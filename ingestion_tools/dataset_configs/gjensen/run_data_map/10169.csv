@@ -1,0 +1,27 @@
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_series_quality
+cwl2011-10-23-1,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2011-10-23-2,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2011-10-23-3,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2011-10-23-4,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2011-10-23-5,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2011-10-24-1,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2011-10-24-2,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2011-10-24-3,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2012-03-29-2,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2012-03-29-3,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2012-03-29-4,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2012-03-29-5,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2012-03-29-6,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2012-03-29-7,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2012-03-29-8,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2012-03-29-9,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2012-03-29-10,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2012-03-29-11,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2012-03-29-12,['IMOD'],True,Weighted back projection,IMOD,UCSF tomo,IMOD,4
+cwl2011-10-31-1,['IMOD'],True,Weighted back projection,IMOD,FEI Tomo,IMOD,4
+cwl2011-10-31-2,['IMOD'],True,Weighted back projection,IMOD,FEI Tomo,IMOD,4
+cwl2011-10-31-3,['IMOD'],True,Weighted back projection,IMOD,FEI Tomo,IMOD,4
+cwl2011-10-31-4,['IMOD'],True,Weighted back projection,IMOD,FEI Tomo,IMOD,4
+cwl2011-10-31-5,['IMOD'],True,Weighted back projection,IMOD,FEI Tomo,IMOD,4
+cwl2011-10-31-6,['IMOD'],True,Weighted back projection,IMOD,FEI Tomo,IMOD,4
+cwl2012-03-29-1,,,,,UCSF tomo,,1

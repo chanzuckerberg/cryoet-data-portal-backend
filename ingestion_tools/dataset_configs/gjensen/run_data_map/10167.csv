@@ -1,0 +1,32 @@
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software,ts-tilt_series_quality
+ycw2017-12-01-1,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-2,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-3,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-5,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-6,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-8,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-9,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-10,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-11,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-12,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-13,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-14,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-16,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-17,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-18,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-20,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-21,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-23,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-24,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-25,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-26,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-27,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-29,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-30,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-31,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-32,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-33,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-34,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-35,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-36,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+ycw2017-12-01-4,,,,,,1

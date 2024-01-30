@@ -1,0 +1,17 @@
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,ts-tilt_alignment_software
+psa2014-06-30-1,['RAPTOR'],True,RAPTOR
+psa2014-06-30-2,['RAPTOR'],True,RAPTOR
+psa2014-06-30-3,['RAPTOR'],True,RAPTOR
+psa2014-06-30-5,['RAPTOR'],True,RAPTOR
+psa2014-06-30-6,['RAPTOR'],True,RAPTOR
+psa2014-06-30-7,['RAPTOR'],True,RAPTOR
+psa2014-06-30-8,['RAPTOR'],True,RAPTOR
+psa2014-06-30-9,['RAPTOR'],True,RAPTOR
+psa2014-06-30-10,['RAPTOR'],True,RAPTOR
+psa2014-06-30-11,['RAPTOR'],True,RAPTOR
+psa2014-06-30-12,['RAPTOR'],True,RAPTOR
+psa2014-06-30-13,['RAPTOR'],True,RAPTOR
+psa2014-06-30-14,['RAPTOR'],True,RAPTOR
+psa2014-06-30-15,['RAPTOR'],True,RAPTOR
+psa2014-06-30-16,['RAPTOR'],True,RAPTOR
+psa2014-06-30-4,['autoPatch'],False,autoPatch

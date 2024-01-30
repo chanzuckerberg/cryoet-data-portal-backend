@@ -1,0 +1,46 @@
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,ts-tilt_alignment_software
+aba2013-12-24-1,['RAPTOR'],True,SIRT,RAPTOR;RAPTOR
+aba2013-12-24-2,['RAPTOR'],True,SIRT,RAPTOR;RAPTOR
+aba2013-12-24-10,['RAPTOR'],True,SIRT,RAPTOR;RAPTOR
+aba2013-12-24-11,['RAPTOR'],True,SIRT,RAPTOR;RAPTOR
+aba2013-12-24-12,['RAPTOR'],True,SIRT,RAPTOR;RAPTOR
+aba2013-12-24-13,['RAPTOR'],True,SIRT,RAPTOR;RAPTOR
+aba2013-12-24-14,['RAPTOR'],True,SIRT,RAPTOR;RAPTOR
+aba2013-12-24-15,['RAPTOR'],True,SIRT,RAPTOR;RAPTOR
+aba2013-12-24-16,['RAPTOR'],True,SIRT,RAPTOR;RAPTOR
+aba2013-12-24-17,['RAPTOR'],True,SIRT,RAPTOR;RAPTOR
+aba2013-12-24-18,['RAPTOR'],True,SIRT,RAPTOR;RAPTOR
+aba2013-12-24-19,['RAPTOR'],True,SIRT,RAPTOR;RAPTOR
+aba2013-12-24-4,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-24-5,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-24-6,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-24-7,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-24-8,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-24-20,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-24-21,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-1,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-2,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-4,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-6,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-7,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-8,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-9,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-10,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-14,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-15,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-16,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-17,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-18,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-19,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-20,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-23,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-24,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-25,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-26,['RAPTOR'],True,Weighted back projection,RAPTOR
+aba2013-12-25-3,['autoPatch'],False,Weighted back projection,autoPatch
+aba2013-12-25-5,['autoPatch'],False,Weighted back projection,autoPatch
+aba2013-12-25-11,['autoPatch'],False,Weighted back projection,autoPatch
+aba2013-12-25-12,['autoPatch'],False,Weighted back projection,autoPatch
+aba2013-12-25-13,['autoPatch'],False,Weighted back projection,autoPatch
+aba2013-12-25-21,['autoPatch'],False,Weighted back projection,autoPatch
+aba2013-12-25-22,['autoPatch'],False,Weighted back projection,autoPatch

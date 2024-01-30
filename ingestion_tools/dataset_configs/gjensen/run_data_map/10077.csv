@@ -1,0 +1,96 @@
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-processing,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_series_quality,ts-tilting_scheme
+dga2016-01-12-1,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-01-12-4,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-01-12-5,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-01-12-7,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-01-12-17,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-01-12-18,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-01-12-21,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-01-12-30,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-01-12-34,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-2,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-8,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-11,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-13,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-17,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-21,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-22,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-26,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-28,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-29,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-36,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-41,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-45,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-47,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-50,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-51,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-70,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-74,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-03-31-81,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR;TOMO3D,4,starting tilt to max then min
+dga2016-01-12-2,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-01-12-3,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-01-12-9,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-01-12-10,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-01-12-13,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-01-12-14,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-01-12-16,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-01-12-29,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-01-12-31,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-01-12-32,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-1,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-5,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-6,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-9,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-14,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-19,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-25,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-32,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-37,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-40,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-44,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-46,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-53,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-57,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-67,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-72,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-76,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-77,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-03-31-86,['RAPTOR'],True,raw,,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+dga2016-01-12-6,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-01-12-12,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-01-12-19,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-01-12-20,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-01-12-22,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-01-12-23,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-01-12-24,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-01-12-25,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-01-12-26,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-01-12-33,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-4,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-15,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-20,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-30,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-31,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-33,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-34,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-38,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-49,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-58,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-59,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-61,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-62,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-65,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-66,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-79,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-03-31-84,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,UCSFTomo,TOMO3D;RAPTOR,4,starting tilt to max then min
+dga2016-01-12-11,['RAPTOR'],True,raw,,Weighted back projection,IMOD,Undefined,RAPTOR,4,min to max tilt
+dga2016-03-31-27,['RAPTOR'],True,raw,,Weighted back projection,IMOD,Undefined,RAPTOR,4,min to max tilt
+dga2016-01-12-38,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,Undefined,TOMO3D;RAPTOR,4,min to max tilt
+dga2016-03-31-48,,,raw,,,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-52,,,raw,,,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-56,,,raw,,,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-60,,,raw,,,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-78,,,raw,,,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-80,,,raw,,,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-83,,,raw,,,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-85,,,raw,,,,UCSFTomo,,1,starting tilt to max then min

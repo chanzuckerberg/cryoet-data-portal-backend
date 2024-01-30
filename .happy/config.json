@@ -1,0 +1,62 @@
+{
+    "config_version": "v2",
+    "default_env": "dev",
+    "app": "cryoet",
+    "default_compose_env_file": ".env.ecr",
+    "slice_default_tag": "branch-main",
+    "services": [
+        "cryoet-api"
+    ],
+    "environments": {
+        "dev": {
+            "aws_profile": "cryoet-dev",
+            "secret_arn": "happy/env-cryoet-dev-config",
+            "terraform_directory": ".happy/terraform/envs/dev",
+            "log_group_prefix": "/happy/cryoet/dev",
+            "auto_run_migrations": true,
+            "task_launch_type": "k8s",
+            "k8s": {
+                "namespace": "cryoet-dev-happy-happy-env",
+                "cluster_id": "cryoet-dev-eks",
+                "auth_method": "eks",
+                "context": "cryoet-dev-eks"
+            }
+        },
+        "staging": {
+            "aws_profile": "cryoet-dev",
+            "secret_arn": "happy/env-cryoet-staging-config",
+            "terraform_directory": ".happy/terraform/envs/staging",
+            "log_group_prefix": "/happy/cryoet/staging",
+            "auto_run_migrations": true,
+            "task_launch_type": "k8s",
+            "k8s": {
+                "namespace": "cryoet-staging-happy-happy-env",
+                "cluster_id": "cryoet-staging-eks",
+                "auth_method": "eks",
+                "context": "cryoet-staging-eks"
+            }
+        },
+        "prod": {
+            "aws_profile": "cryoet-prod",
+            "secret_arn": "happy/env-cryoet-prod-config",
+            "terraform_directory": ".happy/terraform/envs/prod",
+            "log_group_prefix": "/happy/cryoet/prod",
+            "auto_run_migrations": true,
+            "task_launch_type": "k8s",
+            "k8s": {
+                "namespace": "cryoet-prod-happy-happy-env",
+                "cluster_id": "cryoet-prod-eks",
+                "auth_method": "eks",
+                "context": "cryoet-prod-eks"
+            }
+        }
+    },
+    "tasks": {
+        "migrate": [],
+        "delete": []
+    },
+    "features": {
+        "enable_happy_api_usage": true,
+        "enable_ecr_auto_creation": true
+    }
+}

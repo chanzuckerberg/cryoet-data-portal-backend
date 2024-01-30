@@ -1,0 +1,110 @@
+dataset:
+  dataset_identifier: 10226
+  dataset_description: This is 2nd of 17 sets of data studying Salmonella typhimurium
+    collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
+  dataset_title: S. typhimurium  FliL deletion (plus T3SS)
+  authors: &id001
+  - name: Morgan Beeby
+    primary_author_status: true
+    corresponding_author_status: false
+  - name: Grant Jensen
+    primary_author_status: false
+    corresponding_author_status: true
+  organism:
+    name: Salmonella typhimurium
+    taxonomy_id: 99287
+  sample_type: Organism
+  sample_preparation: FliL deletion (plus T3SS)
+  grid_preparation: null
+  dates:
+    deposition_date: 2023-10-01
+    last_modified_date: 2023-12-01
+    release_date: 2023-12-01
+  key_photos:
+    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mba2011-11-23-1/keyimg_mba2011-11-23-1.jpg
+    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mba2011-11-23-1/keyimg_mba2011-11-23-1_s.jpg
+  cell_strain:
+    name: serovar Typhimurium str. LT2
+    id: null
+runs: {}
+tiltseries:
+  pixel_spacing: null
+  tilt_step: 1.5
+  total_flux: 150.0
+  data_acquisition_software: Leginon
+  tilt_series_quality: 4
+  binning_from_frames: null
+  tilt_alignment_software: RAPTOR
+  acceleration_voltage: 300000
+  spherical_aberration_constant: 2.0
+  microscope:
+    manufacturer: FEI
+    model: Polara
+    additional_scope_info: ''
+  camera:
+    manufacturer: Gatan
+    model: UltraCam
+    acquire_mode: null
+  tilting_scheme: starting tilt to max then min
+  tilt_axis: 0.0
+  microscope_optical_setup:
+    phase_plate: false
+    image_corrector: null
+    energy_filter: GIF
+  is_aligned: false
+  tilt_range:
+    min: -65.0
+    max: 65.0
+tomograms:
+  voxel_spacing: null
+  reconstruction_method: Weighted back projection
+  reconstruction_software: IMOD
+  fiducial_alignment_status: true
+  ctf_corrected: null
+  processing: raw
+  processing_software: null
+  align_softwares:
+  - RAPTOR
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  affine_transformation_matrix:
+  - - 1
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 1
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 1
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 1
+  authors: *id001
+  tomogram_version: 1
+annotations: {}
+standardization_config:
+  destination_prefix: '10226'
+  source_prefix: GJensen_full
+  frames_glob: null
+  gain_glob: null
+  rawtlt_files:
+  - '{run_name}/rawdata/*.mdoc'
+  - '{run_name}/file_*/*.rawtlt'
+  - '{run_name}/3dimage_*/*.rawtlt'
+  tiltseries_glob: '{run_name}/rawdata/*'
+  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  tomo_format: mrc
+  tomo_glob: '{run_name}/3dimage_*/*'
+  tomo_regex: .*\.(mrc|rec)$
+  tomo_voxel_size: ''
+  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
+  run_glob: '*'
+  run_regex: (mba2011-11-23-1|mba2011-11-23-2|mba2011-11-23-3|mba2011-11-23-4|mba2011-11-23-5|mba2011-11-23-6|mba2011-11-23-7|mba2011-11-23-8|mba2011-11-23-9|mba2011-11-23-10|mba2011-11-23-11|mba2011-11-23-12|mba2011-11-23-13|mba2011-11-23-14|mba2011-11-23-15|mba2011-11-23-16|mba2011-11-23-17|mba2011-11-23-18|mba2011-11-23-19|mba2011-11-23-20|mba2011-11-23-21|mba2011-11-23-22|mba2011-11-23-23|mba2011-11-23-24|mba2011-11-23-25|mba2011-11-23-26|mba2011-11-23-27|mba2011-11-23-28|mba2011-11-23-29|mba2011-11-23-30|mba2011-11-23-31|mba2011-11-23-32|mba2011-11-23-33|mba2011-11-23-34|mba2011-11-23-35|mba2011-11-23-36)$
+  run_name_regex: (.*)

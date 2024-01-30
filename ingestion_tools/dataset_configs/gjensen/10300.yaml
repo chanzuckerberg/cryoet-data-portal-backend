@@ -1,0 +1,110 @@
+dataset:
+  dataset_identifier: 10300
+  dataset_description: ' and is a part of Caltech Jensen  lab etdb. high-order DNA,
+    H-NS, nucleoid, asymmetric cell division'
+  dataset_title: C. crescentus Calubactor EB session22 27.5KX
+  authors: &id001
+  - name: Jian Shi
+    primary_author_status: true
+    corresponding_author_status: false
+  - name: Grant Jensen
+    primary_author_status: false
+    corresponding_author_status: true
+  organism:
+    name: Caulobacter crescentus
+    taxonomy_id: 565050
+  sample_type: Organism
+  sample_preparation: exponential phase in PYE media, EB 0.02mg/ml overnight 4degree...
+  grid_preparation: QF grid, 10nm gold, 100% humidity...
+  dates:
+    deposition_date: 2023-10-01
+    last_modified_date: 2023-12-01
+    release_date: 2023-12-01
+  key_photos:
+    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/jsa2009-08-07-1/keyimg_jsa2009-08-07-1.jpg
+    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/jsa2009-08-07-1/keyimg_jsa2009-08-07-1_s.jpg
+  cell_strain:
+    name: NA1000
+    id: null
+runs: {}
+tiltseries:
+  pixel_spacing: null
+  tilt_step: 1.0
+  total_flux: 180.0
+  data_acquisition_software: Leginon
+  tilt_series_quality: 4
+  binning_from_frames: null
+  tilt_alignment_software: RAPTOR
+  acceleration_voltage: 300000
+  spherical_aberration_constant: 2.0
+  microscope:
+    manufacturer: FEI
+    model: Polara
+    additional_scope_info: ''
+  camera:
+    manufacturer: Gatan
+    model: UltraCam
+    acquire_mode: null
+  tilting_scheme: starting tilt to max then min
+  tilt_axis: 0.0
+  microscope_optical_setup:
+    phase_plate: false
+    image_corrector: null
+    energy_filter: GIF
+  is_aligned: false
+  tilt_range:
+    min: -60.0
+    max: 60.0
+tomograms:
+  voxel_spacing: null
+  reconstruction_method: Weighted back projection
+  reconstruction_software: IMOD
+  fiducial_alignment_status: true
+  ctf_corrected: null
+  processing: raw
+  processing_software: null
+  align_softwares:
+  - RAPTOR
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  affine_transformation_matrix:
+  - - 1
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 1
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 1
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 1
+  authors: *id001
+  tomogram_version: 1
+annotations: {}
+standardization_config:
+  destination_prefix: '10300'
+  source_prefix: GJensen_full
+  frames_glob: null
+  gain_glob: null
+  rawtlt_files:
+  - '{run_name}/rawdata/*.mdoc'
+  - '{run_name}/file_*/*.rawtlt'
+  - '{run_name}/3dimage_*/*.rawtlt'
+  tiltseries_glob: '{run_name}/rawdata/*'
+  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  tomo_format: mrc
+  tomo_glob: '{run_name}/3dimage_*/*'
+  tomo_regex: .*\.(mrc|rec)$
+  tomo_voxel_size: ''
+  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
+  run_glob: '*'
+  run_regex: (jsa2009-08-07-1|jsa2009-08-07-2|jsa2009-08-07-3|jsa2009-08-07-4|jsa2009-08-07-5|jsa2009-08-07-6|jsa2009-08-07-7|jsa2009-08-07-8|jsa2009-08-07-9|jsa2009-08-07-10|jsa2009-08-07-11|jsa2009-08-07-12|jsa2009-08-07-13|jsa2009-08-07-14|jsa2009-08-07-15|jsa2009-08-07-16|jsa2009-08-07-17|jsa2009-08-07-18|jsa2009-08-07-19|jsa2009-08-07-20|jsa2009-08-07-21|jsa2009-08-07-22|jsa2009-08-07-23|jsa2009-08-07-24|jsa2009-08-07-25|jsa2009-08-07-26|jsa2009-08-07-27|jsa2009-08-07-28|jsa2009-08-07-29|jsa2009-08-07-30|jsa2009-08-07-31|jsa2009-08-07-32|jsa2009-08-07-33|jsa2009-08-07-34|jsa2009-08-07-35|jsa2009-08-07-36|jsa2009-08-07-37|jsa2009-08-07-38|jsa2009-08-07-39|jsa2009-08-07-40|jsa2009-08-07-41|jsa2009-08-07-42|jsa2009-08-07-43)$
+  run_name_regex: (.*)

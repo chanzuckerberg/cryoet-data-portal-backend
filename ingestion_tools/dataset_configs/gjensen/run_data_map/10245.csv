@@ -1,0 +1,11 @@
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_series_quality,ts-tilting_scheme
+etl2013-09-08-1,,,,,Undefined,,1,min to max tilt
+etl2013-09-08-2,,,,,UCSFTomo,,1,starting tilt to max then min
+etl2013-09-08-3,['RAPTOR'],True,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+etl2013-09-08-4,['RAPTOR'],True,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+etl2013-09-08-5,['RAPTOR'],True,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+etl2013-09-08-6,['RAPTOR'],True,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+etl2013-09-08-7,['RAPTOR'],True,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+etl2013-09-08-8,['RAPTOR'],True,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+etl2013-09-08-9,['RAPTOR'],True,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min
+etl2013-09-08-10,['RAPTOR'],True,Weighted back projection,IMOD,UCSFTomo,RAPTOR,4,starting tilt to max then min

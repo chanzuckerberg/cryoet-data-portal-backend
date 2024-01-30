@@ -1,0 +1,118 @@
+dataset:
+  dataset_identifier: 10015
+  dataset_description: This is 2nd of 7 sets of data studying Dolichospermum flos-aquae
+    collected by Przemek Dutka and is a part of Caltech Jensen  lab etdb. Gas vesicles,
+    GvpA, delta GvpC
+  dataset_title: D. flos-aquae Ana GVs delGvpC
+  authors: &id001
+  - name: Przemek Dutka
+    primary_author_status: true
+    corresponding_author_status: false
+  - name: Grant Jensen
+    primary_author_status: false
+    corresponding_author_status: true
+  organism:
+    name: Dolichospermum flos-aquae
+    taxonomy_id: 315271
+  sample_type: Organism
+  sample_preparation: Purification based on Lakshmanan et al., Nature Protocols (2017).
+    After purification GvpC was removed by dialysis in 6M urea.
+  grid_preparation: "A freshly purified GV sample was diluted to  OD500 = ~3 and mixed\
+    \  with  10  nm  BSA-coated  gold  beads.  A  3  \u03BCL volume of sample was\
+    \ applied to C-Flat 2/2 - 3C grids (Protochips)  that  were  freshly  glow-discharged\
+    \  (Pelco EasiGlow,  10  mA,  1  min).  GV  samples  were  frozen using  a  Mark\
+    \  IV  Vitrobot  (FEI,  now  Thermo  Fisher Scientific) (4\xB0C, 100% humidity,\
+    \ blot force 3, blot time 4 s). Defocus range 1.5-3.5 \u03BCm."
+  dates:
+    deposition_date: 2023-10-01
+    last_modified_date: 2023-12-01
+    release_date: 2023-12-01
+  key_photos:
+    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/pda2022-01-23-1/keyimg_pda2022-01-23-1.jpg
+    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/pda2022-01-23-1/keyimg_pda2022-01-23-1_s.jpg
+  cell_strain:
+    name: CCAP 1403/13F
+    id: null
+runs: {}
+tiltseries:
+  pixel_spacing: null
+  tilt_step: 3.0
+  total_flux: 45.0
+  data_acquisition_software: Serial EM
+  tilt_series_quality: 4
+  binning_from_frames: null
+  tilt_alignment_software: Warp
+  acceleration_voltage: 300000
+  spherical_aberration_constant: 2.7
+  microscope:
+    manufacturer: TFS
+    model: Krios
+    additional_scope_info: ''
+  camera:
+    manufacturer: Gatan
+    model: K3
+    acquire_mode: counting
+  tilting_scheme: min to max tilt; non-constant tilt steps
+  tilt_axis: 84.3
+  microscope_optical_setup:
+    phase_plate: false
+    image_corrector: null
+    energy_filter: GIF
+  is_aligned: false
+  tilt_range:
+    min: -45.0
+    max: 45.0
+tomograms:
+  affine_transformation_matrix:
+  - - 1
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 1
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 1
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 1
+  align_softwares:
+  - Warp
+  authors: *id001
+  ctf_corrected: null
+  fiducial_alignment_status: true
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  processing: '{tomo-processing}'
+  processing_software: '{tomo-processing_software}'
+  reconstruction_method: Weighted back projection
+  reconstruction_software: IMOD
+  tomogram_version: 1
+  voxel_spacing: null
+annotations: {}
+standardization_config:
+  destination_prefix: '10015'
+  source_prefix: GJensen_full
+  frames_glob: null
+  gain_glob: null
+  rawtlt_files:
+  - '{run_name}/rawdata/*.mdoc'
+  - '{run_name}/file_*/*.rawtlt'
+  - '{run_name}/3dimage_*/*.rawtlt'
+  tiltseries_glob: '{run_name}/rawdata/*'
+  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  tomo_format: mrc
+  tomo_glob: '{run_name}/3dimage_*/*'
+  tomo_regex: .*\.(mrc|rec)$
+  tomo_voxel_size: ''
+  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
+  run_glob: '*'
+  run_regex: (pda2022-01-23-1|pda2022-01-23-2|pda2022-01-23-3|pda2022-01-23-4|pda2022-01-23-5|pda2022-01-23-6|pda2022-01-23-7|pda2022-01-23-8|pda2022-01-23-9|pda2022-01-23-10|pda2022-01-23-11|pda2022-01-23-12|pda2022-01-23-13|pda2022-01-23-14|pda2022-01-23-15|pda2022-01-23-16|pda2022-01-23-17|pda2022-01-23-18|pda2022-01-23-19|pda2022-01-23-20|pda2022-01-23-21|pda2022-01-23-22|pda2022-01-23-23|pda2022-01-23-24|pda2022-01-23-25|pda2022-01-23-26|pda2022-01-23-27|pda2022-01-23-28|pda2022-01-23-29|pda2022-01-23-30|pda2022-01-23-31|pda2022-01-23-32|pda2022-01-23-33|pda2022-01-23-34|pda2022-01-23-35|pda2022-01-23-36|pda2022-01-23-37|pda2022-01-23-38|pda2022-01-23-39|pda2022-01-23-40|pda2022-01-23-41|pda2022-01-23-42|pda2022-01-23-43|pda2022-01-23-44|pda2022-01-23-45|pda2022-01-23-46|pda2022-01-23-47|pda2022-01-23-48|pda2022-01-23-49|pda2022-01-23-50|pda2022-01-23-51|pda2022-01-23-52|pda2022-01-23-53|pda2022-01-23-54|pda2022-01-23-55|pda2022-01-23-56|pda2022-01-23-57|pda2022-01-23-58|pda2022-01-23-59|pda2022-01-23-60|pda2022-01-23-61|pda2022-01-23-62|pda2022-01-23-63|pda2022-01-23-64|pda2022-01-23-65|pda2022-01-23-66|pda2022-01-23-67|pda2022-01-23-68|pda2022-01-23-69|pda2022-01-23-70|pda2022-01-23-71|pda2022-01-23-72|pda2022-01-23-73|pda2022-01-23-74|pda2022-01-23-75|pda2022-01-23-76|pda2022-01-23-77|pda2022-01-23-78|pda2022-01-23-79|pda2022-01-23-80|pda2022-01-23-81|pda2022-01-23-82|pda2022-01-23-83|pda2022-01-23-84|pda2022-01-23-85|pda2022-01-23-86|pda2022-01-23-87|pda2022-01-23-88|pda2022-01-23-89|pda2022-01-23-90|pda2022-01-23-91|pda2022-01-23-92|pda2022-01-23-93|pda2022-01-23-94|pda2022-01-23-95|pda2022-01-23-96|pda2022-01-23-97|pda2022-01-23-98|pda2022-01-23-99|pda2022-01-23-100|pda2022-01-23-101|pda2022-01-23-102|pda2022-01-23-103)$
+  run_name_regex: (.*)
+  run_data_map_file: run_data_map/10015.csv

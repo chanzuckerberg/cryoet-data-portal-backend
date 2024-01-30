@@ -1,0 +1,116 @@
+dataset:
+  dataset_identifier: 10011
+  dataset_title: Filamentous actin from a neuronal growth cone filopodium
+  dataset_description: REQUIRED
+  authors:
+    - name: Ryan Hylton
+      ORCID: 0000-0002-1549-8521
+    - name: Heebner JE
+    - name: Grillo MA
+    - name: Matt Swulius
+      ORCID: 0000-0002-8147-208X
+  funding:
+    - funding_agency_name: Not funded
+      grant_id: null
+  sample_preparation: 'buffer_ph: 7.4, buffer_details: No buffer was used. The cells were grown on EM grids in Neurobasal media with B-27 supplement (2%) and Penicillin/Streptomycin (1%) or NbActiv4 (with 1% Penicillin/Streptomycin) neuronal cell culture media., vitrification_cryogen_name: ETHANE, vitrification_chamber_humidity: {''units'': ''percentage'', ''valueOf_'': ''70''}, vitrification_chamber_temperature: {''units'': ''K'', ''valueOf_'': ''295.15''}, vitrification_instrument: FEI VITROBOT MARK IV, vitrification_details: 3 uL of 10 nm gold fiducials were added on top of the cells prior to blotting or freezing. Grids were then blotted by hand from behind (the non-cell surface) for 2 seconds before plunge-freezing.. , instance_type: subtomogram_averaging_preparation'
+  grid_preparation: 'model: Quantifoil R2/2, material: GOLD, mesh: 200, support_film_film_type_id: 1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type: support_film, pretreatment_type_: GLOW DISCHARGE'
+  sample_type: REQUIRED
+  dates: &repo-dates
+    deposition_date: 2023-XX-XX
+    release_date: 2023-XX-XX
+    last_modified_date: 2023-XX-XX
+  cell_strain:
+    name: OPTIONAL
+    id: https://OPTIONAL
+  cross_references:
+    dataset_publications: doi:10.1038/s41467-022-30116-x
+  cell_component:
+    name: OPTIONAL
+    id: OPTIONAL
+  organism:
+    name: Rattus norvegicus
+annotations:
+  - metadata:
+      annotation_object:
+        id: REQUIRED
+        name: REQUIRED
+        description: OPTIONAL
+        state: OPTIONAL
+      dates: *repo-dates
+      annotation_method: REQUIRED
+      annotation_publications: OPTIONAL
+      ground_truth_status: REQUIRED #(true or false)
+      authors:
+        - name: RECOMMENDED
+          ORCID: 0000-XXXXXX
+          primary_annotator_status: OPTIONAL #(true or false)
+          corresponding_author_status: OPTIONAL #(true or false)
+      annotation_software: RECOMMENDED
+      version: "1.0"
+      confidence:
+        precision: REQUIRED IF ground_truth_used is specified
+        recall: REQUIRED IF ground_truth_used is specified
+        ground_truth_used: OPTIONAL
+    # Engineering can fill out the values below
+    sources:
+      - columns: zyx
+        file_format: csv
+        glob_string: aaaa/bbb/{ts_name}.csv
+        shape: REQUIRED #(valid values: SegmentationMask, OrientedPoint, or Point)
+        delimiter: OPTIONAL
+runs: {}
+tiltseries:
+  scales: []
+  microscope:
+    manufacturer: FEI
+    model: TITAN KRIOS
+  spherical_aberration_constant: 2.7
+  microscope_optical_setup:
+    energy_filter: GIF Bioquantum
+    phase_plate: null
+    image_corrector: null
+  camera:
+    manufacturer: Gatan
+    model: K2 SUMMIT
+  acceleration_voltage: 300000
+  tilting_scheme: RECOMMENDED
+  tilt_axis: OPTIONAL (float)
+  tilt_step: OPTIONAL (float)
+  tilt_range:
+    min: REQUIRED
+    max: REQUIRED
+  total_flux: REQUIRED
+  data_acquisition_software: REQUIRED
+  binning_from_frames: REQUIRED
+  tilt_series_quality: REQUIRED
+  related_empiar_entry: OPTIONAL
+  pixel_spacing: REQUIRED
+tomograms:
+  voxel_spacing: null
+  fiducial_alignment_status: null
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  affine_transformation_matrix: [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
+  reconstruction_method: null
+  reconstruction_software: Dynamo
+  ctf_corrected: REQUIRED
+  processing: REQUIRED
+  tomogram_version: 1
+standardization_config:
+  destination_prefix: '10011'
+  source_prefix: path/to/source
+  frames_glob: frames/{run_name}_*.tif
+  gain_glob: frames/CountRef.dm4
+  rawtlt_files:
+    - metadata/{run_name}.rawtlt
+    - metadata/{run_name}.xf
+    - metadata/mdocs_modified/{run_name}.mdoc
+  tiltseries_glob: metadata/{run_name}.st
+  tomo_format: mrc
+  tomo_glob: tomograms/*.rec
+  tomo_voxel_size: '13.48'
+  run_glob: frames/*
+  run_regex: /TS_\d\d$
+  run_name_regex: (.*)

@@ -1,0 +1,114 @@
+dataset:
+  dataset_identifier: 10191
+  dataset_description: This is 3rd of 5 sets of data studying Escherichia coli collected
+    by Matt Swulius and is a part of Caltech Jensen  lab etdb. Cells contain WT MreB
+    in the chromosome plus an N-terminal YFP fusion to MreB (YFP-MreB) on the plasmid
+    pLe7. pLE7 also confers a resistance to ampicillin.
+  dataset_title: E. coli (pLE7, 20 uM IPTG)
+  authors: &id001
+  - name: Matt Swulius
+    primary_author_status: true
+    corresponding_author_status: false
+  - name: Grant Jensen
+    primary_author_status: false
+    corresponding_author_status: true
+  organism:
+    name: Escherichia coli
+    taxonomy_id: 562
+  sample_type: Organism
+  sample_preparation: Grown at 37 degrees celsius to OD600=0.2 then 20 uM IPTG was
+    added for 2 hours of growth before freezing.
+  grid_preparation: Vitrobot plunge freezing
+  dates:
+    deposition_date: 2023-10-01
+    last_modified_date: 2023-12-01
+    release_date: 2023-12-01
+  key_photos:
+    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mst2011-11-05-13/keyimg_mst2011-11-05-13.jpg
+    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mst2011-11-05-13/keyimg_mst2011-11-05-13_s.jpg
+  cell_strain:
+    name: ''
+    id: null
+runs: {}
+tiltseries:
+  acceleration_voltage: 300000
+  binning_from_frames: null
+  camera:
+    acquire_mode: null
+    manufacturer: Gatan
+    model: UltraCam
+  data_acquisition_software: UCSFTomo
+  is_aligned: false
+  microscope:
+    additional_scope_info: ''
+    manufacturer: FEI
+    model: Polara
+  microscope_optical_setup:
+    energy_filter: GIF
+    image_corrector: null
+    phase_plate: false
+  pixel_spacing: null
+  spherical_aberration_constant: 2.0
+  tilt_alignment_software: RAPTOR
+  tilt_axis: 0.0
+  tilt_range:
+    max: float {ts-tilt_range-max}
+    min: float {ts-tilt_range-min}
+  tilt_series_quality: 4
+  tilt_step: 1.0
+  tilting_scheme: starting tilt to max then min
+  total_flux: 200.0
+tomograms:
+  voxel_spacing: null
+  reconstruction_method: Weighted back projection
+  reconstruction_software: IMOD
+  fiducial_alignment_status: true
+  ctf_corrected: null
+  processing: raw
+  processing_software: null
+  align_softwares:
+  - RAPTOR
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  affine_transformation_matrix:
+  - - 1
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 1
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 1
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 1
+  authors: *id001
+  tomogram_version: 1
+annotations: {}
+standardization_config:
+  destination_prefix: '10191'
+  source_prefix: GJensen_full
+  frames_glob: null
+  gain_glob: null
+  rawtlt_files:
+  - '{run_name}/rawdata/*.mdoc'
+  - '{run_name}/file_*/*.rawtlt'
+  - '{run_name}/3dimage_*/*.rawtlt'
+  tiltseries_glob: '{run_name}/rawdata/*'
+  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  tomo_format: mrc
+  tomo_glob: '{run_name}/3dimage_*/*'
+  tomo_regex: .*\.(mrc|rec)$
+  tomo_voxel_size: ''
+  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
+  run_glob: '*'
+  run_regex: (mst2011-11-05-13|mst2011-11-05-14|mst2011-11-05-15|mst2011-11-05-16|mst2011-11-05-17|mst2011-11-05-18|mst2011-11-05-19|mst2011-11-05-20|mst2011-11-05-21|mst2011-11-05-22|mst2011-06-02-1|mst2011-06-02-2|mst2011-06-02-3|mst2011-06-02-4|mst2011-06-02-5|mst2011-06-02-6|mst2011-06-02-7|mst2011-06-02-8|mst2011-06-02-9|mst2011-06-02-10|mst2011-06-02-11|mst2011-06-02-12|mst2011-06-02-14|mst2011-06-02-15|mst2011-06-02-16|mst2011-06-02-17|mst2011-06-02-18|mst2011-06-02-19|mst2011-06-02-20|mst2011-06-02-21|mst2011-06-02-22|mst2011-06-02-23|mst2011-06-02-24|mst2011-06-02-26|mst2011-06-02-27|mst2011-06-02-28|mst2011-06-02-29|mst2011-06-02-30)$
+  run_name_regex: (.*)
+  run_data_map_file: run_data_map/10191.csv

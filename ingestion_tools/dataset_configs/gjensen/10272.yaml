@@ -1,0 +1,111 @@
+dataset:
+  dataset_identifier: 10272
+  dataset_description: "This is 10th of 15 sets of data studying Vibrio cholerae collected\
+    \ by Ariane Briegel and is a part of Caltech Jensen  lab etdb. C6706Z- \xE2\u02C6\
+    \u2020vc1394 (MCP F9 system- uncat)"
+  dataset_title: Vibrio cholerae PM5
+  authors: &id001
+  - name: Ariane Briegel
+    primary_author_status: true
+    corresponding_author_status: false
+  - name: Grant Jensen
+    primary_author_status: false
+    corresponding_author_status: true
+  organism:
+    name: Vibrio cholerae
+    taxonomy_id: 686
+  sample_type: Organism
+  sample_preparation: null
+  grid_preparation: null
+  dates:
+    deposition_date: 2023-10-01
+    last_modified_date: 2023-12-01
+    release_date: 2023-12-01
+  key_photos:
+    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/aba2015-06-04-5/keyimg_aba2015-06-04-5.jpg
+    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/aba2015-06-04-5/keyimg_aba2015-06-04-5_s.jpg
+  cell_strain:
+    name: O1 biovar El Tor
+    id: null
+runs: {}
+tiltseries:
+  pixel_spacing: null
+  tilt_step: 1.0
+  total_flux: 160.0
+  data_acquisition_software: UCSFTomo
+  tilt_series_quality: 4
+  binning_from_frames: null
+  tilt_alignment_software: RAPTOR
+  acceleration_voltage: 300000
+  spherical_aberration_constant: 2.7
+  microscope:
+    manufacturer: TFS
+    model: Krios
+    additional_scope_info: ''
+  camera:
+    manufacturer: Gatan
+    model: K2
+    acquire_mode: counting
+  tilting_scheme: starting tilt to max then min
+  tilt_axis: 84.3
+  microscope_optical_setup:
+    phase_plate: false
+    image_corrector: null
+    energy_filter: GIF
+  is_aligned: false
+  tilt_range:
+    min: -60.0
+    max: 60.0
+tomograms:
+  voxel_spacing: null
+  reconstruction_method: Weighted back projection
+  reconstruction_software: IMOD
+  fiducial_alignment_status: true
+  ctf_corrected: null
+  processing: raw
+  processing_software: null
+  align_softwares:
+  - RAPTOR
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  affine_transformation_matrix:
+  - - 1
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 1
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 1
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 1
+  authors: *id001
+  tomogram_version: 1
+annotations: {}
+standardization_config:
+  destination_prefix: '10272'
+  source_prefix: GJensen_full
+  frames_glob: null
+  gain_glob: null
+  rawtlt_files:
+  - '{run_name}/rawdata/*.mdoc'
+  - '{run_name}/file_*/*.rawtlt'
+  - '{run_name}/3dimage_*/*.rawtlt'
+  tiltseries_glob: '{run_name}/rawdata/*'
+  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  tomo_format: mrc
+  tomo_glob: '{run_name}/3dimage_*/*'
+  tomo_regex: .*\.(mrc|rec)$
+  tomo_voxel_size: ''
+  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
+  run_glob: '*'
+  run_regex: (aba2015-06-04-5|aba2015-06-04-6|aba2015-06-04-7|aba2015-06-04-8|aba2015-06-04-9|aba2015-06-04-10|aba2015-06-04-11|aba2015-06-04-12|aba2015-06-04-13|aba2015-06-04-14|aba2015-06-04-15|aba2015-06-04-16|aba2015-06-04-17|aba2015-06-04-18|aba2015-06-04-19|aba2015-06-04-20|aba2015-06-04-21|aba2015-06-04-22|aba2015-06-04-23|aba2015-06-04-24|aba2015-06-04-25|aba2015-06-04-26|aba2015-06-04-27|aba2015-06-04-28|aba2015-06-04-29|aba2015-06-04-30|aba2015-06-04-31|aba2015-06-04-32)$
+  run_name_regex: (.*)

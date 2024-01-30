@@ -1,0 +1,132 @@
+dataset:
+  authors: &dataset_authors
+    - name: Author 1
+      corresponding_author_status: false
+      primary_author_status: false
+      ORCID: 000-000-0000
+  cell_component:
+    id: OPTIONAL
+    name: OPTIONAL
+  cross_references:
+    dataset_publications: OPTIONAL
+    related_database_entries: OPTIONAL
+  cell_strain:
+    id: OPTIONAL
+    name: OPTIONAL
+  cell_type:
+    id: OPTIONAL
+    name: OPTIONAL
+  dataset_identifier: REQUIRED #(ex: 10004)
+  dataset_description: REQUIRED
+  dataset_title: REQUIRED
+  dates: &repo-dates
+    deposition_date: 2023-XX-XX
+    last_modified_date: 2023-XX-XX
+    release_date: 2023-XX-XX
+  funding:
+    - funding_agency_name: RECOMMENDED
+      grant_id: RECOMMENDED
+  grid_preparation: RECOMMENDED
+  key_photos:
+    snapshot: RECOMMENDED
+    thumbnail: RECOMMENDED
+  organism:
+    name: REQUIRED
+    taxonomy_id: REQUIRED
+  sample_preparation: RECOMMENDED
+  sample_type: REQUIRED
+  tissue:
+    id: OPTIONAL
+    name: OPTIONAL
+annotations:
+  - metadata:
+      annotation_object:
+        id: REQUIRED
+        name: REQUIRED
+        description: OPTIONAL
+        state: OPTIONAL
+      dates: *repo-dates
+      annotation_method: REQUIRED
+      annotation_publications: OPTIONAL
+      ground_truth_status: REQUIRED #(true or false)
+      authors:
+        - name: RECOMMENDED
+          ORCID: 0000-XXXXXX
+          primary_annotator_status: OPTIONAL #(true or false)
+          corresponding_author_status: OPTIONAL #(true or false)
+      annotation_software: RECOMMENDED
+      version: "1.0"
+      is_curator_recommended: OPTIONAL #(true or false)
+      confidence:
+        precision: REQUIRED IF ground_truth_used is specified
+        recall: REQUIRED IF ground_truth_used is specified
+        ground_truth_used: OPTIONAL
+    # Engineering can fill out the values below
+    sources:
+      - columns: zyx
+        file_format: csv
+        glob_string: aaaa/bbb/{ts_name}.csv
+        shape: REQUIRED #(valid values: SemanticSegmentationMask, SegmentationMask, OrientedPoint, or Point)
+        is_visualization_default: OPTIONAL #(true or false)
+        delimiter: OPTIONAL
+        mask_label: OPTIONAL # (valid values: integer > 0, for SemanticSegmentationMask)
+runs: {}
+tiltseries:
+  acceleration_voltage: REQUIRED #(ex: 300000)
+  binning_from_frames: REQUIRED
+  camera:
+    manufacturer: REQUIRED
+    model: REQUIRED
+  data_acquisition_software: REQUIRED
+  microscope:
+    manufacturer: REQUIRED
+    model: REQUIRED
+  microscope_optical_setup:
+    energy_filter: REQUIRED
+    phase_plate: REQUIRED
+    image_corrector: REQUIRED
+  pixel_spacing: REQUIRED
+  related_empiar_entry: OPTIONAL
+  scales: []
+  spherical_aberration_constant: REQUIRED #(ex: 2.7)
+  tilting_scheme: RECOMMENDED
+  tilt_axis: OPTIONAL (float)
+  tilt_range:
+    min: REQUIRED
+    max: REQUIRED
+  tilt_step: OPTIONAL (float)
+  tilt_series_quality: REQUIRED
+  total_flux: REQUIRED
+  is_aligned: REQUIRED #(true or false)
+  alignment_binning_factor: REQUIRED if is_aligned = True
+tomograms:
+  ctf_corrected: REQUIRED #(true or false)
+  fiducial_alignment_status: REQUIRED
+  offset:
+    x: REQUIRED (default 0)
+    y: REQUIRED (default 0)
+    z: REQUIRED (default 0)
+  affine_transformation_matrix: [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]] # this is the identity matrix
+  processing: REQUIRED #(valid values: denoised, filtered, or raw)
+  reconstruction_method: REQUIRED
+  reconstruction_software: REQUIRED
+  tomogram_version: 1
+  voxel_spacing: REQUIRED
+  authors: *dataset_authors
+
+standardization_config:
+  destination_prefix: '99999'
+  source_prefix: path/to/source
+  frames_glob: frames/{run_name}_*.tif
+  gain_glob: frames/CountRef.dm4
+  rawtlt_files:
+    - metadata/{run_name}.rawtlt
+    - metadata/{run_name}.xf
+    - metadata/mdocs_modified/{run_name}.mdoc
+  tiltseries_glob: metadata/{run_name}.st
+  tomo_format: mrc
+  tomo_glob: tomograms/*.rec
+  tomo_voxel_size: '13.48'
+  run_glob: frames/*
+  run_regex: /TS_\d\d$
+  run_name_regex: (.*)

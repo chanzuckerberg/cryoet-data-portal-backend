@@ -1,0 +1,56 @@
+run_name,tomo-reconstruction_method,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilting_scheme
+cwl2010-12-13-1,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-2,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-3,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-4,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-5,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-6,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-7,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-8,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-9,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-10,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-11,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-12,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-13,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-14,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-15,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-16,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-17,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-18,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-19,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-20,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-21,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-22,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-23,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-24,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-12-13-25,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-11-29-1,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-11-29-2,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-11-29-3,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-11-29-4,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2010-11-29-5,Weighted back projection,Leginon,IMOD,starting tilt to max then min
+cwl2011-03-31-1,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-3,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-4,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-6,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-7,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-8,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-9,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-10,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-11,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-12,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-13,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-14,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-15,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-16,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-17,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-18,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-19,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-20,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-21,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-22,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-23,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-24,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-25,Weighted back projection,UCSF tomo,IMOD,min to max tilt
+cwl2011-03-31-2,SIRT,UCSF tomo,IMOD;IMOD,min to max tilt
+cwl2011-03-31-5,SIRT,UCSF tomo,IMOD;IMOD,min to max tilt

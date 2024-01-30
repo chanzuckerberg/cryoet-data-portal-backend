@@ -1,0 +1,112 @@
+dataset:
+  dataset_identifier: 10021
+  dataset_description: ' and is a part of Caltech Jensen  lab etdb. Carboxysomes purified
+    from H. Neapolitanus, WT, high resolution'
+  dataset_title: H. neapolitanus Carboxysomes
+  authors: &id001
+  - name: LaurenAnn Metskas
+    primary_author_status: true
+    corresponding_author_status: false
+  - name: Grant Jensen
+    primary_author_status: false
+    corresponding_author_status: true
+  organism:
+    name: Halothiobacillus neapolitanus
+    taxonomy_id: 555778
+  sample_type: Organism
+  sample_preparation: purified by the Savage lab
+  grid_preparation: protochip C-flat 2/2-300 grid, 10nm BSA-gold, 100% humidity, defocus
+    varying -1 to -5.5 microns
+  dates:
+    deposition_date: 2023-10-01
+    last_modified_date: 2023-12-01
+    release_date: 2023-12-01
+  key_photos:
+    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/lma2019-08-21-1/keyimg_lma2019-08-21-1.jpg
+    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/lma2019-08-21-1/keyimg_lma2019-08-21-1_s.jpg
+  cell_strain:
+    name: c2
+    id: null
+runs: {}
+tiltseries:
+  pixel_spacing: null
+  tilt_step: 3.0
+  total_flux: 120.0
+  data_acquisition_software: Serial EM
+  tilt_series_quality: 4
+  binning_from_frames: null
+  tilt_alignment_software: IMOD
+  acceleration_voltage: 300000
+  spherical_aberration_constant: 2.7
+  microscope:
+    manufacturer: TFS
+    model: Krios
+    additional_scope_info: ''
+  camera:
+    manufacturer: Gatan
+    model: K3
+    acquire_mode: counting
+  tilting_scheme: min to max tilt
+  tilt_axis: 84.3
+  microscope_optical_setup:
+    phase_plate: false
+    image_corrector: null
+    energy_filter: GIF
+  is_aligned: false
+  tilt_range:
+    min: -66.0
+    max: 66.0
+tomograms:
+  voxel_spacing: null
+  reconstruction_method: Weighted back projection
+  reconstruction_software: novaCTF
+  fiducial_alignment_status: true
+  ctf_corrected: true
+  processing: ctffind4, novaCTF, custom bash and Matlab scripts;IMOD, ctffind4, novaCTF,
+    custom bash and Matlab scripts
+  processing_software: novaCTF
+  align_softwares:
+  - IMOD
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  affine_transformation_matrix:
+  - - 1
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 1
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 1
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 1
+  authors: *id001
+  tomogram_version: 1
+annotations: {}
+standardization_config:
+  destination_prefix: '10021'
+  source_prefix: GJensen_full
+  frames_glob: null
+  gain_glob: null
+  rawtlt_files:
+  - '{run_name}/rawdata/*.mdoc'
+  - '{run_name}/file_*/*.rawtlt'
+  - '{run_name}/3dimage_*/*.rawtlt'
+  tiltseries_glob: '{run_name}/rawdata/*'
+  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  tomo_format: mrc
+  tomo_glob: '{run_name}/3dimage_*/*'
+  tomo_regex: .*\.(mrc|rec)$
+  tomo_voxel_size: ''
+  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
+  run_glob: '*'
+  run_regex: (lma2019-08-21-1|lma2019-08-21-2|lma2019-08-21-3|lma2019-08-21-4|lma2019-08-21-5|lma2019-08-21-6|lma2019-08-21-7|lma2019-08-21-8|lma2019-08-21-9|lma2019-08-21-10|lma2019-08-21-11|lma2019-08-21-12|lma2019-08-21-13|lma2019-08-21-14|lma2019-08-21-15|lma2019-08-21-16|lma2019-08-21-17|lma2019-08-21-18|lma2019-08-21-19|lma2019-08-21-20|lma2019-08-21-21|lma2019-08-21-22|lma2019-08-21-23|lma2019-08-21-24|lma2019-08-21-25|lma2019-08-21-26|lma2019-08-21-27|lma2019-08-21-28|lma2019-08-21-29|lma2019-08-21-30|lma2019-08-21-31|lma2019-08-21-32|lma2019-08-21-33|lma2019-08-21-34|lma2019-08-21-35|lma2019-08-21-36|lma2019-08-21-37|lma2019-08-21-38|lma2019-08-21-39|lma2019-08-21-40|lma2019-08-21-41|lma2019-08-21-42|lma2019-08-21-43|lma2019-08-21-44|lma2019-08-21-45|lma2019-08-21-46|lma2019-08-21-47|lma2019-08-21-48|lma2019-08-21-49|lma2019-08-21-50|lma2019-08-21-51|lma2019-08-21-52|lma2019-08-21-53|lma2019-08-21-54|lma2019-08-21-55|lma2019-08-21-56|lma2019-08-21-57|lma2019-08-21-58|lma2019-08-21-59|lma2019-08-21-60|lma2019-08-21-61|lma2019-08-21-62)$
+  run_name_regex: (.*)

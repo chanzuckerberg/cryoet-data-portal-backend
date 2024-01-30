@@ -1,0 +1,34 @@
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software,ts-tilt_series_quality
+jsa2009-12-29-1,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+jsa2009-12-29-2,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+jsa2009-12-29-4,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+jsa2009-12-29-19,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+jsa2009-12-29-22,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+jsa2009-12-29-3,,,,,,1
+jsa2009-12-29-5,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-6,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-7,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-8,['RAPTOR'],True,SIRT,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-9,['RAPTOR'],True,SIRT,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-10,['RAPTOR'],True,SIRT,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-11,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-12,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-13,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-14,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-15,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-16,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-17,['RAPTOR'],True,SIRT,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-18,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-20,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-21,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-23,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-24,['RAPTOR'],True,SIRT,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-25,['RAPTOR'],True,SIRT,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-26,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-27,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-28,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-29,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-30,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-31,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-32,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR;RAPTOR,4
+jsa2009-12-29-33,['RAPTOR'],True,SIRT,IMOD,RAPTOR;RAPTOR;RAPTOR,4

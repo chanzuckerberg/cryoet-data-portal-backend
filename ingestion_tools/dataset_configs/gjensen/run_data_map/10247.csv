@@ -1,0 +1,18 @@
+run_name,tomo-reconstruction_method,ts-tilt_alignment_software
+etl2012-09-01-8,Weighted back projection,RAPTOR
+etl2012-09-01-9,Weighted back projection,RAPTOR
+etl2012-09-01-10,Weighted back projection,RAPTOR
+etl2012-09-01-11,Weighted back projection,RAPTOR
+etl2012-09-01-12,Weighted back projection,RAPTOR
+etl2012-09-01-13,Weighted back projection,RAPTOR
+etl2012-09-02-31,Weighted back projection,RAPTOR
+etl2012-09-02-33,Weighted back projection,RAPTOR
+etl2012-09-02-34,Weighted back projection,RAPTOR
+etl2012-09-02-35,Weighted back projection,RAPTOR
+etl2012-09-02-36,Weighted back projection,RAPTOR
+etl2012-09-02-38,Weighted back projection,RAPTOR
+etl2012-09-02-39,Weighted back projection,RAPTOR
+etl2012-09-02-40,Weighted back projection,RAPTOR
+etl2012-09-02-30,SIRT,RAPTOR;RAPTOR;RAPTOR
+etl2012-09-02-32,Weighted back projection,RAPTOR;RAPTOR
+etl2012-09-02-37,Weighted back projection,RAPTOR;RAPTOR

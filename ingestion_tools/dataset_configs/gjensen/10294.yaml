@@ -1,0 +1,112 @@
+dataset:
+  dataset_identifier: 10294
+  dataset_description: This is 6th of 11 sets of data studying Mycoplasma pneumoniae
+    collected by Jian Shi and is a part of Caltech Jensen  lab etdb.
+  dataset_title: M. pneumoniae MP P200 27.5KX
+  authors: &id001
+  - name: Jian Shi
+    primary_author_status: true
+    corresponding_author_status: false
+  - name: Grant Jensen
+    primary_author_status: false
+    corresponding_author_status: true
+  organism:
+    name: Mycoplasma pneumoniae
+    taxonomy_id: 2104
+  sample_type: Organism
+  sample_preparation: null
+  grid_preparation: QF grid, 10nm gold, 100% humidity...
+  dates:
+    deposition_date: 2023-10-01
+    last_modified_date: 2023-12-01
+    release_date: 2023-12-01
+  key_photos:
+    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/jsa2009-12-29-1/keyimg_jsa2009-12-29-1.jpg
+    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/jsa2009-12-29-1/keyimg_jsa2009-12-29-1_s.jpg
+  cell_strain:
+    name: null
+    id: null
+runs: {}
+tiltseries:
+  acceleration_voltage: 300000
+  binning_from_frames: null
+  camera:
+    acquire_mode: null
+    manufacturer: Gatan
+    model: UltraCam
+  data_acquisition_software: Leginon
+  is_aligned: false
+  microscope:
+    additional_scope_info: ''
+    manufacturer: FEI
+    model: Polara
+  microscope_optical_setup:
+    energy_filter: GIF
+    image_corrector: null
+    phase_plate: false
+  pixel_spacing: null
+  spherical_aberration_constant: 2.0
+  tilt_alignment_software: '{ts-tilt_alignment_software}'
+  tilt_axis: 0.0
+  tilt_range:
+    max: 60.0
+    min: -60.0
+  tilt_series_quality: int {ts-tilt_series_quality}
+  tilt_step: 1.0
+  tilting_scheme: starting tilt to max then min
+  total_flux: 150.0
+tomograms:
+  affine_transformation_matrix:
+  - - 1
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 1
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 1
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 1
+  align_softwares: '{tomo-align_softwares}'
+  authors: *id001
+  ctf_corrected: null
+  fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  processing: raw
+  processing_software: null
+  reconstruction_method: '{tomo-reconstruction_method}'
+  reconstruction_software: '{tomo-reconstruction_software}'
+  tomogram_version: 1
+  voxel_spacing: null
+annotations: {}
+standardization_config:
+  destination_prefix: '10294'
+  source_prefix: GJensen_full
+  frames_glob: null
+  gain_glob: null
+  rawtlt_files:
+  - '{run_name}/rawdata/*.mdoc'
+  - '{run_name}/file_*/*.rawtlt'
+  - '{run_name}/{mapped_frame_name}/*.rawtlt'
+  tiltseries_glob: '{run_name}/rawdata/*'
+  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  tomo_format: mrc
+  tomo_glob: '{run_name}/{mapped_tomo_name}'
+  tomo_regex: .*\.(mrc|rec)$
+  tomo_voxel_size: ''
+  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
+  run_glob: '*'
+  run_regex: (jsa2009-12-29-1|jsa2009-12-29-2|jsa2009-12-29-3|jsa2009-12-29-4|jsa2009-12-29-5|jsa2009-12-29-6|jsa2009-12-29-7|jsa2009-12-29-8|jsa2009-12-29-9|jsa2009-12-29-10|jsa2009-12-29-11|jsa2009-12-29-12|jsa2009-12-29-13|jsa2009-12-29-14|jsa2009-12-29-15|jsa2009-12-29-16|jsa2009-12-29-17|jsa2009-12-29-18|jsa2009-12-29-19|jsa2009-12-29-20|jsa2009-12-29-21|jsa2009-12-29-22|jsa2009-12-29-23|jsa2009-12-29-24|jsa2009-12-29-25|jsa2009-12-29-26|jsa2009-12-29-27|jsa2009-12-29-28|jsa2009-12-29-29|jsa2009-12-29-30|jsa2009-12-29-31|jsa2009-12-29-32|jsa2009-12-29-33)$
+  run_name_regex: (.*)
+  run_data_map_file: run_data_map/10294.csv
+  run_to_tomo_map_csv: run_tomo_map/10294.csv
+  run_to_frame_map_csv: run_frames_map/10294.csv

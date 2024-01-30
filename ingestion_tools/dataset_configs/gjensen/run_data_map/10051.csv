@@ -1,0 +1,49 @@
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-processing,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software,ts-tilt_series_quality
+mka2019-11-23-1,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-3,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-5,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-6,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-7,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-8,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-9,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-10,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-11,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-12,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-13,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-14,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-16,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-17,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-18,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-19,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-20,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-21,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-23,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-24,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-25,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-26,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-27,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-28,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-29,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-37,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-38,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-39,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-40,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-41,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-42,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-43,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-44,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-45,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-46,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-47,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-48,['RAPTOR'],True,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
+mka2019-11-23-2,,,raw,,,,,1
+mka2019-11-23-4,,,raw,,,,,1
+mka2019-11-23-15,,,raw,,,,,1
+mka2019-11-23-22,,,raw,,,,,1
+mka2019-11-23-30,,,raw,,,,,1
+mka2019-11-23-31,,,raw,,,,,1
+mka2019-11-23-32,,,raw,,,,,1
+mka2019-11-23-33,,,raw,,,,,1
+mka2019-11-23-34,,,raw,,,,,1
+mka2019-11-23-35,,,raw,,,,,1
+mka2019-11-23-36,,,raw,,,,,1

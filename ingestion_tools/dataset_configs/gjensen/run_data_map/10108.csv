@@ -1,0 +1,11 @@
+run_name,tomo-reconstruction_method,ts-tilt_alignment_software
+scd2017-01-16-1,Weighted back projection,IMOD
+scd2017-01-16-2,Weighted back projection,IMOD
+scd2017-01-16-3,Weighted back projection,IMOD
+scd2017-01-16-7,Weighted back projection,IMOD
+scd2017-01-16-8,Weighted back projection,IMOD
+scd2017-01-16-9,Weighted back projection,IMOD
+scd2017-01-16-5,Weighted back projection,IMOD;IMOD
+scd2017-01-16-6,Weighted back projection,IMOD;IMOD
+scd2017-01-16-10,SIRT,IMOD;IMOD
+scd2017-01-16-13,Weighted back projection,IMOD;IMOD

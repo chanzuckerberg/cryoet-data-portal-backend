@@ -1,0 +1,28 @@
+run_name,tomo-align_softwares,tomo-processing,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software
+dga2017-03-02-40,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR
+dga2017-03-02-41,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-42,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-43,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-44,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-45,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-46,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-47,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-48,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-49,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-50,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-51,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-52,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-53,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-54,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-55,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-57,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-58,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-59,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-61,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-62,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-63,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-64,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-68,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-69,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-70,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-71,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR

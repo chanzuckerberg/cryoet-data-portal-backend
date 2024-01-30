@@ -1,0 +1,10 @@
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software,ts-tilt_series_quality
+etl2013-09-16-5,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+etl2013-09-16-6,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+etl2013-09-16-7,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+etl2013-09-16-9,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+etl2013-09-16-10,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+etl2013-09-16-11,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+etl2013-09-16-12,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+etl2013-09-16-13,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+etl2013-09-16-8,,,,,,1

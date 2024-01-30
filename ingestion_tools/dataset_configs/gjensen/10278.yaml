@@ -1,0 +1,110 @@
+dataset:
+  dataset_identifier: 10278
+  dataset_description: This is 1st of 9 sets of data studying Pseudomonas aeruginosa
+    collected by Ariane Briegel and is a part of Caltech Jensen  lab etdb.
+  dataset_title: P. aeruginosa PAO1 Wild Type
+  authors: &id001
+  - name: Ariane Briegel
+    primary_author_status: true
+    corresponding_author_status: false
+  - name: Grant Jensen
+    primary_author_status: false
+    corresponding_author_status: true
+  organism:
+    name: Pseudomonas aeruginosa
+    taxonomy_id: 287
+  sample_type: Organism
+  sample_preparation: Pseudomonas aeruginosa PAO1 Wild Type
+  grid_preparation: null
+  dates:
+    deposition_date: 2023-10-01
+    last_modified_date: 2023-12-01
+    release_date: 2023-12-01
+  key_photos:
+    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/aba2014-10-14-1/keyimg_aba2014-10-14-1.jpg
+    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/aba2014-10-14-1/keyimg_aba2014-10-14-1_s.jpg
+  cell_strain:
+    name: ''
+    id: null
+runs: {}
+tiltseries:
+  pixel_spacing: null
+  tilt_step: 1.0
+  total_flux: 160.0
+  data_acquisition_software: UCSFTomo
+  tilt_series_quality: 4
+  binning_from_frames: null
+  tilt_alignment_software: RAPTOR
+  acceleration_voltage: 300000
+  spherical_aberration_constant: 2.0
+  microscope:
+    manufacturer: FEI
+    model: Polara
+    additional_scope_info: ''
+  camera:
+    manufacturer: Gatan
+    model: K2
+    acquire_mode: counting
+  tilting_scheme: starting tilt to max then min
+  tilt_axis: 84.3
+  microscope_optical_setup:
+    phase_plate: false
+    image_corrector: null
+    energy_filter: GIF
+  is_aligned: false
+  tilt_range:
+    min: -60.0
+    max: 60.0
+tomograms:
+  voxel_spacing: null
+  reconstruction_method: Weighted back projection
+  reconstruction_software: IMOD
+  fiducial_alignment_status: true
+  ctf_corrected: null
+  processing: raw
+  processing_software: null
+  align_softwares:
+  - RAPTOR
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  affine_transformation_matrix:
+  - - 1
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 1
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 1
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 1
+  authors: *id001
+  tomogram_version: 1
+annotations: {}
+standardization_config:
+  destination_prefix: '10278'
+  source_prefix: GJensen_full
+  frames_glob: null
+  gain_glob: null
+  rawtlt_files:
+  - '{run_name}/rawdata/*.mdoc'
+  - '{run_name}/file_*/*.rawtlt'
+  - '{run_name}/3dimage_*/*.rawtlt'
+  tiltseries_glob: '{run_name}/rawdata/*'
+  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  tomo_format: mrc
+  tomo_glob: '{run_name}/3dimage_*/*'
+  tomo_regex: .*\.(mrc|rec)$
+  tomo_voxel_size: ''
+  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
+  run_glob: '*'
+  run_regex: (aba2014-10-14-1|aba2014-10-14-3|aba2014-10-14-4|aba2014-10-14-5|aba2014-10-14-6|aba2014-10-14-7|aba2014-10-14-8|aba2014-10-14-9|aba2014-10-14-10|aba2014-10-14-11|aba2014-10-14-12|aba2014-10-14-13|aba2014-10-14-14|aba2014-10-14-15|aba2014-10-14-16|aba2014-10-14-17|aba2014-10-14-18|aba2014-10-14-19|aba2014-10-14-20|aba2014-10-14-21|aba2014-10-14-22|aba2014-10-14-23|aba2014-10-14-24|aba2014-10-14-25|aba2014-10-14-26)$
+  run_name_regex: (.*)

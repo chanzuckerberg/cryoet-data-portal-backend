@@ -1,0 +1,66 @@
+run_name,tomo-reconstruction_method,ts-tilt_alignment_software
+jsa2010-01-02-1,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-2,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-3,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-4,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-5,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-6,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-7,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-9,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-11,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-13,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-16,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-18,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-19,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-20,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-22,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-23,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-24,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-25,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-26,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-27,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-28,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-29,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-30,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-31,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-32,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-33,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-35,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-36,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-38,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-39,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-41,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-42,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-43,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-44,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-45,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-46,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-47,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-48,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-50,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-51,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-53,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-55,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-56,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-58,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-59,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-60,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-61,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-62,SIRT,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-63,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-64,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-65,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
+jsa2010-01-02-8,Weighted back projection,RAPTOR
+jsa2010-01-02-10,Weighted back projection,RAPTOR
+jsa2010-01-02-12,Weighted back projection,RAPTOR
+jsa2010-01-02-14,Weighted back projection,RAPTOR
+jsa2010-01-02-15,Weighted back projection,RAPTOR
+jsa2010-01-02-17,Weighted back projection,RAPTOR
+jsa2010-01-02-21,Weighted back projection,RAPTOR
+jsa2010-01-02-34,Weighted back projection,RAPTOR
+jsa2010-01-02-37,Weighted back projection,RAPTOR
+jsa2010-01-02-40,Weighted back projection,RAPTOR
+jsa2010-01-02-49,Weighted back projection,RAPTOR
+jsa2010-01-02-52,Weighted back projection,RAPTOR
+jsa2010-01-02-54,Weighted back projection,RAPTOR
+jsa2010-01-02-57,Weighted back projection,RAPTOR

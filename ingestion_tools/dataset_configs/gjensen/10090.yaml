@@ -1,0 +1,114 @@
+dataset:
+  dataset_identifier: 10090
+  dataset_description: This is 33th of 41 sets of data studying Legionella pneumophila
+    collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Legionella
+    IcmQ71::TevS 42C_On (HS004 E)
+  dataset_title: L. pneumophila Legionella IcmQ71::TevS 42C_On
+  authors: &id001
+  - name: Debnath Ghosal
+    primary_author_status: true
+    corresponding_author_status: false
+  - name: Grant Jensen
+    primary_author_status: false
+    corresponding_author_status: true
+  organism:
+    name: Legionella pneumophila
+    taxonomy_id: 1080311
+  sample_type: Organism
+  sample_preparation: null
+  grid_preparation: "Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot\
+    \ force 6, blot time 3 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane\
+    \ mix. Grid: Quantifoil Cu 2/2 200. Add gold to cells prior to freezing: 1ul of\
+    \ gold to 4 ul of cells, freeze."
+  dates:
+    deposition_date: 2023-10-01
+    last_modified_date: 2023-12-01
+    release_date: 2023-12-01
+  key_photos:
+    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2019-05-31-1/keyimg_dga2019-05-31-1.jpg
+    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2019-05-31-1/keyimg_dga2019-05-31-1_s.jpg
+  cell_strain:
+    name: Philadelphia-1_Lp02
+    id: null
+runs: {}
+tiltseries:
+  pixel_spacing: null
+  tilt_step: 3.0
+  total_flux: 100.0
+  data_acquisition_software: UCSFTomo
+  tilt_series_quality: 4
+  binning_from_frames: null
+  tilt_alignment_software: RAPTOR
+  acceleration_voltage: 300000
+  spherical_aberration_constant: 2.7
+  microscope:
+    manufacturer: TFS
+    model: Krios
+    additional_scope_info: ''
+  camera:
+    manufacturer: Gatan
+    model: K2
+    acquire_mode: counting
+  tilting_scheme: starting tilt to max then min
+  tilt_axis: 84.3
+  microscope_optical_setup:
+    phase_plate: false
+    image_corrector: null
+    energy_filter: GIF
+  is_aligned: false
+  tilt_range:
+    min: -51.0
+    max: 51.0
+tomograms:
+  voxel_spacing: null
+  reconstruction_method: Weighted back projection
+  reconstruction_software: IMOD
+  fiducial_alignment_status: true
+  ctf_corrected: null
+  processing: raw
+  processing_software: null
+  align_softwares:
+  - RAPTOR
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  affine_transformation_matrix:
+  - - 1
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 1
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 1
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 1
+  authors: *id001
+  tomogram_version: 1
+annotations: {}
+standardization_config:
+  destination_prefix: '10090'
+  source_prefix: GJensen_full
+  frames_glob: null
+  gain_glob: null
+  rawtlt_files:
+  - '{run_name}/rawdata/*.mdoc'
+  - '{run_name}/file_*/*.rawtlt'
+  - '{run_name}/3dimage_*/*.rawtlt'
+  tiltseries_glob: '{run_name}/rawdata/*'
+  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  tomo_format: mrc
+  tomo_glob: '{run_name}/3dimage_*/*'
+  tomo_regex: .*\.(mrc|rec)$
+  tomo_voxel_size: ''
+  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
+  run_glob: '*'
+  run_regex: (dga2019-05-31-1|dga2019-05-31-2|dga2019-05-31-3|dga2019-05-31-4|dga2019-05-31-5|dga2019-05-31-6|dga2019-05-31-7|dga2019-05-31-8|dga2019-05-31-9|dga2019-05-31-10|dga2019-05-31-11|dga2019-05-31-12|dga2019-05-31-13|dga2019-05-31-14|dga2019-05-31-15|dga2019-05-31-16|dga2019-05-31-17|dga2019-05-31-18|dga2019-05-31-19|dga2019-05-31-20|dga2019-05-31-21|dga2019-05-31-22|dga2019-05-31-23|dga2019-05-31-24|dga2019-05-31-25|dga2019-05-31-26|dga2019-05-31-27|dga2019-05-31-28|dga2019-05-31-29|dga2019-05-31-30|dga2019-05-31-31|dga2019-05-31-32|dga2019-05-31-33|dga2019-05-31-34|dga2019-05-31-35|dga2019-05-31-36|dga2019-05-31-38|dga2019-05-31-39|dga2019-05-31-40|dga2019-05-31-41|dga2019-05-31-42|dga2019-05-31-43|dga2019-05-31-44|dga2019-05-31-45|dga2019-05-31-46|dga2019-05-31-47|dga2019-05-31-48|dga2019-05-31-49|dga2019-05-31-50|dga2019-05-31-51|dga2019-05-31-52|dga2019-05-31-53|dga2019-05-31-54|dga2019-05-31-55|dga2019-05-31-56|dga2019-05-31-57|dga2019-05-31-58|dga2019-05-31-59|dga2019-05-31-60|dga2019-05-31-61|dga2019-05-31-62|dga2019-05-31-63|dga2019-05-31-64|dga2019-05-31-65|dga2019-05-31-66|dga2019-05-31-67|dga2019-05-31-68|dga2019-05-31-69|dga2019-05-31-70|dga2019-05-31-71|dga2019-05-31-73|dga2019-05-31-74|dga2019-05-31-75|dga2019-05-31-76|dga2019-05-31-77|dga2019-05-31-78|dga2019-05-31-79|dga2019-05-31-80|dga2019-05-31-81|dga2019-05-31-82|dga2019-05-31-83|dga2019-05-31-84|dga2019-05-31-85|dga2019-05-31-86|dga2019-05-31-87|dga2019-05-31-88|dga2019-05-31-89|dga2019-05-31-90|dga2019-05-31-91|dga2019-05-31-92|dga2019-05-31-93|dga2019-05-31-94|dga2019-05-31-95|dga2019-05-31-96|dga2019-05-31-97|dga2019-05-31-98|dga2019-05-31-99|dga2019-05-31-100|dga2019-05-31-101|dga2019-05-31-102|dga2019-05-31-103|dga2019-05-31-104|dga2019-05-31-105|dga2019-05-31-106|dga2019-05-31-107|dga2019-05-31-108)$
+  run_name_regex: (.*)

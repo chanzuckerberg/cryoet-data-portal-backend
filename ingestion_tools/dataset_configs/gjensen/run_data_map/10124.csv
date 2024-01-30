@@ -1,0 +1,11 @@
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,ts-tilt_alignment_software
+psa2014-12-26-1,['Batchruntomo'],True,Batchruntomo
+psa2014-12-26-3,['Batchruntomo'],True,Batchruntomo
+psa2014-12-26-2,['RAPTOR'],True,RAPTOR
+psa2014-12-27-1,['RAPTOR'],True,RAPTOR
+psa2014-12-27-2,['RAPTOR'],True,RAPTOR
+psa2014-12-27-3,['RAPTOR'],True,RAPTOR
+psa2014-12-27-4,['RAPTOR'],True,RAPTOR
+psa2014-12-27-5,['RAPTOR'],True,RAPTOR
+psa2014-12-27-6,['RAPTOR'],True,RAPTOR
+psa2014-12-26-4,['autoPatch'],False,autoPatch

@@ -1,0 +1,113 @@
+dataset:
+  dataset_identifier: 10247
+  dataset_description: This is 2nd of 4 sets of data studying Bacillus subtilis collected
+    by Elitza Tocheva and is a part of Caltech Jensen  lab etdb. withTA
+  dataset_title: Bsubtilis_wildtype_168_sacculi
+  authors: &id001
+  - name: Elitza Tocheva
+    primary_author_status: true
+    corresponding_author_status: false
+  - name: Grant Jensen
+    primary_author_status: false
+    corresponding_author_status: true
+  organism:
+    name: Bacillus subtilis
+    taxonomy_id: 224308
+  sample_type: Organism
+  sample_preparation: sporulation media
+  grid_preparation: quantifoil grid R2/2, 20nm gold, 100% humidity
+  dates:
+    deposition_date: 2023-10-01
+    last_modified_date: 2023-12-01
+    release_date: 2023-12-01
+  key_photos:
+    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/etl2012-09-01-8/keyimg_etl2012-09-01-8.jpg
+    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/etl2012-09-01-8/keyimg_etl2012-09-01-8_s.jpg
+  cell_strain:
+    name: subsp. subtilis str. 168
+    id: null
+runs: {}
+tiltseries:
+  acceleration_voltage: 300000
+  binning_from_frames: null
+  camera:
+    acquire_mode: counting
+    manufacturer: Gatan
+    model: K2
+  data_acquisition_software: UCSF tomo
+  is_aligned: false
+  microscope:
+    additional_scope_info: ''
+    manufacturer: FEI
+    model: Polara
+  microscope_optical_setup:
+    energy_filter: GIF
+    image_corrector: null
+    phase_plate: false
+  pixel_spacing: null
+  spherical_aberration_constant: 2.0
+  tilt_alignment_software: '{ts-tilt_alignment_software}'
+  tilt_axis: 84.3
+  tilt_range:
+    max: 60.0
+    min: -60.0
+  tilt_series_quality: 4
+  tilt_step: 1.0
+  tilting_scheme: min to max tilt
+  total_flux: 200.0
+tomograms:
+  affine_transformation_matrix:
+  - - 1
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 1
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 1
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 1
+  align_softwares:
+  - RAPTOR
+  authors: *id001
+  ctf_corrected: null
+  fiducial_alignment_status: true
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  processing: raw
+  processing_software: null
+  reconstruction_method: '{tomo-reconstruction_method}'
+  reconstruction_software: IMOD
+  tomogram_version: 1
+  voxel_spacing: null
+annotations: {}
+standardization_config:
+  destination_prefix: '10247'
+  source_prefix: GJensen_full
+  frames_glob: null
+  gain_glob: null
+  rawtlt_files:
+  - '{run_name}/rawdata/*.mdoc'
+  - '{run_name}/file_*/*.rawtlt'
+  - '{run_name}/{mapped_frame_name}/*.rawtlt'
+  tiltseries_glob: '{run_name}/rawdata/*'
+  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  tomo_format: mrc
+  tomo_glob: '{run_name}/{mapped_tomo_name}'
+  tomo_regex: .*\.(mrc|rec)$
+  tomo_voxel_size: ''
+  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
+  run_glob: '*'
+  run_regex: (etl2012-09-01-8|etl2012-09-01-9|etl2012-09-01-10|etl2012-09-01-11|etl2012-09-01-12|etl2012-09-01-13|etl2012-09-02-30|etl2012-09-02-31|etl2012-09-02-32|etl2012-09-02-33|etl2012-09-02-34|etl2012-09-02-35|etl2012-09-02-36|etl2012-09-02-37|etl2012-09-02-38|etl2012-09-02-39|etl2012-09-02-40)$
+  run_name_regex: (.*)
+  run_data_map_file: run_data_map/10247.csv
+  run_to_tomo_map_csv: run_tomo_map/10247.csv
+  run_to_frame_map_csv: run_frames_map/10247.csv

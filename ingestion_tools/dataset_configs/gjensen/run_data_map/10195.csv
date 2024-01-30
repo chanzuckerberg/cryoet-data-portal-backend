@@ -1,0 +1,22 @@
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software,ts-tilt_series_quality
+mst2010-12-10-1,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-10-2,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-10-3,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-10-4,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-10-5,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-10-7,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-10-8,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-10-9,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-11-1,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-11-2,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-11-3,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-11-4,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-11-5,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-11-6,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-11-7,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-11-8,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-11-9,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-11-10,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-11-11,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-11-12,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-12-10-6,,,,,,1

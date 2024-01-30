@@ -1,0 +1,231 @@
+import json
+import os
+import os.path
+import re
+import time
+
+import boto3
+import click
+from boto3 import Session
+
+from common.config import DataImportConfig
+from common.fs import FileSystemApi
+from importers.dataset import DatasetImporter
+from importers.run import RunImporter
+
+
+@click.group()
+@click.pass_context
+def cli(ctx):
+    pass
+
+
+def run_job(
+    execution_name: str,
+    config_file: str,
+    input_bucket: str,
+    output_path: str,
+    flags: str,
+    aws_region: str,
+    aws_account_id: str,
+    sfn_name,
+    swipe_comms_bucket: str,
+    swipe_wdl_bucket: str,
+    swipe_wdl_key: str,
+    ecr_repo: str,
+    ecr_tag: str,
+    memory: int | None = None,
+):
+    # TODO, pull these from the
+
+    if not memory:
+        memory = 24000
+
+    state_machine_arn = (
+        f"arn:aws:states:{aws_region}:{aws_account_id}:stateMachine:{sfn_name}"
+    )
+
+    execution_name = re.sub(r"[^0-9a-zA-Z-]", r"-", execution_name)
+    sfn_input_json = {
+        "Input": {
+            "Run": {
+                "aws_region": aws_region,
+                "docker_image_id": f"{aws_account_id}.dkr.ecr.{aws_region}.amazonaws.com/{ecr_repo}:{ecr_tag}",
+                "config_file": config_file,
+                "input_bucket": input_bucket,
+                "output_path": output_path,
+                "flags": flags,
+            }
+        },
+        "OutputPrefix": f"s3://{swipe_comms_bucket}/swipe/standardize-dirs-sfn/{execution_name}/results",
+        "RUN_WDL_URI": f"s3://{swipe_wdl_bucket}/{swipe_wdl_key}",
+        "RunEC2Memory": memory,
+        "RunEC2Vcpu": 1,
+        "RunSPOTMemory": memory,
+        "RunSPOTVcpu": 1,
+        "StateMachineArn": state_machine_arn,
+    }
+
+    session = Session(region_name=aws_region)
+    client = session.client(
+        service_name="stepfunctions",
+    )
+
+    return client.start_execution(
+        stateMachineArn=state_machine_arn,
+        name=execution_name,
+        input=json.dumps(sfn_input_json),
+    )
+
+
+@cli.command()
+@click.argument("config_file", required=True, type=str)
+@click.argument("input_bucket", required=True, type=str)
+@click.argument("output_path", required=True, type=str)
+@click.option("--env-name", type=str, required=True, default="staging")
+@click.option("--ecr-repo", type=str, required=True, default="cryoet-staging")
+@click.option("--ecr-tag", type=str, required=True, default="ci-staging")
+@click.option(
+    "--swipe-wdl-key",
+    type=str,
+    required=True,
+    default="standardize_dirs.wdl-v0.0.1.wdl",
+)
+@click.option("--force-overwrite", is_flag=True, default=False)
+@click.option("--import-tomograms", is_flag=True, default=False)
+@click.option("--import-tomogram-metadata", is_flag=True, default=False)
+@click.option("--import-annotations", is_flag=True, default=False)
+@click.option("--import-annotation-metadata", is_flag=True, default=False)
+@click.option("--import-metadata", is_flag=True, default=False)
+@click.option("--import-frames", is_flag=True, default=False)
+@click.option("--import-tiltseries", is_flag=True, default=False)
+@click.option("--import-tiltseries-metadata", is_flag=True, default=False)
+@click.option("--import-run-metadata", is_flag=True, default=False)
+@click.option("--import-datasets", is_flag=True, default=False)
+@click.option("--import-dataset-metadata", is_flag=True, default=False)
+@click.option("--import-everything", is_flag=True, default=False)
+@click.option("--filter-run-name", type=str, default=None, multiple=True)
+@click.option("--exclude-run-name", type=str, default=None, multiple=True)
+@click.option("--make-key-image", type=bool, is_flag=True, default=False)
+@click.option("--make-neuroglancer-config", type=bool, is_flag=True, default=False)
+@click.option("--write-mrc/--no-write-mrc", default=True)
+@click.option("--write-zarr/--no-write-zarr", default=True)
+@click.option("--memory", type=int, default=None)
+@click.pass_context
+def queue(
+    ctx,
+    config_file: str,
+    input_bucket: str,
+    output_path: str,
+    env_name: str,
+    ecr_repo: str,
+    ecr_tag: str,
+    swipe_wdl_key: str,
+    force_overwrite: bool,
+    import_tomograms: bool,
+    import_tomogram_metadata: bool,
+    import_annotations: bool,
+    import_annotation_metadata: bool,
+    import_metadata: bool,
+    import_frames: bool,
+    import_tiltseries: bool,
+    import_tiltseries_metadata: bool,
+    import_run_metadata: bool,
+    import_datasets: bool,
+    import_dataset_metadata: bool,
+    import_everything: bool,
+    filter_run_name: list[str],
+    exclude_run_name: list[str],
+    make_key_image: bool,
+    make_neuroglancer_config: bool,
+    write_mrc: bool,
+    write_zarr: bool,
+    memory: int | None,
+):
+    fs_mode = "s3"
+    fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=force_overwrite)
+
+    config = DataImportConfig(fs, config_file, output_path, input_bucket)
+    os.makedirs(os.path.join(output_path, config.destination_prefix), exist_ok=True)
+    config.load_map_files()
+
+    exclude_run_name_patterns = [re.compile(pattern) for pattern in exclude_run_name]
+    filter_run_name_patterns = [re.compile(pattern) for pattern in filter_run_name]
+
+    bool_args = {
+        "force-overwrite": force_overwrite,
+        "import-tomograms": import_tomograms,
+        "import-tomogram-metadata": import_tomogram_metadata,
+        "import-annotations": import_annotations,
+        "import-annotation-metadata": import_annotation_metadata,
+        "import-metadata": import_metadata,
+        "import-frames": import_frames,
+        "import-tiltseries": import_tiltseries,
+        "import-tiltseries-metadata": import_tiltseries_metadata,
+        "import-run-metadata": import_run_metadata,
+        "import-datasets": import_datasets,
+        "import-dataset-metadata": import_dataset_metadata,
+        "import-everything": import_everything,
+        "make-key-image": make_key_image,
+        "make-neuroglancer-config": make_neuroglancer_config,
+        "no-write-mrc": not write_mrc,
+        "no-write-zarr": not write_zarr,
+    }
+    args = [f"--{arg_name}" for arg_name, is_enabled in bool_args.items() if is_enabled]
+
+    # Always iterate over datasets and runs.
+    dataset = DatasetImporter(config, None)
+    digitmatch = re.compile(r"[^\d]+(\d+)[^\d]+")
+    for run in RunImporter.find_runs(config, dataset):
+        if list(filter(lambda x: x.match(run.run_name), exclude_run_name_patterns)):
+            print(f"Excluding {run.run_name}..")
+            continue
+        if filter_run_name and not list(
+            filter(lambda x: x.match(run.run_name), filter_run_name_patterns)
+        ):
+            print(f"Skipping {run.run_name}..")
+            continue
+        print(f"Processing {run.run_name}...")
+        new_args = list(args)  # make a copy
+        new_args.append(f"--filter-run-name '^{run.run_name}$'")
+        dataset_id = digitmatch.match(config_file)[1]
+        execution_name = f"{int(time.time())}-ds{dataset_id}-run{run.run_name}"
+
+        # Learn more about our AWS environment
+        swipe_comms_bucket = None
+        swipe_wdl_bucket = None
+        sfn_name = "cryoet-ingestion-{env_name}-default-wdl"
+
+        sts = boto3.client("sts")
+        aws_account_id = sts.get_caller_identity()["Account"]
+        session = Session()
+        aws_region = session.region_name
+        s3_client = session.client("s3")
+        buckets = s3_client.list_buckets()
+        for bucket in buckets["Buckets"]:
+            bucket_name = bucket["Name"]
+            if "swipe-wdl" in bucket_name and env_name in bucket_name:
+                swipe_wdl_bucket = bucket_name
+            if "swipe-comms" in bucket_name and env_name in bucket_name:
+                swipe_comms_bucket = bucket_name
+
+        run_job(
+            execution_name,
+            config_file,
+            input_bucket,
+            output_path,
+            " ".join(new_args),
+            aws_region=aws_region,
+            aws_account_id=aws_account_id,
+            sfn_name=sfn_name,
+            swipe_comms_bucket=swipe_comms_bucket,
+            swipe_wdl_bucket=swipe_wdl_bucket,
+            swipe_wdl_key=swipe_wdl_key,
+            ecr_repo=ecr_repo,
+            ecr_tag=ecr_tag,
+            memory=memory,
+        )
+
+
+if __name__ == "__main__":
+    cli()

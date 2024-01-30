@@ -1,0 +1,9 @@
+run_name,tomo-align_softwares,ts-data_acquisition_software,ts-tilt_alignment_software
+wnj2018-04-19-7,['RAPTOR'],Serial EM,RAPTOR
+wnj2018-04-19-11,['RAPTOR'],Serial EM,RAPTOR
+wnj2018-04-19-14,['RAPTOR'],Serial EM,RAPTOR
+wnj2018-04-19-8,['RAPTOR'],Serial EM,RAPTOR;RAPTOR
+wnj2018-04-19-10,['RAPTOR'],Serial EM,RAPTOR;RAPTOR
+wnj2018-04-19-12,['RAPTOR'],Serial EM,RAPTOR;RAPTOR
+wnj2018-04-19-9,['RAPTOR'],Undefined,RAPTOR
+wnj2018-04-19-13,['IMOD'],Serial EM,IMOD

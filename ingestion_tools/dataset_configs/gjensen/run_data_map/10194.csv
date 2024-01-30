@@ -1,0 +1,40 @@
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software,ts-tilt_series_quality
+mst2010-09-17-2,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-09-17-4,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-09-17-6,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-09-17-7,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-09-17-9,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-09-17-10,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-09-17-11,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-09-17-12,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-09-17-13,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-09-1,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-09-2,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-09-3,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-09-4,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-09-5,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-09-6,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-09-7,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-09-8,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-09-9,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-09-11,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-09-12,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-09-13,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-09-14,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-10-1,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-10-2,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-10-3,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-10-7,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-10-8,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-10-9,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-10-10,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-10-11,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-10-12,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-10-10-13,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
+mst2010-09-17-3,,,,,,1
+mst2010-09-17-5,,,,,,1
+mst2010-09-17-8,,,,,,1
+mst2010-10-09-10,,,,,,1
+mst2010-10-10-4,,,,,,1
+mst2010-10-10-5,,,,,,1
+mst2010-10-10-6,,,,,,1

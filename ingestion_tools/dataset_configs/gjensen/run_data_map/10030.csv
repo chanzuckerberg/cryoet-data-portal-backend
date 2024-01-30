@@ -1,0 +1,5 @@
+run_name,tomo-align_softwares,tomo-reconstruction_method,ts-microscope-model,ts-spherical_aberration_constant,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-total_flux
+wnj2018-05-16-15,['RAPTOR'],Weighted back projection,Krios,2.7,RAPTOR,50.0,-46.0,159.0
+wnj2018-05-16-16,['RAPTOR'],Weighted back projection,0,2.2,RAPTOR,50.0,-52.0,159.0
+wnj2018-04-15-1,['RAPTOR'],SIRT,Krios,2.7,RAPTOR,38.0,-56.0,174.0
+wnj2018-04-15-2,['IMOD'],Weighted back projection,Krios,2.7,IMOD,38.0,-56.0,174.0
