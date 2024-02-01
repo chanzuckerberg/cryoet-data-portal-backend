@@ -13,4 +13,3 @@ output "service_ecrs" {
   description = "The services ECR locations for their docker containers"
   sensitive = false
 }
-

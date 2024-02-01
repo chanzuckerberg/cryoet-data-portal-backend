@@ -29,4 +29,3 @@ E's3 path to this tiltseries in MRC format (downscaled to 50%)';
 alter table "public"."tiltseries" add column "s3_mrc_bin4" varchar null;
 comment on column "public"."tiltseries"."s3_mrc_bin4" is
 E's3 path to this tiltseries in MRC format (downscaled to 25%)';
-
