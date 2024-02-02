@@ -1,4 +1,4 @@
-name: Entities tests
+name: Ingestor tests
 
 on:
   push:
@@ -7,7 +7,6 @@ on:
     paths:
       - "ingestion_tools/**"
   pull_request:
-    branches: "**"
     paths:
       - "ingestion_tools/**"
 
