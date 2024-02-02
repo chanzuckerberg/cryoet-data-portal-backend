@@ -1,24 +1,22 @@
 .PHONY: init
-init:
-	docker compose up -d
+init: ingestor-init api-init
+
+.PHONY: ingestor-init
+ingestor-init:
+	docker compose --profile ingestor up -d
+	cd ./test_infra/; ./seed_moto.sh
+
+.PHONY: api-init
+api-init:
+	docker compose --profile api up -d
 	cd ./test_infra/; ./seed_moto.sh
 	docker compose cp test_infra/seed_db_data.sql db:/tmp/seed_db_data.sql
 	docker compose exec db sh -c 'cat /tmp/seed_db_data.sql | psql postgres://postgres:postgres@127.0.0.1:5432/cryoet'
 
-.PHONY: coverage
-coverage:
-	export AWS_REGION=us-west-2; \
-		export AWS_ACCESS_KEY_ID=test; \
-		export AWS_SECRET_ACCESS_KEY=test; \
-		export BOTO_ENDPOINT_URL=http://localhost:4000; \
-		export BOTO_SIGNATURE_VERSION=s3v4; \
-		coverage run --parallel-mode -m pytest -v -rP --durations=20 ./tests/
+.PHONY: clean
+clean:
+	docker compose --profile '*' down
 
-.PHONY: test
-test:
-	export AWS_REGION=us-west-2; \
-		export AWS_ACCESS_KEY_ID=test; \
-		export AWS_SECRET_ACCESS_KEY=test; \
-		export BOTO_ENDPOINT_URL=http://localhost:4000; \
-		export BOTO_SIGNATURE_VERSION=s3v4; \
-		pytest -vvv -s .
+.PHONY: ingestor-test
+ingestor-test:
+	docker compose exec ingestor pytest -vvv -s .

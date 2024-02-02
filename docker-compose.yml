@@ -36,6 +36,7 @@ services:
       - '5432:5432'
   cryoet-api:
     platform: linux/arm64
+    profiles: ["api"]
     image: hasura-graphql
     build:
       context: ./api_server
@@ -57,6 +58,7 @@ services:
       - '8080:8080'
   hasura-console:
     platform: linux/arm64
+    profiles: ["api"]
     image: hasura-graphql
     build:
       context: ./api_server
@@ -84,6 +86,7 @@ services:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@db:5432/cryoet
   ingestor:
     platform: linux/amd64
+    profiles: ["ingestor"]
     image: ingestor
     build:
       context: ./ingestion_tools

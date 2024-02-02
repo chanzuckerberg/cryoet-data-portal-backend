@@ -1,0 +1,23 @@
+name: Entities tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "ingestion_tools/**"
+  pull_request:
+    branches: "**"
+    paths:
+      - "ingestion_tools/**"
+
+jobs:
+  py-test:
+    steps:
+      - uses: actions/checkout@v3
+      # Set up a local test env and run tests
+      - name: Run tests
+        run: |
+          make ingestor-init
+          make ingestor-test
+
