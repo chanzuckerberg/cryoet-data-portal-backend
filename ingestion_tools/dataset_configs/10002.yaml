@@ -91,7 +91,7 @@ tiltseries:
   alignment_binning_factor: ~ # We may need to calculate this for each tilt if we can identify aligned & unaligned files in the bucket.
 tomograms:
   ctf_corrected: false
-  fiducial_alignment_status: false
+  fiducial_alignment_status: NON_FIDUCIAL
   offset:
     x: 0
     y: 0

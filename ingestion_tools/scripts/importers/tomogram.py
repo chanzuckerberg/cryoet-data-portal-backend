@@ -4,6 +4,8 @@ from common.metadata import TomoMetadata
 
 from importers.base_importer import VolumeImporter
 from importers.key_image import KeyImageImporter
+from common.normalize_fields import normalize_fiducial_alignment
+
 
 if TYPE_CHECKING:
     from importers.run import RunImporter
@@ -14,6 +16,7 @@ else:
 class TomogramImporter(VolumeImporter):
     type_key = "tomogram"
     cached_find_results: dict[str, Any] = {}
+
 
     def get_voxel_spacing(self):
         if self.config.tomo_format != "mrc":
@@ -40,6 +43,10 @@ class TomogramImporter(VolumeImporter):
             base_metadata["voxel_spacing"] = float(base_metadata["voxel_spacing"])
         else:
             merge_data["voxel_spacing"] = round(self.get_voxel_spacing(), 3)
+        # Enforce our schema for these values.
+        base_metadata["fiducial_alignment_status"] = normalize_fiducial_alignment(
+            base_metadata.get("fiducial_alignment_status")
+        )
 
         metadata = TomoMetadata(self.config.fs, base_metadata)
         if write:

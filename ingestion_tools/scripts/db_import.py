@@ -13,6 +13,7 @@ from botocore.client import Config
 from botocore.exceptions import ClientError
 
 from common import db_models
+from common.normalize_fields import normalize_fiducial_alignment
 
 
 @click.group()
@@ -140,9 +141,7 @@ def load_dataset_authors_data(dataset_id: int, metadata: dict[str, Any]):
         "affiliation_address": ["affiliation_address"],
         "affiliation_identifier": ["affiliation_identifier"],
     }
-    existing_objs = get_existing_objects(
-        db_models.DatasetAuthor, {"dataset_id": dataset_id}, ["name", "dataset_id_id"]
-    )
+    existing_objs = get_existing_objects(db_models.DatasetAuthor, {"dataset_id": dataset_id}, ["name", "dataset_id_id"])
     for index, author in enumerate(metadata["authors"]):
         author_map["author_list_order"] = index + 1
         # TODO Update upsert to use existing_obj
@@ -263,7 +262,7 @@ def load_tomo_data(
         "size_y": ["size", "y"],
         "size_z": ["size", "z"],
         "voxel_spacing": ["voxel_spacing"],
-        "fiducial_alignment_status": ["fiducial_alignment_status"],
+        "fiducial_alignment_status": normalize_fiducial_alignment(metadata["fiducial_alignment_status"]),
         "reconstruction_method": ["reconstruction_method"],
         "reconstruction_software": ["reconstruction_software"],
         "processing": ["processing"],
@@ -287,12 +286,7 @@ def load_tomo_data(
         "affine_transformation_matrix": ["affine_transformation_matrix"],
         "type": get_tomogram_type(dir_prefix),
     }
-    return upsert(
-        ["name", "tomogram_voxel_spacing_id"],
-        db_models.Tomogram,
-        data_map,
-        metadata
-    )
+    return upsert(["name", "tomogram_voxel_spacing_id"], db_models.Tomogram, data_map, metadata)
 
 
 def load_annotation_author_data(annotation_id: int, metadata: dict[str, Any]):
@@ -512,22 +506,22 @@ def generate_neuroglancer_data(s3, s3_bucket, tomo_prefix) -> Optional[str]:
 @click.option("--import-tomogram-authors", is_flag=True, default=False)
 @click.option("--import-everything", is_flag=True, default=False)
 def load(
-        s3_bucket: str,
-        https_prefix: str,
-        postgres_url: str,
-        s3_prefix: str,
-        anonymous: bool,
-        debug: bool,
-        filter_dataset: list[str],
-        import_annotations: bool,
-        import_annotation_authors: bool,
-        import_dataset_authors: bool,
-        import_dataset_funding: bool,
-        import_runs: bool,
-        import_tiltseries: bool,
-        import_tomograms: bool,
-        import_tomogram_authors: bool,
-        import_everything: bool,
+    s3_bucket: str,
+    https_prefix: str,
+    postgres_url: str,
+    s3_prefix: str,
+    anonymous: bool,
+    debug: bool,
+    filter_dataset: list[str],
+    import_annotations: bool,
+    import_annotation_authors: bool,
+    import_dataset_authors: bool,
+    import_dataset_funding: bool,
+    import_runs: bool,
+    import_tiltseries: bool,
+    import_tomograms: bool,
+    import_tomogram_authors: bool,
+    import_everything: bool,
 ):
     db_models.db.init(postgres_url)
     if debug:
@@ -553,9 +547,7 @@ def load(
     else:
         import_annotations = max(import_annotations, import_annotation_authors)
         import_tomograms = max(import_tomograms, import_tomogram_authors)
-        import_tomogram_voxel_spacing = max(
-            import_annotations, import_tomograms, import_tomogram_voxel_spacing
-        )
+        import_tomogram_voxel_spacing = max(import_annotations, import_tomograms, import_tomogram_voxel_spacing)
         import_runs = max(import_runs, import_tiltseries, import_tomogram_voxel_spacing)
 
     s3_path_prefix = f"s3://{s3_bucket}"
@@ -580,9 +572,7 @@ def load(
             if import_tiltseries:
                 ts_path = os.path.join(run_prefix, "TiltSeries")
                 ts_metadata_filename = os.path.join(ts_path, "tiltseries_metadata.json")
-                ts_metadata = load_key_json(
-                    s3, s3_bucket, ts_metadata_filename, is_file_required=False
-                )
+                ts_metadata = load_key_json(s3, s3_bucket, ts_metadata_filename, is_file_required=False)
                 load_tiltseries_data(
                     s3,
                     s3_bucket,
@@ -607,16 +597,14 @@ def load(
                 if import_tomograms:
                     tomo_prefix = join_path(spacing_prefix, "CanonicalTomogram")
                     print(f"Tomo prefix is {tomo_prefix}")
-                    tomo_metadata = load_key_json(
-                        s3, s3_bucket, join_path(tomo_prefix, "tomogram_metadata.json")
-                    )
+                    tomo_metadata = load_key_json(s3, s3_bucket, join_path(tomo_prefix, "tomogram_metadata.json"))
                     tomogram = load_tomo_data(
                         spacing,
                         tomo_prefix,
                         tomo_metadata,
                         s3_path_prefix,
                         https_prefix,
-                        generate_neuroglancer_data(s3, s3_bucket, tomo_prefix)
+                        generate_neuroglancer_data(s3, s3_bucket, tomo_prefix),
                     )
                     if import_tomogram_authors:
                         load_tomogram_authors_data(tomogram.id, tomo_metadata)
