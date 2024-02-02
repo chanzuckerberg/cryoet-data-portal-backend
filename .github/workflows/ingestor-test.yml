@@ -20,4 +20,3 @@ jobs:
         run: |
           make ingestor-init
           make ingestor-test
-
