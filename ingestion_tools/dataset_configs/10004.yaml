@@ -166,7 +166,6 @@ standardization_config:
     - '{run_name}/{run_name}.mdoc-dose_filt.xf'
     - '{run_name}/{run_name}.mdoc'
   tiltseries_glob: '{run_name}/*.st'
-  rawtlt_files: ~
   tomo_format: mrc
   tomo_glob: '{run_name}/*.rec'
   tomo_regex: .*\.rec
