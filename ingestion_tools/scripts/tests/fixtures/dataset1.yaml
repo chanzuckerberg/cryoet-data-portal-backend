@@ -34,8 +34,8 @@ dataset:
     name: ~
     id: ~
   key_photos:
-    snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10988-l.gif
-    thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10988.gif
+    snapshot: http://nginx:80/input_bucket/snapshot.gif
+    thumbnail: http://nginx:80/input_bucket/thumbnail.gif
 tiltseries:
   scales: []
   microscope:
