@@ -78,7 +78,7 @@ tiltseries:
   alignment_binning_factor: ~
 tomograms:
   voxel_spacing: 'float {tomograms_voxel_spacing}'
-  fiducial_alignment_status: false
+  fiducial_alignment_status: NON_FIDUCIAL
   offset:
     x: 0
     y: 0

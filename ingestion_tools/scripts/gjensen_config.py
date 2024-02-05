@@ -10,6 +10,7 @@ from typing import Any, Callable
 import click
 import yaml
 
+from common.normalize_fields import normalize_fiducial_alignment
 from common.fs import LocalFilesystem
 from functools import partial
 
@@ -243,6 +244,7 @@ def to_tomogram(
         print(f'{data["run_name"]} has {len(data["tomograms"].values())} tomograms: '
               f'{",".join(set(data["tomograms"].keys()))}')
 
+    tomogram["fiducial_alignment_status"] = normalize_fiducial_alignment(tomogram["fiducial_alignment_status"])
     tomogram["offset"] = {"x": 0, "y": 0, "z": 0}
     tomogram["affine_transformation_matrix"] = [
         [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]
