@@ -36,14 +36,16 @@ def test_key_photo_import_http(s3_fs: FileSystemApi, test_output_bucket: str, s3
     metadata = json.loads(output)
     assert metadata["dataset_title"] == "Dataset 1"
 
+    # Make sure the files are actually present an non-zero length.
     files = s3_client.list_objects(Bucket=test_output_bucket, Prefix=f"{output_prefix}/10001/Images")
     s3_files: list[str] = []
     for item in files["Contents"]:
         s3_files.append(item["Key"])
-    num_key_photos = 0
+        assert item["Size"] > 0
+
+    # Make sure the files are in our metadata and match our s3 file paths
     for key, path in metadata["key_photos"].items():
-        num_key_photos += 1
         assert key in ["snapshot", "thumbnail"]
         assert path.startswith("10001/Images/")
         assert f"{output_prefix}/{path}" in s3_files
-    assert num_key_photos == 2
+    assert len(metadata["key_photos"]) == 2
