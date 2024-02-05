@@ -6,7 +6,7 @@ import starfile
 from scipy.spatial.transform import Rotation as R
 
 
-def invert_rot_matrices_axis_order(rot_xyz):
+def invert_rot_matrices_axis_order(rot_xyz: np.ndarray) -> np.ndarray:
     """
     Rotate n x (3,3) rotation matrices in ndarray based on xyz order to numpy standard zyx, and vice versa
     """
@@ -15,7 +15,7 @@ def invert_rot_matrices_axis_order(rot_xyz):
     return rot_zyx
 
 
-def invert_positions_axis_order(xyz):
+def invert_positions_axis_order(xyz: np.ndarray) -> np.ndarray:
     """
     Invert n x (3,) coordinate vectors in ndarray based on xyz order to numpy standard zyx, and vice versa
     """

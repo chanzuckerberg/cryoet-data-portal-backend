@@ -13,7 +13,7 @@ class DatasetKeyPhotoImporter(BaseImporter):
     type_key = "dataset_keyphoto"
     image_keys = ["snapshot", "thumbnail"]
 
-    def import_key_photo(self):
+    def import_key_photo(self) -> None:
         path = self.config.get_output_path(self)
         for image_type in ["snapshot", "thumbnail"]:
             self.save_image(image_type, path)

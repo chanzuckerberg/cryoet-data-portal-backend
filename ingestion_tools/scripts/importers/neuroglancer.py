@@ -15,7 +15,7 @@ else:
 class NeuroglancerImporter(BaseImporter):
     type_key = "neuroglancer"
 
-    def import_neuroglancer(self):
+    def import_neuroglancer(self) -> str:
         dest_file = self.get_output_path()
         ng_contents = self.get_config_json(self.parent.get_output_path() + ".zarr")
         meta = NeuroglancerMetadata(self.config.fs, ng_contents)
@@ -51,7 +51,7 @@ class NeuroglancerImporter(BaseImporter):
             "layout": "4panel",
         }
 
-    def get_shader_controller(self):
+    def get_shader_controller(self) -> dict[str, Any]:
         tomo_header = self.parent.get_output_header()
         width = 3 * tomo_header.rms.item()
 

@@ -17,8 +17,8 @@ class RunImporter(BaseImporter):
     def __init__(
         self,
         path: str,
-        *args,
-        **kwargs,
+        *args: list[Any],
+        **kwargs: dict[str, Any],
     ):
         super().__init__(*args, **kwargs)
         self.run_path = path
@@ -28,10 +28,10 @@ class RunImporter(BaseImporter):
         else:
             self.voxel_spacing = None
 
-    def set_voxel_spacing(self, voxel_spacing: float):
+    def set_voxel_spacing(self, voxel_spacing: float) -> None:
         self.voxel_spacing = '{:.3f}'.format(round(voxel_spacing, 3))
 
-    def import_run_metadata(self):
+    def import_run_metadata(self) -> None:
         dest_run_metadata = self.get_metadata_path()
         metadata = RunMetadata(self.config.fs, self.config.run_template)
         merge_data = {"run_name": self.run_name}

@@ -16,11 +16,11 @@ else:
 
 
 class RunOverride:
-    run_regex: re.Pattern
+    run_regex: re.Pattern[str]
     tiltseries: dict[str, Any] | None
     tomograms: dict[str, Any] | None
 
-    def __init__(self, run_regex: re.Pattern, tiltseries: dict[str, Any] | None, tomograms: dict[str, Any] | None):
+    def __init__(self, run_regex: re.Pattern[str], tiltseries: dict[str, Any] | None, tomograms: dict[str, Any] | None):
         self.run_regex = run_regex
         self.tiltseries = tiltseries
         self.tomograms = tomograms
@@ -32,15 +32,15 @@ class DataImportConfig:
     destination_prefix: str
     fs: FileSystemApi
     run_glob: str
-    run_regex: re.Pattern
+    run_regex: re.Pattern[str]
     tomo_glob: str
     tomo_format: str
-    tomo_regex: re.Pattern = None
-    tomo_key_photo_glob: str = None
+    tomo_regex: re.Pattern[str] | None
+    tomo_key_photo_glob: str | None
     tomo_voxel_size: str
-    ts_name_regex: re.Pattern = None
-    run_name_regex: re.Pattern
-    frames_name_regex: re.Pattern
+    ts_name_regex: re.Pattern[str] | None
+    run_name_regex: re.Pattern[str]
+    frames_name_regex: re.Pattern[str]
     frames_glob: str
     tiltseries_glob: str | None
     run_to_tomo_map_file: str | None
@@ -100,16 +100,16 @@ class DataImportConfig:
         self.input_path = f"{input_bucket}/{self.source_prefix}"
         self.dataset_root_dir = f"{input_bucket}/{self.source_prefix}"
 
-    def load_run_data_map(self):
+    def load_run_data_map(self) -> None:
         self.run_data_map = self.load_run_metadata_file("run_data_map_file")
 
-    def load_map_files(self):
+    def load_map_files(self) -> None:
         self.load_run_tomo_map()
         self.load_run_frame_map()
         self.load_run_ts_map()
         self.load_run_data_map()
 
-    def load_run_metadata_file(self, file_attr: str):
+    def load_run_metadata_file(self, file_attr: str) -> dict[str, Any]:
         mapdata = {}
         map_filename = None
         try:
@@ -127,7 +127,7 @@ class DataImportConfig:
                 mapdata[row["run_name"]] = row
         return mapdata
 
-    def load_run_csv_file(self, file_attr: str):
+    def load_run_csv_file(self, file_attr: str) -> dict[str, Any]:
         mapdata = {}
         map_filename = None
         try:
@@ -142,17 +142,17 @@ class DataImportConfig:
                 mapdata[row[0]] = row[1]
         return mapdata
 
-    def load_run_tomo_map(self):
+    def load_run_tomo_map(self) -> None:
         self.run_to_tomo_map = self.load_run_csv_file("run_to_tomo_map_csv")
 
-    def load_run_frame_map(self):
+    def load_run_frame_map(self) -> None:
         self.run_to_frame_map = self.load_run_csv_file("run_to_frame_map_csv")
 
-    def load_run_ts_map(self):
+    def load_run_ts_map(self) -> None:
         self.run_to_ts_map = self.load_run_csv_file("run_to_ts_map_csv")
 
     @classmethod
-    def get_run_name(cls, obj: BaseImporter):
+    def get_run_name(cls, obj: BaseImporter) -> str:
         try:
             run = obj.get_run()
             if run:
@@ -162,20 +162,20 @@ class DataImportConfig:
         return ""
 
     @classmethod
-    def get_run_voxelsize(cls, obj: BaseImporter):
+    def get_run_voxelsize(cls, obj: BaseImporter) -> float:
         try:
             run = obj.get_run()
             if run:
                 return run.voxel_spacing
         except ValueError:
             pass
-        return ""
+        return 0
 
     def get_output_path(self, obj: BaseImporter) -> str:
         key = f"{obj.type_key}"
         return self.resolve_output_path(key, self.get_run_name(obj), self.get_run_voxelsize(obj))
 
-    def get_run_data_map(self, run_name) -> dict[str, Any]:
+    def get_run_data_map(self, run_name: str) -> dict[str, Any]:
         if map_vars := self.run_data_map.get(run_name):
             return deepcopy(map_vars)
         return {}
@@ -208,7 +208,7 @@ class DataImportConfig:
                         v[idx] = self.expand_string(run_name, item)
         return metadata_dict
 
-    def get_expanded_metadata(self, obj) -> dict[str, Any]:
+    def get_expanded_metadata(self, obj: BaseImporter) -> dict[str, Any]:
         metadata_type = obj.type_key
         # hacky pluralization, look away!!
         plural_map = {
@@ -233,6 +233,7 @@ class DataImportConfig:
         for item in self.overrides_by_run:
             if item.run_regex.match(run_name):
                 return item
+        return
 
     def get_metadata_path(self, obj: BaseImporter) -> str:
         key = f"{obj.type_key}_metadata"

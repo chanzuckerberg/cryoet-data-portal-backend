@@ -17,7 +17,7 @@ else:
 class RawTiltImporter(BaseImporter):
     type_key = "tiltseries"
 
-    def import_rawtilts(self):
+    def import_rawtilts(self) -> None:
         # Copy rawtilt files and/or xf files and/or tlt files and/or mdoc files to their dest
         run = self.get_run()
         # TODO - We should probably instantiate this class for each file in our list of rawtilt files
@@ -39,7 +39,7 @@ class RawTiltImporter(BaseImporter):
 class TiltSeriesImporter(VolumeImporter):
     type_key = "tiltseries"
 
-    def import_tiltseries(self, write_mrc: bool = True, write_zarr: bool = True):
+    def import_tiltseries(self, write_mrc: bool = True, write_zarr: bool = True) -> None:
         _ = self.scale_mrcfile(
             scale_z_axis=False, write_mrc=write_mrc, write_zarr=write_zarr, voxel_spacing=self.get_pixel_spacing()
         )
@@ -47,7 +47,7 @@ class TiltSeriesImporter(VolumeImporter):
     def get_frames_count(self) -> int:
         return len(FramesImporter.find_all_frames(self.config, self.get_run()))
 
-    def import_metadata(self, write: bool):
+    def import_metadata(self, write: bool) -> None:
         dest_ts_metadata = self.get_metadata_path()
         merge_data = self.load_extra_metadata()
         merge_data["frames_count"] = self.get_frames_count()
@@ -58,7 +58,7 @@ class TiltSeriesImporter(VolumeImporter):
             metadata.write_metadata(dest_ts_metadata, merge_data)
 
     @classmethod
-    def find_tiltseries(cls, config: DataImportConfig, run: RunImporter):
+    def find_tiltseries(cls, config: DataImportConfig, run: RunImporter) -> "TiltSeriesImporter":
         if not config.tiltseries_glob:
             print(f"No tiltseries for {config.dataset_template.get('dataset_identifier')}")
             return []
@@ -70,13 +70,13 @@ class TiltSeriesImporter(VolumeImporter):
 
         return importers
 
-    def get_pixel_spacing(self):
+    def get_pixel_spacing(self) -> float:
         pixel_spacing = self.get_base_metadata().get("pixel_spacing")
         if pixel_spacing:
             return float(pixel_spacing)
         return round(self.get_voxel_size().item(), 3)
 
-    def mrc_header_mapper(self, header):
+    def mrc_header_mapper(self, header) -> None:
         header.ispg = 0
         header.mz = 1
         header.cella.z = 1 * self.get_pixel_spacing()

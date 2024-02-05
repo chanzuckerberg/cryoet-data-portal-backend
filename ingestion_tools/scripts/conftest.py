@@ -23,15 +23,19 @@ def random_bucket_name() -> str:
     return res
 
 @pytest.fixture
-def test_output_bucket(s3_client, random_bucket_name) -> Generator[str, Any, Any]:
+def test_output_bucket(s3_client: S3Client, random_bucket_name: str) -> Generator[str, Any, Any]:
     bucket_name = random_bucket_name
     s3_client.create_bucket(
         Bucket=bucket_name
     )
     yield bucket_name
-    objects = s3_client.list_objects_v2(Bucket = bucket_name)["Contents"]
-    objects = list(map(lambda x: {"Key":x["Key"]},objects))
-    s3_client.delete_objects(Bucket=bucket_name, Delete = {"Objects":objects})
+    try:
+        objects = s3_client.list_objects_v2(Bucket = bucket_name)["Contents"]
+        objects = list(map(lambda x: {"Key":x["Key"]},objects))
+        s3_client.delete_objects(Bucket=bucket_name, Delete = {"Objects":objects})
+    except KeyError:
+        # We may not have written any files and that's ok.
+        pass
     s3_client.delete_bucket(Bucket=bucket_name)
 
 

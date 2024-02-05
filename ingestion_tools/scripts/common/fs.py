@@ -3,46 +3,56 @@ import os
 import os.path
 import shutil
 from hashlib import md5
+from abc import ABC, abstractmethod
+from io import TextIOBase
 
 import boto3
 from s3fs import S3FileSystem
 
 
-class FileSystemApi:
+class FileSystemApi(ABC):
     force_overwrite: bool = False
 
     @classmethod
-    def get_fs_api(cls, mode: str, force_overwrite: bool, client_kwargs: None | dict[str, str]=None):
+    def get_fs_api(cls, mode: str, force_overwrite: bool, client_kwargs: None | dict[str, str]=None) -> "FileSystemApi":
         if mode == "s3":
             return S3Filesystem(force_overwrite=force_overwrite, client_kwargs=client_kwargs)
         else:
             return LocalFilesystem(force_overwrite=force_overwrite)
 
-    def glob(self, *args):
+    @abstractmethod
+    def glob(self, *args: list[str]) -> list[str]:
         pass
 
-    def open(self, path: str, mode: str):
+    @abstractmethod
+    def open(self, path: str, mode: str) -> TextIOBase:
         pass
 
+    @abstractmethod
     def localreadable(self, path: str) -> str:
         pass
 
-    def makedirs(self, path: str):
+    def makedirs(self, path: str) -> None:
         pass
 
-    def localwritable(self, path) -> str:
+    @abstractmethod
+    def localwritable(self, path: str) -> str:
         pass
 
-    def push(self, path):
+    @abstractmethod
+    def push(self, path: str) -> None:
         pass
 
-    def destformat(self, path) -> str:
+    @abstractmethod
+    def destformat(self, path: str) -> str:
         pass
 
-    def copy(self, src_path: str, dest_path: str):
+    @abstractmethod
+    def copy(self, src_path: str, dest_path: str) -> None:
         pass
 
-    def read_block(self, path: str, start: int, end: int):
+    @abstractmethod
+    def read_block(self, path: str, start: int, end: int) -> str:
         pass
 
 
@@ -52,20 +62,20 @@ class S3Filesystem(FileSystemApi):
         self.tmpdir = "/tmp"
         self.force_overwrite = force_overwrite
 
-    def _calc_etag(self, inputfile, partsize=8388608):
+    def _calc_etag(self, inputfile: str, partsize: int=8388608) -> bytes:
         md5_digests = []
         with open(inputfile, "rb") as f:
             for chunk in iter(lambda: f.read(partsize), b""):
                 md5_digests.append(md5(chunk).digest())
         return md5(b"".join(md5_digests)).hexdigest() + "-" + str(len(md5_digests))
 
-    def glob(self, *args):
+    def glob(self, *args: list[str]) -> list[str]:
         return self.s3fs.glob(*args)
 
-    def open(self, path: str, mode: str):
+    def open(self, path: str, mode: str) -> TextIOBase:
         return self.s3fs.open(path, mode)
 
-    def localreadable(self, path) -> str:
+    def localreadable(self, path: str) -> str:
         local_dest_file = os.path.join(self.tmpdir, path)
         # Don't re-download it if it's already available.
         if os.path.exists(local_dest_file):
@@ -77,15 +87,15 @@ class S3Filesystem(FileSystemApi):
         self.s3fs.get(path, local_dest_file)
         return local_dest_file
 
-    def localwritable(self, path) -> str:
+    def localwritable(self, path: str) -> str:
         local_dest_file = os.path.join(self.tmpdir, path)
         os.makedirs(os.path.dirname(local_dest_file), exist_ok=True)
         return local_dest_file
 
-    def destformat(self, path) -> str:
+    def destformat(self, path: str) -> str:
         return f"s3://{path}"
 
-    def push(self, path):
+    def push(self, path: str) -> None:
         remote_file = os.path.relpath(path, self.tmpdir)
         src_size = os.path.getsize(path)
         dest_size = 0
@@ -103,7 +113,7 @@ class S3Filesystem(FileSystemApi):
         self.s3fs.put_file(path, remote_file)
 
     # Copy from one s3 location to another
-    def copy(self, src_path: str, dest_path: str):
+    def copy(self, src_path: str, dest_path: str) -> None:
         # Don't re-copy it if it's already available.
         if self.s3fs.exists(dest_path):
             # TODO, s3 etags aren't sufficient here, so we're cheating and using size.
@@ -122,7 +132,7 @@ class S3Filesystem(FileSystemApi):
         # square brackets [] in them, and that breaks its copy method.
         # self.s3fs.copy(src_path, dest_path, expand=False)
 
-    def read_block(self, path: str, start: int = 0, end: int = 1024):
+    def read_block(self, path: str, start: int = 0, end: int = 1024) -> str:
         local_dest_file = self.localwritable(path)
         if os.path.exists(local_dest_file):
             remote_checksum = self.s3fs.info(path)["ETag"].strip('"')
@@ -144,26 +154,26 @@ class LocalFilesystem(FileSystemApi):
     def __init__(self, force_overwrite: bool):
         self.force_overwrite = force_overwrite
 
-    def glob(self, *args):
+    def glob(self, *args: list[str]) -> list[str]:
         return glob.glob(*args)
 
-    def open(self, path: str, mode: str):
+    def open(self, path: str, mode: str) -> TextIOBase:
         return open(path, mode)
 
-    def localreadable(self, path) -> str:
+    def localreadable(self, path: str) -> str:
         return path
 
-    def localwritable(self, path) -> str:
+    def localwritable(self, path: str) -> str:
         return path
 
-    def makedirs(self, path: str):
+    def makedirs(self, path: str) -> None:
         os.makedirs(path, exist_ok=True)
 
-    def destformat(self, path) -> str:
+    def destformat(self, path: str) -> str:
         return path
 
-    def copy(self, src_path: str, dest_path: str):
+    def copy(self, src_path: str, dest_path: str) -> None:
         shutil.copy(src_path, dest_path)
 
-    def read_block(self, path: str, start: int, end: int):
+    def read_block(self, path: str, start: int, end: int) -> str:
         return path
