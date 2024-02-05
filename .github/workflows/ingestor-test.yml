@@ -12,6 +12,8 @@ on:
 
 jobs:
   py-test:
+    name: "Run tests"
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       # Set up a local test env and run tests
