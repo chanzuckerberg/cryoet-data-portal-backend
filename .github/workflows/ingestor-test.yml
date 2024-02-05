@@ -1,0 +1,23 @@
+name: Ingestor tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "ingestion_tools/**"
+  pull_request:
+    paths:
+      - "ingestion_tools/**"
+
+jobs:
+  py-test:
+    name: "Run tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # Set up a local test env and run tests
+      - name: Run tests
+        run: |
+          make ingestor-init
+          make ingestor-test

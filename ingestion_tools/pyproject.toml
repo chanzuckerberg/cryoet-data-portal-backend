@@ -1,0 +1,85 @@
+[tool.poetry]
+name = "ingestion_tools"
+version = "0.1.0"
+description = "Ingestion tools for the CZI Imaging Institute CryoET Data Portal"
+authors = [
+    "CZI Imaging Team <cryoetdataportal@chanzuckerberg.com>"
+]
+license = "MIT"
+readme = "README.md"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS :: MacOS X",
+    "Programming Language :: Python :: 3.11",
+]
+
+[project.urls]
+homepage = "https://cryoetdataportal.czscience.com/"
+repository = "https://github.com/chanzuckerberg/cryoet-data-portal-backend"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+peewee = "3.16.2"
+boto3 = "*"
+botocore = "*"
+s3fs = {extras = ["boto3"], version = ">=2023.12.0"}
+click = "^8.1.7"
+psycopg2-binary = "^2.9.9"
+mrcfile = "^1.5.0"
+zarr = "^2.16.1"
+dateparser = "^1.2.0"
+starfile = "^0.5.4"
+scikit-image = "^0.22.0"
+ndjson = "^0.3.1"
+ome-zarr = "^0.8.3"
+matplotlib = "^3.8.2"
+imageio = "^2.33.1"
+pytest = "^8.0.0"
+boto3-stubs = {extras = ["s3"], version = "^1.34.34"}
+mypy = "^1.8.0"
+
+[tool.black]
+line-length = 120
+target_version = ['py311']
+
+[tool.ruff]
+select = [
+    "E", "W",  # pycodestyle
+    "F",  # pyflakes
+    "B",  # bugbear
+    "I",  # isort
+    "N",  # pep8-naming
+    "ASYNC",  # async
+    "COM",  # commas
+    "C4",  # comprehensions
+    "DTZ",  # datetimez
+    "ISC",  # implicit-str-concat
+    "G",  # logging-format
+    "T20",  # print
+    "SIM",  # simplify
+]
+ignore = [
+    "E501",  # line too long
+    "C408",  # rewrite empty built-ins as literals
+]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.isort]
+known-first-party =["common"]
+
+[tool.ruff.flake8-quotes]
+docstring-quotes = "double"
+
+[tool.mypy]
+show_error_codes = true
+ignore_missing_imports = true
+warn_unreachable = true
+strict = true

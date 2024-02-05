@@ -36,6 +36,7 @@ services:
       - '5432:5432'
   cryoet-api:
     platform: linux/arm64
+    profiles: ["api"]
     image: hasura-graphql
     build:
       context: ./api_server
@@ -57,6 +58,7 @@ services:
       - '8080:8080'
   hasura-console:
     platform: linux/arm64
+    profiles: ["api"]
     image: hasura-graphql
     build:
       context: ./api_server
@@ -84,10 +86,15 @@ services:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@db:5432/cryoet
   ingestor:
     platform: linux/amd64
+    profiles: ["ingestor"]
     image: ingestor
     build:
       context: ./ingestion_tools
       dockerfile: Dockerfile
+    environment:
+      - AWS_REGION=us-west-2
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
     volumes:
-      - ./ingestion_tools:/usr/src/app
+      - ./ingestion_tools:/usr/src/app/ingestion_tools
     command: ["sleep", "infinity"]

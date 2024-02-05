@@ -12,9 +12,9 @@ class FileSystemApi:
     force_overwrite: bool = False
 
     @classmethod
-    def get_fs_api(cls, mode: str, force_overwrite: bool):
+    def get_fs_api(cls, mode: str, force_overwrite: bool, client_kwargs: None | dict[str, str]=None):
         if mode == "s3":
-            return S3Filesystem(force_overwrite=force_overwrite)
+            return S3Filesystem(force_overwrite=force_overwrite, client_kwargs=client_kwargs)
         else:
             return LocalFilesystem(force_overwrite=force_overwrite)
 
@@ -47,8 +47,8 @@ class FileSystemApi:
 
 
 class S3Filesystem(FileSystemApi):
-    def __init__(self, force_overwrite: bool):
-        self.s3fs = S3FileSystem(anon=False)
+    def __init__(self, force_overwrite: bool, client_kwargs: None | dict[str, str] = None):
+        self.s3fs = S3FileSystem(anon=False, client_kwargs=client_kwargs)
         self.tmpdir = "/tmp"
         self.force_overwrite = force_overwrite
 

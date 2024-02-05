@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Cryoet Data Portal Ingestion",
+            "type": "python",
+            "request": "launch",
+            "module": "main",
+            "postDebugTask": "startservices",
+            "jinja": true,
+            "justMyCode": true
+        }
+    ]
+}

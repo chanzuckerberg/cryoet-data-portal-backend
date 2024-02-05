@@ -26,7 +26,7 @@ class DatasetKeyPhotoImporter(BaseImporter):
             for key in self.image_keys
         }
 
-    def get_image_file(self, key_photo_files: list[str], prefix: str):
+    def get_image_file(self, key_photo_files: list[str], prefix: str) -> str | None:
         image_path = next(
             filter(lambda file: file.startswith(prefix), key_photo_files), None
         )

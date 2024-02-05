@@ -1,0 +1,22 @@
+{
+    "name": "CryoET Portal ingestion tools",
+    "dockerComposeFile": "../../docker-compose.yml",
+    "service": "ingestor",
+    "initializeCommand": "sleep 3",
+    "workspaceFolder": "/usr/src/app/ingestion_tools",
+    "shutdownAction": "echo shutting down",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                 "extensions.verifySignature": false
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-python.black-formatter",
+                "matangover.mypy",
+                "GitHub.copilot"
+            ]
+        }
+    }
+}
