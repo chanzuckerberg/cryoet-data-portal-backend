@@ -109,10 +109,7 @@ def map_to_db(obj: db_models.BaseModel, mapping: dict[str, Any], data: dict[str,
             continue
         value = None
         for pathpart in data_path:
-            if not value:
-                value = data.get(pathpart)
-            else:
-                value = value.get(pathpart)
+            value = data.get(pathpart) if not value else value.get(pathpart)
             if not value:
                 break
         if value and "date" in db_key:
@@ -146,7 +143,7 @@ def load_dataset_authors_data(dataset_id: int, metadata: dict[str, Any]):
         author_map["author_list_order"] = index + 1
         # TODO Update upsert to use existing_obj
         dataset_author = upsert(["dataset_id", "name"], db_models.DatasetAuthor, author_map, author)
-        existing_obj = existing_objs.pop("-".join([dataset_author.name, str(dataset_author.dataset_id_id)]), None)
+        existing_objs.pop("-".join([dataset_author.name, str(dataset_author.dataset_id_id)]), None)
     for stale_obj in existing_objs.values():
         stale_obj.delete_instance()
 
@@ -528,10 +525,7 @@ def load(
         logger = logging.getLogger("peewee")
         logger.addHandler(logging.StreamHandler())
         logger.setLevel(logging.DEBUG)
-    if anonymous:
-        s3 = boto3.client("s3", config=Config(signature_version=UNSIGNED))
-    else:
-        s3 = boto3.client("s3")
+    s3 = boto3.client("s3", config=Config(signature_version=UNSIGNED)) if anonymous else boto3.client("s3")
 
     import_tomogram_voxel_spacing = False
     if import_everything:

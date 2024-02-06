@@ -21,22 +21,18 @@ class DatasetKeyPhotoImporter(BaseImporter):
     def get_metadata(self) -> dict[str, str]:
         path = self.config.get_output_path(self)
         image_files = self.config.fs.glob(f"{path}/*")
-        return {
-            key: self.get_image_file(image_files, f"{path}/{key}")
-            for key in self.image_keys
-        }
+        return {key: self.get_image_file(image_files, f"{path}/{key}") for key in self.image_keys}
 
     def get_image_file(self, key_photo_files: list[str], prefix: str) -> str | None:
-        image_path = next(
-            filter(lambda file: file.startswith(prefix), key_photo_files), None
-        )
+        image_path = next(filter(lambda file: file.startswith(prefix), key_photo_files), None)
         if image_path:
             return os.path.relpath(image_path, self.config.output_prefix)
         return None
 
     def save_image(self, key: str, path: str) -> Optional[str]:
-        image_src = self.config.dataset_template.get("key_photos", {}).get(key) or \
-            self.get_first_valid_tomo_key_photo(key)
+        image_src = self.config.dataset_template.get("key_photos", {}).get(key) or self.get_first_valid_tomo_key_photo(
+            key,
+        )
         if not image_src:
             raise RuntimeError("Image source file not found")
         _, extension = os.path.splitext(image_src)
@@ -48,12 +44,10 @@ class DatasetKeyPhotoImporter(BaseImporter):
         for run in RunImporter.find_runs(self.config, self.get_dataset()):
             for tomo in TomogramImporter.find_tomograms(self.config, run):
                 key_photos = KeyImageImporter(self.config, parent=tomo).get_metadata()
-                if all([image_key in key_photos for image_key in self.image_keys]):
+                if all(image_key in key_photos for image_key in self.image_keys):
                     return os.path.join(self.config.output_prefix, key_photos.get(key))
         return None
 
     @classmethod
-    def find_dataset_key_photos(
-            cls, config: DataImportConfig, dataset: "DatasetImporter"
-    ) -> "DatasetKeyPhotoImporter":
+    def find_dataset_key_photos(cls, config: DataImportConfig, dataset: "DatasetImporter") -> "DatasetKeyPhotoImporter":
         return cls(config=config, parent=dataset)

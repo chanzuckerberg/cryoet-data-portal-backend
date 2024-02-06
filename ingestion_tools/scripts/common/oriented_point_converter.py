@@ -1,6 +1,8 @@
 """
 Various conversion of euler angle to rotation matrix
 """
+import contextlib
+
 import numpy as np
 import starfile
 from scipy.spatial.transform import Rotation as R
@@ -48,10 +50,7 @@ def _from_relion3_star_filtered(file_path, filter_value, filter_key="rlnMicrogra
     to be applied to the instance volume.
     """
     df = starfile.read(file_path)
-    if filter_value:
-        df2 = df[(df[filter_key] == filter_value)]
-    else:
-        df2 = df
+    df2 = df[df[filter_key] == filter_value] if filter_value else df
     xyz_c = df2[["rlnCoordinateX", "rlnCoordinateY", "rlnCoordinateZ"]].to_numpy()
     try:
         xyz_s = df2[["rlnOriginX", "rlnOriginY", "rlnOriginZ"]].to_numpy()  # shift
@@ -111,10 +110,8 @@ def from_stopgap_star(file_path, micrograph_name, binning=1.0, order="xyz"):
     STOPGAP star format convertion to position and rotation matrix
     to be applied to the instance volume.
     """
-    try:
+    with contextlib.suppress(Exception):
         micrograph_name = int(micrograph_name)
-    except:
-        pass
     df = starfile.read(file_path)
     # Looks like Pandas auto convert to micrograph_name to integer if doable
     df2 = df[(df["tomo_num"] == micrograph_name)]

@@ -25,18 +25,14 @@ def upload_file(zipfilename, file_in_zip, file_size, bucket, s3_key):
                 pass
         print(f"Uploading {s3_key} / {file_size / (1024 * 1024)}MB", flush=True)
         z = zipfile.ZipFile(buffer)
-        s3_resource.meta.client.upload_fileobj(
-            z.open(file_in_zip), Bucket=bucket, Key=s3_key
-        )
+        s3_resource.meta.client.upload_fileobj(z.open(file_in_zip), Bucket=bucket, Key=s3_key)
         return f"DONE: {s3_key} / {file_size / (1024 * 1024)}MB"
 
 
 @cli.command()
 @click.argument("zipfilename", required=True, type=str)
 @click.argument("destination", required=True, type=str)
-@click.option(
-    "--parallelism", type=int, default=5, help="How many uploads to run in parallel"
-)
+@click.option("--parallelism", type=int, default=5, help="How many uploads to run in parallel")
 def upload(zipfilename, destination, parallelism):
     s3_location = urlparse(destination)
     with open(zipfilename, "r+b") as buffer:
@@ -54,7 +50,7 @@ def upload(zipfilename, destination, parallelism):
                         file_info.file_size,
                         s3_location.netloc,
                         s3_key,
-                    )
+                    ),
                 )
             for taskres in as_completed(tasks):
                 print(taskres.result())

@@ -53,9 +53,7 @@ def get_dropbox_files(dbx, prefix):
 @cli.command()
 @click.argument("dropbox_path", required=True, type=str)
 @click.argument("destination", required=True, type=str)
-@click.option(
-    "--parallelism", type=int, default=5, help="How many uploads to run in parallel"
-)
+@click.option("--parallelism", type=int, default=5, help="How many uploads to run in parallel")
 def upload(dropbox_path: str, destination: str, parallelism: int):
     s3_location = urlparse(destination)
     tasks = []
@@ -71,7 +69,7 @@ def upload(dropbox_path: str, destination: str, parallelism: int):
                         file.size,
                         s3_location.netloc,
                         s3_key,
-                    )
+                    ),
                 )
         for taskres in as_completed(tasks):
             print(taskres.result())

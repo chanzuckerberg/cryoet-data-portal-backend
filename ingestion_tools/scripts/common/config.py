@@ -1,3 +1,4 @@
+import contextlib
 import csv
 import os
 import os.path
@@ -112,10 +113,8 @@ class DataImportConfig:
     def load_run_metadata_file(self, file_attr: str):
         mapdata = {}
         map_filename = None
-        try:
+        with contextlib.suppress(AttributeError):
             map_filename = getattr(self, file_attr)
-        except AttributeError:
-            pass
         if not map_filename:
             return mapdata
         with self.fs.open(f"{self.input_path}/{map_filename}", "r") as tsvfile:
@@ -130,10 +129,8 @@ class DataImportConfig:
     def load_run_csv_file(self, file_attr: str):
         mapdata = {}
         map_filename = None
-        try:
+        with contextlib.suppress(AttributeError):
             map_filename = getattr(self, file_attr)
-        except AttributeError:
-            pass
         if not map_filename:
             return mapdata
         with self.fs.open(f"{self.input_path}/{map_filename}", "r") as csvfile:
@@ -266,10 +263,8 @@ class DataImportConfig:
         if not globstring:
             return []
         globvars = run.get_glob_vars()
-        try:
+        with contextlib.suppress(ValueError):
             globvars["int_run_name"] = int(run.run_name)
-        except ValueError:
-            pass
         expanded_glob = os.path.join(self.dataset_root_dir, globstring.format(**globvars))
         results = self.fs.glob(expanded_glob)
         if not results:

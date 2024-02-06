@@ -1,14 +1,16 @@
-import numpy as np
+import os
+from typing import TYPE_CHECKING
 
-from importers.base_importer import BaseImporter
+import imageio
+import numpy as np
+from PIL import Image
+
 from common.config import DataImportConfig
 from common.image import ZarrReader
 from common.make_key_image import generate_preview, process_key_image
-import imageio
-from PIL import Image
-import os
 from importers.annotation import AnnotationImporter
-from typing import TYPE_CHECKING
+from importers.base_importer import BaseImporter
+
 if TYPE_CHECKING:
     from importers.tomogram import TomogramImporter
 else:
@@ -52,9 +54,7 @@ class KeyImageImporter(BaseImporter):
                 image = process_key_image(preview, aspect_ratio=None, width=tomo_width, rotate=False)
             else:
                 image = process_key_image(preview, aspect_ratio="4:3", width=width, rotate=True)
-            filename = self.config.fs.localwritable(
-                os.path.join(dir, self.get_file_name(image_type))
-            )
+            filename = self.config.fs.localwritable(os.path.join(dir, self.get_file_name(image_type)))
 
             imageio.imsave(filename, image)
             print(f"key photo saved at {filename}")
@@ -86,15 +86,12 @@ class KeyImageImporter(BaseImporter):
                     if source.shape.lower() not in ["orientedpoint", "point"]:
                         continue
                     # yield our point data
-                    yield source.get_output_data(self.config.fs,
-                                                 annotation.get_output_path())
+                    yield source.get_output_data(self.config.fs, annotation.get_output_path())
                     # We prefer point files over oriented point files, so stop if we just processed that.
                     if source.shape.lower() == "point":
                         break
 
-        preview = generate_preview(
-            data, projection_depth=40, annotations=load_annotations(), cmap="tab10"
-        )
+        preview = generate_preview(data, projection_depth=40, annotations=load_annotations(), cmap="tab10")
         return preview, data.shape[-1]
 
     @staticmethod

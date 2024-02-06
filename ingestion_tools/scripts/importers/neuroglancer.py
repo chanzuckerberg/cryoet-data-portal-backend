@@ -3,7 +3,6 @@ from urllib.parse import urljoin
 
 from common.config import DataImportConfig
 from common.metadata import NeuroglancerMetadata
-
 from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
@@ -45,7 +44,7 @@ class NeuroglancerImporter(BaseImporter):
                         "outputDimensions": dimensions,
                         "inputDimensions": dimensions,
                     },
-                }
+                },
             ],
             "selectedLayer": {"visible": True, "layer": "tomogram"},
             "layout": "4panel",
@@ -67,7 +66,7 @@ class NeuroglancerImporter(BaseImporter):
             "normalized": {
                 "range": [start, end],
                 "window": [window_start, window_end],
-            }
+            },
         }
 
     @classmethod

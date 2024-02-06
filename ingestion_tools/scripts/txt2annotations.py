@@ -19,9 +19,7 @@ def cli(ctx):
 @click.argument("annotator", required=True, type=str)
 @click.argument("annotation_date", required=True, type=str)
 @click.pass_context
-def convert_csv(
-    ctx, csvfilename: str, molecule: str, annotator: str, annotation_date: str
-):
+def convert_csv(ctx, csvfilename: str, molecule: str, annotator: str, annotation_date: str):
     data = open(csvfilename, "r")
     points = csv.reader(data, delimiter=",")
     output_data = []
@@ -36,7 +34,7 @@ def convert_csv(
                 "organelle": None,
                 "annotator": annotator,
                 "annotationDate": dateparser.parse(annotation_date).isoformat(),
-            }
+            },
         )
     print(ndjson.dumps(output_data))
 
@@ -47,9 +45,7 @@ def convert_csv(
 @click.argument("annotator", required=True, type=str)
 @click.argument("annotation_date", required=True, type=str)
 @click.pass_context
-def convert_star(
-    ctx, starfilename: str, molecule: str, annotator: str, annotation_date: str
-):
+def convert_star(ctx, starfilename: str, molecule: str, annotator: str, annotation_date: str):
     df = starfile.read(starfilename)
     output_data = []
     for _, coord in df.iterrows():
@@ -72,7 +68,7 @@ def convert_star(
                 "organelle": None,
                 "annotator": annotator,
                 "annotationDate": dateparser.parse(annotation_date).isoformat(),
-            }
+            },
         )
     print(ndjson.dumps(output_data))
 

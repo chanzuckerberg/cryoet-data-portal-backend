@@ -1,18 +1,18 @@
 import csv
 import datetime
-import re
-from copy import deepcopy
 import json
 import os
+import re
 from collections import defaultdict
+from copy import deepcopy
+from functools import partial
 from typing import Any, Callable
 
 import click
 import yaml
 
-from common.normalize_fields import normalize_fiducial_alignment
 from common.fs import LocalFilesystem
-from functools import partial
+from common.normalize_fields import normalize_fiducial_alignment
 
 
 def to_dataset_author(data: dict[str, Any]) -> list[dict[str, Any]]:
@@ -28,25 +28,20 @@ def to_dataset_author(data: dict[str, Any]) -> list[dict[str, Any]]:
         for name in authors_data["authors"]
     ]
     return sorted(
-        authors,
-        key=lambda x: (x["primary_author_status"], not x["corresponding_author_status"]),
-        reverse=True
+        authors, key=lambda x: (x["primary_author_status"], not x["corresponding_author_status"]), reverse=True,
     )
+
 
 def clean(val: str) -> str:
     if not val:
         return None
 
     return re.sub(
-        r'[\xc2-\xf4][\x80-\xbf]+',
-        lambda m: m.group(0).encode('latin1').decode('utf8'),
-        val.replace("\r\n", "")
+        r"[\xc2-\xf4][\x80-\xbf]+", lambda m: m.group(0).encode("latin1").decode("utf8"), val.replace("\r\n", ""),
     )
 
 
-def to_dataset_config(
-        dataset_id: int, data: dict[str, Any], authors: list[dict[str, Any]]
-) -> dict[str, Any]:
+def to_dataset_config(dataset_id: int, data: dict[str, Any], authors: list[dict[str, Any]]) -> dict[str, Any]:
     dataset = data.get("dataset")
 
     config = {
@@ -59,16 +54,13 @@ def to_dataset_config(
         "sample_preparation": clean(dataset.get("sample_prep")),
         "grid_preparation": clean(dataset.get("grid_prep")),
         "dates": {
-            "deposition_date": datetime.date(2023,10, 1),
+            "deposition_date": datetime.date(2023, 10, 1),
             "last_modified_date": datetime.date(2023, 12, 1),
             "release_date": datetime.date(2023, 12, 1),
         },
     }
 
-    run_name = next(
-        (entry["run_name"] for entry in data.get("runs") if "run_name" in entry),
-        None
-    )
+    run_name = next((entry["run_name"] for entry in data.get("runs") if "run_name" in entry), None)
     if run_name:
         prefix = f"cryoetportal-rawdatasets-dev/GJensen_full/{run_name}"
         config["key_photos"] = {
@@ -90,12 +82,12 @@ def to_dataset_config(
 
 
 def to_standardization_config(
-        dataset_id: int,
-        data: dict[str, Any],
-        run_data_map: dict,
-        run_data_map_path: str,
-        run_tomo_map_path: str,
-        run_frames_map_path: str,
+    dataset_id: int,
+    data: dict[str, Any],
+    run_data_map: dict,
+    run_data_map_path: str,
+    run_tomo_map_path: str,
+    run_frames_map_path: str,
 ) -> dict[str, Any]:
     run_names = []
     mapped_tomo_name = {}
@@ -104,7 +96,7 @@ def to_standardization_config(
         run_names.append(run["run_name"])
         if len(run["tomograms"]) > 1:
             run_has_multiple_tomos = True
-        names = [key for key in run.get("tomograms", {}).keys()]
+        names = list(run.get("tomograms", {}).keys())
         names.sort()
         mapped_tomo_name[run["run_name"]] = next(iter(names), "*")
 
@@ -119,14 +111,14 @@ def to_standardization_config(
         "rawtlt_files": [
             "{run_name}/rawdata/*.mdoc",
             "{run_name}/file_*/*.rawtlt",
-            f"{{run_name}}/{tlt_tomo_path}/*.rawtlt"
+            f"{{run_name}}/{tlt_tomo_path}/*.rawtlt",
         ],
         "tiltseries_glob": "{run_name}/rawdata/*",
-        "ts_name_regex": ".*/rawdata/[^\._].*\.(mrc|st|ali)$",
+        "ts_name_regex": r".*/rawdata/[^\._].*\.(mrc|st|ali)$",
         "tomo_format": "mrc",
         "tomo_glob": f"{{run_name}}/{tomo_path}",
-        "tomo_regex": ".*\.(mrc|rec)$",
-        "tomo_voxel_size": '',
+        "tomo_regex": r".*\.(mrc|rec)$",
+        "tomo_voxel_size": "",
         "tomo_key_photo_glob": "{run_name}/keyimg_{run_name}.jpg",
         "run_glob": "*",
         "run_regex": f'({"|".join(run_names)})$',
@@ -136,7 +128,7 @@ def to_standardization_config(
     if run_data_map:
         run_data_map_file = os.path.join(run_data_map_path, f"{dataset_id}.csv")
         with open(run_data_map_file, "w") as csvfile:
-            fieldnames = ["run_name"] + sorted(list(next(iter(run_data_map.values())).keys()))
+            fieldnames = ["run_name"] + sorted(next(iter(run_data_map.values())).keys())
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             for run_name, value in run_data_map.items():
@@ -161,9 +153,7 @@ def to_standardization_config(
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             # writer.writeheader()
             for run_name, value in mapped_tomo_name.items():
-                writer.writerow(
-                    {"run_name": run_name, "mapped_frame_name": value.split("/")[0]}
-                )
+                writer.writerow({"run_name": run_name, "mapped_frame_name": value.split("/")[0]})
 
         config["run_to_frame_map_csv"] = f"run_frames_map/{dataset_id}.csv"
 
@@ -171,7 +161,12 @@ def to_standardization_config(
 
 
 int_fields = {"ts-tilt_series_quality"}
-float_fields = { "ts-tilt_axis", "ts-tilt_step", "ts-tilt_range-min", "ts-tilt_range-max", }
+float_fields = {
+    "ts-tilt_axis",
+    "ts-tilt_step",
+    "ts-tilt_range-min",
+    "ts-tilt_range-max",
+}
 
 
 def to_template_by_run(templates, run_data_map, prefix: str, path) -> dict[str, Any]:
@@ -188,14 +183,12 @@ def to_template_by_run(templates, run_data_map, prefix: str, path) -> dict[str, 
 
     for key in sorted(all_keys):
         if any(type(entry["metadata"].get(key)) is dict for entry in templates_for_path):
-            template_metadata[key] = to_template_by_run(
-                templates, run_data_map, f"{prefix}-{key}", path + [key]
-            )
+            template_metadata[key] = to_template_by_run(templates, run_data_map, f"{prefix}-{key}", path + [key])
         else:
             if any(type(entry["metadata"].get(key)) is list for entry in templates_for_path):
-                distinct_vals = set(str(entry["metadata"].get(key)) for entry in templates_for_path)
+                distinct_vals = {str(entry["metadata"].get(key)) for entry in templates_for_path}
             else:
-                distinct_vals = set(entry["metadata"].get(key) for entry in templates_for_path)
+                distinct_vals = {entry["metadata"].get(key) for entry in templates_for_path}
             if len(distinct_vals) == 1:
                 template_metadata[key] = templates_for_path[0]["metadata"].get(key)
             else:
@@ -236,19 +229,17 @@ def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
     return tilt_series
 
 
-def to_tomogram(
-        authors: list[dict[str, Any]], data: dict[str, Any]
-) -> [dict[str, Any] | Any]:
+def to_tomogram(authors: list[dict[str, Any]], data: dict[str, Any]) -> [dict[str, Any] | Any]:
     tomogram = next((deepcopy(val) for val in data["tomograms"].values()), {})
     if len(data["tomograms"].keys()) > 1:
-        print(f'{data["run_name"]} has {len(data["tomograms"].values())} tomograms: '
-              f'{",".join(set(data["tomograms"].keys()))}')
+        print(
+            f'{data["run_name"]} has {len(data["tomograms"].values())} tomograms: '
+            f'{",".join(set(data["tomograms"].keys()))}',
+        )
 
     tomogram["fiducial_alignment_status"] = normalize_fiducial_alignment(tomogram["fiducial_alignment_status"])
     tomogram["offset"] = {"x": 0, "y": 0, "z": 0}
-    tomogram["affine_transformation_matrix"] = [
-        [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]
-    ]
+    tomogram["affine_transformation_matrix"] = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
     tomogram["voxel_spacing"] = None
     tomogram["authors"] = authors
     tomogram["tomogram_version"] = 1
@@ -262,21 +253,15 @@ def to_tomogram(
 
 
 def to_config_by_run(
-        dataset_id: int,
-        data: list,
-        run_data_map: dict,
-        mapper: Callable[[dict[str, Any]], dict[str, Any]],
-        prefix: str
+    dataset_id: int, data: list, run_data_map: dict, mapper: Callable[[dict[str, Any]], dict[str, Any]], prefix: str,
 ) -> dict[str, Any]:
     templates = {}
     for entry in data:
         template = mapper(entry)
-        metadata_key = json.dumps(template, separators=(',', ':'))
+        metadata_key = json.dumps(template, separators=(",", ":"))
 
         if metadata_key not in templates:
-            templates[metadata_key] = {
-                "metadata": template, "sources": [entry["run_name"]]
-            }
+            templates[metadata_key] = {"metadata": template, "sources": [entry["run_name"]]}
         else:
             templates[metadata_key]["sources"].append(entry["run_name"])
 
@@ -284,12 +269,7 @@ def to_config_by_run(
         return next(iter(templates.values()), {}).get("metadata")
 
     print(f"{dataset_id} has {len(templates)} configs for {prefix}")
-    return to_template_by_run(
-        list(templates.values()),
-        run_data_map,
-        prefix,
-        []
-    )
+    return to_template_by_run(list(templates.values()), run_data_map, prefix, [])
 
 
 @click.group()
@@ -317,25 +297,15 @@ def create(ctx, input_dir: str, output_dir: str):
     for file_path in file_paths:
         config = json.load(open(file_path, "r"))
         print(f"Reading file {file_path}")
-        for key, val in config.items():
+        for _key, val in config.items():
             authors = to_dataset_author(val.get("dataset"))
             run_data_map = defaultdict(dict)
             dataset_config = {
                 "dataset": to_dataset_config(dataset_id, val, authors),
                 "runs": {},
-                "tiltseries": to_config_by_run(
-                    dataset_id,
-                    val.get("runs"),
-                    run_data_map,
-                    to_tiltseries,
-                    "ts"
-                ),
+                "tiltseries": to_config_by_run(dataset_id, val.get("runs"), run_data_map, to_tiltseries, "ts"),
                 "tomograms": to_config_by_run(
-                    dataset_id,
-                    val.get("runs"),
-                    run_data_map,
-                    partial(to_tomogram, authors),
-                    "tomo"
+                    dataset_id, val.get("runs"), run_data_map, partial(to_tomogram, authors), "tomo",
                 ),
                 "annotations": {},
                 "standardization_config": to_standardization_config(

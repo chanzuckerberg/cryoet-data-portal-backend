@@ -3,9 +3,6 @@ import os.path
 import re
 
 import click
-
-from common.config import DataImportConfig
-from common.fs import FileSystemApi
 from importers.annotation import AnnotationImporter
 from importers.dataset import DatasetImporter
 from importers.dataset_key_photo import DatasetKeyPhotoImporter
@@ -15,6 +12,9 @@ from importers.neuroglancer import NeuroglancerImporter
 from importers.run import RunImporter
 from importers.tiltseries import RawTiltImporter, TiltSeriesImporter
 from importers.tomogram import TomogramImporter
+
+from common.config import DataImportConfig
+from common.fs import FileSystemApi
 
 
 @click.group()
@@ -98,7 +98,7 @@ def convert(
     iterate_keyimages = max(import_everything, make_key_image)
     iterate_tiltseries = max(import_metadata, import_tiltseries, import_tiltseries_metadata, import_everything)
     iterate_annotations = max(
-        import_annotations, import_annotation_metadata, import_metadata, import_everything, make_key_image
+        import_annotations, import_annotation_metadata, import_metadata, import_everything, make_key_image,
     )
     iterate_frames = max(import_frames, import_everything)
     iterate_ng = max(make_neuroglancer_config, import_everything)
@@ -120,8 +120,7 @@ def convert(
         if list(filter(lambda x: x.match(run.run_name), exclude_run_name_patterns)):
             print(f"Excluding {run.run_name}..")
             continue
-        if filter_run_name and \
-                not list(filter(lambda x: x.match(run.run_name), filter_run_name_patterns)):
+        if filter_run_name and not list(filter(lambda x: x.match(run.run_name), filter_run_name_patterns)):
             print(f"Skipping {run.run_name}..")
             continue
         print(f"Processing {run.run_name}...")

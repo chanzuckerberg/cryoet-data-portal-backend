@@ -2,7 +2,7 @@ import json
 import os
 import os.path
 from datetime import datetime
-from typing import Any, List, Callable
+from typing import Any, Callable, List
 
 import mrcfile
 import numpy as np
@@ -34,9 +34,7 @@ class TomoConverter:
             self.mrc_filename = fs.read_block(mrc_filename)
         else:
             self.mrc_filename = fs.localreadable(mrc_filename)
-        with mrcfile.open(
-                self.mrc_filename, permissive=True, header_only=header_only
-        ) as mrc:
+        with mrcfile.open(self.mrc_filename, permissive=True, header_only=header_only) as mrc:
             if mrc.data is None and not header_only:
                 raise Exception("missing mrc data")
             self.header = mrc.header
@@ -83,7 +81,6 @@ class TomoConverter:
             print(f"skipping remote push for {filename}")
         return mrcfiles
 
-
     def pyramid_to_omezarr(
         self,
         fs: FileSystemApi,
@@ -120,7 +117,7 @@ class TomoConverter:
         header.cella.y = isotropic_voxel_size * data.shape[1]
         header.cella.z = isotropic_voxel_size * data.shape[0]
         header.label[0] = "{0:40s}{1:>39s}".format("Validated by cryoET data portal.", time)
-        header.rms = np.sqrt(np.mean((data - np.mean(data))**2))
+        header.rms = np.sqrt(np.mean((data - np.mean(data)) ** 2))
         header.extra1 = self.header.extra1
         header.extra2 = self.header.extra2
 
@@ -130,7 +127,7 @@ class TomoConverter:
             header.exttyp = self.header.exttyp
         else:
             header.nsymbt = np.array(0, dtype="i4")
-            header.exttyp = np.array(b'MRCO', dtype="S4")
+            header.exttyp = np.array(b"MRCO", dtype="S4")
 
         if header_mapper:
             header_mapper(header)
@@ -196,26 +193,19 @@ def get_header(fs: FileSystemApi, tomo_filename: str) -> MrcObject:
 
 
 def scale_mrcfile(
-        fs: FileSystemApi,
-        output_prefix: str,
-        tomo_filename: str,
-        scale_z_axis: bool = True,
-        write_mrc: bool = True,
-        write_zarr: bool = True,
-        header_mapper: Callable[[np.array], None] = None,
-        voxel_spacing=None,
+    fs: FileSystemApi,
+    output_prefix: str,
+    tomo_filename: str,
+    scale_z_axis: bool = True,
+    write_mrc: bool = True,
+    write_zarr: bool = True,
+    header_mapper: Callable[[np.array], None] = None,
+    voxel_spacing=None,
 ):
     tc = TomoConverter(fs, tomo_filename)
     pyramid = tc.make_pyramid(scale_z_axis=scale_z_axis)
     _ = tc.pyramid_to_omezarr(fs, pyramid, f"{output_prefix}.zarr", write_zarr)
-    _ = tc.pyramid_to_mrc(
-        fs,
-        pyramid,
-        f"{output_prefix}.mrc",
-        write_mrc,
-        header_mapper,
-        voxel_spacing
-    )
+    _ = tc.pyramid_to_mrc(fs, pyramid, f"{output_prefix}.mrc", write_mrc, header_mapper, voxel_spacing)
 
 
 def scale_maskfile(
