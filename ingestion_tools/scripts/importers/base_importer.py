@@ -1,5 +1,5 @@
 import os
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 import numpy as np
 from mrcfile.mrcobject import MrcObject
@@ -16,8 +16,9 @@ else:
 class BaseImporter:
     type_key: str
     cached_find_results: dict[str, "BaseImporter"] = {}
+    parent: Optional["BaseImporter"]
 
-    def __init__(self, config: "DataImportConfig", parent: Any | None = None):
+    def __init__(self, config: "DataImportConfig", parent: Optional["BaseImporter"] = None):
         self.config = config
         self.parent = parent
 
@@ -29,7 +30,7 @@ class BaseImporter:
             if parent.type_key == type_key:
                 return parent
             else:
-                parent = parent.parent
+                parent = parent.parent  # type: ignore
 
     def get_glob_vars(self):
         run_name = self.get_run().run_name

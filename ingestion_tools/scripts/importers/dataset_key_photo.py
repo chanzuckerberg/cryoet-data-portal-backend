@@ -26,7 +26,7 @@ class DatasetKeyPhotoImporter(BaseImporter):
     def get_metadata(self) -> dict[str, str]:
         path = self.config.get_output_path(self)
         image_files = self.config.fs.glob(f"{path}/*")
-        return {key: self.get_image_file(image_files, f"{path}/{key}") for key in self.image_keys}
+        return {key: self.get_image_file(image_files, f"{path}/{key}") for key in self.image_keys}  # type: ignore
 
     def get_image_file(self, key_photo_files: list[str], prefix: str) -> str | None:
         image_path = next(filter(lambda file: file.startswith(prefix), key_photo_files), None)

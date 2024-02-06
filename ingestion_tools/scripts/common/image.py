@@ -2,7 +2,7 @@ import json
 import os
 import os.path
 from datetime import datetime
-from typing import Any, Callable, List
+from typing import Any, Callable, List, Optional
 
 import mrcfile
 import numpy as np
@@ -60,8 +60,8 @@ class TomoConverter:
         pyramid: List[np.ndarray],
         mrc_filename: str,
         write: bool = True,
-        header_mapper: Callable[[np.array], None] = None,
-        voxel_spacing: float = None,
+        header_mapper: Optional[Callable[[np.array], None]] = None,
+        voxel_spacing: Optional[float] = None,
     ) -> List[str]:
         mrcfiles = []
         # NOTE - 2023-10-24
@@ -201,7 +201,7 @@ def scale_mrcfile(
     scale_z_axis: bool = True,
     write_mrc: bool = True,
     write_zarr: bool = True,
-    header_mapper: Callable[[np.array], None] = None,
+    header_mapper: Optional[Callable[[np.array], None]] = None,
     voxel_spacing=None,
 ):
     tc = TomoConverter(fs, tomo_filename)

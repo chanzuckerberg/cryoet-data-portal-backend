@@ -3,7 +3,7 @@ import json
 import logging
 import os.path
 from pathlib import PurePath
-from typing import Any, Optional
+from typing import Any, Generator, Optional
 
 import boto3
 import click
@@ -21,7 +21,7 @@ def cli():
     pass
 
 
-def find_subdirs_with_files(s3_client, bucket_name, prefix, target_filename):
+def find_subdirs_with_files(s3_client, bucket_name, prefix, target_filename) -> Generator[str, None, None]:
     paginator = s3_client.get_paginator("list_objects_v2")
     print(f"looking for prefix {prefix}")
     pages = paginator.paginate(Bucket=bucket_name, Prefix=prefix, Delimiter="/")
@@ -37,7 +37,7 @@ def find_subdirs_with_files(s3_client, bucket_name, prefix, target_filename):
             yield subdir
 
 
-def glob_s3_prefixes(s3_client, bucket_name, prefix, glob_string):
+def glob_s3_prefixes(s3_client, bucket_name, prefix, glob_string) -> Generator[str, None, None]:
     paginator = s3_client.get_paginator("list_objects_v2")
     print(f"looking for prefix {prefix}::{glob_string}")
     pages = paginator.paginate(Bucket=bucket_name, Prefix=prefix, Delimiter="/")
@@ -51,7 +51,7 @@ def glob_s3_prefixes(s3_client, bucket_name, prefix, glob_string):
                 yield subdir
 
 
-def glob_s3_files(s3_client, bucket_name, prefix, glob_string):
+def glob_s3_files(s3_client, bucket_name, prefix, glob_string) -> Generator[str, None, None]:
     paginator = s3_client.get_paginator("list_objects_v2")
     print(f"looking for prefix {prefix}{glob_string}")
     pages = paginator.paginate(Bucket=bucket_name, Prefix=prefix, Delimiter="/")
@@ -64,7 +64,7 @@ def glob_s3_files(s3_client, bucket_name, prefix, glob_string):
                 yield obj["Key"]
 
 
-def load_key_json(s3_client, bucket_name, key, is_file_required=True):
+def load_key_json(s3_client, bucket_name, key, is_file_required=True) -> dict[str, Any]:
     try:
         text = s3_client.get_object(Bucket=bucket_name, Key=key)
         data = json.loads(text["Body"].read())
@@ -72,7 +72,7 @@ def load_key_json(s3_client, bucket_name, key, is_file_required=True):
     except ClientError as ex:
         if ex.response["Error"]["Code"] == "NoSuchKey" and not is_file_required:
             print(f"NoSuchKey on bucket_name={bucket_name} key={key}")
-            return None
+            return {}
         else:
             raise
 
@@ -91,7 +91,7 @@ def upsert(
     map_to_db(obj, mapping, data)
     identifiers = {id_field: getattr(obj, id_field) for id_field in id_fields}
     try:
-        existing_obj = klass.get(*[getattr(klass, k) == v for k, v in identifiers.items()])
+        existing_obj = klass.get(*[getattr(klass, k) == v for k, v in identifiers.items()])  # type: ignore
     except peewee.DoesNotExist:
         obj.save(force_insert=True)
         return obj
@@ -102,31 +102,31 @@ def upsert(
     return existing_obj
 
 
-def map_to_db(obj: db_models.BaseModel, mapping: dict[str, Any], data: dict[str, Any]):
+def map_to_db(obj: db_models.BaseModel, mapping: dict[str, Any], data: dict[str, Any]) -> None:
     for db_key, data_path in mapping.items():
         if not isinstance(data_path, list):
             setattr(obj, db_key, data_path)
             continue
         value = None
         for pathpart in data_path:
-            value = data.get(pathpart) if not value else value.get(pathpart)
+            value = data.get(pathpart) if not value else value.get(pathpart)  # type: ignore
             if not value:
                 break
         if value and "date" in db_key:
-            value = datetime.datetime.strptime(value, "%Y-%m-%d")  # type: ignore
+            value = datetime.datetime.strptime(value, "%Y-%m-%d")
         setattr(obj, db_key, value)
 
 
 def get_existing_objects(klass: type, filters: dict[str, Any], hash_attributes: list[str]) -> dict[str, type]:
     result = {}
-    query = klass.select().where(*[getattr(klass, k) == v for k, v in filters.items()])
+    query = klass.select().where(*[getattr(klass, k) == v for k, v in filters.items()])  # type: ignore
     for record in query:
         key = "-".join([f"{getattr(record, attr)}" for attr in hash_attributes])
         result[key] = record
     return result
 
 
-def load_dataset_authors_data(dataset_id: int, metadata: dict[str, Any]):
+def load_dataset_authors_data(dataset_id: int, metadata: dict[str, Any]) -> None:
     author_map = {
         "dataset_id": dataset_id,
         "orcid": ["ORCID"],
@@ -145,10 +145,10 @@ def load_dataset_authors_data(dataset_id: int, metadata: dict[str, Any]):
         dataset_author = upsert(["dataset_id", "name"], db_models.DatasetAuthor, author_map, author)
         existing_objs.pop("-".join([dataset_author.name, str(dataset_author.dataset_id_id)]), None)
     for stale_obj in existing_objs.values():
-        stale_obj.delete_instance()
+        stale_obj.delete_instance()  # type: ignore
 
 
-def load_dataset_funding_data(dataset_id: int, metadata: dict[str, Any]):
+def load_dataset_funding_data(dataset_id: int, metadata: dict[str, Any]) -> None:
     funding_map = {
         "dataset_id": dataset_id,
         "funding_agency_name": ["funding_agency_name"],

@@ -44,6 +44,8 @@ imageio = "^2.33.1"
 pytest = "^8.0.0"
 boto3-stubs = {extras = ["s3"], version = "^1.34.34"}
 mypy = "^1.8.0"
+types-requests = "^2.31.0.20240125"
+types-dateparser = "^1.1.4.20240106"
 
 [tool.black]
 line-length = 120
@@ -89,4 +91,14 @@ docstring-quotes = "double"
 show_error_codes = true
 ignore_missing_imports = true
 warn_unreachable = true
-strict = true
+explicit_package_bases = true
+# disallow_untyped_defs = true
+# Some small utilities that don't really get used much don't need strong type checking
+exclude = [
+    'ingestion_tools/scripts/unziptos3.py',
+    'ingestion_tools/scripts/dropboxtos3.py',
+    'ingestion_tools/scripts/emdbtool.py',
+    'ingestion_tools/scripts/txt2annotations.py',
+    'ingestion_tools/scripts/enqueue_runs.py',
+    'ingestion_tools/scripts/gjensen_config.py',
+]

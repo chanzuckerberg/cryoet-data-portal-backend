@@ -33,7 +33,7 @@ def convert_csv(ctx, csvfilename: str, molecule: str, annotator: str, annotation
                 "molecule": molecule,
                 "organelle": None,
                 "annotator": annotator,
-                "annotationDate": dateparser.parse(annotation_date).isoformat(),
+                "annotationDate": dateparser.parse(annotation_date).isoformat(),  # type: ignore
             },
         )
     print(ndjson.dumps(output_data))
@@ -67,7 +67,7 @@ def convert_star(ctx, starfilename: str, molecule: str, annotator: str, annotati
                 "molecule": molecule,
                 "organelle": None,
                 "annotator": annotator,
-                "annotationDate": dateparser.parse(annotation_date).isoformat(),
+                "annotationDate": dateparser.parse(annotation_date).isoformat(),  # type: ignore
             },
         )
     print(ndjson.dumps(output_data))

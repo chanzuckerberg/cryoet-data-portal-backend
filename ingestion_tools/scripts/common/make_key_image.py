@@ -43,7 +43,7 @@ def generate_preview(
         Generated preview image.
     """
     z_center = tomogram.shape[0] // 2
-    cmap = mpl.colormaps[cmap]
+    colormap = mpl.colormaps[cmap]
 
     z_min = z_center - projection_depth // 2
     z_max = z_min + projection_depth
@@ -84,7 +84,7 @@ def generate_preview(
                 print(f"Ignoring missing annotation for keyframe generation: {e}")
 
     for i, annotation in wrapiterator(enumerate(annotations)):
-        color = cmap(i)
+        color = colormap(i)
         for item in annotation:
             if (t := item.get("type")) is None:
                 logger.error("type for %s cannot be determined", item)
