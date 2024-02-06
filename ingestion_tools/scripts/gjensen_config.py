@@ -46,7 +46,7 @@ def clean(val: Optional[str]) -> Optional[str]:
 
 
 def to_dataset_config(dataset_id: int, data: dict[str, Any], authors: list[dict[str, Any]]) -> dict[str, Any]:
-    dataset: dict[str, Any] = data.get("dataset")
+    dataset: dict[str, Any] = data.get("dataset", {})
 
     config = {
         "dataset_identifier": dataset_id,
@@ -64,7 +64,7 @@ def to_dataset_config(dataset_id: int, data: dict[str, Any], authors: list[dict[
         },
     }
 
-    run_name: str = next((entry["run_name"] for entry in data.get("runs") if "run_name" in entry), None)
+    run_name: Optional[str] = next((entry["run_name"] for entry in data.get("runs", {}) if "run_name" in entry), None)
     if run_name:
         prefix = f"cryoetportal-rawdatasets-dev/GJensen_full/{run_name}"
         config["key_photos"] = {
@@ -96,7 +96,7 @@ def to_standardization_config(
     run_names = []
     mapped_tomo_name = {}
     run_has_multiple_tomos = False
-    for run in data.get("runs"):
+    for run in data.get("runs", {}):
         run_names.append(run["run_name"])
         if len(run["tomograms"]) > 1:
             run_has_multiple_tomos = True
@@ -203,7 +203,7 @@ def to_template_by_run(templates, run_data_map, prefix: str, path) -> dict[str, 
                     template_metadata_value = f"float {{{run_data_map_key}}}"
                 else:
                     template_metadata_value = f"{{{run_data_map_key}}}"
-                template_metadata[key] = template_metadata_value
+                template_metadata[key] = template_metadata_value  # type: ignore
                 for entry in templates_for_path:
                     for source in entry["sources"]:
                         run_data_map[source][run_data_map_key] = entry["metadata"].get(key)
@@ -308,7 +308,7 @@ def create(ctx, input_dir: str, output_dir: str):
         print(f"Reading file {file_path}")
         for _key, val in config.items():
             authors = to_dataset_author(val.get("dataset"))
-            run_data_map = defaultdict(dict)
+            run_data_map: dict[str, Any] = defaultdict(dict)
             dataset_config = {
                 "dataset": to_dataset_config(dataset_id, val, authors),
                 "runs": {},
