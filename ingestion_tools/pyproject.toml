@@ -92,13 +92,5 @@ show_error_codes = true
 ignore_missing_imports = true
 warn_unreachable = true
 explicit_package_bases = true
+# We'd like to turn this on soon but we're not there yet.
 # disallow_untyped_defs = true
-# Some small utilities that don't really get used much don't need strong type checking
-exclude = [
-    'ingestion_tools/scripts/unziptos3.py',
-    'ingestion_tools/scripts/dropboxtos3.py',
-    'ingestion_tools/scripts/emdbtool.py',
-    'ingestion_tools/scripts/txt2annotations.py',
-    'ingestion_tools/scripts/enqueue_runs.py',
-    'ingestion_tools/scripts/gjensen_config.py',
-]
