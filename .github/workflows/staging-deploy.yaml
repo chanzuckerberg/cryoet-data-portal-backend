@@ -20,7 +20,7 @@ jobs:
       cancel-in-progress: true
 
     name: deploy staging branch
-    runs-on: ubuntu-latest
+    runs-on: [ARM64, self-hosted, Linux]
     environment: staging
     if: github.repository == 'chanzuckerberg/cryoet-data-portal-backend'
     steps:
