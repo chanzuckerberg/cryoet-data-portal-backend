@@ -165,10 +165,12 @@ def get_tomo_metadata(
     scales = []
     size: dict[str, float] = {}
     omezarr_dir = fs.destformat(f"{output_prefix}.zarr")
-    zarrinfo = json.loads(open(fs.localreadable(os.path.join(omezarr_dir, ".zattrs")), "r").read())
+    with open(fs.localreadable(os.path.join(omezarr_dir, ".zattrs")), "r") as fh:
+        zarrinfo = json.loads(fh.read())
     multiscales = zarrinfo["multiscales"][0]["datasets"]
     for scale in multiscales:
-        scaleinfo = json.loads(open(fs.localreadable(os.path.join(omezarr_dir, scale["path"], ".zarray")), "r").read())
+        with open(fs.localreadable(os.path.join(omezarr_dir, scale["path"], ".zarray")), "r") as fh:
+            scaleinfo = json.loads(fh.read())
         shape = scaleinfo["shape"]
         dims = {"z": shape[0], "y": shape[1], "x": shape[2]}
         if not size:

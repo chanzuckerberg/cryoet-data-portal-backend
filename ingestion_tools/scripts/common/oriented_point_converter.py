@@ -5,7 +5,7 @@ import contextlib
 
 import numpy as np
 import starfile
-from scipy.spatial.transform import Rotation as R
+from scipy.spatial.transform import Rotation
 
 
 def invert_rot_matrices_axis_order(rot_xyz):
@@ -19,7 +19,7 @@ def invert_rot_matrices_axis_order(rot_xyz):
 
 def invert_positions_axis_order(xyz):
     """
-    Invert n x (3,) coordinate vectors in ndarray based on xyz order to numpy standard zyx, and vice versa
+    invert n x (3,) coordinate vectors in ndarray based on xyz order to numpy standard zyx, and vice versa
     """
     coord_len = xyz.shape[0]
     zyx = np.flip(np.ravel(xyz).reshape((coord_len, 3)), axis=(1,))
@@ -55,12 +55,12 @@ def _from_relion3_star_filtered(file_path, filter_value, filter_key="rlnMicrogra
     try:
         xyz_s = df2[["rlnOriginX", "rlnOriginY", "rlnOriginZ"]].to_numpy()  # shift
         positions = (xyz_c - xyz_s) / float(binning)
-    except:
+    except Exception:
         # do not have origin (shift)
         positions = xyz_c / float(binning)
     euler_angles = df2[["rlnAngleRot", "rlnAngleTilt", "rlnAnglePsi"]].to_numpy()
     # intrinsic transformation
-    rot = R.from_euler(angles=euler_angles, seq="ZYZ", degrees=True).inv().as_matrix()
+    rot = Rotation.from_euler(angles=euler_angles, seq="ZYZ", degrees=True).inv().as_matrix()
     if order == "zyx":
         rot = invert_rot_matrices_axis_order(rot)
         positions = invert_positions_axis_order(positions)
@@ -98,7 +98,7 @@ def from_relion4_star(file_path, tomo_name, binning=1.0, order="xyz"):
     positions = (xyz_c - (xyz_s_a / pixel_a)) / float(binning)
     euler_angles = df2[["rlnAngleRot", "rlnAngleTilt", "rlnAnglePsi"]].to_numpy()
     # intrinsic transformation
-    rot = R.from_euler(angles=euler_angles, seq="ZYZ", degrees=True).inv().as_matrix()
+    rot = Rotation.from_euler(angles=euler_angles, seq="ZYZ", degrees=True).inv().as_matrix()
     if order == "zyx":
         rot = invert_rot_matrices_axis_order(rot)
         positions = invert_positions_axis_order(positions)
@@ -122,7 +122,7 @@ def from_stopgap_star(file_path, micrograph_name, binning=1.0, order="xyz"):
     positions = (xyz_c + xyz_s) / binning
     euler_angles = df2[["phi", "the", "psi"]].to_numpy()
     # extrinsic transformation
-    rot = R.from_euler(angles=euler_angles, seq="zxz", degrees=True).as_matrix()
+    rot = Rotation.from_euler(angles=euler_angles, seq="zxz", degrees=True).as_matrix()
     if order == "zyx":
         rot = invert_rot_matrices_axis_order(rot)
         positions = invert_positions_axis_order(positions)
@@ -130,12 +130,12 @@ def from_stopgap_star(file_path, micrograph_name, binning=1.0, order="xyz"):
 
 
 def from_trf(file_path, mircograph_name, binning=1.0, order="xyz"):
-    f = open(file_path, "r")
-    lines = f.readlines()
+    with open(file_path, "r") as f:
+        lines = f.readlines()
     xyz_c = np.zeros((len(lines), 3))
     rot = np.zeros((len(lines), 3, 3))
-    for i, l in enumerate(lines):
-        bits = l[:-1].split(" ")
+    for i, j in enumerate(lines):
+        bits = j[:-1].split(" ")
         bits = [i for i in bits if i != ""]
         c = np.array((bits[1], bits[2], bits[3]), dtype=np.float32)
         r = np.array(bits[7:], dtype=np.float32).reshape((3, 3))

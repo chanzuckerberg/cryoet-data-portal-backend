@@ -98,7 +98,11 @@ def convert(
     iterate_keyimages = max(import_everything, make_key_image)
     iterate_tiltseries = max(import_metadata, import_tiltseries, import_tiltseries_metadata, import_everything)
     iterate_annotations = max(
-        import_annotations, import_annotation_metadata, import_metadata, import_everything, make_key_image,
+        import_annotations,
+        import_annotation_metadata,
+        import_metadata,
+        import_everything,
+        make_key_image,
     )
     iterate_frames = max(import_frames, import_everything)
     iterate_ng = max(make_neuroglancer_config, import_everything)

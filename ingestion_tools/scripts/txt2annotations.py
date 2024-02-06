@@ -20,8 +20,8 @@ def cli(ctx):
 @click.argument("annotation_date", required=True, type=str)
 @click.pass_context
 def convert_csv(ctx, csvfilename: str, molecule: str, annotator: str, annotation_date: str):
-    data = open(csvfilename, "r")
-    points = csv.reader(data, delimiter=",")
+    with open(csvfilename, "r") as data:
+        points = csv.reader(data, delimiter=",")
     output_data = []
     for coord in points:
         output_data.append(

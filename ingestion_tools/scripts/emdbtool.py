@@ -144,7 +144,7 @@ def fetch_all(emdb_id):
     try:
         info = fetch_emdb_image_acquisition(emdb_id)
         print(yaml.dump(info))
-    except:
+    except requests.exceptions.JSONDecodeError:
         print("Fetching image acquisition failed")
     info = fetch_emdb_imaging(emdb_id)
     print(yaml.dump(info))

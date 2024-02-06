@@ -68,9 +68,16 @@ select = [
 ignore = [
     "E501",  # line too long
     "C408",  # rewrite empty built-ins as literals
+    "T201",  # print statements.
+    "DTZ007", # Datetime objects without timezones.
+    "DTZ005", # More datetimes without timezones.
 ]
 line-length = 120
 target-version = "py39"
+
+[tool.ruff.lint.per-file-ignores]
+# Ignore `SIM115` (not using open() in a context manager) since all calls to this method *do* use a context manager.
+"scripts/common/fs.py" = ["SIM115"]
 
 [tool.ruff.isort]
 known-first-party =["common"]

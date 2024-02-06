@@ -39,7 +39,10 @@ class TiltSeriesImporter(VolumeImporter):
 
     def import_tiltseries(self, write_mrc: bool = True, write_zarr: bool = True):
         _ = self.scale_mrcfile(
-            scale_z_axis=False, write_mrc=write_mrc, write_zarr=write_zarr, voxel_spacing=self.get_pixel_spacing(),
+            scale_z_axis=False,
+            write_mrc=write_mrc,
+            write_zarr=write_zarr,
+            voxel_spacing=self.get_pixel_spacing(),
         )
 
     def get_frames_count(self) -> int:

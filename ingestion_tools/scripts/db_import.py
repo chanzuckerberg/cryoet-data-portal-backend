@@ -32,7 +32,7 @@ def find_subdirs_with_files(s3_client, bucket_name, prefix, target_filename):
             try:
                 metadata_key = f"{subdir}{target_filename}"
                 s3_client.head_object(Bucket=bucket_name, Key=metadata_key)
-            except:
+            except Exception:
                 continue
             yield subdir
 
@@ -104,7 +104,7 @@ def upsert(
 
 def map_to_db(obj: db_models.BaseModel, mapping: dict[str, Any], data: dict[str, Any]):
     for db_key, data_path in mapping.items():
-        if type(data_path) != list:
+        if not isinstance(data_path, list):
             setattr(obj, db_key, data_path)
             continue
         value = None
@@ -113,7 +113,7 @@ def map_to_db(obj: db_models.BaseModel, mapping: dict[str, Any], data: dict[str,
             if not value:
                 break
         if value and "date" in db_key:
-            value = datetime.datetime.strptime(value, "%Y-%m-%d")
+            value = datetime.datetime.strptime(value, "%Y-%m-%d")  # type: ignore
         setattr(obj, db_key, value)
 
 

@@ -1,5 +1,5 @@
 import os
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
 from common.config import DataImportConfig
 from common.copy import copy_by_src
@@ -7,6 +7,11 @@ from importers.base_importer import BaseImporter
 from importers.key_image import KeyImageImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
+
+if TYPE_CHECKING:
+    from importers.dataset import DatasetImporter
+else:
+    DatasetImporter = "DatasetImporter"
 
 
 class DatasetKeyPhotoImporter(BaseImporter):

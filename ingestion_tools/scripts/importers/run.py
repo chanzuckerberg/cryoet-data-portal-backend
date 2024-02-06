@@ -24,7 +24,8 @@ class RunImporter(BaseImporter):
         self.run_path = path
         self.run_name = self.config.run_name_regex.match(os.path.basename(path))[1]
         if voxel_spacing := self.config.expand_string(
-            self.run_name, self.config.tomogram_template.get("voxel_spacing"),
+            self.run_name,
+            self.config.tomogram_template.get("voxel_spacing"),
         ):
             self.set_voxel_spacing(float(voxel_spacing))
         else:

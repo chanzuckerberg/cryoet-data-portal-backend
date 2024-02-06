@@ -19,7 +19,9 @@ def local_fs() -> FileSystemApi:
 @pytest.fixture
 def s3_fs() -> FileSystemApi:
     fs = FileSystemApi.get_fs_api(
-        mode="s3", force_overwrite=False, client_kwargs={"endpoint_url": "http://motoserver:4000"},
+        mode="s3",
+        force_overwrite=False,
+        client_kwargs={"endpoint_url": "http://motoserver:4000"},
     )
     return fs
 

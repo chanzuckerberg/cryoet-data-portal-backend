@@ -28,7 +28,9 @@ def to_dataset_author(data: dict[str, Any]) -> list[dict[str, Any]]:
         for name in authors_data["authors"]
     ]
     return sorted(
-        authors, key=lambda x: (x["primary_author_status"], not x["corresponding_author_status"]), reverse=True,
+        authors,
+        key=lambda x: (x["primary_author_status"], not x["corresponding_author_status"]),
+        reverse=True,
     )
 
 
@@ -37,7 +39,9 @@ def clean(val: str) -> str:
         return None
 
     return re.sub(
-        r"[\xc2-\xf4][\x80-\xbf]+", lambda m: m.group(0).encode("latin1").decode("utf8"), val.replace("\r\n", ""),
+        r"[\xc2-\xf4][\x80-\xbf]+",
+        lambda m: m.group(0).encode("latin1").decode("utf8"),
+        val.replace("\r\n", ""),
     )
 
 
@@ -182,10 +186,10 @@ def to_template_by_run(templates, run_data_map, prefix: str, path) -> dict[str, 
         all_keys = all_keys.union(entry_md.keys())
 
     for key in sorted(all_keys):
-        if any(type(entry["metadata"].get(key)) is dict for entry in templates_for_path):
+        if any(isinstance(entry["metadata"].get(key), dict) for entry in templates_for_path):
             template_metadata[key] = to_template_by_run(templates, run_data_map, f"{prefix}-{key}", path + [key])
         else:
-            if any(type(entry["metadata"].get(key)) is list for entry in templates_for_path):
+            if any(isinstance(entry["metadata"].get(key), list) for entry in templates_for_path):
                 distinct_vals = {str(entry["metadata"].get(key)) for entry in templates_for_path}
             else:
                 distinct_vals = {entry["metadata"].get(key) for entry in templates_for_path}
@@ -253,7 +257,11 @@ def to_tomogram(authors: list[dict[str, Any]], data: dict[str, Any]) -> [dict[st
 
 
 def to_config_by_run(
-    dataset_id: int, data: list, run_data_map: dict, mapper: Callable[[dict[str, Any]], dict[str, Any]], prefix: str,
+    dataset_id: int,
+    data: list,
+    run_data_map: dict,
+    mapper: Callable[[dict[str, Any]], dict[str, Any]],
+    prefix: str,
 ) -> dict[str, Any]:
     templates = {}
     for entry in data:
@@ -282,7 +290,7 @@ def cli(ctx):
 @click.argument("input_dir", required=True, type=str)
 @click.argument("output_dir", required=True, type=str)
 @click.pass_context
-def create(ctx, input_dir: str, output_dir: str):
+def create(ctx, input_dir: str, output_dir: str) -> None:
     dataset_id = 10014
     fs = LocalFilesystem(force_overwrite=True)
     fs.makedirs(output_dir)
@@ -295,7 +303,8 @@ def create(ctx, input_dir: str, output_dir: str):
     file_paths = fs.glob(os.path.join(input_dir, "*.json"))
     file_paths.sort()
     for file_path in file_paths:
-        config = json.load(open(file_path, "r"))
+        with open(file_path, "r") as file:
+            config = json.load(file)
         print(f"Reading file {file_path}")
         for _key, val in config.items():
             authors = to_dataset_author(val.get("dataset"))
@@ -305,7 +314,11 @@ def create(ctx, input_dir: str, output_dir: str):
                 "runs": {},
                 "tiltseries": to_config_by_run(dataset_id, val.get("runs"), run_data_map, to_tiltseries, "ts"),
                 "tomograms": to_config_by_run(
-                    dataset_id, val.get("runs"), run_data_map, partial(to_tomogram, authors), "tomo",
+                    dataset_id,
+                    val.get("runs"),
+                    run_data_map,
+                    partial(to_tomogram, authors),
+                    "tomo",
                 ),
                 "annotations": {},
                 "standardization_config": to_standardization_config(

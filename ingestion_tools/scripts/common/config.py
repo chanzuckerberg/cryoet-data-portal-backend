@@ -178,7 +178,7 @@ class DataImportConfig:
         return {}
 
     def expand_string(self, run_name: str, string_template: Any) -> int | float | str:
-        if type(string_template) != str:
+        if not isinstance(string_template, str):
             return string_template
         if run_data := self.get_run_data_map(run_name):
             string_template = string_template.format(**run_data)
@@ -192,16 +192,16 @@ class DataImportConfig:
 
     def expand_metadata(self, run_name: str, metadata_dict: dict[str, Any]) -> dict[str, Any]:
         for k, v in metadata_dict.items():
-            if type(v) == str:
+            if isinstance(v, str):
                 metadata_dict[k] = self.expand_string(run_name, v)
-            elif (type(v)) == dict:
+            elif isinstance(v, dict):
                 metadata_dict[k] = self.expand_metadata(run_name, v)
-            elif (type(v)) == list:
+            elif isinstance(v, list):
                 for idx in range(len(v)):
                     # Note - we're not supporting deeply nested lists,
                     # but we don't need to with our current data model.
                     item = v[idx]
-                    if type(item) == str:
+                    if isinstance(item, str):
                         v[idx] = self.expand_string(run_name, item)
         return metadata_dict
 

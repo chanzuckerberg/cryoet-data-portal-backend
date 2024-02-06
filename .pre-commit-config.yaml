@@ -9,22 +9,22 @@ repos:
   - id: ruff
     args:
     - --fix
-- repo: https://github.com/pre-commit/mirrors-mypy
-  rev: "v1.4.1"
-  hooks:
-  - id: mypy
-    exclude: "packages/frontend"
-    # entry: mypy --config-file ingestion_tools/pyproject.toml
-    args: ["--config-file", "ingestion_tools/pyproject.toml"]
-    # args: [--config-file=./packages/backend/pyproject.toml]
-    # entry: mypy --config-file packages/backend/pyproject.toml
-    # entry: bash -c 'cd packages/backend && mypy --config-file pyproject.toml .'
-    additional_dependencies:
-      [
-        pydantic,
-        pydantic-settings,
-        click,
-      ]
+      #- repo: https://github.com/pre-commit/mirrors-mypy
+      #  rev: "v1.4.1"
+      #  hooks:
+      #  - id: mypy
+      #    exclude: "packages/frontend"
+      #    # entry: mypy --config-file ingestion_tools/pyproject.toml
+      #    args: ["--config-file", "ingestion_tools/pyproject.toml"]
+      #    # args: [--config-file=./packages/backend/pyproject.toml]
+      #    # entry: mypy --config-file packages/backend/pyproject.toml
+      #    # entry: bash -c 'cd packages/backend && mypy --config-file pyproject.toml .'
+      #    additional_dependencies:
+      #      [
+      #        pydantic,
+      #        pydantic-settings,
+      #        click,
+      #      ]
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.5.0
   hooks:

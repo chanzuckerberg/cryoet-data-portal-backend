@@ -126,7 +126,7 @@ class SemanticSegmentationMaskFile(VolumeAnnotationSource):
         try:
             input_file = self.get_source_file(fs, input_prefix)
             return check_mask_for_label(fs, input_file, self.label)
-        except:
+        except Exception:
             return False
 
 
@@ -168,8 +168,8 @@ class PointFile(BaseAnnotationSource):
         if self.columns == "zyx":
             coord_order = [2, 1, 0]
         annotation_set = []
-        data = fs.open(csvfilename, "r")
-        points = csv.reader(data, delimiter=self.delimiter)
+        with fs.open(csvfilename, "r") as data:
+            points = csv.reader(data, delimiter=self.delimiter)
         if skip_header:
             next(points)
         for coord in points:
@@ -345,7 +345,7 @@ class AnnotationImporter(BaseImporter):
             # Don't panic if we don't have a source file for this annotation source
             try:
                 source.get_source_file(self.config.fs, self.config.input_path)
-            except:
+            except Exception:
                 print(f"Skipping writing annotations for run {run_name} due to missing files")
                 continue
             source.convert(self.config.fs, self.config.input_path, dest_prefix, self.parent.get_voxel_spacing())
@@ -359,7 +359,7 @@ class AnnotationImporter(BaseImporter):
             try:
                 source.get_source_file(self.config.fs, self.config.input_path)
                 real_sources += 1
-            except:
+            except Exception:
                 continue
         if not real_sources:
             print(f"Skipping writing metadata for run {run_name} due to missing files")
