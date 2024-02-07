@@ -1,0 +1,328 @@
+id: https://cryoetdataportal.czscience.com/cetdp
+name: cdp-meta
+prefixes:
+  linkml: https://w3id.org/linkml/
+  ORCID: https://orcid.org/
+  ROR: https://ror.org/
+  UBERON: http://purl.obolibrary.org/obo/UBERON_
+  CL: http://purl.obolibrary.org/obo/CL_
+  GO: http://purl.obolibrary.org/obo/GO_
+imports:
+  - linkml:types
+default_range: string
+
+slots:
+  # ============================================================================
+  # Common slots
+  # ============================================================================
+  ORCID:
+    description: An ORCID identifier.
+    range: string
+    pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
+
+  affiliation_identifier:
+    description: A research organization registry identifier.
+    range: string
+    pattern: '^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$'
+
+enums:
+  # ============================================================================
+  # Controlled vocabularies
+  # ============================================================================
+
+  sample_type:
+    description: Type of sample imaged in a CryoET study.
+    permissible_values:
+      cell:
+        description: Tomographic data of whole cells or cell sections.
+      tissue:
+        description: Tomographic data of tissue sections.
+      organism:
+        description: Tomographic data of sections through multicellular organisms.
+      organelle:
+        description: Tomographic data of purified organelles.
+      virus:
+        description: Tomographic data of purified viruses or VLPs.
+      in vitro:
+        description: Tomographic data of in vitro reconstituted systems or mixtures of proteins.
+      in silico:
+        description: Simulated tomographic data.
+      other:
+        description: Other type of sample.
+
+classes:
+  # ============================================================================
+  # Author and Annotator information
+  # ============================================================================
+
+  Author:
+    description: An author of a scientific data entity.
+    attributes:
+      name:
+        range: string
+        required: true
+        description: The full name of the author.
+      email:
+        range: string
+        description: The email of the author.
+      affiliation_name:
+        range: string
+        description: The name of the author's affiliation.
+      affiliation_address:
+        range: string
+        description: The address of the author's affiliation.
+      is_corresponding:
+        range: boolean
+        description: Whether the author is the corresponding author.
+      is_primary_author:
+        range: boolean
+        description: Whether the author is the primary author.
+        alias: is_primary_annotator
+
+    slots:
+      - ORCID
+      - affiliation_identifier
+    slot_usage:
+      orcid:
+        recommended: true
+      affiliation_identifier:
+        recommended: true
+
+  # ============================================================================
+  # Funding source information
+  # ============================================================================
+
+  Funding:
+    description: A funding source for a scientific data entity.
+    attributes:
+      funding_agency_name:
+        range: string
+        recommended: true
+        description: The name of the funding source.
+      grant_id:
+        range: string
+        recommended: true
+        description: Grant identifier provided by the funding agency
+
+  # ============================================================================
+  # Deposition, release and last modified dates
+  # ============================================================================
+
+  Dates:
+    description: A set of dates.
+    attributes:
+      deposition_date:
+        range: date
+        required: true
+        description: The date a piece of data was deposited to the cryoET data portal.
+      release_date:
+        range: date
+        required: true
+        description: The date a piece of data was made public on the cryoET data portal.
+      last_modified_date:
+        range: date
+        required: true
+        description: The date a piece of data was last modified on the cryoET data portal.
+
+  # ============================================================================
+  # Snapshot / Thumbnail
+  # ============================================================================
+
+  PictureLocations:
+    description: A set of paths to representative images of a piece of data.
+    attributes:
+      snapshot:
+        range: string
+        description: Path to an associated (larger) snapshot image relative to the dataset directory root.
+      thumbnail:
+        range: string
+        description: Path to an associated (smaller) thumbnail image relative to the dataset directory root.
+
+
+  # ============================================================================
+  # Experimental metadata
+  # ============================================================================
+
+  Species:
+    description: The species from which the sample was derived.
+    attributes:
+      name:
+        range: string
+        recommended: true
+        description: The name of the species.
+      taxonomy_id:
+        range: integer
+        recommended: true
+        description: The NCBI taxonomy identifier for the species.
+
+  Tissue:
+    description: The type of tissue from which the sample was derived.
+    attributes:
+      name:
+        range: string
+        recommended: true
+        description: The name of the tissue.
+      id:
+        range: string
+        recommended: true
+        description: The UBERON identifier for the tissue.
+
+  CellType:
+    description: The cell type from which the sample was derived.
+    attributes:
+      name:
+        range: string
+        recommended: true
+        description: The name of the cell type.
+      id:
+        range: string
+        recommended: true
+        description: The CL identifier for the cell type.
+
+  CellStrain:
+    description: The strain or cell line from which the sample was derived.
+    attributes:
+      name:
+        range: string
+        recommended: true
+        description: The name of the cell line or strain.
+      id:
+        range: string
+        recommended: true
+        description: The CL identifier for the cell line or strain.
+
+  CellComponent:
+    description: The cellular component from which the sample was derived.
+    attributes:
+      name:
+        range: string
+        recommended: true
+        description: The name of the cellular component.
+      id:
+        range: string
+        recommended: true
+        description: The GO identifier for the cellular component.
+
+  ExperimentalMetadata:
+    description: Metadata describing sample and sample preparation methods used in a cryoET dataset.
+    attributes:
+      sample_type:
+        range: sample_type
+        required: true
+        description: The type of sample imaged in a CryoET study.
+      organism:
+        range: Species
+        description: The species from which the sample was derived.
+      tissue:
+        range: Tissue
+        description: The type of tissue from which the sample was derived.
+      cell_type:
+        range: CellType
+        description: The cell type from which the sample was derived.
+      cell_strain:
+        range: CellStrain
+        description: The strain or cell line from which the sample was derived.
+      cell_component:
+        range: CellComponent
+        description: The cellular component from which the sample was derived.
+      sample_preparation:
+        range: string
+        description: A description of the sample preparation.
+      grid_preparation:
+        range: string
+        description: A description of the grid preparation.
+      other_setup:
+        range: string
+        description: Any other experimental setup information not covered by the other fields.
+
+
+  # ============================================================================
+  # Dataset
+  # ============================================================================
+
+  CrossReferences:
+    description: A set of cross-references to other databases.
+    attributes:
+      dataset_publications:
+        range: string
+        description: Comma-separated list of DOIs for publications associated with the dataset.
+      related_database_entries:
+        range: string
+        description: Comma-separated list of related database entries for the dataset.
+      related_database_links:
+        range: string
+        description: Comma-separated list of related database links for the dataset.
+      dataset_citations:
+        range: string
+        description: Comma-separated list of DOIs for publications citing the dataset.
+
+  Dataset:
+    description: High-level description of a cryoET dataset.
+    mixins:
+      - TimestampedEntity
+      - AuthoredEntity
+      - FundedEntity
+      - PreviewableEntity
+      - ExperimentalMetadata
+    attributes:
+      dataset_identifier:
+        range: integer
+        required: true
+        description: The unique identifier of the dataset on the cryoET data portal.
+      dataset_title:
+        range: string
+        required: true
+        description: The title of the dataset.
+      dataset_description:
+        range: string
+        required: true
+        description: A short description of the CryoET dataset.
+      cross_references:
+        range: CrossReferences
+        description: A set of cross-references to other databases and publications.
+      snapshot:
+        range: string
+        description: Path to an associated snapshot image relative to the dataset directory root.
+      thumbnail:
+        range: string
+        description: Path to an associated thumbnail image relative to the dataset directory root.
+
+
+  # ============================================================================
+  # Meta-Mixins
+  # ============================================================================
+
+  TimestampedEntity:
+    description: An entity with associated deposition, release and last modified dates.
+    attributes:
+      dates:
+        range: Dates
+        required: true
+        description: The dates at which the entity was deposited, released and last modified.
+
+  AuthoredEntity:
+    description: An entity with associated authors.
+    attributes:
+      authors:
+        range: Author
+        required: true
+        description: An ordered list of authors of the entity.
+        multivalued: true
+        inlined_as_list : true
+
+  FundedEntity:
+    description: An entity with associated funding sources.
+    attributes:
+      funding:
+        range: Funding
+        recommended: true
+        description: An ordered list of funding sources for the entity.
+        multivalued: true
+
+  PreviewableEntity:
+    description: An entity with associated preview images.
+    attributes:
+      key_photos:
+        range: PictureLocations
+        description: A set of paths to representative images of the entity.
+        multivalued: false
