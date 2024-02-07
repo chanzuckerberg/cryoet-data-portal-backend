@@ -318,6 +318,7 @@ classes:
         recommended: true
         description: An ordered list of funding sources for the entity.
         multivalued: true
+        inlined_as_list : true
 
   PreviewableEntity:
     description: An entity with associated preview images.
