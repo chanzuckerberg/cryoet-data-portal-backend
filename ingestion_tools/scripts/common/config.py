@@ -1,3 +1,4 @@
+import contextlib
 import csv
 import os
 import os.path
@@ -112,10 +113,8 @@ class DataImportConfig:
     def load_run_metadata_file(self, file_attr: str):
         mapdata = {}
         map_filename = None
-        try:
+        with contextlib.suppress(AttributeError):
             map_filename = getattr(self, file_attr)
-        except AttributeError:
-            pass
         if not map_filename:
             return mapdata
         with self.fs.open(f"{self.input_path}/{map_filename}", "r") as tsvfile:
@@ -130,10 +129,8 @@ class DataImportConfig:
     def load_run_csv_file(self, file_attr: str):
         mapdata = {}
         map_filename = None
-        try:
+        with contextlib.suppress(AttributeError):
             map_filename = getattr(self, file_attr)
-        except AttributeError:
-            pass
         if not map_filename:
             return mapdata
         with self.fs.open(f"{self.input_path}/{map_filename}", "r") as csvfile:
@@ -181,7 +178,7 @@ class DataImportConfig:
         return {}
 
     def expand_string(self, run_name: str, string_template: Any) -> int | float | str:
-        if type(string_template) != str:
+        if not isinstance(string_template, str):
             return string_template
         if run_data := self.get_run_data_map(run_name):
             string_template = string_template.format(**run_data)
@@ -195,16 +192,16 @@ class DataImportConfig:
 
     def expand_metadata(self, run_name: str, metadata_dict: dict[str, Any]) -> dict[str, Any]:
         for k, v in metadata_dict.items():
-            if type(v) == str:
+            if isinstance(v, str):
                 metadata_dict[k] = self.expand_string(run_name, v)
-            elif (type(v)) == dict:
+            elif isinstance(v, dict):
                 metadata_dict[k] = self.expand_metadata(run_name, v)
-            elif (type(v)) == list:
+            elif isinstance(v, list):
                 for idx in range(len(v)):
                     # Note - we're not supporting deeply nested lists,
                     # but we don't need to with our current data model.
                     item = v[idx]
-                    if type(item) == str:
+                    if isinstance(item, str):
                         v[idx] = self.expand_string(run_name, item)
         return metadata_dict
 
@@ -266,10 +263,8 @@ class DataImportConfig:
         if not globstring:
             return []
         globvars = run.get_glob_vars()
-        try:
+        with contextlib.suppress(ValueError):
             globvars["int_run_name"] = int(run.run_name)
-        except ValueError:
-            pass
         expanded_glob = os.path.join(self.dataset_root_dir, globstring.format(**globvars))
         results = self.fs.glob(expanded_glob)
         if not results:

@@ -1,22 +1,16 @@
 import json
 import os
 import os.path
-import re
 from urllib import parse
 
 import click
+from importers.dataset import DatasetImporter
+from importers.neuroglancer import NeuroglancerImporter
+from importers.run import RunImporter
+from importers.tomogram import TomogramImporter
 
 from common.config import DataImportConfig
 from common.fs import FileSystemApi
-from importers.annotation import AnnotationImporter
-from importers.dataset import DatasetImporter
-from importers.dataset_key_photo import DatasetKeyPhotoImporter
-from importers.frames import FramesImporter
-from importers.key_image import KeyImageImporter
-from importers.neuroglancer import NeuroglancerImporter
-from importers.run import RunImporter
-from importers.tiltseries import RawTiltImporter, TiltSeriesImporter
-from importers.tomogram import TomogramImporter
 
 
 def format_ng_link(neuroglancer_data):

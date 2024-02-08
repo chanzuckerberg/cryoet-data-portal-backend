@@ -1,6 +1,6 @@
+import contextlib
 import os
 import re
-from typing import Any, Dict
 
 from common.formats import tojson
 from common.fs import FileSystemApi
@@ -49,10 +49,8 @@ class AnnotationMetadata(MergedMetadata):
     def get_filename_prefix(self, output_dir: str, identifier: int) -> str:
         version = self.metadata["version"]
         obj = None
-        try:
+        with contextlib.suppress(KeyError):
             obj = self.metadata["annotation_object"]["description"]
-        except KeyError:
-            pass
         if not obj:
             obj = self.metadata["annotation_object"]["name"]
         dest_filename = os.path.join(
@@ -62,7 +60,7 @@ class AnnotationMetadata(MergedMetadata):
                     str(identifier),
                     re.sub("[^0-9a-z]", "_", obj.lower()),
                     re.sub("[^0-9a-z.]", "_", f"{version.lower()}"),
-                ]
+                ],
             ),
         )
         return dest_filename

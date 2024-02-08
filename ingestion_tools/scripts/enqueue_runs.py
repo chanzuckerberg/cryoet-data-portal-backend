@@ -7,11 +7,11 @@ import time
 import boto3
 import click
 from boto3 import Session
+from importers.dataset import DatasetImporter
+from importers.run import RunImporter
 
 from common.config import DataImportConfig
 from common.fs import FileSystemApi
-from importers.dataset import DatasetImporter
-from importers.run import RunImporter
 
 
 @click.group()
@@ -41,9 +41,7 @@ def run_job(
     if not memory:
         memory = 24000
 
-    state_machine_arn = (
-        f"arn:aws:states:{aws_region}:{aws_account_id}:stateMachine:{sfn_name}"
-    )
+    state_machine_arn = f"arn:aws:states:{aws_region}:{aws_account_id}:stateMachine:{sfn_name}"
 
     execution_name = re.sub(r"[^0-9a-zA-Z-]", r"-", execution_name)
     sfn_input_json = {
@@ -55,7 +53,7 @@ def run_job(
                 "input_bucket": input_bucket,
                 "output_path": output_path,
                 "flags": flags,
-            }
+            },
         },
         "OutputPrefix": f"s3://{swipe_comms_bucket}/swipe/standardize-dirs-sfn/{execution_name}/results",
         "RUN_WDL_URI": f"s3://{swipe_wdl_bucket}/{swipe_wdl_key}",
@@ -180,9 +178,7 @@ def queue(
         if list(filter(lambda x: x.match(run.run_name), exclude_run_name_patterns)):
             print(f"Excluding {run.run_name}..")
             continue
-        if filter_run_name and not list(
-            filter(lambda x: x.match(run.run_name), filter_run_name_patterns)
-        ):
+        if filter_run_name and not list(filter(lambda x: x.match(run.run_name), filter_run_name_patterns)):
             print(f"Skipping {run.run_name}..")
             continue
         print(f"Processing {run.run_name}...")

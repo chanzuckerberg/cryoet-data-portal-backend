@@ -9,9 +9,9 @@ def cli():
     pass
 
 
-@cli.command()
+@cli.command(name="tojson")
 @click.argument("yaml_file", required=True, type=str)
-def tojson(yaml_file: str):
+def pytojson(yaml_file: str):
     with open(yaml_file, "r") as fh:
         data = yaml.safe_load(fh.read())
     print(tojson(data))

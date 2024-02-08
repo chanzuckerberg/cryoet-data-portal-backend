@@ -3,7 +3,6 @@ import subprocess
 from typing import TYPE_CHECKING
 
 from common.config import DataImportConfig
-
 from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
