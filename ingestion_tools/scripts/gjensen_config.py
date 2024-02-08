@@ -6,7 +6,7 @@ import re
 from collections import defaultdict
 from copy import deepcopy
 from functools import partial
-from typing import Any, Callable
+from typing import Any, Callable, Optional
 
 import click
 import yaml
@@ -34,7 +34,7 @@ def to_dataset_author(data: dict[str, Any]) -> list[dict[str, Any]]:
     )
 
 
-def clean(val: str) -> str:
+def clean(val: Optional[str]) -> Optional[str]:
     if not val:
         return None
 
@@ -46,7 +46,7 @@ def clean(val: str) -> str:
 
 
 def to_dataset_config(dataset_id: int, data: dict[str, Any], authors: list[dict[str, Any]]) -> dict[str, Any]:
-    dataset = data.get("dataset")
+    dataset: dict[str, Any] = data.get("dataset", {})
 
     config = {
         "dataset_identifier": dataset_id,
@@ -64,7 +64,7 @@ def to_dataset_config(dataset_id: int, data: dict[str, Any], authors: list[dict[
         },
     }
 
-    run_name = next((entry["run_name"] for entry in data.get("runs") if "run_name" in entry), None)
+    run_name: Optional[str] = next((entry["run_name"] for entry in data.get("runs", {}) if "run_name" in entry), None)
     if run_name:
         prefix = f"cryoetportal-rawdatasets-dev/GJensen_full/{run_name}"
         config["key_photos"] = {
@@ -96,7 +96,7 @@ def to_standardization_config(
     run_names = []
     mapped_tomo_name = {}
     run_has_multiple_tomos = False
-    for run in data.get("runs"):
+    for run in data.get("runs", {}):
         run_names.append(run["run_name"])
         if len(run["tomograms"]) > 1:
             run_has_multiple_tomos = True
@@ -175,7 +175,7 @@ float_fields = {
 
 def to_template_by_run(templates, run_data_map, prefix: str, path) -> dict[str, Any]:
     template_metadata = {}
-    all_keys = set()
+    all_keys: set[str] = set()
 
     templates_for_path = []
     for entry in templates:
@@ -203,7 +203,7 @@ def to_template_by_run(templates, run_data_map, prefix: str, path) -> dict[str, 
                     template_metadata_value = f"float {{{run_data_map_key}}}"
                 else:
                     template_metadata_value = f"{{{run_data_map_key}}}"
-                template_metadata[key] = template_metadata_value
+                template_metadata[key] = template_metadata_value  # type: ignore
                 for entry in templates_for_path:
                     for source in entry["sources"]:
                         run_data_map[source][run_data_map_key] = entry["metadata"].get(key)
@@ -233,8 +233,8 @@ def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
     return tilt_series
 
 
-def to_tomogram(authors: list[dict[str, Any]], data: dict[str, Any]) -> [dict[str, Any] | Any]:
-    tomogram = next((deepcopy(val) for val in data["tomograms"].values()), {})
+def to_tomogram(authors: list[dict[str, Any]], data: dict[str, Any]) -> dict[str, Any]:
+    tomogram: dict[str, Any] = next((deepcopy(val) for val in data["tomograms"].values()), {})
     if len(data["tomograms"].keys()) > 1:
         print(
             f'{data["run_name"]} has {len(data["tomograms"].values())} tomograms: '
@@ -271,10 +271,10 @@ def to_config_by_run(
         if metadata_key not in templates:
             templates[metadata_key] = {"metadata": template, "sources": [entry["run_name"]]}
         else:
-            templates[metadata_key]["sources"].append(entry["run_name"])
+            templates[metadata_key]["sources"].append(entry["run_name"])  # type: ignore
 
     if len(templates) <= 1:
-        return next(iter(templates.values()), {}).get("metadata")
+        return next(iter(templates.values()), {}).get("metadata")  # type: ignore
 
     print(f"{dataset_id} has {len(templates)} configs for {prefix}")
     return to_template_by_run(list(templates.values()), run_data_map, prefix, [])
@@ -290,7 +290,7 @@ def cli(ctx):
 @click.argument("input_dir", required=True, type=str)
 @click.argument("output_dir", required=True, type=str)
 @click.pass_context
-def create(ctx, input_dir: str, output_dir: str) -> None:
+def create(ctx, input_dir: str, output_dir: str):
     dataset_id = 10014
     fs = LocalFilesystem(force_overwrite=True)
     fs.makedirs(output_dir)
@@ -308,7 +308,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
         print(f"Reading file {file_path}")
         for _key, val in config.items():
             authors = to_dataset_author(val.get("dataset"))
-            run_data_map = defaultdict(dict)
+            run_data_map: dict[str, Any] = defaultdict(dict)
             dataset_config = {
                 "dataset": to_dataset_config(dataset_id, val, authors),
                 "runs": {},

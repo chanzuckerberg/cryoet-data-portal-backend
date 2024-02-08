@@ -2674,6 +2674,31 @@ files = [
 ]
 
 [[package]]
+name = "types-dateparser"
+version = "1.1.4.20240106"
+description = "Typing stubs for dateparser"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "types-dateparser-1.1.4.20240106.tar.gz", hash = "sha256:155a1bd64111d9f2a03146d56f495f30ac58fdced646773144a68dca870a329c"},
+    {file = "types_dateparser-1.1.4.20240106-py3-none-any.whl", hash = "sha256:4abc6a4dc6cf8986f513672dce34057e609e6c857afbaba2fd8e33e1082efe4d"},
+]
+
+[[package]]
+name = "types-requests"
+version = "2.31.0.20240125"
+description = "Typing stubs for requests"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "types-requests-2.31.0.20240125.tar.gz", hash = "sha256:03a28ce1d7cd54199148e043b2079cdded22d6795d19a2c2a6791a4b2b5e2eb5"},
+    {file = "types_requests-2.31.0.20240125-py3-none-any.whl", hash = "sha256:9592a9a4cb92d6d75d9b491a41477272b710e021011a2a3061157e2fb1f1a5d1"},
+]
+
+[package.dependencies]
+urllib3 = ">=2"
+
+[[package]]
 name = "types-s3transfer"
 version = "0.10.0"
 description = "Type annotations and code completion for s3transfer"
@@ -2972,4 +2997,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "3740306b9b43e919ec7f7cbd6fa4d4d9a4e233d4a1f9ef8dc822e0f7bab1f952"
+content-hash = "41ed3d8bc99a2c83455e589adb11f79115dc115b57f3e659878ce65ef8e88986"

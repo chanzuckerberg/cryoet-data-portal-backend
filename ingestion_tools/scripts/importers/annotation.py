@@ -1,7 +1,7 @@
 import csv
 import os
 import os.path
-from typing import TYPE_CHECKING, Any, TypedDict
+from typing import TYPE_CHECKING, Any, Optional, TypedDict
 
 import ndjson
 import numpy as np
@@ -40,18 +40,19 @@ class AnnotationMap(TypedDict):
 
 class BaseAnnotationSource:
     is_viz_default: bool
+    glob_string: str
 
-    def get_source_file(self, fs: FileSystemApi, input_prefix: str):
+    def get_source_file(self, fs: FileSystemApi, input_prefix: str) -> str:
         source_path = os.path.join(input_prefix, self.glob_string)
         for file in fs.glob(source_path):
             return file
         raise Exception(f"No annotation source file found for {source_path}!")
 
-    def get_object_count(self, fs: FileSystemApi, output_prefix: str):
+    def get_object_count(self, fs: FileSystemApi, output_prefix: str) -> int:
         # We currently don't count objects in segmentation masks.
         return 0
 
-    def is_valid(self, *args, **kwargs):
+    def is_valid(self, *args, **kwargs) -> bool:
         # To be overridden by subclasses to communicate whether this source contains valid information for this run.
         return True
 
@@ -118,7 +119,7 @@ class SemanticSegmentationMaskFile(VolumeAnnotationSource):
         if self.file_format not in ["mrc"]:
             raise NotImplementedError("We only support MRC files for segmentation masks")
 
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float = None):
+    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: Optional[float] = None):
         input_file = self.get_source_file(fs, input_prefix)
         return scale_maskfile(fs, self.get_output_filename(output_prefix), input_file, self.label, write=True)
 
@@ -150,7 +151,7 @@ class PointFile(BaseAnnotationSource):
         if self.file_format not in ["csv", "csv_with_header"]:
             raise NotImplementedError("We only support CSV files for Point files")
 
-    def point(self, x: int, y: int, z: int):
+    def point(self, x: float, y: float, z: float):
         annotation = {
             "type": "point",
             "location": {"x": x, "y": y, "z": z},

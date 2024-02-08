@@ -25,19 +25,19 @@ class FileSystemApi:
     def open(self, path: str, mode: str):
         pass
 
-    def localreadable(self, path: str) -> str:
+    def localreadable(self, path: str) -> str:  # type: ignore
         pass
 
-    def makedirs(self, path: str):
+    def makedirs(self, path: str) -> None:
         pass
 
-    def localwritable(self, path) -> str:
+    def localwritable(self, path) -> str:  # type: ignore
         pass
 
     def push(self, path):
         pass
 
-    def destformat(self, path) -> str:
+    def destformat(self, path) -> str:  # type: ignore
         pass
 
     def copy(self, src_path: str, dest_path: str):
@@ -155,7 +155,7 @@ class LocalFilesystem(FileSystemApi):
     def localwritable(self, path) -> str:
         return path
 
-    def makedirs(self, path: str):
+    def makedirs(self, path: str) -> None:
         os.makedirs(path, exist_ok=True)
 
     def destformat(self, path) -> str:

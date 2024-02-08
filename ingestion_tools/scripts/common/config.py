@@ -4,7 +4,7 @@ import os
 import os.path
 import re
 from copy import deepcopy
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 import yaml
 
@@ -36,10 +36,10 @@ class DataImportConfig:
     run_regex: re.Pattern
     tomo_glob: str
     tomo_format: str
-    tomo_regex: re.Pattern = None
-    tomo_key_photo_glob: str = None
+    tomo_regex: Optional[re.Pattern] = None
+    tomo_key_photo_glob: Optional[str] = None
     tomo_voxel_size: str
-    ts_name_regex: re.Pattern = None
+    ts_name_regex: Optional[re.Pattern] = None
     run_name_regex: re.Pattern
     frames_name_regex: re.Pattern
     frames_glob: str
@@ -110,8 +110,8 @@ class DataImportConfig:
         self.load_run_ts_map()
         self.load_run_data_map()
 
-    def load_run_metadata_file(self, file_attr: str):
-        mapdata = {}
+    def load_run_metadata_file(self, file_attr: str) -> dict[str, Any]:
+        mapdata: dict[str, Any] = {}
         map_filename = None
         with contextlib.suppress(AttributeError):
             map_filename = getattr(self, file_attr)
@@ -126,8 +126,8 @@ class DataImportConfig:
                 mapdata[row["run_name"]] = row
         return mapdata
 
-    def load_run_csv_file(self, file_attr: str):
-        mapdata = {}
+    def load_run_csv_file(self, file_attr: str) -> dict[str, Any]:
+        mapdata: dict[str, Any] = {}
         map_filename = None
         with contextlib.suppress(AttributeError):
             map_filename = getattr(self, file_attr)
@@ -226,10 +226,11 @@ class DataImportConfig:
 
     def get_run_override(self, run_name: str) -> RunOverride | None:
         if not self.overrides_by_run:
-            return
+            return None
         for item in self.overrides_by_run:
             if item.run_regex.match(run_name):
                 return item
+        return None
 
     def get_metadata_path(self, obj: BaseImporter) -> str:
         key = f"{obj.type_key}_metadata"

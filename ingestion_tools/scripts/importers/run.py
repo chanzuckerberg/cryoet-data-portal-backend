@@ -1,5 +1,5 @@
 import os
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 from common.config import DataImportConfig
 from common.metadata import RunMetadata
@@ -13,6 +13,7 @@ else:
 
 class RunImporter(BaseImporter):
     type_key = "run"
+    voxel_spacing: Optional[str]
 
     def __init__(
         self,

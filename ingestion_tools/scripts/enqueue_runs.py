@@ -3,6 +3,7 @@ import os
 import os.path
 import re
 import time
+from typing import Optional
 
 import boto3
 import click
@@ -184,12 +185,12 @@ def queue(
         print(f"Processing {run.run_name}...")
         new_args = list(args)  # make a copy
         new_args.append(f"--filter-run-name '^{run.run_name}$'")
-        dataset_id = digitmatch.match(config_file)[1]
+        dataset_id = digitmatch.match(config_file)[1]  # type: ignore
         execution_name = f"{int(time.time())}-ds{dataset_id}-run{run.run_name}"
 
         # Learn more about our AWS environment
-        swipe_comms_bucket = None
-        swipe_wdl_bucket = None
+        swipe_comms_bucket: Optional[str] = None
+        swipe_wdl_bucket: Optional[str] = None
         sfn_name = "cryoet-ingestion-{env_name}-default-wdl"
 
         sts = boto3.client("sts")
@@ -204,6 +205,10 @@ def queue(
                 swipe_wdl_bucket = bucket_name
             if "swipe-comms" in bucket_name and env_name in bucket_name:
                 swipe_comms_bucket = bucket_name
+        if not swipe_comms_bucket:
+            raise Exception("can't find swipe comms bucket")
+        if not swipe_wdl_bucket:
+            raise Exception("can't find swipe wdl bucket")
 
         run_job(
             execution_name,
