@@ -1,6 +1,7 @@
 import contextlib
 import os
 import re
+from typing import Any
 
 from common.formats import tojson
 from common.fs import FileSystemApi
@@ -8,18 +9,18 @@ from common.merge import deep_merge
 
 
 class BaseMetadata:
-    def __init__(self, fs: FileSystemApi, template):
+    def __init__(self, fs: FileSystemApi, template: dict[str, Any]):
         self.fs = fs
         self.metadata = template
 
-    def write_metadata(self, filename, is_json=True):
+    def write_metadata(self, filename: str, is_json=True) -> None:
         with self.fs.open(filename, "w") as fh:
             data = tojson(self.metadata) if is_json else self.metadata
             fh.write(data)
 
 
 class MergedMetadata(BaseMetadata):
-    def write_metadata(self, filename, merge_data):
+    def write_metadata(self, filename: str, merge_data: dict[str, Any]) -> None:
         metadata = deep_merge(self.metadata, merge_data)
         with self.fs.open(filename, "w") as fh:
             fh.write(tojson(metadata))

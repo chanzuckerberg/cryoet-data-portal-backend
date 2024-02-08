@@ -1,5 +1,5 @@
 import os
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 import numpy as np
 from mrcfile.mrcobject import MrcObject
@@ -8,20 +8,24 @@ from common.image import get_header, get_tomo_metadata, get_voxel_size, scale_mr
 
 if TYPE_CHECKING:
     from common.config import DataImportConfig
+    from importers.dataset import DatasetImporter
     from importers.run import RunImporter
+    from importers.tomogram import TomogramImporter
 else:
     RunImporter = "RunImporter"
+    DatasetImporter = "DatasetImporter"
+    TomogramImporter = "TomogramImporter"
 
 
 class BaseImporter:
     type_key: str
     cached_find_results: dict[str, "BaseImporter"] = {}
 
-    def __init__(self, config: "DataImportConfig", parent: Any | None = None):
+    def __init__(self, config: "DataImportConfig", parent: Optional["BaseImporter"] = None):
         self.config = config
         self.parent = parent
 
-    def parent_getter(self, type_key: str):
+    def parent_getter(self, type_key: str) -> "BaseImporter":
         parent = self
         while True:
             if not parent:
@@ -31,7 +35,7 @@ class BaseImporter:
             else:
                 parent = parent.parent
 
-    def get_glob_vars(self):
+    def get_glob_vars(self) -> dict[str, Any]:
         run_name = self.get_run().run_name
         glob_vars = self.config.get_run_data_map(run_name)
 
@@ -43,22 +47,22 @@ class BaseImporter:
 
         return glob_vars
 
-    def get_run(self):
+    def get_run(self) -> RunImporter:
         return self.parent_getter("run")
 
-    def get_dataset(self):
+    def get_dataset(self) -> DatasetImporter:
         return self.parent_getter("dataset")
 
-    def get_tomogram(self):
+    def get_tomogram(self) -> TomogramImporter:
         return self.parent_getter("tomogram")
 
-    def get_output_path(self):
+    def get_output_path(self) -> str:
         return self.config.get_output_path(self)
 
     def get_base_metadata(self) -> dict[str, Any]:
         return self.config.get_expanded_metadata(self)
 
-    def get_metadata_path(self):
+    def get_metadata_path(self) -> str:
         return self.config.get_metadata_path(self)
 
 
@@ -66,8 +70,8 @@ class VolumeImporter(BaseImporter):
     def __init__(
         self,
         path: str,
-        *args,
-        **kwargs,
+        *args: list[Any],
+        **kwargs: dict[str, Any],
     ):
         super().__init__(*args, **kwargs)
         self.volume_filename = path
@@ -87,7 +91,7 @@ class VolumeImporter(BaseImporter):
         scale_z_axis: bool = True,
         write_zarr: bool = True,
         write_mrc: bool = True,
-        voxel_spacing=None,
+        voxel_spacing: float | None = None,
     ) -> dict[str, Any]:
         output_prefix = self.get_output_path()
         return scale_mrcfile(
@@ -101,7 +105,7 @@ class VolumeImporter(BaseImporter):
             voxel_spacing=voxel_spacing,
         )
 
-    def get_output_path(self):
+    def get_output_path(self) -> str:
         output_dir = super().get_output_path()
         return os.path.join(output_dir, self.get_run().run_name)
 

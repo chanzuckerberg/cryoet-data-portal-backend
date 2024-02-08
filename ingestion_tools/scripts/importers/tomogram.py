@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING, Any
 
+from common.config import DataImportConfig
 from common.metadata import TomoMetadata
 from common.normalize_fields import normalize_fiducial_alignment
 from importers.base_importer import VolumeImporter
@@ -15,19 +16,19 @@ class TomogramImporter(VolumeImporter):
     type_key = "tomogram"
     cached_find_results: dict[str, Any] = {}
 
-    def get_voxel_spacing(self):
+    def get_voxel_spacing(self) -> float:
         if self.config.tomo_format != "mrc":
             raise NotImplementedError("implement handling for other tomo input formats!")
         if voxel_spacing := self.get_base_metadata().get("voxel_spacing"):
             return float(voxel_spacing)
         return self.get_voxel_size().item()
 
-    def import_tomogram(self, write_mrc: bool = True, write_zarr: bool = True):
+    def import_tomogram(self, write_mrc: bool = True, write_zarr: bool = True) -> None:
         if self.config.tomo_format != "mrc":
             raise NotImplementedError("implement handling for other tomo input formats!")
         _ = self.scale_mrcfile(write_mrc=write_mrc, write_zarr=write_zarr, voxel_spacing=self.get_voxel_spacing())
 
-    def import_metadata(self, write: bool):
+    def import_metadata(self, write: bool) -> None:
         dest_tomo_metadata = self.get_metadata_path()
         merge_data = self.load_extra_metadata()
         key_image_importer = KeyImageImporter(self.config, parent=self)
@@ -50,9 +51,14 @@ class TomogramImporter(VolumeImporter):
             metadata.write_metadata(dest_tomo_metadata, merge_data)
 
     @classmethod
-    def find_tomograms(cls, config, run: RunImporter):
+    def find_tomograms(
+        cls,
+        config: DataImportConfig,
+        run: RunImporter,
+        skip_cache: bool = False,
+    ) -> list["TomogramImporter"]:
         cache_key = run.run_name
-        if cache_key in cls.cached_find_results:
+        if not skip_cache and cache_key in cls.cached_find_results:
             return cls.cached_find_results[cache_key]
         tomo_glob = config.tomo_glob
         if config.run_to_tomo_map:
