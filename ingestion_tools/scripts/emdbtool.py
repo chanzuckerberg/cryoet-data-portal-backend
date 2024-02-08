@@ -1,3 +1,4 @@
+import contextlib
 from typing import Optional
 
 import click
@@ -143,7 +144,7 @@ def fetch_all(emdb_id):
     try:
         info = fetch_emdb_image_acquisition(emdb_id)
         print(yaml.dump(info))
-    except:
+    except requests.exceptions.JSONDecodeError:
         print("Fetching image acquisition failed")
     info = fetch_emdb_imaging(emdb_id)
     print(yaml.dump(info))
@@ -155,9 +156,7 @@ def fetch_all(emdb_id):
 
 @cli.command()
 @click.argument("emdb_id", required=True, type=str)
-@click.option(
-    "--merge", required=False, type=str, help="Merge in another metadata document"
-)
+@click.option("--merge", required=False, type=str, help="Merge in another metadata document")
 def convert(emdb_id, merge):
     dataset_data = convert_dataset(emdb_id)
     tiltseries_data = convert_tiltseries(emdb_id)
@@ -182,9 +181,9 @@ def convert(emdb_id, merge):
 
 def convert_tomogram(emdb_id):
     experiment = fetch_emdb_experiment(emdb_id)
-    reconstruction = experiment["structure_determination_list"][
-        "structure_determination"
-    ][0]["image_processing"][0]["final_reconstruction"]
+    reconstruction = experiment["structure_determination_list"]["structure_determination"][0]["image_processing"][0][
+        "final_reconstruction"
+    ]
     reconstruction_method = reconstruction.get("algorithm")
     if reconstruction_method == "BACK PROJECTION":
         reconstruction_method = "Weighted back projection"
@@ -193,10 +192,7 @@ def convert_tomogram(emdb_id):
         "fiducial_alignment_status": None,
         "reconstruction_method": reconstruction_method,
         "reconstruction_software": ", ".join(
-            [
-                item["name"]
-                for item in reconstruction.get("software_list", {}).get("software", [])
-            ]
+            [item["name"] for item in reconstruction.get("software_list", {}).get("software", [])],
         ),
     }
     return doc
@@ -204,16 +200,14 @@ def convert_tomogram(emdb_id):
 
 def convert_tiltseries(emdb_id):
     experiment = fetch_emdb_experiment(emdb_id)
-    microscope = experiment["structure_determination_list"]["structure_determination"][
-        0
-    ]["microscopy_list"]["microscopy"][0]
+    microscope = experiment["structure_determination_list"]["structure_determination"][0]["microscopy_list"][
+        "microscopy"
+    ][0]
     acceleration_voltage = int(microscope["acceleration_voltage"]["valueOf_"])
     ac_voltage_units = microscope["acceleration_voltage"]["units"]
     if ac_voltage_units.lower() == "kv":
         acceleration_voltage *= 1000
-    energy_filter = (
-        microscope.get("specialist_optics", {}).get("energy_filter", {}).get("name")
-    )
+    energy_filter = microscope.get("specialist_optics", {}).get("energy_filter", {}).get("name")
     phase_plate = microscope.get("specialist_optics", {}).get("phase_plate", None)
     doc = {
         "microscope": {
@@ -227,15 +221,13 @@ def convert_tiltseries(emdb_id):
             "image_corrector": None,
         },
         "camera": {
-            "manufacturer": microscope["image_recording_list"]["image_recording"][0][
-                "film_or_detector_model"
-            ]["valueOf_"].split()[0],
+            "manufacturer": microscope["image_recording_list"]["image_recording"][0]["film_or_detector_model"][
+                "valueOf_"
+            ].split()[0],
             "model": " ".join(
-                microscope["image_recording_list"]["image_recording"][0][
-                    "film_or_detector_model"
-                ]["valueOf_"]
+                microscope["image_recording_list"]["image_recording"][0]["film_or_detector_model"]["valueOf_"]
                 .split("(")[0]  # filter out resolution
-                .split()[1:]
+                .split()[1:],
             ),
         },
         "acceleration_voltage": acceleration_voltage,
@@ -258,12 +250,9 @@ def get_empiar_image_urls(related_databases: list[str]) -> Optional[dict[str, st
         if not entry.startswith("EMPIAR-"):
             continue
         id = entry.replace("EMPIAR-", "")
-        urls = [
-            f"https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/{name}.gif"
-            for name in [f"{id}-l", f"{id}"]
-        ]
+        urls = [f"https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/{name}.gif" for name in [f"{id}-l", f"{id}"]]
 
-        if all(list([requests.get(url).ok for url in urls])):
+        if all(requests.get(url).ok for url in urls):
             return {"snapshot": urls[0], "thumbnail": urls[1]}
     return None
 
@@ -273,13 +262,8 @@ def convert_dataset(emdb_id):
     annotations = fetch_emdb_annotations(emdb_id)
     authors = []
     # Try harder to get ORCID's
-    orcids = {
-        item["title"]: item["id"]
-        for item in annotations["annotations"].get("ORCID", [])
-    }
-    for item in info["crossreferences"]["citation_list"]["primary_citation"][
-        "citation_type"
-    ]["author"]:
+    orcids = {item["title"]: item["id"] for item in annotations["annotations"].get("ORCID", [])}
+    for item in info["crossreferences"]["citation_list"]["primary_citation"]["citation_type"]["author"]:
         orcid = item.get("ORCID")
         if not orcid:
             orcid = orcids.get(item["valueOf_"])
@@ -291,29 +275,19 @@ def convert_dataset(emdb_id):
         else:
             authors.append({"name": item["valueOf_"]})
     publications = []
-    for item in info["crossreferences"]["citation_list"]["primary_citation"][
-        "citation_type"
-    ]["external_references"]:
+    for item in info["crossreferences"]["citation_list"]["primary_citation"]["citation_type"]["external_references"]:
         if item["type_"] == "DOI":
             publications.append(item["valueOf_"])
 
     related_databases = []
     if "EMPIAR" in annotations["annotations"]:
-        related_databases = [
-            item["id"] for item in annotations["annotations"]["EMPIAR"]
-        ]
+        related_databases = [item["id"] for item in annotations["annotations"]["EMPIAR"]]
 
     organism = None
-    try:
-        organism = info["sample"]["supramolecule_list"]["supramolecule"][0][
-            "natural_source"
-        ][0]["organism"]["valueOf_"]
-    except KeyError:
-        pass
+    with contextlib.suppress(KeyError):
+        organism = info["sample"]["supramolecule_list"]["supramolecule"][0]["natural_source"][0]["organism"]["valueOf_"]
     if not organism:
-        organism = info["sample"]["supramolecule_list"]["supramolecule"][0][
-            "sci_species_name"
-        ]["valueOf_"]
+        organism = info["sample"]["supramolecule_list"]["supramolecule"][0]["sci_species_name"]["valueOf_"]
 
     metadata_doc = {
         "dataset_title": info["sample"]["name"]["valueOf_"],
@@ -321,7 +295,7 @@ def convert_dataset(emdb_id):
         "organism": {"name": organism},
         "cross_references": {
             "dataset_publications": ", ".join(publications),
-            "related_database_entries": ", ".join(related_databases)
+            "related_database_entries": ", ".join(related_databases),
         },
         "funding": [
             {"funding_agency_name": item["funding_body"], "grant_id": item.get("code")}
@@ -332,9 +306,9 @@ def convert_dataset(emdb_id):
     }
 
     experiment = fetch_emdb_experiment(emdb_id)
-    sample_prep = experiment["structure_determination_list"]["structure_determination"][
-        0
-    ]["specimen_preparation_list"]["specimen_preparation"][0]
+    sample_prep = experiment["structure_determination_list"]["structure_determination"][0]["specimen_preparation_list"][
+        "specimen_preparation"
+    ][0]
     sample_prep_list = []
     for k, v in sample_prep.items():
         if k in ("grid", "preparation_id", "sectioning"):

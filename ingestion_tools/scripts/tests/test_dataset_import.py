@@ -1,10 +1,11 @@
 import json
 
-from common.config import DataImportConfig
 from importers.dataset import DatasetImporter
 from importers.dataset_key_photo import DatasetKeyPhotoImporter
-from common.fs import FileSystemApi
 from mypy_boto3_s3 import S3Client
+
+from common.config import DataImportConfig
+from common.fs import FileSystemApi
 
 
 def test_import_dataset_metadata(s3_fs: FileSystemApi, test_output_bucket: str) -> None:
@@ -15,7 +16,8 @@ def test_import_dataset_metadata(s3_fs: FileSystemApi, test_output_bucket: str) 
     dataset = DatasetImporter(config, None)
     dataset.import_metadata(output_path)
 
-    output = s3_fs.open(f"{output_path}/10001/dataset_metadata.json", "r").read()
+    with s3_fs.open(f"{output_path}/10001/dataset_metadata.json", "r") as fh:
+        output = fh.read()
     metadata = json.loads(output)
     assert metadata["dataset_title"] == "Dataset 1"
 
@@ -32,7 +34,8 @@ def test_key_photo_import_http(s3_fs: FileSystemApi, test_output_bucket: str, s3
     dataset_key_photos_importer.import_key_photo()
     dataset.import_metadata(output_path)
 
-    output = s3_fs.open(f"{output_path}/10001/dataset_metadata.json", "r").read()
+    with s3_fs.open(f"{output_path}/10001/dataset_metadata.json", "r") as fh:
+        output = fh.read()
     metadata = json.loads(output)
     assert metadata["dataset_title"] == "Dataset 1"
 

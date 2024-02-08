@@ -1,3 +1,4 @@
+import contextlib
 import glob
 import os
 import os.path
@@ -99,10 +100,8 @@ class S3Filesystem(FileSystemApi):
         remote_file = os.path.relpath(path, self.tmpdir)
         src_size = os.path.getsize(path)
         dest_size = 0
-        try:
+        with contextlib.suppress(FileNotFoundError):
             dest_size = self.s3fs.size(remote_file)
-        except FileNotFoundError:
-            pass
         if src_size == dest_size:
             if self.force_overwrite:
                 print(f"Forcing re-upload of {path}")

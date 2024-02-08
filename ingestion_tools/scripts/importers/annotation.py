@@ -1,18 +1,15 @@
 import csv
-import json
 import os
 import os.path
-import re
-from typing import TYPE_CHECKING, Any, Dict, Optional, TypedDict
+from typing import TYPE_CHECKING, Any, TypedDict
 
 import ndjson
 import numpy as np
-import starfile
+
 from common import oriented_point_converter as opc
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, scale_maskfile, scale_mrcfile
 from common.metadata import AnnotationMetadata
-
 from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
@@ -83,12 +80,12 @@ class VolumeAnnotationSource(BaseAnnotationSource):
 
 class SegmentationMaskFile(VolumeAnnotationSource):
     def __init__(
-            self,
-            shape: str,
-            glob_string: str,
-            glob_vars: dict[str, str],
-            file_format: str,
-            is_viz_default: bool = False,
+        self,
+        shape: str,
+        glob_string: str,
+        glob_vars: dict[str, str],
+        file_format: str,
+        is_viz_default: bool = False,
     ):
         self.glob_string = glob_string.format(**glob_vars)
         self.file_format = file_format
@@ -99,9 +96,7 @@ class SegmentationMaskFile(VolumeAnnotationSource):
 
     def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float):
         input_file = self.get_source_file(fs, input_prefix)
-        return scale_mrcfile(
-            fs, self.get_output_filename(output_prefix), input_file, voxel_spacing=voxel_spacing
-        )
+        return scale_mrcfile(fs, self.get_output_filename(output_prefix), input_file, voxel_spacing=voxel_spacing)
 
 
 class SemanticSegmentationMaskFile(VolumeAnnotationSource):
@@ -131,7 +126,7 @@ class SemanticSegmentationMaskFile(VolumeAnnotationSource):
         try:
             input_file = self.get_source_file(fs, input_prefix)
             return check_mask_for_label(fs, input_file, self.label)
-        except:
+        except Exception:
             return False
 
 
@@ -173,8 +168,8 @@ class PointFile(BaseAnnotationSource):
         if self.columns == "zyx":
             coord_order = [2, 1, 0]
         annotation_set = []
-        data = fs.open(csvfilename, "r")
-        points = csv.reader(data, delimiter=self.delimiter)
+        with fs.open(csvfilename, "r") as data:
+            points = csv.reader(data, delimiter=self.delimiter)
         if skip_header:
             next(points)
         for coord in points:
@@ -183,7 +178,7 @@ class PointFile(BaseAnnotationSource):
                     float(coord[coord_order[0]]),
                     float(coord[coord_order[1]]),
                     float(coord[coord_order[2]]),
-                )
+                ),
             )
         return annotation_set
 
@@ -194,7 +189,7 @@ class PointFile(BaseAnnotationSource):
                 "path": self.get_output_filename(output_prefix),
                 "shape": self.shape,
                 "is_visualization_default": self.is_viz_default,
-            }
+            },
         ]
         return metadata
 
@@ -250,7 +245,7 @@ class OrientedPointFile(PointFile):
         valid_formats = self.map_functions.keys()
         if self.file_format not in valid_formats:
             raise NotImplementedError(
-                f"We only support {', '.join(self.map_functions.keys())} files for oriented points"
+                f"We only support {', '.join(self.map_functions.keys())} files for oriented points",
             )
 
     def oriented_point(
@@ -350,15 +345,10 @@ class AnnotationImporter(BaseImporter):
             # Don't panic if we don't have a source file for this annotation source
             try:
                 source.get_source_file(self.config.fs, self.config.input_path)
-            except:
+            except Exception:
                 print(f"Skipping writing annotations for run {run_name} due to missing files")
                 continue
-            source.convert(
-                self.config.fs,
-                self.config.input_path,
-                dest_prefix,
-                self.parent.get_voxel_spacing()
-            )
+            source.convert(self.config.fs, self.config.input_path, dest_prefix, self.parent.get_voxel_spacing())
 
     def import_metadata(self):
         run_name = self.parent.get_run().run_name
@@ -369,7 +359,7 @@ class AnnotationImporter(BaseImporter):
             try:
                 source.get_source_file(self.config.fs, self.config.input_path)
                 real_sources += 1
-            except:
+            except Exception:
                 continue
         if not real_sources:
             print(f"Skipping writing metadata for run {run_name} due to missing files")
@@ -395,7 +385,7 @@ class AnnotationImporter(BaseImporter):
                     parent=tomo,
                     annotation_metadata=metadata,
                     annotation_config=annotation_config,
-                )
+                ),
             )
             identifier += 1
 

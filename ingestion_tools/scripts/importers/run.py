@@ -1,9 +1,9 @@
-from typing import Any
-from common.config import DataImportConfig
-from importers.base_importer import BaseImporter
-from common.metadata import RunMetadata
 import os
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
+
+from common.config import DataImportConfig
+from common.metadata import RunMetadata
+from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
     from importers.dataset import DatasetImporter
@@ -23,7 +23,10 @@ class RunImporter(BaseImporter):
         super().__init__(*args, **kwargs)
         self.run_path = path
         self.run_name = self.config.run_name_regex.match(os.path.basename(path))[1]
-        if voxel_spacing := self.config.expand_string(self.run_name, self.config.tomogram_template.get("voxel_spacing")):
+        if voxel_spacing := self.config.expand_string(
+            self.run_name,
+            self.config.tomogram_template.get("voxel_spacing"),
+        ):
             self.set_voxel_spacing(float(voxel_spacing))
         else:
             self.voxel_spacing = None

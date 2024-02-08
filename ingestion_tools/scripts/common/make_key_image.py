@@ -75,13 +75,13 @@ def generate_preview(
 
     # Don't explode if we can't find an annotations file.
     def wrapiterator(iterator):
-      while True:
-        try:
-          yield next(iterator)
-        except StopIteration:
-          break
-        except Exception as e:
-            print(f"Ignoring missing annotation for keyframe generation: {e}")
+        while True:
+            try:
+                yield next(iterator)
+            except StopIteration:
+                break
+            except Exception as e:
+                print(f"Ignoring missing annotation for keyframe generation: {e}")
 
     for i, annotation in wrapiterator(enumerate(annotations)):
         color = cmap(i)

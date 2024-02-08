@@ -1,14 +1,13 @@
-import numpy as np
 import os
 from typing import TYPE_CHECKING, Any, Optional
 
+import numpy as np
 from mrcfile.mrcobject import MrcObject
 
-from common.image import get_tomo_metadata, scale_mrcfile, get_voxel_size, get_header
+from common.image import get_header, get_tomo_metadata, get_voxel_size, scale_mrcfile
 
 if TYPE_CHECKING:
     from common.config import DataImportConfig
-
     from importers.run import RunImporter
     from importers.dataset import DatasetImporter
     from importers.tomogram import TomogramImporter
@@ -93,6 +92,7 @@ class VolumeImporter(BaseImporter):
         write_zarr: bool = True,
         write_mrc: bool = True,
         voxel_spacing: float | None = None,
+
     ) -> dict[str, Any]:
         output_prefix = self.get_output_path()
         return scale_mrcfile(

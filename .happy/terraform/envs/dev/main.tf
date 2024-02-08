@@ -14,6 +14,7 @@ module "stack" {
   deployment_stage = "dev"
   stack_prefix     = "/${var.stack_name}"
   k8s_namespace    = var.k8s_namespace
+  platform_architecture = "arm64"
   additional_env_vars = {
     HASURA_GRAPHQL_ENABLE_CONSOLE = "false"
     HASURA_GRAPHQL_DATABASE_URL = data.aws_ssm_parameter.db_url.value
