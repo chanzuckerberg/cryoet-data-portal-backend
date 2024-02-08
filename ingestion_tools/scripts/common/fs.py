@@ -3,8 +3,8 @@ import glob
 import os
 import os.path
 import shutil
-from hashlib import md5
 from abc import ABC, abstractmethod
+from hashlib import md5
 from io import TextIOBase
 
 import boto3
@@ -15,7 +15,12 @@ class FileSystemApi(ABC):
     force_overwrite: bool = False
 
     @classmethod
-    def get_fs_api(cls, mode: str, force_overwrite: bool, client_kwargs: None | dict[str, str]=None) -> "FileSystemApi":
+    def get_fs_api(
+        cls,
+        mode: str,
+        force_overwrite: bool,
+        client_kwargs: None | dict[str, str] = None,
+    ) -> "FileSystemApi":
         if mode == "s3":
             return S3Filesystem(force_overwrite=force_overwrite, client_kwargs=client_kwargs)
         else:
@@ -34,7 +39,7 @@ class FileSystemApi(ABC):
         pass
 
     def makedirs(self, path: str) -> None:
-        pass
+        return None
 
     @abstractmethod
     def localwritable(self, path: str) -> str:
@@ -63,7 +68,7 @@ class S3Filesystem(FileSystemApi):
         self.tmpdir = "/tmp"
         self.force_overwrite = force_overwrite
 
-    def _calc_etag(self, inputfile: str, partsize: int=8388608) -> bytes:
+    def _calc_etag(self, inputfile: str, partsize: int = 8388608) -> bytes:
         md5_digests = []
         with open(inputfile, "rb") as f:
             for chunk in iter(lambda: f.read(partsize), b""):

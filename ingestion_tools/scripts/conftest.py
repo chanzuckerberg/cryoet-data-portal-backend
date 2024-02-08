@@ -38,9 +38,9 @@ def test_output_bucket(s3_client: S3Client, random_bucket_name: str) -> Generato
     s3_client.create_bucket(Bucket=bucket_name)
     yield bucket_name
     try:
-        objects = s3_client.list_objects_v2(Bucket = bucket_name)["Contents"]
-        objects = list(map(lambda x: {"Key":x["Key"]},objects))
-        s3_client.delete_objects(Bucket=bucket_name, Delete = {"Objects":objects})
+        objects = s3_client.list_objects_v2(Bucket=bucket_name)["Contents"]
+        objects = [{"Key": x["Key"]} for x in objects]
+        s3_client.delete_objects(Bucket=bucket_name, Delete={"Objects": objects})
     except KeyError:
         # We may not have written any files and that's ok.
         pass

@@ -32,7 +32,7 @@ class RunImporter(BaseImporter):
             self.voxel_spacing = None
 
     def set_voxel_spacing(self, voxel_spacing: float) -> None:
-        self.voxel_spacing = '{:.3f}'.format(round(voxel_spacing, 3))
+        self.voxel_spacing = "{:.3f}".format(round(voxel_spacing, 3))
 
     def import_run_metadata(self) -> None:
         dest_run_metadata = self.get_metadata_path()

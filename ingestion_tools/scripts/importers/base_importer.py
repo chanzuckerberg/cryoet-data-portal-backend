@@ -8,8 +8,8 @@ from common.image import get_header, get_tomo_metadata, get_voxel_size, scale_mr
 
 if TYPE_CHECKING:
     from common.config import DataImportConfig
-    from importers.run import RunImporter
     from importers.dataset import DatasetImporter
+    from importers.run import RunImporter
     from importers.tomogram import TomogramImporter
 else:
     RunImporter = "RunImporter"
@@ -92,7 +92,6 @@ class VolumeImporter(BaseImporter):
         write_zarr: bool = True,
         write_mrc: bool = True,
         voxel_spacing: float | None = None,
-
     ) -> dict[str, Any]:
         output_prefix = self.get_output_path()
         return scale_mrcfile(

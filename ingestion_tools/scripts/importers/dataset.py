@@ -12,9 +12,7 @@ class DatasetImporter(BaseImporter):
         meta.write_metadata(self.get_metadata_path(), extra_data)
 
     def load_extra_metadata(self) -> dict[str, str]:
-        key_photo_importer = DatasetKeyPhotoImporter.find_dataset_key_photos(
-            self.config, self
-        )
+        key_photo_importer = DatasetKeyPhotoImporter.find_dataset_key_photos(self.config, self)
 
         return {
             "key_photos": key_photo_importer.get_metadata(),

@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING, Any
 
-from common.metadata import TomoMetadata
 from common.config import DataImportConfig
+from common.metadata import TomoMetadata
 from common.normalize_fields import normalize_fiducial_alignment
 from importers.base_importer import VolumeImporter
 from importers.key_image import KeyImageImporter
@@ -51,11 +51,15 @@ class TomogramImporter(VolumeImporter):
             metadata.write_metadata(dest_tomo_metadata, merge_data)
 
     @classmethod
-    def find_tomograms(cls, config: DataImportConfig, run: RunImporter, skip_cache: bool = False) -> list["TomogramImporter"]:
+    def find_tomograms(
+        cls,
+        config: DataImportConfig,
+        run: RunImporter,
+        skip_cache: bool = False,
+    ) -> list["TomogramImporter"]:
         cache_key = run.run_name
-        if not skip_cache:
-            if cache_key in cls.cached_find_results:
-                return cls.cached_find_results[cache_key]
+        if not skip_cache and cache_key in cls.cached_find_results:
+            return cls.cached_find_results[cache_key]
         tomo_glob = config.tomo_glob
         if config.run_to_tomo_map:
             tomo_glob = tomo_glob.format(**run.get_glob_vars())

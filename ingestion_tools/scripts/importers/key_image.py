@@ -1,9 +1,9 @@
 import os
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Generator
 
 import imageio
 import numpy as np
-from typing import Generator
+from PIL import Image
 
 from common.config import DataImportConfig
 from common.image import ZarrReader
@@ -40,7 +40,7 @@ class KeyImageImporter(BaseImporter):
         image_path = os.path.join(self.get_output_path(), self.get_file_name(image_type))
         return os.path.relpath(image_path, self.config.output_prefix)
 
-    def make_key_image(self, config: DataImportConfig, upload: bool=True) -> None:
+    def make_key_image(self, config: DataImportConfig, upload: bool = True) -> None:
         dir = self.get_output_path()
         preview, tomo_width = None, None
         if config.tomo_key_photo_glob:
