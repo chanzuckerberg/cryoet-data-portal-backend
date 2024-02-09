@@ -77,7 +77,8 @@ annotations:
         description: SARS-CoV2 Spike protein
       dates: *repo-dates
       annotation_method: Template matching + 3D classification filtering
-#      annotation_publications: OPTIONAL
+      method_type: automated
+      annotation_publications: doi:10.1038/s41586-020-2665-2
       ground_truth_status: true
       authors:
         - name: Zunlong Ke
@@ -120,6 +121,7 @@ annotations:
 #        precision: REQUIRED IF ground_truth_used is specified
 #        recall: REQUIRED IF ground_truth_used is specified
         ground_truth_used: author estimation
+      is_curator_recommended: true
     sources:
       - file_format: relion4_star
         glob_string: motl_star/czii-remapped-points.star
@@ -127,6 +129,7 @@ annotations:
         shape: OrientedPoint
         binning: 2
         filter_value: '{run_name}'
+        is_visualization_default: true
 runs: {}
 tiltseries:
   scales: []

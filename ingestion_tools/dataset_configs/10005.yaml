@@ -41,7 +41,7 @@ dataset:
     id: CL:0000019
     name: Sperm
   cross_references:
-    dataset_publications: doi:10.1101/2022.09.28.510016
+    dataset_publications: &publications doi:10.1101/2022.09.28.510016
   cell_component:
     name: sperm flagellum
     id: GO:0036126
@@ -58,7 +58,8 @@ annotations:
         state: 48 nm repeat
       dates: *repo-dates
       annotation_method: Template matching + manual filtering + 3D classification filtering
-      annotation_publications: null
+      method_type: hybrid
+      annotation_publications: *publications
       ground_truth_status: true
       authors: &annotation_authors
         - name: Zhen Chen
@@ -73,12 +74,14 @@ annotations:
           corresponding_author_status: true
       annotation_software: ~
       version: '1.0'
+      is_curator_recommended: true
     sources:
       - columns: xyz
         file_format: csv
         glob_string: coorinates_dmt48/s{run_name}_dmt48_coordinates_bin2.txt
         shape: Point
         delimiter: ' '
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0097545
@@ -86,7 +89,8 @@ annotations:
         state: 96 nm repeat
       dates: *repo-dates
       annotation_method: Template matching + manual filtering + 3D classification filtering
-      annotation_publications: null
+      method_type: hybrid
+      annotation_publications: *publications
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: ~
@@ -95,12 +99,14 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - columns: xyz
         file_format: csv
         glob_string: coordinates_dmt96/s{run_name}_dmt96_coordinates_bin2.txt
         shape: Point
         delimiter: ' '
+        is_visualization_default: true
 runs: {}
 tiltseries:
   scales: []

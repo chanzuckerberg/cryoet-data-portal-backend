@@ -54,7 +54,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: crYOLO picking
-      annotation_publications: ~
+      method_type: automated
+      annotation_publications: doi:10.1101/2023.08.18.553799
       ground_truth_status: False
       authors:
         - name: Ramya Rangan
@@ -80,6 +81,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: tomoman_relion_star
@@ -87,6 +89,7 @@ annotations:
         order: zyx
         glob_string: '{run_name}/metadata/particles/*.star'
         filter_value: ~
+        is_visualization_default: true
 runs: {}
 tiltseries:
   scales: []

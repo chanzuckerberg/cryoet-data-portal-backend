@@ -70,6 +70,7 @@ dataset:
     id: GO:0005929
   organism:
     name: Chlamydomonas reinhardtii
+    taxonomy_id: 3055
   key_photos:
     snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11078-l.gif
     thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11078.gif
@@ -124,7 +125,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: &annotation_method manual picking + line fit + pick on line + CC based filtering
-      annotation_publications: ~
+      method_type: manual
+      annotation_publications: &annotation_publications doi:10.1126/science.abm6704
       ground_truth_status: true
       authors: &annotation_authors
         - name: Hugo G. van den Hoek
@@ -168,6 +170,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -175,6 +178,7 @@ annotations:
         order: zyx
         glob_string: "motivelists/allmotl_S_newbin2_3.star"
         filter_value: "{run_name}"
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0097537
@@ -183,7 +187,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *annotation_method
-      annotation_publications: ~
+      method_type: manual
+      annotation_publications: *annotation_publications
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: 3dmod, STOPGAP
@@ -192,6 +197,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -199,6 +205,7 @@ annotations:
         order: zyx
         glob_string: 'motivelists/allmotl_Y_newbin2_3.star'
         filter_value: "{run_name}"
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0035869
@@ -207,7 +214,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *annotation_method
-      annotation_publications: ~
+      method_type: manual
+      annotation_publications: *annotation_publications
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: 3dmod, STOPGAP
@@ -216,6 +224,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -223,6 +232,7 @@ annotations:
         order: zyx
         glob_string: 'motivelists/allmotl_H_cleanbin2.star'
         filter_value: "{run_name}"
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0035869
@@ -231,7 +241,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *annotation_method
-      annotation_publications: ~
+      method_type: manual
+      annotation_publications: *annotation_publications
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: 3dmod, STOPGAP
@@ -240,6 +251,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -247,6 +259,7 @@ annotations:
         order: zyx
         glob_string: 'motivelists/MTD_MIP_bin2_recentered_shiftedorg_9.star'
         filter_value: "{run_name}"
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0030992
@@ -255,7 +268,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *annotation_method
-      annotation_publications: ~
+      method_type: manual
+      annotation_publications: *annotation_publications
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: 3dmod, STOPGAP
@@ -264,6 +278,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -271,6 +286,7 @@ annotations:
         order: zyx
         glob_string: 'motivelists/allmotl_B2_newbin2_3.star'
         filter_value: "{run_name}"
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0030991
@@ -279,7 +295,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *annotation_method
-      annotation_publications: ~
+      method_type: manual
+      annotation_publications: *annotation_publications
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: 3dmod, STOPGAP
@@ -288,6 +305,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -295,6 +313,7 @@ annotations:
         order: zyx
         glob_string: 'motivelists/allmotl_A2_newbin2_3.star'
         filter_value: "{run_name}"
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0005858
@@ -303,7 +322,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *annotation_method
-      annotation_publications: ~
+      method_type: manual
+      annotation_publications: *annotation_publications
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: 3dmod, STOPGAP
@@ -312,6 +332,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -319,6 +340,7 @@ annotations:
         order: zyx
         glob_string: 'motivelists/allmotl_D_newbin2_3.star'
         filter_value: "{run_name}"
+        is_visualization_default: true
 overrides_by_run: # The tiltseries / tomograms dicts will be hit with a originaldict.update(dict from this section)
   - run_regex: "TS_11$"
     tiltseries:

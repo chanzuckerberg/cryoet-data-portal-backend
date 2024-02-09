@@ -97,8 +97,9 @@ annotations:
         description: ~
         state: ~
       dates: *repo-dates
-      annotation_method: REQUIRED
-      annotation_publications: ~
+      annotation_method: &annotation_methods TomoSegMemTV segmentation + manual correction in TFS Amira
+      method_type: hybrid
+      annotation_publications: &annotation_pubs 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
       ground_truth_status: true
       authors: &annotation_authors
         - name: Michaela Medina
@@ -113,11 +114,13 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - file_format: mrc
         shape: SemanticSegmentationMask
         glob_string: &segmentation_glob 'Voxel_Segmentations/{run_name}_labels.rec.mrc'
         mask_label: 1
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0005743
@@ -125,18 +128,21 @@ annotations:
         description: ~
         state: ~
       dates: *repo-dates
-      annotation_method: REQUIRED
-      annotation_publications: ~
+      annotation_method: *annotation_methods
+      method_type: hybrid
+      annotation_publications: *annotation_pubs
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: TomoSegMemTV+AMIRA
       version: "1.0"
       confidence: *annotation_confidence
+      is_curator_recommended: true
     sources:
       - file_format: mrc
         shape: SemanticSegmentationMask
         glob_string: *segmentation_glob
         mask_label: 2
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0005789
@@ -144,18 +150,21 @@ annotations:
         description: ~
         state: ~
       dates: *repo-dates
-      annotation_method: REQUIRED
-      annotation_publications: ~
+      annotation_method: *annotation_methods
+      method_type: hybrid
+      annotation_publications: *annotation_pubs
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: TomoSegMemTV+AMIRA
       version: "1.0"
       confidence: *annotation_confidence
+      is_curator_recommended: true
     sources:
       - file_format: mrc
         shape: SemanticSegmentationMask
         glob_string: *segmentation_glob
         mask_label: 3
+        is_visualization_default: true
 standardization_config:
   destination_prefix: '10010'
   source_prefix: Grotjahn

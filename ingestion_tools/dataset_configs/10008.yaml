@@ -70,6 +70,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: Template matching + manual filtering + 3D classification filtering
+      method_type: hybrid
       annotation_publications: *publications
       ground_truth_status: true
       authors: &annotation_authors
@@ -104,6 +105,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -111,6 +113,7 @@ annotations:
         order: zyx
         glob_string: 'subtomo/hdcr/hdcr_tm_bin2_motl_12.star'
         filter_value: "{run_name}"
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0022626
@@ -119,6 +122,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: Template matching + manual filtering + 3D classification filtering
+      method_type: hybrid
       annotation_publications: *publications
       ground_truth_status: true
       authors: *annotation_authors
@@ -128,6 +132,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -135,6 +140,7 @@ annotations:
         order: zyx
         glob_string: 'subtomo/ribo/ribo_tm_bin1_motl_12.star'
         filter_value: "{run_name}"
+        is_visualization_default: true
 runs: {}
 tiltseries:
   scales: []

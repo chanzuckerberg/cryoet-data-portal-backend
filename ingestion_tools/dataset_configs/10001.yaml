@@ -92,6 +92,7 @@ annotations:
         name: 'fatty acid synthase complex'
       dates: *repo-dates
       annotation_method: Cumulative template-matching trained 2D CNN predictions + visual filtering + distance constraints + manual addition
+      method_type: hybrid
       annotation_publications: &annotation_publication "EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077"
       ground_truth_status: true
       authors: &annotation_authors
@@ -126,27 +127,32 @@ annotations:
           corresponding_author_status: true
       annotation_software: pyTOM + Keras
       version: "1.0"
+      is_curator_recommended: true
     sources:
       - columns: xyz
         file_format: csv
         glob_string: particle_lists/{run_name}_fas.csv
         shape: Point
+        is_visualization_default: false
   - metadata:
       annotation_object:
         id: GO:0022626
         name: 'cytosolic ribosome'
       dates: *repo-dates
       annotation_method: Cumulative template-matching trained 2D CNN predictions + visual filtering + distance constraints + manual addition
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: pyTOM + Keras
       version: "1.0"
+      is_curator_recommended: true
     sources:
       - shape: Point
         columns: xyz
         file_format: csv
         glob_string: particle_lists/{run_name}_cyto_ribosomes.csv
+        is_visualization_default: true
   # Label 1 - cytoplasm
   - metadata:
       annotation_object:
@@ -156,6 +162,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: &organelle_segmask_annotation_method manual segmentation
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -165,11 +172,13 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: SemanticSegmentationMask
         file_format: mrc
         glob_string: &segmask1_glob 'labels/{run_name}_organelles.mrc'
         mask_label: 1
+        is_visualization_default: false
   # Label 2 - Mitochondria
   - metadata:
       annotation_object:
@@ -179,6 +188,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -188,11 +198,13 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: SemanticSegmentationMask
         file_format: mrc
         glob_string: *segmask1_glob
         mask_label: 2
+        is_visualization_default: true
   # Label 3 - Vesicle
   - metadata:
       annotation_object:
@@ -202,6 +214,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -211,11 +224,13 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: SemanticSegmentationMask
         file_format: mrc
         glob_string: *segmask1_glob
         mask_label: 3
+        is_visualization_default: false
   # Label 4 - Microtubule
   - metadata:
       annotation_object:
@@ -225,6 +240,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -234,11 +250,13 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: SemanticSegmentationMask
         file_format: mrc
         glob_string: *segmask1_glob
         mask_label: 4
+        is_visualization_default: true
   # Label 5 - ER
   - metadata:
       annotation_object:
@@ -248,6 +266,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -257,11 +276,13 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: SemanticSegmentationMask
         file_format: mrc
         glob_string: *segmask1_glob
         mask_label: 5
+        is_visualization_default: true
   # Label 6 - Nuclear envelope
   - metadata:
       annotation_object:
@@ -271,6 +292,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -280,11 +302,13 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: SemanticSegmentationMask
         file_format: mrc
         glob_string: *segmask1_glob
         mask_label: 6
+        is_visualization_default: true
   # Label 7 - Nucleus
   - metadata:
       annotation_object:
@@ -294,6 +318,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -303,11 +328,13 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: SemanticSegmentationMask
         file_format: mrc
         glob_string: *segmask1_glob
         mask_label: 7
+        is_visualization_default: false
   # Label 8 - Vacuole
   - metadata:
       annotation_object:
@@ -317,6 +344,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -326,11 +354,13 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: SemanticSegmentationMask
         file_format: mrc
         glob_string: *segmask1_glob
         mask_label: 8
+        is_visualization_default: false
   # Label 9 - Lipid droplet
   - metadata:
       annotation_object:
@@ -340,6 +370,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -349,11 +380,13 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: SemanticSegmentationMask
         file_format: mrc
         glob_string: *segmask1_glob
         mask_label: 9
+        is_visualization_default: false
   # Label 10 - Golgi apparatus
   - metadata:
       annotation_object:
@@ -363,6 +396,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -372,11 +406,13 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: SemanticSegmentationMask
         file_format: mrc
         glob_string: *segmask1_glob
         mask_label: 10
+        is_visualization_default: true
   # Label 11 - Vesicular body
   - metadata:
       annotation_object:
@@ -386,6 +422,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -395,11 +432,13 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: SemanticSegmentationMask
         file_format: mrc
         glob_string: *segmask1_glob
         mask_label: 11
+        is_visualization_default: false
   # Label 13 - Non-specified compartment
   - metadata:
       annotation_object:
@@ -409,6 +448,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -418,11 +458,13 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: false
     sources:
       - shape: SemanticSegmentationMask
         file_format: mrc
         glob_string: *segmask1_glob
         mask_label: 13
+        is_visualization_default: false
   # Membranes
   - metadata:
       annotation_object:
@@ -432,6 +474,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: 3D CNN prediction + manual correction
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -441,12 +484,13 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: SemanticSegmentationMask
         file_format: mrc
         glob_string: 'labels/{run_name}_membranes.mrc'
         mask_label: 1
-
+        is_visualization_default: false
 tomograms:
   voxel_spacing: 13.48
   fiducial_alignment_status: NON_FIDUCIAL

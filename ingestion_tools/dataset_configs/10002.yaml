@@ -1,4 +1,7 @@
 dataset:
+  dataset_identifier: 10002
+  dataset_description: "Cryo-electron tomograms of RPE1 cells. Comprehensive annotation of actin filaments and microtubules"
+  dataset_title: RPE1 cytosol with actin stress fiber
   authors: &dataset_authors
     - name: Irene de Teresa Trueba
       ORCID: 0000-0002-4691-9501
@@ -30,7 +33,7 @@ dataset:
       ORCID: 0000-0001-8324-4040
       corresponding_author_status: true
   cross_references:
-    dataset_publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
+    dataset_publications: &publications doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
     related_database_entries: EMPIAR-10989
   cell_component:
     name: ~
@@ -38,9 +41,6 @@ dataset:
   cell_type:
     id: CL:0002586
     name: Retinal pigment epithelial-1
-  dataset_identifier: 10002
-  dataset_description: "Cryo-electron tomograms of RPE1 cells. Comprehensive annotation of actin filaments and microtubules"
-  dataset_title: RPE1 cytosol with actin stress fiber
   dates: &repo-dates
     deposition_date: 2023-05-01
     last_modified_date: 2023-11-08
@@ -111,9 +111,10 @@ annotations:
         description: Actin ground truth
         state: ~
       dates: *repo-dates
-      annotation_method: 2D CNN + 3D CNN hyperparameter tuning
-      annotation_publications: ~
-      ground_truth_status: False
+      annotation_method: manual segmentation
+      method_type: manual
+      annotation_publications: *publications
+      ground_truth_status: True
       authors: &annotation_authors
         - name: Sara Goetz
           ORCID: 0000-0002-9903-3667
@@ -150,15 +151,18 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: Ground truth from related paper
+      is_curator_recommended: true
     sources:
       - file_format: mrc
         shape: SegmentationMask
         glob_string: labels/{run_name}_actin_ground_truth.mrc
+        is_visualization_default: true
   - metadata:
       dates: *repo-dates
-      annotation_method: manual
-      annotation_publications: ~
-      ground_truth_status: True
+      annotation_method: 2D CNN + 3D CNN hyperparameter tuning
+      method_type: automated
+      annotation_publications: *publications
+      ground_truth_status: False
       authors: *annotation_authors
       annotation_software: Amira
       version: '1.0'
@@ -171,10 +175,12 @@ annotations:
         name: actin filament
         description: Actin DeePiCt training prediction
         state: ~
+      is_curator_recommended: false
     sources:
       - file_format: mrc
         shape: SegmentationMask
         glob_string: prediction/{run_name}_*.mrc
+        is_visualization_default: false
 #     - columns: zyx
 #       file_format: xml
 #       glob_string: actin_ground_truth_coordinates/{run_name}_*.xml

@@ -63,6 +63,7 @@ annotations:
         name: 'cytosolic ribosome'
       dates: *repo-dates
       annotation_method: Template matching + 2D classification filtering
+      method_type: automated
       annotation_publications: "10.1101/2023.04.28.538734, EMD-17241, EMD-17242, EMD-17243, EMD-17244, EMD-17245"
       ground_truth_status: false
       authors:
@@ -108,11 +109,13 @@ annotations:
         recall: 60
         ground_truth_used: Author estimation
       annotation_software: STOPGAP + RELION
+      is_curator_recommended: true
     sources:
       - columns: xyz
         file_format: csv_with_header
         glob_string: '{run_name}/annoRibosome_bin4.txt'
         shape: Point
+        is_visualization_default: true
 runs: {}
 tiltseries:
   scales: []
