@@ -58,6 +58,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: 'Template matching + manual filtering + 3D classification filtering'
+      method_type: hybrid
       annotation_publications:
       ground_truth_status: true
       authors:

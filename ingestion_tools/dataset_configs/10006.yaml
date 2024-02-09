@@ -77,7 +77,8 @@ annotations:
         description: SARS-CoV2 Spike protein
       dates: *repo-dates
       annotation_method: Template matching + 3D classification filtering
-#      annotation_publications: OPTIONAL
+      method_type: automated
+      annotation_publications: doi:10.1038/s41586-020-2665-2
       ground_truth_status: true
       authors:
         - name: Zunlong Ke

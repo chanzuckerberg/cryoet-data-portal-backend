@@ -41,7 +41,7 @@ dataset:
     id: CL:0000019
     name: Sperm
   cross_references:
-    dataset_publications: doi:10.1101/2022.09.28.510016
+    dataset_publications: &publications doi:10.1101/2022.09.28.510016
   cell_component:
     name: sperm flagellum
     id: GO:0036126
@@ -58,7 +58,8 @@ annotations:
         state: 48 nm repeat
       dates: *repo-dates
       annotation_method: Template matching + manual filtering + 3D classification filtering
-      annotation_publications: null
+      method_type: hybrid
+      annotation_publications: *publications
       ground_truth_status: true
       authors: &annotation_authors
         - name: Zhen Chen
@@ -86,7 +87,8 @@ annotations:
         state: 96 nm repeat
       dates: *repo-dates
       annotation_method: Template matching + manual filtering + 3D classification filtering
-      annotation_publications: null
+      method_type: hybrid
+      annotation_publications: *publications
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: ~

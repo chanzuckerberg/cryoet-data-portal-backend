@@ -92,6 +92,7 @@ annotations:
         name: 'fatty acid synthase complex'
       dates: *repo-dates
       annotation_method: Cumulative template-matching trained 2D CNN predictions + visual filtering + distance constraints + manual addition
+      method_type: hybrid
       annotation_publications: &annotation_publication "EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077"
       ground_truth_status: true
       authors: &annotation_authors
@@ -137,6 +138,7 @@ annotations:
         name: 'cytosolic ribosome'
       dates: *repo-dates
       annotation_method: Cumulative template-matching trained 2D CNN predictions + visual filtering + distance constraints + manual addition
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -156,6 +158,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: &organelle_segmask_annotation_method manual segmentation
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -179,6 +182,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -202,6 +206,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -225,6 +230,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -248,6 +254,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -271,6 +278,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -294,6 +302,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -317,6 +326,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -340,6 +350,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -363,6 +374,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -386,6 +398,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -409,6 +422,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -432,6 +446,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: 3D CNN prediction + manual correction
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors

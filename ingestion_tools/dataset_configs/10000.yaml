@@ -16,8 +16,8 @@ dataset:
       ORCID: 0000-0003-4388-1349
     - name: Mauricio Toro-Nahuelpan
       ORCID: 0000-0001-5333-3640
-    - name: Cheng DWC
-    - name: Tollervey F
+    - name: Dorothy W. C. Cheng
+    - name: Fergus Tollervey
     - name: Constantin Pape
       ORCID: 0000-0001-6562-7187
     - name: Martin Beck
@@ -64,6 +64,7 @@ annotations:
         name: 'fatty acid synthase complex'
       dates: *repo-dates
       annotation_method: Cumulative template-matching trained 2D CNN predictions + visual filtering + distance constraints + manual addition
+      method_type: hybrid
       annotation_publications: &annotation_publication "EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077"
       ground_truth_status: true
       authors: &annotation_authors
@@ -109,6 +110,7 @@ annotations:
         name: 'cytosolic ribosome'
       dates: *repo-dates
       annotation_method: Cumulative template-matching trained 2D CNN predictions + visual filtering + distance constraints + manual addition
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -128,6 +130,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: &organelle_segmask_annotation_method spectrum equalization filter + 2D CNN prediction + manual correction
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -151,6 +154,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -174,6 +178,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -197,6 +202,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -220,6 +226,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -243,6 +250,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -266,6 +274,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -289,6 +298,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -312,6 +322,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -335,6 +346,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -358,6 +370,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -381,6 +394,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *organelle_segmask_annotation_method
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors
@@ -404,6 +418,7 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: 3D CNN prediction + manual correction
+      method_type: hybrid
       annotation_publications: *annotation_publication
       ground_truth_status: true
       authors: *annotation_authors

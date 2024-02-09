@@ -70,6 +70,7 @@ dataset:
     id: GO:0005929
   organism:
     name: Chlamydomonas reinhardtii
+    taxonomy_id: 3055
   key_photos:
     snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11078-l.gif
     thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11078.gif
@@ -124,7 +125,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: &annotation_method manual picking + line fit + pick on line + CC based filtering
-      annotation_publications: ~
+      method_type: manual
+      annotation_publications: &annotation_publications doi:10.1126/science.abm6704
       ground_truth_status: true
       authors: &annotation_authors
         - name: Hugo G. van den Hoek
@@ -183,7 +185,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *annotation_method
-      annotation_publications: ~
+      method_type: manual
+      annotation_publications: *annotation_publications
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: 3dmod, STOPGAP
@@ -207,7 +210,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *annotation_method
-      annotation_publications: ~
+      method_type: manual
+      annotation_publications: *annotation_publications
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: 3dmod, STOPGAP
@@ -231,7 +235,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *annotation_method
-      annotation_publications: ~
+      method_type: manual
+      annotation_publications: *annotation_publications
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: 3dmod, STOPGAP
@@ -255,7 +260,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *annotation_method
-      annotation_publications: ~
+      method_type: manual
+      annotation_publications: *annotation_publications
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: 3dmod, STOPGAP
@@ -279,7 +285,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *annotation_method
-      annotation_publications: ~
+      method_type: manual
+      annotation_publications: *annotation_publications
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: 3dmod, STOPGAP
@@ -303,7 +310,8 @@ annotations:
         state: ~
       dates: *repo-dates
       annotation_method: *annotation_method
-      annotation_publications: ~
+      method_type: manual
+      annotation_publications: *annotation_publications
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: 3dmod, STOPGAP

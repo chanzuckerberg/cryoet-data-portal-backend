@@ -97,8 +97,9 @@ annotations:
         description: ~
         state: ~
       dates: *repo-dates
-      annotation_method: REQUIRED
-      annotation_publications: ~
+      annotation_method: &annotation_methods TomoSegMemTV segmentation + manual correction in TFS Amira
+      method_type: hybrid
+      annotation_publications: &annotation_pubs 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
       ground_truth_status: true
       authors: &annotation_authors
         - name: Michaela Medina
@@ -125,8 +126,9 @@ annotations:
         description: ~
         state: ~
       dates: *repo-dates
-      annotation_method: REQUIRED
-      annotation_publications: ~
+      annotation_method: *annotation_methods
+      method_type: hybrid
+      annotation_publications: *annotation_pubs
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: TomoSegMemTV+AMIRA
@@ -144,8 +146,9 @@ annotations:
         description: ~
         state: ~
       dates: *repo-dates
-      annotation_method: REQUIRED
-      annotation_publications: ~
+      annotation_method: *annotation_methods
+      method_type: hybrid
+      annotation_publications: *annotation_pubs
       ground_truth_status: true
       authors: *annotation_authors
       annotation_software: TomoSegMemTV+AMIRA
