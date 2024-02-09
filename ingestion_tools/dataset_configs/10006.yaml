@@ -121,6 +121,7 @@ annotations:
 #        precision: REQUIRED IF ground_truth_used is specified
 #        recall: REQUIRED IF ground_truth_used is specified
         ground_truth_used: author estimation
+      is_curator_recommended: true
     sources:
       - file_format: relion4_star
         glob_string: motl_star/czii-remapped-points.star
@@ -128,6 +129,7 @@ annotations:
         shape: OrientedPoint
         binning: 2
         filter_value: '{run_name}'
+        is_visualization_default: true
 runs: {}
 tiltseries:
   scales: []

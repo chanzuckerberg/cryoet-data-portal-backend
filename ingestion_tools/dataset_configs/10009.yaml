@@ -170,6 +170,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -177,6 +178,7 @@ annotations:
         order: zyx
         glob_string: "motivelists/allmotl_S_newbin2_3.star"
         filter_value: "{run_name}"
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0097537
@@ -195,6 +197,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -202,6 +205,7 @@ annotations:
         order: zyx
         glob_string: 'motivelists/allmotl_Y_newbin2_3.star'
         filter_value: "{run_name}"
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0035869
@@ -220,6 +224,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -227,6 +232,7 @@ annotations:
         order: zyx
         glob_string: 'motivelists/allmotl_H_cleanbin2.star'
         filter_value: "{run_name}"
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0035869
@@ -245,6 +251,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -252,6 +259,7 @@ annotations:
         order: zyx
         glob_string: 'motivelists/MTD_MIP_bin2_recentered_shiftedorg_9.star'
         filter_value: "{run_name}"
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0030992
@@ -270,6 +278,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -277,6 +286,7 @@ annotations:
         order: zyx
         glob_string: 'motivelists/allmotl_B2_newbin2_3.star'
         filter_value: "{run_name}"
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0030991
@@ -295,6 +305,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -302,6 +313,7 @@ annotations:
         order: zyx
         glob_string: 'motivelists/allmotl_A2_newbin2_3.star'
         filter_value: "{run_name}"
+        is_visualization_default: true
   - metadata:
       annotation_object:
         id: GO:0005858
@@ -320,6 +332,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: stopgap_star
@@ -327,6 +340,7 @@ annotations:
         order: zyx
         glob_string: 'motivelists/allmotl_D_newbin2_3.star'
         filter_value: "{run_name}"
+        is_visualization_default: true
 overrides_by_run: # The tiltseries / tomograms dicts will be hit with a originaldict.update(dict from this section)
   - run_regex: "TS_11$"
     tiltseries:

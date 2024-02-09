@@ -81,6 +81,7 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: ~
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: tomoman_relion_star
@@ -88,6 +89,7 @@ annotations:
         order: zyx
         glob_string: '{run_name}/metadata/particles/*.star'
         filter_value: ~
+        is_visualization_default: true
 runs: {}
 tiltseries:
   scales: []

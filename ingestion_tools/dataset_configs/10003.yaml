@@ -78,6 +78,7 @@ annotations:
         recall: 90
         ground_truth_used: author estimation
       version: '1.0'
+      is_curator_recommended: true
     sources:
       - shape: OrientedPoint
         file_format: relion3_star
@@ -85,6 +86,7 @@ annotations:
         order: zyx
         glob_string: run_ct17_it034_data.star
         filter_value: '{mapped_tomo_name}.tomostar'
+        is_visualization_default: true
 runs: {}
 tiltseries:
   scales: []

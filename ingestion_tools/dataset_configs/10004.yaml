@@ -109,11 +109,13 @@ annotations:
         recall: 60
         ground_truth_used: Author estimation
       annotation_software: STOPGAP + RELION
+      is_curator_recommended: true
     sources:
       - columns: xyz
         file_format: csv_with_header
         glob_string: '{run_name}/annoRibosome_bin4.txt'
         shape: Point
+        is_visualization_default: true
 runs: {}
 tiltseries:
   scales: []

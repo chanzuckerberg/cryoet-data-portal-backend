@@ -151,10 +151,12 @@ annotations:
         precision: ~
         recall: ~
         ground_truth_used: Ground truth from related paper
+      is_curator_recommended: true
     sources:
       - file_format: mrc
         shape: SegmentationMask
         glob_string: labels/{run_name}_actin_ground_truth.mrc
+        is_visualization_default: true
   - metadata:
       dates: *repo-dates
       annotation_method: 2D CNN + 3D CNN hyperparameter tuning
@@ -173,10 +175,12 @@ annotations:
         name: actin filament
         description: Actin DeePiCt training prediction
         state: ~
+      is_curator_recommended: false
     sources:
       - file_format: mrc
         shape: SegmentationMask
         glob_string: prediction/{run_name}_*.mrc
+        is_visualization_default: false
 #     - columns: zyx
 #       file_format: xml
 #       glob_string: actin_ground_truth_coordinates/{run_name}_*.xml
