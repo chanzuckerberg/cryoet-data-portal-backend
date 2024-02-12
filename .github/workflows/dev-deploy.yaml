@@ -1,0 +1,48 @@
+name: Deploy to dev
+
+on:
+  push:
+    branches:
+      - "dev-*"
+    paths:
+      - ".happy/**"
+      - "api_server/**"
+
+# https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-to-dev:
+    concurrency:
+      group: dev-cryoet-api-deploy-${{ github.ref }}
+      cancel-in-progress: true
+
+    name: deploy dev branch
+    runs-on: [ARM64, self-hosted, Linux]
+    environment: dev
+    if: github.repository == 'chanzuckerberg/cryoet-data-portal-backend'
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          mask-aws-account-id: true
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-duration-seconds: 1200
+      - name: Create or update stack
+        uses: chanzuckerberg/github-actions/.github/actions/deploy-happy-stack@v1.24.0
+        env:
+          # Force using BuildKit instead of normal Docker, required so that metadata
+          # is written/read to allow us to use layers of previous builds as cache.
+          DOCKER_BUILDKIT: 1
+          COMPOSE_DOCKER_CLI_BUILD: 1
+          DOCKER_REPO: ${{ secrets.ECR_REPO }}/
+          ENV: dev
+        with:
+          stack-name: "dev-test"
+          create-tag: true
+          tfe-token: ${{ secrets.TFE_TOKEN }}
+          env: dev
+          operation: create-or-update
