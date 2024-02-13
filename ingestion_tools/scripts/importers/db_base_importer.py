@@ -79,13 +79,10 @@ class BaseDBImporter:
     dir_prefix: str
     config: DBImportConfig
     parent: "Optional[BaseDBImporter]"
-    metadata: dict[str, Any]
+    metadata: dict[str, Any]|list[dict[str, Any]]
 
     def join_path(self, *args) -> str:
         return os.path.join(*args)
-
-    def get_metadata_file_path(self) -> str:
-        pass
 
     def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
         pass
@@ -100,7 +97,6 @@ class BaseDBImporter:
         # TODO: print metadata if debug
         data_map = self.get_data_map(self.metadata)
         identifiers = {id_field: map_to_value(id_field, data_map, self.metadata) for id_field in self.get_id_fields()}
-
         klass = self.get_db_model_class()
         force_insert = False
         try:
@@ -114,3 +110,42 @@ class BaseDBImporter:
 
         db_obj.save(force_insert=force_insert)
         return db_obj
+
+
+class StaleDeletionDBImporter(BaseDBImporter):
+
+    def get_filters(self) -> dict[str, str]:
+        pass
+
+    def get_hash_attributes(self) -> list[str]:
+        pass
+
+    def get_existing_objects(self) -> dict[str, BaseModel]:
+        result = {}
+        klass = self.get_db_model_class()
+        query = klass.select().where(*[getattr(klass, k) == v for k, v in self.get_filters().items()])
+        for record in query:
+            key = "-".join([f"{getattr(record, attr)}" for attr in self.get_hash_attributes()])
+            result[key] = record
+        return result
+
+    def import_to_db(self) -> None:
+        klass = self.get_db_model_class()
+        data_map = self.get_data_map(self.metadata)
+        existing_objs = self.get_existing_objects()
+
+        for index, entry in enumerate(self.metadata):
+            hash_values = [str(map_to_value(id_field, data_map, entry)) for id_field in self.get_hash_attributes()]
+            force_insert = False
+            db_obj = existing_objs.pop("-".join(hash_values), None)
+            if not db_obj:
+                db_obj = klass()
+                force_insert = True
+
+            for db_key, data_path in data_map.items():
+                setattr(db_obj, db_key, map_to_value(db_key, data_map, entry))
+            db_obj.save(force_insert=force_insert)
+
+        for stale_obj in existing_objs.values():
+            # TODO: Log deletion
+            stale_obj.delete_instance()

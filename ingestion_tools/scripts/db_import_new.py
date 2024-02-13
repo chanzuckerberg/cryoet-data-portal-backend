@@ -3,7 +3,7 @@ import logging
 
 from common import db_models
 from importers.db_base_importer import DBImportConfig
-from importers.db_dataset import DatasetDBImporter
+from importers.db_dataset import DatasetDBImporter, DatasetFundingImporter
 
 
 @click.group()
@@ -89,7 +89,11 @@ def load(
         if filter_dataset and dataset.dir_prefix not in filter_dataset:
             print(f"Skipping {dataset.dir_prefix}...")
             continue
-        dataset.import_to_db()
+
+        dataset_obj = dataset.import_to_db()
+        if import_dataset_funding:
+            funding = DatasetFundingImporter.get_item(dataset_obj.id, dataset, config)
+            funding.import_to_db()
 
 
 if __name__ == "__main__":

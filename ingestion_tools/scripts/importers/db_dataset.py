@@ -1,11 +1,10 @@
 from typing import Any, Iterable
 
 from common import db_models
-from importers.db_base_importer import BaseDBImporter, DBImportConfig
+from importers.db_base_importer import BaseDBImporter, DBImportConfig, StaleDeletionDBImporter
 
 
 class DatasetDBImporter(BaseDBImporter):
-    type_key = "dataset"
 
     def __init__(self, dir_prefix: str, config: DBImportConfig):
         self.config = config
@@ -75,3 +74,38 @@ class DatasetDBImporter(BaseDBImporter):
             cls(dataset_id, config)
             for dataset_id in config.find_subdirs_with_files(prefix, "dataset_metadata.json")
         ]
+
+
+class DatasetFundingImporter(StaleDeletionDBImporter):
+    def __init__(self, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig):
+        self.dataset_id = dataset_id
+        self.parent = parent
+        self.config = config
+        self.metadata = parent.metadata.get("funding", [])
+
+    def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "dataset_id": self.dataset_id,
+            "funding_agency_name": ["funding_agency_name"],
+            "grant_id": ["grant_id"],
+        }
+
+    def get_id_fields(self) -> list[str]:
+        return ["dataset_id", "funding_agency_name"]
+
+    def get_db_model_class(self) -> type:
+        return db_models.DatasetFunding
+
+    def get_filters(self) -> dict[str, Any]:
+        return {"dataset_id": self.dataset_id}
+
+    def get_hash_attributes(self) -> list[str]:
+        return ["dataset_id", "funding_agency_name"]
+
+    @classmethod
+    def to_hash_attr(cls, dataset_funding: db_models.DatasetFunding) -> str:
+        return "-".join([str(dataset_funding.dataset_id_id), dataset_funding.funding_agency_name])
+
+    @classmethod
+    def get_item(cls, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig) -> "DatasetFundingImporter":
+        return cls(dataset_id, parent, config)
