@@ -1,11 +1,14 @@
 from typing import Any, Iterable
 
 from common import db_models
-from importers.db_base_importer import BaseDBImporter, DBImportConfig, StaleDeletionDBImporter
+from importers.db_base_importer import (
+    BaseDBImporter,
+    DBImportConfig,
+    StaleDeletionDBImporter,
+)
 
 
 class DatasetDBImporter(BaseDBImporter):
-
     def __init__(self, dir_prefix: str, config: DBImportConfig):
         self.config = config
         self.dir_prefix = dir_prefix
@@ -33,7 +36,10 @@ class DatasetDBImporter(BaseDBImporter):
             "deposition_date": ["dates", "deposition_date"],
             "release_date": ["dates", "release_date"],
             "last_modified_date": ["dates", "last_modified_date"],
-            "related_database_entries": ["cross_references", "related_database_entries"],
+            "related_database_entries": [
+                "cross_references",
+                "related_database_entries",
+            ],
             "related_database_links": ["cross_references", "related_database_links"],
             "dataset_publications": ["cross_references", "dataset_publications"],
             "dataset_citations": ["cross_references", "dataset_citations"],
@@ -65,19 +71,66 @@ class DatasetDBImporter(BaseDBImporter):
         if snapshot_path := key_photos.get("snapshot"):
             extra_data["key_photo_url"] = self.join_path(https_prefix, snapshot_path)
         if thumbnail_path := key_photos.get("thumbnail"):
-            extra_data["key_photo_thumbnail_url"] = self.join_path(https_prefix, thumbnail_path)
+            extra_data["key_photo_thumbnail_url"] = self.join_path(
+                https_prefix, thumbnail_path
+            )
         return extra_data
 
     @classmethod
-    def get_items(cls, config: DBImportConfig, prefix: str) -> Iterable["DatasetDBImporter"]:
+    def get_items(
+        cls, config: DBImportConfig, prefix: str
+    ) -> Iterable["DatasetDBImporter"]:
         return [
             cls(dataset_id, config)
-            for dataset_id in config.find_subdirs_with_files(prefix, "dataset_metadata.json")
+            for dataset_id in config.find_subdirs_with_files(
+                prefix, "dataset_metadata.json"
+            )
         ]
 
 
-class DatasetFundingImporter(StaleDeletionDBImporter):
-    def __init__(self, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig):
+class DatasetAuthorDBImporter(StaleDeletionDBImporter):
+    def __init__(
+        self, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig
+    ):
+        self.dataset_id = dataset_id
+        self.parent = parent
+        self.config = config
+        self.metadata = parent.metadata.get("authors", [])
+
+    def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "dataset_id": self.dataset_id,
+            "orcid": ["ORCID"],
+            "name": ["name"],
+            "primary_author_status": ["primary_author_status"],
+            "corresponding_author_status": ["corresponding_author_status"],
+            "email": ["email"],
+            "affiliation_name": ["affiliation_name"],
+            "affiliation_address": ["affiliation_address"],
+            "affiliation_identifier": ["affiliation_identifier"],
+            "author_list_order": ["author_list_order"],
+        }
+
+    def get_id_fields(self) -> list[str]:
+        return ["dataset_id", "name"]
+
+    def get_db_model_class(self) -> type:
+        return db_models.DatasetAuthor
+
+    def get_filters(self) -> dict[str, Any]:
+        return {"dataset_id": self.dataset_id}
+
+    @classmethod
+    def get_item(
+        cls, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig
+    ) -> "DatasetAuthorDBImporter":
+        return cls(dataset_id, parent, config)
+
+
+class DatasetFundingDBImporter(StaleDeletionDBImporter):
+    def __init__(
+        self, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig
+    ):
         self.dataset_id = dataset_id
         self.parent = parent
         self.config = config
@@ -99,13 +152,8 @@ class DatasetFundingImporter(StaleDeletionDBImporter):
     def get_filters(self) -> dict[str, Any]:
         return {"dataset_id": self.dataset_id}
 
-    def get_hash_attributes(self) -> list[str]:
-        return ["dataset_id", "funding_agency_name"]
-
     @classmethod
-    def to_hash_attr(cls, dataset_funding: db_models.DatasetFunding) -> str:
-        return "-".join([str(dataset_funding.dataset_id_id), dataset_funding.funding_agency_name])
-
-    @classmethod
-    def get_item(cls, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig) -> "DatasetFundingImporter":
+    def get_item(
+        cls, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig
+    ) -> "DatasetFundingDBImporter":
         return cls(dataset_id, parent, config)

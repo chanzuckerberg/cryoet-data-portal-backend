@@ -3,7 +3,7 @@ import logging
 
 from common import db_models
 from importers.db_base_importer import DBImportConfig
-from importers.db_dataset import DatasetDBImporter, DatasetFundingImporter
+from importers.db_dataset import DatasetDBImporter, DatasetFundingDBImporter, DatasetAuthorDBImporter
 
 
 @click.group()
@@ -91,8 +91,13 @@ def load(
             continue
 
         dataset_obj = dataset.import_to_db()
+        
+        if import_dataset_authors:
+            dataset_authors = DatasetAuthorDBImporter.get_item(dataset_obj.id, dataset, config)
+            dataset_authors.import_to_db()
+
         if import_dataset_funding:
-            funding = DatasetFundingImporter.get_item(dataset_obj.id, dataset, config)
+            funding = DatasetFundingDBImporter.get_item(dataset_obj.id, dataset, config)
             funding.import_to_db()
 
 

@@ -116,16 +116,12 @@ class StaleDeletionDBImporter(BaseDBImporter):
 
     def get_filters(self) -> dict[str, str]:
         pass
-
-    def get_hash_attributes(self) -> list[str]:
-        pass
-
     def get_existing_objects(self) -> dict[str, BaseModel]:
         result = {}
         klass = self.get_db_model_class()
         query = klass.select().where(*[getattr(klass, k) == v for k, v in self.get_filters().items()])
         for record in query:
-            key = "-".join([f"{getattr(record, attr)}" for attr in self.get_hash_attributes()])
+            key = "-".join([f"{getattr(record, attr)}" for attr in self.get_id_fields()])
             result[key] = record
         return result
 
@@ -133,9 +129,10 @@ class StaleDeletionDBImporter(BaseDBImporter):
         klass = self.get_db_model_class()
         data_map = self.get_data_map(self.metadata)
         existing_objs = self.get_existing_objects()
+        metadata_list = self.metadata if isinstance(self.metadata, list) else [self.metadata]
 
-        for index, entry in enumerate(self.metadata):
-            hash_values = [str(map_to_value(id_field, data_map, entry)) for id_field in self.get_hash_attributes()]
+        for entry in metadata_list:
+            hash_values = [str(map_to_value(id_field, data_map, entry)) for id_field in self.get_id_fields()]
             force_insert = False
             db_obj = existing_objs.pop("-".join(hash_values), None)
             if not db_obj:
