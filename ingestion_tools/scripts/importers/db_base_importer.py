@@ -10,6 +10,7 @@ from botocore.config import Config
 from botocore.exceptions import ClientError
 
 from common.db_models import BaseModel
+import datetime
 
 
 class DBImportConfig:
@@ -23,12 +24,12 @@ class DBImportConfig:
             self,
             anonymous: bool,
             bucket_name: str,
-            https_prefix: str = "https://files.cryoetdataportal.cziscience.com"
+            https_prefix: str,
     ):
         self.s3_client = boto3.client("s3", config=Config(signature_version=UNSIGNED)) if anonymous else boto3.client("s3")
         self.bucket_name = bucket_name
-        self.s3_prefix = "s3://{bucket_name}"
-        self.https_prefix = https_prefix
+        self.s3_prefix = f"s3://{bucket_name}"
+        self.https_prefix = https_prefix if https_prefix else "https://files.cryoetdataportal.cziscience.com"
 
     def find_subdirs_with_files(self, prefix: str, target_filename: str):
         paginator = self.s3_client.get_paginator("list_objects_v2")
@@ -78,8 +79,9 @@ class BaseDBImporter:
     dir_prefix: str
     config: DBImportConfig
     parent: "Optional[BaseDBImporter]"
+    metadata: dict[str, Any]
 
-    def join_path(*args) -> str:
+    def join_path(self, *args) -> str:
         return os.path.join(*args)
 
     def get_metadata_file_path(self) -> str:
@@ -95,10 +97,9 @@ class BaseDBImporter:
         pass
 
     def import_to_db(self) -> BaseModel:
-        metadata = self.config.load_key_json(self.get_metadata_file_path())
         # TODO: print metadata if debug
-        data_map = self.get_data_map(metadata)
-        identifiers = {id_field: map_to_value(id_field, data_map, metadata) for id_field in self.get_id_fields()}
+        data_map = self.get_data_map(self.metadata)
+        identifiers = {id_field: map_to_value(id_field, data_map, self.metadata) for id_field in self.get_id_fields()}
 
         klass = self.get_db_model_class()
         force_insert = False
@@ -109,7 +110,7 @@ class BaseDBImporter:
             force_insert = True
 
         for db_key, data_path in data_map.items():
-            setattr(db_obj, db_key, map_to_value(db_key, data_map, metadata))
+            setattr(db_obj, db_key, map_to_value(db_key, data_map, self.metadata))
 
         db_obj.save(force_insert=force_insert)
         return db_obj
