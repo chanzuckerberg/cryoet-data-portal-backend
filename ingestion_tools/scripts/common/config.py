@@ -36,10 +36,10 @@ class DataImportConfig:
     run_regex: re.Pattern[str]
     tomo_glob: str
     tomo_format: str
-    tomo_regex: re.Pattern[str] | None
-    tomo_key_photo_glob: str | None
+    tomo_regex: re.Pattern[str] | None = None
+    tomo_key_photo_glob: str | None = None
     tomo_voxel_size: str
-    ts_name_regex: re.Pattern[str] | None
+    ts_name_regex: re.Pattern[str] | None = None
     run_name_regex: re.Pattern[str]
     frames_name_regex: re.Pattern[str]
     frames_glob: str
