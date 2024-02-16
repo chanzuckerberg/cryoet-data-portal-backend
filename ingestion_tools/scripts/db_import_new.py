@@ -6,6 +6,7 @@ from importers.db.base_importer import DBImportConfig
 from importers.db.dataset import DatasetDBImporter, DatasetFundingDBImporter, DatasetAuthorDBImporter
 from importers.db.run import RunDBImporter
 from importers.db.tiltseries import TiltSeriesDBImporter
+from importers.db.voxel_spacing import TomogramVoxelSpacingDBImporter
 
 
 @click.group()
@@ -108,9 +109,17 @@ def load(
 
         for run in RunDBImporter.get_item(dataset_id, dataset, config):
             run_obj = run.import_to_db()
+            run_id = run_obj.id
 
-            tilt_series = TiltSeriesDBImporter.get_item(run_obj.id, run, config)
-            tilt_series.import_to_db()
+            if import_tiltseries:
+                tilt_series = TiltSeriesDBImporter.get_item(run_id, run, config)
+                tilt_series.import_to_db()
+
+            if not import_tomogram_voxel_spacing:
+                continue
+
+            for voxel_spacing in TomogramVoxelSpacingDBImporter.get_items(run_id, run, config):
+                voxel_spacing.import_to_db()
 
 
 if __name__ == "__main__":

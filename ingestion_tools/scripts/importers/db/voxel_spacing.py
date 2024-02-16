@@ -1,0 +1,39 @@
+import os
+from typing import Any, Iterator
+
+from common import db_models
+from importers.db.base_importer import BaseDBImporter, DBImportConfig
+from importers.db.run import RunDBImporter
+
+
+class TomogramVoxelSpacingDBImporter(BaseDBImporter):
+    def __init__(self, run_id: int, dir_prefix: str, parent: RunDBImporter, config: DBImportConfig):
+        self.run_id = run_id
+        self.dir_prefix = dir_prefix
+        self.parent = parent
+        self.config = config
+        self.metadata = {}
+
+    def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "voxel_spacing": float(os.path.basename(self.dir_prefix.strip("/"))[len("VoxelSpacing") :]),
+            "s3_prefix": self.join_path(self.config.s3_prefix, self.dir_prefix),
+            "https_prefix": self.join_path(self.config.https_prefix, self.dir_prefix),
+            "run_id": self.run_id,
+        }
+
+    def get_id_fields(self) -> list[str]:
+        return ["run_id", "voxel_spacing"]
+
+    def get_db_model_class(self) -> type:
+        return db_models.TomogramVoxelSpacing
+
+    @classmethod
+    def get_items(
+        cls, run_id: int, run: RunDBImporter, config: DBImportConfig
+    ) -> "Iterator[TomogramVoxelSpacingDBImporter]":
+        tomogram_path = cls.join_path(run.dir_prefix, "Tomograms/")
+        return [
+            cls(run_id, voxel_spacing_path, run, config)
+            for voxel_spacing_path in config.glob_s3(tomogram_path, "VoxelSpacing*", is_file=False)
+        ]

@@ -49,17 +49,18 @@ class DBImportConfig:
                     continue
         return result
 
-    def glob_s3_files(self, prefix: str, glob_string: str):
+    def glob_s3(self, prefix: str, glob_string: str, is_file: bool = True):
         paginator = self.s3_client.get_paginator("list_objects_v2")
         print(f"looking for prefix {prefix}{glob_string}")
         pages = paginator.paginate(Bucket=self.bucket_name, Prefix=prefix, Delimiter="/")
-
+        page_key = "Contents" if is_file else "CommonPrefixes"
+        obj_key = "Key" if is_file else "Prefix"
         for page in pages:
-            for obj in page.get("Contents", {}):
+            for obj in page.get(page_key, {}):
                 if not obj:
                     break
-                if PurePath(obj["Key"]).match(glob_string):
-                    yield obj["Key"]
+                if PurePath(obj[obj_key]).match(glob_string):
+                    yield obj[obj_key]
 
     def load_key_json(self, key: str, is_file_required=True):
         try:
