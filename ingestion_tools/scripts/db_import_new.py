@@ -2,8 +2,10 @@ import click
 import logging
 
 from common import db_models
-from importers.db_base_importer import DBImportConfig
-from importers.db_dataset import DatasetDBImporter, DatasetFundingDBImporter, DatasetAuthorDBImporter
+from importers.db.base_importer import DBImportConfig
+from importers.db.dataset import DatasetDBImporter, DatasetFundingDBImporter, DatasetAuthorDBImporter
+from importers.db.run import RunDBImporter
+from importers.db.tiltseries import TiltSeriesDBImporter
 
 
 @click.group()
@@ -91,14 +93,24 @@ def load(
             continue
 
         dataset_obj = dataset.import_to_db()
-        
+        dataset_id = dataset_obj.id
+
         if import_dataset_authors:
-            dataset_authors = DatasetAuthorDBImporter.get_item(dataset_obj.id, dataset, config)
+            dataset_authors = DatasetAuthorDBImporter.get_item(dataset_id, dataset, config)
             dataset_authors.import_to_db()
 
         if import_dataset_funding:
-            funding = DatasetFundingDBImporter.get_item(dataset_obj.id, dataset, config)
+            funding = DatasetFundingDBImporter.get_item(dataset_id, dataset, config)
             funding.import_to_db()
+
+        if not import_runs:
+            continue
+
+        for run in RunDBImporter.get_item(dataset_id, dataset, config):
+            run_obj = run.import_to_db()
+
+            tilt_series = TiltSeriesDBImporter.get_item(run_obj.id, run, config)
+            tilt_series.import_to_db()
 
 
 if __name__ == "__main__":

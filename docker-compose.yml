@@ -18,7 +18,7 @@ services:
   db:
     image: postgres:14.2
     healthcheck:
-      test: ['CMD', 'pg_isready', '-d', 'cryoetdataportal', '-U', 'postgres']
+      test: ['CMD', 'pg_isready', '-d', 'cryoet', '-U', 'postgres']
     environment:
       POSTGRES_INITDB_ARGS: --data-checksums
       POSTGRES_DB: cryoetdataportal
@@ -29,9 +29,9 @@ services:
       # snapshot and export. Here, we're telling Postgres to use this (non-mounted)
       # directory as its storage location instead so it works with our db snapshot
       # workflow.
-#      PGDATA: /var/lib/cryoetdataportal/data
-#    volumes:
-#      - ./test_infra:/test_infra
+      PGDATA: /var/lib/cryoetdataportal/data
+    volumes:
+      - ./test_infra:/test_infra
     ports:
       - '5432:5432'
   cryoet-api:
@@ -51,7 +51,7 @@ services:
         condition: service_healthy
     environment:
       HASURA_GRAPHQL_ENABLE_CONSOLE: 'false'
-      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@db:5432/cryoetdataportal
+      HASURA_GRAPHQL_DATABASE_URL: postgresql://postgres:postgres@db:5432/cryoetdataportal
       HASURA_GRAPHQL_ADMIN_SECRET: secret
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
     ports:

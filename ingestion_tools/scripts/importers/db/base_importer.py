@@ -1,6 +1,7 @@
 import json
 import os
-from typing import Any, Optional
+from pathlib import PurePath
+from typing import Any, Optional, Iterator
 
 import boto3
 import peewee
@@ -21,30 +22,44 @@ class DBImportConfig:
     https_prefix: str
 
     def __init__(
-            self,
-            anonymous: bool,
-            bucket_name: str,
-            https_prefix: str,
+        self,
+        anonymous: bool,
+        bucket_name: str,
+        https_prefix: str,
     ):
-        self.s3_client = boto3.client("s3", config=Config(signature_version=UNSIGNED)) if anonymous else boto3.client("s3")
+        self.s3_client = (
+            boto3.client("s3", config=Config(signature_version=UNSIGNED)) if anonymous else boto3.client("s3")
+        )
         self.bucket_name = bucket_name
         self.s3_prefix = f"s3://{bucket_name}"
         self.https_prefix = https_prefix if https_prefix else "https://files.cryoetdataportal.cziscience.com"
 
-    def find_subdirs_with_files(self, prefix: str, target_filename: str):
+    def find_subdirs_with_files(self, prefix: str, target_filename: str) -> Iterator[str]:
         paginator = self.s3_client.get_paginator("list_objects_v2")
         print(f"looking for prefix {prefix}")
         pages = paginator.paginate(Bucket=self.bucket_name, Prefix=prefix, Delimiter="/")
-
+        result = []
         for page in pages:
             for obj in page["CommonPrefixes"]:
                 subdir = obj["Prefix"]
                 try:
-                    metadata_key = f"{subdir}{target_filename}"
-                    self.s3_client.head_object(Bucket=self.bucket_name, Key=metadata_key)
+                    self.s3_client.head_object(Bucket=self.bucket_name, Key=f"{subdir}{target_filename}")
+                    result.append(subdir)
                 except Exception:
                     continue
-                yield subdir
+        return result
+
+    def glob_s3_files(self, prefix: str, glob_string: str):
+        paginator = self.s3_client.get_paginator("list_objects_v2")
+        print(f"looking for prefix {prefix}{glob_string}")
+        pages = paginator.paginate(Bucket=self.bucket_name, Prefix=prefix, Delimiter="/")
+
+        for page in pages:
+            for obj in page.get("Contents", {}):
+                if not obj:
+                    break
+                if PurePath(obj["Key"]).match(glob_string):
+                    yield obj["Key"]
 
     def load_key_json(self, key: str, is_file_required=True):
         try:
@@ -79,9 +94,10 @@ class BaseDBImporter:
     dir_prefix: str
     config: DBImportConfig
     parent: "Optional[BaseDBImporter]"
-    metadata: dict[str, Any]|list[dict[str, Any]]
+    metadata: dict[str, Any] | list[dict[str, Any]]
 
-    def join_path(self, *args) -> str:
+    @classmethod
+    def join_path(cls, *args) -> str:
         return os.path.join(*args)
 
     def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
@@ -113,9 +129,9 @@ class BaseDBImporter:
 
 
 class StaleDeletionDBImporter(BaseDBImporter):
-
     def get_filters(self) -> dict[str, str]:
         pass
+
     def get_existing_objects(self) -> dict[str, BaseModel]:
         result = {}
         klass = self.get_db_model_class()

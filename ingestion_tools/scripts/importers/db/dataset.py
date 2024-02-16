@@ -1,7 +1,7 @@
 from typing import Any, Iterable
 
 from common import db_models
-from importers.db_base_importer import (
+from importers.db.base_importer import (
     BaseDBImporter,
     DBImportConfig,
     StaleDeletionDBImporter,
@@ -36,10 +36,7 @@ class DatasetDBImporter(BaseDBImporter):
             "deposition_date": ["dates", "deposition_date"],
             "release_date": ["dates", "release_date"],
             "last_modified_date": ["dates", "last_modified_date"],
-            "related_database_entries": [
-                "cross_references",
-                "related_database_entries",
-            ],
+            "related_database_entries": ["cross_references", "related_database_entries"],
             "related_database_links": ["cross_references", "related_database_links"],
             "dataset_publications": ["cross_references", "dataset_publications"],
             "dataset_citations": ["cross_references", "dataset_citations"],
@@ -60,38 +57,29 @@ class DatasetDBImporter(BaseDBImporter):
         }
 
     def get_computed_fields(self, metadata: dict[str, Any]) -> dict[str, Any]:
+        https_prefix = self.config.https_prefix
         extra_data = {
             "s3_prefix": self.join_path(self.config.s3_prefix, self.dir_prefix),
-            "https_prefix": self.join_path(self.config.https_prefix, self.dir_prefix),
+            "https_prefix": self.join_path(https_prefix, self.dir_prefix),
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
         }
         key_photos = metadata.get("key_photos", {})
-        https_prefix = self.config.https_prefix
         if snapshot_path := key_photos.get("snapshot"):
             extra_data["key_photo_url"] = self.join_path(https_prefix, snapshot_path)
         if thumbnail_path := key_photos.get("thumbnail"):
-            extra_data["key_photo_thumbnail_url"] = self.join_path(
-                https_prefix, thumbnail_path
-            )
+            extra_data["key_photo_thumbnail_url"] = self.join_path(https_prefix, thumbnail_path)
         return extra_data
 
     @classmethod
-    def get_items(
-        cls, config: DBImportConfig, prefix: str
-    ) -> Iterable["DatasetDBImporter"]:
+    def get_items(cls, config: DBImportConfig, prefix: str) -> Iterable["DatasetDBImporter"]:
         return [
-            cls(dataset_id, config)
-            for dataset_id in config.find_subdirs_with_files(
-                prefix, "dataset_metadata.json"
-            )
+            cls(dataset_id, config) for dataset_id in config.find_subdirs_with_files(prefix, "dataset_metadata.json")
         ]
 
 
 class DatasetAuthorDBImporter(StaleDeletionDBImporter):
-    def __init__(
-        self, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig
-    ):
+    def __init__(self, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig):
         self.dataset_id = dataset_id
         self.parent = parent
         self.config = config
@@ -121,16 +109,12 @@ class DatasetAuthorDBImporter(StaleDeletionDBImporter):
         return {"dataset_id": self.dataset_id}
 
     @classmethod
-    def get_item(
-        cls, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig
-    ) -> "DatasetAuthorDBImporter":
+    def get_item(cls, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig) -> "DatasetAuthorDBImporter":
         return cls(dataset_id, parent, config)
 
 
 class DatasetFundingDBImporter(StaleDeletionDBImporter):
-    def __init__(
-        self, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig
-    ):
+    def __init__(self, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig):
         self.dataset_id = dataset_id
         self.parent = parent
         self.config = config
@@ -153,7 +137,5 @@ class DatasetFundingDBImporter(StaleDeletionDBImporter):
         return {"dataset_id": self.dataset_id}
 
     @classmethod
-    def get_item(
-        cls, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig
-    ) -> "DatasetFundingDBImporter":
+    def get_item(cls, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig) -> "DatasetFundingDBImporter":
         return cls(dataset_id, parent, config)
