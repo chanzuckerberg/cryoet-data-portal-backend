@@ -3,7 +3,11 @@ from typing import Any, Iterator
 
 from common import db_models
 from common.normalize_fields import normalize_fiducial_alignment
-from importers.db.base_importer import BaseDBImporter, DBImportConfig, StaleDeletionDBImporter
+from importers.db.base_importer import (
+    BaseDBImporter,
+    DBImportConfig,
+    AuthorsStaleDeletionDBImporter,
+)
 from importers.db.voxel_spacing import TomogramVoxelSpacingDBImporter
 
 
@@ -89,14 +93,14 @@ class TomogramDBImporter(BaseDBImporter):
     def get_item(
         cls, voxel_spacing_id: int, voxel_spacing: TomogramVoxelSpacingDBImporter, config: DBImportConfig
     ) -> Iterator["TomogramDBImporter"]:
-        tomogrma_dir_path = cls.join_path(voxel_spacing.dir_prefix, "CanonicalTomogram")
+        tomogram_dir_path = cls.join_path(voxel_spacing.dir_prefix, "CanonicalTomogram")
         return [
             cls(voxel_spacing_id, tomogram_prefix, voxel_spacing, config)
-            for tomogram_prefix in config.find_subdirs_with_files(tomogrma_dir_path, "tomogram_metadata.json")
+            for tomogram_prefix in config.find_subdirs_with_files(tomogram_dir_path, "tomogram_metadata.json")
         ]
 
 
-class TomogramAuthorDBImporter(StaleDeletionDBImporter):
+class TomogramAuthorDBImporter(AuthorsStaleDeletionDBImporter):
     def __init__(self, tomogram_id: int, parent: TomogramDBImporter, config: DBImportConfig):
         self.tomogram_id = tomogram_id
         self.parent = parent

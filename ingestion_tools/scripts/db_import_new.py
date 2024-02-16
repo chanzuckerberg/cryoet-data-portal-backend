@@ -2,6 +2,7 @@ import click
 import logging
 
 from common import db_models
+from importers.db.annotation import AnnotationDBImporter, AnnotationAuthorDBImporter
 from importers.db.base_importer import DBImportConfig
 from importers.db.dataset import DatasetDBImporter, DatasetFundingDBImporter, DatasetAuthorDBImporter
 from importers.db.run import RunDBImporter
@@ -130,8 +131,15 @@ def load(
                             tomogram_authors = TomogramAuthorDBImporter.get_item(tomogram_obj.id, tomogram, config)
                             tomogram_authors.import_to_db()
 
-                        if not import_annotations:
-                            continue
+                if import_annotations:
+                    for annotation in AnnotationDBImporter.get_item(voxel_spacing_obj.id, voxel_spacing, config):
+                        annotation_obj = annotation.import_to_db()
+
+                        if import_annotation_authors:
+                            annotation_authors = AnnotationAuthorDBImporter.get_item(
+                                annotation_obj.id, annotation, config
+                            )
+                            annotation_authors.import_to_db()
 
 
 if __name__ == "__main__":

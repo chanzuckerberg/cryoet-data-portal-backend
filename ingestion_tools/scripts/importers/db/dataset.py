@@ -5,6 +5,7 @@ from importers.db.base_importer import (
     BaseDBImporter,
     DBImportConfig,
     StaleDeletionDBImporter,
+    AuthorsStaleDeletionDBImporter,
 )
 
 
@@ -113,7 +114,7 @@ class DatasetAuthorDBImporter(StaleDeletionDBImporter):
         return cls(dataset_id, parent, config)
 
 
-class DatasetFundingDBImporter(StaleDeletionDBImporter):
+class DatasetFundingDBImporter(AuthorsStaleDeletionDBImporter):
     def __init__(self, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig):
         self.dataset_id = dataset_id
         self.parent = parent

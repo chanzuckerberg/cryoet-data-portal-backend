@@ -142,24 +142,35 @@ class StaleDeletionDBImporter(BaseDBImporter):
             result[key] = record
         return result
 
+    def update_data_map(self, data_map: dict[str, Any], metadata: dict[str, Any], index: int) -> dict[str, Any]:
+        return data_map
+
     def import_to_db(self) -> None:
         klass = self.get_db_model_class()
         data_map = self.get_data_map(self.metadata)
         existing_objs = self.get_existing_objects()
         metadata_list = self.metadata if isinstance(self.metadata, list) else [self.metadata]
 
-        for entry in metadata_list:
-            hash_values = [str(map_to_value(id_field, data_map, entry)) for id_field in self.get_id_fields()]
+        for index, entry in enumerate(metadata_list):
+            entry_data_map = self.update_data_map(data_map, entry, index)
+            hash_values = [str(map_to_value(id_field, entry_data_map, entry)) for id_field in self.get_id_fields()]
             force_insert = False
             db_obj = existing_objs.pop("-".join(hash_values), None)
             if not db_obj:
                 db_obj = klass()
                 force_insert = True
 
-            for db_key, data_path in data_map.items():
-                setattr(db_obj, db_key, map_to_value(db_key, data_map, entry))
+            for db_key, data_path in entry_data_map.items():
+                setattr(db_obj, db_key, map_to_value(db_key, entry_data_map, entry))
             db_obj.save(force_insert=force_insert)
 
         for stale_obj in existing_objs.values():
             # TODO: Log deletion
             stale_obj.delete_instance()
+
+
+class AuthorsStaleDeletionDBImporter(StaleDeletionDBImporter):
+    def update_data_map(self, data_map: dict[str, Any], metadata: dict[str, Any], index: int) -> dict[str, Any]:
+        if metadata.get("author_list_order"):
+            return data_map
+        return {**data_map, **{"author_list_order": index + 1}}
