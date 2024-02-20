@@ -62,7 +62,7 @@ class DataImportConfig:
     input_prefix: str
     overrides_by_run: list[RunOverride] | None
     run_data_map: dict[str, Any]
-    run_data_map_file: str | None
+    run_data_map_file: str | None = None
 
     def __init__(self, fs: FileSystemApi, config_path: str, output_prefix: str, input_bucket: str):
         self.output_prefix = output_prefix
