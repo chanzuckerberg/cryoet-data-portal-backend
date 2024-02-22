@@ -71,7 +71,7 @@ class TomoConverter:
         mrcfiles.append(os.path.basename(filename))
 
         if write:
-            newfile = mrcfile.new(filename, self.data, overwrite=True)
+            newfile = mrcfile.new(filename, pyramid[0], overwrite=True)
             self.update_headers(newfile, header_mapper, voxel_spacing)
             newfile.flush()
             newfile.close()
