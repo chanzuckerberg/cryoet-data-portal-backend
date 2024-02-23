@@ -39,7 +39,7 @@ class AnnotationMap(TypedDict):
 
 
 class BaseAnnotationSource:
-    is_viz_default: bool
+    is_visualization_default: bool
 
     def get_source_file(self, fs: FileSystemApi, input_prefix: str):
         source_path = os.path.join(input_prefix, self.glob_string)
@@ -71,7 +71,7 @@ class VolumeAnnotationSource(BaseAnnotationSource):
                 "format": fmt,
                 "path": self.get_output_filename(output_prefix, fmt),
                 "shape": self.shape,
-                "is_visualization_default": self.is_viz_default,
+                "is_visualization_default": self.is_visualization_default,
             }
             for fmt in ["zarr", "mrc"]
         ]
@@ -90,7 +90,7 @@ class SegmentationMaskFile(VolumeAnnotationSource):
         self.glob_string = glob_string.format(**glob_vars)
         self.file_format = file_format
         self.shape = shape
-        self.is_viz_default = is_visualization_default
+        self.is_visualization_default = is_visualization_default
         if self.file_format not in ["mrc"]:
             raise NotImplementedError("We only support MRC files for segmentation masks")
 
@@ -113,7 +113,7 @@ class SemanticSegmentationMaskFile(VolumeAnnotationSource):
         self.file_format = file_format
         self.shape = "SegmentationMask"  # Don't expose SemanticSegmentationMask to the public portal.
         self.label = mask_label
-        self.is_viz_default = is_visualization_default
+        self.is_visualization_default = is_visualization_default
 
         if self.file_format not in ["mrc"]:
             raise NotImplementedError("We only support MRC files for segmentation masks")
@@ -121,7 +121,12 @@ class SemanticSegmentationMaskFile(VolumeAnnotationSource):
     def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float = None):
         input_file = self.get_source_file(fs, input_prefix)
         return scale_maskfile(
-            fs, self.get_output_filename(output_prefix), input_file, self.label, write=True, voxel_spacing=voxel_spacing,
+            fs,
+            self.get_output_filename(output_prefix),
+            input_file,
+            self.label,
+            write=True,
+            voxel_spacing=voxel_spacing,
         )
 
     def is_valid(self, fs: FileSystemApi, input_prefix: str) -> bool:
@@ -148,7 +153,7 @@ class PointFile(BaseAnnotationSource):
         self.columns = columns
         self.shape = shape
         self.delimiter = delimiter
-        self.is_viz_default = is_visualization_default
+        self.is_visualization_default = is_visualization_default
         if self.file_format not in ["csv", "csv_with_header"]:
             raise NotImplementedError("We only support CSV files for Point files")
 
@@ -190,7 +195,7 @@ class PointFile(BaseAnnotationSource):
                 "format": "ndjson",
                 "path": self.get_output_filename(output_prefix),
                 "shape": self.shape,
-                "is_visualization_default": self.is_viz_default,
+                "is_visualization_default": self.is_visualization_default,
             },
         ]
         return metadata
@@ -241,7 +246,7 @@ class OrientedPointFile(PointFile):
         self.glob_string = glob_string.format(**glob_vars)
         self.order = order
         self.filter_value = ""
-        self.is_viz_default = is_visualization_default
+        self.is_visualization_default = is_visualization_default
         if filter_value:
             self.filter_value = filter_value.format(**glob_vars)
         valid_formats = self.map_functions.keys()
