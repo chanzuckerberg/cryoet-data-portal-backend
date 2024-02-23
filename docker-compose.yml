@@ -85,7 +85,7 @@ services:
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@db:5432/cryoet
   ingestor:
-    platform: linux/arm64
+    platform: linux/amd64
     profiles: ["ingestor"]
     image: ingestor
     build:
