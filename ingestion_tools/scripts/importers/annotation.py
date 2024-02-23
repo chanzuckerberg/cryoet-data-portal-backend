@@ -120,8 +120,9 @@ class SemanticSegmentationMaskFile(VolumeAnnotationSource):
 
     def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float = None):
         input_file = self.get_source_file(fs, input_prefix)
-        return scale_maskfile(fs, self.get_output_filename(output_prefix), input_file, self.label, write=True,
-                              voxel_spacing=voxel_spacing)
+        return scale_maskfile(
+            fs, self.get_output_filename(output_prefix), input_file, self.label, write=True, voxel_spacing=voxel_spacing
+        )
 
     def is_valid(self, fs: FileSystemApi, input_prefix: str) -> bool:
         try:
