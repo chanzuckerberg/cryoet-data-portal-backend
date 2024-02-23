@@ -620,5 +620,6 @@ def load(
                             load_annotation_author_data(annotation.id, anno_metadata)
 
 
+# Test
 if __name__ == "__main__":
     cli()
