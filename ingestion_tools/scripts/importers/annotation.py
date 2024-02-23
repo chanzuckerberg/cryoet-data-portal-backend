@@ -39,7 +39,7 @@ class AnnotationMap(TypedDict):
 
 
 class BaseAnnotationSource:
-    is_viz_default: bool
+    is_visualization_default: bool
 
     def get_source_file(self, fs: FileSystemApi, input_prefix: str):
         source_path = os.path.join(input_prefix, self.glob_string)
@@ -71,7 +71,7 @@ class VolumeAnnotationSource(BaseAnnotationSource):
                 "format": fmt,
                 "path": self.get_output_filename(output_prefix, fmt),
                 "shape": self.shape,
-                "is_visualization_default": self.is_viz_default,
+                "is_visualization_default": self.is_visualization_default,
             }
             for fmt in ["zarr", "mrc"]
         ]
@@ -85,12 +85,12 @@ class SegmentationMaskFile(VolumeAnnotationSource):
         glob_string: str,
         glob_vars: dict[str, str],
         file_format: str,
-        is_viz_default: bool = False,
+        is_visualization_default: bool = False,
     ):
         self.glob_string = glob_string.format(**glob_vars)
         self.file_format = file_format
         self.shape = shape
-        self.is_viz_default = is_viz_default
+        self.is_visualization_default = is_visualization_default
         if self.file_format not in ["mrc"]:
             raise NotImplementedError("We only support MRC files for segmentation masks")
 
@@ -107,20 +107,27 @@ class SemanticSegmentationMaskFile(VolumeAnnotationSource):
         glob_vars: dict[str, str],
         file_format: str,
         mask_label: int = 1,  # No explicit label means we are dealing with a binary mask already
-        is_viz_default: bool = False,
+        is_visualization_default: bool = False,
     ):
         self.glob_string = glob_string.format(**glob_vars)
         self.file_format = file_format
         self.shape = "SegmentationMask"  # Don't expose SemanticSegmentationMask to the public portal.
         self.label = mask_label
-        self.is_viz_default = is_viz_default
+        self.is_visualization_default = is_visualization_default
 
         if self.file_format not in ["mrc"]:
             raise NotImplementedError("We only support MRC files for segmentation masks")
 
     def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float = None):
         input_file = self.get_source_file(fs, input_prefix)
-        return scale_maskfile(fs, self.get_output_filename(output_prefix), input_file, self.label, write=True)
+        return scale_maskfile(
+            fs,
+            self.get_output_filename(output_prefix),
+            input_file,
+            self.label,
+            write=True,
+            voxel_spacing=voxel_spacing,
+        )
 
     def is_valid(self, fs: FileSystemApi, input_prefix: str) -> bool:
         try:
@@ -138,7 +145,7 @@ class PointFile(BaseAnnotationSource):
         glob_vars: dict[str, str],
         file_format: str,
         columns: str,
-        is_viz_default: bool = False,
+        is_visualization_default: bool = False,
         delimiter: str = ",",
     ):
         self.glob_string = glob_string.format(**glob_vars)
@@ -146,7 +153,7 @@ class PointFile(BaseAnnotationSource):
         self.columns = columns
         self.shape = shape
         self.delimiter = delimiter
-        self.is_viz_default = is_viz_default
+        self.is_visualization_default = is_visualization_default
         if self.file_format not in ["csv", "csv_with_header"]:
             raise NotImplementedError("We only support CSV files for Point files")
 
@@ -170,16 +177,16 @@ class PointFile(BaseAnnotationSource):
         annotation_set = []
         with fs.open(csvfilename, "r") as data:
             points = csv.reader(data, delimiter=self.delimiter)
-        if skip_header:
-            next(points)
-        for coord in points:
-            annotation_set.append(
-                self.point(
-                    float(coord[coord_order[0]]),
-                    float(coord[coord_order[1]]),
-                    float(coord[coord_order[2]]),
-                ),
-            )
+            if skip_header:
+                next(points)
+            for coord in points:
+                annotation_set.append(
+                    self.point(
+                        float(coord[coord_order[0]]),
+                        float(coord[coord_order[1]]),
+                        float(coord[coord_order[2]]),
+                    ),
+                )
         return annotation_set
 
     def get_metadata(self, output_prefix: str):
@@ -188,7 +195,7 @@ class PointFile(BaseAnnotationSource):
                 "format": "ndjson",
                 "path": self.get_output_filename(output_prefix),
                 "shape": self.shape,
-                "is_visualization_default": self.is_viz_default,
+                "is_visualization_default": self.is_visualization_default,
             },
         ]
         return metadata
@@ -227,7 +234,7 @@ class OrientedPointFile(PointFile):
         file_format: str,
         binning: int,
         glob_string: str,
-        is_viz_default: bool = False,
+        is_visualization_default: bool = False,
         order: str | None = None,
         filter_value: str | None = None,
     ):
@@ -239,7 +246,7 @@ class OrientedPointFile(PointFile):
         self.glob_string = glob_string.format(**glob_vars)
         self.order = order
         self.filter_value = ""
-        self.is_viz_default = is_viz_default
+        self.is_visualization_default = is_visualization_default
         if filter_value:
             self.filter_value = filter_value.format(**glob_vars)
         valid_formats = self.map_functions.keys()
