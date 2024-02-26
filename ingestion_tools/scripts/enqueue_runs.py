@@ -137,13 +137,21 @@ def run_job(
 )
 @click.option("--make-key-image", type=bool, is_flag=True, default=False, help="Create key image for run from tomogram")
 @click.option(
-    "--make-neuroglancer-config", type=bool, is_flag=True, default=False, help="Create neuroglancer config for run"
+    "--make-neuroglancer-config",
+    type=bool,
+    is_flag=True,
+    default=False,
+    help="Create neuroglancer config for run",
 )
 @click.option(
-    "--write-mrc/--no-write-mrc", default=True, help="Specify if mrc volumes should be written, defaults to True."
+    "--write-mrc/--no-write-mrc",
+    default=True,
+    help="Specify if mrc volumes should be written, defaults to True.",
 )
 @click.option(
-    "--write-zarr/--no-write-zarr", default=True, help="Specify if zarr volumes should be written, defaults to True."
+    "--write-zarr/--no-write-zarr",
+    default=True,
+    help="Specify if zarr volumes should be written, defaults to True.",
 )
 @click.option("--memory", type=int, default=None, help="Specify memory allocation override")
 @click.pass_context

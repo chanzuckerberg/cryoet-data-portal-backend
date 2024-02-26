@@ -4,13 +4,13 @@
 Before running the script, ensure all the required packages are installed by running
 
 ```
-cd ingestion_tools/scripts  
+cd ingestion_tools/scripts
 pip install -r requirements.txt
 ```
 
-## Running 
+## Running
 
-The `enqueue_runs.py` queues the required processing. 
+The `enqueue_runs.py` queues the required processing.
 
 To learn all the options available:
 ```
