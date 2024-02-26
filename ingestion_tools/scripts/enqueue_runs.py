@@ -28,7 +28,7 @@ def run_job(
     flags: str,
     aws_region: str,
     aws_account_id: str,
-    sfn_name,
+    sfn_name: str,
     swipe_comms_bucket: str,
     swipe_wdl_bucket: str,
     swipe_wdl_key: str,
@@ -80,35 +80,72 @@ def run_job(
 @click.argument("config_file", required=True, type=str)
 @click.argument("input_bucket", required=True, type=str)
 @click.argument("output_path", required=True, type=str)
-@click.option("--env-name", type=str, required=True, default="staging")
-@click.option("--ecr-repo", type=str, required=True, default="cryoet-staging")
-@click.option("--ecr-tag", type=str, required=True, default="ci-staging")
+@click.option(
+    "--env-name",
+    type=str,
+    required=True,
+    default="staging",
+    help="Specify environment, defaults to staging",
+)
+@click.option(
+    "--ecr-repo",
+    type=str,
+    required=True,
+    default="cryoet-staging",
+    help="Specify ecr-repo name, defaults to 'cryoet-staging'",
+)
+@click.option(
+    "--ecr-tag",
+    type=str,
+    required=True,
+    default="ci-staging",
+    help="Specify docker image tag, defaults to 'ci-staging'",
+)
 @click.option(
     "--swipe-wdl-key",
     type=str,
     required=True,
     default="standardize_dirs.wdl-v0.0.1.wdl",
+    help="Specify wdl key for custom workload",
 )
-@click.option("--force-overwrite", is_flag=True, default=False)
-@click.option("--import-tomograms", is_flag=True, default=False)
-@click.option("--import-tomogram-metadata", is_flag=True, default=False)
-@click.option("--import-annotations", is_flag=True, default=False)
-@click.option("--import-annotation-metadata", is_flag=True, default=False)
-@click.option("--import-metadata", is_flag=True, default=False)
-@click.option("--import-frames", is_flag=True, default=False)
-@click.option("--import-tiltseries", is_flag=True, default=False)
-@click.option("--import-tiltseries-metadata", is_flag=True, default=False)
-@click.option("--import-run-metadata", is_flag=True, default=False)
-@click.option("--import-datasets", is_flag=True, default=False)
-@click.option("--import-dataset-metadata", is_flag=True, default=False)
-@click.option("--import-everything", is_flag=True, default=False)
-@click.option("--filter-run-name", type=str, default=None, multiple=True)
-@click.option("--exclude-run-name", type=str, default=None, multiple=True)
-@click.option("--make-key-image", type=bool, is_flag=True, default=False)
-@click.option("--make-neuroglancer-config", type=bool, is_flag=True, default=False)
-@click.option("--write-mrc/--no-write-mrc", default=True)
-@click.option("--write-zarr/--no-write-zarr", default=True)
-@click.option("--memory", type=int, default=None)
+@click.option("--force-overwrite", is_flag=True, default=False, help="Overwrite of volumes if they it already exist")
+@click.option("--import-tomograms", is_flag=True, default=False, help="Import tomogram volumes")
+@click.option("--import-tomogram-metadata", is_flag=True, default=False, help="Import tomogram metadata")
+@click.option("--import-annotations", is_flag=True, default=False, help="Import annotation files")
+@click.option("--import-annotation-metadata", is_flag=True, default=False, help="Import annotation metadata")
+@click.option("--import-metadata", is_flag=True, default=False, help="Import all metadata")
+@click.option("--import-frames", is_flag=True, default=False, help="Import frame files")
+@click.option("--import-tiltseries", is_flag=True, default=False, help="Import tiltseries volumes")
+@click.option("--import-tiltseries-metadata", is_flag=True, default=False, help="Import tiltseries metadata")
+@click.option("--import-run-metadata", is_flag=True, default=False, help="Import run metadata")
+@click.option("--import-datasets", is_flag=True, default=False, help="Import dataset key photos")
+@click.option("--import-dataset-metadata", is_flag=True, default=False, help="Import dataset metadata")
+@click.option("--import-everything", is_flag=True, default=False, help="Import everything for the dataset")
+@click.option(
+    "--filter-run-name",
+    type=str,
+    default=None,
+    multiple=True,
+    help="Only process runs matching the regex. If not specified, all runs are processed",
+)
+@click.option(
+    "--exclude-run-name",
+    type=str,
+    default=None,
+    multiple=True,
+    help="Exclude runs matching this regex. If not specified, all runs are processed",
+)
+@click.option("--make-key-image", type=bool, is_flag=True, default=False, help="Create key image for run from tomogram")
+@click.option(
+    "--make-neuroglancer-config", type=bool, is_flag=True, default=False, help="Create neuroglancer config for run"
+)
+@click.option(
+    "--write-mrc/--no-write-mrc", default=True, help="Specify if mrc volumes should be written, defaults to True."
+)
+@click.option(
+    "--write-zarr/--no-write-zarr", default=True, help="Specify if zarr volumes should be written, defaults to True."
+)
+@click.option("--memory", type=int, default=None, help="Specify memory allocation override")
 @click.pass_context
 def queue(
     ctx,
@@ -190,7 +227,7 @@ def queue(
         # Learn more about our AWS environment
         swipe_comms_bucket = None
         swipe_wdl_bucket = None
-        sfn_name = "cryoet-ingestion-{env_name}-default-wdl"
+        sfn_name = f"cryoet-ingestion-{env_name}-default-wdl"
 
         sts = boto3.client("sts")
         aws_account_id = sts.get_caller_identity()["Account"]
