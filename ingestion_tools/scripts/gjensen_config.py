@@ -246,7 +246,7 @@ def to_tomogram(authors: list[dict[str, Any]], data: dict[str, Any]) -> [dict[st
         )
 
     tomogram["fiducial_alignment_status"] = normalize_fiducial_alignment(
-        tomogram.get("fiducial_alignment_status", False)
+        tomogram.get("fiducial_alignment_status", False),
     )
     tomogram["offset"] = {"x": 0, "y": 0, "z": 0}
     tomogram["affine_transformation_matrix"] = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
