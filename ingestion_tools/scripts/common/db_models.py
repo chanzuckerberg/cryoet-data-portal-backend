@@ -20,41 +20,42 @@ class BaseModel(Model):
 
 class Dataset(BaseModel):
     class Meta:
-        db_table = "datasets"
+        table_name = "datasets"
 
-    id = IntegerField()
+    id = IntegerField(primary_key=True, unique=True)
+
     title = CharField()
     description = CharField()
     deposition_date = DateField()
     release_date = DateField()
     last_modified_date = DateField()
-    related_database_entries = CharField()
-    related_database_links = CharField()
-    dataset_publications = CharField()
-    dataset_citations = CharField()
+    related_database_entries = CharField(null=True)
+    related_database_links = CharField(null=True)
+    dataset_publications = CharField(null=True)
+    dataset_citations = CharField(null=True)
     sample_type = CharField()
-    organism_name = CharField()
-    organism_taxid = CharField()
-    tissue_name = CharField()
-    tissue_id = CharField()
-    cell_name = CharField()
-    cell_type_id = CharField()
-    cell_strain_name = CharField()
-    cell_strain_id = CharField()
-    sample_preparation = CharField()
-    grid_preparation = CharField()
-    other_setup = CharField()
+    organism_name = CharField(null=True)
+    organism_taxid = CharField(null=True)
+    tissue_name = CharField(null=True)
+    tissue_id = CharField(null=True)
+    cell_name = CharField(null=True)
+    cell_type_id = CharField(null=True)
+    cell_strain_name = CharField(null=True)
+    cell_strain_id = CharField(null=True)
+    sample_preparation = CharField(null=True)
+    grid_preparation = CharField(null=True)
+    other_setup = CharField(null=True)
     s3_prefix = CharField()
     https_prefix = CharField()
-    cell_component_name = CharField()
-    cell_component_id = CharField()
-    key_photo_url = CharField()
-    key_photo_thumbnail_url = CharField()
+    cell_component_name = CharField(null=True)
+    cell_component_id = CharField(null=True)
+    key_photo_url = CharField(null=True)
+    key_photo_thumbnail_url = CharField(null=True)
 
 
 class DatasetAuthor(BaseModel):
     class Meta:
-        db_table = "dataset_authors"
+        table_name = "dataset_authors"
 
     id = IntegerField()
     dataset_id = ForeignKeyField(Dataset, backref="authors")
@@ -71,7 +72,7 @@ class DatasetAuthor(BaseModel):
 
 class DatasetFunding(BaseModel):
     class Meta:
-        db_table = "dataset_funding"
+        table_name = "dataset_funding"
 
     id = IntegerField()
     dataset_id = ForeignKeyField(Dataset, backref="funding_sources")
@@ -81,7 +82,7 @@ class DatasetFunding(BaseModel):
 
 class Run(BaseModel):
     class Meta:
-        db_table = "runs"
+        table_name = "runs"
 
     id = IntegerField()
     dataset_id = ForeignKeyField(Dataset, backref="runs")
@@ -92,7 +93,7 @@ class Run(BaseModel):
 
 class TomogramVoxelSpacing(BaseModel):
     class Meta:
-        db_table = "tomogram_voxel_spacings"
+        table_name = "tomogram_voxel_spacings"
 
     id = IntegerField()
     run_id = ForeignKeyField(Run, backref="tomogram_voxel_spacings")
@@ -103,7 +104,7 @@ class TomogramVoxelSpacing(BaseModel):
 
 class Tomogram(BaseModel):
     class Meta:
-        db_table = "tomograms"
+        table_name = "tomograms"
 
     id = IntegerField()
     tomogram_voxel_spacing_id = ForeignKeyField(TomogramVoxelSpacing, backref="tomograms")
@@ -139,7 +140,7 @@ class Tomogram(BaseModel):
 
 class TomogramAuthor(BaseModel):
     class Meta:
-        db_table = "tomogram_authors"
+        table_name = "tomogram_authors"
 
     id = IntegerField()
     tomogram_id = ForeignKeyField(Tomogram, backref="authors")
@@ -156,7 +157,7 @@ class TomogramAuthor(BaseModel):
 
 class Annotation(BaseModel):
     class Meta:
-        db_table = "annotations"
+        table_name = "annotations"
 
     id = IntegerField()
     tomogram_voxel_spacing_id = ForeignKeyField(TomogramVoxelSpacing, backref="runs")
@@ -182,7 +183,7 @@ class Annotation(BaseModel):
 
 class AnnotationFiles(BaseModel):
     class Meta:
-        db_table = "annotation_files"
+        table_name = "annotation_files"
 
     id = IntegerField()
     annotation_id = ForeignKeyField(Annotation, backref="files")
@@ -195,7 +196,7 @@ class AnnotationFiles(BaseModel):
 
 class AnnotationAuthor(BaseModel):
     class Meta:
-        db_table = "annotation_authors"
+        table_name = "annotation_authors"
 
     id = IntegerField()
     annotation_id = IntegerField()
@@ -212,7 +213,7 @@ class AnnotationAuthor(BaseModel):
 
 class TiltSeries(BaseModel):
     class Meta:
-        db_table = "tiltseries"
+        table_name = "tiltseries"
 
     id = IntegerField()
     run_id = ForeignKeyField(Run, backref="tiltseries")

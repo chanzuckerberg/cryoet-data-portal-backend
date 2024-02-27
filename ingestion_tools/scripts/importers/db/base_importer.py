@@ -2,12 +2,7 @@ import json
 import os
 from pathlib import PurePath
 from typing import Any, Optional, Iterator
-
-import boto3
 import peewee
-
-from botocore import UNSIGNED
-from botocore.config import Config
 from botocore.exceptions import ClientError
 
 from common.db_models import BaseModel
@@ -23,13 +18,11 @@ class DBImportConfig:
 
     def __init__(
         self,
-        anonymous: bool,
+        s3_client,
         bucket_name: str,
         https_prefix: str,
     ):
-        self.s3_client = (
-            boto3.client("s3", config=Config(signature_version=UNSIGNED)) if anonymous else boto3.client("s3")
-        )
+        self.s3_client = s3_client
         self.bucket_name = bucket_name
         self.s3_prefix = f"s3://{bucket_name}"
         self.https_prefix = https_prefix if https_prefix else "https://files.cryoetdataportal.cziscience.com"

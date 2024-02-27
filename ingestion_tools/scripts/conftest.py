@@ -1,3 +1,4 @@
+import os
 import random
 import string
 from typing import Any, Generator
@@ -8,6 +9,12 @@ from botocore.client import Config
 from mypy_boto3_s3 import S3Client
 
 from common.fs import FileSystemApi
+from peewee import SqliteDatabase
+
+from common.db_models import BaseModel, Dataset
+
+
+ENDPOINT_URL = os.getenv("ENDPOINT_URL", "http://motoserver:4000")
 
 
 @pytest.fixture
@@ -21,7 +28,7 @@ def s3_fs() -> FileSystemApi:
     fs = FileSystemApi.get_fs_api(
         mode="s3",
         force_overwrite=False,
-        client_kwargs={"endpoint_url": "http://motoserver:4000"},
+        client_kwargs={"endpoint_url": ENDPOINT_URL},
     )
     return fs
 
@@ -51,6 +58,18 @@ def test_output_bucket(s3_client: S3Client, random_bucket_name: str) -> Generato
 def s3_client() -> S3Client:
     return boto3.client(
         "s3",
-        endpoint_url="http://motoserver:4000",
+        endpoint_url=ENDPOINT_URL,
         config=Config(signature_version="s3v4"),
     )
+
+
+@pytest.fixture
+def mock_db() -> [list[BaseModel], Generator[SqliteDatabase, Any, None]]:
+    MODELS = [Dataset]
+    mock_db = SqliteDatabase(":memory:")
+    mock_db.bind(MODELS, bind_refs=False, bind_backrefs=False)
+    mock_db.connect()
+    mock_db.create_tables(MODELS)
+    yield mock_db
+    mock_db.drop_tables(MODELS)
+    mock_db.close()

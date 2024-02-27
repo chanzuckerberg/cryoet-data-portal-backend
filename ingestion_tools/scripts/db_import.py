@@ -1,6 +1,10 @@
 import click
 import logging
 
+import boto3
+from botocore import UNSIGNED
+from botocore.config import Config
+
 from common import db_models
 from importers.db.annotation import AnnotationDBImporter, AnnotationAuthorDBImporter
 from importers.db.base_importer import DBImportConfig
@@ -89,7 +93,8 @@ def load(
         import_tomogram_voxel_spacing = max(import_annotations, import_tomograms, import_tomogram_voxel_spacing)
         import_runs = max(import_runs, import_tiltseries, import_tomogram_voxel_spacing)
 
-    config = DBImportConfig(anonymous, s3_bucket, https_prefix)
+    s3_client = boto3.client("s3", config=Config(signature_version=UNSIGNED)) if anonymous else boto3.client("s3")
+    config = DBImportConfig(s3_client, s3_bucket, https_prefix)
     for dataset in DatasetDBImporter.get_items(config, s3_prefix):
         if filter_dataset and dataset.dir_prefix not in filter_dataset:
             print(f"Skipping {dataset.dir_prefix}...")
