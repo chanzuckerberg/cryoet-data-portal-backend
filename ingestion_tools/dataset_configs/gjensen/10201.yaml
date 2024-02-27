@@ -2,7 +2,7 @@ dataset:
   dataset_identifier: 10201
   dataset_description: This is 1st of 24 sets of data studying Campylobacter jejuni
     collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
-  dataset_title: ''
+  dataset_title: Campylobacter jejuni
   authors: &id001
   - name: Morgan Beeby
     primary_author_status: true
@@ -59,7 +59,7 @@ tomograms:
   voxel_spacing: null
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
-  fiducial_alignment_status: true
+  fiducial_alignment_status: FIDUCIAL
   ctf_corrected: null
   processing: raw
   processing_software: null

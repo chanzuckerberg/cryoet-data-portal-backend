@@ -1,24 +1,24 @@
 run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-processing,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_series_quality,ts-tilt_step,ts-total_flux
-wnj2019-09-08-1,['IMOD'],True,IMOD,IMOD,Weighted back projection,IMOD,Serial EM,IMOD,4,3.0,88.0
-wnj2019-09-08-4,,,raw,,,,Undefined,,1,3.125,88.0
-wnj2019-09-08-5,,,raw,,,,Undefined,,1,3.125,88.0
-wnj2019-09-08-6,,,raw,,,,Undefined,,1,3.125,88.0
-wnj2019-09-08-7,,,raw,,,,Undefined,,1,3.125,88.0
-wnj2019-09-08-8,,,raw,,,,Undefined,,1,3.125,88.0
-wnj2019-09-08-9,,,raw,,,,Undefined,,1,3.125,88.0
-wnj2019-09-08-10,,,raw,,,,Undefined,,1,3.125,88.0
-wnj2019-09-08-11,,,raw,,,,Undefined,,1,3.125,88.0
-wnj2019-09-08-18,,,raw,,,,Undefined,,1,3.125,88.0
-wnj2019-09-08-12,['IMOD'],True,IMOD,IMOD,Weighted back projection,IMOD,Undefined,IMOD,4,3.125,88.0
-wnj2019-09-08-13,['IMOD'],True,IMOD,IMOD,Weighted back projection,IMOD,Undefined,IMOD,4,3.125,88.0
-wnj2019-09-08-14,['IMOD'],True,IMOD,IMOD,Weighted back projection,IMOD,Undefined,IMOD,4,3.125,88.0
-wnj2019-09-08-15,['IMOD'],True,IMOD,IMOD,Weighted back projection,IMOD,Undefined,IMOD,4,3.125,88.0
-wnj2019-09-08-16,['IMOD'],True,IMOD,IMOD,Weighted back projection,IMOD,Undefined,IMOD,4,3.125,88.0
-wnj2019-09-08-17,['IMOD'],True,IMOD,IMOD,Weighted back projection,IMOD,Undefined,IMOD,4,3.125,88.0
-wnj2019-09-08-19,,,raw,,,,Serial EM,,1,3.125,8.1
-wnj2019-09-08-20,,,raw,,,,Serial EM,,1,3.125,8.1
-wnj2019-09-08-21,,,raw,,,,Serial EM,,1,3.125,8.1
-wnj2019-09-08-22,,,raw,,,,Serial EM,,1,3.125,8.1
-wnj2019-09-08-23,,,raw,,,,Serial EM,,1,3.125,8.1
-wnj2019-09-08-24,,,raw,,,,Serial EM,,1,3.125,8.1
-wnj2019-09-08-25,,,raw,,,,Undefined,,1,3.0,88.0
+wnj2019-09-08-1,['IMOD'],FIDUCIAL,IMOD,IMOD,Weighted back projection,IMOD,Serial EM,IMOD,4,3.0,88.0
+wnj2019-09-08-4,,NON_FIDUCIAL,raw,,None,None,Undefined,,1,3.125,88.0
+wnj2019-09-08-5,,NON_FIDUCIAL,raw,,None,None,Undefined,,1,3.125,88.0
+wnj2019-09-08-6,,NON_FIDUCIAL,raw,,None,None,Undefined,,1,3.125,88.0
+wnj2019-09-08-7,,NON_FIDUCIAL,raw,,None,None,Undefined,,1,3.125,88.0
+wnj2019-09-08-8,,NON_FIDUCIAL,raw,,None,None,Undefined,,1,3.125,88.0
+wnj2019-09-08-9,,NON_FIDUCIAL,raw,,None,None,Undefined,,1,3.125,88.0
+wnj2019-09-08-10,,NON_FIDUCIAL,raw,,None,None,Undefined,,1,3.125,88.0
+wnj2019-09-08-11,,NON_FIDUCIAL,raw,,None,None,Undefined,,1,3.125,88.0
+wnj2019-09-08-18,,NON_FIDUCIAL,raw,,None,None,Undefined,,1,3.125,88.0
+wnj2019-09-08-12,['IMOD'],FIDUCIAL,IMOD,IMOD,Weighted back projection,IMOD,Undefined,IMOD,4,3.125,88.0
+wnj2019-09-08-13,['IMOD'],FIDUCIAL,IMOD,IMOD,Weighted back projection,IMOD,Undefined,IMOD,4,3.125,88.0
+wnj2019-09-08-14,['IMOD'],FIDUCIAL,IMOD,IMOD,Weighted back projection,IMOD,Undefined,IMOD,4,3.125,88.0
+wnj2019-09-08-15,['IMOD'],FIDUCIAL,IMOD,IMOD,Weighted back projection,IMOD,Undefined,IMOD,4,3.125,88.0
+wnj2019-09-08-16,['IMOD'],FIDUCIAL,IMOD,IMOD,Weighted back projection,IMOD,Undefined,IMOD,4,3.125,88.0
+wnj2019-09-08-17,['IMOD'],FIDUCIAL,IMOD,IMOD,Weighted back projection,IMOD,Undefined,IMOD,4,3.125,88.0
+wnj2019-09-08-19,,NON_FIDUCIAL,raw,,None,None,Serial EM,,1,3.125,8.1
+wnj2019-09-08-20,,NON_FIDUCIAL,raw,,None,None,Serial EM,,1,3.125,8.1
+wnj2019-09-08-21,,NON_FIDUCIAL,raw,,None,None,Serial EM,,1,3.125,8.1
+wnj2019-09-08-22,,NON_FIDUCIAL,raw,,None,None,Serial EM,,1,3.125,8.1
+wnj2019-09-08-23,,NON_FIDUCIAL,raw,,None,None,Serial EM,,1,3.125,8.1
+wnj2019-09-08-24,,NON_FIDUCIAL,raw,,None,None,Serial EM,,1,3.125,8.1
+wnj2019-09-08-25,,NON_FIDUCIAL,raw,,None,None,Undefined,,1,3.0,88.0

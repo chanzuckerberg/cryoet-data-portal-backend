@@ -78,7 +78,7 @@ tomograms:
   - IMOD
   authors: *id001
   ctf_corrected: null
-  fiducial_alignment_status: true
+  fiducial_alignment_status: FIDUCIAL
   offset:
     x: 0
     y: 0

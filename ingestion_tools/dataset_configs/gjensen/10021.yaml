@@ -60,7 +60,7 @@ tomograms:
   voxel_spacing: null
   reconstruction_method: Weighted back projection
   reconstruction_software: novaCTF
-  fiducial_alignment_status: true
+  fiducial_alignment_status: FIDUCIAL
   ctf_corrected: true
   processing: ctffind4, novaCTF, custom bash and Matlab scripts;IMOD, ctffind4, novaCTF,
     custom bash and Matlab scripts

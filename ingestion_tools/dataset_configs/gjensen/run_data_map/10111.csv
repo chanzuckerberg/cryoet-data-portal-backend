@@ -1,29 +1,29 @@
 run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software,ts-tilt_series_quality
-rra2014-02-20-1,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-2,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-3,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-4,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-5,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-6,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-7,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-8,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-9,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-10,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-11,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-12,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-13,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-14,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-15,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-16,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-17,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-18,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-19,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-21,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-22,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-23,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-24,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-25,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-26,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-28,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-rra2014-02-20-20,,,,,,1
-rra2014-02-20-27,,,,,,1
+rra2014-02-20-1,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-3,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-4,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-5,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-6,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-8,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-10,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-12,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-13,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-14,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-15,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-16,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-17,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-18,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-19,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-21,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-22,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-23,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-24,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-25,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-26,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-28,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+rra2014-02-20-20,,NON_FIDUCIAL,None,None,,1
+rra2014-02-20-27,,NON_FIDUCIAL,None,None,,1

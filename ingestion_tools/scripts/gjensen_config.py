@@ -233,6 +233,10 @@ def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
     return tilt_series
 
 
+def normalize_invalid_to_none(value: str) -> str:
+    return value if value else "None"
+
+
 def to_tomogram(authors: list[dict[str, Any]], data: dict[str, Any]) -> [dict[str, Any] | Any]:
     tomogram = next((deepcopy(val) for val in data["tomograms"].values()), {})
     if len(data["tomograms"].keys()) > 1:
@@ -241,12 +245,16 @@ def to_tomogram(authors: list[dict[str, Any]], data: dict[str, Any]) -> [dict[st
             f'{",".join(set(data["tomograms"].keys()))}',
         )
 
-    tomogram["fiducial_alignment_status"] = normalize_fiducial_alignment(tomogram["fiducial_alignment_status"])
+    tomogram["fiducial_alignment_status"] = normalize_fiducial_alignment(
+        tomogram.get("fiducial_alignment_status", False)
+    )
     tomogram["offset"] = {"x": 0, "y": 0, "z": 0}
     tomogram["affine_transformation_matrix"] = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
     tomogram["voxel_spacing"] = None
     tomogram["authors"] = authors
     tomogram["tomogram_version"] = 1
+    tomogram["reconstruction_method"] = normalize_invalid_to_none(tomogram.get("reconstruction_method"))
+    tomogram["reconstruction_software"] = normalize_invalid_to_none(tomogram.get("reconstruction_software"))
 
     if not tomogram.get("processing"):
         tomogram["processing"] = "raw"
@@ -300,7 +308,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     fs.makedirs(run_data_map_path)
     fs.makedirs(run_tomo_map_path)
     fs.makedirs(run_frames_map_path)
-    file_paths = fs.glob(os.path.join(input_dir, "*.json"))
+    file_paths = fs.glob(os.path.join(input_dir, "[0-9]*.json"))
     file_paths.sort()
     for file_path in file_paths:
         with open(file_path, "r") as file:

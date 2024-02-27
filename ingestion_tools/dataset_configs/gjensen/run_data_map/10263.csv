@@ -1,21 +1,21 @@
 run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software,ts-tilt_series_quality
-aba2014-05-05-1,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR;RAPTOR,4
-aba2014-05-05-2,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-3,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-4,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-5,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-6,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-7,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-9,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-10,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-11,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-12,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-15,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-16,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-18,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-19,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-20,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-aba2014-05-05-8,['RAPTOR'],True,SIRT,IMOD,RAPTOR;RAPTOR;RAPTOR;RAPTOR,4
-aba2014-05-05-13,['RAPTOR'],True,SIRT,IMOD,RAPTOR;RAPTOR;RAPTOR;RAPTOR;RAPTOR,4
-aba2014-05-05-14,,,,,,1
-aba2014-05-05-17,,,,,,1
+aba2014-05-05-1,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR;RAPTOR,4
+aba2014-05-05-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-3,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-4,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-5,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-6,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-10,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-12,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-15,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-16,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-18,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-19,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-20,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,RAPTOR,4
+aba2014-05-05-8,['RAPTOR'],FIDUCIAL,SIRT,IMOD,RAPTOR;RAPTOR;RAPTOR;RAPTOR,4
+aba2014-05-05-13,['RAPTOR'],FIDUCIAL,SIRT,IMOD,RAPTOR;RAPTOR;RAPTOR;RAPTOR;RAPTOR,4
+aba2014-05-05-14,,NON_FIDUCIAL,None,None,,1
+aba2014-05-05-17,,NON_FIDUCIAL,None,None,,1

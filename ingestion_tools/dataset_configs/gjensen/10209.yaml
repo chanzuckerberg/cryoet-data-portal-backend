@@ -59,7 +59,7 @@ tomograms:
   voxel_spacing: null
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
-  fiducial_alignment_status: true
+  fiducial_alignment_status: FIDUCIAL
   ctf_corrected: true
   processing: CTF-corrected then filtered at second zero (0.35, 0.05)
   processing_software: IMOD
