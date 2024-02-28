@@ -61,7 +61,7 @@ tomograms:
   reconstruction_software: IMOD
   fiducial_alignment_status: FIDUCIAL
   ctf_corrected: null
-  processing: binned 4x total then filtered 0.28 (= 4.6nm resolution cutoff)
+  processing: filtered
   processing_software: IMOD
   align_softwares:
   - RAPTOR

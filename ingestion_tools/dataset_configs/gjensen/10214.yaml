@@ -61,7 +61,7 @@ tomograms:
   reconstruction_software: IMOD
   fiducial_alignment_status: FIDUCIAL
   ctf_corrected: null
-  processing: golds erased, binned 2x, filtered 0.28, 0.025 (to ~5.5nm resolution)
+  processing: filtered
   processing_software: IMOD
   align_softwares:
   - RAPTOR

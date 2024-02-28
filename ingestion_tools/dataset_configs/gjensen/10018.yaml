@@ -64,7 +64,7 @@ tomograms:
   reconstruction_software: IMOD
   fiducial_alignment_status: FIDUCIAL
   ctf_corrected: null
-  processing: IMOD, SIRT-like
+  processing: raw
   processing_software: IMOD
   align_softwares:
   - IMOD

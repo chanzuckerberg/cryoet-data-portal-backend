@@ -83,7 +83,7 @@ tomograms:
     x: 0
     y: 0
     z: 0
-  processing: IMOD
+  processing: raw
   processing_software: IMOD
   reconstruction_method: '{tomo-reconstruction_method}'
   reconstruction_software: IMOD

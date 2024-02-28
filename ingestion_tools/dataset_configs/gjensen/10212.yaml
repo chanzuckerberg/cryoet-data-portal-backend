@@ -82,7 +82,7 @@ tomograms:
     x: 0
     y: 0
     z: 0
-  processing: filtered 0.28, 0.02 after binning 2x more (to ~5.5nm resolution)
+  processing: filtered
   processing_software: IMOD
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD

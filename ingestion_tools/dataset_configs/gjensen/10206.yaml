@@ -61,7 +61,7 @@ tomograms:
   reconstruction_software: IMOD
   fiducial_alignment_status: FIDUCIAL
   ctf_corrected: null
-  processing: raw; filtered 0.28,0.02 after binning
+  processing: filtered
   processing_software: IMOD
   align_softwares:
   - RAPTOR

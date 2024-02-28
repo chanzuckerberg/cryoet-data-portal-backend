@@ -90,7 +90,7 @@ tomograms:
     x: 0
     y: 0
     z: 0
-  processing: '{tomo-processing}'
+  processing: raw
   processing_software: '{tomo-processing_software}'
   reconstruction_method: '{tomo-reconstruction_method}'
   reconstruction_software: '{tomo-reconstruction_software}'

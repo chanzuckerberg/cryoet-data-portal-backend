@@ -14,6 +14,18 @@ import yaml
 from common.fs import LocalFilesystem
 from common.normalize_fields import normalize_fiducial_alignment
 
+RAW_PROCESSING_TYPES = {
+    "raptor",
+    "ctffind4, novactf, custom bash and matlab scripts;imod, ctffind4, novactf, custom bash and matlab scripts",
+    "imod",
+    "tomo3d",
+    "batchruntomo",
+    "imod, sirt-like",
+    "warp, dynamo",
+    "sirt",
+    "raw",
+}
+
 
 def to_dataset_author(data: dict[str, Any]) -> list[dict[str, Any]]:
     authors_data = data["authors"]
@@ -207,7 +219,6 @@ def to_template_by_run(templates, run_data_map, prefix: str, path) -> dict[str, 
                 for entry in templates_for_path:
                     for source in entry["sources"]:
                         run_data_map[source][run_data_map_key] = entry["metadata"].get(key)
-
     return template_metadata
 
 
@@ -239,6 +250,19 @@ def normalize_invalid_to_none(value: str) -> str:
     return value if value else "None"
 
 
+def normalize_processing(input_processing: str) -> str:
+    if not input_processing:
+        return "raw"
+    input_processing = input_processing.lower()
+
+    if "filtered" in input_processing:
+        return "filtered"
+    elif input_processing == "denoised":
+        return "denoised"
+    elif input_processing in RAW_PROCESSING_TYPES:
+        return "raw"
+
+
 def to_tomogram(
     authors: list[dict[str, Any]],
     spacing_corrections: dict[str, dict],
@@ -261,8 +285,7 @@ def to_tomogram(
     tomogram["reconstruction_method"] = normalize_invalid_to_none(tomogram.get("reconstruction_method"))
     tomogram["reconstruction_software"] = normalize_invalid_to_none(tomogram.get("reconstruction_software"))
 
-    if not tomogram.get("processing"):
-        tomogram["processing"] = "raw"
+    tomogram["processing"] = normalize_processing(tomogram.get("processing"))
 
     if valid_voxel_spacing := spacing_corrections.get(data["run_name"]):
         tomogram["voxel_spacing"] = valid_voxel_spacing["tomogram"]
