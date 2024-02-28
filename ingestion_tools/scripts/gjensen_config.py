@@ -240,7 +240,9 @@ def normalize_invalid_to_none(value: str) -> str:
 
 
 def to_tomogram(
-    authors: list[dict[str, Any]], spacing_corrections: dict[str, dict], data: dict[str, Any]
+    authors: list[dict[str, Any]],
+    spacing_corrections: dict[str, dict],
+    data: dict[str, Any],
 ) -> [dict[str, Any] | Any]:
     tomogram = next((deepcopy(val) for val in data["tomograms"].values()), {})
     if len(data["tomograms"].keys()) > 1:
@@ -336,7 +338,11 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
                 "dataset": to_dataset_config(dataset_id, val, authors),
                 "runs": {},
                 "tiltseries": to_config_by_run(
-                    dataset_id, val.get("runs"), run_data_map, partial(to_tiltseries, spacing_corrections), "ts"
+                    dataset_id,
+                    val.get("runs"),
+                    run_data_map,
+                    partial(to_tiltseries, spacing_corrections),
+                    "ts",
                 ),
                 "tomograms": to_config_by_run(
                     dataset_id,
