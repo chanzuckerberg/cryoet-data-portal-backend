@@ -1,27 +1,27 @@
-run_name,tomo-align_softwares,tomo-processing,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software
-dga2016-01-14-1,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D
-dga2016-01-14-3,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D
-dga2016-01-14-4,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D
-dga2016-01-14-7,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D
-dga2016-01-14-8,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D
-dga2016-01-14-9,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D
-dga2016-01-14-13,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D
-dga2016-01-14-17,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D
-dga2016-01-14-22,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D
-dga2016-01-14-23,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D
-dga2016-01-14-2,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR
-dga2016-01-14-12,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR
-dga2016-01-14-15,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR
-dga2016-01-14-16,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR
-dga2016-01-14-18,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR
-dga2016-01-14-19,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR
-dga2016-01-14-21,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR
-dga2016-01-14-24,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR
-dga2016-01-14-25,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR
-dga2016-01-14-26,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR
-dga2016-01-14-5,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
-dga2016-01-14-6,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
-dga2016-01-14-10,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
-dga2016-01-14-11,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
-dga2016-01-14-14,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
-dga2016-01-14-20,['RAPTOR'],raw,,Weighted back projection,IMOD,RAPTOR
+run_name,tomo-align_softwares,tomo-processing,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software
+dga2016-01-14-1,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR;TOMO3D
+dga2016-01-14-3,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR;TOMO3D
+dga2016-01-14-4,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR;TOMO3D
+dga2016-01-14-7,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR;TOMO3D
+dga2016-01-14-8,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR;TOMO3D
+dga2016-01-14-9,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR;TOMO3D
+dga2016-01-14-13,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR;TOMO3D
+dga2016-01-14-17,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR;TOMO3D
+dga2016-01-14-22,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR;TOMO3D
+dga2016-01-14-23,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR;TOMO3D
+dga2016-01-14-2,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,16.79999200228987,TOMO3D;RAPTOR
+dga2016-01-14-12,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,16.79998358364763,TOMO3D;RAPTOR
+dga2016-01-14-15,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,16.79998779296875,TOMO3D;RAPTOR
+dga2016-01-14-16,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,16.79999200228987,TOMO3D;RAPTOR
+dga2016-01-14-18,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,16.79997621733567,TOMO3D;RAPTOR
+dga2016-01-14-19,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,16.79999200228987,TOMO3D;RAPTOR
+dga2016-01-14-21,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,16.79998358364763,TOMO3D;RAPTOR
+dga2016-01-14-24,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,16.79998779296875,TOMO3D;RAPTOR
+dga2016-01-14-25,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,16.79998779296875,TOMO3D;RAPTOR
+dga2016-01-14-26,['TOMO3D'],TOMO3D,tomo3D,SIRT,TOMO3D,16.79999200228987,TOMO3D;RAPTOR
+dga2016-01-14-5,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR
+dga2016-01-14-6,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR
+dga2016-01-14-10,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR
+dga2016-01-14-11,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR
+dga2016-01-14-14,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR
+dga2016-01-14-20,['RAPTOR'],raw,,Weighted back projection,IMOD,1.68,RAPTOR

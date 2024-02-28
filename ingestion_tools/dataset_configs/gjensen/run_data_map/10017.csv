@@ -1,15 +1,15 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-processing,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software,ts-tilt_series_quality
-pda2020-11-04-1,,NON_FIDUCIAL,raw,,None,None,,1
-pda2020-11-04-5,,NON_FIDUCIAL,raw,,None,None,,1
-pda2020-11-04-6,,NON_FIDUCIAL,raw,,None,None,,1
-pda2020-11-04-7,,NON_FIDUCIAL,raw,,None,None,,1
-pda2020-11-04-12,,NON_FIDUCIAL,raw,,None,None,,1
-pda2020-11-04-14,,NON_FIDUCIAL,raw,,None,None,,1
-pda2020-11-04-2,['RAPTOR'],FIDUCIAL,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
-pda2020-11-04-3,['RAPTOR'],FIDUCIAL,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
-pda2020-11-04-4,['RAPTOR'],FIDUCIAL,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
-pda2020-11-04-8,['RAPTOR'],FIDUCIAL,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
-pda2020-11-04-9,['RAPTOR'],FIDUCIAL,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
-pda2020-11-04-13,['RAPTOR'],FIDUCIAL,Raptor,IMOD,Weighted back projection,IMOD,RAPTOR,4
-pda2020-11-04-10,['Batchruntomo'],FIDUCIAL,Batchruntomo,IMOD,Weighted back projection,IMOD,Batchruntomo,4
-pda2020-11-04-11,['Batchruntomo'],FIDUCIAL,Batchruntomo,IMOD,Weighted back projection,IMOD,Batchruntomo,4
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-processing,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_quality
+pda2020-11-04-1,,NON_FIDUCIAL,raw,,None,None,,,1
+pda2020-11-04-5,,NON_FIDUCIAL,raw,,None,None,,,1
+pda2020-11-04-6,,NON_FIDUCIAL,raw,,None,None,,,1
+pda2020-11-04-7,,NON_FIDUCIAL,raw,,None,None,,,1
+pda2020-11-04-12,,NON_FIDUCIAL,raw,,None,None,,,1
+pda2020-11-04-14,,NON_FIDUCIAL,raw,,None,None,,,1
+pda2020-11-04-2,['RAPTOR'],FIDUCIAL,Raptor,IMOD,Weighted back projection,IMOD,0.56,RAPTOR,4
+pda2020-11-04-3,['RAPTOR'],FIDUCIAL,Raptor,IMOD,Weighted back projection,IMOD,0.56,RAPTOR,4
+pda2020-11-04-4,['RAPTOR'],FIDUCIAL,Raptor,IMOD,Weighted back projection,IMOD,0.56,RAPTOR,4
+pda2020-11-04-8,['RAPTOR'],FIDUCIAL,Raptor,IMOD,Weighted back projection,IMOD,0.56,RAPTOR,4
+pda2020-11-04-9,['RAPTOR'],FIDUCIAL,Raptor,IMOD,Weighted back projection,IMOD,0.56,RAPTOR,4
+pda2020-11-04-13,['RAPTOR'],FIDUCIAL,Raptor,IMOD,Weighted back projection,IMOD,0.56,RAPTOR,4
+pda2020-11-04-10,['Batchruntomo'],FIDUCIAL,Batchruntomo,IMOD,Weighted back projection,IMOD,0.56,Batchruntomo,4
+pda2020-11-04-11,['Batchruntomo'],FIDUCIAL,Batchruntomo,IMOD,Weighted back projection,IMOD,0.56,Batchruntomo,4

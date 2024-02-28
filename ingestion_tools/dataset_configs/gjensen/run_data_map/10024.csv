@@ -1,6 +1,6 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,ts-microscope-model,ts-spherical_aberration_constant,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_quality,ts-tilt_step,ts-total_flux
-wnj2019-02-21-1,,NON_FIDUCIAL,None,None,0,2.2,,60.0,-60.0,1,2.0,6.42
-wnj2019-02-21-2,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,Krios,2.7,IMOD,0.0,-50.0,4,1.0,58.0
-wnj2019-02-21-3,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,Krios,2.7,IMOD,60.0,-50.0,4,1.0,58.0
-wnj2019-02-21-7,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,Krios,2.7,IMOD,2.0,-50.0,4,1.0,58.0
-wnj2019-02-21-8,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,Krios,2.7,IMOD,60.0,-50.0,4,2.0,58.0
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-microscope-model,ts-pixel_spacing,ts-spherical_aberration_constant,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_quality,ts-tilt_step,ts-total_flux
+wnj2019-02-21-1,,NON_FIDUCIAL,None,None,,0,2.272,2.2,,60.0,-60.0,1,2.0,6.42
+wnj2019-02-21-2,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.164,Krios,0.54,2.7,IMOD,0.0,-50.0,4,1.0,58.0
+wnj2019-02-21-3,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.164,Krios,0.54,2.7,IMOD,60.0,-50.0,4,1.0,58.0
+wnj2019-02-21-7,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.164,Krios,0.54,2.7,IMOD,2.0,-50.0,4,1.0,58.0
+wnj2019-02-21-8,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.164,Krios,0.54,2.7,IMOD,60.0,-50.0,4,2.0,58.0

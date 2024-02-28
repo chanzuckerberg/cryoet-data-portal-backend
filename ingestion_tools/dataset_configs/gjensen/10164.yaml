@@ -32,7 +32,7 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: null
+  pixel_spacing: 0.644
   tilt_step: 1.0
   total_flux: 120.0
   data_acquisition_software: UCSFTomo
@@ -60,7 +60,7 @@ tiltseries:
     min: -50.0
     max: 50.0
 tomograms:
-  voxel_spacing: null
+  voxel_spacing: 1.288
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
   fiducial_alignment_status: FIDUCIAL

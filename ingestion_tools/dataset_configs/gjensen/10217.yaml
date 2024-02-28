@@ -30,7 +30,7 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: null
+  pixel_spacing: 0.512
   tilt_step: 1.5
   total_flux: 200.0
   data_acquisition_software: Leginon
@@ -58,7 +58,7 @@ tiltseries:
     min: -61.0
     max: 61.0
 tomograms:
-  voxel_spacing: null
+  voxel_spacing: 1.024
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
   fiducial_alignment_status: FIDUCIAL

@@ -1,42 +1,42 @@
-run_name,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_step,ts-tilting_scheme,ts-total_flux
-ycw2014-02-14-1,UCSFTomo,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,205.0
-ycw2014-02-14-2,UCSFTomo,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,205.0
-ycw2014-02-14-3,UCSFTomo,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,205.0
-ycw2014-03-31-1,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-2,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-5,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-7,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-8,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-9,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-10,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-11,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-12,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-13,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-14,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-15,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-16,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-17,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-18,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-19,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-20,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-21,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-22,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-23,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-24,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-25,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-26,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-27,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-28,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-29,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-30,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-31,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-32,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-33,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-34,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-35,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-36,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-37,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-38,Undefined,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-3,Undefined,RAPTOR,65.0,-65.0,1.0,min to max tilt,200.0
-ycw2014-03-31-4,Undefined,RAPTOR;RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
-ycw2014-03-31-6,Undefined,RAPTOR;RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+run_name,tomo-voxel_spacing,ts-data_acquisition_software,ts-pixel_spacing,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_step,ts-tilting_scheme,ts-total_flux
+ycw2014-02-14-1,1.92,UCSFTomo,0.48,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,205.0
+ycw2014-02-14-2,1.92,UCSFTomo,0.48,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,205.0
+ycw2014-02-14-3,1.92,UCSFTomo,0.48,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,205.0
+ycw2014-03-31-1,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-2,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-5,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-7,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-8,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-9,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-10,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-11,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-12,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-13,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-14,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-15,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-16,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-17,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-18,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-19,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-20,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-21,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-22,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-23,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-24,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-25,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-26,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-27,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-28,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-29,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-30,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-31,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-32,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-33,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-34,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-35,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-36,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-37,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-38,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-3,19.2,Undefined,4.8,RAPTOR,65.0,-65.0,1.0,min to max tilt,200.0
+ycw2014-03-31-4,19.2,Undefined,4.8,RAPTOR;RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0
+ycw2014-03-31-6,19.2,Undefined,4.8,RAPTOR;RAPTOR,65.0,-65.0,1.5,min to max tilt,130.0

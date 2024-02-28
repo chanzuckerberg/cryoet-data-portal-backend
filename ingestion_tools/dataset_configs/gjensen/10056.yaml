@@ -49,7 +49,7 @@ tiltseries:
     energy_filter: GIF
     image_corrector: null
     phase_plate: false
-  pixel_spacing: null
+  pixel_spacing: 0.39
   spherical_aberration_constant: 2.0
   tilt_alignment_software: '{ts-tilt_alignment_software}'
   tilt_axis: 84.3
@@ -91,7 +91,7 @@ tomograms:
   reconstruction_method: '{tomo-reconstruction_method}'
   reconstruction_software: '{tomo-reconstruction_software}'
   tomogram_version: 1
-  voxel_spacing: null
+  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
 standardization_config:
   destination_prefix: '10056'

@@ -1,34 +1,34 @@
-run_name,tomo-reconstruction_method
-jsa2010-03-31-1,Weighted back projection
-jsa2010-03-31-3,Weighted back projection
-jsa2010-03-31-6,Weighted back projection
-jsa2010-03-31-10,Weighted back projection
-jsa2010-03-31-11,Weighted back projection
-jsa2010-03-31-13,Weighted back projection
-jsa2010-03-31-14,Weighted back projection
-jsa2010-03-31-15,Weighted back projection
-jsa2010-03-31-16,Weighted back projection
-jsa2010-03-31-23,Weighted back projection
-jsa2010-03-31-25,Weighted back projection
-jsa2010-03-31-28,Weighted back projection
-jsa2010-03-31-29,Weighted back projection
-jsa2010-03-31-30,Weighted back projection
-jsa2010-03-31-31,Weighted back projection
-jsa2010-03-31-32,Weighted back projection
-jsa2010-03-31-33,Weighted back projection
-jsa2010-03-31-2,SIRT
-jsa2010-03-31-4,SIRT
-jsa2010-03-31-5,SIRT
-jsa2010-03-31-7,SIRT
-jsa2010-03-31-8,SIRT
-jsa2010-03-31-9,SIRT
-jsa2010-03-31-12,SIRT
-jsa2010-03-31-17,SIRT
-jsa2010-03-31-18,SIRT
-jsa2010-03-31-19,SIRT
-jsa2010-03-31-20,SIRT
-jsa2010-03-31-21,SIRT
-jsa2010-03-31-22,SIRT
-jsa2010-03-31-24,SIRT
-jsa2010-03-31-26,SIRT
-jsa2010-03-31-27,SIRT
+run_name,tomo-reconstruction_method,tomo-voxel_spacing
+jsa2010-03-31-1,Weighted back projection,1.548
+jsa2010-03-31-3,Weighted back projection,1.548
+jsa2010-03-31-6,Weighted back projection,1.548
+jsa2010-03-31-10,Weighted back projection,1.548
+jsa2010-03-31-11,Weighted back projection,1.548
+jsa2010-03-31-13,Weighted back projection,1.548
+jsa2010-03-31-14,Weighted back projection,1.548
+jsa2010-03-31-15,Weighted back projection,1.548
+jsa2010-03-31-16,Weighted back projection,1.548
+jsa2010-03-31-23,Weighted back projection,1.548
+jsa2010-03-31-25,Weighted back projection,1.548
+jsa2010-03-31-28,Weighted back projection,1.548
+jsa2010-03-31-29,Weighted back projection,1.548
+jsa2010-03-31-30,Weighted back projection,1.548
+jsa2010-03-31-31,Weighted back projection,1.548
+jsa2010-03-31-32,Weighted back projection,1.548
+jsa2010-03-31-33,Weighted back projection,1.548
+jsa2010-03-31-2,SIRT,15.640000343322754
+jsa2010-03-31-4,SIRT,15.640000343322754
+jsa2010-03-31-5,SIRT,15.640000343322754
+jsa2010-03-31-7,SIRT,15.640000343322754
+jsa2010-03-31-8,SIRT,15.640000343322754
+jsa2010-03-31-9,SIRT,15.640000343322754
+jsa2010-03-31-12,SIRT,15.640000343322754
+jsa2010-03-31-17,SIRT,15.640000343322754
+jsa2010-03-31-18,SIRT,15.640000343322754
+jsa2010-03-31-19,SIRT,15.640000343322754
+jsa2010-03-31-20,SIRT,15.640000343322754
+jsa2010-03-31-21,SIRT,15.640000343322754
+jsa2010-03-31-22,SIRT,15.640000343322754
+jsa2010-03-31-24,SIRT,15.640000343322754
+jsa2010-03-31-26,SIRT,15.640000343322754
+jsa2010-03-31-27,SIRT,15.640000343322754

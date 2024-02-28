@@ -28,7 +28,7 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: null
+  pixel_spacing: 0.774
   tilt_step: 1.0
   total_flux: 150.0
   data_acquisition_software: Leginon
@@ -87,7 +87,7 @@ tomograms:
   reconstruction_method: '{tomo-reconstruction_method}'
   reconstruction_software: IMOD
   tomogram_version: 1
-  voxel_spacing: null
+  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
 standardization_config:
   destination_prefix: '10298'

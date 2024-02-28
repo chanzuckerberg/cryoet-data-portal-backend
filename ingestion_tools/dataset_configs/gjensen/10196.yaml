@@ -57,7 +57,7 @@ tiltseries:
     min: -63
     max: 63
 tomograms:
-  voxel_spacing: null
+  voxel_spacing: 19.239999771118164
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
   fiducial_alignment_status: FIDUCIAL

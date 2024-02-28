@@ -1,34 +1,34 @@
-run_name,tomo-reconstruction_method,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-total_flux
-ycw2012-09-07-1,Weighted back projection,UCSF Tomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-2,Weighted back projection,UCSF Tomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-3,Weighted back projection,UCSF Tomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-6,Weighted back projection,UCSF Tomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-14,Weighted back projection,UCSF Tomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-17,Weighted back projection,UCSF Tomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-26,Weighted back projection,UCSF Tomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-4,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-5,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-7,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-9,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-10,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-11,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-12,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-13,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-18,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-19,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-20,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-21,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-22,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-23,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-24,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-25,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-27,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-30,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-8,SIRT,UCSF Tomo,RAPTOR;RAPTOR,65.0,-65.0,100.0
-ycw2012-10-08-1,Weighted back projection,UCSFTomo,RAPTOR,60.0,-60.0,75.0
-ycw2012-10-08-2,Weighted back projection,UCSFTomo,RAPTOR,60.0,-60.0,75.0
-ycw2012-10-08-3,Weighted back projection,UCSFTomo,RAPTOR,60.0,-60.0,75.0
-ycw2012-10-08-4,Weighted back projection,UCSFTomo,RAPTOR,60.0,-60.0,75.0
-ycw2012-10-08-5,Weighted back projection,UCSFTomo,RAPTOR,60.0,-60.0,75.0
-ycw2012-10-08-6,Weighted back projection,UCSFTomo,RAPTOR,60.0,-60.0,75.0
-ycw2012-10-08-7,Weighted back projection,UCSFTomo,RAPTOR,60.0,-60.0,75.0
+run_name,tomo-reconstruction_method,tomo-voxel_spacing,ts-data_acquisition_software,ts-pixel_spacing,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-total_flux
+ycw2012-09-07-1,Weighted back projection,2.0,UCSF Tomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-2,Weighted back projection,2.0,UCSF Tomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-3,Weighted back projection,2.0,UCSF Tomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-6,Weighted back projection,2.0,UCSF Tomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-14,Weighted back projection,2.0,UCSF Tomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-17,Weighted back projection,2.0,UCSF Tomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-26,Weighted back projection,2.0,UCSF Tomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-4,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-5,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-7,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-9,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-10,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-11,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-12,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-13,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-18,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-19,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-20,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-21,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-22,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-23,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-24,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-25,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-27,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-30,Weighted back projection,2.0,UCSFTomo,1.0,RAPTOR,65.0,-65.0,100.0
+ycw2012-09-07-8,SIRT,2.0,UCSF Tomo,1.0,RAPTOR;RAPTOR,65.0,-65.0,100.0
+ycw2012-10-08-1,Weighted back projection,1.96,UCSFTomo,0.49,RAPTOR,60.0,-60.0,75.0
+ycw2012-10-08-2,Weighted back projection,1.96,UCSFTomo,0.49,RAPTOR,60.0,-60.0,75.0
+ycw2012-10-08-3,Weighted back projection,1.96,UCSFTomo,0.49,RAPTOR,60.0,-60.0,75.0
+ycw2012-10-08-4,Weighted back projection,1.96,UCSFTomo,0.49,RAPTOR,60.0,-60.0,75.0
+ycw2012-10-08-5,Weighted back projection,1.96,UCSFTomo,0.49,RAPTOR,60.0,-60.0,75.0
+ycw2012-10-08-6,Weighted back projection,1.96,UCSFTomo,0.49,RAPTOR,60.0,-60.0,75.0
+ycw2012-10-08-7,Weighted back projection,1.96,UCSFTomo,0.49,RAPTOR,60.0,-60.0,75.0

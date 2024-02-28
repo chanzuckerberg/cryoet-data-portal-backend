@@ -1,21 +1,21 @@
-run_name,tomo-reconstruction_method
-jsa2010-02-21-1,Weighted back projection
-jsa2010-02-21-4,Weighted back projection
-jsa2010-02-21-7,Weighted back projection
-jsa2010-02-21-8,Weighted back projection
-jsa2010-02-21-9,Weighted back projection
-jsa2010-02-21-11,Weighted back projection
-jsa2010-02-21-14,Weighted back projection
-jsa2010-02-21-16,Weighted back projection
-jsa2010-02-21-17,Weighted back projection
-jsa2010-02-21-2,SIRT
-jsa2010-02-21-3,SIRT
-jsa2010-02-21-5,SIRT
-jsa2010-02-21-6,SIRT
-jsa2010-02-21-10,SIRT
-jsa2010-02-21-12,SIRT
-jsa2010-02-21-13,SIRT
-jsa2010-02-21-15,SIRT
-jsa2010-02-21-18,SIRT
-jsa2010-02-21-19,SIRT
-jsa2010-02-21-20,SIRT
+run_name,tomo-reconstruction_method,tomo-voxel_spacing
+jsa2010-02-21-1,Weighted back projection,1.548
+jsa2010-02-21-4,Weighted back projection,1.548
+jsa2010-02-21-7,Weighted back projection,1.548
+jsa2010-02-21-8,Weighted back projection,1.548
+jsa2010-02-21-9,Weighted back projection,1.548
+jsa2010-02-21-11,Weighted back projection,1.548
+jsa2010-02-21-14,Weighted back projection,1.548
+jsa2010-02-21-16,Weighted back projection,1.548
+jsa2010-02-21-17,Weighted back projection,1.548
+jsa2010-02-21-2,SIRT,15.640000343322754
+jsa2010-02-21-3,SIRT,15.640000343322754
+jsa2010-02-21-5,SIRT,15.640000343322754
+jsa2010-02-21-6,SIRT,15.640000343322754
+jsa2010-02-21-10,SIRT,15.640000343322754
+jsa2010-02-21-12,SIRT,15.640000343322754
+jsa2010-02-21-13,SIRT,15.640000343322754
+jsa2010-02-21-15,SIRT,15.640000343322754
+jsa2010-02-21-18,SIRT,15.640000343322754
+jsa2010-02-21-19,SIRT,15.640000343322754
+jsa2010-02-21-20,SIRT,15.640000343322754

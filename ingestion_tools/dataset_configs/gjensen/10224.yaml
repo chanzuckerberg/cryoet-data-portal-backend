@@ -28,7 +28,7 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: null
+  pixel_spacing: 0.512
   tilt_step: 1.0
   total_flux: 200.0
   data_acquisition_software: Leginon
@@ -56,19 +56,6 @@ tiltseries:
     min: -65.0
     max: 65.0
 tomograms:
-  voxel_spacing: null
-  reconstruction_method: SIRT
-  reconstruction_software: IMOD
-  fiducial_alignment_status: FIDUCIAL
-  ctf_corrected: null
-  processing: raw
-  processing_software: null
-  align_softwares:
-  - RAPTOR
-  offset:
-    x: 0
-    y: 0
-    z: 0
   affine_transformation_matrix:
   - - 1
     - 0
@@ -86,8 +73,21 @@ tomograms:
     - 0
     - 0
     - 1
+  align_softwares:
+  - RAPTOR
   authors: *id001
+  ctf_corrected: null
+  fiducial_alignment_status: FIDUCIAL
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  processing: raw
+  processing_software: null
+  reconstruction_method: SIRT
+  reconstruction_software: IMOD
   tomogram_version: 1
+  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
 standardization_config:
   destination_prefix: '10224'
@@ -108,3 +108,4 @@ standardization_config:
   run_glob: '*'
   run_regex: (mba2011-08-10-1|mba2011-08-10-2|mba2011-08-10-3|mba2011-08-10-4|mba2011-08-10-5|mba2011-08-10-6|mba2011-08-10-7|mba2011-08-10-8|mba2011-08-10-9|mba2011-08-10-10|mba2011-08-10-11|mba2011-08-10-12|mba2011-08-10-13|mba2011-08-10-14|mba2011-08-10-15|mba2011-08-10-16|mba2011-08-10-17|mba2011-08-10-18|mba2011-08-10-19|mba2011-08-10-20|mba2011-08-10-21|mba2011-08-10-22|mba2011-08-10-23|mba2011-08-10-24|mba2011-08-10-25|mba2011-08-10-26|mba2011-08-10-27|mba2011-08-10-28|mba2011-08-10-29|mba2011-08-10-30|mba2011-08-10-31|mba2011-08-10-32|mba2011-08-10-33|mba2011-08-10-34|mba2011-08-10-35|mba2011-08-10-36|mba2011-08-10-37|mba2011-08-10-38|mba2011-08-10-39|mba2011-08-10-40|mba2011-08-10-41|mba2011-08-10-42)$
   run_name_regex: (.*)
+  run_data_map_file: run_data_map/10224.csv

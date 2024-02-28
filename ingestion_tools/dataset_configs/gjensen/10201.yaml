@@ -28,7 +28,7 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: null
+  pixel_spacing: 0.512
   tilt_step: 1.5
   total_flux: 200.0
   data_acquisition_software: Leginon
@@ -56,19 +56,6 @@ tiltseries:
     min: -64.5
     max: 64.5
 tomograms:
-  voxel_spacing: null
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
-  fiducial_alignment_status: FIDUCIAL
-  ctf_corrected: null
-  processing: raw
-  processing_software: null
-  align_softwares:
-  - RAPTOR
-  offset:
-    x: 0
-    y: 0
-    z: 0
   affine_transformation_matrix:
   - - 1
     - 0
@@ -86,8 +73,21 @@ tomograms:
     - 0
     - 0
     - 1
+  align_softwares:
+  - RAPTOR
   authors: *id001
+  ctf_corrected: null
+  fiducial_alignment_status: FIDUCIAL
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  processing: raw
+  processing_software: null
+  reconstruction_method: Weighted back projection
+  reconstruction_software: IMOD
   tomogram_version: 1
+  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
 standardization_config:
   destination_prefix: '10201'
@@ -108,3 +108,4 @@ standardization_config:
   run_glob: '*'
   run_regex: (mba2011-07-15-1|mba2011-07-15-2|mba2011-07-15-3|mba2011-07-15-4|mba2011-07-15-5|mba2011-07-15-6|mba2011-07-15-7|mba2011-07-15-8|mba2011-07-15-9|mba2011-07-15-10|mba2011-07-15-11|mba2011-07-15-12|mba2011-07-15-13|mba2011-07-16-1|mba2011-07-16-2|mba2011-07-16-3)$
   run_name_regex: (.*)
+  run_data_map_file: run_data_map/10201.csv

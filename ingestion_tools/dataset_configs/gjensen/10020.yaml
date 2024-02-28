@@ -34,7 +34,7 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: null
+  pixel_spacing: 0.1687
   tilt_step: 3.0
   total_flux: 50.0
   data_acquisition_software: Serial EM
@@ -93,7 +93,7 @@ tomograms:
   reconstruction_method: '{tomo-reconstruction_method}'
   reconstruction_software: IMOD
   tomogram_version: 1
-  voxel_spacing: null
+  voxel_spacing: 0.6748
 annotations: {}
 standardization_config:
   destination_prefix: '10020'
