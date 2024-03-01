@@ -1,0 +1,46 @@
+dataset:
+  dataset_identifier: REQUIRED #(ex: 10004)
+annotations:
+  - metadata:
+      annotation_object:
+        id: REQUIRED
+        name: REQUIRED
+        description: OPTIONAL
+        state: OPTIONAL
+      dates:
+        deposition_date: 2023-XX-XX
+        last_modified_date: 2023-XX-XX
+        release_date: 2023-XX-XX
+      annotation_method: REQUIRED
+      annotation_publications: OPTIONAL
+      ground_truth_status: REQUIRED #(true or false)
+      authors:
+        - name: RECOMMENDED
+          ORCID: 0000-XXXXXX
+          primary_annotator_status: OPTIONAL #(true or false)
+          corresponding_author_status: OPTIONAL #(true or false)
+      annotation_software: RECOMMENDED
+      version: 1.0
+      is_curator_recommended: OPTIONAL #(true or false)
+      confidence:
+        precision: REQUIRED IF ground_truth_used is specified
+        recall: REQUIRED IF ground_truth_used is specified
+        ground_truth_used: OPTIONAL
+    sources:
+      - columns: zyx
+        file_format: csv
+        glob_string: aaaa/bbb/{ts_name}.csv
+        shape: REQUIRED #(valid values: SemanticSegmentationMask, SegmentationMask, OrientedPoint, or Point)
+        is_visualization_default: OPTIONAL #(true or false)
+        delimiter: OPTIONAL
+        mask_label: OPTIONAL # (valid values: integer > 0, for SemanticSegmentationMask)
+runs: {}
+tiltseries: {} # To be expanded in future
+tomograms: {} # To be expanded in future
+standardization_config:
+  deposition_id: OPTIONAL
+  destination_prefix: '99999'
+  deposition_source_prefix: path/to/source
+  run_glob: frames/*
+  run_regex: /TS_\d\d$
+  run_name_regex: (.*)
