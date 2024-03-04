@@ -1,5 +1,5 @@
-run_name,tomo-voxel_spacing,ts-pixel_spacing,ts-tilt_alignment_software,ts-tilt_range-min,ts-total_flux
-wnj2018-04-18-1,2.56,0.6,RAPTOR;RAPTOR,-70.0,168.0
-wnj2018-04-18-2,2.56,0.6,RAPTOR;RAPTOR,-70.0,168.0
-wnj2018-04-18-3,1.26,0.6,RAPTOR,-70.0,168.0
-wnj2018-04-19-4,0.96,0.48,RAPTOR;RAPTOR,-50.0,175.0
+run_name,tomo-voxel_spacing,ts-pixel_spacing,ts-tilt_alignment_software,ts-tilt_range-min,ts-tilt_series_path,ts-total_flux
+wnj2018-04-18-1,12.656,6.328,RAPTOR;RAPTOR,-70.0,rawdata/sq1_cell1.mrc,168.0
+wnj2018-04-18-2,12.656,6.328,RAPTOR;RAPTOR,-70.0,rawdata/sq1_cell2.mrc,168.0
+wnj2018-04-18-3,12.656,6.328,RAPTOR,-70.0,rawdata/sq1_cell3.mrc,168.0
+wnj2018-04-19-4,9.138,4.569,RAPTOR;RAPTOR,-50.0,rawdata/sq2_cell5.mrc,175.0

@@ -1,27 +1,27 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_series_quality
-cwl2011-10-23-1,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2011-10-23-2,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2011-10-23-3,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2011-10-23-4,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2011-10-23-5,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2011-10-24-1,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2011-10-24-2,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2011-10-24-3,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2012-03-29-2,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2012-03-29-3,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2012-03-29-4,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2012-03-29-5,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2012-03-29-6,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2012-03-29-7,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2012-03-29-8,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2012-03-29-9,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2012-03-29-10,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2012-03-29-11,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2012-03-29-12,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,UCSF tomo,IMOD,4
-cwl2011-10-31-1,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,FEI Tomo,IMOD,4
-cwl2011-10-31-2,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,FEI Tomo,IMOD,4
-cwl2011-10-31-3,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,FEI Tomo,IMOD,4
-cwl2011-10-31-4,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,FEI Tomo,IMOD,4
-cwl2011-10-31-5,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,FEI Tomo,IMOD,4
-cwl2011-10-31-6,['IMOD'],FIDUCIAL,Weighted back projection,IMOD,2.0,FEI Tomo,IMOD,4
-cwl2012-03-29-1,,NON_FIDUCIAL,None,None,,UCSF tomo,,1
+run_name,tomo-voxel_spacing,ts-data_acquisition_software,ts-pixel_spacing,ts-tilt_series_path
+cwl2011-10-23-1,2.0,UCSF tomo,1.0,rawdata/23oct11c_jurkatcryosec_2_ns.st
+cwl2011-10-23-2,2.0,UCSF tomo,1.0,rawdata/23oct11_jurkatcryosec_3_ns.st
+cwl2011-10-23-3,2.0,UCSF tomo,1.0,rawdata/23oct11_jurkatcryosec_4.st
+cwl2011-10-23-4,20.0,UCSF tomo,1.0,rawdata/23oct11_jurkatcryosec_5_ns.st
+cwl2011-10-23-5,2.0,UCSF tomo,1.0,rawdata/23oct11_jurkatcryosec_8_ns.st
+cwl2011-10-24-1,2.0,UCSF tomo,1.0,rawdata/24oct11_jurkatcryosecs_ns.st
+cwl2011-10-24-2,2.0,UCSF tomo,1.0,rawdata/24oct11_jurkatcryosecs_1_ns.st
+cwl2011-10-24-3,20.0,UCSF tomo,1.0,rawdata/24oct11_jurkatcryosecs_2_ns.st
+cwl2011-10-31-1,3.0,FEI Tomo,1.0,rawdata/11oct31_cryosec-Tomo_4_ns.st
+cwl2011-10-31-2,2.0,FEI Tomo,1.0,rawdata/11oct31_cryosec-Tomo_7_ns.st
+cwl2011-10-31-3,2.0,FEI Tomo,1.0,rawdata/11oct31_cryosec-Tomo_10_ns.st
+cwl2011-10-31-4,2.0,FEI Tomo,1.0,rawdata/11oct31_cryosec-Tomo_11_ns.st
+cwl2011-10-31-5,2.0,FEI Tomo,1.0,rawdata/11oct31_cryosec-Tomo_12.st
+cwl2011-10-31-6,2.0,FEI Tomo,1.0,rawdata/11oct31_cryosec-Tomo_17_ns.st
+cwl2012-03-29-1,18.920000692052167,UCSF tomo,9.460000038146973,rawdata/12mar29_Jurkatcryosec_tgtsq7_AtlasBT2c_0001_ns.st
+cwl2012-03-29-2,18.920000692052167,UCSF tomo,9.460000038146973,rawdata/12mar29_Jurkatcryosec_tgtsq7_AtlasBT2c_0002_ns.st
+cwl2012-03-29-3,28.380000229105573,UCSF tomo,9.460000038146973,rawdata/12mar29_Jurkatcryosec_tgtsq7_AtlasBT2c_0006_ns.st
+cwl2012-03-29-4,18.920000692052167,UCSF tomo,9.460000038146973,rawdata/12mar29_Jurkatcryosec_tgtsq7_AtlasBT2c_0007_ns.st
+cwl2012-03-29-5,18.920000692052167,UCSF tomo,9.460000038146973,rawdata/12mar29_Jurkatcryosec_tgtsq7_AtlasBT2c_0008.st
+cwl2012-03-29-6,18.920000692052167,UCSF tomo,9.460000038146973,rawdata/12mar29_Jurkatcryosec_tgtsq7_AtlasBT2c_0011.st
+cwl2012-03-29-7,18.920000692052167,UCSF tomo,9.460000038146973,rawdata/12mar29_Jurkatcryosec_tgtsq7_AtlasBT2c_0012.st
+cwl2012-03-29-8,18.920000692052167,UCSF tomo,9.460000038146973,rawdata/12mar29_Jurkatcryosec_tgtsq7_AtlasBT2c_0015.st
+cwl2012-03-29-9,18.920000692052167,UCSF tomo,9.460000038146973,rawdata/12mar29_Jurkatcryosec_tgtsq7_AtlasBT2c_0016.st
+cwl2012-03-29-10,18.920000692052167,UCSF tomo,9.460000038146973,rawdata/12mar29_Jurkatcryosec_tgtsq7_AtlasBT2c_0018.st
+cwl2012-03-29-11,18.920000692052167,UCSF tomo,9.460000038146973,rawdata/12mar29_Jurkatcryosec_tgtsq7_AtlasBT2c_0019_ns.st
+cwl2012-03-29-12,18.920000692052167,UCSF tomo,9.460000038146973,rawdata/12mar29_Jurkatcryosec_tgtsq7_AtlasBT10001_ns.st

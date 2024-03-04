@@ -28,35 +28,36 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: 0.39
-  tilt_step: 1.0
-  total_flux: 150.0
-  data_acquisition_software: UCSFTomo
-  tilt_series_quality: 4
-  binning_from_frames: null
-  tilt_alignment_software: RAPTOR
   acceleration_voltage: 300000
-  spherical_aberration_constant: 2.0
-  microscope:
-    manufacturer: FEI
-    model: Polara
-    additional_scope_info: ''
+  binning_from_frames: null
   camera:
+    acquire_mode: counting
     manufacturer: Gatan
     model: K2
-    acquire_mode: counting
-  tilting_scheme: starting tilt to max then min
-  tilt_axis: 84.3
-  microscope_optical_setup:
-    phase_plate: false
-    image_corrector: null
-    energy_filter: GIF
+  data_acquisition_software: UCSFTomo
   is_aligned: false
+  microscope:
+    additional_scope_info: ''
+    manufacturer: FEI
+    model: Polara
+  microscope_optical_setup:
+    energy_filter: GIF
+    image_corrector: null
+    phase_plate: false
+  pixel_spacing: 4.0360000000000005
+  spherical_aberration_constant: 2.0
+  tilt_alignment_software: RAPTOR
+  tilt_axis: 84.3
   tilt_range:
-    min: -65.0
     max: 65.0
+    min: -65.0
+  tilt_series_path: '{ts-tilt_series_path}'
+  tilt_series_quality: 4
+  tilt_step: 1.0
+  tilting_scheme: starting tilt to max then min
+  total_flux: 150.0
 tomograms:
-  voxel_spacing: 1.56
+  voxel_spacing: 16.145
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
   fiducial_alignment_status: FIDUCIAL
@@ -108,3 +109,4 @@ standardization_config:
   run_glob: '*'
   run_regex: (scy2016-01-14-1|scy2016-01-14-2|scy2016-01-14-3|scy2016-01-14-4|scy2016-01-14-5|scy2016-01-15-1|scy2016-01-15-2|scy2016-01-15-3|scy2016-01-15-4|scy2016-01-15-5|scy2016-01-15-6|scy2016-01-15-7|scy2016-01-15-8|scy2016-01-15-9|scy2016-01-15-10|scy2016-01-15-11|scy2016-01-15-12|scy2016-01-15-13)$
   run_name_regex: (.*)
+  run_data_map_file: run_data_map/10253.csv

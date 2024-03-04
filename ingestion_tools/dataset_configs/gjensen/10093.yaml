@@ -48,13 +48,14 @@ tiltseries:
     energy_filter: GIF
     image_corrector: null
     phase_plate: false
-  pixel_spacing: 0.26
+  pixel_spacing: '{ts-pixel_spacing}'
   spherical_aberration_constant: 2.7
   tilt_alignment_software: '{ts-tilt_alignment_software}'
   tilt_axis: 84.3
   tilt_range:
     max: 45.0
     min: -45.0
+  tilt_series_path: '{ts-tilt_series_path}'
   tilt_series_quality: int {ts-tilt_series_quality}
   tilt_step: 3.0
   tilting_scheme: starting tilt to max then min

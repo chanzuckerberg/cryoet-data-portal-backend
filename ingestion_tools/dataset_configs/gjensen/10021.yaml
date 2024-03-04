@@ -29,47 +29,35 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: 0.1104
-  tilt_step: 3.0
-  total_flux: 120.0
-  data_acquisition_software: Serial EM
-  tilt_series_quality: 4
-  binning_from_frames: null
-  tilt_alignment_software: IMOD
   acceleration_voltage: 300000
-  spherical_aberration_constant: 2.7
-  microscope:
-    manufacturer: TFS
-    model: Krios
-    additional_scope_info: ''
+  binning_from_frames: null
   camera:
+    acquire_mode: counting
     manufacturer: Gatan
     model: K3
-    acquire_mode: counting
-  tilting_scheme: min to max tilt
-  tilt_axis: 84.3
-  microscope_optical_setup:
-    phase_plate: false
-    image_corrector: null
-    energy_filter: GIF
+  data_acquisition_software: Serial EM
   is_aligned: false
+  microscope:
+    additional_scope_info: ''
+    manufacturer: TFS
+    model: Krios
+  microscope_optical_setup:
+    energy_filter: GIF
+    image_corrector: null
+    phase_plate: false
+  pixel_spacing: 1.0
+  spherical_aberration_constant: 2.7
+  tilt_alignment_software: IMOD
+  tilt_axis: 84.3
   tilt_range:
-    min: -66.0
     max: 66.0
+    min: -66.0
+  tilt_series_path: '{ts-tilt_series_path}'
+  tilt_series_quality: 4
+  tilt_step: 3.0
+  tilting_scheme: min to max tilt
+  total_flux: 120.0
 tomograms:
-  voxel_spacing: 0.8832
-  reconstruction_method: Weighted back projection
-  reconstruction_software: novaCTF
-  fiducial_alignment_status: FIDUCIAL
-  ctf_corrected: true
-  processing: raw
-  processing_software: novaCTF
-  align_softwares:
-  - IMOD
-  offset:
-    x: 0
-    y: 0
-    z: 0
   affine_transformation_matrix:
   - - 1
     - 0
@@ -87,8 +75,21 @@ tomograms:
     - 0
     - 0
     - 1
+  align_softwares:
+  - IMOD
   authors: *id001
+  ctf_corrected: true
+  fiducial_alignment_status: FIDUCIAL
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  processing: raw
+  processing_software: novaCTF
+  reconstruction_method: Weighted back projection
+  reconstruction_software: novaCTF
   tomogram_version: 1
+  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
 standardization_config:
   destination_prefix: '10021'
@@ -109,3 +110,4 @@ standardization_config:
   run_glob: '*'
   run_regex: (lma2019-08-21-1|lma2019-08-21-2|lma2019-08-21-3|lma2019-08-21-4|lma2019-08-21-5|lma2019-08-21-6|lma2019-08-21-7|lma2019-08-21-8|lma2019-08-21-9|lma2019-08-21-10|lma2019-08-21-11|lma2019-08-21-12|lma2019-08-21-13|lma2019-08-21-14|lma2019-08-21-15|lma2019-08-21-16|lma2019-08-21-17|lma2019-08-21-18|lma2019-08-21-19|lma2019-08-21-20|lma2019-08-21-21|lma2019-08-21-22|lma2019-08-21-23|lma2019-08-21-24|lma2019-08-21-25|lma2019-08-21-26|lma2019-08-21-27|lma2019-08-21-28|lma2019-08-21-29|lma2019-08-21-30|lma2019-08-21-31|lma2019-08-21-32|lma2019-08-21-33|lma2019-08-21-34|lma2019-08-21-35|lma2019-08-21-36|lma2019-08-21-37|lma2019-08-21-38|lma2019-08-21-39|lma2019-08-21-40|lma2019-08-21-41|lma2019-08-21-42|lma2019-08-21-43|lma2019-08-21-44|lma2019-08-21-45|lma2019-08-21-46|lma2019-08-21-47|lma2019-08-21-48|lma2019-08-21-49|lma2019-08-21-50|lma2019-08-21-51|lma2019-08-21-52|lma2019-08-21-53|lma2019-08-21-54|lma2019-08-21-55|lma2019-08-21-56|lma2019-08-21-57|lma2019-08-21-58|lma2019-08-21-59|lma2019-08-21-60|lma2019-08-21-61|lma2019-08-21-62)$
   run_name_regex: (.*)
+  run_data_map_file: run_data_map/10021.csv

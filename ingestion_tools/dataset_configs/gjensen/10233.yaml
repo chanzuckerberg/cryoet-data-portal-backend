@@ -31,35 +31,36 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: 0.632
-  tilt_step: 1.5
-  total_flux: 200.0
-  data_acquisition_software: Leginon
-  tilt_series_quality: 4
-  binning_from_frames: null
-  tilt_alignment_software: RAPTOR
   acceleration_voltage: 300000
-  spherical_aberration_constant: 2.0
-  microscope:
-    manufacturer: FEI
-    model: Polara
-    additional_scope_info: ''
+  binning_from_frames: null
   camera:
+    acquire_mode: null
     manufacturer: Gatan
     model: UltraCam
-    acquire_mode: null
-  tilting_scheme: starting tilt to max then min
-  tilt_axis: 0.0
-  microscope_optical_setup:
-    phase_plate: false
-    image_corrector: null
-    energy_filter: GIF
+  data_acquisition_software: Leginon
   is_aligned: false
+  microscope:
+    additional_scope_info: ''
+    manufacturer: FEI
+    model: Polara
+  microscope_optical_setup:
+    energy_filter: GIF
+    image_corrector: null
+    phase_plate: false
+  pixel_spacing: 0.6320000000000001
+  spherical_aberration_constant: 2.0
+  tilt_alignment_software: RAPTOR
+  tilt_axis: 0.0
   tilt_range:
-    min: -65.0
     max: 65.0
+    min: -65.0
+  tilt_series_path: '{ts-tilt_series_path}'
+  tilt_series_quality: 4
+  tilt_step: 1.5
+  tilting_scheme: starting tilt to max then min
+  total_flux: 200.0
 tomograms:
-  voxel_spacing: 1.264
+  voxel_spacing: 12.64
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
   fiducial_alignment_status: FIDUCIAL
@@ -111,3 +112,4 @@ standardization_config:
   run_glob: '*'
   run_regex: (mba2010-03-04-1|mba2010-03-04-2|mba2010-03-04-3|mba2010-03-04-4|mba2010-03-04-5)$
   run_name_regex: (.*)
+  run_data_map_file: run_data_map/10233.csv

@@ -48,6 +48,7 @@ tiltseries:
     acquire_mode: null
   tilting_scheme: starting tilt to max then min
   tilt_axis: 0.0
+  tilt_series_path: null
   microscope_optical_setup:
     phase_plate: false
     image_corrector: null
@@ -57,6 +58,19 @@ tiltseries:
     min: -61.0
     max: 61.0
 tomograms:
+  voxel_spacing: 19.24
+  reconstruction_method: Weighted back projection
+  reconstruction_software: IMOD
+  fiducial_alignment_status: FIDUCIAL
+  ctf_corrected: null
+  processing: raw
+  processing_software: null
+  align_softwares:
+  - IMOD
+  offset:
+    x: 0
+    y: 0
+    z: 0
   affine_transformation_matrix:
   - - 1
     - 0
@@ -74,21 +88,8 @@ tomograms:
     - 0
     - 0
     - 1
-  align_softwares:
-  - IMOD
   authors: *id001
-  ctf_corrected: null
-  fiducial_alignment_status: FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  processing_software: null
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
   tomogram_version: 1
-  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
 standardization_config:
   destination_prefix: '10242'
@@ -109,4 +110,3 @@ standardization_config:
   run_glob: '*'
   run_regex: (mba2009-08-27-1|mba2009-08-27-2|mba2009-08-27-3|mba2009-08-27-4|mba2009-08-27-5|mba2009-08-27-6|mba2009-08-27-7|mba2009-08-27-8|mba2009-08-27-9|mba2009-08-27-10)$
   run_name_regex: (.*)
-  run_data_map_file: run_data_map/10242.csv

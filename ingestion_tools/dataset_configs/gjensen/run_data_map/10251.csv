@@ -1,21 +1,21 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_quality
-etl2012-05-12-17,,NON_FIDUCIAL,None,None,,,60.0,-60.0,1
-etl2012-05-13-1,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-3,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-4,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-5,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-6,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-8,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-10,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-12,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-13,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-14,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-15,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-16,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-17,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-18,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
-etl2012-05-13-19,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,3.8,RAPTOR,40.0,-40.0,4
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_path,ts-tilt_series_quality
+etl2012-05-12-17,,NON_FIDUCIAL,None,None,,,60.0,-60.0,rawdata/trepnoOM10001.mrc,1
+etl2012-05-13-1,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/trepnoOM20001.mrc,4
+etl2012-05-13-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/trepnoOM20002.mrc,4
+etl2012-05-13-3,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/trepnoOM20003.mrc,4
+etl2012-05-13-4,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/trepnoOM20004.mrc,4
+etl2012-05-13-5,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/trepnoOM20005.mrc,4
+etl2012-05-13-6,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/trepnoOM20006.mrc,4
+etl2012-05-13-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/trepnoOM20007.mrc,4
+etl2012-05-13-8,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/trepnoOM20008.mrc,4
+etl2012-05-13-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/AlnoOMa0001.mrc,4
+etl2012-05-13-10,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/AlnoOMa0002.mrc,4
+etl2012-05-13-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/AlnoOMa0003.mrc,4
+etl2012-05-13-12,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/AlnoOMa0004.mrc,4
+etl2012-05-13-13,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/AlnoOMa0005.mrc,4
+etl2012-05-13-14,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/AlnoOMa0006.mrc,4
+etl2012-05-13-15,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/AlnoOMa0007.mrc,4
+etl2012-05-13-16,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/AlnoOMa0008.mrc,4
+etl2012-05-13-17,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/AlnoOMa0009.mrc,4
+etl2012-05-13-18,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/AlnoOM2b.mrc,4
+etl2012-05-13-19,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,18.919999999999998,RAPTOR,40.0,-40.0,rawdata/AlnoOM2c.mrc,4

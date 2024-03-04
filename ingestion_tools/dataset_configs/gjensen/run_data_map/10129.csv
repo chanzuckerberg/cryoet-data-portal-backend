@@ -1,22 +1,22 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilting_scheme
-psa2014-06-19-5,['RAPTOR'],FIDUCIAL,Undefined,RAPTOR,min to max tilt
-psa2014-06-19-6,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-7,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-8,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-9,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-10,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-11,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-12,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-13,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-14,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-15,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-16,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-17,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-18,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-19,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-20,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-22,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-23,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-24,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-25,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,starting tilt to max then min
-psa2014-06-19-21,['autoPatch'],NON_FIDUCIAL,UCSFTomo,autoPatch,starting tilt to max then min
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_series_path,ts-tilting_scheme
+psa2014-06-19-5,['RAPTOR'],FIDUCIAL,Undefined,RAPTOR,rawdata/atlas40001.mrc,min to max tilt
+psa2014-06-19-6,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas40002.mrc,starting tilt to max then min
+psa2014-06-19-7,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas40003.mrc,starting tilt to max then min
+psa2014-06-19-8,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas40004.mrc,starting tilt to max then min
+psa2014-06-19-9,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas40005.mrc,starting tilt to max then min
+psa2014-06-19-10,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas40006.mrc,starting tilt to max then min
+psa2014-06-19-11,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas40007.mrc,starting tilt to max then min
+psa2014-06-19-12,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas40008.mrc,starting tilt to max then min
+psa2014-06-19-13,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas40009.mrc,starting tilt to max then min
+psa2014-06-19-14,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas40010.mrc,starting tilt to max then min
+psa2014-06-19-15,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas40011.mrc,starting tilt to max then min
+psa2014-06-19-16,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas40012.mrc,starting tilt to max then min
+psa2014-06-19-17,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas40013.mrc,starting tilt to max then min
+psa2014-06-19-18,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas40014.mrc,starting tilt to max then min
+psa2014-06-19-19,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas40015.mrc,starting tilt to max then min
+psa2014-06-19-20,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas50001.mrc,starting tilt to max then min
+psa2014-06-19-21,['autoPatch'],NON_FIDUCIAL,UCSFTomo,autoPatch,rawdata/atlas50002.mrc,starting tilt to max then min
+psa2014-06-19-22,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas50003.mrc,starting tilt to max then min
+psa2014-06-19-23,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas50004.mrc,starting tilt to max then min
+psa2014-06-19-24,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas50005.mrc,starting tilt to max then min
+psa2014-06-19-25,['RAPTOR'],FIDUCIAL,UCSFTomo,RAPTOR,rawdata/atlas50006.mrc,starting tilt to max then min

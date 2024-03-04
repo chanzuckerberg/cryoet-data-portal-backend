@@ -1,28 +1,28 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-voxel_spacing,ts-tilt_alignment_software
-aba2014-02-21-1,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-3,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-4,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-5,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-6,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-7,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-8,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-10,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-18,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-19,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-20,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-21,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-22,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-23,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-24,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-25,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-26,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-27,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR
-aba2014-02-21-2,['RAPTOR'],FIDUCIAL,SIRT,6.4399998308067135,RAPTOR;RAPTOR;RAPTOR;RAPTOR
-aba2014-02-21-13,['RAPTOR'],FIDUCIAL,SIRT,1.0,RAPTOR;RAPTOR;RAPTOR;RAPTOR
-aba2014-02-21-15,['RAPTOR'],FIDUCIAL,SIRT,,RAPTOR;RAPTOR;RAPTOR;RAPTOR
-aba2014-02-21-17,['RAPTOR'],FIDUCIAL,Weighted back projection,6.529409494281267,RAPTOR;RAPTOR;RAPTOR;RAPTOR
-aba2014-02-21-9,['autoPatch'],NON_FIDUCIAL,Weighted back projection,1.28,autoPatch
-aba2014-02-21-11,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR;RAPTOR;RAPTOR
-aba2014-02-21-12,['RAPTOR'],FIDUCIAL,Weighted back projection,1.28,RAPTOR;RAPTOR;RAPTOR
-aba2014-02-21-14,['RAPTOR'],FIDUCIAL,Weighted back projection,6.529409494281267,RAPTOR;RAPTOR;RAPTOR
-aba2014-02-21-16,['RAPTOR'],FIDUCIAL,SIRT,1.0,RAPTOR;RAPTOR;RAPTOR
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_path
+aba2014-02-21-1,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0001.mrc
+aba2014-02-21-2,['RAPTOR'],FIDUCIAL,Weighted back projection,6.529,RAPTOR;RAPTOR;RAPTOR;RAPTOR,rawdata/VibrioYiWeiStyle0002.mrc
+aba2014-02-21-3,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0003.mrc
+aba2014-02-21-4,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0004.mrc
+aba2014-02-21-5,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0005.mrc
+aba2014-02-21-6,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0006.mrc
+aba2014-02-21-7,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0007.mrc
+aba2014-02-21-8,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0008.mrc
+aba2014-02-21-9,['autoPatch'],NON_FIDUCIAL,Weighted back projection,13.059000000000001,autoPatch,rawdata/VibrioYiWeiStyle0009.mrc
+aba2014-02-21-10,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0010.mrc
+aba2014-02-21-11,['RAPTOR'],FIDUCIAL,Weighted back projection,6.529,RAPTOR;RAPTOR;RAPTOR,rawdata/VibrioYiWeiStyle0011.mrc
+aba2014-02-21-12,['RAPTOR'],FIDUCIAL,SIRT,1.0,RAPTOR;RAPTOR;RAPTOR,rawdata/VibrioYiWeiStyle0012.mrc
+aba2014-02-21-13,['RAPTOR'],FIDUCIAL,SIRT,1.0,RAPTOR;RAPTOR;RAPTOR;RAPTOR,rawdata/VibrioYiWeiStyle0013.mrc
+aba2014-02-21-14,['RAPTOR'],FIDUCIAL,Weighted back projection,6.529,RAPTOR;RAPTOR;RAPTOR,rawdata/VibrioYiWeiStyle0014.mrc
+aba2014-02-21-15,['RAPTOR'],FIDUCIAL,SIRT,1.0,RAPTOR;RAPTOR;RAPTOR;RAPTOR,rawdata/VibrioYiWeiStyle0015.mrc
+aba2014-02-21-16,['RAPTOR'],FIDUCIAL,Weighted back projection,6.529,RAPTOR;RAPTOR;RAPTOR,rawdata/VibrioYiWeiStyle0016.mrc
+aba2014-02-21-17,['RAPTOR'],FIDUCIAL,SIRT,13.059000000000001,RAPTOR;RAPTOR;RAPTOR;RAPTOR,rawdata/VibrioYiWeiStyle0017.mrc
+aba2014-02-21-18,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0018.mrc
+aba2014-02-21-19,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0019.mrc
+aba2014-02-21-20,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0020.mrc
+aba2014-02-21-21,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0021.mrc
+aba2014-02-21-22,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0022.mrc
+aba2014-02-21-23,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0023.mrc
+aba2014-02-21-24,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0024.mrc
+aba2014-02-21-25,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0025.mrc
+aba2014-02-21-26,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0026.mrc
+aba2014-02-21-27,['RAPTOR'],FIDUCIAL,Weighted back projection,13.059000000000001,RAPTOR,rawdata/VibrioYiWeiStyle0027.mrc

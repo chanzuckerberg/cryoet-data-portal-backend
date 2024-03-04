@@ -50,6 +50,7 @@ tiltseries:
     acquire_mode: counting
   tilting_scheme: min to max tilt
   tilt_axis: 84.3
+  tilt_series_path: rawdata/bio3-1_lam1_cell1.st
   microscope_optical_setup:
     phase_plate: true
     image_corrector: null

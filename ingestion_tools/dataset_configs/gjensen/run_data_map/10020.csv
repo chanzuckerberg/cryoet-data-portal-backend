@@ -1,4 +1,4 @@
-run_name,tomo-reconstruction_method
-pda2021-02-02-20,SIRT
-pda2021-02-02-21,SIRT
-pda2022-02-02-1,Weighted back projection
+run_name,tomo-reconstruction_method,ts-tilt_series_path
+pda2021-02-02-20,SIRT,rawdata/wtAnaGV_PhasePlate_1.mrc
+pda2022-02-02-1,Weighted back projection,rawdata/wtAnaGV_PhasePlate_2.mrc
+pda2021-02-02-21,SIRT,rawdata/wtAnaGV_PhasePlate_3.mrc

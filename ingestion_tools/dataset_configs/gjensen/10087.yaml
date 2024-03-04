@@ -48,13 +48,14 @@ tiltseries:
     energy_filter: GIF
     image_corrector: null
     phase_plate: false
-  pixel_spacing: 0.26
+  pixel_spacing: 2.6
   spherical_aberration_constant: 2.7
   tilt_alignment_software: '{ts-tilt_alignment_software}'
   tilt_axis: 84.3
   tilt_range:
     max: 51.0
     min: -51.0
+  tilt_series_path: '{ts-tilt_series_path}'
   tilt_series_quality: 4
   tilt_step: 3.0
   tilting_scheme: starting tilt to max then min
@@ -90,7 +91,7 @@ tomograms:
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
   tomogram_version: 1
-  voxel_spacing: 1.04
+  voxel_spacing: 10.4
 annotations: {}
 standardization_config:
   destination_prefix: '10087'

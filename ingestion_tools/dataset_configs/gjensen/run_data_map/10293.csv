@@ -1,42 +1,42 @@
-run_name,tomo-reconstruction_method,tomo-voxel_spacing,ts-tilt_alignment_software
-jsa2009-10-16-1,Weighted back projection,1.548,RAPTOR;RAPTOR;RAPTOR
-jsa2009-10-16-9,SIRT,15.640000343322754,RAPTOR;RAPTOR;RAPTOR
-jsa2009-10-16-18,SIRT,15.640000343322754,RAPTOR;RAPTOR;RAPTOR
-jsa2009-10-16-28,Weighted back projection,15.479999431128642,RAPTOR;RAPTOR;RAPTOR
-jsa2009-10-16-31,SIRT,15.640000343322754,RAPTOR;RAPTOR;RAPTOR
-jsa2009-10-16-2,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-3,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-4,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-5,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-6,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-7,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-8,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-10,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-11,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-12,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-13,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-14,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-15,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-16,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-17,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-19,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-20,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-21,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-22,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-23,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-24,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-25,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-26,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-27,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-29,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-30,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-32,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-33,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-34,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-35,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-36,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-37,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-38,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-39,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-40,Weighted back projection,1.548,RAPTOR
-jsa2009-10-16-41,Weighted back projection,1.548,RAPTOR
+run_name,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_path
+jsa2009-10-16-1,15.48,RAPTOR;RAPTOR;RAPTOR,rawdata/09oct16a_Box235B_001.mrc
+jsa2009-10-16-2,15.64,RAPTOR,rawdata/09oct16a_Box235B_002.mrc
+jsa2009-10-16-3,15.64,RAPTOR,rawdata/09oct16a_Box235B_003.mrc
+jsa2009-10-16-4,15.64,RAPTOR,rawdata/09oct16a_Box235B_004.mrc
+jsa2009-10-16-5,15.64,RAPTOR,rawdata/09oct16a_Box235B_005.mrc
+jsa2009-10-16-6,15.64,RAPTOR,rawdata/09oct16a_Box235B_006.mrc
+jsa2009-10-16-7,15.64,RAPTOR,rawdata/09oct16a_Box235B_008.mrc
+jsa2009-10-16-8,15.64,RAPTOR,rawdata/09oct16a_Box235B_009.mrc
+jsa2009-10-16-9,15.64,RAPTOR;RAPTOR;RAPTOR,rawdata/09oct16a_Box235B_010.mrc
+jsa2009-10-16-10,15.64,RAPTOR,rawdata/09oct16a_Box235B_011.mrc
+jsa2009-10-16-11,15.64,RAPTOR,rawdata/09oct16a_Box235B_012.mrc
+jsa2009-10-16-12,15.64,RAPTOR,rawdata/09oct16a_Box235B_013.mrc
+jsa2009-10-16-13,15.64,RAPTOR,rawdata/09oct16a_Box235B_014.mrc
+jsa2009-10-16-14,15.64,RAPTOR,rawdata/09oct16a_Box235B_015.mrc
+jsa2009-10-16-15,15.64,RAPTOR,rawdata/09oct16a_Box235B_016.mrc
+jsa2009-10-16-16,15.64,RAPTOR,rawdata/09oct16a_Box235B_018.mrc
+jsa2009-10-16-17,15.64,RAPTOR,rawdata/09oct16a_Box235B_019.mrc
+jsa2009-10-16-18,15.48,RAPTOR;RAPTOR;RAPTOR,rawdata/09oct16a_Box235B_021.mrc
+jsa2009-10-16-19,15.64,RAPTOR,rawdata/09oct16a_Box235B_022.mrc
+jsa2009-10-16-20,15.64,RAPTOR,rawdata/09oct16a_Box235B_023.mrc
+jsa2009-10-16-21,15.64,RAPTOR,rawdata/09oct16a_Box235B_024.mrc
+jsa2009-10-16-22,15.64,RAPTOR,rawdata/09oct16a_Box235B_025.mrc
+jsa2009-10-16-23,15.64,RAPTOR,rawdata/09oct16a_Box235B_027.mrc
+jsa2009-10-16-24,15.64,RAPTOR,rawdata/09oct16a_Box235B_028.mrc
+jsa2009-10-16-25,15.64,RAPTOR,rawdata/09oct16a_Box235B_029.mrc
+jsa2009-10-16-26,15.64,RAPTOR,rawdata/09oct16a_Box235B_030.mrc
+jsa2009-10-16-27,15.64,RAPTOR,rawdata/09oct16a_Box235B_031.mrc
+jsa2009-10-16-28,15.47999929138322,RAPTOR;RAPTOR;RAPTOR,rawdata/09oct16a_Box235B_032.mrc
+jsa2009-10-16-29,15.64,RAPTOR,rawdata/09oct16a_Box235B_033.mrc
+jsa2009-10-16-30,15.64,RAPTOR,rawdata/09oct16a_Box235B_034.mrc
+jsa2009-10-16-31,15.479999533961497,RAPTOR;RAPTOR;RAPTOR,rawdata/09oct16a_Box235B_035.mrc
+jsa2009-10-16-32,15.64,RAPTOR,rawdata/09oct16a_Box235B_037.mrc
+jsa2009-10-16-33,15.64,RAPTOR,rawdata/09oct16a_Box235B_038.mrc
+jsa2009-10-16-34,15.64,RAPTOR,rawdata/09oct16a_Box235B_039.mrc
+jsa2009-10-16-35,15.48,RAPTOR,rawdata/09oct16a_Box235B_040.mrc
+jsa2009-10-16-36,15.64,RAPTOR,rawdata/09oct16a_Box235B_041.mrc
+jsa2009-10-16-37,15.64,RAPTOR,rawdata/09oct16a_Box235B_042.mrc
+jsa2009-10-16-38,15.64,RAPTOR,rawdata/09oct16a_Box235B_043.mrc
+jsa2009-10-16-39,15.64,RAPTOR,rawdata/09oct16a_Box235B_045.mrc
+jsa2009-10-16-40,15.64,RAPTOR,rawdata/09oct16a_Box235B_046.mrc
+jsa2009-10-16-41,15.64,RAPTOR,rawdata/09oct16a_Box235B_047.mrc

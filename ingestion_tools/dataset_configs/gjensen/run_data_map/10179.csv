@@ -1,56 +1,56 @@
-run_name,tomo-reconstruction_method,tomo-voxel_spacing,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilting_scheme
-cwl2010-12-13-1,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-2,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-3,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-4,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-5,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-6,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-7,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-8,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-9,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-10,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-11,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-12,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-13,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-14,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-15,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-16,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-17,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-18,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-19,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-20,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-21,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-22,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-23,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-24,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-12-13-25,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-11-29-1,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-11-29-2,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-11-29-3,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-11-29-4,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2010-11-29-5,Weighted back projection,2.0,Leginon,IMOD,starting tilt to max then min
-cwl2011-03-31-1,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-3,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-4,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-6,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-7,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-8,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-9,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-10,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-11,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-12,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-13,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-14,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-15,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-16,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-17,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-18,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-19,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-20,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-21,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-22,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-23,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-24,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-25,Weighted back projection,2.0,UCSF tomo,IMOD,min to max tilt
-cwl2011-03-31-2,SIRT,,UCSF tomo,IMOD;IMOD,min to max tilt
-cwl2011-03-31-5,SIRT,,UCSF tomo,IMOD;IMOD,min to max tilt
+run_name,tomo-voxel_spacing,ts-data_acquisition_software,ts-pixel_spacing,ts-tilt_alignment_software,ts-tilt_series_path,ts-tilting_scheme
+cwl2010-12-13-1,12.58,Leginon,12.58,IMOD,rawdata/._10dec13a_C45_1_003.st,starting tilt to max then min
+cwl2010-12-13-2,37.74,Leginon,12.58,IMOD,rawdata/10dec13a_C45_1_004.st,starting tilt to max then min
+cwl2010-12-13-3,12.58,Leginon,12.58,IMOD,rawdata/._10dec13a_C45_1_005.st,starting tilt to max then min
+cwl2010-12-13-4,12.58,Leginon,12.58,IMOD,rawdata/10dec13a_C45_1_007.st,starting tilt to max then min
+cwl2010-12-13-5,12.58,Leginon,12.58,IMOD,rawdata/._10dec13a_C45_1_008.st,starting tilt to max then min
+cwl2010-12-13-6,12.58,Leginon,12.58,IMOD,rawdata/10dec13a_C45_1_009.st,starting tilt to max then min
+cwl2010-12-13-7,12.58,Leginon,12.58,IMOD,rawdata/._10dec13a_C45_1_010.st,starting tilt to max then min
+cwl2010-12-13-8,12.58,Leginon,12.58,IMOD,rawdata/._10dec13a_C45_1_011.st,starting tilt to max then min
+cwl2010-12-13-9,12.58,Leginon,12.58,IMOD,rawdata/10dec13a_C45_1_012.st,starting tilt to max then min
+cwl2010-12-13-10,12.58,Leginon,12.58,IMOD,rawdata/._10dec13a_C45_1_013.st,starting tilt to max then min
+cwl2010-12-13-11,25.16,Leginon,12.58,IMOD,rawdata/._10dec13a_C45_4_015.st,starting tilt to max then min
+cwl2010-12-13-12,12.58,Leginon,12.58,IMOD,rawdata/10dec13a_C45_4_016.st,starting tilt to max then min
+cwl2010-12-13-13,12.58,Leginon,12.58,IMOD,rawdata/._10dec13a_C45_4_020.st,starting tilt to max then min
+cwl2010-12-13-14,12.58,Leginon,12.58,IMOD,rawdata/._10dec13a_C45_4_021.st,starting tilt to max then min
+cwl2010-12-13-15,25.16,Leginon,12.58,IMOD,rawdata/._10dec13a_C45_4_023.st,starting tilt to max then min
+cwl2010-12-13-16,12.58,Leginon,12.58,IMOD,rawdata/10dec13a_C45_4_024.st,starting tilt to max then min
+cwl2010-12-13-17,12.58,Leginon,12.58,IMOD,rawdata/10dec13a_C45_4_025.st,starting tilt to max then min
+cwl2010-12-13-18,25.16,Leginon,12.58,IMOD,rawdata/._10dec13a_C45_4_027.st,starting tilt to max then min
+cwl2010-12-13-19,12.58,Leginon,12.58,IMOD,rawdata/10dec13a_C45_4_028.st,starting tilt to max then min
+cwl2010-12-13-20,12.58,Leginon,12.58,IMOD,rawdata/10dec13a_C45_4_031.st,starting tilt to max then min
+cwl2010-12-13-21,12.58,Leginon,12.58,IMOD,rawdata/10dec13a_C45_4_036.st,starting tilt to max then min
+cwl2010-12-13-22,12.58,Leginon,12.58,IMOD,rawdata/10dec13a_C45_4_037.st,starting tilt to max then min
+cwl2010-12-13-23,12.58,Leginon,12.58,IMOD,rawdata/._10dec13a_C45_4_038.st,starting tilt to max then min
+cwl2010-12-13-24,12.58,Leginon,12.58,IMOD,rawdata/._10dec13a_C45_4_039.st,starting tilt to max then min
+cwl2010-12-13-25,12.58,Leginon,12.58,IMOD,rawdata/._10dec13a_C45_4_040.st,starting tilt to max then min
+cwl2010-11-29-1,12.58,Leginon,12.58,IMOD,rawdata/._10nov29b_C39x3_003.st,starting tilt to max then min
+cwl2010-11-29-2,12.58,Leginon,12.58,IMOD,rawdata/10nov29b_C39x3_004.st,starting tilt to max then min
+cwl2010-11-29-3,12.58,Leginon,12.58,IMOD,rawdata/10nov29b_C39x3_010.st,starting tilt to max then min
+cwl2010-11-29-4,12.58,Leginon,12.58,IMOD,rawdata/._10nov29b_C39x3_011.st,starting tilt to max then min
+cwl2010-11-29-5,12.58,Leginon,12.58,IMOD,rawdata/._10nov29b_C39x2_013.st,starting tilt to max then min
+cwl2011-03-31-1,23.84,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_001_ns.st,min to max tilt
+cwl2011-03-31-2,23.84,UCSF tomo,23.84,IMOD;IMOD,rawdata/11mar31a_C_58-2_002.st,min to max tilt
+cwl2011-03-31-3,23.84,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_003.st,min to max tilt
+cwl2011-03-31-4,47.68,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_004.st,min to max tilt
+cwl2011-03-31-5,23.84,UCSF tomo,23.84,IMOD;IMOD,rawdata/11mar31a_C_58-2_005.st,min to max tilt
+cwl2011-03-31-6,23.84,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_006.st,min to max tilt
+cwl2011-03-31-7,23.84,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_007.st,min to max tilt
+cwl2011-03-31-8,23.84,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_009.st,min to max tilt
+cwl2011-03-31-9,23.84,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_010.st,min to max tilt
+cwl2011-03-31-10,23.84,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_011.st,min to max tilt
+cwl2011-03-31-11,23.84,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_012.st,min to max tilt
+cwl2011-03-31-12,23.84,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_014.st,min to max tilt
+cwl2011-03-31-13,23.84,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_016.st,min to max tilt
+cwl2011-03-31-14,23.84,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_018.st,min to max tilt
+cwl2011-03-31-15,23.84,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_019.st,min to max tilt
+cwl2011-03-31-16,23.84,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_020.st,min to max tilt
+cwl2011-03-31-17,23.84,UCSF tomo,23.84,IMOD,rawdata/11mar31a_C_58-2_021.st,min to max tilt
+cwl2011-03-31-18,11.92,UCSF tomo,11.92,IMOD,rawdata/11mar31a_C_58-2_022.st,min to max tilt
+cwl2011-03-31-19,11.92,UCSF tomo,11.92,IMOD,rawdata/11mar31a_C_58-2_023.st,min to max tilt
+cwl2011-03-31-20,11.92,UCSF tomo,11.92,IMOD,rawdata/11mar31a_C_58-2_024.st,min to max tilt
+cwl2011-03-31-21,23.84,UCSF tomo,11.92,IMOD,rawdata/11mar31a_C_58-2_025.st,min to max tilt
+cwl2011-03-31-22,11.92,UCSF tomo,11.92,IMOD,rawdata/11mar31a_C_58-2_028.st,min to max tilt
+cwl2011-03-31-23,11.92,UCSF tomo,11.92,IMOD,rawdata/11mar31a_C_58-2_029.st,min to max tilt
+cwl2011-03-31-24,11.92,UCSF tomo,11.92,IMOD,rawdata/11mar31a_C_58-2_030.st,min to max tilt
+cwl2011-03-31-25,23.84,UCSF tomo,11.92,IMOD,rawdata/11mar31a_C_58-2_031.st,min to max tilt

@@ -30,35 +30,36 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: 0.5
-  tilt_step: 1.0
-  total_flux: 150.0
-  data_acquisition_software: UCSF tomo
-  tilt_series_quality: 4
-  binning_from_frames: null
-  tilt_alignment_software: IMOD
   acceleration_voltage: 300000
-  spherical_aberration_constant: 2.0
-  microscope:
-    manufacturer: FEI
-    model: Polara
-    additional_scope_info: ''
+  binning_from_frames: null
   camera:
+    acquire_mode: null
     manufacturer: Gatan
     model: UltraCam
-    acquire_mode: null
-  tilting_scheme: min to max tilt
-  tilt_axis: 0.0
-  microscope_optical_setup:
-    phase_plate: false
-    image_corrector: null
-    energy_filter: GIF
+  data_acquisition_software: UCSF tomo
   is_aligned: false
+  microscope:
+    additional_scope_info: ''
+    manufacturer: FEI
+    model: Polara
+  microscope_optical_setup:
+    energy_filter: GIF
+    image_corrector: null
+    phase_plate: false
+  pixel_spacing: 9.459999999999999
+  spherical_aberration_constant: 2.0
+  tilt_alignment_software: IMOD
+  tilt_axis: 0.0
   tilt_range:
-    min: -60.0
     max: 60.0
+    min: -60.0
+  tilt_series_path: '{ts-tilt_series_path}'
+  tilt_series_quality: 4
+  tilt_step: 1.0
+  tilting_scheme: min to max tilt
+  total_flux: 150.0
 tomograms:
-  voxel_spacing: 2.0
+  voxel_spacing: 18.919999999999998
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
   fiducial_alignment_status: FIDUCIAL
@@ -110,3 +111,4 @@ standardization_config:
   run_glob: '*'
   run_regex: (cwl2011-12-12-1|cwl2011-12-12-2|cwl2011-12-12-3|cwl2011-12-12-4|cwl2011-12-12-5|cwl2011-12-12-6|cwl2011-12-12-7|cwl2011-12-12-8|cwl2011-12-12-9|cwl2011-12-12-10|cwl2011-12-12-11|cwl2011-12-12-12|cwl2011-12-12-13|cwl2011-12-12-14|cwl2011-12-12-15|cwl2011-12-12-16|cwl2011-12-12-17|cwl2011-12-12-18|cwl2011-12-12-19|cwl2011-12-12-20|cwl2011-12-12-21|cwl2011-12-12-22|cwl2011-12-12-23|cwl2011-12-12-24|cwl2011-12-12-25|cwl2011-12-12-26|cwl2011-12-12-27|cwl2011-12-12-28|cwl2011-12-12-29|cwl2011-12-15-1|cwl2011-12-15-2|cwl2011-12-15-3|cwl2011-12-15-4|cwl2011-12-25-10|cwl2011-12-25-11|cwl2011-12-25-12)$
   run_name_regex: (.*)
+  run_data_map_file: run_data_map/10170.csv

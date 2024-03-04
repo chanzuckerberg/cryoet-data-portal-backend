@@ -1,7 +1,7 @@
-run_name,tomo-voxel_spacing,ts-data_acquisition_software,ts-microscope-model,ts-microscope_optical_setup-phase_plate,ts-pixel_spacing,ts-spherical_aberration_constant,ts-tilt_range-max,ts-total_flux
-wnj2018-06-28-7,1.72,Undefined,Krios,False,0.43,2.7,60.0,182.0
-wnj2018-06-28-8,1.72,Undefined,Krios,True,0.43,2.7,60.0,162.7
-wnj2018-06-28-12,1.72,Undefined,Krios,False,0.43,2.7,60.0,165.5
-wnj2018-06-28-13,1.72,Undefined,Krios,False,0.43,2.7,60.0,165.5
-wnj2018-06-28-14,1.72,Undefined,Krios,False,0.43,2.7,0.0,165.5
-wnj2018-06-28-19,0.98,Serial EM,0,False,0.49,2.2,60.0,182.0
+run_name,tomo-voxel_spacing,ts-data_acquisition_software,ts-microscope-model,ts-microscope_optical_setup-phase_plate,ts-spherical_aberration_constant,ts-tilt_range-max,ts-tilt_series_path,ts-total_flux
+wnj2018-06-28-7,17.276,Undefined,Krios,False,2.7,60.0,rawdata/sq1_cell4.mrc,182.0
+wnj2018-06-28-8,17.276,Undefined,Krios,True,2.7,60.0,rawdata/sq2_cell2.mrc,162.7
+wnj2018-06-28-12,17.276,Undefined,Krios,False,2.7,60.0,rawdata/sq3_cell1.mrc,165.5
+wnj2018-06-28-13,17.276,Undefined,Krios,False,2.7,60.0,rawdata/sq3_cell2.mrc,165.5
+wnj2018-06-28-14,17.276,Undefined,Krios,False,2.7,0.0,rawdata/sq3_cell3.mrc,165.5
+wnj2018-06-28-19,8.638,Serial EM,0,False,2.2,60.0,rawdata/sq1_cell2.st,182.0
