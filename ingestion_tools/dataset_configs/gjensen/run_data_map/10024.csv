@@ -1,6 +1,6 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,ts-microscope-model,ts-spherical_aberration_constant,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_quality,ts-tilt_step,ts-total_flux
-wnj2019-02-21-1,,,,,0,2.2,,60.0,-60.0,1,2.0,6.42
-wnj2019-02-21-2,['IMOD'],True,Weighted back projection,IMOD,Krios,2.7,IMOD,0.0,-50.0,4,1.0,58.0
-wnj2019-02-21-3,['IMOD'],True,Weighted back projection,IMOD,Krios,2.7,IMOD,60.0,-50.0,4,1.0,58.0
-wnj2019-02-21-7,['IMOD'],True,Weighted back projection,IMOD,Krios,2.7,IMOD,2.0,-50.0,4,1.0,58.0
-wnj2019-02-21-8,['IMOD'],True,Weighted back projection,IMOD,Krios,2.7,IMOD,60.0,-50.0,4,2.0,58.0
+run_name,tomo-voxel_spacing,ts-microscope-model,ts-pixel_spacing,ts-spherical_aberration_constant,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_path,ts-tilt_step,ts-total_flux
+wnj2019-02-21-1,45.44,0,22.72,2.2,60.0,-60.0,rawdata/lam4_ov_ts_orig.st,2.0,6.42
+wnj2019-02-21-2,21.64,Krios,5.41,2.7,0.0,-50.0,rawdata/lam4_ts1_orig.st,1.0,58.0
+wnj2019-02-21-3,21.64,Krios,5.41,2.7,60.0,-50.0,rawdata/lam4_ts5_orig.st,1.0,58.0
+wnj2019-02-21-7,21.64,Krios,5.41,2.7,2.0,-50.0,rawdata/lam4_ts2_orig.st,1.0,58.0
+wnj2019-02-21-8,21.64,Krios,5.41,2.7,60.0,-50.0,rawdata/lam4_ts4_orig.st,2.0,58.0

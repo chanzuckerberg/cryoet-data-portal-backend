@@ -1,5 +1,5 @@
-run_name,ts-tilt_step
-cwl2012-12-08-1,1.0
-cwl2012-12-08-2,1.0
-cwl2012-12-08-3,1.5
-cwl2012-12-08-4,1.5
+run_name,ts-tilt_series_path,ts-tilt_step
+cwl2012-12-08-1,rawdata/12dec08_C157_2_NocsynchHela_man1.mrc,1.0
+cwl2012-12-08-2,rawdata/12dec08_C157_2_NocsynchHela_man2.mrc,1.0
+cwl2012-12-08-3,rawdata/12dec08_c157_3_AT1_tgt0004_man4.mrc,1.5
+cwl2012-12-08-4,rawdata/12dec08_c157_3_AT1_tgt0005_man5.mrc,1.5

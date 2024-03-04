@@ -29,38 +29,39 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: null
-  tilt_step: 1.0
-  total_flux: 180.0
-  data_acquisition_software: UCSFTomo
-  tilt_series_quality: 4
-  binning_from_frames: null
-  tilt_alignment_software: RAPTOR
   acceleration_voltage: 300000
-  spherical_aberration_constant: 2.0
-  microscope:
-    manufacturer: FEI
-    model: Polara
-    additional_scope_info: ''
+  binning_from_frames: null
   camera:
+    acquire_mode: counting
     manufacturer: Gatan
     model: K2
-    acquire_mode: counting
-  tilting_scheme: starting tilt to max then min
-  tilt_axis: 84.3
-  microscope_optical_setup:
-    phase_plate: false
-    image_corrector: null
-    energy_filter: GIF
+  data_acquisition_software: UCSFTomo
   is_aligned: false
+  microscope:
+    additional_scope_info: ''
+    manufacturer: FEI
+    model: Polara
+  microscope_optical_setup:
+    energy_filter: GIF
+    image_corrector: null
+    phase_plate: false
+  pixel_spacing: 4.0360000000000005
+  spherical_aberration_constant: 2.0
+  tilt_alignment_software: RAPTOR
+  tilt_axis: 84.3
   tilt_range:
-    min: -55.0
     max: 55.0
+    min: -55.0
+  tilt_series_path: '{ts-tilt_series_path}'
+  tilt_series_quality: 4
+  tilt_step: 1.0
+  tilting_scheme: starting tilt to max then min
+  total_flux: 180.0
 tomograms:
-  voxel_spacing: null
+  voxel_spacing: 16.145
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
-  fiducial_alignment_status: true
+  fiducial_alignment_status: FIDUCIAL
   ctf_corrected: null
   processing: raw
   processing_software: null
@@ -109,3 +110,4 @@ standardization_config:
   run_glob: '*'
   run_regex: (rra2014-02-04-3|rra2014-02-04-5|rra2014-02-04-6|rra2014-02-04-8|rra2014-02-04-9|rra2014-02-04-10|rra2014-02-04-11|rra2014-02-04-12|rra2014-02-04-13|rra2014-02-04-15|rra2014-02-04-16|rra2014-02-04-19|rra2014-02-04-23|rra2014-02-04-28|rra2014-02-04-30|rra2014-02-04-31|rra2014-02-04-32|rra2014-02-04-33|rra2014-02-04-34|rra2014-02-04-35|rra2014-02-04-36|rra2014-02-04-38|rra2014-02-04-39|rra2014-02-04-41|rra2014-02-04-42|rra2014-02-04-43|rra2014-02-04-44|rra2014-02-04-45|rra2014-02-04-46)$
   run_name_regex: (.*)
+  run_data_map_file: run_data_map/10115.csv

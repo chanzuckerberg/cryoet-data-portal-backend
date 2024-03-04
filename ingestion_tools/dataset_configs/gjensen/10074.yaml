@@ -52,13 +52,14 @@ tiltseries:
     energy_filter: GIF
     image_corrector: null
     phase_plate: false
-  pixel_spacing: null
+  pixel_spacing: '{ts-pixel_spacing}'
   spherical_aberration_constant: 2.7
   tilt_alignment_software: '{ts-tilt_alignment_software}'
   tilt_axis: 84.3
   tilt_range:
     max: 60.0
     min: -60.0
+  tilt_series_path: '{ts-tilt_series_path}'
   tilt_series_quality: int {ts-tilt_series_quality}
   tilt_step: 1.5
   tilting_scheme: starting tilt to max then min
@@ -89,12 +90,12 @@ tomograms:
     x: 0
     y: 0
     z: 0
-  processing: '{tomo-processing}'
+  processing: raw
   processing_software: '{tomo-processing_software}'
   reconstruction_method: '{tomo-reconstruction_method}'
   reconstruction_software: '{tomo-reconstruction_software}'
   tomogram_version: 1
-  voxel_spacing: null
+  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
 standardization_config:
   destination_prefix: '10074'

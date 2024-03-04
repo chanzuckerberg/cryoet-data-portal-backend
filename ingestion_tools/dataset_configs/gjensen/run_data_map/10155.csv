@@ -1,106 +1,106 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,ts-camera-model,ts-data_acquisition_software,ts-microscope-manufacturer,ts-microscope-model,ts-spherical_aberration_constant,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_step,ts-tilting_scheme,ts-total_flux
-ycw2012-11-14-16,['RAPTOR'],True,K2,UCSF Tomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,115.0
-ycw2012-11-14-17,['RAPTOR'],True,K2,UCSF Tomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,115.0
-ycw2012-11-14-18,['RAPTOR'],True,K2,UCSF Tomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,115.0
-ycw2012-11-14-19,['RAPTOR'],True,K2,UCSF Tomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,115.0
-ycw2012-11-14-20,['RAPTOR'],True,K2,UCSF Tomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,115.0
-ycw2012-11-14-21,['RAPTOR'],True,K2,UCSF Tomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,115.0
-ycw2012-11-14-23,['RAPTOR'],True,K2,UCSF Tomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,115.0
-ycw2012-11-14-25,['RAPTOR'],True,K2,UCSF Tomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,115.0
-ycw2012-11-14-27,['RAPTOR'],True,K2,UCSF Tomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,115.0
-ycw2012-11-14-28,['RAPTOR'],True,K2,UCSF Tomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,115.0
-ycw2012-11-14-30,['RAPTOR'],True,K2,UCSF Tomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,115.0
-ycw2012-11-14-31,['RAPTOR'],True,K2,UCSF Tomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,115.0
-ycw2012-11-14-32,['RAPTOR'],True,K3,UCSF Tomo,TFS,0,2.2,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,115.0
-ycw2012-11-14-33,['RAPTOR'],True,K3,UCSF Tomo,TFS,0,2.2,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,115.0
-ycw2012-11-14-36,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,82.0
-ycw2012-11-14-37,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,82.0
-ycw2012-11-14-38,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,82.0
-ycw2012-11-14-39,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,82.0
-ycw2012-11-14-40,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,82.0
-ycw2012-11-14-47,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,150.0
-ycw2012-11-14-48,['RAPTOR'],True,K3,Undefined,TFS,0,2.2,RAPTOR,60.0,-60.0,1.5,min to max tilt,110.0
-ycw2012-11-14-49,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.5,starting tilt to max then min,110.0
-ycw2012-11-14-50,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.5,starting tilt to max then min,110.0
-ycw2012-11-14-52,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.5,starting tilt to max then min,110.0
-ycw2012-11-14-53,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.5,starting tilt to max then min,110.0
-ycw2012-11-14-56,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.5,starting tilt to max then min,110.0
-ycw2012-11-14-58,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.5,starting tilt to max then min,110.0
-ycw2012-11-14-59,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.5,starting tilt to max then min,110.0
-ycw2012-11-14-60,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.5,starting tilt to max then min,110.0
-ycw2012-11-14-62,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.5,starting tilt to max then min,110.0
-ycw2012-11-14-63,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.5,starting tilt to max then min,110.0
-ycw2012-11-14-64,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.5,starting tilt to max then min,110.0
-ycw2012-11-14-65,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.5,starting tilt to max then min,110.0
-ycw2012-11-14-66,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.5,starting tilt to max then min,110.0
-ycw2012-12-05-28,['RAPTOR'],True,K2,UCSF Tomo,FEI,Polara,2.0,RAPTOR,60.0,-60.0,1.0,starting tilt to max then min,114.0
-ycw2013-05-01-10,['RAPTOR'],True,K2,UCSF Tomo,TFS,Krios,2.7,RAPTOR;RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-05-01-11,['RAPTOR'],True,K2,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-05-01-15,['RAPTOR'],True,K2,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-05-01-25,['RAPTOR'],True,K2,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-05-01-27,['RAPTOR'],True,K2,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-05-01-34,['RAPTOR'],True,K2,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-05-01-40,['RAPTOR'],True,K2,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-05-01-51,['RAPTOR'],True,K2,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-05-01-53,['RAPTOR'],True,K2,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-11,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-12,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-13,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-15,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-16,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-18,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-19,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-20,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-21,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-23,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-24,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-25,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-26,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-27,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-28,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-29,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-31,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-37,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-39,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-40,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-41,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-42,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-43,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-44,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-45,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-48,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-50,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-51,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-52,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-53,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-54,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-59,['RAPTOR'],True,K2,UCSFTomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-14,['autoPatch'],False,K2,UCSFTomo,FEI,Polara,2.0,autoPatch,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-17,['autoPatch'],False,K2,UCSFTomo,FEI,Polara,2.0,autoPatch,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-22,['autoPatch'],False,K2,UCSFTomo,FEI,Polara,2.0,autoPatch,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-30,['autoPatch'],False,K2,UCSFTomo,FEI,Polara,2.0,autoPatch,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-08-20-47,['autoPatch'],False,K2,UCSFTomo,FEI,Polara,2.0,autoPatch,65.0,-65.0,1.0,starting tilt to max then min,100.0
-ycw2013-09-10-9,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,80.0
-ycw2013-09-10-13,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,80.0
-ycw2013-09-10-14,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,80.0
-ycw2013-09-10-16,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,80.0
-ycw2013-09-10-21,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,1.0,starting tilt to max then min,80.0
-ycw2013-09-10-27,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-28,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-31,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-32,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-33,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-36,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-37,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-38,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-39,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-40,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-41,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-42,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-43,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-44,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-45,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-46,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-47,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-09-10-48,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,2.0,starting tilt to max then min,20.0
-ycw2013-11-06-26,['RAPTOR'],True,K2,UCSFTomo,TFS,Krios,2.7,RAPTOR,50.0,-50.0,1.0,starting tilt to max then min,150.0
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-voxel_spacing,ts-camera-model,ts-data_acquisition_software,ts-microscope-manufacturer,ts-microscope-model,ts-pixel_spacing,ts-spherical_aberration_constant,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_path,ts-tilt_step,ts-tilting_scheme,ts-total_flux
+ycw2012-11-14-16,['RAPTOR'],FIDUCIAL,16.145,K2,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0010001.mrc,1.0,starting tilt to max then min,115.0
+ycw2012-11-14-17,['RAPTOR'],FIDUCIAL,16.145,K2,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0010002.mrc,1.0,starting tilt to max then min,115.0
+ycw2012-11-14-18,['RAPTOR'],FIDUCIAL,16.145,K2,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0010003.mrc,1.0,starting tilt to max then min,115.0
+ycw2012-11-14-19,['RAPTOR'],FIDUCIAL,16.145,K2,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0010004.mrc,1.0,starting tilt to max then min,115.0
+ycw2012-11-14-20,['RAPTOR'],FIDUCIAL,16.145,K2,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0010005.mrc,1.0,starting tilt to max then min,115.0
+ycw2012-11-14-21,['RAPTOR'],FIDUCIAL,16.145,K2,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0010006.mrc,1.0,starting tilt to max then min,115.0
+ycw2012-11-14-23,['RAPTOR'],FIDUCIAL,16.145,K2,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0010008.mrc,1.0,starting tilt to max then min,115.0
+ycw2012-11-14-25,['RAPTOR'],FIDUCIAL,16.145,K2,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0010010.mrc,1.0,starting tilt to max then min,115.0
+ycw2012-11-14-27,['RAPTOR'],FIDUCIAL,16.145,K2,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0010012.mrc,1.0,starting tilt to max then min,115.0
+ycw2012-11-14-28,['RAPTOR'],FIDUCIAL,16.145,K2,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0010013.mrc,1.0,starting tilt to max then min,115.0
+ycw2012-11-14-30,['RAPTOR'],FIDUCIAL,16.145,K2,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0010015.mrc,1.0,starting tilt to max then min,115.0
+ycw2012-11-14-31,['RAPTOR'],FIDUCIAL,16.145,K2,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0010016.mrc,1.0,starting tilt to max then min,115.0
+ycw2012-11-14-32,['RAPTOR'],FIDUCIAL,16.145,K3,UCSF Tomo,TFS,0,4.0360000000000005,2.2,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0010017.mrc,1.0,starting tilt to max then min,115.0
+ycw2012-11-14-33,['RAPTOR'],FIDUCIAL,16.145,K3,UCSF Tomo,TFS,0,4.0360000000000005,2.2,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0010018.mrc,1.0,starting tilt to max then min,115.0
+ycw2012-11-14-36,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0020001.mrc,1.0,starting tilt to max then min,82.0
+ycw2012-11-14-37,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030002.mrc,1.0,starting tilt to max then min,82.0
+ycw2012-11-14-38,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030003.mrc,1.0,starting tilt to max then min,82.0
+ycw2012-11-14-39,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030004.mrc,1.0,starting tilt to max then min,82.0
+ycw2012-11-14-40,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030005.mrc,1.0,starting tilt to max then min,82.0
+ycw2012-11-14-47,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030006.mrc,1.0,starting tilt to max then min,150.0
+ycw2012-11-14-48,['RAPTOR'],FIDUCIAL,13.059000000000001,K3,Undefined,TFS,0,3.265,2.2,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030007.mrc,1.5,min to max tilt,110.0
+ycw2012-11-14-49,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030008.mrc,1.5,starting tilt to max then min,110.0
+ycw2012-11-14-50,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030009.mrc,1.5,starting tilt to max then min,110.0
+ycw2012-11-14-52,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030011.mrc,1.5,starting tilt to max then min,110.0
+ycw2012-11-14-53,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030012.mrc,1.5,starting tilt to max then min,110.0
+ycw2012-11-14-56,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030015.mrc,1.5,starting tilt to max then min,110.0
+ycw2012-11-14-58,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030017.mrc,1.5,starting tilt to max then min,110.0
+ycw2012-11-14-59,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030018.mrc,1.5,starting tilt to max then min,110.0
+ycw2012-11-14-60,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030019.mrc,1.5,starting tilt to max then min,110.0
+ycw2012-11-14-62,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030021.mrc,1.5,starting tilt to max then min,110.0
+ycw2012-11-14-63,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030022.mrc,1.5,starting tilt to max then min,110.0
+ycw2012-11-14-64,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030023.mrc,1.5,starting tilt to max then min,110.0
+ycw2012-11-14-65,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030024.mrc,1.5,starting tilt to max then min,110.0
+ycw2012-11-14-66,['RAPTOR'],FIDUCIAL,13.059000000000001,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030025.mrc,1.5,starting tilt to max then min,110.0
+ycw2012-12-05-28,['RAPTOR'],FIDUCIAL,16.145,K2,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,60.0,-60.0,rawdata/Invasion_complex_120002.mrc,1.0,starting tilt to max then min,114.0
+ycw2013-05-01-10,['RAPTOR'],FIDUCIAL,16.8,K2,UCSF Tomo,TFS,Krios,4.829,2.7,RAPTOR;RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0010.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-05-01-11,['RAPTOR'],FIDUCIAL,19.315,K2,UCSF Tomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0011.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-05-01-15,['RAPTOR'],FIDUCIAL,19.315,K2,UCSF Tomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0015.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-05-01-25,['RAPTOR'],FIDUCIAL,19.315,K2,UCSF Tomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0025.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-05-01-27,['RAPTOR'],FIDUCIAL,19.315,K2,UCSF Tomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0027.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-05-01-34,['RAPTOR'],FIDUCIAL,19.315,K2,UCSF Tomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries_30001.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-05-01-40,['RAPTOR'],FIDUCIAL,19.315,K2,UCSF Tomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries_30007.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-05-01-51,['RAPTOR'],FIDUCIAL,19.315,K2,UCSF Tomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries_30009.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-05-01-53,['RAPTOR'],FIDUCIAL,19.315,K2,UCSF Tomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries_30011.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-11,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10001.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-12,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10002.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-13,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10003.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-14,['autoPatch'],NON_FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,autoPatch,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10004.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-15,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10005.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-16,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10006.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-17,['autoPatch'],NON_FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,autoPatch,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10007.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-18,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10008.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-19,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10009.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-20,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10010.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-21,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10011.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-22,['autoPatch'],NON_FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,autoPatch,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10012.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-23,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10013.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-24,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10014.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-25,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10015.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-26,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10016.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-27,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10017.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-28,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10018.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-29,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10019.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-30,['autoPatch'],NON_FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,autoPatch,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10020.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-31,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10021.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-37,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10028.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-39,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10030.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-40,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10031.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-41,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10032.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-42,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10033.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-43,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10034.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-44,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10035.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-45,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10036.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-47,['autoPatch'],NON_FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,autoPatch,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10038.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-48,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10039.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-50,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10041.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-51,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10042.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-52,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10043.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-53,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10044.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-54,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10045.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-08-20-59,['RAPTOR'],FIDUCIAL,16.145,K2,UCSFTomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR,65.0,-65.0,rawdata/20130820_Bdellovibrio+WM3433_10051.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-09-10-9,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/20130909_Janelia_Bdellovibrio_Vibrio_10009.mrc,1.0,starting tilt to max then min,80.0
+ycw2013-09-10-13,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/20130909_Janelia_Bdellovibrio_Vibrio_10013.mrc,1.0,starting tilt to max then min,80.0
+ycw2013-09-10-14,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/20130909_Janelia_Bdellovibrio_Vibrio_10014.mrc,1.0,starting tilt to max then min,80.0
+ycw2013-09-10-16,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/20130909_Janelia_Bdellovibrio_Vibrio_10016.mrc,1.0,starting tilt to max then min,80.0
+ycw2013-09-10-21,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/20130909_Janelia_Bdellovibrio_Vibrio_10021.mrc,1.0,starting tilt to max then min,80.0
+ycw2013-09-10-27,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_10003.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-28,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_10004.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-31,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20002.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-32,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20003.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-33,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20004.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-36,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20007.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-37,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20008.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-38,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20009.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-39,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20010.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-40,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20011.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-41,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20012.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-42,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20013.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-43,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20014.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-44,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20015.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-45,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20016.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-46,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20017.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-47,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20018.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-09-10-48,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/20130910_Janelia_Bdellovibrio_WM3433_20019.mrc,2.0,starting tilt to max then min,20.0
+ycw2013-11-06-26,['RAPTOR'],FIDUCIAL,19.315,K2,UCSFTomo,TFS,Krios,4.829,2.7,RAPTOR,50.0,-50.0,rawdata/01-montage_7x70015.mrc,1.0,starting tilt to max then min,150.0

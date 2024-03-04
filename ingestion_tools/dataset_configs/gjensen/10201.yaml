@@ -2,7 +2,7 @@ dataset:
   dataset_identifier: 10201
   dataset_description: This is 1st of 24 sets of data studying Campylobacter jejuni
     collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
-  dataset_title: ''
+  dataset_title: Campylobacter jejuni
   authors: &id001
   - name: Morgan Beeby
     primary_author_status: true
@@ -28,47 +28,35 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: null
-  tilt_step: 1.5
-  total_flux: 200.0
-  data_acquisition_software: Leginon
-  tilt_series_quality: 4
-  binning_from_frames: null
-  tilt_alignment_software: RAPTOR
   acceleration_voltage: 300000
-  spherical_aberration_constant: 2.0
-  microscope:
-    manufacturer: FEI
-    model: Polara
-    additional_scope_info: ''
+  binning_from_frames: null
   camera:
+    acquire_mode: null
     manufacturer: Gatan
     model: UltraCam
-    acquire_mode: null
-  tilting_scheme: starting tilt to max then min
-  tilt_axis: 0.0
-  microscope_optical_setup:
-    phase_plate: false
-    image_corrector: null
-    energy_filter: GIF
+  data_acquisition_software: Leginon
   is_aligned: false
+  microscope:
+    additional_scope_info: ''
+    manufacturer: FEI
+    model: Polara
+  microscope_optical_setup:
+    energy_filter: GIF
+    image_corrector: null
+    phase_plate: false
+  pixel_spacing: 5.12
+  spherical_aberration_constant: 2.0
+  tilt_alignment_software: RAPTOR
+  tilt_axis: 0.0
   tilt_range:
-    min: -64.5
     max: 64.5
+    min: -64.5
+  tilt_series_path: '{ts-tilt_series_path}'
+  tilt_series_quality: 4
+  tilt_step: 1.5
+  tilting_scheme: starting tilt to max then min
+  total_flux: 200.0
 tomograms:
-  voxel_spacing: null
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
-  fiducial_alignment_status: true
-  ctf_corrected: null
-  processing: raw
-  processing_software: null
-  align_softwares:
-  - RAPTOR
-  offset:
-    x: 0
-    y: 0
-    z: 0
   affine_transformation_matrix:
   - - 1
     - 0
@@ -86,8 +74,21 @@ tomograms:
     - 0
     - 0
     - 1
+  align_softwares:
+  - RAPTOR
   authors: *id001
+  ctf_corrected: null
+  fiducial_alignment_status: FIDUCIAL
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  processing: raw
+  processing_software: null
+  reconstruction_method: Weighted back projection
+  reconstruction_software: IMOD
   tomogram_version: 1
+  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
 standardization_config:
   destination_prefix: '10201'
@@ -108,3 +109,4 @@ standardization_config:
   run_glob: '*'
   run_regex: (mba2011-07-15-1|mba2011-07-15-2|mba2011-07-15-3|mba2011-07-15-4|mba2011-07-15-5|mba2011-07-15-6|mba2011-07-15-7|mba2011-07-15-8|mba2011-07-15-9|mba2011-07-15-10|mba2011-07-15-11|mba2011-07-15-12|mba2011-07-15-13|mba2011-07-16-1|mba2011-07-16-2|mba2011-07-16-3)$
   run_name_regex: (.*)
+  run_data_map_file: run_data_map/10201.csv

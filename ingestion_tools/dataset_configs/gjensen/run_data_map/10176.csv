@@ -1,22 +1,22 @@
-run_name,ts-tilt_alignment_software
-cwl2011-08-14-1,IMOD
-cwl2011-08-14-2,IMOD
-cwl2011-08-14-3,IMOD
-cwl2011-08-14-4,IMOD
-cwl2011-08-14-5,IMOD
-cwl2011-08-14-6,IMOD
-cwl2011-08-14-7,IMOD
-cwl2011-08-14-8,IMOD
-cwl2011-08-14-9,IMOD
-cwl2011-08-14-10,IMOD
-cwl2011-08-14-11,IMOD
-cwl2011-08-14-12,IMOD
-cwl2011-08-14-13,IMOD
-cwl2011-08-14-15,IMOD
-cwl2011-08-14-16,IMOD
-cwl2011-08-14-17,IMOD
-cwl2011-08-14-18,IMOD
-cwl2011-08-14-19,IMOD
-cwl2011-08-14-20,IMOD
-cwl2011-08-14-21,IMOD
-cwl2011-08-14-14,IMOD;IMOD
+run_name,tomo-reconstruction_method,ts-tilt_alignment_software,ts-tilt_series_path
+cwl2011-08-14-1,Weighted back projection,IMOD,rawdata/11aug14_0001.st
+cwl2011-08-14-2,Weighted back projection,IMOD,rawdata/11aug14_1_C88_1.st
+cwl2011-08-14-3,Weighted back projection,IMOD,rawdata/11aug14_0002.st
+cwl2011-08-14-4,Weighted back projection,IMOD,rawdata/11aug14_2_C88_1.st
+cwl2011-08-14-5,Weighted back projection,IMOD,rawdata/11aug14_0003_ns.st
+cwl2011-08-14-6,Weighted back projection,IMOD,rawdata/11aug14_3_C89_3.st
+cwl2011-08-14-7,Weighted back projection,IMOD,rawdata/11aug14_0005_ns.st
+cwl2011-08-14-8,Weighted back projection,IMOD,rawdata/11aug14_0008_ns.st
+cwl2011-08-14-9,Weighted back projection,IMOD,rawdata/11aug14_0009.st
+cwl2011-08-14-10,Weighted back projection,IMOD,rawdata/11aug14_0011.st
+cwl2011-08-14-11,Weighted back projection,IMOD,rawdata/11aug14_0012.st
+cwl2011-08-14-12,Weighted back projection,IMOD,rawdata/11aug14_0013_ns.st
+cwl2011-08-14-13,Weighted back projection,IMOD,rawdata/11aug14_0014.st
+cwl2011-08-14-14,SIRT,IMOD;IMOD,rawdata/11aug14_0015.st
+cwl2011-08-14-15,Weighted back projection,IMOD,rawdata/11aug14_0016.st
+cwl2011-08-14-16,Weighted back projection,IMOD,rawdata/11aug14_0018.st
+cwl2011-08-14-17,Weighted back projection,IMOD,rawdata/11aug14_0019.st
+cwl2011-08-14-18,Weighted back projection,IMOD,rawdata/11aug14_0021.st
+cwl2011-08-14-19,Weighted back projection,IMOD,rawdata/11aug14_0023preali.st
+cwl2011-08-14-20,Weighted back projection,IMOD,rawdata/11aug14_0024.st
+cwl2011-08-14-21,Weighted back projection,IMOD,rawdata/11aug16_.st

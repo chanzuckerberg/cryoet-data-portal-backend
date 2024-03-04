@@ -28,38 +28,39 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: null
-  tilt_step: 1.0
-  total_flux: 180.0
-  data_acquisition_software: SerialEM
-  tilt_series_quality: 4
-  binning_from_frames: null
-  tilt_alignment_software: RAPTOR
   acceleration_voltage: 300000
-  spherical_aberration_constant: 2.0
-  microscope:
-    manufacturer: FEI
-    model: Polara
-    additional_scope_info: ''
+  binning_from_frames: null
   camera:
+    acquire_mode: counting
     manufacturer: Gatan
     model: K2
-    acquire_mode: counting
-  tilting_scheme: min to max tilt
-  tilt_axis: 84.3
-  microscope_optical_setup:
-    phase_plate: false
-    image_corrector: null
-    energy_filter: GIF
+  data_acquisition_software: SerialEM
   is_aligned: false
+  microscope:
+    additional_scope_info: ''
+    manufacturer: FEI
+    model: Polara
+  microscope_optical_setup:
+    energy_filter: GIF
+    image_corrector: null
+    phase_plate: false
+  pixel_spacing: 4.319
+  spherical_aberration_constant: 2.0
+  tilt_alignment_software: RAPTOR
+  tilt_axis: 84.3
   tilt_range:
-    min: -60.0
     max: 60.0
+    min: -60.0
+  tilt_series_path: '{ts-tilt_series_path}'
+  tilt_series_quality: 4
+  tilt_step: 1.0
+  tilting_scheme: min to max tilt
+  total_flux: 180.0
 tomograms:
-  voxel_spacing: null
+  voxel_spacing: 17.276
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
-  fiducial_alignment_status: true
+  fiducial_alignment_status: FIDUCIAL
   ctf_corrected: null
   processing: raw
   processing_software: null
@@ -108,3 +109,4 @@ standardization_config:
   run_glob: '*'
   run_regex: (ycw2018-06-04-1|ycw2018-06-04-2|ycw2018-06-04-3|ycw2018-06-04-4|ycw2018-06-04-5|ycw2018-06-04-6|ycw2018-06-04-7|ycw2018-06-04-9|ycw2018-06-04-10|ycw2018-06-04-11|ycw2018-06-04-12|ycw2018-06-04-13|ycw2018-06-04-15|ycw2018-06-04-17|ycw2018-06-04-18|ycw2018-06-04-19|ycw2018-06-04-20|ycw2018-06-04-21|ycw2018-06-04-22|ycw2018-06-04-23|ycw2018-06-04-24|ycw2018-06-04-25|ycw2018-06-04-26|ycw2018-06-04-28|ycw2018-06-04-29|ycw2018-06-04-30|ycw2018-06-04-31|ycw2018-06-04-32|ycw2018-06-04-33|ycw2018-06-04-34|ycw2018-06-04-35|ycw2018-06-04-36|ycw2018-06-04-38|ycw2018-06-04-39|ycw2018-06-04-40|ycw2018-06-04-42|ycw2018-06-04-43|ycw2018-06-04-44|ycw2018-06-04-45|ycw2018-06-04-48|ycw2018-06-04-49|ycw2018-06-04-50|ycw2018-06-04-51|ycw2018-06-04-52|ycw2018-06-04-53|ycw2018-06-04-54|ycw2018-06-04-55|ycw2018-06-04-56|ycw2018-06-04-57|ycw2018-06-04-59|ycw2018-06-04-60|ycw2018-06-04-61|ycw2018-06-04-62|ycw2018-06-04-63|ycw2018-06-04-64|ycw2018-06-04-65|ycw2018-06-04-66|ycw2018-06-04-68|ycw2018-06-04-69|ycw2018-06-04-70|ycw2018-06-04-71|ycw2018-06-04-72|ycw2018-06-04-73|ycw2018-06-04-74|ycw2018-06-04-75|ycw2018-06-04-78|ycw2018-06-04-79|ycw2018-06-04-80|ycw2018-06-04-81|ycw2018-06-04-83|ycw2018-06-04-84|ycw2018-06-04-85|ycw2018-06-04-86|ycw2018-06-04-87|ycw2018-06-04-88|ycw2018-06-04-91|ycw2018-06-04-92|ycw2018-06-04-93)$
   run_name_regex: (.*)
+  run_data_map_file: run_data_map/10138.csv

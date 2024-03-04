@@ -1,8 +1,8 @@
-run_name,tomo-align_softwares,ts-tilt_alignment_software
-aba2015-02-23-37,['RAPTOR'],RAPTOR
-aba2015-02-23-38,['RAPTOR'],RAPTOR
-aba2015-02-23-39,['RAPTOR'],RAPTOR
-aba2015-02-23-40,['RAPTOR'],RAPTOR
-aba2015-02-23-41,['RAPTOR'],RAPTOR
-aba2015-02-23-43,['RAPTOR'],RAPTOR
-aba2015-02-23-42,['Batchruntomo'],Batchruntomo
+run_name,tomo-align_softwares,ts-tilt_alignment_software,ts-tilt_series_path
+aba2015-02-23-37,['RAPTOR'],RAPTOR,rawdata/PseudomonasdeltaF7shortreceptorFeb0001.mrc
+aba2015-02-23-38,['RAPTOR'],RAPTOR,rawdata/PseudomonasdeltaF7shortreceptorFeb0002.mrc
+aba2015-02-23-39,['RAPTOR'],RAPTOR,rawdata/PseudomonasdeltaF7shortreceptorFeb0003.mrc
+aba2015-02-23-40,['RAPTOR'],RAPTOR,rawdata/PseudomonasdeltaF7shortreceptorFeb0004.mrc
+aba2015-02-23-41,['RAPTOR'],RAPTOR,rawdata/PseudomonasdeltaF7shortreceptorFeb0005.mrc
+aba2015-02-23-42,['Batchruntomo'],Batchruntomo,rawdata/PseudomonasdeltaF7shortreceptorFeb0006.mrc
+aba2015-02-23-43,['RAPTOR'],RAPTOR,rawdata/PseudomonasdeltaF7shortreceptorFeb0007.mrc
