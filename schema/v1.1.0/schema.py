@@ -1,5 +1,5 @@
 from linkml_runtime.utils.schemaview import SchemaView
-from linkml_runtime.dumpers import json_dumper, yaml_dumper
+from linkml_runtime.dumpers import yaml_dumper
 from linkml.utils.helpers import write_to_file
 
 import click
