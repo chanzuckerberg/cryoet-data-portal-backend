@@ -2,7 +2,7 @@
 
 
 
-URI: https://cryoetdataportal.czscience.com/schema-docs/metadata
+URI: metadata
 
 Name: cdp-meta
 

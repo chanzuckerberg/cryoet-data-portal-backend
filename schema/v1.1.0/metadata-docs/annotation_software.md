@@ -5,7 +5,7 @@ _Software used for generating this annotation_
 
 
 
-URI: [cdp-meta:annotation_software](https://cryoetdataportal.czscience.com/schema/metadata/annotation_software)
+URI: [cdp-meta:annotation_software](metadataannotation_software)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:annotation_software](https://cryoetdataportal.czscience.com/schem
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:annotation_software](https://cryoetdataportal.czscience.com/schem
 ```yaml
 name: annotation_software
 description: Software used for generating this annotation
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_software
 rank: 1000

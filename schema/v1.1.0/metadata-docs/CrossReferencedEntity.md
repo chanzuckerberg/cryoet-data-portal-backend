@@ -9,7 +9,7 @@ _An entity with associated cross-references to other databases and publications.
 * __NOTE__: this is an abstract class and should not be instantiated directly
 
 
-URI: [cdp-meta:CrossReferencedEntity](https://cryoetdataportal.czscience.com/schema/metadata/CrossReferencedEntity)
+URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:CrossReferencedEntity](https://cryoetdataportal.czscience.com/sch
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -84,13 +84,13 @@ URI: [cdp-meta:CrossReferencedEntity](https://cryoetdataportal.czscience.com/sch
 ```yaml
 name: CrossReferencedEntity
 description: An entity with associated cross-references to other databases and publications.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 attributes:
   cross_references:
     name: cross_references
     description: A set of cross-references to other databases and publications.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: cross_references
     owner: CrossReferencedEntity
@@ -110,13 +110,13 @@ attributes:
 ```yaml
 name: CrossReferencedEntity
 description: An entity with associated cross-references to other databases and publications.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 attributes:
   cross_references:
     name: cross_references
     description: A set of cross-references to other databases and publications.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: cross_references
     owner: CrossReferencedEntity

@@ -5,7 +5,7 @@ _Processing software used to derive the tomogram_
 
 
 
-URI: [cdp-meta:processing_software](https://cryoetdataportal.czscience.com/schema/metadata/processing_software)
+URI: [cdp-meta:processing_software](metadataprocessing_software)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:processing_software](https://cryoetdataportal.czscience.com/schem
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:processing_software](https://cryoetdataportal.czscience.com/schem
 ```yaml
 name: processing_software
 description: Processing software used to derive the tomogram
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tomogram_processing_software
 rank: 1000

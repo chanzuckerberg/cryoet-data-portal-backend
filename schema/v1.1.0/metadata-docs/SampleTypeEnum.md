@@ -47,7 +47,7 @@ URI: [SampleTypeEnum](SampleTypeEnum.md)
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -58,7 +58,7 @@ URI: [SampleTypeEnum](SampleTypeEnum.md)
 ```yaml
 name: sample_type_enum
 description: Type of sample imaged in a CryoET study.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 permissible_values:
   cell:

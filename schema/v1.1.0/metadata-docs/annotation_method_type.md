@@ -5,7 +5,7 @@ _Classification of the annotation method based on supervision._
 
 
 
-URI: [cdp-meta:annotation_method_type](https://cryoetdataportal.czscience.com/schema/metadata/annotation_method_type)
+URI: [cdp-meta:annotation_method_type](metadataannotation_method_type)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:annotation_method_type](https://cryoetdataportal.czscience.com/sc
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:annotation_method_type](https://cryoetdataportal.czscience.com/sc
 ```yaml
 name: annotation_method_type
 description: Classification of the annotation method based on supervision.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_method_type
 rank: 1000

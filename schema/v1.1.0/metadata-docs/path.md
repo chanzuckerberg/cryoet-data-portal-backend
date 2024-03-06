@@ -5,7 +5,7 @@ _Path to the annotation file relative to the dataset root._
 
 
 
-URI: [cdp-meta:path](https://cryoetdataportal.czscience.com/schema/metadata/path)
+URI: [cdp-meta:path](metadatapath)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:path](https://cryoetdataportal.czscience.com/schema/metadata/path
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:path](https://cryoetdataportal.czscience.com/schema/metadata/path
 ```yaml
 name: path
 description: Path to the annotation file relative to the dataset root.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_file_path
 rank: 1000

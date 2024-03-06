@@ -5,7 +5,7 @@ _The flip or rotation transformation of this author submitted tomogram is indica
 
 
 
-URI: [cdp-meta:affine_transformation_matrix](https://cryoetdataportal.czscience.com/schema/metadata/affine_transformation_matrix)
+URI: [cdp-meta:affine_transformation_matrix](metadataaffine_transformation_matrix)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:affine_transformation_matrix](https://cryoetdataportal.czscience.
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:affine_transformation_matrix](https://cryoetdataportal.czscience.
 name: affine_transformation_matrix
 description: The flip or rotation transformation of this author submitted tomogram
   is indicated here
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tomogram_affine_transformation_matrix
 rank: 1000

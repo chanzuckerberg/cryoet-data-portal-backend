@@ -1,6 +1,6 @@
 # Slot: key_photos
 
-URI: [cdp-meta:key_photos](https://cryoetdataportal.czscience.com/schema/metadata/key_photos)
+URI: [cdp-meta:key_photos](metadatakey_photos)
 
 
 

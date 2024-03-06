@@ -5,7 +5,7 @@ _The size of a tomogram in voxels in each dimension._
 
 
 
-URI: [cdp-meta:size](https://cryoetdataportal.czscience.com/schema/metadata/size)
+URI: [cdp-meta:size](metadatasize)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:size](https://cryoetdataportal.czscience.com/schema/metadata/size
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:size](https://cryoetdataportal.czscience.com/schema/metadata/size
 ```yaml
 name: size
 description: The size of a tomogram in voxels in each dimension.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: size
 owner: Tomogram

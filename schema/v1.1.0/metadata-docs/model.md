@@ -1,6 +1,6 @@
 # Slot: model
 
-URI: [cdp-meta:model](https://cryoetdataportal.czscience.com/schema/metadata/model)
+URI: [cdp-meta:model](metadatamodel)
 
 
 

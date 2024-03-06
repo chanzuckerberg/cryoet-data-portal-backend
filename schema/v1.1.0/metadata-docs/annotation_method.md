@@ -5,7 +5,7 @@ _Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Le
 
 
 
-URI: [cdp-meta:annotation_method](https://cryoetdataportal.czscience.com/schema/metadata/annotation_method)
+URI: [cdp-meta:annotation_method](metadataannotation_method)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:annotation_method](https://cryoetdataportal.czscience.com/schema/
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:annotation_method](https://cryoetdataportal.czscience.com/schema/
 name: annotation_method
 description: Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled
   Learning, template matching)
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_method
 rank: 1000

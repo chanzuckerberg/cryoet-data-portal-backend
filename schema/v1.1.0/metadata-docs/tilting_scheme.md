@@ -5,7 +5,7 @@ _The order of stage tilting during acquisition of the data_
 
 
 
-URI: [cdp-meta:tilting_scheme](https://cryoetdataportal.czscience.com/schema/metadata/tilting_scheme)
+URI: [cdp-meta:tilting_scheme](metadatatilting_scheme)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:tilting_scheme](https://cryoetdataportal.czscience.com/schema/met
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:tilting_scheme](https://cryoetdataportal.czscience.com/schema/met
 ```yaml
 name: tilting_scheme
 description: The order of stage tilting during acquisition of the data
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_tilting_scheme
 rank: 1000

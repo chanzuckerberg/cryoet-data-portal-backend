@@ -5,7 +5,7 @@ _Software used to collect data_
 
 
 
-URI: [cdp-meta:data_acquisition_software](https://cryoetdataportal.czscience.com/schema/metadata/data_acquisition_software)
+URI: [cdp-meta:data_acquisition_software](metadatadata_acquisition_software)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:data_acquisition_software](https://cryoetdataportal.czscience.com
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:data_acquisition_software](https://cryoetdataportal.czscience.com
 ```yaml
 name: data_acquisition_software
 description: Software used to collect data
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_data_acquisition_software
 rank: 1000

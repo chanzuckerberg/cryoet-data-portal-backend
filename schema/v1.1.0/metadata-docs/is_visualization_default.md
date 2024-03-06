@@ -5,7 +5,7 @@ _This annotation will be rendered in neuroglancer by default._
 
 
 
-URI: [cdp-meta:is_visualization_default](https://cryoetdataportal.czscience.com/schema/metadata/is_visualization_default)
+URI: [cdp-meta:is_visualization_default](metadatais_visualization_default)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:is_visualization_default](https://cryoetdataportal.czscience.com/
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:is_visualization_default](https://cryoetdataportal.czscience.com/
 ```yaml
 name: is_visualization_default
 description: This annotation will be rendered in neuroglancer by default.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_file_is_visualization_default
 rank: 1000

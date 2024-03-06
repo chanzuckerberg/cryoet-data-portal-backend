@@ -5,7 +5,7 @@ _Metadata describing a file containing an annotation._
 
 
 
-URI: [cdp-meta:files](https://cryoetdataportal.czscience.com/schema/metadata/files)
+URI: [cdp-meta:files](metadatafiles)
 
 
 
@@ -47,7 +47,7 @@ URI: [cdp-meta:files](https://cryoetdataportal.czscience.com/schema/metadata/fil
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -58,7 +58,7 @@ URI: [cdp-meta:files](https://cryoetdataportal.czscience.com/schema/metadata/fil
 ```yaml
 name: files
 description: Metadata describing a file containing an annotation.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 multivalued: true
 list_elements_ordered: true

@@ -1,9 +1,9 @@
-id: https://cryoetdataportal.czscience.com/schema-docs/common
+id: common
 name: cdp-common
 version: 1.1.0
 prefixes:
   linkml: https://w3id.org/linkml/
-  cdp-common: https://cryoetdataportal.czscience.com/schema/common/
+  cdp-common: common
   ROR: https://ror.org/
   UBERON: http://purl.obolibrary.org/obo/UBERON_
   CL: http://purl.obolibrary.org/obo/CL_

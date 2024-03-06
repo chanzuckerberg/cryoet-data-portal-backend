@@ -41,7 +41,7 @@ URI: [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -52,7 +52,7 @@ URI: [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)
 ```yaml
 name: fiducial_alignment_status_enum
 description: Fiducial Alignment method
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 permissible_values:
   FIDUCIAL:

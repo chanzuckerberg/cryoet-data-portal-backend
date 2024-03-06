@@ -7,7 +7,7 @@ _The optical setup of the microscope used to collect the tilt series._
 
 
 
-URI: [cdp-meta:MicroscopeOpticalSetup](https://cryoetdataportal.czscience.com/schema/metadata/MicroscopeOpticalSetup)
+URI: [cdp-meta:MicroscopeOpticalSetup](metadataMicroscopeOpticalSetup)
 
 
 
@@ -70,7 +70,7 @@ URI: [cdp-meta:MicroscopeOpticalSetup](https://cryoetdataportal.czscience.com/sc
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -97,12 +97,12 @@ URI: [cdp-meta:MicroscopeOpticalSetup](https://cryoetdataportal.czscience.com/sc
 ```yaml
 name: MicroscopeOpticalSetup
 description: The optical setup of the microscope used to collect the tilt series.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   energy_filter:
     name: energy_filter
     description: Energy filter setup used
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_microscope_energy_filter
     rank: 1000
@@ -116,7 +116,7 @@ attributes:
   phase_plate:
     name: phase_plate
     description: Phase plate configuration
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_microscope_phase_plate
     rank: 1000
@@ -130,7 +130,7 @@ attributes:
   image_corrector:
     name: image_corrector
     description: Image corrector setup
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_microscope_image_corrector
     rank: 1000
@@ -151,12 +151,12 @@ attributes:
 ```yaml
 name: MicroscopeOpticalSetup
 description: The optical setup of the microscope used to collect the tilt series.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   energy_filter:
     name: energy_filter
     description: Energy filter setup used
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_microscope_energy_filter
     rank: 1000
@@ -170,7 +170,7 @@ attributes:
   phase_plate:
     name: phase_plate
     description: Phase plate configuration
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_microscope_phase_plate
     rank: 1000
@@ -184,7 +184,7 @@ attributes:
   image_corrector:
     name: image_corrector
     description: Image corrector setup
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_microscope_image_corrector
     rank: 1000

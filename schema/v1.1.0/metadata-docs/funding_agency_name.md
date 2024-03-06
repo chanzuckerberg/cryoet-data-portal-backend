@@ -5,7 +5,7 @@ _The name of the funding source._
 
 
 
-URI: [cdp-meta:funding_agency_name](https://cryoetdataportal.czscience.com/schema/metadata/funding_agency_name)
+URI: [cdp-meta:funding_agency_name](metadatafunding_agency_name)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:funding_agency_name](https://cryoetdataportal.czscience.com/schem
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:funding_agency_name](https://cryoetdataportal.czscience.com/schem
 ```yaml
 name: funding_agency_name
 description: The name of the funding source.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:funding_agency_name
 rank: 1000

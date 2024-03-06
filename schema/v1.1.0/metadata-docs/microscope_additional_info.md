@@ -5,7 +5,7 @@ _Other microscope optical setup information, in addition to energy filter, phase
 
 
 
-URI: [cdp-meta:microscope_additional_info](https://cryoetdataportal.czscience.com/schema/metadata/microscope_additional_info)
+URI: [cdp-meta:microscope_additional_info](metadatamicroscope_additional_info)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:microscope_additional_info](https://cryoetdataportal.czscience.co
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:microscope_additional_info](https://cryoetdataportal.czscience.co
 name: microscope_additional_info
 description: Other microscope optical setup information, in addition to energy filter,
   phase plate and image corrector
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_microscope_additional_info
 rank: 1000

@@ -1,6 +1,6 @@
 # Slot: cell_type
 
-URI: [cdp-meta:cell_type](https://cryoetdataportal.czscience.com/schema/metadata/cell_type)
+URI: [cdp-meta:cell_type](metadatacell_type)
 
 
 

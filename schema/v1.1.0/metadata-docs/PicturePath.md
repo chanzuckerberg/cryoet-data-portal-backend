@@ -7,7 +7,7 @@ _A set of paths to representative images of a piece of data._
 
 
 
-URI: [cdp-meta:PicturePath](https://cryoetdataportal.czscience.com/schema/metadata/PicturePath)
+URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 
 
@@ -67,7 +67,7 @@ URI: [cdp-meta:PicturePath](https://cryoetdataportal.czscience.com/schema/metada
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -94,13 +94,13 @@ URI: [cdp-meta:PicturePath](https://cryoetdataportal.czscience.com/schema/metada
 ```yaml
 name: PicturePath
 description: A set of paths to representative images of a piece of data.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   snapshot:
     name: snapshot
     description: Path to the dataset preview image relative to the dataset directory
       root.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: snapshot
     owner: PicturePath
@@ -113,7 +113,7 @@ attributes:
     name: thumbnail
     description: Path to the thumbnail of preview image relative to the dataset directory
       root.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: thumbnail
     owner: PicturePath
@@ -132,13 +132,13 @@ attributes:
 ```yaml
 name: PicturePath
 description: A set of paths to representative images of a piece of data.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   snapshot:
     name: snapshot
     description: Path to the dataset preview image relative to the dataset directory
       root.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: snapshot
     owner: PicturePath
@@ -151,7 +151,7 @@ attributes:
     name: thumbnail
     description: Path to the thumbnail of preview image relative to the dataset directory
       root.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: thumbnail
     owner: PicturePath

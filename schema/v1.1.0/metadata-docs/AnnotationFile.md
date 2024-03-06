@@ -7,7 +7,7 @@ _Metadata describing a file containing an annotation._
 
 
 
-URI: [cdp-meta:AnnotationFile](https://cryoetdataportal.czscience.com/schema/metadata/AnnotationFile)
+URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
 
 
 
@@ -75,7 +75,7 @@ URI: [cdp-meta:AnnotationFile](https://cryoetdataportal.czscience.com/schema/met
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -102,12 +102,12 @@ URI: [cdp-meta:AnnotationFile](https://cryoetdataportal.czscience.com/schema/met
 ```yaml
 name: AnnotationFile
 description: Metadata describing a file containing an annotation.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   format:
     name: format
     description: File format for this file
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_file_format
     rank: 1000
@@ -122,7 +122,7 @@ attributes:
     name: shape
     description: Describe whether this is a Point, OrientedPoint, or SegmentationMask
       file
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_file_shape_type
     rank: 1000
@@ -136,7 +136,7 @@ attributes:
   path:
     name: path
     description: Path to the annotation file relative to the dataset root.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_file_path
     rank: 1000
@@ -150,7 +150,7 @@ attributes:
   is_visualization_default:
     name: is_visualization_default
     description: This annotation will be rendered in neuroglancer by default.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_file_is_visualization_default
     rank: 1000
@@ -171,12 +171,12 @@ attributes:
 ```yaml
 name: AnnotationFile
 description: Metadata describing a file containing an annotation.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   format:
     name: format
     description: File format for this file
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_file_format
     rank: 1000
@@ -191,7 +191,7 @@ attributes:
     name: shape
     description: Describe whether this is a Point, OrientedPoint, or SegmentationMask
       file
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_file_shape_type
     rank: 1000
@@ -205,7 +205,7 @@ attributes:
   path:
     name: path
     description: Path to the annotation file relative to the dataset root.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_file_path
     rank: 1000
@@ -219,7 +219,7 @@ attributes:
   is_visualization_default:
     name: is_visualization_default
     description: This annotation will be rendered in neuroglancer by default.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_file_is_visualization_default
     rank: 1000

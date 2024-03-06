@@ -7,7 +7,7 @@ _Metadata describing the confidence of an annotation._
 
 
 
-URI: [cdp-meta:AnnotationConfidence](https://cryoetdataportal.czscience.com/schema/metadata/AnnotationConfidence)
+URI: [cdp-meta:AnnotationConfidence](metadataAnnotationConfidence)
 
 
 
@@ -70,7 +70,7 @@ URI: [cdp-meta:AnnotationConfidence](https://cryoetdataportal.czscience.com/sche
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -97,13 +97,13 @@ URI: [cdp-meta:AnnotationConfidence](https://cryoetdataportal.czscience.com/sche
 ```yaml
 name: AnnotationConfidence
 description: Metadata describing the confidence of an annotation.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   precision:
     name: precision
     description: Describe the confidence level of the annotation. Precision is defined
       as the % of annotation objects being true positive
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_confidence_precision
     rank: 1000
@@ -118,7 +118,7 @@ attributes:
     name: recall
     description: Describe the confidence level of the annotation. Recall is defined
       as the % of true positives being annotated correctly
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_confidence_recall
     rank: 1000
@@ -132,7 +132,7 @@ attributes:
   ground_truth_used:
     name: ground_truth_used
     description: Annotation filename used as ground truth for precision and recall
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_ground_truth_used
     rank: 1000
@@ -153,13 +153,13 @@ attributes:
 ```yaml
 name: AnnotationConfidence
 description: Metadata describing the confidence of an annotation.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   precision:
     name: precision
     description: Describe the confidence level of the annotation. Precision is defined
       as the % of annotation objects being true positive
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_confidence_precision
     rank: 1000
@@ -174,7 +174,7 @@ attributes:
     name: recall
     description: Describe the confidence level of the annotation. Recall is defined
       as the % of true positives being annotated correctly
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_confidence_recall
     rank: 1000
@@ -188,7 +188,7 @@ attributes:
   ground_truth_used:
     name: ground_truth_used
     description: Annotation filename used as ground truth for precision and recall
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_ground_truth_used
     rank: 1000

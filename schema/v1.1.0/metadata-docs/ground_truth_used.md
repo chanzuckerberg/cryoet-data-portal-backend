@@ -5,7 +5,7 @@ _Annotation filename used as ground truth for precision and recall_
 
 
 
-URI: [cdp-meta:ground_truth_used](https://cryoetdataportal.czscience.com/schema/metadata/ground_truth_used)
+URI: [cdp-meta:ground_truth_used](metadataground_truth_used)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:ground_truth_used](https://cryoetdataportal.czscience.com/schema/
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:ground_truth_used](https://cryoetdataportal.czscience.com/schema/
 ```yaml
 name: ground_truth_used
 description: Annotation filename used as ground truth for precision and recall
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_ground_truth_used
 rank: 1000

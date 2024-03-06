@@ -5,7 +5,7 @@ _Metadata describing the confidence of an annotation._
 
 
 
-URI: [cdp-meta:confidence](https://cryoetdataportal.czscience.com/schema/metadata/confidence)
+URI: [cdp-meta:confidence](metadataconfidence)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:confidence](https://cryoetdataportal.czscience.com/schema/metadat
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:confidence](https://cryoetdataportal.czscience.com/schema/metadat
 ```yaml
 name: confidence
 description: Metadata describing the confidence of an annotation.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: confidence
 owner: Annotation

@@ -5,7 +5,7 @@ _Number of objects identified_
 
 
 
-URI: [cdp-meta:object_count](https://cryoetdataportal.czscience.com/schema/metadata/object_count)
+URI: [cdp-meta:object_count](metadataobject_count)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:object_count](https://cryoetdataportal.czscience.com/schema/metad
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:object_count](https://cryoetdataportal.czscience.com/schema/metad
 ```yaml
 name: object_count
 description: Number of objects identified
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_object_count
 rank: 1000

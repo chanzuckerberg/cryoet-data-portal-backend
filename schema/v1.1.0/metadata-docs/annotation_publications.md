@@ -5,7 +5,7 @@ _DOIs for publications that describe the dataset. Use a comma to separate multip
 
 
 
-URI: [cdp-meta:annotation_publications](https://cryoetdataportal.czscience.com/schema/metadata/annotation_publications)
+URI: [cdp-meta:annotation_publications](metadataannotation_publications)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:annotation_publications](https://cryoetdataportal.czscience.com/s
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:annotation_publications](https://cryoetdataportal.czscience.com/s
 name: annotation_publications
 description: DOIs for publications that describe the dataset. Use a comma to separate
   multiple DOIs.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_publication
 rank: 1000

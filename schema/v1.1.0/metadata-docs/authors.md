@@ -1,6 +1,6 @@
 # Slot: authors
 
-URI: [cdp-meta:authors](https://cryoetdataportal.czscience.com/schema/metadata/authors)
+URI: [cdp-meta:authors](metadataauthors)
 
 
 

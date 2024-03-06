@@ -7,7 +7,7 @@ _Annotator of a scientific data entity._
 
 
 
-URI: [cdp-meta:Annotator](https://cryoetdataportal.czscience.com/schema/metadata/Annotator)
+URI: [cdp-meta:Annotator](metadataAnnotator)
 
 
 
@@ -96,7 +96,7 @@ URI: [cdp-meta:Annotator](https://cryoetdataportal.czscience.com/schema/metadata
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -123,11 +123,11 @@ URI: [cdp-meta:Annotator](https://cryoetdataportal.czscience.com/schema/metadata
 ```yaml
 name: Annotator
 description: Annotator of a scientific data entity.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   name:
     name: name
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_name
     alias: name
@@ -146,7 +146,7 @@ attributes:
     inlined_as_list: true
   email:
     name: email
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_email
     alias: email
@@ -159,7 +159,7 @@ attributes:
     inlined_as_list: true
   affiliation_name:
     name: affiliation_name
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_affiliation_name
     alias: affiliation_name
@@ -172,7 +172,7 @@ attributes:
     inlined_as_list: true
   affiliation_address:
     name: affiliation_address
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_affiliation_address
     alias: affiliation_address
@@ -185,7 +185,7 @@ attributes:
     inlined_as_list: true
   affiliation_identifier:
     name: affiliation_identifier
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:affiliation_identifier
     alias: affiliation_identifier
@@ -199,7 +199,7 @@ attributes:
     inlined_as_list: true
   is_corresponding:
     name: is_corresponding
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_corresponding_author_status
     alias: is_corresponding
@@ -213,7 +213,7 @@ attributes:
   is_primary_annotator:
     name: is_primary_annotator
     description: Whether the author is a primary author.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_primary_author_status
     rank: 1000
@@ -226,7 +226,7 @@ attributes:
     inlined_as_list: true
   ORCID:
     name: ORCID
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:orcid
     alias: ORCID
@@ -248,11 +248,11 @@ attributes:
 ```yaml
 name: Annotator
 description: Annotator of a scientific data entity.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   name:
     name: name
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_name
     alias: name
@@ -271,7 +271,7 @@ attributes:
     inlined_as_list: true
   email:
     name: email
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_email
     alias: email
@@ -284,7 +284,7 @@ attributes:
     inlined_as_list: true
   affiliation_name:
     name: affiliation_name
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_affiliation_name
     alias: affiliation_name
@@ -297,7 +297,7 @@ attributes:
     inlined_as_list: true
   affiliation_address:
     name: affiliation_address
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_affiliation_address
     alias: affiliation_address
@@ -310,7 +310,7 @@ attributes:
     inlined_as_list: true
   affiliation_identifier:
     name: affiliation_identifier
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:affiliation_identifier
     alias: affiliation_identifier
@@ -324,7 +324,7 @@ attributes:
     inlined_as_list: true
   is_corresponding:
     name: is_corresponding
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_corresponding_author_status
     alias: is_corresponding
@@ -338,7 +338,7 @@ attributes:
   is_primary_annotator:
     name: is_primary_annotator
     description: Whether the author is a primary author.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_primary_author_status
     rank: 1000
@@ -351,7 +351,7 @@ attributes:
     inlined_as_list: true
   ORCID:
     name: ORCID
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:orcid
     alias: ORCID

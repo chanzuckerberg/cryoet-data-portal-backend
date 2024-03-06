@@ -7,7 +7,7 @@ _Metadata describing the object being annotated._
 
 
 
-URI: [cdp-meta:AnnotationObject](https://cryoetdataportal.czscience.com/schema/metadata/AnnotationObject)
+URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 
 
@@ -75,7 +75,7 @@ URI: [cdp-meta:AnnotationObject](https://cryoetdataportal.czscience.com/schema/m
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -102,11 +102,11 @@ URI: [cdp-meta:AnnotationObject](https://cryoetdataportal.czscience.com/schema/m
 ```yaml
 name: AnnotationObject
 description: Metadata describing the object being annotated.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   id:
     name: id
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_object_id
     alias: id
@@ -122,7 +122,7 @@ attributes:
     inlined_as_list: true
   name:
     name: name
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_object_name
     alias: name
@@ -144,7 +144,7 @@ attributes:
     description: A textual description of the annotation object, can be a longer description
       to include additional information not covered by the Annotation object name
       and state.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_object_description
     rank: 1000
@@ -158,7 +158,7 @@ attributes:
   state:
     name: state
     description: Molecule state annotated (e.g. open, closed)
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_object_state
     rank: 1000
@@ -179,11 +179,11 @@ attributes:
 ```yaml
 name: AnnotationObject
 description: Metadata describing the object being annotated.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   id:
     name: id
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_object_id
     alias: id
@@ -199,7 +199,7 @@ attributes:
     inlined_as_list: true
   name:
     name: name
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_object_name
     alias: name
@@ -221,7 +221,7 @@ attributes:
     description: A textual description of the annotation object, can be a longer description
       to include additional information not covered by the Annotation object name
       and state.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_object_description
     rank: 1000
@@ -235,7 +235,7 @@ attributes:
   state:
     name: state
     description: Molecule state annotated (e.g. open, closed)
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_object_state
     rank: 1000

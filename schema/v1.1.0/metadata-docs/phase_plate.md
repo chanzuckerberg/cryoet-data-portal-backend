@@ -5,7 +5,7 @@ _Phase plate configuration_
 
 
 
-URI: [cdp-meta:phase_plate](https://cryoetdataportal.czscience.com/schema/metadata/phase_plate)
+URI: [cdp-meta:phase_plate](metadataphase_plate)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:phase_plate](https://cryoetdataportal.czscience.com/schema/metada
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:phase_plate](https://cryoetdataportal.czscience.com/schema/metada
 ```yaml
 name: phase_plate
 description: Phase plate configuration
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_microscope_phase_plate
 rank: 1000

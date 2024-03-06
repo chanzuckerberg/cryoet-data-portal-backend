@@ -5,7 +5,7 @@ _Describe the confidence level of the annotation. Precision is defined as the % 
 
 
 
-URI: [cdp-meta:precision](https://cryoetdataportal.czscience.com/schema/metadata/precision)
+URI: [cdp-meta:precision](metadataprecision)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:precision](https://cryoetdataportal.czscience.com/schema/metadata
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:precision](https://cryoetdataportal.czscience.com/schema/metadata
 name: precision
 description: Describe the confidence level of the annotation. Precision is defined
   as the % of annotation objects being true positive
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_confidence_precision
 rank: 1000

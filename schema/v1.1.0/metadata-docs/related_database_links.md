@@ -5,7 +5,7 @@ _Comma-separated list of related database links for the dataset._
 
 
 
-URI: [cdp-meta:related_database_links](https://cryoetdataportal.czscience.com/schema/metadata/related_database_links)
+URI: [cdp-meta:related_database_links](metadatarelated_database_links)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:related_database_links](https://cryoetdataportal.czscience.com/sc
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:related_database_links](https://cryoetdataportal.czscience.com/sc
 ```yaml
 name: related_database_links
 description: Comma-separated list of related database links for the dataset.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: related_database_links
 owner: CrossReferences

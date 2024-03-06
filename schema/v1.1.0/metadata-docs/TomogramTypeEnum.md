@@ -34,7 +34,7 @@ URI: [TomogramTypeEnum](TomogramTypeEnum.md)
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -45,7 +45,7 @@ URI: [TomogramTypeEnum](TomogramTypeEnum.md)
 ```yaml
 name: tomogram_type_enum
 description: Tomogram type
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 permissible_values:
   CANONICAL:

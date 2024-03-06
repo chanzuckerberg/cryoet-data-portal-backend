@@ -1,6 +1,6 @@
 # Slot: cross_references
 
-URI: [cdp-meta:cross_references](https://cryoetdataportal.czscience.com/schema/metadata/cross_references)
+URI: [cdp-meta:cross_references](metadatacross_references)
 
 
 

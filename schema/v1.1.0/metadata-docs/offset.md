@@ -5,7 +5,7 @@ _The offset of a tomogram in voxels in each dimension relative to the canonical 
 
 
 
-URI: [cdp-meta:offset](https://cryoetdataportal.czscience.com/schema/metadata/offset)
+URI: [cdp-meta:offset](metadataoffset)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:offset](https://cryoetdataportal.czscience.com/schema/metadata/of
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:offset](https://cryoetdataportal.czscience.com/schema/metadata/of
 name: offset
 description: The offset of a tomogram in voxels in each dimension relative to the
   canonical tomogram.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: offset
 owner: Tomogram

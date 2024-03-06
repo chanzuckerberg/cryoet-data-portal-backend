@@ -5,7 +5,7 @@ _Version of tomogram using the same software and post-processing. Version of tom
 
 
 
-URI: [cdp-meta:tomogram_version](https://cryoetdataportal.czscience.com/schema/metadata/tomogram_version)
+URI: [cdp-meta:tomogram_version](metadatatomogram_version)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:tomogram_version](https://cryoetdataportal.czscience.com/schema/m
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -58,7 +58,7 @@ name: tomogram_version
 description: Version of tomogram using the same software and post-processing. Version
   of tomogram using the same software and post-processing. This will be presented
   as the latest version
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tomogram_version
 rank: 1000

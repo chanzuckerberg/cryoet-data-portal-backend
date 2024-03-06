@@ -5,7 +5,7 @@ _Maximal tilt angle in degrees_
 
 
 
-URI: [cdp-meta:max](https://cryoetdataportal.czscience.com/schema/metadata/max)
+URI: [cdp-meta:max](metadatamax)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:max](https://cryoetdataportal.czscience.com/schema/metadata/max)
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:max](https://cryoetdataportal.czscience.com/schema/metadata/max)
 ```yaml
 name: max
 description: Maximal tilt angle in degrees
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_tilt_max
 rank: 1000

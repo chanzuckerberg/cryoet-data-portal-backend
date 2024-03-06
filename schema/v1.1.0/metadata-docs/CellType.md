@@ -7,7 +7,7 @@ _The cell type from which the sample was derived._
 
 
 
-URI: [cdp-meta:CellType](https://cryoetdataportal.czscience.com/schema/metadata/CellType)
+URI: [cdp-meta:CellType](metadataCellType)
 
 
 
@@ -66,7 +66,7 @@ URI: [cdp-meta:CellType](https://cryoetdataportal.czscience.com/schema/metadata/
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -93,11 +93,11 @@ URI: [cdp-meta:CellType](https://cryoetdataportal.czscience.com/schema/metadata/
 ```yaml
 name: CellType
 description: The cell type from which the sample was derived.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   name:
     name: name
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:cell_name
     alias: name
@@ -116,7 +116,7 @@ attributes:
     inlined_as_list: true
   id:
     name: id
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:cell_type_id
     alias: id
@@ -140,11 +140,11 @@ attributes:
 ```yaml
 name: CellType
 description: The cell type from which the sample was derived.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   name:
     name: name
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:cell_name
     alias: name
@@ -163,7 +163,7 @@ attributes:
     inlined_as_list: true
   id:
     name: id
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:cell_type_id
     alias: id

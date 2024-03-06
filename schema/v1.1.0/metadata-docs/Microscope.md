@@ -5,7 +5,7 @@ _The microscope used to collect the tilt series._
 
 
 
-URI: [cdp-meta:microscope](https://cryoetdataportal.czscience.com/schema/metadata/microscope)
+URI: [cdp-meta:microscope](metadatamicroscope)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:microscope](https://cryoetdataportal.czscience.com/schema/metadat
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:microscope](https://cryoetdataportal.czscience.com/schema/metadat
 ```yaml
 name: microscope
 description: The microscope used to collect the tilt series.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: microscope
 owner: TiltSeries

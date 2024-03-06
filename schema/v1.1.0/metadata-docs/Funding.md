@@ -1,6 +1,6 @@
 # Slot: funding
 
-URI: [cdp-meta:funding](https://cryoetdataportal.czscience.com/schema/metadata/funding)
+URI: [cdp-meta:funding](metadatafunding)
 
 
 

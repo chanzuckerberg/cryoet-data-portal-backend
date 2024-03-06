@@ -7,7 +7,7 @@ _The cellular component from which the sample was derived._
 
 
 
-URI: [cdp-meta:CellComponent](https://cryoetdataportal.czscience.com/schema/metadata/CellComponent)
+URI: [cdp-meta:CellComponent](metadataCellComponent)
 
 
 
@@ -66,7 +66,7 @@ URI: [cdp-meta:CellComponent](https://cryoetdataportal.czscience.com/schema/meta
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -93,11 +93,11 @@ URI: [cdp-meta:CellComponent](https://cryoetdataportal.czscience.com/schema/meta
 ```yaml
 name: CellComponent
 description: The cellular component from which the sample was derived.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   name:
     name: name
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:cell_component_name
     alias: name
@@ -116,7 +116,7 @@ attributes:
     inlined_as_list: true
   id:
     name: id
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:cell_component_id
     alias: id
@@ -140,11 +140,11 @@ attributes:
 ```yaml
 name: CellComponent
 description: The cellular component from which the sample was derived.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   name:
     name: name
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:cell_component_name
     alias: name
@@ -163,7 +163,7 @@ attributes:
     inlined_as_list: true
   id:
     name: id
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:cell_component_id
     alias: id

@@ -36,7 +36,7 @@ URI: [AnnotationShapeEnum](AnnotationShapeEnum.md)
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -47,7 +47,7 @@ URI: [AnnotationShapeEnum](AnnotationShapeEnum.md)
 ```yaml
 name: annotation_shape_enum
 description: Annotation shape types available on the data portal.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 permissible_values:
   Point:

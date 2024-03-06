@@ -5,7 +5,7 @@ _The date a data item was received by the cryoET data portal._
 
 
 
-URI: [cdp-meta:release_date](https://cryoetdataportal.czscience.com/schema/metadata/release_date)
+URI: [cdp-meta:release_date](metadatarelease_date)
 
 
 
@@ -47,7 +47,7 @@ URI: [cdp-meta:release_date](https://cryoetdataportal.czscience.com/schema/metad
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -58,7 +58,7 @@ URI: [cdp-meta:release_date](https://cryoetdataportal.czscience.com/schema/metad
 ```yaml
 name: release_date
 description: The date a data item was received by the cryoET data portal.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: release_date
 owner: DateStamp

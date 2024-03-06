@@ -1,5 +1,5 @@
 name: cdp-meta
-id: https://cryoetdataportal.czscience.com/schema-docs/metadata
+id: metadata
 version: 1.1.0
 imports:
 - linkml:types
@@ -9,7 +9,7 @@ prefixes:
     prefix_reference: https://w3id.org/linkml/
   cdp-meta:
     prefix_prefix: cdp-meta
-    prefix_reference: https://cryoetdataportal.czscience.com/schema/metadata/
+    prefix_reference: metadata
   ORCID:
     prefix_prefix: ORCID
     prefix_reference: https://orcid.org/
@@ -31,7 +31,7 @@ enums:
   sample_type_enum:
     name: sample_type_enum
     description: Type of sample imaged in a CryoET study.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     permissible_values:
       cell:
         text: cell
@@ -61,7 +61,7 @@ enums:
   fiducial_alignment_status_enum:
     name: fiducial_alignment_status_enum
     description: Fiducial Alignment method
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     permissible_values:
       FIDUCIAL:
         text: FIDUCIAL
@@ -72,7 +72,7 @@ enums:
   tomogram_type_enum:
     name: tomogram_type_enum
     description: Tomogram type
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     permissible_values:
       CANONICAL:
         text: CANONICAL
@@ -80,7 +80,7 @@ enums:
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     permissible_values:
       manual:
         text: manual
@@ -94,7 +94,7 @@ enums:
   annotation_shape_enum:
     name: annotation_shape_enum
     description: Annotation shape types available on the data portal.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     permissible_values:
       Point:
         text: Point
@@ -109,13 +109,13 @@ classes:
   PicturePath:
     name: PicturePath
     description: A set of paths to representative images of a piece of data.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       snapshot:
         name: snapshot
         description: Path to the dataset preview image relative to the dataset directory
           root.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: snapshot
         owner: PicturePath
         domain_of:
@@ -127,7 +127,7 @@ classes:
         name: thumbnail
         description: Path to the thumbnail of preview image relative to the dataset
           directory root.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: thumbnail
         owner: PicturePath
         domain_of:
@@ -138,12 +138,12 @@ classes:
   Author:
     name: Author
     description: Author of a scientific data entity.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       name:
         name: name
         description: The full name of the author.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:author_name
         alias: name
@@ -163,7 +163,7 @@ classes:
       email:
         name: email
         description: The email address of the author.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:author_email
         alias: email
@@ -177,7 +177,7 @@ classes:
       affiliation_name:
         name: affiliation_name
         description: The name of the author's affiliation.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:author_affiliation_name
         alias: affiliation_name
@@ -191,7 +191,7 @@ classes:
       affiliation_address:
         name: affiliation_address
         description: The address of the author's affiliation.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:author_affiliation_address
         alias: affiliation_address
@@ -205,7 +205,7 @@ classes:
       affiliation_identifier:
         name: affiliation_identifier
         description: A Research Organization Registry (ROR) identifier.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:affiliation_identifier
         alias: affiliation_identifier
@@ -221,7 +221,7 @@ classes:
       is_corresponding:
         name: is_corresponding
         description: Whether the author is a corresponding author.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:author_corresponding_author_status
         alias: is_corresponding
@@ -235,7 +235,7 @@ classes:
       is_primary_author:
         name: is_primary_author
         description: Whether the author is a primary author.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:author_primary_author_status
         alias: is_primary_author
@@ -249,7 +249,7 @@ classes:
         name: ORCID
         description: A unique, persistent identifier for researchers, provided by
           ORCID.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:orcid
         alias: ORCID
@@ -265,11 +265,11 @@ classes:
   Annotator:
     name: Annotator
     description: Annotator of a scientific data entity.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       name:
         name: name
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:author_name
         alias: name
@@ -288,7 +288,7 @@ classes:
         inlined_as_list: true
       email:
         name: email
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:author_email
         alias: email
@@ -301,7 +301,7 @@ classes:
         inlined_as_list: true
       affiliation_name:
         name: affiliation_name
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:author_affiliation_name
         alias: affiliation_name
@@ -314,7 +314,7 @@ classes:
         inlined_as_list: true
       affiliation_address:
         name: affiliation_address
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:author_affiliation_address
         alias: affiliation_address
@@ -327,7 +327,7 @@ classes:
         inlined_as_list: true
       affiliation_identifier:
         name: affiliation_identifier
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:affiliation_identifier
         alias: affiliation_identifier
@@ -341,7 +341,7 @@ classes:
         inlined_as_list: true
       is_corresponding:
         name: is_corresponding
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:author_corresponding_author_status
         alias: is_corresponding
@@ -355,7 +355,7 @@ classes:
       is_primary_annotator:
         name: is_primary_annotator
         description: Whether the author is a primary author.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:author_primary_author_status
         alias: is_primary_annotator
@@ -367,7 +367,7 @@ classes:
         inlined_as_list: true
       ORCID:
         name: ORCID
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:orcid
         alias: ORCID
@@ -383,12 +383,12 @@ classes:
     name: Funding
     description: A funding source for a scientific data entity (base for JSON and
       DB representation).
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       funding_agency_name:
         name: funding_agency_name
         description: The name of the funding source.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:funding_agency_name
         alias: funding_agency_name
@@ -401,7 +401,7 @@ classes:
       grant_id:
         name: grant_id
         description: Grant identifier provided by the funding agency
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:funding_grant_id
         alias: grant_id
@@ -415,7 +415,7 @@ classes:
     name: DateStamp
     description: A set of dates at which a data item was deposited, published and
       last modified.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     abstract: true
     slots:
     - deposition_date
@@ -441,7 +441,7 @@ classes:
       deposition_date:
         name: deposition_date
         description: The date a data item was received by the cryoET data portal.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: deposition_date
         owner: DateStamp
         domain_of:
@@ -453,7 +453,7 @@ classes:
       release_date:
         name: release_date
         description: The date a data item was received by the cryoET data portal.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: release_date
         owner: DateStamp
         domain_of:
@@ -467,7 +467,7 @@ classes:
         name: last_modified_date
         description: The date a piece of data was last modified on the cryoET data
           portal.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: last_modified_date
         owner: DateStamp
         domain_of:
@@ -480,14 +480,14 @@ classes:
   DatestampedEntity:
     name: DatestampedEntity
     description: An entity with associated deposition, release and last modified dates.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     abstract: true
     attributes:
       dates:
         name: dates
         description: A set of dates at which a data item was deposited, published
           and last modified.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: dates
         owner: DatestampedEntity
         domain_of:
@@ -499,13 +499,13 @@ classes:
   AuthoredEntity:
     name: AuthoredEntity
     description: An entity with associated authors.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     abstract: true
     attributes:
       authors:
         name: authors
         description: Author of a scientific data entity.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         multivalued: true
         list_elements_ordered: true
         alias: authors
@@ -520,13 +520,13 @@ classes:
   AnnotatoredEntity:
     name: AnnotatoredEntity
     description: An entity with associated annotation authors.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     abstract: true
     attributes:
       authors:
         name: authors
         description: Annotator of a scientific data entity.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         multivalued: true
         list_elements_ordered: true
         alias: authors
@@ -541,14 +541,14 @@ classes:
   FundedEntity:
     name: FundedEntity
     description: An entity with associated funding sources.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     abstract: true
     attributes:
       funding:
         name: funding
         description: A funding source for a scientific data entity (base for JSON
           and DB representation).
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         multivalued: true
         list_elements_ordered: true
         alias: funding
@@ -563,13 +563,13 @@ classes:
     name: CrossReferencedEntity
     description: An entity with associated cross-references to other databases and
       publications.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     abstract: true
     attributes:
       cross_references:
         name: cross_references
         description: A set of cross-references to other databases and publications.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: cross_references
         owner: CrossReferencedEntity
         domain_of:
@@ -580,13 +580,13 @@ classes:
   PicturedEntity:
     name: PicturedEntity
     description: An entity with associated preview images.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     abstract: true
     attributes:
       key_photos:
         name: key_photos
         description: A set of paths to representative images of a piece of data.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: key_photos
         owner: PicturedEntity
         domain_of:
@@ -598,11 +598,11 @@ classes:
   Organism:
     name: Organism
     description: The species from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       name:
         name: name
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:organism_name
         alias: name
@@ -622,7 +622,7 @@ classes:
       taxonomy_id:
         name: taxonomy_id
         description: NCBI taxonomy identifier for the organism, e.g. 9606
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:organism_taxid
         alias: taxonomy_id
@@ -635,11 +635,11 @@ classes:
   Tissue:
     name: Tissue
     description: The type of tissue from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       name:
         name: name
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tissue_name
         alias: name
@@ -659,7 +659,7 @@ classes:
       id:
         name: id
         description: The UBERON identifier for the tissue.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tissue_id
         alias: id
@@ -676,11 +676,11 @@ classes:
   CellType:
     name: CellType
     description: The cell type from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       name:
         name: name
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:cell_name
         alias: name
@@ -699,7 +699,7 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:cell_type_id
         alias: id
@@ -716,11 +716,11 @@ classes:
   CellStrain:
     name: CellStrain
     description: The strain or cell line from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       name:
         name: name
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:cell_strain_name
         alias: name
@@ -739,7 +739,7 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:cell_strain_id
         alias: id
@@ -756,11 +756,11 @@ classes:
   CellComponent:
     name: CellComponent
     description: The cellular component from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       name:
         name: name
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:cell_component_name
         alias: name
@@ -779,7 +779,7 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:cell_component_id
         alias: id
@@ -797,13 +797,13 @@ classes:
     name: ExperimentalMetadata
     description: Metadata describing sample and sample preparation methods used in
       a cryoET dataset.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     abstract: true
     attributes:
       sample_type:
         name: sample_type
         description: Type of sample imaged in a CryoET study.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:preparation_sample_type
         alias: sample_type
@@ -816,7 +816,7 @@ classes:
       sample_preparation:
         name: sample_preparation
         description: Describes how the sample was prepared.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:sample_preparation
         alias: sample_preparation
@@ -829,7 +829,7 @@ classes:
       grid_preparation:
         name: grid_preparation
         description: Describes Cryo-ET grid preparation.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:grid_preparation
         alias: grid_preparation
@@ -843,7 +843,7 @@ classes:
         name: other_setup
         description: Describes other setup not covered by sample preparation or grid
           preparation that may make this dataset unique in   the same publication.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:preparation_other_setup
         alias: other_setup
@@ -856,7 +856,7 @@ classes:
       organism:
         name: organism
         description: The species from which the sample was derived.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: organism
         owner: ExperimentalMetadata
         domain_of:
@@ -867,7 +867,7 @@ classes:
       tissue:
         name: tissue
         description: The type of tissue from which the sample was derived.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: tissue
         owner: ExperimentalMetadata
         domain_of:
@@ -878,7 +878,7 @@ classes:
       cell_type:
         name: cell_type
         description: The cell type from which the sample was derived.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: cell_type
         owner: ExperimentalMetadata
         domain_of:
@@ -889,7 +889,7 @@ classes:
       cell_strain:
         name: cell_strain
         description: The strain or cell line from which the sample was derived.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: cell_strain
         owner: ExperimentalMetadata
         domain_of:
@@ -900,7 +900,7 @@ classes:
       cell_component:
         name: cell_component
         description: The cellular component from which the sample was derived.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: cell_component
         owner: ExperimentalMetadata
         domain_of:
@@ -911,7 +911,7 @@ classes:
   Dataset:
     name: Dataset
     description: High-level description of a cryoET dataset.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     mixins:
     - DatestampedEntity
     - AuthoredEntity
@@ -924,7 +924,7 @@ classes:
         name: dataset_identifier
         description: An identifier for a CryoET dataset, assigned by the Data Portal.
           Used to identify the dataset as the directory  name in data tree.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:dataset_identifier
         alias: dataset_identifier
@@ -937,7 +937,7 @@ classes:
       dataset_title:
         name: dataset_title
         description: Title of a CryoET dataset.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:dataset_title
         alias: dataset_title
@@ -951,7 +951,7 @@ classes:
         name: dataset_description
         description: A short description of a CryoET dataset, similar to an abstract
           for a journal article or dataset.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:dataset_description
         alias: dataset_description
@@ -965,7 +965,7 @@ classes:
         name: dates
         description: A set of dates at which a data item was deposited, published
           and last modified.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: dates
         owner: Dataset
         domain_of:
@@ -977,7 +977,7 @@ classes:
       authors:
         name: authors
         description: Author of a scientific data entity.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         multivalued: true
         list_elements_ordered: true
         alias: authors
@@ -993,7 +993,7 @@ classes:
         name: funding
         description: A funding source for a scientific data entity (base for JSON
           and DB representation).
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         multivalued: true
         list_elements_ordered: true
         alias: funding
@@ -1007,7 +1007,7 @@ classes:
       key_photos:
         name: key_photos
         description: A set of paths to representative images of a piece of data.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: key_photos
         owner: Dataset
         domain_of:
@@ -1019,7 +1019,7 @@ classes:
       cross_references:
         name: cross_references
         description: A set of cross-references to other databases and publications.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: cross_references
         owner: Dataset
         domain_of:
@@ -1030,7 +1030,7 @@ classes:
       sample_type:
         name: sample_type
         description: Type of sample imaged in a CryoET study.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:preparation_sample_type
         alias: sample_type
@@ -1043,7 +1043,7 @@ classes:
       sample_preparation:
         name: sample_preparation
         description: Describes how the sample was prepared.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:sample_preparation
         alias: sample_preparation
@@ -1056,7 +1056,7 @@ classes:
       grid_preparation:
         name: grid_preparation
         description: Describes Cryo-ET grid preparation.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:grid_preparation
         alias: grid_preparation
@@ -1070,7 +1070,7 @@ classes:
         name: other_setup
         description: Describes other setup not covered by sample preparation or grid
           preparation that may make this dataset unique in   the same publication.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:preparation_other_setup
         alias: other_setup
@@ -1083,7 +1083,7 @@ classes:
       organism:
         name: organism
         description: The species from which the sample was derived.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: organism
         owner: Dataset
         domain_of:
@@ -1094,7 +1094,7 @@ classes:
       tissue:
         name: tissue
         description: The type of tissue from which the sample was derived.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: tissue
         owner: Dataset
         domain_of:
@@ -1105,7 +1105,7 @@ classes:
       cell_type:
         name: cell_type
         description: The cell type from which the sample was derived.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: cell_type
         owner: Dataset
         domain_of:
@@ -1116,7 +1116,7 @@ classes:
       cell_strain:
         name: cell_strain
         description: The strain or cell line from which the sample was derived.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: cell_strain
         owner: Dataset
         domain_of:
@@ -1127,7 +1127,7 @@ classes:
       cell_component:
         name: cell_component
         description: The cellular component from which the sample was derived.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: cell_component
         owner: Dataset
         domain_of:
@@ -1138,12 +1138,12 @@ classes:
   Camera:
     name: Camera
     description: The camera used to collect the tilt series.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       manufacturer:
         name: manufacturer
         description: Name of the camera manufacturer
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_camera_manufacturer
         alias: manufacturer
@@ -1157,7 +1157,7 @@ classes:
       model:
         name: model
         description: Camera model name
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_camera_model
         alias: model
@@ -1171,11 +1171,11 @@ classes:
   Microscope:
     name: Microscope
     description: The microscope used to collect the tilt series.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       manufacturer:
         name: manufacturer
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_microscope_manufacturer
         alias: manufacturer
@@ -1188,7 +1188,7 @@ classes:
         inlined_as_list: true
       model:
         name: model
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_microscope_model
         alias: model
@@ -1202,12 +1202,12 @@ classes:
   MicroscopeOpticalSetup:
     name: MicroscopeOpticalSetup
     description: The optical setup of the microscope used to collect the tilt series.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       energy_filter:
         name: energy_filter
         description: Energy filter setup used
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_microscope_energy_filter
         alias: energy_filter
@@ -1220,7 +1220,7 @@ classes:
       phase_plate:
         name: phase_plate
         description: Phase plate configuration
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_microscope_phase_plate
         alias: phase_plate
@@ -1233,7 +1233,7 @@ classes:
       image_corrector:
         name: image_corrector
         description: Image corrector setup
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_microscope_image_corrector
         alias: image_corrector
@@ -1246,12 +1246,12 @@ classes:
   TiltRange:
     name: TiltRange
     description: The range of tilt angles in the tilt series.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       min:
         name: min
         description: Minimal tilt angle in degrees
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_tilt_min
         alias: min
@@ -1264,7 +1264,7 @@ classes:
       max:
         name: max
         description: Maximal tilt angle in degrees
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_tilt_max
         alias: max
@@ -1277,12 +1277,12 @@ classes:
   TiltSeries:
     name: TiltSeries
     description: Metadata describing a tilt series.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       acceleration_voltage:
         name: acceleration_voltage
         description: Electron Microscope Accelerator voltage in volts
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_acceleration_voltage
         alias: acceleration_voltage
@@ -1295,7 +1295,7 @@ classes:
       spherical_aberration_constant:
         name: spherical_aberration_constant
         description: Spherical Aberration Constant of the objective lens in millimeters
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_spherical_aberration_constant
         alias: spherical_aberration_constant
@@ -1309,7 +1309,7 @@ classes:
         name: microscope_additional_info
         description: Other microscope optical setup information, in addition to energy
           filter, phase plate and image corrector
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_microscope_additional_info
         alias: microscope_additional_info
@@ -1322,7 +1322,7 @@ classes:
       tilt_axis:
         name: tilt_axis
         description: Rotation angle in degrees
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_tilt_axis
         alias: tilt_axis
@@ -1335,7 +1335,7 @@ classes:
       tilt_step:
         name: tilt_step
         description: Tilt step in degrees
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_tilt_step
         alias: tilt_step
@@ -1348,7 +1348,7 @@ classes:
       tilting_scheme:
         name: tilting_scheme
         description: The order of stage tilting during acquisition of the data
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_tilting_scheme
         alias: tilting_scheme
@@ -1362,7 +1362,7 @@ classes:
         name: total_flux
         description: Number of Electrons reaching the specimen in a square Angstrom
           area for the entire tilt series
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_total_flux
         alias: total_flux
@@ -1375,7 +1375,7 @@ classes:
       data_acquisition_software:
         name: data_acquisition_software
         description: Software used to collect data
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_data_acquisition_software
         alias: data_acquisition_software
@@ -1388,7 +1388,7 @@ classes:
       binning_from_frames:
         name: binning_from_frames
         description: Describes the binning factor from frames to tilt series file
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_binning_from_frames
         alias: binning_from_frames
@@ -1402,7 +1402,7 @@ classes:
         name: tilt_series_quality
         description: Author assessment of tilt series quality within the dataset (1-5,
           5 is best)
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_tilt_series_quality
         alias: tilt_series_quality
@@ -1415,7 +1415,7 @@ classes:
       pixel_spacing:
         name: pixel_spacing
         description: Pixel spacing for the tilt series
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_pixel_spacing
         alias: pixel_spacing
@@ -1428,7 +1428,7 @@ classes:
       aligned_tiltseries_binning:
         name: aligned_tiltseries_binning
         description: Binning factor of the aligned tilt series
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_aligned_tiltseries_binning
         alias: aligned_tiltseries_binning
@@ -1441,7 +1441,7 @@ classes:
       frames_count:
         name: frames_count
         description: Number of frames associated with this tiltseries
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_frames_count
         alias: frames_count
@@ -1454,7 +1454,7 @@ classes:
       camera:
         name: camera
         description: The camera used to collect the tilt series.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: camera
         owner: TiltSeries
         domain_of:
@@ -1465,7 +1465,7 @@ classes:
       microscope:
         name: microscope
         description: The microscope used to collect the tilt series.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: microscope
         owner: TiltSeries
         domain_of:
@@ -1477,7 +1477,7 @@ classes:
         name: microscope_optical_setup
         description: The optical setup of the microscope used to collect the tilt
           series.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: microscope_optical_setup
         owner: TiltSeries
         domain_of:
@@ -1488,7 +1488,7 @@ classes:
       tilt_range:
         name: tilt_range
         description: The range of tilt angles in the tilt series.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: tilt_range
         owner: TiltSeries
         domain_of:
@@ -1499,12 +1499,12 @@ classes:
   TomogramSize:
     name: TomogramSize
     description: The size of a tomogram in voxels in each dimension.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       x:
         name: x
         description: Number of pixels in the 3D data fast axis
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_size_x
         alias: x
@@ -1518,7 +1518,7 @@ classes:
       y:
         name: y
         description: Number of pixels in the 3D data medium axis
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_size_y
         alias: y
@@ -1533,7 +1533,7 @@ classes:
         name: z
         description: Number of pixels in the 3D data slow axis.  This is the image
           projection direction at zero stage tilt
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_size_z
         alias: z
@@ -1548,11 +1548,11 @@ classes:
     name: TomogramOffset
     description: The offset of a tomogram in voxels in each dimension relative to
       the canonical tomogram.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       x:
         name: x
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_offset_x
         alias: x
@@ -1565,7 +1565,7 @@ classes:
         inlined_as_list: true
       y:
         name: y
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_offset_y
         alias: y
@@ -1578,7 +1578,7 @@ classes:
         inlined_as_list: true
       z:
         name: z
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_offset_z
         alias: z
@@ -1592,7 +1592,7 @@ classes:
   Tomogram:
     name: Tomogram
     description: Metadata describing a tomogram.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     mixins:
     - AuthoredEntity
     - PicturedEntity
@@ -1600,7 +1600,7 @@ classes:
       voxel_spacing:
         name: voxel_spacing
         description: Voxel spacing equal in all three axes in angstroms
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_voxel_spacing
         alias: voxel_spacing
@@ -1614,7 +1614,7 @@ classes:
         name: fiducial_alignment_status
         description: Whether the tomographic alignment was computed based on fiducial
           markers.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_fiducial_alignment_status
         alias: fiducial_alignment_status
@@ -1627,7 +1627,7 @@ classes:
       ctf_corrected:
         name: ctf_corrected
         description: Whether this tomogram is CTF corrected
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_ctf_corrected
         alias: ctf_corrected
@@ -1641,7 +1641,7 @@ classes:
         name: reconstruction_method
         description: Describe reconstruction method (Weighted back-projection, SART,
           SIRT)
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_reconstruction_method
         alias: reconstruction_method
@@ -1654,7 +1654,7 @@ classes:
       reconstruction_software:
         name: reconstruction_software
         description: Name of software used for reconstruction
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_reconstruction_software
         alias: reconstruction_software
@@ -1667,7 +1667,7 @@ classes:
       processing:
         name: processing
         description: Describe additional processing used to derive the tomogram
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_processing
         alias: processing
@@ -1680,7 +1680,7 @@ classes:
       processing_software:
         name: processing_software
         description: Processing software used to derive the tomogram
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_processing_software
         alias: processing_software
@@ -1695,7 +1695,7 @@ classes:
         description: Version of tomogram using the same software and post-processing.
           Version of tomogram using the same software and post-processing. This will
           be presented as the latest version
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_version
         alias: tomogram_version
@@ -1709,7 +1709,7 @@ classes:
         name: affine_transformation_matrix
         description: The flip or rotation transformation of this author submitted
           tomogram is indicated here
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_affine_transformation_matrix
         alias: affine_transformation_matrix
@@ -1722,7 +1722,7 @@ classes:
       size:
         name: size
         description: The size of a tomogram in voxels in each dimension.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: size
         owner: Tomogram
         domain_of:
@@ -1734,7 +1734,7 @@ classes:
         name: offset
         description: The offset of a tomogram in voxels in each dimension relative
           to the canonical tomogram.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: offset
         owner: Tomogram
         domain_of:
@@ -1745,7 +1745,7 @@ classes:
       authors:
         name: authors
         description: Author of a scientific data entity.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         multivalued: true
         list_elements_ordered: true
         alias: authors
@@ -1760,7 +1760,7 @@ classes:
       key_photos:
         name: key_photos
         description: A set of paths to representative images of a piece of data.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: key_photos
         owner: Tomogram
         domain_of:
@@ -1772,12 +1772,12 @@ classes:
   AnnotationFile:
     name: AnnotationFile
     description: Metadata describing a file containing an annotation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       format:
         name: format
         description: File format for this file
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_file_format
         alias: format
@@ -1791,7 +1791,7 @@ classes:
         name: shape
         description: Describe whether this is a Point, OrientedPoint, or SegmentationMask
           file
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_file_shape_type
         alias: shape
@@ -1804,7 +1804,7 @@ classes:
       path:
         name: path
         description: Path to the annotation file relative to the dataset root.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_file_path
         alias: path
@@ -1817,7 +1817,7 @@ classes:
       is_visualization_default:
         name: is_visualization_default
         description: This annotation will be rendered in neuroglancer by default.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_file_is_visualization_default
         alias: is_visualization_default
@@ -1830,13 +1830,13 @@ classes:
   AnnotationConfidence:
     name: AnnotationConfidence
     description: Metadata describing the confidence of an annotation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       precision:
         name: precision
         description: Describe the confidence level of the annotation. Precision is
           defined as the % of annotation objects being true positive
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_confidence_precision
         alias: precision
@@ -1850,7 +1850,7 @@ classes:
         name: recall
         description: Describe the confidence level of the annotation. Recall is defined
           as the % of true positives being annotated correctly
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_confidence_recall
         alias: recall
@@ -1863,7 +1863,7 @@ classes:
       ground_truth_used:
         name: ground_truth_used
         description: Annotation filename used as ground truth for precision and recall
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_ground_truth_used
         alias: ground_truth_used
@@ -1876,11 +1876,11 @@ classes:
   AnnotationObject:
     name: AnnotationObject
     description: Metadata describing the object being annotated.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       id:
         name: id
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_object_id
         alias: id
@@ -1896,7 +1896,7 @@ classes:
         inlined_as_list: true
       name:
         name: name
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_object_name
         alias: name
@@ -1918,7 +1918,7 @@ classes:
         description: A textual description of the annotation object, can be a longer
           description to include additional information not covered by the Annotation
           object name and state.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_object_description
         alias: description
@@ -1931,7 +1931,7 @@ classes:
       state:
         name: state
         description: Molecule state annotated (e.g. open, closed)
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_object_state
         alias: state
@@ -1944,7 +1944,7 @@ classes:
   Annotation:
     name: Annotation
     description: Metadata describing an annotation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     mixins:
     - DatestampedEntity
     - AnnotatoredEntity
@@ -1953,7 +1953,7 @@ classes:
         name: annotation_method
         description: Describe how the annotation is made (e.g. Manual, crYoLO, Positive
           Unlabeled Learning, template matching)
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_method
         alias: annotation_method
@@ -1966,7 +1966,7 @@ classes:
       annotation_method_type:
         name: annotation_method_type
         description: Classification of the annotation method based on supervision.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_method_type
         alias: annotation_method_type
@@ -1980,7 +1980,7 @@ classes:
         name: annotation_publications
         description: DOIs for publications that describe the dataset. Use a comma
           to separate multiple DOIs.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_publication
         alias: annotation_publications
@@ -1993,7 +1993,7 @@ classes:
       annotation_software:
         name: annotation_software
         description: Software used for generating this annotation
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_software
         alias: annotation_software
@@ -2007,7 +2007,7 @@ classes:
         name: ground_truth_status
         description: Whether an annotation is considered ground truth, as determined
           by the annotator.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_ground_truth_status
         alias: ground_truth_status
@@ -2020,7 +2020,7 @@ classes:
       object_count:
         name: object_count
         description: Number of objects identified
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_object_count
         alias: object_count
@@ -2034,7 +2034,7 @@ classes:
         name: is_curator_recommended
         description: This annotation is recommended by the curator to be preferred
           for this object type.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_is_curator_recommended
         alias: is_curator_recommended
@@ -2047,7 +2047,7 @@ classes:
       files:
         name: files
         description: Metadata describing a file containing an annotation.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         multivalued: true
         list_elements_ordered: true
         alias: files
@@ -2060,7 +2060,7 @@ classes:
       confidence:
         name: confidence
         description: Metadata describing the confidence of an annotation.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: confidence
         owner: Annotation
         domain_of:
@@ -2071,7 +2071,7 @@ classes:
       annotation_object:
         name: annotation_object
         description: Metadata describing the object being annotated.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: annotation_object
         owner: Annotation
         domain_of:
@@ -2083,7 +2083,7 @@ classes:
         name: dates
         description: A set of dates at which a data item was deposited, published
           and last modified.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: dates
         owner: Annotation
         domain_of:
@@ -2095,7 +2095,7 @@ classes:
       authors:
         name: authors
         description: Annotator of a scientific data entity.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         multivalued: true
         list_elements_ordered: true
         alias: authors
@@ -2110,13 +2110,13 @@ classes:
   CrossReferences:
     name: CrossReferences
     description: A set of cross-references to other databases and publications.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     attributes:
       dataset_publications:
         name: dataset_publications
         description: Comma-separated list of DOIs for publications associated with
           the dataset.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: dataset_publications
         owner: CrossReferences
         domain_of:
@@ -2128,7 +2128,7 @@ classes:
       related_database_entries:
         name: related_database_entries
         description: Comma-separated list of related database entries for the dataset.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: related_database_entries
         owner: CrossReferences
         domain_of:
@@ -2140,7 +2140,7 @@ classes:
       related_database_links:
         name: related_database_links
         description: Comma-separated list of related database links for the dataset.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: related_database_links
         owner: CrossReferences
         domain_of:
@@ -2151,7 +2151,7 @@ classes:
       dataset_citations:
         name: dataset_citations
         description: Comma-separated list of DOIs for publications citing the dataset.
-        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        from_schema: metadata
         alias: dataset_citations
         owner: CrossReferences
         domain_of:

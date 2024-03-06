@@ -5,7 +5,7 @@ _Whether the author is a primary author._
 
 
 
-URI: [cdp-meta:is_primary_author](https://cryoetdataportal.czscience.com/schema/metadata/is_primary_author)
+URI: [cdp-meta:is_primary_author](metadatais_primary_author)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:is_primary_author](https://cryoetdataportal.czscience.com/schema/
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:is_primary_author](https://cryoetdataportal.czscience.com/schema/
 ```yaml
 name: is_primary_author
 description: Whether the author is a primary author.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:author_primary_author_status
 rank: 1000

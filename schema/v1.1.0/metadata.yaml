@@ -1,9 +1,9 @@
-id: https://cryoetdataportal.czscience.com/schema-docs/metadata
+id: metadata
 name: cdp-meta
 version: 1.1.0
 prefixes:
   linkml: https://w3id.org/linkml/
-  cdp-meta: https://cryoetdataportal.czscience.com/schema/metadata/
+  cdp-meta: metadata
   ORCID: https://orcid.org/
   ROR: https://ror.org/
   UBERON: http://purl.obolibrary.org/obo/UBERON_

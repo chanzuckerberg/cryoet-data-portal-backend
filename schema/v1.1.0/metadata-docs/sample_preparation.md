@@ -1,6 +1,6 @@
 # Slot: sample_preparation
 
-URI: [cdp-meta:sample_preparation](https://cryoetdataportal.czscience.com/schema/metadata/sample_preparation)
+URI: [cdp-meta:sample_preparation](metadatasample_preparation)
 
 
 

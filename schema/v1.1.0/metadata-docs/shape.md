@@ -5,7 +5,7 @@ _Describe whether this is a Point, OrientedPoint, or SegmentationMask file_
 
 
 
-URI: [cdp-meta:shape](https://cryoetdataportal.czscience.com/schema/metadata/shape)
+URI: [cdp-meta:shape](metadatashape)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:shape](https://cryoetdataportal.czscience.com/schema/metadata/sha
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:shape](https://cryoetdataportal.czscience.com/schema/metadata/sha
 name: shape
 description: Describe whether this is a Point, OrientedPoint, or SegmentationMask
   file
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_file_shape_type
 rank: 1000

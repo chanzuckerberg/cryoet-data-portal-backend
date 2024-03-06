@@ -1,6 +1,6 @@
 # Slot: other_setup
 
-URI: [cdp-meta:other_setup](https://cryoetdataportal.czscience.com/schema/metadata/other_setup)
+URI: [cdp-meta:other_setup](metadataother_setup)
 
 
 

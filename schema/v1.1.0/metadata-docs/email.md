@@ -1,6 +1,6 @@
 # Slot: email
 
-URI: [cdp-meta:email](https://cryoetdataportal.czscience.com/schema/metadata/email)
+URI: [cdp-meta:email](metadataemail)
 
 
 

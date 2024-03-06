@@ -7,7 +7,7 @@ _High-level description of a cryoET dataset._
 
 
 
-URI: [cdp-meta:Dataset](https://cryoetdataportal.czscience.com/schema/metadata/Dataset)
+URI: [cdp-meta:Dataset](metadataDataset)
 
 
 
@@ -143,7 +143,7 @@ URI: [cdp-meta:Dataset](https://cryoetdataportal.czscience.com/schema/metadata/D
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -170,7 +170,7 @@ URI: [cdp-meta:Dataset](https://cryoetdataportal.czscience.com/schema/metadata/D
 ```yaml
 name: Dataset
 description: High-level description of a cryoET dataset.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 mixins:
 - DatestampedEntity
 - AuthoredEntity
@@ -183,7 +183,7 @@ attributes:
     name: dataset_identifier
     description: An identifier for a CryoET dataset, assigned by the Data Portal.
       Used to identify the dataset as the directory  name in data tree.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:dataset_identifier
     rank: 1000
@@ -197,7 +197,7 @@ attributes:
   dataset_title:
     name: dataset_title
     description: Title of a CryoET dataset.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:dataset_title
     rank: 1000
@@ -212,7 +212,7 @@ attributes:
     name: dataset_description
     description: A short description of a CryoET dataset, similar to an abstract for
       a journal article or dataset.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:dataset_description
     rank: 1000
@@ -227,7 +227,7 @@ attributes:
     name: dates
     description: A set of dates at which a data item was deposited, published and
       last modified.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: dates
     owner: Dataset
     domain_of:
@@ -241,7 +241,7 @@ attributes:
   authors:
     name: authors
     description: Author of a scientific data entity.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     multivalued: true
     list_elements_ordered: true
     alias: authors
@@ -260,7 +260,7 @@ attributes:
     name: funding
     description: A funding source for a scientific data entity (base for JSON and
       DB representation).
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     multivalued: true
     list_elements_ordered: true
     alias: funding
@@ -275,7 +275,7 @@ attributes:
   key_photos:
     name: key_photos
     description: A set of paths to representative images of a piece of data.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: key_photos
     owner: Dataset
     domain_of:
@@ -289,7 +289,7 @@ attributes:
   cross_references:
     name: cross_references
     description: A set of cross-references to other databases and publications.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: cross_references
     owner: Dataset
     domain_of:
@@ -301,7 +301,7 @@ attributes:
   sample_type:
     name: sample_type
     description: Type of sample imaged in a CryoET study.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:preparation_sample_type
     alias: sample_type
@@ -315,7 +315,7 @@ attributes:
   sample_preparation:
     name: sample_preparation
     description: Describes how the sample was prepared.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:sample_preparation
     alias: sample_preparation
@@ -329,7 +329,7 @@ attributes:
   grid_preparation:
     name: grid_preparation
     description: Describes Cryo-ET grid preparation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:grid_preparation
     alias: grid_preparation
@@ -344,7 +344,7 @@ attributes:
     name: other_setup
     description: Describes other setup not covered by sample preparation or grid preparation
       that may make this dataset unique in   the same publication.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:preparation_other_setup
     alias: other_setup
@@ -358,7 +358,7 @@ attributes:
   organism:
     name: organism
     description: The species from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: organism
     owner: Dataset
     domain_of:
@@ -370,7 +370,7 @@ attributes:
   tissue:
     name: tissue
     description: The type of tissue from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: tissue
     owner: Dataset
     domain_of:
@@ -382,7 +382,7 @@ attributes:
   cell_type:
     name: cell_type
     description: The cell type from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: cell_type
     owner: Dataset
     domain_of:
@@ -394,7 +394,7 @@ attributes:
   cell_strain:
     name: cell_strain
     description: The strain or cell line from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: cell_strain
     owner: Dataset
     domain_of:
@@ -406,7 +406,7 @@ attributes:
   cell_component:
     name: cell_component
     description: The cellular component from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: cell_component
     owner: Dataset
     domain_of:
@@ -425,7 +425,7 @@ attributes:
 ```yaml
 name: Dataset
 description: High-level description of a cryoET dataset.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 mixins:
 - DatestampedEntity
 - AuthoredEntity
@@ -438,7 +438,7 @@ attributes:
     name: dataset_identifier
     description: An identifier for a CryoET dataset, assigned by the Data Portal.
       Used to identify the dataset as the directory  name in data tree.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:dataset_identifier
     rank: 1000
@@ -452,7 +452,7 @@ attributes:
   dataset_title:
     name: dataset_title
     description: Title of a CryoET dataset.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:dataset_title
     rank: 1000
@@ -467,7 +467,7 @@ attributes:
     name: dataset_description
     description: A short description of a CryoET dataset, similar to an abstract for
       a journal article or dataset.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:dataset_description
     rank: 1000
@@ -482,7 +482,7 @@ attributes:
     name: dates
     description: A set of dates at which a data item was deposited, published and
       last modified.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: dates
     owner: Dataset
     domain_of:
@@ -496,7 +496,7 @@ attributes:
   authors:
     name: authors
     description: Author of a scientific data entity.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     multivalued: true
     list_elements_ordered: true
     alias: authors
@@ -515,7 +515,7 @@ attributes:
     name: funding
     description: A funding source for a scientific data entity (base for JSON and
       DB representation).
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     multivalued: true
     list_elements_ordered: true
     alias: funding
@@ -530,7 +530,7 @@ attributes:
   key_photos:
     name: key_photos
     description: A set of paths to representative images of a piece of data.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: key_photos
     owner: Dataset
     domain_of:
@@ -544,7 +544,7 @@ attributes:
   cross_references:
     name: cross_references
     description: A set of cross-references to other databases and publications.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: cross_references
     owner: Dataset
     domain_of:
@@ -556,7 +556,7 @@ attributes:
   sample_type:
     name: sample_type
     description: Type of sample imaged in a CryoET study.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:preparation_sample_type
     alias: sample_type
@@ -570,7 +570,7 @@ attributes:
   sample_preparation:
     name: sample_preparation
     description: Describes how the sample was prepared.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:sample_preparation
     alias: sample_preparation
@@ -584,7 +584,7 @@ attributes:
   grid_preparation:
     name: grid_preparation
     description: Describes Cryo-ET grid preparation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:grid_preparation
     alias: grid_preparation
@@ -599,7 +599,7 @@ attributes:
     name: other_setup
     description: Describes other setup not covered by sample preparation or grid preparation
       that may make this dataset unique in   the same publication.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:preparation_other_setup
     alias: other_setup
@@ -613,7 +613,7 @@ attributes:
   organism:
     name: organism
     description: The species from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: organism
     owner: Dataset
     domain_of:
@@ -625,7 +625,7 @@ attributes:
   tissue:
     name: tissue
     description: The type of tissue from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: tissue
     owner: Dataset
     domain_of:
@@ -637,7 +637,7 @@ attributes:
   cell_type:
     name: cell_type
     description: The cell type from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: cell_type
     owner: Dataset
     domain_of:
@@ -649,7 +649,7 @@ attributes:
   cell_strain:
     name: cell_strain
     description: The strain or cell line from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: cell_strain
     owner: Dataset
     domain_of:
@@ -661,7 +661,7 @@ attributes:
   cell_component:
     name: cell_component
     description: The cellular component from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: cell_component
     owner: Dataset
     domain_of:

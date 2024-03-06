@@ -5,7 +5,7 @@ _Molecule state annotated (e.g. open, closed)_
 
 
 
-URI: [cdp-meta:state](https://cryoetdataportal.czscience.com/schema/metadata/state)
+URI: [cdp-meta:state](metadatastate)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:state](https://cryoetdataportal.czscience.com/schema/metadata/sta
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:state](https://cryoetdataportal.czscience.com/schema/metadata/sta
 ```yaml
 name: state
 description: Molecule state annotated (e.g. open, closed)
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_object_state
 rank: 1000

@@ -7,7 +7,7 @@ _The offset of a tomogram in voxels in each dimension relative to the canonical 
 
 
 
-URI: [cdp-meta:TomogramOffset](https://cryoetdataportal.czscience.com/schema/metadata/TomogramOffset)
+URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
 
 
 
@@ -70,7 +70,7 @@ URI: [cdp-meta:TomogramOffset](https://cryoetdataportal.czscience.com/schema/met
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -98,11 +98,11 @@ URI: [cdp-meta:TomogramOffset](https://cryoetdataportal.czscience.com/schema/met
 name: TomogramOffset
 description: The offset of a tomogram in voxels in each dimension relative to the
   canonical tomogram.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   x:
     name: x
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_offset_x
     alias: x
@@ -115,7 +115,7 @@ attributes:
     inlined_as_list: true
   y:
     name: y
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_offset_y
     alias: y
@@ -128,7 +128,7 @@ attributes:
     inlined_as_list: true
   z:
     name: z
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_offset_z
     alias: z
@@ -150,11 +150,11 @@ attributes:
 name: TomogramOffset
 description: The offset of a tomogram in voxels in each dimension relative to the
   canonical tomogram.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   x:
     name: x
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_offset_x
     alias: x
@@ -167,7 +167,7 @@ attributes:
     inlined_as_list: true
   y:
     name: y
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_offset_y
     alias: y
@@ -180,7 +180,7 @@ attributes:
     inlined_as_list: true
   z:
     name: z
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_offset_z
     alias: z

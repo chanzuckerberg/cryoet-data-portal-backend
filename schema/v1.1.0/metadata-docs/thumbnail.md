@@ -5,7 +5,7 @@ _Path to the thumbnail of preview image relative to the dataset directory root._
 
 
 
-URI: [cdp-meta:thumbnail](https://cryoetdataportal.czscience.com/schema/metadata/thumbnail)
+URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:thumbnail](https://cryoetdataportal.czscience.com/schema/metadata
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:thumbnail](https://cryoetdataportal.czscience.com/schema/metadata
 name: thumbnail
 description: Path to the thumbnail of preview image relative to the dataset directory
   root.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: thumbnail
 owner: PicturePath

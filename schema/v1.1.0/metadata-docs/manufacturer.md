@@ -1,6 +1,6 @@
 # Slot: manufacturer
 
-URI: [cdp-meta:manufacturer](https://cryoetdataportal.czscience.com/schema/metadata/manufacturer)
+URI: [cdp-meta:manufacturer](metadatamanufacturer)
 
 
 

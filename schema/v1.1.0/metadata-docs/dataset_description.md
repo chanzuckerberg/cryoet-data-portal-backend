@@ -5,7 +5,7 @@ _A short description of a CryoET dataset, similar to an abstract for a journal a
 
 
 
-URI: [cdp-meta:dataset_description](https://cryoetdataportal.czscience.com/schema/metadata/dataset_description)
+URI: [cdp-meta:dataset_description](metadatadataset_description)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:dataset_description](https://cryoetdataportal.czscience.com/schem
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:dataset_description](https://cryoetdataportal.czscience.com/schem
 name: dataset_description
 description: A short description of a CryoET dataset, similar to an abstract for a
   journal article or dataset.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:dataset_description
 rank: 1000

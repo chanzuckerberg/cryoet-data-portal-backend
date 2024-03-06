@@ -5,7 +5,7 @@ _Comma-separated list of DOIs for publications citing the dataset._
 
 
 
-URI: [cdp-meta:dataset_citations](https://cryoetdataportal.czscience.com/schema/metadata/dataset_citations)
+URI: [cdp-meta:dataset_citations](metadatadataset_citations)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:dataset_citations](https://cryoetdataportal.czscience.com/schema/
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:dataset_citations](https://cryoetdataportal.czscience.com/schema/
 ```yaml
 name: dataset_citations
 description: Comma-separated list of DOIs for publications citing the dataset.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: dataset_citations
 owner: CrossReferences

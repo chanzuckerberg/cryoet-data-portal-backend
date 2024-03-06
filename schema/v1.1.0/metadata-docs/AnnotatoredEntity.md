@@ -9,7 +9,7 @@ _An entity with associated annotation authors._
 * __NOTE__: this is an abstract class and should not be instantiated directly
 
 
-URI: [cdp-meta:AnnotatoredEntity](https://cryoetdataportal.czscience.com/schema/metadata/AnnotatoredEntity)
+URI: [cdp-meta:AnnotatoredEntity](metadataAnnotatoredEntity)
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:AnnotatoredEntity](https://cryoetdataportal.czscience.com/schema/
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -84,13 +84,13 @@ URI: [cdp-meta:AnnotatoredEntity](https://cryoetdataportal.czscience.com/schema/
 ```yaml
 name: AnnotatoredEntity
 description: An entity with associated annotation authors.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 attributes:
   authors:
     name: authors
     description: Annotator of a scientific data entity.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     multivalued: true
     list_elements_ordered: true
     alias: authors
@@ -115,13 +115,13 @@ attributes:
 ```yaml
 name: AnnotatoredEntity
 description: An entity with associated annotation authors.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 attributes:
   authors:
     name: authors
     description: Annotator of a scientific data entity.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     multivalued: true
     list_elements_ordered: true
     alias: authors

@@ -5,7 +5,7 @@ _Path to the dataset preview image relative to the dataset directory root._
 
 
 
-URI: [cdp-meta:snapshot](https://cryoetdataportal.czscience.com/schema/metadata/snapshot)
+URI: [cdp-meta:snapshot](metadatasnapshot)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:snapshot](https://cryoetdataportal.czscience.com/schema/metadata/
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:snapshot](https://cryoetdataportal.czscience.com/schema/metadata/
 ```yaml
 name: snapshot
 description: Path to the dataset preview image relative to the dataset directory root.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: snapshot
 owner: PicturePath

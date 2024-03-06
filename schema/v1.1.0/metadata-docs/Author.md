@@ -7,7 +7,7 @@ _Author of a scientific data entity._
 
 
 
-URI: [cdp-meta:Author](https://cryoetdataportal.czscience.com/schema/metadata/Author)
+URI: [cdp-meta:Author](metadataAuthor)
 
 
 
@@ -97,7 +97,7 @@ URI: [cdp-meta:Author](https://cryoetdataportal.czscience.com/schema/metadata/Au
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -124,12 +124,12 @@ URI: [cdp-meta:Author](https://cryoetdataportal.czscience.com/schema/metadata/Au
 ```yaml
 name: Author
 description: Author of a scientific data entity.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   name:
     name: name
     description: The full name of the author.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_name
     rank: 1000
@@ -150,7 +150,7 @@ attributes:
   email:
     name: email
     description: The email address of the author.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_email
     rank: 1000
@@ -165,7 +165,7 @@ attributes:
   affiliation_name:
     name: affiliation_name
     description: The name of the author's affiliation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_affiliation_name
     rank: 1000
@@ -180,7 +180,7 @@ attributes:
   affiliation_address:
     name: affiliation_address
     description: The address of the author's affiliation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_affiliation_address
     rank: 1000
@@ -195,7 +195,7 @@ attributes:
   affiliation_identifier:
     name: affiliation_identifier
     description: A Research Organization Registry (ROR) identifier.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:affiliation_identifier
     rank: 1000
@@ -212,7 +212,7 @@ attributes:
   is_corresponding:
     name: is_corresponding
     description: Whether the author is a corresponding author.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_corresponding_author_status
     rank: 1000
@@ -227,7 +227,7 @@ attributes:
   is_primary_author:
     name: is_primary_author
     description: Whether the author is a primary author.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_primary_author_status
     rank: 1000
@@ -241,7 +241,7 @@ attributes:
   ORCID:
     name: ORCID
     description: A unique, persistent identifier for researchers, provided by ORCID.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:orcid
     rank: 1000
@@ -265,12 +265,12 @@ attributes:
 ```yaml
 name: Author
 description: Author of a scientific data entity.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   name:
     name: name
     description: The full name of the author.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_name
     rank: 1000
@@ -291,7 +291,7 @@ attributes:
   email:
     name: email
     description: The email address of the author.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_email
     rank: 1000
@@ -306,7 +306,7 @@ attributes:
   affiliation_name:
     name: affiliation_name
     description: The name of the author's affiliation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_affiliation_name
     rank: 1000
@@ -321,7 +321,7 @@ attributes:
   affiliation_address:
     name: affiliation_address
     description: The address of the author's affiliation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_affiliation_address
     rank: 1000
@@ -336,7 +336,7 @@ attributes:
   affiliation_identifier:
     name: affiliation_identifier
     description: A Research Organization Registry (ROR) identifier.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:affiliation_identifier
     rank: 1000
@@ -353,7 +353,7 @@ attributes:
   is_corresponding:
     name: is_corresponding
     description: Whether the author is a corresponding author.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_corresponding_author_status
     rank: 1000
@@ -368,7 +368,7 @@ attributes:
   is_primary_author:
     name: is_primary_author
     description: Whether the author is a primary author.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:author_primary_author_status
     rank: 1000
@@ -382,7 +382,7 @@ attributes:
   ORCID:
     name: ORCID
     description: A unique, persistent identifier for researchers, provided by ORCID.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:orcid
     rank: 1000

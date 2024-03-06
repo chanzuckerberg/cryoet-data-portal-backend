@@ -5,7 +5,7 @@ _Whether this tomogram is CTF corrected_
 
 
 
-URI: [cdp-meta:ctf_corrected](https://cryoetdataportal.czscience.com/schema/metadata/ctf_corrected)
+URI: [cdp-meta:ctf_corrected](metadatactf_corrected)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:ctf_corrected](https://cryoetdataportal.czscience.com/schema/meta
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:ctf_corrected](https://cryoetdataportal.czscience.com/schema/meta
 ```yaml
 name: ctf_corrected
 description: Whether this tomogram is CTF corrected
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tomogram_ctf_corrected
 rank: 1000

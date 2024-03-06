@@ -1,6 +1,6 @@
 # Slot: tissue
 
-URI: [cdp-meta:tissue](https://cryoetdataportal.czscience.com/schema/metadata/tissue)
+URI: [cdp-meta:tissue](metadatatissue)
 
 
 

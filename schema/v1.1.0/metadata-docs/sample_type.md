@@ -1,6 +1,6 @@
 # Slot: sample_type
 
-URI: [cdp-meta:sample_type](https://cryoetdataportal.czscience.com/schema/metadata/sample_type)
+URI: [cdp-meta:sample_type](metadatasample_type)
 
 
 

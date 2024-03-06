@@ -5,7 +5,7 @@ _Author assessment of tilt series quality within the dataset (1-5, 5 is best)_
 
 
 
-URI: [cdp-meta:tilt_series_quality](https://cryoetdataportal.czscience.com/schema/metadata/tilt_series_quality)
+URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:tilt_series_quality](https://cryoetdataportal.czscience.com/schem
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:tilt_series_quality](https://cryoetdataportal.czscience.com/schem
 name: tilt_series_quality
 description: Author assessment of tilt series quality within the dataset (1-5, 5 is
   best)
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_tilt_series_quality
 rank: 1000

@@ -5,7 +5,7 @@ _Describe additional processing used to derive the tomogram_
 
 
 
-URI: [cdp-meta:processing](https://cryoetdataportal.czscience.com/schema/metadata/processing)
+URI: [cdp-meta:processing](metadataprocessing)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:processing](https://cryoetdataportal.czscience.com/schema/metadat
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:processing](https://cryoetdataportal.czscience.com/schema/metadat
 ```yaml
 name: processing
 description: Describe additional processing used to derive the tomogram
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tomogram_processing
 rank: 1000

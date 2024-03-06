@@ -5,7 +5,7 @@ _A textual description of the annotation object, can be a longer description to 
 
 
 
-URI: [cdp-meta:description](https://cryoetdataportal.czscience.com/schema/metadata/description)
+URI: [cdp-meta:description](metadatadescription)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:description](https://cryoetdataportal.czscience.com/schema/metada
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -58,7 +58,7 @@ name: description
 description: A textual description of the annotation object, can be a longer description
   to include additional information not covered by the Annotation object name and
   state.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_object_description
 rank: 1000

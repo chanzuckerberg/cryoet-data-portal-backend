@@ -5,7 +5,7 @@ _File format for this file_
 
 
 
-URI: [cdp-meta:format](https://cryoetdataportal.czscience.com/schema/metadata/format)
+URI: [cdp-meta:format](metadataformat)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:format](https://cryoetdataportal.czscience.com/schema/metadata/fo
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:format](https://cryoetdataportal.czscience.com/schema/metadata/fo
 ```yaml
 name: format
 description: File format for this file
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_file_format
 rank: 1000

@@ -42,7 +42,7 @@ URI: [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md)
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -53,7 +53,7 @@ URI: [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md)
 ```yaml
 name: annotation_method_type_enum
 description: Describes how the annotations were generated.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 permissible_values:
   manual:

@@ -1,6 +1,6 @@
 # Slot: name
 
-URI: [cdp-meta:name](https://cryoetdataportal.czscience.com/schema/metadata/name)
+URI: [cdp-meta:name](metadataname)
 
 
 

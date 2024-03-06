@@ -5,7 +5,7 @@ _Number of Electrons reaching the specimen in a square Angstrom area for the ent
 
 
 
-URI: [cdp-meta:total_flux](https://cryoetdataportal.czscience.com/schema/metadata/total_flux)
+URI: [cdp-meta:total_flux](metadatatotal_flux)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:total_flux](https://cryoetdataportal.czscience.com/schema/metadat
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:total_flux](https://cryoetdataportal.czscience.com/schema/metadat
 name: total_flux
 description: Number of Electrons reaching the specimen in a square Angstrom area for
   the entire tilt series
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_total_flux
 rank: 1000

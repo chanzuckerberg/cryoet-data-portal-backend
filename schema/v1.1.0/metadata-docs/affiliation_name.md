@@ -1,6 +1,6 @@
 # Slot: affiliation_name
 
-URI: [cdp-meta:affiliation_name](https://cryoetdataportal.czscience.com/schema/metadata/affiliation_name)
+URI: [cdp-meta:affiliation_name](metadataaffiliation_name)
 
 
 

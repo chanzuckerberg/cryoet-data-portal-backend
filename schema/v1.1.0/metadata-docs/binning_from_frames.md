@@ -5,7 +5,7 @@ _Describes the binning factor from frames to tilt series file_
 
 
 
-URI: [cdp-meta:binning_from_frames](https://cryoetdataportal.czscience.com/schema/metadata/binning_from_frames)
+URI: [cdp-meta:binning_from_frames](metadatabinning_from_frames)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:binning_from_frames](https://cryoetdataportal.czscience.com/schem
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:binning_from_frames](https://cryoetdataportal.czscience.com/schem
 ```yaml
 name: binning_from_frames
 description: Describes the binning factor from frames to tilt series file
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_binning_from_frames
 rank: 1000

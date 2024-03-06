@@ -5,7 +5,7 @@ _Spherical Aberration Constant of the objective lens in millimeters_
 
 
 
-URI: [cdp-meta:spherical_aberration_constant](https://cryoetdataportal.czscience.com/schema/metadata/spherical_aberration_constant)
+URI: [cdp-meta:spherical_aberration_constant](metadataspherical_aberration_constant)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:spherical_aberration_constant](https://cryoetdataportal.czscience
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:spherical_aberration_constant](https://cryoetdataportal.czscience
 ```yaml
 name: spherical_aberration_constant
 description: Spherical Aberration Constant of the objective lens in millimeters
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_spherical_aberration_constant
 rank: 1000

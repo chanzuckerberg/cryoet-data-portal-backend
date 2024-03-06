@@ -5,7 +5,7 @@ _Describe the confidence level of the annotation. Recall is defined as the % of 
 
 
 
-URI: [cdp-meta:recall](https://cryoetdataportal.czscience.com/schema/metadata/recall)
+URI: [cdp-meta:recall](metadatarecall)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:recall](https://cryoetdataportal.czscience.com/schema/metadata/re
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:recall](https://cryoetdataportal.czscience.com/schema/metadata/re
 name: recall
 description: Describe the confidence level of the annotation. Recall is defined as
   the % of true positives being annotated correctly
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_confidence_recall
 rank: 1000

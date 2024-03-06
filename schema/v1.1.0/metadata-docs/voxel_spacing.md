@@ -5,7 +5,7 @@ _Voxel spacing equal in all three axes in angstroms_
 
 
 
-URI: [cdp-meta:voxel_spacing](https://cryoetdataportal.czscience.com/schema/metadata/voxel_spacing)
+URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:voxel_spacing](https://cryoetdataportal.czscience.com/schema/meta
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:voxel_spacing](https://cryoetdataportal.czscience.com/schema/meta
 ```yaml
 name: voxel_spacing
 description: Voxel spacing equal in all three axes in angstroms
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tomogram_voxel_spacing
 rank: 1000

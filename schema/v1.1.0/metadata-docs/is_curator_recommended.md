@@ -5,7 +5,7 @@ _This annotation is recommended by the curator to be preferred for this object t
 
 
 
-URI: [cdp-meta:is_curator_recommended](https://cryoetdataportal.czscience.com/schema/metadata/is_curator_recommended)
+URI: [cdp-meta:is_curator_recommended](metadatais_curator_recommended)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:is_curator_recommended](https://cryoetdataportal.czscience.com/sc
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:is_curator_recommended](https://cryoetdataportal.czscience.com/sc
 name: is_curator_recommended
 description: This annotation is recommended by the curator to be preferred for this
   object type.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_is_curator_recommended
 rank: 1000

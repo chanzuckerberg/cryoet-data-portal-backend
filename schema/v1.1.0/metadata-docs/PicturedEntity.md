@@ -9,7 +9,7 @@ _An entity with associated preview images._
 * __NOTE__: this is an abstract class and should not be instantiated directly
 
 
-URI: [cdp-meta:PicturedEntity](https://cryoetdataportal.czscience.com/schema/metadata/PicturedEntity)
+URI: [cdp-meta:PicturedEntity](metadataPicturedEntity)
 
 
 
@@ -58,7 +58,7 @@ URI: [cdp-meta:PicturedEntity](https://cryoetdataportal.czscience.com/schema/met
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -85,13 +85,13 @@ URI: [cdp-meta:PicturedEntity](https://cryoetdataportal.czscience.com/schema/met
 ```yaml
 name: PicturedEntity
 description: An entity with associated preview images.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 attributes:
   key_photos:
     name: key_photos
     description: A set of paths to representative images of a piece of data.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: key_photos
     owner: PicturedEntity
@@ -113,13 +113,13 @@ attributes:
 ```yaml
 name: PicturedEntity
 description: An entity with associated preview images.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 attributes:
   key_photos:
     name: key_photos
     description: A set of paths to representative images of a piece of data.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: key_photos
     owner: PicturedEntity

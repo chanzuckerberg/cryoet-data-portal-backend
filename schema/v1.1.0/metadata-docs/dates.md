@@ -1,6 +1,6 @@
 # Slot: dates
 
-URI: [cdp-meta:dates](https://cryoetdataportal.czscience.com/schema/metadata/dates)
+URI: [cdp-meta:dates](metadatadates)
 
 
 

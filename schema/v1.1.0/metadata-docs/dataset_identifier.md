@@ -5,7 +5,7 @@ _An identifier for a CryoET dataset, assigned by the Data Portal. Used to identi
 
 
 
-URI: [cdp-meta:dataset_identifier](https://cryoetdataportal.czscience.com/schema/metadata/dataset_identifier)
+URI: [cdp-meta:dataset_identifier](metadatadataset_identifier)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:dataset_identifier](https://cryoetdataportal.czscience.com/schema
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:dataset_identifier](https://cryoetdataportal.czscience.com/schema
 name: dataset_identifier
 description: An identifier for a CryoET dataset, assigned by the Data Portal. Used
   to identify the dataset as the directory  name in data tree.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:dataset_identifier
 rank: 1000

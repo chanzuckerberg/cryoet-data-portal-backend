@@ -5,7 +5,7 @@ _Grant identifier provided by the funding agency_
 
 
 
-URI: [cdp-meta:grant_id](https://cryoetdataportal.czscience.com/schema/metadata/grant_id)
+URI: [cdp-meta:grant_id](metadatagrant_id)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:grant_id](https://cryoetdataportal.czscience.com/schema/metadata/
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:grant_id](https://cryoetdataportal.czscience.com/schema/metadata/
 ```yaml
 name: grant_id
 description: Grant identifier provided by the funding agency
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:funding_grant_id
 rank: 1000

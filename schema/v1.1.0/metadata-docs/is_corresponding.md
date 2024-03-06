@@ -1,6 +1,6 @@
 # Slot: is_corresponding
 
-URI: [cdp-meta:is_corresponding](https://cryoetdataportal.czscience.com/schema/metadata/is_corresponding)
+URI: [cdp-meta:is_corresponding](metadatais_corresponding)
 
 
 

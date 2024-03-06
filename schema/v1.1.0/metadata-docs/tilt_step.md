@@ -5,7 +5,7 @@ _Tilt step in degrees_
 
 
 
-URI: [cdp-meta:tilt_step](https://cryoetdataportal.czscience.com/schema/metadata/tilt_step)
+URI: [cdp-meta:tilt_step](metadatatilt_step)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:tilt_step](https://cryoetdataportal.czscience.com/schema/metadata
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:tilt_step](https://cryoetdataportal.czscience.com/schema/metadata
 ```yaml
 name: tilt_step
 description: Tilt step in degrees
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_tilt_step
 rank: 1000

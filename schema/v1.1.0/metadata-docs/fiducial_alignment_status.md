@@ -5,7 +5,7 @@ _Whether the tomographic alignment was computed based on fiducial markers._
 
 
 
-URI: [cdp-meta:fiducial_alignment_status](https://cryoetdataportal.czscience.com/schema/metadata/fiducial_alignment_status)
+URI: [cdp-meta:fiducial_alignment_status](metadatafiducial_alignment_status)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:fiducial_alignment_status](https://cryoetdataportal.czscience.com
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:fiducial_alignment_status](https://cryoetdataportal.czscience.com
 ```yaml
 name: fiducial_alignment_status
 description: Whether the tomographic alignment was computed based on fiducial markers.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tomogram_fiducial_alignment_status
 rank: 1000

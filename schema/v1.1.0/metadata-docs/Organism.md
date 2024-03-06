@@ -1,6 +1,6 @@
 # Slot: organism
 
-URI: [cdp-meta:organism](https://cryoetdataportal.czscience.com/schema/metadata/organism)
+URI: [cdp-meta:organism](metadataorganism)
 
 
 

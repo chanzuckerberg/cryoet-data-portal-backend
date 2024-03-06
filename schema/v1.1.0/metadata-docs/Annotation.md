@@ -7,7 +7,7 @@ _Metadata describing an annotation._
 
 
 
-URI: [cdp-meta:Annotation](https://cryoetdataportal.czscience.com/schema/metadata/Annotation)
+URI: [cdp-meta:Annotation](metadataAnnotation)
 
 
 
@@ -114,7 +114,7 @@ URI: [cdp-meta:Annotation](https://cryoetdataportal.czscience.com/schema/metadat
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -141,7 +141,7 @@ URI: [cdp-meta:Annotation](https://cryoetdataportal.czscience.com/schema/metadat
 ```yaml
 name: Annotation
 description: Metadata describing an annotation.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 mixins:
 - DatestampedEntity
 - AnnotatoredEntity
@@ -150,7 +150,7 @@ attributes:
     name: annotation_method
     description: Describe how the annotation is made (e.g. Manual, crYoLO, Positive
       Unlabeled Learning, template matching)
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_method
     rank: 1000
@@ -164,7 +164,7 @@ attributes:
   annotation_method_type:
     name: annotation_method_type
     description: Classification of the annotation method based on supervision.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_method_type
     rank: 1000
@@ -179,7 +179,7 @@ attributes:
     name: annotation_publications
     description: DOIs for publications that describe the dataset. Use a comma to separate
       multiple DOIs.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_publication
     rank: 1000
@@ -193,7 +193,7 @@ attributes:
   annotation_software:
     name: annotation_software
     description: Software used for generating this annotation
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_software
     rank: 1000
@@ -208,7 +208,7 @@ attributes:
     name: ground_truth_status
     description: Whether an annotation is considered ground truth, as determined by
       the annotator.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_ground_truth_status
     rank: 1000
@@ -222,7 +222,7 @@ attributes:
   object_count:
     name: object_count
     description: Number of objects identified
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_object_count
     rank: 1000
@@ -237,7 +237,7 @@ attributes:
     name: is_curator_recommended
     description: This annotation is recommended by the curator to be preferred for
       this object type.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_is_curator_recommended
     rank: 1000
@@ -251,7 +251,7 @@ attributes:
   files:
     name: files
     description: Metadata describing a file containing an annotation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     multivalued: true
     list_elements_ordered: true
@@ -265,7 +265,7 @@ attributes:
   confidence:
     name: confidence
     description: Metadata describing the confidence of an annotation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: confidence
     owner: Annotation
@@ -277,7 +277,7 @@ attributes:
   annotation_object:
     name: annotation_object
     description: Metadata describing the object being annotated.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: annotation_object
     owner: Annotation
@@ -290,7 +290,7 @@ attributes:
     name: dates
     description: A set of dates at which a data item was deposited, published and
       last modified.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: dates
     owner: Annotation
     domain_of:
@@ -304,7 +304,7 @@ attributes:
   authors:
     name: authors
     description: Annotator of a scientific data entity.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     multivalued: true
     list_elements_ordered: true
     alias: authors
@@ -329,7 +329,7 @@ attributes:
 ```yaml
 name: Annotation
 description: Metadata describing an annotation.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 mixins:
 - DatestampedEntity
 - AnnotatoredEntity
@@ -338,7 +338,7 @@ attributes:
     name: annotation_method
     description: Describe how the annotation is made (e.g. Manual, crYoLO, Positive
       Unlabeled Learning, template matching)
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_method
     rank: 1000
@@ -352,7 +352,7 @@ attributes:
   annotation_method_type:
     name: annotation_method_type
     description: Classification of the annotation method based on supervision.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_method_type
     rank: 1000
@@ -367,7 +367,7 @@ attributes:
     name: annotation_publications
     description: DOIs for publications that describe the dataset. Use a comma to separate
       multiple DOIs.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_publication
     rank: 1000
@@ -381,7 +381,7 @@ attributes:
   annotation_software:
     name: annotation_software
     description: Software used for generating this annotation
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_software
     rank: 1000
@@ -396,7 +396,7 @@ attributes:
     name: ground_truth_status
     description: Whether an annotation is considered ground truth, as determined by
       the annotator.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_ground_truth_status
     rank: 1000
@@ -410,7 +410,7 @@ attributes:
   object_count:
     name: object_count
     description: Number of objects identified
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_object_count
     rank: 1000
@@ -425,7 +425,7 @@ attributes:
     name: is_curator_recommended
     description: This annotation is recommended by the curator to be preferred for
       this object type.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_is_curator_recommended
     rank: 1000
@@ -439,7 +439,7 @@ attributes:
   files:
     name: files
     description: Metadata describing a file containing an annotation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     multivalued: true
     list_elements_ordered: true
@@ -453,7 +453,7 @@ attributes:
   confidence:
     name: confidence
     description: Metadata describing the confidence of an annotation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: confidence
     owner: Annotation
@@ -465,7 +465,7 @@ attributes:
   annotation_object:
     name: annotation_object
     description: Metadata describing the object being annotated.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: annotation_object
     owner: Annotation
@@ -478,7 +478,7 @@ attributes:
     name: dates
     description: A set of dates at which a data item was deposited, published and
       last modified.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: dates
     owner: Annotation
     domain_of:
@@ -492,7 +492,7 @@ attributes:
   authors:
     name: authors
     description: Annotator of a scientific data entity.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     multivalued: true
     list_elements_ordered: true
     alias: authors

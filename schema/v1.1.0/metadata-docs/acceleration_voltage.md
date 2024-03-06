@@ -5,7 +5,7 @@ _Electron Microscope Accelerator voltage in volts_
 
 
 
-URI: [cdp-meta:acceleration_voltage](https://cryoetdataportal.czscience.com/schema/metadata/acceleration_voltage)
+URI: [cdp-meta:acceleration_voltage](metadataacceleration_voltage)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:acceleration_voltage](https://cryoetdataportal.czscience.com/sche
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:acceleration_voltage](https://cryoetdataportal.czscience.com/sche
 ```yaml
 name: acceleration_voltage
 description: Electron Microscope Accelerator voltage in volts
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_acceleration_voltage
 rank: 1000

@@ -9,7 +9,7 @@ _A set of dates at which a data item was deposited, published and last modified.
 * __NOTE__: this is an abstract class and should not be instantiated directly
 
 
-URI: [cdp-meta:DateStamp](https://cryoetdataportal.czscience.com/schema/metadata/DateStamp)
+URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 
 
@@ -77,7 +77,7 @@ URI: [cdp-meta:DateStamp](https://cryoetdataportal.czscience.com/schema/metadata
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -105,7 +105,7 @@ URI: [cdp-meta:DateStamp](https://cryoetdataportal.czscience.com/schema/metadata
 name: DateStamp
 description: A set of dates at which a data item was deposited, published and last
   modified.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 slots:
 - deposition_date
@@ -131,7 +131,7 @@ attributes:
   deposition_date:
     name: deposition_date
     description: The date a data item was received by the cryoET data portal.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: deposition_date
     owner: DateStamp
@@ -144,7 +144,7 @@ attributes:
   release_date:
     name: release_date
     description: The date a data item was received by the cryoET data portal.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: release_date
     owner: DateStamp
@@ -158,7 +158,7 @@ attributes:
   last_modified_date:
     name: last_modified_date
     description: The date a piece of data was last modified on the cryoET data portal.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: last_modified_date
     owner: DateStamp
@@ -180,7 +180,7 @@ attributes:
 name: DateStamp
 description: A set of dates at which a data item was deposited, published and last
   modified.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 slot_usage:
   deposition_date:
@@ -202,7 +202,7 @@ attributes:
   deposition_date:
     name: deposition_date
     description: The date a data item was received by the cryoET data portal.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: deposition_date
     owner: DateStamp
@@ -215,7 +215,7 @@ attributes:
   release_date:
     name: release_date
     description: The date a data item was received by the cryoET data portal.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: release_date
     owner: DateStamp
@@ -229,7 +229,7 @@ attributes:
   last_modified_date:
     name: last_modified_date
     description: The date a piece of data was last modified on the cryoET data portal.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: last_modified_date
     owner: DateStamp

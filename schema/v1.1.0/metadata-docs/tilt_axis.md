@@ -5,7 +5,7 @@ _Rotation angle in degrees_
 
 
 
-URI: [cdp-meta:tilt_axis](https://cryoetdataportal.czscience.com/schema/metadata/tilt_axis)
+URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:tilt_axis](https://cryoetdataportal.czscience.com/schema/metadata
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:tilt_axis](https://cryoetdataportal.czscience.com/schema/metadata
 ```yaml
 name: tilt_axis
 description: Rotation angle in degrees
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_tilt_axis
 rank: 1000

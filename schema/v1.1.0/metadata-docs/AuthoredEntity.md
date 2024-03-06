@@ -9,7 +9,7 @@ _An entity with associated authors._
 * __NOTE__: this is an abstract class and should not be instantiated directly
 
 
-URI: [cdp-meta:AuthoredEntity](https://cryoetdataportal.czscience.com/schema/metadata/AuthoredEntity)
+URI: [cdp-meta:AuthoredEntity](metadataAuthoredEntity)
 
 
 
@@ -58,7 +58,7 @@ URI: [cdp-meta:AuthoredEntity](https://cryoetdataportal.czscience.com/schema/met
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -85,13 +85,13 @@ URI: [cdp-meta:AuthoredEntity](https://cryoetdataportal.czscience.com/schema/met
 ```yaml
 name: AuthoredEntity
 description: An entity with associated authors.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 attributes:
   authors:
     name: authors
     description: Author of a scientific data entity.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     multivalued: true
     list_elements_ordered: true
@@ -117,13 +117,13 @@ attributes:
 ```yaml
 name: AuthoredEntity
 description: An entity with associated authors.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 attributes:
   authors:
     name: authors
     description: Author of a scientific data entity.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     multivalued: true
     list_elements_ordered: true

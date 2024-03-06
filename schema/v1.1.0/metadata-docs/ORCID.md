@@ -1,6 +1,6 @@
 # Slot: ORCID
 
-URI: [cdp-meta:ORCID](https://cryoetdataportal.czscience.com/schema/metadata/ORCID)
+URI: [cdp-meta:ORCID](metadataORCID)
 
 
 

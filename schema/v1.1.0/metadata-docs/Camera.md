@@ -5,7 +5,7 @@ _The camera used to collect the tilt series._
 
 
 
-URI: [cdp-meta:camera](https://cryoetdataportal.czscience.com/schema/metadata/camera)
+URI: [cdp-meta:camera](metadatacamera)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:camera](https://cryoetdataportal.czscience.com/schema/metadata/ca
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:camera](https://cryoetdataportal.czscience.com/schema/metadata/ca
 ```yaml
 name: camera
 description: The camera used to collect the tilt series.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: camera
 owner: TiltSeries

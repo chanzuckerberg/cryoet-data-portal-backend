@@ -5,7 +5,7 @@ _Pixel spacing for the tilt series_
 
 
 
-URI: [cdp-meta:pixel_spacing](https://cryoetdataportal.czscience.com/schema/metadata/pixel_spacing)
+URI: [cdp-meta:pixel_spacing](metadatapixel_spacing)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:pixel_spacing](https://cryoetdataportal.czscience.com/schema/meta
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:pixel_spacing](https://cryoetdataportal.czscience.com/schema/meta
 ```yaml
 name: pixel_spacing
 description: Pixel spacing for the tilt series
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_pixel_spacing
 rank: 1000

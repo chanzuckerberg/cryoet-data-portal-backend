@@ -7,7 +7,7 @@ _The size of a tomogram in voxels in each dimension._
 
 
 
-URI: [cdp-meta:TomogramSize](https://cryoetdataportal.czscience.com/schema/metadata/TomogramSize)
+URI: [cdp-meta:TomogramSize](metadataTomogramSize)
 
 
 
@@ -70,7 +70,7 @@ URI: [cdp-meta:TomogramSize](https://cryoetdataportal.czscience.com/schema/metad
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -97,12 +97,12 @@ URI: [cdp-meta:TomogramSize](https://cryoetdataportal.czscience.com/schema/metad
 ```yaml
 name: TomogramSize
 description: The size of a tomogram in voxels in each dimension.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   x:
     name: x
     description: Number of pixels in the 3D data fast axis
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_size_x
     rank: 1000
@@ -117,7 +117,7 @@ attributes:
   y:
     name: y
     description: Number of pixels in the 3D data medium axis
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_size_y
     rank: 1000
@@ -133,7 +133,7 @@ attributes:
     name: z
     description: Number of pixels in the 3D data slow axis.  This is the image projection
       direction at zero stage tilt
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_size_z
     rank: 1000
@@ -155,12 +155,12 @@ attributes:
 ```yaml
 name: TomogramSize
 description: The size of a tomogram in voxels in each dimension.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   x:
     name: x
     description: Number of pixels in the 3D data fast axis
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_size_x
     rank: 1000
@@ -175,7 +175,7 @@ attributes:
   y:
     name: y
     description: Number of pixels in the 3D data medium axis
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_size_y
     rank: 1000
@@ -191,7 +191,7 @@ attributes:
     name: z
     description: Number of pixels in the 3D data slow axis.  This is the image projection
       direction at zero stage tilt
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_size_z
     rank: 1000

@@ -9,7 +9,7 @@ _An entity with associated funding sources._
 * __NOTE__: this is an abstract class and should not be instantiated directly
 
 
-URI: [cdp-meta:FundedEntity](https://cryoetdataportal.czscience.com/schema/metadata/FundedEntity)
+URI: [cdp-meta:FundedEntity](metadataFundedEntity)
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:FundedEntity](https://cryoetdataportal.czscience.com/schema/metad
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -84,14 +84,14 @@ URI: [cdp-meta:FundedEntity](https://cryoetdataportal.czscience.com/schema/metad
 ```yaml
 name: FundedEntity
 description: An entity with associated funding sources.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 attributes:
   funding:
     name: funding
     description: A funding source for a scientific data entity (base for JSON and
       DB representation).
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     multivalued: true
     list_elements_ordered: true
@@ -114,14 +114,14 @@ attributes:
 ```yaml
 name: FundedEntity
 description: An entity with associated funding sources.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 attributes:
   funding:
     name: funding
     description: A funding source for a scientific data entity (base for JSON and
       DB representation).
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     multivalued: true
     list_elements_ordered: true

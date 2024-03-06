@@ -7,7 +7,7 @@ _Metadata describing a tomogram._
 
 
 
-URI: [cdp-meta:Tomogram](https://cryoetdataportal.czscience.com/schema/metadata/Tomogram)
+URI: [cdp-meta:Tomogram](metadataTomogram)
 
 
 
@@ -119,7 +119,7 @@ URI: [cdp-meta:Tomogram](https://cryoetdataportal.czscience.com/schema/metadata/
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -146,7 +146,7 @@ URI: [cdp-meta:Tomogram](https://cryoetdataportal.czscience.com/schema/metadata/
 ```yaml
 name: Tomogram
 description: Metadata describing a tomogram.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 mixins:
 - AuthoredEntity
 - PicturedEntity
@@ -154,7 +154,7 @@ attributes:
   voxel_spacing:
     name: voxel_spacing
     description: Voxel spacing equal in all three axes in angstroms
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_voxel_spacing
     rank: 1000
@@ -169,7 +169,7 @@ attributes:
     name: fiducial_alignment_status
     description: Whether the tomographic alignment was computed based on fiducial
       markers.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_fiducial_alignment_status
     rank: 1000
@@ -183,7 +183,7 @@ attributes:
   ctf_corrected:
     name: ctf_corrected
     description: Whether this tomogram is CTF corrected
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_ctf_corrected
     rank: 1000
@@ -197,7 +197,7 @@ attributes:
   reconstruction_method:
     name: reconstruction_method
     description: Describe reconstruction method (Weighted back-projection, SART, SIRT)
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_reconstruction_method
     rank: 1000
@@ -211,7 +211,7 @@ attributes:
   reconstruction_software:
     name: reconstruction_software
     description: Name of software used for reconstruction
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_reconstruction_software
     rank: 1000
@@ -225,7 +225,7 @@ attributes:
   processing:
     name: processing
     description: Describe additional processing used to derive the tomogram
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_processing
     rank: 1000
@@ -239,7 +239,7 @@ attributes:
   processing_software:
     name: processing_software
     description: Processing software used to derive the tomogram
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_processing_software
     rank: 1000
@@ -255,7 +255,7 @@ attributes:
     description: Version of tomogram using the same software and post-processing.
       Version of tomogram using the same software and post-processing. This will be
       presented as the latest version
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_version
     rank: 1000
@@ -270,7 +270,7 @@ attributes:
     name: affine_transformation_matrix
     description: The flip or rotation transformation of this author submitted tomogram
       is indicated here
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_affine_transformation_matrix
     rank: 1000
@@ -284,7 +284,7 @@ attributes:
   size:
     name: size
     description: The size of a tomogram in voxels in each dimension.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: size
     owner: Tomogram
@@ -297,7 +297,7 @@ attributes:
     name: offset
     description: The offset of a tomogram in voxels in each dimension relative to
       the canonical tomogram.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: offset
     owner: Tomogram
@@ -309,7 +309,7 @@ attributes:
   authors:
     name: authors
     description: Author of a scientific data entity.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     multivalued: true
     list_elements_ordered: true
     alias: authors
@@ -327,7 +327,7 @@ attributes:
   key_photos:
     name: key_photos
     description: A set of paths to representative images of a piece of data.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: key_photos
     owner: Tomogram
     domain_of:
@@ -348,7 +348,7 @@ attributes:
 ```yaml
 name: Tomogram
 description: Metadata describing a tomogram.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 mixins:
 - AuthoredEntity
 - PicturedEntity
@@ -356,7 +356,7 @@ attributes:
   voxel_spacing:
     name: voxel_spacing
     description: Voxel spacing equal in all three axes in angstroms
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_voxel_spacing
     rank: 1000
@@ -371,7 +371,7 @@ attributes:
     name: fiducial_alignment_status
     description: Whether the tomographic alignment was computed based on fiducial
       markers.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_fiducial_alignment_status
     rank: 1000
@@ -385,7 +385,7 @@ attributes:
   ctf_corrected:
     name: ctf_corrected
     description: Whether this tomogram is CTF corrected
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_ctf_corrected
     rank: 1000
@@ -399,7 +399,7 @@ attributes:
   reconstruction_method:
     name: reconstruction_method
     description: Describe reconstruction method (Weighted back-projection, SART, SIRT)
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_reconstruction_method
     rank: 1000
@@ -413,7 +413,7 @@ attributes:
   reconstruction_software:
     name: reconstruction_software
     description: Name of software used for reconstruction
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_reconstruction_software
     rank: 1000
@@ -427,7 +427,7 @@ attributes:
   processing:
     name: processing
     description: Describe additional processing used to derive the tomogram
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_processing
     rank: 1000
@@ -441,7 +441,7 @@ attributes:
   processing_software:
     name: processing_software
     description: Processing software used to derive the tomogram
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_processing_software
     rank: 1000
@@ -457,7 +457,7 @@ attributes:
     description: Version of tomogram using the same software and post-processing.
       Version of tomogram using the same software and post-processing. This will be
       presented as the latest version
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_version
     rank: 1000
@@ -472,7 +472,7 @@ attributes:
     name: affine_transformation_matrix
     description: The flip or rotation transformation of this author submitted tomogram
       is indicated here
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_affine_transformation_matrix
     rank: 1000
@@ -486,7 +486,7 @@ attributes:
   size:
     name: size
     description: The size of a tomogram in voxels in each dimension.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: size
     owner: Tomogram
@@ -499,7 +499,7 @@ attributes:
     name: offset
     description: The offset of a tomogram in voxels in each dimension relative to
       the canonical tomogram.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: offset
     owner: Tomogram
@@ -511,7 +511,7 @@ attributes:
   authors:
     name: authors
     description: Author of a scientific data entity.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     multivalued: true
     list_elements_ordered: true
     alias: authors
@@ -529,7 +529,7 @@ attributes:
   key_photos:
     name: key_photos
     description: A set of paths to representative images of a piece of data.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     alias: key_photos
     owner: Tomogram
     domain_of:

@@ -1,6 +1,6 @@
 # Slot: cell_strain
 
-URI: [cdp-meta:cell_strain](https://cryoetdataportal.czscience.com/schema/metadata/cell_strain)
+URI: [cdp-meta:cell_strain](metadatacell_strain)
 
 
 

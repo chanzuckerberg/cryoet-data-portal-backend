@@ -5,7 +5,7 @@ _NCBI taxonomy identifier for the organism, e.g. 9606_
 
 
 
-URI: [cdp-meta:taxonomy_id](https://cryoetdataportal.czscience.com/schema/metadata/taxonomy_id)
+URI: [cdp-meta:taxonomy_id](metadatataxonomy_id)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:taxonomy_id](https://cryoetdataportal.czscience.com/schema/metada
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:taxonomy_id](https://cryoetdataportal.czscience.com/schema/metada
 ```yaml
 name: taxonomy_id
 description: NCBI taxonomy identifier for the organism, e.g. 9606
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:organism_taxid
 rank: 1000

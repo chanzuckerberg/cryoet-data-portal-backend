@@ -5,7 +5,7 @@ _Describe reconstruction method (Weighted back-projection, SART, SIRT)_
 
 
 
-URI: [cdp-meta:reconstruction_method](https://cryoetdataportal.czscience.com/schema/metadata/reconstruction_method)
+URI: [cdp-meta:reconstruction_method](metadatareconstruction_method)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:reconstruction_method](https://cryoetdataportal.czscience.com/sch
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:reconstruction_method](https://cryoetdataportal.czscience.com/sch
 ```yaml
 name: reconstruction_method
 description: Describe reconstruction method (Weighted back-projection, SART, SIRT)
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tomogram_reconstruction_method
 rank: 1000

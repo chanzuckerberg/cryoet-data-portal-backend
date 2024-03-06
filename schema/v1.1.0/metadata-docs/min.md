@@ -5,7 +5,7 @@ _Minimal tilt angle in degrees_
 
 
 
-URI: [cdp-meta:min](https://cryoetdataportal.czscience.com/schema/metadata/min)
+URI: [cdp-meta:min](metadatamin)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:min](https://cryoetdataportal.czscience.com/schema/metadata/min)
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:min](https://cryoetdataportal.czscience.com/schema/metadata/min)
 ```yaml
 name: min
 description: Minimal tilt angle in degrees
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_tilt_min
 rank: 1000

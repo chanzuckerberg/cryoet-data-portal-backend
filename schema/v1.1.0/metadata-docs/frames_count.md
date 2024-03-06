@@ -5,7 +5,7 @@ _Number of frames associated with this tiltseries_
 
 
 
-URI: [cdp-meta:frames_count](https://cryoetdataportal.czscience.com/schema/metadata/frames_count)
+URI: [cdp-meta:frames_count](metadataframes_count)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:frames_count](https://cryoetdataportal.czscience.com/schema/metad
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:frames_count](https://cryoetdataportal.czscience.com/schema/metad
 ```yaml
 name: frames_count
 description: Number of frames associated with this tiltseries
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_frames_count
 rank: 1000

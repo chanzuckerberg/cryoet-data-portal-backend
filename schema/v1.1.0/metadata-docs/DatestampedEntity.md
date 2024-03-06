@@ -9,7 +9,7 @@ _An entity with associated deposition, release and last modified dates._
 * __NOTE__: this is an abstract class and should not be instantiated directly
 
 
-URI: [cdp-meta:DatestampedEntity](https://cryoetdataportal.czscience.com/schema/metadata/DatestampedEntity)
+URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
 
 
 
@@ -58,7 +58,7 @@ URI: [cdp-meta:DatestampedEntity](https://cryoetdataportal.czscience.com/schema/
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -85,14 +85,14 @@ URI: [cdp-meta:DatestampedEntity](https://cryoetdataportal.czscience.com/schema/
 ```yaml
 name: DatestampedEntity
 description: An entity with associated deposition, release and last modified dates.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 attributes:
   dates:
     name: dates
     description: A set of dates at which a data item was deposited, published and
       last modified.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: dates
     owner: DatestampedEntity
@@ -114,14 +114,14 @@ attributes:
 ```yaml
 name: DatestampedEntity
 description: An entity with associated deposition, release and last modified dates.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 attributes:
   dates:
     name: dates
     description: A set of dates at which a data item was deposited, published and
       last modified.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: dates
     owner: DatestampedEntity

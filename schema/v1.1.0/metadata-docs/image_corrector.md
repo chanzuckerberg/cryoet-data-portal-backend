@@ -5,7 +5,7 @@ _Image corrector setup_
 
 
 
-URI: [cdp-meta:image_corrector](https://cryoetdataportal.czscience.com/schema/metadata/image_corrector)
+URI: [cdp-meta:image_corrector](metadataimage_corrector)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:image_corrector](https://cryoetdataportal.czscience.com/schema/me
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:image_corrector](https://cryoetdataportal.czscience.com/schema/me
 ```yaml
 name: image_corrector
 description: Image corrector setup
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_microscope_image_corrector
 rank: 1000

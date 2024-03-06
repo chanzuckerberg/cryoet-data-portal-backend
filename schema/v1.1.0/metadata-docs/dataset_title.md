@@ -5,7 +5,7 @@ _Title of a CryoET dataset._
 
 
 
-URI: [cdp-meta:dataset_title](https://cryoetdataportal.czscience.com/schema/metadata/dataset_title)
+URI: [cdp-meta:dataset_title](metadatadataset_title)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:dataset_title](https://cryoetdataportal.czscience.com/schema/meta
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:dataset_title](https://cryoetdataportal.czscience.com/schema/meta
 ```yaml
 name: dataset_title
 description: Title of a CryoET dataset.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:dataset_title
 rank: 1000

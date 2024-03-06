@@ -5,7 +5,7 @@ _The range of tilt angles in the tilt series._
 
 
 
-URI: [cdp-meta:tilt_range](https://cryoetdataportal.czscience.com/schema/metadata/tilt_range)
+URI: [cdp-meta:tilt_range](metadatatilt_range)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:tilt_range](https://cryoetdataportal.czscience.com/schema/metadat
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:tilt_range](https://cryoetdataportal.czscience.com/schema/metadat
 ```yaml
 name: tilt_range
 description: The range of tilt angles in the tilt series.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: tilt_range
 owner: TiltSeries

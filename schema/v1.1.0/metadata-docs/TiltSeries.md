@@ -7,7 +7,7 @@ _Metadata describing a tilt series._
 
 
 
-URI: [cdp-meta:TiltSeries](https://cryoetdataportal.czscience.com/schema/metadata/TiltSeries)
+URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 
 
 
@@ -133,7 +133,7 @@ URI: [cdp-meta:TiltSeries](https://cryoetdataportal.czscience.com/schema/metadat
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -160,12 +160,12 @@ URI: [cdp-meta:TiltSeries](https://cryoetdataportal.czscience.com/schema/metadat
 ```yaml
 name: TiltSeries
 description: Metadata describing a tilt series.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   acceleration_voltage:
     name: acceleration_voltage
     description: Electron Microscope Accelerator voltage in volts
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_acceleration_voltage
     rank: 1000
@@ -179,7 +179,7 @@ attributes:
   spherical_aberration_constant:
     name: spherical_aberration_constant
     description: Spherical Aberration Constant of the objective lens in millimeters
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_spherical_aberration_constant
     rank: 1000
@@ -194,7 +194,7 @@ attributes:
     name: microscope_additional_info
     description: Other microscope optical setup information, in addition to energy
       filter, phase plate and image corrector
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_microscope_additional_info
     rank: 1000
@@ -208,7 +208,7 @@ attributes:
   tilt_axis:
     name: tilt_axis
     description: Rotation angle in degrees
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_tilt_axis
     rank: 1000
@@ -222,7 +222,7 @@ attributes:
   tilt_step:
     name: tilt_step
     description: Tilt step in degrees
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_tilt_step
     rank: 1000
@@ -236,7 +236,7 @@ attributes:
   tilting_scheme:
     name: tilting_scheme
     description: The order of stage tilting during acquisition of the data
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_tilting_scheme
     rank: 1000
@@ -251,7 +251,7 @@ attributes:
     name: total_flux
     description: Number of Electrons reaching the specimen in a square Angstrom area
       for the entire tilt series
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_total_flux
     rank: 1000
@@ -265,7 +265,7 @@ attributes:
   data_acquisition_software:
     name: data_acquisition_software
     description: Software used to collect data
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_data_acquisition_software
     rank: 1000
@@ -279,7 +279,7 @@ attributes:
   binning_from_frames:
     name: binning_from_frames
     description: Describes the binning factor from frames to tilt series file
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_binning_from_frames
     rank: 1000
@@ -294,7 +294,7 @@ attributes:
     name: tilt_series_quality
     description: Author assessment of tilt series quality within the dataset (1-5,
       5 is best)
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_tilt_series_quality
     rank: 1000
@@ -308,7 +308,7 @@ attributes:
   pixel_spacing:
     name: pixel_spacing
     description: Pixel spacing for the tilt series
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_pixel_spacing
     rank: 1000
@@ -322,7 +322,7 @@ attributes:
   aligned_tiltseries_binning:
     name: aligned_tiltseries_binning
     description: Binning factor of the aligned tilt series
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_aligned_tiltseries_binning
     rank: 1000
@@ -336,7 +336,7 @@ attributes:
   frames_count:
     name: frames_count
     description: Number of frames associated with this tiltseries
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_frames_count
     rank: 1000
@@ -350,7 +350,7 @@ attributes:
   camera:
     name: camera
     description: The camera used to collect the tilt series.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: camera
     owner: TiltSeries
@@ -362,7 +362,7 @@ attributes:
   microscope:
     name: microscope
     description: The microscope used to collect the tilt series.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: microscope
     owner: TiltSeries
@@ -374,7 +374,7 @@ attributes:
   microscope_optical_setup:
     name: microscope_optical_setup
     description: The optical setup of the microscope used to collect the tilt series.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: microscope_optical_setup
     owner: TiltSeries
@@ -386,7 +386,7 @@ attributes:
   tilt_range:
     name: tilt_range
     description: The range of tilt angles in the tilt series.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: tilt_range
     owner: TiltSeries
@@ -405,12 +405,12 @@ attributes:
 ```yaml
 name: TiltSeries
 description: Metadata describing a tilt series.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   acceleration_voltage:
     name: acceleration_voltage
     description: Electron Microscope Accelerator voltage in volts
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_acceleration_voltage
     rank: 1000
@@ -424,7 +424,7 @@ attributes:
   spherical_aberration_constant:
     name: spherical_aberration_constant
     description: Spherical Aberration Constant of the objective lens in millimeters
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_spherical_aberration_constant
     rank: 1000
@@ -439,7 +439,7 @@ attributes:
     name: microscope_additional_info
     description: Other microscope optical setup information, in addition to energy
       filter, phase plate and image corrector
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_microscope_additional_info
     rank: 1000
@@ -453,7 +453,7 @@ attributes:
   tilt_axis:
     name: tilt_axis
     description: Rotation angle in degrees
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_tilt_axis
     rank: 1000
@@ -467,7 +467,7 @@ attributes:
   tilt_step:
     name: tilt_step
     description: Tilt step in degrees
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_tilt_step
     rank: 1000
@@ -481,7 +481,7 @@ attributes:
   tilting_scheme:
     name: tilting_scheme
     description: The order of stage tilting during acquisition of the data
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_tilting_scheme
     rank: 1000
@@ -496,7 +496,7 @@ attributes:
     name: total_flux
     description: Number of Electrons reaching the specimen in a square Angstrom area
       for the entire tilt series
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_total_flux
     rank: 1000
@@ -510,7 +510,7 @@ attributes:
   data_acquisition_software:
     name: data_acquisition_software
     description: Software used to collect data
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_data_acquisition_software
     rank: 1000
@@ -524,7 +524,7 @@ attributes:
   binning_from_frames:
     name: binning_from_frames
     description: Describes the binning factor from frames to tilt series file
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_binning_from_frames
     rank: 1000
@@ -539,7 +539,7 @@ attributes:
     name: tilt_series_quality
     description: Author assessment of tilt series quality within the dataset (1-5,
       5 is best)
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_tilt_series_quality
     rank: 1000
@@ -553,7 +553,7 @@ attributes:
   pixel_spacing:
     name: pixel_spacing
     description: Pixel spacing for the tilt series
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_pixel_spacing
     rank: 1000
@@ -567,7 +567,7 @@ attributes:
   aligned_tiltseries_binning:
     name: aligned_tiltseries_binning
     description: Binning factor of the aligned tilt series
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_aligned_tiltseries_binning
     rank: 1000
@@ -581,7 +581,7 @@ attributes:
   frames_count:
     name: frames_count
     description: Number of frames associated with this tiltseries
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_frames_count
     rank: 1000
@@ -595,7 +595,7 @@ attributes:
   camera:
     name: camera
     description: The camera used to collect the tilt series.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: camera
     owner: TiltSeries
@@ -607,7 +607,7 @@ attributes:
   microscope:
     name: microscope
     description: The microscope used to collect the tilt series.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: microscope
     owner: TiltSeries
@@ -619,7 +619,7 @@ attributes:
   microscope_optical_setup:
     name: microscope_optical_setup
     description: The optical setup of the microscope used to collect the tilt series.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: microscope_optical_setup
     owner: TiltSeries
@@ -631,7 +631,7 @@ attributes:
   tilt_range:
     name: tilt_range
     description: The range of tilt angles in the tilt series.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: tilt_range
     owner: TiltSeries

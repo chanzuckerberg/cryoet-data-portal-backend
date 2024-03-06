@@ -7,7 +7,7 @@ _The range of tilt angles in the tilt series._
 
 
 
-URI: [cdp-meta:TiltRange](https://cryoetdataportal.czscience.com/schema/metadata/TiltRange)
+URI: [cdp-meta:TiltRange](metadataTiltRange)
 
 
 
@@ -65,7 +65,7 @@ URI: [cdp-meta:TiltRange](https://cryoetdataportal.czscience.com/schema/metadata
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -92,12 +92,12 @@ URI: [cdp-meta:TiltRange](https://cryoetdataportal.czscience.com/schema/metadata
 ```yaml
 name: TiltRange
 description: The range of tilt angles in the tilt series.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   min:
     name: min
     description: Minimal tilt angle in degrees
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_tilt_min
     rank: 1000
@@ -111,7 +111,7 @@ attributes:
   max:
     name: max
     description: Maximal tilt angle in degrees
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_tilt_max
     rank: 1000
@@ -132,12 +132,12 @@ attributes:
 ```yaml
 name: TiltRange
 description: The range of tilt angles in the tilt series.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   min:
     name: min
     description: Minimal tilt angle in degrees
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_tilt_min
     rank: 1000
@@ -151,7 +151,7 @@ attributes:
   max:
     name: max
     description: Maximal tilt angle in degrees
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_tilt_max
     rank: 1000

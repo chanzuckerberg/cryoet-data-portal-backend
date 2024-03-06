@@ -5,7 +5,7 @@ _Whether an annotation is considered ground truth, as determined by the annotato
 
 
 
-URI: [cdp-meta:ground_truth_status](https://cryoetdataportal.czscience.com/schema/metadata/ground_truth_status)
+URI: [cdp-meta:ground_truth_status](metadataground_truth_status)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:ground_truth_status](https://cryoetdataportal.czscience.com/schem
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:ground_truth_status](https://cryoetdataportal.czscience.com/schem
 name: ground_truth_status
 description: Whether an annotation is considered ground truth, as determined by the
   annotator.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_ground_truth_status
 rank: 1000

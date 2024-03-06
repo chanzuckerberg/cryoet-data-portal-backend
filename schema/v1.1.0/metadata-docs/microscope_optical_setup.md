@@ -5,7 +5,7 @@ _The optical setup of the microscope used to collect the tilt series._
 
 
 
-URI: [cdp-meta:microscope_optical_setup](https://cryoetdataportal.czscience.com/schema/metadata/microscope_optical_setup)
+URI: [cdp-meta:microscope_optical_setup](metadatamicroscope_optical_setup)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:microscope_optical_setup](https://cryoetdataportal.czscience.com/
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:microscope_optical_setup](https://cryoetdataportal.czscience.com/
 ```yaml
 name: microscope_optical_setup
 description: The optical setup of the microscope used to collect the tilt series.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: microscope_optical_setup
 owner: TiltSeries

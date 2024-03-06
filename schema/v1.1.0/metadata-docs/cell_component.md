@@ -1,6 +1,6 @@
 # Slot: cell_component
 
-URI: [cdp-meta:cell_component](https://cryoetdataportal.czscience.com/schema/metadata/cell_component)
+URI: [cdp-meta:cell_component](metadatacell_component)
 
 
 

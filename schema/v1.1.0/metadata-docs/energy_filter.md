@@ -5,7 +5,7 @@ _Energy filter setup used_
 
 
 
-URI: [cdp-meta:energy_filter](https://cryoetdataportal.czscience.com/schema/metadata/energy_filter)
+URI: [cdp-meta:energy_filter](metadataenergy_filter)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:energy_filter](https://cryoetdataportal.czscience.com/schema/meta
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:energy_filter](https://cryoetdataportal.czscience.com/schema/meta
 ```yaml
 name: energy_filter
 description: Energy filter setup used
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_microscope_energy_filter
 rank: 1000

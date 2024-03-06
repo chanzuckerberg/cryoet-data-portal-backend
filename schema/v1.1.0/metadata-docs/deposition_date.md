@@ -5,7 +5,7 @@ _The date a data item was received by the cryoET data portal._
 
 
 
-URI: [cdp-meta:deposition_date](https://cryoetdataportal.czscience.com/schema/metadata/deposition_date)
+URI: [cdp-meta:deposition_date](metadatadeposition_date)
 
 
 
@@ -47,7 +47,7 @@ URI: [cdp-meta:deposition_date](https://cryoetdataportal.czscience.com/schema/me
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -58,7 +58,7 @@ URI: [cdp-meta:deposition_date](https://cryoetdataportal.czscience.com/schema/me
 ```yaml
 name: deposition_date
 description: The date a data item was received by the cryoET data portal.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: deposition_date
 owner: DateStamp

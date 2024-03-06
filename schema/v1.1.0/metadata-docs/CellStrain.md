@@ -7,7 +7,7 @@ _The strain or cell line from which the sample was derived._
 
 
 
-URI: [cdp-meta:CellStrain](https://cryoetdataportal.czscience.com/schema/metadata/CellStrain)
+URI: [cdp-meta:CellStrain](metadataCellStrain)
 
 
 
@@ -66,7 +66,7 @@ URI: [cdp-meta:CellStrain](https://cryoetdataportal.czscience.com/schema/metadat
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -93,11 +93,11 @@ URI: [cdp-meta:CellStrain](https://cryoetdataportal.czscience.com/schema/metadat
 ```yaml
 name: CellStrain
 description: The strain or cell line from which the sample was derived.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   name:
     name: name
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:cell_strain_name
     alias: name
@@ -116,7 +116,7 @@ attributes:
     inlined_as_list: true
   id:
     name: id
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:cell_strain_id
     alias: id
@@ -140,11 +140,11 @@ attributes:
 ```yaml
 name: CellStrain
 description: The strain or cell line from which the sample was derived.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   name:
     name: name
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:cell_strain_name
     alias: name
@@ -163,7 +163,7 @@ attributes:
     inlined_as_list: true
   id:
     name: id
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:cell_strain_id
     alias: id

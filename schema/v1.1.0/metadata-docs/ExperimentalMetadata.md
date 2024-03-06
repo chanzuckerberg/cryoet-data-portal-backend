@@ -9,7 +9,7 @@ _Metadata describing sample and sample preparation methods used in a cryoET data
 * __NOTE__: this is an abstract class and should not be instantiated directly
 
 
-URI: [cdp-meta:ExperimentalMetadata](https://cryoetdataportal.czscience.com/schema/metadata/ExperimentalMetadata)
+URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 
 
@@ -97,7 +97,7 @@ URI: [cdp-meta:ExperimentalMetadata](https://cryoetdataportal.czscience.com/sche
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -125,13 +125,13 @@ URI: [cdp-meta:ExperimentalMetadata](https://cryoetdataportal.czscience.com/sche
 name: ExperimentalMetadata
 description: Metadata describing sample and sample preparation methods used in a cryoET
   dataset.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 attributes:
   sample_type:
     name: sample_type
     description: Type of sample imaged in a CryoET study.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:preparation_sample_type
     rank: 1000
@@ -146,7 +146,7 @@ attributes:
   sample_preparation:
     name: sample_preparation
     description: Describes how the sample was prepared.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:sample_preparation
     rank: 1000
@@ -161,7 +161,7 @@ attributes:
   grid_preparation:
     name: grid_preparation
     description: Describes Cryo-ET grid preparation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:grid_preparation
     rank: 1000
@@ -177,7 +177,7 @@ attributes:
     name: other_setup
     description: Describes other setup not covered by sample preparation or grid preparation
       that may make this dataset unique in   the same publication.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:preparation_other_setup
     rank: 1000
@@ -192,7 +192,7 @@ attributes:
   organism:
     name: organism
     description: The species from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: organism
     owner: ExperimentalMetadata
@@ -205,7 +205,7 @@ attributes:
   tissue:
     name: tissue
     description: The type of tissue from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: tissue
     owner: ExperimentalMetadata
@@ -218,7 +218,7 @@ attributes:
   cell_type:
     name: cell_type
     description: The cell type from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: cell_type
     owner: ExperimentalMetadata
@@ -231,7 +231,7 @@ attributes:
   cell_strain:
     name: cell_strain
     description: The strain or cell line from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: cell_strain
     owner: ExperimentalMetadata
@@ -244,7 +244,7 @@ attributes:
   cell_component:
     name: cell_component
     description: The cellular component from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: cell_component
     owner: ExperimentalMetadata
@@ -265,13 +265,13 @@ attributes:
 name: ExperimentalMetadata
 description: Metadata describing sample and sample preparation methods used in a cryoET
   dataset.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 abstract: true
 attributes:
   sample_type:
     name: sample_type
     description: Type of sample imaged in a CryoET study.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:preparation_sample_type
     rank: 1000
@@ -286,7 +286,7 @@ attributes:
   sample_preparation:
     name: sample_preparation
     description: Describes how the sample was prepared.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:sample_preparation
     rank: 1000
@@ -301,7 +301,7 @@ attributes:
   grid_preparation:
     name: grid_preparation
     description: Describes Cryo-ET grid preparation.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:grid_preparation
     rank: 1000
@@ -317,7 +317,7 @@ attributes:
     name: other_setup
     description: Describes other setup not covered by sample preparation or grid preparation
       that may make this dataset unique in   the same publication.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     exact_mappings:
     - cdp-common:preparation_other_setup
     rank: 1000
@@ -332,7 +332,7 @@ attributes:
   organism:
     name: organism
     description: The species from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: organism
     owner: ExperimentalMetadata
@@ -345,7 +345,7 @@ attributes:
   tissue:
     name: tissue
     description: The type of tissue from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: tissue
     owner: ExperimentalMetadata
@@ -358,7 +358,7 @@ attributes:
   cell_type:
     name: cell_type
     description: The cell type from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: cell_type
     owner: ExperimentalMetadata
@@ -371,7 +371,7 @@ attributes:
   cell_strain:
     name: cell_strain
     description: The strain or cell line from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: cell_strain
     owner: ExperimentalMetadata
@@ -384,7 +384,7 @@ attributes:
   cell_component:
     name: cell_component
     description: The cellular component from which the sample was derived.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: cell_component
     owner: ExperimentalMetadata

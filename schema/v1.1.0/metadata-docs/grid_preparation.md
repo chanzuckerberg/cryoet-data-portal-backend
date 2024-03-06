@@ -1,6 +1,6 @@
 # Slot: grid_preparation
 
-URI: [cdp-meta:grid_preparation](https://cryoetdataportal.czscience.com/schema/metadata/grid_preparation)
+URI: [cdp-meta:grid_preparation](metadatagrid_preparation)
 
 
 

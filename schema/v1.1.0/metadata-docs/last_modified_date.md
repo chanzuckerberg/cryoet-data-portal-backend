@@ -5,7 +5,7 @@ _The date a piece of data was last modified on the cryoET data portal._
 
 
 
-URI: [cdp-meta:last_modified_date](https://cryoetdataportal.czscience.com/schema/metadata/last_modified_date)
+URI: [cdp-meta:last_modified_date](metadatalast_modified_date)
 
 
 
@@ -47,7 +47,7 @@ URI: [cdp-meta:last_modified_date](https://cryoetdataportal.czscience.com/schema
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -58,7 +58,7 @@ URI: [cdp-meta:last_modified_date](https://cryoetdataportal.czscience.com/schema
 ```yaml
 name: last_modified_date
 description: The date a piece of data was last modified on the cryoET data portal.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: last_modified_date
 owner: DateStamp

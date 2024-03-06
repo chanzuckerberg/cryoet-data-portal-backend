@@ -5,7 +5,7 @@ _Name of software used for reconstruction_
 
 
 
-URI: [cdp-meta:reconstruction_software](https://cryoetdataportal.czscience.com/schema/metadata/reconstruction_software)
+URI: [cdp-meta:reconstruction_software](metadatareconstruction_software)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:reconstruction_software](https://cryoetdataportal.czscience.com/s
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:reconstruction_software](https://cryoetdataportal.czscience.com/s
 ```yaml
 name: reconstruction_software
 description: Name of software used for reconstruction
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 exact_mappings:
 - cdp-common:tomogram_reconstruction_software
 rank: 1000

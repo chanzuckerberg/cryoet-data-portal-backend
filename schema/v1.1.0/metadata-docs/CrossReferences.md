@@ -7,7 +7,7 @@ _A set of cross-references to other databases and publications._
 
 
 
-URI: [cdp-meta:CrossReferences](https://cryoetdataportal.czscience.com/schema/metadata/CrossReferences)
+URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 
 
 
@@ -76,7 +76,7 @@ URI: [cdp-meta:CrossReferences](https://cryoetdataportal.czscience.com/schema/me
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -103,13 +103,13 @@ URI: [cdp-meta:CrossReferences](https://cryoetdataportal.czscience.com/schema/me
 ```yaml
 name: CrossReferences
 description: A set of cross-references to other databases and publications.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   dataset_publications:
     name: dataset_publications
     description: Comma-separated list of DOIs for publications associated with the
       dataset.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: dataset_publications
     owner: CrossReferences
@@ -122,7 +122,7 @@ attributes:
   related_database_entries:
     name: related_database_entries
     description: Comma-separated list of related database entries for the dataset.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: related_database_entries
     owner: CrossReferences
@@ -135,7 +135,7 @@ attributes:
   related_database_links:
     name: related_database_links
     description: Comma-separated list of related database links for the dataset.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: related_database_links
     owner: CrossReferences
@@ -147,7 +147,7 @@ attributes:
   dataset_citations:
     name: dataset_citations
     description: Comma-separated list of DOIs for publications citing the dataset.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: dataset_citations
     owner: CrossReferences
@@ -166,13 +166,13 @@ attributes:
 ```yaml
 name: CrossReferences
 description: A set of cross-references to other databases and publications.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 attributes:
   dataset_publications:
     name: dataset_publications
     description: Comma-separated list of DOIs for publications associated with the
       dataset.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: dataset_publications
     owner: CrossReferences
@@ -185,7 +185,7 @@ attributes:
   related_database_entries:
     name: related_database_entries
     description: Comma-separated list of related database entries for the dataset.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: related_database_entries
     owner: CrossReferences
@@ -198,7 +198,7 @@ attributes:
   related_database_links:
     name: related_database_links
     description: Comma-separated list of related database links for the dataset.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: related_database_links
     owner: CrossReferences
@@ -210,7 +210,7 @@ attributes:
   dataset_citations:
     name: dataset_citations
     description: Comma-separated list of DOIs for publications citing the dataset.
-    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    from_schema: metadata
     rank: 1000
     alias: dataset_citations
     owner: CrossReferences

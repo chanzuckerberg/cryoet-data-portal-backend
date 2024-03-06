@@ -5,7 +5,7 @@ _Metadata describing the object being annotated._
 
 
 
-URI: [cdp-meta:annotation_object](https://cryoetdataportal.czscience.com/schema/metadata/annotation_object)
+URI: [cdp-meta:annotation_object](metadataannotation_object)
 
 
 
@@ -45,7 +45,7 @@ URI: [cdp-meta:annotation_object](https://cryoetdataportal.czscience.com/schema/
 ### Schema Source
 
 
-* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+* from schema: metadata
 
 
 
@@ -56,7 +56,7 @@ URI: [cdp-meta:annotation_object](https://cryoetdataportal.czscience.com/schema/
 ```yaml
 name: annotation_object
 description: Metadata describing the object being annotated.
-from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+from_schema: metadata
 rank: 1000
 alias: annotation_object
 owner: Annotation
