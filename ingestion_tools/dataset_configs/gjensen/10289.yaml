@@ -58,6 +58,19 @@ tiltseries:
   tilting_scheme: starting tilt to max then min
   total_flux: 150.0
 tomograms:
+  voxel_spacing: 15.64
+  reconstruction_method: Weighted back projection
+  reconstruction_software: IMOD
+  fiducial_alignment_status: FIDUCIAL
+  ctf_corrected: null
+  processing: raw
+  processing_software: null
+  align_softwares:
+  - RAPTOR
+  offset:
+    x: 0
+    y: 0
+    z: 0
   affine_transformation_matrix:
   - - 1
     - 0
@@ -75,21 +88,8 @@ tomograms:
     - 0
     - 0
     - 1
-  align_softwares:
-  - RAPTOR
   authors: *id001
-  ctf_corrected: null
-  fiducial_alignment_status: FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  processing_software: null
-  reconstruction_method: '{tomo-reconstruction_method}'
-  reconstruction_software: IMOD
   tomogram_version: 1
-  voxel_spacing: 15.64
 annotations: {}
 standardization_config:
   destination_prefix: '10289'

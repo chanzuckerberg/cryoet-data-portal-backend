@@ -1,8 +1,8 @@
 run_name,tomo-voxel_spacing,ts-data_acquisition_software,ts-microscope-manufacturer,ts-microscope-model,ts-pixel_spacing,ts-spherical_aberration_constant,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_path,ts-tilt_step,ts-total_flux
-ycw2012-12-05-10,20.0,UCSF Tomo,FEI,Polara,4.933,2.0,RAPTOR;RAPTOR,60.0,-60.0,rawdata/Invasion_complex_2_001.mrc,1.0,73.0
+ycw2012-12-05-10,19.733,UCSF Tomo,FEI,Polara,4.933,2.0,RAPTOR;RAPTOR,60.0,-60.0,rawdata/Invasion_complex_2_001.mrc,1.0,73.0
 ycw2012-12-05-11,19.733,UCSF Tomo,FEI,Polara,4.933,2.0,RAPTOR;RAPTOR,60.0,-60.0,rawdata/Invasion_complex_4_001.mrc,1.0,73.0
-ycw2012-12-05-13,1.6400000000000001,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR;RAPTOR,60.0,-60.0,rawdata/Invasion_complex_50001.mrc,1.0,114.0
-ycw2012-12-05-14,1.6400000000000001,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR;RAPTOR,60.0,-60.0,rawdata/Invasion_complex_60001.mrc,1.0,114.0
+ycw2012-12-05-13,16.145,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR;RAPTOR,60.0,-60.0,rawdata/Invasion_complex_50001.mrc,1.0,114.0
+ycw2012-12-05-14,16.145,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR;RAPTOR,60.0,-60.0,rawdata/Invasion_complex_60001.mrc,1.0,114.0
 ycw2012-12-05-15,16.145,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR;RAPTOR,60.0,-60.0,rawdata/Invasion_complex_70001.mrc,1.0,114.0
 ycw2012-12-05-16,16.145,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR;RAPTOR,60.0,-60.0,rawdata/Invasion_complex_80001.mrc,1.0,114.0
 ycw2012-12-05-17,16.145,UCSF Tomo,FEI,Polara,4.0360000000000005,2.0,RAPTOR;RAPTOR,60.0,-60.0,rawdata/Invasion_complex_80002.mrc,1.0,114.0

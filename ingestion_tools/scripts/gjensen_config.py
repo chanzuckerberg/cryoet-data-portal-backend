@@ -6,7 +6,7 @@ import re
 from collections import defaultdict
 from copy import deepcopy
 from functools import partial
-from typing import Any, Callable
+from typing import Any, Callable, Optional
 
 import click
 import yaml
@@ -97,6 +97,16 @@ def to_dataset_config(dataset_id: int, data: dict[str, Any], authors: list[dict[
     return config
 
 
+def get_canonical_tomogram_name(run: dict[str, Any]) -> Optional[str]:
+    """
+    Get name of the tomogram to treat as Canonical when there are multiple tomograms for a run. Use sorting to find
+    the first tomogram alphabetically.
+    """
+    names = list(run.get("tomograms", {}).keys())
+    names.sort()
+    return next(iter(names), None)
+
+
 def to_standardization_config(
     dataset_id: int,
     data: dict[str, Any],
@@ -112,9 +122,7 @@ def to_standardization_config(
         run_names.append(run["run_name"])
         if len(run["tomograms"]) > 1:
             run_has_multiple_tomos = True
-        names = list(run.get("tomograms", {}).keys())
-        names.sort()
-        mapped_tomo_name[run["run_name"]] = next(iter(names), "*")
+        mapped_tomo_name[run["run_name"]] = get_canonical_tomogram_name(run) or "*"
 
     tlt_tomo_path = "{mapped_frame_name}" if run_has_multiple_tomos else "3dimage_*"
     tomo_path = "{mapped_tomo_name}" if run_has_multiple_tomos else "3dimage_*/*"
@@ -222,7 +230,7 @@ def to_template_by_run(templates, run_data_map, prefix: str, path) -> dict[str, 
     return template_metadata
 
 
-def to_tiltseries(spacing_corrections: dict[str, dict], data: dict[str, Any]) -> dict[str, Any]:
+def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
     tilt_series = deepcopy(data["tilt_series"])
     microscope = tilt_series.get("microscope", {})
     tilt_series["microscope_optical_setup"] = {
@@ -237,9 +245,6 @@ def to_tiltseries(spacing_corrections: dict[str, dict], data: dict[str, Any]) ->
         "min": tilt_series.pop("tilt_range_min"),
         "max": tilt_series.pop("tilt_range_max"),
     }
-
-    if valid_pixel_spacing := spacing_corrections.get(data["run_name"]):
-        tilt_series["pixel_spacing"] = valid_pixel_spacing["tilt_series"]
 
     tilt_series["tilt_series_quality"] = 4 if len(data["tomograms"]) else 1
 
@@ -265,10 +270,10 @@ def normalize_processing(input_processing: str) -> str:
 
 def to_tomogram(
     authors: list[dict[str, Any]],
-    spacing_corrections: dict[str, dict],
     data: dict[str, Any],
 ) -> [dict[str, Any] | Any]:
-    tomogram = next((deepcopy(val) for val in data["tomograms"].values()), {})
+    canonical_tomogram_name = get_canonical_tomogram_name(data)
+    tomogram = deepcopy(data["tomograms"][canonical_tomogram_name]) if canonical_tomogram_name else {}
     if len(data["tomograms"].keys()) > 1:
         print(
             f'{data["run_name"]} has {len(data["tomograms"].values())} tomograms: '
@@ -287,9 +292,7 @@ def to_tomogram(
 
     tomogram["processing"] = normalize_processing(tomogram.get("processing"))
 
-    if valid_voxel_spacing := spacing_corrections.get(data["run_name"]):
-        tomogram["voxel_spacing"] = valid_voxel_spacing["tomogram"]
-    elif not tomogram.get("voxel_spacing"):
+    if "voxel_spacing" not in tomogram:
         tomogram["voxel_spacing"] = None
 
     return tomogram
@@ -341,15 +344,6 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     fs.makedirs(run_frames_map_path)
     file_paths = fs.glob(os.path.join(input_dir, "[0-9]*.json"))
     file_paths.sort()
-    spacing_corrections = {}
-    with open(os.path.join(input_dir, "spacing_correction.json"), "r") as file:
-        spacing_corrections = {
-            entry["run_name"]: {
-                "tomogram": entry["tomogram_voxel_spacing"],
-                "tilt_series": entry["tilt_series_pixel_spacing"],
-            }
-            for entry in json.load(file)
-        }
     for file_path in file_paths:
         with open(file_path, "r") as file:
             config = json.load(file)
@@ -364,14 +358,14 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
                     dataset_id,
                     val.get("runs"),
                     run_data_map,
-                    partial(to_tiltseries, spacing_corrections),
+                    partial(to_tiltseries),
                     "ts",
                 ),
                 "tomograms": to_config_by_run(
                     dataset_id,
                     val.get("runs"),
                     run_data_map,
-                    partial(to_tomogram, authors, spacing_corrections),
+                    partial(to_tomogram, authors),
                     "tomo",
                 ),
                 "annotations": {},
