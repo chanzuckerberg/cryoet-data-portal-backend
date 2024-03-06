@@ -1,40 +1,40 @@
-run_name,tomo-reconstruction_method,ts-tilt_alignment_software,ts-tilt_series_path
-jsa2010-04-01-1,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_001.mrc
-jsa2010-04-01-2,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_002.mrc
-jsa2010-04-01-3,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_003.mrc
-jsa2010-04-01-4,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_004.mrc
-jsa2010-04-01-5,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_005.mrc
-jsa2010-04-01-6,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_006.mrc
-jsa2010-04-01-7,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_007.mrc
-jsa2010-04-01-8,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_008.mrc
-jsa2010-04-01-9,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_009.mrc
-jsa2010-04-01-10,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_010.mrc
-jsa2010-04-01-11,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_011.mrc
-jsa2010-04-01-12,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_012.mrc
-jsa2010-04-01-13,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_013.mrc
-jsa2010-04-01-14,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_014.mrc
-jsa2010-04-01-15,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_015.mrc
-jsa2010-04-01-16,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_016.mrc
-jsa2010-04-01-17,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_017.mrc
-jsa2010-04-01-18,Weighted back projection,RAPTOR,rawdata/10apr01a_B718a_018.mrc
-jsa2010-04-01-19,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_019.mrc
-jsa2010-04-01-20,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_020.mrc
-jsa2010-04-01-21,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_021.mrc
-jsa2010-04-01-22,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_022.mrc
-jsa2010-04-01-23,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_023.mrc
-jsa2010-04-01-24,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_024.mrc
-jsa2010-04-01-25,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_025.mrc
-jsa2010-04-01-26,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_026.mrc
-jsa2010-04-01-27,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_028.mrc
-jsa2010-04-01-28,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_029.mrc
-jsa2010-04-01-29,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_030.mrc
-jsa2010-04-01-30,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_033.mrc
-jsa2010-04-01-31,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_034.mrc
-jsa2010-04-01-32,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_036.mrc
-jsa2010-04-01-33,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_037.mrc
-jsa2010-04-01-34,SIRT,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_038.mrc
-jsa2010-04-01-35,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_039.mrc
-jsa2010-04-01-36,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_040.mrc
-jsa2010-04-01-37,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_041.mrc
-jsa2010-04-01-38,Weighted back projection,RAPTOR,rawdata/10apr01a_B718a_042.mrc
-jsa2010-04-01-39,Weighted back projection,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_044.mrc
+run_name,ts-tilt_alignment_software,ts-tilt_series_path
+jsa2010-04-01-1,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_001.mrc
+jsa2010-04-01-2,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_002.mrc
+jsa2010-04-01-3,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_003.mrc
+jsa2010-04-01-4,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_004.mrc
+jsa2010-04-01-5,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_005.mrc
+jsa2010-04-01-6,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_006.mrc
+jsa2010-04-01-7,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_007.mrc
+jsa2010-04-01-8,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_008.mrc
+jsa2010-04-01-9,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_009.mrc
+jsa2010-04-01-10,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_010.mrc
+jsa2010-04-01-11,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_011.mrc
+jsa2010-04-01-12,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_012.mrc
+jsa2010-04-01-13,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_013.mrc
+jsa2010-04-01-14,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_014.mrc
+jsa2010-04-01-15,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_015.mrc
+jsa2010-04-01-16,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_016.mrc
+jsa2010-04-01-17,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_017.mrc
+jsa2010-04-01-18,RAPTOR,rawdata/10apr01a_B718a_018.mrc
+jsa2010-04-01-19,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_019.mrc
+jsa2010-04-01-20,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_020.mrc
+jsa2010-04-01-21,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_021.mrc
+jsa2010-04-01-22,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_022.mrc
+jsa2010-04-01-23,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_023.mrc
+jsa2010-04-01-24,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_024.mrc
+jsa2010-04-01-25,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_025.mrc
+jsa2010-04-01-26,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_026.mrc
+jsa2010-04-01-27,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_028.mrc
+jsa2010-04-01-28,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_029.mrc
+jsa2010-04-01-29,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_030.mrc
+jsa2010-04-01-30,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_033.mrc
+jsa2010-04-01-31,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_034.mrc
+jsa2010-04-01-32,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_036.mrc
+jsa2010-04-01-33,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_037.mrc
+jsa2010-04-01-34,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_038.mrc
+jsa2010-04-01-35,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_039.mrc
+jsa2010-04-01-36,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_040.mrc
+jsa2010-04-01-37,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_041.mrc
+jsa2010-04-01-38,RAPTOR,rawdata/10apr01a_B718a_042.mrc
+jsa2010-04-01-39,RAPTOR;RAPTOR,rawdata/10apr01a_B718a_044.mrc

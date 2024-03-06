@@ -86,7 +86,7 @@ tomograms:
     z: 0
   processing: raw
   processing_software: '{tomo-processing_software}'
-  reconstruction_method: '{tomo-reconstruction_method}'
+  reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
   tomogram_version: 1
   voxel_spacing: '{tomo-voxel_spacing}'

@@ -3,17 +3,17 @@ ycw2013-05-01-1,19.315,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-t
 ycw2013-05-01-4,19.315,UCSF Tomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0004.mrc,100.0
 ycw2013-05-01-5,19.315,UCSF Tomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0005.mrc,100.0
 ycw2013-05-01-6,19.315,UCSF Tomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0006.mrc,100.0
-ycw2013-05-01-8,16.8,UCSF Tomo,FEI,Polara,2.0,RAPTOR;RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0008.mrc,100.0
+ycw2013-05-01-8,19.315,UCSF Tomo,FEI,Polara,2.0,RAPTOR;RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0008.mrc,100.0
 ycw2013-05-01-9,19.315,UCSF Tomo,FEI,Polara,2.0,RAPTOR;RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0009.mrc,100.0
 ycw2013-05-01-12,19.315,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0012.mrc,100.0
 ycw2013-05-01-13,19.315,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0013.mrc,100.0
 ycw2013-05-01-14,19.315,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0014.mrc,100.0
 ycw2013-05-01-16,19.315,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0016.mrc,100.0
 ycw2013-05-01-19,19.315,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0019.mrc,100.0
-ycw2013-05-01-20,16.8,UCSF Tomo,TFS,Krios,2.7,RAPTOR;RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0020.mrc,100.0
+ycw2013-05-01-20,19.315,UCSF Tomo,TFS,Krios,2.7,RAPTOR;RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0020.mrc,100.0
 ycw2013-05-01-21,19.315,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0021.mrc,100.0
 ycw2013-05-01-22,19.315,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0022.mrc,100.0
-ycw2013-05-01-23,16.8,UCSF Tomo,TFS,Krios,2.7,RAPTOR;RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0023.mrc,100.0
+ycw2013-05-01-23,19.315,UCSF Tomo,TFS,Krios,2.7,RAPTOR;RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0023.mrc,100.0
 ycw2013-05-01-24,19.315,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0024.mrc,100.0
 ycw2013-05-01-26,19.315,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0026.mrc,100.0
 ycw2013-05-01-29,19.315,UCSF Tomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0030.mrc,100.0
@@ -24,7 +24,7 @@ ycw2013-05-01-36,19.315,UCSF Tomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,rawdata/grid3
 ycw2013-05-01-37,19.315,UCSF Tomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries_30004.mrc,100.0
 ycw2013-05-01-38,19.315,UCSF Tomo,FEI,Polara,2.0,RAPTOR;RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries_30005.mrc,100.0
 ycw2013-05-01-39,19.315,UCSF Tomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries_30006.mrc,100.0
-ycw2013-05-01-41,16.8,UCSF Tomo,FEI,Polara,2.0,RAPTOR;RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries_30008.mrc,100.0
+ycw2013-05-01-41,19.315,UCSF Tomo,FEI,Polara,2.0,RAPTOR;RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries_30008.mrc,100.0
 ycw2013-05-01-52,19.315,UCSF Tomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries_30010.mrc,100.0
 ycw2013-05-01-57,19.315,UCSF Tomo,FEI,Polara,2.0,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0007.mrc,100.0
 ycw2013-06-04-1,19.315,UCSFTomo,TFS,Krios,2.7,RAPTOR,65.0,-65.0,rawdata/atlas_29x29_20001.mrc,120.0

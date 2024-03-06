@@ -86,10 +86,10 @@ tomograms:
     z: 0
   processing: raw
   processing_software: null
-  reconstruction_method: '{tomo-reconstruction_method}'
+  reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
   tomogram_version: 1
-  voxel_spacing: '{tomo-voxel_spacing}'
+  voxel_spacing: 13.059000000000001
 annotations: {}
 standardization_config:
   destination_prefix: '10268'

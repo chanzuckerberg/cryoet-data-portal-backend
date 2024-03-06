@@ -89,7 +89,7 @@ tomograms:
   reconstruction_method: '{tomo-reconstruction_method}'
   reconstruction_software: '{tomo-reconstruction_software}'
   tomogram_version: 1
-  voxel_spacing: 16.145
+  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
 standardization_config:
   destination_prefix: '10054'
