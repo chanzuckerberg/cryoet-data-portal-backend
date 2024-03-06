@@ -54,7 +54,7 @@ class ZarrWriter:
             },
         ]
 
-    def ome_zarr_transforms(self, voxel_size: Tuple[float]) -> List[Dict[str, Any]]:
+    def ome_zarr_transforms(self, voxel_size: Tuple[float, float, float]) -> List[Dict[str, Any]]:
         return [{"scale": [voxel_size[0], voxel_size[1], voxel_size[2]], "type": "scale"}]
 
     def write_data(
