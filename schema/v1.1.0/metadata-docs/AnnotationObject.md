@@ -1,0 +1,251 @@
+# Class: AnnotationObject
+
+
+_Metadata describing the object being annotated._
+
+
+
+
+
+URI: [cdp-meta:AnnotationObject](https://cryoetdataportal.czscience.com/schema/metadata/AnnotationObject)
+
+
+
+
+```mermaid
+ classDiagram
+    class AnnotationObject
+      AnnotationObject : description
+        
+          AnnotationObject --> string : description
+        
+      AnnotationObject : id
+        
+          AnnotationObject --> string : id
+        
+      AnnotationObject : name
+        
+          AnnotationObject --> string : name
+        
+      AnnotationObject : state
+        
+          AnnotationObject --> string : state
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Inheritance |
+| ---  | --- | --- | --- |
+| [id](id.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
+| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
+| [description](description.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | A textual description of the annotation object, can be a longer description t... | direct |
+| [state](state.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Molecule state annotated (e | direct |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Annotation](Annotation.md) | [annotation_object](annotation_object.md) | range | [AnnotationObject](AnnotationObject.md) |
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:AnnotationObject |
+| native | cdp-meta:AnnotationObject |
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: AnnotationObject
+description: Metadata describing the object being annotated.
+from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+attributes:
+  id:
+    name: id
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    exact_mappings:
+    - cdp-common:annotation_object_id
+    alias: id
+    owner: AnnotationObject
+    domain_of:
+    - Tissue
+    - CellType
+    - CellStrain
+    - CellComponent
+    - AnnotationObject
+    range: string
+    inlined: true
+    inlined_as_list: true
+  name:
+    name: name
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    exact_mappings:
+    - cdp-common:annotation_object_name
+    alias: name
+    owner: AnnotationObject
+    domain_of:
+    - Author
+    - Annotator
+    - Organism
+    - Tissue
+    - CellType
+    - CellStrain
+    - CellComponent
+    - AnnotationObject
+    range: string
+    inlined: true
+    inlined_as_list: true
+  description:
+    name: description
+    description: A textual description of the annotation object, can be a longer description
+      to include additional information not covered by the Annotation object name
+      and state.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    exact_mappings:
+    - cdp-common:annotation_object_description
+    rank: 1000
+    alias: description
+    owner: AnnotationObject
+    domain_of:
+    - AnnotationObject
+    range: string
+    inlined: true
+    inlined_as_list: true
+  state:
+    name: state
+    description: Molecule state annotated (e.g. open, closed)
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    exact_mappings:
+    - cdp-common:annotation_object_state
+    rank: 1000
+    alias: state
+    owner: AnnotationObject
+    domain_of:
+    - AnnotationObject
+    range: string
+    inlined: true
+    inlined_as_list: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: AnnotationObject
+description: Metadata describing the object being annotated.
+from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+attributes:
+  id:
+    name: id
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    exact_mappings:
+    - cdp-common:annotation_object_id
+    alias: id
+    owner: AnnotationObject
+    domain_of:
+    - Tissue
+    - CellType
+    - CellStrain
+    - CellComponent
+    - AnnotationObject
+    range: string
+    inlined: true
+    inlined_as_list: true
+  name:
+    name: name
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    exact_mappings:
+    - cdp-common:annotation_object_name
+    alias: name
+    owner: AnnotationObject
+    domain_of:
+    - Author
+    - Annotator
+    - Organism
+    - Tissue
+    - CellType
+    - CellStrain
+    - CellComponent
+    - AnnotationObject
+    range: string
+    inlined: true
+    inlined_as_list: true
+  description:
+    name: description
+    description: A textual description of the annotation object, can be a longer description
+      to include additional information not covered by the Annotation object name
+      and state.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    exact_mappings:
+    - cdp-common:annotation_object_description
+    rank: 1000
+    alias: description
+    owner: AnnotationObject
+    domain_of:
+    - AnnotationObject
+    range: string
+    inlined: true
+    inlined_as_list: true
+  state:
+    name: state
+    description: Molecule state annotated (e.g. open, closed)
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    exact_mappings:
+    - cdp-common:annotation_object_state
+    rank: 1000
+    alias: state
+    owner: AnnotationObject
+    domain_of:
+    - AnnotationObject
+    range: string
+    inlined: true
+    inlined_as_list: true
+
+```
+</details>

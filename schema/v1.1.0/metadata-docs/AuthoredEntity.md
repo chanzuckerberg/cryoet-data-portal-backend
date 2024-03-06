@@ -1,0 +1,144 @@
+# Class: AuthoredEntity
+
+
+_An entity with associated authors._
+
+
+
+
+* __NOTE__: this is an abstract class and should not be instantiated directly
+
+
+URI: [cdp-meta:AuthoredEntity](https://cryoetdataportal.czscience.com/schema/metadata/AuthoredEntity)
+
+
+
+
+```mermaid
+ classDiagram
+    class AuthoredEntity
+      AuthoredEntity <|-- Dataset
+      AuthoredEntity <|-- Tomogram
+      
+      AuthoredEntity : authors
+        
+          AuthoredEntity --> Author : authors
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Inheritance |
+| ---  | --- | --- | --- |
+| [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:AuthoredEntity |
+| native | cdp-meta:AuthoredEntity |
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: AuthoredEntity
+description: An entity with associated authors.
+from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+abstract: true
+attributes:
+  authors:
+    name: authors
+    description: Author of a scientific data entity.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    rank: 1000
+    multivalued: true
+    list_elements_ordered: true
+    alias: authors
+    owner: AuthoredEntity
+    domain_of:
+    - AuthoredEntity
+    - AnnotatoredEntity
+    - Dataset
+    - Tomogram
+    - Annotation
+    range: Author
+    required: true
+    inlined: true
+    inlined_as_list: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: AuthoredEntity
+description: An entity with associated authors.
+from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+abstract: true
+attributes:
+  authors:
+    name: authors
+    description: Author of a scientific data entity.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    rank: 1000
+    multivalued: true
+    list_elements_ordered: true
+    alias: authors
+    owner: AuthoredEntity
+    domain_of:
+    - AuthoredEntity
+    - AnnotatoredEntity
+    - Dataset
+    - Tomogram
+    - Annotation
+    range: Author
+    required: true
+    inlined: true
+    inlined_as_list: true
+
+```
+</details>

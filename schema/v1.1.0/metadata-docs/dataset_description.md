@@ -1,0 +1,73 @@
+# Slot: dataset_description
+
+
+_A short description of a CryoET dataset, similar to an abstract for a journal article or dataset._
+
+
+
+URI: [cdp-meta:dataset_description](https://cryoetdataportal.czscience.com/schema/metadata/dataset_description)
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+[Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+
+
+
+
+
+
+
+## Properties
+
+* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: dataset_description
+description: A short description of a CryoET dataset, similar to an abstract for a
+  journal article or dataset.
+from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+exact_mappings:
+- cdp-common:dataset_description
+rank: 1000
+alias: dataset_description
+owner: Dataset
+domain_of:
+- Dataset
+range: string
+inlined: true
+inlined_as_list: true
+
+```
+</details>

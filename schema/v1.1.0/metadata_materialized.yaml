@@ -1,0 +1,2162 @@
+name: cdp-meta
+id: https://cryoetdataportal.czscience.com/schema-docs/metadata
+version: 1.1.0
+imports:
+- linkml:types
+prefixes:
+  linkml:
+    prefix_prefix: linkml
+    prefix_reference: https://w3id.org/linkml/
+  cdp-meta:
+    prefix_prefix: cdp-meta
+    prefix_reference: https://cryoetdataportal.czscience.com/schema/metadata/
+  ORCID:
+    prefix_prefix: ORCID
+    prefix_reference: https://orcid.org/
+  ROR:
+    prefix_prefix: ROR
+    prefix_reference: https://ror.org/
+  UBERON:
+    prefix_prefix: UBERON
+    prefix_reference: http://purl.obolibrary.org/obo/UBERON_
+  CL:
+    prefix_prefix: CL
+    prefix_reference: http://purl.obolibrary.org/obo/CL_
+  GO:
+    prefix_prefix: GO
+    prefix_reference: http://purl.obolibrary.org/obo/GO_
+default_prefix: cdp-meta
+default_range: string
+enums:
+  sample_type_enum:
+    name: sample_type_enum
+    description: Type of sample imaged in a CryoET study.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    permissible_values:
+      cell:
+        text: cell
+        description: Tomographic data of whole cells or cell sections.
+      tissue:
+        text: tissue
+        description: Tomographic data of tissue sections.
+      organism:
+        text: organism
+        description: Tomographic data of sections through multicellular organisms.
+      organelle:
+        text: organelle
+        description: Tomographic data of purified organelles.
+      virus:
+        text: virus
+        description: Tomographic data of purified viruses or VLPs.
+      in_vitro:
+        text: in_vitro
+        description: Tomographic data of in vitro reconstituted systems or mixtures
+          of proteins.
+      in_silico:
+        text: in_silico
+        description: Simulated tomographic data.
+      other:
+        text: other
+        description: Other type of sample.
+  fiducial_alignment_status_enum:
+    name: fiducial_alignment_status_enum
+    description: Fiducial Alignment method
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    permissible_values:
+      FIDUCIAL:
+        text: FIDUCIAL
+        description: Alignment computed based on fiducial markers
+      NON_FIDUCIAL:
+        text: NON_FIDUCIAL
+        description: Alignment computed without fiducial markers
+  tomogram_type_enum:
+    name: tomogram_type_enum
+    description: Tomogram type
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    permissible_values:
+      CANONICAL:
+        text: CANONICAL
+        description: Canonical tomogram (basis geometry for all annotations)
+  annotation_method_type_enum:
+    name: annotation_method_type_enum
+    description: Describes how the annotations were generated.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    permissible_values:
+      manual:
+        text: manual
+        description: Annotations were generated manually.
+      automated:
+        text: automated
+        description: Annotations were generated semi-automatically.
+      hybrid:
+        text: hybrid
+        description: Annotations were generated automatically.
+  annotation_shape_enum:
+    name: annotation_shape_enum
+    description: Annotation shape types available on the data portal.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    permissible_values:
+      Point:
+        text: Point
+        description: Annotations were generated manually.
+      OrientedPoint:
+        text: OrientedPoint
+        description: Annotations were generated semi-automatically.
+      SegmentationMask:
+        text: SegmentationMask
+        description: Annotations were generated automatically.
+classes:
+  PicturePath:
+    name: PicturePath
+    description: A set of paths to representative images of a piece of data.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      snapshot:
+        name: snapshot
+        description: Path to the dataset preview image relative to the dataset directory
+          root.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: snapshot
+        owner: PicturePath
+        domain_of:
+        - PicturePath
+        range: string
+        inlined: true
+        inlined_as_list: true
+      thumbnail:
+        name: thumbnail
+        description: Path to the thumbnail of preview image relative to the dataset
+          directory root.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: thumbnail
+        owner: PicturePath
+        domain_of:
+        - PicturePath
+        range: string
+        inlined: true
+        inlined_as_list: true
+  Author:
+    name: Author
+    description: Author of a scientific data entity.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      name:
+        name: name
+        description: The full name of the author.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:author_name
+        alias: name
+        owner: Author
+        domain_of:
+        - Author
+        - Annotator
+        - Organism
+        - Tissue
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+      email:
+        name: email
+        description: The email address of the author.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:author_email
+        alias: email
+        owner: Author
+        domain_of:
+        - Author
+        - Annotator
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_name:
+        name: affiliation_name
+        description: The name of the author's affiliation.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:author_affiliation_name
+        alias: affiliation_name
+        owner: Author
+        domain_of:
+        - Author
+        - Annotator
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_address:
+        name: affiliation_address
+        description: The address of the author's affiliation.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:author_affiliation_address
+        alias: affiliation_address
+        owner: Author
+        domain_of:
+        - Author
+        - Annotator
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_identifier:
+        name: affiliation_identifier
+        description: A Research Organization Registry (ROR) identifier.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:affiliation_identifier
+        alias: affiliation_identifier
+        owner: Author
+        domain_of:
+        - Author
+        - Annotator
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$
+      is_corresponding:
+        name: is_corresponding
+        description: Whether the author is a corresponding author.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:author_corresponding_author_status
+        alias: is_corresponding
+        owner: Author
+        domain_of:
+        - Author
+        - Annotator
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_primary_author:
+        name: is_primary_author
+        description: Whether the author is a primary author.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:author_primary_author_status
+        alias: is_primary_author
+        owner: Author
+        domain_of:
+        - Author
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      ORCID:
+        name: ORCID
+        description: A unique, persistent identifier for researchers, provided by
+          ORCID.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:orcid
+        alias: ORCID
+        owner: Author
+        domain_of:
+        - Author
+        - Annotator
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
+  Annotator:
+    name: Annotator
+    description: Annotator of a scientific data entity.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      name:
+        name: name
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:author_name
+        alias: name
+        owner: Annotator
+        domain_of:
+        - Author
+        - Annotator
+        - Organism
+        - Tissue
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+      email:
+        name: email
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:author_email
+        alias: email
+        owner: Annotator
+        domain_of:
+        - Author
+        - Annotator
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_name:
+        name: affiliation_name
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:author_affiliation_name
+        alias: affiliation_name
+        owner: Annotator
+        domain_of:
+        - Author
+        - Annotator
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_address:
+        name: affiliation_address
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:author_affiliation_address
+        alias: affiliation_address
+        owner: Annotator
+        domain_of:
+        - Author
+        - Annotator
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_identifier:
+        name: affiliation_identifier
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:affiliation_identifier
+        alias: affiliation_identifier
+        owner: Annotator
+        domain_of:
+        - Author
+        - Annotator
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+      is_corresponding:
+        name: is_corresponding
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:author_corresponding_author_status
+        alias: is_corresponding
+        owner: Annotator
+        domain_of:
+        - Author
+        - Annotator
+        range: string
+        inlined: true
+        inlined_as_list: true
+      is_primary_annotator:
+        name: is_primary_annotator
+        description: Whether the author is a primary author.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:author_primary_author_status
+        alias: is_primary_annotator
+        owner: Annotator
+        domain_of:
+        - Annotator
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      ORCID:
+        name: ORCID
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:orcid
+        alias: ORCID
+        owner: Annotator
+        domain_of:
+        - Author
+        - Annotator
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+  Funding:
+    name: Funding
+    description: A funding source for a scientific data entity (base for JSON and
+      DB representation).
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      funding_agency_name:
+        name: funding_agency_name
+        description: The name of the funding source.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:funding_agency_name
+        alias: funding_agency_name
+        owner: Funding
+        domain_of:
+        - Funding
+        range: string
+        inlined: true
+        inlined_as_list: true
+      grant_id:
+        name: grant_id
+        description: Grant identifier provided by the funding agency
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:funding_grant_id
+        alias: grant_id
+        owner: Funding
+        domain_of:
+        - Funding
+        range: string
+        inlined: true
+        inlined_as_list: true
+  DateStamp:
+    name: DateStamp
+    description: A set of dates at which a data item was deposited, published and
+      last modified.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    abstract: true
+    slots:
+    - deposition_date
+    - release_date
+    - last_modified_date
+    slot_usage:
+      deposition_date:
+        name: deposition_date
+        domain_of:
+        - DateStamp
+        required: true
+      release_date:
+        name: release_date
+        domain_of:
+        - DateStamp
+        recommended: true
+      last_modified_date:
+        name: last_modified_date
+        domain_of:
+        - DateStamp
+        recommended: true
+    attributes:
+      deposition_date:
+        name: deposition_date
+        description: The date a data item was received by the cryoET data portal.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: deposition_date
+        owner: DateStamp
+        domain_of:
+        - DateStamp
+        range: date
+        required: true
+        inlined: true
+        inlined_as_list: true
+      release_date:
+        name: release_date
+        description: The date a data item was received by the cryoET data portal.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: release_date
+        owner: DateStamp
+        domain_of:
+        - DateStamp
+        range: date
+        required: true
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+      last_modified_date:
+        name: last_modified_date
+        description: The date a piece of data was last modified on the cryoET data
+          portal.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: last_modified_date
+        owner: DateStamp
+        domain_of:
+        - DateStamp
+        range: date
+        required: true
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+  DatestampedEntity:
+    name: DatestampedEntity
+    description: An entity with associated deposition, release and last modified dates.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    abstract: true
+    attributes:
+      dates:
+        name: dates
+        description: A set of dates at which a data item was deposited, published
+          and last modified.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: dates
+        owner: DatestampedEntity
+        domain_of:
+        - DatestampedEntity
+        range: DateStamp
+        required: true
+        inlined: true
+        inlined_as_list: true
+  AuthoredEntity:
+    name: AuthoredEntity
+    description: An entity with associated authors.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    abstract: true
+    attributes:
+      authors:
+        name: authors
+        description: Author of a scientific data entity.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        multivalued: true
+        list_elements_ordered: true
+        alias: authors
+        owner: AuthoredEntity
+        domain_of:
+        - AuthoredEntity
+        - AnnotatoredEntity
+        range: Author
+        required: true
+        inlined: true
+        inlined_as_list: true
+  AnnotatoredEntity:
+    name: AnnotatoredEntity
+    description: An entity with associated annotation authors.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    abstract: true
+    attributes:
+      authors:
+        name: authors
+        description: Annotator of a scientific data entity.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        multivalued: true
+        list_elements_ordered: true
+        alias: authors
+        owner: AnnotatoredEntity
+        domain_of:
+        - AuthoredEntity
+        - AnnotatoredEntity
+        range: Annotator
+        required: true
+        inlined: true
+        inlined_as_list: true
+  FundedEntity:
+    name: FundedEntity
+    description: An entity with associated funding sources.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    abstract: true
+    attributes:
+      funding:
+        name: funding
+        description: A funding source for a scientific data entity (base for JSON
+          and DB representation).
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        multivalued: true
+        list_elements_ordered: true
+        alias: funding
+        owner: FundedEntity
+        domain_of:
+        - FundedEntity
+        range: Funding
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+  CrossReferencedEntity:
+    name: CrossReferencedEntity
+    description: An entity with associated cross-references to other databases and
+      publications.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    abstract: true
+    attributes:
+      cross_references:
+        name: cross_references
+        description: A set of cross-references to other databases and publications.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: cross_references
+        owner: CrossReferencedEntity
+        domain_of:
+        - CrossReferencedEntity
+        range: CrossReferences
+        inlined: true
+        inlined_as_list: true
+  PicturedEntity:
+    name: PicturedEntity
+    description: An entity with associated preview images.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    abstract: true
+    attributes:
+      key_photos:
+        name: key_photos
+        description: A set of paths to representative images of a piece of data.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: key_photos
+        owner: PicturedEntity
+        domain_of:
+        - PicturedEntity
+        range: PicturePath
+        required: true
+        inlined: true
+        inlined_as_list: true
+  Organism:
+    name: Organism
+    description: The species from which the sample was derived.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      name:
+        name: name
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:organism_name
+        alias: name
+        owner: Organism
+        domain_of:
+        - Author
+        - Annotator
+        - Organism
+        - Tissue
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+      taxonomy_id:
+        name: taxonomy_id
+        description: NCBI taxonomy identifier for the organism, e.g. 9606
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:organism_taxid
+        alias: taxonomy_id
+        owner: Organism
+        domain_of:
+        - Organism
+        range: string
+        inlined: true
+        inlined_as_list: true
+  Tissue:
+    name: Tissue
+    description: The type of tissue from which the sample was derived.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      name:
+        name: name
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tissue_name
+        alias: name
+        owner: Tissue
+        domain_of:
+        - Author
+        - Annotator
+        - Organism
+        - Tissue
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+      id:
+        name: id
+        description: The UBERON identifier for the tissue.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tissue_id
+        alias: id
+        owner: Tissue
+        domain_of:
+        - Tissue
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+  CellType:
+    name: CellType
+    description: The cell type from which the sample was derived.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      name:
+        name: name
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:cell_name
+        alias: name
+        owner: CellType
+        domain_of:
+        - Author
+        - Annotator
+        - Organism
+        - Tissue
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+      id:
+        name: id
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:cell_type_id
+        alias: id
+        owner: CellType
+        domain_of:
+        - Tissue
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+  CellStrain:
+    name: CellStrain
+    description: The strain or cell line from which the sample was derived.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      name:
+        name: name
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:cell_strain_name
+        alias: name
+        owner: CellStrain
+        domain_of:
+        - Author
+        - Annotator
+        - Organism
+        - Tissue
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+      id:
+        name: id
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:cell_strain_id
+        alias: id
+        owner: CellStrain
+        domain_of:
+        - Tissue
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+  CellComponent:
+    name: CellComponent
+    description: The cellular component from which the sample was derived.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      name:
+        name: name
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:cell_component_name
+        alias: name
+        owner: CellComponent
+        domain_of:
+        - Author
+        - Annotator
+        - Organism
+        - Tissue
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+      id:
+        name: id
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:cell_component_id
+        alias: id
+        owner: CellComponent
+        domain_of:
+        - Tissue
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+  ExperimentalMetadata:
+    name: ExperimentalMetadata
+    description: Metadata describing sample and sample preparation methods used in
+      a cryoET dataset.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    abstract: true
+    attributes:
+      sample_type:
+        name: sample_type
+        description: Type of sample imaged in a CryoET study.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:preparation_sample_type
+        alias: sample_type
+        owner: ExperimentalMetadata
+        domain_of:
+        - ExperimentalMetadata
+        range: sample_type_enum
+        inlined: true
+        inlined_as_list: true
+      sample_preparation:
+        name: sample_preparation
+        description: Describes how the sample was prepared.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:sample_preparation
+        alias: sample_preparation
+        owner: ExperimentalMetadata
+        domain_of:
+        - ExperimentalMetadata
+        range: string
+        inlined: true
+        inlined_as_list: true
+      grid_preparation:
+        name: grid_preparation
+        description: Describes Cryo-ET grid preparation.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:grid_preparation
+        alias: grid_preparation
+        owner: ExperimentalMetadata
+        domain_of:
+        - ExperimentalMetadata
+        range: string
+        inlined: true
+        inlined_as_list: true
+      other_setup:
+        name: other_setup
+        description: Describes other setup not covered by sample preparation or grid
+          preparation that may make this dataset unique in   the same publication.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:preparation_other_setup
+        alias: other_setup
+        owner: ExperimentalMetadata
+        domain_of:
+        - ExperimentalMetadata
+        range: string
+        inlined: true
+        inlined_as_list: true
+      organism:
+        name: organism
+        description: The species from which the sample was derived.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: organism
+        owner: ExperimentalMetadata
+        domain_of:
+        - ExperimentalMetadata
+        range: Organism
+        inlined: true
+        inlined_as_list: true
+      tissue:
+        name: tissue
+        description: The type of tissue from which the sample was derived.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: tissue
+        owner: ExperimentalMetadata
+        domain_of:
+        - ExperimentalMetadata
+        range: Tissue
+        inlined: true
+        inlined_as_list: true
+      cell_type:
+        name: cell_type
+        description: The cell type from which the sample was derived.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: cell_type
+        owner: ExperimentalMetadata
+        domain_of:
+        - ExperimentalMetadata
+        range: CellType
+        inlined: true
+        inlined_as_list: true
+      cell_strain:
+        name: cell_strain
+        description: The strain or cell line from which the sample was derived.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: cell_strain
+        owner: ExperimentalMetadata
+        domain_of:
+        - ExperimentalMetadata
+        range: CellStrain
+        inlined: true
+        inlined_as_list: true
+      cell_component:
+        name: cell_component
+        description: The cellular component from which the sample was derived.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: cell_component
+        owner: ExperimentalMetadata
+        domain_of:
+        - ExperimentalMetadata
+        range: CellComponent
+        inlined: true
+        inlined_as_list: true
+  Dataset:
+    name: Dataset
+    description: High-level description of a cryoET dataset.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    mixins:
+    - DatestampedEntity
+    - AuthoredEntity
+    - FundedEntity
+    - PicturedEntity
+    - CrossReferencedEntity
+    - ExperimentalMetadata
+    attributes:
+      dataset_identifier:
+        name: dataset_identifier
+        description: An identifier for a CryoET dataset, assigned by the Data Portal.
+          Used to identify the dataset as the directory  name in data tree.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:dataset_identifier
+        alias: dataset_identifier
+        owner: Dataset
+        domain_of:
+        - Dataset
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      dataset_title:
+        name: dataset_title
+        description: Title of a CryoET dataset.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:dataset_title
+        alias: dataset_title
+        owner: Dataset
+        domain_of:
+        - Dataset
+        range: string
+        inlined: true
+        inlined_as_list: true
+      dataset_description:
+        name: dataset_description
+        description: A short description of a CryoET dataset, similar to an abstract
+          for a journal article or dataset.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:dataset_description
+        alias: dataset_description
+        owner: Dataset
+        domain_of:
+        - Dataset
+        range: string
+        inlined: true
+        inlined_as_list: true
+      dates:
+        name: dates
+        description: A set of dates at which a data item was deposited, published
+          and last modified.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: dates
+        owner: Dataset
+        domain_of:
+        - DatestampedEntity
+        range: DateStamp
+        required: true
+        inlined: true
+        inlined_as_list: true
+      authors:
+        name: authors
+        description: Author of a scientific data entity.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        multivalued: true
+        list_elements_ordered: true
+        alias: authors
+        owner: Dataset
+        domain_of:
+        - AuthoredEntity
+        - AnnotatoredEntity
+        range: Author
+        required: true
+        inlined: true
+        inlined_as_list: true
+      funding:
+        name: funding
+        description: A funding source for a scientific data entity (base for JSON
+          and DB representation).
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        multivalued: true
+        list_elements_ordered: true
+        alias: funding
+        owner: Dataset
+        domain_of:
+        - FundedEntity
+        range: Funding
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+      key_photos:
+        name: key_photos
+        description: A set of paths to representative images of a piece of data.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: key_photos
+        owner: Dataset
+        domain_of:
+        - PicturedEntity
+        range: PicturePath
+        required: true
+        inlined: true
+        inlined_as_list: true
+      cross_references:
+        name: cross_references
+        description: A set of cross-references to other databases and publications.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: cross_references
+        owner: Dataset
+        domain_of:
+        - CrossReferencedEntity
+        range: CrossReferences
+        inlined: true
+        inlined_as_list: true
+      sample_type:
+        name: sample_type
+        description: Type of sample imaged in a CryoET study.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:preparation_sample_type
+        alias: sample_type
+        owner: Dataset
+        domain_of:
+        - ExperimentalMetadata
+        range: string
+        inlined: true
+        inlined_as_list: true
+      sample_preparation:
+        name: sample_preparation
+        description: Describes how the sample was prepared.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:sample_preparation
+        alias: sample_preparation
+        owner: Dataset
+        domain_of:
+        - ExperimentalMetadata
+        range: string
+        inlined: true
+        inlined_as_list: true
+      grid_preparation:
+        name: grid_preparation
+        description: Describes Cryo-ET grid preparation.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:grid_preparation
+        alias: grid_preparation
+        owner: Dataset
+        domain_of:
+        - ExperimentalMetadata
+        range: string
+        inlined: true
+        inlined_as_list: true
+      other_setup:
+        name: other_setup
+        description: Describes other setup not covered by sample preparation or grid
+          preparation that may make this dataset unique in   the same publication.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:preparation_other_setup
+        alias: other_setup
+        owner: Dataset
+        domain_of:
+        - ExperimentalMetadata
+        range: string
+        inlined: true
+        inlined_as_list: true
+      organism:
+        name: organism
+        description: The species from which the sample was derived.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: organism
+        owner: Dataset
+        domain_of:
+        - ExperimentalMetadata
+        range: Organism
+        inlined: true
+        inlined_as_list: true
+      tissue:
+        name: tissue
+        description: The type of tissue from which the sample was derived.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: tissue
+        owner: Dataset
+        domain_of:
+        - ExperimentalMetadata
+        range: Tissue
+        inlined: true
+        inlined_as_list: true
+      cell_type:
+        name: cell_type
+        description: The cell type from which the sample was derived.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: cell_type
+        owner: Dataset
+        domain_of:
+        - ExperimentalMetadata
+        range: CellType
+        inlined: true
+        inlined_as_list: true
+      cell_strain:
+        name: cell_strain
+        description: The strain or cell line from which the sample was derived.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: cell_strain
+        owner: Dataset
+        domain_of:
+        - ExperimentalMetadata
+        range: CellStrain
+        inlined: true
+        inlined_as_list: true
+      cell_component:
+        name: cell_component
+        description: The cellular component from which the sample was derived.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: cell_component
+        owner: Dataset
+        domain_of:
+        - ExperimentalMetadata
+        range: CellComponent
+        inlined: true
+        inlined_as_list: true
+  Camera:
+    name: Camera
+    description: The camera used to collect the tilt series.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      manufacturer:
+        name: manufacturer
+        description: Name of the camera manufacturer
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_camera_manufacturer
+        alias: manufacturer
+        owner: Camera
+        domain_of:
+        - Camera
+        - Microscope
+        range: string
+        inlined: true
+        inlined_as_list: true
+      model:
+        name: model
+        description: Camera model name
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_camera_model
+        alias: model
+        owner: Camera
+        domain_of:
+        - Camera
+        - Microscope
+        range: string
+        inlined: true
+        inlined_as_list: true
+  Microscope:
+    name: Microscope
+    description: The microscope used to collect the tilt series.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      manufacturer:
+        name: manufacturer
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_microscope_manufacturer
+        alias: manufacturer
+        owner: Microscope
+        domain_of:
+        - Camera
+        - Microscope
+        range: string
+        inlined: true
+        inlined_as_list: true
+      model:
+        name: model
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_microscope_model
+        alias: model
+        owner: Microscope
+        domain_of:
+        - Camera
+        - Microscope
+        range: string
+        inlined: true
+        inlined_as_list: true
+  MicroscopeOpticalSetup:
+    name: MicroscopeOpticalSetup
+    description: The optical setup of the microscope used to collect the tilt series.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      energy_filter:
+        name: energy_filter
+        description: Energy filter setup used
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_microscope_energy_filter
+        alias: energy_filter
+        owner: MicroscopeOpticalSetup
+        domain_of:
+        - MicroscopeOpticalSetup
+        range: string
+        inlined: true
+        inlined_as_list: true
+      phase_plate:
+        name: phase_plate
+        description: Phase plate configuration
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_microscope_phase_plate
+        alias: phase_plate
+        owner: MicroscopeOpticalSetup
+        domain_of:
+        - MicroscopeOpticalSetup
+        range: string
+        inlined: true
+        inlined_as_list: true
+      image_corrector:
+        name: image_corrector
+        description: Image corrector setup
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_microscope_image_corrector
+        alias: image_corrector
+        owner: MicroscopeOpticalSetup
+        domain_of:
+        - MicroscopeOpticalSetup
+        range: string
+        inlined: true
+        inlined_as_list: true
+  TiltRange:
+    name: TiltRange
+    description: The range of tilt angles in the tilt series.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      min:
+        name: min
+        description: Minimal tilt angle in degrees
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_tilt_min
+        alias: min
+        owner: TiltRange
+        domain_of:
+        - TiltRange
+        range: float
+        inlined: true
+        inlined_as_list: true
+      max:
+        name: max
+        description: Maximal tilt angle in degrees
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_tilt_max
+        alias: max
+        owner: TiltRange
+        domain_of:
+        - TiltRange
+        range: float
+        inlined: true
+        inlined_as_list: true
+  TiltSeries:
+    name: TiltSeries
+    description: Metadata describing a tilt series.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      acceleration_voltage:
+        name: acceleration_voltage
+        description: Electron Microscope Accelerator voltage in volts
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_acceleration_voltage
+        alias: acceleration_voltage
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      spherical_aberration_constant:
+        name: spherical_aberration_constant
+        description: Spherical Aberration Constant of the objective lens in millimeters
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_spherical_aberration_constant
+        alias: spherical_aberration_constant
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: float
+        inlined: true
+        inlined_as_list: true
+      microscope_additional_info:
+        name: microscope_additional_info
+        description: Other microscope optical setup information, in addition to energy
+          filter, phase plate and image corrector
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_microscope_additional_info
+        alias: microscope_additional_info
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: string
+        inlined: true
+        inlined_as_list: true
+      tilt_axis:
+        name: tilt_axis
+        description: Rotation angle in degrees
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_tilt_axis
+        alias: tilt_axis
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: float
+        inlined: true
+        inlined_as_list: true
+      tilt_step:
+        name: tilt_step
+        description: Tilt step in degrees
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_tilt_step
+        alias: tilt_step
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: float
+        inlined: true
+        inlined_as_list: true
+      tilting_scheme:
+        name: tilting_scheme
+        description: The order of stage tilting during acquisition of the data
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_tilting_scheme
+        alias: tilting_scheme
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: string
+        inlined: true
+        inlined_as_list: true
+      total_flux:
+        name: total_flux
+        description: Number of Electrons reaching the specimen in a square Angstrom
+          area for the entire tilt series
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_total_flux
+        alias: total_flux
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: float
+        inlined: true
+        inlined_as_list: true
+      data_acquisition_software:
+        name: data_acquisition_software
+        description: Software used to collect data
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_data_acquisition_software
+        alias: data_acquisition_software
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: string
+        inlined: true
+        inlined_as_list: true
+      binning_from_frames:
+        name: binning_from_frames
+        description: Describes the binning factor from frames to tilt series file
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_binning_from_frames
+        alias: binning_from_frames
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: float
+        inlined: true
+        inlined_as_list: true
+      tilt_series_quality:
+        name: tilt_series_quality
+        description: Author assessment of tilt series quality within the dataset (1-5,
+          5 is best)
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_tilt_series_quality
+        alias: tilt_series_quality
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      pixel_spacing:
+        name: pixel_spacing
+        description: Pixel spacing for the tilt series
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_pixel_spacing
+        alias: pixel_spacing
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: float
+        inlined: true
+        inlined_as_list: true
+      aligned_tiltseries_binning:
+        name: aligned_tiltseries_binning
+        description: Binning factor of the aligned tilt series
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_aligned_tiltseries_binning
+        alias: aligned_tiltseries_binning
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      frames_count:
+        name: frames_count
+        description: Number of frames associated with this tiltseries
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tiltseries_frames_count
+        alias: frames_count
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      camera:
+        name: camera
+        description: The camera used to collect the tilt series.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: camera
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: Camera
+        inlined: true
+        inlined_as_list: true
+      microscope:
+        name: microscope
+        description: The microscope used to collect the tilt series.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: microscope
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: Microscope
+        inlined: true
+        inlined_as_list: true
+      microscope_optical_setup:
+        name: microscope_optical_setup
+        description: The optical setup of the microscope used to collect the tilt
+          series.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: microscope_optical_setup
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: MicroscopeOpticalSetup
+        inlined: true
+        inlined_as_list: true
+      tilt_range:
+        name: tilt_range
+        description: The range of tilt angles in the tilt series.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: tilt_range
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: TiltRange
+        inlined: true
+        inlined_as_list: true
+  TomogramSize:
+    name: TomogramSize
+    description: The size of a tomogram in voxels in each dimension.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      x:
+        name: x
+        description: Number of pixels in the 3D data fast axis
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_size_x
+        alias: x
+        owner: TomogramSize
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      y:
+        name: y
+        description: Number of pixels in the 3D data medium axis
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_size_y
+        alias: y
+        owner: TomogramSize
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      z:
+        name: z
+        description: Number of pixels in the 3D data slow axis.  This is the image
+          projection direction at zero stage tilt
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_size_z
+        alias: z
+        owner: TomogramSize
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        range: integer
+        inlined: true
+        inlined_as_list: true
+  TomogramOffset:
+    name: TomogramOffset
+    description: The offset of a tomogram in voxels in each dimension relative to
+      the canonical tomogram.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      x:
+        name: x
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_offset_x
+        alias: x
+        owner: TomogramOffset
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        range: string
+        inlined: true
+        inlined_as_list: true
+      y:
+        name: y
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_offset_y
+        alias: y
+        owner: TomogramOffset
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        range: string
+        inlined: true
+        inlined_as_list: true
+      z:
+        name: z
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_offset_z
+        alias: z
+        owner: TomogramOffset
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        range: string
+        inlined: true
+        inlined_as_list: true
+  Tomogram:
+    name: Tomogram
+    description: Metadata describing a tomogram.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    mixins:
+    - AuthoredEntity
+    - PicturedEntity
+    attributes:
+      voxel_spacing:
+        name: voxel_spacing
+        description: Voxel spacing equal in all three axes in angstroms
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_voxel_spacing
+        alias: voxel_spacing
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        range: float
+        inlined: true
+        inlined_as_list: true
+      fiducial_alignment_status:
+        name: fiducial_alignment_status
+        description: Whether the tomographic alignment was computed based on fiducial
+          markers.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_fiducial_alignment_status
+        alias: fiducial_alignment_status
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        range: fiducial_alignment_status_enum
+        inlined: true
+        inlined_as_list: true
+      ctf_corrected:
+        name: ctf_corrected
+        description: Whether this tomogram is CTF corrected
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_ctf_corrected
+        alias: ctf_corrected
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      reconstruction_method:
+        name: reconstruction_method
+        description: Describe reconstruction method (Weighted back-projection, SART,
+          SIRT)
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_reconstruction_method
+        alias: reconstruction_method
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        range: string
+        inlined: true
+        inlined_as_list: true
+      reconstruction_software:
+        name: reconstruction_software
+        description: Name of software used for reconstruction
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_reconstruction_software
+        alias: reconstruction_software
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        range: string
+        inlined: true
+        inlined_as_list: true
+      processing:
+        name: processing
+        description: Describe additional processing used to derive the tomogram
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_processing
+        alias: processing
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        range: string
+        inlined: true
+        inlined_as_list: true
+      processing_software:
+        name: processing_software
+        description: Processing software used to derive the tomogram
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_processing_software
+        alias: processing_software
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        range: string
+        inlined: true
+        inlined_as_list: true
+      tomogram_version:
+        name: tomogram_version
+        description: Version of tomogram using the same software and post-processing.
+          Version of tomogram using the same software and post-processing. This will
+          be presented as the latest version
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_version
+        alias: tomogram_version
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affine_transformation_matrix:
+        name: affine_transformation_matrix
+        description: The flip or rotation transformation of this author submitted
+          tomogram is indicated here
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:tomogram_affine_transformation_matrix
+        alias: affine_transformation_matrix
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        range: string
+        inlined: true
+        inlined_as_list: true
+      size:
+        name: size
+        description: The size of a tomogram in voxels in each dimension.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: size
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        range: TomogramSize
+        inlined: true
+        inlined_as_list: true
+      offset:
+        name: offset
+        description: The offset of a tomogram in voxels in each dimension relative
+          to the canonical tomogram.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: offset
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        range: TomogramOffset
+        inlined: true
+        inlined_as_list: true
+      authors:
+        name: authors
+        description: Author of a scientific data entity.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        multivalued: true
+        list_elements_ordered: true
+        alias: authors
+        owner: Tomogram
+        domain_of:
+        - AuthoredEntity
+        - AnnotatoredEntity
+        range: Author
+        required: true
+        inlined: true
+        inlined_as_list: true
+      key_photos:
+        name: key_photos
+        description: A set of paths to representative images of a piece of data.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: key_photos
+        owner: Tomogram
+        domain_of:
+        - PicturedEntity
+        range: PicturePath
+        required: true
+        inlined: true
+        inlined_as_list: true
+  AnnotationFile:
+    name: AnnotationFile
+    description: Metadata describing a file containing an annotation.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      format:
+        name: format
+        description: File format for this file
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_file_format
+        alias: format
+        owner: AnnotationFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      shape:
+        name: shape
+        description: Describe whether this is a Point, OrientedPoint, or SegmentationMask
+          file
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_file_shape_type
+        alias: shape
+        owner: AnnotationFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      path:
+        name: path
+        description: Path to the annotation file relative to the dataset root.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_file_path
+        alias: path
+        owner: AnnotationFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        description: This annotation will be rendered in neuroglancer by default.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_file_is_visualization_default
+        alias: is_visualization_default
+        owner: AnnotationFile
+        domain_of:
+        - AnnotationFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+  AnnotationConfidence:
+    name: AnnotationConfidence
+    description: Metadata describing the confidence of an annotation.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      precision:
+        name: precision
+        description: Describe the confidence level of the annotation. Precision is
+          defined as the % of annotation objects being true positive
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_confidence_precision
+        alias: precision
+        owner: AnnotationConfidence
+        domain_of:
+        - AnnotationConfidence
+        range: float
+        inlined: true
+        inlined_as_list: true
+      recall:
+        name: recall
+        description: Describe the confidence level of the annotation. Recall is defined
+          as the % of true positives being annotated correctly
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_confidence_recall
+        alias: recall
+        owner: AnnotationConfidence
+        domain_of:
+        - AnnotationConfidence
+        range: float
+        inlined: true
+        inlined_as_list: true
+      ground_truth_used:
+        name: ground_truth_used
+        description: Annotation filename used as ground truth for precision and recall
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_ground_truth_used
+        alias: ground_truth_used
+        owner: AnnotationConfidence
+        domain_of:
+        - AnnotationConfidence
+        range: string
+        inlined: true
+        inlined_as_list: true
+  AnnotationObject:
+    name: AnnotationObject
+    description: Metadata describing the object being annotated.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      id:
+        name: id
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_object_id
+        alias: id
+        owner: AnnotationObject
+        domain_of:
+        - Tissue
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+      name:
+        name: name
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_object_name
+        alias: name
+        owner: AnnotationObject
+        domain_of:
+        - Author
+        - Annotator
+        - Organism
+        - Tissue
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+      description:
+        name: description
+        description: A textual description of the annotation object, can be a longer
+          description to include additional information not covered by the Annotation
+          object name and state.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_object_description
+        alias: description
+        owner: AnnotationObject
+        domain_of:
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+      state:
+        name: state
+        description: Molecule state annotated (e.g. open, closed)
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_object_state
+        alias: state
+        owner: AnnotationObject
+        domain_of:
+        - AnnotationObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+  Annotation:
+    name: Annotation
+    description: Metadata describing an annotation.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    mixins:
+    - DatestampedEntity
+    - AnnotatoredEntity
+    attributes:
+      annotation_method:
+        name: annotation_method
+        description: Describe how the annotation is made (e.g. Manual, crYoLO, Positive
+          Unlabeled Learning, template matching)
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_method
+        alias: annotation_method
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: string
+        inlined: true
+        inlined_as_list: true
+      annotation_method_type:
+        name: annotation_method_type
+        description: Classification of the annotation method based on supervision.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_method_type
+        alias: annotation_method_type
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: annotation_method_type_enum
+        inlined: true
+        inlined_as_list: true
+      annotation_publications:
+        name: annotation_publications
+        description: DOIs for publications that describe the dataset. Use a comma
+          to separate multiple DOIs.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_publication
+        alias: annotation_publications
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: string
+        inlined: true
+        inlined_as_list: true
+      annotation_software:
+        name: annotation_software
+        description: Software used for generating this annotation
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_software
+        alias: annotation_software
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: string
+        inlined: true
+        inlined_as_list: true
+      ground_truth_status:
+        name: ground_truth_status
+        description: Whether an annotation is considered ground truth, as determined
+          by the annotator.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_ground_truth_status
+        alias: ground_truth_status
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      object_count:
+        name: object_count
+        description: Number of objects identified
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_object_count
+        alias: object_count
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      is_curator_recommended:
+        name: is_curator_recommended
+        description: This annotation is recommended by the curator to be preferred
+          for this object type.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        exact_mappings:
+        - cdp-common:annotation_is_curator_recommended
+        alias: is_curator_recommended
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      files:
+        name: files
+        description: Metadata describing a file containing an annotation.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        multivalued: true
+        list_elements_ordered: true
+        alias: files
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: AnnotationFile
+        inlined: true
+        inlined_as_list: true
+      confidence:
+        name: confidence
+        description: Metadata describing the confidence of an annotation.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: confidence
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: AnnotationConfidence
+        inlined: true
+        inlined_as_list: true
+      annotation_object:
+        name: annotation_object
+        description: Metadata describing the object being annotated.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: annotation_object
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: AnnotationObject
+        inlined: true
+        inlined_as_list: true
+      dates:
+        name: dates
+        description: A set of dates at which a data item was deposited, published
+          and last modified.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: dates
+        owner: Annotation
+        domain_of:
+        - DatestampedEntity
+        range: DateStamp
+        required: true
+        inlined: true
+        inlined_as_list: true
+      authors:
+        name: authors
+        description: Annotator of a scientific data entity.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        multivalued: true
+        list_elements_ordered: true
+        alias: authors
+        owner: Annotation
+        domain_of:
+        - AuthoredEntity
+        - AnnotatoredEntity
+        range: Annotator
+        required: true
+        inlined: true
+        inlined_as_list: true
+  CrossReferences:
+    name: CrossReferences
+    description: A set of cross-references to other databases and publications.
+    from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+    attributes:
+      dataset_publications:
+        name: dataset_publications
+        description: Comma-separated list of DOIs for publications associated with
+          the dataset.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: dataset_publications
+        owner: CrossReferences
+        domain_of:
+        - CrossReferences
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+      related_database_entries:
+        name: related_database_entries
+        description: Comma-separated list of related database entries for the dataset.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: related_database_entries
+        owner: CrossReferences
+        domain_of:
+        - CrossReferences
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+      related_database_links:
+        name: related_database_links
+        description: Comma-separated list of related database links for the dataset.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: related_database_links
+        owner: CrossReferences
+        domain_of:
+        - CrossReferences
+        range: string
+        inlined: true
+        inlined_as_list: true
+      dataset_citations:
+        name: dataset_citations
+        description: Comma-separated list of DOIs for publications citing the dataset.
+        from_schema: https://cryoetdataportal.czscience.com/schema-docs/metadata
+        alias: dataset_citations
+        owner: CrossReferences
+        domain_of:
+        - CrossReferences
+        range: string
+        inlined: true
+        inlined_as_list: true
+source_file: metadata.yaml
