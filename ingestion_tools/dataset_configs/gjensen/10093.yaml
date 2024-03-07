@@ -48,7 +48,7 @@ tiltseries:
     energy_filter: GIF
     image_corrector: null
     phase_plate: false
-  pixel_spacing: '{ts-pixel_spacing}'
+  pixel_spacing: 2.6
   spherical_aberration_constant: 2.7
   tilt_alignment_software: '{ts-tilt_alignment_software}'
   tilt_axis: 84.3

@@ -59,7 +59,7 @@ tiltseries:
   tilting_scheme: starting tilt to max then min
   total_flux: 160.0
 tomograms:
-  voxel_spacing: 13.059000000000001
+  voxel_spacing: 13.059
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
   fiducial_alignment_status: FIDUCIAL

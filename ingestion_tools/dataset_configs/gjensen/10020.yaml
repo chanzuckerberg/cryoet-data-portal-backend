@@ -50,7 +50,7 @@ tiltseries:
     energy_filter: GIF
     image_corrector: null
     phase_plate: true
-  pixel_spacing: 1.6869999999999998
+  pixel_spacing: 1.687
   spherical_aberration_constant: 2.7
   tilt_alignment_software: IMOD
   tilt_axis: 84.3
@@ -94,7 +94,7 @@ tomograms:
   reconstruction_method: '{tomo-reconstruction_method}'
   reconstruction_software: IMOD
   tomogram_version: 1
-  voxel_spacing: 6.747999999999999
+  voxel_spacing: 6.748
 annotations: {}
 standardization_config:
   destination_prefix: '10020'
