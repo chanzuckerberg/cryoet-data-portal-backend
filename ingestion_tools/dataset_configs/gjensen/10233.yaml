@@ -47,7 +47,7 @@ tiltseries:
     energy_filter: GIF
     image_corrector: null
     phase_plate: false
-  pixel_spacing: 0.6320000000000001
+  pixel_spacing: 0.632
   spherical_aberration_constant: 2.0
   tilt_alignment_software: RAPTOR
   tilt_axis: 0.0

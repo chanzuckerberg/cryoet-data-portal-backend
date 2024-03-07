@@ -45,7 +45,7 @@ tiltseries:
     energy_filter: GIF
     image_corrector: null
     phase_plate: false
-  pixel_spacing: 7.739999771118164
+  pixel_spacing: 7.74
   spherical_aberration_constant: 2.0
   tilt_alignment_software: IMOD
   tilt_axis: 0.0
