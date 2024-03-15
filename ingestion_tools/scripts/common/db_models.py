@@ -71,12 +71,12 @@ class DatasetAuthor(BaseModel):
 
 class DatasetFunding(BaseModel):
     class Meta:
-        db_table = "dataset_funding"
+        table_name = "dataset_funding"
 
-    id = IntegerField()
+    id = IntegerField(primary_key=True)
     dataset_id = ForeignKeyField(Dataset, backref="funding_sources")
     funding_agency_name = CharField()
-    grant_id = CharField()
+    grant_id = CharField(null=True)
 
 
 class Run(BaseModel):

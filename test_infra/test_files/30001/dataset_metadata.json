@@ -33,8 +33,15 @@
     "funding":
     [
         {
-            "funding_agency_name": "Test Agency",
+            "funding_agency_name": "Test Agency 1",
             "grant_id": "56789"
+        },
+        {
+            "funding_agency_name": "Test Agency 2"
+        },
+        {
+            "funding_agency_name": "Grant Provider 1",
+            "grant_id": "1234"
         }
     ],
     "sample_preparation": "method1: value1, method2: value3",

@@ -3,7 +3,7 @@ from typing import Any, Generator
 import pytest
 from peewee import SqliteDatabase
 
-from common.db_models import BaseModel, Dataset, DatasetAuthor
+from common.db_models import BaseModel, Dataset, DatasetAuthor, DatasetFunding
 
 
 @pytest.fixture
@@ -15,7 +15,7 @@ def default_inputs(endpoint_url: str, http_prefix: str) -> list[str]:
 
 @pytest.fixture
 def mock_db() -> [list[BaseModel], Generator[SqliteDatabase, Any, None]]:
-    MODELS = [Dataset, DatasetAuthor]
+    MODELS = [Dataset, DatasetAuthor, DatasetFunding]
     mock_db = SqliteDatabase(":memory:")
     mock_db.bind(MODELS, bind_refs=False, bind_backrefs=False)
     mock_db.connect()
@@ -99,6 +99,29 @@ def dataset_30001_authors_expected() -> list[dict[str, Any]]:
             "corresponding_author_status": True,
             "primary_author_status": False,
             "author_list_order": 3,
+        }
+    ]
+
+
+@pytest.fixture
+def dataset_30001_funding_expected() -> list[dict[str, Any]]:
+    return [
+        {
+            "id": 2,
+            "dataset_id": 30001,
+            "funding_agency_name": "Grant Provider 1",
+            "grant_id": "1234",
+        },
+        {
+            "id": 4,
+            "dataset_id": 30001,
+            "funding_agency_name": "Test Agency 1",
+            "grant_id": "56789",
+        },
+        {
+            "id": 5,
+            "dataset_id": 30001,
+            "funding_agency_name": "Test Agency 2",
         }
     ]
 
