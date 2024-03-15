@@ -9,9 +9,6 @@ from botocore.client import Config
 from mypy_boto3_s3 import S3Client
 
 from common.fs import FileSystemApi
-from peewee import SqliteDatabase
-
-from common.db_models import BaseModel, Dataset
 
 
 @pytest.fixture
@@ -22,13 +19,6 @@ def endpoint_url() -> str:
 @pytest.fixture
 def http_prefix() -> str:
     return "https://foo.com"
-
-
-@pytest.fixture
-def default_inputs(endpoint_url: str, http_prefix: str) -> list[str]:
-    # Setting this to empty as we initialize a test DB in mock_db
-    postgres_url = ""
-    return ["test-public-bucket", http_prefix, postgres_url, "--endpoint-url", endpoint_url]
 
 
 @pytest.fixture
@@ -73,15 +63,3 @@ def s3_client(endpoint_url: str) -> S3Client:
         endpoint_url=endpoint_url,
         config=Config(signature_version="s3v4"),
     )
-
-
-@pytest.fixture
-def mock_db() -> [list[BaseModel], Generator[SqliteDatabase, Any, None]]:
-    MODELS = [Dataset]
-    mock_db = SqliteDatabase(":memory:")
-    mock_db.bind(MODELS, bind_refs=False, bind_backrefs=False)
-    mock_db.connect()
-    mock_db.create_tables(MODELS)
-    yield mock_db
-    mock_db.drop_tables(MODELS)
-    mock_db.close()

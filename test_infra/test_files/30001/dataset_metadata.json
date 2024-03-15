@@ -8,10 +8,14 @@
             "primary_author_status": true
         },
         {
-            "name": "Virginia Wolf",
+            "name": "Virginia Woolf",
             "ORCID": "0000-0000-1234-0000",
             "corresponding_author_status": false,
-            "primary_author_status": false
+            "primary_author_status": false,
+            "email": "vwoolf@dall.way",
+            "affiliation_name": "Bloomsbury",
+            "affiliation_address": "London, UK",
+            "affiliation_identifier": "1234343"
         },
         {
             "name": "Julia Child",

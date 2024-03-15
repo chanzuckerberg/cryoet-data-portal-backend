@@ -54,18 +54,18 @@ class Dataset(BaseModel):
 
 class DatasetAuthor(BaseModel):
     class Meta:
-        db_table = "dataset_authors"
+        table_name = "dataset_authors"
 
-    id = IntegerField()
+    id = IntegerField(primary_key=True)
     dataset_id = ForeignKeyField(Dataset, backref="authors")
-    orcid = CharField()
+    orcid = CharField(null=True)
     name = CharField()
-    corresponding_author_status = BooleanField()
-    primary_author_status = BooleanField()
-    email = CharField()
-    affiliation_name = CharField()
-    affiliation_address = CharField()
-    affiliation_identifier = CharField()
+    corresponding_author_status = BooleanField(null=True)
+    primary_author_status = BooleanField(null=True)
+    email = CharField(null=True)
+    affiliation_name = CharField(null=True)
+    affiliation_address = CharField(null=True)
+    affiliation_identifier = CharField(null=True)
     author_list_order = IntegerField()
 
 
