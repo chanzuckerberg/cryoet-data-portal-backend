@@ -83,7 +83,7 @@ class Run(BaseModel):
     class Meta:
         table_name = "runs"
 
-    id = IntegerField()
+    id = IntegerField(primary_key=True)
     dataset_id = ForeignKeyField(Dataset, backref="runs")
     name = CharField()
     s3_prefix = CharField()

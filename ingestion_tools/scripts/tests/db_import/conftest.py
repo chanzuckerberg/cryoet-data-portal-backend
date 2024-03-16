@@ -1,9 +1,12 @@
 from datetime import date
-from typing import Any, Generator
+from typing import Any, Generator, Callable
 import pytest
 from peewee import SqliteDatabase
+from mypy_boto3_s3 import S3Client
+from click.testing import CliRunner
 
-from common.db_models import BaseModel, Dataset, DatasetAuthor, DatasetFunding
+from db_import import load
+from common.db_models import BaseModel, Dataset, DatasetAuthor, DatasetFunding, Run
 
 
 @pytest.fixture
@@ -15,7 +18,7 @@ def default_inputs(endpoint_url: str, http_prefix: str) -> list[str]:
 
 @pytest.fixture
 def mock_db() -> [list[BaseModel], Generator[SqliteDatabase, Any, None]]:
-    MODELS = [Dataset, DatasetAuthor, DatasetFunding]
+    MODELS = [Dataset, DatasetAuthor, DatasetFunding, Run]
     mock_db = SqliteDatabase(":memory:")
     mock_db.bind(MODELS, bind_refs=False, bind_backrefs=False)
     mock_db.connect()
@@ -33,6 +36,24 @@ def verify_model():
             assert value == expected, f"Unexpected value for {key} actual={value} expected={expected}"
 
     return _verify_model
+
+
+@pytest.fixture
+def verify_dataset_import(
+    mock_db: Generator[SqliteDatabase, Any, None],
+    s3_client: S3Client,
+    default_inputs: list[str],
+    verify_model: Callable[[BaseModel, dict[str, Any]], None],
+    dataset_30001_expected: dict[str, Any],
+) -> Callable[[list[str]], Dataset]:
+    def _verify(additional_inputs: list[str]) -> Dataset:
+        input_args = default_inputs + ["--s3_prefix", "30001"] + additional_inputs
+        CliRunner().invoke(load, input_args)
+        actual = Dataset.get(id=30001)
+        verify_model(actual, dataset_30001_expected)
+        return actual
+
+    return _verify
 
 
 @pytest.fixture
@@ -69,62 +90,3 @@ def dataset_30001_expected(http_prefix: str) -> dict[str, Any]:
         "key_photo_url": f"{http_prefix}/30001/KeyPhoto/snapshot.png",
         "key_photo_thumbnail_url": f"{http_prefix}/30001/KeyPhoto/thumbnail.png",
     }
-
-
-@pytest.fixture
-def dataset_30001_authors_expected() -> list[dict[str, Any]]:
-    return [
-        {
-            "id": 4,
-            "dataset_id": 30001,
-            "name": "Jane Eyre",
-            "corresponding_author_status": False,
-            "primary_author_status": True,
-            "author_list_order": 1,
-        },
-        {
-            "id": 3,
-            "dataset_id": 30001,
-            "orcid": "0000-0000-1234-0000",
-            "name": "Virginia Woolf",
-            "corresponding_author_status": False,
-            "primary_author_status": False,
-            "email": "vwoolf@dall.way",
-            "affiliation_name": "Bloomsbury",
-            "affiliation_address": "London, UK",
-            "affiliation_identifier": "1234343",
-            "author_list_order": 2,
-        },
-        {
-            "id": 5,
-            "dataset_id": 30001,
-            "orcid": "9876-0000-0000-0000",
-            "name": "Julia Child",
-            "corresponding_author_status": True,
-            "primary_author_status": False,
-            "author_list_order": 3,
-        },
-    ]
-
-
-@pytest.fixture
-def dataset_30001_funding_expected() -> list[dict[str, Any]]:
-    return [
-        {
-            "id": 2,
-            "dataset_id": 30001,
-            "funding_agency_name": "Grant Provider 1",
-            "grant_id": "1234",
-        },
-        {
-            "id": 4,
-            "dataset_id": 30001,
-            "funding_agency_name": "Test Agency 1",
-            "grant_id": "56789",
-        },
-        {
-            "id": 5,
-            "dataset_id": 30001,
-            "funding_agency_name": "Test Agency 2",
-        },
-    ]
