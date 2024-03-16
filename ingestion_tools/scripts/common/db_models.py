@@ -92,9 +92,9 @@ class Run(BaseModel):
 
 class TomogramVoxelSpacing(BaseModel):
     class Meta:
-        db_table = "tomogram_voxel_spacings"
+        table_name = "tomogram_voxel_spacings"
 
-    id = IntegerField()
+    id = IntegerField(primary_key=True)
     run_id = ForeignKeyField(Run, backref="tomogram_voxel_spacings")
     voxel_spacing = FloatField()
     s3_prefix = CharField()

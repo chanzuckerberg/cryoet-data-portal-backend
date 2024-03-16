@@ -6,7 +6,7 @@ from mypy_boto3_s3 import S3Client
 from click.testing import CliRunner
 
 from db_import import load
-from common.db_models import BaseModel, Dataset, DatasetAuthor, DatasetFunding, Run
+from common.db_models import BaseModel, Dataset, DatasetAuthor, DatasetFunding, Run, TomogramVoxelSpacing
 
 
 @pytest.fixture
@@ -18,7 +18,7 @@ def default_inputs(endpoint_url: str, http_prefix: str) -> list[str]:
 
 @pytest.fixture
 def mock_db() -> [list[BaseModel], Generator[SqliteDatabase, Any, None]]:
-    MODELS = [Dataset, DatasetAuthor, DatasetFunding, Run]
+    MODELS = [Dataset, DatasetAuthor, DatasetFunding, Run, TomogramVoxelSpacing]
     mock_db = SqliteDatabase(":memory:")
     mock_db.bind(MODELS, bind_refs=False, bind_backrefs=False)
     mock_db.connect()

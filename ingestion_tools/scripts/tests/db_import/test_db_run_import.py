@@ -26,7 +26,7 @@ def dataset_30001_runs_expected(http_prefix: str) -> list[dict[str, Any]]:
 
 
 # Tests addition of new runs, and updating entries already existing in db
-def test_import_run_update(
+def test_import_run(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
     dataset_30001_runs_expected: list[dict[str, Any]],
