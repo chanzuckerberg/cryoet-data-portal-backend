@@ -15,14 +15,16 @@ DATASET_ID = 30001
 def populate_dataset_author_table() -> None:
     models.DatasetAuthor(id=1, dataset_id=10000, name="Julia Child", author_list_order=1).save(force_insert=True)
     models.DatasetAuthor(id=2, dataset_id=DATASET_ID, name="Stale Author", author_list_order=1).save(force_insert=True)
-    models.DatasetAuthor(id=3, dataset_id=DATASET_ID, name="Virginia Woolf", author_list_order=3).save(force_insert=True)
+    models.DatasetAuthor(id=3, dataset_id=DATASET_ID, name="Virginia Woolf", author_list_order=3).save(
+        force_insert=True
+    )
 
 
 def populate_dataset_funding_table() -> None:
     models.DatasetFunding(id=1, dataset_id=10000, funding_agency_name="Grant Provider 1").save(force_insert=True)
-    models.DatasetFunding(
-        id=2, dataset_id=DATASET_ID, funding_agency_name="Grant Provider 1", grant_id="foo"
-    ).save(force_insert=True)
+    models.DatasetFunding(id=2, dataset_id=DATASET_ID, funding_agency_name="Grant Provider 1", grant_id="foo").save(
+        force_insert=True
+    )
     # TODO: Add functionality to remove stale data
     # models.DatasetFunding(id=3, dataset_id=DATASET_ID, funding_agency_name="Grant Provider 2").save(force_insert=True)
     models.DatasetFunding(id=3, dataset_id=10000, funding_agency_name="Grant Provider 2").save(force_insert=True)
@@ -30,11 +32,11 @@ def populate_dataset_funding_table() -> None:
 
 @pytest.fixture
 def verify_dataset_import(
-        mock_db: Generator[SqliteDatabase, Any, None],
-        s3_client: S3Client,
-        default_inputs: list[str],
-        verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
-        dataset_30001_expected: dict[str, Any]
+    mock_db: Generator[SqliteDatabase, Any, None],
+    s3_client: S3Client,
+    default_inputs: list[str],
+    verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
+    dataset_30001_expected: dict[str, Any],
 ) -> Callable[[list[str], int, int], models.Dataset]:
     def _verify(additional_inputs: list[str], authors_count: int, funding_source_count: int) -> models.Dataset:
         input_args = default_inputs + ["--s3_prefix", str(DATASET_ID)] + additional_inputs
@@ -44,6 +46,7 @@ def verify_dataset_import(
         assert len(actual.authors) == authors_count
         assert len(actual.funding_sources) == funding_source_count
         return actual
+
     return _verify
 
 
@@ -60,7 +63,15 @@ def test_import_dataset_update(
 ) -> None:
     today = datetime.date.today()
     models.Dataset(
-        id=DATASET_ID, title="foo", description="bar", deposition_date=today, release_date=today, last_modified_date=today, sample_type="test", s3_prefix="s3://invalid_bucket/", https_prefix="https://invalid-site.com/1234"
+        id=DATASET_ID,
+        title="foo",
+        description="bar",
+        deposition_date=today,
+        release_date=today,
+        last_modified_date=today,
+        sample_type="test",
+        s3_prefix="s3://invalid_bucket/",
+        https_prefix="https://invalid-site.com/1234",
     ).save(force_insert=True)
     verify_dataset_import([], 0, 0)
 

@@ -81,7 +81,7 @@ class DatasetFunding(BaseModel):
 
 class Run(BaseModel):
     class Meta:
-        db_table = "runs"
+        table_name = "runs"
 
     id = IntegerField()
     dataset_id = ForeignKeyField(Dataset, backref="runs")

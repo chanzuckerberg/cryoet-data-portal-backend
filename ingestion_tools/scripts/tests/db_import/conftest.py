@@ -31,6 +31,7 @@ def verify_model():
         for key, value in actual.__data__.items():
             expected = expected_values.get(key)
             assert value == expected, f"Unexpected value for {key} actual={value} expected={expected}"
+
     return _verify_model
 
 
@@ -39,7 +40,10 @@ def dataset_30001_expected(http_prefix: str) -> dict[str, Any]:
     return {
         "id": 30001,
         "title": "Lorem ipsum dolor",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "description": (
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et"
+            " dolore magna aliqua."
+        ),
         "deposition_date": date(2023, 4, 1),
         "release_date": date(2023, 6, 2),
         "last_modified_date": date(2023, 8, 5),
@@ -63,7 +67,7 @@ def dataset_30001_expected(http_prefix: str) -> dict[str, Any]:
         "tissue_id": "1234",
         "tissue_name": "test-tissue1",
         "key_photo_url": f"{http_prefix}/30001/KeyPhoto/snapshot.png",
-        "key_photo_thumbnail_url": f"{http_prefix}/30001/KeyPhoto/thumbnail.png"
+        "key_photo_thumbnail_url": f"{http_prefix}/30001/KeyPhoto/thumbnail.png",
     }
 
 
@@ -99,7 +103,7 @@ def dataset_30001_authors_expected() -> list[dict[str, Any]]:
             "corresponding_author_status": True,
             "primary_author_status": False,
             "author_list_order": 3,
-        }
+        },
     ]
 
 
@@ -122,6 +126,5 @@ def dataset_30001_funding_expected() -> list[dict[str, Any]]:
             "id": 5,
             "dataset_id": 30001,
             "funding_agency_name": "Test Agency 2",
-        }
+        },
     ]
-
