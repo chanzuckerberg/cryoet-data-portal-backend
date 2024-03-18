@@ -37,38 +37,39 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: null
-  tilt_step: 2.0
-  total_flux: 100.0
-  data_acquisition_software: UCSFTomo
-  tilt_series_quality: 4
-  binning_from_frames: null
-  tilt_alignment_software: RAPTOR
   acceleration_voltage: 300000
-  spherical_aberration_constant: 2.0
-  microscope:
-    manufacturer: FEI
-    model: Polara
-    additional_scope_info: ''
+  binning_from_frames: null
   camera:
+    acquire_mode: counting
     manufacturer: Gatan
     model: K2
-    acquire_mode: counting
-  tilting_scheme: starting tilt to max then min
-  tilt_axis: 84.3
-  microscope_optical_setup:
-    phase_plate: false
-    image_corrector: null
-    energy_filter: GIF
+  data_acquisition_software: UCSFTomo
   is_aligned: false
+  microscope:
+    additional_scope_info: ''
+    manufacturer: FEI
+    model: Polara
+  microscope_optical_setup:
+    energy_filter: GIF
+    image_corrector: null
+    phase_plate: false
+  pixel_spacing: 4.036
+  spherical_aberration_constant: 2.0
+  tilt_alignment_software: RAPTOR
+  tilt_axis: 84.3
   tilt_range:
-    min: -60.0
     max: 60.0
+    min: -60.0
+  tilt_series_path: '{ts-tilt_series_path}'
+  tilt_series_quality: 4
+  tilt_step: 2.0
+  tilting_scheme: starting tilt to max then min
+  total_flux: 100.0
 tomograms:
-  voxel_spacing: null
+  voxel_spacing: 16.145
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
-  fiducial_alignment_status: true
+  fiducial_alignment_status: FIDUCIAL
   ctf_corrected: null
   processing: raw
   processing_software: null
@@ -117,3 +118,4 @@ standardization_config:
   run_glob: '*'
   run_regex: (dga2017-07-17-1|dga2017-07-17-2|dga2017-07-17-3|dga2017-07-17-4|dga2017-07-17-5|dga2017-07-17-6|dga2017-07-17-7|dga2017-07-17-8|dga2017-07-17-9|dga2017-07-17-10|dga2017-07-17-11|dga2017-07-17-12|dga2017-07-17-14|dga2017-07-17-15|dga2017-07-17-16|dga2017-07-17-17|dga2017-07-17-18|dga2017-07-17-19|dga2017-07-17-20|dga2017-07-17-21|dga2017-07-17-22|dga2017-07-17-23|dga2017-07-17-24|dga2017-07-17-25|dga2017-07-17-26|dga2017-07-17-27|dga2017-07-17-28|dga2017-07-17-29|dga2017-07-17-30|dga2017-07-17-31|dga2017-07-17-32|dga2017-07-17-33|dga2017-07-17-34|dga2017-07-17-35|dga2017-07-17-36|dga2017-07-17-37|dga2017-07-17-39|dga2017-07-17-40|dga2017-07-17-41|dga2017-07-17-42|dga2017-07-17-43|dga2017-07-17-44|dga2017-07-17-45|dga2017-07-17-46|dga2017-07-17-47|dga2017-07-17-48|dga2017-07-17-49|dga2017-07-17-50|dga2017-07-17-51|dga2017-07-17-52|dga2017-07-17-53|dga2017-07-17-55|dga2017-07-17-56|dga2017-07-17-57|dga2017-07-17-58|dga2017-07-17-59|dga2017-07-17-60|dga2017-07-17-61|dga2017-07-17-62|dga2017-07-17-63|dga2017-07-17-64|dga2017-07-17-65|dga2017-07-17-66|dga2017-07-18-3|dga2017-07-18-4|dga2017-07-17-67|dga2017-07-17-69|dga2017-07-17-74|dga2017-07-17-75|dga2017-07-17-76|dga2017-07-17-77|dga2017-07-17-78|dga2017-07-17-79|dga2017-07-17-80|dga2017-07-17-81|dga2017-07-17-82|dga2017-07-17-84|dga2017-07-17-85|dga2017-07-17-86|dga2017-07-17-87|dga2017-07-17-88|dga2017-07-17-89|dga2017-07-17-90|dga2017-07-17-91|dga2017-07-17-92|dga2017-07-17-93|dga2017-07-17-95|dga2017-07-17-96|dga2017-07-17-98|dga2017-07-17-99|dga2017-07-17-100|dga2017-07-17-102|dga2017-07-17-103|dga2017-07-17-104|dga2017-07-17-105|dga2017-07-17-106|dga2017-07-17-107|dga2017-07-17-108)$
   run_name_regex: (.*)
+  run_data_map_file: run_data_map/10076.csv

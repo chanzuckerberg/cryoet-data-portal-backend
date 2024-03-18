@@ -36,22 +36,22 @@ class DataImportConfig:
     run_regex: re.Pattern[str]
     tomo_glob: str
     tomo_format: str
-    tomo_regex: re.Pattern[str] | None
-    tomo_key_photo_glob: str | None
+    tomo_regex: re.Pattern[str] | None = None
+    tomo_key_photo_glob: str | None = None
     tomo_voxel_size: str
-    ts_name_regex: re.Pattern[str] | None
+    ts_name_regex: re.Pattern[str] | None = None
     run_name_regex: re.Pattern[str]
-    frames_name_regex: re.Pattern[str]
+    frames_name_regex: re.Pattern[str] | None = None
     frames_glob: str
-    tiltseries_glob: str | None
-    run_to_tomo_map_file: str | None
-    run_to_tomo_map: dict[str, str] | None
-    run_to_frame_map_csv: str | None
-    run_to_frame_map: dict[str, str] | None
-    run_to_ts_map_csv: str | None
-    run_to_ts_map: dict[str, str] | None
+    tiltseries_glob: str | None = None
+    run_to_tomo_map_file: str | None = None
+    run_to_tomo_map: dict[str, str] | None = None
+    run_to_frame_map_csv: str | None = None
+    run_to_frame_map: dict[str, str] | None = None
+    run_to_ts_map_csv: str | None = None
+    run_to_ts_map: dict[str, str] | None = None
     gain_glob: str
-    rawtlt_files: list[str] | None
+    rawtlt_files: list[str] | None = None
     # metadata templates
     dataset_template: dict[str, Any]
     run_template: dict[str, Any]
@@ -60,7 +60,7 @@ class DataImportConfig:
     annotation_template: dict[str, Any]
     output_prefix: str
     input_prefix: str
-    overrides_by_run: list[RunOverride] | None
+    overrides_by_run: list[RunOverride] | None = None
     run_data_map: dict[str, Any]
     run_data_map_file: str | None = None
 

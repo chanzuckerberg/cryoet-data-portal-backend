@@ -11,12 +11,12 @@ task cryoet_data_ingestion_workflow {
     }
 
     command <<<
-        set -Euxo pipefail
-	export PYTHONUNBUFFERED=1
-	python --version 1>&2
-	ls -l 1>&2
-	pwd 1>&2
-	cd /usr/src/app/scripts
+        set -euxo pipefail
+        export PYTHONUNBUFFERED=1
+        python --version 1>&2
+        ls -l 1>&2
+        pwd 1>&2
+        cd /usr/src/app/ingestion_tools/scripts
         python standardize_dirs.py convert ~{config_file} ~{input_bucket} ~{output_path} ~{flags} 1>&2
     >>>
 

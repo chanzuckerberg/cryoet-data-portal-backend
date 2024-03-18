@@ -31,7 +31,7 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: null
+  pixel_spacing: 5.41
   tilt_step: 1.0
   total_flux: 86.0
   data_acquisition_software: Serial EM
@@ -50,6 +50,7 @@ tiltseries:
     acquire_mode: counting
   tilting_scheme: min to max tilt
   tilt_axis: 84.3
+  tilt_series_path: rawdata/bio3-1_lam1_cell1.st
   microscope_optical_setup:
     phase_plate: true
     image_corrector: null
@@ -59,10 +60,10 @@ tiltseries:
     min: -60.0
     max: 0.0
 tomograms:
-  voxel_spacing: null
+  voxel_spacing: 21.64
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
-  fiducial_alignment_status: true
+  fiducial_alignment_status: FIDUCIAL
   ctf_corrected: null
   processing: raw
   processing_software: null

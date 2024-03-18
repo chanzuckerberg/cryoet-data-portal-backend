@@ -1,0 +1,11 @@
+run_name,tomo-voxel_spacing,ts-tilt_series_path
+cwl2010-10-05-1,25.16,rawdata/._10oct05a_C29_4_00003gr_00026sq_v01_00001hl_v01_00002tomo.st
+cwl2010-10-05-2,25.16,rawdata/._10oct05a_st6_00010gr_00002sq_v01_00002hl_v01_00002tomo.st
+cwl2010-10-05-3,25.16,rawdata/._10oct05a_C29_4_00014gr_00027sq_v01_00002hl_v01_00003tomo.st
+cwl2010-10-05-4,25.16,rawdata/._10oct05a_st6_00012gr_00001sq_v02_00004hl_v04_00004tomo.st
+cwl2010-10-05-5,25.16,rawdata/._10oct05a_C29_4_00003gr_00001sq_v02_00003hl_v01_00005tomo.st
+cwl2010-10-05-6,25.16,rawdata/._10oct05a_st6_00010gr_00002sq_v01_00001hl_v01_00005tomo.st
+cwl2010-10-05-7,25.16,rawdata/._10oct05a_st6_00010gr_00002sq_v01_00001hl_v03_00006tomo.st
+cwl2010-10-05-8,25.16,rawdata/._10oct05a_st6_00010gr_00002sq_v01_00001hl_v07_00008tomo.st
+cwl2010-10-05-9,50.32,rawdata/._10oct05a_C29_3_00008gr_00001sq_v02_00002hl_v03_00009tomo.st
+cwl2010-09-24-1,25.16,rawdata/10sep24a_C28_1_001.st

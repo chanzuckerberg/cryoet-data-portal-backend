@@ -1,0 +1,588 @@
+id: metadata
+name: cdp-meta
+version: 1.1.0
+prefixes:
+  linkml: https://w3id.org/linkml/
+  cdp-meta: metadata
+  ORCID: https://orcid.org/
+  ROR: https://ror.org/
+  UBERON: http://purl.obolibrary.org/obo/UBERON_
+  CL: http://purl.obolibrary.org/obo/CL_
+  GO: http://purl.obolibrary.org/obo/GO_
+  #cdp-common: common
+imports:
+  - linkml:types
+default_range: string
+default_prefix: cdp-meta
+
+classes:
+  # ============================================================================
+  # Snapshot / Thumbnail
+  # ============================================================================
+
+  PicturePath:
+    description: A set of paths to representative images of a piece of data.
+
+    attributes:
+      snapshot:
+        range: string
+        description: Path to the dataset preview image relative to the dataset directory root.
+      thumbnail:
+        range: string
+        description: Path to the thumbnail of preview image relative to the dataset directory root.
+
+  # ============================================================================
+
+  # ============================================================================
+  # Author / Annotator
+  # ============================================================================
+  Author:
+    description: >-
+      Author of a scientific data entity.
+    attributes:
+      name:
+        exact_mappings:
+          - cdp-common:author_name
+      email:
+        exact_mappings:
+          - cdp-common:author_email
+      affiliation_name:
+        exact_mappings:
+          - cdp-common:author_affiliation_name
+      affiliation_address:
+        exact_mappings:
+          - cdp-common:author_affiliation_address
+      affiliation_identifier:
+        exact_mappings:
+          - cdp-common:affiliation_identifier
+        recommended: true
+      is_corresponding:
+        exact_mappings:
+          - cdp-common:author_corresponding_author_status
+      is_primary_author:
+        exact_mappings:
+          - cdp-common:author_primary_author_status
+      ORCID:
+        exact_mappings:
+          - cdp-common:orcid
+        recommended: true
+
+  Annotator:
+    description: >-
+      Annotator of a scientific data entity.
+    attributes:
+      name:
+        exact_mappings:
+          - cdp-common:author_name
+      email:
+        exact_mappings:
+          - cdp-common:author_email
+      affiliation_name:
+        exact_mappings:
+          - cdp-common:author_affiliation_name
+      affiliation_address:
+        exact_mappings:
+          - cdp-common:author_affiliation_address
+      affiliation_identifier:
+        exact_mappings:
+          - cdp-common:affiliation_identifier
+        recommended: true
+      is_corresponding:
+        exact_mappings:
+          - cdp-common:author_corresponding_author_status
+      is_primary_annotator:
+        exact_mappings:
+          - cdp-common:author_primary_author_status
+      ORCID:
+        exact_mappings:
+          - cdp-common:orcid
+        recommended: true
+  # ============================================================================
+
+
+
+  # ============================================================================
+  # Funding source information
+  # ============================================================================
+  Funding:
+    description: A funding source for a scientific data entity (base for JSON and DB representation).
+    attributes:
+      funding_agency_name:
+        exact_mappings:
+          - cdp-common:funding_agency_name
+      grant_id:
+        exact_mappings:
+          - cdp-common:funding_grant_id
+  # ============================================================================
+
+  # ============================================================================
+  # Deposition, release and last modified dates
+  # ============================================================================
+  DateStamp:
+    abstract: true
+    description: A set of dates at which a data item was deposited, published and last modified.
+    attributes:
+      deposition_date:
+        required: true
+        exact_mappings:
+          - cdp-common:deposition_date
+      release_date:
+        recommended: true
+        exact_mappings:
+          - cdp-common:release_date
+      last_modified_date:
+        recommended: true
+        exact_mappings:
+          - cdp-common:last_modified_date
+
+  # ============================================================================
+  # Meta-Mixins
+  # ============================================================================
+  DatestampedEntity:
+    abstract: true
+    description: An entity with associated deposition, release and last modified dates.
+    attributes:
+      dates:
+        range: DateStamp
+        required: true
+
+  AuthoredEntity:
+    abstract: true
+    description: An entity with associated authors.
+    attributes:
+      authors:
+        range: Author
+        required: true
+        description: An ordered list of authors of the entity.
+        multivalued: true
+        inlined_as_list: true
+        list_elements_ordered: true
+
+  AnnotatoredEntity:
+    abstract: true
+    description: An entity with associated annotation authors.
+    attributes:
+      authors:
+        range: Annotator
+        required: true
+        description: An ordered list of annotation authors of the entity.
+        multivalued: true
+        inlined_as_list: true
+        list_elements_ordered: true
+
+  FundedEntity:
+    abstract: true
+    description: An entity with associated funding sources.
+    attributes:
+      funding:
+        range: Funding
+        recommended: true
+        description: An ordered list of funding sources for the entity.
+        multivalued: true
+        inlined_as_list: true
+        list_elements_ordered: true
+
+  CrossReferencedEntity:
+    abstract: true
+    description: An entity with associated cross-references to other databases and publications.
+    attributes:
+      cross_references:
+        range: CrossReferences
+
+  PicturedEntity:
+    abstract: true
+    description: An entity with associated preview images.
+    attributes:
+      key_photos:
+        range: PicturePath
+        description: A set of paths to representative images of the entity.
+        required: true
+  # ============================================================================
+
+  # ============================================================================
+  # Experimental metadata
+  # ============================================================================
+  Organism:
+    description: &desc_Organism The species from which the sample was derived.
+    attributes:
+      name:
+        exact_mappings:
+          -  cdp-common:organism_name
+      taxonomy_id:
+        exact_mappings:
+          - cdp-common:organism_taxid
+
+  Tissue:
+    description: &desc_Tissue The type of tissue from which the sample was derived.
+    attributes:
+      name:
+        exact_mappings:
+          - cdp-common:tissue_name
+      id:
+        exact_mappings:
+          - cdp-common:tissue_id
+
+  CellType:
+    description: &desc_CellType The cell type from which the sample was derived.
+    attributes:
+      name:
+        exact_mappings:
+          - cdp-common:cell_name
+      id:
+        exact_mappings:
+          - cdp-common:cell_type_id
+
+  CellStrain:
+    description: &desc_CellStrain The strain or cell line from which the sample was derived.
+    attributes:
+      name:
+        exact_mappings:
+          - cdp-common:cell_strain_name
+      id:
+        exact_mappings:
+          - cdp-common:cell_strain_id
+
+  CellComponent:
+    description: &desc_CellComponent The cellular component from which the sample was derived.
+    attributes:
+      name:
+        exact_mappings:
+          - cdp-common:cell_component_name
+      id:
+        exact_mappings:
+          - cdp-common:cell_component_id
+
+  ExperimentalMetadata:
+    abstract: true
+    description: Metadata describing sample and sample preparation methods used in a cryoET dataset.
+    attributes:
+      sample_type:
+        exact_mappings:
+          - cdp-common:preparation_sample_type
+      sample_preparation:
+        exact_mappings:
+          - cdp-common:sample_preparation
+      grid_preparation:
+        exact_mappings:
+          - cdp-common:grid_preparation
+      other_setup:
+        exact_mappings:
+          - cdp-common:preparation_other_setup
+      organism:
+        description: *desc_Organism
+        range: Organism
+      tissue:
+        description: *desc_Tissue
+        range: Tissue
+      cell_type:
+        description: *desc_CellType
+        range: CellType
+      cell_strain:
+        description: *desc_CellStrain
+        range: CellStrain
+      cell_component:
+        description: *desc_CellComponent
+        range: CellComponent
+  # ============================================================================
+
+  # ============================================================================
+  # dataset_metadata.json
+  # ============================================================================
+  Dataset:
+    description: High-level description of a cryoET dataset.
+    mixins:
+      - DatestampedEntity
+      - AuthoredEntity
+      - FundedEntity
+      - PicturedEntity
+      - CrossReferencedEntity
+      - ExperimentalMetadata
+
+    attributes:
+      dataset_identifier:
+        exact_mappings:
+        - cdp-common:dataset_identifier
+      dataset_title:
+        exact_mappings:
+        - cdp-common:dataset_title
+      dataset_description:
+        exact_mappings:
+        - cdp-common:dataset_description
+
+  # ============================================================================
+
+  # ============================================================================
+  # TiltSeries metadata
+  # ============================================================================
+  Camera:
+    description: &desc_camera The camera used to collect the tilt series.
+    attributes:
+      manufacturer:
+        exact_mappings:
+          - cdp-common:tiltseries_camera_manufacturer
+      model:
+        exact_mappings:
+          - cdp-common:tiltseries_camera_model
+
+  Microscope:
+    description: &desc_microscope The microscope used to collect the tilt series.
+    attributes:
+      manufacturer:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_manufacturer
+      model:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_model
+
+  MicroscopeOpticalSetup:
+    description: &desc_microscope_optical_setup The optical setup of the microscope used to collect the tilt series.
+    attributes:
+      energy_filter:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_energy_filter
+      phase_plate:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_phase_plate
+      image_corrector:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_image_corrector
+
+  TiltRange:
+    description: &desc_tilt_range The range of tilt angles in the tilt series.
+    attributes:
+      min:
+        exact_mappings:
+          - cdp-common:tiltseries_tilt_min
+      max:
+        exact_mappings:
+          - cdp-common:tiltseries_tilt_max
+  # ============================================================================
+
+  # ============================================================================
+  # tiltseries_metadata.json
+  # ============================================================================
+  TiltSeries:
+    description: Metadata describing a tilt series.
+
+    attributes:
+      acceleration_voltage:
+        exact_mappings:
+          - cdp-common:tiltseries_acceleration_voltage
+      spherical_aberration_constant:
+        exact_mappings:
+          - cdp-common:tiltseries_spherical_aberration_constant
+      microscope_additional_info:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_additional_info
+      tilt_axis:
+        exact_mappings:
+          - cdp-common:tiltseries_tilt_axis
+      tilt_step:
+        exact_mappings:
+          - cdp-common:tiltseries_tilt_step
+      tilting_scheme:
+        exact_mappings:
+          - cdp-common:tiltseries_tilting_scheme
+      total_flux:
+        exact_mappings:
+          - cdp-common:tiltseries_total_flux
+      data_acquisition_software:
+        exact_mappings:
+          - cdp-common:tiltseries_data_acquisition_software
+      binning_from_frames:
+        exact_mappings:
+          - cdp-common:tiltseries_binning_from_frames
+      tilt_series_quality:
+        exact_mappings:
+          - cdp-common:tiltseries_tilt_series_quality
+      pixel_spacing:
+        exact_mappings:
+          - cdp-common:tiltseries_pixel_spacing
+      aligned_tiltseries_binning:
+        exact_mappings:
+          - cdp-common:tiltseries_aligned_tiltseries_binning
+      frames_count:
+        exact_mappings:
+          - cdp-common:tiltseries_frames_count
+      camera:
+        description: *desc_camera
+        range: Camera
+      microscope:
+        description: *desc_microscope
+        range: Microscope
+      microscope_optical_setup:
+        description: *desc_microscope_optical_setup
+        range: MicroscopeOpticalSetup
+      tilt_range:
+        description: *desc_tilt_range
+        range: TiltRange
+  # ============================================================================
+
+  # ============================================================================
+  # Tomogram metadata
+  # ============================================================================
+  TomogramSize:
+    description: &desc_tomogram_size The size of a tomogram in voxels in each dimension.
+    attributes:
+      x:
+        exact_mappings:
+          - cdp-common:tomogram_size_x
+      y:
+        exact_mappings:
+          - cdp-common:tomogram_size_y
+      z:
+        exact_mappings:
+          - cdp-common:tomogram_size_z
+
+  TomogramOffset:
+    description: &desc_tomogram_offset The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.
+    attributes:
+      x:
+        exact_mappings:
+          - cdp-common:tomogram_offset_x
+      y:
+        exact_mappings:
+          - cdp-common:tomogram_offset_y
+      z:
+        exact_mappings:
+          - cdp-common:tomogram_offset_z
+  # ============================================================================
+
+  # ============================================================================
+  # tomogram_metadata.json
+  # ============================================================================
+  Tomogram:
+    description: Metadata describing a tomogram.
+    mixins:
+      - AuthoredEntity
+      - PicturedEntity
+
+    attributes:
+      voxel_spacing:
+        exact_mappings:
+          - cdp-common:tomogram_voxel_spacing
+      fiducial_alignment_status:
+        exact_mappings:
+          - cdp-common:tomogram_fiducial_alignment_status
+      ctf_corrected:
+        exact_mappings:
+          - cdp-common:tomogram_ctf_corrected
+      reconstruction_method:
+        exact_mappings:
+          - cdp-common:tomogram_reconstruction_method
+      reconstruction_software:
+        exact_mappings:
+          - cdp-common:tomogram_reconstruction_software
+      processing:
+        exact_mappings:
+          - cdp-common:tomogram_processing
+      processing_software:
+        exact_mappings:
+          - cdp-common:tomogram_processing_software
+      tomogram_version:
+        exact_mappings:
+          - cdp-common:tomogram_version
+      affine_transformation_matrix:
+        exact_mappings:
+          - cdp-common:tomogram_affine_transformation_matrix
+      size:
+        description: *desc_tomogram_size
+        range: TomogramSize
+      offset:
+        description: *desc_tomogram_offset
+        range: TomogramOffset
+  # ============================================================================
+
+  # ============================================================================
+  # Annotation metadata
+  # ============================================================================
+  AnnotationFile:
+    description: &desc_annotation_file Metadata describing a file containing an annotation.
+    attributes:
+      format:
+        exact_mappings:
+          - cdp-common:annotation_file_format
+      shape:
+        exact_mappings:
+          - cdp-common:annotation_file_shape_type
+      path:
+        exact_mappings:
+          - cdp-common:annotation_file_path
+      is_visualization_default:
+        exact_mappings:
+          - cdp-common:annotation_file_is_visualization_default
+
+  AnnotationConfidence:
+    description: &desc_annotation_confidence Metadata describing the confidence of an annotation.
+    attributes:
+      precision:
+        exact_mappings:
+          - cdp-common:annotation_confidence_precision
+      recall:
+        exact_mappings:
+          - cdp-common:annotation_confidence_recall
+      ground_truth_used:
+        exact_mappings:
+          - cdp-common:annotation_ground_truth_used
+
+  AnnotationObject:
+    description: &desc_annotation_object Metadata describing the object being annotated.
+    attributes:
+      id:
+        exact_mappings:
+          - cdp-common:annotation_object_id
+      name:
+        exact_mappings:
+          - cdp-common:annotation_object_name
+      description:
+        exact_mappings:
+          - cdp-common:annotation_object_description
+      state:
+        exact_mappings:
+          - cdp-common:annotation_object_state
+  # ============================================================================
+
+  # ============================================================================
+  # annotation_metadata.json
+  # ============================================================================
+  Annotation:
+    description: Metadata describing an annotation.
+    mixins:
+    - DatestampedEntity
+    - AnnotatoredEntity
+
+    attributes:
+      annotation_method:
+        exact_mappings:
+          - cdp-common:annotation_method
+      annotation_method_type:
+        exact_mappings:
+          - cdp-common:annotation_method_type
+      annotation_publications:
+        exact_mappings:
+          - cdp-common:annotation_publication
+      annotation_software:
+        exact_mappings:
+          - cdp-common:annotation_software
+      ground_truth_status:
+        exact_mappings:
+          - cdp-common:annotation_ground_truth_status
+      object_count:
+        exact_mappings:
+          - cdp-common:annotation_object_count
+      is_curator_recommended:
+        exact_mappings:
+          - cdp-common:annotation_is_curator_recommended
+      files:
+        description: *desc_annotation_file
+        range: AnnotationFile
+        multivalued: true
+        inlined_as_list: true
+        list_elements_ordered: true
+      confidence:
+        description: *desc_annotation_confidence
+        range: AnnotationConfidence
+      annotation_object:
+        description: *desc_annotation_object
+        range: AnnotationObject
+  # ============================================================================

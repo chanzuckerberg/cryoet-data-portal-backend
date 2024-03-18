@@ -71,7 +71,7 @@ class TomoConverter:
         mrcfiles.append(os.path.basename(filename))
 
         if write:
-            newfile = mrcfile.new(filename, self.data, overwrite=True)
+            newfile = mrcfile.new(filename, pyramid[0], overwrite=True)
             self.update_headers(newfile, header_mapper, voxel_spacing)
             newfile.flush()
             newfile.close()
@@ -217,6 +217,7 @@ def scale_maskfile(
     label: int,
     scale_z_axis: bool = True,
     write: bool = True,
+    voxel_spacing=None,
 ):
     mc = MaskConverter(fs, tomo_filename, label)
     pyramid = mc.make_pyramid(scale_z_axis=scale_z_axis)
@@ -226,6 +227,7 @@ def scale_maskfile(
         pyramid,
         f"{output_prefix}.mrc",
         write,
+        voxel_spacing=voxel_spacing,
     )
 
 
