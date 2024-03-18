@@ -2,7 +2,7 @@ import json
 import os
 import os.path
 from datetime import datetime
-from typing import Any, Callable, List, Dict, Union, Optional, Tuple
+from typing import Any, Callable, Dict, List, Tuple
 
 import mrcfile
 import numpy as np
@@ -13,7 +13,6 @@ import zarr
 from mrcfile.mrcfile import MrcFile
 from mrcfile.mrcobject import MrcObject
 from skimage.transform import downscale_local_mean
-from fsspec import AbstractFileSystem
 
 from common.fs import FileSystemApi
 
@@ -102,9 +101,11 @@ class TomoConverter:
 
     # Make an array of an original size image, plus `max_layers` half-scaled images
     def make_pyramid(
-        self, max_layers: int = 2, scale_z_axis: bool = True, voxel_spacing: float = None
+        self,
+        max_layers: int = 2,
+        scale_z_axis: bool = True,
+        voxel_spacing: float = None,
     ) -> Tuple[List[np.ndarray], List[Tuple[float, float, float]]]:
-
         # Voxel size for unbinned
         if not voxel_spacing:
             voxel_spacing = self.get_voxel_size()
@@ -127,7 +128,7 @@ class TomoConverter:
                     pyramid_voxel_spacing[i][0] * z_scale,
                     pyramid_voxel_spacing[i][1] * 2,
                     pyramid_voxel_spacing[i][2] * 2,
-                )
+                ),
             )
 
         return pyramid, pyramid_voxel_spacing
@@ -167,7 +168,6 @@ class TomoConverter:
         write: bool = True,
         pyramid_voxel_spacing: List[Tuple[float, float, float]] = None,
     ) -> str:
-
         destination_zarrdir = fs.destformat(zarrdir)
         # Write zarr data as 256^3 voxel chunks
         if write:
@@ -212,7 +212,10 @@ class MaskConverter(TomoConverter):
         self.label = label
 
     def make_pyramid(
-        self, max_layers: int = 2, scale_z_axis: bool = True, voxel_spacing: float = None
+        self,
+        max_layers: int = 2,
+        scale_z_axis: bool = True,
+        voxel_spacing: float = None,
     ) -> Tuple[List[np.ndarray], List[Tuple[float, float, float]]]:
         # Voxel size for unbinned
         if not voxel_spacing:
@@ -239,7 +242,7 @@ class MaskConverter(TomoConverter):
                     pyramid_voxel_spacing[i][0] * z_scale,
                     pyramid_voxel_spacing[i][1] * 2,
                     pyramid_voxel_spacing[i][2] * 2,
-                )
+                ),
             )
 
         return pyramid, pyramid_voxel_spacing
@@ -298,7 +301,11 @@ def scale_mrcfile(
     tc = TomoConverter(fs, tomo_filename)
     pyramid, pyramid_voxel_spacing = tc.make_pyramid(scale_z_axis=scale_z_axis, voxel_spacing=voxel_spacing)
     _ = tc.pyramid_to_omezarr(
-        fs, pyramid, f"{output_prefix}.zarr", write_zarr, pyramid_voxel_spacing=pyramid_voxel_spacing
+        fs,
+        pyramid,
+        f"{output_prefix}.zarr",
+        write_zarr,
+        pyramid_voxel_spacing=pyramid_voxel_spacing,
     )
     _ = tc.pyramid_to_mrc(fs, pyramid, f"{output_prefix}.mrc", write_mrc, header_mapper, voxel_spacing)
 
