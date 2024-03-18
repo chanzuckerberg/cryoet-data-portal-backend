@@ -109,6 +109,9 @@ class TomoConverter:
         if not voxel_spacing:
             voxel_spacing = self.get_voxel_size()
 
+        # Ensure voxel spacing rounded to 3rd digit
+        voxel_spacing = round(voxel_spacing, 3)
+
         pyramid = [self.data.astype("f4")]
         pyramid_voxel_spacing = [(voxel_spacing, voxel_spacing, voxel_spacing)]
 
@@ -214,6 +217,9 @@ class MaskConverter(TomoConverter):
         # Voxel size for unbinned
         if not voxel_spacing:
             voxel_spacing = self.get_voxel_size()
+
+        # Ensure voxel spacing rounded to 3rd digit
+        voxel_spacing = round(voxel_spacing, 3)
 
         pyramid = [(self.data == self.label).astype(np.float32)]
         pyramid_voxel_spacing = [(voxel_spacing, voxel_spacing, voxel_spacing)]
