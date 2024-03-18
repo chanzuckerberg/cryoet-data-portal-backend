@@ -30,10 +30,9 @@ class ZarrReader:
 
 
 class ZarrWriter:
-    def __init__(self, zarrdir: str, fs: AbstractFileSystem = None):
-        self.fs = fs
-        self.loc = zarr.storage.FSStore(zarrdir, key_separator="/", mode="w", dimension_separator="/", fs=fs)
-        self.root_group = zarr.group(self.loc, overwrite=True)
+    def __init__(self, zarrdir: str):
+        self.loc = ome_zarr.io.parse_url(zarrdir, mode="w")
+        self.root_group = zarr.group(self.loc.store, overwrite=True)
 
     def ome_zarr_axes(self) -> List[Dict[str, str]]:
         return [
@@ -60,23 +59,12 @@ class ZarrWriter:
     def write_data(
         self,
         data: List[np.ndarray],
-        voxel_spacing: Optional[List[Tuple[float, float, float]]] = None,
+        voxel_spacing: List[Tuple[float, float, float]],
         chunk_size: Tuple[int, int, int] = (256, 256, 256),
         scale_z_axis: bool = True,
     ):
         pyramid = []
         scales = []
-
-        # If no voxel size is provided, assume 2x downscaling for each layer and scale 1 for the base layer
-        if not voxel_spacing:
-            voxel_spacing = [(1, 1, 1)]
-            z_scale = 1
-            if scale_z_axis:
-                z_scale = 2
-
-            for i in range(len(data) - 1):
-                ax1, ax2, ax3 = voxel_spacing[-1]
-                voxel_spacing.append((ax1 * z_scale, ax2 * 2, ax3 * 2))
 
         # If voxel_size is a list, it must match the length of the data
         if len(voxel_spacing) != len(data):
@@ -133,9 +121,9 @@ class TomoConverter:
             pyramid.append(downscaled_data)
             pyramid_voxel_spacing.append(
                 (
-                    pyramid_voxel_spacing[-1][0] * z_scale,
-                    pyramid_voxel_spacing[-1][1] * 2,
-                    pyramid_voxel_spacing[-1][2] * 2,
+                    pyramid_voxel_spacing[i][0] * z_scale,
+                    pyramid_voxel_spacing[i][1] * 2,
+                    pyramid_voxel_spacing[i][2] * 2,
                 )
             )
 
@@ -242,9 +230,9 @@ class MaskConverter(TomoConverter):
             pyramid.append(scaled)
             pyramid_voxel_spacing.append(
                 (
-                    pyramid_voxel_spacing[-1][0] * z_scale,
-                    pyramid_voxel_spacing[-1][1] * 2,
-                    pyramid_voxel_spacing[-1][2] * 2,
+                    pyramid_voxel_spacing[i][0] * z_scale,
+                    pyramid_voxel_spacing[i][1] * 2,
+                    pyramid_voxel_spacing[i][2] * 2,
                 )
             )
 
