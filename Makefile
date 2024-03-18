@@ -1,9 +1,17 @@
 .PHONY: init
 init: ingestor-init api-init
 
+.PHONY: stop
+stop:
+	docker compose --profile '*' stop
+
+.PHONY: start
+start:
+	docker compose --profile ingestor start
+
 .PHONY: ingestor-init
 ingestor-init:
-	docker compose -f ./docker-compose.yml -f ./ingestion_tools/docker-compose.yml --profile ingestor up -d
+	docker compose --profile ingestor up -d
 	cd ./test_infra/; ./seed_moto.sh
 
 .PHONY: api-init

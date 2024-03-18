@@ -67,6 +67,10 @@ class DataImportConfig:
     def __init__(self, fs: FileSystemApi, config_path: str, output_prefix: str, input_bucket: str):
         self.output_prefix = output_prefix
         self.fs = fs
+        self.run_to_tomo_map = {}
+        self.run_data_map = {}
+        self.run_to_frame_map = {}
+        self.run_to_ts_map = {}
         with open(config_path, "r") as conffile:
             dataset_config = yaml.safe_load(conffile)
             config = dataset_config["standardization_config"]
