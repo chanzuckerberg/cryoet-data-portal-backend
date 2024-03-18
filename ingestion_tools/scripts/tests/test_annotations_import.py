@@ -13,8 +13,8 @@ from mypy_boto3_s3 import S3Client
 
 default_anno_metadata = {
   "annotation_object": {
-    "id": "GO:0005835",
-    "name": "fatty acid synthase complex",
+    "id": "GO:0001234",
+    "name": "some protein",
   },
   "dates": {
       "deposition_date": "2022-02-02",
@@ -35,7 +35,7 @@ default_anno_metadata = {
 def dataset_config(s3_fs: FileSystemApi, test_output_bucket: str) -> DataImportConfig:
     config_file = "tests/fixtures/annotations/anno_config.yaml"
     output_path = f"{test_output_bucket}/output"
-    input_bucket = "input_bucket"
+    input_bucket = "test-public-bucket"
     config = DataImportConfig(s3_fs, config_file, output_path, input_bucket)
     return config
 
@@ -46,7 +46,13 @@ def tomo_importer(dataset_config: DataImportConfig) -> TomogramImporter:
     tomo = TomogramImporter(config=dataset_config, parent=run, path="run1")
     return tomo
 
-def test_import_annotation_metadata(s3_fs: FileSystemApi, test_output_bucket: str, tomo_importer: TomogramImporter, dataset_config: DataImportConfig) -> None:
+def list_dir(s3_client: S3Client, bucket: str, prefix: str) -> None:
+    files = s3_client.list_objects(Bucket=bucket, Prefix=prefix)
+    print(json.dumps(files, indent=2))
+    for item in files["Contents"]:
+        print(item["Key"])
+
+def test_import_annotation_metadata(s3_fs: FileSystemApi, test_output_bucket: str, tomo_importer: TomogramImporter, dataset_config: DataImportConfig, s3_client: S3Client) -> None:
     anno_config = {
       "metadata": default_anno_metadata,
       "sources": [{
@@ -67,3 +73,13 @@ def test_import_annotation_metadata(s3_fs: FileSystemApi, test_output_bucket: st
     )
     anno.import_annotations(True)
     anno.import_metadata()
+
+    # Make sure we have a csv file and a metadata file
+    prefix = anno.get_output_path()
+    list_dir(s3_client, test_output_bucket, prefix)
+    anno_file = f"{prefix}.json"
+    print("PREFIX -- ", anno_file)
+
+    with s3_fs.open(anno_file, "r") as fh:
+        metadata = json.load(fh)
+    print("DATA -- ", json.dumps(metadata, indent=4))

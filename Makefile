@@ -1,6 +1,14 @@
 .PHONY: init
 init: ingestor-init api-init
 
+.PHONY: stop
+stop:
+	docker compose --profile ingestor stop
+
+.PHONY: start
+start:
+	docker compose --profile ingestor start
+
 .PHONY: ingestor-init
 ingestor-init:
 	docker compose --profile ingestor up -d

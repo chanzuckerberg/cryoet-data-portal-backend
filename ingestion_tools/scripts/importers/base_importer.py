@@ -41,9 +41,9 @@ class BaseImporter:
 
         glob_vars["run_name"] = run_name
         # TODO: remove these in favor of the singular tsv file
-        glob_vars["mapped_tomo_name"] = (self.config.run_to_tomo_map or {}).get(run_name)
-        glob_vars["mapped_frame_name"] = (self.config.run_to_frame_map or {}).get(run_name)
-        glob_vars["mapped_ts_name"] = (self.config.run_to_ts_map or {}).get(run_name)
+        glob_vars["mapped_tomo_name"] = self.config.run_to_tomo_map.get(run_name)
+        glob_vars["mapped_frame_name"] = self.config.run_to_frame_map.get(run_name)
+        glob_vars["mapped_ts_name"] = self.config.run_to_ts_map.get(run_name)
 
         return glob_vars
 
