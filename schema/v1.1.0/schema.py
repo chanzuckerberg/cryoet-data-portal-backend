@@ -1,8 +1,7 @@
-from linkml_runtime.utils.schemaview import SchemaView
-from linkml_runtime.dumpers import yaml_dumper
-from linkml.utils.helpers import write_to_file
-
 import click
+from linkml.utils.helpers import write_to_file
+from linkml_runtime.dumpers import yaml_dumper
+from linkml_runtime.utils.schemaview import SchemaView
 
 
 def _materialize_classes(schema: SchemaView) -> None:
@@ -29,20 +28,18 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
         slot = input_slots.get(s)
         mappings = slot["exact_mappings"]
         if mappings:
-            mappings = [
-                m.replace("cdp-common:", "") for m in mappings if "cdp-common:" in m
-            ]
+            mappings = [m.replace("cdp-common:", "") for m in mappings if "cdp-common:" in m]
 
             if len(mappings) > 1:
                 raise ValueError(
-                    f"Slot {slot['name']} has multiple mappings to common schema"
+                    f"Slot {slot['name']} has multiple mappings to common schema",
                 )
 
             common_slot = common_slots.get(mappings[0])
 
             if not common_slot:
                 raise ValueError(
-                    f"Slot {mappings[0]} does not exist in common schema. Check the exact_mappings for {slot['name']}."
+                    f"Slot {mappings[0]} does not exist in common schema. Check the exact_mappings for {slot['name']}.",
                 )
 
             slot["range"] = common_slot["range"]
@@ -60,7 +57,7 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
     # Make sure the attributes that have classes as range have their descriptions set
     for c in schema.all_classes():
         clz = schema.get_class(c)
-        for name, attr in clz.attributes.items():
+        for _, attr in clz.attributes.items():
             if attr.range in schema.all_classes():
                 attr.description = schema.get_class(attr.range).description
 
