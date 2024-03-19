@@ -1,0 +1,58 @@
+[project]
+name = "schema_manager"
+version = "1.0"
+description = "Tools for managing schema of the CryoET Data Portal"
+authors = [
+    "CZI Imaging Team <cryoetdataportal@chanzuckerberg.com>"
+]
+license = "MIT"
+
+[tool.black]
+line-length = 120
+target_version = ['py311']
+
+[tool.ruff]
+lint.select = [
+    "E", "W",  # pycodestyle
+    "F",  # pyflakes
+    "B",  # bugbear
+    "I",  # isort
+    "N",  # pep8-naming
+    "ASYNC",  # async
+    "COM",  # commas
+    "C4",  # comprehensions
+    "DTZ",  # datetimez
+    "ISC",  # implicit-str-concat
+    "G",  # logging-format
+    "T20",  # print
+    "SIM",  # simplify
+]
+lint.ignore = [
+    "E501",  # line too long
+    "C408",  # rewrite empty built-ins as literals
+    "T201",  # print statements.
+    "DTZ007", # Datetime objects without timezones.
+    "DTZ005", # More datetimes without timezones.
+]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint.per-file-ignores]
+"v1.1.0/metadata_models.py" = [
+    "N802", # function name should be lowercase
+    "N805", # First argument of a method should be named `self`
+    "SIM102", # Simplyfing nested loop
+]
+
+
+[tool.ruff.lint.isort]
+known-first-party =["common"]
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "double"
+
+[tool.mypy]
+show_error_codes = true
+ignore_missing_imports = true
+warn_unreachable = true
+strict = true
