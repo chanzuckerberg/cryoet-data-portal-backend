@@ -1,11 +1,11 @@
-run_name,tomo-reconstruction_method,ts-tilt_alignment_software
-scd2017-01-16-1,Weighted back projection,IMOD
-scd2017-01-16-2,Weighted back projection,IMOD
-scd2017-01-16-3,Weighted back projection,IMOD
-scd2017-01-16-7,Weighted back projection,IMOD
-scd2017-01-16-8,Weighted back projection,IMOD
-scd2017-01-16-9,Weighted back projection,IMOD
-scd2017-01-16-5,Weighted back projection,IMOD;IMOD
-scd2017-01-16-6,Weighted back projection,IMOD;IMOD
-scd2017-01-16-10,SIRT,IMOD;IMOD
-scd2017-01-16-13,Weighted back projection,IMOD;IMOD
+run_name,tomo-voxel_spacing,ts-pixel_spacing,ts-tilt_alignment_software,ts-tilt_series_path
+scd2017-01-16-1,25.312,6.328,IMOD,rawdata/tomography6.mrc
+scd2017-01-16-2,25.312,6.328,IMOD,rawdata/tomography5.mrc
+scd2017-01-16-3,50.624,12.656,IMOD,rawdata/tomography7.mrc
+scd2017-01-16-5,25.312,6.328,IMOD;IMOD,rawdata/tomography4.mrc
+scd2017-01-16-6,25.312,12.656,IMOD;IMOD,rawdata/tomography9.mrc
+scd2017-01-16-7,25.312,12.656,IMOD,rawdata/tomography10.mrc
+scd2017-01-16-8,25.312,6.328,IMOD,rawdata/tomography3.mrc
+scd2017-01-16-9,25.312,12.656,IMOD,rawdata/tomography11.mrc
+scd2017-01-16-10,25.312,6.328,IMOD;IMOD,rawdata/tomography2.mrc
+scd2017-01-16-13,25.312,6.328,IMOD;IMOD,rawdata/tomography1.mrc

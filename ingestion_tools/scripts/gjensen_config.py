@@ -6,13 +6,25 @@ import re
 from collections import defaultdict
 from copy import deepcopy
 from functools import partial
-from typing import Any, Callable
+from typing import Any, Callable, Optional
 
 import click
 import yaml
 
 from common.fs import LocalFilesystem
 from common.normalize_fields import normalize_fiducial_alignment
+
+RAW_PROCESSING_TYPES = {
+    "raptor",
+    "ctffind4, novactf, custom bash and matlab scripts;imod, ctffind4, novactf, custom bash and matlab scripts",
+    "imod",
+    "tomo3d",
+    "batchruntomo",
+    "imod, sirt-like",
+    "warp, dynamo",
+    "sirt",
+    "raw",
+}
 
 
 def to_dataset_author(data: dict[str, Any]) -> list[dict[str, Any]]:
@@ -85,6 +97,16 @@ def to_dataset_config(dataset_id: int, data: dict[str, Any], authors: list[dict[
     return config
 
 
+def get_canonical_tomogram_name(run: dict[str, Any]) -> Optional[str]:
+    """
+    Get name of the tomogram to treat as Canonical when there are multiple tomograms for a run. Use sorting to find
+    the first tomogram alphabetically.
+    """
+    names = list(run.get("tomograms", {}).keys())
+    names.sort()
+    return next(iter(names), None)
+
+
 def to_standardization_config(
     dataset_id: int,
     data: dict[str, Any],
@@ -100,9 +122,7 @@ def to_standardization_config(
         run_names.append(run["run_name"])
         if len(run["tomograms"]) > 1:
             run_has_multiple_tomos = True
-        names = list(run.get("tomograms", {}).keys())
-        names.sort()
-        mapped_tomo_name[run["run_name"]] = next(iter(names), "*")
+        mapped_tomo_name[run["run_name"]] = get_canonical_tomogram_name(run) or "*"
 
     tlt_tomo_path = "{mapped_frame_name}" if run_has_multiple_tomos else "3dimage_*"
     tomo_path = "{mapped_tomo_name}" if run_has_multiple_tomos else "3dimage_*/*"
@@ -207,7 +227,6 @@ def to_template_by_run(templates, run_data_map, prefix: str, path) -> dict[str, 
                 for entry in templates_for_path:
                     for source in entry["sources"]:
                         run_data_map[source][run_data_map_key] = entry["metadata"].get(key)
-
     return template_metadata
 
 
@@ -227,31 +246,53 @@ def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
         "max": tilt_series.pop("tilt_range_max"),
     }
 
-    tilt_series["pixel_spacing"] = None
     tilt_series["tilt_series_quality"] = 4 if len(data["tomograms"]) else 1
-
+    tilt_series["pixel_spacing"] = round(tilt_series["pixel_spacing"], 3) if tilt_series.get("pixel_spacing") else None
     return tilt_series
 
 
-def to_tomogram(authors: list[dict[str, Any]], data: dict[str, Any]) -> [dict[str, Any] | Any]:
-    tomogram = next((deepcopy(val) for val in data["tomograms"].values()), {})
+def normalize_invalid_to_none(value: str) -> str:
+    return value if value else "None"
+
+
+def normalize_processing(input_processing: str) -> str:
+    if not input_processing:
+        return "raw"
+    input_processing = input_processing.lower()
+
+    if "filtered" in input_processing:
+        return "filtered"
+    elif input_processing == "denoised":
+        return "denoised"
+    elif input_processing in RAW_PROCESSING_TYPES:
+        return "raw"
+
+
+def to_tomogram(
+    authors: list[dict[str, Any]],
+    data: dict[str, Any],
+) -> [dict[str, Any] | Any]:
+    canonical_tomogram_name = get_canonical_tomogram_name(data)
+    tomogram = deepcopy(data["tomograms"][canonical_tomogram_name]) if canonical_tomogram_name else {}
     if len(data["tomograms"].keys()) > 1:
         print(
             f'{data["run_name"]} has {len(data["tomograms"].values())} tomograms: '
             f'{",".join(set(data["tomograms"].keys()))}',
         )
 
-    tomogram["fiducial_alignment_status"] = normalize_fiducial_alignment(tomogram["fiducial_alignment_status"])
+    tomogram["fiducial_alignment_status"] = normalize_fiducial_alignment(
+        tomogram.get("fiducial_alignment_status", False),
+    )
     tomogram["offset"] = {"x": 0, "y": 0, "z": 0}
     tomogram["affine_transformation_matrix"] = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
-    tomogram["voxel_spacing"] = None
     tomogram["authors"] = authors
     tomogram["tomogram_version"] = 1
+    tomogram["reconstruction_method"] = normalize_invalid_to_none(tomogram.get("reconstruction_method"))
+    tomogram["reconstruction_software"] = normalize_invalid_to_none(tomogram.get("reconstruction_software"))
 
-    if not tomogram.get("processing"):
-        tomogram["processing"] = "raw"
-    if not tomogram.get("voxel_spacing"):
-        tomogram["voxel_spacing"] = None
+    tomogram["processing"] = normalize_processing(tomogram.get("processing"))
+
+    tomogram["voxel_spacing"] = round(tomogram["voxel_spacing"], 3) if "voxel_spacing" in tomogram else None
 
     return tomogram
 
@@ -300,7 +341,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     fs.makedirs(run_data_map_path)
     fs.makedirs(run_tomo_map_path)
     fs.makedirs(run_frames_map_path)
-    file_paths = fs.glob(os.path.join(input_dir, "*.json"))
+    file_paths = fs.glob(os.path.join(input_dir, "[0-9]*.json"))
     file_paths.sort()
     for file_path in file_paths:
         with open(file_path, "r") as file:
@@ -312,7 +353,13 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
             dataset_config = {
                 "dataset": to_dataset_config(dataset_id, val, authors),
                 "runs": {},
-                "tiltseries": to_config_by_run(dataset_id, val.get("runs"), run_data_map, to_tiltseries, "ts"),
+                "tiltseries": to_config_by_run(
+                    dataset_id,
+                    val.get("runs"),
+                    run_data_map,
+                    partial(to_tiltseries),
+                    "ts",
+                ),
                 "tomograms": to_config_by_run(
                     dataset_id,
                     val.get("runs"),

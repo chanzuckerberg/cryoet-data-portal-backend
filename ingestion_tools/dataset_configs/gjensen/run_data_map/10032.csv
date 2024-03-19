@@ -1,5 +1,5 @@
-run_name,ts-data_acquisition_software,ts-tilt_range-min,ts-total_flux
-wnj2018-06-28-2,SerialEM,-60.0,188.0
-wnj2018-06-28-3,Undefined,-60.0,188.0
-wnj2018-06-28-4,Undefined,-60.0,188.0
-wnj2018-06-28-5,Undefined,-50.0,173.0
+run_name,ts-data_acquisition_software,ts-tilt_range-min,ts-tilt_series_path,ts-total_flux
+wnj2018-06-28-2,SerialEM,-60.0,rawdata/sq1_cell1.mrc,188.0
+wnj2018-06-28-3,Undefined,-60.0,rawdata/sq1_cell2.mrc,188.0
+wnj2018-06-28-4,Undefined,-60.0,rawdata/sq1_cell3.mrc,188.0
+wnj2018-06-28-5,Undefined,-50.0,rawdata/sq1_cell4.mrc,173.0

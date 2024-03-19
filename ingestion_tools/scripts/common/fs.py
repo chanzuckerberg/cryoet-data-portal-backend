@@ -181,3 +181,6 @@ class LocalFilesystem(FileSystemApi):
 
     def read_block(self, path: str, start: int, end: int) -> str:
         return path
+
+    def push(self, path: str) -> None:
+        pass

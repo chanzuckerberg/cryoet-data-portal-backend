@@ -45,13 +45,14 @@ tiltseries:
     energy_filter: GIF
     image_corrector: null
     phase_plate: false
-  pixel_spacing: null
+  pixel_spacing: 7.74
   spherical_aberration_constant: 2.0
   tilt_alignment_software: '{ts-tilt_alignment_software}'
   tilt_axis: 0.0
   tilt_range:
     max: float {ts-tilt_range-max}
     min: float {ts-tilt_range-min}
+  tilt_series_path: '{ts-tilt_series_path}'
   tilt_series_quality: 4
   tilt_step: float {ts-tilt_step}
   tilting_scheme: starting tilt to max then min
@@ -77,7 +78,7 @@ tomograms:
   align_softwares: '{tomo-align_softwares}'
   authors: *id001
   ctf_corrected: null
-  fiducial_alignment_status: true
+  fiducial_alignment_status: FIDUCIAL
   offset:
     x: 0
     y: 0
@@ -87,7 +88,7 @@ tomograms:
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
   tomogram_version: 1
-  voxel_spacing: null
+  voxel_spacing: 15.48
 annotations: {}
 standardization_config:
   destination_prefix: '10227'
