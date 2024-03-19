@@ -22,4 +22,4 @@ jobs:
       - name: check backend
         uses: pre-commit/action@v3.0.0
         with:
-          extra_args: --files ${{ steps.files_changed.outputs.files}}
+          extra_args: --files ${{ steps.files_changed.outputs.files }}
