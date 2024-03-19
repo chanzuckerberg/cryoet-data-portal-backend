@@ -1,6 +1,7 @@
-from typing import Callable, Any
+from typing import Any, Callable
 
 import pytest as pytest
+from tests.db_import.populate_db import populate_run
 
 import common.db_models as models
 
@@ -22,6 +23,13 @@ def dataset_30001_runs_expected(http_prefix: str) -> list[dict[str, Any]]:
             "s3_prefix": "s3://test-public-bucket/30001/RUN2/",
             "https_prefix": f"{http_prefix}/30001/RUN2/",
         },
+        {
+            "id": 4,
+            "dataset_id": 30001,
+            "name": "RUN3",
+            "s3_prefix": "s3://test-public-bucket/30001/RUN3/",
+            "https_prefix": f"{http_prefix}/30001/RUN3/",
+        },
     ]
 
 
@@ -31,14 +39,8 @@ def test_import_run(
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
     dataset_30001_runs_expected: list[dict[str, Any]],
 ) -> None:
-    models.Run(
-        id=2,
-        dataset_id=30001,
-        name="RUN1",
-        s3_prefix="s3://test-public-bucket/1000/RUN1",
-        https_prefix="http://test.com/10000/RUN1",
-    ).save(force_insert=True)
+    populate_run()
     actual = verify_dataset_import(["--import-runs"])
-    actual_runs = [run for run in actual.runs]
+    actual_runs = list(actual.runs)
     for i, run in enumerate(actual_runs):
         verify_model(run, dataset_30001_runs_expected[i])

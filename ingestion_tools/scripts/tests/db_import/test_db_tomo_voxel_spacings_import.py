@@ -1,4 +1,4 @@
-from typing import Callable, Any
+from typing import Any, Callable
 
 import pytest as pytest
 
@@ -39,9 +39,7 @@ def test_import_voxel_spacings(
         https_prefix="http://test.com/10000/RUN1",
     ).save(force_insert=True)
     actual = verify_dataset_import(["--import-tomograms"])
-    actual_runs = [run for run in actual.runs]
-    i = 0
-    for run in actual_runs:
+    expected = iter(dataset_30001_voxel_spacings_expected)
+    for run in actual.runs:
         for tomogram_voxel_spacing in run.tomogram_voxel_spacings:
-            verify_model(tomogram_voxel_spacing, dataset_30001_voxel_spacings_expected[i])
-            i += 1
+            verify_model(tomogram_voxel_spacing, next(expected))

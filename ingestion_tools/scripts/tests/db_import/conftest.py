@@ -1,12 +1,13 @@
 from datetime import date
-from typing import Any, Generator, Callable
-import pytest
-from peewee import SqliteDatabase
-from mypy_boto3_s3 import S3Client
-from click.testing import CliRunner
+from typing import Any, Callable, Generator
 
+import pytest
+from click.testing import CliRunner
 from db_import import load
-from common.db_models import BaseModel, Dataset, DatasetAuthor, DatasetFunding, Run, TomogramVoxelSpacing
+from mypy_boto3_s3 import S3Client
+from peewee import SqliteDatabase
+
+from common.db_models import BaseModel, Dataset, DatasetAuthor, DatasetFunding, Run, TiltSeries, TomogramVoxelSpacing
 
 
 @pytest.fixture
@@ -18,13 +19,13 @@ def default_inputs(endpoint_url: str, http_prefix: str) -> list[str]:
 
 @pytest.fixture
 def mock_db() -> [list[BaseModel], Generator[SqliteDatabase, Any, None]]:
-    MODELS = [Dataset, DatasetAuthor, DatasetFunding, Run, TomogramVoxelSpacing]
+    models = [Dataset, DatasetAuthor, DatasetFunding, Run, TiltSeries, TomogramVoxelSpacing]
     mock_db = SqliteDatabase(":memory:")
-    mock_db.bind(MODELS, bind_refs=False, bind_backrefs=False)
+    mock_db.bind(models, bind_refs=False, bind_backrefs=False)
     mock_db.connect()
-    mock_db.create_tables(MODELS)
+    mock_db.create_tables(models)
     yield mock_db
-    mock_db.drop_tables(MODELS)
+    mock_db.drop_tables(models)
     mock_db.close()
 
 
