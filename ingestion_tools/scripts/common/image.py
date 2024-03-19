@@ -139,7 +139,7 @@ class MaskConverter(TomoConverter):
         self.label = label
 
     def make_pyramid(self, max_layers: int = 2, scale_z_axis: bool = True) -> List[np.ndarray]:
-        pyramid = [(self.data == self.label).astype(np.float32)]
+        pyramid = [(self.data == self.label).astype(np.int8)]
         # Then make a pyramid of 100/50/25 percent scale volumes
         for i in range(max_layers):
             z_scale = 1
