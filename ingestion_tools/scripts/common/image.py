@@ -148,7 +148,7 @@ class MaskConverter(TomoConverter):
 
             # For semantic segmentation masks we want to have a binary output.
             # downscale_local_mean will return float array even for bool input with non-binary values
-            scaled = (downscale_local_mean(pyramid[i] == 1, (z_scale, 2, 2)) > 0).astype(np.int8)
+            scaled = (downscale_local_mean(pyramid[i], (z_scale, 2, 2)) > 0).astype(np.int8)
             pyramid.append(scaled)
 
         return pyramid
