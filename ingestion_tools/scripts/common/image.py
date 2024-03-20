@@ -139,7 +139,7 @@ class MaskConverter(TomoConverter):
         self.label = label
 
     def make_pyramid(self, max_layers: int = 2, scale_z_axis: bool = True) -> List[np.ndarray]:
-        pyramid = [(self.data == self.label).astype(np.float32)]
+        pyramid = [(self.data == self.label).astype(np.int8)]
         # Then make a pyramid of 100/50/25 percent scale volumes
         for i in range(max_layers):
             z_scale = 1
@@ -148,7 +148,7 @@ class MaskConverter(TomoConverter):
 
             # For semantic segmentation masks we want to have a binary output.
             # downscale_local_mean will return float array even for bool input with non-binary values
-            scaled = (downscale_local_mean(pyramid[i] == self.label, (z_scale, 2, 2)) > 0).astype(np.float32)
+            scaled = (downscale_local_mean(pyramid[i], (z_scale, 2, 2)) > 0).astype(np.int8)
             pyramid.append(scaled)
 
         return pyramid
