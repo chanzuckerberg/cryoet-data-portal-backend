@@ -1,26 +1,27 @@
 from typing import Any, Callable
 
 import pytest as pytest
+from tests.db_import.populate_db import DATASET_ID, RUN_ID, populate_tiltseries_table
 
 import common.db_models as models
 
 
 @pytest.fixture
-def dataset_30001_tiltseries_expected(http_prefix: str) -> list[dict[str, Any]]:
+def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
     return [
         {
-            "id": 2,
-            "run_id": 2,
-            "s3_mrc_bin1": "s3://test-public-bucket/30001/RUN1/TiltSeries/ts_foo.mrc",
-            "https_mrc_bin1": f"{http_prefix}/30001/RUN1/TiltSeries/ts_foo.mrc",
-            "s3_omezarr_dir": "s3://test-public-bucket/30001/RUN1/TiltSeries/ts_foo.zarr",
-            "https_omezarr_dir": f"{http_prefix}/30001/RUN1/TiltSeries/ts_foo.zarr",
-            "s3_collection_metadata": "s3://test-public-bucket/30001/RUN1/TiltSeries/foo.mdoc",
-            "https_collection_metadata": f"{http_prefix}/30001/RUN1/TiltSeries/foo.mdoc",
-            "s3_angle_list": "s3://test-public-bucket/30001/RUN1/TiltSeries/bar.rawtlt",
-            "https_angle_list": f"{http_prefix}/30001/RUN1/TiltSeries/bar.rawtlt",
-            "s3_alignment_file": "s3://test-public-bucket/30001/RUN1/TiltSeries/baz.xf",
-            "https_alignment_file": f"{http_prefix}/30001/RUN1/TiltSeries/baz.xf",
+            "id": 101,
+            "run_id": RUN_ID,
+            "s3_mrc_bin1": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/ts_foo.mrc",
+            "https_mrc_bin1": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/ts_foo.mrc",
+            "s3_omezarr_dir": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/ts_foo.zarr",
+            "https_omezarr_dir": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/ts_foo.zarr",
+            "s3_collection_metadata": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/foo.mdoc",
+            "https_collection_metadata": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/foo.mdoc",
+            "s3_angle_list": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/bar.rawtlt",
+            "https_angle_list": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/bar.rawtlt",
+            "s3_alignment_file": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/baz.xf",
+            "https_alignment_file": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/baz.xf",
             "acceleration_voltage": 300000,
             "spherical_aberration_constant": 2.7,
             "microscope_manufacturer": "TFS",
@@ -48,14 +49,12 @@ def dataset_30001_tiltseries_expected(http_prefix: str) -> list[dict[str, Any]]:
             "frames_count": 60,
         },
         {
-            "id": 3,
-            "run_id": 4,
-            "s3_mrc_bin1": "s3://test-public-bucket/30001/RUN3/TiltSeries/ts_foo.mrc",
-            "https_mrc_bin1": f"{http_prefix}/30001/RUN1/TiltSeries/ts_foo.mrc",
-            "s3_omezarr_dir": "s3://test-public-bucket/30001/RUN1/TiltSeries/ts_foo.zarr",
-            "https_omezarr_dir": f"{http_prefix}/30001/RUN1/TiltSeries/ts_foo.zarr",
-            "s3_angle_list": "s3://test-public-bucket/30001/RUN3/TiltSeries/bar.tlt",
-            "https_angle_list": f"{http_prefix}/30001/RUN3/TiltSeries/bar.tlt",
+            "s3_mrc_bin1": f"s3://test-public-bucket/{DATASET_ID}/RUN3/TiltSeries/ts_foo.mrc",
+            "https_mrc_bin1": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/ts_foo.mrc",
+            "s3_omezarr_dir": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/ts_foo.zarr",
+            "https_omezarr_dir": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/ts_foo.zarr",
+            "s3_angle_list": f"s3://test-public-bucket/{DATASET_ID}/RUN3/TiltSeries/bar.tlt",
+            "https_angle_list": f"{http_prefix}/{DATASET_ID}/RUN3/TiltSeries/bar.tlt",
             "acceleration_voltage": 10000,
             "spherical_aberration_constant": 2.7,
             "microscope_manufacturer": "DC",
@@ -82,10 +81,14 @@ def dataset_30001_tiltseries_expected(http_prefix: str) -> list[dict[str, Any]]:
 def test_import_tiltseries(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
-    dataset_30001_tiltseries_expected: list[dict[str, Any]],
+    expected_tiltseries: list[dict[str, Any]],
 ) -> None:
+    populate_tiltseries_table()
     actual = verify_dataset_import(["--import-tiltseries"])
-    expected = iter(dataset_30001_tiltseries_expected)
+    expected_iter = iter(expected_tiltseries)
     for run in actual.runs:
         for tiltseries in run.tiltseries:
-            verify_model(tiltseries, next(expected))
+            expected = next(expected_iter)
+            if "run_id" not in expected:
+                expected["run_id"] = run.id
+            verify_model(tiltseries, expected)

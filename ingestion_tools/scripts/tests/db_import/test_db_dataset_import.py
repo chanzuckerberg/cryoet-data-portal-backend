@@ -1,27 +1,31 @@
-import datetime
 from typing import Any, Callable
 
 import pytest
+from tests.db_import.populate_db import (
+    DATASET_AUTHOR_ID,
+    DATASET_FUNDING_ID,
+    DATASET_ID,
+    populate_dataset_authors_table,
+    populate_dataset_funding_table,
+    populate_dataset_table,
+)
 
 import common.db_models as models
 
-DATASET_ID = 30001
-
 
 @pytest.fixture
-def dataset_30001_authors_expected() -> list[dict[str, Any]]:
+def expected_authors() -> list[dict[str, Any]]:
     return [
         {
-            "id": 4,
-            "dataset_id": 30001,
+            "dataset_id": DATASET_ID,
             "name": "Jane Eyre",
             "corresponding_author_status": False,
             "primary_author_status": True,
             "author_list_order": 1,
         },
         {
-            "id": 3,
-            "dataset_id": 30001,
+            "id": DATASET_AUTHOR_ID,
+            "dataset_id": DATASET_ID,
             "orcid": "0000-0000-1234-0000",
             "name": "Virginia Woolf",
             "corresponding_author_status": False,
@@ -33,8 +37,7 @@ def dataset_30001_authors_expected() -> list[dict[str, Any]]:
             "author_list_order": 2,
         },
         {
-            "id": 5,
-            "dataset_id": 30001,
+            "dataset_id": DATASET_ID,
             "orcid": "9876-0000-0000-0000",
             "name": "Julia Child",
             "corresponding_author_status": True,
@@ -45,23 +48,21 @@ def dataset_30001_authors_expected() -> list[dict[str, Any]]:
 
 
 @pytest.fixture
-def dataset_30001_funding_expected() -> list[dict[str, Any]]:
+def expected_funding_sources() -> list[dict[str, Any]]:
     return [
         {
-            "id": 2,
-            "dataset_id": 30001,
+            "id": DATASET_FUNDING_ID,
+            "dataset_id": DATASET_ID,
             "funding_agency_name": "Grant Provider 1",
             "grant_id": "1234",
         },
         {
-            "id": 4,
-            "dataset_id": 30001,
+            "dataset_id": DATASET_ID,
             "funding_agency_name": "Test Agency 1",
             "grant_id": "56789",
         },
         {
-            "id": 5,
-            "dataset_id": 30001,
+            "dataset_id": DATASET_ID,
             "funding_agency_name": "Test Agency 2",
         },
     ]
@@ -72,26 +73,17 @@ def test_import_dataset_new(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
 ) -> None:
     actual = verify_dataset_import([])
-    assert len(actual.authors) == 2
-    assert len(actual.funding_sources) == 1
+    assert len(actual.authors) == 0
+    assert len(actual.funding_sources) == 0
 
 
 # Tests update of dataset existing in database
 def test_import_dataset_update(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
 ) -> None:
-    today = datetime.datetime.now().date()
-    models.Dataset(
-        id=DATASET_ID,
-        title="foo",
-        description="bar",
-        deposition_date=today,
-        release_date=today,
-        last_modified_date=today,
-        sample_type="test",
-        s3_prefix="s3://invalid_bucket/",
-        https_prefix="https://invalid-site.com/1234",
-    ).save(force_insert=True)
+    populate_dataset_table()
+    populate_dataset_authors_table()
+    populate_dataset_funding_table()
     actual = verify_dataset_import([])
     assert len(actual.authors) == 2
     assert len(actual.funding_sources) == 1
@@ -101,25 +93,31 @@ def test_import_dataset_update(
 def test_import_dataset_and_dataset_authors(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
-    dataset_30001_authors_expected: list[dict[str, Any]],
+    expected_authors: list[dict[str, Any]],
 ) -> None:
+    populate_dataset_table()
+    populate_dataset_authors_table()
+    populate_dataset_funding_table()
     actual = verify_dataset_import(["--import-dataset-authors"])
-    assert len(actual.authors) == len(dataset_30001_authors_expected)
+    assert len(actual.authors) == len(expected_authors)
     assert len(actual.funding_sources) == 1
     actual_authors = list(actual.authors.order_by(models.DatasetAuthor.author_list_order))
     for i, author in enumerate(actual_authors):
-        verify_model(author, dataset_30001_authors_expected[i])
+        verify_model(author, expected_authors[i])
 
 
 # Tests addition of new funding sources, and updating entries already existing in db
 def test_import_dataset_and_dataset_funding(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
-    dataset_30001_funding_expected: list[dict[str, Any]],
+    expected_funding_sources: list[dict[str, Any]],
 ) -> None:
+    populate_dataset_table()
+    populate_dataset_authors_table()
+    populate_dataset_funding_table()
     actual = verify_dataset_import(["--import-dataset-funding"])
     assert len(actual.authors) == 2
-    assert len(actual.funding_sources) == len(dataset_30001_funding_expected)
-    actual_funding_sources = list(actual.funding_sources)
+    assert len(actual.funding_sources) == len(expected_funding_sources)
+    actual_funding_sources = list(actual.funding_sources.order_by(models.DatasetFunding.funding_agency_name))
     for i, funding_sources in enumerate(actual_funding_sources):
-        verify_model(funding_sources, dataset_30001_funding_expected[i])
+        verify_model(funding_sources, expected_funding_sources[i])

@@ -103,9 +103,9 @@ class TomogramVoxelSpacing(BaseModel):
 
 class Tomogram(BaseModel):
     class Meta:
-        db_table = "tomograms"
+        table_name = "tomograms"
 
-    id = IntegerField()
+    id = IntegerField(primary_key=True)
     tomogram_voxel_spacing_id = ForeignKeyField(TomogramVoxelSpacing, backref="tomograms")
     name = CharField()
     size_x = IntegerField()
@@ -116,9 +116,9 @@ class Tomogram(BaseModel):
     reconstruction_method = CharField()
     reconstruction_software = CharField()
     processing = CharField()
-    processing_software = CharField()
+    processing_software = CharField(null=True)
     tomogram_version = CharField()
-    is_canonical = BooleanField()
+    is_canonical = BooleanField(null=True)
     s3_omezarr_dir = CharField()
     https_omezarr_dir = CharField()
     s3_mrc_scale0 = CharField()
@@ -126,31 +126,31 @@ class Tomogram(BaseModel):
     scale0_dimensions = CharField()
     scale1_dimensions = CharField()
     scale2_dimensions = CharField()
-    ctf_corrected = BooleanField()
+    ctf_corrected = BooleanField(null=True)
     offset_x = IntegerField()
     offset_y = IntegerField()
     offset_z = IntegerField()
-    affine_transformation_matrix = ArrayField(dimensions=2)
-    key_photo_url = CharField()
-    key_photo_thumbnail_url = CharField()
-    neuroglancer_config = CharField()
-    type = CharField()
+    affine_transformation_matrix = ArrayField(dimensions=2, null=True)
+    key_photo_url = CharField(null=True)
+    key_photo_thumbnail_url = CharField(null=True)
+    neuroglancer_config = CharField(null=True)
+    type = CharField(null=True)
 
 
 class TomogramAuthor(BaseModel):
     class Meta:
-        db_table = "tomogram_authors"
+        table_name = "tomogram_authors"
 
     id = IntegerField()
     tomogram_id = ForeignKeyField(Tomogram, backref="authors")
-    orcid = CharField()
+    orcid = CharField(null=True)
     name = CharField()
-    corresponding_author_status = BooleanField()
-    primary_author_status = BooleanField()
-    email = CharField()
-    affiliation_name = CharField()
-    affiliation_address = CharField()
-    affiliation_identifier = CharField()
+    corresponding_author_status = BooleanField(null=True)
+    primary_author_status = BooleanField(null=True)
+    email = CharField(null=True)
+    affiliation_name = CharField(null=True)
+    affiliation_address = CharField(null=True)
+    affiliation_identifier = CharField(null=True)
     author_list_order = IntegerField()
 
 

@@ -522,8 +522,7 @@ def load(
     import_everything: bool,
     endpoint_url: str,
 ):
-    if postgres_url:
-        db_models.db.init(postgres_url)
+    db_models.db.init(postgres_url)
     if debug:
         logger = logging.getLogger("peewee")
         logger.addHandler(logging.StreamHandler())
