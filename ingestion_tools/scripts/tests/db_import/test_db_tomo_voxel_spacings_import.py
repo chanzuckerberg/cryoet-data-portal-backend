@@ -10,7 +10,7 @@ def dataset_30001_voxel_spacings_expected(http_prefix: str) -> list[dict[str, An
     return [
         {
             "id": 2,
-            "run_id": 1,
+            "run_id": 2,
             "voxel_spacing": 12.3,
             "s3_prefix": "s3://test-public-bucket/30001/RUN1/Tomograms/VoxelSpacing12.300/",
             "https_prefix": f"{http_prefix}/30001/RUN1/Tomograms/VoxelSpacing12.300/",
@@ -31,13 +31,6 @@ def test_import_voxel_spacings(
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
     dataset_30001_voxel_spacings_expected: list[dict[str, Any]],
 ) -> None:
-    models.TomogramVoxelSpacing(
-        id=2,
-        run_id=1,
-        voxel_spacing=12.3,
-        s3_prefix="s3://test-public-bucket/1000/RUN1",
-        https_prefix="http://test.com/10000/RUN1",
-    ).save(force_insert=True)
     actual = verify_dataset_import(["--import-tomograms"])
     expected = iter(dataset_30001_voxel_spacings_expected)
     for run in actual.runs:

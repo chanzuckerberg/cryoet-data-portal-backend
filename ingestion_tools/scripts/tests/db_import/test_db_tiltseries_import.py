@@ -1,7 +1,6 @@
 from typing import Any, Callable
 
 import pytest as pytest
-from tests.db_import.populate_db import populate_run
 
 import common.db_models as models
 
@@ -79,43 +78,12 @@ def dataset_30001_tiltseries_expected(http_prefix: str) -> list[dict[str, Any]]:
     ]
 
 
-def populate_tiltseries():
-    models.TiltSeries(
-        id=2,
-        run_id=2,
-        s3_mrc_bin1="ts_foo.mrc",
-        https_mrc_bin1="ts_foo.mrc",
-        s3_omezarr_dir="ts_foo.zarr",
-        https_omezarr_dir="ts_foo.zarr",
-        acceleration_voltage=100,
-        spherical_aberration_constant=1.0,
-        microscope_manufacturer="unknown",
-        microscope_model="unknown",
-        microscope_energy_filter="unknown",
-        camera_manufacturer="unknown",
-        camera_model="unknown",
-        tilt_min=0,
-        tilt_max=0,
-        tilt_range=0,
-        tilt_step=0,
-        tilt_axis=1.0,
-        tilt_series_quality=3,
-        total_flux=0,
-        is_aligned=False,
-        pixel_spacing=0.3,
-        tilting_scheme="unknown",
-        data_acquisition_software="unknown",
-    ).save(force_insert=True)
-
-
 # Tests addition of new tiltseries, and updating entries already existing in db
 def test_import_tiltseries(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
     dataset_30001_tiltseries_expected: list[dict[str, Any]],
 ) -> None:
-    populate_run()
-    populate_tiltseries()
     actual = verify_dataset_import(["--import-tiltseries"])
     expected = iter(dataset_30001_tiltseries_expected)
     for run in actual.runs:

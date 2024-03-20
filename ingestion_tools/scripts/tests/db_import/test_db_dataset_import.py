@@ -2,28 +2,10 @@ import datetime
 from typing import Any, Callable
 
 import pytest
+
 import common.db_models as models
 
-
 DATASET_ID = 30001
-
-
-def populate_dataset_author_table() -> None:
-    models.DatasetAuthor(id=1, dataset_id=10000, name="Julia Child", author_list_order=1).save(force_insert=True)
-    models.DatasetAuthor(id=2, dataset_id=DATASET_ID, name="Stale Author", author_list_order=1).save(force_insert=True)
-    models.DatasetAuthor(id=3, dataset_id=DATASET_ID, name="Virginia Woolf", author_list_order=3).save(
-        force_insert=True
-    )
-
-
-def populate_dataset_funding_table() -> None:
-    models.DatasetFunding(id=1, dataset_id=10000, funding_agency_name="Grant Provider 1").save(force_insert=True)
-    models.DatasetFunding(id=2, dataset_id=DATASET_ID, funding_agency_name="Grant Provider 1", grant_id="foo").save(
-        force_insert=True
-    )
-    # TODO: Add functionality to remove stale data
-    # models.DatasetFunding(id=3, dataset_id=DATASET_ID, funding_agency_name="Grant Provider 2").save(force_insert=True)
-    models.DatasetFunding(id=3, dataset_id=10000, funding_agency_name="Grant Provider 2").save(force_insert=True)
 
 
 @pytest.fixture
@@ -90,15 +72,15 @@ def test_import_dataset_new(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
 ) -> None:
     actual = verify_dataset_import([])
-    assert len(actual.authors) == 0
-    assert len(actual.funding_sources) == 0
+    assert len(actual.authors) == 2
+    assert len(actual.funding_sources) == 1
 
 
 # Tests update of dataset existing in database
 def test_import_dataset_update(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
 ) -> None:
-    today = datetime.date.today()
+    today = datetime.datetime.now().date()
     models.Dataset(
         id=DATASET_ID,
         title="foo",
@@ -111,8 +93,8 @@ def test_import_dataset_update(
         https_prefix="https://invalid-site.com/1234",
     ).save(force_insert=True)
     actual = verify_dataset_import([])
-    assert len(actual.authors) == 0
-    assert len(actual.funding_sources) == 0
+    assert len(actual.authors) == 2
+    assert len(actual.funding_sources) == 1
 
 
 # Tests addition of new authors, updating entries already existing in db, and removing stale authors
@@ -121,11 +103,10 @@ def test_import_dataset_and_dataset_authors(
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
     dataset_30001_authors_expected: list[dict[str, Any]],
 ) -> None:
-    populate_dataset_author_table()
     actual = verify_dataset_import(["--import-dataset-authors"])
     assert len(actual.authors) == len(dataset_30001_authors_expected)
-    assert len(actual.funding_sources) == 0
-    actual_authors = [author for author in actual.authors.order_by(models.DatasetAuthor.author_list_order)]
+    assert len(actual.funding_sources) == 1
+    actual_authors = list(actual.authors.order_by(models.DatasetAuthor.author_list_order))
     for i, author in enumerate(actual_authors):
         verify_model(author, dataset_30001_authors_expected[i])
 
@@ -136,10 +117,9 @@ def test_import_dataset_and_dataset_funding(
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
     dataset_30001_funding_expected: list[dict[str, Any]],
 ) -> None:
-    populate_dataset_funding_table()
     actual = verify_dataset_import(["--import-dataset-funding"])
-    assert len(actual.authors) == 0
+    assert len(actual.authors) == 2
     assert len(actual.funding_sources) == len(dataset_30001_funding_expected)
-    actual_funding_sources = [author for author in actual.funding_sources]
+    actual_funding_sources = list(actual.funding_sources)
     for i, funding_sources in enumerate(actual_funding_sources):
         verify_model(funding_sources, dataset_30001_funding_expected[i])

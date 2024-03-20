@@ -6,6 +6,7 @@ from click.testing import CliRunner
 from db_import import load
 from mypy_boto3_s3 import S3Client
 from peewee import SqliteDatabase
+from tests.db_import.populate_db import populate_all_tables
 
 from common.db_models import BaseModel, Dataset, DatasetAuthor, DatasetFunding, Run, TiltSeries, TomogramVoxelSpacing
 
@@ -24,6 +25,7 @@ def mock_db() -> [list[BaseModel], Generator[SqliteDatabase, Any, None]]:
     mock_db.bind(models, bind_refs=False, bind_backrefs=False)
     mock_db.connect()
     mock_db.create_tables(models)
+    populate_all_tables()
     yield mock_db
     mock_db.drop_tables(models)
     mock_db.close()
