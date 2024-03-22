@@ -10,6 +10,9 @@ from peewee import PostgresqlDatabase, SqliteDatabase
 from tests.db_import.populate_db import DATASET_ID, clean_all_mock_data
 
 from common.db_models import (
+    Annotation,
+    AnnotationAuthor,
+    AnnotationFiles,
     BaseModel,
     Dataset,
     DatasetAuthor,
@@ -36,7 +39,19 @@ def default_inputs(endpoint_url: str, http_prefix: str, db_connection: str) -> l
 def mock_db(db_connection: str) -> [list[BaseModel], Generator[SqliteDatabase, Any, None]]:
     mock_db = PostgresqlDatabase(db_connection)
     mock_db.connect()
-    models = [Dataset, DatasetAuthor, DatasetFunding, Run, TiltSeries, TomogramVoxelSpacing, Tomogram, TomogramAuthor]
+    models = [
+        Dataset,
+        DatasetAuthor,
+        DatasetFunding,
+        Run,
+        TiltSeries,
+        TomogramVoxelSpacing,
+        Tomogram,
+        TomogramAuthor,
+        Annotation,
+        AnnotationFiles,
+        AnnotationAuthor,
+    ]
     mock_db.bind(models, bind_refs=False, bind_backrefs=False)
     yield mock_db
     clean_all_mock_data()

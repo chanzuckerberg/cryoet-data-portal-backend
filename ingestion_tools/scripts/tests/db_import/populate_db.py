@@ -1,6 +1,8 @@
 from datetime import datetime
 
 from common.db_models import (
+    Annotation,
+    AnnotationFiles,
     Dataset,
     DatasetAuthor,
     DatasetFunding,
@@ -17,6 +19,8 @@ DATASET_FUNDING_ID = 105
 RUN_ID = 102
 TOMOGRAM_VOXEL_ID = 104
 TOMOGRAM_ID = 103
+ANNOTATION_ID = 100
+ANNOTATION_FILE_ID = 110
 
 
 def populate_dataset_table() -> None:
@@ -161,6 +165,58 @@ def populate_tiltseries_table() -> None:
     ).save(force_insert=True)
 
 
+def populate_annotations() -> None:
+    populate_tomogram_voxel_spacing_table()
+    Annotation(
+        id=ANNOTATION_ID,
+        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID,
+        s3_metadata_path="s3://test-public-bucket/30001/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0.json",
+        https_metadata_path="foo",
+        deposition_date="2025-04-01",
+        release_date="2025-06-01",
+        last_modified_date="2025-06-01",
+        annotation_method="",
+        ground_truth_status=False,
+        object_name="bar",
+        object_count=0,
+        object_id="invalid-id",
+        annotation_software="bar",
+    ).save(force_insert=True)
+    # Annotation(
+    #     id=101,
+    #     tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID,
+    #     s3_metadata_path="foo",
+    #     https_metadata_path="foo",
+    #     deposition_date="2025-04-01",
+    #     release_date="2025-06-01",
+    #     last_modified_date="2025-06-01",
+    #     annotation_method="",
+    #     ground_truth_status=False,
+    #     object_name="bar",
+    #     object_id="invalid-id",
+    #     annotation_software="bar",
+    # ).save(force_insert=True)
+
+
+def populate_annotation_files() -> None:
+    populate_annotations()
+    AnnotationFiles(
+        id=ANNOTATION_FILE_ID,
+        annotation_id=ANNOTATION_ID,
+        s3_path="s3://foo",
+        https_path="https://foo",
+        shape_type="Point",
+        format="ndjson",
+    ).save(force_insert=True)
+    # AnnotationFiles(
+    #     annotation_id=ANNOTATION_ID,
+    #     s3_path="s3://foo",
+    #     https_path="https://foo",
+    #     shape_type="OrientedPoint",
+    #     format="ndjson",
+    # ).save(force_insert=True)
+
+
 def clean_all_mock_data() -> None:
     for dataset in Dataset.select().where(Dataset.id << [DATASET_ID]):
         for author in dataset.authors:
@@ -175,6 +231,12 @@ def clean_all_mock_data() -> None:
                     for author in tomogram.authors:
                         author.delete_instance()
                     tomogram.delete_instance()
+                for annotation in voxel_spacing.annotations:
+                    for file in annotation.files:
+                        file.delete_instance()
+                    for author in annotation.authors:
+                        author.delete_instance()
+                    annotation.delete_instance()
                 voxel_spacing.delete_instance()
             run.delete_instance()
         dataset.delete_instance()

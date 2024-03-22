@@ -135,6 +135,7 @@ def expected_tomograms_authors() -> list[dict[str, Any]]:
             "id": 200,
             "tomogram_id": TOMOGRAM_ID,
             "name": "Stale Author",
+            "primary_author_status": False,
             "corresponding_author_status": True,
             "author_list_order": 3,
         },

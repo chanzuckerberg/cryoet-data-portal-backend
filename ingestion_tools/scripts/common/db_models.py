@@ -60,8 +60,8 @@ class DatasetAuthor(BaseModel):
     dataset_id = ForeignKeyField(Dataset, backref="authors")
     orcid = CharField(null=True)
     name = CharField()
-    corresponding_author_status = BooleanField(null=True)
-    primary_author_status = BooleanField(null=True)
+    corresponding_author_status = BooleanField(default=False, null=True)
+    primary_author_status = BooleanField(default=False, null=True)
     email = CharField(null=True)
     affiliation_name = CharField(null=True)
     affiliation_address = CharField(null=True)
@@ -145,8 +145,8 @@ class TomogramAuthor(BaseModel):
     tomogram_id = ForeignKeyField(Tomogram, backref="authors")
     orcid = CharField(null=True)
     name = CharField()
-    corresponding_author_status = BooleanField(null=True)
-    primary_author_status = BooleanField(null=True)
+    corresponding_author_status = BooleanField(default=False, null=True)
+    primary_author_status = BooleanField(default=False, null=True)
     email = CharField(null=True)
     affiliation_name = CharField(null=True)
     affiliation_address = CharField(null=True)
@@ -156,33 +156,33 @@ class TomogramAuthor(BaseModel):
 
 class Annotation(BaseModel):
     class Meta:
-        db_table = "annotations"
+        table_name = "annotations"
 
     id = IntegerField()
-    tomogram_voxel_spacing_id = ForeignKeyField(TomogramVoxelSpacing, backref="runs")
+    tomogram_voxel_spacing_id = ForeignKeyField(TomogramVoxelSpacing, backref="annotations")
     s3_metadata_path = CharField()
     https_metadata_path = CharField()
     deposition_date = DateField()
     release_date = DateField()
     last_modified_date = DateField()
-    annotation_publication = CharField()
-    annotation_software = CharField()
+    annotation_publication = CharField(null=True)
+    annotation_software = CharField(null=True)
     annotation_method = CharField()
     ground_truth_status = BooleanField()
     object_name = CharField()
     object_id = CharField()
-    object_description = CharField()
-    object_state = CharField()
+    object_description = CharField(null=True)
+    object_state = CharField(null=True)
     object_count = IntegerField()
-    confidence_precision = FloatField()
-    confidence_recall = FloatField()
+    confidence_precision = FloatField(null=True)
+    confidence_recall = FloatField(null=True)
     ground_truth_used = CharField()
-    is_curator_recommended = BooleanField()
+    is_curator_recommended = BooleanField(default=False)
 
 
 class AnnotationFiles(BaseModel):
     class Meta:
-        db_table = "annotation_files"
+        table_name = "annotation_files"
 
     id = IntegerField()
     annotation_id = ForeignKeyField(Annotation, backref="files")
@@ -190,23 +190,23 @@ class AnnotationFiles(BaseModel):
     format = CharField()
     s3_path = CharField()
     https_path = CharField()
-    is_visualization_default = BooleanField()
+    is_visualization_default = BooleanField(default=False)
 
 
 class AnnotationAuthor(BaseModel):
     class Meta:
-        db_table = "annotation_authors"
+        table_name = "annotation_authors"
 
     id = IntegerField()
-    annotation_id = IntegerField()
+    annotation_id = ForeignKeyField(Annotation, backref="authors")
     name = CharField()
-    orcid = CharField()
-    corresponding_author_status = BooleanField()
-    primary_annotator_status = BooleanField()
-    email = CharField()
-    affiliation_name = CharField()
-    affiliation_address = CharField()
-    affiliation_identifier = CharField()
+    orcid = CharField(null=True)
+    corresponding_author_status = BooleanField(default=False)
+    primary_annotator_status = BooleanField(default=False)
+    email = CharField(null=True)
+    affiliation_name = CharField(null=True)
+    affiliation_address = CharField(null=True)
+    affiliation_identifier = CharField(null=True)
     author_list_order = IntegerField()
 
 
