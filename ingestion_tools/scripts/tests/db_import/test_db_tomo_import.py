@@ -131,14 +131,6 @@ def expected_tomograms_authors() -> list[dict[str, Any]]:
             "affiliation_identifier": "test-affliation-id",
             "author_list_order": 2,
         },
-        {
-            "id": 200,
-            "tomogram_id": TOMOGRAM_ID,
-            "name": "Stale Author",
-            "primary_author_status": False,
-            "corresponding_author_status": True,
-            "author_list_order": 3,
-        },
     ]
 
 
@@ -179,5 +171,6 @@ def test_import_tomograms_authors(
     for run in actual.runs:
         for tomogram_voxel_spacing in run.tomogram_voxel_spacings:
             for tomogram in tomogram_voxel_spacing.tomograms:
+                assert len(tomogram.authors) == len(expected_tomograms_authors)
                 for author in tomogram.authors.order_by(models.TomogramAuthor.author_list_order):
                     verify_model(author, next(expected_tomograms_authors_iter))
