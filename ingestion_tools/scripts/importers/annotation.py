@@ -297,6 +297,14 @@ class InstanceSegmentationFile(OrientedPointFile):
         "tardis": ipc.from_tardis,
     }
 
+    def get_object_count(self, fs, output_prefix):
+        data = self.get_output_data(fs, output_prefix)
+
+        ids = [d["instance_id"] for d in data]
+
+        # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
+        return len(set(ids))
+
     def load(
         self,
         fs: FileSystemApi,
