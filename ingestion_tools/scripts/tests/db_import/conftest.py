@@ -53,8 +53,8 @@ def mock_db(db_connection: str) -> [list[BaseModel], Generator[SqliteDatabase, A
         AnnotationAuthor,
     ]
     mock_db.bind(models, bind_refs=False, bind_backrefs=False)
-    yield mock_db
     clean_all_mock_data()
+    yield mock_db
     mock_db.close()
 
 
