@@ -117,16 +117,20 @@ tomograms:
 standardization_config:
   destination_prefix: '99999'
   source_prefix: path/to/source
+  run_glob: frames/*
+  run_regex: /TS_\d\d$
+  run_name_regex: (.*)
   frames_glob: frames/{run_name}_*.tif
+  frames_name_regex: (.*)
   gain_glob: frames/CountRef.dm4
   rawtlt_files:
     - metadata/{run_name}.rawtlt
     - metadata/{run_name}.xf
     - metadata/mdocs_modified/{run_name}.mdoc
   tiltseries_glob: metadata/{run_name}.st
+  ts_name_regex: (.*)\.rec
   tomo_format: mrc
   tomo_glob: tomograms/*.rec
+  tomo_regex: (.*)\.mrc
   tomo_voxel_size: '13.48'
-  run_glob: frames/*
-  run_regex: /TS_\d\d$
-  run_name_regex: (.*)
+  tomo_key_photo_glob: .*\.jpg

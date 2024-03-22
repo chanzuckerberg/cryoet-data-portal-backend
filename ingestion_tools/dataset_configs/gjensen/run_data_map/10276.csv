@@ -1,32 +1,32 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,ts-tilt_alignment_software
-aba2014-04-10-3,['RAPTOR'],True,SIRT,RAPTOR;RAPTOR;RAPTOR;RAPTOR
-aba2014-04-10-4,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-5,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-6,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-7,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-8,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-9,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-10,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-11,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-12,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-13,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-15,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-16,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-17,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-18,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-19,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-20,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-21,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-22,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-23,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-24,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-25,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-26,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-27,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-28,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-29,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-30,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-31,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-32,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-33,['RAPTOR'],True,Weighted back projection,RAPTOR
-aba2014-04-10-14,['autoPatch'],False,Weighted back projection,autoPatch
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,ts-tilt_alignment_software,ts-tilt_series_path
+aba2014-04-10-3,['RAPTOR'],FIDUCIAL,RAPTOR;RAPTOR;RAPTOR;RAPTOR,rawdata/VibrioDeltaA20001.mrc
+aba2014-04-10-4,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20002.mrc
+aba2014-04-10-5,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20003.mrc
+aba2014-04-10-6,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20004.mrc
+aba2014-04-10-7,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20005.mrc
+aba2014-04-10-8,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20006.mrc
+aba2014-04-10-9,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20007.mrc
+aba2014-04-10-10,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20008.mrc
+aba2014-04-10-11,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20009.mrc
+aba2014-04-10-12,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20010.mrc
+aba2014-04-10-13,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20011.mrc
+aba2014-04-10-14,['autoPatch'],NON_FIDUCIAL,autoPatch,rawdata/VibrioDeltaA20012.mrc
+aba2014-04-10-15,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20013.mrc
+aba2014-04-10-16,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20014.mrc
+aba2014-04-10-17,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20015.mrc
+aba2014-04-10-18,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20016.mrc
+aba2014-04-10-19,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20017.mrc
+aba2014-04-10-20,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20018.mrc
+aba2014-04-10-21,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20019.mrc
+aba2014-04-10-22,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20020.mrc
+aba2014-04-10-23,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20021.mrc
+aba2014-04-10-24,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20022.mrc
+aba2014-04-10-25,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20023.mrc
+aba2014-04-10-26,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20024.mrc
+aba2014-04-10-27,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20025.mrc
+aba2014-04-10-28,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20026.mrc
+aba2014-04-10-29,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20027.mrc
+aba2014-04-10-30,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20028.mrc
+aba2014-04-10-31,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20029.mrc
+aba2014-04-10-32,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20030.mrc
+aba2014-04-10-33,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20031.mrc

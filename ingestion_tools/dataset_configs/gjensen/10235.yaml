@@ -28,38 +28,39 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: null
-  tilt_step: 1.5
-  total_flux: 130.0
-  data_acquisition_software: Leginon
-  tilt_series_quality: 4
-  binning_from_frames: null
-  tilt_alignment_software: RAPTOR
   acceleration_voltage: 300000
-  spherical_aberration_constant: 2.0
-  microscope:
-    manufacturer: FEI
-    model: Polara
-    additional_scope_info: ''
+  binning_from_frames: null
   camera:
+    acquire_mode: null
     manufacturer: Gatan
     model: UltraCam
-    acquire_mode: null
-  tilting_scheme: starting tilt to max then min
-  tilt_axis: 0.0
-  microscope_optical_setup:
-    phase_plate: false
-    image_corrector: null
-    energy_filter: GIF
+  data_acquisition_software: Leginon
   is_aligned: false
+  microscope:
+    additional_scope_info: ''
+    manufacturer: FEI
+    model: Polara
+  microscope_optical_setup:
+    energy_filter: GIF
+    image_corrector: null
+    phase_plate: false
+  pixel_spacing: 5.12
+  spherical_aberration_constant: 2.0
+  tilt_alignment_software: RAPTOR
+  tilt_axis: 0.0
   tilt_range:
-    min: -65.0
     max: 65.0
+    min: -65.0
+  tilt_series_path: '{ts-tilt_series_path}'
+  tilt_series_quality: 4
+  tilt_step: 1.5
+  tilting_scheme: starting tilt to max then min
+  total_flux: 130.0
 tomograms:
-  voxel_spacing: null
+  voxel_spacing: 10.24
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
-  fiducial_alignment_status: true
+  fiducial_alignment_status: FIDUCIAL
   ctf_corrected: null
   processing: raw
   processing_software: null
@@ -108,3 +109,4 @@ standardization_config:
   run_glob: '*'
   run_regex: (mba2011-08-26-1|mba2011-08-26-2|mba2011-08-26-3|mba2011-08-26-4|mba2011-08-26-5|mba2011-08-26-6|mba2011-08-26-7|mba2011-08-26-8|mba2011-08-26-9|mba2011-08-26-10|mba2011-08-26-11|mba2011-08-26-12|mba2011-08-26-13|mba2011-08-26-14|mba2011-08-26-15|mba2011-08-26-16|mba2011-08-26-17|mba2011-08-26-18|mba2011-08-26-19|mba2011-08-26-20|mba2011-08-26-21|mba2011-08-26-22|mba2011-08-26-23|mba2011-08-26-24|mba2011-08-26-25|mba2011-08-26-26)$
   run_name_regex: (.*)
+  run_data_map_file: run_data_map/10235.csv

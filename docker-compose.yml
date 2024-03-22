@@ -21,7 +21,7 @@ services:
       test: ['CMD', 'pg_isready', '-d', 'cryoet', '-U', 'postgres']
     environment:
       POSTGRES_INITDB_ARGS: --data-checksums
-      POSTGRES_DB: cryoetdataportal
+      POSTGRES_DB: cryoet
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       # The postgres image declares a mounted volume at /var/lib/postgresql/data
@@ -51,7 +51,7 @@ services:
         condition: service_healthy
     environment:
       HASURA_GRAPHQL_ENABLE_CONSOLE: 'false'
-      HASURA_GRAPHQL_DATABASE_URL: postgresql://postgres:postgres@db:5432/cryoetdataportal
+      HASURA_GRAPHQL_DATABASE_URL: postgresql://postgres:postgres@db:5432/cryoet
       HASURA_GRAPHQL_ADMIN_SECRET: secret
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
     ports:
@@ -84,17 +84,3 @@ services:
         condition: service_healthy
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@db:5432/cryoet
-  ingestor:
-    platform: linux/arm64
-    profiles: ["ingestor"]
-    image: ingestor
-    build:
-      context: ./ingestion_tools
-      dockerfile: Dockerfile
-    environment:
-      - AWS_REGION=us-west-2
-      - AWS_ACCESS_KEY_ID=test
-      - AWS_SECRET_ACCESS_KEY=test
-    volumes:
-      - ./ingestion_tools:/usr/src/app/ingestion_tools
-    command: ["sleep", "infinity"]

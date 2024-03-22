@@ -1,36 +1,36 @@
-run_name,tomo-reconstruction_method,ts-tilt_alignment_software
-jsa2009-12-31-1,Weighted back projection,RAPTOR
-jsa2009-12-31-2,Weighted back projection,RAPTOR
-jsa2009-12-31-6,Weighted back projection,RAPTOR
-jsa2009-12-31-12,Weighted back projection,RAPTOR
-jsa2009-12-31-20,Weighted back projection,RAPTOR
-jsa2009-12-31-26,Weighted back projection,RAPTOR
-jsa2009-12-31-28,Weighted back projection,RAPTOR
-jsa2009-12-31-3,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-4,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-5,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-7,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-8,SIRT,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-9,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-10,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-11,SIRT,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-13,SIRT,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-14,SIRT,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-15,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-16,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-17,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-18,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-19,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-21,SIRT,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-22,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-23,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-24,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-25,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-27,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-29,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-30,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-31,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-32,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-33,Weighted back projection,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-34,SIRT,RAPTOR;RAPTOR;RAPTOR
-jsa2009-12-31-35,SIRT,RAPTOR;RAPTOR;RAPTOR
+run_name,ts-tilt_alignment_software,ts-tilt_series_path
+jsa2009-12-31-1,RAPTOR,rawdata/09dec31a_B864b_001.mrc
+jsa2009-12-31-2,RAPTOR,rawdata/09dec31a_B864b_002.mrc
+jsa2009-12-31-3,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_003.mrc
+jsa2009-12-31-4,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_004.mrc
+jsa2009-12-31-5,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_005.mrc
+jsa2009-12-31-6,RAPTOR,rawdata/09dec31a_B864b_006.mrc
+jsa2009-12-31-7,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_007.mrc
+jsa2009-12-31-8,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_008.mrc
+jsa2009-12-31-9,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_009.mrc
+jsa2009-12-31-10,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_010.mrc
+jsa2009-12-31-11,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_011.mrc
+jsa2009-12-31-12,RAPTOR,rawdata/09dec31a_B864b_012.mrc
+jsa2009-12-31-13,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_013.mrc
+jsa2009-12-31-14,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_014.mrc
+jsa2009-12-31-15,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_015.mrc
+jsa2009-12-31-16,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_016.mrc
+jsa2009-12-31-17,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_017.mrc
+jsa2009-12-31-18,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_018.mrc
+jsa2009-12-31-19,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_019.mrc
+jsa2009-12-31-20,RAPTOR,rawdata/09dec31a_B864b_020.mrc
+jsa2009-12-31-21,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_023.mrc
+jsa2009-12-31-22,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_024.mrc
+jsa2009-12-31-23,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_025.mrc
+jsa2009-12-31-24,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_026.mrc
+jsa2009-12-31-25,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_027.mrc
+jsa2009-12-31-26,RAPTOR,rawdata/09dec31a_B864b_028.mrc
+jsa2009-12-31-27,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_029.mrc
+jsa2009-12-31-28,RAPTOR,rawdata/09dec31a_B864b_030.mrc
+jsa2009-12-31-29,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_031.mrc
+jsa2009-12-31-30,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_033.mrc
+jsa2009-12-31-31,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_034.mrc
+jsa2009-12-31-32,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_035.mrc
+jsa2009-12-31-33,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_036.mrc
+jsa2009-12-31-34,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_037.mrc
+jsa2009-12-31-35,RAPTOR;RAPTOR;RAPTOR,rawdata/09dec31a_B864b_038.mrc

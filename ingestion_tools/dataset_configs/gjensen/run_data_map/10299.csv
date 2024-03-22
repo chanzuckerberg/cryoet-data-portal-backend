@@ -1,21 +1,21 @@
-run_name,tomo-reconstruction_method
-jsa2010-02-21-1,Weighted back projection
-jsa2010-02-21-4,Weighted back projection
-jsa2010-02-21-7,Weighted back projection
-jsa2010-02-21-8,Weighted back projection
-jsa2010-02-21-9,Weighted back projection
-jsa2010-02-21-11,Weighted back projection
-jsa2010-02-21-14,Weighted back projection
-jsa2010-02-21-16,Weighted back projection
-jsa2010-02-21-17,Weighted back projection
-jsa2010-02-21-2,SIRT
-jsa2010-02-21-3,SIRT
-jsa2010-02-21-5,SIRT
-jsa2010-02-21-6,SIRT
-jsa2010-02-21-10,SIRT
-jsa2010-02-21-12,SIRT
-jsa2010-02-21-13,SIRT
-jsa2010-02-21-15,SIRT
-jsa2010-02-21-18,SIRT
-jsa2010-02-21-19,SIRT
-jsa2010-02-21-20,SIRT
+run_name,ts-tilt_series_path
+jsa2010-02-21-1,rawdata/10feb21a_MP3a_001.mrc
+jsa2010-02-21-2,rawdata/10feb21a_MP3a_002.mrc
+jsa2010-02-21-3,rawdata/10feb21a_MP3a_003.mrc
+jsa2010-02-21-4,rawdata/10feb21a_MP3a_004.mrc
+jsa2010-02-21-5,rawdata/10feb21a_MP3a_005.mrc
+jsa2010-02-21-6,rawdata/10feb21a_MP3a_006.mrc
+jsa2010-02-21-7,rawdata/10feb21a_MP3a_007.mrc
+jsa2010-02-21-8,rawdata/10feb21a_MP3a_008.mrc
+jsa2010-02-21-9,rawdata/10feb21a_MP3a_009.mrc
+jsa2010-02-21-10,rawdata/10feb21a_MP3a_010.mrc
+jsa2010-02-21-11,rawdata/10feb21a_MP3a_011.mrc
+jsa2010-02-21-12,rawdata/10feb21a_MP3a_012.mrc
+jsa2010-02-21-13,rawdata/10feb21a_MP3a_013.mrc
+jsa2010-02-21-14,rawdata/10feb21a_MP3a_014.mrc
+jsa2010-02-21-15,rawdata/10feb21a_MP3a_015.mrc
+jsa2010-02-21-16,rawdata/10feb21a_MP3a_016.mrc
+jsa2010-02-21-17,rawdata/10feb21a_MP3a_017.mrc
+jsa2010-02-21-18,rawdata/10feb21a_MP3a_018.mrc
+jsa2010-02-21-19,rawdata/10feb21a_MP3a_019.mrc
+jsa2010-02-21-20,rawdata/10feb21a_MP3a_020.mrc

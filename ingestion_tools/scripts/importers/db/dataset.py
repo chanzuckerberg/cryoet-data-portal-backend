@@ -2,10 +2,10 @@ from typing import Any, Iterable
 
 from common import db_models
 from importers.db.base_importer import (
+    AuthorsStaleDeletionDBImporter,
     BaseDBImporter,
     DBImportConfig,
     StaleDeletionDBImporter,
-    AuthorsStaleDeletionDBImporter,
 )
 
 
@@ -79,7 +79,7 @@ class DatasetDBImporter(BaseDBImporter):
         ]
 
 
-class DatasetAuthorDBImporter(StaleDeletionDBImporter):
+class DatasetAuthorDBImporter(AuthorsStaleDeletionDBImporter):
     def __init__(self, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig):
         self.dataset_id = dataset_id
         self.parent = parent
@@ -114,7 +114,7 @@ class DatasetAuthorDBImporter(StaleDeletionDBImporter):
         return cls(dataset_id, parent, config)
 
 
-class DatasetFundingDBImporter(AuthorsStaleDeletionDBImporter):
+class DatasetFundingDBImporter(StaleDeletionDBImporter):
     def __init__(self, dataset_id: int, parent: DatasetDBImporter, config: DBImportConfig):
         self.dataset_id = dataset_id
         self.parent = parent

@@ -9,28 +9,30 @@ from botocore.client import Config
 from mypy_boto3_s3 import S3Client
 
 from common.fs import FileSystemApi
-from peewee import SqliteDatabase
-
-from common.db_models import BaseModel, Dataset
 
 
-ENDPOINT_URL = os.getenv("ENDPOINT_URL", "http://motoserver:4000")
+@pytest.fixture
+def endpoint_url() -> str:
+    return os.getenv("ENDPOINT_URL", "http://motoserver:4000")
+
+
+@pytest.fixture
+def http_prefix() -> str:
+    return "https://foo.com"
 
 
 @pytest.fixture
 def local_fs() -> FileSystemApi:
-    fs = FileSystemApi.get_fs_api(mode="local", force_overwrite=False)
-    return fs
+    return FileSystemApi.get_fs_api(mode="local", force_overwrite=False)
 
 
 @pytest.fixture
-def s3_fs() -> FileSystemApi:
-    fs = FileSystemApi.get_fs_api(
+def s3_fs(endpoint_url: str) -> FileSystemApi:
+    return FileSystemApi.get_fs_api(
         mode="s3",
         force_overwrite=False,
-        client_kwargs={"endpoint_url": ENDPOINT_URL},
+        client_kwargs={"endpoint_url": endpoint_url},
     )
-    return fs
 
 
 @pytest.fixture
@@ -55,21 +57,9 @@ def test_output_bucket(s3_client: S3Client, random_bucket_name: str) -> Generato
 
 
 @pytest.fixture
-def s3_client() -> S3Client:
+def s3_client(endpoint_url: str) -> S3Client:
     return boto3.client(
         "s3",
-        endpoint_url=ENDPOINT_URL,
+        endpoint_url=endpoint_url,
         config=Config(signature_version="s3v4"),
     )
-
-
-@pytest.fixture
-def mock_db() -> [list[BaseModel], Generator[SqliteDatabase, Any, None]]:
-    MODELS = [Dataset]
-    mock_db = SqliteDatabase(":memory:")
-    mock_db.bind(MODELS, bind_refs=False, bind_backrefs=False)
-    mock_db.connect()
-    mock_db.create_tables(MODELS)
-    yield mock_db
-    mock_db.drop_tables(MODELS)
-    mock_db.close()

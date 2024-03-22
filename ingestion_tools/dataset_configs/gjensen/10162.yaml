@@ -32,7 +32,7 @@ dataset:
     id: null
 runs: {}
 tiltseries:
-  pixel_spacing: null
+  pixel_spacing: 7.74
   tilt_step: 1.0
   total_flux: 120.0
   data_acquisition_software: UCSF Tomo
@@ -51,6 +51,7 @@ tiltseries:
     acquire_mode: null
   tilting_scheme: starting tilt to max then min
   tilt_axis: 0.0
+  tilt_series_path: rawdata/2012Mar12_10003.mrc
   microscope_optical_setup:
     phase_plate: false
     image_corrector: null
@@ -60,10 +61,10 @@ tiltseries:
     min: -60.0
     max: 60.0
 tomograms:
-  voxel_spacing: null
+  voxel_spacing: 15.48
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
-  fiducial_alignment_status: true
+  fiducial_alignment_status: FIDUCIAL
   ctf_corrected: null
   processing: raw
   processing_software: null

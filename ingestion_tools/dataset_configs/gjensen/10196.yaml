@@ -48,6 +48,7 @@ tiltseries:
     acquire_mode: null
   tilting_scheme: bidirectional
   tilt_axis: 0.0
+  tilt_series_path: null
   microscope_optical_setup:
     phase_plate: false
     image_corrector: null
@@ -57,10 +58,10 @@ tiltseries:
     min: -63
     max: 63
 tomograms:
-  voxel_spacing: null
+  voxel_spacing: 19.24
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
-  fiducial_alignment_status: true
+  fiducial_alignment_status: FIDUCIAL
   ctf_corrected: null
   processing: raw
   processing_software: null

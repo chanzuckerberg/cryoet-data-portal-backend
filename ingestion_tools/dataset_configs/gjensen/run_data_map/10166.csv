@@ -1,34 +1,34 @@
-run_name,tomo-reconstruction_method,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-total_flux
-ycw2012-09-07-1,Weighted back projection,UCSF Tomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-2,Weighted back projection,UCSF Tomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-3,Weighted back projection,UCSF Tomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-6,Weighted back projection,UCSF Tomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-14,Weighted back projection,UCSF Tomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-17,Weighted back projection,UCSF Tomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-26,Weighted back projection,UCSF Tomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-4,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-5,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-7,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-9,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-10,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-11,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-12,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-13,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-18,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-19,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-20,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-21,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-22,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-23,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-24,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-25,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-27,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-30,Weighted back projection,UCSFTomo,RAPTOR,65.0,-65.0,100.0
-ycw2012-09-07-8,SIRT,UCSF Tomo,RAPTOR;RAPTOR,65.0,-65.0,100.0
-ycw2012-10-08-1,Weighted back projection,UCSFTomo,RAPTOR,60.0,-60.0,75.0
-ycw2012-10-08-2,Weighted back projection,UCSFTomo,RAPTOR,60.0,-60.0,75.0
-ycw2012-10-08-3,Weighted back projection,UCSFTomo,RAPTOR,60.0,-60.0,75.0
-ycw2012-10-08-4,Weighted back projection,UCSFTomo,RAPTOR,60.0,-60.0,75.0
-ycw2012-10-08-5,Weighted back projection,UCSFTomo,RAPTOR,60.0,-60.0,75.0
-ycw2012-10-08-6,Weighted back projection,UCSFTomo,RAPTOR,60.0,-60.0,75.0
-ycw2012-10-08-7,Weighted back projection,UCSFTomo,RAPTOR,60.0,-60.0,75.0
+run_name,tomo-voxel_spacing,ts-data_acquisition_software,ts-pixel_spacing,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_path,ts-total_flux
+ycw2012-09-07-1,19.733,UCSF Tomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10001.mrc,100.0
+ycw2012-09-07-2,19.733,UCSF Tomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10002.mrc,100.0
+ycw2012-09-07-3,19.733,UCSF Tomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10003.mrc,100.0
+ycw2012-09-07-4,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10004.mrc,100.0
+ycw2012-09-07-5,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10005.mrc,100.0
+ycw2012-09-07-6,19.733,UCSF Tomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10006.mrc,100.0
+ycw2012-09-07-7,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10007.mrc,100.0
+ycw2012-09-07-8,20.0,UCSF Tomo,9.867,RAPTOR;RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10008.mrc,100.0
+ycw2012-09-07-9,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10009.mrc,100.0
+ycw2012-09-07-10,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10010.mrc,100.0
+ycw2012-09-07-11,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10011.mrc,100.0
+ycw2012-09-07-12,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10012.mrc,100.0
+ycw2012-09-07-13,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10013.mrc,100.0
+ycw2012-09-07-14,19.733,UCSF Tomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10014.mrc,100.0
+ycw2012-09-07-17,19.733,UCSF Tomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10017.mrc,100.0
+ycw2012-09-07-18,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10018.mrc,100.0
+ycw2012-09-07-19,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10019.mrc,100.0
+ycw2012-09-07-20,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10020.mrc,100.0
+ycw2012-09-07-21,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10021.mrc,100.0
+ycw2012-09-07-22,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10022.mrc,100.0
+ycw2012-09-07-23,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10023.mrc,100.0
+ycw2012-09-07-24,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10024.mrc,100.0
+ycw2012-09-07-25,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10025.mrc,100.0
+ycw2012-09-07-26,19.733,UCSF Tomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10026.mrc,100.0
+ycw2012-09-07-27,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10027.mrc,100.0
+ycw2012-09-07-30,19.733,UCSFTomo,9.867,RAPTOR,65.0,-65.0,rawdata/20120907_AR46_10031.mrc,100.0
+ycw2012-10-08-1,19.733,UCSFTomo,4.933,RAPTOR,60.0,-60.0,rawdata/AR46_20121008_10001.mrc,75.0
+ycw2012-10-08-2,19.733,UCSFTomo,4.933,RAPTOR,60.0,-60.0,rawdata/AR46_20121008_10002.mrc,75.0
+ycw2012-10-08-3,19.733,UCSFTomo,4.933,RAPTOR,60.0,-60.0,rawdata/AR46_20121008_10003.mrc,75.0
+ycw2012-10-08-4,19.733,UCSFTomo,4.933,RAPTOR,60.0,-60.0,rawdata/AR46_20121008_10004.mrc,75.0
+ycw2012-10-08-5,19.733,UCSFTomo,4.933,RAPTOR,60.0,-60.0,rawdata/AR46_20121008_10005.mrc,75.0
+ycw2012-10-08-6,19.733,UCSFTomo,4.933,RAPTOR,60.0,-60.0,rawdata/AR46_20121008_10006.mrc,75.0
+ycw2012-10-08-7,19.733,UCSFTomo,4.933,RAPTOR,60.0,-60.0,rawdata/AR46_20121008_10007.mrc,75.0

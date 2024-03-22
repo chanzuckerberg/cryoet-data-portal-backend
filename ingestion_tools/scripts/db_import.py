@@ -1,18 +1,18 @@
-import click
 import logging
 
 import boto3
+import click
 from botocore import UNSIGNED
 from botocore.config import Config
-
-from common import db_models
-from importers.db.annotation import AnnotationDBImporter, AnnotationAuthorDBImporter
+from importers.db.annotation import AnnotationAuthorDBImporter, AnnotationDBImporter
 from importers.db.base_importer import DBImportConfig
-from importers.db.dataset import DatasetDBImporter, DatasetFundingDBImporter, DatasetAuthorDBImporter
+from importers.db.dataset import DatasetAuthorDBImporter, DatasetDBImporter, DatasetFundingDBImporter
 from importers.db.run import RunDBImporter
 from importers.db.tiltseries import TiltSeriesDBImporter
-from importers.db.tomogram import TomogramDBImporter, TomogramAuthorDBImporter
+from importers.db.tomogram import TomogramAuthorDBImporter, TomogramDBImporter
 from importers.db.voxel_spacing import TomogramVoxelSpacingDBImporter
+
+from common import db_models
 
 
 @click.group()
@@ -52,6 +52,7 @@ def cli():
 @click.option("--import-tomogram-authors", is_flag=True, default=False)
 @click.option("--import-tomogram-voxel-spacing", is_flag=True, default=False)
 @click.option("--import-everything", is_flag=True, default=False)
+@click.option("--endpoint-url", type=str, default=None)
 def load(
     s3_bucket: str,
     https_prefix: str,
@@ -70,6 +71,7 @@ def load(
     import_tomogram_authors: bool,
     import_tomogram_voxel_spacing: bool,
     import_everything: bool,
+    endpoint_url: str,
 ):
     db_models.db.init(postgres_url)
     if debug:
@@ -93,7 +95,8 @@ def load(
         import_tomogram_voxel_spacing = max(import_annotations, import_tomograms, import_tomogram_voxel_spacing)
         import_runs = max(import_runs, import_tiltseries, import_tomogram_voxel_spacing)
 
-    s3_client = boto3.client("s3", config=Config(signature_version=UNSIGNED)) if anonymous else boto3.client("s3")
+    s3_config = Config(signature_version=UNSIGNED) if anonymous else None
+    s3_client = boto3.client("s3", endpoint_url=endpoint_url, config=s3_config)
     config = DBImportConfig(s3_client, s3_bucket, https_prefix)
     for dataset in DatasetDBImporter.get_items(config, s3_prefix):
         if filter_dataset and dataset.dir_prefix not in filter_dataset:
@@ -142,7 +145,9 @@ def load(
 
                         if import_annotation_authors:
                             annotation_authors = AnnotationAuthorDBImporter.get_item(
-                                annotation_obj.id, annotation, config
+                                annotation_obj.id,
+                                annotation,
+                                config,
                             )
                             annotation_authors.import_to_db()
 

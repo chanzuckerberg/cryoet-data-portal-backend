@@ -47,7 +47,7 @@ class TiltSeriesDBImporter(BaseDBImporter):
             "tilt_axis": ["tilt_axis"],
             "total_flux": ["total_flux"],
             "data_acquisition_software": ["data_acquisition_software"],
-            "related_empiar_entry": ["empiar_entry"],
+            "related_empiar_entry": ["related_empiar_entry"],
             "tilt_series_quality": ["tilt_series_quality"],
             "is_aligned": ["is_aligned"],
             "aligned_tiltseries_binning": ["aligned_tiltseries_binning"],

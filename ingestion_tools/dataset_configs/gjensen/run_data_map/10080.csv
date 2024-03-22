@@ -1,74 +1,74 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-processing,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software,ts-tilt_series_quality
-dga2016-08-11-1,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,4
-dga2016-08-11-7,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,4
-dga2016-08-11-46,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,4
-dga2016-08-11-57,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,4
-dga2016-08-11-62,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,4
-dga2016-08-11-64,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,4
-dga2016-08-11-66,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,4
-dga2016-08-11-69,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,4
-dga2016-08-11-74,['TOMO3D'],True,TOMO3D,tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,4
-dga2016-08-11-2,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-3,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-4,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-6,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-11,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-16,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-38,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-45,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-47,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-48,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-56,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-59,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-63,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-70,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-71,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-72,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-76,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-77,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-78,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR;TOMO3D,4
-dga2016-08-11-5,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-9,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-10,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-12,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-14,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-15,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-17,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-18,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-19,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-20,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-21,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-22,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-23,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-26,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-27,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-28,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-29,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-30,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-31,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-32,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-33,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-34,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-35,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-36,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-37,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-39,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-40,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-41,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-42,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-43,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-44,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-51,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-54,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-55,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-58,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-61,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-65,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-67,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-68,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-73,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-79,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-80,['RAPTOR'],True,raw,,Weighted back projection,IMOD,RAPTOR,4
-dga2016-08-11-24,,,raw,,,,,1
-dga2016-08-11-52,,,raw,,,,,1
-dga2016-08-11-75,,,raw,,,,,1
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_path,ts-tilt_series_quality
+dga2016-08-11-1,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,RAPTOR;TOMO3D,rawdata/7967-gridb-atlas3a0009.mrc,4
+dga2016-08-11-2,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/JV79670001.mrc,4
+dga2016-08-11-3,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,RAPTOR;TOMO3D,rawdata/7967-gridb-atlas3a0010.mrc,4
+dga2016-08-11-4,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/JV79670002.mrc,4
+dga2016-08-11-5,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0011.mrc,4
+dga2016-08-11-6,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,RAPTOR;TOMO3D,rawdata/JV79670003.mrc,4
+dga2016-08-11-7,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,RAPTOR;TOMO3D,rawdata/7967-gridb-atlas3a0012.mrc,4
+dga2016-08-11-9,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0013.mrc,4
+dga2016-08-11-10,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670005.mrc,4
+dga2016-08-11-11,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/7967-gridb-atlas3a0014.mrc,4
+dga2016-08-11-12,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670006.mrc,4
+dga2016-08-11-14,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670007.mrc,4
+dga2016-08-11-15,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0016.mrc,4
+dga2016-08-11-16,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/JV79670008.mrc,4
+dga2016-08-11-17,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0017.mrc,4
+dga2016-08-11-18,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670009.mrc,4
+dga2016-08-11-19,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0018.mrc,4
+dga2016-08-11-20,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670010.mrc,4
+dga2016-08-11-21,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0019.mrc,4
+dga2016-08-11-22,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670011.mrc,4
+dga2016-08-11-23,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0020.mrc,4
+dga2016-08-11-24,,NON_FIDUCIAL,,None,None,,,rawdata/JV79670012.mrc,1
+dga2016-08-11-26,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670013.mrc,4
+dga2016-08-11-27,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0022.mrc,4
+dga2016-08-11-28,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670014.mrc,4
+dga2016-08-11-29,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0023.mrc,4
+dga2016-08-11-30,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670015.mrc,4
+dga2016-08-11-31,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0024.mrc,4
+dga2016-08-11-32,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670016.mrc,4
+dga2016-08-11-33,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0025.mrc,4
+dga2016-08-11-34,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670017.mrc,4
+dga2016-08-11-35,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0026.mrc,4
+dga2016-08-11-36,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670018.mrc,4
+dga2016-08-11-37,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0027.mrc,4
+dga2016-08-11-38,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/JV79670019.mrc,4
+dga2016-08-11-39,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0028.mrc,4
+dga2016-08-11-40,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670020.mrc,4
+dga2016-08-11-41,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0029.mrc,4
+dga2016-08-11-42,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670021.mrc,4
+dga2016-08-11-43,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0030.mrc,4
+dga2016-08-11-44,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670022.mrc,4
+dga2016-08-11-45,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/7967-gridb-atlas3a0031.mrc,4
+dga2016-08-11-46,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,RAPTOR;TOMO3D,rawdata/JV79670023.mrc,4
+dga2016-08-11-47,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/JV79670024.mrc,4
+dga2016-08-11-48,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,RAPTOR;TOMO3D,rawdata/JV79670025.mrc,4
+dga2016-08-11-51,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670028.mrc,4
+dga2016-08-11-52,,NON_FIDUCIAL,,None,None,,,rawdata/JV79670029.mrc,1
+dga2016-08-11-54,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670031.mrc,4
+dga2016-08-11-55,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670032.mrc,4
+dga2016-08-11-56,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,RAPTOR;TOMO3D,rawdata/JV79670033.mrc,4
+dga2016-08-11-57,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/JV79670034.mrc,4
+dga2016-08-11-58,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670035.mrc,4
+dga2016-08-11-59,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/JV79670036.mrc,4
+dga2016-08-11-61,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670038.mrc,4
+dga2016-08-11-62,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,RAPTOR;TOMO3D,rawdata/JV79670039.mrc,4
+dga2016-08-11-63,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,RAPTOR;TOMO3D,rawdata/JV79670040.mrc,4
+dga2016-08-11-64,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/JV79670041.mrc,4
+dga2016-08-11-65,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670048.mrc,4
+dga2016-08-11-66,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/JV79670042.mrc,4
+dga2016-08-11-67,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670049.mrc,4
+dga2016-08-11-68,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/JV79670043.mrc,4
+dga2016-08-11-69,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,RAPTOR;TOMO3D,rawdata/JV79670044.mrc,4
+dga2016-08-11-70,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,RAPTOR;TOMO3D,rawdata/JV79670045.mrc,4
+dga2016-08-11-71,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,RAPTOR;TOMO3D,rawdata/JV79670046.mrc,4
+dga2016-08-11-72,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/JV79670047.mrc,4
+dga2016-08-11-73,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0005.mrc,4
+dga2016-08-11-74,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/7967-gridb-atlas3a0001.mrc,4
+dga2016-08-11-75,,NON_FIDUCIAL,,None,None,,,rawdata/7967-gridb-atlas3a0006.mrc,1
+dga2016-08-11-76,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/7967-gridb-atlas3a0002.mrc,4
+dga2016-08-11-77,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/7967-gridb-atlas3a0007.mrc,4
+dga2016-08-11-78,['TOMO3D'],FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,TOMO3D;RAPTOR,rawdata/7967-gridb-atlas3a0003.mrc,4
+dga2016-08-11-79,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0008.mrc,4
+dga2016-08-11-80,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,16.8,RAPTOR,rawdata/7967-gridb-atlas3a0004.mrc,4

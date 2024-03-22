@@ -1,40 +1,40 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software,ts-tilt_series_quality
-mst2010-09-17-2,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-09-17-4,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-09-17-6,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-09-17-7,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-09-17-9,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-09-17-10,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-09-17-11,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-09-17-12,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-09-17-13,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-09-1,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-09-2,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-09-3,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-09-4,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-09-5,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-09-6,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-09-7,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-09-8,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-09-9,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-09-11,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-09-12,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-09-13,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-09-14,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-10-1,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-10-2,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-10-3,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-10-7,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-10-8,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-10-9,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-10-10,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-10-11,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-10-12,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-10-10-13,['RAPTOR'],True,Weighted back projection,IMOD,RAPTOR,4
-mst2010-09-17-3,,,,,,1
-mst2010-09-17-5,,,,,,1
-mst2010-09-17-8,,,,,,1
-mst2010-10-09-10,,,,,,1
-mst2010-10-10-4,,,,,,1
-mst2010-10-10-5,,,,,,1
-mst2010-10-10-6,,,,,,1
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-pixel_spacing,ts-tilt_alignment_software,ts-tilt_series_path,ts-tilt_series_quality
+mst2010-09-17-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.24,9.62,RAPTOR,rawdata/10sep17a_at1_001.st,4
+mst2010-09-17-3,,NON_FIDUCIAL,None,None,,9.62,,rawdata/10sep17a_at1_002.st,1
+mst2010-09-17-4,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.24,19.24,RAPTOR,rawdata/10sep17a_at1_003.ali,4
+mst2010-09-17-5,,NON_FIDUCIAL,None,None,,9.62,,rawdata/10sep17a_at1_004.st,1
+mst2010-09-17-6,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.24,19.24,RAPTOR,rawdata/10sep17a_at1_005.ali,4
+mst2010-09-17-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.24,19.24,RAPTOR,rawdata/10sep17a_at1_006.ali,4
+mst2010-09-17-8,,NON_FIDUCIAL,None,None,,9.62,,rawdata/10sep17a_at1_007.st,1
+mst2010-09-17-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.24,9.62,RAPTOR,rawdata/10sep17a_at1_008.st,4
+mst2010-09-17-10,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.24,19.24,RAPTOR,rawdata/10sep17a_at1_009.ali,4
+mst2010-09-17-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.24,19.24,RAPTOR,rawdata/10sep17a_at1_010.ali,4
+mst2010-09-17-12,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.24,19.24,RAPTOR,rawdata/10sep17a_at1_011.ali,4
+mst2010-09-17-13,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.24,19.24,RAPTOR,rawdata/10sep17a_at1_012.ali,4
+mst2010-10-09-1,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct09a_at1_003.ali,4
+mst2010-10-09-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct09a_at1_004.ali,4
+mst2010-10-09-3,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct09a_at1_005.ali,4
+mst2010-10-09-4,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct09a_at1_006.ali,4
+mst2010-10-09-5,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct09a_at1_007.ali,4
+mst2010-10-09-6,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct09a_at1_008.ali,4
+mst2010-10-09-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct09a_at1_009.ali,4
+mst2010-10-09-8,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct09a_at1_010.ali,4
+mst2010-10-09-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct09a_at1_011.ali,4
+mst2010-10-09-10,,NON_FIDUCIAL,None,None,,12.58,,rawdata/10oct09a_at1_012.mrc,1
+mst2010-10-09-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct09a_at1_020.ali,4
+mst2010-10-09-12,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct09a_at1_023.ali,4
+mst2010-10-09-13,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct09a_at1_024.ali,4
+mst2010-10-09-14,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct09a_at1_027.ali,4
+mst2010-10-10-1,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct10a_at1_004.ali,4
+mst2010-10-10-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct10a_at1_005.ali,4
+mst2010-10-10-3,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct10a_at1_006.ali,4
+mst2010-10-10-4,,NON_FIDUCIAL,None,None,,12.58,,rawdata/10oct10a_at1_007.st,1
+mst2010-10-10-5,,NON_FIDUCIAL,None,None,,12.58,,rawdata/10oct10a_at1_008.st,1
+mst2010-10-10-6,,NON_FIDUCIAL,None,None,,12.58,,rawdata/10oct10a_at1_009.st,1
+mst2010-10-10-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,12.58,RAPTOR,rawdata/10oct10a_at1_010.mrc,4
+mst2010-10-10-8,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,12.58,RAPTOR,rawdata/10oct10a_at1_013.mrc,4
+mst2010-10-10-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,12.58,RAPTOR,rawdata/10oct10a_at1_014.mrc,4
+mst2010-10-10-10,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,12.58,RAPTOR,rawdata/10oct10a_at1_015.mrc,4
+mst2010-10-10-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,12.58,RAPTOR,rawdata/10oct10a_at1_016.mrc,4
+mst2010-10-10-12,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct10a_at1_011.ali,4
+mst2010-10-10-13,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,25.16,25.16,RAPTOR,rawdata/10oct10a_at1_012.ali,4
