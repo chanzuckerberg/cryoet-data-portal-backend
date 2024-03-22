@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING, Any, TypedDict
 import ndjson
 import numpy as np
 
+from common import instance_point_converter as ipc
 from common import oriented_point_converter as opc
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, scale_maskfile, scale_mrcfile
@@ -291,6 +292,44 @@ class OrientedPointFile(PointFile):
         return annotation_set
 
 
+class InstanceSegmentationFile(OrientedPointFile):
+    map_functions = {
+        "tardis": ipc.from_tardis,
+    }
+
+    def get_object_count(self, fs, output_prefix):
+        data = self.get_output_data(fs, output_prefix)
+
+        ids = [d["instance_id"] for d in data]
+
+        # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
+        return len(set(ids))
+
+    def load(
+        self,
+        fs: FileSystemApi,
+        filename: str,
+    ):
+        method = self.map_functions[self.file_format]
+        local_file = fs.localreadable(filename)
+
+        try:
+            print(self.binning)
+            points = method(local_file, self.filter_value, self.binning, self.order)
+        except ValueError as err:
+            print(err)
+            return []
+
+        return points
+
+    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float):
+        filename = self.get_output_filename(output_prefix)
+        annotations = self.load(fs, self.get_source_file(fs, input_prefix))
+
+        with fs.open(filename, "w") as fh:
+            ndjson.dump([a.to_dict() for a in annotations], fh)
+
+
 def annotation_source_factory(source_config, glob_vars):
     if source_config["shape"] == "SegmentationMask":
         return SegmentationMaskFile(**source_config, glob_vars=glob_vars)
@@ -300,6 +339,8 @@ def annotation_source_factory(source_config, glob_vars):
         return OrientedPointFile(**source_config, glob_vars=glob_vars)
     if source_config["shape"] == "Point":
         return PointFile(**source_config, glob_vars=glob_vars)
+    if source_config["shape"] == "InstanceSegmentation":
+        return InstanceSegmentationFile(**source_config, glob_vars=glob_vars)
     raise NotImplementedError(f"Unknown shape {source_config['shape']}")
 
 
