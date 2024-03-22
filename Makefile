@@ -17,6 +17,15 @@ api-init:
 clean:
 	docker compose --profile '*' down
 
-.PHONY: ingestor-test
-ingestor-test:
-	docker compose exec ingestor pytest -vvv -s .
+.PHONY: ingestor-test-db-init
+ingestor-test-db-init:
+	# Starting up cryoet-api ensures we are running the test against the latest schema
+	docker compose up db cryoet-api -d
+
+.PHONY: ingestor-test-db
+ingestor-test-db:
+	docker compose exec ingestor pytest -vvv -s . -k db_import
+
+.PHONY: ingestor-test-s3
+ingestor-test-s3:
+	docker compose exec ingestor pytest -vvv -s . -k s3_import
