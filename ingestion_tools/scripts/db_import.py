@@ -426,7 +426,7 @@ def load_tiltseries_data(
         "tilt_axis": ["tilt_axis"],
         "total_flux": ["total_flux"],
         "data_acquisition_software": ["data_acquisition_software"],
-        "related_empiar_entry": ["empiar_entry"],
+        "related_empiar_entry": ["related_empiar_entry"],
         "tilt_series_quality": ["tilt_series_quality"],
         "run_id": run.id,
         "is_aligned": ["is_aligned"],
@@ -502,6 +502,7 @@ def generate_neuroglancer_data(s3, s3_bucket, tomo_prefix) -> Optional[str]:
 @click.option("--import-tomograms", is_flag=True, default=False)
 @click.option("--import-tomogram-authors", is_flag=True, default=False)
 @click.option("--import-everything", is_flag=True, default=False)
+@click.option("--endpoint-url", type=str, default=None)
 def load(
     s3_bucket: str,
     https_prefix: str,
@@ -519,13 +520,15 @@ def load(
     import_tomograms: bool,
     import_tomogram_authors: bool,
     import_everything: bool,
+    endpoint_url: str,
 ):
     db_models.db.init(postgres_url)
     if debug:
         logger = logging.getLogger("peewee")
         logger.addHandler(logging.StreamHandler())
         logger.setLevel(logging.DEBUG)
-    s3 = boto3.client("s3", config=Config(signature_version=UNSIGNED)) if anonymous else boto3.client("s3")
+    config = Config(signature_version=UNSIGNED) if anonymous else None
+    s3 = boto3.client("s3", endpoint_url=endpoint_url, config=config)
 
     import_tomogram_voxel_spacing = False
     if import_everything:

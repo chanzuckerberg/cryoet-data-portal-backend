@@ -1,3 +1,4 @@
+import os
 import random
 import string
 from typing import Any, Generator
@@ -11,19 +12,27 @@ from common.fs import FileSystemApi
 
 
 @pytest.fixture
-def local_fs() -> FileSystemApi:
-    fs = FileSystemApi.get_fs_api(mode="local", force_overwrite=False)
-    return fs
+def endpoint_url() -> str:
+    return os.getenv("ENDPOINT_URL", "http://motoserver:4000")
 
 
 @pytest.fixture
-def s3_fs() -> FileSystemApi:
-    fs = FileSystemApi.get_fs_api(
+def http_prefix() -> str:
+    return "https://foo.com"
+
+
+@pytest.fixture
+def local_fs() -> FileSystemApi:
+    return FileSystemApi.get_fs_api(mode="local", force_overwrite=False)
+
+
+@pytest.fixture
+def s3_fs(endpoint_url: str) -> FileSystemApi:
+    return FileSystemApi.get_fs_api(
         mode="s3",
         force_overwrite=False,
-        client_kwargs={"endpoint_url": "http://motoserver:4000"},
+        client_kwargs={"endpoint_url": endpoint_url},
     )
-    return fs
 
 
 @pytest.fixture
@@ -48,9 +57,9 @@ def test_output_bucket(s3_client: S3Client, random_bucket_name: str) -> Generato
 
 
 @pytest.fixture
-def s3_client() -> S3Client:
+def s3_client(endpoint_url: str) -> S3Client:
     return boto3.client(
         "s3",
-        endpoint_url="http://motoserver:4000",
+        endpoint_url=endpoint_url,
         config=Config(signature_version="s3v4"),
     )

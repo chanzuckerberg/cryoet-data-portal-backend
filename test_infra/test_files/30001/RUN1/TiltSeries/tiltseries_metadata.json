@@ -1,0 +1,39 @@
+{
+    "microscope": {
+        "manufacturer": "TFS",
+        "model": "Krios"
+    },
+    "spherical_aberration_constant": 2.7,
+    "microscope_optical_setup": {
+        "energy_filter": "GIF Quantum LS",
+        "phase_plate": "Volta Phase Plate",
+        "image_corrector": "Foo"
+    },
+    "microscope_additional_info": "info about the scope",
+    "camera": {
+        "manufacturer": "Gatan",
+        "model": "K2 Summit"
+    },
+    "acceleration_voltage": 300000,
+    "tilting_scheme": "Dose symmetric from 0.0 degrees",
+    "tilt_axis": 84.7,
+    "tilt_step": 2,
+    "tilt_range": {
+        "min": -40,
+        "max": 40
+    },
+    "total_flux": 122,
+    "data_acquisition_software": "SerialEM",
+    "binning_from_frames": 1,
+    "tilt_series_quality": 5,
+    "related_empiar_entry": "EMPIAR-XYZ",
+    "pixel_spacing": 4.370,
+    "is_aligned": true,
+    "aligned_tiltseries_binning": 3,
+    "omezarr_dir": "ts_foo.zarr",
+    "mrc_files": [
+        "ts_foo.mrc"
+    ],
+    "run_name": "RUN1",
+    "frames_count": 60
+}
