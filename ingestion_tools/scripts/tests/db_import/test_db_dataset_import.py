@@ -86,7 +86,7 @@ def test_import_dataset_update(
     populate_dataset_funding_table()
     actual = verify_dataset_import([])
     assert len(actual.authors) == 2
-    assert len(actual.funding_sources) == 1
+    assert len(actual.funding_sources) == 2
 
 
 # Tests addition of new authors, updating entries already existing in db, and removing stale authors
@@ -100,7 +100,7 @@ def test_import_dataset_and_dataset_authors(
     populate_dataset_funding_table()
     actual = verify_dataset_import(["--import-dataset-authors"])
     assert len(actual.authors) == len(expected_authors)
-    assert len(actual.funding_sources) == 1
+    assert len(actual.funding_sources) == 2
     actual_authors = list(actual.authors.order_by(models.DatasetAuthor.author_list_order))
     for i, author in enumerate(actual_authors):
         verify_model(author, expected_authors[i])

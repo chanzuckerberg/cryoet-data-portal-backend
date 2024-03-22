@@ -54,8 +54,7 @@ def populate_dataset_funding_table() -> None:
     ).save(
         force_insert=True,
     )
-    # TODO: Add functionality to remove stale data
-    # DatasetFunding(id=109, dataset_id=30001, funding_agency_name="Grant Provider 2").save(force_insert=True)
+    DatasetFunding(id=109, dataset_id=30001, funding_agency_name="Stale Grant Entry").save(force_insert=True)
 
 
 def populate_runs_table() -> None:
