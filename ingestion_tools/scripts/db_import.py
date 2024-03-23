@@ -123,7 +123,8 @@ def load(
 
             if import_tiltseries:
                 tilt_series = TiltSeriesDBImporter.get_item(run_id, run, config)
-                tilt_series.import_to_db()
+                if tilt_series:
+                    tilt_series.import_to_db()
 
             if not import_tomogram_voxel_spacing:
                 continue

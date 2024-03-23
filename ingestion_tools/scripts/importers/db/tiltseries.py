@@ -49,7 +49,6 @@ class TiltSeriesDBImporter(BaseDBImporter):
             "data_acquisition_software": ["data_acquisition_software"],
             "related_empiar_entry": ["related_empiar_entry"],
             "tilt_series_quality": ["tilt_series_quality"],
-            "is_aligned": ["is_aligned"],
             "aligned_tiltseries_binning": ["aligned_tiltseries_binning"],
             "frames_count": ["frames_count"],
         }
@@ -64,6 +63,7 @@ class TiltSeriesDBImporter(BaseDBImporter):
         extra_data = {
             "run_id": self.run_id,
             "tilt_range": abs(float(metadata["tilt_range"]["max"]) - float(metadata["tilt_range"]["min"])),
+            "is_aligned": metadata.get("is_aligned") or False,
         }
         if mrc_path := metadata.get("mrc_files", [None])[0]:
             extra_data["s3_mrc_bin1"] = self.join_path(s3_prefix, self.dir_prefix, mrc_path)
@@ -90,5 +90,5 @@ class TiltSeriesDBImporter(BaseDBImporter):
     @classmethod
     def get_item(cls, run_id: int, run: RunDBImporter, config: DBImportConfig) -> "TiltSeriesDBImporter":
         ts_dir_path = cls.join_path(run.dir_prefix, "TiltSeries")
-        for ts_prefix in config.find_subdirs_with_files(ts_dir_path, "tiltseries_metadata.json"):
-            return cls(run_id, ts_prefix, run, config)
+        ts_prefix = config.find_subdirs_with_files(ts_dir_path, "tiltseries_metadata.json")
+        return cls(run_id, ts_prefix[0], run, config) if len(ts_prefix) > 0 else None

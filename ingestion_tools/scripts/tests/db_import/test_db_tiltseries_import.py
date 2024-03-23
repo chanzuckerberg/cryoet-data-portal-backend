@@ -50,9 +50,9 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
         },
         {
             "s3_mrc_bin1": f"s3://test-public-bucket/{DATASET_ID}/RUN3/TiltSeries/ts_foo.mrc",
-            "https_mrc_bin1": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/ts_foo.mrc",
-            "s3_omezarr_dir": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/ts_foo.zarr",
-            "https_omezarr_dir": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/ts_foo.zarr",
+            "https_mrc_bin1": f"{http_prefix}/{DATASET_ID}/RUN3/TiltSeries/ts_foo.mrc",
+            "s3_omezarr_dir": f"s3://test-public-bucket/{DATASET_ID}/RUN3/TiltSeries/ts_foo.zarr",
+            "https_omezarr_dir": f"{http_prefix}/{DATASET_ID}/RUN3/TiltSeries/ts_foo.zarr",
             "s3_angle_list": f"s3://test-public-bucket/{DATASET_ID}/RUN3/TiltSeries/bar.tlt",
             "https_angle_list": f"{http_prefix}/{DATASET_ID}/RUN3/TiltSeries/bar.tlt",
             "acceleration_voltage": 10000,
@@ -86,7 +86,7 @@ def test_import_tiltseries(
     populate_tiltseries_table()
     actual = verify_dataset_import(["--import-tiltseries"])
     expected_iter = iter(expected_tiltseries)
-    for run in actual.runs:
+    for run in actual.runs.order_by(models.Run.name):
         for tiltseries in run.tiltseries:
             expected = next(expected_iter)
             if "run_id" not in expected:

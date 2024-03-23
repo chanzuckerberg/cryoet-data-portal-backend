@@ -1,12 +1,13 @@
+import datetime
 import json
 import os
 from pathlib import PurePath
-from typing import Any, Optional, Iterator
+from typing import Any, Iterator, Optional
+
 import peewee
 from botocore.exceptions import ClientError
 
 from common.db_models import BaseModel
-import datetime
 
 
 class DBImportConfig:
@@ -33,9 +34,9 @@ class DBImportConfig:
         pages = paginator.paginate(Bucket=self.bucket_name, Prefix=prefix, Delimiter="/")
         result = []
         for page in pages:
-            for obj in page["CommonPrefixes"]:
-                subdir = obj["Prefix"]
+            for obj in page.get("CommonPrefixes", []):
                 try:
+                    subdir = obj["Prefix"]
                     self.s3_client.head_object(Bucket=self.bucket_name, Key=f"{subdir}{target_filename}")
                     result.append(subdir)
                 except Exception:
@@ -115,7 +116,7 @@ class BaseDBImporter:
             db_obj = klass()
             force_insert = True
 
-        for db_key, data_path in data_map.items():
+        for db_key, _data_path in data_map.items():
             setattr(db_obj, db_key, map_to_value(db_key, data_map, self.metadata))
 
         db_obj.save(force_insert=force_insert)
@@ -153,7 +154,7 @@ class StaleDeletionDBImporter(BaseDBImporter):
                 db_obj = klass()
                 force_insert = True
 
-            for db_key, data_path in entry_data_map.items():
+            for db_key, _data_path in entry_data_map.items():
                 setattr(db_obj, db_key, map_to_value(db_key, entry_data_map, entry))
             db_obj.save(force_insert=force_insert)
 
