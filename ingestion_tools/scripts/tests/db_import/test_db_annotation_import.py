@@ -68,6 +68,14 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
             "format": "zarr",
             "is_visualization_default": False,
         },
+        {
+            "annotation_id": ANNOTATION_ID,
+            "s3_path": "s3://foo-stale-annotation",
+            "https_path": "https://foo-stale-annotation",
+            "shape_type": "ZZOrientedPoint",
+            "format": "ndjson",
+            "is_visualization_default": False,
+        },
     ]
 
 
@@ -108,12 +116,13 @@ def test_import_annotations(
     actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID)
     for annotation in actual_voxel_spacing.annotations.order_by(models.Annotation.s3_metadata_path):
         verify_model(annotation, next(expected_annotations_iter))
-        assert len(annotation.authors) == 0
+        assert len(annotation.files) == len(expected_annotation_files)
         for file in annotation.files.order_by(models.AnnotationFiles.shape_type, models.AnnotationFiles.format):
             verify_model(file, next(expected_annotations_files_iter))
+        assert len(annotation.authors) == 0
 
 
-# Tests update of annotations, tests addition and update annotation files
+# Tests update of existing annotation authors, addition of new authors and deletion of stale authors
 def test_import_annotation_authors(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],

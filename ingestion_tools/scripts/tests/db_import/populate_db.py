@@ -209,13 +209,13 @@ def populate_annotation_files() -> None:
         shape_type="Point",
         format="ndjson",
     ).save(force_insert=True)
-    # AnnotationFiles(
-    #     annotation_id=ANNOTATION_ID,
-    #     s3_path="s3://foo",
-    #     https_path="https://foo",
-    #     shape_type="OrientedPoint",
-    #     format="ndjson",
-    # ).save(force_insert=True)
+    AnnotationFiles(
+        annotation_id=ANNOTATION_ID,
+        s3_path="s3://foo-stale-annotation",
+        https_path="https://foo-stale-annotation",
+        shape_type="ZZOrientedPoint",
+        format="ndjson",
+    ).save(force_insert=True)
 
 
 def populate_annotation_authors_table() -> None:
