@@ -87,8 +87,8 @@ def expected_tomograms(http_prefix: str) -> list[dict[str, Any]]:
             "size_z": 400,
             "voxel_spacing": 3.456,
             "fiducial_alignment_status": "NON_FIDUCIAL",
-            "reconstruction_method": "",
-            "reconstruction_software": "Warp",
+            "reconstruction_method": "None",
+            "reconstruction_software": "None",
             "processing": "filtered",
             "tomogram_version": "1",
             "is_canonical": True,
@@ -103,34 +103,38 @@ def expected_tomograms(http_prefix: str) -> list[dict[str, Any]]:
             "offset_x": 0,
             "offset_y": 0,
             "offset_z": 0,
+            "neuroglancer_config": "{}",
             "type": "CANONICAL",
         },
     ]
 
 
 @pytest.fixture
-def expected_tomograms_authors() -> list[dict[str, Any]]:
+def expected_tomograms_authors() -> list[list[dict[str, Any]]]:
     return [
-        {
-            "tomogram_id": TOMOGRAM_ID,
-            "name": "John Doe",
-            "corresponding_author_status": True,
-            "primary_author_status": False,
-            "author_list_order": 1,
-        },
-        {
-            "id": 100,
-            "tomogram_id": TOMOGRAM_ID,
-            "orcid": "0000-4444-1234-0000",
-            "name": "Jane Smith",
-            "corresponding_author_status": False,
-            "primary_author_status": False,
-            "email": "jsmith@test.com",
-            "affiliation_name": "Foo",
-            "affiliation_address": "some address",
-            "affiliation_identifier": "test-affliation-id",
-            "author_list_order": 2,
-        },
+        [
+            {
+                "tomogram_id": TOMOGRAM_ID,
+                "name": "John Doe",
+                "corresponding_author_status": True,
+                "primary_author_status": False,
+                "author_list_order": 1,
+            },
+            {
+                "id": 100,
+                "tomogram_id": TOMOGRAM_ID,
+                "orcid": "0000-4444-1234-0000",
+                "name": "Jane Smith",
+                "corresponding_author_status": False,
+                "primary_author_status": False,
+                "email": "jsmith@test.com",
+                "affiliation_name": "Foo",
+                "affiliation_address": "some address",
+                "affiliation_identifier": "test-affliation-id",
+                "author_list_order": 2,
+            },
+        ],
+        [],
     ]
 
 
@@ -163,7 +167,7 @@ def test_import_voxel_spacings_and_tomograms(
 def test_import_tomograms_authors(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
-    expected_tomograms_authors: list[dict[str, Any]],
+    expected_tomograms_authors: list[list[dict[str, Any]]],
 ) -> None:
     populate_tomogram_authors_table()
     actual = verify_dataset_import(["--import-tomogram-authors"])
@@ -171,6 +175,8 @@ def test_import_tomograms_authors(
     for run in actual.runs:
         for tomogram_voxel_spacing in run.tomogram_voxel_spacings:
             for tomogram in tomogram_voxel_spacing.tomograms:
-                assert len(tomogram.authors) == len(expected_tomograms_authors)
+                tomogram_authors = next(expected_tomograms_authors_iter)
+                assert len(tomogram.authors) == len(tomogram_authors)
+                tomogram_authors_iter = iter(tomogram_authors)
                 for author in tomogram.authors.order_by(models.TomogramAuthor.author_list_order):
-                    verify_model(author, next(expected_tomograms_authors_iter))
+                    verify_model(author, next(tomogram_authors_iter))

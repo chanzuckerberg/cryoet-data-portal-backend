@@ -56,7 +56,7 @@ class DBImportConfig:
                 if PurePath(obj[obj_key]).match(glob_string):
                     yield obj[obj_key]
 
-    def load_key_json(self, key: str, is_file_required=True):
+    def load_key_json(self, key: str, is_file_required: bool = True):
         try:
             text = self.s3_client.get_object(Bucket=self.bucket_name, Key=key)
             data = json.loads(text["Body"].read())

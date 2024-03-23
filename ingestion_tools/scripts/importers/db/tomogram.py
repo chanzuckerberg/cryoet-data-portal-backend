@@ -2,18 +2,22 @@ import json
 from typing import Any, Iterator
 
 from common import db_models
-from common.normalize_fields import normalize_fiducial_alignment
+from common.normalize_fields import normalize_fiducial_alignment, normalize_to_none_str
 from importers.db.base_importer import (
+    AuthorsStaleDeletionDBImporter,
     BaseDBImporter,
     DBImportConfig,
-    AuthorsStaleDeletionDBImporter,
 )
 from importers.db.voxel_spacing import TomogramVoxelSpacingDBImporter
 
 
 class TomogramDBImporter(BaseDBImporter):
     def __init__(
-        self, voxel_spacing_id: int, dir_prefix: str, parent: TomogramVoxelSpacingDBImporter, config: DBImportConfig
+        self,
+        voxel_spacing_id: int,
+        dir_prefix: str,
+        parent: TomogramVoxelSpacingDBImporter,
+        config: DBImportConfig,
     ):
         self.voxel_spacing_id = voxel_spacing_id
         self.dir_prefix = dir_prefix
@@ -57,7 +61,8 @@ class TomogramDBImporter(BaseDBImporter):
         return "UNKOWN"
 
     def generate_neuroglancer_data(self) -> str:
-        config = self.config.load_key_json(self.join_path(self.dir_prefix, "neuroglancer_config.json"))
+        path = self.join_path(self.dir_prefix, "neuroglancer_config.json")
+        config = self.config.load_key_json(path, is_file_required=False)
         # TODO: Log warning
         return json.dumps(config, separators=(",", ":")) if config else "{}"
 
@@ -66,9 +71,9 @@ class TomogramDBImporter(BaseDBImporter):
         s3_prefix = self.config.s3_prefix
         extra_data = {
             "tomogram_voxel_spacing_id": self.voxel_spacing_id,
-            "fiducial_alignment_status": normalize_fiducial_alignment(metadata["fiducial_alignment_status"]),
-            "reconstruction_method": ["reconstruction_method"],
-            "reconstruction_software": ["reconstruction_software"],
+            "fiducial_alignment_status": normalize_fiducial_alignment(metadata.get("fiducial_alignment_status")),
+            "reconstruction_method": normalize_to_none_str(metadata.get("reconstruction_method")),
+            "reconstruction_software": normalize_to_none_str(metadata.get("reconstruction_software")),
             "is_canonical": True,  # TODO: mark this for deprecation
             "s3_omezarr_dir": self.join_path(s3_prefix, self.dir_prefix, metadata["omezarr_dir"]),
             "https_omezarr_dir": self.join_path(https_prefix, self.dir_prefix, metadata["omezarr_dir"]),
@@ -91,7 +96,10 @@ class TomogramDBImporter(BaseDBImporter):
 
     @classmethod
     def get_item(
-        cls, voxel_spacing_id: int, voxel_spacing: TomogramVoxelSpacingDBImporter, config: DBImportConfig
+        cls,
+        voxel_spacing_id: int,
+        voxel_spacing: TomogramVoxelSpacingDBImporter,
+        config: DBImportConfig,
     ) -> Iterator["TomogramDBImporter"]:
         tomogram_dir_path = cls.join_path(voxel_spacing.dir_prefix, "CanonicalTomogram")
         return [
@@ -132,6 +140,9 @@ class TomogramAuthorDBImporter(AuthorsStaleDeletionDBImporter):
 
     @classmethod
     def get_item(
-        cls, dataset_id: int, parent: TomogramDBImporter, config: DBImportConfig
+        cls,
+        dataset_id: int,
+        parent: TomogramDBImporter,
+        config: DBImportConfig,
     ) -> "TomogramAuthorDBImporter":
         return cls(dataset_id, parent, config)
