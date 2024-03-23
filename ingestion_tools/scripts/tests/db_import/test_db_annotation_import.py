@@ -3,10 +3,12 @@ from typing import Any, Callable
 
 import pytest as pytest
 from tests.db_import.populate_db import (
+    ANNOTATION_AUTHOR_ID,
     ANNOTATION_FILE_ID,
     ANNOTATION_ID,
     DATASET_ID,
     TOMOGRAM_VOXEL_ID,
+    populate_annotation_authors_table,
     populate_annotation_files,
 )
 
@@ -69,6 +71,29 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
     ]
 
 
+@pytest.fixture
+def expected_annotation_authors() -> list[dict[str, Any]]:
+    return [
+        {
+            "id": ANNOTATION_AUTHOR_ID,
+            "annotation_id": ANNOTATION_ID,
+            "name": "Jane Smith",
+            "corresponding_author_status": False,
+            "primary_annotator_status": True,
+            "author_list_order": 1,
+        },
+        {
+            "annotation_id": ANNOTATION_ID,
+            "name": "John Doe",
+            "corresponding_author_status": False,
+            "primary_annotator_status": False,
+            "orcid": "0000-0000-1234-0000",
+            "email": "jdoe@test.com",
+            "author_list_order": 2,
+        },
+    ]
+
+
 # Tests update of annotations, tests addition and update annotation files
 def test_import_annotations(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
@@ -86,3 +111,20 @@ def test_import_annotations(
         assert len(annotation.authors) == 0
         for file in annotation.files.order_by(models.AnnotationFiles.shape_type, models.AnnotationFiles.format):
             verify_model(file, next(expected_annotations_files_iter))
+
+
+# Tests update of annotations, tests addition and update annotation files
+def test_import_annotation_authors(
+    verify_dataset_import: Callable[[list[str]], models.Dataset],
+    verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
+    expected_annotations: list[dict[str, Any]],
+    expected_annotation_authors: list[dict[str, Any]],
+) -> None:
+    populate_annotation_authors_table()
+    verify_dataset_import(["--import-annotation-authors"])
+    expected_annotations_authors_iter = iter(expected_annotation_authors)
+    actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID)
+    for annotation in actual_voxel_spacing.annotations.order_by(models.Annotation.s3_metadata_path):
+        assert len(annotation.authors) == len(expected_annotation_authors)
+        for author in annotation.authors.order_by(models.AnnotationAuthor.author_list_order):
+            verify_model(author, next(expected_annotations_authors_iter))

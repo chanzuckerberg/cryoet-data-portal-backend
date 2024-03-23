@@ -2,6 +2,7 @@ from datetime import datetime
 
 from common.db_models import (
     Annotation,
+    AnnotationAuthor,
     AnnotationFiles,
     Dataset,
     DatasetAuthor,
@@ -21,6 +22,7 @@ TOMOGRAM_VOXEL_ID = 104
 TOMOGRAM_ID = 103
 ANNOTATION_ID = 100
 ANNOTATION_FILE_ID = 110
+ANNOTATION_AUTHOR_ID = 400
 
 
 def populate_dataset_table() -> None:
@@ -214,6 +216,20 @@ def populate_annotation_files() -> None:
     #     shape_type="OrientedPoint",
     #     format="ndjson",
     # ).save(force_insert=True)
+
+
+def populate_annotation_authors_table() -> None:
+    populate_annotations()
+    AnnotationAuthor(id=ANNOTATION_AUTHOR_ID, annotation_id=ANNOTATION_ID, name="Jane Smith", author_list_order=1).save(
+        force_insert=True,
+    )
+    AnnotationAuthor(
+        id=200,
+        annotation_id=ANNOTATION_ID,
+        name="Stale Author",
+        corresponding_author_status=True,
+        author_list_order=3,
+    ).save(force_insert=True)
 
 
 def clean_all_mock_data() -> None:
