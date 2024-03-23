@@ -98,7 +98,8 @@ class BaseDBImporter:
     def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
         pass
 
-    def get_id_fields(self) -> set[str]:
+    @classmethod
+    def get_id_fields(cls) -> list[str]:
         pass
 
     def get_db_model_class(self) -> type:
@@ -127,13 +128,16 @@ class StaleDeletionDBImporter(BaseDBImporter):
     def get_filters(self) -> dict[str, str]:
         pass
 
+    @classmethod
+    def get_hash_value(cls, record: BaseModel) -> str:
+        return "-".join([f"{getattr(record, attr)}" for attr in cls.get_id_fields()])
+
     def get_existing_objects(self) -> dict[str, BaseModel]:
         result = {}
         klass = self.get_db_model_class()
         query = klass.select().where(*[getattr(klass, k) == v for k, v in self.get_filters().items()])
         for record in query:
-            key = "-".join([f"{getattr(record, attr)}" for attr in self.get_id_fields()])
-            result[key] = record
+            result[self.get_hash_value(record)] = record
         return result
 
     def update_data_map(self, data_map: dict[str, Any], metadata: dict[str, Any], index: int) -> dict[str, Any]:
@@ -158,8 +162,9 @@ class StaleDeletionDBImporter(BaseDBImporter):
                 setattr(db_obj, db_key, map_to_value(db_key, entry_data_map, entry))
             db_obj.save(force_insert=force_insert)
 
-        for stale_obj in existing_objs.values():
+        for key, stale_obj in existing_objs.items():
             # TODO: Log deletion
+            print(f"Deleting record of {klass} with id={stale_obj.id} and key={key}")
             stale_obj.delete_instance()
 
 
@@ -168,3 +173,33 @@ class AuthorsStaleDeletionDBImporter(StaleDeletionDBImporter):
         if metadata.get("author_list_order"):
             return data_map
         return {**data_map, **{"author_list_order": index + 1}}
+
+
+class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
+    existing_objects: dict[str, BaseModel]
+    ref_klass: type[BaseDBImporter]
+
+    @classmethod
+    def children_tables_references(cls) -> dict[str, "StaleParentDeletionDBImporter"]:
+        pass
+
+    def mark_as_active(self, record: BaseModel):
+        key = self.get_hash_value(record)
+        self.existing_objects.pop(key, None)
+
+    def remove_stale_objects(self):
+        for key, stale_obj in self.existing_objects.items():
+            print(f"Deleting record of {self} with id={stale_obj.id} and key={key}")
+            for child_rel, deletion_helper in self.children_tables_references().items():
+                for entry in getattr(stale_obj, child_rel):
+                    if deletion_helper is None:
+                        entry.delete_instance()
+            stale_obj.delete_instance()
+
+    @classmethod
+    def get_id_fields(cls) -> list[str]:
+        return cls.ref_klass.get_id_fields()
+
+    @classmethod
+    def get_db_model_class(cls) -> type:
+        return cls.ref_klass.get_db_model_class()

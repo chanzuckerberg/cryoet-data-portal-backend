@@ -22,7 +22,8 @@ class DatasetDBImporter(BaseDBImporter):
     def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
         return {**self.get_direct_mapped_fields(), **self.get_computed_fields(metadata)}
 
-    def get_id_fields(self) -> list[str]:
+    @classmethod
+    def get_id_fields(cls) -> list[str]:
         return ["id"]
 
     def get_db_model_class(self) -> type:
@@ -100,7 +101,8 @@ class DatasetAuthorDBImporter(AuthorsStaleDeletionDBImporter):
             "author_list_order": ["author_list_order"],
         }
 
-    def get_id_fields(self) -> list[str]:
+    @classmethod
+    def get_id_fields(cls) -> list[str]:
         return ["dataset_id", "name"]
 
     def get_db_model_class(self) -> type:
@@ -128,7 +130,8 @@ class DatasetFundingDBImporter(StaleDeletionDBImporter):
             "grant_id": ["grant_id"],
         }
 
-    def get_id_fields(self) -> list[str]:
+    @classmethod
+    def get_id_fields(cls) -> list[str]:
         return ["dataset_id", "funding_agency_name"]
 
     def get_db_model_class(self) -> type:

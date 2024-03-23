@@ -4,6 +4,7 @@ import pytest as pytest
 from tests.db_import.populate_db import (
     DATASET_ID,
     RUN_ID,
+    TOMOGRAM_AUTHOR_ID,
     TOMOGRAM_ID,
     TOMOGRAM_VOXEL_ID,
     populate_tomogram_authors_table,
@@ -121,7 +122,7 @@ def expected_tomograms_authors() -> list[list[dict[str, Any]]]:
                 "author_list_order": 1,
             },
             {
-                "id": 100,
+                "id": TOMOGRAM_AUTHOR_ID,
                 "tomogram_id": TOMOGRAM_ID,
                 "orcid": "0000-4444-1234-0000",
                 "name": "Jane Smith",

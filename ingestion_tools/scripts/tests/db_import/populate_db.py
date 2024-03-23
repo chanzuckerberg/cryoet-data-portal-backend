@@ -15,14 +15,18 @@ from common.db_models import (
 )
 
 DATASET_ID = 30001
-DATASET_AUTHOR_ID = 103
-DATASET_FUNDING_ID = 105
-RUN_ID = 102
-TOMOGRAM_VOXEL_ID = 104
-TOMOGRAM_ID = 103
-ANNOTATION_ID = 100
-ANNOTATION_FILE_ID = 110
-ANNOTATION_AUTHOR_ID = 400
+DATASET_AUTHOR_ID = 301
+DATASET_FUNDING_ID = 302
+RUN_ID = 401
+TILTSERIES_ID = 501
+TOMOGRAM_VOXEL_ID = 502
+TOMOGRAM_ID = 601
+TOMOGRAM_AUTHOR_ID = 701
+ANNOTATION_ID = 602
+ANNOTATION_FILE_ID = 701
+ANNOTATION_AUTHOR_ID = 702
+
+STALE_ANNOTATION_ID = 900
 
 
 def populate_dataset_table() -> None:
@@ -126,7 +130,9 @@ def populate_tomograms_table() -> None:
 
 def populate_tomogram_authors_table() -> None:
     populate_tomograms_table()
-    TomogramAuthor(id=100, tomogram_id=TOMOGRAM_ID, name="Jane Smith", author_list_order=1).save(force_insert=True)
+    TomogramAuthor(id=TOMOGRAM_AUTHOR_ID, tomogram_id=TOMOGRAM_ID, name="Jane Smith", author_list_order=1).save(
+        force_insert=True,
+    )
     TomogramAuthor(
         id=200,
         tomogram_id=TOMOGRAM_ID,
@@ -139,7 +145,7 @@ def populate_tomogram_authors_table() -> None:
 def populate_tiltseries_table() -> None:
     populate_runs_table()
     TiltSeries(
-        id=101,
+        id=TILTSERIES_ID,
         run_id=RUN_ID,
         s3_mrc_bin1="ts_foo.mrc",
         https_mrc_bin1="ts_foo.mrc",
@@ -183,20 +189,21 @@ def populate_annotations() -> None:
         object_id="invalid-id",
         annotation_software="bar",
     ).save(force_insert=True)
-    # Annotation(
-    #     id=101,
-    #     tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID,
-    #     s3_metadata_path="foo",
-    #     https_metadata_path="foo",
-    #     deposition_date="2025-04-01",
-    #     release_date="2025-06-01",
-    #     last_modified_date="2025-06-01",
-    #     annotation_method="",
-    #     ground_truth_status=False,
-    #     object_name="bar",
-    #     object_id="invalid-id",
-    #     annotation_software="bar",
-    # ).save(force_insert=True)
+    Annotation(
+        id=STALE_ANNOTATION_ID,
+        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID,
+        s3_metadata_path="foo",
+        https_metadata_path="foo",
+        deposition_date="2025-04-01",
+        release_date="2025-06-01",
+        last_modified_date="2025-06-01",
+        annotation_method="",
+        ground_truth_status=False,
+        object_name="bar",
+        object_id="invalid-id",
+        object_count=200,
+        annotation_software="bar",
+    ).save(force_insert=True)
 
 
 def populate_annotation_files() -> None:
@@ -216,6 +223,20 @@ def populate_annotation_files() -> None:
         shape_type="ZZOrientedPoint",
         format="ndjson",
     ).save(force_insert=True)
+    AnnotationFiles(
+        annotation_id=STALE_ANNOTATION_ID,
+        s3_path="s3://foo-stale-annotation/point",
+        https_path="https://foo-stale-annotation/point",
+        shape_type="Point",
+        format="ndjson",
+    ).save(force_insert=True)
+    AnnotationFiles(
+        annotation_id=STALE_ANNOTATION_ID,
+        s3_path="s3://foo-stale-annotation/seg_mask",
+        https_path="https://foo-stale-annotation/seg_mask",
+        shape_type="SegmentationMask",
+        format="mrc",
+    ).save(force_insert=True)
 
 
 def populate_annotation_authors_table() -> None:
@@ -226,6 +247,15 @@ def populate_annotation_authors_table() -> None:
     AnnotationAuthor(
         id=200,
         annotation_id=ANNOTATION_ID,
+        name="Stale Author",
+        corresponding_author_status=True,
+        author_list_order=3,
+    ).save(force_insert=True)
+    AnnotationAuthor(annotation_id=STALE_ANNOTATION_ID, name="Jane Smith", author_list_order=1).save(
+        force_insert=True,
+    )
+    AnnotationAuthor(
+        annotation_id=STALE_ANNOTATION_ID,
         name="Stale Author",
         corresponding_author_status=True,
         author_list_order=3,

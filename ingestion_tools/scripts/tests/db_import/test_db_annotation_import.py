@@ -68,14 +68,6 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
             "format": "zarr",
             "is_visualization_default": False,
         },
-        {
-            "annotation_id": ANNOTATION_ID,
-            "s3_path": "s3://foo-stale-annotation",
-            "https_path": "https://foo-stale-annotation",
-            "shape_type": "ZZOrientedPoint",
-            "format": "ndjson",
-            "is_visualization_default": False,
-        },
     ]
 
 

@@ -4,7 +4,7 @@ import boto3
 import click
 from botocore import UNSIGNED
 from botocore.config import Config
-from importers.db.annotation import AnnotationAuthorDBImporter, AnnotationDBImporter
+from importers.db.annotation import AnnotationAuthorDBImporter, AnnotationDBImporter, StaleAnnotationDeletionDBImporter
 from importers.db.base_importer import DBImportConfig
 from importers.db.dataset import DatasetAuthorDBImporter, DatasetDBImporter, DatasetFundingDBImporter
 from importers.db.run import RunDBImporter
@@ -141,8 +141,10 @@ def load(
                             tomogram_authors.import_to_db()
 
                 if import_annotations:
+                    annotation_cleaner = StaleAnnotationDeletionDBImporter(voxel_spacing_obj.id, config)
                     for annotation in AnnotationDBImporter.get_item(voxel_spacing_obj.id, voxel_spacing, config):
                         annotation_obj = annotation.import_to_db()
+                        annotation_cleaner.mark_as_active(annotation_obj)
 
                         if import_annotation_authors:
                             annotation_authors = AnnotationAuthorDBImporter.get_item(
@@ -151,6 +153,7 @@ def load(
                                 config,
                             )
                             annotation_authors.import_to_db()
+                    annotation_cleaner.remove_stale_objects()
 
 
 if __name__ == "__main__":

@@ -129,7 +129,8 @@ class TomogramAuthorDBImporter(AuthorsStaleDeletionDBImporter):
             "author_list_order": ["author_list_order"],
         }
 
-    def get_id_fields(self) -> list[str]:
+    @classmethod
+    def get_id_fields(cls) -> list[str]:
         return ["tomogram_id", "name"]
 
     def get_db_model_class(self) -> type:

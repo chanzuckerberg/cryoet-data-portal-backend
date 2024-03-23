@@ -6,9 +6,7 @@ from importers.db.dataset import DatasetDBImporter
 
 
 class RunDBImporter(BaseDBImporter):
-    def __init__(
-        self, dataset_id: int, dir_prefix: str, parent: DatasetDBImporter, config: DBImportConfig
-    ):
+    def __init__(self, dataset_id: int, dir_prefix: str, parent: DatasetDBImporter, config: DBImportConfig):
         self.dataset_id = dataset_id
         self.dir_prefix = dir_prefix
         self.parent = parent
@@ -26,16 +24,15 @@ class RunDBImporter(BaseDBImporter):
             "https_prefix": self.join_path(self.config.https_prefix, self.dir_prefix),
         }
 
-    def get_id_fields(self) -> list[str]:
+    @classmethod
+    def get_id_fields(cls) -> list[str]:
         return ["dataset_id", "name"]
 
     def get_db_model_class(self) -> type:
         return db_models.Run
 
     @classmethod
-    def get_item(
-        cls, dataset_id: int, dataset: DatasetDBImporter, config: DBImportConfig
-    ) -> "Iterator[RunDBImporter]":
+    def get_item(cls, dataset_id: int, dataset: DatasetDBImporter, config: DBImportConfig) -> "Iterator[RunDBImporter]":
         return [
             cls(dataset_id, run_prefix, dataset, config)
             for run_prefix in config.find_subdirs_with_files(dataset.dir_prefix, "run_metadata.json")

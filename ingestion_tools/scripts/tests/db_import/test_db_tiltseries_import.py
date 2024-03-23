@@ -1,7 +1,7 @@
 from typing import Any, Callable
 
 import pytest as pytest
-from tests.db_import.populate_db import DATASET_ID, RUN_ID, populate_tiltseries_table
+from tests.db_import.populate_db import DATASET_ID, RUN_ID, TILTSERIES_ID, populate_tiltseries_table
 
 import common.db_models as models
 
@@ -10,7 +10,7 @@ import common.db_models as models
 def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
     return [
         {
-            "id": 101,
+            "id": TILTSERIES_ID,
             "run_id": RUN_ID,
             "s3_mrc_bin1": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/ts_foo.mrc",
             "https_mrc_bin1": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/ts_foo.mrc",

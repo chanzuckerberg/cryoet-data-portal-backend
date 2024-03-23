@@ -22,7 +22,8 @@ class TomogramVoxelSpacingDBImporter(BaseDBImporter):
             "run_id": self.run_id,
         }
 
-    def get_id_fields(self) -> list[str]:
+    @classmethod
+    def get_id_fields(cls) -> list[str]:
         return ["run_id", "voxel_spacing"]
 
     def get_db_model_class(self) -> type:
@@ -30,7 +31,10 @@ class TomogramVoxelSpacingDBImporter(BaseDBImporter):
 
     @classmethod
     def get_items(
-        cls, run_id: int, run: RunDBImporter, config: DBImportConfig
+        cls,
+        run_id: int,
+        run: RunDBImporter,
+        config: DBImportConfig,
     ) -> "Iterator[TomogramVoxelSpacingDBImporter]":
         tomogram_path = cls.join_path(run.dir_prefix, "Tomograms/")
         return [

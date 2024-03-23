@@ -19,7 +19,8 @@ class TiltSeriesDBImporter(BaseDBImporter):
     def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
         return {**self.get_direct_mapped_fields(), **self.get_computed_fields(metadata)}
 
-    def get_id_fields(self) -> list[str]:
+    @classmethod
+    def get_id_fields(cls) -> list[str]:
         return ["run_id"]
 
     def get_db_model_class(self) -> type:
