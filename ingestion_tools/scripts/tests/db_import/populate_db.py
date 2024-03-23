@@ -19,14 +19,17 @@ DATASET_AUTHOR_ID = 301
 DATASET_FUNDING_ID = 302
 RUN_ID = 401
 TILTSERIES_ID = 501
-TOMOGRAM_VOXEL_ID = 502
+TOMOGRAM_VOXEL_ID1 = 502
+TOMOGRAM_VOXEL_ID2 = 503
 TOMOGRAM_ID = 601
 TOMOGRAM_AUTHOR_ID = 701
 ANNOTATION_ID = 602
 ANNOTATION_FILE_ID = 701
 ANNOTATION_AUTHOR_ID = 702
 
-STALE_ANNOTATION_ID = 900
+STALE_TOMOGRAM_VOXEL_ID = 901
+STALE_TOMOGRAM_ID = 902
+STALE_ANNOTATION_ID = 903
 
 
 def populate_dataset_table() -> None:
@@ -92,11 +95,18 @@ def populate_tomogram_voxel_spacing_table() -> None:
         https_prefix="http://test.com/RUN1/VoxelSpacing3.456/",
     ).save(force_insert=True)
     TomogramVoxelSpacing(
-        id=TOMOGRAM_VOXEL_ID,
+        id=TOMOGRAM_VOXEL_ID1,
         run_id=RUN_ID,
         voxel_spacing=12.3,
         s3_prefix="s3://test-public-bucket/VoxelSpacing12.3/",
         https_prefix="http://test.com/RUN1/VoxelSpacing12.3/",
+    ).save(force_insert=True)
+    TomogramVoxelSpacing(
+        id=TOMOGRAM_VOXEL_ID2,
+        run_id=RUN_ID,
+        voxel_spacing=9.876,
+        s3_prefix="s3://test-public-bucket/VoxelSpacing9.876/",
+        https_prefix="http://test.com/RUN1/VoxelSpacing9.876/",
     ).save(force_insert=True)
 
 
@@ -104,7 +114,7 @@ def populate_tomograms_table() -> None:
     populate_tomogram_voxel_spacing_table()
     Tomogram(
         id=TOMOGRAM_ID,
-        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID,
+        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
         name="RUN1",
         voxel_spacing=12.3,
         s3_omezarr_dir="s3://RUN1.zarr",
@@ -114,6 +124,30 @@ def populate_tomograms_table() -> None:
         size_x=25,
         size_y=25,
         size_z=25,
+        fiducial_alignment_status="foo",
+        reconstruction_method="",
+        reconstruction_software="",
+        tomogram_version="0.5",
+        scale0_dimensions="",
+        scale1_dimensions="",
+        scale2_dimensions="",
+        processing="",
+        offset_x=0,
+        offset_y=0,
+        offset_z=0,
+    ).save(force_insert=True)
+    Tomogram(
+        id=STALE_TOMOGRAM_ID,
+        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID2,
+        name="RUN1",
+        voxel_spacing=12.3,
+        s3_omezarr_dir="s3://stale.zarr",
+        https_omezarr_dir="http://test.com/stale.zarr",
+        s3_mrc_scale0="s3://stale.mrc",
+        https_mrc_scale0="http://test.com/stale.mrc",
+        size_x=2,
+        size_y=2,
+        size_z=2,
         fiducial_alignment_status="foo",
         reconstruction_method="",
         reconstruction_software="",
@@ -138,6 +172,12 @@ def populate_tomogram_authors_table() -> None:
         tomogram_id=TOMOGRAM_ID,
         name="Stale Author",
         corresponding_author_status=True,
+        author_list_order=3,
+    ).save(force_insert=True)
+    TomogramAuthor(
+        tomogram_id=STALE_TOMOGRAM_ID,
+        name="Stale Author 2",
+        primary_author_status=True,
         author_list_order=3,
     ).save(force_insert=True)
 
@@ -176,7 +216,7 @@ def populate_annotations() -> None:
     populate_tomogram_voxel_spacing_table()
     Annotation(
         id=ANNOTATION_ID,
-        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID,
+        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
         s3_metadata_path="s3://test-public-bucket/30001/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0.json",
         https_metadata_path="foo",
         deposition_date="2025-04-01",
@@ -191,7 +231,7 @@ def populate_annotations() -> None:
     ).save(force_insert=True)
     Annotation(
         id=STALE_ANNOTATION_ID,
-        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID,
+        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
         s3_metadata_path="foo",
         https_metadata_path="foo",
         deposition_date="2025-04-01",

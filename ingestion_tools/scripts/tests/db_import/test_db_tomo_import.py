@@ -6,7 +6,8 @@ from tests.db_import.populate_db import (
     RUN_ID,
     TOMOGRAM_AUTHOR_ID,
     TOMOGRAM_ID,
-    TOMOGRAM_VOXEL_ID,
+    TOMOGRAM_VOXEL_ID1,
+    TOMOGRAM_VOXEL_ID2,
     populate_tomogram_authors_table,
     populate_tomograms_table,
 )
@@ -25,7 +26,14 @@ def expected_voxel_spacings(http_prefix: str) -> list[dict[str, Any]]:
             "https_prefix": "http://test.com/RUN1/VoxelSpacing3.456/",
         },
         {
-            "id": TOMOGRAM_VOXEL_ID,
+            "id": TOMOGRAM_VOXEL_ID2,
+            "run_id": RUN_ID,
+            "voxel_spacing": 9.876,
+            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing9.876/",
+            "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing9.876/",
+        },
+        {
+            "id": TOMOGRAM_VOXEL_ID1,
             "run_id": RUN_ID,
             "voxel_spacing": 12.3,
             "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/",
@@ -46,7 +54,7 @@ def expected_tomograms(http_prefix: str) -> list[dict[str, Any]]:
     return [
         {
             "id": TOMOGRAM_ID,
-            "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID,
+            "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
             "name": "RUN1",
             "size_x": 980,
             "size_y": 1016,

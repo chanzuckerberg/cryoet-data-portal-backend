@@ -7,7 +7,7 @@ from tests.db_import.populate_db import (
     ANNOTATION_FILE_ID,
     ANNOTATION_ID,
     DATASET_ID,
-    TOMOGRAM_VOXEL_ID,
+    TOMOGRAM_VOXEL_ID1,
     populate_annotation_authors_table,
     populate_annotation_files,
 )
@@ -21,7 +21,7 @@ def expected_annotations(http_prefix: str) -> list[dict[str, Any]]:
     return [
         {
             "id": ANNOTATION_ID,
-            "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID,
+            "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
             "s3_metadata_path": f"s3://test-public-bucket/{path}",
             "https_metadata_path": f"{http_prefix}/{path}",
             "deposition_date": datetime.date(2023, 4, 1),
@@ -105,7 +105,7 @@ def test_import_annotations(
     verify_dataset_import(["--import-annotations"])
     expected_annotations_iter = iter(expected_annotations)
     expected_annotations_files_iter = iter(expected_annotation_files)
-    actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID)
+    actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID1)
     for annotation in actual_voxel_spacing.annotations.order_by(models.Annotation.s3_metadata_path):
         verify_model(annotation, next(expected_annotations_iter))
         assert len(annotation.files) == len(expected_annotation_files)
@@ -124,7 +124,7 @@ def test_import_annotation_authors(
     populate_annotation_authors_table()
     verify_dataset_import(["--import-annotation-authors"])
     expected_annotations_authors_iter = iter(expected_annotation_authors)
-    actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID)
+    actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID1)
     for annotation in actual_voxel_spacing.annotations.order_by(models.Annotation.s3_metadata_path):
         assert len(annotation.authors) == len(expected_annotation_authors)
         for author in annotation.authors.order_by(models.AnnotationAuthor.author_list_order):
