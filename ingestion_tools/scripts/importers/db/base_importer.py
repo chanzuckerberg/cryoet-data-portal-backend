@@ -176,11 +176,12 @@ class AuthorsStaleDeletionDBImporter(StaleDeletionDBImporter):
 
 
 class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
-    existing_objects: dict[str, BaseModel]
     ref_klass: type[BaseDBImporter]
+    existing_objects: dict[str, BaseModel]
+    config: DBImportConfig
 
     @classmethod
-    def children_tables_references(cls) -> dict[str, "StaleParentDeletionDBImporter"]:
+    def children_tables_references(cls) -> dict[str, "type[StaleParentDeletionDBImporter]"]:
         pass
 
     def mark_as_active(self, record: BaseModel):
@@ -194,6 +195,9 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
                 for entry in getattr(stale_obj, child_rel):
                     if deletion_helper is None:
                         entry.delete_instance()
+                    else:
+                        klass = deletion_helper(stale_obj.id, self.config)
+                        klass.remove_stale_objects()
             stale_obj.delete_instance()
 
     @classmethod

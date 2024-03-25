@@ -27,7 +27,6 @@ ANNOTATION_ID = 602
 ANNOTATION_FILE_ID = 701
 ANNOTATION_AUTHOR_ID = 702
 
-STALE_TOMOGRAM_VOXEL_ID = 901
 STALE_TOMOGRAM_ID = 902
 STALE_ANNOTATION_ID = 903
 
@@ -108,6 +107,60 @@ def populate_tomogram_voxel_spacing_table() -> None:
         s3_prefix="s3://test-public-bucket/VoxelSpacing9.876/",
         https_prefix="http://test.com/RUN1/VoxelSpacing9.876/",
     ).save(force_insert=True)
+
+
+def populate_stale_tomogram_voxel_spacing_data() -> None:
+    stale_tomogram_voxel_id = 1000
+    stale_tomogram_id = 1001
+    stale_annotation_id = 10002
+    TomogramVoxelSpacing(
+        id=stale_tomogram_voxel_id,
+        run_id=RUN_ID,
+        voxel_spacing=10.345,
+        s3_prefix="s3://test-public-bucket/VoxelSpacing10.345/",
+        https_prefix="http://test.com/RUN1/VoxelSpacing10.345/",
+    ).save(force_insert=True)
+    Tomogram(
+        id=stale_tomogram_id,
+        tomogram_voxel_spacing_id=stale_tomogram_voxel_id,
+        name="RUN1",
+        voxel_spacing=10.345,
+        s3_omezarr_dir="s3://stale.zarr",
+        https_omezarr_dir="http://test.com/stale.zarr",
+        s3_mrc_scale0="s3://stale.mrc",
+        https_mrc_scale0="http://test.com/stale.mrc",
+        size_x=2,
+        size_y=2,
+        size_z=2,
+        fiducial_alignment_status="foo",
+        reconstruction_method="",
+        reconstruction_software="",
+        tomogram_version="0.5",
+        scale0_dimensions="",
+        scale1_dimensions="",
+        scale2_dimensions="",
+        processing="",
+        offset_x=0,
+        offset_y=0,
+        offset_z=0,
+    ).save(force_insert=True)
+    TomogramAuthor(tomogram_id=stale_tomogram_id, name="Jane Smith", author_list_order=1).save(force_insert=True)
+    Annotation(
+        id=stale_annotation_id,
+        tomogram_voxel_spacing_id=stale_tomogram_voxel_id,
+        s3_metadata_path="foo",
+        https_metadata_path="foo",
+        deposition_date="2025-04-01",
+        release_date="2025-06-01",
+        last_modified_date="2025-06-01",
+        annotation_method="",
+        ground_truth_status=False,
+        object_name="bar",
+        object_id="invalid-id",
+        object_count=200,
+        annotation_software="bar",
+    ).save(force_insert=True)
+    AnnotationAuthor(annotation_id=stale_annotation_id, name="Jane Smith", author_list_order=1).save(force_insert=True)
 
 
 def populate_tomograms_table() -> None:

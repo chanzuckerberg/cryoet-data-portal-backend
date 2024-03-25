@@ -10,7 +10,7 @@ from importers.db.dataset import DatasetAuthorDBImporter, DatasetDBImporter, Dat
 from importers.db.run import RunDBImporter
 from importers.db.tiltseries import TiltSeriesDBImporter
 from importers.db.tomogram import StaleTomogramDeletionDBImporter, TomogramAuthorDBImporter, TomogramDBImporter
-from importers.db.voxel_spacing import TomogramVoxelSpacingDBImporter
+from importers.db.voxel_spacing import StaleVoxelSpacingDeletionDBImporter, TomogramVoxelSpacingDBImporter
 
 from common import db_models
 
@@ -129,6 +129,7 @@ def load(
             if not import_tomogram_voxel_spacing:
                 continue
 
+            voxel_spacing_cleaner = StaleVoxelSpacingDeletionDBImporter(run_id, config)
             for voxel_spacing in TomogramVoxelSpacingDBImporter.get_items(run_id, run, config):
                 voxel_spacing_obj = voxel_spacing.import_to_db()
 
@@ -157,6 +158,10 @@ def load(
                             )
                             annotation_authors.import_to_db()
                     annotation_cleaner.remove_stale_objects()
+
+                voxel_spacing_cleaner.mark_as_active(voxel_spacing_obj)
+
+            voxel_spacing_cleaner.remove_stale_objects()
 
 
 if __name__ == "__main__":

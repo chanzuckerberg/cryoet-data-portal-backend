@@ -8,6 +8,7 @@ from tests.db_import.populate_db import (
     TOMOGRAM_ID,
     TOMOGRAM_VOXEL_ID1,
     TOMOGRAM_VOXEL_ID2,
+    populate_stale_tomogram_voxel_spacing_data,
     populate_tomogram_authors_table,
     populate_tomograms_table,
 )
@@ -18,13 +19,6 @@ import common.db_models as models
 @pytest.fixture
 def expected_voxel_spacings(http_prefix: str) -> list[dict[str, Any]]:
     return [
-        {
-            "id": 103,
-            "run_id": RUN_ID,
-            "voxel_spacing": 3.456,
-            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing3.456/",
-            "https_prefix": "http://test.com/RUN1/VoxelSpacing3.456/",
-        },
         {
             "id": TOMOGRAM_VOXEL_ID2,
             "run_id": RUN_ID,
@@ -155,6 +149,7 @@ def test_import_voxel_spacings_and_tomograms(
     expected_tomograms: list[dict[str, Any]],
 ) -> None:
     populate_tomograms_table()
+    populate_stale_tomogram_voxel_spacing_data()
     actual = verify_dataset_import(["--import-tomograms"])
     expected_voxel_spacings_iter = iter(expected_voxel_spacings)
     expected_tomograms_iter = iter(expected_tomograms)
@@ -179,6 +174,7 @@ def test_import_tomograms_authors(
     expected_tomograms_authors: list[list[dict[str, Any]]],
 ) -> None:
     populate_tomogram_authors_table()
+    populate_stale_tomogram_voxel_spacing_data()
     actual = verify_dataset_import(["--import-tomogram-authors"])
     expected_tomograms_authors_iter = iter(expected_tomograms_authors)
     for run in actual.runs:

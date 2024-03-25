@@ -2,7 +2,12 @@ import os
 from typing import Any, Iterator
 
 from common import db_models
-from importers.db.base_importer import BaseDBImporter, DBImportConfig
+from importers.db.base_importer import (
+    BaseDBImporter,
+    DBImportConfig,
+    StaleDeletionDBImporter,
+    StaleParentDeletionDBImporter,
+)
 from importers.db.run import RunDBImporter
 
 
@@ -26,7 +31,8 @@ class TomogramVoxelSpacingDBImporter(BaseDBImporter):
     def get_id_fields(cls) -> list[str]:
         return ["run_id", "voxel_spacing"]
 
-    def get_db_model_class(self) -> type:
+    @classmethod
+    def get_db_model_class(cls) -> type:
         return db_models.TomogramVoxelSpacing
 
     @classmethod
@@ -41,3 +47,24 @@ class TomogramVoxelSpacingDBImporter(BaseDBImporter):
             cls(run_id, voxel_spacing_path, run, config)
             for voxel_spacing_path in config.glob_s3(tomogram_path, "VoxelSpacing*", is_file=False)
         ]
+
+
+class StaleVoxelSpacingDeletionDBImporter(StaleParentDeletionDBImporter):
+    ref_klass = TomogramVoxelSpacingDBImporter
+
+    def __init__(self, run_id: int, config: DBImportConfig):
+        self.run_id = run_id
+        self.config = config
+        self.existing_objects = self.get_existing_objects()
+
+    def get_filters(self) -> dict[str, Any]:
+        return {"run_id": self.run_id}
+
+    def children_tables_references(self) -> dict[str, type[StaleDeletionDBImporter]]:
+        from importers.db.annotation import StaleAnnotationDeletionDBImporter
+        from importers.db.tomogram import StaleTomogramDeletionDBImporter
+
+        return {
+            "tomograms": StaleTomogramDeletionDBImporter,
+            "annotations": StaleAnnotationDeletionDBImporter,
+        }
