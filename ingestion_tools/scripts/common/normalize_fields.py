@@ -1,8 +1,8 @@
 def normalize_fiducial_alignment(status):
     # Grant jensen configs use true/false
-    if status is True:
+    if status is True or status == "True":
         return "FIDUCIAL"
-    if status is False:
+    if status is False or status == "False":
         return "NON_FIDUCIAL"
     # Everybody else uses proper values
     if status.upper() in ["FIDUCIAL", "NON_FIDUCIAL"]:
