@@ -9,9 +9,9 @@ permissions:
 
 jobs:
   deploy-to-prod:
-    concurrency:
-      group: prod-cryoet-api-deploy-${{ github.ref }}
-      cancel-in-progress: true
+#    concurrency:
+#      group: prod-cryoet-api-deploy-${{ github.ref }}
+#      cancel-in-progress: true
 
     name: deploy to prod
     runs-on: [ARM64, self-hosted, Linux]
