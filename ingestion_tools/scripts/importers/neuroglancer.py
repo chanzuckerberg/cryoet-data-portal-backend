@@ -17,7 +17,7 @@ class NeuroglancerImporter(BaseImporter):
     def import_neuroglancer(self) -> str:
         dest_file = self.get_output_path()
         ng_contents = self.get_config_json(self.parent.get_output_path() + ".zarr")
-        meta = NeuroglancerMetadata(self.config.fs, ng_contents)
+        meta = NeuroglancerMetadata(self.config.fs, self.config.deposition_id, ng_contents)
         meta.write_metadata(dest_file)
         return dest_file
 

@@ -30,6 +30,7 @@ class RunOverride:
 class DataImportConfig:
     https_prefix = os.getenv("DOMAIN_NAME", "https://files.cryoetdataportal.cziscience.com")
     source_prefix: str
+    deposition_id: str
     destination_prefix: str
     fs: FileSystemApi
     run_glob: str

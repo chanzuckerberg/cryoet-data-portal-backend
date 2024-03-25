@@ -425,7 +425,7 @@ class AnnotationImporter(BaseImporter):
         annotations = []
         identifier = 100
         for annotation_config in config.annotation_template:
-            metadata = AnnotationMetadata(config.fs, annotation_config["metadata"])
+            metadata = AnnotationMetadata(config.fs, config.deposition_id, annotation_config["metadata"])
             annotations.append(
                 AnnotationImporter(
                     identifier=identifier,
