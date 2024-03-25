@@ -22,6 +22,8 @@ from common.fs import FileSystemApi
 def cli(ctx):
     pass
 
+class ImportConfig:
+    import_tomograms: bool
 
 @cli.command()
 @click.argument("config_file", required=True, type=str)
@@ -84,28 +86,6 @@ def convert(
     os.makedirs(os.path.join(output_path, config.destination_prefix), exist_ok=True)
     config.load_map_files()
 
-    # Configure which dependencies that do / don't require us to iterate over importer results.
-    iterate_tomos = max(
-        import_tomograms,
-        import_tomogram_metadata,
-        import_annotations,
-        import_annotation_metadata,
-        import_metadata,
-        import_everything,
-        make_key_image,
-        make_neuroglancer_config,
-    )
-    iterate_keyimages = max(import_everything, make_key_image)
-    iterate_tiltseries = max(import_metadata, import_tiltseries, import_tiltseries_metadata, import_everything)
-    iterate_annotations = max(
-        import_annotations,
-        import_annotation_metadata,
-        import_metadata,
-        import_everything,
-        make_key_image,
-    )
-    iterate_frames = max(import_frames, import_everything)
-    iterate_ng = max(make_neuroglancer_config, import_everything)
     if import_everything:
         import_tomograms = True
         import_tomogram_metadata = True
@@ -116,9 +96,61 @@ def convert(
         import_datasets = True
         import_dataset_metadata = True
 
+    import_config = {
+        "datasets": {"data": import_datasets, "metadata": import_metadata},
+        "runs": {"data": FIXME, "metadata": FIXME},
+        "frames": {"data": import_frames, "metadata": False},
+        "tiltseries": {"data": import_tiltseries, "metadata": import_tiltseries_metadata},
+        "voxel_spacings": {"data": FIXME, "metadata": FIXME},
+        "alignments": {"data": FIXME, "metadata": FIXME},
+        "tomograms": {"data": import_tomograms, "metadata": import_tomogram_metadata},
+        "keyimage": {"data": make_key_image, "metadata": False},
+        "neuroglancer": {"data": make_neuroglancer_config, "metadata": False},
+        "annotations": {"data": import_annotations, "metadata": import_annotation_metadata},
+        "keyphoto": {"data": import_datasets, "metadata": False}
+    }
+
     exclude_run_name_patterns = [re.compile(pattern) for pattern in exclude_run_name]
     filter_run_name_patterns = [re.compile(pattern) for pattern in filter_run_name]
+    import_tree = {
+        "datasets": {
+            "runs": {
+                "frames": {},
+                "tiltseries": {},
+                "voxel_spacings": {
+                    "alignments": {
+                        "tomograms": {
+                            "keyimage": {},
+                            "neuroglancer": {}
+                        },
+                        "annotations": {},
+                    },
+                },
+            },
+            "keyphoto": {}
+        },
+    }
+
+
+    def should_iterate(object_type, children, import_config):
+        should_import = import_config[object_type]
+        if max(should_import.values):
+            return True
+        for object_type, grandchildren in children.items():
+            if should_iterate(object_type, grandchildren, import_config):
+                return True
+
+    def import_object_type(object_type, children, import_config, parent=None):
+        should_iterate = should_iterate(object_type, children, import_config)
+        if not should_iterate:
+            return
+        object = SomeClassImporter(
+
+
     # Always iterate over datasets and runs.
+    datasets = DatasetImporter.find_datasets(config)
+    for dataset in datasets:
+        import_dataset(dataset)
     dataset = DatasetImporter(config, None)
     for run in RunImporter.find_runs(config, dataset):
         if list(filter(lambda x: x.match(run.run_name), exclude_run_name_patterns)):

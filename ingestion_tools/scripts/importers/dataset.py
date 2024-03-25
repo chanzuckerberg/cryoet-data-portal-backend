@@ -7,7 +7,7 @@ class DatasetImporter(BaseImporter):
     type_key = "dataset"
 
     def import_metadata(self, output_prefix: str) -> None:
-        meta = DatasetMetadata(self.config.fs, self.config.dataset_template)
+        meta = DatasetMetadata(self.config.fs, self.config.deposition_id, self.config.dataset_template)
         extra_data = self.load_extra_metadata()
         meta.write_metadata(self.get_metadata_path(), extra_data)
 

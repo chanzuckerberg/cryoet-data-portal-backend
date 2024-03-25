@@ -4,6 +4,7 @@ import os
 import os.path
 import re
 from copy import deepcopy
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 import yaml
@@ -27,9 +28,37 @@ class RunOverride:
         self.tomograms = tomograms
 
 
+@dataclass
+class DatasetFinderConfig:
+    local_glob: str
+    remote_glob: str
+
+
+@dataclass
+class RunFinderConfig:
+    local_glob: str
+    remote_glob: str
+
+
+@dataclass
+class TomogramVoxelSpacingFinderConfig:
+    local_glob: str
+    remote_glob: str
+
+
+@dataclass
+class AnnotationFinderConfig:
+    local_glob: str
+    remote_glob: str
+
+
 class DataImportConfig:
+    dataset_finder: DatasetFinderConfig | None
+    run_finder: RunFinderConfig | None
+    tomogram_voxel_spacing_finder: TomogramVoxelSpacingFinderConfig | None
     https_prefix = os.getenv("DOMAIN_NAME", "https://files.cryoetdataportal.cziscience.com")
     source_prefix: str
+    deposition_id: str
     destination_prefix: str
     fs: FileSystemApi
     run_glob: str

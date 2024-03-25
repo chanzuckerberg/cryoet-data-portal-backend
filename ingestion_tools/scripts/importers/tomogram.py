@@ -46,7 +46,7 @@ class TomogramImporter(VolumeImporter):
             base_metadata.get("fiducial_alignment_status"),
         )
 
-        metadata = TomoMetadata(self.config.fs, base_metadata)
+        metadata = TomoMetadata(self.config.fs, self.config.deposition_id, base_metadata)
         if write:
             metadata.write_metadata(dest_tomo_metadata, merge_data)
 
