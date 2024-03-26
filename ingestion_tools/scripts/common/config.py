@@ -123,6 +123,7 @@ class DepositionImportConfig:
                 setattr(self, f"{template_key}_template", {})
         self.input_path = f"{input_bucket}/{self.source_prefix}"
         self.dataset_root_dir = f"{input_bucket}/{self.source_prefix}"
+        self.deposition_root_dir = f"{input_bucket}/{self.source_prefix}"
 
     def load_run_data_map(self) -> None:
         self.run_data_map = self.load_run_metadata_file("run_data_map_file")

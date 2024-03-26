@@ -25,8 +25,7 @@ class SourceGlobFinder(ABC):
         self.name_regex = re.compile(name_regex)
     
     def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
-        expanded_glob = os.path.join(config.dataset_root_dir, self.list_glob.format(**glob_vars))
-        path = os.path.join(config.input_path, expanded_glob)
+        path = os.path.join(config.deposition_root_dir, self.list_glob.format(**glob_vars))
         print(f"path -- {path}")
         responses = {}
         for fname in config.fs.glob(path):
@@ -51,9 +50,8 @@ class DestinationGlobFinder(ABC):
         self.name_regex = re.compile(name_regex)
     
     def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
-        expanded_glob = os.path.join(config.dataset_root_dir, self.list_glob.format(**glob_vars))
-        path = os.path.join(config.input_path, expanded_glob)
-        print(f"path -- {path}")
+        path = os.path.join(self.list_glob.format(**glob_vars))
+        print(f"dgf path -- {path}")
         responses = {}
         for fname in config.fs.glob(path):
             if not self.match_regex.search(fname):

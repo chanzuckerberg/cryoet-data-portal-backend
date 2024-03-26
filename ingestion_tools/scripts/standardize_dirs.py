@@ -41,6 +41,7 @@ def cli(ctx):
 @click.option("--import-datasets", is_flag=True, default=False)
 @click.option("--import-dataset-metadata", is_flag=True, default=False)
 @click.option("--import-everything", is_flag=True, default=False)
+@click.option("--filter-dataset-name", type=str, default=None, multiple=True)
 @click.option("--filter-run-name", type=str, default=None, multiple=True)
 @click.option("--exclude-run-name", type=str, default=None, multiple=True)
 @click.option("--make-key-image", type=bool, is_flag=True, default=False)
@@ -67,6 +68,7 @@ def convert(
     import_datasets: bool,
     import_dataset_metadata: bool,
     import_everything: bool,
+    filter_dataset_name: list[str],
     filter_run_name: list[str],
     exclude_run_name: list[str],
     make_key_image: bool,
@@ -119,6 +121,7 @@ def convert(
 
     exclude_run_name_patterns = [re.compile(pattern) for pattern in exclude_run_name]
     filter_run_name_patterns = [re.compile(pattern) for pattern in filter_run_name]
+    filter_ds_name_patterns = [re.compile(pattern) for pattern in filter_dataset_name]
     # Always iterate over datasets and runs.
     if config.dataset_finder_config:
         datasets = config.dataset_finder_config.find(DatasetImporter, None, config, fs)
@@ -126,6 +129,9 @@ def convert(
         # Maintain reverse compatibility
         datasets = [DatasetImporter(config, None, name=config.destination_prefix, source_path=config.source_prefix)]
     for dataset in datasets:
+        if filter_dataset_name and not list(filter(lambda x: x.match(dataset.name), filter_ds_name_patterns)):
+            print(f"Skipping dataset {dataset.name}..")
+            continue
         if config.run_finder_config:
             runs = config.run_finder_config.find(RunImporter, dataset, config, fs)
         else:
@@ -154,8 +160,10 @@ def convert(
                         if iterate_annotations:
                             for annotation in AnnotationImporter.find_annotations(config, vs):
                                 if import_annotations:
+                                    print(f"Importing annotation {annotation} ... ")
                                     annotation.import_annotations(True)
                                 if import_annotation_metadata:
+                                    print(f"Importing annotation metadata {annotation} ... ")
                                     annotation.import_metadata()
                         # If we've already processed annotations, rethink whether we need to
                         # iterate over tomograms
