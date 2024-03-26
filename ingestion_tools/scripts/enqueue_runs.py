@@ -10,7 +10,7 @@ from boto3 import Session
 from importers.dataset import DatasetImporter
 from importers.run import RunImporter
 
-from common.config import DataImportConfig
+from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
 
 
@@ -188,7 +188,7 @@ def queue(
     fs_mode = "s3"
     fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=force_overwrite)
 
-    config = DataImportConfig(fs, config_file, output_path, input_bucket)
+    config = DepositionImportConfig(fs, config_file, output_path, input_bucket)
     os.makedirs(os.path.join(output_path, config.destination_prefix), exist_ok=True)
     config.load_map_files()
 

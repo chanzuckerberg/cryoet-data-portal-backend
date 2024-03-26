@@ -1,10 +1,11 @@
 from typing import TYPE_CHECKING, Any
 
-from common.config import DataImportConfig
+from common.config import DepositionImportConfig
 from common.metadata import TomoMetadata
 from common.normalize_fields import normalize_fiducial_alignment
 from importers.base_importer import VolumeImporter
 from importers.key_image import KeyImageImporter
+from importers.voxel_spacing import VoxelSpacingImporter
 
 if TYPE_CHECKING:
     from importers.run import RunImporter
@@ -53,11 +54,12 @@ class TomogramImporter(VolumeImporter):
     @classmethod
     def find_tomograms(
         cls,
-        config: DataImportConfig,
-        run: RunImporter,
+        config: DepositionImportConfig,
+        vs: VoxelSpacingImporter,
         skip_cache: bool = False,
     ) -> list["TomogramImporter"]:
-        cache_key = run.run_name
+        run = vs.parent
+        cache_key = run.name
         if not skip_cache and cache_key in cls.cached_find_results:
             return cls.cached_find_results[cache_key]
         tomo_glob = config.tomo_glob
@@ -73,5 +75,5 @@ class TomogramImporter(VolumeImporter):
                     tomos.append(fname)
         if not tomos:
             return []
-        cls.cached_find_results[cache_key] = [cls(config=config, parent=run, path=tomos[0])]
+        cls.cached_find_results[cache_key] = [cls(config=config, parent=vs, path=tomos[0])]
         return cls.cached_find_results[cache_key]

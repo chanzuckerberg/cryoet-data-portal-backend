@@ -5,7 +5,7 @@ import imageio
 import numpy as np
 from PIL import Image
 
-from common.config import DataImportConfig
+from common.config import DepositionImportConfig
 from common.image import ZarrReader
 from common.make_key_image import generate_preview, process_key_image
 from importers.annotation import AnnotationImporter
@@ -27,7 +27,7 @@ class KeyImageImporter(BaseImporter):
     }
 
     @classmethod
-    def find_key_images(cls, config: DataImportConfig, tomogram: TomogramImporter) -> "KeyImageImporter":
+    def find_key_images(cls, config: DepositionImportConfig, tomogram: TomogramImporter) -> "KeyImageImporter":
         return [cls(config, parent=tomogram)]
 
     def get_metadata(self) -> dict[str, str]:
@@ -40,7 +40,7 @@ class KeyImageImporter(BaseImporter):
         image_path = os.path.join(self.get_output_path(), self.get_file_name(image_type))
         return os.path.relpath(image_path, self.config.output_prefix)
 
-    def make_key_image(self, config: DataImportConfig, upload: bool = True) -> None:
+    def make_key_image(self, config: DepositionImportConfig, upload: bool = True) -> None:
         dir = self.get_output_path()
         preview, tomo_width = None, None
         if config.tomo_key_photo_glob:

@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING, Any
 from urllib.parse import urljoin
 
-from common.config import DataImportConfig
+from common.config import DepositionImportConfig
 from common.metadata import NeuroglancerMetadata
 from importers.base_importer import BaseImporter
 
@@ -70,5 +70,5 @@ class NeuroglancerImporter(BaseImporter):
         }
 
     @classmethod
-    def find_ng(cls, config: DataImportConfig, tomo: TomogramImporter) -> list["NeuroglancerImporter"]:
+    def find_ng(cls, config: DepositionImportConfig, tomo: TomogramImporter) -> list["NeuroglancerImporter"]:
         return [cls(config=config, parent=tomo)]

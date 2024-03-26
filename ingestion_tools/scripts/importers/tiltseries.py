@@ -1,7 +1,7 @@
 import os
 from typing import TYPE_CHECKING
 
-from common.config import DataImportConfig
+from common.config import DepositionImportConfig
 from common.metadata import TiltSeriesMetadata
 from importers.base_importer import BaseImporter, VolumeImporter
 from importers.frames import FramesImporter
@@ -27,7 +27,7 @@ class RawTiltImporter(BaseImporter):
                 self.config.fs.copy(item, output_file)
 
     @classmethod
-    def find_rawtilts(cls, config: DataImportConfig, run: RunImporter) -> list["RawTiltImporter"]:
+    def find_rawtilts(cls, config: DepositionImportConfig, run: RunImporter) -> list["RawTiltImporter"]:
         if not config.rawtlt_files:
             print(f"No tiltseries raw files for {config.dataset_template.get('dataset_identifier')}")
             return []
@@ -59,7 +59,7 @@ class TiltSeriesImporter(VolumeImporter):
             metadata.write_metadata(dest_ts_metadata, merge_data)
 
     @classmethod
-    def find_tiltseries(cls, config: DataImportConfig, run: RunImporter) -> "TiltSeriesImporter":
+    def find_tiltseries(cls, config: DepositionImportConfig, run: RunImporter) -> "TiltSeriesImporter":
         if not config.tiltseries_glob:
             print(f"No tiltseries for {config.dataset_template.get('dataset_identifier')}")
             return []

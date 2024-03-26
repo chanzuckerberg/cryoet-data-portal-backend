@@ -6,6 +6,7 @@ import click
 from importers.annotation import AnnotationImporter
 from importers.dataset import DatasetImporter
 from importers.dataset_key_photo import DatasetKeyPhotoImporter
+from importers.voxel_spacing import VoxelSpacingImporter
 from importers.frames import FramesImporter
 from importers.key_image import KeyImageImporter
 from importers.neuroglancer import NeuroglancerImporter
@@ -13,7 +14,7 @@ from importers.run import RunImporter
 from importers.tiltseries import RawTiltImporter, TiltSeriesImporter
 from importers.tomogram import TomogramImporter
 
-from common.config import DataImportConfig
+from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
 
 
@@ -80,7 +81,7 @@ def convert(
 
     fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=force_overwrite)
 
-    config = DataImportConfig(fs, config_file, output_path, input_bucket)
+    config = DepositionImportConfig(fs, config_file, output_path, input_bucket)
     os.makedirs(os.path.join(output_path, config.destination_prefix), exist_ok=True)
     config.load_map_files()
 
@@ -119,57 +120,96 @@ def convert(
     exclude_run_name_patterns = [re.compile(pattern) for pattern in exclude_run_name]
     filter_run_name_patterns = [re.compile(pattern) for pattern in filter_run_name]
     # Always iterate over datasets and runs.
-    dataset = DatasetImporter(config, None)
-    for run in RunImporter.find_runs(config, dataset):
-        if list(filter(lambda x: x.match(run.run_name), exclude_run_name_patterns)):
-            print(f"Excluding {run.run_name}..")
-            continue
-        if filter_run_name and not list(filter(lambda x: x.match(run.run_name), filter_run_name_patterns)):
-            print(f"Skipping {run.run_name}..")
-            continue
-        print(f"Processing {run.run_name}...")
-        if import_run_metadata or import_metadata or import_everything:
-            run.import_run_metadata()
-        if iterate_tomos:
-            for tomo in TomogramImporter.find_tomograms(config, run):
-                if iterate_tomos and not run.voxel_spacing:
-                    run.set_voxel_spacing(tomo.get_voxel_spacing())
-                if import_tomograms:
-                    tomo.import_tomogram(write_mrc=write_mrc, write_zarr=write_zarr)
-                if iterate_annotations:
-                    for annotation in AnnotationImporter.find_annotations(config, tomo):
-                        if import_annotations:
-                            annotation.import_annotations(True)
-                        if import_annotation_metadata:
-                            annotation.import_metadata()
-                if iterate_keyimages:
-                    for keyimage in KeyImageImporter.find_key_images(config, tomo):
-                        keyimage.make_key_image(config)
-                if import_tomogram_metadata:
-                    tomo.import_metadata(True)
-                if iterate_ng:
-                    for item in NeuroglancerImporter.find_ng(config, tomo):
-                        item.import_neuroglancer()
-        if iterate_frames:
-            frame_imports = FramesImporter.find_frames(config, run)
-            for importer in frame_imports:
-                importer.import_frames()
-        if iterate_tiltseries:
-            ts_imports = TiltSeriesImporter.find_tiltseries(config, run)
-            for importer in ts_imports:
+    if config.dataset_finder_config:
+        datasets = config.dataset_finder_config.find(DatasetImporter, None, config, fs)
+    else:
+        # Maintain reverse compatibility
+        datasets = [DatasetImporter(config, None, name=config.destination_prefix, source_path=config.source_prefix)]
+    for dataset in datasets:
+        if config.run_finder_config:
+            runs = config.run_finder_config.find(RunImporter, dataset, config, fs)
+        else:
+            # Maintain reverse compatibility
+            runs = RunImporter.find_runs(config, dataset)
+        for run in runs:
+            if list(filter(lambda x: x.match(run.name), exclude_run_name_patterns)):
+                print(f"Excluding {run.name}..")
+                continue
+            if filter_run_name and not list(filter(lambda x: x.match(run.name), filter_run_name_patterns)):
+                print(f"Skipping {run.name}..")
+                continue
+            print(f"Processing {run.name}...")
+            if import_run_metadata or import_metadata or import_everything:
+                run.import_run_metadata()
+            if iterate_tomos:
+                if config.vs_finder_config:
+                    voxel_spacings = config.vs_finder_config.find(VoxelSpacingImporter, run, config, fs)
+                else:
+                    voxel_spacings = VoxelSpacingImporter.find_vs(config, run)
+                for vs in voxel_spacings:
+                    legacy_anno_import = True
+                    # We can import annotations without fetching tomos in the new world!
+                    if vs.name:
+                        legacy_anno_import = False
+                        if iterate_annotations:
+                            for annotation in AnnotationImporter.find_annotations(config, vs):
+                                if import_annotations:
+                                    annotation.import_annotations(True)
+                                if import_annotation_metadata:
+                                    annotation.import_metadata()
+                        # If we've already processed annotations, rethink whether we need to
+                        # iterate over tomograms
+                        iterate_tomos = max(
+                            import_tomograms,
+                            import_tomogram_metadata,
+                            import_metadata,
+                            import_everything,
+                            make_key_image,
+                            make_neuroglancer_config,
+                        )
+                    if not iterate_tomos:
+                        continue
+                    tomos = TomogramImporter.find_tomograms(config, vs)
+                    for tomo in tomos:
+                        if iterate_tomos and not vs.name:
+                            vs.set_voxel_spacing(tomo.get_voxel_spacing())
+                        if import_tomograms:
+                            tomo.import_tomogram(write_mrc=write_mrc, write_zarr=write_zarr)
+                        if legacy_anno_import:
+                            if iterate_annotations:
+                                for annotation in AnnotationImporter.find_annotations(config, vs):
+                                    if import_annotations:
+                                        annotation.import_annotations(True)
+                                    if import_annotation_metadata:
+                                        annotation.import_metadata()
+                        if iterate_keyimages:
+                            for keyimage in KeyImageImporter.find_key_images(config, tomo):
+                                keyimage.make_key_image(config)
+                        if import_tomogram_metadata:
+                            tomo.import_metadata(True)
+                        if iterate_ng:
+                            for item in NeuroglancerImporter.find_ng(config, tomo):
+                                item.import_neuroglancer()
+            if iterate_frames:
+                frame_imports = FramesImporter.find_frames(config, run)
+                for importer in frame_imports:
+                    importer.import_frames()
+            if iterate_tiltseries:
+                ts_imports = TiltSeriesImporter.find_tiltseries(config, run)
+                for importer in ts_imports:
+                    if import_tiltseries:
+                        importer.import_tiltseries(write_mrc=write_mrc, write_zarr=write_zarr)
+                    if import_tiltseries_metadata:
+                        importer.import_metadata(True)
                 if import_tiltseries:
-                    importer.import_tiltseries(write_mrc=write_mrc, write_zarr=write_zarr)
-                if import_tiltseries_metadata:
-                    importer.import_metadata(True)
-            if import_tiltseries:
-                raw_imports = RawTiltImporter.find_rawtilts(config, run)
-                for importer in raw_imports:
-                    importer.import_rawtilts()
-    if import_datasets or import_everything:
-        dataset_key_photos_importer = DatasetKeyPhotoImporter.find_dataset_key_photos(config, dataset)
-        dataset_key_photos_importer.import_key_photo()
-    if import_metadata or import_dataset_metadata or import_everything:
-        dataset.import_metadata(output_path)
+                    raw_imports = RawTiltImporter.find_rawtilts(config, run)
+                    for importer in raw_imports:
+                        importer.import_rawtilts()
+        if import_datasets or import_everything:
+            dataset_key_photos_importer = DatasetKeyPhotoImporter.find_dataset_key_photos(config, dataset)
+            dataset_key_photos_importer.import_key_photo()
+        if import_metadata or import_dataset_metadata or import_everything:
+            dataset.import_metadata(output_path)
 
 
 if __name__ == "__main__":

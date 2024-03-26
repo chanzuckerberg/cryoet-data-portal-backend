@@ -2,7 +2,7 @@ import os
 import subprocess
 from typing import TYPE_CHECKING
 
-from common.config import DataImportConfig
+from common.config import DepositionImportConfig
 from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
@@ -27,15 +27,15 @@ class FramesImporter(BaseImporter):
         for item in self.find_all_gains(config, run):
             if item.endswith(".dm4"):
                 local_input = fs.localreadable(item)
-                local_output = fs.localwritable(os.path.join(output_dir, f"{run.run_name}_gain.mrc"))
+                local_output = fs.localwritable(os.path.join(output_dir, f"{run.name}_gain.mrc"))
                 subprocess.check_output(["/usr/local/IMOD/bin/dm2mrc", local_input, local_output])
                 fs.push(local_output)
             else:
-                dest_filename = os.path.join(output_dir, f"{run.run_name}_gain.mrc")
+                dest_filename = os.path.join(output_dir, f"{run.name}_gain.mrc")
                 fs.copy(item, dest_filename)
 
     @classmethod
-    def find_frames(cls, config: DataImportConfig, run: RunImporter) -> list["FramesImporter"]:
+    def find_frames(cls, config: DepositionImportConfig, run: RunImporter) -> list["FramesImporter"]:
         if not config.frames_glob:
             print(f"No frames for {config.dataset_template.get('dataset_identifier')}")
             return []
@@ -43,15 +43,15 @@ class FramesImporter(BaseImporter):
         return [importer]
 
     @classmethod
-    def find_all_frames(cls, config: DataImportConfig, run: RunImporter):
+    def find_all_frames(cls, config: DepositionImportConfig, run: RunImporter):
         return cls.find_files(config.frames_glob, config, run)
 
     @classmethod
-    def find_all_gains(cls, config: DataImportConfig, run: RunImporter):
+    def find_all_gains(cls, config: DepositionImportConfig, run: RunImporter):
         return cls.find_files(config.gain_glob, config, run)
 
     @classmethod
-    def find_files(cls, glob: str, config: DataImportConfig, run: RunImporter):
+    def find_files(cls, glob: str, config: DepositionImportConfig, run: RunImporter):
         if not glob:
             return []
         if config.run_to_frame_map:

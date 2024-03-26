@@ -1,5 +1,6 @@
 import os
 from typing import TYPE_CHECKING, Any, Optional
+import contextlib
 
 import numpy as np
 from mrcfile.mrcobject import MrcObject
@@ -7,7 +8,7 @@ from mrcfile.mrcobject import MrcObject
 from common.image import get_header, get_tomo_metadata, get_voxel_size, scale_mrcfile
 
 if TYPE_CHECKING:
-    from common.config import DataImportConfig
+    from common.config import DepositionImportConfig
     from importers.dataset import DatasetImporter
     from importers.run import RunImporter
     from importers.tomogram import TomogramImporter
@@ -21,9 +22,11 @@ class BaseImporter:
     type_key: str
     cached_find_results: dict[str, "BaseImporter"] = {}
 
-    def __init__(self, config: "DataImportConfig", parent: Optional["BaseImporter"] = None):
+    def __init__(self, config: "DepositionImportConfig", parent: Optional["BaseImporter"] = None, name: Optional[str] = None, path: Optional[str] = None):
         self.config = config
         self.parent = parent
+        self.name = name
+        self.path = path
 
     def parent_getter(self, type_key: str) -> "BaseImporter":
         parent = self
@@ -36,15 +39,24 @@ class BaseImporter:
                 parent = parent.parent
 
     def get_glob_vars(self) -> dict[str, Any]:
-        run_name = self.get_run().run_name
-        glob_vars = self.config.get_run_data_map(run_name)
+        glob_vars = {}
+        glob_vars[f"{self.type_key}_path"] = self.path
+        glob_vars[f"{self.type_key}_name"] = self.name
+        with contextlib.suppress(ValueError, TypeError):
+            glob_vars[f"int_{self.type_key}_name"] = int(self.name)
 
-        glob_vars["run_name"] = run_name
-        # TODO: remove these in favor of the singular tsv file
-        glob_vars["mapped_tomo_name"] = self.config.run_to_tomo_map.get(run_name)
-        glob_vars["mapped_frame_name"] = self.config.run_to_frame_map.get(run_name)
-        glob_vars["mapped_ts_name"] = self.config.run_to_ts_map.get(run_name)
+        # TODO FIXME this should probably be moved to the RunImporter
+        if self.type_key == "run":
+            run_name = self.name
+            glob_vars.update(self.config.get_run_data_map(run_name))
 
+            # TODO: remove these in favor of the singular tsv file
+            glob_vars["mapped_tomo_name"] = self.config.run_to_tomo_map.get(run_name)
+            glob_vars["mapped_frame_name"] = self.config.run_to_frame_map.get(run_name)
+            glob_vars["mapped_ts_name"] = self.config.run_to_ts_map.get(run_name)
+
+        if self.parent:
+            glob_vars.update(self.parent.get_glob_vars())
         return glob_vars
 
     def get_run(self) -> RunImporter:
@@ -107,13 +119,13 @@ class VolumeImporter(BaseImporter):
 
     def get_output_path(self) -> str:
         output_dir = super().get_output_path()
-        return os.path.join(output_dir, self.get_run().run_name)
+        return os.path.join(output_dir, self.get_run().name)
 
     def load_extra_metadata(self) -> dict[str, Any]:
         run: RunImporter = self.get_run()
         output_prefix = self.get_output_path()
         metadata = get_tomo_metadata(self.config.fs, output_prefix)
-        metadata["run_name"] = run.run_name
+        metadata["run_name"] = run.name
         return metadata
 
     def mrc_header_mapper(self, header):

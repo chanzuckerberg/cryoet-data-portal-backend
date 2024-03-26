@@ -2,8 +2,8 @@ from typing import TYPE_CHECKING
 
 from importers.base_importer import BaseImporter
 
-from common.config import DataImportConfig
-from common.metadata import VoxelSpacingMetadata
+from common.config import DepositionImportConfig
+from typing import Any
 
 if TYPE_CHECKING:
     from importers.run import RunImporter
@@ -12,22 +12,36 @@ else:
 
 
 class VoxelSpacingImporter(BaseImporter):
-    type_key = "alignment"
+    type_key = "voxel_spacing"
 
-    def write_index_file(self):
-        # TODO FIXME we should write an index file that lists all the voxel spacings we have for a given run so that nobody has to list dirs!!
-        pass
+    def __init__(
+        self,
+        *args: list[Any],
+        **kwargs: dict[str, Any],
+    ):
+        super().__init__(*args, **kwargs)
+
+    # TODO mutating importers is bad news :'(
+    def set_voxel_spacing(self, voxel_spacing):
+        self.name = self.format_voxel_spacing(float(voxel_spacing))
 
     @classmethod
-    def find(
-        cls,
-        config: DataImportConfig,
-        run: RunImporter,
-        skip_cache: bool = False,
-    ) -> list["AlignmentImporter"]:
-        return [cls(config=config, parent=run, path="TODO")]
-
-    def import_metadata(self, output_prefix: str) -> None:
-        meta = VoxelSpacingMetadata(self.config.fs, self.config.deposition_id, self.config.alignment_template)
-        extra_data = {"deposition_identifier": 12445}  # TODO FIXME
-        meta.write_metadata(self.get_metadata_path(), extra_data)
+    def format_voxel_spacing(cls, voxel_spacing: float) -> None:
+        return "{:.3f}".format(round(voxel_spacing, 3))
+    
+    def get_voxel_spacing(self):
+        return self.name
+    
+    # TODO this method needs to go away in favor of finders.
+    @classmethod
+    def find_vs(cls, config: DepositionImportConfig, run: RunImporter) -> list[Any]:
+        responses = []
+        if voxel_spacing := config.expand_string(
+            run.name,
+            config.tomogram_template.get("voxel_spacing"),
+        ):
+            voxel_spacing = cls.format_voxel_spacing(float(voxel_spacing))
+        else:
+            voxel_spacing = None
+        responses.append(cls(config=config, parent=run, name=voxel_spacing, path=None))
+        return responses

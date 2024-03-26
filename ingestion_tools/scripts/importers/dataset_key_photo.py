@@ -1,7 +1,7 @@
 import os
 from typing import TYPE_CHECKING, Optional
 
-from common.config import DataImportConfig
+from common.config import DepositionImportConfig
 from common.copy import copy_by_src
 from importers.base_importer import BaseImporter
 from importers.key_image import KeyImageImporter
@@ -54,5 +54,5 @@ class DatasetKeyPhotoImporter(BaseImporter):
         return None
 
     @classmethod
-    def find_dataset_key_photos(cls, config: DataImportConfig, dataset: "DatasetImporter") -> "DatasetKeyPhotoImporter":
+    def find_dataset_key_photos(cls, config: DepositionImportConfig, dataset: "DatasetImporter") -> "DatasetKeyPhotoImporter":
         return cls(config=config, parent=dataset)

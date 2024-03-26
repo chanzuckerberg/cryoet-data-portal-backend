@@ -5,6 +5,7 @@ import os.path
 import re
 from copy import deepcopy
 from typing import TYPE_CHECKING, Any
+from common.finders import DatasetImporterFactory, RunImporterFactory, VSImporterFactory
 
 import yaml
 
@@ -27,7 +28,7 @@ class RunOverride:
         self.tomograms = tomograms
 
 
-class DataImportConfig:
+class DepositionImportConfig:
     https_prefix = os.getenv("DOMAIN_NAME", "https://files.cryoetdataportal.cziscience.com")
     source_prefix: str
     deposition_id: str
@@ -60,10 +61,14 @@ class DataImportConfig:
     tiltseries_template: dict[str, Any]
     annotation_template: dict[str, Any]
     output_prefix: str
-    input_prefix: str
     overrides_by_run: list[RunOverride] | None = None
     run_data_map: dict[str, Any]
     run_data_map_file: str | None = None
+    # Data Finders
+    #vs_finder_config: DepositionObjectImporterFactory | None = None
+    dataset_finder_config: DatasetImporterFactory | None = None
+    run_finder_config: RunImporterFactory | None = None
+    vs_finder_config: VSImporterFactory | None = None
 
     def __init__(self, fs: FileSystemApi, config_path: str, output_prefix: str, input_bucket: str):
         self.output_prefix = output_prefix
@@ -71,6 +76,20 @@ class DataImportConfig:
         with open(config_path, "r") as conffile:
             dataset_config = yaml.safe_load(conffile)
             config = dataset_config["standardization_config"]
+
+            # TODO refactor this to not be so literal.
+            config["dataset_finder_config"] = None
+            config["run_finder_config"] = None
+            config["vs_finder_config"] = None
+            if config.get("dataset"):
+                config["dataset_finder_config"] = DatasetImporterFactory(**config["dataset"])
+                del config["dataset"]
+            if config.get("run"):
+                config["run_finder_config"] = RunImporterFactory(**config["run"])
+                del config["run"]
+            if config.get("tomogram_voxel_spacing"):
+                config["vs_finder_config"] = VSImporterFactory(**config["tomogram_voxel_spacing"])
+                del config["tomogram_voxel_spacing"]
 
             for k, v in config.items():
                 if "regex" in k:
@@ -98,7 +117,10 @@ class DataImportConfig:
             "annotations": "annotation",
         }
         for config_key, template_key in template_configs.items():
-            setattr(self, f"{template_key}_template", dataset_config[config_key])
+            try:
+                setattr(self, f"{template_key}_template", dataset_config[config_key])
+            except KeyError:
+                setattr(self, f"{template_key}_template", {})
         self.input_path = f"{input_bucket}/{self.source_prefix}"
         self.dataset_root_dir = f"{input_bucket}/{self.source_prefix}"
 
@@ -150,28 +172,28 @@ class DataImportConfig:
         self.run_to_ts_map = self.load_run_csv_file("run_to_ts_map_csv")
 
     @classmethod
-    def get_run_name(cls, obj: BaseImporter) -> str:
+    def get_dataset_name(cls, obj: BaseImporter) -> str:
         try:
-            run = obj.get_run()
-            if run:
-                return run.run_name
+            ds = obj.get_dataset()
+            if ds:
+                return ds.name
         except ValueError:
             pass
         return ""
 
     @classmethod
-    def get_run_voxelsize(cls, obj: BaseImporter) -> float:
+    def get_run_name(cls, obj: BaseImporter) -> str:
         try:
             run = obj.get_run()
             if run:
-                return run.voxel_spacing
+                return run.name
         except ValueError:
             pass
-        return 0
+        return ""
 
     def get_output_path(self, obj: BaseImporter) -> str:
         key = f"{obj.type_key}"
-        return self.resolve_output_path(key, self.get_run_name(obj), self.get_run_voxelsize(obj))
+        return self.resolve_output_path(key, obj)
 
     def get_run_data_map(self, run_name: str) -> dict[str, Any]:
         if map_vars := self.run_data_map.get(run_name):
@@ -235,27 +257,34 @@ class DataImportConfig:
 
     def get_metadata_path(self, obj: BaseImporter) -> str:
         key = f"{obj.type_key}_metadata"
-        return self.resolve_output_path(key, self.get_run_name(obj), self.get_run_voxelsize(obj))
+        return self.resolve_output_path(key, obj)
 
-    def resolve_output_path(self, key: str, run_name: str, voxelsize: float | str) -> str:
+    def resolve_output_path(self, key: str, obj: BaseImporter) -> str:
         paths = {
-            "tomogram": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/CanonicalTomogram",
-            "key_image": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/KeyPhotos",
-            "tiltseries": "{run_name}/TiltSeries",
-            "frames": "{run_name}/Frames",
-            "annotation": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/Annotations",
-            "annotation_metadata": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/Annotations",
-            "run_metadata": "{run_name}/run_metadata.json",
-            "tomogram_metadata": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/CanonicalTomogram/tomogram_metadata.json",
-            "tiltseries_metadata": "{run_name}/TiltSeries/tiltseries_metadata.json",
-            "dataset_metadata": "dataset_metadata.json",
+            "tomogram": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram",
+            "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos",
+            "tiltseries": "{dataset_name}/{run_name}/TiltSeries",
+            "frames": "{dataset_name}/{run_name}/Frames",
+            "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
+            "annotation_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
+            "run_metadata": "{dataset_name}/{run_name}/run_metadata.json",
+            "tomogram_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/tomogram_metadata.json",
+            "tiltseries_metadata": "{dataset_name}/{run_name}/TiltSeries/tiltseries_metadata.json",
+            "dataset_metadata": "{dataset_name}/dataset_metadata.json",
+            "run": "{dataset_name}/{run_name}",
+            "dataset": "{dataset_name}",
             "dataset_keyphoto": "Images",
-            "neuroglancer": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/CanonicalTomogram/neuroglancer_config.json",
+            "neuroglancer": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/neuroglancer_config.json",
         }
+        output_prefix = self.output_prefix
+        glob_vars = obj.get_glob_vars()
+        # support older configs that specified the dataset name as the output prefix
+        if self.output_prefix == glob_vars["dataset_name"]:
+            output_prefix = ""
         path = os.path.join(
-            self.output_prefix,
+            output_prefix,
             self.destination_prefix,
-            paths[key].format(run_name=run_name, voxelsize=voxelsize),
+            paths[key].format(**glob_vars)
         )
         self.fs.makedirs(path)
         return path
@@ -264,9 +293,9 @@ class DataImportConfig:
         run = obj.get_run()
         if not globstring:
             return []
-        globvars = run.get_glob_vars()
+        globvars = obj.get_glob_vars()
         with contextlib.suppress(ValueError):
-            globvars["int_run_name"] = int(run.run_name)
+            globvars["int_run_name"] = int(run.name)
         expanded_glob = os.path.join(self.dataset_root_dir, globstring.format(**globvars))
         results = self.fs.glob(expanded_glob)
         if not results:

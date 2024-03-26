@@ -14,7 +14,7 @@ from common.metadata import AnnotationMetadata
 from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
-    from importers.tomogram import TomogramImporter
+    from importers.voxel_spacing import VoxelSpacingImporter
 
 
 class AnnotationObject(TypedDict):
@@ -387,7 +387,7 @@ class AnnotationImporter(BaseImporter):
         return self.annotation_metadata.get_filename_prefix(output_dir, self.identifier)
 
     def import_annotations(self, write: bool):
-        run_name = self.parent.get_run().run_name
+        run_name = self.parent.get_run().name
         dest_prefix = self.get_output_path()
         for source in self.sources:
             # Don't panic if we don't have a source file for this annotation source
@@ -399,7 +399,7 @@ class AnnotationImporter(BaseImporter):
             source.convert(self.config.fs, self.config.input_path, dest_prefix, self.parent.get_voxel_spacing())
 
     def import_metadata(self):
-        run_name = self.parent.get_run().run_name
+        run_name = self.parent.get_run().name
         print(f"importing annotations for {run_name}")
         real_sources = 0
         for source in self.sources:
@@ -421,7 +421,7 @@ class AnnotationImporter(BaseImporter):
         self.annotation_metadata.write_metadata(filename, self.local_metadata)
 
     @classmethod
-    def find_annotations(cls, config, tomo: "TomogramImporter"):
+    def find_annotations(cls, config, vs: "VoxelSpacingImporter"):
         annotations = []
         identifier = 100
         for annotation_config in config.annotation_template:
@@ -430,7 +430,7 @@ class AnnotationImporter(BaseImporter):
                 AnnotationImporter(
                     identifier=identifier,
                     config=config,
-                    parent=tomo,
+                    parent=vs,
                     annotation_metadata=metadata,
                     annotation_config=annotation_config,
                 ),
