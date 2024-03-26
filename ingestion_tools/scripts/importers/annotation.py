@@ -421,11 +421,31 @@ class AnnotationImporter(BaseImporter):
         self.annotation_metadata.write_metadata(filename, self.local_metadata)
 
     @classmethod
+    def get_identifier(cls, metadata_obj: AnnotationMetadata, existing_annotations: list[dict[str, Any]], current_identifier: dict[str, int]):
+        # See if we have an exact match we should use
+        for annotation_id, existing_metadata in existing_annotations.items():
+            if all([
+                existing_metadata.get("deposition_id") == metadata_obj.deposition_id,
+                existing_metadata["annotation_object"]["description"] == metadata_obj.metadata["annotation_object"]["description"],
+                existing_metadata["annotation_object"]["name"] == metadata_obj.metadata["annotation_object"]["name"],
+                existing_metadata["annotation_method"] == metadata_obj.metadata["annotation_method"],
+            ]):
+                return annotation_id
+        if existing_annotations and current_identifier["identifier"] <= max(existing_annotations.keys()):
+            current_identifier["identifier"] = max(existing_annotations.keys()) + 1
+        return_value = current_identifier["identifier"]
+        current_identifier["identifier"] += 1
+        return return_value
+
+    @classmethod
     def find_annotations(cls, config, vs: "VoxelSpacingImporter"):
         annotations = []
-        identifier = 100
+        # make this a dict so we can pass by reference
+        current_identifier = {"identifier": 100}
+        existing_annotations = vs.get_existing_annotation_metadatas(config.fs)
         for annotation_config in config.annotation_template:
             metadata = AnnotationMetadata(config.fs, config.deposition_id, annotation_config["metadata"])
+            identifier = cls.get_identifier(metadata, existing_annotations, current_identifier)
             annotations.append(
                 AnnotationImporter(
                     identifier=identifier,

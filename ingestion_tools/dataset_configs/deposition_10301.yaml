@@ -31,26 +31,6 @@ annotations:
         shape: InstanceSegmentation
         glob_string: "{dataset_name}/{run_name}/{run_name}_instance.csv"
         is_visualization_default: false
-  - metadata:
-      dates: *repo-dates
-      annotation_method: TARDIS
-      method_type: automated
-      annotation_publications: ~
-      ground_truth_status: False
-      authors: *annotation_authors
-      annotation_software: TARDIS
-      version: '1.0'
-      confidence:
-        precision: ~
-        recall: ~
-        ground_truth_used: ~
-      annotation_object:
-        id: GO:0016020
-        name: membrane
-        description: ~
-        state: ~
-      is_curator_recommended: false
-    sources:
       - file_format: mrc
         shape: SemanticSegmentationMask
         glob_string: "{dataset_name}/{run_name}/{run_name}_semantic.mrc"

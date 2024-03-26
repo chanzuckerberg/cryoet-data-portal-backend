@@ -1,4 +1,7 @@
 from typing import TYPE_CHECKING
+import json
+import os
+import contextlib
 
 from importers.base_importer import BaseImporter
 
@@ -32,6 +35,16 @@ class VoxelSpacingImporter(BaseImporter):
     def get_voxel_spacing(self):
         return self.name
     
+    def get_existing_annotation_metadatas(self, fs):
+        # TODO use an annotation finder object here when we have one.
+        metadata_glob = f"{self.config.resolve_output_path('annotation', self)}/*.json"
+        metadatas = {}
+        for file in fs.glob(metadata_glob):
+            identifier = os.path.basename(file).split("-")[0]
+            with contextlib.suppress(ValueError, TypeError):
+                metadatas[int(identifier)] = json.loads(fs.open(file, "r").read())
+        return metadatas
+
     # TODO this method needs to go away in favor of finders.
     @classmethod
     def find_vs(cls, config: DepositionImportConfig, run: RunImporter) -> list[Any]:
