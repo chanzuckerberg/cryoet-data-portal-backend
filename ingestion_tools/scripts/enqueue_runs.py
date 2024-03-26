@@ -129,6 +129,13 @@ def run_job(
     help="Only process runs matching the regex. If not specified, all runs are processed",
 )
 @click.option(
+    "--filter-dataset-name",
+    type=str,
+    default=None,
+    multiple=True,
+    help="Only process runs matching the regex. If not specified, all runs are processed",
+)
+@click.option(
     "--exclude-run-name",
     type=str,
     default=None,
@@ -178,6 +185,7 @@ def queue(
     import_dataset_metadata: bool,
     import_everything: bool,
     filter_run_name: list[str],
+    filter_dataset_name: list[str],
     exclude_run_name: list[str],
     make_key_image: bool,
     make_neuroglancer_config: bool,
@@ -194,6 +202,7 @@ def queue(
 
     exclude_run_name_patterns = [re.compile(pattern) for pattern in exclude_run_name]
     filter_run_name_patterns = [re.compile(pattern) for pattern in filter_run_name]
+    filter_ds_name_patterns = [re.compile(pattern) for pattern in filter_dataset_name]
 
     bool_args = {
         "force-overwrite": force_overwrite,
@@ -217,55 +226,69 @@ def queue(
     args = [f"--{arg_name}" for arg_name, is_enabled in bool_args.items() if is_enabled]
 
     # Always iterate over datasets and runs.
-    dataset = DatasetImporter(config, None)
-    digitmatch = re.compile(r"[^\d]+(\d+)[^\d]+")
-    for run in RunImporter.find_runs(config, dataset):
-        if list(filter(lambda x: x.match(run.run_name), exclude_run_name_patterns)):
-            print(f"Excluding {run.run_name}..")
+    if config.dataset_finder_config:
+        datasets = config.dataset_finder_config.find(DatasetImporter, None, config, fs)
+    else:
+        # Maintain reverse compatibility
+        datasets = [DatasetImporter(config, None, name=config.destination_prefix, path=config.source_prefix)]
+    for dataset in datasets:
+        if filter_dataset_name and not list(filter(lambda x: x.match(dataset.name), filter_ds_name_patterns)):
+            print(f"Skipping dataset {dataset.name}..")
             continue
-        if filter_run_name and not list(filter(lambda x: x.match(run.run_name), filter_run_name_patterns)):
-            print(f"Skipping {run.run_name}..")
-            continue
-        print(f"Processing {run.run_name}...")
-        new_args = list(args)  # make a copy
-        new_args.append(f"--filter-run-name '^{run.run_name}$'")
-        dataset_id = digitmatch.match(config_file)[1]
-        execution_name = f"{int(time.time())}-ds{dataset_id}-run{run.run_name}"
+        digitmatch = re.compile(r"[^\d]+(\d+)[^\d]+")
+        if config.run_finder_config:
+            runs = config.run_finder_config.find(RunImporter, dataset, config, fs)
+        else:
+            # Maintain reverse compatibility
+            runs = RunImporter.find_runs(config, dataset)
+        for run in runs:
+            if list(filter(lambda x: x.match(run.name), exclude_run_name_patterns)):
+                print(f"Excluding {run.name}..")
+                continue
+            if filter_run_name and not list(filter(lambda x: x.match(run.name), filter_run_name_patterns)):
+                print(f"Skipping {run.name}..")
+                continue
+            print(f"Processing {run.name}...")
+            new_args = list(args)  # make a copy
+            new_args.append(f"--filter-dataset-name '^{dataset.name}$'")
+            new_args.append(f"--filter-run-name '^{run.name}$'")
+            dataset_id = digitmatch.match(config_file)[1]
+            execution_name = f"{int(time.time())}-ds{dataset_id}-run{run.name}"
 
-        # Learn more about our AWS environment
-        swipe_comms_bucket = None
-        swipe_wdl_bucket = None
-        sfn_name = f"cryoet-ingestion-{env_name}-default-wdl"
+            # Learn more about our AWS environment
+            swipe_comms_bucket = None
+            swipe_wdl_bucket = None
+            sfn_name = f"cryoet-ingestion-{env_name}-default-wdl"
 
-        sts = boto3.client("sts")
-        aws_account_id = sts.get_caller_identity()["Account"]
-        session = Session()
-        aws_region = session.region_name
-        s3_client = session.client("s3")
-        buckets = s3_client.list_buckets()
-        for bucket in buckets["Buckets"]:
-            bucket_name = bucket["Name"]
-            if "swipe-wdl" in bucket_name and env_name in bucket_name:
-                swipe_wdl_bucket = bucket_name
-            if "swipe-comms" in bucket_name and env_name in bucket_name:
-                swipe_comms_bucket = bucket_name
+            sts = boto3.client("sts")
+            aws_account_id = sts.get_caller_identity()["Account"]
+            session = Session()
+            aws_region = session.region_name
+            s3_client = session.client("s3")
+            buckets = s3_client.list_buckets()
+            for bucket in buckets["Buckets"]:
+                bucket_name = bucket["Name"]
+                if "swipe-wdl" in bucket_name and env_name in bucket_name:
+                    swipe_wdl_bucket = bucket_name
+                if "swipe-comms" in bucket_name and env_name in bucket_name:
+                    swipe_comms_bucket = bucket_name
 
-        run_job(
-            execution_name,
-            config_file,
-            input_bucket,
-            output_path,
-            " ".join(new_args),
-            aws_region=aws_region,
-            aws_account_id=aws_account_id,
-            sfn_name=sfn_name,
-            swipe_comms_bucket=swipe_comms_bucket,
-            swipe_wdl_bucket=swipe_wdl_bucket,
-            swipe_wdl_key=swipe_wdl_key,
-            ecr_repo=ecr_repo,
-            ecr_tag=ecr_tag,
-            memory=memory,
-        )
+            run_job(
+                execution_name,
+                config_file,
+                input_bucket,
+                output_path,
+                " ".join(new_args),
+                aws_region=aws_region,
+                aws_account_id=aws_account_id,
+                sfn_name=sfn_name,
+                swipe_comms_bucket=swipe_comms_bucket,
+                swipe_wdl_bucket=swipe_wdl_bucket,
+                swipe_wdl_key=swipe_wdl_key,
+                ecr_repo=ecr_repo,
+                ecr_tag=ecr_tag,
+                memory=memory,
+            )
 
 
 if __name__ == "__main__":

@@ -6,13 +6,13 @@ import click
 from importers.annotation import AnnotationImporter
 from importers.dataset import DatasetImporter
 from importers.dataset_key_photo import DatasetKeyPhotoImporter
-from importers.voxel_spacing import VoxelSpacingImporter
 from importers.frames import FramesImporter
 from importers.key_image import KeyImageImporter
 from importers.neuroglancer import NeuroglancerImporter
 from importers.run import RunImporter
 from importers.tiltseries import RawTiltImporter, TiltSeriesImporter
 from importers.tomogram import TomogramImporter
+from importers.voxel_spacing import VoxelSpacingImporter
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
@@ -127,7 +127,7 @@ def convert(
         datasets = config.dataset_finder_config.find(DatasetImporter, None, config, fs)
     else:
         # Maintain reverse compatibility
-        datasets = [DatasetImporter(config, None, name=config.destination_prefix, source_path=config.source_prefix)]
+        datasets = [DatasetImporter(config, None, name=config.destination_prefix, path=config.source_prefix)]
     for dataset in datasets:
         if filter_dataset_name and not list(filter(lambda x: x.match(dataset.name), filter_ds_name_patterns)):
             print(f"Skipping dataset {dataset.name}..")
