@@ -1,0 +1,79 @@
+annotations:
+  - metadata:
+      annotation_object:
+        id: GO:0016020
+        name: membrane
+        description: ~
+        state: ~
+      dates: &repo-dates
+        deposition_date: 2024-02-20
+        last_modified_date: 2024-02-20
+        release_date: 2024-02-20
+      annotation_method: TARDIS
+      method_type: automated
+      annotation_publications: ~
+      ground_truth_status: False
+      authors: &annotation_authors
+        - name: Robert Kiewisz
+          primary_annotator_status: true
+        - name: Tristan Bepler
+          corresponding_author_status: true
+      annotation_software: TARDIS
+      version: '1.0'
+      confidence:
+        precision: ~
+        recall: ~
+      is_curator_recommended: False
+    sources:
+      - file_format: tardis
+        binning: 1
+        order: xyz
+        shape: InstanceSegmentation
+        glob_string: "{dataset_name}/{run_name}/{run_name}_instance.csv"
+        is_visualization_default: false
+  - metadata:
+      dates: *repo-dates
+      annotation_method: TARDIS
+      method_type: automated
+      annotation_publications: ~
+      ground_truth_status: False
+      authors: *annotation_authors
+      annotation_software: TARDIS
+      version: '1.0'
+      confidence:
+        precision: ~
+        recall: ~
+        ground_truth_used: ~
+      annotation_object:
+        id: GO:0016020
+        name: membrane
+        description: ~
+        state: ~
+      is_curator_recommended: false
+    sources:
+      - file_format: mrc
+        shape: SemanticSegmentationMask
+        glob_string: "{dataset_name}/{run_name}/{run_name}_semantic.mrc"
+        is_visualization_default: false
+standardization_config:
+  deposition_id: 10301
+  dataset:
+    source:
+      source_glob:
+        list_glob: '*'
+        match_regex: .*
+        name_regex: (.*)
+  run:
+    source:
+      source_glob:
+        list_glob: '{dataset_name}/*'
+        match_regex: .*
+        name_regex: (.*)
+  tomogram_voxel_spacing:
+    source:
+      destination_glob:
+        list_glob: '{run_output_path}/Tomograms/VoxelSpacing*'
+        match_regex: .*
+        name_regex: VoxelSpacing(.*)
+  destination_prefix: ''
+  source_prefix: 'robert_kiewisz_tardis_01_2024'
