@@ -9,7 +9,7 @@ from importers.neuroglancer import NeuroglancerImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
 
-from common.config import DataImportConfig
+from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
 
 
@@ -43,18 +43,18 @@ def getlink(
     if int(dataset) >= 10013:
         dataset_path = f"gjensen/{dataset}"
     config_file = os.path.abspath(os.path.join(script_location, f"../dataset_configs/{dataset_path}.yaml"))
-    config = DataImportConfig(fs, config_file, "cryoet-data-portal-staging", "cryoetportal-rawdatasets-dev")
+    config = DepositionImportConfig(fs, config_file, "cryoet-data-portal-staging", "cryoetportal-rawdatasets-dev")
     config.load_map_files()
 
     # Always iterate over datasets and runs.
     ds = DatasetImporter(config, None)
     for iter_run in RunImporter.find_runs(config, ds):
-        if iter_run.run_name != run:
+        if iter_run.name != run:
             if debug:
-                print(f"Skipping {iter_run.run_name}..")
+                print(f"Skipping {iter_run.name}..")
             continue
         if debug:
-            print(f"Processing {iter_run.run_name}...")
+            print(f"Processing {iter_run.name}...")
         for tomo in TomogramImporter.find_tomograms(config, iter_run):
             iter_run.set_voxel_spacing(tomo.get_voxel_spacing())
             for item in NeuroglancerImporter.find_ng(config, tomo):

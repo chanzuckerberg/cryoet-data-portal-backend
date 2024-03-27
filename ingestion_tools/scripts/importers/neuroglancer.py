@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING, Any
 from urllib.parse import urljoin
 
-from common.config import DataImportConfig
+from common.config import DepositionImportConfig
 from common.metadata import NeuroglancerMetadata
 from importers.base_importer import BaseImporter
 
@@ -17,7 +17,7 @@ class NeuroglancerImporter(BaseImporter):
     def import_neuroglancer(self) -> str:
         dest_file = self.get_output_path()
         ng_contents = self.get_config_json(self.parent.get_output_path() + ".zarr")
-        meta = NeuroglancerMetadata(self.config.fs, ng_contents)
+        meta = NeuroglancerMetadata(self.config.fs, self.config.deposition_id, ng_contents)
         meta.write_metadata(dest_file)
         return dest_file
 
@@ -70,5 +70,5 @@ class NeuroglancerImporter(BaseImporter):
         }
 
     @classmethod
-    def find_ng(cls, config: DataImportConfig, tomo: TomogramImporter) -> list["NeuroglancerImporter"]:
+    def find_ng(cls, config: DepositionImportConfig, tomo: TomogramImporter) -> list["NeuroglancerImporter"]:
         return [cls(config=config, parent=tomo)]

@@ -3,7 +3,7 @@ from importers.dataset import DatasetImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
 
-from common.config import DataImportConfig
+from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
 
 
@@ -29,7 +29,7 @@ def test_voxel_spacing_by_tomogram_metadata(
     output_path = f"{test_output_bucket}/output"
     input_bucket = "test-public-bucket"
 
-    config = DataImportConfig(s3_fs, import_config, output_path, input_bucket)
+    config = DepositionImportConfig(s3_fs, import_config, output_path, input_bucket)
     config.load_map_files()
     dataset = DatasetImporter(config, None)
     run = RunImporter.find_runs(config, dataset)[0]
