@@ -1,27 +1,27 @@
 run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-data_acquisition_software,ts-pixel_spacing,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_path,ts-tilt_series_quality,ts-total_flux
-dga2019-08-06-1,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant3a.mrc,4,170.0
-dga2019-08-06-2,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant4a.mrc,4,170.0
-dga2019-08-06-3,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant5a.mrc,4,170.0
-dga2019-08-06-4,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant6a.mrc,4,170.0
-dga2019-08-06-5,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant7a.mrc,4,170.0
-dga2019-08-06-6,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant8a.mrc,4,170.0
-dga2019-08-06-7,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant9a.mrc,4,170.0
-dga2019-08-06-8,['Batchruntomo'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,Batchruntomo,48.0,-48.0,rawdata/Cc_mutant10a.mrc,4,170.0
-dga2019-08-06-9,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant11a.mrc,4,170.0
-dga2019-08-06-10,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant12a.mrc,4,170.0
-dga2019-08-06-11,['Batchruntomo'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,Batchruntomo,48.0,-48.0,rawdata/Cc_mutant13a.mrc,4,170.0
-dga2019-08-06-12,['Batchruntomo'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,Batchruntomo,48.0,-48.0,rawdata/Cc_mutant14a.mrc,4,170.0
-dga2019-08-06-13,,NON_FIDUCIAL,,None,None,,Serial EM,3.3600000000000003,,48.0,-48.0,rawdata/Cc_mutant15a.mrc,1,170.0
-dga2019-08-06-14,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant16a.mrc,4,170.0
-dga2019-08-06-15,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant17a.mrc,4,170.0
-dga2019-08-06-16,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant18a.mrc,4,170.0
-dga2019-08-06-17,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant19a.mrc,4,170.0
-dga2019-08-06-18,['Batchruntomo'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,Batchruntomo,48.0,-48.0,rawdata/Cc_mutant20a.mrc,4,170.0
-dga2019-08-06-19,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant21a.mrc,4,170.0
-dga2019-08-06-20,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant22a.mrc,4,170.0
-dga2019-08-06-21,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,RAPTOR,48.0,-48.0,rawdata/Cc_mutant23a.mrc,4,170.0
-dga2019-08-06-26,['Batchruntomo'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.440000000000001,Serial EM,3.3600000000000003,Batchruntomo,48.0,-48.0,rawdata/Cc_mutant.mrc,4,170.0
-dga2019-08-06-27,,NON_FIDUCIAL,,None,None,,Serial EM,3.3600000000000003,,48.0,-48.0,rawdata/Cc_mutant2a.mrc,1,170.0
+dga2019-08-06-1,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant3a.mrc,4,170.0
+dga2019-08-06-2,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant4a.mrc,4,170.0
+dga2019-08-06-3,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant5a.mrc,4,170.0
+dga2019-08-06-4,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant6a.mrc,4,170.0
+dga2019-08-06-5,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant7a.mrc,4,170.0
+dga2019-08-06-6,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant8a.mrc,4,170.0
+dga2019-08-06-7,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant9a.mrc,4,170.0
+dga2019-08-06-8,['Batchruntomo'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,Batchruntomo,48.0,-48.0,rawdata/Cc_mutant10a.mrc,4,170.0
+dga2019-08-06-9,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant11a.mrc,4,170.0
+dga2019-08-06-10,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant12a.mrc,4,170.0
+dga2019-08-06-11,['Batchruntomo'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,Batchruntomo,48.0,-48.0,rawdata/Cc_mutant13a.mrc,4,170.0
+dga2019-08-06-12,['Batchruntomo'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,Batchruntomo,48.0,-48.0,rawdata/Cc_mutant14a.mrc,4,170.0
+dga2019-08-06-13,,NON_FIDUCIAL,,None,None,,Serial EM,3.36,,48.0,-48.0,rawdata/Cc_mutant15a.mrc,1,170.0
+dga2019-08-06-14,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant16a.mrc,4,170.0
+dga2019-08-06-15,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant17a.mrc,4,170.0
+dga2019-08-06-16,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant18a.mrc,4,170.0
+dga2019-08-06-17,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant19a.mrc,4,170.0
+dga2019-08-06-18,['Batchruntomo'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,Batchruntomo,48.0,-48.0,rawdata/Cc_mutant20a.mrc,4,170.0
+dga2019-08-06-19,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant21a.mrc,4,170.0
+dga2019-08-06-20,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant22a.mrc,4,170.0
+dga2019-08-06-21,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,RAPTOR,48.0,-48.0,rawdata/Cc_mutant23a.mrc,4,170.0
+dga2019-08-06-26,['Batchruntomo'],FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,Batchruntomo,48.0,-48.0,rawdata/Cc_mutant.mrc,4,170.0
+dga2019-08-06-27,,NON_FIDUCIAL,,None,None,,Serial EM,3.36,,48.0,-48.0,rawdata/Cc_mutant2a.mrc,1,170.0
 dga2019-12-07-84,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,14.12,SerialEM,3.53,RAPTOR,54.0,-54.0,rawdata/Cc_TS100.mrc,4,130.0
 dga2019-12-07-85,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,14.12,SerialEM,3.53,RAPTOR,54.0,-54.0,rawdata/Cc_TS48.mrc,4,130.0
 dga2019-12-07-86,['RAPTOR'],FIDUCIAL,,Weighted back projection,IMOD,14.12,SerialEM,3.53,RAPTOR,54.0,-54.0,rawdata/Cc_TS101.mrc,4,130.0

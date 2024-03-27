@@ -247,7 +247,7 @@ def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
     }
 
     tilt_series["tilt_series_quality"] = 4 if len(data["tomograms"]) else 1
-
+    tilt_series["pixel_spacing"] = round(tilt_series["pixel_spacing"], 3) if tilt_series.get("pixel_spacing") else None
     return tilt_series
 
 
@@ -292,8 +292,7 @@ def to_tomogram(
 
     tomogram["processing"] = normalize_processing(tomogram.get("processing"))
 
-    if "voxel_spacing" not in tomogram:
-        tomogram["voxel_spacing"] = None
+    tomogram["voxel_spacing"] = round(tomogram["voxel_spacing"], 3) if "voxel_spacing" in tomogram else None
 
     return tomogram
 

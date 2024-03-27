@@ -87,7 +87,7 @@ tomograms:
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
   tomogram_version: 1
-  voxel_spacing: 24.666999999999998
+  voxel_spacing: 24.667
 annotations: {}
 standardization_config:
   destination_prefix: '10134'

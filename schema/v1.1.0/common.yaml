@@ -1,0 +1,697 @@
+id: common
+name: cdp-common
+version: 1.1.0
+prefixes:
+  linkml: https://w3id.org/linkml/
+  cdp-common: common
+  ROR: https://ror.org/
+  UBERON: http://purl.obolibrary.org/obo/UBERON_
+  CL: http://purl.obolibrary.org/obo/CL_
+  GO: http://purl.obolibrary.org/obo/GO_
+  IAO: http://purl.obolibrary.org/obo/IAO_
+  FOAF: http://xmlns.com/foaf/0.1/
+imports:
+  - linkml:types
+default_prefix: cdp-common
+default_range: string
+
+
+slots:
+  # ============================================================================
+  # Common Identifiers
+  # ============================================================================
+  orcid:
+    description: >-
+      A unique, persistent identifier for researchers, provided by ORCID.
+    range: string
+    pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
+    exact_mappings:
+      - IAO:0000708
+
+  affiliation_identifier:
+    description: >-
+      A Research Organization Registry (ROR) identifier.
+    range: string
+    pattern: '^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$'
+  # ============================================================================
+
+  # ============================================================================
+  # Dates (re-used in Dataset, Tomogram, Tiltseries, Annotation)
+  # ============================================================================
+  deposition_date:
+    range: date
+    required: true
+    description: >-
+      The date a data item was received by the cryoET data portal.
+
+  release_date:
+    range: date
+    required: true
+    description: >-
+      The date a data item was received by the cryoET data portal.
+
+  last_modified_date:
+    range: date
+    required: true
+    description: >-
+      The date a piece of data was last modified on the cryoET data portal.
+  # ============================================================================
+
+  # ============================================================================
+  # Author slots
+  # ============================================================================
+  author_name:
+    range: string
+    required: true
+    description: >-
+      The full name of the author.
+    close_mappings:
+      - FOAF:name
+
+  author_email:
+    range: string
+    description: >-
+      The email address of the author.
+    close_mappings:
+      - FOAF:mbox
+
+  author_affiliation_name:
+    range: string
+    description: >-
+      The name of the author's affiliation.
+
+  author_affiliation_address:
+    range: string
+    description: >-
+      The address of the author's affiliation.
+
+  author_corresponding_author_status:
+    range: boolean
+    description: >-
+      Whether the author is a corresponding author.
+
+  author_primary_author_status:
+    range: boolean
+    description: >-
+      Whether the author is a primary author.
+
+  author_primary_annotator_status:
+    range: boolean
+    description: >-
+      Whether the author is a primary annotator.
+
+  author_list_order:
+    range: integer
+    required: true
+    description: >-
+      The position of the author in the author list.
+  # ============================================================================
+
+  # ============================================================================
+  # Dataset slots
+  # ============================================================================
+  dataset_identifier:
+    identifier: true
+    range: integer
+    required: true
+    description: >-
+      An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory 
+      name in data tree.
+  dataset_title:
+    range: string
+    required: true
+    description: >-
+      Title of a CryoET dataset.
+  dataset_description:
+    range: string
+    required: true
+    description: >-
+      A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.
+
+  dataset_key_photo_url:
+    range: string
+    description: >-
+      URL for the dataset preview image.
+  dataset_key_photo_thumbnail_url:
+    range: string
+    description: >- 
+      URL for the thumbnail of preview image.
+  dataset_s3_prefix:
+    range: string
+    description: >-
+      The S3 public bucket path where this dataset is contained.
+  dataset_https_prefix:
+    range: string
+    description: >-
+      The HTTPS directory path where this dataset is contained.
+  # ============================================================================
+
+  # ============================================================================
+  # Funding information slots
+  # ============================================================================
+  funding_agency_name:
+    range: string
+    recommended: true
+    description: The name of the funding source.
+  funding_grant_id:
+    range: string
+    recommended: true
+    description: Grant identifier provided by the funding agency
+  # ============================================================================
+
+  # ============================================================================
+  # Experimental metadata slots
+  # ============================================================================
+  # Organism/Species
+  organism_name:
+    range: string
+    recommended: true
+    description: >-
+      Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens.
+  organism_taxid:
+    range: string
+    recommended: true
+    description: >-
+      NCBI taxonomy identifier for the organism, e.g. 9606
+
+  # Tissue
+  tissue_name:
+    range: string
+    recommended: true
+    description: >-
+      Name of the tissue from which a biological sample used in a CryoET study is derived from.
+  tissue_id:
+    range: string
+    recommended: true
+    description: >-
+      The UBERON identifier for the tissue.
+
+  # Cell Type
+  cell_name:
+    range: string
+    recommended: true
+    description: >-
+      Name of the cell type from which a biological sample used in a CryoET study is derived from.
+  cell_type_id:
+    range: string
+    recommended: true
+    description: >-
+      Cell Ontology identifier for the cell type
+
+  # Cell Strain
+  cell_strain_name:
+    range: string
+    recommended: true
+    description: >-
+      Cell line or strain for the sample.
+  cell_strain_id:
+    range: string
+    recommended: true
+    description: >-
+      Link to more information about the cell strain.
+
+  # Cell Component
+  cell_component_name:
+    range: string
+    recommended: true
+    description: >-
+      Name of the cellular component.
+  cell_component_id:
+    range: string
+    recommended: true
+    description: >-
+      The GO identifier for the cellular component.
+
+  # Preparation
+  preparation_sample_type:
+    range: sample_type_enum
+    required: true
+    description: >-
+      Type of sample imaged in a CryoET study.
+  sample_preparation:
+    range: string
+    recommended: true
+    description: >-
+      Describes how the sample was prepared.
+  grid_preparation:
+    range: string
+    recommended: true
+    description: >-
+      Describes Cryo-ET grid preparation.
+  preparation_other_setup:
+    range: string
+    recommended: true
+    description: >-
+      Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in  
+      the same publication.
+  # ============================================================================
+
+  # ============================================================================
+  # Run slots
+  # ============================================================================
+
+  # ============================================================================
+
+  # ============================================================================
+  # TomogramVoxelSpacing slots
+  # ============================================================================
+
+  # ============================================================================
+
+  # ============================================================================
+  # TiltSeries slots
+  # ============================================================================
+  #  id:
+  #    range: integer
+  #    description: Numeric identifier for this tilt series (this may change!)
+  #run (Run): An object relationship with the run this tiltseries is a part of
+  tiltseries_run_id:
+    range: integer
+    description: Reference to the run this tiltseries is a part of
+  tiltseries_acceleration_voltage:
+    range: integer
+    description: Electron Microscope Accelerator voltage in volts
+    unit:
+      descriptive_name: volts
+      symbol: V
+  tiltseries_aligned_tiltseries_binning:
+    range: integer
+    description: Binning factor of the aligned tilt series
+  tiltseries_binning_from_frames:
+    range: float
+    description: Describes the binning factor from frames to tilt series file
+  tiltseries_camera_manufacturer:
+    range: string
+    description: Name of the camera manufacturer
+  tiltseries_camera_model:
+    range: string
+    description: Camera model name
+  tiltseries_data_acquisition_software:
+    range: string
+    description: Software used to collect data
+  tiltseries_frames_count:
+    range: integer
+    description: Number of frames associated with this tiltseries
+  tiltseries_https_alignment_file:
+    range: string
+    description: HTTPS path to the alignment file for this tiltseries
+  tiltseries_https_angle_list:
+    range: string
+    description: HTTPS path to the angle list file for this tiltseries
+  tiltseries_https_collection_metadata:
+    range: string
+    description: HTTPS path to the collection metadata file for this tiltseries
+  tiltseries_https_mrc_bin1:
+    range: string
+    description: HTTPS path to this tiltseries in MRC format (no scaling)
+  tiltseries_https_omezarr_dir:
+    range: string
+    description: HTTPS path to this tiltseries in multiscale OME-Zarr format
+  tiltseries_microscope_additional_info:
+    range: string
+    description: Other microscope optical setup information, in addition to energy filter, phase plate and image corrector
+  tiltseries_microscope_energy_filter:
+    range: string
+    description: Energy filter setup used
+  tiltseries_microscope_image_corrector:
+    range: string
+    description: Image corrector setup
+  tiltseries_microscope_manufacturer:
+    range: string
+    description: Name of the microscope manufacturer
+  tiltseries_microscope_model:
+    range: string
+    description: Microscope model name
+  tiltseries_microscope_phase_plate:
+    range: string
+    description: Phase plate configuration
+  tiltseries_pixel_spacing:
+    range: float
+    description: Pixel spacing for the tilt series
+    unit:
+      descriptive_name: Angstroms per pixel
+      symbol: Å/px
+  tiltseries_related_empiar_entry:
+    range: string
+    description: If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier
+  tiltseries_s3_alignment_file:
+    range: string
+    description: S3 path to the alignment file for this tiltseries
+  tiltseries_s3_angle_list:
+    range: string
+    description: S3 path to the angle list file for this tiltseries
+  tiltseries_s3_collection_metadata:
+    range: string
+    description: S3 path to the collection metadata file for this tiltseries
+  tiltseries_s3_mrc_bin1:
+    range: string
+    description: S3 path to this tiltseries in MRC format (no scaling)
+  tiltseries_s3_omezarr_dir:
+    range: string
+    description: S3 path to this tiltseries in multiscale OME-Zarr format
+  tiltseries_spherical_aberration_constant:
+    range: float
+    description: Spherical Aberration Constant of the objective lens in millimeters
+    unit:
+      descriptive_name: millimeters
+      symbol: mm
+  tiltseries_tilt_axis:
+    range: float
+    description: Rotation angle in degrees
+    unit:
+      descriptive_name: degrees
+      symbol: °
+  tiltseries_tilt_max:
+    range: float
+    description: Maximal tilt angle in degrees
+    unit:
+      descriptive_name: degrees
+      symbol: °
+  tiltseries_tilt_min:
+    range: float
+    description: Minimal tilt angle in degrees
+    unit:
+      descriptive_name: degrees
+      symbol: °
+  tiltseries_tilt_range:
+    range: float
+    description: Total tilt range in degrees
+    unit:
+      descriptive_name: degrees
+      symbol: °
+  tiltseries_tilt_series_quality:
+    range: integer
+    description: Author assessment of tilt series quality within the dataset (1-5, 5 is best)
+  tiltseries_tilt_step:
+    range: float
+    description: Tilt step in degrees
+    unit:
+      descriptive_name: degrees
+      symbol: °
+  tiltseries_tilting_scheme:
+    range: string
+    description: The order of stage tilting during acquisition of the data
+  tiltseries_total_flux:
+    range: float
+    description: Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series
+    unit:
+      descriptive_name: electrons per square Angstrom
+      symbol: e^-/Å^2
+  # ============================================================================
+
+
+  # ============================================================================
+  # Tomogram slots
+  # ============================================================================
+  tomogram_affine_transformation_matrix:
+    range: string
+    description: The flip or rotation transformation of this author submitted tomogram is indicated here
+  tomogram_ctf_corrected:
+    range: boolean
+    description: Whether this tomogram is CTF corrected
+  #dataset (Dataset): An object relationship with the dataset this tomogram is a part of
+  tomogram_dataset_id:
+    range: integer
+    description: Reference to the dataset this tomogram is a part of
+  tomogram_fiducial_alignment_status:
+    range: fiducial_alignment_status_enum
+    description: Whether the tomographic alignment was computed based on fiducial markers.
+  tomogram_https_mrc_scale0:
+    range: string
+    description: HTTPS path to this tomogram in MRC format (no scaling)
+  tomogram_https_omezarr_dir:
+    range: string
+    description: HTTPS path to this tomogram in multiscale OME-Zarr format
+  tomogram_is_canonical:
+    range: boolean
+    description: Is this tomogram considered the canonical tomogram for the run experiment?
+  tomogram_key_photo_thumbnail_url:
+    range: string
+    description: URL for the thumbnail of key photo
+  tomogram_key_photo_url:
+    range: string
+    description: URL for the key photo
+  tomogram_name:
+    range: string
+    description: Short name for this tomogram
+  tomogram_neuroglancer_config:
+    range: string
+    description: the compact json of neuroglancer config
+  tomogram_offset_x:
+    range: integer
+    description: x offset data relative to the canonical tomogram in pixels
+    unit:
+      descriptive_name: pixels
+      symbol: px
+  tomogram_offset_y:
+    range: integer
+    description: y offset data relative to the canonical tomogram in pixels
+    unit:
+      descriptive_name: pixels
+      symbol: px
+  tomogram_offset_z:
+    range: integer
+    description: z offset data relative to the canonical tomogram in pixels
+    unit:
+      descriptive_name: pixels
+      symbol: px
+  tomogram_processing:
+    range: string
+    description: Describe additional processing used to derive the tomogram
+  tomogram_processing_software:
+    range: string
+    description: Processing software used to derive the tomogram
+  tomogram_reconstruction_method:
+    range: string
+    description: Describe reconstruction method (Weighted back-projection, SART, SIRT)
+  tomogram_reconstruction_software:
+    range: string
+    description: Name of software used for reconstruction
+  tomogram_s3_mrc_scale0:
+    range: string
+    description: S3 path to this tomogram in MRC format (no scaling)
+  tomogram_s3_omezarr_dir:
+    range: string
+    description: S3 path to this tomogram in multiscale OME-Zarr format
+  tomogram_scale0_dimensions:
+    range: string
+    description: comma separated x,y,z dimensions of the unscaled tomogram
+  tomogram_scale1_dimensions:
+    range: string
+    description: comma separated x,y,z dimensions of the scale1 tomogram
+  tomogram_scale2_dimensions:
+    range: string
+    description: comma separated x,y,z dimensions of the scale2 tomogram
+  tomogram_size_x:
+    range: integer
+    description: Number of pixels in the 3D data fast axis
+  tomogram_size_y:
+    range: integer
+    description: Number of pixels in the 3D data medium axis
+  tomogram_size_z:
+    range: integer
+    description: Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
+  tomogram_version:
+    range: string
+    description: Version of tomogram using the same software and post-processing. Version of tomogram using the same software and post-processing. This will be presented as the latest version
+  #tomogram_voxel_spacing (TomogramVoxelSpacing): An object relationship with a specific voxel spacing for this experiment run
+  tomogram_type:
+    range: string
+    description: "Tomogram purpose (ex: CANONICAL)"
+  tomogram_voxel_spacing:
+    range: float
+    description: Voxel spacing equal in all three axes in angstroms
+    unit:
+      descriptive_name: Angstroms per voxel
+      symbol: Å/voxel
+  # ============================================================================
+
+  # ============================================================================
+  # Annotation slots
+  # ============================================================================
+  #id (int): Numeric identifier (May change!)
+  annotation_method:
+    range: string
+    description: Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)
+  annotation_method_type:
+    range: annotation_method_type_enum
+    description: Classification of the annotation method based on supervision.
+  annotation_publication:
+    range: string
+    description: DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.
+  annotation_software:
+    range: string
+    description: Software used for generating this annotation
+  #authors (list[Author]): An array relationship with the authors of this annotation
+  annotation_confidence_precision:
+    range: float
+    description: Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive
+  annotation_confidence_recall:
+    range: float
+    description: Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly
+  #deposition_date (date): Date when an annotation set is initially received by the Data Portal.
+  annotation_ground_truth_status:
+    range: boolean
+    description: Whether an annotation is considered ground truth, as determined by the annotator.
+  annotation_ground_truth_used:
+    range: string
+    description: Annotation filename used as ground truth for precision and recall
+  https_metadata_path:
+    range: string
+    description: HTTPS path for the metadata json file for this annotation
+  #last_modified_date (date): Date when an annotation was last modified in the Data Portal
+  annotation_object_count:
+    range: integer
+    description: Number of objects identified
+  annotation_object_description:
+    range: string
+    description: A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.
+  annotation_object_id:
+    range: string
+    description: Gene Ontology Cellular Component identifier for the annotation object
+  annotation_object_name:
+    range: string
+    description: Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)
+  annotation_object_state:
+    range: string
+    description: Molecule state annotated (e.g. open, closed)
+  #release_date (date): Date when annotation data is made public by the Data Portal.
+  #tomogram_voxel_spacing (TomogramVoxelSpacing): An object relationship with a specific voxel spacing for this annotation
+  tomogram_voxel_spacing_id:
+    range: integer
+    description: Reference to the tomogram voxel spacing group this annotation applies to
+  s3_metadata_path:
+    range: string
+    description: S3 path for the metadata json file for this annotation
+  annotation_is_curator_recommended:
+    range: boolean
+    description: This annotation is recommended by the curator to be preferred for this object type.
+
+  # ============================================================================
+  # Annotation File slots
+  # ============================================================================
+  #id (int): Numeric identifier (May change!)
+  annotation_file_format:
+    range: string
+    description: File format for this file
+  annotation_file_https_path:
+    range: string
+    description: HTTPS url for the annotation file
+  annotation_file_s3_path:
+    range: string
+    description: S3 path for the annotation file
+  annotation_file_shape_type:
+    range: string
+    description: Describe whether this is a Point, OrientedPoint, or SegmentationMask file
+  annotation_file_annotation_id:
+    range: integer
+    description: Reference to the annotation this file applies to
+  annotation_file_path:
+    range: string
+    description: Path to the annotation file relative to the dataset root.
+  annotation_file_is_visualization_default:
+    range: boolean
+    description: This annotation will be rendered in neuroglancer by default.
+  #Annotation (Annotation): The annotation this file is a part of
+
+enums:
+  # ============================================================================
+  # Controlled vocabularies
+  # ============================================================================
+  sample_type_enum:
+    description: Type of sample imaged in a CryoET study.
+    permissible_values:
+      cell:
+        description: Tomographic data of whole cells or cell sections.
+      tissue:
+        description: Tomographic data of tissue sections.
+      organism:
+        description: Tomographic data of sections through multicellular organisms.
+      organelle:
+        description: Tomographic data of purified organelles.
+      virus:
+        description: Tomographic data of purified viruses or VLPs.
+      in_vitro:
+        description: Tomographic data of in vitro reconstituted systems or mixtures of proteins.
+      in_silico:
+        description: Simulated tomographic data.
+      other:
+        description: Other type of sample.
+
+  fiducial_alignment_status_enum:
+    description: Fiducial Alignment method
+    permissible_values:
+      FIDUCIAL:
+        description: Alignment computed based on fiducial markers
+      NON_FIDUCIAL:
+        description: Alignment computed without fiducial markers
+
+  tomogram_type_enum:
+    description: Tomogram type
+    permissible_values:
+      CANONICAL:
+        description: Canonical tomogram (basis geometry for all annotations)
+
+  annotation_method_type_enum:
+    description: Describes how the annotations were generated.
+    permissible_values:
+      manual:
+        description: Annotations were generated manually.
+      automated:
+        description: Annotations were generated semi-automatically.
+      hybrid:
+        description: Annotations were generated automatically.
+
+  annotation_shape_enum:
+    description: Annotation shape types available on the data portal.
+    permissible_values:
+      Point:
+        description: Annotations were generated manually.
+      OrientedPoint:
+        description: Annotations were generated semi-automatically.
+      SegmentationMask:
+        description: Annotations were generated automatically.
+
+
+classes:
+  # ============================================================================
+  # Deposition, release and last modified dates
+  # ============================================================================
+  DateStamp:
+    abstract: true
+    description: A set of dates at which a data item was deposited, published and last modified.
+    slots:
+      - deposition_date
+      - release_date
+      - last_modified_date
+    slot_usage:
+      deposition_date:
+        required: true
+      release_date:
+        recommended: true
+      last_modified_date:
+        recommended: true
+
+  # ============================================================================
+  # Cross-references to other databases and publications
+  # ============================================================================
+  CrossReferences:
+    description: A set of cross-references to other databases and publications.
+    attributes:
+      dataset_publications:
+        range: string
+        recommended: true
+        description: Comma-separated list of DOIs for publications associated with the dataset.
+      related_database_entries:
+        range: string
+        recommended: true
+        description: Comma-separated list of related database entries for the dataset.
+      related_database_links:
+        range: string
+        description: Comma-separated list of related database links for the dataset.
+      dataset_citations:
+        range: string
+        description: Comma-separated list of DOIs for publications citing the dataset.
+
+
+

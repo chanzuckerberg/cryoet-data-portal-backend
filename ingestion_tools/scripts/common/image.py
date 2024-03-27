@@ -224,7 +224,7 @@ class MaskConverter(TomoConverter):
         # Ensure voxel spacing rounded to 3rd digit
         voxel_spacing = round(voxel_spacing, 3)
 
-        pyramid = [(self.data == self.label).astype(np.float32)]
+        pyramid = [(self.data == self.label).astype(np.int8)]
         pyramid_voxel_spacing = [(voxel_spacing, voxel_spacing, voxel_spacing)]
 
         # Then make a pyramid of 100/50/25 percent scale volumes
@@ -235,7 +235,7 @@ class MaskConverter(TomoConverter):
 
             # For semantic segmentation masks we want to have a binary output.
             # downscale_local_mean will return float array even for bool input with non-binary values
-            scaled = (downscale_local_mean(pyramid[i] == self.label, (z_scale, 2, 2)) > 0).astype(np.float32)
+            scaled = (downscale_local_mean(pyramid[i], (z_scale, 2, 2)) > 0).astype(np.int8)
             pyramid.append(scaled)
             pyramid_voxel_spacing.append(
                 (

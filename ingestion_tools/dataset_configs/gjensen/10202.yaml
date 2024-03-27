@@ -44,7 +44,7 @@ tiltseries:
     energy_filter: GIF
     image_corrector: null
     phase_plate: false
-  pixel_spacing: 7.800000000000001
+  pixel_spacing: 7.8
   spherical_aberration_constant: 2.0
   tilt_alignment_software: RAPTOR
   tilt_axis: 0.0
@@ -57,7 +57,7 @@ tiltseries:
   tilting_scheme: starting tilt to max then min
   total_flux: 200.0
 tomograms:
-  voxel_spacing: 15.600000000000001
+  voxel_spacing: 15.6
   reconstruction_method: Weighted back projection
   reconstruction_software: IMOD
   fiducial_alignment_status: FIDUCIAL

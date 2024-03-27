@@ -1,17 +1,17 @@
 run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-data_acquisition_software,ts-pixel_spacing,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_path,ts-tilt_series_quality,ts-total_flux
-qya2015-12-07-1,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.0360000000000005,RAPTOR,60.0,-60.0,rawdata/atlas10001.mrc,4,180.0
-qya2015-12-07-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.0360000000000005,RAPTOR,60.0,-60.0,rawdata/atlas10002.mrc,4,180.0
-qya2015-12-07-3,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.0360000000000005,RAPTOR,60.0,-60.0,rawdata/atlas10003.mrc,4,180.0
-qya2015-12-07-8,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSF Tomo,4.0360000000000005,RAPTOR,60.0,-60.0,rawdata/atlas10008.mrc,4,180.0
-qya2015-12-07-28,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.0360000000000005,RAPTOR,60.0,-60.0,rawdata/atlas10028.mrc,4,180.0
-qya2015-12-24-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.0360000000000005,RAPTOR,60.0,-60.0,rawdata/proteus20003.mrc,4,195.0
-qya2015-12-24-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.0360000000000005,RAPTOR,60.0,-60.0,rawdata/proteus20012.mrc,4,195.0
-qya2015-12-24-22,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.0360000000000005,RAPTOR,60.0,-60.0,rawdata/proteus20025.mrc,4,195.0
-qya2015-12-24-23,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.0360000000000005,RAPTOR,60.0,-60.0,rawdata/proteus20026.mrc,4,195.0
-qya2015-12-24-26,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.0360000000000005,RAPTOR,60.0,-60.0,rawdata/proteus20029.mrc,4,195.0
-qya2015-12-24-33,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.0360000000000005,RAPTOR,60.0,-60.0,rawdata/proteus20036.mrc,4,195.0
-qya2015-12-24-41,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.0360000000000005,RAPTOR,60.0,-60.0,rawdata/proteus20044.mrc,4,195.0
-qya2015-12-24-42,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.0360000000000005,RAPTOR,60.0,-60.0,rawdata/proteus20046.mrc,4,195.0
+qya2015-12-07-1,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.036,RAPTOR,60.0,-60.0,rawdata/atlas10001.mrc,4,180.0
+qya2015-12-07-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.036,RAPTOR,60.0,-60.0,rawdata/atlas10002.mrc,4,180.0
+qya2015-12-07-3,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.036,RAPTOR,60.0,-60.0,rawdata/atlas10003.mrc,4,180.0
+qya2015-12-07-8,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSF Tomo,4.036,RAPTOR,60.0,-60.0,rawdata/atlas10008.mrc,4,180.0
+qya2015-12-07-28,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.036,RAPTOR,60.0,-60.0,rawdata/atlas10028.mrc,4,180.0
+qya2015-12-24-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.036,RAPTOR,60.0,-60.0,rawdata/proteus20003.mrc,4,195.0
+qya2015-12-24-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.036,RAPTOR,60.0,-60.0,rawdata/proteus20012.mrc,4,195.0
+qya2015-12-24-22,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.036,RAPTOR,60.0,-60.0,rawdata/proteus20025.mrc,4,195.0
+qya2015-12-24-23,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.036,RAPTOR,60.0,-60.0,rawdata/proteus20026.mrc,4,195.0
+qya2015-12-24-26,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.036,RAPTOR,60.0,-60.0,rawdata/proteus20029.mrc,4,195.0
+qya2015-12-24-33,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.036,RAPTOR,60.0,-60.0,rawdata/proteus20036.mrc,4,195.0
+qya2015-12-24-41,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.036,RAPTOR,60.0,-60.0,rawdata/proteus20044.mrc,4,195.0
+qya2015-12-24-42,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,UCSFTomo,4.036,RAPTOR,60.0,-60.0,rawdata/proteus20046.mrc,4,195.0
 qya2015-12-26-1,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,4.933,RAPTOR,60.0,-60.0,rawdata/proteus30001.mrc,4,195.0
 qya2015-12-26-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,4.933,RAPTOR,60.0,-60.0,rawdata/proteus30002.mrc,4,195.0
 qya2015-12-25-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,4.933,RAPTOR,60.0,-60.0,rawdata/agrobacter0009.mrc,4,195.0

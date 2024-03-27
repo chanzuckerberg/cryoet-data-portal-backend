@@ -2,7 +2,7 @@ run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction
 mka2018-09-29-1,,NON_FIDUCIAL,None,None,,21.64,,rawdata/AnchorHM.mrc,1
 mka2018-09-29-2,,NON_FIDUCIAL,None,None,,61.7,,rawdata/AnchorLM.mrc,1
 mka2018-09-29-3,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,21.64,5.41,RAPTOR,rawdata/Pseudomonas_DfliF29.mrc,4
-mka2018-09-29-4,,NON_FIDUCIAL,None,None,,2247.1459999999997,,rawdata/Grid10Atlas.mrc,1
+mka2018-09-29-4,,NON_FIDUCIAL,None,None,,2247.146,,rawdata/Grid10Atlas.mrc,1
 mka2018-09-29-5,,NON_FIDUCIAL,None,None,,61.7,,rawdata/MontageSq3.mrc,1
 mka2018-09-29-6,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,21.64,5.41,RAPTOR,rawdata/Pseudomonas_DfliF3.mrc,4
 mka2018-09-29-7,,NON_FIDUCIAL,None,None,,61.7,,rawdata/MontageSq4.mrc,1
