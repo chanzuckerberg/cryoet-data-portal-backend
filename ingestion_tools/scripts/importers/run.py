@@ -29,12 +29,3 @@ class RunImporter(BaseImporter):
         metadata = RunMetadata(self.config.fs, self.config.deposition_id, self.config.run_template)
         merge_data = {"run_name": self.name}
         metadata.write_metadata(dest_run_metadata, merge_data)
-
-    @classmethod
-    def find_runs(cls, config: DepositionImportConfig, dataset: DatasetImporter) -> list[Any]:
-        run_path = os.path.join(config.input_path, config.run_glob)
-        responses = []
-        for fname in config.fs.glob(run_path):
-            if config.run_regex.search(fname):
-                responses.append(cls(config=config, parent=dataset, path=fname))
-        return responses

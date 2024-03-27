@@ -91,12 +91,15 @@ def convert(
     iterate_tomos = max(
         import_tomograms,
         import_tomogram_metadata,
-        import_annotations,
-        import_annotation_metadata,
         import_metadata,
         import_everything,
         make_key_image,
         make_neuroglancer_config,
+    )
+    iterate_voxelspacings = max(
+        iterate_tomos,
+        import_annotations,
+        import_annotation_metadata,
     )
     iterate_keyimages = max(import_everything, make_key_image)
     iterate_tiltseries = max(import_metadata, import_tiltseries, import_tiltseries_metadata, import_everything)
@@ -123,20 +126,12 @@ def convert(
     filter_run_name_patterns = [re.compile(pattern) for pattern in filter_run_name]
     filter_ds_name_patterns = [re.compile(pattern) for pattern in filter_dataset_name]
     # Always iterate over datasets and runs.
-    if config.dataset_finder_config:
-        datasets = config.dataset_finder_config.find(DatasetImporter, None, config, fs)
-    else:
-        # Maintain reverse compatibility
-        datasets = [DatasetImporter(config, None, name=config.destination_prefix, path=config.source_prefix)]
+    datasets = config.dataset_finder_config.find(DatasetImporter, None, config, fs)
     for dataset in datasets:
         if filter_dataset_name and not list(filter(lambda x: x.match(dataset.name), filter_ds_name_patterns)):
             print(f"Skipping dataset {dataset.name}..")
             continue
-        if config.run_finder_config:
-            runs = config.run_finder_config.find(RunImporter, dataset, config, fs)
-        else:
-            # Maintain reverse compatibility
-            runs = RunImporter.find_runs(config, dataset)
+        runs = config.run_finder_config.find(RunImporter, dataset, config, fs)
         for run in runs:
             if list(filter(lambda x: x.match(run.name), exclude_run_name_patterns)):
                 print(f"Excluding {run.name}..")
@@ -147,16 +142,11 @@ def convert(
             print(f"Processing {run.name}...")
             if import_run_metadata or import_metadata or import_everything:
                 run.import_run_metadata()
-            if iterate_tomos:
-                if config.vs_finder_config:
-                    voxel_spacings = config.vs_finder_config.find(VoxelSpacingImporter, run, config, fs)
-                else:
-                    voxel_spacings = VoxelSpacingImporter.find_vs(config, run)
+            if iterate_voxelspacings:
+                voxel_spacings = config.voxel_spacing_finder_config.find(VoxelSpacingImporter, run, config, fs)
                 for vs in voxel_spacings:
-                    legacy_anno_import = True
                     # We can import annotations without fetching tomos in the new world!
                     if vs.name:
-                        legacy_anno_import = False
                         if iterate_annotations:
                             for annotation in AnnotationImporter.find_annotations(config, vs):
                                 if import_annotations:
@@ -165,31 +155,14 @@ def convert(
                                 if import_annotation_metadata:
                                     print(f"Importing annotation metadata {annotation} ... ")
                                     annotation.import_metadata()
-                        # If we've already processed annotations, rethink whether we need to
-                        # iterate over tomograms
-                        iterate_tomos = max(
-                            import_tomograms,
-                            import_tomogram_metadata,
-                            import_metadata,
-                            import_everything,
-                            make_key_image,
-                            make_neuroglancer_config,
-                        )
                     if not iterate_tomos:
                         continue
-                    tomos = TomogramImporter.find_tomograms(config, vs)
+                    tomos = config.tomogram_finder_config.find(TomogramImporter, vs, config, fs)
                     for tomo in tomos:
                         if iterate_tomos and not vs.name:
                             vs.set_voxel_spacing(tomo.get_voxel_spacing())
                         if import_tomograms:
                             tomo.import_tomogram(write_mrc=write_mrc, write_zarr=write_zarr)
-                        if legacy_anno_import:
-                            if iterate_annotations:
-                                for annotation in AnnotationImporter.find_annotations(config, vs):
-                                    if import_annotations:
-                                        annotation.import_annotations(True)
-                                    if import_annotation_metadata:
-                                        annotation.import_metadata()
                         if iterate_keyimages:
                             for keyimage in KeyImageImporter.find_key_images(config, tomo):
                                 keyimage.make_key_image(config)
@@ -199,20 +172,23 @@ def convert(
                             for item in NeuroglancerImporter.find_ng(config, tomo):
                                 item.import_neuroglancer()
             if iterate_frames:
-                frame_imports = FramesImporter.find_frames(config, run)
-                for importer in frame_imports:
-                    importer.import_frames()
+                frame_importers = config.frame_finder_config.find(FrameImporter, run, config, fs)
+                for frame in frame_importers:
+                    frame.import_item()
+                gain_importers = config.frame_finder_config.find(GainImporter, run, config, fs)
+                for gain in gain_importers:
+                    gain.import_item()
             if iterate_tiltseries:
-                ts_imports = TiltSeriesImporter.find_tiltseries(config, run)
+                ts_imports = config.tiltseries_finder_config.find(TiltSeriesImporter, run, config, fs)
                 for importer in ts_imports:
                     if import_tiltseries:
                         importer.import_tiltseries(write_mrc=write_mrc, write_zarr=write_zarr)
                     if import_tiltseries_metadata:
                         importer.import_metadata(True)
                 if import_tiltseries:
-                    raw_imports = RawTiltImporter.find_rawtilts(config, run)
-                    for importer in raw_imports:
-                        importer.import_rawtilts()
+                    rawtlt_importers = config.rawtlt_finder_config.find(RawTiltImporter, run, config, fs)
+                    for importer in rawtlt_importers:
+                        importer.import_item()
         if import_datasets or import_everything:
             dataset_key_photos_importer = DatasetKeyPhotoImporter.find_dataset_key_photos(config, dataset)
             dataset_key_photos_importer.import_key_photo()

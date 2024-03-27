@@ -15,15 +15,42 @@ else:
 ###
 ### Base Finders
 ###
-class SourceGlobFinder(ABC):
+class SourceMultiGlobFinder:
     list_glob: str
     match_regex: re.Pattern[str]
     name_regex: re.Pattern[str]
 
-    def __init__(self, list_glob: str, match_regex: re.Pattern[str], name_regex: re.Pattern[str]):
+    def __init__(self, list_globs: str):
+        self.list_globs = list_globs
+
+    def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
+        responses = {}
+        for list_glob in self.list_globs:
+            path = os.path.join(config.deposition_root_dir, list_glob.format(**glob_vars))
+            print(f"path -- {path}")
+            for fname in config.fs.glob(path):
+                if not self.match_regex.search(fname):
+                    continue
+                path = fname
+                obj_name = self.name_regex.match(os.path.basename(path))[1]
+                responses[path] = obj_name
+        return responses
+
+class SourceGlobFinder:
+    list_glob: str
+    match_regex: re.Pattern[str]
+    name_regex: re.Pattern[str]
+
+    def __init__(self, list_glob: str, match_regex: re.Pattern[str] | None = None, name_regex: re.Pattern[str] | None = None):
         self.list_glob = list_glob
-        self.match_regex = re.compile(match_regex)
-        self.name_regex = re.compile(name_regex)
+        if not match_regex:
+            self.match_regex = re.compile(".*")
+        else:
+            self.match_regex = re.compile(match_regex)
+        if not name_regex:
+            self.name_regex = re.compile("(.*)")
+        else:
+            self.name_regex = re.compile(name_regex)
 
     def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
         path = os.path.join(config.deposition_root_dir, self.list_glob.format(**glob_vars))
@@ -41,7 +68,7 @@ class SourceGlobFinder(ABC):
 # TODO this thing probably shouldn't exist, since it relies on a particular existing state of our
 # output directories, but for the moment we have a deposition that doesn't encode voxel spacings in it,
 # so this is about the best we can do.
-class DestinationGlobFinder(ABC):
+class DestinationGlobFinder:
     list_glob: str
     match_regex: re.Pattern[str]
     name_regex: re.Pattern[str]
@@ -64,53 +91,22 @@ class DestinationGlobFinder(ABC):
         return responses
 
 
-class BaseLiteralValueFinder(ABC):
+class BaseLiteralValueFinder:
     literal_value: list[Any]
 
     def __init__(self, literal_value: str):
         self.literal_value = literal_value
 
-    def find(self, config: DepositionImportConfig, fs: FileSystemApi):
-        return self.literal_value
+    def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
+        return [item for item in self.literal_value]
 
+class VoxelSpacingLiteralValueFinder(BaseLiteralValueFinder):
+    def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
+        # Expand voxel spacing based on tomogram metadata. This is for reverse compatibility with certain configs with run overrides.
+        if "run_name" in glob_vars:
+            return [config.expand_string(glob_vars["run_name"], config.tomogram_template.get("voxel_spacing")) for item in self.literal_value]
+        return [item for item in self.literal_value]
 
-###
-### Dataset finders
-###
-class DatasetDestinationGlobFinder(DestinationGlobFinder):
-    pass
-
-
-class DatasetSourceGlobFinder(SourceGlobFinder):
-    pass
-
-
-class DatasetLiteralFinder(BaseLiteralValueFinder):
-    pass
-
-
-class RunDestinationGlobFinder(DestinationGlobFinder):
-    pass
-
-
-class RunSourceGlobFinder(SourceGlobFinder):
-    pass
-
-
-class RunLiteralFinder(BaseLiteralValueFinder):
-    pass
-
-
-class VSDestinationGlobFinder(DestinationGlobFinder):
-    pass
-
-
-class VSSourceGlobFinder(SourceGlobFinder):
-    pass
-
-
-class VSLiteralFinder(BaseLiteralValueFinder):
-    pass
 
 
 ###
@@ -144,37 +140,60 @@ class DepositionObjectImporterFactory(ABC):
         return results
 
 
-class DatasetImporterFactory(DepositionObjectImporterFactory):
+class DefaultImporterFactory(DepositionObjectImporterFactory):
     def load(self, parent_object: Any | None, config: DepositionImportConfig, fs: FileSystemApi):
         source = self.source
         if source.get("source_glob"):
-            return DatasetSourceGlobFinder(**source["source_glob"])
+            return SourceGlobFinder(**source["source_glob"])
+        if source.get("source_multi_glob"):
+            return SourceMultiGlobFinder(**source["source_multi_glob"])
         if source.get("destination_glob"):
-            return DatasetDestinationGlobFinder(**source["destination_glob"])
+            return DestinationGlobFinder(**source["destination_glob"])
         if source.get("literal"):
-            return DatasetLiteralFinder(**source["tomogram_header"])
+            return BaseLiteralValueFinder(**source["literal"])
         raise Exception("Invalid source type")
 
 
-class RunImporterFactory(DepositionObjectImporterFactory):
-    def load(self, parent_object: Any | None, config: DepositionImportConfig, fs: FileSystemApi):
-        source = self.source
-        if source.get("source_glob"):
-            return RunSourceGlobFinder(**source["source_glob"])
-        if source.get("destination_glob"):
-            return RunDestinationGlobFinder(**source["destination_glob"])
-        if source.get("literal"):
-            return RunLiteralFinder(**source["tomogram_header"])
-        raise Exception("Invalid source type")
-
-
+# TODO - This one's gonna need to get fancy to inspect tomogram headers.
 class VSImporterFactory(DepositionObjectImporterFactory):
     def load(self, parent_object: Any | None, config: DepositionImportConfig, fs: FileSystemApi):
         source = self.source
         if source.get("source_glob"):
-            return VSSourceGlobFinder(**source["source_glob"])
+            return SourceGlobFinder(**source["source_glob"])
         if source.get("destination_glob"):
-            return VSDestinationGlobFinder(**source["destination_glob"])
+            return DestinationGlobFinder(**source["destination_glob"])
+        # TODO FIXME
+        # if source.get("tomogram_header"):
+        #     return TBDTomogramHeaderReader(**source["tomogram_header"])
         if source.get("literal"):
-            return VSLiteralFinder(**source["tomogram_header"])
+            # FIXME
+            return VoxelSpacingLiteralValueFinder(**source["literal"])
         raise Exception("Invalid source type")
+
+class RawtltImporterFactory(DefaultImporterFactory):
+    pass
+
+class TiltseriesImporterFactory(DefaultImporterFactory):
+    pass
+
+class FrameImporterFactory(DefaultImporterFactory):
+    pass
+
+class GainImporterFactory(DefaultImporterFactory):
+    pass
+
+class TomogramImporterFactory(DefaultImporterFactory):
+    pass
+
+class DatasetImporterFactory(DefaultImporterFactory):
+    pass
+
+class RunImporterFactory(DefaultImporterFactory):
+    pass
+
+class KeyImageImporterFactory(DefaultImporterFactory):
+    pass
+
+# TODO, how is this going to work???
+class AnnotationImporterFactory(DefaultImporterFactory):
+    pass

@@ -12,28 +12,6 @@ else:
     RunImporter = "RunImporter"
 
 
-class RawTiltImporter(BaseImporter):
-    type_key = "tiltseries"
-
-    def import_rawtilts(self) -> None:
-        # Copy rawtilt files and/or xf files and/or tlt files and/or mdoc files to their dest
-        run = self.get_run()
-        # TODO - We should probably instantiate this class for each file in our list of rawtilt files
-        # but we're cheating and importing them all through a single instance. If we need to expand
-        # the functionality we support for rawtilts we should refactor this.
-        for file_glob in self.config.rawtlt_files:
-            for item in self.config.glob_files(run, file_glob):
-                output_file = os.path.join(self.get_output_path(), os.path.basename(item))
-                self.config.fs.copy(item, output_file)
-
-    @classmethod
-    def find_rawtilts(cls, config: DepositionImportConfig, run: RunImporter) -> list["RawTiltImporter"]:
-        if not config.rawtlt_files:
-            print(f"No tiltseries raw files for {config.dataset_template.get('dataset_identifier')}")
-            return []
-        return [cls(config=config, parent=run)]
-
-
 class TiltSeriesImporter(VolumeImporter):
     type_key = "tiltseries"
 
@@ -57,19 +35,6 @@ class TiltSeriesImporter(VolumeImporter):
         metadata = TiltSeriesMetadata(self.config.fs, self.config.deposition_id, base_metadata)
         if write:
             metadata.write_metadata(dest_ts_metadata, merge_data)
-
-    @classmethod
-    def find_tiltseries(cls, config: DepositionImportConfig, run: RunImporter) -> "TiltSeriesImporter":
-        if not config.tiltseries_glob:
-            print(f"No tiltseries for {config.dataset_template.get('dataset_identifier')}")
-            return []
-        importers = []
-        for item in config.glob_files(run, config.tiltseries_glob):
-            if config.ts_name_regex and not config.ts_name_regex.match(item):
-                continue
-            importers.append(cls(config=config, parent=run, path=item))
-
-        return importers
 
     def get_pixel_spacing(self) -> float:
         pixel_spacing = self.get_base_metadata().get("pixel_spacing")

@@ -50,30 +50,3 @@ class TomogramImporter(VolumeImporter):
         metadata = TomoMetadata(self.config.fs, self.config.deposition_id, base_metadata)
         if write:
             metadata.write_metadata(dest_tomo_metadata, merge_data)
-
-    @classmethod
-    def find_tomograms(
-        cls,
-        config: DepositionImportConfig,
-        vs: VoxelSpacingImporter,
-        skip_cache: bool = False,
-    ) -> list["TomogramImporter"]:
-        run = vs.parent
-        cache_key = run.name
-        if not skip_cache and cache_key in cls.cached_find_results:
-            return cls.cached_find_results[cache_key]
-        tomo_glob = config.tomo_glob
-        if config.run_to_tomo_map:
-            tomo_glob = tomo_glob.format(**run.get_glob_vars())
-        tomos = []
-        if tomo_glob:
-            for fname in config.glob_files(run, tomo_glob):
-                if config.tomo_regex:
-                    if config.tomo_regex.search(fname):
-                        tomos.append(fname)
-                else:
-                    tomos.append(fname)
-        if not tomos:
-            return []
-        cls.cached_find_results[cache_key] = [cls(config=config, parent=vs, path=tomos[0])]
-        return cls.cached_find_results[cache_key]

@@ -1,12 +1,9 @@
-from typing import TYPE_CHECKING
+import contextlib
 import json
 import os
-import contextlib
+from typing import TYPE_CHECKING, Any
 
 from importers.base_importer import BaseImporter
-
-from common.config import DepositionImportConfig
-from typing import Any
 
 if TYPE_CHECKING:
     from importers.run import RunImporter
@@ -23,6 +20,7 @@ class VoxelSpacingImporter(BaseImporter):
         **kwargs: dict[str, Any],
     ):
         super().__init__(*args, **kwargs)
+        self.name = self.set_voxel_spacing(self.name)
 
     # TODO mutating importers is bad news :'(
     def set_voxel_spacing(self, voxel_spacing):
@@ -31,10 +29,10 @@ class VoxelSpacingImporter(BaseImporter):
     @classmethod
     def format_voxel_spacing(cls, voxel_spacing: float) -> None:
         return "{:.3f}".format(round(voxel_spacing, 3))
-    
+
     def get_voxel_spacing(self):
         return self.name
-    
+
     def get_existing_annotation_metadatas(self, fs):
         # TODO use an annotation finder object here when we have one.
         metadata_glob = f"{self.config.resolve_output_path('annotation', self)}/*.json"
@@ -44,17 +42,3 @@ class VoxelSpacingImporter(BaseImporter):
             with contextlib.suppress(ValueError, TypeError):
                 metadatas[int(identifier)] = json.loads(fs.open(file, "r").read())
         return metadatas
-
-    # TODO this method needs to go away in favor of finders.
-    @classmethod
-    def find_vs(cls, config: DepositionImportConfig, run: RunImporter) -> list[Any]:
-        responses = []
-        if voxel_spacing := config.expand_string(
-            run.name,
-            config.tomogram_template.get("voxel_spacing"),
-        ):
-            voxel_spacing = cls.format_voxel_spacing(float(voxel_spacing))
-        else:
-            voxel_spacing = None
-        responses.append(cls(config=config, parent=run, name=voxel_spacing, path=None))
-        return responses

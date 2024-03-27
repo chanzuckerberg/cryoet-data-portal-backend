@@ -130,3 +130,10 @@ class VolumeImporter(BaseImporter):
 
     def mrc_header_mapper(self, header):
         pass
+
+class BaseFileImporter(BaseImporter):
+    def import_item(self, write: bool = True):
+        fs = self.config.fs
+        output_dir = self.get_output_path()
+        dest_filename = os.path.join(output_dir, os.path.basename(self.path))
+        fs.copy(self.path, dest_filename)
