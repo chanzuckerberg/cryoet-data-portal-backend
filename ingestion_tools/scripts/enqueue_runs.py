@@ -252,8 +252,9 @@ def queue(
             new_args = list(args)  # make a copy
             new_args.append(f"--filter-dataset-name '^{dataset.name}$'")
             new_args.append(f"--filter-run-name '^{run.name}$'")
-            dataset_id = digitmatch.match(config_file)[1]
-            execution_name = f"{int(time.time())}-ds{dataset_id}-run{run.name}"
+            dataset_id = dataset.name
+            deposition_id = config.deposition_id
+            execution_name = f"{int(time.time())}-dep{deposition_id}-ds{dataset_id}-run{run.name}"
 
             # Learn more about our AWS environment
             swipe_comms_bucket = None
