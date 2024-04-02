@@ -3,17 +3,19 @@ import yaml
 
 
 @click.group()
-@click.pass_context
-def cli(ctx):
+def cli():
     pass
 
 
-def update_file(filename: str) -> bool:
+def update_file(filename: str) -> None:
     with open(filename, "r") as fh:
         data = yaml.safe_load(fh.read())
     standardization_config = data["standardization_config"]
     if not standardization_config.get("dataset"):
-        standardization_config["dataset"] = {"source": {"literal": {"value": [data.get("destination_prefix")]}}}
+        standardization_config["dataset"] = {
+            "source": {"literal": {"value": [str(standardization_config.get("destination_prefix"))]}},
+        }
+        del standardization_config["destination_prefix"]
     if not standardization_config.get("run"):
         standardization_config["run"] = {
             "source": {
@@ -36,8 +38,8 @@ def update_file(filename: str) -> bool:
             },
         }
         del standardization_config["gain_glob"]
-    if not standardization_config.get("frames"):
-        standardization_config["frames"] = {
+    if not standardization_config.get("frame"):
+        standardization_config["frame"] = {
             "source": {
                 "source_glob": {
                     "list_glob": standardization_config["frames_glob"],
@@ -50,34 +52,37 @@ def update_file(filename: str) -> bool:
             "source": {
                 "source_glob": {
                     "list_glob": standardization_config["tiltseries_glob"],
-                    "name_regex": standardization_config["ts_name_regex"],
+                    "name_regex": standardization_config.get("ts_name_regex", ".*"),
                 },
             },
         }
         del standardization_config["tiltseries_glob"]
-        del standardization_config["ts_name_regex"]
+        if "ts_name_regex" in standardization_config:
+            del standardization_config["ts_name_regex"]
     if not standardization_config.get("tomogram"):
         standardization_config["tomogram"] = {
             "source": {
                 "source_glob": {
                     "list_glob": standardization_config["tomo_glob"],
-                    "match_regex": standardization_config["tomo_regex"],
+                    "match_regex": standardization_config.get("tomo_regex", ".*"),
                 },
             },
         }
         del standardization_config["tomo_glob"]
-        del standardization_config["tomo_regex"]
+        if "tomo_regex" in standardization_config:
+            del standardization_config["tomo_regex"]
     if not standardization_config.get("key_image"):
-        standardization_config["key_image"] = {
-            "source": {
-                "source_glob": {
-                    "list_glob": standardization_config["tomo_key_photo_glob"],
+        if standardization_config.get("tomo_key_photo_glob"):
+            standardization_config["key_image"] = {
+                "source": {
+                    "source_glob": {
+                        "list_glob": standardization_config["tomo_key_photo_glob"],
+                    },
                 },
-            },
-        }
-        del standardization_config["rawtlt_files"]
-    if not standardization_config.get("rawtlt"):
-        standardization_config["rawtlt"] = {
+            }
+            del standardization_config["tomo_key_photo_glob"]
+    if not standardization_config.get("rawtilt"):
+        standardization_config["rawtilt"] = {
             "source": {
                 "source_multi_glob": {
                     "list_globs": standardization_config["rawtlt_files"],
@@ -90,9 +95,9 @@ def update_file(filename: str) -> bool:
         standardization_config["voxel_spacing"] = {
             "source": {
                 "source_glob": {
-                    "list_glob": standardization_config["run_glob"],
-                    "match_regex": standardization_config["run_regex"],
-                    "name_regex": standardization_config["run_name_regex"],
+                    "list_glob": standardization_config.get("run_glob", "*"),
+                    "match_regex": standardization_config.get("asdf", ".*"),
+                    "name_regex": standardization_config.get("asdf", "(.*)"),
                 },
             },
         }
@@ -102,7 +107,7 @@ def update_file(filename: str) -> bool:
 
 
 @cli.command()
-@click.argument("conf_file", required=True, type=str, nargs="*")
+@click.argument("conf_file", required=True, type=str, nargs=-1)
 def upgrade(conf_file: list[str]) -> None:
     for filename in conf_file:
         update_file(filename)

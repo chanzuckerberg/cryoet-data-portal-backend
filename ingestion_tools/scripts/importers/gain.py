@@ -1,17 +1,8 @@
 import os
 from typing import TYPE_CHECKING
 
-from common.config import DepositionImportConfig
-from common.metadata import TiltSeriesMetadata
-from importers.base_importer import BaseImporter, VolumeImporter
-from importers.frames import FramesImporter
+from importers.base_importer import BaseImporter
 import subprocess
-
-if TYPE_CHECKING:
-    from importers.run import RunImporter
-else:
-    RunImporter = "RunImporter"
-
 
 class GainImporter(BaseImporter):
     type_key = "gain"

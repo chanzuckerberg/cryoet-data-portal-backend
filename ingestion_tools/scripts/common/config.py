@@ -5,7 +5,7 @@ import os.path
 import re
 from copy import deepcopy
 from typing import TYPE_CHECKING, Any
-from common.finders import DatasetImporterFactory, RunImporterFactory, VSImporterFactory, TiltseriesImporterFactory, FrameImporterFactory, GainImporterFactory, TomogramImporterFactory, RawtltImporterFactory, KeyImageImporterFactory
+from common.finders import DatasetImporterFactory, RunImporterFactory, VSImporterFactory, TiltseriesImporterFactory, FrameImporterFactory, GainImporterFactory, TomogramImporterFactory, RawTiltImporterFactory, KeyImageImporterFactory
 
 import yaml
 
@@ -31,7 +31,6 @@ class RunOverride:
 class DepositionImportConfig:
     https_prefix = os.getenv("DOMAIN_NAME", "https://files.cryoetdataportal.cziscience.com")
     source_prefix: str
-    destination_prefix: str
     output_prefix: str
     fs: FileSystemApi
     tomo_format: str
@@ -46,7 +45,7 @@ class DepositionImportConfig:
     run_to_frame_map: dict[str, str] | None = None
     run_to_ts_map_csv: str | None = None
     run_to_ts_map: dict[str, str] | None = None
-    rawtlt_files: list[str] | None = None
+    rawtilt_files: list[str] | None = None
     overrides_by_run: list[RunOverride] | None = None
     run_data_map: dict[str, Any]
     run_data_map_file: str | None = None
@@ -61,7 +60,7 @@ class DepositionImportConfig:
     frame_finder_config: FrameImporterFactory | None = None
     gain_finder_config: GainImporterFactory | None = None
     key_image_finder_config: KeyImageImporterFactory | None = None
-    rawtlt_finder_config: RawtltImporterFactory | None = None
+    rawtilt_finder_config: RawTiltImporterFactory | None = None
     run_finder_config: RunImporterFactory | None = None
     tiltseries_finder_config: TiltseriesImporterFactory | None = None
     tomogram_finder_config: TomogramImporterFactory | None = None
@@ -79,16 +78,22 @@ class DepositionImportConfig:
                 "frame": FrameImporterFactory,
                 "gain": GainImporterFactory,
                 "key_image": KeyImageImporterFactory,
-                "rawtlt": RawtltImporterFactory,
-                "run_finder": RunImporterFactory,
+                "rawtilt": RawTiltImporterFactory,
+                "run": RunImporterFactory,
                 "tiltseries": TiltseriesImporterFactory,
                 "tomogram": TomogramImporterFactory,
                 "voxel_spacing": VSImporterFactory,
             }
             for key, cls in factories.items():
-                if config.get("key"):
+                if config.get(key):
                     config[f"{key}_finder_config"] = cls(**config[key])
                     del config[key]
+
+            # Copy the remaining standardization config keys over to this object.
+            for k, v in config.items():
+                if "regex" in k:
+                    v = re.compile(v)
+                setattr(self, k, v)
 
             self.overrides_by_run = []
             try:
@@ -261,7 +266,7 @@ class DepositionImportConfig:
             "tiltseries": "{dataset_name}/{run_name}/TiltSeries",
             "gain": "{dataset_name}/{run_name}/Frames/{run_name}_gain.mrc",
             "frames": "{dataset_name}/{run_name}/Frames",
-            "rawtlt": "{dataset_name}/{run_name}/TiltSeries",
+            "rawtilt": "{dataset_name}/{run_name}/TiltSeries",
             "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
             "annotation_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
             "run_metadata": "{dataset_name}/{run_name}/run_metadata.json",
@@ -280,7 +285,6 @@ class DepositionImportConfig:
             output_prefix = ""
         path = os.path.join(
             output_prefix,
-            self.destination_prefix,
             paths[key].format(**glob_vars)
         )
         self.fs.makedirs(path)

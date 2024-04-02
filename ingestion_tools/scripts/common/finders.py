@@ -33,7 +33,7 @@ class SourceMultiGlobFinder:
                     continue
                 path = fname
                 obj_name = self.name_regex.match(os.path.basename(path))[1]
-                responses[path] = obj_name
+                responses[obj_name] = path
         return responses
 
 class SourceGlobFinder:
@@ -61,7 +61,7 @@ class SourceGlobFinder:
                 continue
             path = fname
             obj_name = self.name_regex.match(os.path.basename(path))[1]
-            responses[path] = obj_name
+            responses[obj_name] = path
         return responses
 
 
@@ -87,18 +87,18 @@ class DestinationGlobFinder:
                 continue
             path = fname
             obj_name = self.name_regex.match(os.path.basename(path))[1]
-            responses[path] = obj_name
+            responses[obj_name] = path
         return responses
 
 
 class BaseLiteralValueFinder:
     literal_value: list[Any]
 
-    def __init__(self, literal_value: str):
-        self.literal_value = literal_value
+    def __init__(self, value: str):
+        self.literal_value = value
 
     def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
-        return [item for item in self.literal_value]
+        return {item: None for item in self.literal_value}
 
 class VoxelSpacingLiteralValueFinder(BaseLiteralValueFinder):
     def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
@@ -135,7 +135,7 @@ class DepositionObjectImporterFactory(ABC):
             tmp_parent_object = tmp_parent_object.parent
         found = loader.find(config, fs, glob_vars)
         results = []
-        for path, name in found.items():
+        for name, path in found.items():
             results.append(cls(config=config, parent=parent_object, name=name, path=path))
         return results
 
@@ -170,7 +170,7 @@ class VSImporterFactory(DepositionObjectImporterFactory):
             return VoxelSpacingLiteralValueFinder(**source["literal"])
         raise Exception("Invalid source type")
 
-class RawtltImporterFactory(DefaultImporterFactory):
+class RawTiltImporterFactory(DefaultImporterFactory):
     pass
 
 class TiltseriesImporterFactory(DefaultImporterFactory):

@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 from common.config import DepositionImportConfig
 from common.metadata import TiltSeriesMetadata
 from importers.base_importer import BaseImporter, VolumeImporter
-from importers.frames import FramesImporter
+from importers.frame import FrameImporter
 
 if TYPE_CHECKING:
     from importers.run import RunImporter
@@ -24,7 +24,7 @@ class TiltSeriesImporter(VolumeImporter):
         )
 
     def get_frames_count(self) -> int:
-        return len(FramesImporter.find_all_frames(self.config, self.get_run()))
+        return len(FrameImporter.find_all_frames(self.config, self.get_run()))
 
     def import_metadata(self, write: bool) -> None:
         dest_ts_metadata = self.get_metadata_path()

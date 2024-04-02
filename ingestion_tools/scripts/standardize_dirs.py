@@ -6,12 +6,14 @@ import click
 from importers.annotation import AnnotationImporter
 from importers.dataset import DatasetImporter
 from importers.dataset_key_photo import DatasetKeyPhotoImporter
-from importers.frames import FramesImporter
 from importers.key_image import KeyImageImporter
 from importers.neuroglancer import NeuroglancerImporter
 from importers.run import RunImporter
-from importers.tiltseries import RawTiltImporter, TiltSeriesImporter
+from importers.tiltseries import TiltSeriesImporter
+from importers.rawtilt import RawTiltImporter
+from importers.frame import FrameImporter
 from importers.tomogram import TomogramImporter
+from importers.gain import GainImporter
 from importers.voxel_spacing import VoxelSpacingImporter
 
 from common.config import DepositionImportConfig
@@ -48,7 +50,7 @@ def cli(ctx):
 @click.option("--make-neuroglancer-config", type=bool, is_flag=True, default=False)
 @click.option("--write-mrc/--no-write-mrc", default=True)
 @click.option("--write-zarr/--no-write-zarr", default=True)
-@click.option("--local_fs", type=bool, is_flag=True, default=False)
+@click.option("--local-fs", type=bool, is_flag=True, default=False)
 @click.pass_context
 def convert(
     ctx,
@@ -84,7 +86,6 @@ def convert(
     fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=force_overwrite)
 
     config = DepositionImportConfig(fs, config_file, output_path, input_bucket)
-    os.makedirs(os.path.join(output_path, config.destination_prefix), exist_ok=True)
     config.load_map_files()
 
     # Configure which dependencies that do / don't require us to iterate over importer results.
@@ -145,32 +146,30 @@ def convert(
             if iterate_voxelspacings:
                 voxel_spacings = config.voxel_spacing_finder_config.find(VoxelSpacingImporter, run, config, fs)
                 for vs in voxel_spacings:
-                    # We can import annotations without fetching tomos in the new world!
-                    if vs.name:
-                        if iterate_annotations:
-                            for annotation in AnnotationImporter.find_annotations(config, vs):
-                                if import_annotations:
-                                    print(f"Importing annotation {annotation} ... ")
-                                    annotation.import_annotations(True)
-                                if import_annotation_metadata:
-                                    print(f"Importing annotation metadata {annotation} ... ")
-                                    annotation.import_metadata()
-                    if not iterate_tomos:
+                    if iterate_tomos:
+                        tomos = config.tomogram_finder_config.find(TomogramImporter, vs, config, fs)
+                        for tomo in tomos:
+                            if iterate_tomos and not vs.name:
+                                vs.set_voxel_spacing(tomo.get_voxel_spacing())
+                            if import_tomograms:
+                                tomo.import_tomogram(write_mrc=write_mrc, write_zarr=write_zarr)
+                            if iterate_keyimages:
+                                for keyimage in KeyImageImporter.find_key_images(config, tomo):
+                                    keyimage.make_key_image(config)
+                            if import_tomogram_metadata:
+                                tomo.import_metadata(True)
+                            if iterate_ng:
+                                for item in NeuroglancerImporter.find_ng(config, tomo):
+                                    item.import_neuroglancer()
+                    if not iterate_annotations:
                         continue
-                    tomos = config.tomogram_finder_config.find(TomogramImporter, vs, config, fs)
-                    for tomo in tomos:
-                        if iterate_tomos and not vs.name:
-                            vs.set_voxel_spacing(tomo.get_voxel_spacing())
-                        if import_tomograms:
-                            tomo.import_tomogram(write_mrc=write_mrc, write_zarr=write_zarr)
-                        if iterate_keyimages:
-                            for keyimage in KeyImageImporter.find_key_images(config, tomo):
-                                keyimage.make_key_image(config)
-                        if import_tomogram_metadata:
-                            tomo.import_metadata(True)
-                        if iterate_ng:
-                            for item in NeuroglancerImporter.find_ng(config, tomo):
-                                item.import_neuroglancer()
+                    for annotation in AnnotationImporter.find_annotations(config, vs):
+                        if import_annotations:
+                            print(f"Importing annotation {annotation} ... ")
+                            annotation.import_annotations(True)
+                        if import_annotation_metadata:
+                            print(f"Importing annotation metadata {annotation} ... ")
+                            annotation.import_metadata()
             if iterate_frames:
                 frame_importers = config.frame_finder_config.find(FrameImporter, run, config, fs)
                 for frame in frame_importers:
