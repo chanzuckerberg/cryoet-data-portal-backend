@@ -127,12 +127,12 @@ def convert(
     filter_run_name_patterns = [re.compile(pattern) for pattern in filter_run_name]
     filter_ds_name_patterns = [re.compile(pattern) for pattern in filter_dataset_name]
     # Always iterate over datasets and runs.
-    datasets = config.dataset_finder_config.find(DatasetImporter, None, config, fs)
+    datasets = config.find_datasets(DatasetImporter, None, fs)
     for dataset in datasets:
         if filter_dataset_name and not list(filter(lambda x: x.match(dataset.name), filter_ds_name_patterns)):
             print(f"Skipping dataset {dataset.name}..")
             continue
-        runs = config.run_finder_config.find(RunImporter, dataset, config, fs)
+        runs = config.find_runs(RunImporter, dataset, fs)
         for run in runs:
             if list(filter(lambda x: x.match(run.name), exclude_run_name_patterns)):
                 print(f"Excluding {run.name}..")
@@ -144,10 +144,10 @@ def convert(
             if import_run_metadata or import_metadata or import_everything:
                 run.import_run_metadata()
             if iterate_voxelspacings:
-                voxel_spacings = config.voxel_spacing_finder_config.find(VoxelSpacingImporter, run, config, fs)
+                voxel_spacings = config.find_voxel_spacings(VoxelSpacingImporter, run, fs)
                 for vs in voxel_spacings:
                     if iterate_tomos:
-                        tomos = config.tomogram_finder_config.find(TomogramImporter, vs, config, fs)
+                        tomos = config.find_tomograms(TomogramImporter, vs, fs)
                         for tomo in tomos:
                             if iterate_tomos and not vs.name:
                                 vs.set_voxel_spacing(tomo.get_voxel_spacing())
@@ -171,21 +171,21 @@ def convert(
                             print(f"Importing annotation metadata {annotation} ... ")
                             annotation.import_metadata()
             if iterate_frames:
-                frame_importers = config.frame_finder_config.find(FrameImporter, run, config, fs)
+                frame_importers = config.find_frames(FrameImporter, run, fs)
                 for frame in frame_importers:
                     frame.import_item()
-                gain_importers = config.frame_finder_config.find(GainImporter, run, config, fs)
+                gain_importers = config.find_gains(GainImporter, run, fs)
                 for gain in gain_importers:
                     gain.import_item()
             if iterate_tiltseries:
-                ts_imports = config.tiltseries_finder_config.find(TiltSeriesImporter, run, config, fs)
+                ts_imports = config.find_tiltseries(TiltSeriesImporter, run, fs)
                 for importer in ts_imports:
                     if import_tiltseries:
                         importer.import_tiltseries(write_mrc=write_mrc, write_zarr=write_zarr)
                     if import_tiltseries_metadata:
                         importer.import_metadata(True)
                 if import_tiltseries:
-                    rawtlt_importers = config.rawtlt_finder_config.find(RawTiltImporter, run, config, fs)
+                    rawtlt_importers = config.find_rawtilts(RawTiltImporter, run, fs)
                     for importer in rawtlt_importers:
                         importer.import_item()
         if import_datasets or import_everything:

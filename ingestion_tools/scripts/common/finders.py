@@ -104,8 +104,8 @@ class VoxelSpacingLiteralValueFinder(BaseLiteralValueFinder):
     def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
         # Expand voxel spacing based on tomogram metadata. This is for reverse compatibility with certain configs with run overrides.
         if "run_name" in glob_vars:
-            return [config.expand_string(glob_vars["run_name"], config.tomogram_template.get("voxel_spacing")) for item in self.literal_value]
-        return [item for item in self.literal_value]
+            return {config.expand_string(glob_vars["run_name"], config.tomogram_template.get("voxel_spacing")): None for item in self.literal_value}
+        return {item: None for item in self.literal_value}
 
 
 
@@ -143,6 +143,7 @@ class DepositionObjectImporterFactory(ABC):
 class DefaultImporterFactory(DepositionObjectImporterFactory):
     def load(self, parent_object: Any | None, config: DepositionImportConfig, fs: FileSystemApi):
         source = self.source
+        print(source)
         if source.get("source_glob"):
             return SourceGlobFinder(**source["source_glob"])
         if source.get("source_multi_glob"):

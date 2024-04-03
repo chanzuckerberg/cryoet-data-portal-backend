@@ -36,6 +36,8 @@ class DepositionImportConfig:
     tomo_format: str
     tomo_key_photo_glob: str | None = None
     tomo_voxel_size: str
+    # Override handling
+    overrides: list[dict[str, Any]] | None = None
     # Core metadata
     deposition_id: str
     # Override configuration
@@ -56,15 +58,27 @@ class DepositionImportConfig:
     tiltseries_template: dict[str, Any]
     annotation_template: dict[str, Any]
     # Data Finders
-    dataset_finder_config: DatasetImporterFactory | None = None
-    frame_finder_config: FrameImporterFactory | None = None
-    gain_finder_config: GainImporterFactory | None = None
-    key_image_finder_config: KeyImageImporterFactory | None = None
-    rawtilt_finder_config: RawTiltImporterFactory | None = None
-    run_finder_config: RunImporterFactory | None = None
-    tiltseries_finder_config: TiltseriesImporterFactory | None = None
-    tomogram_finder_config: TomogramImporterFactory | None = None
-    voxel_spacing_finder_config: VSImporterFactory | None = None
+    dataset_finder_config: dict[str, Any] | None = None
+    frame_finder_config: dict[str, Any] | None = None
+    gain_finder_config: dict[str, Any] | None = None
+    key_image_finder_config: dict[str, Any] | None = None
+    rawtilt_finder_config: dict[str, Any] | None = None
+    run_finder_config: dict[str, Any] | None = None
+    tiltseries_finder_config: dict[str, Any] | None = None
+    tomogram_finder_config: dict[str, Any] | None = None
+    voxel_spacing_finder_config: dict[str, Any] | None = None
+
+    finder_factories = {
+        "dataset": DatasetImporterFactory,
+        "frame": FrameImporterFactory,
+        "gain": GainImporterFactory,
+        "key_image": KeyImageImporterFactory,
+        "rawtilt": RawTiltImporterFactory,
+        "run": RunImporterFactory,
+        "tiltseries": TiltseriesImporterFactory,
+        "tomogram": TomogramImporterFactory,
+        "voxel_spacing": VSImporterFactory,
+    }
 
     def __init__(self, fs: FileSystemApi, config_path: str, output_prefix: str, input_bucket: str):
         self.output_prefix = output_prefix
@@ -73,20 +87,9 @@ class DepositionImportConfig:
             dataset_config = yaml.safe_load(conffile)
             config = dataset_config["standardization_config"]
 
-            factories = {
-                "dataset": DatasetImporterFactory,
-                "frame": FrameImporterFactory,
-                "gain": GainImporterFactory,
-                "key_image": KeyImageImporterFactory,
-                "rawtilt": RawTiltImporterFactory,
-                "run": RunImporterFactory,
-                "tiltseries": TiltseriesImporterFactory,
-                "tomogram": TomogramImporterFactory,
-                "voxel_spacing": VSImporterFactory,
-            }
-            for key, cls in factories.items():
+            for key, _ in self.finder_factories.items():
                 if config.get(key):
-                    config[f"{key}_finder_config"] = cls(**config[key])
+                    config[f"{key}_finder_config"] = config[key]
                     del config[key]
 
             # Copy the remaining standardization config keys over to this object.
@@ -108,6 +111,7 @@ class DepositionImportConfig:
                 # This isn't a required field
                 pass
 
+        self.overrides = dataset_config.get("overrides")
         template_configs = {
             "runs": "run",
             "tomograms": "tomogram",
@@ -148,6 +152,71 @@ class DepositionImportConfig:
             for row in reader:
                 mapdata[row["run_name"]] = row
         return mapdata
+    
+    def _get_finder_config(self, key: str, parent_obj) -> Any:
+        key_name = f"{key}_finder_config"
+        items = getattr(self,key_name)
+
+        if not self.overrides:
+            return items
+
+        next = parent_obj
+        obj_type_to_name_map = {}
+        while next:
+            obj_type_to_name_map[next.type_key] = next.name
+            next = getattr(next, "parent", None)
+
+        for override in self.overrides:
+            if all(re.search(regex, obj_type_to_name_map.get(obj_type, "")) for obj_type,regex in override["match"].items()):
+                sources = override["sources"]
+                if key in sources:
+                    return {"source": sources[key]}
+
+        return items
+
+    def _finder(self, import_class, key_name: str, parent, fs):
+        # TODO apply overrides!!
+        config = self._get_finder_config(key_name, parent)
+        cls = self.finder_factories[key_name]
+        finder_cls = cls(**config)
+        items = finder_cls.find(import_class, parent, self, fs)
+        return items
+
+    def find_datasets(self, import_class, parent, fs):
+        items = self._finder(import_class, 'dataset', parent, fs)
+        return items
+
+    def find_frames(self, import_class, parent, fs):
+        items = self._finder(import_class, 'frame', parent, fs)
+        return items
+
+    def find_gains(self, import_class, parent, fs):
+        items = self._finder(import_class, 'gain', parent, fs)
+        return items
+
+    def find_key_images(self, import_class, parent, fs):
+        items = self._finder(import_class, 'key_image', parent, fs)
+        return items
+
+    def find_rawtilts(self, import_class, parent, fs):
+        items = self._finder(import_class, 'rawtilt', parent, fs)
+        return items
+
+    def find_runs(self, import_class, parent, fs):
+        items = self._finder(import_class, 'run', parent, fs)
+        return items
+
+    def find_tiltseries(self, import_class, parent, fs):
+        items = self._finder(import_class, 'tiltseries', parent, fs)
+        return items
+
+    def find_tomograms(self, import_class, parent, fs):
+        items = self._finder(import_class, 'tomogram', parent, fs)
+        return items
+
+    def find_voxel_spacings(self, import_class, parent, fs):
+        items = self._finder(import_class, 'voxel_spacing', parent, fs)
+        return items
 
     def load_run_csv_file(self, file_attr: str) -> dict[str, Any]:
         mapdata = {}
@@ -275,7 +344,7 @@ class DepositionImportConfig:
             "dataset_metadata": "{dataset_name}/dataset_metadata.json",
             "run": "{dataset_name}/{run_name}",
             "dataset": "{dataset_name}",
-            "dataset_keyphoto": "Images",
+            "dataset_keyphoto": "{dataset_name}/Images",
             "neuroglancer": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/neuroglancer_config.json",
         }
         output_prefix = self.output_prefix

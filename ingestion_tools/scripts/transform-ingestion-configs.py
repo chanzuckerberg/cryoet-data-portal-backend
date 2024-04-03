@@ -11,6 +11,17 @@ def update_file(filename: str) -> None:
     with open(filename, "r") as fh:
         data = yaml.safe_load(fh.read())
     standardization_config = data["standardization_config"]
+    overrides = data.get("overrides_by_run")
+    if overrides:
+        standardization_config["overrides"] = []
+        for item in overrides:
+            new_override = {"match": {"run": item["run_regex"]}}
+            if item.get("tiltseries"):
+                new_override["metadata"] = {"tiltseries": item["tiltseries"]}
+            if item.get("tomogram"):
+                new_override["sources"] = {"voxel_spacing": {"literal": {"value": [item["tomogram"]["voxel_spacing"]]}}}
+            standardization_config["overrides"].append(new_override)
+        del data["overrides_by_run"]
     if not standardization_config.get("dataset"):
         standardization_config["dataset"] = {
             "source": {"literal": {"value": [str(standardization_config.get("destination_prefix"))]}},
