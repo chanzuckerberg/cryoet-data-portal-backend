@@ -20,7 +20,7 @@ class VoxelSpacingImporter(BaseImporter):
         **kwargs: dict[str, Any],
     ):
         super().__init__(*args, **kwargs)
-        self.name = self.set_voxel_spacing(self.name)
+        self.set_voxel_spacing(self.name)
 
     # TODO mutating importers is bad news :'(
     def set_voxel_spacing(self, voxel_spacing):

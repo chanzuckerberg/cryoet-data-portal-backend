@@ -330,6 +330,7 @@ class DepositionImportConfig:
 
     def resolve_output_path(self, key: str, obj: BaseImporter) -> str:
         paths = {
+            "voxel_spacing": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}",
             "tomogram": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram",
             "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos",
             "tiltseries": "{dataset_name}/{run_name}/TiltSeries",
@@ -349,9 +350,6 @@ class DepositionImportConfig:
         }
         output_prefix = self.output_prefix
         glob_vars = obj.get_glob_vars()
-        # support older configs that specified the dataset name as the output prefix
-        if self.output_prefix == glob_vars["dataset_name"]:
-            output_prefix = ""
         path = os.path.join(
             output_prefix,
             paths[key].format(**glob_vars)
