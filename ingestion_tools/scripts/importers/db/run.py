@@ -1,6 +1,7 @@
 from typing import Any, Iterator
 
 from common import db_models
+from common.db_models import BaseModel
 from importers.db.base_importer import BaseDBImporter, DBImportConfig
 from importers.db.dataset import DatasetDBImporter
 
@@ -28,7 +29,8 @@ class RunDBImporter(BaseDBImporter):
     def get_id_fields(cls) -> list[str]:
         return ["dataset_id", "name"]
 
-    def get_db_model_class(self) -> type:
+    @classmethod
+    def get_db_model_class(cls) -> type[BaseModel]:
         return db_models.Run
 
     @classmethod

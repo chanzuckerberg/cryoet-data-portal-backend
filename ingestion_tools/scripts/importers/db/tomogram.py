@@ -2,6 +2,7 @@ import json
 from typing import Any, Iterator
 
 from common import db_models
+from common.db_models import BaseModel
 from common.normalize_fields import normalize_fiducial_alignment, normalize_to_none_str
 from importers.db.base_importer import (
     AuthorsStaleDeletionDBImporter,
@@ -37,7 +38,7 @@ class TomogramDBImporter(BaseDBImporter):
         return ["name", "tomogram_voxel_spacing_id"]
 
     @classmethod
-    def get_db_model_class(cls) -> type:
+    def get_db_model_class(cls) -> type[BaseModel]:
         return db_models.Tomogram
 
     @classmethod
@@ -137,7 +138,7 @@ class TomogramAuthorDBImporter(AuthorsStaleDeletionDBImporter):
         return ["tomogram_id", "name"]
 
     @classmethod
-    def get_db_model_class(cls) -> type:
+    def get_db_model_class(cls) -> type[BaseModel]:
         return db_models.TomogramAuthor
 
     def get_filters(self) -> dict[str, Any]:
@@ -156,13 +157,8 @@ class TomogramAuthorDBImporter(AuthorsStaleDeletionDBImporter):
 class StaleTomogramDeletionDBImporter(StaleParentDeletionDBImporter):
     ref_klass = TomogramDBImporter
 
-    def __init__(self, voxel_spacing_id: int, config: DBImportConfig):
-        self.voxel_spacing_id = voxel_spacing_id
-        self.config = config
-        self.existing_objects = self.get_existing_objects()
-
     def get_filters(self) -> dict[str, Any]:
-        return {"tomogram_voxel_spacing_id": self.voxel_spacing_id}
+        return {"tomogram_voxel_spacing_id": self.parent_id}
 
     def children_tables_references(self) -> dict[str, None]:
         return {"authors": None}

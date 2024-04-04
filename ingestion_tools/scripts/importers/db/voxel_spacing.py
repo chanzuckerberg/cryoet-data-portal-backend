@@ -52,13 +52,8 @@ class TomogramVoxelSpacingDBImporter(BaseDBImporter):
 class StaleVoxelSpacingDeletionDBImporter(StaleParentDeletionDBImporter):
     ref_klass = TomogramVoxelSpacingDBImporter
 
-    def __init__(self, run_id: int, config: DBImportConfig):
-        self.run_id = run_id
-        self.config = config
-        self.existing_objects = self.get_existing_objects()
-
     def get_filters(self) -> dict[str, Any]:
-        return {"run_id": self.run_id}
+        return {"run_id": self.parent_id}
 
     def children_tables_references(self) -> dict[str, type[StaleDeletionDBImporter]]:
         from importers.db.annotation import StaleAnnotationDeletionDBImporter

@@ -1,25 +1,29 @@
-import datetime
 import json
 import os
+from datetime import datetime
 from pathlib import PurePath
-from typing import Any, Iterator, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 import peewee
 from botocore.exceptions import ClientError
 
 from common.db_models import BaseModel
 
+if TYPE_CHECKING:
+    from mypy_boto3_s3 import S3Client
+else:
+    S3Client = object
+
 
 class DBImportConfig:
-    # TODO: define better type
-    s3_client: Any
+    s3_client: S3Client
     bucket_name: str
     s3_prefix: str
     https_prefix: str
 
     def __init__(
         self,
-        s3_client,
+        s3_client: S3Client,
         bucket_name: str,
         https_prefix: str,
     ):
@@ -28,7 +32,7 @@ class DBImportConfig:
         self.s3_prefix = f"s3://{bucket_name}"
         self.https_prefix = https_prefix if https_prefix else "https://files.cryoetdataportal.cziscience.com"
 
-    def find_subdirs_with_files(self, prefix: str, target_filename: str) -> Iterator[str]:
+    def find_subdirs_with_files(self, prefix: str, target_filename: str) -> list[str]:
         paginator = self.s3_client.get_paginator("list_objects_v2")
         print(f"looking for prefix {prefix}")
         pages = paginator.paginate(Bucket=self.bucket_name, Prefix=prefix, Delimiter="/")
@@ -80,7 +84,7 @@ def map_to_value(db_key: str, mapping: dict[str, Any], data: dict[str, Any]) -> 
         if not value:
             break
     if value and "date" in db_key:
-        value = datetime.datetime.strptime(value, "%Y-%m-%d")  # type: ignore
+        value = datetime.strptime(value, "%Y-%m-%d")  # type: ignore
     return value
 
 
@@ -102,7 +106,8 @@ class BaseDBImporter:
     def get_id_fields(cls) -> list[str]:
         pass
 
-    def get_db_model_class(self) -> type:
+    @classmethod
+    def get_db_model_class(cls) -> type[BaseModel]:
         pass
 
     def import_to_db(self) -> BaseModel:
@@ -179,6 +184,12 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
     ref_klass: type[BaseDBImporter]
     existing_objects: dict[str, BaseModel]
     config: DBImportConfig
+    parent_id: int
+
+    def __init__(self, parent_id: int, config: DBImportConfig):
+        self.parent_id = parent_id
+        self.config = config
+        self.existing_objects = self.get_existing_objects()
 
     @classmethod
     def children_tables_references(cls) -> dict[str, "type[StaleParentDeletionDBImporter]"]:

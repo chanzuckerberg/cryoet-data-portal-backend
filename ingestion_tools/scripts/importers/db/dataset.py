@@ -1,6 +1,7 @@
 from typing import Any, Iterable
 
 from common import db_models
+from common.db_models import BaseModel
 from importers.db.base_importer import (
     AuthorsStaleDeletionDBImporter,
     BaseDBImporter,
@@ -26,7 +27,8 @@ class DatasetDBImporter(BaseDBImporter):
     def get_id_fields(cls) -> list[str]:
         return ["id"]
 
-    def get_db_model_class(self) -> type:
+    @classmethod
+    def get_db_model_class(cls) -> type[BaseModel]:
         return db_models.Dataset
 
     @classmethod
@@ -105,7 +107,8 @@ class DatasetAuthorDBImporter(AuthorsStaleDeletionDBImporter):
     def get_id_fields(cls) -> list[str]:
         return ["dataset_id", "name"]
 
-    def get_db_model_class(self) -> type:
+    @classmethod
+    def get_db_model_class(cls) -> type[BaseModel]:
         return db_models.DatasetAuthor
 
     def get_filters(self) -> dict[str, Any]:
@@ -134,7 +137,8 @@ class DatasetFundingDBImporter(StaleDeletionDBImporter):
     def get_id_fields(cls) -> list[str]:
         return ["dataset_id", "funding_agency_name"]
 
-    def get_db_model_class(self) -> type:
+    @classmethod
+    def get_db_model_class(cls) -> type[BaseModel]:
         return db_models.DatasetFunding
 
     def get_filters(self) -> dict[str, Any]:

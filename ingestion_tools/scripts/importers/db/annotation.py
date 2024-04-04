@@ -63,7 +63,7 @@ class AnnotationDBImporter(BaseDBImporter):
         return ["s3_metadata_path"]
 
     @classmethod
-    def get_db_model_class(cls) -> type:
+    def get_db_model_class(cls) -> type[BaseModel]:
         return db_models.Annotation
 
     @classmethod
@@ -104,7 +104,8 @@ class AnnotationFilesDBImporter(StaleDeletionDBImporter):
     def get_id_fields(cls) -> list[str]:
         return ["annotation_id", "format", "shape_type"]
 
-    def get_db_model_class(self) -> type:
+    @classmethod
+    def get_db_model_class(cls) -> type[BaseModel]:
         return db_models.AnnotationFiles
 
     def get_filters(self) -> dict[str, Any]:
@@ -145,7 +146,8 @@ class AnnotationAuthorDBImporter(AuthorsStaleDeletionDBImporter):
     def get_id_fields(cls) -> list[str]:
         return ["annotation_id", "name"]
 
-    def get_db_model_class(self) -> type:
+    @classmethod
+    def get_db_model_class(cls) -> type[BaseModel]:
         return db_models.AnnotationAuthor
 
     def get_filters(self) -> dict[str, Any]:
@@ -164,13 +166,8 @@ class AnnotationAuthorDBImporter(AuthorsStaleDeletionDBImporter):
 class StaleAnnotationDeletionDBImporter(StaleParentDeletionDBImporter):
     ref_klass = AnnotationDBImporter
 
-    def __init__(self, voxel_spacing_id: int, config: DBImportConfig):
-        self.voxel_spacing_id = voxel_spacing_id
-        self.config = config
-        self.existing_objects = self.get_existing_objects()
-
     def get_filters(self) -> dict[str, Any]:
-        return {"tomogram_voxel_spacing_id": self.voxel_spacing_id}
+        return {"tomogram_voxel_spacing_id": self.parent_id}
 
     def children_tables_references(self) -> dict[str, None]:
         return {"authors": None, "files": None}
