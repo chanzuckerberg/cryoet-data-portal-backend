@@ -20,8 +20,8 @@ class DatasetDBImporter(BaseDBImporter):
     def get_metadata_file_path(self) -> str:
         return self.join_path(self.dir_prefix, "dataset_metadata.json")
 
-    def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
-        return {**self.get_direct_mapped_fields(), **self.get_computed_fields(metadata)}
+    def get_data_map(self) -> dict[str, Any]:
+        return {**self.get_direct_mapped_fields(), **self.get_computed_fields()}
 
     @classmethod
     def get_id_fields(cls) -> list[str]:
@@ -60,7 +60,7 @@ class DatasetDBImporter(BaseDBImporter):
             "other_setup": ["other_setup"],
         }
 
-    def get_computed_fields(self, metadata: dict[str, Any]) -> dict[str, Any]:
+    def get_computed_fields(self) -> dict[str, Any]:
         https_prefix = self.config.https_prefix
         extra_data = {
             "s3_prefix": self.join_path(self.config.s3_prefix, self.dir_prefix),
@@ -68,7 +68,7 @@ class DatasetDBImporter(BaseDBImporter):
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
         }
-        key_photos = metadata.get("key_photos", {})
+        key_photos = self.metadata.get("key_photos", {})
         if snapshot_path := key_photos.get("snapshot"):
             extra_data["key_photo_url"] = self.join_path(https_prefix, snapshot_path)
         if thumbnail_path := key_photos.get("thumbnail"):
@@ -89,7 +89,7 @@ class DatasetAuthorDBImporter(AuthorsStaleDeletionDBImporter):
         self.config = config
         self.metadata = parent.metadata.get("authors", [])
 
-    def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
+    def get_data_map(self) -> dict[str, Any]:
         return {
             "dataset_id": self.dataset_id,
             "orcid": ["ORCID"],
@@ -126,7 +126,7 @@ class DatasetFundingDBImporter(StaleDeletionDBImporter):
         self.config = config
         self.metadata = parent.metadata.get("funding", [])
 
-    def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
+    def get_data_map(self) -> dict[str, Any]:
         return {
             "dataset_id": self.dataset_id,
             "funding_agency_name": ["funding_agency_name"],

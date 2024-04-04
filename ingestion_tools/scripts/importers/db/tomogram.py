@@ -30,8 +30,8 @@ class TomogramDBImporter(BaseDBImporter):
     def get_metadata_file_path(self) -> str:
         return self.join_path(self.dir_prefix, "tomogram_metadata.json")
 
-    def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
-        return {**self.get_direct_mapped_fields(), **self.get_computed_fields(metadata)}
+    def get_data_map(self) -> dict[str, Any]:
+        return {**self.get_direct_mapped_fields(), **self.get_computed_fields()}
 
     @classmethod
     def get_id_fields(cls) -> list[str]:
@@ -70,30 +70,30 @@ class TomogramDBImporter(BaseDBImporter):
         # TODO: Log warning
         return json.dumps(config, separators=(",", ":")) if config else "{}"
 
-    def get_computed_fields(self, metadata: dict[str, Any]) -> dict[str, Any]:
+    def get_computed_fields(self) -> dict[str, Any]:
         https_prefix = self.config.https_prefix
         s3_prefix = self.config.s3_prefix
         extra_data = {
             "tomogram_voxel_spacing_id": self.voxel_spacing_id,
-            "fiducial_alignment_status": normalize_fiducial_alignment(metadata.get("fiducial_alignment_status")),
-            "reconstruction_method": normalize_to_none_str(metadata.get("reconstruction_method")),
-            "reconstruction_software": normalize_to_none_str(metadata.get("reconstruction_software")),
+            "fiducial_alignment_status": normalize_fiducial_alignment(self.metadata.get("fiducial_alignment_status")),
+            "reconstruction_method": normalize_to_none_str(self.metadata.get("reconstruction_method")),
+            "reconstruction_software": normalize_to_none_str(self.metadata.get("reconstruction_software")),
             "is_canonical": True,  # TODO: mark this for deprecation
-            "s3_omezarr_dir": self.join_path(s3_prefix, self.dir_prefix, metadata["omezarr_dir"]),
-            "https_omezarr_dir": self.join_path(https_prefix, self.dir_prefix, metadata["omezarr_dir"]),
-            "s3_mrc_scale0": self.join_path(s3_prefix, self.dir_prefix, metadata["mrc_files"][0]),
-            "https_mrc_scale0": self.join_path(https_prefix, self.dir_prefix, metadata["mrc_files"][0]),
+            "s3_omezarr_dir": self.join_path(s3_prefix, self.dir_prefix, self.metadata["omezarr_dir"]),
+            "https_omezarr_dir": self.join_path(https_prefix, self.dir_prefix, self.metadata["omezarr_dir"]),
+            "s3_mrc_scale0": self.join_path(s3_prefix, self.dir_prefix, self.metadata["mrc_files"][0]),
+            "https_mrc_scale0": self.join_path(https_prefix, self.dir_prefix, self.metadata["mrc_files"][0]),
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
             "neuroglancer_config": self.generate_neuroglancer_data(),
             "type": self.get_tomogram_type(),
         }
-        if key_photos := metadata.get("key_photo"):
+        if key_photos := self.metadata.get("key_photo"):
             extra_data["key_photo_url"] = self.join_path(https_prefix, key_photos.get("snapshot"))
             extra_data["key_photo_thumbnail_url"] = self.join_path(https_prefix, key_photos.get("thumbnail"))
 
         for i in range(0, 3):
-            scale = metadata["scales"][i]
+            scale = self.metadata["scales"][i]
             extra_data[f"scale{i}_dimensions"] = ",".join([str(scale[p]) for p in "xyz"])
 
         return extra_data
@@ -119,7 +119,7 @@ class TomogramAuthorDBImporter(AuthorsStaleDeletionDBImporter):
         self.config = config
         self.metadata = parent.metadata.get("authors", [])
 
-    def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
+    def get_data_map(self) -> dict[str, Any]:
         return {
             "tomogram_id": self.tomogram_id,
             "orcid": ["ORCID"],

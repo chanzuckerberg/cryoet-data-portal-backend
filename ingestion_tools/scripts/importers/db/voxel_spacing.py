@@ -19,7 +19,7 @@ class TomogramVoxelSpacingDBImporter(BaseDBImporter):
         self.config = config
         self.metadata = {}
 
-    def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
+    def get_data_map(self) -> dict[str, Any]:
         return {
             "voxel_spacing": float(os.path.basename(self.dir_prefix.strip("/"))[len("VoxelSpacing") :]),
             "s3_prefix": self.join_path(self.config.s3_prefix, self.dir_prefix),

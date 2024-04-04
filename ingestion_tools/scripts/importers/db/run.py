@@ -17,7 +17,7 @@ class RunDBImporter(BaseDBImporter):
     def get_metadata_file_path(self) -> str:
         return self.join_path(self.dir_prefix, "run_metadata.json")
 
-    def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
+    def get_data_map(self) -> dict[str, Any]:
         return {
             "dataset_id": self.dataset_id,
             "name": ["run_name"],

@@ -17,8 +17,8 @@ class TiltSeriesDBImporter(BaseDBImporter):
     def get_metadata_file_path(self) -> str:
         return self.join_path(self.dir_prefix, "tiltseries_metadata.json")
 
-    def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
-        return {**self.get_direct_mapped_fields(), **self.get_computed_fields(metadata)}
+    def get_data_map(self) -> dict[str, Any]:
+        return {**self.get_direct_mapped_fields(), **self.get_computed_fields()}
 
     @classmethod
     def get_id_fields(cls) -> list[str]:
@@ -60,19 +60,19 @@ class TiltSeriesDBImporter(BaseDBImporter):
         for key in self.config.glob_s3(self.dir_prefix, file_extension_pattern):
             return key
 
-    def get_computed_fields(self, metadata: dict[str, Any]) -> dict[str, Any]:
+    def get_computed_fields(self) -> dict[str, Any]:
         https_prefix = self.config.https_prefix
         s3_prefix = self.config.s3_prefix
         extra_data = {
             "run_id": self.run_id,
-            "tilt_range": abs(float(metadata["tilt_range"]["max"]) - float(metadata["tilt_range"]["min"])),
-            "is_aligned": metadata.get("is_aligned") or False,
+            "tilt_range": abs(float(self.metadata["tilt_range"]["max"]) - float(self.metadata["tilt_range"]["min"])),
+            "is_aligned": self.metadata.get("is_aligned") or False,
         }
-        if mrc_path := metadata.get("mrc_files", [None])[0]:
+        if mrc_path := self.metadata.get("mrc_files", [None])[0]:
             extra_data["s3_mrc_bin1"] = self.join_path(s3_prefix, self.dir_prefix, mrc_path)
             extra_data["https_mrc_bin1"] = self.join_path(https_prefix, self.dir_prefix, mrc_path)
 
-        if omezarr_path := metadata.get("omezarr_dir"):
+        if omezarr_path := self.metadata.get("omezarr_dir"):
             extra_data["s3_omezarr_dir"] = self.join_path(s3_prefix, self.dir_prefix, omezarr_path)
             extra_data["https_omezarr_dir"] = self.join_path(https_prefix, self.dir_prefix, omezarr_path)
 

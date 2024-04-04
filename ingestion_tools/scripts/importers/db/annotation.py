@@ -29,7 +29,7 @@ class AnnotationDBImporter(BaseDBImporter):
         self.metadata_path = metadata_filename
         self.metadata = config.load_key_json(self.metadata_path)
 
-    def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
+    def get_data_map(self) -> dict[str, Any]:
         return {
             "tomogram_voxel_spacing_id": self.voxel_spacing_id,
             "s3_metadata_path": self.join_path(self.config.s3_prefix, self.metadata_path),
@@ -87,7 +87,7 @@ class AnnotationFilesDBImporter(StaleDeletionDBImporter):
         self.config = config
         self.metadata = parent.metadata.get("files", [])
 
-    def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
+    def get_data_map(self) -> dict[str, Any]:
         return {
             "annotation_id": self.annotation_id,
             "shape_type": ["shape"],
@@ -128,7 +128,7 @@ class AnnotationAuthorDBImporter(AuthorsStaleDeletionDBImporter):
         self.config = config
         self.metadata = parent.metadata.get("authors", [])
 
-    def get_data_map(self, metadata: dict[str, Any]) -> dict[str, Any]:
+    def get_data_map(self) -> dict[str, Any]:
         return {
             "annotation_id": self.annotation_id,
             "orcid": ["ORCID"],
