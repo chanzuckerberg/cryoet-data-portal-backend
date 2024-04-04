@@ -8,9 +8,11 @@ from tests.db_import.populate_db import (
     TOMOGRAM_ID,
     TOMOGRAM_VOXEL_ID1,
     TOMOGRAM_VOXEL_ID2,
-    populate_stale_tomogram_voxel_spacing_data,
-    populate_tomogram_authors_table,
-    populate_tomograms_table,
+    populate_stale_tomogram_authors,
+    populate_stale_tomogram_voxel_spacing,
+    populate_stale_tomograms,
+    populate_tomogram_authors,
+    populate_tomograms,
 )
 
 import common.db_models as models
@@ -148,8 +150,7 @@ def test_import_voxel_spacings_and_tomograms(
     expected_voxel_spacings: list[dict[str, Any]],
     expected_tomograms: list[dict[str, Any]],
 ) -> None:
-    populate_tomograms_table()
-    populate_stale_tomogram_voxel_spacing_data()
+    populate_tomograms()
     actual = verify_dataset_import(["--import-tomograms"])
     expected_voxel_spacings_iter = iter(expected_voxel_spacings)
     expected_tomograms_iter = iter(expected_tomograms)
@@ -167,19 +168,52 @@ def test_import_voxel_spacings_and_tomograms(
                 assert len(tomogram.authors) == 0
 
 
-# Tests addition of new tomogram_author
+# Tests addition of new, and update of existing tomogram authors
 def test_import_tomograms_authors(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
     expected_tomograms_authors: list[list[dict[str, Any]]],
 ) -> None:
-    populate_tomogram_authors_table()
-    populate_stale_tomogram_voxel_spacing_data()
+    populate_tomogram_authors()
     actual = verify_dataset_import(["--import-tomogram-authors"])
     expected_tomograms_authors_iter = iter(expected_tomograms_authors)
     for run in actual.runs:
         for tomogram_voxel_spacing in run.tomogram_voxel_spacings:
             for tomogram in tomogram_voxel_spacing.tomograms:
+                tomogram_authors = next(expected_tomograms_authors_iter)
+                assert len(tomogram.authors) == len(tomogram_authors)
+                tomogram_authors_iter = iter(tomogram_authors)
+                for author in tomogram.authors.order_by(models.TomogramAuthor.author_list_order):
+                    verify_model(author, next(tomogram_authors_iter))
+
+
+# Tests deletion of stale voxel spacing, tomograms and tomogram authors
+def test_import_voxel_spacings_tomograms_and_authors_removes_stale(
+    verify_dataset_import: Callable[[list[str]], models.Dataset],
+    verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
+    expected_voxel_spacings: list[dict[str, Any]],
+    expected_tomograms: list[dict[str, Any]],
+    expected_tomograms_authors: list[list[dict[str, Any]]],
+) -> None:
+    populate_tomogram_authors()
+    populate_stale_tomogram_voxel_spacing()
+    populate_stale_tomograms()
+    populate_stale_tomogram_authors()
+    actual = verify_dataset_import(["--import-tomogram-authors"])
+    expected_voxel_spacings_iter = iter(expected_voxel_spacings)
+    expected_tomograms_iter = iter(expected_tomograms)
+    expected_tomograms_authors_iter = iter(expected_tomograms_authors)
+    for run in actual.runs:
+        for tomogram_voxel_spacing in run.tomogram_voxel_spacings.order_by(models.TomogramVoxelSpacing.voxel_spacing):
+            expected_voxel_spacing = next(expected_voxel_spacings_iter)
+            if "run_id" not in expected_voxel_spacing:
+                expected_voxel_spacing["run_id"] = run.id
+            verify_model(tomogram_voxel_spacing, expected_voxel_spacing)
+            for tomogram in tomogram_voxel_spacing.tomograms:
+                expected_tomogram = next(expected_tomograms_iter)
+                if "tomogram_voxel_spacing_id" not in expected_tomogram:
+                    expected_tomogram["tomogram_voxel_spacing_id"] = tomogram_voxel_spacing.id
+                verify_model(tomogram, expected_tomogram)
                 tomogram_authors = next(expected_tomograms_authors_iter)
                 assert len(tomogram.authors) == len(tomogram_authors)
                 tomogram_authors_iter = iter(tomogram_authors)

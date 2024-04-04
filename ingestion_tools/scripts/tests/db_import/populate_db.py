@@ -31,7 +31,7 @@ STALE_TOMOGRAM_ID = 902
 STALE_ANNOTATION_ID = 903
 
 
-def populate_dataset_table() -> None:
+def populate_dataset() -> None:
     today = datetime.now().date()
     Dataset(
         id=DATASET_ID,
@@ -46,14 +46,17 @@ def populate_dataset_table() -> None:
     ).save(force_insert=True)
 
 
-def populate_dataset_authors_table() -> None:
-    DatasetAuthor(id=102, dataset_id=DATASET_ID, name="Stale Author", author_list_order=1).save(force_insert=True)
+def populate_dataset_authors() -> None:
     DatasetAuthor(id=DATASET_AUTHOR_ID, dataset_id=DATASET_ID, name="Virginia Woolf", author_list_order=3).save(
         force_insert=True,
     )
 
 
-def populate_dataset_funding_table() -> None:
+def populate_stale_dataset_authors() -> None:
+    DatasetAuthor(id=102, dataset_id=DATASET_ID, name="Stale Author", author_list_order=1).save(force_insert=True)
+
+
+def populate_dataset_funding() -> None:
     DatasetFunding(
         id=DATASET_FUNDING_ID,
         dataset_id=DATASET_ID,
@@ -62,11 +65,14 @@ def populate_dataset_funding_table() -> None:
     ).save(
         force_insert=True,
     )
+
+
+def populate_stale_dataset_funding() -> None:
     DatasetFunding(id=109, dataset_id=30001, funding_agency_name="Stale Grant Entry").save(force_insert=True)
 
 
-def populate_runs_table() -> None:
-    populate_dataset_table()
+def populate_run() -> None:
+    populate_dataset()
     Run(
         id=RUN_ID,
         dataset_id=DATASET_ID,
@@ -74,18 +80,10 @@ def populate_runs_table() -> None:
         s3_prefix="s3://test-bucket/RUN1",
         https_prefix="http://test.com/RUN1",
     ).save(force_insert=True)
-    # TODO: Add functionality to remove stale data
-    # Run(
-    #     id=103,
-    #     dataset_id=DATASET_ID,
-    #     name="STALE_RUN",
-    #     s3_prefix="s3://test-bucket/STALE_RUN",
-    #     https_prefix="http://test.com/STALE_RUN",
-    # )
 
 
-def populate_tomogram_voxel_spacing_table() -> None:
-    populate_runs_table()
+def populate_tomogram_voxel_spacing() -> None:
+    populate_run()
     TomogramVoxelSpacing(
         id=103,
         run_id=RUN_ID,
@@ -109,7 +107,7 @@ def populate_tomogram_voxel_spacing_table() -> None:
     ).save(force_insert=True)
 
 
-def populate_stale_tomogram_voxel_spacing_data() -> None:
+def populate_stale_tomogram_voxel_spacing() -> None:
     stale_tomogram_voxel_id = 1000
     stale_tomogram_id = 1001
     stale_annotation_id = 10002
@@ -163,8 +161,8 @@ def populate_stale_tomogram_voxel_spacing_data() -> None:
     AnnotationAuthor(annotation_id=stale_annotation_id, name="Jane Smith", author_list_order=1).save(force_insert=True)
 
 
-def populate_tomograms_table() -> None:
-    populate_tomogram_voxel_spacing_table()
+def populate_tomograms() -> None:
+    populate_tomogram_voxel_spacing()
     Tomogram(
         id=TOMOGRAM_ID,
         tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
@@ -189,6 +187,9 @@ def populate_tomograms_table() -> None:
         offset_y=0,
         offset_z=0,
     ).save(force_insert=True)
+
+
+def populate_stale_tomograms() -> None:
     Tomogram(
         id=STALE_TOMOGRAM_ID,
         tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID2,
@@ -215,11 +216,20 @@ def populate_tomograms_table() -> None:
     ).save(force_insert=True)
 
 
-def populate_tomogram_authors_table() -> None:
-    populate_tomograms_table()
+def populate_tomogram_authors() -> None:
+    populate_tomograms()
     TomogramAuthor(id=TOMOGRAM_AUTHOR_ID, tomogram_id=TOMOGRAM_ID, name="Jane Smith", author_list_order=1).save(
         force_insert=True,
     )
+
+
+def populate_stale_tomogram_authors() -> None:
+    TomogramAuthor(
+        tomogram_id=STALE_TOMOGRAM_ID,
+        name="Stale Author 2",
+        primary_author_status=True,
+        author_list_order=3,
+    ).save(force_insert=True)
     TomogramAuthor(
         id=200,
         tomogram_id=TOMOGRAM_ID,
@@ -227,16 +237,10 @@ def populate_tomogram_authors_table() -> None:
         corresponding_author_status=True,
         author_list_order=3,
     ).save(force_insert=True)
-    TomogramAuthor(
-        tomogram_id=STALE_TOMOGRAM_ID,
-        name="Stale Author 2",
-        primary_author_status=True,
-        author_list_order=3,
-    ).save(force_insert=True)
 
 
-def populate_tiltseries_table() -> None:
-    populate_runs_table()
+def populate_tiltseries() -> None:
+    populate_run()
     TiltSeries(
         id=TILTSERIES_ID,
         run_id=RUN_ID,
@@ -266,7 +270,7 @@ def populate_tiltseries_table() -> None:
 
 
 def populate_annotations() -> None:
-    populate_tomogram_voxel_spacing_table()
+    populate_tomogram_voxel_spacing()
     Annotation(
         id=ANNOTATION_ID,
         tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
@@ -282,6 +286,9 @@ def populate_annotations() -> None:
         object_id="invalid-id",
         annotation_software="bar",
     ).save(force_insert=True)
+
+
+def populate_stale_annotations() -> None:
     Annotation(
         id=STALE_ANNOTATION_ID,
         tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
@@ -316,6 +323,10 @@ def populate_annotation_files() -> None:
         shape_type="ZZOrientedPoint",
         format="ndjson",
     ).save(force_insert=True)
+
+
+def populate_stale_annotation_files() -> None:
+    populate_stale_annotations()
     AnnotationFiles(
         annotation_id=STALE_ANNOTATION_ID,
         s3_path="s3://foo-stale-annotation/point",
@@ -332,7 +343,7 @@ def populate_annotation_files() -> None:
     ).save(force_insert=True)
 
 
-def populate_annotation_authors_table() -> None:
+def populate_annotation_authors() -> None:
     populate_annotations()
     AnnotationAuthor(id=ANNOTATION_AUTHOR_ID, annotation_id=ANNOTATION_ID, name="Jane Smith", author_list_order=1).save(
         force_insert=True,
@@ -344,6 +355,10 @@ def populate_annotation_authors_table() -> None:
         corresponding_author_status=True,
         author_list_order=3,
     ).save(force_insert=True)
+
+
+def populate_stale_annotation_authors() -> None:
+    populate_stale_annotations()
     AnnotationAuthor(annotation_id=STALE_ANNOTATION_ID, name="Jane Smith", author_list_order=1).save(
         force_insert=True,
     )

@@ -1,7 +1,7 @@
 from typing import Any, Callable
 
 import pytest as pytest
-from tests.db_import.populate_db import DATASET_ID, RUN_ID, TILTSERIES_ID, populate_tiltseries_table
+from tests.db_import.populate_db import DATASET_ID, RUN_ID, TILTSERIES_ID, populate_tiltseries
 
 import common.db_models as models
 
@@ -83,7 +83,7 @@ def test_import_tiltseries(
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
     expected_tiltseries: list[dict[str, Any]],
 ) -> None:
-    populate_tiltseries_table()
+    populate_tiltseries()
     actual = verify_dataset_import(["--import-tiltseries"])
     expected_iter = iter(expected_tiltseries)
     for run in actual.runs.order_by(models.Run.name):
