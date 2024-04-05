@@ -36,7 +36,6 @@ dataset:
   sample_type: organism
 runs: {}
 standardization_config:
-  deposition_id: 999
   dataset:
     source:
       literal:
@@ -74,10 +73,10 @@ standardization_config:
         match_regex: .*\.rec
   voxel_spacing:
     source:
-      source_glob:
-        list_glob: '*'
-        match_regex: .*
-        name_regex: (.*)
+      tomogram_header:
+        list_glob: tomograms/{run_name}.rec
+        match_regex: .*\.rec
+        header_key: voxel_size
 tiltseries:
   acceleration_voltage: 300000
   alignment_binning_factor: null

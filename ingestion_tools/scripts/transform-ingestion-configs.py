@@ -18,8 +18,10 @@ def update_file(filename: str) -> None:
             new_override = {"match": {"run": item["run_regex"]}}
             if item.get("tiltseries"):
                 new_override["metadata"] = {"tiltseries": item["tiltseries"]}
-            if item.get("tomogram"):
-                new_override["sources"] = {"voxel_spacing": {"literal": {"value": [item["tomogram"]["voxel_spacing"]]}}}
+            if item.get("tomograms"):
+                new_override["sources"] = {
+                    "voxel_spacing": {"literal": {"value": [item["tomograms"]["voxel_spacing"]]}},
+                }
             standardization_config["overrides"].append(new_override)
         del data["overrides_by_run"]
     if not standardization_config.get("dataset"):
@@ -101,15 +103,10 @@ def update_file(filename: str) -> None:
             },
         }
         del standardization_config["rawtlt_files"]
-    # TODO FIXME
     if not standardization_config.get("voxel_spacing"):
         standardization_config["voxel_spacing"] = {
             "source": {
-                "source_glob": {
-                    "list_glob": standardization_config.get("run_glob", "*"),
-                    "match_regex": standardization_config.get("asdf", ".*"),
-                    "name_regex": standardization_config.get("asdf", "(.*)"),
-                },
+                "literal": {"value": [data["tomograms"]["voxel_spacing"]]},
             },
         }
 

@@ -1,7 +1,8 @@
 import pytest
 from importers.dataset import DatasetImporter
 from importers.run import RunImporter
-from importers.tomogram import VoxelSpacingImporter
+from importers.tomogram import TomogramImporter
+from importers.voxel_spacing import VoxelSpacingImporter
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
@@ -34,9 +35,13 @@ def test_voxel_spacing_by_tomogram_metadata(
 
     datasets = config.find_datasets(DatasetImporter, None, s3_fs)
     runs = config.find_runs(RunImporter, datasets[0], s3_fs)
+    # print("====")
+    # print(config._get_finder_config("voxel_spacing", runs[0]))
+    # exit()
     voxel_spacings = config.find_voxel_spacings(VoxelSpacingImporter, runs[0], s3_fs)
+    tomos = config.find_tomograms(TomogramImporter, voxel_spacings[0], s3_fs)
 
     assert voxel_spacings[0].name == "{:.3f}".format(round(float(expected), 3))
 
     # I'm not sure why numpy's returning weird 14.079999 like floats instead of 14.08
-    assert round(tomo.get_voxel_spacing(), 4) == float(expected)
+    assert round(tomos[0].get_voxel_spacing(), 4) == float(expected)
