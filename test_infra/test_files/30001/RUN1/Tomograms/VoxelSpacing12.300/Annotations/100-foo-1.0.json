@@ -13,20 +13,18 @@
     "annotation_publications": "EMPIAR-XYZ",
     "ground_truth_status": true,
     "authors": [
-        [
         {
             "name": "Jane Smith",
             "corresponding_author_status": false,
-            "primary_author_status": true
+            "primary_annotator_status": true
         },
         {
             "name": "John Doe",
             "ORCID": "0000-0000-1234-0000",
             "corresponding_author_status": false,
-            "primary_author_status": false,
+            "primary_annotator_status": false,
             "email": "jdoe@test.com"
         }
-    ]
     ],
     "annotation_software": "pyTOM + Keras",
     "version": "1.0",
