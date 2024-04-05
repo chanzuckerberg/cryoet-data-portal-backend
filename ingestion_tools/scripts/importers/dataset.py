@@ -17,5 +17,3 @@ class DatasetImporter(BaseImporter):
         return {
             "key_photos": key_photo_importer.get_metadata(),
         }
-
-
