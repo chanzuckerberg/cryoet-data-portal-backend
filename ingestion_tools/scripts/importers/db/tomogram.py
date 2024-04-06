@@ -57,6 +57,7 @@ class TomogramDBImporter(BaseDBImporter):
             "offset_y": ["offset", "y"],
             "offset_z": ["offset", "z"],
             "affine_transformation_matrix": ["affine_transformation_matrix"],
+            "deposition_id": ["deposition_id"],
         }
 
     def get_tomogram_type(self) -> str:
