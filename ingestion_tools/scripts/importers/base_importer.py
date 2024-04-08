@@ -1,6 +1,9 @@
 import os
 from typing import TYPE_CHECKING, Any, Optional
 import contextlib
+from common.finders import DepositionObjectImporterFactory
+
+
 
 import numpy as np
 from mrcfile.mrcobject import MrcObject
@@ -12,31 +15,35 @@ if TYPE_CHECKING:
     from importers.dataset import DatasetImporter
     from importers.run import RunImporter
     from importers.tomogram import TomogramImporter
+    from common.config import DepositionImportConfig
+    from common.fs import FileSystemApi
 else:
     RunImporter = "RunImporter"
     DatasetImporter = "DatasetImporter"
     TomogramImporter = "TomogramImporter"
+    DepositionImportConfig = "DepositionImportConfig"
+    FileSystemApi = "FileSystemApi"
 
 
 class BaseImporter:
     type_key: str
     cached_find_results: dict[str, "BaseImporter"] = {}
+    finder_factory: DepositionObjectImporterFactory | None = None
+    dependencies: list[str] = []
 
-    def __init__(self, config: "DepositionImportConfig", parent: Optional["BaseImporter"] = None, name: Optional[str] = None, path: Optional[str] = None):
+    def __init__(self, config: "DepositionImportConfig", name: Optional[str] = None, path: Optional[str] = None, parents: Optional["BaseImporter"] = None):
         self.config = config
-        self.parent = parent
+        self.parents = parents
         self.name = name
         self.path = path
 
     def parent_getter(self, type_key: str) -> "BaseImporter":
-        parent = self
-        while True:
-            if not parent:
-                raise ValueError(f"Could not find parent of type {type_key}")
-            if parent.type_key == type_key:
-                return parent
-            else:
-                parent = parent.parent
+        if self.type_key == type_key:
+            return self
+        for parent in self.parents:
+            item = parent.parent_getter(type_key)
+            if item:
+                return item
 
     def get_glob_vars(self) -> dict[str, Any]:
         glob_vars = {}
@@ -55,8 +62,9 @@ class BaseImporter:
             glob_vars["mapped_frame_name"] = self.config.run_to_frame_map.get(run_name)
             glob_vars["mapped_ts_name"] = self.config.run_to_ts_map.get(run_name)
 
-        if self.parent:
-            glob_vars.update(self.parent.get_glob_vars())
+        if self.parents:
+            for parent in self.parents.values():
+                glob_vars.update(parent.get_glob_vars())
         return glob_vars
 
     def get_run(self) -> RunImporter:
@@ -76,6 +84,14 @@ class BaseImporter:
 
     def get_metadata_path(self) -> str:
         return self.config.get_metadata_path(self)
+    
+    @classmethod
+    def finder(cls, config: DepositionImportConfig, fs: FileSystemApi, **parents):
+        finder_config = config._get_finder_config(cls.type_key, **parents)
+        finder_cls = cls.finder_factory(**finder_config)
+        items = finder_cls.find(cls, config, fs, **parents)
+        return items
+
 
 
 class VolumeImporter(BaseImporter):

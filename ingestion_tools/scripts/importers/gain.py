@@ -3,9 +3,13 @@ from typing import TYPE_CHECKING
 
 from importers.base_importer import BaseImporter
 import subprocess
+from common.finders import DefaultImporterFactory
 
 class GainImporter(BaseImporter):
     type_key = "gain"
+    finder_factory = DefaultImporterFactory
+    dependencies = ["run"]
+    has_metadata = False
 
     def import_item(self) -> None:
         fs = self.config.fs

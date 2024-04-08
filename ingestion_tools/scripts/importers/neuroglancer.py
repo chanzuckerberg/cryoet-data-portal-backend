@@ -4,6 +4,7 @@ from urllib.parse import urljoin
 from common.config import DepositionImportConfig
 from common.metadata import NeuroglancerMetadata
 from importers.base_importer import BaseImporter
+from common.finders import DefaultImporterFactory
 
 if TYPE_CHECKING:
     from importers.tomogram import TomogramImporter
@@ -13,6 +14,9 @@ else:
 
 class NeuroglancerImporter(BaseImporter):
     type_key = "neuroglancer"
+    finder_factory = DefaultImporterFactory
+    dependencies = ["tomogram"]
+    has_metadata = False
 
     def import_neuroglancer(self) -> str:
         dest_file = self.get_output_path()

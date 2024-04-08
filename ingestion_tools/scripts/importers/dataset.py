@@ -3,9 +3,13 @@ from importers.base_importer import BaseImporter
 from importers.dataset_key_photo import DatasetKeyPhotoImporter
 from typing import Any
 
+from common.finders import DefaultImporterFactory
 
 class DatasetImporter(BaseImporter):
     type_key = "dataset"
+    finder_factory = DefaultImporterFactory
+    dependencies = []
+    has_metadata = True
 
     def __init__(
         self,

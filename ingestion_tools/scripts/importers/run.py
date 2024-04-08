@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Any
 from common.config import DepositionImportConfig
 from common.metadata import RunMetadata
 from importers.base_importer import BaseImporter
+from common.finders import DefaultImporterFactory
 
 if TYPE_CHECKING:
     from importers.dataset import DatasetImporter
@@ -13,6 +14,9 @@ else:
 
 class RunImporter(BaseImporter):
     type_key = "run"
+    finder_factory = DefaultImporterFactory
+    dependencies = ["dataset"]
+    has_metadata = True
 
     def __init__(
         self,

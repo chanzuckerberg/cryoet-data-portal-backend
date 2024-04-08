@@ -10,6 +10,7 @@ from common.image import ZarrReader
 from common.make_key_image import generate_preview, process_key_image
 from importers.annotation import AnnotationImporter
 from importers.base_importer import BaseImporter
+from common.finders import DefaultImporterFactory
 
 if TYPE_CHECKING:
     from importers.tomogram import TomogramImporter
@@ -19,6 +20,9 @@ else:
 
 class KeyImageImporter(BaseImporter):
     type_key = "key_image"
+    finder_factory = DefaultImporterFactory
+    dependencies = ["tomogram"]
+    has_metadata = False
     width_sizes = {
         "original": "orig",  # uncropped, may be used to display to user later on
         "thumbnail": 134,  # small thumbnail

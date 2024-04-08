@@ -6,6 +6,7 @@ from common.normalize_fields import normalize_fiducial_alignment
 from importers.base_importer import VolumeImporter
 from importers.key_image import KeyImageImporter
 from importers.voxel_spacing import VoxelSpacingImporter
+from common.finders import DefaultImporterFactory
 
 if TYPE_CHECKING:
     from importers.run import RunImporter
@@ -15,7 +16,10 @@ else:
 
 class TomogramImporter(VolumeImporter):
     type_key = "tomogram"
+    finder_factory = DefaultImporterFactory
     cached_find_results: dict[str, Any] = {}
+    dependencies = ["voxel_spacing"]
+    has_metadata = True
 
     def get_voxel_spacing(self) -> float:
         return float(self.parent.name)

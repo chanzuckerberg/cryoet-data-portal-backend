@@ -12,6 +12,7 @@ from common.fs import FileSystemApi
 from common.image import check_mask_for_label, scale_maskfile, scale_mrcfile
 from common.metadata import AnnotationMetadata
 from importers.base_importer import BaseImporter
+from common.finders import DefaultImporterFactory
 
 if TYPE_CHECKING:
     from importers.voxel_spacing import VoxelSpacingImporter
@@ -346,6 +347,9 @@ def annotation_source_factory(source_config, glob_vars):
 
 class AnnotationImporter(BaseImporter):
     type_key = "annotation"
+    finder_factory = DefaultImporterFactory
+    dependencies = ["voxel_spacing"]
+    has_metadata = True
 
     def __init__(
         self,

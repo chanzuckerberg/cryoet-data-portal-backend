@@ -5,15 +5,18 @@ from common.config import DepositionImportConfig
 from common.metadata import TiltSeriesMetadata
 from importers.base_importer import BaseImporter, VolumeImporter
 from importers.frame import FrameImporter
+from common.finders import DefaultImporterFactory
 
 if TYPE_CHECKING:
     from importers.run import RunImporter
 else:
     RunImporter = "RunImporter"
 
-
 class TiltSeriesImporter(VolumeImporter):
     type_key = "tiltseries"
+    finder_factory = DefaultImporterFactory
+    dependencies = ["run"]
+    has_metadata = True
 
     def import_tiltseries(self, write_mrc: bool = True, write_zarr: bool = True) -> None:
         _ = self.scale_mrcfile(

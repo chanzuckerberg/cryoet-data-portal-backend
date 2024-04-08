@@ -8,17 +8,6 @@ from typing import TYPE_CHECKING, Any
 
 import yaml
 
-from common.finders import (
-    DatasetImporterFactory,
-    FrameImporterFactory,
-    GainImporterFactory,
-    KeyImageImporterFactory,
-    RawTiltImporterFactory,
-    RunImporterFactory,
-    TiltseriesImporterFactory,
-    TomogramImporterFactory,
-    VSImporterFactory,
-)
 from common.fs import FileSystemApi
 
 if TYPE_CHECKING:
@@ -77,26 +66,14 @@ class DepositionImportConfig:
     tomogram_finder_config: dict[str, Any] | None = None
     voxel_spacing_finder_config: dict[str, Any] | None = None
 
-    finder_factories = {
-        "dataset": DatasetImporterFactory,
-        "frame": FrameImporterFactory,
-        "gain": GainImporterFactory,
-        "key_image": KeyImageImporterFactory,
-        "rawtilt": RawTiltImporterFactory,
-        "run": RunImporterFactory,
-        "tiltseries": TiltseriesImporterFactory,
-        "tomogram": TomogramImporterFactory,
-        "voxel_spacing": VSImporterFactory,
-    }
-
-    def __init__(self, fs: FileSystemApi, config_path: str, output_prefix: str, input_bucket: str):
+    def __init__(self, fs: FileSystemApi, config_path: str, output_prefix: str, input_bucket: str, object_classes: list[str]):
         self.output_prefix = output_prefix
         self.fs = fs
         with open(config_path, "r") as conffile:
             dataset_config = yaml.safe_load(conffile)
             config = dataset_config["standardization_config"]
 
-            for key, _ in self.finder_factories.items():
+            for key in object_classes:
                 if config.get(key):
                     config[f"{key}_finder_config"] = config[key]
                     del config[key]
@@ -149,18 +126,24 @@ class DepositionImportConfig:
                 mapdata[row["run_name"]] = row
         return mapdata
 
-    def _get_finder_config(self, key: str, parent_obj) -> Any:
+    def _get_finder_config(self, key: str, **parent_objs) -> Any:
         key_name = f"{key}_finder_config"
         items = getattr(self, key_name)
 
         if not self.overrides:
             return items
 
-        next = parent_obj
         obj_type_to_name_map = {}
-        while next:
-            obj_type_to_name_map[next.type_key] = next.name
-            next = getattr(next, "parent", None)
+        tmp_parent_objects = list(parent_objs.values())
+        while True:
+            new_parent_objects = []
+            for parent in tmp_parent_objects:
+                obj_type_to_name_map[parent.type_key] = parent.name
+                if parent.parents:
+                    new_parent_objects.extend(parent.parents.values())
+            if not new_parent_objects:
+                break
+            tmp_parent_objects = new_parent_objects
 
         for override in self.overrides:
             if all(
@@ -171,49 +154,6 @@ class DepositionImportConfig:
                 if key in sources:
                     return {"source": sources[key]}
 
-        return items
-
-    def _finder(self, import_class, key_name: str, parent, fs):
-        config = self._get_finder_config(key_name, parent)
-        cls = self.finder_factories[key_name]
-        finder_cls = cls(**config)
-        items = finder_cls.find(import_class, parent, self, fs)
-        return items
-
-    def find_datasets(self, import_class, parent, fs):
-        items = self._finder(import_class, "dataset", parent, fs)
-        return items
-
-    def find_frames(self, import_class, parent, fs):
-        items = self._finder(import_class, "frame", parent, fs)
-        return items
-
-    def find_gains(self, import_class, parent, fs):
-        items = self._finder(import_class, "gain", parent, fs)
-        return items
-
-    def find_key_images(self, import_class, parent, fs):
-        items = self._finder(import_class, "key_image", parent, fs)
-        return items
-
-    def find_rawtilts(self, import_class, parent, fs):
-        items = self._finder(import_class, "rawtilt", parent, fs)
-        return items
-
-    def find_runs(self, import_class, parent, fs):
-        items = self._finder(import_class, "run", parent, fs)
-        return items
-
-    def find_tiltseries(self, import_class, parent, fs):
-        items = self._finder(import_class, "tiltseries", parent, fs)
-        return items
-
-    def find_tomograms(self, import_class, parent, fs):
-        items = self._finder(import_class, "tomogram", parent, fs)
-        return items
-
-    def find_voxel_spacings(self, import_class, parent, fs):
-        items = self._finder(import_class, "voxel_spacing", parent, fs)
         return items
 
     def load_run_csv_file(self, file_attr: str) -> dict[str, Any]:

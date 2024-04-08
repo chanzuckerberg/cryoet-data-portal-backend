@@ -7,6 +7,7 @@ from importers.base_importer import BaseImporter
 from importers.key_image import KeyImageImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
+from common.finders import DefaultImporterFactory
 
 if TYPE_CHECKING:
     from importers.dataset import DatasetImporter
@@ -17,6 +18,9 @@ else:
 class DatasetKeyPhotoImporter(BaseImporter):
     type_key = "dataset_keyphoto"
     image_keys = ["snapshot", "thumbnail"]
+    finder_factory = DefaultImporterFactory
+    dependencies = [] # TODO this thing has dependencies on *imported* runs!!
+    has_metadata = False
 
     def import_key_photo(self) -> None:
         path = self.config.get_output_path(self)

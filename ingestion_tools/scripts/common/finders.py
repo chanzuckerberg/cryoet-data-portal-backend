@@ -10,8 +10,6 @@ if TYPE_CHECKING:
     from common.config import DepositionImportConfig
 else:
     DepositionImportConfig = "DepositionImportConfig"
-    DatasetImporter = "DatasetImporter"
-
 
 ###
 ### Base Finders
@@ -105,42 +103,6 @@ class BaseLiteralValueFinder:
         return {item: None for item in self.literal_value}
 
 
-class VoxelSpacingLiteralValueFinder(BaseLiteralValueFinder):
-    def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
-        values = {}
-        for item in self.literal_value:
-            # Do we have a template to expand?
-            if isinstance(item, str) and "{" in item:
-                values[round(float(config.expand_string(glob_vars["run_name"], item)), 3)] = None
-                continue
-            values[item] = None
-        return values
-
-
-class TomogramHeaderFinder:
-    def __init__(self, list_glob: str, match_regex: str, header_key: str):
-        self.list_glob = list_glob
-        self.header_key = header_key
-        if not match_regex:
-            self.match_regex = re.compile(".*")
-        else:
-            self.match_regex = re.compile(match_regex)
-
-    def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
-        # Expand voxel spacing based on tomogram metadata. This is for reverse compatibility with certain configs with run overrides.
-        path = os.path.join(config.deposition_root_dir, self.list_glob.format(**glob_vars))
-        responses = {}
-        for fname in config.fs.glob(path):
-            if not self.match_regex.search(fname):
-                continue
-            path = fname
-            # Make this extensible to support other tomo metadata later if need be.
-            if self.header_key == "voxel_size":
-                size = get_voxel_size(fs, path).item()
-                responses[size] = ""
-            else:
-                raise Exception("invalid header key")
-        return responses
 
 
 ###
@@ -151,31 +113,33 @@ class DepositionObjectImporterFactory(ABC):
         self.source = source
 
     @abstractmethod
-    def load(self, expansion_data: dict, config: DepositionImportConfig, fs: FileSystemApi):
+    def load(self, config: DepositionImportConfig, fs: FileSystemApi, **expansion_data: dict[str, Any] | None):
         pass
 
-    # TODO FIXME -- passing in the class-to-instantiate is a temporary hack to work around
-    # python circular import shenanigans. We should try to refactor this out and have each
-    # factory create the specific object types it's supposed to create, so we can customize
-    # instantiation per object type when we need it.
-    def find(self, cls, parent_object: Any | None, config: DepositionImportConfig, fs: FileSystemApi):
-        loader = self.load(parent_object, config, fs)
+    def find(self, cls, config: DepositionImportConfig, fs: FileSystemApi, **parent_objects: dict[str, Any] | None):
+        loader = self.load(config, fs, **parent_objects)
         glob_vars = {}
-        if parent_object:
-            glob_vars = parent_object.get_glob_vars()
-        tmp_parent_object = parent_object
-        while tmp_parent_object:
-            glob_vars[f"{tmp_parent_object.type_key}_output_path"] = tmp_parent_object.get_output_path()
-            tmp_parent_object = tmp_parent_object.parent
+        for parent in parent_objects.values():
+            glob_vars.update(parent.get_glob_vars())
+        tmp_parent_objects = list(parent_objects.values())
+        while True:
+            new_parent_objects = []
+            for parent in tmp_parent_objects:
+                glob_vars[f"{parent.type_key}_output_path"] = parent.get_output_path()
+                if parent.parents:
+                    new_parent_objects.extend(parent.parents.values())
+            if not new_parent_objects:
+                break
+            tmp_parent_objects = new_parent_objects
         found = loader.find(config, fs, glob_vars)
         results = []
         for name, path in found.items():
-            results.append(cls(config=config, parent=parent_object, name=name, path=path))
+            results.append(cls(config=config, parents=parent_objects, name=name, path=path))
         return results
 
 
 class DefaultImporterFactory(DepositionObjectImporterFactory):
-    def load(self, parent_object: Any | None, config: DepositionImportConfig, fs: FileSystemApi):
+    def load(self, config: DepositionImportConfig, fs: FileSystemApi, **parent_objects: dict[str, Any] | None):
         source = self.source
         if source.get("source_glob"):
             return SourceGlobFinder(**source["source_glob"])
@@ -186,55 +150,3 @@ class DefaultImporterFactory(DepositionObjectImporterFactory):
         if source.get("literal"):
             return BaseLiteralValueFinder(**source["literal"])
         raise Exception("Invalid source type")
-
-
-# TODO - This one's gonna need to get fancy to inspect tomogram headers.
-class VSImporterFactory(DepositionObjectImporterFactory):
-    def load(self, parent_object: Any | None, config: DepositionImportConfig, fs: FileSystemApi):
-        source = self.source
-        if source.get("source_glob"):
-            return SourceGlobFinder(**source["source_glob"])
-        if source.get("destination_glob"):
-            return DestinationGlobFinder(**source["destination_glob"])
-        if source.get("tomogram_header"):
-            return TomogramHeaderFinder(**source["tomogram_header"])
-        if source.get("literal"):
-            return VoxelSpacingLiteralValueFinder(**source["literal"])
-        raise Exception("Invalid source type")
-
-
-class RawTiltImporterFactory(DefaultImporterFactory):
-    pass
-
-
-class TiltseriesImporterFactory(DefaultImporterFactory):
-    pass
-
-
-class FrameImporterFactory(DefaultImporterFactory):
-    pass
-
-
-class GainImporterFactory(DefaultImporterFactory):
-    pass
-
-
-class TomogramImporterFactory(DefaultImporterFactory):
-    pass
-
-
-class DatasetImporterFactory(DefaultImporterFactory):
-    pass
-
-
-class RunImporterFactory(DefaultImporterFactory):
-    pass
-
-
-class KeyImageImporterFactory(DefaultImporterFactory):
-    pass
-
-
-# TODO, how is this going to work???
-class AnnotationImporterFactory(DefaultImporterFactory):
-    pass
