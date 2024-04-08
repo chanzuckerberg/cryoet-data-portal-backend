@@ -13,7 +13,7 @@ def test_import_dataset_metadata(s3_fs: FileSystemApi, test_output_bucket: str) 
     output_path = f"{test_output_bucket}/output"
     input_bucket = "input_bucket"
     config = DepositionImportConfig(s3_fs, config_file, output_path, input_bucket)
-    dataset = DatasetImporter(config, None)
+    dataset = config.find_datasets(DatasetImporter, None, s3_fs)[0]
     dataset.import_metadata(output_path)
 
     with s3_fs.open(f"{output_path}/10001/dataset_metadata.json", "r") as fh:
@@ -29,7 +29,7 @@ def test_key_photo_import_http(s3_fs: FileSystemApi, test_output_bucket: str, s3
     input_bucket = "test-public-bucket"
     config = DepositionImportConfig(s3_fs, config_file, output_path, input_bucket)
 
-    dataset = DatasetImporter(config, None)
+    dataset = config.find_datasets(DatasetImporter, None, s3_fs)[0]
     dataset_key_photos_importer = DatasetKeyPhotoImporter.find_dataset_key_photos(config, dataset)
     dataset_key_photos_importer.import_key_photo()
     dataset.import_metadata(output_path)

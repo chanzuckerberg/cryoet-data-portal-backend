@@ -12,11 +12,11 @@ from common.fs import FileSystemApi
     "import_config, expected",
     [
         # By default, we read voxel spacing from the import config file
-        ("tests/fixtures/voxel_spacing/tomo_metadata.yaml", "1.1234"),
+        ("tests/fixtures/voxel_spacing/tomo_metadata.yaml", "1.123"),
         # Or we can read it from a data map.
-        ("tests/fixtures/voxel_spacing/tomo_run_data_map.yaml", "4.5678"),
+        ("tests/fixtures/voxel_spacing/tomo_run_data_map.yaml", "4.568"),
         # Or we can use the "overrides" functionality to override it per run
-        ("tests/fixtures/voxel_spacing/overrides_by_run.yaml", "5.6789"),
+        ("tests/fixtures/voxel_spacing/overrides_by_run.yaml", "5.679"),
         # Or if the import config leaves it empty, we can read it from the MRC headers
         ("tests/fixtures/voxel_spacing/mrc_header.yaml", "14.08"),
     ],
@@ -35,9 +35,6 @@ def test_voxel_spacing_by_tomogram_metadata(
 
     datasets = config.find_datasets(DatasetImporter, None, s3_fs)
     runs = config.find_runs(RunImporter, datasets[0], s3_fs)
-    # print("====")
-    # print(config._get_finder_config("voxel_spacing", runs[0]))
-    # exit()
     voxel_spacings = config.find_voxel_spacings(VoxelSpacingImporter, runs[0], s3_fs)
     tomos = config.find_tomograms(TomogramImporter, voxel_spacings[0], s3_fs)
 

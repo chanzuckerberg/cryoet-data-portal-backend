@@ -18,11 +18,7 @@ class TomogramImporter(VolumeImporter):
     cached_find_results: dict[str, Any] = {}
 
     def get_voxel_spacing(self) -> float:
-        if self.config.tomo_format != "mrc":
-            raise NotImplementedError("implement handling for other tomo input formats!")
-        if voxel_spacing := self.get_base_metadata().get("voxel_spacing"):
-            return float(voxel_spacing)
-        return self.get_voxel_size().item()
+        return float(self.parent.name)
 
     def import_tomogram(self, write_mrc: bool = True, write_zarr: bool = True) -> None:
         if self.config.tomo_format != "mrc":

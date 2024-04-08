@@ -2,9 +2,9 @@ import os
 import re
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any
-from common.image import get_voxel_size
 
 from common.fs import FileSystemApi
+from common.image import get_voxel_size
 
 if TYPE_CHECKING:
     from common.config import DepositionImportConfig
@@ -28,7 +28,6 @@ class SourceMultiGlobFinder:
         responses = {}
         for list_glob in self.list_globs:
             path = os.path.join(config.deposition_root_dir, list_glob.format(**glob_vars))
-            print(f"path -- {path}")
             for fname in config.fs.glob(path):
                 if not self.match_regex.search(fname):
                     continue
@@ -37,12 +36,18 @@ class SourceMultiGlobFinder:
                 responses[obj_name] = path
         return responses
 
+
 class SourceGlobFinder:
     list_glob: str
     match_regex: re.Pattern[str]
     name_regex: re.Pattern[str]
 
-    def __init__(self, list_glob: str, match_regex: re.Pattern[str] | None = None, name_regex: re.Pattern[str] | None = None):
+    def __init__(
+        self,
+        list_glob: str,
+        match_regex: re.Pattern[str] | None = None,
+        name_regex: re.Pattern[str] | None = None,
+    ):
         self.list_glob = list_glob
         if not match_regex:
             self.match_regex = re.compile(".*")
@@ -55,7 +60,6 @@ class SourceGlobFinder:
 
     def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
         path = os.path.join(config.deposition_root_dir, self.list_glob.format(**glob_vars))
-        print(f"path -- {path}")
         responses = {}
         for fname in config.fs.glob(path):
             if not self.match_regex.search(fname):
@@ -81,7 +85,6 @@ class DestinationGlobFinder:
 
     def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
         path = os.path.join(self.list_glob.format(**glob_vars))
-        print(f"dgf path -- {path}")
         responses = {}
         for fname in config.fs.glob(path):
             if not self.match_regex.search(fname):
@@ -101,12 +104,18 @@ class BaseLiteralValueFinder:
     def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
         return {item: None for item in self.literal_value}
 
+
 class VoxelSpacingLiteralValueFinder(BaseLiteralValueFinder):
     def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
-        # Expand voxel spacing based on tomogram metadata. This is for reverse compatibility with certain configs with run overrides.
-        if "run_name" in glob_vars:
-            return {config.expand_string(glob_vars["run_name"], config.tomogram_template.get("voxel_spacing")): None for item in self.literal_value}
-        return {item: None for item in self.literal_value}
+        values = {}
+        for item in self.literal_value:
+            # Do we have a template to expand?
+            if isinstance(item, str) and "{" in item:
+                values[round(float(config.expand_string(glob_vars["run_name"], item)), 3)] = None
+                continue
+            values[item] = None
+        return values
+
 
 class TomogramHeaderFinder:
     def __init__(self, list_glob: str, match_regex: str, header_key: str):
@@ -168,7 +177,6 @@ class DepositionObjectImporterFactory(ABC):
 class DefaultImporterFactory(DepositionObjectImporterFactory):
     def load(self, parent_object: Any | None, config: DepositionImportConfig, fs: FileSystemApi):
         source = self.source
-        print(source)
         if source.get("source_glob"):
             return SourceGlobFinder(**source["source_glob"])
         if source.get("source_multi_glob"):
@@ -184,40 +192,48 @@ class DefaultImporterFactory(DepositionObjectImporterFactory):
 class VSImporterFactory(DepositionObjectImporterFactory):
     def load(self, parent_object: Any | None, config: DepositionImportConfig, fs: FileSystemApi):
         source = self.source
-        print(source)
         if source.get("source_glob"):
             return SourceGlobFinder(**source["source_glob"])
         if source.get("destination_glob"):
             return DestinationGlobFinder(**source["destination_glob"])
         if source.get("tomogram_header"):
-             return TomogramHeaderFinder(**source["tomogram_header"])
+            return TomogramHeaderFinder(**source["tomogram_header"])
         if source.get("literal"):
             return VoxelSpacingLiteralValueFinder(**source["literal"])
         raise Exception("Invalid source type")
 
+
 class RawTiltImporterFactory(DefaultImporterFactory):
     pass
+
 
 class TiltseriesImporterFactory(DefaultImporterFactory):
     pass
 
+
 class FrameImporterFactory(DefaultImporterFactory):
     pass
+
 
 class GainImporterFactory(DefaultImporterFactory):
     pass
 
+
 class TomogramImporterFactory(DefaultImporterFactory):
     pass
+
 
 class DatasetImporterFactory(DefaultImporterFactory):
     pass
 
+
 class RunImporterFactory(DefaultImporterFactory):
     pass
 
+
 class KeyImageImporterFactory(DefaultImporterFactory):
     pass
+
 
 # TODO, how is this going to work???
 class AnnotationImporterFactory(DefaultImporterFactory):

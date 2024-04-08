@@ -5,10 +5,20 @@ import os.path
 import re
 from copy import deepcopy
 from typing import TYPE_CHECKING, Any
-from common.finders import DatasetImporterFactory, RunImporterFactory, VSImporterFactory, TiltseriesImporterFactory, FrameImporterFactory, GainImporterFactory, TomogramImporterFactory, RawTiltImporterFactory, KeyImageImporterFactory
 
 import yaml
 
+from common.finders import (
+    DatasetImporterFactory,
+    FrameImporterFactory,
+    GainImporterFactory,
+    KeyImageImporterFactory,
+    RawTiltImporterFactory,
+    RunImporterFactory,
+    TiltseriesImporterFactory,
+    TomogramImporterFactory,
+    VSImporterFactory,
+)
 from common.fs import FileSystemApi
 
 if TYPE_CHECKING:
@@ -48,7 +58,6 @@ class DepositionImportConfig:
     run_to_ts_map_csv: str | None = None
     run_to_ts_map: dict[str, str] | None = None
     rawtilt_files: list[str] | None = None
-    overrides_by_run: list[RunOverride] | None = None
     run_data_map: dict[str, Any]
     run_data_map_file: str | None = None
     # metadata templates
@@ -98,19 +107,6 @@ class DepositionImportConfig:
                     v = re.compile(v)
                 setattr(self, k, v)
 
-            self.overrides_by_run = []
-            try:
-                for item in dataset_config["overrides_by_run"]:
-                    override = RunOverride(
-                        run_regex=re.compile(item["run_regex"]),
-                        tomograms=item.get("tomograms"),
-                        tiltseries=item.get("tiltseries"),
-                    )
-                    self.overrides_by_run.append(override)
-            except KeyError:
-                # This isn't a required field
-                pass
-
         self.overrides = dataset_config.get("overrides")
         template_configs = {
             "runs": "run",
@@ -152,10 +148,10 @@ class DepositionImportConfig:
             for row in reader:
                 mapdata[row["run_name"]] = row
         return mapdata
-    
+
     def _get_finder_config(self, key: str, parent_obj) -> Any:
         key_name = f"{key}_finder_config"
-        items = getattr(self,key_name)
+        items = getattr(self, key_name)
 
         if not self.overrides:
             return items
@@ -167,7 +163,10 @@ class DepositionImportConfig:
             next = getattr(next, "parent", None)
 
         for override in self.overrides:
-            if all(re.search(regex, obj_type_to_name_map.get(obj_type, "")) for obj_type,regex in override["match"].items()):
+            if all(
+                re.search(regex, obj_type_to_name_map.get(obj_type, ""))
+                for obj_type, regex in override["match"].items()
+            ):
                 sources = override["sources"]
                 if key in sources:
                     return {"source": sources[key]}
@@ -175,7 +174,6 @@ class DepositionImportConfig:
         return items
 
     def _finder(self, import_class, key_name: str, parent, fs):
-        # TODO apply overrides!!
         config = self._get_finder_config(key_name, parent)
         cls = self.finder_factories[key_name]
         finder_cls = cls(**config)
@@ -183,39 +181,39 @@ class DepositionImportConfig:
         return items
 
     def find_datasets(self, import_class, parent, fs):
-        items = self._finder(import_class, 'dataset', parent, fs)
+        items = self._finder(import_class, "dataset", parent, fs)
         return items
 
     def find_frames(self, import_class, parent, fs):
-        items = self._finder(import_class, 'frame', parent, fs)
+        items = self._finder(import_class, "frame", parent, fs)
         return items
 
     def find_gains(self, import_class, parent, fs):
-        items = self._finder(import_class, 'gain', parent, fs)
+        items = self._finder(import_class, "gain", parent, fs)
         return items
 
     def find_key_images(self, import_class, parent, fs):
-        items = self._finder(import_class, 'key_image', parent, fs)
+        items = self._finder(import_class, "key_image", parent, fs)
         return items
 
     def find_rawtilts(self, import_class, parent, fs):
-        items = self._finder(import_class, 'rawtilt', parent, fs)
+        items = self._finder(import_class, "rawtilt", parent, fs)
         return items
 
     def find_runs(self, import_class, parent, fs):
-        items = self._finder(import_class, 'run', parent, fs)
+        items = self._finder(import_class, "run", parent, fs)
         return items
 
     def find_tiltseries(self, import_class, parent, fs):
-        items = self._finder(import_class, 'tiltseries', parent, fs)
+        items = self._finder(import_class, "tiltseries", parent, fs)
         return items
 
     def find_tomograms(self, import_class, parent, fs):
-        items = self._finder(import_class, 'tomogram', parent, fs)
+        items = self._finder(import_class, "tomogram", parent, fs)
         return items
 
     def find_voxel_spacings(self, import_class, parent, fs):
-        items = self._finder(import_class, 'voxel_spacing', parent, fs)
+        items = self._finder(import_class, "voxel_spacing", parent, fs)
         return items
 
     def load_run_csv_file(self, file_attr: str) -> dict[str, Any]:
@@ -317,6 +315,7 @@ class DepositionImportConfig:
         return base_metadata
 
     def get_run_override(self, run_name: str) -> RunOverride | None:
+        return
         if not self.overrides_by_run:
             return
         for item in self.overrides_by_run:
@@ -350,10 +349,7 @@ class DepositionImportConfig:
         }
         output_prefix = self.output_prefix
         glob_vars = obj.get_glob_vars()
-        path = os.path.join(
-            output_prefix,
-            paths[key].format(**glob_vars)
-        )
+        path = os.path.join(output_prefix, paths[key].format(**glob_vars))
         self.fs.makedirs(path)
         return path
 

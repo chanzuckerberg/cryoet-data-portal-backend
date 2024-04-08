@@ -35,6 +35,14 @@ dataset:
   sample_preparation: 'buffer_ph: 7.0'
   sample_type: organism
 runs: {}
+overrides:
+- match:
+    run: ^run1$
+  sources:
+    voxel_spacing:
+      literal:
+        value:
+        - 5.6789
 standardization_config:
   dataset:
     source:
@@ -49,14 +57,6 @@ standardization_config:
     source:
       source_glob:
         list_glob: ''
-  overrides:
-  - match:
-      run: ^run1$
-    sources:
-      voxel_spacing:
-        literal:
-          value:
-          - 5.6789
   rawtilt:
     source:
       source_multi_glob:
