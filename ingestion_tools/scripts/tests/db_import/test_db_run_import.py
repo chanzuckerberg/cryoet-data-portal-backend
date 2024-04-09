@@ -1,7 +1,7 @@
 from typing import Any, Callable
 
 import pytest as pytest
-from tests.db_import.populate_db import DATASET_ID, RUN_ID, populate_runs_table
+from tests.db_import.populate_db import DATASET_ID, RUN_ID, populate_run
 
 import common.db_models as models
 
@@ -37,7 +37,7 @@ def test_import_run(
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
     expected_runs: list[dict[str, Any]],
 ) -> None:
-    populate_runs_table()
+    populate_run()
     actual = verify_dataset_import(["--import-runs"])
     actual_runs = list(actual.runs)
     for i, run in enumerate(actual_runs):

@@ -1,0 +1,42 @@
+name: Deploy to Prod
+
+on: workflow_dispatch
+
+# https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-to-prod:
+#    concurrency:
+#      group: prod-cryoet-api-deploy-${{ github.ref }}
+#      cancel-in-progress: true
+
+    name: deploy to prod
+    runs-on: [ARM64, self-hosted, Linux]
+    environment: prod
+    if: github.repository == 'chanzuckerberg/cryoet-data-portal-backend'
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          mask-aws-account-id: true
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-duration-seconds: 1200
+      - name: Create or update stack
+        uses: chanzuckerberg/github-actions/.github/actions/deploy-happy-stack@v1.24.0
+        env:
+          # Force using BuildKit instead of normal Docker, required so that metadata
+          # is written/read to allow us to use layers of previous builds as cache.
+          DOCKER_BUILDKIT: 1
+          COMPOSE_DOCKER_CLI_BUILD: 1
+          DOCKER_REPO: ${{ secrets.ECR_REPO }}/
+          ENV: prod
+        with:
+          stack-name: "graphql"
+          create-tag: true
+          tfe-token: ${{ secrets.TFE_TOKEN }}
+          env: prod
+          operation: create-or-update
