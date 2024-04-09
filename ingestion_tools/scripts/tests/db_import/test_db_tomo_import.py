@@ -110,6 +110,7 @@ def expected_tomograms(http_prefix: str) -> list[dict[str, Any]]:
             "offset_z": 0,
             "neuroglancer_config": "{}",
             "type": "CANONICAL",
+            "deposition_id": 111111,
         },
     ]
 

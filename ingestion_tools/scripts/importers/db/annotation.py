@@ -50,6 +50,8 @@ class AnnotationDBImporter(BaseDBImporter):
             "ground_truth_used": ["annotation_confidence", "ground_truth_used"],
             "annotation_software": ["annotation_software"],
             "is_curator_recommended": ["is_curator_recommended"],
+            "method_type": ["method_type"],
+            "deposition_id": ["deposition_id"],
         }
 
     def import_to_db(self) -> BaseModel:
