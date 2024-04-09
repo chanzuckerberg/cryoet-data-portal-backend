@@ -1,23 +1,19 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-pixel_spacing,ts-tilt_alignment_software,ts-tilt_series_path,ts-tilt_series_quality
-aba2014-03-05-1,,NON_FIDUCIAL,None,None,,223.2,,rawdata/deltaA3AtlasB.mrc,1
-aba2014-03-05-2,,NON_FIDUCIAL,None,None,,223.2,,rawdata/deltaA3AtlasBTile01.mrc,1
-aba2014-03-05-3,,NON_FIDUCIAL,None,None,,223.2,,rawdata/deltaA3AtlasBTile02.mrc,1
-aba2014-03-05-4,,NON_FIDUCIAL,None,None,,21.835,,rawdata/deltaA3AtlasBtgt.mrc,1
-aba2014-03-05-5,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0001.mrc,4
-aba2014-03-05-6,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0002.mrc,4
-aba2014-03-05-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0003.mrc,4
-aba2014-03-05-8,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0004.mrc,4
-aba2014-03-05-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0005.mrc,4
-aba2014-03-05-10,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0006.mrc,4
-aba2014-03-05-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0007.mrc,4
-aba2014-03-05-12,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0008.mrc,4
-aba2014-03-05-13,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0009.mrc,4
-aba2014-03-05-14,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0010.mrc,4
-aba2014-03-05-15,,NON_FIDUCIAL,None,None,,3.805,,rawdata/deltaA3VibrioC0011.mrc,1
-aba2014-03-05-16,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0012.mrc,4
-aba2014-03-05-17,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0013.mrc,4
-aba2014-03-05-18,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0014.mrc,4
-aba2014-03-05-19,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0015.mrc,4
-aba2014-03-05-20,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0016.mrc,4
-aba2014-03-05-21,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0017.mrc,4
-aba2014-03-05-22,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,3.805,RAPTOR,rawdata/deltaA3VibrioC0018.mrc,4
+run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_path,ts-tilt_series_quality
+aba2014-03-05-5,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0001.mrc,4
+aba2014-03-05-6,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0002.mrc,4
+aba2014-03-05-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0003.mrc,4
+aba2014-03-05-8,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0004.mrc,4
+aba2014-03-05-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0005.mrc,4
+aba2014-03-05-10,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0006.mrc,4
+aba2014-03-05-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0007.mrc,4
+aba2014-03-05-12,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0008.mrc,4
+aba2014-03-05-13,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0009.mrc,4
+aba2014-03-05-14,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0010.mrc,4
+aba2014-03-05-15,,NON_FIDUCIAL,None,None,,,rawdata/deltaA3VibrioC0011.mrc,1
+aba2014-03-05-16,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0012.mrc,4
+aba2014-03-05-17,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0013.mrc,4
+aba2014-03-05-18,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0014.mrc,4
+aba2014-03-05-19,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0015.mrc,4
+aba2014-03-05-20,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0016.mrc,4
+aba2014-03-05-21,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0017.mrc,4
+aba2014-03-05-22,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,15.218,RAPTOR,rawdata/deltaA3VibrioC0018.mrc,4

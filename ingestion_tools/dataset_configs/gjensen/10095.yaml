@@ -2,7 +2,7 @@ dataset:
   dataset_identifier: 10095
   dataset_description: This is 38th of 41 sets of data studying Legionella pneumophila
     collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb.
-  dataset_title: "L. pneumophila Lp02 \xCE\u201DpilQ"
+  dataset_title: "L. pneumophila Lp02 \u2206pilQ"
   authors: &id001
   - name: Debnath Ghosal
     primary_author_status: true
@@ -47,19 +47,32 @@ tiltseries:
     energy_filter: GIF
     image_corrector: null
     phase_plate: false
-  pixel_spacing: '{ts-pixel_spacing}'
+  pixel_spacing: 4.036
   spherical_aberration_constant: 1.2
-  tilt_alignment_software: '{ts-tilt_alignment_software}'
+  tilt_alignment_software: RAPTOR
   tilt_axis: 84.3
   tilt_range:
     max: 60.0
     min: -60.0
   tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: int {ts-tilt_series_quality}
+  tilt_series_quality: 4
   tilt_step: 1.5
   tilting_scheme: starting tilt to max then min
   total_flux: 100.0
 tomograms:
+  voxel_spacing: 16.145
+  reconstruction_method: Weighted back projection
+  reconstruction_software: IMOD
+  fiducial_alignment_status: FIDUCIAL
+  ctf_corrected: null
+  processing: raw
+  processing_software: null
+  align_softwares:
+  - RAPTOR
+  offset:
+    x: 0
+    y: 0
+    z: 0
   affine_transformation_matrix:
   - - 1
     - 0
@@ -77,20 +90,8 @@ tomograms:
     - 0
     - 0
     - 1
-  align_softwares: '{tomo-align_softwares}'
   authors: *id001
-  ctf_corrected: null
-  fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  processing_software: null
-  reconstruction_method: '{tomo-reconstruction_method}'
-  reconstruction_software: '{tomo-reconstruction_software}'
   tomogram_version: 1
-  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
 standardization_config:
   destination_prefix: '10095'
@@ -109,6 +110,6 @@ standardization_config:
   tomo_voxel_size: ''
   tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
   run_glob: '*'
-  run_regex: (dga2017-03-02-1|dga2017-03-02-2|dga2017-03-02-3|dga2017-03-02-4|dga2017-03-02-5|dga2017-03-02-6|dga2017-03-02-7|dga2017-03-02-8|dga2017-03-02-9|dga2017-03-02-10|dga2017-03-02-11|dga2017-03-02-12|dga2017-03-02-13|dga2017-03-02-14|dga2017-03-02-15|dga2017-03-02-16|dga2017-03-02-17|dga2017-03-02-18|dga2017-03-02-19|dga2017-03-02-20|dga2017-03-02-21|dga2017-03-02-22|dga2017-03-02-23|dga2017-03-02-24|dga2017-03-02-25|dga2017-03-02-26|dga2017-03-02-27|dga2017-03-02-28|dga2017-03-02-37|dga2017-03-02-38|dga2017-03-02-39)$
+  run_regex: (dga2017-03-02-1|dga2017-03-02-2|dga2017-03-02-3|dga2017-03-02-4|dga2017-03-02-5|dga2017-03-02-6|dga2017-03-02-7|dga2017-03-02-8|dga2017-03-02-9|dga2017-03-02-10|dga2017-03-02-11|dga2017-03-02-12|dga2017-03-02-13|dga2017-03-02-14|dga2017-03-02-15|dga2017-03-02-16|dga2017-03-02-17|dga2017-03-02-18|dga2017-03-02-19|dga2017-03-02-20|dga2017-03-02-21|dga2017-03-02-22|dga2017-03-02-23|dga2017-03-02-24|dga2017-03-02-25|dga2017-03-02-26|dga2017-03-02-27|dga2017-03-02-28|dga2017-03-02-37|dga2017-03-02-38)$
   run_name_regex: (.*)
   run_data_map_file: run_data_map/10095.csv

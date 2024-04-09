@@ -2,7 +2,7 @@ dataset:
   dataset_identifier: 10269
   dataset_description: This is 7th of 15 sets of data studying Vibrio cholerae collected
     by Ariane Briegel and is a part of Caltech Jensen  lab etdb. Wild Type Vibrio
-  dataset_title: "Vibrio cholerae C6706 \xE2\u02C6\u2020lacZ"
+  dataset_title: "Vibrio cholerae C6706 \u2206lacZ"
   authors: &id001
   - name: Ariane Briegel
     primary_author_status: true

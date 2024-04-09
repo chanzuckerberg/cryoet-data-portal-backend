@@ -1,9 +1,8 @@
 dataset:
   dataset_identifier: 10265
   dataset_description: "This is 3rd of 15 sets of data studying Vibrio cholerae collected\
-    \ by Ariane Briegel and is a part of Caltech Jensen  lab etdb. C6706Z- \xE2\u02C6\
-    \u2020vca1093 \xE2\u02C6\u2020vca1094 \xE2\u02C6\u2020vca1095 (CheWCheWCheA knockout\
-    \ cluster 3)"
+    \ by Ariane Briegel and is a part of Caltech Jensen  lab etdb. C6706Z- \u2206\
+    vca1093 \u2206vca1094 \u2206vca1095 (CheWCheWCheA knockout cluster 3)"
   dataset_title: Vibrio CheWCheWCheA knockout
   authors: &id001
   - name: Ariane Briegel

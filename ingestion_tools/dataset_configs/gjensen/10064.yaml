@@ -2,7 +2,7 @@ dataset:
   dataset_identifier: 10064
   dataset_description: "This is 7th of 41 sets of data studying Legionella pneumophila\
     \ collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. JV2067\
-    \ Legionella thyA \xCE\u201DIcmX"
+    \ Legionella thyA \u2206IcmX"
   dataset_title: L. pneumophila JV2067
   authors: &id001
   - name: Debnath Ghosal

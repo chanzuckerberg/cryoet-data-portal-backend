@@ -48,7 +48,7 @@ tiltseries:
     phase_plate: '{ts-microscope_optical_setup-phase_plate}'
   pixel_spacing: 4.319
   spherical_aberration_constant: 2.7
-  tilt_alignment_software: '{ts-tilt_alignment_software}'
+  tilt_alignment_software: RAPTOR
   tilt_axis: 84.3
   tilt_range:
     max: float {ts-tilt_range-max}
