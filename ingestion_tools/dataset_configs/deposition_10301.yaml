@@ -7,18 +7,35 @@ annotations:
         state: ~
       dates: &repo-dates
         deposition_date: 2024-02-20
-        last_modified_date: 2024-02-20
-        release_date: 2024-02-20
+        last_modified_date: 2024-04-10
+        release_date: 2024-04-10
       annotation_method: TARDIS
       method_type: automated
-      annotation_publications: ~
+      annotation_publications: 10.1093/micmic/ozad067.485 and GitHub https://github.com/SMLC-NYSBC/TARDIS
       ground_truth_status: False
       authors: &annotation_authors
         - name: Robert Kiewisz
-          primary_annotator_status: true
+          ORCID: 0000-0003-2733-4978
+          primary_author_status: true
+        - name: Gunar Fabig
+          ORCID: 0000-0003-3017-0978
+        - name: Stefanie Redemann
+          ORCID: 0000-0003-2334-7309
+        - name: Will Conway
+          ORCID: 0000-0001-7532-4331
+        - name: Victor Kostyuchenko
+          ORCID: 0000-0001-9751-307X
+        - name: Jake Johnston
+          ORCID: 0000-0003-3060-7738
+        - name: Oliver Clarke
+        - name: Shee-Mei Lok
+          ORCID: 0000-0003-4631-8041
+        - name: Thomas Müller-Reichert
+          ORCID: 0000-0003-0203-1436
         - name: Tristan Bepler
+          ORCID: 0000-0001-5595-9954
           corresponding_author_status: true
-      annotation_software: TARDIS
+      annotation_software: TARDIS-em v0.2.0
       version: '1.0'
       confidence:
         precision: ~
@@ -34,7 +51,7 @@ annotations:
       - file_format: mrc
         shape: SemanticSegmentationMask
         glob_string: "{dataset_name}/{run_name}/{run_name}_semantic.mrc"
-        is_visualization_default: false
+        is_visualization_default: true
 standardization_config:
   deposition_id: 10301
   dataset:
