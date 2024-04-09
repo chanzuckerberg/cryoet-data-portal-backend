@@ -86,7 +86,7 @@ class BaseImporter:
         return self.config.get_metadata_path(self)
     
     @classmethod
-    def finder(cls, config: DepositionImportConfig, fs: FileSystemApi, **parents):
+    def finder(cls, config: DepositionImportConfig, fs: FileSystemApi, **parents) -> list["BaseImporter"]:
         finder_config = config._get_finder_config(cls.type_key, **parents)
         finder_cls = cls.finder_factory(**finder_config)
         items = finder_cls.find(cls, config, fs, **parents)

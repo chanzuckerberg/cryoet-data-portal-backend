@@ -4,7 +4,7 @@ import os
 from typing import TYPE_CHECKING, Any
 
 from importers.base_importer import BaseImporter
-from common.finders import DepositionObjectImporterFactory, SourceGlobFinder, DestinationGlobFinder, BaseLiteralValueFinder
+from common.finders import DepositionObjectImporterFactory, SourceGlobFinder, DestinationGlobFinder, BaseLiteralValueFinder, BaseFinder
 from common.config import DepositionImportConfig
 from common.image import get_voxel_size
 import re
@@ -27,7 +27,7 @@ class VoxelSpacingLiteralValueFinder(BaseLiteralValueFinder):
         return values
 
 
-class TomogramHeaderFinder:
+class TomogramHeaderFinder(BaseFinder):
     def __init__(self, list_glob: str, match_regex: str, header_key: str):
         self.list_glob = list_glob
         self.header_key = header_key
@@ -53,7 +53,7 @@ class TomogramHeaderFinder:
         return responses
 
 class VSImporterFactory(DepositionObjectImporterFactory):
-    def load(self, config: DepositionImportConfig, fs: FileSystemApi, **parent_objects: dict[str, Any] | None):
+    def load(self, config: DepositionImportConfig, fs: FileSystemApi, **parent_objects: dict[str, Any] | None) -> BaseFinder:
         source = self.source
         if source.get("source_glob"):
             return SourceGlobFinder(**source["source_glob"])

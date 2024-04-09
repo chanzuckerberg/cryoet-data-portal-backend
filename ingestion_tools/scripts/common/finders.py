@@ -14,7 +14,12 @@ else:
 ###
 ### Base Finders
 ###
-class SourceMultiGlobFinder:
+class BaseFinder(ABC):
+    @abstractmethod
+    def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
+        pass
+
+class SourceMultiGlobFinder(BaseFinder):
     list_glob: str
     match_regex: re.Pattern[str]
     name_regex: re.Pattern[str]
@@ -35,7 +40,7 @@ class SourceMultiGlobFinder:
         return responses
 
 
-class SourceGlobFinder:
+class SourceGlobFinder(BaseFinder):
     list_glob: str
     match_regex: re.Pattern[str]
     name_regex: re.Pattern[str]
@@ -71,7 +76,7 @@ class SourceGlobFinder:
 # TODO this thing probably shouldn't exist, since it relies on a particular existing state of our
 # output directories, but for the moment we have a deposition that doesn't encode voxel spacings in it,
 # so this is about the best we can do.
-class DestinationGlobFinder:
+class DestinationGlobFinder(BaseFinder):
     list_glob: str
     match_regex: re.Pattern[str]
     name_regex: re.Pattern[str]
@@ -113,7 +118,7 @@ class DepositionObjectImporterFactory(ABC):
         self.source = source
 
     @abstractmethod
-    def load(self, config: DepositionImportConfig, fs: FileSystemApi, **expansion_data: dict[str, Any] | None):
+    def load(self, config: DepositionImportConfig, fs: FileSystemApi, **expansion_data: dict[str, Any] | None) -> BaseFinder:
         pass
 
     def find(self, cls, config: DepositionImportConfig, fs: FileSystemApi, **parent_objects: dict[str, Any] | None):
@@ -139,7 +144,7 @@ class DepositionObjectImporterFactory(ABC):
 
 
 class DefaultImporterFactory(DepositionObjectImporterFactory):
-    def load(self, config: DepositionImportConfig, fs: FileSystemApi, **parent_objects: dict[str, Any] | None):
+    def load(self, config: DepositionImportConfig, fs: FileSystemApi, **parent_objects: dict[str, Any] | None) -> BaseFinder:
         source = self.source
         if source.get("source_glob"):
             return SourceGlobFinder(**source["source_glob"])
