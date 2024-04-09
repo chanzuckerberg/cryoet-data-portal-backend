@@ -11,7 +11,7 @@ annotations:
         release_date: 2024-04-10
       annotation_method: TARDIS
       method_type: automated
-      annotation_publications: 10.1093/micmic/ozad067.485 and GitHub https://github.com/SMLC-NYSBC/TARDIS
+      annotation_publications: 10.1093/micmic/ozad067.485, https://github.com/SMLC-NYSBC/TARDIS
       ground_truth_status: False
       authors: &annotation_authors
         - name: Robert Kiewisz
