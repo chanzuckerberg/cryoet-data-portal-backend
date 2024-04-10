@@ -175,6 +175,7 @@ class TomomanData:
 @dataclass
 class PortalOutput:
     run_name: str
+    annotation_micrograph_name: str
     tilt_series_min_tilt: float
     tilt_series_max_tilt: float
     tilt_series_tilt_axis_angle: float
@@ -197,6 +198,7 @@ class PortalOutput:
 
         return cls(
             run_name=record.stack_dir.replace(record.root_dir, "").strip("/"),
+            annotation_micrograph_name=str(record.tomo_num),
             tilt_series_min_tilt=record.min_tilt,
             tilt_series_max_tilt=record.max_tilt,
             tilt_series_tilt_axis_angle=record.tilt_axis_angle,

@@ -123,11 +123,11 @@ annotations:
       is_curator_recommended: true
     sources:
       - file_format: stopgap_star
-        binning: 1
+        filter_value: "{annotation_micrograph_name}"
+        binning: 4
         order: zyx
         glob_string: "{run_name}/metadata/particles/f1atpase_*.star"
         shape: OrientedPoint
-        filter_value: ~
         is_visualization_default: true
 
   # mitochondrial F1-F0-ATPase complex
@@ -146,11 +146,11 @@ annotations:
       is_curator_recommended: true
     sources:
       - file_format: stopgap_star
-        binning: 1
+        filter_value: "{annotation_micrograph_name}"
+        binning: 4
         order: zyx
         glob_string: "{run_name}/metadata/particles/f1atpase_mito_*.star"
         shape: OrientedPoint
-        filter_value: ~
         is_visualization_default: true
 
   # Ribosome
@@ -169,11 +169,11 @@ annotations:
       is_curator_recommended: true
     sources:
       - file_format: stopgap_star
-        binning: 1
+        filter_value: "{annotation_micrograph_name}"
+        binning: 4
         order: zyx
         glob_string: "{run_name}/metadata/particles/ribosome_*.star"
         shape: OrientedPoint
-        filter_value: ~
         is_visualization_default: true
 
   # Nucleosome
@@ -191,11 +191,11 @@ annotations:
       is_curator_recommended: true
     sources:
       - file_format: stopgap_star
-        binning: 1
+        filter_value: "{annotation_micrograph_name}"
+        binning: 4
         order: zyx
         glob_string: "{run_name}/metadata/particles/nucleosome_*.star"
         shape: OrientedPoint
-        filter_value: ~
         is_visualization_default: true
 
   # rubisco
@@ -214,11 +214,11 @@ annotations:
       is_curator_recommended: true
     sources:
       - file_format: stopgap_star
-        binning: 1
+        filter_value: "{annotation_micrograph_name}"
+        binning: 4
         order: zyx
         glob_string: "{run_name}/metadata/particles/rubisco_*.star"
         shape: OrientedPoint
-        filter_value: ~
         is_visualization_default: true
 
   # microtubule
@@ -236,11 +236,11 @@ annotations:
       is_curator_recommended: true
     sources:
       - file_format: stopgap_star
-        binning: 1
+        filter_value: "{annotation_micrograph_name}"
+        binning: 4
         order: zyx
         glob_string: "{run_name}/metadata/particles/microtubule_*.star"
         shape: OrientedPoint
-        filter_value: ~
         is_visualization_default: true
 
 runs: {}
