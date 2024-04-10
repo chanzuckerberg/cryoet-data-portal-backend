@@ -2,7 +2,7 @@ dataset:
   authors: &dataset_authors
     - name: Ron Kelley,
       primary_author_status: true
-    - name: Sagar Khavnekar,
+    - name: Sagar Khavnekar
       corresponding_author_status: true
       primary_author_status: true
       ORCID: 0000-0003-2020-3561
