@@ -1,49 +1,49 @@
 dataset:
   authors: &dataset_authors
-    - name: Ron Kelley,
+    - name: Ron Kelley
       corresponding_author_status: false
       primary_author_status: true
-    - name: Xianjun Zhang,
+    - name: Xianjun Zhang
       corresponding_author_status: false
       primary_author_status: false
-    - name: Martin Obr,
+    - name: Martin Obr
       corresponding_author_status: false
       primary_author_status: false
-    - name: Sagar Khavnekar,
+    - name: Sagar Khavnekar
       corresponding_author_status: true
       primary_author_status: true
       ORCID: 0000-0003-2020-3561
-    - name: Ricardo D. Righetto,
+    - name: Ricardo D. Righetto
       corresponding_author_status: false
       primary_author_status: false
-    - name: Florent Waltz,
+    - name: Florent Waltz
       corresponding_author_status: false
       primary_author_status: false
-    - name: Wojciech Wietrzynski,
+    - name: Wojciech Wietrzynski
       corresponding_author_status: false
       primary_author_status: false
-    - name: Michael A,
+    - name: Alicia K Michael
       corresponding_author_status: false
       primary_author_status: false
-    - name: Grigory Tagiltsev,
+    - name: Grigory Tagiltsev
       corresponding_author_status: false
       primary_author_status: false
-    - name: Florian Beck,
+    - name: Florian Beck
       corresponding_author_status: false
       primary_author_status: false
-    - name: Ellen Zhong,
+    - name: Ellen Zhong
       corresponding_author_status: false
       primary_author_status: false
-    - name: William Wan,
+    - name: William Wan
       corresponding_author_status: false
       primary_author_status: false
-    - name: John Briggs,
+    - name: John Briggs
       corresponding_author_status: false
       primary_author_status: false
-    - name: M. Jürgen Plitzko,
+    - name: M. Jürgen Plitzko
       corresponding_author_status: false
       primary_author_status: false
-    - name: Benjamin D. Engel,
+    - name: Benjamin D. Engel
       corresponding_author_status: false
       primary_author_status: false
     - name: Abhay Kotecha
@@ -86,36 +86,36 @@ annotations:
       ground_truth_status: true
       method_type: hybrid
       authors: &annotation_authors
-        - name: Ron Kelley,
+        - name: Ron Kelley
           corresponding_author_status: false
           primary_annotator_status: true
-        - name: Xianjun Zhang,
-        - name: Martin Obr,
-        - name: Sagar Khavnekar,
+        - name: Xianjun Zhang
+        - name: Martin Obr
+        - name: Sagar Khavnekar
           corresponding_author_status: true
           primary_annotator_status: true
           ORCID: 0000-0003-2020-3561
-        - name: Ricardo D. Righetto,
+        - name: Ricardo D. Righetto
           corresponding_author_status: false
-        - name: Florent Waltz,
+        - name: Florent Waltz
           corresponding_author_status: false
-        - name: Wojciech Wietrzynski,
+        - name: Wojciech Wietrzynski
           corresponding_author_status: false
-        - name: Michael A,
+        - name: Alicia K Michael
           corresponding_author_status: false
-        - name: Grigory Tagiltsev,
+        - name: Grigory Tagiltsev
           corresponding_author_status: false
-        - name: Florian Beck,
+        - name: Florian Beck
           corresponding_author_status: false
-        - name: Ellen Zhong,
+        - name: Ellen Zhong
           corresponding_author_status: false
-        - name: William Wan,
+        - name: William Wan
           corresponding_author_status: false
-        - name: John Briggs,
+        - name: John Briggs
           corresponding_author_status: false
-        - name: M. Jürgen Plitzko,
+        - name: M. Jürgen Plitzko
           corresponding_author_status: false
-        - name: Benjamin D. Engel,
+        - name: Benjamin D. Engel
           corresponding_author_status: false
         - name: Abhay Kotecha
           corresponding_author_status: true
@@ -269,13 +269,13 @@ tiltseries:
   scales: []
   spherical_aberration_constant: 2.7
   tilting_scheme: dose-symmetric
-  tilt_axis: "{tilt_series_tilt_axis_angle}"
+  tilt_axis: "float {tilt_series_tilt_axis_angle}"
   tilt_range:
-    min: "{tilt_series_min_tilt}"
-    max: "{tilt_series_max_tilt}"
+    min: "float {tilt_series_min_tilt}"
+    max: "float {tilt_series_max_tilt}"
   tilt_step: 3.0
   tilt_series_quality: 5
-  total_flux: "{tilt_series_total_flux}"
+  total_flux: "float {tilt_series_total_flux}"
   is_aligned: false
   alignment_binning_factor: null
 tomograms:
@@ -306,9 +306,9 @@ standardization_config:
   rawtlt_files:
     - "{run_name}/{run_name}.rawtlt"
     - "{run_name}/{run_name}.mdoc"
-    - "AreTomo/{run_name}_dose-filt.tlt"
-    - "AreTomo/{run_name}_dose-filt.xf"
-    - "ctffind4/ctfphaseflip_ctffind4.txt"
+    - "{run_name}/AreTomo/{run_name}_dose-filt.tlt"
+    - "{run_name}/AreTomo/{run_name}_dose-filt.xf"
+    - "{run_name}/ctffind4/ctfphaseflip_ctffind4.txt"
   tiltseries_glob: "{run_name}/{run_name}.st"
   ts_name_regex: (.*)
   tomo_format: mrc
