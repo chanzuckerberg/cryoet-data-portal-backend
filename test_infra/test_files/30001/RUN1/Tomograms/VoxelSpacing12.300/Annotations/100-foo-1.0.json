@@ -49,5 +49,6 @@
             "shape": "SegmentationMask",
             "is_visualization_default": false
         }
-    ]
+    ],
+    "deposition_id": 111111
 }

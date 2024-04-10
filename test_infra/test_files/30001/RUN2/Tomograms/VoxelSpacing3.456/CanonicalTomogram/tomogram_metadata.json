@@ -38,5 +38,6 @@
     "mrc_files": [
         "RUN2.mrc"
     ],
-    "run_name": "RUN2"
+    "run_name": "RUN2",
+    "deposition_id": 111111
 }
