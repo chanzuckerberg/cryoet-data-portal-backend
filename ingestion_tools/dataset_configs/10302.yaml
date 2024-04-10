@@ -122,9 +122,9 @@ standardization_config:
   run_glob: "chlamy_visual_proteomics/*"
   run_regex: /(\d{8}_.*)$
   run_name_regex: (.*)
-  frames_glob: ''  # "chlamy_visual_proteomics/{run_name}/frames/*.eer"
-  frames_name_regex: ''  #(.*)
-  gain_glob: '' # "chlamy_visual_proteomics/{frame_gain_reference}"
+  frames_glob: ""  # "chlamy_visual_proteomics/{run_name}/frames/*.eer"
+  frames_name_regex: ""  #(.*)
+  gain_glob: "" # "chlamy_visual_proteomics/{frame_gain_reference}"
   rawtlt_files:
     - "chlamy_visual_proteomics/{run_name}/{run_name}.rawtlt"
     - "chlamy_visual_proteomics/{run_name}/{run_name}.mdoc"
