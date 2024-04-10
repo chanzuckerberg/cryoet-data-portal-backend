@@ -84,6 +84,7 @@ annotations:
       annotation_method: &annotation_method Template matching + manual filtering + 3D classification filtering
       annotation_publications: *dataset-publications
       ground_truth_status: true
+      method_type: hybrid
       authors: &annotation_authors
         - name: Ron Kelley,
           corresponding_author_status: false
@@ -140,6 +141,7 @@ annotations:
       annotation_method: *annotation_method
       annotation_publications: *dataset-publications
       ground_truth_status: true
+      method_type: hybrid
       authors: *annotation_authors
       annotation_software: STOPGAP
       version: "1.0"
@@ -163,6 +165,7 @@ annotations:
       annotation_method: *annotation_method
       annotation_publications: *dataset-publications
       ground_truth_status: true
+      method_type: hybrid
       authors: *annotation_authors
       annotation_software: STOPGAP
       version: "1.0"
@@ -185,6 +188,7 @@ annotations:
       annotation_method: *annotation_method
       annotation_publications: *dataset-publications
       ground_truth_status: true
+      method_type: hybrid
       authors: *annotation_authors
       annotation_software: STOPGAP
       version: "1.0"
@@ -208,6 +212,7 @@ annotations:
       annotation_method: *annotation_method
       annotation_publications: *dataset-publications
       ground_truth_status: true
+      method_type: hybrid
       authors: *annotation_authors
       annotation_software: STOPGAP
       version: "1.0"
@@ -230,6 +235,7 @@ annotations:
       annotation_method: *annotation_method
       annotation_publications: *dataset-publications
       ground_truth_status: true
+      method_type: hybrid
       authors: *annotation_authors
       annotation_software: STOPGAP
       version: "1.0"
