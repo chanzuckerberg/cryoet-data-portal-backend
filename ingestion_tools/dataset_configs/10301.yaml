@@ -269,13 +269,13 @@ tiltseries:
   scales: []
   spherical_aberration_constant: 2.7
   tilting_scheme: dose-symmetric
-  tilt_axis: "{tilt_series_tilt_axis_angle}"
+  tilt_axis: "float {tilt_series_tilt_axis_angle}"
   tilt_range:
-    min: "{tilt_series_min_tilt}"
-    max: "{tilt_series_max_tilt}"
+    min: "float {tilt_series_min_tilt}"
+    max: "float {tilt_series_max_tilt}"
   tilt_step: 3.0
   tilt_series_quality: 5
-  total_flux: "{tilt_series_total_flux}"
+  total_flux: "float {tilt_series_total_flux}"
   is_aligned: false
   alignment_binning_factor: null
 tomograms:
