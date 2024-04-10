@@ -93,8 +93,8 @@ tiltseries:
   tilting_scheme: dose-symmetric
   tilt_axis: "{tilt_series_tilt_axis_angle}"
   tilt_range:
-    min: "{tilt_series_min}"
-    max: "{tilt_series_max}"
+    min: "{tilt_series_min_tilt}"
+    max: "{tilt_series_max_tilt}"
   tilt_step: 3.0
   tilt_series_quality: 5
   total_flux: "{tilt_series_total_flux}"
@@ -122,9 +122,9 @@ standardization_config:
   run_glob: "chlamy_visual_proteomics/*"
   run_regex: /(\d{8}_.*)$
   run_name_regex: (.*)
-  #frames_glob: null # "chlamy_visual_proteomics/{run_name}/frames/*.eer"
-  #frames_name_regex: null #(.*)
-  #gain_glob: null # "chlamy_visual_proteomics/{frame_gain_reference}"
+  frames_glob: ''  # "chlamy_visual_proteomics/{run_name}/frames/*.eer"
+  frames_name_regex: ''  #(.*)
+  gain_glob: '' # "chlamy_visual_proteomics/{frame_gain_reference}"
   rawtlt_files:
     - "chlamy_visual_proteomics/{run_name}/{run_name}.rawtlt"
     - "chlamy_visual_proteomics/{run_name}/{run_name}.mdoc"
