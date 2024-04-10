@@ -87,7 +87,7 @@ class TomomanData:
         dose = [float(it[0]) for it in record["dose"]]
         target_defocus = float(record["target_defocus"][0][0])
         gainref = str(record["gainref"][0])
-        defects_file = str(record["defects_file"][0])
+        defects_file = str(record["defects_file"][0]) if record["defects_file"].size > 0 else ""
         rotate_gain = float(record["rotate_gain"][0][0])
         flip_gain = float(record["flip_gain"][0][0])
         raw_stack_name = str(record["raw_stack_name"][0])
@@ -176,6 +176,7 @@ class TomomanData:
 class PortalOutput:
     run_name: str
     annotation_micrograph_name: str
+    frame_gain_reference: str
     tilt_series_min_tilt: float
     tilt_series_max_tilt: float
     tilt_series_tilt_axis_angle: float
@@ -198,6 +199,7 @@ class PortalOutput:
 
         return cls(
             run_name=record.stack_dir.replace(record.root_dir, "").strip("/"),
+            frame_gain_reference=record.gainref.replace(record.root_dir, "").strip("/"),
             annotation_micrograph_name=str(record.tomo_num),
             tilt_series_min_tilt=record.min_tilt,
             tilt_series_max_tilt=record.max_tilt,

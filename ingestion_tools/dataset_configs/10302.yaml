@@ -1,0 +1,140 @@
+dataset:
+  authors: &dataset_authors
+    - name: Ron Kelley,
+      primary_author_status: true
+    - name: Sagar Khavnekar,
+      corresponding_author_status: true
+      primary_author_status: true
+      ORCID: 0000-0003-2020-3561
+    - name: Xianjun Zhang
+      ORCID: 0000-0003-3554-780X
+    - name: Martin Obr
+      ORCID: 0000-0003-1756-6564
+    - name: Saikat Chakraborty
+      ORCID: 0000-0002-6307-8441
+    - name: Adrian Fujiet Koh
+      ORCID: 0000-0001-6682-4449
+    - name: Jessica Heebner
+      ORCID: 0000-0002-7025-7608
+    - name: Ricardo D. Righetto
+      ORCID: 0000-0003-4247-4303
+    - name: Florent Waltz
+      ORCID: 0000-0002-2251-3363
+    - name: C McCafferty
+    - name: Hugo van den Hoek
+    - name: Wojciech Wietrzynski
+      ORCID: 0000-0001-8898-2392
+    - name: P Van Der Stappen
+    - name: Alicia K Michael
+      ORCID: 0000-0002-6080-839X
+    - name: S van Dorst
+    - name: Grigory Tagiltsev
+      ORCID: 0000-0002-9312-2108
+    - name: Florian Beck
+    - name: Ellen Zhong
+      ORCID: 0000-0001-6345-1907
+    - name: William Wan
+      ORCID: 0000-0003-2497-3010
+    - name: John Briggs
+      ORCID: 0000-0003-3990-6910
+    - name: M. Jürgen Plitzko
+      corresponding_author_status: false
+      primary_author_status: false
+    - name: Benjamin D. Engel
+      ORCID: 0000-0002-0941-4387
+    - name: Abhay Kotecha
+      corresponding_author_status: true
+      primary_author_status: false
+      ORCID: 0000-0002-4480-5439
+  cross_references:
+    dataset_publications: &dataset-publications EMPIAR-11830, 10.1093/micmic/ozad067.480
+    related_database_entries: EMPIAR-11830
+  cell_type:
+    name: Chlamydomonas reinhardtii
+  dataset_identifier: 10302
+  dataset_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled lamella.
+  dataset_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using cryo-plasmaFIB milling - Full Dataset
+  dates: &repo-dates
+    deposition_date: 2024-04-10
+    last_modified_date: 2024-04-10
+    release_date: 2024-04-10
+#  funding:
+#    - funding_agency_name: RECOMMENDED
+#      grant_id: RECOMMENDED
+  grid_preparation: ~
+  key_photos:
+    snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons//11830-l.gif
+    thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons//11830.gif
+  organism:
+    name: Chlamydomonas reinhardtii
+    taxonomy_id: 3055
+  sample_preparation: ~
+  sample_type: Organism
+annotations: {}
+runs: {}
+tiltseries:
+  acceleration_voltage: 300000
+  binning_from_frames: 1
+  camera:
+    manufacturer: FEI
+    model: FALCON IV
+  data_acquisition_software: TEM Tomography 5
+  microscope:
+    manufacturer: FEI
+    model: TITAN KRIOS
+  microscope_optical_setup:
+    energy_filter: Selectris X
+    phase_plate: None
+    image_corrector: None
+  pixel_spacing: 1.96
+  related_empiar_entry: EMPIAR-11830
+  scales: []
+  spherical_aberration_constant: 2.7
+  tilting_scheme: dose-symmetric
+  tilt_axis: "{tilt_series_tilt_axis_angle}"
+  tilt_range:
+    min: "{tilt_series_min}"
+    max: "{tilt_series_max}"
+  tilt_step: 3.0
+  tilt_series_quality: 5
+  total_flux: "{tilt_series_total_flux}"
+  is_aligned: false
+  alignment_binning_factor: null
+tomograms:
+  ctf_corrected: true
+  fiducial_alignment_status: false
+  offset:
+    x: 0
+    y: 0
+    z: 0
+  affine_transformation_matrix: [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]] # this is the identity matrix
+  processing: denoised
+  reconstruction_method: WBP
+  reconstruction_software: IMOD
+  tomogram_version: 1
+  voxel_spacing: 7.84
+  authors: *dataset_authors
+
+standardization_config:
+  destination_prefix: "10302"
+  source_prefix: "cryoetportal-rawdatasets-dev/chlamy2/data/"
+  run_data_map_file: "chlamy_visual_proteomics/run_to_data_map.tsv"
+  run_glob: "*"
+  run_regex: /\d{8}_.*$
+  run_name_regex: (.*)
+  frames_glob: null # "chlamy_visual_proteomics/{run_name}/frames/*.eer"
+  frames_name_regex: null #(.*)
+  gain_glob: null # "chlamy_visual_proteomics/{frame_gain_reference}"
+  rawtlt_files:
+    - "chlamy_visual_proteomics/{run_name}/{run_name}.rawtlt"
+    - "chlamy_visual_proteomics/{run_name}/{run_name}.mdoc"
+    - "chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.tlt"
+    - "chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.xf"
+    - "chlamy_visual_proteomics/{run_name}/ctffind4/ctfphaseflip_ctffind4.txt"
+  tiltseries_glob: "chlamy_visual_proteomics/{run_name}/{run_name}.st"
+  ts_name_regex: (.*)
+  tomo_format: mrc
+  tomo_glob: "cryocare_bin4/{annotation_micrograph_name}.mrc"
+  tomo_regex: (.*)\.mrc
+  tomo_voxel_size: "7.84"
+  tomo_key_photo_glob: .*\.jpg
