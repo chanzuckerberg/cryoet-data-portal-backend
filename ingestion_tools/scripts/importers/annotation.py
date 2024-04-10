@@ -5,13 +5,13 @@ from typing import TYPE_CHECKING, Any, TypedDict
 
 import ndjson
 import numpy as np
-from importers.base_importer import BaseImporter
 
 from common import instance_point_converter as ipc
 from common import oriented_point_converter as opc
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, scale_maskfile, scale_mrcfile
 from common.metadata import AnnotationMetadata
+from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
     from importers.voxel_spacing import VoxelSpacingImporter
@@ -432,8 +432,8 @@ class AnnotationImporter(BaseImporter):
             if all(
                 [
                     existing_metadata.get("deposition_id") == metadata_obj.deposition_id,
-                    existing_metadata["annotation_object"]["description"]
-                    == metadata_obj.metadata["annotation_object"]["description"],
+                    existing_metadata["annotation_object"].get("description")
+                    == metadata_obj.metadata["annotation_object"].get("description"),
                     existing_metadata["annotation_object"]["name"]
                     == metadata_obj.metadata["annotation_object"]["name"],
                     existing_metadata["annotation_method"] == metadata_obj.metadata["annotation_method"],
