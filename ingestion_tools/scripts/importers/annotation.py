@@ -5,13 +5,13 @@ from typing import TYPE_CHECKING, Any, TypedDict
 
 import ndjson
 import numpy as np
+from importers.base_importer import BaseImporter
 
 from common import instance_point_converter as ipc
 from common import oriented_point_converter as opc
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, scale_maskfile, scale_mrcfile
 from common.metadata import AnnotationMetadata
-from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
     from importers.voxel_spacing import VoxelSpacingImporter
@@ -396,7 +396,7 @@ class AnnotationImporter(BaseImporter):
             except Exception:
                 print(f"Skipping writing annotations for run {run_name} due to missing files")
                 continue
-            source.convert(self.config.fs, self.config.input_path, dest_prefix, self.parent.get_voxel_spacing())
+            source.convert(self.config.fs, self.config.input_path, dest_prefix, float(self.parent.get_voxel_spacing()))
 
     def import_metadata(self):
         run_name = self.parent.get_run().name
@@ -421,15 +421,24 @@ class AnnotationImporter(BaseImporter):
         self.annotation_metadata.write_metadata(filename, self.local_metadata)
 
     @classmethod
-    def get_identifier(cls, metadata_obj: AnnotationMetadata, existing_annotations: list[dict[str, Any]], current_identifier: dict[str, int]):
+    def get_identifier(
+        cls,
+        metadata_obj: AnnotationMetadata,
+        existing_annotations: list[dict[str, Any]],
+        current_identifier: dict[str, int],
+    ):
         # See if we have an exact match we should use
         for annotation_id, existing_metadata in existing_annotations.items():
-            if all([
-                existing_metadata.get("deposition_id") == metadata_obj.deposition_id,
-                existing_metadata["annotation_object"]["description"] == metadata_obj.metadata["annotation_object"]["description"],
-                existing_metadata["annotation_object"]["name"] == metadata_obj.metadata["annotation_object"]["name"],
-                existing_metadata["annotation_method"] == metadata_obj.metadata["annotation_method"],
-            ]):
+            if all(
+                [
+                    existing_metadata.get("deposition_id") == metadata_obj.deposition_id,
+                    existing_metadata["annotation_object"]["description"]
+                    == metadata_obj.metadata["annotation_object"]["description"],
+                    existing_metadata["annotation_object"]["name"]
+                    == metadata_obj.metadata["annotation_object"]["name"],
+                    existing_metadata["annotation_method"] == metadata_obj.metadata["annotation_method"],
+                ],
+            ):
                 return annotation_id
         if existing_annotations and current_identifier["identifier"] <= max(existing_annotations.keys()):
             current_identifier["identifier"] = max(existing_annotations.keys()) + 1
