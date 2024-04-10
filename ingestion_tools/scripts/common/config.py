@@ -117,7 +117,7 @@ class DataImportConfig:
             map_filename = getattr(self, file_attr)
         if not map_filename:
             return mapdata
-        with self.fs.open(f"{self.input_path}/{map_filename}", "r") as tsvfile:
+        with self.fs.open(os.path.join(self.input_path, map_filename), "r") as tsvfile:
             if map_filename.endswith("tsv"):
                 reader = csv.DictReader(tsvfile, delimiter="\t")
             else:
@@ -133,7 +133,7 @@ class DataImportConfig:
             map_filename = getattr(self, file_attr)
         if not map_filename:
             return mapdata
-        with self.fs.open(f"{self.input_path}/{map_filename}", "r") as csvfile:
+        with self.fs.open(os.path.join(self.input_path, map_filename), "r") as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
                 mapdata[row[0]] = row[1]
@@ -245,7 +245,9 @@ class DataImportConfig:
             "annotation": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/Annotations",
             "annotation_metadata": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/Annotations",
             "run_metadata": "{run_name}/run_metadata.json",
-            "tomogram_metadata": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/CanonicalTomogram/tomogram_metadata.json",
+            "tomogram_metadata": (
+                "{run_name}/Tomograms/VoxelSpacing{voxelsize}/CanonicalTomogram/tomogram_metadata.json"
+            ),
             "tiltseries_metadata": "{run_name}/TiltSeries/tiltseries_metadata.json",
             "dataset_metadata": "dataset_metadata.json",
             "dataset_keyphoto": "Images",

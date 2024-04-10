@@ -265,8 +265,8 @@ tiltseries:
   tilting_scheme: dose-symmetric
   tilt_axis: "{tilt_series_tilt_axis_angle}"
   tilt_range:
-    min: "{tilt_series_min}"
-    max: "{tilt_series_max}"
+    min: "{tilt_series_min_tilt}"
+    max: "{tilt_series_max_tilt}"
   tilt_step: 3.0
   tilt_series_quality: 5
   total_flux: "{tilt_series_total_flux}"
