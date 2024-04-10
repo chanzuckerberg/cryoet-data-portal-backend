@@ -117,14 +117,14 @@ tomograms:
 
 standardization_config:
   destination_prefix: "10302"
-  source_prefix: "cryoetportal-rawdatasets-dev/chlamy2/data/"
+  source_prefix: "chlamy2/data/"
   run_data_map_file: "chlamy_visual_proteomics/run_to_data_map.tsv"
-  run_glob: "*"
-  run_regex: /\d{8}_.*$
+  run_glob: "chlamy_visual_proteomics/*"
+  run_regex: /(\d{8}_.*)$
   run_name_regex: (.*)
-  frames_glob: null # "chlamy_visual_proteomics/{run_name}/frames/*.eer"
-  frames_name_regex: null #(.*)
-  gain_glob: null # "chlamy_visual_proteomics/{frame_gain_reference}"
+  #frames_glob: null # "chlamy_visual_proteomics/{run_name}/frames/*.eer"
+  #frames_name_regex: null #(.*)
+  #gain_glob: null # "chlamy_visual_proteomics/{frame_gain_reference}"
   rawtlt_files:
     - "chlamy_visual_proteomics/{run_name}/{run_name}.rawtlt"
     - "chlamy_visual_proteomics/{run_name}/{run_name}.mdoc"
