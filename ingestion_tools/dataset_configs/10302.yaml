@@ -1,6 +1,6 @@
 dataset:
   authors: &dataset_authors
-    - name: Ron Kelley,
+    - name: Ron Kelley
       primary_author_status: true
     - name: Sagar Khavnekar
       corresponding_author_status: true
