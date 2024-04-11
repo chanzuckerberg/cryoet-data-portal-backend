@@ -269,13 +269,14 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
         the stale object.
         """
         for key, stale_obj in self.existing_objects.items():
-            print(f"Deleting record of {self} with id={stale_obj.id} and key={key}")
             for child_rel, deletion_helper in self.children_tables_references().items():
                 for entry in getattr(stale_obj, child_rel):
                     if deletion_helper is None:
+                        print(f"Deleting record of {entry} with id={entry.id} to delete parent")
                         entry.delete_instance()
                     else:
                         # Using stale_obj.id as all the use cases currently are satisfied by this.
                         klass = deletion_helper(stale_obj.id, self.config)
                         klass.remove_stale_objects()
+            print(f"Deleting record of {self} with id={stale_obj.id} and key={key}")
             stale_obj.delete_instance()
