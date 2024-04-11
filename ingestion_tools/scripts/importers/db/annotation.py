@@ -135,7 +135,6 @@ class AnnotationAuthorDBImporter(AuthorsStaleDeletionDBImporter):
             "annotation_id": self.annotation_id,
             "orcid": ["ORCID"],
             "name": ["name"],
-            "primary_annotator_status": ["primary_annotator_status"],
             "corresponding_author_status": ["corresponding_author_status"],
             "email": ["email"],
             "affiliation_name": ["affiliation_name"],
@@ -143,6 +142,13 @@ class AnnotationAuthorDBImporter(AuthorsStaleDeletionDBImporter):
             "affiliation_identifier": ["affiliation_identifier"],
             "author_list_order": ["author_list_order"],
         }
+
+    def update_data_map(self, data_map: dict[str, Any], metadata: dict[str, Any], index: int) -> dict[str, Any]:
+        data_map = super().update_data_map(data_map, metadata, index)
+        primary_author_status = {
+            "primary_annotator_status": metadata.get("primary_annotator_status", metadata.get("primary_author_status")),
+        }
+        return {**data_map, **primary_author_status}
 
     @classmethod
     def get_id_fields(cls) -> list[str]:
