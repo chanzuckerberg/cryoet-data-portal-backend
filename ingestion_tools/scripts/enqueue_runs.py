@@ -248,6 +248,9 @@ def queue(
         dataset_id = digitmatch.match(config_file)[1]
         execution_name = f"{int(time.time())}-ds{dataset_id}-run{run.run_name}"
 
+        # execution name greater than 80 chars causes boto ValidationException
+        if len(execution_name) > 80:
+            execution_name = execution_name[-80:]
         # Learn more about our AWS environment
         swipe_comms_bucket = None
         swipe_wdl_bucket = None
