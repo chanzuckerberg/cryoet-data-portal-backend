@@ -135,6 +135,13 @@ def run_job(
     multiple=True,
     help="Exclude runs matching this regex. If not specified, all runs are processed",
 )
+@click.option(
+    "--skip-until-run-name",
+    type=str,
+    default=None,
+    multiple=False,
+    help="Exclude runs matching this regex. If not specified, all runs are processed",
+)
 @click.option("--make-key-image", type=bool, is_flag=True, default=False, help="Create key image for run from tomogram")
 @click.option(
     "--make-neuroglancer-config",
@@ -179,6 +186,7 @@ def queue(
     import_everything: bool,
     filter_run_name: list[str],
     exclude_run_name: list[str],
+    skip_until_run_name: str,
     make_key_image: bool,
     make_neuroglancer_config: bool,
     write_mrc: bool,
@@ -219,7 +227,15 @@ def queue(
     # Always iterate over datasets and runs.
     dataset = DatasetImporter(config, None)
     digitmatch = re.compile(r"[^\d]+(\d+)[^\d]+")
+
+    skip_run = skip_until_run_name is not None
+    skip_run_until_regex = re.compile(skip_until_run_name)
     for run in RunImporter.find_runs(config, dataset):
+        if skip_run and not skip_run_until_regex.match(run.run_name):
+            print(f"Skipping {run.run_name}..")
+            continue
+
+        skip_run = False
         if list(filter(lambda x: x.match(run.run_name), exclude_run_name_patterns)):
             print(f"Excluding {run.run_name}..")
             continue
