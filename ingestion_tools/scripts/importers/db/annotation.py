@@ -135,7 +135,6 @@ class AnnotationAuthorDBImporter(AuthorsStaleDeletionDBImporter):
             "annotation_id": self.annotation_id,
             "orcid": ["ORCID"],
             "name": ["name"],
-            "primary_annotator_status": ["primary_author_status"],
             "corresponding_author_status": ["corresponding_author_status"],
             "email": ["email"],
             "affiliation_name": ["affiliation_name"],
