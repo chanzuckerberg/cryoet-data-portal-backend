@@ -228,8 +228,11 @@ def queue(
     dataset = DatasetImporter(config, None)
     digitmatch = re.compile(r"[^\d]+(\d+)[^\d]+")
 
-    skip_run = skip_until_run_name is not None
-    skip_run_until_regex = re.compile(skip_until_run_name)
+    skip_run_until_regex = None
+    skip_run = False
+    if skip_until_run_name:
+        skip_run = True
+        skip_run_until_regex = re.compile(skip_until_run_name)
     for run in RunImporter.find_runs(config, dataset):
         if skip_run and not skip_run_until_regex.match(run.run_name):
             print(f"Skipping {run.run_name}..")
