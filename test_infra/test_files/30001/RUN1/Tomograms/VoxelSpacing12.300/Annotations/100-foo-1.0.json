@@ -19,6 +19,11 @@
             "primary_annotator_status": true
         },
         {
+            "name": "J Carpenter",
+            "corresponding_author_status": false,
+            "primary_author_status": true
+        },
+        {
             "name": "John Doe",
             "ORCID": "0000-0000-1234-0000",
             "corresponding_author_status": false,
