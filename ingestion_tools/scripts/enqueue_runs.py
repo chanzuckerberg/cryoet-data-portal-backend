@@ -228,6 +228,24 @@ def queue(
     dataset = DatasetImporter(config, None)
     digitmatch = re.compile(r"[^\d]+(\d+)[^\d]+")
 
+    # Learn more about our AWS environment
+    swipe_comms_bucket = None
+    swipe_wdl_bucket = None
+    sfn_name = f"cryoet-ingestion-{env_name}-default-wdl"
+
+    sts = boto3.client("sts")
+    aws_account_id = sts.get_caller_identity()["Account"]
+    session = Session()
+    aws_region = session.region_name
+    s3_client = session.client("s3")
+    buckets = s3_client.list_buckets()
+    for bucket in buckets["Buckets"]:
+        bucket_name = bucket["Name"]
+        if "swipe-wdl" in bucket_name and env_name in bucket_name:
+            swipe_wdl_bucket = bucket_name
+        if "swipe-comms" in bucket_name and env_name in bucket_name:
+            swipe_comms_bucket = bucket_name
+
     skip_run_until_regex = None
     skip_run = False
     if skip_until_run_name:
@@ -254,23 +272,6 @@ def queue(
         # execution name greater than 80 chars causes boto ValidationException
         if len(execution_name) > 80:
             execution_name = execution_name[-80:]
-        # Learn more about our AWS environment
-        swipe_comms_bucket = None
-        swipe_wdl_bucket = None
-        sfn_name = f"cryoet-ingestion-{env_name}-default-wdl"
-
-        sts = boto3.client("sts")
-        aws_account_id = sts.get_caller_identity()["Account"]
-        session = Session()
-        aws_region = session.region_name
-        s3_client = session.client("s3")
-        buckets = s3_client.list_buckets()
-        for bucket in buckets["Buckets"]:
-            bucket_name = bucket["Name"]
-            if "swipe-wdl" in bucket_name and env_name in bucket_name:
-                swipe_wdl_bucket = bucket_name
-            if "swipe-comms" in bucket_name and env_name in bucket_name:
-                swipe_comms_bucket = bucket_name
 
         run_job(
             execution_name,
