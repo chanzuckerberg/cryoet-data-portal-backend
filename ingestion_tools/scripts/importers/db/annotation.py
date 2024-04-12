@@ -1,7 +1,5 @@
 from typing import Any, Iterator
 
-from common import db_models
-from common.db_models import BaseModel
 from importers.db.base_importer import (
     AuthorsStaleDeletionDBImporter,
     BaseDBImporter,
@@ -10,6 +8,9 @@ from importers.db.base_importer import (
     StaleParentDeletionDBImporter,
 )
 from importers.db.voxel_spacing import TomogramVoxelSpacingDBImporter
+
+from common import db_models
+from common.db_models import BaseModel
 
 
 class AnnotationDBImporter(BaseDBImporter):
@@ -147,6 +148,7 @@ class AnnotationAuthorDBImporter(AuthorsStaleDeletionDBImporter):
         data_map = super().update_data_map(data_map, metadata, index)
         primary_author_status = {
             "primary_annotator_status": metadata.get("primary_annotator_status", metadata.get("primary_author_status")),
+            "primary_author_status": metadata.get("primary_annotator_status", metadata.get("primary_author_status")),
         }
         return {**data_map, **primary_author_status}
 
