@@ -36,21 +36,21 @@ dga2016-01-15-36,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_a
 dga2016-01-15-37,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010021.mrc
 dga2016-01-15-38,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010055.mrc
 dga2016-01-15-39,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010022.mrc
-dga2016-01-15-40,['TOMO3D'],tomo3D,SIRT,TOMO3D,RAPTOR;TOMO3D,rawdata/tomo_area1000100010056.mrc
-dga2016-01-15-41,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,rawdata/tomo_area1000100010023.mrc
+dga2016-01-15-40,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D,rawdata/tomo_area1000100010056.mrc
+dga2016-01-15-41,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D,rawdata/tomo_area1000100010023.mrc
 dga2016-01-15-42,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010038.mrc
-dga2016-01-15-43,['TOMO3D'],tomo3D,SIRT,TOMO3D,RAPTOR;TOMO3D,rawdata/tomo_area1000100010057.mrc
+dga2016-01-15-43,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D,rawdata/tomo_area1000100010057.mrc
 dga2016-01-15-44,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010024.mrc
 dga2016-01-15-45,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010025.mrc
 dga2016-01-15-46,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010058.mrc
 dga2016-01-15-47,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010026.mrc
-dga2016-01-15-48,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,rawdata/tomo_area1000100010059.mrc
+dga2016-01-15-48,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D,rawdata/tomo_area1000100010059.mrc
 dga2016-01-15-49,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010027.mrc
 dga2016-01-15-50,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010028.mrc
 dga2016-01-15-51,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010060.mrc
-dga2016-01-15-52,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,rawdata/tomo_area1000100010029.mrc
+dga2016-01-15-52,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D,rawdata/tomo_area1000100010029.mrc
 dga2016-01-15-53,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010039.mrc
-dga2016-01-15-54,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,rawdata/tomo_area1000100010040.mrc
+dga2016-01-15-54,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D,rawdata/tomo_area1000100010040.mrc
 dga2016-01-15-55,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010061.mrc
 dga2016-01-15-56,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010030.mrc
 dga2016-01-15-57,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010062.mrc
@@ -69,7 +69,7 @@ dga2016-01-15-69,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_a
 dga2016-01-15-70,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area1000100010070.mrc
 dga2016-01-15-71,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area6_100010001.mrc
 dga2016-01-15-72,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area6_100010002.mrc
-dga2016-01-15-73,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,rawdata/tomo_area6_100010003.mrc
+dga2016-01-15-73,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D,rawdata/tomo_area6_100010003.mrc
 dga2016-01-15-74,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area6_100010004.mrc
 dga2016-01-15-75,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area6_100010005.mrc
 dga2016-01-15-76,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/tomo_area4c_1000100010001.mrc
@@ -83,7 +83,7 @@ dga2016-01-15-84,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/atlas_
 dga2016-01-15-85,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/atlas_area_a0010.mrc
 dga2016-01-15-86,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/atlas_area_a0011.mrc
 dga2016-01-15-87,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/atlas_area_a0001.mrc
-dga2016-01-15-88,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,rawdata/atlas_area_a0002.mrc
+dga2016-01-15-88,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D,rawdata/atlas_area_a0002.mrc
 dga2016-01-15-89,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/atlas_area_a0012.mrc
 dga2016-01-15-90,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/atlas_area_a0013.mrc
 dga2016-01-15-91,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/atlas_area_a0014.mrc
