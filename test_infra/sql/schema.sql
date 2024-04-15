@@ -116,7 +116,8 @@ CREATE TABLE public.annotation_authors (
     affiliation_name character varying,
     affiliation_address character varying,
     affiliation_identifier character varying,
-    author_list_order integer
+    author_list_order integer,
+    primary_author_status integer
 );
 
 
