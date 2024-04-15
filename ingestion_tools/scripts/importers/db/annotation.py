@@ -1,5 +1,7 @@
 from typing import Any, Iterator
 
+from common import db_models
+from common.db_models import BaseModel
 from importers.db.base_importer import (
     AuthorsStaleDeletionDBImporter,
     BaseDBImporter,
@@ -8,9 +10,6 @@ from importers.db.base_importer import (
     StaleParentDeletionDBImporter,
 )
 from importers.db.voxel_spacing import TomogramVoxelSpacingDBImporter
-
-from common import db_models
-from common.db_models import BaseModel
 
 
 class AnnotationDBImporter(BaseDBImporter):
@@ -33,8 +32,14 @@ class AnnotationDBImporter(BaseDBImporter):
     def get_data_map(self) -> dict[str, Any]:
         return {
             "tomogram_voxel_spacing_id": self.voxel_spacing_id,
-            "s3_metadata_path": self.join_path(self.config.s3_prefix, self.metadata_path),
-            "https_metadata_path": self.join_path(self.config.https_prefix, self.metadata_path),
+            "s3_metadata_path": self.join_path(
+                self.config.s3_prefix,
+                self.metadata_path,
+            ),
+            "https_metadata_path": self.join_path(
+                self.config.https_prefix,
+                self.metadata_path,
+            ),
             "deposition_date": ["dates", "deposition_date"],
             "release_date": ["dates", "release_date"],
             "last_modified_date": ["dates", "last_modified_date"],
@@ -57,7 +62,11 @@ class AnnotationDBImporter(BaseDBImporter):
 
     def import_to_db(self) -> BaseModel:
         annotation_obj = super().import_to_db()
-        annotation_files = AnnotationFilesDBImporter.get_item(annotation_obj.id, self, self.config)
+        annotation_files = AnnotationFilesDBImporter.get_item(
+            annotation_obj.id,
+            self,
+            self.config,
+        )
         annotation_files.import_to_db()
         return annotation_obj
 
@@ -78,13 +87,27 @@ class AnnotationDBImporter(BaseDBImporter):
     ) -> Iterator["AnnotationDBImporter"]:
         annotation_dir_path = cls.join_path(voxel_spacing.dir_prefix, "Annotations/")
         return [
-            cls(voxel_spacing_id, annotation_dir_path, annotation_metadata_path, voxel_spacing, config)
-            for annotation_metadata_path in config.glob_s3(annotation_dir_path, "*.json")
+            cls(
+                voxel_spacing_id,
+                annotation_dir_path,
+                annotation_metadata_path,
+                voxel_spacing,
+                config,
+            )
+            for annotation_metadata_path in config.glob_s3(
+                annotation_dir_path,
+                "*.json",
+            )
         ]
 
 
 class AnnotationFilesDBImporter(StaleDeletionDBImporter):
-    def __init__(self, annotation_id: int, parent: AnnotationDBImporter, config: DBImportConfig):
+    def __init__(
+        self,
+        annotation_id: int,
+        parent: AnnotationDBImporter,
+        config: DBImportConfig,
+    ):
         self.annotation_id = annotation_id
         self.parent = parent
         self.config = config
@@ -98,9 +121,17 @@ class AnnotationFilesDBImporter(StaleDeletionDBImporter):
             "is_visualization_default": ["is_visualization_default"],
         }
 
-    def update_data_map(self, data_map: dict[str, Any], metadata: dict[str, Any], index: int) -> dict[str, Any]:
+    def update_data_map(
+        self,
+        data_map: dict[str, Any],
+        metadata: dict[str, Any],
+        index: int,
+    ) -> dict[str, Any]:
         data_map["s3_path"] = self.join_path(self.config.s3_prefix, metadata["path"])
-        data_map["https_path"] = self.join_path(self.config.https_prefix, metadata["path"])
+        data_map["https_path"] = self.join_path(
+            self.config.https_prefix,
+            metadata["path"],
+        )
         return data_map
 
     @classmethod
@@ -125,7 +156,12 @@ class AnnotationFilesDBImporter(StaleDeletionDBImporter):
 
 
 class AnnotationAuthorDBImporter(AuthorsStaleDeletionDBImporter):
-    def __init__(self, annotation_id: int, parent: AnnotationDBImporter, config: DBImportConfig):
+    def __init__(
+        self,
+        annotation_id: int,
+        parent: AnnotationDBImporter,
+        config: DBImportConfig,
+    ):
         self.annotation_id = annotation_id
         self.parent = parent
         self.config = config
@@ -144,11 +180,22 @@ class AnnotationAuthorDBImporter(AuthorsStaleDeletionDBImporter):
             "author_list_order": ["author_list_order"],
         }
 
-    def update_data_map(self, data_map: dict[str, Any], metadata: dict[str, Any], index: int) -> dict[str, Any]:
+    def update_data_map(
+        self,
+        data_map: dict[str, Any],
+        metadata: dict[str, Any],
+        index: int,
+    ) -> dict[str, Any]:
         data_map = super().update_data_map(data_map, metadata, index)
         primary_author_status = {
-            "primary_annotator_status": metadata.get("primary_annotator_status", metadata.get("primary_author_status")),
-            "primary_author_status": metadata.get("primary_annotator_status", metadata.get("primary_author_status")),
+            "primary_annotator_status": metadata.get(
+                "primary_annotator_status",
+                metadata.get("primary_author_status"),
+            ),
+            "primary_author_status": metadata.get(
+                "primary_annotator_status",
+                metadata.get("primary_author_status"),
+            ),
         }
         return {**data_map, **primary_author_status}
 
