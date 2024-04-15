@@ -19,9 +19,7 @@ import common.db_models as models
 
 @pytest.fixture
 def expected_annotations(http_prefix: str) -> list[dict[str, Any]]:
-    path = (
-        f"{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0.json"
-    )
+    path = f"{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0.json"
     return [
         {
             "id": ANNOTATION_ID,
