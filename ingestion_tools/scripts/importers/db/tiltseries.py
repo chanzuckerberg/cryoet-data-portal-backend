@@ -63,9 +63,10 @@ class TiltSeriesDBImporter(BaseDBImporter):
     def get_computed_fields(self) -> dict[str, Any]:
         https_prefix = self.config.https_prefix
         s3_prefix = self.config.s3_prefix
+        tilt_range = float(self.metadata["tilt_range"]["max"]) - float(self.metadata["tilt_range"]["min"])
         extra_data = {
             "run_id": self.run_id,
-            "tilt_range": abs(float(self.metadata["tilt_range"]["max"]) - float(self.metadata["tilt_range"]["min"])),
+            "tilt_range": round(abs(tilt_range), 2),
             "is_aligned": self.metadata.get("is_aligned") or False,
         }
         if mrc_path := self.metadata.get("mrc_files", [None])[0]:

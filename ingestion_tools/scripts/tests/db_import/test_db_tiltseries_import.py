@@ -34,7 +34,7 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "camera_model": "K2 Summit",
             "tilt_min": -40,
             "tilt_max": 40,
-            "tilt_range": 80,
+            "tilt_range": 80.99,
             "tilt_step": 2,
             "tilting_scheme": "Dose symmetric from 0.0 degrees",
             "tilt_axis": 84.7,
