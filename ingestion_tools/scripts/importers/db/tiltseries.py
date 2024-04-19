@@ -65,8 +65,8 @@ class TiltSeriesDBImporter(BaseDBImporter):
         tilt_min = float(self.metadata["tilt_range"]["min"])
         extra_data = {
             "run_id": self.run_id,
-            "tilt_min": round(abs(tilt_min), 2),
-            "tilt_max": round(abs(tilt_max), 2),
+            "tilt_min": round(tilt_min, 2),
+            "tilt_max": round(tilt_max, 2),
             "tilt_range": round(abs(tilt_max - tilt_min), 2),
             "is_aligned": self.metadata.get("is_aligned") or False,
         }
