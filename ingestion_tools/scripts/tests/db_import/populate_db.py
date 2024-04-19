@@ -121,19 +121,14 @@ def populate_tomogram_voxel_spacing() -> None:
 
 
 def populate_stale_tomogram_voxel_spacing(run_id: int = RUN1_ID) -> None:
-    stale_tomogram_voxel_id = 1000
-    stale_tomogram_id = 1001
-    stale_annotation_id = 10002
-    TomogramVoxelSpacing.create(
-        id=stale_tomogram_voxel_id,
+    stale_voxel_spacing = TomogramVoxelSpacing.create(
         run_id=run_id,
         voxel_spacing=10.345,
         s3_prefix="s3://test-public-bucket/VoxelSpacing10.345/",
         https_prefix="http://test.com/RUN1/VoxelSpacing10.345/",
     )
-    Tomogram.create(
-        id=stale_tomogram_id,
-        tomogram_voxel_spacing_id=stale_tomogram_voxel_id,
+    stale_tomogram = Tomogram.create(
+        tomogram_voxel_spacing_id=stale_voxel_spacing.id,
         name="RUN1",
         voxel_spacing=10.345,
         s3_omezarr_dir="s3://stale.zarr",
@@ -155,10 +150,10 @@ def populate_stale_tomogram_voxel_spacing(run_id: int = RUN1_ID) -> None:
         offset_y=0,
         offset_z=0,
     )
-    TomogramAuthor.create(tomogram_id=stale_tomogram_id, name="Jane Smith", author_list_order=1)
-    Annotation.create(
-        id=stale_annotation_id,
-        tomogram_voxel_spacing_id=stale_tomogram_voxel_id,
+    TomogramAuthor.create(tomogram_id=stale_tomogram.id, name="Jane Smith", author_list_order=1)
+    TomogramAuthor.create(tomogram_id=stale_tomogram.id, name="John John", author_list_order=2)
+    stale_annotation = Annotation.create(
+        tomogram_voxel_spacing_id=stale_voxel_spacing.id,
         s3_metadata_path="foo",
         https_metadata_path="foo",
         deposition_date="2025-04-01",
@@ -171,7 +166,8 @@ def populate_stale_tomogram_voxel_spacing(run_id: int = RUN1_ID) -> None:
         object_count=200,
         annotation_software="bar",
     )
-    AnnotationAuthor.create(annotation_id=stale_annotation_id, name="Jane Smith", author_list_order=1)
+    AnnotationAuthor.create(annotation_id=stale_annotation.id, name="Jane Smith", author_list_order=1)
+    AnnotationAuthor.create(annotation_id=stale_annotation.id, name="John John", author_list_order=2)
 
 
 def populate_tomograms() -> None:
