@@ -3,7 +3,7 @@ from typing import Any, Callable
 import pytest as pytest
 from tests.db_import.populate_db import (
     DATASET_ID,
-    RUN_ID,
+    RUN1_ID,
     TOMOGRAM_AUTHOR_ID,
     TOMOGRAM_ID,
     TOMOGRAM_VOXEL_ID1,
@@ -23,14 +23,14 @@ def expected_voxel_spacings(http_prefix: str) -> list[dict[str, Any]]:
     return [
         {
             "id": TOMOGRAM_VOXEL_ID2,
-            "run_id": RUN_ID,
+            "run_id": RUN1_ID,
             "voxel_spacing": 9.876,
             "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing9.876/",
             "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing9.876/",
         },
         {
             "id": TOMOGRAM_VOXEL_ID1,
-            "run_id": RUN_ID,
+            "run_id": RUN1_ID,
             "voxel_spacing": 12.3,
             "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/",
             "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/",

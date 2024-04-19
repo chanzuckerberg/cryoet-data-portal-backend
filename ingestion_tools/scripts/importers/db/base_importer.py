@@ -261,6 +261,7 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
 
     def mark_as_active(self, record: BaseModel):
         """Mark a record as active by removing it from existing objects when encountered."""
+        print(f"marking as active {record} {self.get_hash_value(record)}")
         self.existing_objects.pop(self.get_hash_value(record), None)
 
     def remove_stale_objects(self):

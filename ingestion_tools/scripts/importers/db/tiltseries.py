@@ -2,7 +2,7 @@ from typing import Any
 
 from common import db_models
 from common.db_models import BaseModel
-from importers.db.base_importer import BaseDBImporter, DBImportConfig
+from importers.db.base_importer import BaseDBImporter, DBImportConfig, StaleParentDeletionDBImporter
 from importers.db.run import RunDBImporter
 
 
@@ -95,3 +95,13 @@ class TiltSeriesDBImporter(BaseDBImporter):
         ts_dir_path = cls.join_path(run.dir_prefix, "TiltSeries")
         ts_prefix = config.find_subdirs_with_files(ts_dir_path, "tiltseries_metadata.json")
         return cls(run_id, ts_prefix[0], run, config) if len(ts_prefix) > 0 else None
+
+
+class StaleTiltSeriesDeletionDBImporter(StaleParentDeletionDBImporter):
+    ref_klass = TiltSeriesDBImporter
+
+    def get_filters(self) -> dict[str, Any]:
+        return {"run_id": self.parent_id}
+
+    def children_tables_references(self) -> dict[str, None]:
+        return {}

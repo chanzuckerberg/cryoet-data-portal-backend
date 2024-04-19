@@ -17,7 +17,8 @@ from common.db_models import (
 DATASET_ID = 30001
 DATASET_AUTHOR_ID = 301
 DATASET_FUNDING_ID = 302
-RUN_ID = 401
+RUN1_ID = 401
+RUN4_ID = 402
 TILTSERIES_ID = 501
 TOMOGRAM_VOXEL_ID1 = 502
 TOMOGRAM_VOXEL_ID2 = 503
@@ -27,8 +28,9 @@ ANNOTATION_ID = 602
 ANNOTATION_FILE_ID = 701
 ANNOTATION_AUTHOR_ID = 702
 
-STALE_TOMOGRAM_ID = 902
-STALE_ANNOTATION_ID = 903
+STALE_RUN_ID = 902
+STALE_TOMOGRAM_ID = 903
+STALE_ANNOTATION_ID = 904
 
 
 def populate_dataset() -> None:
@@ -74,11 +76,28 @@ def populate_stale_dataset_funding() -> None:
 def populate_run() -> None:
     populate_dataset()
     Run(
-        id=RUN_ID,
+        id=RUN1_ID,
         dataset_id=DATASET_ID,
         name="RUN1",
         s3_prefix="s3://test-bucket/RUN1",
         https_prefix="http://test.com/RUN1",
+    ).save(force_insert=True)
+    Run(
+        id=RUN4_ID,
+        dataset_id=DATASET_ID,
+        name="RUN4",
+        s3_prefix="s3://test-bucket/RUN4",
+        https_prefix="http://test.com/RUN4",
+    ).save(force_insert=True)
+
+
+def populate_stale_run() -> None:
+    Run(
+        id=STALE_RUN_ID,
+        dataset_id=DATASET_ID,
+        name="RUN5",
+        s3_prefix="s3://test-bucket/RUN5",
+        https_prefix="http://test.com/RUN5",
     ).save(force_insert=True)
 
 
@@ -86,21 +105,21 @@ def populate_tomogram_voxel_spacing() -> None:
     populate_run()
     TomogramVoxelSpacing(
         id=103,
-        run_id=RUN_ID,
+        run_id=RUN1_ID,
         voxel_spacing=3.456,
         s3_prefix="s3://test-public-bucket/30001/RUN1/Tomograms/VoxelSpacing3.456/",
         https_prefix="http://test.com/RUN1/VoxelSpacing3.456/",
     ).save(force_insert=True)
     TomogramVoxelSpacing(
         id=TOMOGRAM_VOXEL_ID1,
-        run_id=RUN_ID,
+        run_id=RUN1_ID,
         voxel_spacing=12.3,
         s3_prefix="s3://test-public-bucket/VoxelSpacing12.3/",
         https_prefix="http://test.com/RUN1/VoxelSpacing12.3/",
     ).save(force_insert=True)
     TomogramVoxelSpacing(
         id=TOMOGRAM_VOXEL_ID2,
-        run_id=RUN_ID,
+        run_id=RUN1_ID,
         voxel_spacing=9.876,
         s3_prefix="s3://test-public-bucket/VoxelSpacing9.876/",
         https_prefix="http://test.com/RUN1/VoxelSpacing9.876/",
@@ -113,7 +132,7 @@ def populate_stale_tomogram_voxel_spacing() -> None:
     stale_annotation_id = 10002
     TomogramVoxelSpacing(
         id=stale_tomogram_voxel_id,
-        run_id=RUN_ID,
+        run_id=RUN1_ID,
         voxel_spacing=10.345,
         s3_prefix="s3://test-public-bucket/VoxelSpacing10.345/",
         https_prefix="http://test.com/RUN1/VoxelSpacing10.345/",
@@ -243,7 +262,36 @@ def populate_tiltseries() -> None:
     populate_run()
     TiltSeries(
         id=TILTSERIES_ID,
-        run_id=RUN_ID,
+        run_id=RUN1_ID,
+        s3_mrc_bin1="ts_foo.mrc",
+        https_mrc_bin1="ts_foo.mrc",
+        s3_omezarr_dir="ts_foo.zarr",
+        https_omezarr_dir="ts_foo.zarr",
+        acceleration_voltage=100,
+        spherical_aberration_constant=1.0,
+        microscope_manufacturer="unknown",
+        microscope_model="unknown",
+        microscope_energy_filter="unknown",
+        camera_manufacturer="unknown",
+        camera_model="unknown",
+        tilt_min=0,
+        tilt_max=0,
+        tilt_range=0,
+        tilt_step=0,
+        tilt_axis=1.0,
+        tilt_series_quality=3,
+        total_flux=0,
+        is_aligned=False,
+        pixel_spacing=0.3,
+        tilting_scheme="unknown",
+        data_acquisition_software="unknown",
+    ).save(force_insert=True)
+
+
+def populate_stale_tiltseries() -> None:
+    populate_stale_run()
+    TiltSeries(
+        run_id=RUN4_ID,
         s3_mrc_bin1="ts_foo.mrc",
         https_mrc_bin1="ts_foo.mrc",
         s3_omezarr_dir="ts_foo.zarr",

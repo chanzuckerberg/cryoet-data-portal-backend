@@ -1,7 +1,7 @@
 from typing import Any, Callable
 
 import pytest as pytest
-from tests.db_import.populate_db import DATASET_ID, RUN_ID, populate_run
+from tests.db_import.populate_db import DATASET_ID, RUN1_ID, RUN4_ID, populate_run
 
 import common.db_models as models
 
@@ -10,7 +10,7 @@ import common.db_models as models
 def expected_runs(http_prefix: str) -> list[dict[str, Any]]:
     return [
         {
-            "id": RUN_ID,
+            "id": RUN1_ID,
             "dataset_id": DATASET_ID,
             "name": "RUN1",
             "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN1/",
@@ -27,6 +27,13 @@ def expected_runs(http_prefix: str) -> list[dict[str, Any]]:
             "name": "RUN3",
             "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN3/",
             "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN3/",
+        },
+        {
+            "id": RUN4_ID,
+            "dataset_id": DATASET_ID,
+            "name": "RUN4",
+            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN4/",
+            "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN4/",
         },
     ]
 
