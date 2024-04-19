@@ -1,9 +1,12 @@
 from datetime import datetime
 
+from playhouse.shortcuts import model_to_dict
+
 from common.db_models import (
     Annotation,
     AnnotationAuthor,
     AnnotationFiles,
+    BaseModel,
     Dataset,
     DatasetAuthor,
     DatasetFunding,
@@ -75,30 +78,24 @@ def populate_stale_dataset_funding() -> None:
 
 def populate_run() -> None:
     populate_dataset()
-    Run(
+    run = Run.create(
         id=RUN1_ID,
         dataset_id=DATASET_ID,
         name="RUN1",
         s3_prefix="s3://test-bucket/RUN1",
         https_prefix="http://test.com/RUN1",
-    ).save(force_insert=True)
-    Run(
-        id=RUN4_ID,
-        dataset_id=DATASET_ID,
-        name="RUN4",
-        s3_prefix="s3://test-bucket/RUN4",
-        https_prefix="http://test.com/RUN4",
-    ).save(force_insert=True)
+    )
+    copy_and_update(run, {"name": "RUN4", "id": RUN4_ID})
 
 
 def populate_stale_run() -> None:
-    Run(
+    Run.create(
         id=STALE_RUN_ID,
         dataset_id=DATASET_ID,
         name="RUN5",
         s3_prefix="s3://test-bucket/RUN5",
         https_prefix="http://test.com/RUN5",
-    ).save(force_insert=True)
+    )
 
 
 def populate_tomogram_voxel_spacing() -> None:
@@ -137,6 +134,7 @@ def populate_stale_tomogram_voxel_spacing() -> None:
         s3_prefix="s3://test-public-bucket/VoxelSpacing10.345/",
         https_prefix="http://test.com/RUN1/VoxelSpacing10.345/",
     ).save(force_insert=True)
+
     Tomogram(
         id=stale_tomogram_id,
         tomogram_voxel_spacing_id=stale_tomogram_voxel_id,
@@ -289,9 +287,33 @@ def populate_tiltseries() -> None:
 
 
 def populate_stale_tiltseries() -> None:
-    populate_stale_run()
     TiltSeries(
         run_id=RUN4_ID,
+        s3_mrc_bin1="ts_foo.mrc",
+        https_mrc_bin1="ts_foo.mrc",
+        s3_omezarr_dir="ts_foo.zarr",
+        https_omezarr_dir="ts_foo.zarr",
+        acceleration_voltage=100,
+        spherical_aberration_constant=1.0,
+        microscope_manufacturer="unknown",
+        microscope_model="unknown",
+        microscope_energy_filter="unknown",
+        camera_manufacturer="unknown",
+        camera_model="unknown",
+        tilt_min=0,
+        tilt_max=0,
+        tilt_range=0,
+        tilt_step=0,
+        tilt_axis=1.0,
+        tilt_series_quality=3,
+        total_flux=0,
+        is_aligned=False,
+        pixel_spacing=0.3,
+        tilting_scheme="unknown",
+        data_acquisition_software="unknown",
+    ).save(force_insert=True)
+    TiltSeries(
+        run_id=STALE_RUN_ID,
         s3_mrc_bin1="ts_foo.mrc",
         https_mrc_bin1="ts_foo.mrc",
         s3_omezarr_dir="ts_foo.zarr",
@@ -416,6 +438,13 @@ def populate_stale_annotation_authors() -> None:
         corresponding_author_status=True,
         author_list_order=3,
     ).save(force_insert=True)
+
+
+def copy_and_update(model: BaseModel, new_values: dict) -> BaseModel:
+    data = model_to_dict(model, recurse=False, backrefs=False)
+    data.pop("id")
+    data = {**data, **new_values}
+    return model.insert(data).execute()
 
 
 def clean_all_mock_data() -> None:

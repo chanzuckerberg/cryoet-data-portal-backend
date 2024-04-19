@@ -5,6 +5,7 @@ from tests.db_import.populate_db import (
     DATASET_ID,
     RUN1_ID,
     TILTSERIES_ID,
+    populate_stale_run,
     populate_stale_tiltseries,
     populate_tiltseries,
 )
@@ -107,6 +108,7 @@ def test_import_tiltseries_stale_deletion(
     expected_tiltseries: list[dict[str, Any]],
 ) -> None:
     populate_tiltseries()
+    populate_stale_run()
     populate_stale_tiltseries()
     actual = verify_dataset_import(["--import-tiltseries"])
     expected_iter = iter(expected_tiltseries)

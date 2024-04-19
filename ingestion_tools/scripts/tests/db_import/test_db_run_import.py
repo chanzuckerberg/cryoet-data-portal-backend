@@ -1,7 +1,7 @@
 from typing import Any, Callable
 
 import pytest as pytest
-from tests.db_import.populate_db import DATASET_ID, RUN1_ID, RUN4_ID, populate_run
+from tests.db_import.populate_db import DATASET_ID, RUN1_ID, RUN4_ID, populate_run, populate_stale_run
 
 import common.db_models as models
 
@@ -45,6 +45,20 @@ def test_import_run(
     expected_runs: list[dict[str, Any]],
 ) -> None:
     populate_run()
+    actual = verify_dataset_import(["--import-runs"])
+    actual_runs = list(actual.runs)
+    for i, run in enumerate(actual_runs):
+        verify_model(run, expected_runs[i])
+
+
+# Tests deletion of stale runs existing in db
+def test_import_run_stale_deletion(
+    verify_dataset_import: Callable[[list[str]], models.Dataset],
+    verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
+    expected_runs: list[dict[str, Any]],
+) -> None:
+    populate_run()
+    populate_stale_run()
     actual = verify_dataset_import(["--import-runs"])
     actual_runs = list(actual.runs)
     for i, run in enumerate(actual_runs):

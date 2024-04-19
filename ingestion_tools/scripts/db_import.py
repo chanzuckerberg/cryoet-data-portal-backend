@@ -7,7 +7,7 @@ from botocore.config import Config
 from importers.db.annotation import AnnotationAuthorDBImporter, AnnotationDBImporter, StaleAnnotationDeletionDBImporter
 from importers.db.base_importer import DBImportConfig
 from importers.db.dataset import DatasetAuthorDBImporter, DatasetDBImporter, DatasetFundingDBImporter
-from importers.db.run import RunDBImporter
+from importers.db.run import RunDBImporter, StaleRunDeletionDBImporter
 from importers.db.tiltseries import StaleTiltSeriesDeletionDBImporter, TiltSeriesDBImporter
 from importers.db.tomogram import StaleTomogramDeletionDBImporter, TomogramAuthorDBImporter, TomogramDBImporter
 from importers.db.voxel_spacing import StaleVoxelSpacingDeletionDBImporter, TomogramVoxelSpacingDBImporter
@@ -117,9 +117,11 @@ def load(
         if not import_runs:
             continue
 
+        run_cleaner = StaleRunDeletionDBImporter(dataset_id, config)
         for run in RunDBImporter.get_item(dataset_id, dataset, config):
             run_obj = run.import_to_db()
             run_id = run_obj.id
+            run_cleaner.mark_as_active(run_obj)
 
             if import_tiltseries:
                 tiltseries_cleaner = StaleTiltSeriesDeletionDBImporter(run_id, config)
@@ -165,6 +167,8 @@ def load(
                 voxel_spacing_cleaner.mark_as_active(voxel_spacing_obj)
 
             voxel_spacing_cleaner.remove_stale_objects()
+
+        run_cleaner.remove_stale_objects()
 
 
 if __name__ == "__main__":
