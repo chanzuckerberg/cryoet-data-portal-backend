@@ -261,7 +261,7 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
 
     def mark_as_active(self, record: BaseModel):
         """Mark a record as active by removing it from existing objects when encountered."""
-        print(f"marking as active {record} {self.get_hash_value(record)}")
+        print(f"marking as active {self.ref_klass.get_db_model_class()} with identifiers {self.get_hash_value(record)}")
         self.existing_objects.pop(self.get_hash_value(record), None)
 
     def remove_stale_objects(self):
@@ -273,11 +273,14 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
             for child_rel, deletion_helper in self.children_tables_references().items():
                 for entry in getattr(stale_obj, child_rel):
                     if deletion_helper is None:
-                        print(f"Deleting record of {entry} with id={entry.id} to delete parent")
+                        print(
+                            f"Deleting record of {type(entry)} with id={entry.id} data={entry.__data__} to delete"
+                            f" parent: {type(stale_obj)}",
+                        )
                         entry.delete_instance()
                     else:
                         # Using stale_obj.id as all the use cases currently are satisfied by this.
                         klass = deletion_helper(stale_obj.id, self.config)
                         klass.remove_stale_objects()
-            print(f"Deleting record of {self} with id={stale_obj.id} and key={key}")
+            print(f"Deleting record of {self.ref_klass.get_db_model_class()} with id={stale_obj.id} and key={key}")
             stale_obj.delete_instance()

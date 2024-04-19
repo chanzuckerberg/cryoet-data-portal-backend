@@ -114,7 +114,6 @@ def test_import_tiltseries_stale_deletion(
     expected_iter = iter(expected_tiltseries)
     for run in actual.runs.order_by(models.Run.name):
         for tiltseries in run.tiltseries:
-            print(f"ts_id: {tiltseries} run_name: {run.name}")
             expected = next(expected_iter)
             if "run_id" not in expected:
                 expected["run_id"] = run.id

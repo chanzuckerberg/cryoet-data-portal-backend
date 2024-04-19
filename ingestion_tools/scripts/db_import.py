@@ -119,6 +119,7 @@ def load(
 
         run_cleaner = StaleRunDeletionDBImporter(dataset_id, config)
         for run in RunDBImporter.get_item(dataset_id, dataset, config):
+            print(f"Processing Run with prefix {run.dir_prefix}")
             run_obj = run.import_to_db()
             run_id = run_obj.id
             run_cleaner.mark_as_active(run_obj)
