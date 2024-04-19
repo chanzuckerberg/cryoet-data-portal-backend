@@ -1,7 +1,14 @@
 from typing import Any, Callable
 
 import pytest as pytest
-from tests.db_import.populate_db import DATASET_ID, RUN1_ID, RUN4_ID, populate_run, populate_stale_run
+from tests.db_import.populate_db import (
+    DATASET_ID,
+    RUN1_ID,
+    RUN4_ID,
+    populate_run,
+    populate_stale_run,
+    populate_stale_tiltseries,
+)
 
 import common.db_models as models
 
@@ -46,7 +53,8 @@ def test_import_run(
 ) -> None:
     populate_run()
     actual = verify_dataset_import(["--import-runs"])
-    actual_runs = list(actual.runs)
+    actual_runs = list(actual.runs.order_by(models.Run.name))
+    assert len(expected_runs) == len(actual_runs)
     for i, run in enumerate(actual_runs):
         verify_model(run, expected_runs[i])
 
@@ -59,7 +67,9 @@ def test_import_run_stale_deletion(
 ) -> None:
     populate_run()
     populate_stale_run()
+    populate_stale_tiltseries()
     actual = verify_dataset_import(["--import-runs"])
-    actual_runs = list(actual.runs)
+    actual_runs = list(actual.runs.order_by(models.Run.name))
+    assert len(expected_runs) == len(actual_runs)
     for i, run in enumerate(actual_runs):
         verify_model(run, expected_runs[i])
