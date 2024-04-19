@@ -43,8 +43,6 @@ class TiltSeriesDBImporter(BaseDBImporter):
             "microscope_additional_info": ["microscope_additional_info"],
             "camera_manufacturer": ["camera", "manufacturer"],
             "camera_model": ["camera", "model"],
-            "tilt_min": ["tilt_range", "min"],
-            "tilt_max": ["tilt_range", "max"],
             "tilt_step": ["tilt_step"],
             "tilting_scheme": ["tilting_scheme"],
             "tilt_axis": ["tilt_axis"],
@@ -63,10 +61,13 @@ class TiltSeriesDBImporter(BaseDBImporter):
     def get_computed_fields(self) -> dict[str, Any]:
         https_prefix = self.config.https_prefix
         s3_prefix = self.config.s3_prefix
-        tilt_range = float(self.metadata["tilt_range"]["max"]) - float(self.metadata["tilt_range"]["min"])
+        tilt_max = float(self.metadata["tilt_range"]["max"])
+        tilt_min = float(self.metadata["tilt_range"]["min"])
         extra_data = {
             "run_id": self.run_id,
-            "tilt_range": round(abs(tilt_range), 2),
+            "tilt_min": round(abs(tilt_min), 2),
+            "tilt_max": round(abs(tilt_max), 2),
+            "tilt_range": round(abs(tilt_max - tilt_min), 2),
             "is_aligned": self.metadata.get("is_aligned") or False,
         }
         if mrc_path := self.metadata.get("mrc_files", [None])[0]:

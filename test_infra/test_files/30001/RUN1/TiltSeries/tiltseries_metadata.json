@@ -19,8 +19,8 @@
     "tilt_axis": 84.7,
     "tilt_step": 2,
     "tilt_range": {
-        "min": -40,
-        "max": 40.99
+        "min": -40.012,
+        "max": 40.967
     },
     "total_flux": 122,
     "data_acquisition_software": "SerialEM",
