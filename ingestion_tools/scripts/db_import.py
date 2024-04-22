@@ -14,6 +14,9 @@ from importers.db.voxel_spacing import StaleVoxelSpacingDeletionDBImporter, Tomo
 
 from common import db_models
 
+logger = logging.getLogger("db_import")
+logging.basicConfig(level=logging.INFO)
+
 
 @click.group()
 def cli():
@@ -75,8 +78,9 @@ def load(
 ):
     db_models.db.init(postgres_url)
     if debug:
-        logger = logging.getLogger("peewee")
-        logger.addHandler(logging.StreamHandler())
+        peewee_logger = logging.getLogger("peewee")
+        peewee_logger.addHandler(logging.StreamHandler())
+        peewee_logger.setLevel(logging.DEBUG)
         logger.setLevel(logging.DEBUG)
 
     if import_everything:
@@ -100,7 +104,7 @@ def load(
     config = DBImportConfig(s3_client, s3_bucket, https_prefix)
     for dataset in DatasetDBImporter.get_items(config, s3_prefix):
         if filter_dataset and dataset.dir_prefix not in filter_dataset:
-            print(f"Skipping {dataset.dir_prefix}...")
+            logger.info("Skipping %s...", dataset.dir_prefix)
             continue
 
         dataset_obj = dataset.import_to_db()
@@ -119,7 +123,7 @@ def load(
 
         run_cleaner = StaleRunDeletionDBImporter(dataset_id, config)
         for run in RunDBImporter.get_item(dataset_id, dataset, config):
-            print(f"Processing Run with prefix {run.dir_prefix}")
+            logger.info("Processing Run with prefix %s", run.dir_prefix)
             run_obj = run.import_to_db()
             run_id = run_obj.id
             run_cleaner.mark_as_active(run_obj)
