@@ -1,4 +1,1 @@
--- Could not auto-generate a down migration.
--- Please write an appropriate down migration for the SQL below:
--- alter table "public"."annotation_authors" add column "primary_author_status" boolean
---  null;
+alter table "public"."annotation_authors" drop column "primary_author_status";

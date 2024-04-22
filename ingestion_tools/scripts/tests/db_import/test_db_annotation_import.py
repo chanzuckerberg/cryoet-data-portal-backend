@@ -120,15 +120,10 @@ def test_import_annotations(
     expected_annotations_iter = iter(expected_annotations)
     expected_annotations_files_iter = iter(expected_annotation_files)
     actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID1)
-    for annotation in actual_voxel_spacing.annotations.order_by(
-        models.Annotation.s3_metadata_path,
-    ):
+    for annotation in actual_voxel_spacing.annotations.order_by(models.Annotation.s3_metadata_path):
         verify_model(annotation, next(expected_annotations_iter))
         assert len(annotation.files) == len(expected_annotation_files)
-        for file in annotation.files.order_by(
-            models.AnnotationFiles.shape_type,
-            models.AnnotationFiles.format,
-        ):
+        for file in annotation.files.order_by(models.AnnotationFiles.shape_type, models.AnnotationFiles.format):
             verify_model(file, next(expected_annotations_files_iter))
         assert len(annotation.authors) == 0
 
@@ -146,15 +141,10 @@ def test_import_annotations_files_removes_stale(
     expected_annotations_iter = iter(expected_annotations)
     expected_annotations_files_iter = iter(expected_annotation_files)
     actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID1)
-    for annotation in actual_voxel_spacing.annotations.order_by(
-        models.Annotation.s3_metadata_path,
-    ):
+    for annotation in actual_voxel_spacing.annotations.order_by(models.Annotation.s3_metadata_path):
         verify_model(annotation, next(expected_annotations_iter))
         assert len(annotation.files) == len(expected_annotation_files)
-        for file in annotation.files.order_by(
-            models.AnnotationFiles.shape_type,
-            models.AnnotationFiles.format,
-        ):
+        for file in annotation.files.order_by(models.AnnotationFiles.shape_type, models.AnnotationFiles.format):
             verify_model(file, next(expected_annotations_files_iter))
         assert len(annotation.authors) == 0
 
@@ -170,13 +160,9 @@ def test_import_annotation_authors(
     verify_dataset_import(["--import-annotation-authors"])
     expected_annotations_authors_iter = iter(expected_annotation_authors)
     actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID1)
-    for annotation in actual_voxel_spacing.annotations.order_by(
-        models.Annotation.s3_metadata_path,
-    ):
+    for annotation in actual_voxel_spacing.annotations.order_by(models.Annotation.s3_metadata_path):
         assert len(annotation.authors) == len(expected_annotation_authors)
-        for author in annotation.authors.order_by(
-            models.AnnotationAuthor.author_list_order,
-        ):
+        for author in annotation.authors.order_by(models.AnnotationAuthor.author_list_order):
             verify_model(author, next(expected_annotations_authors_iter))
 
 
@@ -192,11 +178,7 @@ def test_import_annotation_authors_removes_stale(
     verify_dataset_import(["--import-annotation-authors"])
     expected_annotations_authors_iter = iter(expected_annotation_authors)
     actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID1)
-    for annotation in actual_voxel_spacing.annotations.order_by(
-        models.Annotation.s3_metadata_path,
-    ):
+    for annotation in actual_voxel_spacing.annotations.order_by(models.Annotation.s3_metadata_path):
         assert len(annotation.authors) == len(expected_annotation_authors)
-        for author in annotation.authors.order_by(
-            models.AnnotationAuthor.author_list_order,
-        ):
+        for author in annotation.authors.order_by(models.AnnotationAuthor.author_list_order):
             verify_model(author, next(expected_annotations_authors_iter))

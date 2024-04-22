@@ -106,10 +106,7 @@ class Tomogram(BaseModel):
         table_name = "tomograms"
 
     id = IntegerField(primary_key=True)
-    tomogram_voxel_spacing_id = ForeignKeyField(
-        TomogramVoxelSpacing,
-        backref="tomograms",
-    )
+    tomogram_voxel_spacing_id = ForeignKeyField(TomogramVoxelSpacing, backref="tomograms")
     name = CharField()
     size_x = IntegerField()
     size_y = IntegerField()
@@ -163,10 +160,7 @@ class Annotation(BaseModel):
         table_name = "annotations"
 
     id = IntegerField()
-    tomogram_voxel_spacing_id = ForeignKeyField(
-        TomogramVoxelSpacing,
-        backref="annotations",
-    )
+    tomogram_voxel_spacing_id = ForeignKeyField(TomogramVoxelSpacing, backref="annotations")
     s3_metadata_path = CharField()
     https_metadata_path = CharField()
     deposition_date = DateField()
