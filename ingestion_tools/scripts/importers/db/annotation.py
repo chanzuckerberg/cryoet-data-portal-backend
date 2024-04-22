@@ -147,6 +147,7 @@ class AnnotationAuthorDBImporter(AuthorsStaleDeletionDBImporter):
         data_map = super().update_data_map(data_map, metadata, index)
         primary_author_status = {
             "primary_annotator_status": metadata.get("primary_annotator_status", metadata.get("primary_author_status")),
+            "primary_author_status": metadata.get("primary_annotator_status", metadata.get("primary_author_status")),
         }
         return {**data_map, **primary_author_status}
 

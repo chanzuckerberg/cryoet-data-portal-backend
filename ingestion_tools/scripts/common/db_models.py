@@ -206,6 +206,7 @@ class AnnotationAuthor(BaseModel):
     orcid = CharField(null=True)
     corresponding_author_status = BooleanField(default=False)
     primary_annotator_status = BooleanField(default=False)
+    primary_author_status = BooleanField(default=False)
     email = CharField(null=True)
     affiliation_name = CharField(null=True)
     affiliation_address = CharField(null=True)
