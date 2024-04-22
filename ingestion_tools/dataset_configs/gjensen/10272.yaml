@@ -1,8 +1,8 @@
 dataset:
   dataset_identifier: 10272
   dataset_description: "This is 10th of 15 sets of data studying Vibrio cholerae collected\
-    \ by Ariane Briegel and is a part of Caltech Jensen  lab etdb. C6706Z- \xE2\u02C6\
-    \u2020vc1394 (MCP F9 system- uncat)"
+    \ by Ariane Briegel and is a part of Caltech Jensen  lab etdb. C6706Z- \u2206\
+    vc1394 (MCP F9 system- uncat)"
   dataset_title: Vibrio cholerae PM5
   authors: &id001
   - name: Ariane Briegel

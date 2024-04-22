@@ -1,9 +1,9 @@
 dataset:
   dataset_identifier: 10076
   dataset_description: "This is 19th of 41 sets of data studying Legionella pneumophila\
-    \ collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. \xCE\u201D\
+    \ collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. \u2206\
     dotLOB (Deletion of Dot/Icm ATPases dotL, dotO, dotB)"
-  dataset_title: "L. pneumophila JV6781_\xCE\u201DdotLOB"
+  dataset_title: "L. pneumophila JV6781_\u2206dotLOB"
   authors: &id001
   - name: Debnath Ghosal
     primary_author_status: true

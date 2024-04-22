@@ -1,32 +1,31 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-pixel_spacing,ts-tilt_alignment_software,ts-tilt_series_path,ts-tilt_series_quality
-dga2017-03-02-1,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0001.mrc,4
-dga2017-03-02-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0002.mrc,4
-dga2017-03-02-3,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0003.mrc,4
-dga2017-03-02-4,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0004.mrc,4
-dga2017-03-02-5,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0005.mrc,4
-dga2017-03-02-6,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0006.mrc,4
-dga2017-03-02-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0007.mrc,4
-dga2017-03-02-8,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0008.mrc,4
-dga2017-03-02-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0009.mrc,4
-dga2017-03-02-10,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0010.mrc,4
-dga2017-03-02-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0011.mrc,4
-dga2017-03-02-12,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0012.mrc,4
-dga2017-03-02-13,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0013.mrc,4
-dga2017-03-02-14,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0014.mrc,4
-dga2017-03-02-15,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0015.mrc,4
-dga2017-03-02-16,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0016.mrc,4
-dga2017-03-02-17,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0017.mrc,4
-dga2017-03-02-18,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0018.mrc,4
-dga2017-03-02-19,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0019.mrc,4
-dga2017-03-02-20,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0020.mrc,4
-dga2017-03-02-21,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0021.mrc,4
-dga2017-03-02-22,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0022.mrc,4
-dga2017-03-02-23,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0023.mrc,4
-dga2017-03-02-24,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0024.mrc,4
-dga2017-03-02-25,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0025.mrc,4
-dga2017-03-02-26,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0026.mrc,4
-dga2017-03-02-27,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0027.mrc,4
-dga2017-03-02-28,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q0028.mrc,4
-dga2017-03-02-37,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q20002.mrc,4
-dga2017-03-02-38,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,16.145,4.036,RAPTOR,rawdata/delta_Q20003.mrc,4
-dga2017-03-02-39,,NON_FIDUCIAL,None,None,,23.871,,rawdata/Q1_atlas_2tgt.mrc,1
+run_name,ts-tilt_series_path
+dga2017-03-02-1,rawdata/delta_Q0001.mrc
+dga2017-03-02-2,rawdata/delta_Q0002.mrc
+dga2017-03-02-3,rawdata/delta_Q0003.mrc
+dga2017-03-02-4,rawdata/delta_Q0004.mrc
+dga2017-03-02-5,rawdata/delta_Q0005.mrc
+dga2017-03-02-6,rawdata/delta_Q0006.mrc
+dga2017-03-02-7,rawdata/delta_Q0007.mrc
+dga2017-03-02-8,rawdata/delta_Q0008.mrc
+dga2017-03-02-9,rawdata/delta_Q0009.mrc
+dga2017-03-02-10,rawdata/delta_Q0010.mrc
+dga2017-03-02-11,rawdata/delta_Q0011.mrc
+dga2017-03-02-12,rawdata/delta_Q0012.mrc
+dga2017-03-02-13,rawdata/delta_Q0013.mrc
+dga2017-03-02-14,rawdata/delta_Q0014.mrc
+dga2017-03-02-15,rawdata/delta_Q0015.mrc
+dga2017-03-02-16,rawdata/delta_Q0016.mrc
+dga2017-03-02-17,rawdata/delta_Q0017.mrc
+dga2017-03-02-18,rawdata/delta_Q0018.mrc
+dga2017-03-02-19,rawdata/delta_Q0019.mrc
+dga2017-03-02-20,rawdata/delta_Q0020.mrc
+dga2017-03-02-21,rawdata/delta_Q0021.mrc
+dga2017-03-02-22,rawdata/delta_Q0022.mrc
+dga2017-03-02-23,rawdata/delta_Q0023.mrc
+dga2017-03-02-24,rawdata/delta_Q0024.mrc
+dga2017-03-02-25,rawdata/delta_Q0025.mrc
+dga2017-03-02-26,rawdata/delta_Q0026.mrc
+dga2017-03-02-27,rawdata/delta_Q0027.mrc
+dga2017-03-02-28,rawdata/delta_Q0028.mrc
+dga2017-03-02-37,rawdata/delta_Q20002.mrc
+dga2017-03-02-38,rawdata/delta_Q20003.mrc

@@ -1,5 +1,5 @@
 run_name,tomo-align_softwares,tomo-voxel_spacing,ts-camera-model,ts-data_acquisition_software,ts-microscope-manufacturer,ts-microscope-model,ts-pixel_spacing,ts-spherical_aberration_constant,ts-tilt_alignment_software,ts-tilt_axis,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_path,ts-tilting_scheme
-cwl2013-04-30-1,['FEIBatchTomo'],2.0,UltraScan,FEIbatchtomo,TFS,Krios,1.0,2.7,FEIBatchTomo,0.0,60.0,-60.0,rawdata/13apr26_tomo_30.mrc,min to max tilt
+cwl2013-04-30-1,['FEIBatchTomo'],27.0,UltraScan,FEIbatchtomo,TFS,Krios,13.5,2.7,FEIBatchTomo,0.0,60.0,-60.0,rawdata/13apr26_tomo_30.mrc,min to max tilt
 cwl2013-04-30-3,['FEIBatchTomo'],27.0,UltraScan,FEIbatchtomo,TFS,Krios,13.5,2.7,FEIBatchTomo,0.0,60.0,-60.0,rawdata/13apr26_tomo_10.mrc,min to max tilt
 cwl2013-04-30-4,['FEIBatchTomo'],27.0,UltraScan,FEIbatchtomo,TFS,Krios,13.5,2.7,FEIBatchTomo,0.0,60.0,-60.0,rawdata/13apr26_tomo_11.mrc,min to max tilt
 cwl2013-04-30-5,['FEIBatchTomo'],27.0,UltraScan,FEIbatchtomo,TFS,Krios,13.5,2.7,FEIBatchTomo,0.0,60.0,-60.0,rawdata/13apr26_tomo_12.mrc,min to max tilt
