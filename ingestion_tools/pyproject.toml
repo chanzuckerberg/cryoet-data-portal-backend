@@ -50,6 +50,10 @@ line-length = 120
 target_version = ['py311']
 
 [tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
 select = [
     "E", "W",  # pycodestyle
     "F",  # pyflakes
@@ -72,17 +76,15 @@ ignore = [
     "DTZ007", # Datetime objects without timezones.
     "DTZ005", # More datetimes without timezones.
 ]
-line-length = 120
-target-version = "py39"
 
 [tool.ruff.lint.per-file-ignores]
 # Ignore `SIM115` (not using open() in a context manager) since all calls to this method *do* use a context manager.
 "scripts/common/fs.py" = ["SIM115"]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party =["common"]
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 docstring-quotes = "double"
 
 [tool.mypy]

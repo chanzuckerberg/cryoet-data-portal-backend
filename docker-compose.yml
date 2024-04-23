@@ -51,7 +51,7 @@ services:
         condition: service_healthy
     environment:
       HASURA_GRAPHQL_ENABLE_CONSOLE: 'false'
-      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@db:5432/cryoet
+      HASURA_GRAPHQL_DATABASE_URL: postgresql://postgres:postgres@db:5432/cryoet
       HASURA_GRAPHQL_ADMIN_SECRET: secret
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
     ports:

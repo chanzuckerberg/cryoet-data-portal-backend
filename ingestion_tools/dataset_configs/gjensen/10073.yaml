@@ -52,15 +52,15 @@ tiltseries:
     energy_filter: GIF
     image_corrector: null
     phase_plate: false
-  pixel_spacing: '{ts-pixel_spacing}'
+  pixel_spacing: 4.933
   spherical_aberration_constant: 2.0
-  tilt_alignment_software: '{ts-tilt_alignment_software}'
+  tilt_alignment_software: RAPTOR
   tilt_axis: 84.3
   tilt_range:
     max: 60.0
     min: -50.0
   tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: int {ts-tilt_series_quality}
+  tilt_series_quality: 4
   tilt_step: 1.0
   tilting_scheme: starting tilt to max then min
   total_flux: 90.0
@@ -82,10 +82,11 @@ tomograms:
     - 0
     - 0
     - 1
-  align_softwares: '{tomo-align_softwares}'
+  align_softwares:
+  - RAPTOR
   authors: *id001
   ctf_corrected: null
-  fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
+  fiducial_alignment_status: FIDUCIAL
   offset:
     x: 0
     y: 0
@@ -93,9 +94,9 @@ tomograms:
   processing: raw
   processing_software: null
   reconstruction_method: '{tomo-reconstruction_method}'
-  reconstruction_software: '{tomo-reconstruction_software}'
+  reconstruction_software: IMOD
   tomogram_version: 1
-  voxel_spacing: '{tomo-voxel_spacing}'
+  voxel_spacing: 19.733
 annotations: {}
 standardization_config:
   destination_prefix: '10073'
@@ -114,7 +115,7 @@ standardization_config:
   tomo_voxel_size: ''
   tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
   run_glob: '*'
-  run_regex: (dga2015-12-11-3|dga2015-12-11-4|dga2015-12-11-6|dga2015-12-11-7|dga2015-12-11-8|dga2015-12-11-9|dga2015-12-11-10|dga2015-12-11-11|dga2015-12-11-12|dga2015-12-11-13|dga2015-12-11-14|dga2015-12-11-15|dga2015-12-11-16|dga2015-12-11-17|dga2015-12-11-18|dga2015-12-11-19|dga2015-12-11-20|dga2015-12-11-21|dga2015-12-11-22|dga2015-12-11-23|dga2015-12-11-25|dga2015-12-11-26|dga2015-12-11-27|dga2015-12-11-28|dga2015-12-11-29|dga2015-12-11-30|dga2015-12-11-31|dga2015-12-11-32|dga2015-12-11-33|dga2015-12-11-34|dga2015-12-11-35|dga2015-12-11-36|dga2015-12-11-38|dga2015-12-11-39|dga2015-12-11-40|dga2015-12-11-42|dga2015-12-11-43|dga2015-12-11-44|dga2015-12-11-46|dga2015-12-11-47|dga2015-12-11-49|dga2015-12-11-53|dga2015-12-11-57|dga2015-12-11-58|dga2015-12-11-59|dga2015-12-11-60|dga2015-12-11-61|dga2015-12-11-62|dga2015-12-11-63|dga2015-12-11-64)$
+  run_regex: (dga2015-12-11-3|dga2015-12-11-4|dga2015-12-11-6|dga2015-12-11-7|dga2015-12-11-8|dga2015-12-11-9|dga2015-12-11-10|dga2015-12-11-11|dga2015-12-11-12|dga2015-12-11-13|dga2015-12-11-14|dga2015-12-11-15|dga2015-12-11-16|dga2015-12-11-17|dga2015-12-11-18|dga2015-12-11-19|dga2015-12-11-20|dga2015-12-11-21|dga2015-12-11-22|dga2015-12-11-23|dga2015-12-11-25|dga2015-12-11-26|dga2015-12-11-27|dga2015-12-11-28|dga2015-12-11-29|dga2015-12-11-30|dga2015-12-11-31|dga2015-12-11-32|dga2015-12-11-33|dga2015-12-11-34|dga2015-12-11-35|dga2015-12-11-36|dga2015-12-11-38|dga2015-12-11-39|dga2015-12-11-40|dga2015-12-11-42|dga2015-12-11-43|dga2015-12-11-44|dga2015-12-11-46|dga2015-12-11-47|dga2015-12-11-49|dga2015-12-11-53|dga2015-12-11-57|dga2015-12-11-58|dga2015-12-11-59|dga2015-12-11-60|dga2015-12-11-61|dga2015-12-11-62)$
   run_name_regex: (.*)
   run_data_map_file: run_data_map/10073.csv
   run_to_tomo_map_csv: run_tomo_map/10073.csv

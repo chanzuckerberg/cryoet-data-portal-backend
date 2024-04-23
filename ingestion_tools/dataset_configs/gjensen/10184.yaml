@@ -53,7 +53,7 @@ tiltseries:
     phase_plate: false
   pixel_spacing: '{ts-pixel_spacing}'
   spherical_aberration_constant: '{ts-spherical_aberration_constant}'
-  tilt_alignment_software: '{ts-tilt_alignment_software}'
+  tilt_alignment_software: RAPTOR
   tilt_axis: 84.3
   tilt_range:
     max: 60.0

@@ -1,0 +1,59 @@
+{
+    "annotation_object": {
+        "id": "GO:000000",
+        "name": "foo"
+    },
+    "dates": {
+        "deposition_date": "2023-04-01",
+        "release_date": "2023-06-01",
+        "last_modified_date": "2023-06-01"
+    },
+    "annotation_method": "2D CNN predictions",
+    "method_type": "hybrid",
+    "annotation_publications": "EMPIAR-XYZ",
+    "ground_truth_status": true,
+    "authors": [
+        {
+            "name": "Jane Smith",
+            "corresponding_author_status": false,
+            "primary_annotator_status": true
+        },
+        {
+            "name": "J Carpenter",
+            "corresponding_author_status": false,
+            "primary_author_status": true
+        },
+        {
+            "name": "John Doe",
+            "ORCID": "0000-0000-1234-0000",
+            "corresponding_author_status": false,
+            "primary_annotator_status": false,
+            "email": "jdoe@test.com"
+        }
+    ],
+    "annotation_software": "pyTOM + Keras",
+    "version": "1.0",
+    "is_curator_recommended": true,
+    "object_count": 16,
+    "files": [
+        {
+            "format": "ndjson",
+            "path": "30001/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0_point.ndjson",
+            "shape": "Point",
+            "is_visualization_default": true
+        },
+        {
+            "format": "mrc",
+            "path": "30001/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0_segmask.mrc",
+            "shape": "SegmentationMask",
+            "is_visualization_default": false
+        },
+        {
+            "format": "zarr",
+            "path": "30001/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0_segmask.zarr",
+            "shape": "SegmentationMask",
+            "is_visualization_default": false
+        }
+    ],
+    "deposition_id": 111111
+}

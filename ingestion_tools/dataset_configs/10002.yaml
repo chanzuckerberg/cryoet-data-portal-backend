@@ -154,7 +154,7 @@ annotations:
       is_curator_recommended: true
     sources:
       - file_format: mrc
-        shape: SegmentationMask
+        shape: SemanticSegmentationMask
         glob_string: labels/{run_name}_actin_ground_truth.mrc
         is_visualization_default: true
   - metadata:
@@ -178,7 +178,7 @@ annotations:
       is_curator_recommended: false
     sources:
       - file_format: mrc
-        shape: SegmentationMask
+        shape: SemanticSegmentationMask
         glob_string: prediction/{run_name}_*.mrc
         is_visualization_default: false
 #     - columns: zyx

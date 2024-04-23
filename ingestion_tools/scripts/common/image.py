@@ -2,7 +2,7 @@ import json
 import os
 import os.path
 from datetime import datetime
-from typing import Any, Callable, List
+from typing import Any, Callable, Dict, List, Tuple
 
 import mrcfile
 import numpy as np
@@ -28,6 +28,63 @@ class ZarrReader:
         return data
 
 
+class ZarrWriter:
+    def __init__(self, zarrdir: str):
+        self.loc = ome_zarr.io.parse_url(zarrdir, mode="w")
+        self.root_group = zarr.group(self.loc.store, overwrite=True)
+
+    def ome_zarr_axes(self) -> List[Dict[str, str]]:
+        return [
+            {
+                "name": "z",
+                "type": "space",
+                "unit": "angstrom",
+            },
+            {
+                "name": "y",
+                "type": "space",
+                "unit": "angstrom",
+            },
+            {
+                "name": "x",
+                "type": "space",
+                "unit": "angstrom",
+            },
+        ]
+
+    def ome_zarr_transforms(self, voxel_size: Tuple[float, float, float]) -> List[Dict[str, Any]]:
+        return [{"scale": [voxel_size[0], voxel_size[1], voxel_size[2]], "type": "scale"}]
+
+    def write_data(
+        self,
+        data: List[np.ndarray],
+        voxel_spacing: List[Tuple[float, float, float]],
+        chunk_size: Tuple[int, int, int] = (256, 256, 256),
+        scale_z_axis: bool = True,
+    ):
+        pyramid = []
+        scales = []
+
+        # If voxel_size is a list, it must match the length of the data
+        if len(voxel_spacing) != len(data):
+            raise ValueError(f"Length of voxel_size ({len(voxel_spacing)}) must match length of data ({len(data)})")
+
+        # Store each layer of the pyramid and its corresponding voxel size
+        for d, vs in zip(data, voxel_spacing):
+            pyramid.append(d)
+            scales.append(self.ome_zarr_transforms(vs))
+
+        # Write the pyramid to the zarr store
+        return ome_zarr.writer.write_multiscale(
+            pyramid,
+            group=self.root_group,
+            axes=self.ome_zarr_axes(),
+            coordinate_transformations=scales,
+            storage_options=dict(chunks=chunk_size, overwrite=True),
+            compute=True,
+        )
+
+
 class TomoConverter:
     def __init__(self, fs: FileSystemApi, mrc_filename: str, header_only: bool = False):
         if header_only:
@@ -43,8 +100,22 @@ class TomoConverter:
             self.data: np.ndarray = mrc.data
 
     # Make an array of an original size image, plus `max_layers` half-scaled images
-    def make_pyramid(self, max_layers: int = 2, scale_z_axis: bool = True) -> List[np.ndarray]:
+    def make_pyramid(
+        self,
+        max_layers: int = 2,
+        scale_z_axis: bool = True,
+        voxel_spacing: float = None,
+    ) -> Tuple[List[np.ndarray], List[Tuple[float, float, float]]]:
+        # Voxel size for unbinned
+        if not voxel_spacing:
+            voxel_spacing = self.get_voxel_size()
+
+        # Ensure voxel spacing rounded to 3rd digit
+        voxel_spacing = round(voxel_spacing, 3)
+
         pyramid = [self.data.astype("f4")]
+        pyramid_voxel_spacing = [(voxel_spacing, voxel_spacing, voxel_spacing)]
+
         # Then make a pyramid of 100/50/25 percent scale volumes
         for i in range(max_layers):
             z_scale = 1
@@ -52,7 +123,15 @@ class TomoConverter:
                 z_scale = 2
             downscaled_data = downscale_local_mean(pyramid[i], (z_scale, 2, 2))
             pyramid.append(downscaled_data)
-        return pyramid
+            pyramid_voxel_spacing.append(
+                (
+                    pyramid_voxel_spacing[i][0] * z_scale,
+                    pyramid_voxel_spacing[i][1] * 2,
+                    pyramid_voxel_spacing[i][2] * 2,
+                ),
+            )
+
+        return pyramid, pyramid_voxel_spacing
 
     def pyramid_to_mrc(
         self,
@@ -87,19 +166,13 @@ class TomoConverter:
         pyramid: List[np.ndarray],
         zarrdir: str,
         write: bool = True,
+        pyramid_voxel_spacing: List[Tuple[float, float, float]] = None,
     ) -> str:
         destination_zarrdir = fs.destformat(zarrdir)
-
         # Write zarr data as 256^3 voxel chunks
         if write:
-            loc = ome_zarr.io.parse_url(destination_zarrdir, mode="w")
-            root_group = zarr.group(loc.store, overwrite=True)
-            ome_zarr.writer.write_multiscale(
-                pyramid,
-                group=root_group,
-                axes="zyx",
-                storage_options=dict(chunks=(256, 256, 256), overwrite=True),
-            )
+            writer = ZarrWriter(destination_zarrdir)
+            writer.write_data(pyramid, voxel_spacing=pyramid_voxel_spacing, chunk_size=(256, 256, 256))
         else:
             print(f"skipping remote push for {destination_zarrdir}")
         return os.path.basename(zarrdir)
@@ -138,8 +211,22 @@ class MaskConverter(TomoConverter):
         super().__init__(fs, mrc_filename)
         self.label = label
 
-    def make_pyramid(self, max_layers: int = 2, scale_z_axis: bool = True) -> List[np.ndarray]:
-        pyramid = [(self.data == self.label).astype(np.float32)]
+    def make_pyramid(
+        self,
+        max_layers: int = 2,
+        scale_z_axis: bool = True,
+        voxel_spacing: float = None,
+    ) -> Tuple[List[np.ndarray], List[Tuple[float, float, float]]]:
+        # Voxel size for unbinned
+        if not voxel_spacing:
+            voxel_spacing = self.get_voxel_size()
+
+        # Ensure voxel spacing rounded to 3rd digit
+        voxel_spacing = round(voxel_spacing, 3)
+
+        pyramid = [(self.data == self.label).astype(np.int8)]
+        pyramid_voxel_spacing = [(voxel_spacing, voxel_spacing, voxel_spacing)]
+
         # Then make a pyramid of 100/50/25 percent scale volumes
         for i in range(max_layers):
             z_scale = 1
@@ -148,10 +235,17 @@ class MaskConverter(TomoConverter):
 
             # For semantic segmentation masks we want to have a binary output.
             # downscale_local_mean will return float array even for bool input with non-binary values
-            scaled = (downscale_local_mean(pyramid[i] == self.label, (z_scale, 2, 2)) > 0).astype(np.float32)
+            scaled = (downscale_local_mean(pyramid[i], (z_scale, 2, 2)) > 0).astype(np.int8)
             pyramid.append(scaled)
+            pyramid_voxel_spacing.append(
+                (
+                    pyramid_voxel_spacing[i][0] * z_scale,
+                    pyramid_voxel_spacing[i][1] * 2,
+                    pyramid_voxel_spacing[i][2] * 2,
+                ),
+            )
 
-        return pyramid
+        return pyramid, pyramid_voxel_spacing
 
     def has_label(self) -> bool:
         return np.any(self.data == self.label)
@@ -205,8 +299,14 @@ def scale_mrcfile(
     voxel_spacing=None,
 ):
     tc = TomoConverter(fs, tomo_filename)
-    pyramid = tc.make_pyramid(scale_z_axis=scale_z_axis)
-    _ = tc.pyramid_to_omezarr(fs, pyramid, f"{output_prefix}.zarr", write_zarr)
+    pyramid, pyramid_voxel_spacing = tc.make_pyramid(scale_z_axis=scale_z_axis, voxel_spacing=voxel_spacing)
+    _ = tc.pyramid_to_omezarr(
+        fs,
+        pyramid,
+        f"{output_prefix}.zarr",
+        write_zarr,
+        pyramid_voxel_spacing=pyramid_voxel_spacing,
+    )
     _ = tc.pyramid_to_mrc(fs, pyramid, f"{output_prefix}.mrc", write_mrc, header_mapper, voxel_spacing)
 
 
@@ -220,8 +320,8 @@ def scale_maskfile(
     voxel_spacing=None,
 ):
     mc = MaskConverter(fs, tomo_filename, label)
-    pyramid = mc.make_pyramid(scale_z_axis=scale_z_axis)
-    _ = mc.pyramid_to_omezarr(fs, pyramid, f"{output_prefix}.zarr", write)
+    pyramid, pyramid_voxel_spacing = mc.make_pyramid(scale_z_axis=scale_z_axis, voxel_spacing=voxel_spacing)
+    _ = mc.pyramid_to_omezarr(fs, pyramid, f"{output_prefix}.zarr", write, pyramid_voxel_spacing=pyramid_voxel_spacing)
     _ = mc.pyramid_to_mrc(
         fs,
         pyramid,

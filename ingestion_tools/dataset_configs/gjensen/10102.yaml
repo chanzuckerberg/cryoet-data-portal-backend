@@ -16,7 +16,7 @@ dataset:
   sample_type: Organism
   sample_preparation: null
   grid_preparation: "OD=6, 4 ul loading. bloting condition 6s force/ 3s time/ 1s dry\
-    \ time, QUANTIFOIL\xAE \xE2\u20AC\u201C Holey Carbon Films 200 mesh"
+    \ time, QUANTIFOIL\xAE Holey Carbon Films 200 mesh"
   dates:
     deposition_date: 2023-10-01
     last_modified_date: 2023-12-01
@@ -47,7 +47,7 @@ tiltseries:
     phase_plate: false
   pixel_spacing: '{ts-pixel_spacing}'
   spherical_aberration_constant: 2.0
-  tilt_alignment_software: '{ts-tilt_alignment_software}'
+  tilt_alignment_software: IMOD
   tilt_axis: 84.3
   tilt_range:
     max: 60.0

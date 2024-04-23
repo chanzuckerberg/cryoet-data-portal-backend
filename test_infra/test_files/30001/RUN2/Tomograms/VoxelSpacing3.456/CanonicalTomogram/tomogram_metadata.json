@@ -1,0 +1,43 @@
+{
+    "voxel_spacing": 3.456,
+    "reconstruction_method": "",
+    "reconstruction_software": "",
+    "fiducial_alignment_status": "NON_FIDUCIAL",
+    "ctf_corrected": "",
+    "processing": "filtered",
+    "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    },
+    "authors": [],
+    "tomogram_version": 1,
+    "scales": [
+        {
+            "z": 400,
+            "y": 800,
+            "x": 800
+        },
+        {
+            "z": 200,
+            "y": 400,
+            "x": 400
+        },
+        {
+            "z": 100,
+            "y": 200,
+            "x": 200
+        }
+    ],
+    "size": {
+        "z": 400,
+        "y": 800,
+        "x": 800
+    },
+    "omezarr_dir": "RUN2.zarr",
+    "mrc_files": [
+        "RUN2.mrc"
+    ],
+    "run_name": "RUN2",
+    "deposition_id": 111111
+}

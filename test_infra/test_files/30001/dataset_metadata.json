@@ -1,0 +1,79 @@
+{
+    "dataset_title": "Lorem ipsum dolor",
+    "authors": [
+        {
+            "name": "Jane Eyre",
+            "corresponding_author_status": false,
+            "primary_author_status": true
+        },
+        {
+            "name": "Virginia Woolf",
+            "ORCID": "0000-0000-1234-0000",
+            "corresponding_author_status": false,
+            "primary_author_status": false,
+            "email": "vwoolf@dall.way",
+            "affiliation_name": "Bloomsbury",
+            "affiliation_address": "London, UK",
+            "affiliation_identifier": "1234343"
+        },
+        {
+            "name": "Julia Child",
+            "ORCID": "9876-0000-0000-0000",
+            "corresponding_author_status": true,
+            "primary_author_status": false
+        }
+    ],
+    "cross_references": {
+        "dataset_publications": "test-publication-data",
+        "dataset_citations": "10.1101/2024.01.12.111111",
+        "related_database_entries": "TEST-1243435"
+    },
+    "funding":
+    [
+        {
+            "funding_agency_name": "Test Agency 1",
+            "grant_id": "56789"
+        },
+        {
+            "funding_agency_name": "Test Agency 2"
+        },
+        {
+            "funding_agency_name": "Grant Provider 1",
+            "grant_id": "1234"
+        }
+    ],
+    "sample_preparation": "method1: value1, method2: value3",
+    "grid_preparation": "method3: value8, method6: value4",
+    "dataset_identifier": 30001,
+    "dataset_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "sample_type": "organism",
+    "dates": {
+        "deposition_date": "2023-04-01",
+        "release_date": "2023-06-02",
+        "last_modified_date": "2023-08-05"
+    },
+    "cell_component": {
+        "id": "GO:123435",
+        "name": "tail"
+    },
+    "cell_strain": {
+        "id": 999999,
+        "name": "test value"
+    },
+    "cell_type": {
+        "id": 4321,
+        "name": "foo"
+    },
+    "organism": {
+        "taxonomy_id": 1111,
+        "name": "Foo Bar"
+    },
+    "tissue": {
+        "id": 1234,
+        "name": "test-tissue1"
+    },
+    "key_photos": {
+        "snapshot": "30001/KeyPhoto/snapshot.png",
+        "thumbnail": "30001/KeyPhoto/thumbnail.png"
+    }
+}

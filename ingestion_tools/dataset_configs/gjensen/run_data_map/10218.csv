@@ -1,5 +1,5 @@
 run_name,tomo-align_softwares,tomo-reconstruction_method,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_path,ts-tilt_step
-mba2010-08-27-1,['RAPTOR'],SIRT,1.0,RAPTOR,64.0,-59.0,rawdata/10aug27b_WT_Campy_002.st,1.5
+mba2010-08-27-1,['RAPTOR'],SIRT,10.24,RAPTOR,64.0,-59.0,rawdata/10aug27b_WT_Campy_002.st,1.5
 mba2010-08-27-2,['IMOD'],SIRT,10.24,IMOD,64.0,-59.0,rawdata/10aug27b_WT_Campy_004.st,1.5
 mba2010-08-27-3,['IMOD'],SIRT,10.24,IMOD,64.0,-59.0,rawdata/10aug27b_WT_Campy_005.st,1.5
 mba2010-08-27-4,['IMOD'],SIRT,10.24,IMOD,64.0,-59.0,rawdata/10aug27b_WT_Campy_008.st,1.5
