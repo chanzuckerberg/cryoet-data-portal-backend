@@ -16,22 +16,22 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
  classDiagram
     class CrossReferences
       CrossReferences : dataset_citations
-        
+
           CrossReferences --> string : dataset_citations
-        
+
       CrossReferences : dataset_publications
-        
+
           CrossReferences --> string : dataset_publications
-        
+
       CrossReferences : related_database_entries
-        
+
           CrossReferences --> string : related_database_entries
-        
+
       CrossReferences : related_database_links
-        
+
           CrossReferences --> string : related_database_links
-        
-      
+
+
 ```
 
 

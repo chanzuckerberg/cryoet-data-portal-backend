@@ -120,24 +120,14 @@ class Author(ConfiguredBaseModel):
     """
 
     name: Optional[str] = Field(None, description="""The full name of the author.""")
-    email: Optional[str] = Field(
-        None, description="""The email address of the author."""
-    )
-    affiliation_name: Optional[str] = Field(
-        None, description="""The name of the author's affiliation."""
-    )
-    affiliation_address: Optional[str] = Field(
-        None, description="""The address of the author's affiliation."""
-    )
+    email: Optional[str] = Field(None, description="""The email address of the author.""")
+    affiliation_name: Optional[str] = Field(None, description="""The name of the author's affiliation.""")
+    affiliation_address: Optional[str] = Field(None, description="""The address of the author's affiliation.""")
     affiliation_identifier: Optional[str] = Field(
         None, description="""A Research Organization Registry (ROR) identifier."""
     )
-    is_corresponding: Optional[bool] = Field(
-        None, description="""Whether the author is a corresponding author."""
-    )
-    is_primary_author: Optional[bool] = Field(
-        None, description="""Whether the author is a primary author."""
-    )
+    is_corresponding: Optional[bool] = Field(None, description="""Whether the author is a corresponding author.""")
+    is_primary_author: Optional[bool] = Field(None, description="""Whether the author is a primary author.""")
     ORCID: Optional[str] = Field(
         None,
         description="""A unique, persistent identifier for researchers, provided by ORCID.""",
@@ -149,9 +139,7 @@ class Author(ConfiguredBaseModel):
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
-                    raise ValueError(
-                        f"Invalid affiliation_identifier format: {element}"
-                    )
+                    raise ValueError(f"Invalid affiliation_identifier format: {element}")
         elif isinstance(v, str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid affiliation_identifier format: {v}")
@@ -181,9 +169,7 @@ class Annotator(ConfiguredBaseModel):
     affiliation_address: Optional[str] = Field(None)
     affiliation_identifier: Optional[str] = Field(None)
     is_corresponding: Optional[str] = Field(None)
-    is_primary_annotator: Optional[bool] = Field(
-        None, description="""Whether the author is a primary author."""
-    )
+    is_primary_annotator: Optional[bool] = Field(None, description="""Whether the author is a primary author.""")
     ORCID: Optional[str] = Field(None)
 
 
@@ -192,12 +178,8 @@ class Funding(ConfiguredBaseModel):
     A funding source for a scientific data entity (base for JSON and DB representation).
     """
 
-    funding_agency_name: Optional[str] = Field(
-        None, description="""The name of the funding source."""
-    )
-    grant_id: Optional[str] = Field(
-        None, description="""Grant identifier provided by the funding agency"""
-    )
+    funding_agency_name: Optional[str] = Field(None, description="""The name of the funding source.""")
+    grant_id: Optional[str] = Field(None, description="""Grant identifier provided by the funding agency""")
 
 
 class DateStamp(ConfiguredBaseModel):
@@ -235,9 +217,7 @@ class AuthoredEntity(ConfiguredBaseModel):
     An entity with associated authors.
     """
 
-    authors: List[Author] = Field(
-        default_factory=list, description="""Author of a scientific data entity."""
-    )
+    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""")
 
 
 class AnnotatoredEntity(ConfiguredBaseModel):
@@ -245,9 +225,7 @@ class AnnotatoredEntity(ConfiguredBaseModel):
     An entity with associated annotation authors.
     """
 
-    authors: List[Annotator] = Field(
-        default_factory=list, description="""Annotator of a scientific data entity."""
-    )
+    authors: List[Annotator] = Field(default_factory=list, description="""Annotator of a scientific data entity.""")
 
 
 class FundedEntity(ConfiguredBaseModel):
@@ -289,9 +267,7 @@ class Organism(ConfiguredBaseModel):
     """
 
     name: Optional[str] = Field(None)
-    taxonomy_id: Optional[str] = Field(
-        None, description="""NCBI taxonomy identifier for the organism, e.g. 9606"""
-    )
+    taxonomy_id: Optional[str] = Field(None, description="""NCBI taxonomy identifier for the organism, e.g. 9606""")
 
 
 class Tissue(ConfiguredBaseModel):
@@ -300,9 +276,7 @@ class Tissue(ConfiguredBaseModel):
     """
 
     name: Optional[str] = Field(None)
-    id: Optional[str] = Field(
-        None, description="""The UBERON identifier for the tissue."""
-    )
+    id: Optional[str] = Field(None, description="""The UBERON identifier for the tissue.""")
 
 
 class CellType(ConfiguredBaseModel):
@@ -337,28 +311,16 @@ class ExperimentalMetadata(ConfiguredBaseModel):
     Metadata describing sample and sample preparation methods used in a cryoET dataset.
     """
 
-    sample_type: Optional[SampleTypeEnum] = Field(
-        None, description="""Type of sample imaged in a CryoET study."""
-    )
-    sample_preparation: Optional[str] = Field(
-        None, description="""Describes how the sample was prepared."""
-    )
-    grid_preparation: Optional[str] = Field(
-        None, description="""Describes Cryo-ET grid preparation."""
-    )
+    sample_type: Optional[SampleTypeEnum] = Field(None, description="""Type of sample imaged in a CryoET study.""")
+    sample_preparation: Optional[str] = Field(None, description="""Describes how the sample was prepared.""")
+    grid_preparation: Optional[str] = Field(None, description="""Describes Cryo-ET grid preparation.""")
     other_setup: Optional[str] = Field(
         None,
         description="""Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in   the same publication.""",
     )
-    organism: Optional[Organism] = Field(
-        None, description="""The species from which the sample was derived."""
-    )
-    tissue: Optional[Tissue] = Field(
-        None, description="""The type of tissue from which the sample was derived."""
-    )
-    cell_type: Optional[CellType] = Field(
-        None, description="""The cell type from which the sample was derived."""
-    )
+    organism: Optional[Organism] = Field(None, description="""The species from which the sample was derived.""")
+    tissue: Optional[Tissue] = Field(None, description="""The type of tissue from which the sample was derived.""")
+    cell_type: Optional[CellType] = Field(None, description="""The cell type from which the sample was derived.""")
     cell_strain: Optional[CellStrain] = Field(
         None,
         description="""The strain or cell line from which the sample was derived.""",
@@ -385,9 +347,7 @@ class Dataset(
         None,
         description="""An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory  name in data tree.""",
     )
-    dataset_title: Optional[str] = Field(
-        None, description="""Title of a CryoET dataset."""
-    )
+    dataset_title: Optional[str] = Field(None, description="""Title of a CryoET dataset.""")
     dataset_description: Optional[str] = Field(
         None,
         description="""A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.""",
@@ -396,9 +356,7 @@ class Dataset(
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
     )
-    authors: List[Author] = Field(
-        default_factory=list, description="""Author of a scientific data entity."""
-    )
+    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""")
     funding: Optional[List[Funding]] = Field(
         default_factory=list,
         description="""A funding source for a scientific data entity (base for JSON and DB representation).""",
@@ -411,28 +369,16 @@ class Dataset(
         None,
         description="""A set of cross-references to other databases and publications.""",
     )
-    sample_type: Optional[str] = Field(
-        None, description="""Type of sample imaged in a CryoET study."""
-    )
-    sample_preparation: Optional[str] = Field(
-        None, description="""Describes how the sample was prepared."""
-    )
-    grid_preparation: Optional[str] = Field(
-        None, description="""Describes Cryo-ET grid preparation."""
-    )
+    sample_type: Optional[str] = Field(None, description="""Type of sample imaged in a CryoET study.""")
+    sample_preparation: Optional[str] = Field(None, description="""Describes how the sample was prepared.""")
+    grid_preparation: Optional[str] = Field(None, description="""Describes Cryo-ET grid preparation.""")
     other_setup: Optional[str] = Field(
         None,
         description="""Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in   the same publication.""",
     )
-    organism: Optional[Organism] = Field(
-        None, description="""The species from which the sample was derived."""
-    )
-    tissue: Optional[Tissue] = Field(
-        None, description="""The type of tissue from which the sample was derived."""
-    )
-    cell_type: Optional[CellType] = Field(
-        None, description="""The cell type from which the sample was derived."""
-    )
+    organism: Optional[Organism] = Field(None, description="""The species from which the sample was derived.""")
+    tissue: Optional[Tissue] = Field(None, description="""The type of tissue from which the sample was derived.""")
+    cell_type: Optional[CellType] = Field(None, description="""The cell type from which the sample was derived.""")
     cell_strain: Optional[CellStrain] = Field(
         None,
         description="""The strain or cell line from which the sample was derived.""",
@@ -448,9 +394,7 @@ class Camera(ConfiguredBaseModel):
     The camera used to collect the tilt series.
     """
 
-    manufacturer: Optional[str] = Field(
-        None, description="""Name of the camera manufacturer"""
-    )
+    manufacturer: Optional[str] = Field(None, description="""Name of the camera manufacturer""")
     model: Optional[str] = Field(None, description="""Camera model name""")
 
 
@@ -468,15 +412,9 @@ class MicroscopeOpticalSetup(ConfiguredBaseModel):
     The optical setup of the microscope used to collect the tilt series.
     """
 
-    energy_filter: Optional[str] = Field(
-        None, description="""Energy filter setup used"""
-    )
-    phase_plate: Optional[str] = Field(
-        None, description="""Phase plate configuration"""
-    )
-    image_corrector: Optional[str] = Field(
-        None, description="""Image corrector setup"""
-    )
+    energy_filter: Optional[str] = Field(None, description="""Energy filter setup used""")
+    phase_plate: Optional[str] = Field(None, description="""Phase plate configuration""")
+    image_corrector: Optional[str] = Field(None, description="""Image corrector setup""")
 
 
 class TiltRange(ConfiguredBaseModel):
@@ -504,9 +442,7 @@ class TiltSeries(ConfiguredBaseModel):
         None,
         description="""Other microscope optical setup information, in addition to energy filter, phase plate and image corrector""",
     )
-    tilt_axis: Optional[float] = Field(
-        None, description="""Rotation angle in degrees"""
-    )
+    tilt_axis: Optional[float] = Field(None, description="""Rotation angle in degrees""")
     tilt_step: Optional[float] = Field(None, description="""Tilt step in degrees""")
     tilting_scheme: Optional[str] = Field(
         None,
@@ -516,9 +452,7 @@ class TiltSeries(ConfiguredBaseModel):
         None,
         description="""Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series""",
     )
-    data_acquisition_software: Optional[str] = Field(
-        None, description="""Software used to collect data"""
-    )
+    data_acquisition_software: Optional[str] = Field(None, description="""Software used to collect data""")
     binning_from_frames: Optional[float] = Field(
         None,
         description="""Describes the binning factor from frames to tilt series file""",
@@ -527,28 +461,16 @@ class TiltSeries(ConfiguredBaseModel):
         None,
         description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""",
     )
-    pixel_spacing: Optional[float] = Field(
-        None, description="""Pixel spacing for the tilt series"""
-    )
-    aligned_tiltseries_binning: Optional[int] = Field(
-        None, description="""Binning factor of the aligned tilt series"""
-    )
-    frames_count: Optional[int] = Field(
-        None, description="""Number of frames associated with this tiltseries"""
-    )
-    camera: Optional[Camera] = Field(
-        None, description="""The camera used to collect the tilt series."""
-    )
-    microscope: Optional[Microscope] = Field(
-        None, description="""The microscope used to collect the tilt series."""
-    )
+    pixel_spacing: Optional[float] = Field(None, description="""Pixel spacing for the tilt series""")
+    aligned_tiltseries_binning: Optional[int] = Field(None, description="""Binning factor of the aligned tilt series""")
+    frames_count: Optional[int] = Field(None, description="""Number of frames associated with this tiltseries""")
+    camera: Optional[Camera] = Field(None, description="""The camera used to collect the tilt series.""")
+    microscope: Optional[Microscope] = Field(None, description="""The microscope used to collect the tilt series.""")
     microscope_optical_setup: Optional[MicroscopeOpticalSetup] = Field(
         None,
         description="""The optical setup of the microscope used to collect the tilt series.""",
     )
-    tilt_range: Optional[TiltRange] = Field(
-        None, description="""The range of tilt angles in the tilt series."""
-    )
+    tilt_range: Optional[TiltRange] = Field(None, description="""The range of tilt angles in the tilt series.""")
 
 
 class TomogramSize(ConfiguredBaseModel):
@@ -556,12 +478,8 @@ class TomogramSize(ConfiguredBaseModel):
     The size of a tomogram in voxels in each dimension.
     """
 
-    x: Optional[int] = Field(
-        None, description="""Number of pixels in the 3D data fast axis"""
-    )
-    y: Optional[int] = Field(
-        None, description="""Number of pixels in the 3D data medium axis"""
-    )
+    x: Optional[int] = Field(None, description="""Number of pixels in the 3D data fast axis""")
+    y: Optional[int] = Field(None, description="""Number of pixels in the 3D data medium axis""")
     z: Optional[int] = Field(
         None,
         description="""Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt""",
@@ -583,30 +501,22 @@ class Tomogram(PicturedEntity, AuthoredEntity):
     Metadata describing a tomogram.
     """
 
-    voxel_spacing: Optional[float] = Field(
-        None, description="""Voxel spacing equal in all three axes in angstroms"""
-    )
+    voxel_spacing: Optional[float] = Field(None, description="""Voxel spacing equal in all three axes in angstroms""")
     fiducial_alignment_status: Optional[FiducialAlignmentStatusEnum] = Field(
         None,
         description="""Whether the tomographic alignment was computed based on fiducial markers.""",
     )
-    ctf_corrected: Optional[bool] = Field(
-        None, description="""Whether this tomogram is CTF corrected"""
-    )
+    ctf_corrected: Optional[bool] = Field(None, description="""Whether this tomogram is CTF corrected""")
     reconstruction_method: Optional[str] = Field(
         None,
         description="""Describe reconstruction method (Weighted back-projection, SART, SIRT)""",
     )
-    reconstruction_software: Optional[str] = Field(
-        None, description="""Name of software used for reconstruction"""
-    )
+    reconstruction_software: Optional[str] = Field(None, description="""Name of software used for reconstruction""")
     processing: Optional[str] = Field(
         None,
         description="""Describe additional processing used to derive the tomogram""",
     )
-    processing_software: Optional[str] = Field(
-        None, description="""Processing software used to derive the tomogram"""
-    )
+    processing_software: Optional[str] = Field(None, description="""Processing software used to derive the tomogram""")
     tomogram_version: Optional[str] = Field(
         None,
         description="""Version of tomogram using the same software and post-processing. Version of tomogram using the same software and post-processing. This will be presented as the latest version""",
@@ -615,16 +525,12 @@ class Tomogram(PicturedEntity, AuthoredEntity):
         None,
         description="""The flip or rotation transformation of this author submitted tomogram is indicated here""",
     )
-    size: Optional[TomogramSize] = Field(
-        None, description="""The size of a tomogram in voxels in each dimension."""
-    )
+    size: Optional[TomogramSize] = Field(None, description="""The size of a tomogram in voxels in each dimension.""")
     offset: Optional[TomogramOffset] = Field(
         None,
         description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""",
     )
-    authors: List[Author] = Field(
-        default_factory=list, description="""Author of a scientific data entity."""
-    )
+    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""")
     key_photos: PicturePath = Field(
         ...,
         description="""A set of paths to representative images of a piece of data.""",
@@ -681,9 +587,7 @@ class AnnotationObject(ConfiguredBaseModel):
         None,
         description="""A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.""",
     )
-    state: Optional[str] = Field(
-        None, description="""Molecule state annotated (e.g. open, closed)"""
-    )
+    state: Optional[str] = Field(None, description="""Molecule state annotated (e.g. open, closed)""")
 
 
 class Annotation(AnnotatoredEntity, DatestampedEntity):
@@ -703,16 +607,12 @@ class Annotation(AnnotatoredEntity, DatestampedEntity):
         None,
         description="""DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.""",
     )
-    annotation_software: Optional[str] = Field(
-        None, description="""Software used for generating this annotation"""
-    )
+    annotation_software: Optional[str] = Field(None, description="""Software used for generating this annotation""")
     ground_truth_status: Optional[bool] = Field(
         None,
         description="""Whether an annotation is considered ground truth, as determined by the annotator.""",
     )
-    object_count: Optional[int] = Field(
-        None, description="""Number of objects identified"""
-    )
+    object_count: Optional[int] = Field(None, description="""Number of objects identified""")
     is_curator_recommended: Optional[bool] = Field(
         None,
         description="""This annotation is recommended by the curator to be preferred for this object type.""",
@@ -731,9 +631,7 @@ class Annotation(AnnotatoredEntity, DatestampedEntity):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
     )
-    authors: List[Annotator] = Field(
-        default_factory=list, description="""Annotator of a scientific data entity."""
-    )
+    authors: List[Annotator] = Field(default_factory=list, description="""Annotator of a scientific data entity.""")
 
 
 class CrossReferences(ConfiguredBaseModel):

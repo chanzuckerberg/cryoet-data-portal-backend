@@ -16,22 +16,22 @@ URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
  classDiagram
     class AnnotationFile
       AnnotationFile : format
-        
+
           AnnotationFile --> string : format
-        
+
       AnnotationFile : is_visualization_default
-        
+
           AnnotationFile --> boolean : is_visualization_default
-        
+
       AnnotationFile : path
-        
+
           AnnotationFile --> string : path
-        
+
       AnnotationFile : shape
-        
+
           AnnotationFile --> string : shape
-        
-      
+
+
 ```
 
 

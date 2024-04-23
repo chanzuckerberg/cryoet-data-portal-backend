@@ -19,12 +19,12 @@ URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
     class DatestampedEntity
       DatestampedEntity <|-- Dataset
       DatestampedEntity <|-- Annotation
-      
+
       DatestampedEntity : dates
-        
+
           DatestampedEntity --> DateStamp : dates
-        
-      
+
+
 ```
 
 

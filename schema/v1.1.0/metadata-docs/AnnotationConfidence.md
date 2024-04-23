@@ -16,18 +16,18 @@ URI: [cdp-meta:AnnotationConfidence](metadataAnnotationConfidence)
  classDiagram
     class AnnotationConfidence
       AnnotationConfidence : ground_truth_used
-        
+
           AnnotationConfidence --> string : ground_truth_used
-        
+
       AnnotationConfidence : precision
-        
+
           AnnotationConfidence --> float : precision
-        
+
       AnnotationConfidence : recall
-        
+
           AnnotationConfidence --> float : recall
-        
-      
+
+
 ```
 
 

@@ -16,74 +16,74 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
  classDiagram
     class TiltSeries
       TiltSeries : acceleration_voltage
-        
+
           TiltSeries --> integer : acceleration_voltage
-        
+
       TiltSeries : aligned_tiltseries_binning
-        
+
           TiltSeries --> integer : aligned_tiltseries_binning
-        
+
       TiltSeries : binning_from_frames
-        
+
           TiltSeries --> float : binning_from_frames
-        
+
       TiltSeries : camera
-        
+
           TiltSeries --> Camera : camera
-        
+
       TiltSeries : data_acquisition_software
-        
+
           TiltSeries --> string : data_acquisition_software
-        
+
       TiltSeries : frames_count
-        
+
           TiltSeries --> integer : frames_count
-        
+
       TiltSeries : microscope
-        
+
           TiltSeries --> Microscope : microscope
-        
+
       TiltSeries : microscope_additional_info
-        
+
           TiltSeries --> string : microscope_additional_info
-        
+
       TiltSeries : microscope_optical_setup
-        
+
           TiltSeries --> MicroscopeOpticalSetup : microscope_optical_setup
-        
+
       TiltSeries : pixel_spacing
-        
+
           TiltSeries --> float : pixel_spacing
-        
+
       TiltSeries : spherical_aberration_constant
-        
+
           TiltSeries --> float : spherical_aberration_constant
-        
+
       TiltSeries : tilt_axis
-        
+
           TiltSeries --> float : tilt_axis
-        
+
       TiltSeries : tilt_range
-        
+
           TiltSeries --> TiltRange : tilt_range
-        
+
       TiltSeries : tilt_series_quality
-        
+
           TiltSeries --> integer : tilt_series_quality
-        
+
       TiltSeries : tilt_step
-        
+
           TiltSeries --> float : tilt_step
-        
+
       TiltSeries : tilting_scheme
-        
+
           TiltSeries --> string : tilting_scheme
-        
+
       TiltSeries : total_flux
-        
+
           TiltSeries --> float : total_flux
-        
-      
+
+
 ```
 
 

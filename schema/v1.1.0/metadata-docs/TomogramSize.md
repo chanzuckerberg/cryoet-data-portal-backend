@@ -16,18 +16,18 @@ URI: [cdp-meta:TomogramSize](metadataTomogramSize)
  classDiagram
     class TomogramSize
       TomogramSize : x
-        
+
           TomogramSize --> integer : x
-        
+
       TomogramSize : y
-        
+
           TomogramSize --> integer : y
-        
+
       TomogramSize : z
-        
+
           TomogramSize --> integer : z
-        
-      
+
+
 ```
 
 

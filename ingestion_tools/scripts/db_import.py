@@ -7,12 +7,15 @@ from botocore.config import Config
 from importers.db.annotation import AnnotationAuthorDBImporter, AnnotationDBImporter, StaleAnnotationDeletionDBImporter
 from importers.db.base_importer import DBImportConfig
 from importers.db.dataset import DatasetAuthorDBImporter, DatasetDBImporter, DatasetFundingDBImporter
-from importers.db.run import RunDBImporter
-from importers.db.tiltseries import TiltSeriesDBImporter
+from importers.db.run import RunDBImporter, StaleRunDeletionDBImporter
+from importers.db.tiltseries import StaleTiltSeriesDeletionDBImporter, TiltSeriesDBImporter
 from importers.db.tomogram import StaleTomogramDeletionDBImporter, TomogramAuthorDBImporter, TomogramDBImporter
 from importers.db.voxel_spacing import StaleVoxelSpacingDeletionDBImporter, TomogramVoxelSpacingDBImporter
 
 from common import db_models
+
+logger = logging.getLogger("db_import")
+logging.basicConfig(level=logging.INFO)
 
 
 @click.group()
@@ -75,8 +78,9 @@ def load(
 ):
     db_models.db.init(postgres_url)
     if debug:
-        logger = logging.getLogger("peewee")
-        logger.addHandler(logging.StreamHandler())
+        peewee_logger = logging.getLogger("peewee")
+        peewee_logger.addHandler(logging.StreamHandler())
+        peewee_logger.setLevel(logging.DEBUG)
         logger.setLevel(logging.DEBUG)
 
     if import_everything:
@@ -100,7 +104,7 @@ def load(
     config = DBImportConfig(s3_client, s3_bucket, https_prefix)
     for dataset in DatasetDBImporter.get_items(config, s3_prefix):
         if filter_dataset and dataset.dir_prefix not in filter_dataset:
-            print(f"Skipping {dataset.dir_prefix}...")
+            logger.info("Skipping %s...", dataset.dir_prefix)
             continue
 
         dataset_obj = dataset.import_to_db()
@@ -117,14 +121,20 @@ def load(
         if not import_runs:
             continue
 
+        run_cleaner = StaleRunDeletionDBImporter(dataset_id, config)
         for run in RunDBImporter.get_item(dataset_id, dataset, config):
+            logger.info("Processing Run with prefix %s", run.dir_prefix)
             run_obj = run.import_to_db()
             run_id = run_obj.id
+            run_cleaner.mark_as_active(run_obj)
 
             if import_tiltseries:
-                tilt_series = TiltSeriesDBImporter.get_item(run_id, run, config)
-                if tilt_series:
-                    tilt_series.import_to_db()
+                tiltseries_cleaner = StaleTiltSeriesDeletionDBImporter(run_id, config)
+                tiltseries = TiltSeriesDBImporter.get_item(run_id, run, config)
+                if tiltseries:
+                    tiltseries_obj = tiltseries.import_to_db()
+                    tiltseries_cleaner.mark_as_active(tiltseries_obj)
+                tiltseries_cleaner.remove_stale_objects()
 
             if not import_tomogram_voxel_spacing:
                 continue
@@ -162,6 +172,8 @@ def load(
                 voxel_spacing_cleaner.mark_as_active(voxel_spacing_obj)
 
             voxel_spacing_cleaner.remove_stale_objects()
+
+        run_cleaner.remove_stale_objects()
 
 
 if __name__ == "__main__":

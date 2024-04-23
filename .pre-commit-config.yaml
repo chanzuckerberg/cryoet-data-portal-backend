@@ -3,12 +3,19 @@ repos:
   rev: 24.4.0
   hooks:
   - id: black
+    args:
+    - --config
+    - ingestion_tools/pyproject.toml
 - repo: https://github.com/astral-sh/ruff-pre-commit
   rev: v0.4.1
   hooks:
   - id: ruff
+    # This file is codegen'd and non-compliant :'(
+    exclude: ^schema/v1.1.0/metadata_models.py
     args:
     - --fix
+    - --config
+    - ingestion_tools/pyproject.toml
       #- repo: https://github.com/pre-commit/mirrors-mypy
       #  rev: "v1.4.1"
       #  hooks:
