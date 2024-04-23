@@ -1,17 +1,17 @@
 import json
 from os.path import basename
+
+import ndjson
 import pytest
+from importers.annotation import AnnotationImporter
+from importers.dataset import DatasetImporter
+from importers.run import RunImporter
+from importers.tomogram import TomogramImporter
+from mypy_boto3_s3 import S3Client
 
 from common.config import DataImportConfig
 from common.fs import FileSystemApi
-from importers.dataset import DatasetImporter
-from importers.tomogram import TomogramImporter
-from importers.run import RunImporter
-from importers.annotation import AnnotationImporter
-from importers.dataset_key_photo import DatasetKeyPhotoImporter
 from common.metadata import AnnotationMetadata
-from mypy_boto3_s3 import S3Client
-import ndjson
 
 default_anno_metadata = {
     "annotation_object": {
@@ -75,7 +75,7 @@ def test_import_annotation_metadata(
                 "glob_string": "annotations/points.csv",
                 "shape": "Point",
                 "is_visualization_default": False,
-            }
+            },
         ],
     }
     anno_metadata = AnnotationMetadata(dataset_config.fs, anno_config["metadata"])
