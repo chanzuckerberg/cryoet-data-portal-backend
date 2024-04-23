@@ -16,38 +16,38 @@ URI: [cdp-meta:Annotator](metadataAnnotator)
  classDiagram
     class Annotator
       Annotator : affiliation_address
-        
+
           Annotator --> string : affiliation_address
-        
+
       Annotator : affiliation_identifier
-        
+
           Annotator --> string : affiliation_identifier
-        
+
       Annotator : affiliation_name
-        
+
           Annotator --> string : affiliation_name
-        
+
       Annotator : email
-        
+
           Annotator --> string : email
-        
+
       Annotator : is_corresponding
-        
+
           Annotator --> string : is_corresponding
-        
+
       Annotator : is_primary_annotator
-        
+
           Annotator --> boolean : is_primary_annotator
-        
+
       Annotator : name
-        
+
           Annotator --> string : name
-        
+
       Annotator : ORCID
-        
+
           Annotator --> string : ORCID
-        
-      
+
+
 ```
 
 

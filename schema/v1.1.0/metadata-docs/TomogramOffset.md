@@ -16,18 +16,18 @@ URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
  classDiagram
     class TomogramOffset
       TomogramOffset : x
-        
+
           TomogramOffset --> string : x
-        
+
       TomogramOffset : y
-        
+
           TomogramOffset --> string : y
-        
+
       TomogramOffset : z
-        
+
           TomogramOffset --> string : z
-        
-      
+
+
 ```
 
 

@@ -16,14 +16,14 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
  classDiagram
     class PicturePath
       PicturePath : snapshot
-        
+
           PicturePath --> string : snapshot
-        
+
       PicturePath : thumbnail
-        
+
           PicturePath --> string : thumbnail
-        
-      
+
+
 ```
 
 

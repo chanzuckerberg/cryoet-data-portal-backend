@@ -16,18 +16,18 @@ URI: [cdp-meta:MicroscopeOpticalSetup](metadataMicroscopeOpticalSetup)
  classDiagram
     class MicroscopeOpticalSetup
       MicroscopeOpticalSetup : energy_filter
-        
+
           MicroscopeOpticalSetup --> string : energy_filter
-        
+
       MicroscopeOpticalSetup : image_corrector
-        
+
           MicroscopeOpticalSetup --> string : image_corrector
-        
+
       MicroscopeOpticalSetup : phase_plate
-        
+
           MicroscopeOpticalSetup --> string : phase_plate
-        
-      
+
+
 ```
 
 

@@ -1,4 +1,3 @@
-exclude: ^schema/
 repos:
 - repo: https://github.com/psf/black-pre-commit-mirror
   rev: 24.4.0
@@ -11,6 +10,8 @@ repos:
   rev: v0.4.1
   hooks:
   - id: ruff
+    # This file is codegen'd and non-compliant :'(
+    exclude: ^schema/v1.1.0/metadata_models.py
     args:
     - --fix
     - --config

@@ -17,60 +17,60 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
     class Tomogram
       AuthoredEntity <|-- Tomogram
       PicturedEntity <|-- Tomogram
-      
+
       Tomogram : affine_transformation_matrix
-        
+
           Tomogram --> string : affine_transformation_matrix
-        
+
       Tomogram : authors
-        
+
           Tomogram --> Author : authors
-        
+
       Tomogram : ctf_corrected
-        
+
           Tomogram --> boolean : ctf_corrected
-        
+
       Tomogram : fiducial_alignment_status
-        
+
           Tomogram --> fiducial_alignment_status_enum : fiducial_alignment_status
-        
+
       Tomogram : key_photos
-        
+
           Tomogram --> PicturePath : key_photos
-        
+
       Tomogram : offset
-        
+
           Tomogram --> TomogramOffset : offset
-        
+
       Tomogram : processing
-        
+
           Tomogram --> string : processing
-        
+
       Tomogram : processing_software
-        
+
           Tomogram --> string : processing_software
-        
+
       Tomogram : reconstruction_method
-        
+
           Tomogram --> string : reconstruction_method
-        
+
       Tomogram : reconstruction_software
-        
+
           Tomogram --> string : reconstruction_software
-        
+
       Tomogram : size
-        
+
           Tomogram --> TomogramSize : size
-        
+
       Tomogram : tomogram_version
-        
+
           Tomogram --> string : tomogram_version
-        
+
       Tomogram : voxel_spacing
-        
+
           Tomogram --> float : voxel_spacing
-        
-      
+
+
 ```
 
 

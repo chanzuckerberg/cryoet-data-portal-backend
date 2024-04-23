@@ -19,12 +19,12 @@ URI: [cdp-meta:PicturedEntity](metadataPicturedEntity)
     class PicturedEntity
       PicturedEntity <|-- Dataset
       PicturedEntity <|-- Tomogram
-      
+
       PicturedEntity : key_photos
-        
+
           PicturedEntity --> PicturePath : key_photos
-        
-      
+
+
 ```
 
 

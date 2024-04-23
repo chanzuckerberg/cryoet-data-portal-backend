@@ -18,12 +18,12 @@ URI: [cdp-meta:FundedEntity](metadataFundedEntity)
  classDiagram
     class FundedEntity
       FundedEntity <|-- Dataset
-      
+
       FundedEntity : funding
-        
+
           FundedEntity --> Funding : funding
-        
-      
+
+
 ```
 
 
