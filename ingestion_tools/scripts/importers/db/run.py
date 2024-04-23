@@ -2,7 +2,12 @@ from typing import Any, Iterator
 
 from common import db_models
 from common.db_models import BaseModel
-from importers.db.base_importer import BaseDBImporter, DBImportConfig
+from importers.db.base_importer import (
+    BaseDBImporter,
+    DBImportConfig,
+    StaleDeletionDBImporter,
+    StaleParentDeletionDBImporter,
+)
 from importers.db.dataset import DatasetDBImporter
 
 
@@ -39,3 +44,19 @@ class RunDBImporter(BaseDBImporter):
             cls(dataset_id, run_prefix, dataset, config)
             for run_prefix in config.find_subdirs_with_files(dataset.dir_prefix, "run_metadata.json")
         ]
+
+
+class StaleRunDeletionDBImporter(StaleParentDeletionDBImporter):
+    ref_klass = RunDBImporter
+
+    def get_filters(self) -> dict[str, Any]:
+        return {"dataset_id": self.parent_id}
+
+    def children_tables_references(self) -> dict[str, type[StaleDeletionDBImporter]]:
+        from importers.db.tiltseries import StaleTiltSeriesDeletionDBImporter
+        from importers.db.voxel_spacing import StaleVoxelSpacingDeletionDBImporter
+
+        return {
+            "tomogram_voxel_spacings": StaleVoxelSpacingDeletionDBImporter,
+            "tiltseries": StaleTiltSeriesDeletionDBImporter,
+        }
