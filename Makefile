@@ -1,17 +1,19 @@
+export docker_compose:=docker compose -f ./docker-compose.yml -f ./ingestion_tools/docker-compose.yml
+
 .PHONY: init
 init: ingestor-init api-init
 
 .PHONY: stop
 stop:
-	docker compose --profile '*' stop
+	$(docker_compose) --profile '*' stop
 
 .PHONY: start
 start:
-	docker compose --profile ingestor start
+	$(docker_compose) --profile ingestor start
 
 .PHONY: ingestor-init
 ingestor-init:
-	docker compose --profile ingestor up -d
+	$(docker_compose) --profile ingestor up -d
 	cd ./test_infra/; ./seed_moto.sh
 
 .PHONY: api-init
@@ -23,7 +25,7 @@ api-init:
 
 .PHONY: clean
 clean:
-	docker compose --profile '*' down
+	$(docker_compose) --profile '*' down
 
 .PHONY: ingestor-test-db-init
 ingestor-test-db-init:
