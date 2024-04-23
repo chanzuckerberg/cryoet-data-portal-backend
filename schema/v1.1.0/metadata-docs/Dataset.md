@@ -21,76 +21,76 @@ URI: [cdp-meta:Dataset](metadataDataset)
       PicturedEntity <|-- Dataset
       CrossReferencedEntity <|-- Dataset
       ExperimentalMetadata <|-- Dataset
-      
+
       Dataset : authors
-        
+
           Dataset --> Author : authors
-        
+
       Dataset : cell_component
-        
+
           Dataset --> CellComponent : cell_component
-        
+
       Dataset : cell_strain
-        
+
           Dataset --> CellStrain : cell_strain
-        
+
       Dataset : cell_type
-        
+
           Dataset --> CellType : cell_type
-        
+
       Dataset : cross_references
-        
+
           Dataset --> CrossReferences : cross_references
-        
+
       Dataset : dataset_description
-        
+
           Dataset --> string : dataset_description
-        
+
       Dataset : dataset_identifier
-        
+
           Dataset --> integer : dataset_identifier
-        
+
       Dataset : dataset_title
-        
+
           Dataset --> string : dataset_title
-        
+
       Dataset : dates
-        
+
           Dataset --> DateStamp : dates
-        
+
       Dataset : funding
-        
+
           Dataset --> Funding : funding
-        
+
       Dataset : grid_preparation
-        
+
           Dataset --> string : grid_preparation
-        
+
       Dataset : key_photos
-        
+
           Dataset --> PicturePath : key_photos
-        
+
       Dataset : organism
-        
+
           Dataset --> Organism : organism
-        
+
       Dataset : other_setup
-        
+
           Dataset --> string : other_setup
-        
+
       Dataset : sample_preparation
-        
+
           Dataset --> string : sample_preparation
-        
+
       Dataset : sample_type
-        
+
           Dataset --> string : sample_type
-        
+
       Dataset : tissue
-        
+
           Dataset --> Tissue : tissue
-        
-      
+
+
 ```
 
 

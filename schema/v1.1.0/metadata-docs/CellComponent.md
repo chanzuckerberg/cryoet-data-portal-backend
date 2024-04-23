@@ -16,14 +16,14 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
  classDiagram
     class CellComponent
       CellComponent : id
-        
+
           CellComponent --> string : id
-        
+
       CellComponent : name
-        
+
           CellComponent --> string : name
-        
-      
+
+
 ```
 
 

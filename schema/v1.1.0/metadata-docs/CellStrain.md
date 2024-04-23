@@ -16,14 +16,14 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
  classDiagram
     class CellStrain
       CellStrain : id
-        
+
           CellStrain --> string : id
-        
+
       CellStrain : name
-        
+
           CellStrain --> string : name
-        
-      
+
+
 ```
 
 

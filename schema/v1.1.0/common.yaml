@@ -115,7 +115,7 @@ slots:
     range: integer
     required: true
     description: >-
-      An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory 
+      An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory
       name in data tree.
   dataset_title:
     range: string
@@ -134,7 +134,7 @@ slots:
       URL for the dataset preview image.
   dataset_key_photo_thumbnail_url:
     range: string
-    description: >- 
+    description: >-
       URL for the thumbnail of preview image.
   dataset_s3_prefix:
     range: string
@@ -242,7 +242,7 @@ slots:
     range: string
     recommended: true
     description: >-
-      Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in  
+      Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in
       the same publication.
   # ============================================================================
 
@@ -692,6 +692,3 @@ classes:
       dataset_citations:
         range: string
         description: Comma-separated list of DOIs for publications citing the dataset.
-
-
-

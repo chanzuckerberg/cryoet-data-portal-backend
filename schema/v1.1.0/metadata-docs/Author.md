@@ -16,38 +16,38 @@ URI: [cdp-meta:Author](metadataAuthor)
  classDiagram
     class Author
       Author : affiliation_address
-        
+
           Author --> string : affiliation_address
-        
+
       Author : affiliation_identifier
-        
+
           Author --> string : affiliation_identifier
-        
+
       Author : affiliation_name
-        
+
           Author --> string : affiliation_name
-        
+
       Author : email
-        
+
           Author --> string : email
-        
+
       Author : is_corresponding
-        
+
           Author --> boolean : is_corresponding
-        
+
       Author : is_primary_author
-        
+
           Author --> boolean : is_primary_author
-        
+
       Author : name
-        
+
           Author --> string : name
-        
+
       Author : ORCID
-        
+
           Author --> string : ORCID
-        
-      
+
+
 ```
 
 
