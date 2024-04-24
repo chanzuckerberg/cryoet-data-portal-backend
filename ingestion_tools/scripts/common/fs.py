@@ -103,18 +103,20 @@ class S3Filesystem(FileSystemApi):
 
     def push(self, path: str) -> None:
         remote_file = os.path.relpath(path, self.tmpdir)
-        src_size = os.path.getsize(path)
-        dest_size = 0
-        with contextlib.suppress(FileNotFoundError):
-            dest_size = self.s3fs.size(remote_file)
-        if src_size == dest_size:
-            if self.force_overwrite:
-                print(f"Forcing re-upload of {path}")
-            else:
-                print(f"Skipping re-upload of {path}")
-                return
+        if os.path.isfile(path):
+            src_size = os.path.getsize(path)
+            dest_size = 0
+            with contextlib.suppress(FileNotFoundError):
+                dest_size = self.s3fs.size(remote_file)
+            # TODO: Update this to use Etag
+            if src_size == dest_size:
+                if self.force_overwrite:
+                    print(f"Forcing re-upload of {path}")
+                else:
+                    print(f"Skipping re-upload of {path}")
+                    return
         print(f"Pushing {path} to {remote_file}")
-        self.s3fs.put_file(path, remote_file)
+        self.s3fs.put(path, remote_file, recursive=True)
 
     # Copy from one s3 location to another
     def copy(self, src_path: str, dest_path: str) -> None:

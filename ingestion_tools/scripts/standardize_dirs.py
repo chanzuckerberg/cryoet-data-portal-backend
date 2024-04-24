@@ -44,6 +44,7 @@ def cli(ctx):
 @click.option("--exclude-run-name", type=str, default=None, multiple=True)
 @click.option("--make-key-image", type=bool, is_flag=True, default=False)
 @click.option("--make-neuroglancer-config", type=bool, is_flag=True, default=False)
+@click.option("--import-neuroglancer-precompute", type=bool, is_flag=True, default=False)
 @click.option("--write-mrc/--no-write-mrc", default=True)
 @click.option("--write-zarr/--no-write-zarr", default=True)
 @click.option("--local_fs", type=bool, is_flag=True, default=False)
@@ -70,6 +71,7 @@ def convert(
     exclude_run_name: list[str],
     make_key_image: bool,
     make_neuroglancer_config: bool,
+    import_neuroglancer_precompute: bool,
     write_mrc: bool,
     write_zarr: bool,
     local_fs: bool,
@@ -85,25 +87,24 @@ def convert(
     config.load_map_files()
 
     # Configure which dependencies that do / don't require us to iterate over importer results.
-    iterate_tomos = max(
-        import_tomograms,
-        import_tomogram_metadata,
-        import_annotations,
-        import_annotation_metadata,
-        import_metadata,
-        import_everything,
-        make_key_image,
-        make_neuroglancer_config,
-    )
-    iterate_keyimages = max(import_everything, make_key_image)
-    iterate_tiltseries = max(import_metadata, import_tiltseries, import_tiltseries_metadata, import_everything)
     iterate_annotations = max(
         import_annotations,
         import_annotation_metadata,
         import_metadata,
-        import_everything,
+        import_neuroglancer_precompute,
         make_key_image,
     )
+    iterate_tomos = max(
+        import_tomograms,
+        import_tomogram_metadata,
+        import_metadata,
+        import_everything,
+        make_key_image,
+        make_neuroglancer_config,
+        iterate_annotations,
+    )
+    iterate_keyimages = max(import_everything, make_key_image)
+    iterate_tiltseries = max(import_metadata, import_tiltseries, import_tiltseries_metadata, import_everything)
     iterate_frames = max(import_frames, import_everything)
     iterate_ng = max(make_neuroglancer_config, import_everything)
     if import_everything:
@@ -142,6 +143,8 @@ def convert(
                             annotation.import_annotations(True)
                         if import_annotation_metadata:
                             annotation.import_metadata()
+                        if import_neuroglancer_precompute:
+                            annotation.import_neuroglancer_component()
                 if iterate_keyimages:
                     for keyimage in KeyImageImporter.find_key_images(config, tomo):
                         keyimage.make_key_image(config)

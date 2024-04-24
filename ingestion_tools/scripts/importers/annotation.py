@@ -1,6 +1,8 @@
 import csv
+import json
 import os
 import os.path
+from pathlib import Path
 from typing import TYPE_CHECKING, Any, TypedDict
 
 import ndjson
@@ -15,6 +17,9 @@ from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
     from importers.tomogram import TomogramImporter
+
+
+from cryo_et_neuroglancer.write_annotations import process_annotation as encode_point_annotation
 
 
 class AnnotationObject(TypedDict):
@@ -55,6 +60,19 @@ class BaseAnnotationSource:
     def is_valid(self, *args, **kwargs):
         # To be overridden by subclasses to communicate whether this source contains valid information for this run.
         return True
+
+    def get_local_neuroglancer_path(self, fs: FileSystemApi, annotation_path: str, output_prefix: str) -> str:
+        file_name = os.path.basename(f"{annotation_path}_{self.shape.lower()}")
+        return fs.localwritable(os.path.join(output_prefix, file_name, ""))
+
+    def neuroglancer_precompute(
+        self,
+        fs: FileSystemApi,
+        annotation_path: str,
+        output_prefix: str,
+        voxel_spacing: float,
+    ):
+        pass
 
 
 class VolumeAnnotationSource(BaseAnnotationSource):
@@ -205,10 +223,10 @@ class PointFile(BaseAnnotationSource):
         filename = f"{output_prefix}_{self.shape.lower()}.ndjson"
         return filename
 
-    def get_object_count(self, fs, output_prefix):
+    def get_object_count(self, fs: FileSystemApi, output_prefix: str):
         return len(self.get_output_data(fs, output_prefix))
 
-    def get_output_data(self, fs, output_prefix):
+    def get_output_data(self, fs: FileSystemApi, output_prefix: str):
         with fs.open(self.get_output_filename(output_prefix), "r") as f:
             annotations = ndjson.load(f)
         return annotations
@@ -218,6 +236,25 @@ class PointFile(BaseAnnotationSource):
         annotations = self.load(fs, self.get_source_file(fs, input_prefix))
         with fs.open(filename, "w") as fh:
             ndjson.dump(annotations, fh)
+
+    def neuroglancer_precompute(
+        self,
+        fs: FileSystemApi,
+        annotation_path: str,
+        output_prefix: str,
+        voxel_spacing: float,
+    ):
+        tmp_path = self.get_local_neuroglancer_path(fs, annotation_path, output_prefix)
+        annotation_metadata_path = fs.localreadable(f"{annotation_path}.json")
+        with open(annotation_metadata_path) as f:
+            annotation_metadata = json.load(f)
+        annotation_data = (annotation_metadata, self.get_output_data(fs, annotation_path))
+        encode_point_annotation(
+            annotation_data,
+            Path(tmp_path),
+            voxel_spacing / 10,
+        )
+        fs.push(tmp_path)
 
 
 class OrientedPointFile(PointFile):
@@ -419,6 +456,23 @@ class AnnotationImporter(BaseImporter):
         filename = f"{dest_prefix}.json"
         print(filename)
         self.annotation_metadata.write_metadata(filename, self.local_metadata)
+
+    def import_neuroglancer_component(self):
+        run_name = self.parent.get_run().run_name
+        voxel_size = self.config.get_run_voxelsize(self)
+        ng_output_path = self.config.resolve_output_path("neuroglancer_precompute", run_name, voxel_size)
+        for source in self.sources:
+            try:
+                source.get_source_file(self.config.fs, self.config.input_path)
+            except Exception:
+                print(f"Skipping generating annotations neuroglancer config for run {run_name} due to missing files")
+                continue
+            source.neuroglancer_precompute(
+                self.config.fs,
+                self.get_output_path(),
+                ng_output_path,
+                float(voxel_size),
+            )
 
     @classmethod
     def find_annotations(cls, config, tomo: "TomogramImporter"):

@@ -252,6 +252,7 @@ class DataImportConfig:
             "dataset_metadata": "dataset_metadata.json",
             "dataset_keyphoto": "Images",
             "neuroglancer": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/CanonicalTomogram/neuroglancer_config.json",
+            "neuroglancer_precompute": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/NeuroglancerPrecompute",
         }
         path = os.path.join(
             self.output_prefix,
