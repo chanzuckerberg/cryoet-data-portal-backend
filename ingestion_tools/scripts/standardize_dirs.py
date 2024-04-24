@@ -1,4 +1,6 @@
 import json
+from typing import Optional
+from collections import defaultdict
 import re
 from typing import Any
 
@@ -35,6 +37,24 @@ IMPORTERS = [
     VoxelSpacingImporter,
 ]
 IMPORTER_DICT = {cls.type_key: cls for cls in IMPORTERS}
+IMPORTER_DEP_TREE = {
+    DatasetImporter: {
+        RunImporter: {
+            VoxelSpacingImporter: {
+                TomogramImporter: {
+                    KeyImageImporter: {},
+                    NeuroglancerImporter: {},
+                },
+                AnnotationImporter: {},
+            }, 
+            FrameImporter: {
+                GainImporter: {},
+            },
+            TiltSeriesImporter: {},
+        },
+        DatasetKeyPhotoImporter: {},
+    }
+}
 
 
 @click.group()
@@ -46,7 +66,7 @@ def cli(ctx):
 def common_options(func):
     options = []
     for cls in IMPORTERS:
-        importer_key = cls.type_key
+        importer_key = cls.type_key.replace("_", "-")
         options.append(click.option(f"--import-{importer_key}", is_flag=True, default=False))
         options.append(click.option(f"--filter-{importer_key}-name", type=str, default=None, multiple=True))
         options.append(click.option(f"--exclude-{importer_key}-name", type=str, default=None, multiple=True))
@@ -76,17 +96,31 @@ def get_import_tree(deps, objects_to_import) -> dict[str, Any]:
     return tree
 
 
-def walk_import_tree(import_tree, fs, config, kwargs, parents=None):
-    if not parents:
+def flatten_dependency_tree(tree):
+    treedict = {}
+    for k, v in tree.items():
+        treedict[k] = set([])
+        treedict[k].update(set(v.keys()))
+        for subtype, subdict in flatten_dependency_tree(v).items():
+            treedict[subtype] = subdict
+            treedict[k].update(subdict)
+    return treedict
+
+def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dict[str, Any]] = None):
+    if parents is None:
         parents = {}
-    for key, value in import_tree.items():
-        importer = IMPORTER_DICT[key]
+    for import_class, child_import_classes in tree.items():
+        if import_class not in to_iterate:
+            continue
+        print(f"Iterating {import_class}")
+        filter_patterns = [re.compile(pattern) for pattern in kwargs.get(f"filter_{import_class.type_key}_name", [])]
+        exclude_patterns = [re.compile(pattern) for pattern in kwargs.get(f"exclude_{import_class.type_key}_name", [])]
+
         parent_args = {}
-        for dep in importer.dependencies:
+        for dep in import_class.dependencies:
             parent_args[dep] = parents[dep]
-        items = importer.finder(config, fs, **parents)
-        exclude_patterns = [re.compile(pattern) for pattern in kwargs.get(f"exclude_{key}_name")]
-        filter_patterns = [re.compile(pattern) for pattern in kwargs.get(f"filter_{key}_name")]
+
+        items = import_class.finder(config, config.fs, **parent_args)
         for item in items:
             if list(filter(lambda x: x.match(item.name), exclude_patterns)):
                 print(f"Excluding {item.name}..")
@@ -94,32 +128,27 @@ def walk_import_tree(import_tree, fs, config, kwargs, parents=None):
             if filter_patterns and not list(filter(lambda x: x.match(item.name), filter_patterns)):
                 print(f"Skipping {item.name}..")
                 continue
-            if kwargs.get(f"import_{key}"):
-                print(f"Importing {key}")
+            if import_class in to_import:
+                print(f"Importing {import_class.type_key}")
                 # item.import_item()
-            # Not all importers have metadata, but we don't expose the option for it unless it's supported
-            if kwargs.get(f"import_{key}_metadata"):
-                print(f"Importing {key} metadata")
-                # item.import_metadata()
-            if value:
-                sub_parents = {key: item}
+            if child_import_classes:
+                sub_parents = {import_class.type_key: item}
                 sub_parents.update(parents)
-                walk_import_tree(value, fs, config, kwargs, parents=sub_parents)
-
-        if key in kwargs and kwargs[key]:
-            print(f"iterating over {key}")
-        if value:
-            walk_import_tree(value, fs, config, kwargs)
-
+                do_import(config, child_import_classes, to_import, to_iterate, kwargs, sub_parents)
+            # Not all importers have metadata, but we don't expose the option for it unless it's supported
+            if kwargs.get(f"import_{import_class.type_key}_metadata"):
+                print(f"Importing {import_class.type_key} metadata")
+                # item.import_metadata()
+        exit()
 
 @cli.command()
 @click.argument("config_file", required=True, type=str)
 @click.argument("input_bucket", required=True, type=str)
 @click.argument("output_path", required=True, type=str)
-@click.option("--force-overwrite", is_flag=True, default=False)
+@click.option("--import-everything", is_flag=True, default=False)
 @click.option("--write-mrc/--no-write-mrc", default=True)
 @click.option("--write-zarr/--no-write-zarr", default=True)
-@click.option("--import-everything", is_flag=True, default=False)
+@click.option("--force-overwrite", is_flag=True, default=False)
 @click.option("--local-fs", type=bool, is_flag=True, default=False)
 @common_options
 @click.pass_context
@@ -133,7 +162,6 @@ def convert2(
     local_fs: bool,
     **kwargs,
 ):
-    print(kwargs)
     fs_mode = "s3"
     if local_fs:
         fs_mode = "local"
@@ -142,6 +170,19 @@ def convert2(
 
     config = DepositionImportConfig(fs, config_file, output_path, input_bucket, IMPORTER_DICT.keys())
     config.load_map_files()
+
+    iteration_deps = flatten_dependency_tree(IMPORTER_DEP_TREE).items()
+    if import_everything:
+        to_import = set([k for k in IMPORTERS if kwargs.get(f"import_{k.type_key}")])
+    else:
+        to_import = set([k for k in IMPORTERS if kwargs.get(f"import_{k.type_key}")])
+        to_import.update(set([k for k in IMPORTERS if kwargs.get(f"import_{k.type_key}_metadata")]))
+    to_iterate = set([k for k, v in iteration_deps if to_import.intersection(v)])
+    do_import(config, IMPORTER_DEP_TREE, to_import, to_iterate, kwargs)
+    exit()
+
+    print(kwargs)
+
 
     if import_everything:
         objects_to_import = set(IMPORTER_DICT.keys())
