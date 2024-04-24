@@ -211,7 +211,7 @@ class TomoConverter:
 
 
 class MaskConverter(TomoConverter):
-    def __init__(self, fs: FileSystemApi, mrc_filename: str, header_only: bool = False, label: int = 1):
+    def __init__(self, fs: FileSystemApi, mrc_filename: str, label: int = 1, header_only: bool = False):
         super().__init__(fs, mrc_filename, header_only)
         self.label = label
 
@@ -265,6 +265,12 @@ def get_header(fs: FileSystemApi, tomo_filename: str) -> MrcObject:
     return TomoConverter(fs, tomo_filename, header_only=True).header
 
 
+def get_converter(fs: FileSystemApi, tomo_filename: str, label: int | None = None):
+    if label is not None:
+        return MaskConverter(fs, tomo_filename, label)
+    return TomoConverter(fs, tomo_filename)
+
+
 def scale_mrcfile(
     fs: FileSystemApi,
     output_prefix: str,
@@ -274,8 +280,9 @@ def scale_mrcfile(
     write_zarr: bool = True,
     header_mapper: Callable[[np.array], None] = None,
     voxel_spacing=None,
+    label: int = None,
 ):
-    tc = TomoConverter(fs, tomo_filename)
+    tc = get_converter(fs, tomo_filename, label)
     pyramid, pyramid_voxel_spacing = tc.make_pyramid(scale_z_axis=scale_z_axis, voxel_spacing=voxel_spacing)
     _ = tc.pyramid_to_omezarr(
         fs,
@@ -285,27 +292,6 @@ def scale_mrcfile(
         pyramid_voxel_spacing=pyramid_voxel_spacing,
     )
     _ = tc.pyramid_to_mrc(fs, pyramid, f"{output_prefix}.mrc", write_mrc, header_mapper, voxel_spacing)
-
-
-def scale_maskfile(
-    fs: FileSystemApi,
-    output_prefix: str,
-    tomo_filename: str,
-    label: int,
-    scale_z_axis: bool = True,
-    write: bool = True,
-    voxel_spacing=None,
-):
-    mc = MaskConverter(fs, tomo_filename, label)
-    pyramid, pyramid_voxel_spacing = mc.make_pyramid(scale_z_axis=scale_z_axis, voxel_spacing=voxel_spacing)
-    _ = mc.pyramid_to_omezarr(fs, pyramid, f"{output_prefix}.zarr", write, pyramid_voxel_spacing=pyramid_voxel_spacing)
-    _ = mc.pyramid_to_mrc(
-        fs,
-        pyramid,
-        f"{output_prefix}.mrc",
-        write,
-        voxel_spacing=voxel_spacing,
-    )
 
 
 def check_mask_for_label(
