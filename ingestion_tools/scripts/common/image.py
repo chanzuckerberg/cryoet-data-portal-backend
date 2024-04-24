@@ -99,6 +99,13 @@ class TomoConverter:
             self.voxel_size: np.rec.array = mrc.voxel_size
             self.data: np.ndarray = mrc.data
 
+    def get_pyramid_base_data(self) -> np.ndarray:
+        return self.data.astype(np.float32)
+
+    @classmethod
+    def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:
+        return data
+
     # Make an array of an original size image, plus `max_layers` half-scaled images
     def make_pyramid(
         self,
@@ -113,15 +120,12 @@ class TomoConverter:
         # Ensure voxel spacing rounded to 3rd digit
         voxel_spacing = round(voxel_spacing, 3)
 
-        pyramid = [self.data.astype("f4")]
+        pyramid = [self.get_pyramid_base_data()]
         pyramid_voxel_spacing = [(voxel_spacing, voxel_spacing, voxel_spacing)]
-
+        z_scale = 2 if scale_z_axis else 1
         # Then make a pyramid of 100/50/25 percent scale volumes
         for i in range(max_layers):
-            z_scale = 1
-            if scale_z_axis:
-                z_scale = 2
-            downscaled_data = downscale_local_mean(pyramid[i], (z_scale, 2, 2))
+            downscaled_data = self.scaled_data_transformation(downscale_local_mean(pyramid[i], (z_scale, 2, 2)))
             pyramid.append(downscaled_data)
             pyramid_voxel_spacing.append(
                 (
@@ -207,45 +211,18 @@ class TomoConverter:
 
 
 class MaskConverter(TomoConverter):
-    def __init__(self, fs: FileSystemApi, mrc_filename: str, label: int = 1):
-        super().__init__(fs, mrc_filename)
+    def __init__(self, fs: FileSystemApi, mrc_filename: str, header_only: bool = False, label: int = 1):
+        super().__init__(fs, mrc_filename, header_only)
         self.label = label
 
-    def make_pyramid(
-        self,
-        max_layers: int = 2,
-        scale_z_axis: bool = True,
-        voxel_spacing: float = None,
-    ) -> Tuple[List[np.ndarray], List[Tuple[float, float, float]]]:
-        # Voxel size for unbinned
-        if not voxel_spacing:
-            voxel_spacing = self.get_voxel_size()
+    def get_pyramid_base_data(self) -> np.ndarray:
+        return (self.data == self.label).astype(np.int8)
 
-        # Ensure voxel spacing rounded to 3rd digit
-        voxel_spacing = round(voxel_spacing, 3)
-
-        pyramid = [(self.data == self.label).astype(np.int8)]
-        pyramid_voxel_spacing = [(voxel_spacing, voxel_spacing, voxel_spacing)]
-
-        # Then make a pyramid of 100/50/25 percent scale volumes
-        for i in range(max_layers):
-            z_scale = 1
-            if scale_z_axis:
-                z_scale = 2
-
-            # For semantic segmentation masks we want to have a binary output.
-            # downscale_local_mean will return float array even for bool input with non-binary values
-            scaled = (downscale_local_mean(pyramid[i], (z_scale, 2, 2)) > 0).astype(np.int8)
-            pyramid.append(scaled)
-            pyramid_voxel_spacing.append(
-                (
-                    pyramid_voxel_spacing[i][0] * z_scale,
-                    pyramid_voxel_spacing[i][1] * 2,
-                    pyramid_voxel_spacing[i][2] * 2,
-                ),
-            )
-
-        return pyramid, pyramid_voxel_spacing
+    @classmethod
+    def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:
+        # For semantic segmentation masks we want to have a binary output.
+        # downscale_local_mean will return float array even for bool input with non-binary values
+        return (data > 0).astype(np.int8)
 
     def has_label(self) -> bool:
         return np.any(self.data == self.label)
