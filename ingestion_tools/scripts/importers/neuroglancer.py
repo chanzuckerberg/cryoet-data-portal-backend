@@ -1,12 +1,12 @@
 from typing import TYPE_CHECKING, Any
 from urllib.parse import urljoin
 
-from common.config import DepositionImportConfig
 import numpy as np
 
+from common.config import DepositionImportConfig
+from common.finders import DefaultImporterFactory
 from common.metadata import NeuroglancerMetadata
 from importers.base_importer import BaseImporter
-from common.finders import DefaultImporterFactory
 
 if TYPE_CHECKING:
     from importers.tomogram import TomogramImporter

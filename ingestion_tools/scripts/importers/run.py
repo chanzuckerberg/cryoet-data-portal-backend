@@ -1,10 +1,9 @@
 import os
 from typing import TYPE_CHECKING, Any
 
-from common.config import DepositionImportConfig
+from common.finders import DefaultImporterFactory
 from common.metadata import RunMetadata
 from importers.base_importer import BaseImporter
-from common.finders import DefaultImporterFactory
 
 if TYPE_CHECKING:
     from importers.dataset import DatasetImporter

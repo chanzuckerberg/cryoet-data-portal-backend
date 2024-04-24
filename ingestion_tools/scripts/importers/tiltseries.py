@@ -1,16 +1,15 @@
-import os
 from typing import TYPE_CHECKING
 
-from common.config import DepositionImportConfig
-from common.metadata import TiltSeriesMetadata
-from importers.base_importer import BaseImporter, VolumeImporter
-from importers.frame import FrameImporter
 from common.finders import DefaultImporterFactory
+from common.metadata import TiltSeriesMetadata
+from importers.base_importer import VolumeImporter
+from importers.frame import FrameImporter
 
 if TYPE_CHECKING:
     from importers.run import RunImporter
 else:
     RunImporter = "RunImporter"
+
 
 class TiltSeriesImporter(VolumeImporter):
     type_key = "tiltseries"

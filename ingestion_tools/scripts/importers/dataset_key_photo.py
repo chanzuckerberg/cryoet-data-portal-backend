@@ -3,11 +3,11 @@ from typing import TYPE_CHECKING, Optional
 
 from common.config import DepositionImportConfig
 from common.copy import copy_by_src
+from common.finders import DefaultImporterFactory
 from importers.base_importer import BaseImporter
 from importers.key_image import KeyImageImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
-from common.finders import DefaultImporterFactory
 
 if TYPE_CHECKING:
     from importers.dataset import DatasetImporter
@@ -19,7 +19,7 @@ class DatasetKeyPhotoImporter(BaseImporter):
     type_key = "dataset_keyphoto"
     image_keys = ["snapshot", "thumbnail"]
     finder_factory = DefaultImporterFactory
-    dependencies = [] # TODO this thing has dependencies on *imported* runs!!
+    dependencies = []  # TODO this thing has dependencies on *imported* runs!!
     has_metadata = False
 
     def import_key_photo(self) -> None:
@@ -58,5 +58,9 @@ class DatasetKeyPhotoImporter(BaseImporter):
         return None
 
     @classmethod
-    def find_dataset_key_photos(cls, config: DepositionImportConfig, dataset: "DatasetImporter") -> "DatasetKeyPhotoImporter":
+    def find_dataset_key_photos(
+        cls,
+        config: DepositionImportConfig,
+        dataset: "DatasetImporter",
+    ) -> "DatasetKeyPhotoImporter":
         return cls(config=config, parent=dataset)

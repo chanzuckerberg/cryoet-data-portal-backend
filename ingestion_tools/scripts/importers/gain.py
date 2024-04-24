@@ -1,9 +1,8 @@
-import os
-from typing import TYPE_CHECKING
-
-from importers.base_importer import BaseImporter
 import subprocess
+
 from common.finders import DefaultImporterFactory
+from importers.base_importer import BaseImporter
+
 
 class GainImporter(BaseImporter):
     type_key = "gain"

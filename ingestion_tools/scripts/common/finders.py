@@ -4,12 +4,12 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any
 
 from common.fs import FileSystemApi
-from common.image import get_voxel_size
 
 if TYPE_CHECKING:
     from common.config import DepositionImportConfig
 else:
     DepositionImportConfig = "DepositionImportConfig"
+
 
 ###
 ### Base Finders
@@ -18,6 +18,7 @@ class BaseFinder(ABC):
     @abstractmethod
     def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
         pass
+
 
 class SourceMultiGlobFinder(BaseFinder):
     list_glob: str
@@ -108,8 +109,6 @@ class BaseLiteralValueFinder:
         return {item: None for item in self.literal_value}
 
 
-
-
 ###
 ### Factories
 ###
@@ -118,7 +117,12 @@ class DepositionObjectImporterFactory(ABC):
         self.source = source
 
     @abstractmethod
-    def load(self, config: DepositionImportConfig, fs: FileSystemApi, **expansion_data: dict[str, Any] | None) -> BaseFinder:
+    def load(
+        self,
+        config: DepositionImportConfig,
+        fs: FileSystemApi,
+        **expansion_data: dict[str, Any] | None,
+    ) -> BaseFinder:
         pass
 
     def find(self, cls, config: DepositionImportConfig, fs: FileSystemApi, **parent_objects: dict[str, Any] | None):
@@ -144,7 +148,12 @@ class DepositionObjectImporterFactory(ABC):
 
 
 class DefaultImporterFactory(DepositionObjectImporterFactory):
-    def load(self, config: DepositionImportConfig, fs: FileSystemApi, **parent_objects: dict[str, Any] | None) -> BaseFinder:
+    def load(
+        self,
+        config: DepositionImportConfig,
+        fs: FileSystemApi,
+        **parent_objects: dict[str, Any] | None,
+    ) -> BaseFinder:
         source = self.source
         if source.get("source_glob"):
             return SourceGlobFinder(**source["source_glob"])

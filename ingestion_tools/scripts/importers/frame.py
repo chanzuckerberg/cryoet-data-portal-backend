@@ -1,5 +1,6 @@
-from importers.base_importer import BaseFileImporter
 from common.finders import DefaultImporterFactory
+from importers.base_importer import BaseFileImporter
+
 
 class FrameImporterFactory(DefaultImporterFactory):
     pass

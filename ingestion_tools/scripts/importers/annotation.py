@@ -8,11 +8,11 @@ import numpy as np
 
 from common import instance_point_converter as ipc
 from common import oriented_point_converter as opc
+from common.finders import DefaultImporterFactory
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, scale_maskfile, scale_mrcfile
 from common.metadata import AnnotationMetadata
 from importers.base_importer import BaseImporter
-from common.finders import DefaultImporterFactory
 
 if TYPE_CHECKING:
     from importers.voxel_spacing import VoxelSpacingImporter
@@ -425,15 +425,24 @@ class AnnotationImporter(BaseImporter):
         self.annotation_metadata.write_metadata(filename, self.local_metadata)
 
     @classmethod
-    def get_identifier(cls, metadata_obj: AnnotationMetadata, existing_annotations: list[dict[str, Any]], current_identifier: dict[str, int]):
+    def get_identifier(
+        cls,
+        metadata_obj: AnnotationMetadata,
+        existing_annotations: list[dict[str, Any]],
+        current_identifier: dict[str, int],
+    ):
         # See if we have an exact match we should use
         for annotation_id, existing_metadata in existing_annotations.items():
-            if all([
-                existing_metadata.get("deposition_id") == metadata_obj.deposition_id,
-                existing_metadata["annotation_object"]["description"] == metadata_obj.metadata["annotation_object"]["description"],
-                existing_metadata["annotation_object"]["name"] == metadata_obj.metadata["annotation_object"]["name"],
-                existing_metadata["annotation_method"] == metadata_obj.metadata["annotation_method"],
-            ]):
+            if all(
+                [
+                    existing_metadata.get("deposition_id") == metadata_obj.deposition_id,
+                    existing_metadata["annotation_object"]["description"]
+                    == metadata_obj.metadata["annotation_object"]["description"],
+                    existing_metadata["annotation_object"]["name"]
+                    == metadata_obj.metadata["annotation_object"]["name"],
+                    existing_metadata["annotation_method"] == metadata_obj.metadata["annotation_method"],
+                ],
+            ):
                 return annotation_id
         if existing_annotations and current_identifier["identifier"] <= max(existing_annotations.keys()):
             current_identifier["identifier"] = max(existing_annotations.keys()) + 1

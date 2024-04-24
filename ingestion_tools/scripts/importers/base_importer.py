@@ -1,22 +1,19 @@
+import contextlib
 import os
 from typing import TYPE_CHECKING, Any, Optional
-import contextlib
-from common.finders import DepositionObjectImporterFactory
-
-
 
 import numpy as np
 from mrcfile.mrcobject import MrcObject
 
+from common.finders import DepositionObjectImporterFactory
 from common.image import get_header, get_tomo_metadata, get_voxel_size, scale_mrcfile
 
 if TYPE_CHECKING:
     from common.config import DepositionImportConfig
+    from common.fs import FileSystemApi
     from importers.dataset import DatasetImporter
     from importers.run import RunImporter
     from importers.tomogram import TomogramImporter
-    from common.config import DepositionImportConfig
-    from common.fs import FileSystemApi
 else:
     RunImporter = "RunImporter"
     DatasetImporter = "DatasetImporter"
@@ -31,7 +28,13 @@ class BaseImporter:
     finder_factory: DepositionObjectImporterFactory | None = None
     dependencies: list[str] = []
 
-    def __init__(self, config: "DepositionImportConfig", name: Optional[str] = None, path: Optional[str] = None, parents: Optional["BaseImporter"] = None):
+    def __init__(
+        self,
+        config: "DepositionImportConfig",
+        name: Optional[str] = None,
+        path: Optional[str] = None,
+        parents: Optional["BaseImporter"] = None,
+    ):
         self.config = config
         self.parents = parents
         self.name = name
@@ -84,14 +87,13 @@ class BaseImporter:
 
     def get_metadata_path(self) -> str:
         return self.config.get_metadata_path(self)
-    
+
     @classmethod
     def finder(cls, config: DepositionImportConfig, fs: FileSystemApi, **parents) -> list["BaseImporter"]:
         finder_config = config._get_finder_config(cls.type_key, **parents)
         finder_cls = cls.finder_factory(**finder_config)
         items = finder_cls.find(cls, config, fs, **parents)
         return items
-
 
 
 class VolumeImporter(BaseImporter):
@@ -146,6 +148,7 @@ class VolumeImporter(BaseImporter):
 
     def mrc_header_mapper(self, header):
         pass
+
 
 class BaseFileImporter(BaseImporter):
     def import_item(self, write: bool = True):

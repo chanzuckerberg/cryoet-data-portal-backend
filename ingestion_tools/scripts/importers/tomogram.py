@@ -1,12 +1,10 @@
 from typing import TYPE_CHECKING, Any
 
-from common.config import DepositionImportConfig
+from common.finders import DefaultImporterFactory
 from common.metadata import TomoMetadata
 from common.normalize_fields import normalize_fiducial_alignment
 from importers.base_importer import VolumeImporter
 from importers.key_image import KeyImageImporter
-from importers.voxel_spacing import VoxelSpacingImporter
-from common.finders import DefaultImporterFactory
 
 if TYPE_CHECKING:
     from importers.run import RunImporter

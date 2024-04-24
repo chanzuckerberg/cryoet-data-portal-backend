@@ -1,19 +1,26 @@
 import contextlib
 import json
 import os
+import re
 from typing import TYPE_CHECKING, Any
 
-from importers.base_importer import BaseImporter
-from common.finders import DepositionObjectImporterFactory, SourceGlobFinder, DestinationGlobFinder, BaseLiteralValueFinder, BaseFinder
 from common.config import DepositionImportConfig
-from common.image import get_voxel_size
-import re
+from common.finders import (
+    BaseFinder,
+    BaseLiteralValueFinder,
+    DepositionObjectImporterFactory,
+    DestinationGlobFinder,
+    SourceGlobFinder,
+)
 from common.fs import FileSystemApi
+from common.image import get_voxel_size
+from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
     from importers.run import RunImporter
 else:
     RunImporter = "RunImporter"
+
 
 class VoxelSpacingLiteralValueFinder(BaseLiteralValueFinder):
     def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
@@ -52,8 +59,14 @@ class TomogramHeaderFinder(BaseFinder):
                 raise Exception("invalid header key")
         return responses
 
+
 class VSImporterFactory(DepositionObjectImporterFactory):
-    def load(self, config: DepositionImportConfig, fs: FileSystemApi, **parent_objects: dict[str, Any] | None) -> BaseFinder:
+    def load(
+        self,
+        config: DepositionImportConfig,
+        fs: FileSystemApi,
+        **parent_objects: dict[str, Any] | None,
+    ) -> BaseFinder:
         source = self.source
         if source.get("source_glob"):
             return SourceGlobFinder(**source["source_glob"])
@@ -64,6 +77,7 @@ class VSImporterFactory(DepositionObjectImporterFactory):
         if source.get("literal"):
             return VoxelSpacingLiteralValueFinder(**source["literal"])
         raise Exception("Invalid source type")
+
 
 class VoxelSpacingImporter(BaseImporter):
     type_key = "voxel_spacing"

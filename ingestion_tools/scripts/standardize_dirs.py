@@ -1,28 +1,39 @@
-import os
 import json
-import os.path
 import re
+from typing import Any
 
 import click
-from typing import Any
 from importers.annotation import AnnotationImporter
 from importers.dataset import DatasetImporter
 from importers.dataset_key_photo import DatasetKeyPhotoImporter
+from importers.frame import FrameImporter
+from importers.gain import GainImporter
 from importers.key_image import KeyImageImporter
 from importers.neuroglancer import NeuroglancerImporter
+from importers.rawtilt import RawTiltImporter
 from importers.run import RunImporter
 from importers.tiltseries import TiltSeriesImporter
-from importers.rawtilt import RawTiltImporter
-from importers.frame import FrameImporter
 from importers.tomogram import TomogramImporter
-from importers.gain import GainImporter
 from importers.voxel_spacing import VoxelSpacingImporter
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
 
-IMPORTERS = [AnnotationImporter, DatasetKeyPhotoImporter, DatasetImporter, FrameImporter, NeuroglancerImporter, TomogramImporter,
-             GainImporter, KeyImageImporter, RawTiltImporter, RunImporter, TiltSeriesImporter, TomogramImporter, VoxelSpacingImporter]
+IMPORTERS = [
+    AnnotationImporter,
+    DatasetKeyPhotoImporter,
+    DatasetImporter,
+    FrameImporter,
+    NeuroglancerImporter,
+    TomogramImporter,
+    GainImporter,
+    KeyImageImporter,
+    RawTiltImporter,
+    RunImporter,
+    TiltSeriesImporter,
+    TomogramImporter,
+    VoxelSpacingImporter,
+]
 IMPORTER_DICT = {cls.type_key: cls for cls in IMPORTERS}
 
 
@@ -30,6 +41,7 @@ IMPORTER_DICT = {cls.type_key: cls for cls in IMPORTERS}
 @click.pass_context
 def cli(ctx):
     pass
+
 
 def common_options(func):
     options = []
@@ -44,6 +56,7 @@ def common_options(func):
         func = option(func)
     return func
 
+
 def get_import_tree(deps, objects_to_import) -> dict[str, Any]:
     # If we don't have deps passed in, start at the root
     if not deps:
@@ -54,10 +67,14 @@ def get_import_tree(deps, objects_to_import) -> dict[str, Any]:
             tree[dep] = {}
         sub_deps = set([item.type_key for item in IMPORTERS if dep in item.dependencies])
         if sub_deps:
-            subtree = get_import_tree(set([item.type_key for item in IMPORTERS if dep in item.dependencies]), objects_to_import)
+            subtree = get_import_tree(
+                set([item.type_key for item in IMPORTERS if dep in item.dependencies]),
+                objects_to_import,
+            )
             if subtree:
                 tree[dep] = subtree
     return tree
+
 
 def walk_import_tree(import_tree, fs, config, kwargs, parents=None):
     if not parents:
@@ -88,12 +105,12 @@ def walk_import_tree(import_tree, fs, config, kwargs, parents=None):
                 sub_parents = {key: item}
                 sub_parents.update(parents)
                 walk_import_tree(value, fs, config, kwargs, parents=sub_parents)
-            
 
         if key in kwargs and kwargs[key]:
             print(f"iterating over {key}")
         if value:
             walk_import_tree(value, fs, config, kwargs)
+
 
 @cli.command()
 @click.argument("config_file", required=True, type=str)
@@ -114,7 +131,7 @@ def convert2(
     import_everything: bool,
     force_overwrite: bool,
     local_fs: bool,
-    **kwargs
+    **kwargs,
 ):
     print(kwargs)
     fs_mode = "s3"
@@ -129,13 +146,13 @@ def convert2(
     if import_everything:
         objects_to_import = set(IMPORTER_DICT.keys())
     else:
-       # Figure out which objects we need to drill down to
-       objects_to_import = set([])
-       for arg in [arg_name for arg_name, arg_value in kwargs.items() if arg_value and arg_name.startswith("import_")]:
-           type_name = arg[len("import_"):]
-           if type_name.endswith("_metadata"):
-               type_name = type_name[:-len("_metadata")]
-           objects_to_import.add(type_name)
+        # Figure out which objects we need to drill down to
+        objects_to_import = set([])
+        for arg in [arg_name for arg_name, arg_value in kwargs.items() if arg_value and arg_name.startswith("import_")]:
+            type_name = arg[len("import_") :]
+            if type_name.endswith("_metadata"):
+                type_name = type_name[: -len("_metadata")]
+            objects_to_import.add(type_name)
 
     import_tree = get_import_tree(None, objects_to_import)
     print(json.dumps(import_tree))
@@ -160,6 +177,7 @@ def convert2(
             if filter_run_name and not list(filter(lambda x: x.match(run.name), filter_run_name_patterns)):
                 print(f"Skipping {run.name}..")
                 continue
+
 
 @cli.command()
 @click.argument("config_file", required=True, type=str)

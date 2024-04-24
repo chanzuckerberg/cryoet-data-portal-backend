@@ -1,12 +1,12 @@
 import contextlib
 import os
 import re
+from copy import deepcopy
 from typing import Any
 
 from common.formats import tojson
 from common.fs import FileSystemApi
 from common.merge import deep_merge
-from copy import deepcopy
 
 
 class BaseMetadata:
