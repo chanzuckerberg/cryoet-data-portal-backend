@@ -18,12 +18,12 @@ URI: [cdp-meta:AnnotatoredEntity](metadataAnnotatoredEntity)
  classDiagram
     class AnnotatoredEntity
       AnnotatoredEntity <|-- Annotation
-      
+
       AnnotatoredEntity : authors
-        
+
           AnnotatoredEntity --> Annotator : authors
-        
-      
+
+
 ```
 
 

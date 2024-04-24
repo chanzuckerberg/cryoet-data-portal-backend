@@ -16,14 +16,14 @@ URI: [cdp-meta:TiltRange](metadataTiltRange)
  classDiagram
     class TiltRange
       TiltRange : max
-        
+
           TiltRange --> float : max
-        
+
       TiltRange : min
-        
+
           TiltRange --> float : min
-        
-      
+
+
 ```
 
 

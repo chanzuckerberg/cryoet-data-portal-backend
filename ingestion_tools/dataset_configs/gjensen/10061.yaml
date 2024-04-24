@@ -2,9 +2,9 @@ dataset:
   dataset_identifier: 10061
   dataset_description: "This is 4th of 41 sets of data studying Legionella pneumophila\
     \ collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Legionella\
-    \ thyA \xCE\u201DdotUF (JV1180). JV1180 is an independent isolate of the UF deletion.\
+    \ thyA \u2206dotUF (JV1180). JV1180 is an independent isolate of the UF deletion.\
     \ JV1180 and JV1181 are same thing."
-  dataset_title: "L. pneumophila JV1180_\xCE\u201DdotUF"
+  dataset_title: "L. pneumophila JV1180_\u2206dotUF"
   authors: &id001
   - name: Debnath Ghosal
     primary_author_status: true

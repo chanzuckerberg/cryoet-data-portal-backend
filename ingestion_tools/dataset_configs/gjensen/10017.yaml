@@ -16,7 +16,7 @@ dataset:
   sample_type: Organism
   sample_preparation: "Lakshmanan, A., Lu, G., Farhadi, A. et al. Preparation of biogenic\
     \ gas . vesicle nanostructures for use as contrast agents for ultrasound and .\
-    \ MRI. Nat Protoc 12, 2050\xE2\u20AC\u201C2080 (2017). . https://doi.org/10.1038/nprot.2017.081.\
+    \ MRI. Nat Protoc 12, 2050\u20132080 (2017). . https://doi.org/10.1038/nprot.2017.081.\
     \ Sample in 10mM Hepes, pH7.4; OD 5.0"
   grid_preparation: Quantifoil C2/2 200mesh extra thick carbon, 10nm BSA-gold, 100%
     . humidity, Blot time 4, Blot force 3, temp 4C

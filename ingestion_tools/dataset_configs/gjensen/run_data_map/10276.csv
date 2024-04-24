@@ -1,5 +1,5 @@
 run_name,tomo-align_softwares,tomo-fiducial_alignment_status,ts-tilt_alignment_software,ts-tilt_series_path
-aba2014-04-10-3,['RAPTOR'],FIDUCIAL,RAPTOR;RAPTOR;RAPTOR;RAPTOR,rawdata/VibrioDeltaA20001.mrc
+aba2014-04-10-3,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20001.mrc
 aba2014-04-10-4,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20002.mrc
 aba2014-04-10-5,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20003.mrc
 aba2014-04-10-6,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/VibrioDeltaA20004.mrc

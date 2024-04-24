@@ -5,9 +5,11 @@ from tests.db_import.populate_db import (
     DATASET_AUTHOR_ID,
     DATASET_FUNDING_ID,
     DATASET_ID,
-    populate_dataset_authors_table,
-    populate_dataset_funding_table,
-    populate_dataset_table,
+    populate_dataset,
+    populate_dataset_authors,
+    populate_dataset_funding,
+    populate_stale_dataset_authors,
+    populate_stale_dataset_funding,
 )
 
 import common.db_models as models
@@ -81,11 +83,11 @@ def test_import_dataset_new(
 def test_import_dataset_update(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
 ) -> None:
-    populate_dataset_table()
-    populate_dataset_authors_table()
-    populate_dataset_funding_table()
+    populate_dataset()
+    populate_dataset_authors()
+    populate_dataset_funding()
     actual = verify_dataset_import([])
-    assert len(actual.authors) == 2
+    assert len(actual.authors) == 1
     assert len(actual.funding_sources) == 1
 
 
@@ -95,9 +97,9 @@ def test_import_dataset_and_dataset_authors(
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
     expected_authors: list[dict[str, Any]],
 ) -> None:
-    populate_dataset_table()
-    populate_dataset_authors_table()
-    populate_dataset_funding_table()
+    populate_dataset()
+    populate_dataset_authors()
+    populate_dataset_funding()
     actual = verify_dataset_import(["--import-dataset-authors"])
     assert len(actual.authors) == len(expected_authors)
     assert len(actual.funding_sources) == 1
@@ -112,11 +114,33 @@ def test_import_dataset_and_dataset_funding(
     verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
     expected_funding_sources: list[dict[str, Any]],
 ) -> None:
-    populate_dataset_table()
-    populate_dataset_authors_table()
-    populate_dataset_funding_table()
+    populate_dataset()
+    populate_dataset_authors()
+    populate_dataset_funding()
     actual = verify_dataset_import(["--import-dataset-funding"])
-    assert len(actual.authors) == 2
+    assert len(actual.authors) == 1
+    assert len(actual.funding_sources) == len(expected_funding_sources)
+    actual_funding_sources = list(actual.funding_sources.order_by(models.DatasetFunding.funding_agency_name))
+    for i, funding_sources in enumerate(actual_funding_sources):
+        verify_model(funding_sources, expected_funding_sources[i])
+
+
+def test_import_dataset_funding_and_authors_remove_stale(
+    verify_dataset_import: Callable[[list[str]], models.Dataset],
+    verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
+    expected_authors: list[dict[str, Any]],
+    expected_funding_sources: list[dict[str, Any]],
+) -> None:
+    populate_dataset()
+    populate_dataset_authors()
+    populate_stale_dataset_authors()
+    populate_dataset_funding()
+    populate_stale_dataset_funding()
+    actual = verify_dataset_import(["--import-dataset-authors", "--import-dataset-funding"])
+    assert len(actual.authors) == len(expected_authors)
+    actual_authors = list(actual.authors.order_by(models.DatasetAuthor.author_list_order))
+    for i, author in enumerate(actual_authors):
+        verify_model(author, expected_authors[i])
     assert len(actual.funding_sources) == len(expected_funding_sources)
     actual_funding_sources = list(actual.funding_sources.order_by(models.DatasetFunding.funding_agency_name))
     for i, funding_sources in enumerate(actual_funding_sources):

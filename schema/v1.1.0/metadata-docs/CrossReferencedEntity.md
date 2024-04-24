@@ -18,12 +18,12 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
  classDiagram
     class CrossReferencedEntity
       CrossReferencedEntity <|-- Dataset
-      
+
       CrossReferencedEntity : cross_references
-        
+
           CrossReferencedEntity --> CrossReferences : cross_references
-        
-      
+
+
 ```
 
 

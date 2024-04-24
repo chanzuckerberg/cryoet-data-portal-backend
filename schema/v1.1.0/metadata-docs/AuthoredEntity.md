@@ -19,12 +19,12 @@ URI: [cdp-meta:AuthoredEntity](metadataAuthoredEntity)
     class AuthoredEntity
       AuthoredEntity <|-- Dataset
       AuthoredEntity <|-- Tomogram
-      
+
       AuthoredEntity : authors
-        
+
           AuthoredEntity --> Author : authors
-        
-      
+
+
 ```
 
 

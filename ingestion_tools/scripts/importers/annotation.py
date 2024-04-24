@@ -358,7 +358,7 @@ class AnnotationImporter(BaseImporter):
         annotation_metadata: AnnotationMetadata,
         *args,
         **kwargs,
-    ):
+    ) -> None:
         super().__init__(*args, **kwargs)
         self.identifier: int = identifier
         self.annotation_config = annotation_config

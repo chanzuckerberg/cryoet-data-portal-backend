@@ -1,8 +1,12 @@
 from datetime import datetime
 
+from playhouse.shortcuts import model_to_dict
+
 from common.db_models import (
     Annotation,
+    AnnotationAuthor,
     AnnotationFiles,
+    BaseModel,
     Dataset,
     DatasetAuthor,
     DatasetFunding,
@@ -14,18 +18,27 @@ from common.db_models import (
 )
 
 DATASET_ID = 30001
-DATASET_AUTHOR_ID = 103
-DATASET_FUNDING_ID = 105
-RUN_ID = 102
-TOMOGRAM_VOXEL_ID = 104
-TOMOGRAM_ID = 103
-ANNOTATION_ID = 100
-ANNOTATION_FILE_ID = 110
+DATASET_AUTHOR_ID = 301
+DATASET_FUNDING_ID = 302
+RUN1_ID = 401
+RUN4_ID = 402
+TILTSERIES_ID = 501
+TOMOGRAM_VOXEL_ID1 = 502
+TOMOGRAM_VOXEL_ID2 = 503
+TOMOGRAM_ID = 601
+TOMOGRAM_AUTHOR_ID = 701
+ANNOTATION_ID = 602
+ANNOTATION_FILE_ID = 701
+ANNOTATION_AUTHOR_ID = 702
+
+STALE_RUN_ID = 902
+STALE_TOMOGRAM_ID = 903
+STALE_ANNOTATION_ID = 904
 
 
-def populate_dataset_table() -> None:
+def populate_dataset() -> None:
     today = datetime.now().date()
-    Dataset(
+    Dataset.create(
         id=DATASET_ID,
         title="foo",
         description="bar",
@@ -35,71 +48,133 @@ def populate_dataset_table() -> None:
         sample_type="test",
         s3_prefix="s3://invalid_bucket/",
         https_prefix="https://invalid-site.com/1234",
-    ).save(force_insert=True)
-
-
-def populate_dataset_authors_table() -> None:
-    DatasetAuthor(id=102, dataset_id=DATASET_ID, name="Stale Author", author_list_order=1).save(force_insert=True)
-    DatasetAuthor(id=DATASET_AUTHOR_ID, dataset_id=DATASET_ID, name="Virginia Woolf", author_list_order=3).save(
-        force_insert=True,
     )
 
 
-def populate_dataset_funding_table() -> None:
-    DatasetFunding(
+def populate_dataset_authors() -> None:
+    DatasetAuthor.create(id=DATASET_AUTHOR_ID, dataset_id=DATASET_ID, name="Virginia Woolf", author_list_order=3)
+
+
+def populate_stale_dataset_authors() -> None:
+    DatasetAuthor.create(dataset_id=DATASET_ID, name="Stale Author", author_list_order=1)
+
+
+def populate_dataset_funding() -> None:
+    DatasetFunding.create(
         id=DATASET_FUNDING_ID,
         dataset_id=DATASET_ID,
         funding_agency_name="Grant Provider 1",
         grant_id="foo",
-    ).save(
-        force_insert=True,
     )
-    # TODO: Add functionality to remove stale data
-    # DatasetFunding(id=109, dataset_id=30001, funding_agency_name="Grant Provider 2").save(force_insert=True)
 
 
-def populate_runs_table() -> None:
-    populate_dataset_table()
-    Run(
-        id=RUN_ID,
+def populate_stale_dataset_funding() -> None:
+    DatasetFunding.create(dataset_id=DATASET_ID, funding_agency_name="Stale Grant Entry")
+
+
+def populate_run() -> None:
+    populate_dataset()
+    run = Run.create(
+        id=RUN1_ID,
         dataset_id=DATASET_ID,
         name="RUN1",
         s3_prefix="s3://test-bucket/RUN1",
         https_prefix="http://test.com/RUN1",
-    ).save(force_insert=True)
-    # TODO: Add functionality to remove stale data
-    # Run(
-    #     id=103,
-    #     dataset_id=DATASET_ID,
-    #     name="STALE_RUN",
-    #     s3_prefix="s3://test-bucket/STALE_RUN",
-    #     https_prefix="http://test.com/STALE_RUN",
-    # )
+    )
+    update_and_save(run, {"name": "RUN4", "id": RUN4_ID})
 
 
-def populate_tomogram_voxel_spacing_table() -> None:
-    populate_runs_table()
-    TomogramVoxelSpacing(
-        id=103,
-        run_id=RUN_ID,
+def populate_stale_run() -> None:
+    Run.create(
+        id=STALE_RUN_ID,
+        dataset_id=DATASET_ID,
+        name="RUN5",
+        s3_prefix="s3://test-bucket/RUN5",
+        https_prefix="http://test.com/RUN5",
+    )
+    populate_stale_tomogram_voxel_spacing(STALE_RUN_ID)
+
+
+def populate_tomogram_voxel_spacing() -> None:
+    populate_run()
+    https_prefix = "http://test.com/RUN1/VoxelSpacing{vs}"
+    TomogramVoxelSpacing.create(
+        run_id=RUN1_ID,
         voxel_spacing=3.456,
-        s3_prefix="s3://test-public-bucket/30001/RUN1/Tomograms/VoxelSpacing3.456/",
-        https_prefix="http://test.com/RUN1/VoxelSpacing3.456/",
-    ).save(force_insert=True)
-    TomogramVoxelSpacing(
-        id=TOMOGRAM_VOXEL_ID,
-        run_id=RUN_ID,
+        s3_prefix="s3://test-public-bucket/VoxelSpacing3.456/",
+        https_prefix=https_prefix.format(vs=3.456),
+    )
+    TomogramVoxelSpacing.create(
+        id=TOMOGRAM_VOXEL_ID1,
+        run_id=RUN1_ID,
         voxel_spacing=12.3,
         s3_prefix="s3://test-public-bucket/VoxelSpacing12.3/",
-        https_prefix="http://test.com/RUN1/VoxelSpacing12.3/",
-    ).save(force_insert=True)
+        https_prefix=https_prefix.format(vs=12.3),
+    )
+    TomogramVoxelSpacing.create(
+        id=TOMOGRAM_VOXEL_ID2,
+        run_id=RUN1_ID,
+        voxel_spacing=9.876,
+        s3_prefix="s3://test-public-bucket/VoxelSpacing9.876/",
+        https_prefix=https_prefix.format(vs=9.876),
+    )
 
 
-def populate_tomograms_table() -> None:
-    populate_tomogram_voxel_spacing_table()
-    Tomogram(
+def populate_stale_tomogram_voxel_spacing(run_id: int = RUN1_ID) -> None:
+    stale_voxel_spacing = TomogramVoxelSpacing.create(
+        run_id=run_id,
+        voxel_spacing=10.345,
+        s3_prefix="s3://test-public-bucket/VoxelSpacing10.345/",
+        https_prefix="http://test.com/RUN1/VoxelSpacing10.345/",
+    )
+    stale_tomogram = Tomogram.create(
+        tomogram_voxel_spacing_id=stale_voxel_spacing.id,
+        name="RUN1",
+        voxel_spacing=10.345,
+        s3_omezarr_dir="s3://stale.zarr",
+        https_omezarr_dir="http://test.com/stale.zarr",
+        s3_mrc_scale0="s3://stale.mrc",
+        https_mrc_scale0="http://test.com/stale.mrc",
+        size_x=2,
+        size_y=2,
+        size_z=2,
+        fiducial_alignment_status="foo",
+        reconstruction_method="",
+        reconstruction_software="",
+        tomogram_version="0.5",
+        scale0_dimensions="",
+        scale1_dimensions="",
+        scale2_dimensions="",
+        processing="",
+        offset_x=0,
+        offset_y=0,
+        offset_z=0,
+    )
+    TomogramAuthor.create(tomogram_id=stale_tomogram.id, name="Jane Smith", author_list_order=1)
+    TomogramAuthor.create(tomogram_id=stale_tomogram.id, name="John John", author_list_order=2)
+    stale_annotation = Annotation.create(
+        tomogram_voxel_spacing_id=stale_voxel_spacing.id,
+        s3_metadata_path="foo",
+        https_metadata_path="foo",
+        deposition_date="2025-04-01",
+        release_date="2025-06-01",
+        last_modified_date="2025-06-01",
+        annotation_method="",
+        ground_truth_status=False,
+        object_name="bar",
+        object_id="invalid-id",
+        object_count=200,
+        annotation_software="bar",
+    )
+    AnnotationAuthor.create(annotation_id=stale_annotation.id, name="Jane Smith", author_list_order=1)
+    AnnotationAuthor.create(annotation_id=stale_annotation.id, name="John John", author_list_order=2)
+
+
+def populate_tomograms() -> None:
+    populate_tomogram_voxel_spacing()
+    Tomogram.create(
         id=TOMOGRAM_ID,
-        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID,
+        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
         name="RUN1",
         voxel_spacing=12.3,
         s3_omezarr_dir="s3://RUN1.zarr",
@@ -120,26 +195,56 @@ def populate_tomograms_table() -> None:
         offset_x=0,
         offset_y=0,
         offset_z=0,
-    ).save(force_insert=True)
+    )
 
 
-def populate_tomogram_authors_table() -> None:
-    populate_tomograms_table()
-    TomogramAuthor(id=100, tomogram_id=TOMOGRAM_ID, name="Jane Smith", author_list_order=1).save(force_insert=True)
-    TomogramAuthor(
-        id=200,
-        tomogram_id=TOMOGRAM_ID,
-        name="Stale Author",
-        corresponding_author_status=True,
+def populate_stale_tomograms() -> None:
+    Tomogram.create(
+        id=STALE_TOMOGRAM_ID,
+        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID2,
+        name="RUN1",
+        voxel_spacing=12.3,
+        s3_omezarr_dir="s3://stale.zarr",
+        https_omezarr_dir="http://test.com/stale.zarr",
+        s3_mrc_scale0="s3://stale.mrc",
+        https_mrc_scale0="http://test.com/stale.mrc",
+        size_x=2,
+        size_y=2,
+        size_z=2,
+        fiducial_alignment_status="foo",
+        reconstruction_method="",
+        reconstruction_software="",
+        tomogram_version="0.5",
+        scale0_dimensions="",
+        scale1_dimensions="",
+        scale2_dimensions="",
+        processing="",
+        offset_x=0,
+        offset_y=0,
+        offset_z=0,
+    )
+
+
+def populate_tomogram_authors() -> None:
+    populate_tomograms()
+    TomogramAuthor.create(id=TOMOGRAM_AUTHOR_ID, tomogram_id=TOMOGRAM_ID, name="Jane Smith", author_list_order=1)
+
+
+def populate_stale_tomogram_authors() -> None:
+    author = TomogramAuthor.create(
+        tomogram_id=STALE_TOMOGRAM_ID,
+        name="Stale Author 2",
+        primary_author_status=True,
         author_list_order=3,
-    ).save(force_insert=True)
+    )
+    update_and_save(author, {"tomogram_id": TOMOGRAM_ID})
 
 
-def populate_tiltseries_table() -> None:
-    populate_runs_table()
-    TiltSeries(
-        id=101,
-        run_id=RUN_ID,
+def populate_tiltseries() -> None:
+    populate_run()
+    TiltSeries.create(
+        id=TILTSERIES_ID,
+        run_id=RUN1_ID,
         s3_mrc_bin1="ts_foo.mrc",
         https_mrc_bin1="ts_foo.mrc",
         s3_omezarr_dir="ts_foo.zarr",
@@ -162,14 +267,43 @@ def populate_tiltseries_table() -> None:
         pixel_spacing=0.3,
         tilting_scheme="unknown",
         data_acquisition_software="unknown",
-    ).save(force_insert=True)
+    )
+
+
+def populate_stale_tiltseries() -> None:
+    tilt_series = TiltSeries(
+        run_id=RUN4_ID,
+        s3_mrc_bin1="ts_foo.mrc",
+        https_mrc_bin1="ts_foo.mrc",
+        s3_omezarr_dir="ts_foo.zarr",
+        https_omezarr_dir="ts_foo.zarr",
+        acceleration_voltage=100,
+        spherical_aberration_constant=1.0,
+        microscope_manufacturer="unknown",
+        microscope_model="unknown",
+        microscope_energy_filter="unknown",
+        camera_manufacturer="unknown",
+        camera_model="unknown",
+        tilt_min=0,
+        tilt_max=0,
+        tilt_range=0,
+        tilt_step=0,
+        tilt_axis=1.0,
+        tilt_series_quality=3,
+        total_flux=0,
+        is_aligned=False,
+        pixel_spacing=0.3,
+        tilting_scheme="unknown",
+        data_acquisition_software="unknown",
+    )
+    update_and_save(tilt_series, {"run_id": STALE_RUN_ID})
 
 
 def populate_annotations() -> None:
-    populate_tomogram_voxel_spacing_table()
-    Annotation(
+    populate_tomogram_voxel_spacing()
+    Annotation.create(
         id=ANNOTATION_ID,
-        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID,
+        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
         s3_metadata_path="s3://test-public-bucket/30001/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0.json",
         https_metadata_path="foo",
         deposition_date="2025-04-01",
@@ -181,40 +315,74 @@ def populate_annotations() -> None:
         object_count=0,
         object_id="invalid-id",
         annotation_software="bar",
-    ).save(force_insert=True)
-    # Annotation(
-    #     id=101,
-    #     tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID,
-    #     s3_metadata_path="foo",
-    #     https_metadata_path="foo",
-    #     deposition_date="2025-04-01",
-    #     release_date="2025-06-01",
-    #     last_modified_date="2025-06-01",
-    #     annotation_method="",
-    #     ground_truth_status=False,
-    #     object_name="bar",
-    #     object_id="invalid-id",
-    #     annotation_software="bar",
-    # ).save(force_insert=True)
+    )
+
+
+def populate_stale_annotations() -> None:
+    Annotation.create(
+        id=STALE_ANNOTATION_ID,
+        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
+        s3_metadata_path="foo",
+        https_metadata_path="foo",
+        deposition_date="2025-04-01",
+        release_date="2025-06-01",
+        last_modified_date="2025-06-01",
+        annotation_method="",
+        ground_truth_status=False,
+        object_name="bar",
+        object_id="invalid-id",
+        object_count=200,
+        annotation_software="bar",
+    )
 
 
 def populate_annotation_files() -> None:
     populate_annotations()
-    AnnotationFiles(
+    file = AnnotationFiles.create(
         id=ANNOTATION_FILE_ID,
         annotation_id=ANNOTATION_ID,
         s3_path="s3://foo",
         https_path="https://foo",
         shape_type="Point",
         format="ndjson",
-    ).save(force_insert=True)
-    # AnnotationFiles(
-    #     annotation_id=ANNOTATION_ID,
-    #     s3_path="s3://foo",
-    #     https_path="https://foo",
-    #     shape_type="OrientedPoint",
-    #     format="ndjson",
-    # ).save(force_insert=True)
+    )
+    update_and_save(file, {"shape_type": "ZZOrientedPoint", "format": "ndjson"})
+
+
+def populate_stale_annotation_files() -> None:
+    populate_stale_annotations()
+    file = AnnotationFiles.create(
+        annotation_id=STALE_ANNOTATION_ID,
+        s3_path="s3://foo-stale-annotation/point",
+        https_path="https://foo-stale-annotation/point",
+        shape_type="Point",
+        format="ndjson",
+    )
+    update_and_save(file, {"shape_type": "SegmentationMask", "format": "mrc"})
+
+
+def populate_annotation_authors() -> None:
+    populate_annotations()
+    author = AnnotationAuthor.create(
+        id=ANNOTATION_AUTHOR_ID,
+        annotation_id=ANNOTATION_ID,
+        name="Jane Smith",
+        author_list_order=1,
+    )
+    update_and_save(author, {"name": "Stale Author", "corresponding_author_status": True, "author_list_order": 3})
+
+
+def populate_stale_annotation_authors() -> None:
+    populate_stale_annotations()
+    author = AnnotationAuthor.create(annotation_id=STALE_ANNOTATION_ID, name="Jane Smith", author_list_order=1)
+    update_and_save(author, {"name": "Stale Author", "corresponding_author_status": True, "author_list_order": 3})
+
+
+def update_and_save(model: BaseModel, new_values: dict) -> BaseModel:
+    data = model_to_dict(model, recurse=False, backrefs=False)
+    data.pop("id")
+    data = {**data, **new_values}
+    return model.insert(data).execute()
 
 
 def clean_all_mock_data() -> None:

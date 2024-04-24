@@ -16,14 +16,14 @@ URI: [cdp-meta:CellType](metadataCellType)
  classDiagram
     class CellType
       CellType : id
-        
+
           CellType --> string : id
-        
+
       CellType : name
-        
+
           CellType --> string : name
-        
-      
+
+
 ```
 
 

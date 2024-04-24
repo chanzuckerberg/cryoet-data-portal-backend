@@ -116,7 +116,8 @@ CREATE TABLE public.annotation_authors (
     affiliation_name character varying,
     affiliation_address character varying,
     affiliation_identifier character varying,
-    author_list_order integer
+    author_list_order integer,
+    primary_author_status boolean
 );
 
 
@@ -325,7 +326,9 @@ CREATE TABLE public.annotations (
     ground_truth_used character varying,
     tomogram_voxel_spacing_id integer,
     annotation_software character varying,
-    is_curator_recommended boolean DEFAULT false
+    is_curator_recommended boolean DEFAULT false,
+    deposition_id integer,
+    method_type character varying
 );
 
 
@@ -1405,7 +1408,8 @@ CREATE TABLE public.tomograms (
     key_photo_url character varying,
     key_photo_thumbnail_url character varying,
     neuroglancer_config character varying,
-    type text
+    type text,
+    deposition_id integer
 );
 
 

@@ -49,6 +49,7 @@ annotations:
       annotation_method: REQUIRED
       annotation_publications: OPTIONAL
       ground_truth_status: REQUIRED #(true or false)
+      method_type: REQUIRED #(manual, hybrid, automated)
       authors:
         - name: RECOMMENDED
           ORCID: 0000-XXXXXX

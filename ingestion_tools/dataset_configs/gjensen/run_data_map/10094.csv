@@ -1,5 +1,5 @@
 run_name,tomo-align_softwares,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software,ts-tilt_series_path
-dga2017-03-02-40,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D;RAPTOR,rawdata/Lg_DeltaDE_201703020001.mrc
+dga2017-03-02-40,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D,rawdata/Lg_DeltaDE_201703020001.mrc
 dga2017-03-02-41,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020002.mrc
 dga2017-03-02-42,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020003.mrc
 dga2017-03-02-43,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020004.mrc

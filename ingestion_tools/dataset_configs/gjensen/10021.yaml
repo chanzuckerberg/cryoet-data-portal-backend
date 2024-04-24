@@ -45,7 +45,7 @@ tiltseries:
     energy_filter: GIF
     image_corrector: null
     phase_plate: false
-  pixel_spacing: 1.0
+  pixel_spacing: 1.104
   spherical_aberration_constant: 2.7
   tilt_alignment_software: IMOD
   tilt_axis: 84.3
@@ -58,6 +58,19 @@ tiltseries:
   tilting_scheme: min to max tilt
   total_flux: 120.0
 tomograms:
+  voxel_spacing: 8.832
+  reconstruction_method: Weighted back projection
+  reconstruction_software: novaCTF
+  fiducial_alignment_status: FIDUCIAL
+  ctf_corrected: true
+  processing: raw
+  processing_software: novaCTF
+  align_softwares:
+  - IMOD
+  offset:
+    x: 0
+    y: 0
+    z: 0
   affine_transformation_matrix:
   - - 1
     - 0
@@ -75,21 +88,8 @@ tomograms:
     - 0
     - 0
     - 1
-  align_softwares:
-  - IMOD
   authors: *id001
-  ctf_corrected: true
-  fiducial_alignment_status: FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  processing_software: novaCTF
-  reconstruction_method: Weighted back projection
-  reconstruction_software: novaCTF
   tomogram_version: 1
-  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
 standardization_config:
   destination_prefix: '10021'

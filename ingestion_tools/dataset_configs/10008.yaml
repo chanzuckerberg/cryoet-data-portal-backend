@@ -117,7 +117,7 @@ annotations:
   - metadata:
       annotation_object:
         id: GO:0022626
-        name: cytosolic Ribosome
+        name: cytosolic ribosome
         description: ~
         state: ~
       dates: *repo-dates

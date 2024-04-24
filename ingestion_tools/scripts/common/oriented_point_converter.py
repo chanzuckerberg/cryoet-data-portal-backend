@@ -1,6 +1,7 @@
 """
 Various conversion of euler angle to rotation matrix
 """
+
 import contextlib
 
 import numpy as np

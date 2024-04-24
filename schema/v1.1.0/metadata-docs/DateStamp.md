@@ -18,18 +18,18 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
  classDiagram
     class DateStamp
       DateStamp : deposition_date
-        
+
           DateStamp --> date : deposition_date
-        
+
       DateStamp : last_modified_date
-        
+
           DateStamp --> date : last_modified_date
-        
+
       DateStamp : release_date
-        
+
           DateStamp --> date : release_date
-        
-      
+
+
 ```
 
 

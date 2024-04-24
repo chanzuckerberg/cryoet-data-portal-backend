@@ -66,9 +66,20 @@ class DepositionImportConfig:
     tomogram_finder_config: dict[str, Any] | None = None
     voxel_spacing_finder_config: dict[str, Any] | None = None
 
-    def __init__(self, fs: FileSystemApi, config_path: str, output_prefix: str, input_bucket: str, object_classes: list[str]):
+    def __init__(
+        self,
+        fs: FileSystemApi,
+        config_path: str,
+        output_prefix: str,
+        input_bucket: str,
+        object_classes: list[str],
+    ):
         self.output_prefix = output_prefix
         self.fs = fs
+        self.run_to_tomo_map = {}
+        self.run_data_map = {}
+        self.run_to_frame_map = {}
+        self.run_to_ts_map = {}
         with open(config_path, "r") as conffile:
             dataset_config = yaml.safe_load(conffile)
             config = dataset_config["standardization_config"]
@@ -117,7 +128,7 @@ class DepositionImportConfig:
             map_filename = getattr(self, file_attr)
         if not map_filename:
             return mapdata
-        with self.fs.open(f"{self.input_path}/{map_filename}", "r") as tsvfile:
+        with self.fs.open(os.path.join(self.input_path, map_filename), "r") as tsvfile:
             if map_filename.endswith("tsv"):
                 reader = csv.DictReader(tsvfile, delimiter="\t")
             else:
@@ -163,7 +174,7 @@ class DepositionImportConfig:
             map_filename = getattr(self, file_attr)
         if not map_filename:
             return mapdata
-        with self.fs.open(f"{self.input_path}/{map_filename}", "r") as csvfile:
+        with self.fs.open(os.path.join(self.input_path, map_filename), "r") as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
                 mapdata[row[0]] = row[1]

@@ -39,7 +39,7 @@ def test_key_photo_import_http(s3_fs: FileSystemApi, test_output_bucket: str, s3
     metadata = json.loads(output)
     assert metadata["dataset_title"] == "Dataset 1"
 
-    # Make sure the files are actually present an non-zero length.
+    # Make sure the files are actually present and non-zero length.
     files = s3_client.list_objects(Bucket=test_output_bucket, Prefix=f"{output_prefix}/10001/Images")
     s3_files: list[str] = []
     for item in files["Contents"]:

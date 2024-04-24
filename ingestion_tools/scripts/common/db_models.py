@@ -135,6 +135,7 @@ class Tomogram(BaseModel):
     key_photo_thumbnail_url = CharField(null=True)
     neuroglancer_config = CharField(null=True)
     type = CharField(null=True)
+    deposition_id = IntegerField(null=True)
 
 
 class TomogramAuthor(BaseModel):
@@ -178,6 +179,8 @@ class Annotation(BaseModel):
     confidence_recall = FloatField(null=True)
     ground_truth_used = CharField()
     is_curator_recommended = BooleanField(default=False)
+    method_type = CharField()
+    deposition_id = IntegerField(null=True)
 
 
 class AnnotationFiles(BaseModel):
@@ -203,6 +206,7 @@ class AnnotationAuthor(BaseModel):
     orcid = CharField(null=True)
     corresponding_author_status = BooleanField(default=False)
     primary_annotator_status = BooleanField(default=False)
+    primary_author_status = BooleanField(default=False)
     email = CharField(null=True)
     affiliation_name = CharField(null=True)
     affiliation_address = CharField(null=True)
