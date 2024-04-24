@@ -56,6 +56,17 @@ class BaseAnnotationSource:
         # To be overridden by subclasses to communicate whether this source contains valid information for this run.
         return True
 
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
+        pass
+
 
 class VolumeAnnotationSource(BaseAnnotationSource):
     shape: str
@@ -95,7 +106,15 @@ class SegmentationMaskFile(VolumeAnnotationSource):
         if self.file_format not in ["mrc"]:
             raise NotImplementedError("We only support MRC files for segmentation masks")
 
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float):
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
         input_file = self.get_source_file(fs, input_prefix)
         return scale_mrcfile(fs, self.get_output_filename(output_prefix), input_file, voxel_spacing=voxel_spacing)
 
@@ -119,7 +138,15 @@ class SemanticSegmentationMaskFile(VolumeAnnotationSource):
         if self.file_format not in ["mrc"]:
             raise NotImplementedError("We only support MRC files for segmentation masks")
 
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float = None):
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float = None,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
         input_file = self.get_source_file(fs, input_prefix)
         return scale_mrcfile(
             fs,
@@ -212,7 +239,15 @@ class PointFile(BaseAnnotationSource):
             annotations = ndjson.load(f)
         return annotations
 
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float):
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
         filename = self.get_output_filename(output_prefix)
         annotations = self.load(fs, self.get_source_file(fs, input_prefix))
         with fs.open(filename, "w") as fh:
@@ -317,7 +352,15 @@ class InstanceSegmentationFile(OrientedPointFile):
 
         return points
 
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float):
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
         filename = self.get_output_filename(output_prefix)
         annotations = self.load(fs, self.get_source_file(fs, input_prefix))
 
@@ -381,7 +424,7 @@ class AnnotationImporter(BaseImporter):
         output_dir = super().get_output_path()
         return self.annotation_metadata.get_filename_prefix(output_dir, self.identifier)
 
-    def import_annotations(self, write: bool):
+    def import_annotations(self, write_mrc: bool = True, write_zarr: bool = True):
         run_name = self.parent.get_run().run_name
         dest_prefix = self.get_output_path()
         for source in self.sources:
@@ -391,7 +434,14 @@ class AnnotationImporter(BaseImporter):
             except Exception:
                 print(f"Skipping writing annotations for run {run_name} due to missing files")
                 continue
-            source.convert(self.config.fs, self.config.input_path, dest_prefix, self.parent.get_voxel_spacing())
+            source.convert(
+                self.config.fs,
+                self.config.input_path,
+                dest_prefix,
+                self.parent.get_voxel_spacing(),
+                write_mrc,
+                write_zarr,
+            )
 
     def import_metadata(self):
         run_name = self.parent.get_run().run_name
