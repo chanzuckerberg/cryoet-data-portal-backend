@@ -135,6 +135,13 @@ def run_job(
     multiple=True,
     help="Exclude runs matching this regex. If not specified, all runs are processed",
 )
+@click.option(
+    "--skip-until-run-name",
+    type=str,
+    default=None,
+    multiple=False,
+    help="Exclude runs matching this regex. If not specified, all runs are processed",
+)
 @click.option("--make-key-image", type=bool, is_flag=True, default=False, help="Create key image for run from tomogram")
 @click.option(
     "--make-neuroglancer-config",
@@ -179,6 +186,7 @@ def queue(
     import_everything: bool,
     filter_run_name: list[str],
     exclude_run_name: list[str],
+    skip_until_run_name: str,
     make_key_image: bool,
     make_neuroglancer_config: bool,
     write_mrc: bool,
@@ -219,7 +227,36 @@ def queue(
     # Always iterate over datasets and runs.
     dataset = DatasetImporter(config, None)
     digitmatch = re.compile(r"[^\d]+(\d+)[^\d]+")
+
+    # Learn more about our AWS environment
+    swipe_comms_bucket = None
+    swipe_wdl_bucket = None
+    sfn_name = f"cryoet-ingestion-{env_name}-default-wdl"
+
+    sts = boto3.client("sts")
+    aws_account_id = sts.get_caller_identity()["Account"]
+    session = Session()
+    aws_region = session.region_name
+    s3_client = session.client("s3")
+    buckets = s3_client.list_buckets()
+    for bucket in buckets["Buckets"]:
+        bucket_name = bucket["Name"]
+        if "swipe-wdl" in bucket_name and env_name in bucket_name:
+            swipe_wdl_bucket = bucket_name
+        if "swipe-comms" in bucket_name and env_name in bucket_name:
+            swipe_comms_bucket = bucket_name
+
+    skip_run_until_regex = None
+    skip_run = False
+    if skip_until_run_name:
+        skip_run = True
+        skip_run_until_regex = re.compile(skip_until_run_name)
     for run in RunImporter.find_runs(config, dataset):
+        if skip_run and not skip_run_until_regex.match(run.run_name):
+            print(f"Skipping {run.run_name}..")
+            continue
+
+        skip_run = False
         if list(filter(lambda x: x.match(run.run_name), exclude_run_name_patterns)):
             print(f"Excluding {run.run_name}..")
             continue
@@ -232,23 +269,9 @@ def queue(
         dataset_id = digitmatch.match(config_file)[1]
         execution_name = f"{int(time.time())}-ds{dataset_id}-run{run.run_name}"
 
-        # Learn more about our AWS environment
-        swipe_comms_bucket = None
-        swipe_wdl_bucket = None
-        sfn_name = f"cryoet-ingestion-{env_name}-default-wdl"
-
-        sts = boto3.client("sts")
-        aws_account_id = sts.get_caller_identity()["Account"]
-        session = Session()
-        aws_region = session.region_name
-        s3_client = session.client("s3")
-        buckets = s3_client.list_buckets()
-        for bucket in buckets["Buckets"]:
-            bucket_name = bucket["Name"]
-            if "swipe-wdl" in bucket_name and env_name in bucket_name:
-                swipe_wdl_bucket = bucket_name
-            if "swipe-comms" in bucket_name and env_name in bucket_name:
-                swipe_comms_bucket = bucket_name
+        # execution name greater than 80 chars causes boto ValidationException
+        if len(execution_name) > 80:
+            execution_name = execution_name[-80:]
 
         run_job(
             execution_name,
