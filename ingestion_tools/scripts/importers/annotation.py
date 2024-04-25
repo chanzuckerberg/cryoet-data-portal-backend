@@ -117,6 +117,25 @@ class SegmentationMaskFile(VolumeAnnotationSource):
         input_file = self.get_source_file(fs, input_prefix)
         return scale_mrcfile(fs, self.get_output_filename(output_prefix), input_file, voxel_spacing=voxel_spacing)
 
+    def precompute_data_for_neuroglancer(
+        self,
+        fs: FileSystemApi,
+        annotation_path: str,
+        output_prefix: str,
+        voxel_spacing: float,
+    ):
+        # tmp_path = self.get_local_neuroglancer_path(fs, annotation_path, output_prefix)
+        annotation_zarr_path = self.get_output_filename(annotation_path, "zarr")
+        # resolution = voxel_spacing / 10
+        print(annotation_zarr_path)
+        # encode_segmentation(
+        #     filename=annotation_zarr_path,
+        #     delete_existing_output_directory=True,
+        #     output_path=Path(tmp_path),
+        #     resolution=(resolution, resolution, resolution),
+        # )
+        # fs.push(tmp_path)
+
 
 class SemanticSegmentationMaskFile(VolumeAnnotationSource):
     def __init__(
