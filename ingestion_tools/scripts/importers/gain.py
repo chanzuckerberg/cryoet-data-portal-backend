@@ -5,7 +5,8 @@ from importers.base_importer import BaseImporter
 
 
 class GainImporter(BaseImporter):
-    type_key = "gains"
+    type_key = "gain"
+    plural_key = "gains"
     finder_factory = DefaultImporterFactory
     dependencies = ["run"]
     has_metadata = False

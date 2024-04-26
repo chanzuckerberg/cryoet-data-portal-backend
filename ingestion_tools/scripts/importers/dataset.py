@@ -7,7 +7,8 @@ from importers.dataset_key_photo import DatasetKeyPhotoImporter
 
 
 class DatasetImporter(BaseImporter):
-    type_key = "datasets"
+    type_key = "dataset"
+    plural_key = "datasets"
     finder_factory = DefaultImporterFactory
     dependencies = []
     has_metadata = True

@@ -16,7 +16,8 @@ else:
 
 
 class DatasetKeyPhotoImporter(BaseImporter):
-    type_key = "dataset_keyphotos"
+    type_key = "dataset_keyphoto"
+    plural_key = "dataset_keyphotos"
     image_keys = ["snapshot", "thumbnail"]
     finder_factory = DefaultImporterFactory
     dependencies = []  # TODO this thing has dependencies on *imported* runs!!

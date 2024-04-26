@@ -13,6 +13,7 @@ else:
 
 class TiltSeriesImporter(VolumeImporter):
     type_key = "tiltseries"
+    plural_key = "tiltseries"
     finder_factory = DefaultImporterFactory
     dependencies = ["run"]
     has_metadata = True

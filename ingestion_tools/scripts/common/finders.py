@@ -128,7 +128,7 @@ class DepositionObjectImporterFactory(ABC):
     def find(self, cls, config: DepositionImportConfig, fs: FileSystemApi, **parent_objects: dict[str, Any] | None):
         loader = self.load(config, fs, **parent_objects)
         glob_vars = {}
-        for parent in parent_objects.values():
+        for _, parent in parent_objects.items():
             glob_vars.update(parent.get_glob_vars())
         tmp_parent_objects = list(parent_objects.values())
         while True:
@@ -143,7 +143,7 @@ class DepositionObjectImporterFactory(ABC):
         found = loader.find(config, fs, glob_vars)
         results = []
         for name, path in found.items():
-            results.append(cls(config=config, parents=parent_objects, name=name, path=path))
+            results.append(cls(config=config, name=name, path=path, parents=parent_objects))
         return results
 
 

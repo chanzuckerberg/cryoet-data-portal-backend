@@ -16,6 +16,7 @@ else:
 
 class NeuroglancerImporter(BaseImporter):
     type_key = "neuroglancer"
+    plural_key = "neuroglancer"
     finder_factory = DefaultImporterFactory
     dependencies = ["tomogram"]
     has_metadata = False

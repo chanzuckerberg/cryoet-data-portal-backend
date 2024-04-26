@@ -59,7 +59,7 @@ class DepositionImportConfig:
         config_path: str,
         output_prefix: str,
         input_bucket: str,
-        object_classes: list[str],
+        object_classes: list[BaseImporter],
     ):
         self.output_prefix = output_prefix
         self.fs = fs
@@ -72,11 +72,10 @@ class DepositionImportConfig:
 
             self.object_configs = {}
             print(object_classes)
-            for key in object_classes:
-                print(f"key: {key} / keys: {list(config.keys())}")
-                if config.get(key):
-                    self.object_configs[key] = config[key]
-                    del config[key]
+            for item in object_classes:
+                if config.get(item.plural_key):
+                    self.object_configs[item.type_key] = config[item.plural_key]
+                    del config[item.plural_key]
 
             # Copy the remaining standardization config keys over to this object.
             for k, v in config.get('standardization_config', {}).items():
@@ -114,10 +113,19 @@ class DepositionImportConfig:
                 mapdata[row["run_name"]] = row
         return mapdata
 
-    def _get_finder_configs(self, key: str, **parent_objs) -> Any:
+    def _get_object_configs(self, key: str, **parent_objs) -> Any:
         items = self.object_configs.get(key, [])
-        print(f"found / {items}")
 
+        return items
+
+        #####
+        #####
+        #####
+        # TODO FIXME FIXME -- decide how to support overrides!
+        #####
+        #####
+        #####
+        #####
         if not self.overrides:
             return items
 
@@ -257,23 +265,23 @@ class DepositionImportConfig:
 
     def resolve_output_path(self, key: str, obj: BaseImporter) -> str:
         paths = {
-            "voxel_spacings": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}",
-            "tomograms": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram",
-            "key_images": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos",
+            "voxel_spacing": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}",
+            "tomogram": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram",
+            "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos",
             "tiltseries": "{dataset_name}/{run_name}/TiltSeries",
-            "gains": "{dataset_name}/{run_name}/Frames/{run_name}_gain.mrc",
-            "frames": "{dataset_name}/{run_name}/Frames",
-            "rawtilts": "{dataset_name}/{run_name}/TiltSeries",
-            "annotations": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
-            "annotations_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
-            "runs_metadata": "{dataset_name}/{run_name}/run_metadata.json",
-            "tomograms_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/tomogram_metadata.json",
+            "gain": "{dataset_name}/{run_name}/Frames/{run_name}_gain.mrc",
+            "frame": "{dataset_name}/{run_name}/Frames",
+            "rawtilt": "{dataset_name}/{run_name}/TiltSeries",
+            "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
+            "annotation_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
+            "run_metadata": "{dataset_name}/{run_name}/run_metadata.json",
+            "tomogram_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/tomogram_metadata.json",
             "tiltseries_metadata": "{dataset_name}/{run_name}/TiltSeries/tiltseries_metadata.json",
-            "datasets_metadata": "{dataset_name}/dataset_metadata.json",
-            "runs": "{dataset_name}/{run_name}",
-            "datasets": "{dataset_name}",
-            "dataset_keyphotos": "{dataset_name}/Images",
-            "neuroglancers": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/neuroglancer_config.json",
+            "dataset_metadata": "{dataset_name}/dataset_metadata.json",
+            "run": "{dataset_name}/{run_name}",
+            "dataset": "{dataset_name}",
+            "dataset_keyphoto": "{dataset_name}/Images",
+            "neuroglancer": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/neuroglancer_config.json",
         }
         output_prefix = self.output_prefix
         glob_vars = obj.get_glob_vars()

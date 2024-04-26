@@ -24,6 +24,7 @@ else:
 
 class BaseImporter:
     type_key: str
+    plural_key: str
     cached_find_results: dict[str, "BaseImporter"] = {}
     finder_factory: DepositionObjectImporterFactory | None = None
     dependencies: list[str] = []
@@ -90,10 +91,13 @@ class BaseImporter:
 
     @classmethod
     def finder(cls, config: DepositionImportConfig, fs: FileSystemApi, **parents) -> list["BaseImporter"]:
-        finder_configs = config._get_finder_configs(cls.type_key, **parents)
-        for config in finder_configs:
-            finder_cls = cls.finder_factory.load(**config)
-            yield (item for item in finder_cls.find(cls, config, fs, **parents))
+        finder_configs = config._get_object_configs(cls.type_key, **parents)
+        for finder in finder_configs:
+            sources = finder.get("sources", [])
+            for source in sources:
+                finder = cls.finder_factory(source)
+                for item in finder.find(cls, config, fs, **parents):
+                    yield item
 
 class VolumeImporter(BaseImporter):
     def __init__(

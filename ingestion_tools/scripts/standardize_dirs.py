@@ -66,8 +66,9 @@ def cli(ctx):
 def common_options(func):
     options = []
     for cls in IMPORTERS:
+        plural_key = cls.plural_key.replace("_", "-")
         importer_key = cls.type_key.replace("_", "-")
-        options.append(click.option(f"--import-{importer_key}", is_flag=True, default=False))
+        options.append(click.option(f"--import-{plural_key}", is_flag=True, default=False))
         options.append(click.option(f"--filter-{importer_key}-name", type=str, default=None, multiple=True))
         options.append(click.option(f"--exclude-{importer_key}-name", type=str, default=None, multiple=True))
         if cls.has_metadata:
@@ -75,25 +76,6 @@ def common_options(func):
     for option in options:
         func = option(func)
     return func
-
-
-def get_import_tree(deps, objects_to_import) -> dict[str, Any]:
-    # If we don't have deps passed in, start at the root
-    if not deps:
-        deps = set([item.type_key for item in IMPORTERS if not item.dependencies])
-    tree = {}
-    for dep in deps:
-        if dep in objects_to_import:
-            tree[dep] = {}
-        sub_deps = set([item.type_key for item in IMPORTERS if dep in item.dependencies])
-        if sub_deps:
-            subtree = get_import_tree(
-                set([item.type_key for item in IMPORTERS if dep in item.dependencies]),
-                objects_to_import,
-            )
-            if subtree:
-                tree[dep] = subtree
-    return tree
 
 
 def flatten_dependency_tree(tree):
@@ -111,6 +93,7 @@ def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dic
         parents = {}
     for import_class, child_import_classes in tree.items():
         if import_class not in to_iterate:
+            print(f"Skipping iteration for {import_class}")
             continue
         print(f"Iterating {import_class}")
         filter_patterns = [re.compile(pattern) for pattern in kwargs.get(f"filter_{import_class.type_key}_name", [])]
@@ -122,6 +105,7 @@ def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dic
 
         items = import_class.finder(config, config.fs, **parent_args)
         for item in items:
+            print("found an item!!")
             if list(filter(lambda x: x.match(item.name), exclude_patterns)):
                 print(f"Excluding {item.name}..")
                 continue
@@ -168,56 +152,19 @@ def convert2(
 
     fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=force_overwrite)
 
-    config = DepositionImportConfig(fs, config_file, output_path, input_bucket, list(IMPORTER_DICT.keys()))
+    config = DepositionImportConfig(fs, config_file, output_path, input_bucket, IMPORTERS)
     config.load_map_files()
 
     iteration_deps = flatten_dependency_tree(IMPORTER_DEP_TREE).items()
     if import_everything:
-        to_import = set([k for k in IMPORTERS if kwargs.get(f"import_{k.type_key}")])
+        to_import = set([k for k in IMPORTERS])
     else:
-        to_import = set([k for k in IMPORTERS if kwargs.get(f"import_{k.type_key}")])
+        to_import = set([k for k in IMPORTERS if kwargs.get(f"import_{k.plural_key}")])
         to_import.update(set([k for k in IMPORTERS if kwargs.get(f"import_{k.type_key}_metadata")]))
-    to_iterate = set([k for k, v in iteration_deps if to_import.intersection(v)])
+    to_iterate = to_import
+    to_iterate = to_iterate.union(set([k for k, v in iteration_deps if to_import.intersection(v)]))
     do_import(config, IMPORTER_DEP_TREE, to_import, to_iterate, kwargs)
     exit()
-
-    print(kwargs)
-
-
-    if import_everything:
-        objects_to_import = set(IMPORTER_DICT.keys())
-    else:
-        # Figure out which objects we need to drill down to
-        objects_to_import = set([])
-        for arg in [arg_name for arg_name, arg_value in kwargs.items() if arg_value and arg_name.startswith("import_")]:
-            type_name = arg[len("import_") :]
-            if type_name.endswith("_metadata"):
-                type_name = type_name[: -len("_metadata")]
-            objects_to_import.add(type_name)
-
-    import_tree = get_import_tree(None, objects_to_import)
-    print(json.dumps(import_tree))
-    walk_import_tree(import_tree, fs, config, kwargs)
-
-    exit()
-
-    exclude_run_name_patterns = [re.compile(pattern) for pattern in exclude_run_name]
-    filter_run_name_patterns = [re.compile(pattern) for pattern in filter_run_name]
-    filter_ds_name_patterns = [re.compile(pattern) for pattern in filter_dataset_name]
-    # Always iterate over datasets and runs.
-    datasets = config.find_datasets(DatasetImporter, None, fs)
-    for dataset in datasets:
-        if filter_dataset_name and not list(filter(lambda x: x.match(dataset.name), filter_ds_name_patterns)):
-            print(f"Skipping dataset {dataset.name}..")
-            continue
-        runs = config.find_runs(RunImporter, dataset, fs)
-        for run in runs:
-            if list(filter(lambda x: x.match(run.name), exclude_run_name_patterns)):
-                print(f"Excluding {run.name}..")
-                continue
-            if filter_run_name and not list(filter(lambda x: x.match(run.name), filter_run_name_patterns)):
-                print(f"Skipping {run.name}..")
-                continue
 
 
 @cli.command()

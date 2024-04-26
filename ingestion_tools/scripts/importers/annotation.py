@@ -346,7 +346,8 @@ def annotation_source_factory(source_config, glob_vars):
 
 
 class AnnotationImporter(BaseImporter):
-    type_key = "annotations"
+    type_key = "annotation"
+    plural_key = "annotations"
     finder_factory = DefaultImporterFactory
     dependencies = ["voxel_spacing"]
     has_metadata = True
@@ -449,6 +450,32 @@ class AnnotationImporter(BaseImporter):
         return_value = current_identifier["identifier"]
         current_identifier["identifier"] += 1
         return return_value
+
+    @classmethod
+    def finder(cls, config, fs, **parents: dict[str, BaseImporter]) -> list[BaseImporter]:
+        annotations = []
+        # make this a dict so we can pass by reference
+        vs = parents["voxel_spacing"]
+        current_identifier = {"identifier": 100}
+        existing_annotations = vs.get_existing_annotation_metadatas(config.fs)
+        for annotation_config in config.annotation_template:
+            metadata = AnnotationMetadata(config.fs, config.deposition_id, annotation_config["metadata"])
+            identifier = cls.get_identifier(metadata, existing_annotations, current_identifier)
+            annotations.append(
+                AnnotationImporter(
+                    identifier=identifier,
+                    config=config,
+                    parent=vs,
+                    annotation_metadata=metadata,
+                    annotation_config=annotation_config,
+                ),
+            )
+            identifier += 1
+
+        # Annotation has to have at least one valid source to be imported.
+        annotations = [a for a in annotations if a.has_valid_source()]
+
+        return annotations
 
     @classmethod
     def find_annotations(cls, config, vs: "VoxelSpacingImporter"):
