@@ -13,7 +13,7 @@ else:
 
 
 class TomogramImporter(VolumeImporter):
-    type_key = "tomogram"
+    type_key = "tomograms"
     finder_factory = DefaultImporterFactory
     cached_find_results: dict[str, Any] = {}
     dependencies = ["voxel_spacing"]

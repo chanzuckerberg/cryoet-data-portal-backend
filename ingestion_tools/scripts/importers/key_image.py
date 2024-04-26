@@ -19,7 +19,7 @@ else:
 
 
 class KeyImageImporter(BaseImporter):
-    type_key = "key_image"
+    type_key = "key_images"
     finder_factory = DefaultImporterFactory
     dependencies = ["tomogram"]
     has_metadata = False

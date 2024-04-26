@@ -12,7 +12,7 @@ else:
 
 
 class RunImporter(BaseImporter):
-    type_key = "run"
+    type_key = "runs"
     finder_factory = DefaultImporterFactory
     dependencies = ["dataset"]
     has_metadata = True

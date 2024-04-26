@@ -80,7 +80,7 @@ class VSImporterFactory(DepositionObjectImporterFactory):
 
 
 class VoxelSpacingImporter(BaseImporter):
-    type_key = "voxel_spacing"
+    type_key = "voxel_spacings"
     finder_factory = VSImporterFactory
     dependencies = ["run"]
     has_metadata = False

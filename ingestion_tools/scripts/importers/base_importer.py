@@ -90,11 +90,10 @@ class BaseImporter:
 
     @classmethod
     def finder(cls, config: DepositionImportConfig, fs: FileSystemApi, **parents) -> list["BaseImporter"]:
-        finder_config = config._get_finder_config(cls.type_key, **parents)
-        finder_cls = cls.finder_factory.load(**finder_config)
-        items = finder_cls.find(cls, config, fs, **parents)
-        return items
-
+        finder_configs = config._get_finder_configs(cls.type_key, **parents)
+        for config in finder_configs:
+            finder_cls = cls.finder_factory.load(**config)
+            yield (item for item in finder_cls.find(cls, config, fs, **parents))
 
 class VolumeImporter(BaseImporter):
     def __init__(

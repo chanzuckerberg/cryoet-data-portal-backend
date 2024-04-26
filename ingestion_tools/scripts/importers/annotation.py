@@ -346,7 +346,7 @@ def annotation_source_factory(source_config, glob_vars):
 
 
 class AnnotationImporter(BaseImporter):
-    type_key = "annotation"
+    type_key = "annotations"
     finder_factory = DefaultImporterFactory
     dependencies = ["voxel_spacing"]
     has_metadata = True

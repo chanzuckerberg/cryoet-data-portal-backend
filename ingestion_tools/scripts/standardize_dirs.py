@@ -168,7 +168,7 @@ def convert2(
 
     fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=force_overwrite)
 
-    config = DepositionImportConfig(fs, config_file, output_path, input_bucket, IMPORTER_DICT.keys())
+    config = DepositionImportConfig(fs, config_file, output_path, input_bucket, list(IMPORTER_DICT.keys()))
     config.load_map_files()
 
     iteration_deps = flatten_dependency_tree(IMPORTER_DEP_TREE).items()
