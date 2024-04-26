@@ -16,7 +16,7 @@ else:
 ###
 class BaseFinder(ABC):
     @abstractmethod
-    def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
         pass
 
 
@@ -28,7 +28,7 @@ class SourceMultiGlobFinder(BaseFinder):
     def __init__(self, list_globs: str):
         self.list_globs = list_globs
 
-    def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
         responses = {}
         for list_glob in self.list_globs:
             path = os.path.join(config.deposition_root_dir, list_glob.format(**glob_vars))
@@ -62,7 +62,7 @@ class SourceGlobFinder(BaseFinder):
         else:
             self.name_regex = re.compile(name_regex)
 
-    def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
         path = os.path.join(config.deposition_root_dir, self.list_glob.format(**glob_vars))
         responses = {}
         for fname in config.fs.glob(path):
@@ -87,7 +87,7 @@ class DestinationGlobFinder(BaseFinder):
         self.match_regex = re.compile(match_regex)
         self.name_regex = re.compile(name_regex)
 
-    def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
         path = os.path.join(self.list_glob.format(**glob_vars))
         responses = {}
         for fname in config.fs.glob(path):
@@ -105,7 +105,7 @@ class BaseLiteralValueFinder:
     def __init__(self, value: str):
         self.literal_value = value
 
-    def find(self, config: DepositionImportConfig, fs: FileSystemApi, glob_vars: dict[str, Any]):
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
         return {item: None for item in self.literal_value}
 
 
@@ -120,13 +120,12 @@ class DepositionObjectImporterFactory(ABC):
     def load(
         self,
         config: DepositionImportConfig,
-        fs: FileSystemApi,
         **expansion_data: dict[str, Any] | None,
     ) -> BaseFinder:
         pass
 
-    def find(self, cls, config: DepositionImportConfig, fs: FileSystemApi, **parent_objects: dict[str, Any] | None):
-        loader = self.load(config, fs, **parent_objects)
+    def find(self, cls, config: DepositionImportConfig, metadata: dict[str, Any], **parent_objects: dict[str, Any] | None):
+        loader = self.load(config, **parent_objects)
         glob_vars = {}
         for _, parent in parent_objects.items():
             glob_vars.update(parent.get_glob_vars())
@@ -140,10 +139,10 @@ class DepositionObjectImporterFactory(ABC):
             if not new_parent_objects:
                 break
             tmp_parent_objects = new_parent_objects
-        found = loader.find(config, fs, glob_vars)
+        found = loader.find(config, glob_vars)
         results = []
         for name, path in found.items():
-            results.append(cls(config=config, name=name, path=path, parents=parent_objects))
+            results.append(cls(config=config, metadata=metadata, name=name, path=path, parents=parent_objects))
         return results
 
 
@@ -151,7 +150,6 @@ class DefaultImporterFactory(DepositionObjectImporterFactory):
     def load(
         self,
         config: DepositionImportConfig,
-        fs: FileSystemApi,
         **parent_objects: dict[str, Any] | None,
     ) -> BaseFinder:
         source = self.source

@@ -238,7 +238,7 @@ class DepositionImportConfig:
             "tomogram": "tomograms",
             "tiltseries": "tiltseries",
         }
-        base_metadata = deepcopy(getattr(self, f"{metadata_type}_template"))
+        base_metadata = deepcopy(obj.metadata)
         if metadata_type not in ["tomogram", "tiltseries"]:
             return base_metadata
 

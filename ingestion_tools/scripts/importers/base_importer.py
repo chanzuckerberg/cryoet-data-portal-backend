@@ -32,11 +32,13 @@ class BaseImporter:
     def __init__(
         self,
         config: "DepositionImportConfig",
+        metadata: dict[str, Any],
         name: Optional[str] = None,
         path: Optional[str] = None,
         parents: Optional["BaseImporter"] = None,
     ):
         self.config = config
+        self.metadata = metadata
         self.parents = parents
         self.name = name
         self.path = path
@@ -90,13 +92,14 @@ class BaseImporter:
         return self.config.get_metadata_path(self)
 
     @classmethod
-    def finder(cls, config: DepositionImportConfig, fs: FileSystemApi, **parents) -> list["BaseImporter"]:
+    def finder(cls, config: DepositionImportConfig, **parents) -> list["BaseImporter"]:
         finder_configs = config._get_object_configs(cls.type_key, **parents)
         for finder in finder_configs:
+            metadata = finder.get("metadata", {})
             sources = finder.get("sources", [])
             for source in sources:
                 finder = cls.finder_factory(source)
-                for item in finder.find(cls, config, fs, **parents):
+                for item in finder.find(cls, config, metadata, **parents):
                     yield item
 
 class VolumeImporter(BaseImporter):

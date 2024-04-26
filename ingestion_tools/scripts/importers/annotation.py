@@ -392,7 +392,7 @@ class AnnotationImporter(BaseImporter):
         return self.annotation_metadata.get_filename_prefix(output_dir, self.identifier)
 
     def import_annotations(self, write: bool):
-        run_name = self.parent.get_run().name
+        run_name = self.get_run().name
         dest_prefix = self.get_output_path()
         for source in self.sources:
             # Don't panic if we don't have a source file for this annotation source
@@ -401,10 +401,10 @@ class AnnotationImporter(BaseImporter):
             except Exception:
                 print(f"Skipping writing annotations for run {run_name} due to missing files")
                 continue
-            source.convert(self.config.fs, self.config.input_path, dest_prefix, self.parent.get_voxel_spacing())
+            source.convert(self.config.fs, self.config.input_path, dest_prefix, self.get_voxel_spacing())
 
     def import_metadata(self):
-        run_name = self.parent.get_run().name
+        run_name = self.get_run().name
         print(f"importing annotations for {run_name}")
         real_sources = 0
         for source in self.sources:
@@ -452,22 +452,24 @@ class AnnotationImporter(BaseImporter):
         return return_value
 
     @classmethod
-    def finder(cls, config, fs, **parents: dict[str, BaseImporter]) -> list[BaseImporter]:
+    def finder(cls, config, **parents: dict[str, BaseImporter]) -> list[BaseImporter]:
         annotations = []
         # make this a dict so we can pass by reference
         vs = parents["voxel_spacing"]
         current_identifier = {"identifier": 100}
         existing_annotations = vs.get_existing_annotation_metadatas(config.fs)
-        for annotation_config in config.annotation_template:
+        configs = config._get_object_configs(cls.type_key, **parents)
+        for annotation_config in configs:
             metadata = AnnotationMetadata(config.fs, config.deposition_id, annotation_config["metadata"])
             identifier = cls.get_identifier(metadata, existing_annotations, current_identifier)
             annotations.append(
                 AnnotationImporter(
                     identifier=identifier,
                     config=config,
-                    parent=vs,
                     annotation_metadata=metadata,
                     annotation_config=annotation_config,
+                    metadata=annotation_config["metadata"], # TODO this is redundant and should probably be fixed?
+                    parents=parents,
                 ),
             )
             identifier += 1
@@ -490,7 +492,7 @@ class AnnotationImporter(BaseImporter):
                 AnnotationImporter(
                     identifier=identifier,
                     config=config,
-                    parent=vs,
+                    parents=[vs],
                     annotation_metadata=metadata,
                     annotation_config=annotation_config,
                 ),

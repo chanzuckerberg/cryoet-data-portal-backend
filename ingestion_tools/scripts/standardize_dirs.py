@@ -103,7 +103,7 @@ def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dic
         for dep in import_class.dependencies:
             parent_args[dep] = parents[dep]
 
-        items = import_class.finder(config, config.fs, **parent_args)
+        items = import_class.finder(config, **parent_args)
         for item in items:
             print("found an item!!")
             if list(filter(lambda x: x.match(item.name), exclude_patterns)):
