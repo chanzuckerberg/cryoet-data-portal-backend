@@ -45,10 +45,10 @@ class KeyImageImporter(BaseImporter):
         image_path = os.path.join(self.get_output_path(), self.get_file_name(image_type))
         return os.path.relpath(image_path, self.config.output_prefix)
 
-    def make_key_image(self, config: DepositionImportConfig, upload: bool = True) -> None:
+    def import_item(self) -> None:
         dir = self.get_output_path()
         preview, tomo_width = None, None
-        if config.tomo_key_photo_glob:
+        if self.config.tomo_key_photo_glob:
             preview, tomo_width = self.get_existing_preview()
         if preview is None:
             preview, tomo_width = self.generate_preview_from_tomo()

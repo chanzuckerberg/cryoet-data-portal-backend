@@ -18,11 +18,11 @@ class TiltSeriesImporter(VolumeImporter):
     dependencies = ["run"]
     has_metadata = True
 
-    def import_tiltseries(self, write_mrc: bool = True, write_zarr: bool = True) -> None:
+    def import_item(self) -> None:
         _ = self.scale_mrcfile(
             scale_z_axis=False,
-            write_mrc=write_mrc,
-            write_zarr=write_zarr,
+            write_mrc=self.config.write_mrc,
+            write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_pixel_spacing(),
         )
 

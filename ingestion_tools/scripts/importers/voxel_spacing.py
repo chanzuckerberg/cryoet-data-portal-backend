@@ -100,8 +100,14 @@ class VoxelSpacingImporter(BaseImporter):
     def format_voxel_spacing(cls, voxel_spacing: float) -> None:
         return "{:.3f}".format(round(voxel_spacing, 3))
 
+    def as_float(self) -> float:
+        return float(self.name)
+
     def get_voxel_spacing(self):
         return self.name
+
+    def import_item(self):
+        pass
 
     def get_existing_annotation_metadatas(self, fs):
         # TODO use an annotation finder object here when we have one.

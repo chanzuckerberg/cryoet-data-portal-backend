@@ -67,6 +67,11 @@ class DepositionImportConfig:
         self.run_data_map = {}
         self.run_to_frame_map = {}
         self.run_to_ts_map = {}
+
+        # TODO these are controlled by CLI flags, which we should probably handle as a group.
+        self.write_mrc: bool = True
+        self.write_zarr: bool = True
+
         with open(config_path, "r") as conffile:
             config = yaml.safe_load(conffile)
 

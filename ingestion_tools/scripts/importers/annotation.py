@@ -15,7 +15,7 @@ from common.metadata import AnnotationMetadata
 from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
-    from importers.voxel_spacing import VoxelSpacingImporter
+    pass
 
 
 class AnnotationObject(TypedDict):
@@ -391,7 +391,7 @@ class AnnotationImporter(BaseImporter):
         output_dir = super().get_output_path()
         return self.annotation_metadata.get_filename_prefix(output_dir, self.identifier)
 
-    def import_annotations(self, write: bool):
+    def import_item(self):
         run_name = self.get_run().name
         dest_prefix = self.get_output_path()
         for source in self.sources:
@@ -401,7 +401,7 @@ class AnnotationImporter(BaseImporter):
             except Exception:
                 print(f"Skipping writing annotations for run {run_name} due to missing files")
                 continue
-            source.convert(self.config.fs, self.config.input_path, dest_prefix, self.get_voxel_spacing())
+            source.convert(self.config.fs, self.config.input_path, dest_prefix, self.get_voxel_spacing().as_float())
 
     def import_metadata(self):
         run_name = self.get_run().name
@@ -470,31 +470,6 @@ class AnnotationImporter(BaseImporter):
                     annotation_config=annotation_config,
                     metadata=annotation_config["metadata"],  # TODO this is redundant and should probably be fixed?
                     parents=parents,
-                ),
-            )
-            identifier += 1
-
-        # Annotation has to have at least one valid source to be imported.
-        annotations = [a for a in annotations if a.has_valid_source()]
-
-        return annotations
-
-    @classmethod
-    def find_annotations(cls, config, vs: "VoxelSpacingImporter"):
-        annotations = []
-        # make this a dict so we can pass by reference
-        current_identifier = {"identifier": 100}
-        existing_annotations = vs.get_existing_annotation_metadatas(config.fs)
-        for annotation_config in config.annotation_template:
-            metadata = AnnotationMetadata(config.fs, config.deposition_id, annotation_config["metadata"])
-            identifier = cls.get_identifier(metadata, existing_annotations, current_identifier)
-            annotations.append(
-                AnnotationImporter(
-                    identifier=identifier,
-                    config=config,
-                    parents=[vs],
-                    annotation_metadata=metadata,
-                    annotation_config=annotation_config,
                 ),
             )
             identifier += 1

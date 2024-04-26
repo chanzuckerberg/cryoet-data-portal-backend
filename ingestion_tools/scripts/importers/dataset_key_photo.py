@@ -23,7 +23,7 @@ class DatasetKeyPhotoImporter(BaseImporter):
     dependencies = []  # TODO this thing has dependencies on *imported* runs!!
     has_metadata = False
 
-    def import_key_photo(self) -> None:
+    def import_item(self) -> None:
         path = self.config.get_output_path(self)
         for image_type in ["snapshot", "thumbnail"]:
             self.save_image(image_type, path)

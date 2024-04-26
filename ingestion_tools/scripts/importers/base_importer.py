@@ -10,14 +10,15 @@ from common.image import get_header, get_tomo_metadata, get_voxel_size, scale_mr
 
 if TYPE_CHECKING:
     from common.config import DepositionImportConfig
-    from common.fs import FileSystemApi
     from importers.dataset import DatasetImporter
     from importers.run import RunImporter
     from importers.tomogram import TomogramImporter
+    from importers.voxel_spacing import VoxelSpacingImporter
 else:
     RunImporter = "RunImporter"
     DatasetImporter = "DatasetImporter"
     TomogramImporter = "TomogramImporter"
+    VoxelSpacingImporter = "VoxelSpacingImporter"
     DepositionImportConfig = "DepositionImportConfig"
     FileSystemApi = "FileSystemApi"
 
@@ -46,10 +47,7 @@ class BaseImporter:
     def parent_getter(self, type_key: str) -> "BaseImporter":
         if self.type_key == type_key:
             return self
-        for parent in self.parents:
-            item = parent.parent_getter(type_key)
-            if item:
-                return item
+        return self.parents[type_key]
 
     def get_glob_vars(self) -> dict[str, Any]:
         glob_vars = {}
@@ -81,6 +79,9 @@ class BaseImporter:
 
     def get_tomogram(self) -> TomogramImporter:
         return self.parent_getter("tomogram")
+
+    def get_voxel_spacing(self) -> VoxelSpacingImporter:
+        return self.parent_getter("voxel_spacing")
 
     def get_output_path(self) -> str:
         return self.config.get_output_path(self)

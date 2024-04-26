@@ -11,6 +11,9 @@ class DatasetImporter(BaseImporter):
     dependencies = []
     has_metadata = True
 
+    def import_item(self) -> None:
+        pass
+
     def import_metadata(self, output_prefix: str) -> None:
         meta = DatasetMetadata(self.config.fs, self.config.deposition_id, self.config.dataset_template)
         extra_data = self.load_extra_metadata()

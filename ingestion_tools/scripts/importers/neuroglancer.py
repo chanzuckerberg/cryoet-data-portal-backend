@@ -21,7 +21,7 @@ class NeuroglancerImporter(BaseImporter):
     dependencies = ["tomogram"]
     has_metadata = False
 
-    def import_neuroglancer(self) -> str:
+    def import_item(self) -> str:
         dest_file = self.get_output_path()
         ng_contents = self.get_config_json(self.parent.get_output_path() + ".zarr")
         meta = NeuroglancerMetadata(self.config.fs, self.config.deposition_id, ng_contents)

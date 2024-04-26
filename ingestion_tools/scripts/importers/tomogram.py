@@ -23,10 +23,12 @@ class TomogramImporter(VolumeImporter):
     def get_voxel_spacing(self) -> float:
         return float(self.parent.name)
 
-    def import_tomogram(self, write_mrc: bool = True, write_zarr: bool = True) -> None:
+    def import_item(self) -> None:
         if self.config.tomo_format != "mrc":
             raise NotImplementedError("implement handling for other tomo input formats!")
-        _ = self.scale_mrcfile(write_mrc=write_mrc, write_zarr=write_zarr, voxel_spacing=self.get_voxel_spacing())
+        _ = self.scale_mrcfile(
+            write_mrc=self.config.write_mrc, write_zarr=self.config.write_zarr, voxel_spacing=self.get_voxel_spacing(),
+        )
 
     def import_metadata(self, write: bool) -> None:
         dest_tomo_metadata = self.get_metadata_path()

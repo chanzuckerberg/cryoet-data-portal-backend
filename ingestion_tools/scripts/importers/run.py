@@ -28,7 +28,10 @@ class RunImporter(BaseImporter):
         if not self.name:
             self.name = self.config.run_name_regex.match(os.path.basename(self.path))[1]
 
-    def import_run_metadata(self) -> None:
+    def import_item(self) -> None:
+        pass
+
+    def import_metadata(self) -> None:
         dest_run_metadata = self.get_metadata_path()
         metadata = RunMetadata(self.config.fs, self.config.deposition_id, self.config.run_template)
         merge_data = {"run_name": self.name}
