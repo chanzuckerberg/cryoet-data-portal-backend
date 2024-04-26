@@ -78,7 +78,7 @@ class DepositionImportConfig:
                     del config[item.plural_key]
 
             # Copy the remaining standardization config keys over to this object.
-            for k, v in config.get('standardization_config', {}).items():
+            for k, v in config.get("standardization_config", {}).items():
                 if "regex" in k:
                     v = re.compile(v)
                 setattr(self, k, v)

@@ -3,8 +3,6 @@ import re
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any
 
-from common.fs import FileSystemApi
-
 if TYPE_CHECKING:
     from common.config import DepositionImportConfig
 else:
@@ -124,7 +122,13 @@ class DepositionObjectImporterFactory(ABC):
     ) -> BaseFinder:
         pass
 
-    def find(self, cls, config: DepositionImportConfig, metadata: dict[str, Any], **parent_objects: dict[str, Any] | None):
+    def find(
+        self,
+        cls,
+        config: DepositionImportConfig,
+        metadata: dict[str, Any],
+        **parent_objects: dict[str, Any] | None,
+    ):
         loader = self.load(config, **parent_objects)
         glob_vars = {}
         for _, parent in parent_objects.items():

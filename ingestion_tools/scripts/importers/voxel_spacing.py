@@ -12,7 +12,6 @@ from common.finders import (
     DestinationGlobFinder,
     SourceGlobFinder,
 )
-from common.fs import FileSystemApi
 from common.image import get_voxel_size
 from importers.base_importer import BaseImporter
 
@@ -53,7 +52,7 @@ class TomogramHeaderFinder(BaseFinder):
             path = fname
             # Make this extensible to support other tomo metadata later if need be.
             if self.header_key == "voxel_size":
-                size = get_voxel_size(fs, path).item()
+                size = get_voxel_size(config.fs, path).item()
                 responses[size] = ""
             else:
                 raise Exception("invalid header key")

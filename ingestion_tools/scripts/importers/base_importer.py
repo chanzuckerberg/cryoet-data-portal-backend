@@ -102,6 +102,7 @@ class BaseImporter:
                 for item in finder.find(cls, config, metadata, **parents):
                     yield item
 
+
 class VolumeImporter(BaseImporter):
     def __init__(
         self,

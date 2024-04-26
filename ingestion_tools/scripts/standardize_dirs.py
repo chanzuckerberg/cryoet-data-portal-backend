@@ -1,8 +1,5 @@
-import json
-from typing import Optional
-from collections import defaultdict
 import re
-from typing import Any
+from typing import Any, Optional
 
 import click
 from importers.annotation import AnnotationImporter
@@ -46,14 +43,14 @@ IMPORTER_DEP_TREE = {
                     NeuroglancerImporter: {},
                 },
                 AnnotationImporter: {},
-            }, 
+            },
             FrameImporter: {
                 GainImporter: {},
             },
             TiltSeriesImporter: {},
         },
         DatasetKeyPhotoImporter: {},
-    }
+    },
 }
 
 
@@ -81,12 +78,13 @@ def common_options(func):
 def flatten_dependency_tree(tree):
     treedict = {}
     for k, v in tree.items():
-        treedict[k] = set([])
+        treedict[k] = set()
         treedict[k].update(set(v.keys()))
         for subtype, subdict in flatten_dependency_tree(v).items():
             treedict[subtype] = subdict
             treedict[k].update(subdict)
     return treedict
+
 
 def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dict[str, Any]] = None):
     if parents is None:
@@ -125,6 +123,7 @@ def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dic
                 # item.import_metadata()
         exit()
 
+
 @cli.command()
 @click.argument("config_file", required=True, type=str)
 @click.argument("input_bucket", required=True, type=str)
@@ -157,12 +156,12 @@ def convert2(
 
     iteration_deps = flatten_dependency_tree(IMPORTER_DEP_TREE).items()
     if import_everything:
-        to_import = set([k for k in IMPORTERS])
+        to_import = set(IMPORTERS)
     else:
-        to_import = set([k for k in IMPORTERS if kwargs.get(f"import_{k.plural_key}")])
-        to_import.update(set([k for k in IMPORTERS if kwargs.get(f"import_{k.type_key}_metadata")]))
+        to_import = {k for k in IMPORTERS if kwargs.get(f"import_{k.plural_key}")}
+        to_import.update({k for k in IMPORTERS if kwargs.get(f"import_{k.type_key}_metadata")})
     to_iterate = to_import
-    to_iterate = to_iterate.union(set([k for k, v in iteration_deps if to_import.intersection(v)]))
+    to_iterate = to_iterate.union({k for k, v in iteration_deps if to_import.intersection(v)})
     do_import(config, IMPORTER_DEP_TREE, to_import, to_iterate, kwargs)
     exit()
 

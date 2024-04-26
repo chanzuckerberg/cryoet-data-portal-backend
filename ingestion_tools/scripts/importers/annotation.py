@@ -468,7 +468,7 @@ class AnnotationImporter(BaseImporter):
                     config=config,
                     annotation_metadata=metadata,
                     annotation_config=annotation_config,
-                    metadata=annotation_config["metadata"], # TODO this is redundant and should probably be fixed?
+                    metadata=annotation_config["metadata"],  # TODO this is redundant and should probably be fixed?
                     parents=parents,
                 ),
             )

@@ -1,5 +1,3 @@
-from typing import Any
-
 from common.finders import DefaultImporterFactory
 from common.metadata import DatasetMetadata
 from importers.base_importer import BaseImporter
