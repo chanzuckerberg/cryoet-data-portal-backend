@@ -13,13 +13,6 @@ class DatasetImporter(BaseImporter):
     dependencies = []
     has_metadata = True
 
-    def __init__(
-        self,
-        *args: list[Any],
-        **kwargs: dict[str, Any],
-    ):
-        super().__init__(*args, **kwargs)
-
     def import_metadata(self, output_prefix: str) -> None:
         meta = DatasetMetadata(self.config.fs, self.config.deposition_id, self.config.dataset_template)
         extra_data = self.load_extra_metadata()
