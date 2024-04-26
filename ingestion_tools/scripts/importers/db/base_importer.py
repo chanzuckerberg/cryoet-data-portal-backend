@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from datetime import datetime
 from pathlib import PurePath
@@ -13,6 +14,8 @@ if TYPE_CHECKING:
     from mypy_boto3_s3 import S3Client
 else:
     S3Client = object
+
+logger = logging.getLogger("db_import")
 
 
 class DBImportConfig:
@@ -34,7 +37,7 @@ class DBImportConfig:
 
     def find_subdirs_with_files(self, prefix: str, target_filename: str) -> list[str]:
         paginator = self.s3_client.get_paginator("list_objects_v2")
-        print(f"looking for prefix {prefix}")
+        logger.info("looking for prefix %s", prefix)
         pages = paginator.paginate(Bucket=self.bucket_name, Prefix=prefix, Delimiter="/")
         result = []
         for page in pages:
@@ -49,7 +52,7 @@ class DBImportConfig:
 
     def glob_s3(self, prefix: str, glob_string: str, is_file: bool = True):
         paginator = self.s3_client.get_paginator("list_objects_v2")
-        print(f"looking for prefix {prefix}{glob_string}")
+        logger.info("looking for prefix %s%s", prefix, glob_string)
         pages = paginator.paginate(Bucket=self.bucket_name, Prefix=prefix, Delimiter="/")
         page_key = "Contents" if is_file else "CommonPrefixes"
         obj_key = "Key" if is_file else "Prefix"
@@ -70,7 +73,7 @@ class DBImportConfig:
             return json.loads(text["Body"].read())
         except ClientError as ex:
             if ex.response["Error"]["Code"] == "NoSuchKey" and not is_file_required:
-                print(f"NoSuchKey on bucket_name={self.bucket_name} key={key}")
+                logger.warning("NoSuchKey on bucket_name=%s key=%s", self.bucket_name, key)
                 return None
             else:
                 raise
@@ -127,7 +130,7 @@ class BaseDBImporter:
         Gets the mapping, and queries to check if the table already has a record matching the id fields. If not, it will
         create a new object and insert it, else it will update the object with values from the metadata.
         """
-        # TODO: print metadata if debug
+        logger.debug(json.dumps(self.metadata, indent=2))
         data_map = self.get_data_map()
         identifiers = {id_field: map_to_value(id_field, data_map, self.metadata) for id_field in self.get_id_fields()}
         klass = self.get_db_model_class()
@@ -209,7 +212,7 @@ class StaleDeletionDBImporter(BaseDBImporter):
             db_obj.save(force_insert=force_insert)
 
         for key, stale_obj in existing_objs.items():
-            print(f"Deleting record of {klass} with id={stale_obj.id} and key={key}")
+            logger.info("Deleting record of %s with id=%d and key=%s", klass, stale_obj.id, key)
             stale_obj.delete_instance()
 
 
@@ -261,6 +264,11 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
 
     def mark_as_active(self, record: BaseModel):
         """Mark a record as active by removing it from existing objects when encountered."""
+        logger.info(
+            "marking as active %s with identifiers %s",
+            self.ref_klass.get_db_model_class(),
+            self.get_hash_value(record),
+        )
         self.existing_objects.pop(self.get_hash_value(record), None)
 
     def remove_stale_objects(self):
@@ -269,13 +277,25 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
         the stale object.
         """
         for key, stale_obj in self.existing_objects.items():
-            print(f"Deleting record of {self} with id={stale_obj.id} and key={key}")
             for child_rel, deletion_helper in self.children_tables_references().items():
                 for entry in getattr(stale_obj, child_rel):
                     if deletion_helper is None:
+                        logger.info(
+                            "Deleting record of %s with id=%d data=%s to delete parent: %s",
+                            type(entry),
+                            entry.id,
+                            entry.__data__,
+                            type(stale_obj),
+                        )
                         entry.delete_instance()
                     else:
                         # Using stale_obj.id as all the use cases currently are satisfied by this.
                         klass = deletion_helper(stale_obj.id, self.config)
                         klass.remove_stale_objects()
+            logger.info(
+                "Deleting record of %s with id=%d and key=%s",
+                self.ref_klass.get_db_model_class(),
+                stale_obj.id,
+                key,
+            )
             stale_obj.delete_instance()

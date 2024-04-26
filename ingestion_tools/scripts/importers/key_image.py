@@ -73,25 +73,28 @@ class KeyImageImporter(BaseImporter):
             return data, data.shape[-1]
         return None, None
 
+    def load_annotations(self) -> Generator[np.ndarray, None, None]:
+        for annotation in AnnotationImporter.find_annotations(self.config, self.parent):
+            for source in annotation.sources:
+                if source.shape.lower() not in ["orientedpoint", "point"]:
+                    continue
+                annotation_path = annotation.get_output_path()
+                try:
+                    annotation_data = source.get_output_data(self.config.fs, annotation_path)
+                    yield annotation_data
+                    # We prefer point files over oriented point files, so stop if we just processed that.
+                    if source.shape.lower() == "point":
+                        break
+                except FileNotFoundError:
+                    print(f"Unable to load annotation data for {source.get_output_filename(annotation_path)}")
+
     def generate_preview_from_tomo(self) -> tuple[np.ndarray, np.ndarray]:
         tomo_filename = self.parent.get_output_path() + ".zarr"
 
         # TODO: optimize to check if image needs to be regenerated
         print(f"loading tomogram {tomo_filename}")
         data = ZarrReader(self.config.fs, tomo_filename).get_data()
-
-        def load_annotations() -> Generator[np.ndarray, None, None]:
-            for annotation in AnnotationImporter.find_annotations(self.config, self.parent):
-                for source in annotation.sources:
-                    if source.shape.lower() not in ["orientedpoint", "point"]:
-                        continue
-                    # yield our point data
-                    yield source.get_output_data(self.config.fs, annotation.get_output_path())
-                    # We prefer point files over oriented point files, so stop if we just processed that.
-                    if source.shape.lower() == "point":
-                        break
-
-        preview = generate_preview(data, projection_depth=40, annotations=load_annotations(), cmap="tab10")
+        preview = generate_preview(data, projection_depth=40, annotations=self.load_annotations(), cmap="tab10")
         return preview, data.shape[-1]
 
     @staticmethod

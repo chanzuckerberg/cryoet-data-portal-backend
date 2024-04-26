@@ -1,7 +1,14 @@
 from typing import Any, Callable
 
 import pytest as pytest
-from tests.db_import.populate_db import DATASET_ID, RUN_ID, TILTSERIES_ID, populate_tiltseries
+from tests.db_import.populate_db import (
+    DATASET_ID,
+    RUN1_ID,
+    TILTSERIES_ID,
+    populate_stale_run,
+    populate_stale_tiltseries,
+    populate_tiltseries,
+)
 
 import common.db_models as models
 
@@ -11,7 +18,7 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
     return [
         {
             "id": TILTSERIES_ID,
-            "run_id": RUN_ID,
+            "run_id": RUN1_ID,
             "s3_mrc_bin1": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/ts_foo.mrc",
             "https_mrc_bin1": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/ts_foo.mrc",
             "s3_omezarr_dir": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/ts_foo.zarr",
@@ -32,9 +39,9 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "microscope_additional_info": "info about the scope",
             "camera_manufacturer": "Gatan",
             "camera_model": "K2 Summit",
-            "tilt_min": -40,
-            "tilt_max": 40,
-            "tilt_range": 80,
+            "tilt_min": -40.01,
+            "tilt_max": 40.97,
+            "tilt_range": 80.98,
             "tilt_step": 2,
             "tilting_scheme": "Dose symmetric from 0.0 degrees",
             "tilt_axis": 84.7,
@@ -84,6 +91,25 @@ def test_import_tiltseries(
     expected_tiltseries: list[dict[str, Any]],
 ) -> None:
     populate_tiltseries()
+    actual = verify_dataset_import(["--import-tiltseries"])
+    expected_iter = iter(expected_tiltseries)
+    for run in actual.runs.order_by(models.Run.name):
+        for tiltseries in run.tiltseries:
+            expected = next(expected_iter)
+            if "run_id" not in expected:
+                expected["run_id"] = run.id
+            verify_model(tiltseries, expected)
+
+
+# Tests addition of new tiltseries, and updating entries already existing in db
+def test_import_tiltseries_stale_deletion(
+    verify_dataset_import: Callable[[list[str]], models.Dataset],
+    verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
+    expected_tiltseries: list[dict[str, Any]],
+) -> None:
+    populate_tiltseries()
+    populate_stale_run()
+    populate_stale_tiltseries()
     actual = verify_dataset_import(["--import-tiltseries"])
     expected_iter = iter(expected_tiltseries)
     for run in actual.runs.order_by(models.Run.name):

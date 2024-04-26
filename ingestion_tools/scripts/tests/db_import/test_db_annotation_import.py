@@ -84,16 +84,26 @@ def expected_annotation_authors() -> list[dict[str, Any]]:
             "name": "Jane Smith",
             "corresponding_author_status": False,
             "primary_annotator_status": True,
+            "primary_author_status": True,
             "author_list_order": 1,
+        },
+        {
+            "annotation_id": ANNOTATION_ID,
+            "name": "J Carpenter",
+            "corresponding_author_status": False,
+            "primary_annotator_status": True,
+            "primary_author_status": True,
+            "author_list_order": 2,
         },
         {
             "annotation_id": ANNOTATION_ID,
             "name": "John Doe",
             "corresponding_author_status": False,
             "primary_annotator_status": False,
+            "primary_author_status": False,
             "orcid": "0000-0000-1234-0000",
             "email": "jdoe@test.com",
-            "author_list_order": 2,
+            "author_list_order": 3,
         },
     ]
 

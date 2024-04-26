@@ -5,10 +5,10 @@ import os.path
 import re
 from copy import deepcopy
 from typing import TYPE_CHECKING, Any
-from common.finders import DatasetImporterFactory, RunImporterFactory, VSImporterFactory
 
 import yaml
 
+from common.finders import DatasetImporterFactory, RunImporterFactory, VSImporterFactory
 from common.fs import FileSystemApi
 
 if TYPE_CHECKING:
@@ -65,7 +65,7 @@ class DepositionImportConfig:
     run_data_map: dict[str, Any]
     run_data_map_file: str | None = None
     # Data Finders
-    #vs_finder_config: DepositionObjectImporterFactory | None = None
+    # vs_finder_config: DepositionObjectImporterFactory | None = None
     dataset_finder_config: DatasetImporterFactory | None = None
     run_finder_config: RunImporterFactory | None = None
     vs_finder_config: VSImporterFactory | None = None
@@ -73,6 +73,10 @@ class DepositionImportConfig:
     def __init__(self, fs: FileSystemApi, config_path: str, output_prefix: str, input_bucket: str):
         self.output_prefix = output_prefix
         self.fs = fs
+        self.run_to_tomo_map = {}
+        self.run_data_map = {}
+        self.run_to_frame_map = {}
+        self.run_to_ts_map = {}
         with open(config_path, "r") as conffile:
             dataset_config = yaml.safe_load(conffile)
             config = dataset_config["standardization_config"]
@@ -141,7 +145,7 @@ class DepositionImportConfig:
             map_filename = getattr(self, file_attr)
         if not map_filename:
             return mapdata
-        with self.fs.open(f"{self.input_path}/{map_filename}", "r") as tsvfile:
+        with self.fs.open(os.path.join(self.input_path, map_filename), "r") as tsvfile:
             if map_filename.endswith("tsv"):
                 reader = csv.DictReader(tsvfile, delimiter="\t")
             else:
@@ -157,7 +161,7 @@ class DepositionImportConfig:
             map_filename = getattr(self, file_attr)
         if not map_filename:
             return mapdata
-        with self.fs.open(f"{self.input_path}/{map_filename}", "r") as csvfile:
+        with self.fs.open(os.path.join(self.input_path, map_filename), "r") as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
                 mapdata[row[0]] = row[1]
@@ -262,31 +266,27 @@ class DepositionImportConfig:
 
     def resolve_output_path(self, key: str, obj: BaseImporter) -> str:
         paths = {
-            "tomogram": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram",
-            "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos",
-            "tiltseries": "{dataset_name}/{run_name}/TiltSeries",
-            "frames": "{dataset_name}/{run_name}/Frames",
             "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
             "annotation_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
-            "run_metadata": "{dataset_name}/{run_name}/run_metadata.json",
-            "tomogram_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/tomogram_metadata.json",
-            "tiltseries_metadata": "{dataset_name}/{run_name}/TiltSeries/tiltseries_metadata.json",
-            "dataset_metadata": "{dataset_name}/dataset_metadata.json",
-            "run": "{dataset_name}/{run_name}",
             "dataset": "{dataset_name}",
             "dataset_keyphoto": "Images",
+            "dataset_metadata": "{dataset_name}/dataset_metadata.json",
+            "frames": "{dataset_name}/{run_name}/Frames",
+            "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos",
             "neuroglancer": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/neuroglancer_config.json",
+            "run": "{dataset_name}/{run_name}",
+            "run_metadata": "{dataset_name}/{run_name}/run_metadata.json",
+            "tiltseries": "{dataset_name}/{run_name}/TiltSeries",
+            "tiltseries_metadata": "{dataset_name}/{run_name}/TiltSeries/tiltseries_metadata.json",
+            "tomogram": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram",
+            "tomogram_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/tomogram_metadata.json",
         }
         output_prefix = self.output_prefix
         glob_vars = obj.get_glob_vars()
         # support older configs that specified the dataset name as the output prefix
         if self.output_prefix == glob_vars["dataset_name"]:
             output_prefix = ""
-        path = os.path.join(
-            output_prefix,
-            self.destination_prefix,
-            paths[key].format(**glob_vars)
-        )
+        path = os.path.join(output_prefix, self.destination_prefix, paths[key].format(**glob_vars))
         self.fs.makedirs(path)
         return path
 

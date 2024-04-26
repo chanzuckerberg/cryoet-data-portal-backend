@@ -2,7 +2,7 @@ dataset:
   dataset_identifier: 10059
   dataset_description: "This is 2nd of 41 sets of data studying Legionella pneumophila\
     \ collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Legionella\
-    \ thyA \xCE\u201DdotG.This strain is published in Nat Mic (2018). Roy and Liu."
+    \ thyA \u2206dotG.This strain is published in Nat Mic (2018). Roy and Liu."
   dataset_title: L. pneumophila CR2715_Janelia
   authors: &id001
   - name: Debnath Ghosal

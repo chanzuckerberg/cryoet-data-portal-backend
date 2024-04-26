@@ -34,7 +34,7 @@ ycw2012-11-14-64,['RAPTOR'],FIDUCIAL,13.059,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAP
 ycw2012-11-14-65,['RAPTOR'],FIDUCIAL,13.059,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030024.mrc,1.5,starting tilt to max then min,110.0
 ycw2012-11-14-66,['RAPTOR'],FIDUCIAL,13.059,K2,UCSFTomo,FEI,Polara,3.265,2.0,RAPTOR,60.0,-60.0,rawdata/Bdellovibrio_wt_20121114_0030025.mrc,1.5,starting tilt to max then min,110.0
 ycw2012-12-05-28,['RAPTOR'],FIDUCIAL,16.145,K2,UCSF Tomo,FEI,Polara,4.036,2.0,RAPTOR,60.0,-60.0,rawdata/Invasion_complex_120002.mrc,1.0,starting tilt to max then min,114.0
-ycw2013-05-01-10,['RAPTOR'],FIDUCIAL,19.315,K2,UCSF Tomo,TFS,Krios,4.829,2.7,RAPTOR;RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0010.mrc,1.0,starting tilt to max then min,100.0
+ycw2013-05-01-10,['RAPTOR'],FIDUCIAL,19.315,K2,UCSF Tomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0010.mrc,1.0,starting tilt to max then min,100.0
 ycw2013-05-01-11,['RAPTOR'],FIDUCIAL,19.315,K2,UCSF Tomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0011.mrc,1.0,starting tilt to max then min,100.0
 ycw2013-05-01-15,['RAPTOR'],FIDUCIAL,19.315,K2,UCSF Tomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0015.mrc,1.0,starting tilt to max then min,100.0
 ycw2013-05-01-25,['RAPTOR'],FIDUCIAL,19.315,K2,UCSF Tomo,TFS,Krios,4.829,2.7,RAPTOR,65.0,-65.0,rawdata/grid3-tiltseries0025.mrc,1.0,starting tilt to max then min,100.0

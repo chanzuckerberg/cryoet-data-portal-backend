@@ -14,9 +14,8 @@ dataset:
     name: Gluconacetobacter hansenii
     taxonomy_id: 714995
   sample_type: Organism
-  sample_preparation: "\uFFFC\uFFFCLittle Petri dishes were inoculateed with 1mL of\
-    \ Ghansenii cultures with a gold grid layed at the bottom. Incubated at 30C for\
-    \ 6 hours"
+  sample_preparation: Little Petri dishes were inoculateed with 1mL of Ghansenii cultures
+    with a gold grid layed at the bottom. Incubated at 30C for 6 hours
   grid_preparation: BC 0% 22C - BT5s BF15 DT2s +1uL on each side (Frontblotted more
     than it backblotted) - Thick biofilm
   dates:

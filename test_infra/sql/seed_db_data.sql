@@ -29,16 +29,16 @@ INSERT INTO public.annotations VALUES (43, 's3://test-public-bucket/20002/RUN001
 INSERT INTO public.annotations VALUES (44, 's3://test-public-bucket/20002/RUN002/TomogramVoxelSpacing13.48/Annotations/author4-ribosome-1.0.json', 'http://localhost:4444/20002/RUN002/TomogramVoxelSpacing13.48/Annotations/author4-ribosome-1.0.json', '2023-04-01', '2023-06-01', '2023-06-01', 'EMPIAR-77777', 'Manual', true, 'Ribosome', 'GO:000000A', NULL, NULL, 16, NULL, NULL, NULL, 7, NULL, true);
 INSERT INTO public.annotations VALUES (45, 's3://test-public-bucket/20002/RUN002/TomogramVoxelSpacing13.48/Annotations/author4-spike-1.0.json', 'http://localhost:4444/20002/RUN002/TomogramVoxelSpacing13.48/Annotations/author4-spike-1.0.json', '2023-04-01', '2023-06-01', '2023-06-01', 'EMPIAR-77777', 'Manual', true, 'Spike Protein', 'GO:000000A', NULL, NULL, 16, NULL, NULL, NULL, 7, NULL, true);
 
-INSERT INTO public.annotation_authors VALUES (50, 40, 'Author 1', '0000-0000-0000-0007', false, true, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO public.annotation_authors VALUES (51, 40, 'Author 2', '0000-0000-0000-0008', false, true, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO public.annotation_authors VALUES (52, 41, 'Author 1', '0000-0000-0000-0007', false, true, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO public.annotation_authors VALUES (53, 41, 'Author 2', '0000-0000-0000-0008', false, true, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO public.annotation_authors VALUES (54, 42, 'Author 3', '0000-0000-0000-0039', false, true, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO public.annotation_authors VALUES (55, 42, 'Author 4', '0000-0000-0000-0049', false, true, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO public.annotation_authors VALUES (56, 43, 'Author 5', '0000-0000-0000-0059', false, true, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO public.annotation_authors VALUES (57, 44, 'Author 6', '0000-0000-0000-0069', false, true, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO public.annotation_authors VALUES (58, 45, 'Author 7', '0000-0000-0000-0079', false, true, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO public.annotation_authors VALUES (59, 45, 'Author 8', '0000-0000-0000-0089', false, true, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.annotation_authors VALUES (50, 40, 'Author 1', '0000-0000-0000-0007', false, true, NULL, NULL, NULL, NULL, NULL, true);
+INSERT INTO public.annotation_authors VALUES (51, 40, 'Author 2', '0000-0000-0000-0008', false, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.annotation_authors VALUES (52, 41, 'Author 1', '0000-0000-0000-0007', false, true, NULL, NULL, NULL, NULL, NULL, true);
+INSERT INTO public.annotation_authors VALUES (53, 41, 'Author 2', '0000-0000-0000-0008', true,  NULL, NULL, NULL, NULL, NULL, NULL  NULL);
+INSERT INTO public.annotation_authors VALUES (54, 42, 'Author 3', '0000-0000-0000-0039', false, true, NULL, NULL, NULL, NULL, NULL, true);
+INSERT INTO public.annotation_authors VALUES (55, 42, 'Author 4', '0000-0000-0000-0049', true, false, NULL, NULL, NULL, NULL, NULL, false);
+INSERT INTO public.annotation_authors VALUES (56, 43, 'Author 5', '0000-0000-0000-0059', false, true, NULL, NULL, NULL, NULL, NULL, true);
+INSERT INTO public.annotation_authors VALUES (57, 44, 'Author 6', '0000-0000-0000-0069', false, true, NULL, NULL, NULL, NULL, NULL, true);
+INSERT INTO public.annotation_authors VALUES (58, 45, 'Author 7', '0000-0000-0000-0079', false, true, NULL, NULL, NULL, NULL, NULL, true);
+INSERT INTO public.annotation_authors VALUES (59, 45, 'Author 8', '0000-0000-0000-0089', false, true, NULL, NULL, NULL, NULL, NULL, true);
 
 
 INSERT INTO public.annotation_files VALUES (70, 40, 'OrientedPoint', 'ndjson', 'http://localhost:4444/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/mitochondria.ndjson', 's3://test-public-bucket/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/mitochondria.ndjson');

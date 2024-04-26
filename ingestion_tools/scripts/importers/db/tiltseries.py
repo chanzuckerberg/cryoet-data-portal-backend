@@ -2,7 +2,7 @@ from typing import Any
 
 from common import db_models
 from common.db_models import BaseModel
-from importers.db.base_importer import BaseDBImporter, DBImportConfig
+from importers.db.base_importer import BaseDBImporter, DBImportConfig, StaleParentDeletionDBImporter
 from importers.db.run import RunDBImporter
 
 
@@ -43,8 +43,6 @@ class TiltSeriesDBImporter(BaseDBImporter):
             "microscope_additional_info": ["microscope_additional_info"],
             "camera_manufacturer": ["camera", "manufacturer"],
             "camera_model": ["camera", "model"],
-            "tilt_min": ["tilt_range", "min"],
-            "tilt_max": ["tilt_range", "max"],
             "tilt_step": ["tilt_step"],
             "tilting_scheme": ["tilting_scheme"],
             "tilt_axis": ["tilt_axis"],
@@ -63,9 +61,13 @@ class TiltSeriesDBImporter(BaseDBImporter):
     def get_computed_fields(self) -> dict[str, Any]:
         https_prefix = self.config.https_prefix
         s3_prefix = self.config.s3_prefix
+        tilt_max = float(self.metadata["tilt_range"]["max"])
+        tilt_min = float(self.metadata["tilt_range"]["min"])
         extra_data = {
             "run_id": self.run_id,
-            "tilt_range": abs(float(self.metadata["tilt_range"]["max"]) - float(self.metadata["tilt_range"]["min"])),
+            "tilt_min": round(tilt_min, 2),
+            "tilt_max": round(tilt_max, 2),
+            "tilt_range": round(abs(tilt_max - tilt_min), 2),
             "is_aligned": self.metadata.get("is_aligned") or False,
         }
         if mrc_path := self.metadata.get("mrc_files", [None])[0]:
@@ -95,3 +97,13 @@ class TiltSeriesDBImporter(BaseDBImporter):
         ts_dir_path = cls.join_path(run.dir_prefix, "TiltSeries")
         ts_prefix = config.find_subdirs_with_files(ts_dir_path, "tiltseries_metadata.json")
         return cls(run_id, ts_prefix[0], run, config) if len(ts_prefix) > 0 else None
+
+
+class StaleTiltSeriesDeletionDBImporter(StaleParentDeletionDBImporter):
+    ref_klass = TiltSeriesDBImporter
+
+    def get_filters(self) -> dict[str, Any]:
+        return {"run_id": self.parent_id}
+
+    def children_tables_references(self) -> dict[str, None]:
+        return {}

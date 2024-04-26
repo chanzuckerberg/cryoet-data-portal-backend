@@ -15,7 +15,7 @@ dataset:
     taxonomy_id: 584
   sample_type: Organism
   sample_preparation: "OD=6, 4 ul loading. blotting condition 6s force/ 3s time/ 1s\
-    \ dry time, QUANTIFOIL\xAE \xE2\u20AC\u201C Holey Carbon Films 200 mesh"
+    \ dry time, QUANTIFOIL\xAE Holey Carbon Films 200 mesh"
   grid_preparation: 'single tilt. constant angular increment, step: 1.0. tilt range:
     (-60, 60). dosage: 195/A2. defocus: -10um. magnification: 22500.'
   dates:
