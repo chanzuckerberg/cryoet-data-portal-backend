@@ -20,6 +20,7 @@ if TYPE_CHECKING:
 
 
 from cryo_et_neuroglancer.write_annotations import process_annotation as encode_point_annotation
+from cryo_et_neuroglancer.write_segmentation import main as encode_segmentation
 
 
 class AnnotationObject(TypedDict):
@@ -117,27 +118,27 @@ class SegmentationMaskFile(VolumeAnnotationSource):
         input_file = self.get_source_file(fs, input_prefix)
         return scale_mrcfile(fs, self.get_output_filename(output_prefix), input_file, voxel_spacing=voxel_spacing)
 
-    def precompute_data_for_neuroglancer(
+    def neuroglancer_precompute(
         self,
         fs: FileSystemApi,
         annotation_path: str,
         output_prefix: str,
         voxel_spacing: float,
     ):
-        # tmp_path = self.get_local_neuroglancer_path(fs, annotation_path, output_prefix)
-        annotation_zarr_path = self.get_output_filename(annotation_path, "zarr")
-        # resolution = voxel_spacing / 10
-        print(annotation_zarr_path)
-        # encode_segmentation(
-        #     filename=annotation_zarr_path,
-        #     delete_existing_output_directory=True,
-        #     output_path=Path(tmp_path),
-        #     resolution=(resolution, resolution, resolution),
-        # )
-        # fs.push(tmp_path)
+        tmp_path = self.get_local_neuroglancer_path(fs, annotation_path, output_prefix)
+        annotation_zarr_path = fs.destformat(self.get_output_filename(annotation_path, "zarr"))
+        resolution = voxel_spacing / 10
+
+        encode_segmentation(
+            filename=annotation_zarr_path,
+            output_path=Path(tmp_path),
+            delete_existing_output_directory=True,
+            resolution=(resolution, resolution, resolution),
+        )
+        fs.push(tmp_path)
 
 
-class SemanticSegmentationMaskFile(VolumeAnnotationSource):
+class SemanticSegmentationMaskFile(SegmentationMaskFile):
     def __init__(
         self,
         shape: str,
