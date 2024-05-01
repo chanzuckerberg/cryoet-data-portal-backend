@@ -29,6 +29,7 @@ class BaseImporter:
     cached_find_results: dict[str, "BaseImporter"] = {}
     finder_factory: DepositionObjectImporterFactory | None = None
     dependencies: list[str] = []
+    parents: dict[str, "BaseImporter"] | None = None
 
     def __init__(
         self,
@@ -36,13 +37,16 @@ class BaseImporter:
         metadata: dict[str, Any],
         name: Optional[str] = None,
         path: Optional[str] = None,
-        parents: Optional["BaseImporter"] = None,
+        parents: Optional[dict[str, "BaseImporter"]] = None,
     ):
         self.config = config
         self.metadata = metadata
-        self.parents = parents
         self.name = name
         self.path = path
+
+        if parents is None:
+            parents = {}
+        self.parents = parents
 
     def parent_getter(self, type_key: str) -> "BaseImporter":
         if self.type_key == type_key:
@@ -61,7 +65,7 @@ class BaseImporter:
             run_name = self.name
             glob_vars.update(self.config.get_run_data_map(run_name))
 
-            # TODO: remove these in favor of the singular tsv file
+            # TODO: we want to remove these in favor of the singular tsv file!
             glob_vars["mapped_tomo_name"] = self.config.run_to_tomo_map.get(run_name)
             glob_vars["mapped_frame_name"] = self.config.run_to_frame_map.get(run_name)
             glob_vars["mapped_ts_name"] = self.config.run_to_ts_map.get(run_name)
@@ -93,7 +97,7 @@ class BaseImporter:
         return self.config.get_metadata_path(self)
 
     @classmethod
-    def finder(cls, config: DepositionImportConfig, **parents) -> list["BaseImporter"]:
+    def finder(cls, config: DepositionImportConfig, **parents: dict[str, "BaseImporter"]) -> list["BaseImporter"]:
         finder_configs = config._get_object_configs(cls.type_key, **parents)
         for finder in finder_configs:
             metadata = finder.get("metadata", {})

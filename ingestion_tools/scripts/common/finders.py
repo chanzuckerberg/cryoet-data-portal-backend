@@ -113,6 +113,13 @@ class BaseLiteralValueFinder:
 class DepositionObjectImporterFactory(ABC):
     def __init__(self, source: dict[str, Any]):
         self.source = source
+        parent_filters = source.get("parent_filters", {})
+        self.exclude_parents = {}
+        self.include_parents = {}
+        for parent_key, regex_list in parent_filters.get("require", {}).items():
+            self.include_parents[parent_key] = [re.compile(regex_str) for regex_str in regex_list]
+        for parent_key, regex_list in parent_filters.get("exclude", {}).items():
+            self.exclude_parents[parent_key] = [re.compile(regex_str) for regex_str in regex_list]
 
     @abstractmethod
     def load(
@@ -133,16 +140,19 @@ class DepositionObjectImporterFactory(ABC):
         glob_vars = {}
         for _, parent in parent_objects.items():
             glob_vars.update(parent.get_glob_vars())
-        tmp_parent_objects = list(parent_objects.values())
-        while True:
-            new_parent_objects = []
-            for parent in tmp_parent_objects:
-                glob_vars[f"{parent.type_key}_output_path"] = parent.get_output_path()
-                if parent.parents:
-                    new_parent_objects.extend(parent.parents.values())
-            if not new_parent_objects:
-                break
-            tmp_parent_objects = new_parent_objects
+        for parent_key, parent_obj in parent_objects.items():
+            # Apply include/exclude filters
+            if self.exclude_parents.get(parent_key):
+                for regex in self.exclude_parents[parent_key]:
+                    if regex.search(parent_obj.name):
+                        return []
+            if self.include_parents.get(parent_key):
+                for regex in self.include_parents[parent_key]:
+                    if not regex.search(parent_obj.name):
+                        return []
+            # These are *only* used by source glob finder, which is kindof a hack :'(
+            glob_vars[f"{parent_obj.type_key}_output_path"] = parent_obj.get_output_path()
+
         found = loader.find(config, glob_vars)
         results = []
         for name, path in found.items():
