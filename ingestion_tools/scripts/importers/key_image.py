@@ -22,7 +22,6 @@ class KeyImageImporter(BaseImporter):
     type_key = "key_image"
     plural_key = "key_images"
     finder_factory = DefaultImporterFactory
-    dependencies = ["tomogram"]
     has_metadata = False
     width_sizes = {
         "original": "orig",  # uncropped, may be used to display to user later on
@@ -30,10 +29,6 @@ class KeyImageImporter(BaseImporter):
         "snapshot": 512,  # small detail expand
         "expanded": 1024,  # large detail expand
     }
-
-    @classmethod
-    def find_key_images(cls, config: DepositionImportConfig, tomogram: TomogramImporter) -> "KeyImageImporter":
-        return [cls(config, parent=tomogram)]
 
     def get_metadata(self) -> dict[str, str]:
         return {
@@ -48,7 +43,7 @@ class KeyImageImporter(BaseImporter):
     def import_item(self) -> None:
         dir = self.get_output_path()
         preview, tomo_width = None, None
-        if self.config.tomo_key_photo_glob:
+        if self.path:
             preview, tomo_width = self.get_existing_preview()
         if preview is None:
             preview, tomo_width = self.generate_preview_from_tomo()
@@ -70,7 +65,7 @@ class KeyImageImporter(BaseImporter):
     def get_existing_preview(self) -> tuple[np.ndarray | None, int | None]:
         config = self.config
         run = self.get_run()
-        for fname in config.glob_files(run, config.tomo_key_photo_glob):
+        for fname in config.glob_files(run, self.path):
             file_name = config.fs.localreadable(fname)
             img = Image.open(file_name)
             img.load()
@@ -79,7 +74,7 @@ class KeyImageImporter(BaseImporter):
         return None, None
 
     def load_annotations(self) -> Generator[np.ndarray, None, None]:
-        for annotation in AnnotationImporter.find_annotations(self.config, self.parent):
+        for annotation in AnnotationImporter.find_annotations(self.config, self.get_tomogram()):
             for source in annotation.sources:
                 if source.shape.lower() not in ["orientedpoint", "point"]:
                     continue
@@ -94,7 +89,7 @@ class KeyImageImporter(BaseImporter):
                     print(f"Unable to load annotation data for {source.get_output_filename(annotation_path)}")
 
     def generate_preview_from_tomo(self) -> tuple[np.ndarray, np.ndarray]:
-        tomo_filename = self.parent.get_output_path() + ".zarr"
+        tomo_filename = self.get_tomogram().get_output_path() + ".zarr"
 
         # TODO: optimize to check if image needs to be regenerated
         print(f"loading tomogram {tomo_filename}")

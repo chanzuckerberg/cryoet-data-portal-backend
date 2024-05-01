@@ -10,5 +10,4 @@ class FrameImporter(BaseFileImporter):
     type_key = "frame"
     plural_key = "frames"
     finder_factory = DefaultImporterFactory
-    dependencies = ["run"]
     has_metadata = False

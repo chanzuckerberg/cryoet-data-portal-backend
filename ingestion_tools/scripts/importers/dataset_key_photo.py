@@ -20,7 +20,6 @@ class DatasetKeyPhotoImporter(BaseImporter):
     plural_key = "dataset_keyphotos"
     image_keys = ["snapshot", "thumbnail"]
     finder_factory = DefaultImporterFactory
-    dependencies = []  # TODO this thing has dependencies on *imported* runs!!
     has_metadata = False
 
     def import_item(self) -> None:
@@ -57,11 +56,3 @@ class DatasetKeyPhotoImporter(BaseImporter):
                 if all(image_key in key_photos for image_key in self.image_keys):
                     return os.path.join(self.config.output_prefix, key_photos.get(key))
         return None
-
-    @classmethod
-    def find_dataset_key_photos(
-        cls,
-        config: DepositionImportConfig,
-        dataset: "DatasetImporter",
-    ) -> "DatasetKeyPhotoImporter":
-        return cls(config=config, parent=dataset)

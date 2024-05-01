@@ -8,7 +8,6 @@ class DatasetImporter(BaseImporter):
     type_key = "dataset"
     plural_key = "datasets"
     finder_factory = DefaultImporterFactory
-    dependencies = []
     has_metadata = True
 
     def import_item(self) -> None:
@@ -19,6 +18,7 @@ class DatasetImporter(BaseImporter):
         extra_data = self.load_extra_metadata()
         meta.write_metadata(self.get_metadata_path(), extra_data)
 
+    # TODO fixme we should see what's best here.
     def load_extra_metadata(self) -> dict[str, dict[str, str]]:
         key_photo_importer = DatasetKeyPhotoImporter.find_dataset_key_photos(self.config, self)
 

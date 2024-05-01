@@ -28,7 +28,6 @@ class BaseImporter:
     plural_key: str
     cached_find_results: dict[str, "BaseImporter"] = {}
     finder_factory: DepositionObjectImporterFactory | None = None
-    dependencies: list[str] = []
     parents: dict[str, "BaseImporter"] | None = None
 
     def __init__(

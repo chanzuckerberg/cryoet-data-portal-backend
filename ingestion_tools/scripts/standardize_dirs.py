@@ -99,11 +99,10 @@ def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dic
         filter_patterns = [re.compile(pattern) for pattern in kwargs.get(f"filter_{import_class.type_key}_name", [])]
         exclude_patterns = [re.compile(pattern) for pattern in kwargs.get(f"exclude_{import_class.type_key}_name", [])]
 
-        # Is it clearer to flatten parents instead of recursing through parent objs?
+        # It's probably clearer to send a flat dict of parents instead of
+        # requiring importers to recurse through a single parent to find 
+        # all ancestors
         parent_args = dict(parents)
-        # parent_args = {}
-        # for dep in import_class.dependencies:
-        #    parent_args[dep] = parents[dep]
 
         items = import_class.finder(config, **parent_args)
         for item in items:
@@ -138,7 +137,7 @@ def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dic
 @click.option("--local-fs", type=bool, is_flag=True, default=False)
 @common_options
 @click.pass_context
-def convert2(
+def convert(
     ctx,
     config_file: str,
     input_bucket: str,

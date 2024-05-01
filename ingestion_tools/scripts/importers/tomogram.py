@@ -17,7 +17,6 @@ class TomogramImporter(VolumeImporter):
     plural_key = "tomograms"
     finder_factory = DefaultImporterFactory
     cached_find_results: dict[str, Any] = {}
-    dependencies = ["voxel_spacing"]
     has_metadata = True
 
     def get_voxel_spacing(self) -> float:

@@ -349,7 +349,6 @@ class AnnotationImporter(BaseImporter):
     type_key = "annotation"
     plural_key = "annotations"
     finder_factory = DefaultImporterFactory
-    dependencies = ["voxel_spacing"]
     has_metadata = True
 
     def __init__(

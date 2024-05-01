@@ -8,7 +8,6 @@ class GainImporter(BaseImporter):
     type_key = "gain"
     plural_key = "gains"
     finder_factory = DefaultImporterFactory
-    dependencies = ["run"]
     has_metadata = False
 
     def import_item(self) -> None:

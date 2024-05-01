@@ -81,7 +81,6 @@ class VoxelSpacingImporter(BaseImporter):
     type_key = "voxel_spacing"
     plural_key = "voxel_spacings"
     finder_factory = VSImporterFactory
-    dependencies = ["run"]
     has_metadata = False
 
     def __init__(
