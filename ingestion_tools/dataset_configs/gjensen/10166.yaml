@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Hyphomonas neptunium
     taxonomy_id: 228405
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Cells grown overnight in Marine Broth (MB) medium at 30 degrees
     without antibiotics. OD600=0.6
   grid_preparation: "Vitrobot settings: 100% humidity, 3\xB5l sample, 10 nm BSA treated\

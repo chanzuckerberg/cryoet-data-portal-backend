@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Treponema primitia
     taxonomy_id: 545694
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Cells were grown in the presence of proteinase K for 15min
   grid_preparation: Vitrobot
   dates:

@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Campylobacter jejuni
     taxonomy_id: 407148
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: null
   grid_preparation: null
   dates:

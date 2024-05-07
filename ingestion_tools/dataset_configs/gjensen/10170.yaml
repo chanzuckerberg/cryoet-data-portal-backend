@@ -13,9 +13,9 @@ dataset:
     primary_author_status: false
     corresponding_author_status: true
   organism:
-    name: Jurkat Human T-cell
-    taxonomy_id: 0
-  sample_type: Organism
+    name: Homo sapiens
+    taxonomy_id: 9606
+  sample_type: cell
   sample_preparation: infected VSVG-pNL4GFP
   grid_preparation: cryo-sectioned by Mark Ladinsky
   dates:
@@ -26,8 +26,11 @@ dataset:
     snapshot: cryoetportal-rawdatasets-dev/GJensen_full/cwl2011-12-12-1/keyimg_cwl2011-12-12-1.jpg
     thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/cwl2011-12-12-1/keyimg_cwl2011-12-12-1_s.jpg
   cell_strain:
-    name: Clone E6-1
+    name: Jurkat Clone E6-1
     id: null
+  cell_type:
+    cell_name: T cell
+    cell_type_id: CL:0000084
 runs: {}
 tiltseries:
   acceleration_voltage: 300000

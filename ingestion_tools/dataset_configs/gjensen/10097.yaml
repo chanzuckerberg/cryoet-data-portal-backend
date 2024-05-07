@@ -15,7 +15,7 @@ dataset:
   organism:
     name: Legionella pneumophila
     taxonomy_id: 1080311
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: 'Lp02 is thymidine auxotroph of the parental strain Lp01 originating
     from Philadelphia-1 strain. Cells were grown in AYE liquid culture with following
     supplements: ferric nitrate, cysteine hydrochloride and thymidine. Scrape cells

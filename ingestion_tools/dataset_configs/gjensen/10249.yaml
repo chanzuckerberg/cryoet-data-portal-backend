@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Bacillus subtilis
     taxonomy_id: 224308
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: null
   grid_preparation: null
   dates:

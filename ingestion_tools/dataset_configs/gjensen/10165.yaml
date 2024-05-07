@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Hyphomonas neptunium
     taxonomy_id: 228405
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Cells grown overnight in Marine Broth (MB) medium at 30 degrees.
     1:20 diluted into GAMS-P medium and incubated for 48 hr at 30 degrees. 10 ml cells
     were pelleted and resuspended into 10 ml MB, incubate for 5 hr at 30 degrees.

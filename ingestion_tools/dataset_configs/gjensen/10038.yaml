@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Pseudomonas aeruginosa
     taxonomy_id: 287
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: I inoculated one colony from an LB agar plate and grew the cells
     overnight in LB with 100 ug/ml of Gentamycin. Then I concentrated the cells three
     times and mixed them with gold nanoparticles

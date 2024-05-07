@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Helicobacter pylori
     taxonomy_id: 85962
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: H.pylori cells grown in BLBB + 10% heat inactivated fetal bovine
     serum at 37 degrees in microaerobic chamber with GasPak EZ Campy Sachets for 3
     days, OD600=0.4.  Spun cells down at 3000rpm for 5 minutes to concentrate before

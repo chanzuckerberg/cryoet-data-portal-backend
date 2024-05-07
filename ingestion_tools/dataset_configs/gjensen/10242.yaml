@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Spiroplasma melliferum
     taxonomy_id: 2134
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: grown in modified spiroplasma media with penicillin
   grid_preparation: 4-minute glow discharge on Harrick glow discharger, Quantifoil
     R2/2 grids, 10 nm gold fiducials, 'MORGAN5' Vitrobot settings

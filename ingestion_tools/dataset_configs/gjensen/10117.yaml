@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Nitrosopumilus maritimus
     taxonomy_id: 338192
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Nmar cells, looking for ESCRt related structures in dividing
     cells
   grid_preparation: null

@@ -16,7 +16,7 @@ dataset:
   organism:
     name: Salmonella typhimurium
     taxonomy_id: 99287
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: 'Salomella rabbit ears: 45min penicillin treatment with sucrose
     and MgSO4'
   grid_preparation: null

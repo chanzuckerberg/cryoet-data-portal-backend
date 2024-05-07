@@ -15,7 +15,7 @@ dataset:
   organism:
     name: Coxiella burnetii
     taxonomy_id: 777
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Refer to Heinzen lab.
   grid_preparation: "Freezing: 100% humidity, 4\xB5l sample, Blot force 6, blot time\
     \ 4 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane mix. Grid: Quantifoil\

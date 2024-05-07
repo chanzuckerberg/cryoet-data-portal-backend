@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Dolichospermum flos-aquae
     taxonomy_id: 315271
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: "Lakshmanan, A., Lu, G., Farhadi, A. et al. Preparation of biogenic\
     \ gas . vesicle nanostructures for use as contrast agents for ultrasound and .\
     \ MRI. Nat Protoc 12, 2050\u20132080 (2017). . https://doi.org/10.1038/nprot.2017.081.\

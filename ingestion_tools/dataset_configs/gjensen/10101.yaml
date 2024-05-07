@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Proteus mirabilis
     taxonomy_id: 584
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: "OD=6, 4 ul loading. blotting condition 6s force/ 3s time/ 1s\
     \ dry time, QUANTIFOIL\xAE Holey Carbon Films 200 mesh"
   grid_preparation: 'single tilt. constant angular increment, step: 1.0. tilt range:

@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Vibrio cholerae
     taxonomy_id: 686
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: null
   grid_preparation: null
   dates:

@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Vibrio fischeri
     taxonomy_id: 312309
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Vibrio fischeri flgP-deletion flagella
   grid_preparation: null
   dates:

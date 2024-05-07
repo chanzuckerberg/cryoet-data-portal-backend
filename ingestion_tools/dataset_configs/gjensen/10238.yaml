@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Salmonella typhimurium
     taxonomy_id: 99287
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: WT Salmonella minicell-producing strain 17261, 5hr growth
   grid_preparation: null
   dates:

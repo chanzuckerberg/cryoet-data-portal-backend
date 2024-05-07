@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Streptococcus pneumoniae
     taxonomy_id: 1313
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: wt
   grid_preparation: Vitrobot
   dates:

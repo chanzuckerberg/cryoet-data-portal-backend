@@ -13,7 +13,7 @@ dataset:
   organism:
     name: MLV
     taxonomy_id: 0
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: MLV 43D
   grid_preparation: null
   dates:

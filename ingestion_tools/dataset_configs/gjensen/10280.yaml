@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Pseudomonas aeruginosa
     taxonomy_id: 287
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Pseudomonas aeruginosa strain PAOI delta aer2 pJN105-aer2
   grid_preparation: null
   dates:

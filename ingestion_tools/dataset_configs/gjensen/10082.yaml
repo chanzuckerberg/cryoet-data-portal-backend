@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Legionella pneumophila
     taxonomy_id: 1080311
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: 'Cells were grown in AYE liquid culture with following supplements:
     ferric nitrate, cysteine hydrochloride and thymidine.'
   grid_preparation: "6 grids were frozen for the JV9082 strain (2x concentrated culture);\

@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Coxiella burnetii
     taxonomy_id: 777
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Refer to Heinzen lab
   grid_preparation: null
   dates:

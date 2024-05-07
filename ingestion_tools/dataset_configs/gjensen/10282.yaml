@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Pseudomonas aeruginosa
     taxonomy_id: 287
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: PW 1307 Pseudomonas aeruginosa PAO1 delta CheA (F7)transposon
     mutant collection
   grid_preparation: null

@@ -15,7 +15,7 @@ dataset:
   organism:
     name: Pseudomonas aeruginosa
     taxonomy_id: 287
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: The cells were grown overnight at 37 C in LB with 100 ug/ml
     gentamicin
   grid_preparation: Samples from the overnight culture were used to prepare the grids.

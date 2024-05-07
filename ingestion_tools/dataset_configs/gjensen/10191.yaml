@@ -15,7 +15,7 @@ dataset:
   organism:
     name: Escherichia coli
     taxonomy_id: 562
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Grown at 37 degrees celsius to OD600=0.2 then 20 uM IPTG was
     added for 2 hours of growth before freezing.
   grid_preparation: Vitrobot plunge freezing

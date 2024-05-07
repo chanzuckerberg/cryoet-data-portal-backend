@@ -15,7 +15,7 @@ dataset:
   organism:
     name: Legionella pneumophila
     taxonomy_id: 1080311
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: "Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot\
     \ force 6, blot time 3 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane\
     \ mix. Grid: Quantifoil Cu 2/2 200. Add gold to cells prior to freezing: 1ul of\

@@ -10,9 +10,9 @@ dataset:
     primary_author_status: false
     corresponding_author_status: true
   organism:
-    name: CHMP1B tubes
-    taxonomy_id: 0
-  sample_type: Organism
+    name: Homo sapiens
+    taxonomy_id: 9606
+  sample_type: in_vitro
   sample_preparation: null
   grid_preparation: null
   dates:

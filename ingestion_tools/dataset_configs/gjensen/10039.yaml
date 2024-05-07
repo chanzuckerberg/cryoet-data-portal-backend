@@ -15,7 +15,7 @@ dataset:
   organism:
     name: Pseudomonas aeruginosa
     taxonomy_id: 287
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Cells were plated on LB agar plate with 100 ug/ml gentamicin.
     Then, single colony was . inoculated in LB culture (with 100 ug/ml gentamicin)
     at 37C overnight. After 16 hours, the cells . were added to grids and blotted.

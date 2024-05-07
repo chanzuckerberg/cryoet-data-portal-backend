@@ -15,7 +15,7 @@ dataset:
   organism:
     name: Gluconacetobacter hansenii
     taxonomy_id: 714995
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: IDEM
   grid_preparation: IDEM
   dates:

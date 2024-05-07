@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Pseudomonas aeruginosa
     taxonomy_id: 287
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Pseudomonas aerugionsa strain PW 1312.Acquired from the Transposon
     mutant collection. (F7 short receptor- PW1312  phoAwp09q2F12)
   grid_preparation: null

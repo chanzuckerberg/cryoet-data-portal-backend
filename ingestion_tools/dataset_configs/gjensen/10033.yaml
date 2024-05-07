@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Gluconacetobacter hansenii
     taxonomy_id: 714995
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: "Static cultures 18h old - Shaken, spun down (2500rcf - 10min\
     \ - 30\xB0C) - resuspended in 0.5mL - incubated at 30\xB0C for 4h"
   grid_preparation: manual blotting (backside) 3s (glare passed)

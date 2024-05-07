@@ -16,7 +16,7 @@ dataset:
   organism:
     name: Helicobacter pylori
     taxonomy_id: 85962
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: I grew the cells on blood agar plates from -80 stock at 37C
     with 5% CO2. the cells were grown . for 48 hours and then spread on a new plate
     with a cotton swab and left to grow for 24 hours. . The grids were prepared from

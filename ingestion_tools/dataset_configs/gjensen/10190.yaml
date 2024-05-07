@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Escherichia coli
     taxonomy_id: 562
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: null
   grid_preparation: Induced with 20um IPTG for 2 hours starting at OD600=0.2.
   dates:

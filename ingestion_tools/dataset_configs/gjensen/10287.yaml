@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Helicobacter hepaticus
     taxonomy_id: 235279
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: grown in the Mazmanian lab
   grid_preparation: null
   dates:

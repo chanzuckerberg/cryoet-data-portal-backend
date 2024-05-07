@@ -15,7 +15,7 @@ dataset:
   organism:
     name: Magnetospirillum magneticum
     taxonomy_id: 342108
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: This is the wild type in which the entire island of genes responsible
     for magnetosome formation has been deleted
   grid_preparation: null

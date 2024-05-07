@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Gluconacetobacter hansenii
     taxonomy_id: 714995
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Static culture overnight - Spun down 10min 2000rcf - pellet
     resuspended in 0.5mL - put back at 30deg for 3 hours
   grid_preparation: Manual backside blotting 5sec

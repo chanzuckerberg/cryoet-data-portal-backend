@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Mycoplasma pneumoniae
     taxonomy_id: 2104
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: null
   grid_preparation: null
   dates:

@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Legionella pneumophila
     taxonomy_id: 1080311
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: null
   grid_preparation: "6 grids were frozen for this strain (2x concentrated culture,\
     \ OD~4.8); Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot force\

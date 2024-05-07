@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Pseudomonas aeruginosa
     taxonomy_id: 287
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: The cells were grown overnight in LB at 37 C.
   grid_preparation: Cells from overnight culture were added to thick carbon grids
     and blotted using the vitrobot in BI. Blot force 6, blot time 3 s, drain time

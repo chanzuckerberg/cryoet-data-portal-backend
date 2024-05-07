@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Vibrio harveyi
     taxonomy_id: 669
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: grown in AB medium
   grid_preparation: null
   dates:

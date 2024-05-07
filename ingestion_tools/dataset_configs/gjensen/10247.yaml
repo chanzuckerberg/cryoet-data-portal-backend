@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Bacillus subtilis
     taxonomy_id: 224308
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: sporulation media
   grid_preparation: quantifoil grid R2/2, 20nm gold, 100% humidity
   dates:

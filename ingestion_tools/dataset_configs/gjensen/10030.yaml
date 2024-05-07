@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Gluconacetobacter hansenii
     taxonomy_id: 714995
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Shaking 1 day old cultures (24h approx) cultured in 10mL in
     sealed falcon tubes at 30deg, 200rpm
   grid_preparation: Backside manual blotting 5s

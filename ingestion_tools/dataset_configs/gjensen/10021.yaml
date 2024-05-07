@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Halothiobacillus neapolitanus
     taxonomy_id: 555778
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: purified by the Savage lab
   grid_preparation: protochip C-flat 2/2-300 grid, 10nm BSA-gold, 100% humidity, defocus
     varying -1 to -5.5 microns

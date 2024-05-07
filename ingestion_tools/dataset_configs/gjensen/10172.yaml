@@ -11,9 +11,9 @@ dataset:
     primary_author_status: false
     corresponding_author_status: true
   organism:
-    name: HUVECs
+    name: Homo sapiens
     taxonomy_id: 9606
-  sample_type: Cell
+  sample_type: cell
   sample_preparation: null
   grid_preparation: null
   dates:
@@ -28,10 +28,7 @@ dataset:
     id: null
   cell_type:
     cell_name: umbilical vein endothelial cell
-    cell_type_id: http://purl.obolibrary.org/obo/BTO_0001949
-  tissue:
-    tissue_name: blood vessel endothelium
-    tissue_id: http://purl.obolibrary.org/obo/BTO_0000766
+    cell_type_id: CL:0002618
 runs: {}
 tiltseries:
   acceleration_voltage: 300000

@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Dolichospermum flos-aquae
     taxonomy_id: 315271
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: "Lakshmanan et al. Nat Protoc 12, 2050\u20132080 (2017). Sample\
     \ in 10 mM Tris-HCl (pH 7.5), 10 mM NaCl, 1 mM EDTA with 5 mg/ml DNA solution(Herring\
     \ sperm DNA, Promega); OD 15"

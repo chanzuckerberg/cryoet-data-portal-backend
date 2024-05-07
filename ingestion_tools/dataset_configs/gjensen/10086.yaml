@@ -15,7 +15,7 @@ dataset:
   organism:
     name: Legionella pneumophila
     taxonomy_id: 1080311
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Phagosome isolation method as described by Joelle Gabay (Endnote).
   grid_preparation: "6 grids were frozen, cell density was increased to 2x by centrifugation.\
     \ Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot force 6, blot\

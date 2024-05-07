@@ -15,7 +15,7 @@ dataset:
   organism:
     name: 'Sulfolobus solfataricus '
     taxonomy_id: 273057
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: null
   grid_preparation: "S. solfataricus strain P2 cultures were infected with STIV as\
     \ previously described (Ortmann et al., 2006). Sulfolobus were grown up from glycerol\

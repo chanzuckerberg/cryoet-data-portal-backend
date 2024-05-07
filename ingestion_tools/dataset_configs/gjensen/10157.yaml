@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Bdellovibrio bacteriovorus
     taxonomy_id: 264462
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Bdellovibrio/Vibrio cholerae
   grid_preparation: "Vitrobot settings: 100% humidity, 3\xB5l sample, 10 nm BSA treated\
     \ gold. -3 offset, 4 sec blot time, no drain. Ethane/propane mix. Quantifoil Cu\

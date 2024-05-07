@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Halobacterium salinarum
     taxonomy_id: 64091
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Standard H. salinarum medium
   grid_preparation: "Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot\
     \ force 6, blot time 3.5 sec. Wait time 8 sec. Drain time 1 sec. Ethane/propane\

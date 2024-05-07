@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Nitrosopumilus maritimus
     taxonomy_id: 338192
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: 'Nmar cells grown to mid log phase. Not concentrated, looking
     for cell division related CDV proteins.(Pipeline:  autoprocref_1396627728)'
   grid_preparation: null

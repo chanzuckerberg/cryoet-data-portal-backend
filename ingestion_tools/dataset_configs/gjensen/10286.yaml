@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Pseudomonas aeruginosa
     taxonomy_id: 287
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Pseudomonas full length aer2 on plasmid, no induction
   grid_preparation: null
   dates:

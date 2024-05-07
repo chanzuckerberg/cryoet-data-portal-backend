@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Salmonella typhimurium
     taxonomy_id: 99287
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Test run of Salmonella rabbit ears
   grid_preparation: null
   dates:

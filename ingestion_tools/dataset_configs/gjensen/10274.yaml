@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Vibrio cholerae
     taxonomy_id: 686
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: "Grew in LB 24 hours at 30C; diluted 150 \xB5L into 2 mL Ca-HEPES\
     \ buffer and grew 16 hours at 30C"
   grid_preparation: null

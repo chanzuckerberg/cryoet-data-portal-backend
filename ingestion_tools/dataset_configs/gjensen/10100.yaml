@@ -12,7 +12,7 @@ dataset:
   organism:
     name: Caulobacter crescentus
     taxonomy_id: 565050
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: null
   grid_preparation: null
   dates:

@@ -1,9 +1,9 @@
 run_name,tomo-align_softwares,tomo-fiducial_alignment_status,ts-tilt_alignment_software,ts-tilt_series_path
 scd2016-03-02-1,['autoPatch'],NON_FIDUCIAL,autoPatch,rawdata/tomography.mrc
 scd2016-03-02-2,['autoPatch'],NON_FIDUCIAL,autoPatch,rawdata/tomography3.mrc
-scd2016-03-02-3,['Batchruntomo'],FIDUCIAL,Batchruntomo,rawdata/tomography4.mrc
-scd2016-03-02-4,['Batchruntomo'],FIDUCIAL,Batchruntomo,rawdata/tomography5.mrc
+scd2016-03-02-3,['IMOD'],FIDUCIAL,IMOD,rawdata/tomography4.mrc
+scd2016-03-02-4,['IMOD'],FIDUCIAL,IMOD,rawdata/tomography5.mrc
 scd2016-03-02-5,['autoPatch'],NON_FIDUCIAL,autoPatch,rawdata/tomography8.mrc
-scd2016-03-02-6,['Batchruntomo'],FIDUCIAL,Batchruntomo,rawdata/tomography9.mrc
+scd2016-03-02-6,['IMOD'],FIDUCIAL,IMOD,rawdata/tomography9.mrc
 scd2016-03-02-7,['autoPatch'],NON_FIDUCIAL,autoPatch,rawdata/tomography10.mrc
 scd2016-03-02-8,['autoPatch'],NON_FIDUCIAL,autoPatch,rawdata/tomography12.mrc

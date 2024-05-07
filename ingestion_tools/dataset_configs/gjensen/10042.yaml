@@ -15,7 +15,7 @@ dataset:
   organism:
     name: Pseudomonas aeruginosa
     taxonomy_id: 287
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Cells were first grown on LB plate with 100 ug/ml gentamicin
     over night (from -80 C stock). . Next dat, one colony was inoculated in 2 ml of
     LB (with 100 ug/ml gentamicin) and incubated . for 16 hours at 37 C with 175 rpm.

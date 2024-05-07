@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Dolichospermum flos-aquae
     taxonomy_id: 315271
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: Purification based on Lakshmanan et al., Nature Protocols (2017).
   grid_preparation: "A freshly purified GV sample was diluted to  OD500 = ~20 and\
     \ mixed  with  10  nm  BSA-coated  gold  beads.  A  3  \xB5L volume of sample\

@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Sulfolobus acidocaldarius
     taxonomy_id: 2285
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: grown in Brock's Medium at 80C, synchronize with Baby Machine
   grid_preparation: frozen at Kay Grunewald's lab. Harrick plasma cleaner. Blotted
     on both sides, 5 sec, sponge for humidity

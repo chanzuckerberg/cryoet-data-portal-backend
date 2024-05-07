@@ -14,7 +14,7 @@ dataset:
   organism:
     name: Gluconacetobacter hansenii
     taxonomy_id: 714995
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: 1mL of SH+carb inoculated with cellulose mat in little Petri
     dish with 4  Quantifoil gold grids R 2/2 Au 200 at 8:30am
   grid_preparation: Freezing started at 3:45pm (7:15h of incubation)Manual backblotting

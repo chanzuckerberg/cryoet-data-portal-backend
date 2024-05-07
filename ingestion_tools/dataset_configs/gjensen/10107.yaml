@@ -11,9 +11,9 @@ dataset:
     primary_author_status: false
     corresponding_author_status: true
   organism:
-    name: Rat INS-1E pancreatic beta cells
+    name: Rattus norvegicus
     taxonomy_id: 10116
-  sample_type: Organism
+  sample_type: cell
   sample_preparation: null
   grid_preparation: null
   dates:
@@ -24,8 +24,11 @@ dataset:
     snapshot: cryoetportal-rawdatasets-dev/GJensen_full/scd2016-03-02-1/keyimg_scd2016-03-02-1.jpg
     thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/scd2016-03-02-1/keyimg_scd2016-03-02-1_s.jpg
   cell_strain:
-    name: ''
+    name: INS-1E
     id: null
+  cell_type:
+    cell_name: pancreatic beta cell
+    cell_type_id: CL:0000169
 runs: {}
 tiltseries:
   acceleration_voltage: 300000

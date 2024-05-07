@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Helicobacter pylori
     taxonomy_id: 85962
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: null
   grid_preparation: "Vitrobot settings: 100% humidity, 37 C, 3\xB5l BSA treated 20\
     \ nm gold (100 ml gold+ 25 ml 10% BSA x4, resuspend in 30 ul). Blot for 5 sec\

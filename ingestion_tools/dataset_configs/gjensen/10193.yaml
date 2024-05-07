@@ -15,7 +15,7 @@ dataset:
   organism:
     name: Escherichia coli
     taxonomy_id: 562
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: LB 37 Degrees
   grid_preparation: Induced at an OD of .2 and grew for 2 hours (~OD of .8)
   dates:

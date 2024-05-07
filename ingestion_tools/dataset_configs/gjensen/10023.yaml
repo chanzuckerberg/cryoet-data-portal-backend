@@ -13,7 +13,7 @@ dataset:
   organism:
     name: Gluconacetobacter hansenii
     taxonomy_id: 714995
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: I inoculated 10 petri dishes filled with 1mL of SH with a biofilm
     from 12.02.19. 5 grids will be incubated 3 hours at 30C, static conditions
   grid_preparation: Quantifoil Au R2/2 NH2 200 glowdischarged 1min - 15mA. Coated

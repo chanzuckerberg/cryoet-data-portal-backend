@@ -14,7 +14,7 @@ dataset:
   organism:
     name: 'Sulfolobus solfataricus '
     taxonomy_id: 273057
-  sample_type: Organism
+  sample_type: organism
   sample_preparation: null
   grid_preparation: grown at home, synchronized using primary baby machine
   dates:
