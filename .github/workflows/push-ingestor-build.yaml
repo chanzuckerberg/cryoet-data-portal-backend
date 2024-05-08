@@ -15,8 +15,8 @@ permissions:
 
 jobs:
   deploy-to-staging:
-    name: deploy staging branch
-    runs-on: [ARM64, self-hosted, Linux]
+    name: build and push ingestor to remote
+    runs-on: ubuntu-latest
     environment: staging
     if: github.repository == 'chanzuckerberg/cryoet-data-portal-backend'
     steps:
