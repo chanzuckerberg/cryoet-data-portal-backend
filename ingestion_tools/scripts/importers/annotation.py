@@ -115,8 +115,14 @@ class SegmentationMaskFile(VolumeAnnotationSource):
         write_mrc: bool = True,
         write_zarr: bool = True,
     ):
-        input_file = self.get_source_file(fs, input_prefix)
-        return scale_mrcfile(fs, self.get_output_filename(output_prefix), input_file, voxel_spacing=voxel_spacing)
+        return scale_mrcfile(
+            fs,
+            self.get_output_filename(output_prefix),
+            self.get_source_file(fs, input_prefix),
+            write_mrc=write_mrc,
+            write_zarr=write_zarr,
+            voxel_spacing=voxel_spacing,
+        )
 
 
 class SemanticSegmentationMaskFile(VolumeAnnotationSource):
@@ -147,12 +153,13 @@ class SemanticSegmentationMaskFile(VolumeAnnotationSource):
         write_mrc: bool = True,
         write_zarr: bool = True,
     ):
-        input_file = self.get_source_file(fs, input_prefix)
         return scale_mrcfile(
             fs,
             self.get_output_filename(output_prefix),
-            input_file,
+            self.get_source_file(fs, input_prefix),
             label=self.label,
+            write_mrc=write_mrc,
+            write_zarr=write_zarr,
             voxel_spacing=voxel_spacing,
         )
 
