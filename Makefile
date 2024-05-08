@@ -52,5 +52,6 @@ push-local-ingestor-build:
 
 .PHONY: push-ingestor-build
 push-ingestor-build:
+	echo $(ecr_repo)
 	cd ./ingestion_tools/; docker build . -t $(ecr_repo):$(tag) --platform linux/amd64; \
 	docker push $(ecr_repo):$(tag);
