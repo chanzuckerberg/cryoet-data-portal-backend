@@ -47,7 +47,7 @@ push-local-ingestor-build:
 	aws_region=$$(aws configure get region); \
 	account_id=$$(aws sts get-caller-identity | jq -r ".Account"); \
 	ecr_repo=$$account_id.dkr.ecr.$$aws_region.amazonaws.com; \
-	$(MAKE) push-ingestor-build ecr_repo=$$ecr_repo/cryoet-staging tag=$(tag) aws_region=$$aws_region;
+	$(MAKE) push-ingestor-build ecr_repo=$$ecr_repo/cryoet-staging tag=$(tag);
 
 .PHONY: push-ingestor-build
 push-ingestor-build:
