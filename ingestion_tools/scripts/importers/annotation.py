@@ -9,7 +9,7 @@ import numpy as np
 from common import instance_point_converter as ipc
 from common import oriented_point_converter as opc
 from common.fs import FileSystemApi
-from common.image import check_mask_for_label, scale_maskfile, scale_mrcfile
+from common.image import check_mask_for_label, scale_mrcfile
 from common.metadata import AnnotationMetadata
 from importers.base_importer import BaseImporter
 
@@ -56,6 +56,17 @@ class BaseAnnotationSource:
         # To be overridden by subclasses to communicate whether this source contains valid information for this run.
         return True
 
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
+        pass
+
 
 class VolumeAnnotationSource(BaseAnnotationSource):
     shape: str
@@ -95,9 +106,23 @@ class SegmentationMaskFile(VolumeAnnotationSource):
         if self.file_format not in ["mrc"]:
             raise NotImplementedError("We only support MRC files for segmentation masks")
 
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float):
-        input_file = self.get_source_file(fs, input_prefix)
-        return scale_mrcfile(fs, self.get_output_filename(output_prefix), input_file, voxel_spacing=voxel_spacing)
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
+        return scale_mrcfile(
+            fs,
+            self.get_output_filename(output_prefix),
+            self.get_source_file(fs, input_prefix),
+            write_mrc=write_mrc,
+            write_zarr=write_zarr,
+            voxel_spacing=voxel_spacing,
+        )
 
 
 class SemanticSegmentationMaskFile(VolumeAnnotationSource):
@@ -119,14 +144,22 @@ class SemanticSegmentationMaskFile(VolumeAnnotationSource):
         if self.file_format not in ["mrc"]:
             raise NotImplementedError("We only support MRC files for segmentation masks")
 
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float = None):
-        input_file = self.get_source_file(fs, input_prefix)
-        return scale_maskfile(
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float = None,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
+        return scale_mrcfile(
             fs,
             self.get_output_filename(output_prefix),
-            input_file,
-            self.label,
-            write=True,
+            self.get_source_file(fs, input_prefix),
+            label=self.label,
+            write_mrc=write_mrc,
+            write_zarr=write_zarr,
             voxel_spacing=voxel_spacing,
         )
 
@@ -213,7 +246,15 @@ class PointFile(BaseAnnotationSource):
             annotations = ndjson.load(f)
         return annotations
 
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float):
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
         filename = self.get_output_filename(output_prefix)
         annotations = self.load(fs, self.get_source_file(fs, input_prefix))
         with fs.open(filename, "w") as fh:
@@ -305,11 +346,7 @@ class InstanceSegmentationFile(OrientedPointFile):
         # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
         return len(set(ids))
 
-    def load(
-        self,
-        fs: FileSystemApi,
-        filename: str,
-    ):
+    def load(self, fs: FileSystemApi, filename: str):
         method = self.map_functions[self.file_format]
         local_file = fs.localreadable(filename)
 
@@ -322,7 +359,15 @@ class InstanceSegmentationFile(OrientedPointFile):
 
         return points
 
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float):
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
         filename = self.get_output_filename(output_prefix)
         annotations = self.load(fs, self.get_source_file(fs, input_prefix))
 
@@ -386,7 +431,7 @@ class AnnotationImporter(BaseImporter):
         output_dir = super().get_output_path()
         return self.annotation_metadata.get_filename_prefix(output_dir, self.identifier)
 
-    def import_annotations(self, write: bool):
+    def import_annotations(self, write_mrc: bool = True, write_zarr: bool = True):
         run_name = self.parent.get_run().run_name
         dest_prefix = self.get_output_path()
         for source in self.sources:
@@ -396,7 +441,14 @@ class AnnotationImporter(BaseImporter):
             except Exception:
                 print(f"Skipping writing annotations for run {run_name} due to missing files")
                 continue
-            source.convert(self.config.fs, self.config.input_path, dest_prefix, self.parent.get_voxel_spacing())
+            source.convert(
+                self.config.fs,
+                self.config.input_path,
+                dest_prefix,
+                self.parent.get_voxel_spacing(),
+                write_mrc,
+                write_zarr,
+            )
 
     def import_metadata(self):
         run_name = self.parent.get_run().run_name
