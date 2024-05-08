@@ -30,7 +30,6 @@ clean:
 .PHONY: ingestor-test-db-init
 ingestor-test-db-init:
 	docker compose up db -d
-	cd ./test_infra/
 	docker compose cp test_infra/sql db:/tmp/sql
 	docker compose exec db sh -c 'cat /tmp/sql/schema.sql | psql postgres://postgres:postgres@127.0.0.1:5432/cryoet'
 	docker compose exec db sh -c 'cat /tmp/sql/seed_db_enum.sql | psql postgres://postgres:postgres@127.0.0.1:5432/cryoet'
@@ -42,3 +41,13 @@ ingestor-test-db:
 .PHONY: ingestor-test-s3
 ingestor-test-s3:
 	docker compose exec ingestor pytest -vvv -s . -k s3_import
+
+.PHONY: ingestor-push-to-ecr
+ingestor-push-to-ecr:
+	aws_region=$$(aws configure get region); \
+	account_id=$$(aws sts get-caller-identity | jq -r ".Account"); \
+	ecr_repo=$$account_id.dkr.ecr.$$aws_region.amazonaws.com; \
+	cd ./ingestion_tools/; \
+	docker build . -t $$ecr_repo/cryoet-staging:$(tag) --platform linux/amd64; \
+	aws ecr get-login-password --region $$aws_region | docker login --username AWS --password-stdin $$ecr_repo;	\
+	docker push $$ecr_repo/cryoet-staging:$(tag);
