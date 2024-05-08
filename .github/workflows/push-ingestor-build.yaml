@@ -32,4 +32,5 @@ jobs:
       - name: Build and push Docker image
         env:
           ECR_REPO: ${{ secrets.ECR_REPO }}
-        run: make push-ingestor-build ecr_repo=$ECR_REPO tag=latest
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: make push-ingestor-build ecr_repo=$ECR_REPO tag=latest aws_region=$AWS_REGION
