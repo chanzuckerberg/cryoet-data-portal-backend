@@ -47,10 +47,10 @@ push-local-ingestor-build:
 	aws_region=$$(aws configure get region); \
 	account_id=$$(aws sts get-caller-identity | jq -r ".Account"); \
 	ecr_repo=$$account_id.dkr.ecr.$$aws_region.amazonaws.com; \
+	aws ecr get-login-password --region $$aws_region | docker login --username AWS --password-stdin $(ecr_repo); \
 	$(MAKE) push-ingestor-build ecr_repo=$$ecr_repo/cryoet-staging tag=$(tag);
 
 .PHONY: push-ingestor-build
 push-ingestor-build:
-	cd ./ingestion_tools/; docker build . -t $(ecr_repo):$(tag) --platform linux/amd64;
-	aws ecr get-login-password --region $(aws_region) | docker login --username AWS --password-stdin $(ecr_repo); \
+	cd ./ingestion_tools/; docker build . -t $(ecr_repo):$(tag) --platform linux/amd64; \
 	docker push $(ecr_repo):$(tag);

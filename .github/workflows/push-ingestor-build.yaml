@@ -2,8 +2,10 @@ name: Build and push ingestor to remote
 
 on:
   push:
-    branches:
-      - main
+    push:
+      branches:
+        - main
+        - mvenkatakrishnan/*
     paths:
       - "ingestion_tools/**"
       - ".github/workflows/push-ingestor-build.yaml"
@@ -29,8 +31,10 @@ jobs:
           role-duration-seconds: 1200
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
       - name: Build and push Docker image
         env:
           ECR_REPO: ${{ secrets.ECR_REPO }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-        run: make push-ingestor-build ecr_repo=$ECR_REPO tag=latest aws_region=$AWS_REGION
+        run: make push-ingestor-build ecr_repo=$ECR_REPO tag=latest
