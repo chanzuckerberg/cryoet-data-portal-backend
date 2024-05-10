@@ -13,7 +13,7 @@ from common.fs import FileSystemApi
 
 @pytest.fixture
 def endpoint_url() -> str:
-    return os.getenv("ENDPOINT_URL", "http://motoserver:4000")
+    return os.getenv("ENDPOINT_URL", "http://motoserver:5000")
 
 
 @pytest.fixture
