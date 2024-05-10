@@ -1,13 +1,14 @@
 import csv
 import os
 import os.path
-from typing import TYPE_CHECKING, Any, TypedDict
+from typing import TYPE_CHECKING, Any, Dict, List, TypedDict
 
 import ndjson
 import numpy as np
 
 from common import instance_point_converter as ipc
 from common import oriented_point_converter as opc
+from common import point_converter as pc
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, scale_maskfile, scale_mrcfile
 from common.metadata import AnnotationMetadata
@@ -138,59 +139,56 @@ class SemanticSegmentationMaskFile(VolumeAnnotationSource):
             return False
 
 
-class PointFile(BaseAnnotationSource):
+class AbstractPointFile(BaseAnnotationSource):
+    output_type = ""
+    map_functions = {}
+
     def __init__(
         self,
         shape: str,
         glob_string: str,
         glob_vars: dict[str, str],
         file_format: str,
-        columns: str,
         is_visualization_default: bool = False,
-        delimiter: str = ",",
     ):
-        self.glob_string = glob_string.format(**glob_vars)
-        self.file_format = file_format
-        self.columns = columns
+        # Common metadata
         self.shape = shape
-        self.delimiter = delimiter
+        self.glob_string = glob_string
+        self.glob_vars = glob_vars
+        self.glob_string = glob_string.format(**glob_vars)
         self.is_visualization_default = is_visualization_default
-        if self.file_format not in ["csv", "csv_with_header"]:
-            raise NotImplementedError("We only support CSV files for Point files")
 
-    def point(self, x: int, y: int, z: int):
-        annotation = {
-            "type": "point",
-            "location": {"x": x, "y": y, "z": z},
-        }
-        return annotation
+        # Format
+        self._test_valid_format(file_format)
+        self.file_format = file_format
+
+        # Converter arguments
+        self.converter_args = {}
+
+    def _test_valid_format(self, file_format: str):
+        valid_formats = self.map_functions.keys()
+        if file_format not in valid_formats:
+            raise NotImplementedError(
+                f"We only support {', '.join(valid_formats)} files for {self.output_type} annotations."
+            )
 
     def load(
         self,
         fs: FileSystemApi,
-        csvfilename: str,
-    ):
-        skip_header = self.file_format == "csv_with_header"
-        # Convert to xyz order
-        coord_order = [0, 1, 2]
-        if self.columns == "zyx":
-            coord_order = [2, 1, 0]
-        annotation_set = []
-        with fs.open(csvfilename, "r") as data:
-            points = csv.reader(data, delimiter=self.delimiter)
-            if skip_header:
-                next(points)
-            for coord in points:
-                annotation_set.append(
-                    self.point(
-                        float(coord[coord_order[0]]),
-                        float(coord[coord_order[1]]),
-                        float(coord[coord_order[2]]),
-                    ),
-                )
-        return annotation_set
+        filename: str,
+    ) -> List[pc.Point | pc.InstancePoint | pc.OrientedPoint]:
+        method = self.map_functions[self.file_format]
+        local_file = fs.localreadable(filename)
 
-    def get_metadata(self, output_prefix: str):
+        try:
+            points = method(local_file, **self.converter_args)
+        except ValueError as err:
+            print(err)
+            return []
+
+        return points
+
+    def get_metadata(self, output_prefix: str) -> List[Dict[str, Any]]:
         metadata = [
             {
                 "format": "ndjson",
@@ -201,133 +199,134 @@ class PointFile(BaseAnnotationSource):
         ]
         return metadata
 
-    def get_output_filename(self, output_prefix: str):
+    def get_output_filename(self, output_prefix: str) -> str:
         filename = f"{output_prefix}_{self.shape.lower()}.ndjson"
         return filename
 
-    def get_object_count(self, fs, output_prefix):
+    def get_object_count(self, fs: FileSystemApi, output_prefix: str) -> int:
         return len(self.get_output_data(fs, output_prefix))
 
-    def get_output_data(self, fs, output_prefix):
+    def get_output_data(
+        self, fs: FileSystemApi, output_prefix: str
+    ) -> List[pc.Point | pc.InstancePoint | pc.OrientedPoint]:
         with fs.open(self.get_output_filename(output_prefix), "r") as f:
             annotations = ndjson.load(f)
         return annotations
 
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float):
-        filename = self.get_output_filename(output_prefix)
-        annotations = self.load(fs, self.get_source_file(fs, input_prefix))
-        with fs.open(filename, "w") as fh:
-            ndjson.dump(annotations, fh)
-
-
-class OrientedPointFile(PointFile):
-    map_functions = {
-        "relion3_star": opc.from_relion3_star,
-        "relion4_star": opc.from_relion4_star,
-        "tomoman_relion_star": opc.from_tomoman_relion_star,
-        "stopgap_star": opc.from_stopgap_star,
-    }
-
-    def __init__(
-        self,
-        shape: str,
-        glob_vars: dict[str, str],
-        file_format: str,
-        binning: int,
-        glob_string: str,
-        is_visualization_default: bool = False,
-        order: str | None = None,
-        filter_value: str | None = None,
-    ):
-        self.shape = shape
-        self.file_format = file_format
-        self.binning = binning
-        self.glob_string = glob_string
-        self.glob_vars = glob_vars
-        self.glob_string = glob_string.format(**glob_vars)
-        self.order = order
-        self.filter_value = ""
-        self.is_visualization_default = is_visualization_default
-        if filter_value:
-            self.filter_value = filter_value.format(**glob_vars)
-        valid_formats = self.map_functions.keys()
-        if self.file_format not in valid_formats:
-            raise NotImplementedError(
-                f"We only support {', '.join(self.map_functions.keys())} files for oriented points",
-            )
-
-    def oriented_point(
-        self,
-        position: np.ndarray,
-        rot_matrix: np.ndarray,
-    ):
-        position = position.tolist()
-        rot_matrix = rot_matrix.tolist()
-        annotation = {
-            "type": "orientedPoint",
-            "location": {
-                "x": position[2],
-                "y": position[1],
-                "z": position[0],
-            },
-            "xyz_rotation_matrix": rot_matrix,
-        }
-        return annotation
-
-    def load(
-        self,
-        fs: FileSystemApi,
-        starfilename: str,
-    ):
-        method = self.map_functions[self.file_format]
-        local_file = fs.localreadable(starfilename)
-        annotation_set = []
-        try:
-            positions, rotations = method(local_file, self.filter_value, self.binning, self.order)
-        except ValueError as err:
-            print(err)
-            return []
-        for rownum in range(len(positions)):
-            annotation_set.append(self.oriented_point(positions[rownum], rotations[rownum]))
-        return annotation_set
-
-
-class InstanceSegmentationFile(OrientedPointFile):
-    map_functions = {
-        "tardis": ipc.from_tardis,
-    }
-
-    def get_object_count(self, fs, output_prefix):
-        data = self.get_output_data(fs, output_prefix)
-
-        ids = [d["instance_id"] for d in data]
-
-        # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
-        return len(set(ids))
-
-    def load(
-        self,
-        fs: FileSystemApi,
-        filename: str,
-    ):
-        method = self.map_functions[self.file_format]
-        local_file = fs.localreadable(filename)
-
-        try:
-            print(self.binning)
-            points = method(local_file, self.filter_value, self.binning, self.order)
-        except ValueError as err:
-            print(err)
-            return []
-
-        return points
-
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float):
+    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float) -> None:
         filename = self.get_output_filename(output_prefix)
         annotations = self.load(fs, self.get_source_file(fs, input_prefix))
 
         with fs.open(filename, "w") as fh:
             ndjson.dump([a.to_dict() for a in annotations], fh)
+
+
+class PointFile(AbstractPointFile):
+    output_type = "point"
+    map_functions = {
+        "csv": pc.from_csv,
+        "csv_with_header": pc.from_csv_with_header,
+        "mod": pc.from_mod,
+    }
+
+    def __init__(
+        self,
+        shape: str,
+        glob_string: str,
+        glob_vars: dict[str, str],
+        file_format: str,
+        is_visualization_default: bool = False,
+        columns: str = "xyz",
+        delimiter: str = ",",
+    ):
+        super().__init__(shape, glob_string, glob_vars, file_format, is_visualization_default)
+
+        self.columns = columns
+        self.delimiter = delimiter
+
+        self.converter_args = {
+            "order": self.columns,
+            "delimiter": self.delimiter,
+        }
+
+
+class OrientedPointFile(AbstractPointFile):
+    output_type = "orientedPoint"
+    map_functions = {
+        "relion3_star": pc.from_relion3_star,
+        "relion4_star": pc.from_relion4_star,
+        "tomoman_relion_star": pc.from_tomoman_relion_star,
+        "stopgap_star": pc.from_stopgap_star,
+    }
+
+    def __init__(
+        self,
+        shape: str,
+        glob_string: str,
+        glob_vars: dict[str, str],
+        file_format: str,
+        is_visualization_default: bool = False,
+        binning: int = 1,
+        order: str | None = None,
+        filter_value: str | None = None,
+    ):
+        super().__init__(shape, glob_string, glob_vars, file_format, is_visualization_default)
+
+        # Converter arguments
+        if filter_value:
+            self.filter_value = filter_value.format(**glob_vars)
+        else:
+            self.filter_value = ""
+
+        self.order = order
+        self.binning = binning
+
+        self.converter_args = {
+            "order": self.order,
+            "binning": self.binning,
+            "filter_value": self.filter_value,
+        }
+
+
+class InstanceSegmentationFile(AbstractPointFile):
+    output_type = "instancePoint"
+    map_functions = {
+        "tardis": pc.from_tardis,
+    }
+
+    def __init__(
+        self,
+        shape: str,
+        glob_string: str,
+        glob_vars: dict[str, str],
+        file_format: str,
+        is_visualization_default: bool = False,
+        binning: int = 1,
+        order: str | None = None,
+        filter_value: str | None = None,
+    ):
+        super().__init__(shape, glob_string, glob_vars, file_format, is_visualization_default)
+
+        # Converter arguments
+        if filter_value:
+            self.filter_value = filter_value.format(**glob_vars)
+        else:
+            self.filter_value = ""
+
+        self.order = order
+        self.binning = binning
+        self.converter_args = {
+            "order": self.order,
+            "binning": self.binning,
+            "filter_value": self.filter_value,
+        }
+
+    def get_object_count(self, fs: FileSystemApi, output_prefix: str) -> int:
+        data = self.get_output_data(fs, output_prefix)
+        ids = [d["instance_id"] for d in data]
+
+        # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
+        return len(set(ids))
 
 
 def annotation_source_factory(source_config, glob_vars):
