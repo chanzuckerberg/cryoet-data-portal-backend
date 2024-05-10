@@ -75,17 +75,18 @@ MATRIX_TRANSFORM = {"xyz": lambda x: x, "zyx": np.transpose}
 
 def _from_csv(
     local_file: str,
-    micrograph_name: str,
+    filter_value: str = "",
     binning: float = 1,
     axis_columns: Tuple[int, int, int] = (0, 1, 2),
     id_column: int = 3,
     skip_header: bool = False,
+    delimiter: str = ",",
     instance_point: bool = False,
 ) -> List[Union[Point, InstancePoint]]:
     points = []
 
     with open(local_file, "r") as f:
-        reader = csv.reader(f)
+        reader = csv.reader(f, delimiter=delimiter)
 
         # Skip header.
         if skip_header:
@@ -114,35 +115,56 @@ def _from_csv(
 
 
 def from_csv(
-    local_file: str,
-    micrograph_name: str,
+    local_file: Union[str, os.PathLike],
+    filter_value: str = "",
     binning: float = 1.0,
     order: str = "xyz",
+    delimiter: str = ",",
 ) -> List[Point]:
     return _from_csv(
-        local_file, micrograph_name, binning, skip_header=False, axis_columns=AXIS_ORDER[order], instance_point=False
+        local_file,
+        filter_value=filter_value,
+        binning=binning,
+        skip_header=False,
+        axis_columns=AXIS_ORDER[order],
+        delimiter=delimiter,
+        instance_point=False,
     )
+
 
 def from_csv_with_header(
-    local_file: str,
-    micrograph_name: str,
+    local_file: Union[str, os.PathLike],
+    filter_value: str = "",
     binning: float = 1.0,
     order: str = "xyz",
+    delimiter: str = ",",
 ) -> List[Point]:
     return _from_csv(
-        local_file, micrograph_name, binning, skip_header=True, axis_columns=AXIS_ORDER[order], instance_point=False
+        local_file,
+        filter_value=filter_value,
+        binning=binning,
+        skip_header=True,
+        axis_columns=AXIS_ORDER[order],
+        delimiter=delimiter,
+        instance_point=False,
     )
-
 
 
 def from_tardis(
-    local_file: str,
-    filter_key: str,
+    local_file: Union[str, os.PathLike],
+    filter_value: str,
     binning: float = 1,
     order: str = "xyz",
 ) -> List[InstancePoint]:
     return _from_csv(
-        local_file, filter_key, binning, skip_header=True, axis_columns=(1, 2, 3), id_column=0, instance_point=True
+        local_file,
+        filter_value=filter_value,
+        binning=binning,
+        skip_header=True,
+        axis_columns=(1, 2, 3),
+        id_column=0,
+        delimiter=",",
+        instance_point=True,
     )
 
 
@@ -201,7 +223,7 @@ def from_trf(
 
 
 def from_stopgap_star(
-    local_file: Union[str, os.PathLike], micrograph_name: str, binning: float = 1.0, order: str = "xyz"
+    local_file: Union[str, os.PathLike], filter_value: str, binning: float = 1.0, order: str = "xyz"
 ) -> List[OrientedPoint]:
     """
     STOPGAP star format convertion to position and rotation matrix
@@ -212,15 +234,15 @@ def from_stopgap_star(
     matrix_transform = MATRIX_TRANSFORM[order]
 
     with contextlib.suppress(Exception):
-        micrograph_name = int(micrograph_name)
+        filter_value = int(filter_value)
 
     df = starfile.read(local_file)
 
     # Looks like Pandas auto convert to micrograph_name to integer if doable
-    df2 = df[(df["tomo_num"] == micrograph_name)]
+    df2 = df[(df["tomo_num"] == filter_value)]
 
     if len(df2) == 0:
-        raise ValueError(f"No annotations in {local_file} for tomo {micrograph_name}")
+        raise ValueError(f"No annotations in {local_file} for tomo {filter_value}")
 
     xyz_c = df2[["orig_x", "orig_y", "orig_z"]].to_numpy()
     xyz_s = df2[["x_shift", "y_shift", "z_shift"]].to_numpy()  # shift
@@ -244,7 +266,7 @@ def from_stopgap_star(
 
 
 def from_relion4_star(
-    local_file: Union[str, os.PathLike], micrograph_name: str, binning: float = 1.0, order: str = "xyz"
+    local_file: Union[str, os.PathLike], filter_value: str, binning: float = 1.0, order: str = "xyz"
 ) -> List[OrientedPoint]:
     """
     Relion4 star format convertion to position and rotation matrix
@@ -257,7 +279,7 @@ def from_relion4_star(
     df = starfile.read(local_file)
 
     pixel_a = df["optics"]["rlnImagePixelSize"][0]
-    df2 = df["particles"][(df["particles"]["rlnTomoName"] == micrograph_name)]
+    df2 = df["particles"][(df["particles"]["rlnTomoName"] == filter_value)]
     xyz_c = df2[["rlnCoordinateX", "rlnCoordinateY", "rlnCoordinateZ"]].to_numpy()
     xyz_s_a = df2[["rlnOriginXAngst", "rlnOriginYAngst", "rlnOriginZAngst"]].to_numpy()  # shift in angstrom
     positions = (xyz_c - (xyz_s_a / pixel_a)) / float(binning)
@@ -325,22 +347,22 @@ def _from_relion3_star_filtered(
 
 
 def from_relion3_star(
-    file_path: Union[str, os.PathLike], micrograph_name: str, binning: float = 1.0, order: str = "xyz"
+    file_path: Union[str, os.PathLike], filter_value: str, binning: float = 1.0, order: str = "xyz"
 ) -> List[OrientedPoint]:
     """
     Relion3 star format convertion to position and rotation matrix
     to be applied to the instance volume.
     """
     filter_key = "rlnMicrographName"
-    return _from_relion3_star_filtered(file_path, micrograph_name, filter_key, binning, order)
+    return _from_relion3_star_filtered(file_path, filter_value, filter_key, binning, order)
 
 
 def from_tomoman_relion_star(
-    file_path: Union[str, os.PathLike], micrograph_name: str, binning: float = 1.0, order: str = "xyz"
+    file_path: Union[str, os.PathLike], filter_value: str, binning: float = 1.0, order: str = "xyz"
 ) -> List[OrientedPoint]:
     """
     Tomoman Relion3 star format convertion to position and rotation matrix
     to be applied to the instance volume.
     """
     filter_key = "rlnTomoName"
-    return _from_relion3_star_filtered(file_path, micrograph_name, filter_key, binning, order)
+    return _from_relion3_star_filtered(file_path, filter_value, filter_key, binning, order)

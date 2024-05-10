@@ -6,8 +6,8 @@ from typing import TYPE_CHECKING, Any, Dict, List, TypedDict
 import ndjson
 import numpy as np
 
-from common import instance_point_converter as ipc
-from common import oriented_point_converter as opc
+# from common import instance_point_converter as ipc
+# from common import oriented_point_converter as opc
 from common import point_converter as pc
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, scale_maskfile, scale_mrcfile
@@ -236,7 +236,9 @@ class PointFile(AbstractPointFile):
         glob_vars: dict[str, str],
         file_format: str,
         is_visualization_default: bool = False,
+        binning: int = 1,
         columns: str = "xyz",
+        filter_value: str = "",
         delimiter: str = ",",
     ):
         super().__init__(shape, glob_string, glob_vars, file_format, is_visualization_default)
@@ -245,7 +247,9 @@ class PointFile(AbstractPointFile):
         self.delimiter = delimiter
 
         self.converter_args = {
+            "binning": binning,
             "order": self.columns,
+            "filter_value": filter_value,
             "delimiter": self.delimiter,
         }
 
@@ -282,8 +286,8 @@ class OrientedPointFile(AbstractPointFile):
         self.binning = binning
 
         self.converter_args = {
-            "order": self.order,
             "binning": self.binning,
+            "order": self.order,
             "filter_value": self.filter_value,
         }
 
