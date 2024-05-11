@@ -16,22 +16,22 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
  classDiagram
     class AnnotationObject
       AnnotationObject : description
-        
+
           AnnotationObject --> string : description
-        
+
       AnnotationObject : id
-        
+
           AnnotationObject --> string : id
-        
+
       AnnotationObject : name
-        
+
           AnnotationObject --> string : name
-        
+
       AnnotationObject : state
-        
+
           AnnotationObject --> string : state
-        
-      
+
+
 ```
 
 

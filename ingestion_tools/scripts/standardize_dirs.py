@@ -143,7 +143,7 @@ def convert(
                 if iterate_annotations:
                     for annotation in AnnotationImporter.find_annotations(config, tomo):
                         if import_annotations:
-                            annotation.import_annotations(True)
+                            annotation.import_annotations(write_mrc=write_mrc, write_zarr=write_zarr)
                         if import_annotation_metadata:
                             annotation.import_metadata()
                         if import_neuroglancer_precompute:

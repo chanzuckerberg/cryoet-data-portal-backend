@@ -17,56 +17,56 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
     class Annotation
       DatestampedEntity <|-- Annotation
       AnnotatoredEntity <|-- Annotation
-      
+
       Annotation : annotation_method
-        
+
           Annotation --> string : annotation_method
-        
+
       Annotation : annotation_method_type
-        
+
           Annotation --> annotation_method_type_enum : annotation_method_type
-        
+
       Annotation : annotation_object
-        
+
           Annotation --> AnnotationObject : annotation_object
-        
+
       Annotation : annotation_publications
-        
+
           Annotation --> string : annotation_publications
-        
+
       Annotation : annotation_software
-        
+
           Annotation --> string : annotation_software
-        
+
       Annotation : authors
-        
+
           Annotation --> Annotator : authors
-        
+
       Annotation : confidence
-        
+
           Annotation --> AnnotationConfidence : confidence
-        
+
       Annotation : dates
-        
+
           Annotation --> DateStamp : dates
-        
+
       Annotation : files
-        
+
           Annotation --> AnnotationFile : files
-        
+
       Annotation : ground_truth_status
-        
+
           Annotation --> boolean : ground_truth_status
-        
+
       Annotation : is_curator_recommended
-        
+
           Annotation --> boolean : is_curator_recommended
-        
+
       Annotation : object_count
-        
+
           Annotation --> integer : object_count
-        
-      
+
+
 ```
 
 

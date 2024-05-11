@@ -18,44 +18,44 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
  classDiagram
     class ExperimentalMetadata
       ExperimentalMetadata <|-- Dataset
-      
+
       ExperimentalMetadata : cell_component
-        
+
           ExperimentalMetadata --> CellComponent : cell_component
-        
+
       ExperimentalMetadata : cell_strain
-        
+
           ExperimentalMetadata --> CellStrain : cell_strain
-        
+
       ExperimentalMetadata : cell_type
-        
+
           ExperimentalMetadata --> CellType : cell_type
-        
+
       ExperimentalMetadata : grid_preparation
-        
+
           ExperimentalMetadata --> string : grid_preparation
-        
+
       ExperimentalMetadata : organism
-        
+
           ExperimentalMetadata --> Organism : organism
-        
+
       ExperimentalMetadata : other_setup
-        
+
           ExperimentalMetadata --> string : other_setup
-        
+
       ExperimentalMetadata : sample_preparation
-        
+
           ExperimentalMetadata --> string : sample_preparation
-        
+
       ExperimentalMetadata : sample_type
-        
+
           ExperimentalMetadata --> sample_type_enum : sample_type
-        
+
       ExperimentalMetadata : tissue
-        
+
           ExperimentalMetadata --> Tissue : tissue
-        
-      
+
+
 ```
 
 

@@ -164,7 +164,7 @@ class LocalFilesystem(FileSystemApi):
         return glob.glob(*args)
 
     def open(self, path: str, mode: str) -> TextIOBase:
-        return open(path, mode)
+        return open(path, mode)  # noqa
 
     def localreadable(self, path: str) -> str:
         return path
