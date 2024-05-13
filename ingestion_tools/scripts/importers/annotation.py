@@ -13,10 +13,62 @@ from common.fs import FileSystemApi
 from common.image import check_mask_for_label, scale_maskfile, scale_mrcfile
 from common.metadata import AnnotationMetadata
 from importers.base_importer import BaseImporter
+from common.finders import (
+    BaseFinder,
+    BaseLiteralValueFinder,
+    DepositionObjectImporterFactory,
+    DestinationGlobFinder,
+    SourceGlobFinder,
+)
 
 if TYPE_CHECKING:
     pass
 
+class AnnotationFinder(BaseFinder):
+    def __init__(self, list_glob: str, match_regex: str, header_key: str):
+        self.list_glob = list_glob
+        self.header_key = header_key
+        if not match_regex:
+            self.match_regex = re.compile(".*")
+        else:
+            self.match_regex = re.compile(match_regex)
+
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
+        annotations = []
+        # make this a dict so we can pass by reference
+        vs = self.parents["voxel_spacing"]
+        current_identifier = {"identifier": 100}
+        existing_annotations = vs.get_existing_annotation_metadatas(config.fs)
+        configs = config._get_object_configs(cls.type_key, **parents)
+        for annotation_config in configs:
+            metadata = AnnotationMetadata(config.fs, config.deposition_id, annotation_config["metadata"])
+            identifier = cls.get_identifier(metadata, existing_annotations, current_identifier)
+            annotations.append(
+                AnnotationImporter(
+                    identifier=identifier,
+                    config=config,
+                    annotation_metadata=metadata,
+                    annotation_config=annotation_config,
+                    metadata=annotation_config["metadata"],  # TODO this is redundant and should probably be fixed?
+                    parents=parents,
+                ),
+            )
+            identifier += 1
+
+        # Annotation has to have at least one valid source to be imported.
+        annotations = [a for a in annotations if a.has_valid_source()]
+
+        return annotations
+
+
+class AnnotationImporterFactory(DepositionObjectImporterFactory):
+    def load(
+        self,
+        config: DepositionImportConfig,
+        **parent_objects: dict[str, Any] | None,
+    ) -> BaseFinder:
+        source = self.source
+        return AnnotationFinder(source)
 
 class AnnotationObject(TypedDict):
     name: str
@@ -348,7 +400,7 @@ def annotation_source_factory(source_config, glob_vars):
 class AnnotationImporter(BaseImporter):
     type_key = "annotation"
     plural_key = "annotations"
-    finder_factory = DefaultImporterFactory
+    finder_factory = AnnotationImporterFactory
     has_metadata = True
 
     def __init__(
@@ -449,31 +501,3 @@ class AnnotationImporter(BaseImporter):
         return_value = current_identifier["identifier"]
         current_identifier["identifier"] += 1
         return return_value
-
-    @classmethod
-    def finder(cls, config, **parents: dict[str, BaseImporter]) -> list[BaseImporter]:
-        annotations = []
-        # make this a dict so we can pass by reference
-        vs = parents["voxel_spacing"]
-        current_identifier = {"identifier": 100}
-        existing_annotations = vs.get_existing_annotation_metadatas(config.fs)
-        configs = config._get_object_configs(cls.type_key, **parents)
-        for annotation_config in configs:
-            metadata = AnnotationMetadata(config.fs, config.deposition_id, annotation_config["metadata"])
-            identifier = cls.get_identifier(metadata, existing_annotations, current_identifier)
-            annotations.append(
-                AnnotationImporter(
-                    identifier=identifier,
-                    config=config,
-                    annotation_metadata=metadata,
-                    annotation_config=annotation_config,
-                    metadata=annotation_config["metadata"],  # TODO this is redundant and should probably be fixed?
-                    parents=parents,
-                ),
-            )
-            identifier += 1
-
-        # Annotation has to have at least one valid source to be imported.
-        annotations = [a for a in annotations if a.has_valid_source()]
-
-        return annotations
