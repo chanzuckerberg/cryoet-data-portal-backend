@@ -120,41 +120,6 @@ class DepositionImportConfig:
 
     def _get_object_configs(self, key: str, **parent_objs) -> Any:
         items = self.object_configs.get(key, [])
-
-        return items
-
-        #####
-        #####
-        #####
-        # TODO FIXME FIXME -- decide how to support overrides!
-        #####
-        #####
-        #####
-        #####
-        if not self.overrides:
-            return items
-
-        obj_type_to_name_map = {}
-        tmp_parent_objects = list(parent_objs.values())
-        while True:
-            new_parent_objects = []
-            for parent in tmp_parent_objects:
-                obj_type_to_name_map[parent.type_key] = parent.name
-                if parent.parents:
-                    new_parent_objects.extend(parent.parents.values())
-            if not new_parent_objects:
-                break
-            tmp_parent_objects = new_parent_objects
-
-        for override in self.overrides:
-            if all(
-                re.search(regex, obj_type_to_name_map.get(obj_type, ""))
-                for obj_type, regex in override["match"].items()
-            ):
-                sources = override["sources"]
-                if key in sources:
-                    return {"source": sources[key]}
-
         return items
 
     def load_run_csv_file(self, file_attr: str) -> dict[str, Any]:
@@ -249,20 +214,7 @@ class DepositionImportConfig:
 
         run_name = self.get_run_name(obj)
         base_metadata = self.expand_metadata(run_name, base_metadata)
-        if override_data := self.get_run_override(run_name):
-            map_key = plural_map[metadata_type]
-            if extra_metadata := getattr(override_data, map_key):
-                base_metadata.update(extra_metadata)
         return base_metadata
-
-    def get_run_override(self, run_name: str) -> RunOverride | None:
-        return
-        if not self.overrides_by_run:
-            return
-        for item in self.overrides_by_run:
-            if item.run_regex.match(run_name):
-                return item
-        return
 
     def get_metadata_path(self, obj: BaseImporter) -> str:
         key = f"{obj.type_key}_metadata"
@@ -291,7 +243,7 @@ class DepositionImportConfig:
         output_prefix = self.output_prefix
         glob_vars = obj.get_glob_vars()
         path = os.path.join(output_prefix, paths[key].format(**glob_vars))
-        self.fs.makedirs(path)
+        self.fs.makedirs(os.path.dirname(path))
         return path
 
     def glob_files(self, obj: BaseImporter, globstring: str) -> list[str]:

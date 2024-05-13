@@ -96,14 +96,15 @@ class DestinationGlobFinder(BaseFinder):
             responses[obj_name] = path
         return responses
 
-
 class BaseLiteralValueFinder:
     literal_value: list[Any]
 
-    def __init__(self, value: str):
+    def __init__(self, value: dict[str, str] | list[str]):
         self.literal_value = value
 
     def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
+        if isinstance(self.literal_value, dict):
+            return self.literal_value
         return {item: None for item in self.literal_value}
 
 

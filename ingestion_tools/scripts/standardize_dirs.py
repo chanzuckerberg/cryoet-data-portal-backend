@@ -121,7 +121,7 @@ def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dic
             # Not all importers have metadata, but we don't expose the option for it unless it's supported
             if kwargs.get(f"import_{import_class.type_key}_metadata"):
                 print(f"Importing {import_class.type_key} metadata")
-                # item.import_metadata()
+                item.import_metadata()
         exit()
 
 

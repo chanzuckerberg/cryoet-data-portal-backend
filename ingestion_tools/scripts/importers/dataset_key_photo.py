@@ -24,8 +24,7 @@ class DatasetKeyPhotoImporter(BaseImporter):
 
     def import_item(self) -> None:
         path = self.config.get_output_path(self)
-        for image_type in ["snapshot", "thumbnail"]:
-            self.save_image(image_type, path)
+        self.save_image(self.name, path)
 
     def get_metadata(self) -> dict[str, str]:
         path = self.config.get_output_path(self)
@@ -39,9 +38,7 @@ class DatasetKeyPhotoImporter(BaseImporter):
         return None
 
     def save_image(self, key: str, path: str) -> Optional[str]:
-        image_src = self.config.dataset_template.get("key_photos", {}).get(key) or self.get_first_valid_tomo_key_photo(
-            key,
-        )
+        image_src = self.path or self.get_first_valid_tomo_key_photo(key)
         if not image_src:
             raise RuntimeError("Image source file not found")
         _, extension = os.path.splitext(image_src)
