@@ -86,7 +86,7 @@ annotations:
       - shape: OrientedPoint
         file_format: tomoman_relion_star
         binning: 4
-        order: zyx
+        order: xyz
         glob_string: '{run_name}/metadata/particles/*.star'
         filter_value: ~
         is_visualization_default: true

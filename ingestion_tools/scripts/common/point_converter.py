@@ -70,7 +70,7 @@ class InstancePoint:
 
 
 AXIS_ORDER = {"xyz": (0, 1, 2), "zyx": (2, 1, 0)}
-MATRIX_TRANSFORM = {"xyz": lambda x: x, "zyx": np.transpose}
+MATRIX_TRANSFORM = {"xyz": lambda x: x, "zyx": np.flip}
 
 
 def _from_csv(
@@ -182,9 +182,9 @@ def from_mod(
         coords = (row["x"], row["y"], row["z"])
         points.append(
             Point(
-                x_coord=coords[axis_order] / binning,
-                y_coord=coords[axis_order] / binning,
-                z_coord=coords[axis_order] / binning,
+                x_coord=coords[axis_order[0]] / binning,
+                y_coord=coords[axis_order[1]] / binning,
+                z_coord=coords[axis_order[2]] / binning,
             )
         )
 
@@ -212,9 +212,9 @@ def from_trf(
 
         points.append(
             OrientedPoint(
-                x_coord=coords[0] / binning,
-                y_coord=coords[1] / binning,
-                z_coord=coords[2] / binning,
+                x_coord=coords[axis_order[0]] / binning,
+                y_coord=coords[axis_order[1]] / binning,
+                z_coord=coords[axis_order[2]] / binning,
                 rot_matrix=matrix_transform(rot),
             )
         )
@@ -253,9 +253,9 @@ def from_stopgap_star(
     for i in range(len(df2)):
         points.append(
             OrientedPoint(
-                x_coord=positions[i, 0],
-                y_coord=positions[i, 1],
-                z_coord=positions[i, 2],
+                x_coord=positions[i, axis_order[0]],
+                y_coord=positions[i, axis_order[1]],
+                z_coord=positions[i, axis_order[2]],
                 rot_matrix=matrix_transform(
                     Rotation.from_euler(angles=euler_angles[i], seq="zxz", degrees=True).as_matrix()
                 ),
@@ -289,11 +289,11 @@ def from_relion4_star(
     for i in range(len(df2)):
         points.append(
             OrientedPoint(
-                x_coord=positions[i, 0],
-                y_coord=positions[i, 1],
-                z_coord=positions[i, 2],
+                x_coord=positions[i, axis_order[0]],
+                y_coord=positions[i, axis_order[1]],
+                z_coord=positions[i, axis_order[2]],
                 rot_matrix=matrix_transform(
-                    Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).inv().as_matrix()
+                    Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).as_matrix()
                 ),
             )
         )
@@ -334,11 +334,11 @@ def _from_relion3_star_filtered(
     for i in range(len(df2)):
         points.append(
             OrientedPoint(
-                x_coord=positions[i, 0],
-                y_coord=positions[i, 1],
-                z_coord=positions[i, 2],
+                x_coord=positions[i, axis_order[0]],
+                y_coord=positions[i, axis_order[1]],
+                z_coord=positions[i, axis_order[2]],
                 rot_matrix=matrix_transform(
-                    Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).inv().as_matrix()
+                    Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).as_matrix()
                 ),
             )
         )
