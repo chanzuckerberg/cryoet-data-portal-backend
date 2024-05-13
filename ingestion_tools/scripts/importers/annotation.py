@@ -1,4 +1,5 @@
 import csv
+import re
 import os
 import os.path
 from typing import TYPE_CHECKING, Any, TypedDict
@@ -10,9 +11,10 @@ from common import instance_point_converter as ipc
 from common import oriented_point_converter as opc
 from common.finders import DefaultImporterFactory
 from common.fs import FileSystemApi
-from common.image import check_mask_for_label, scale_maskfile, scale_mrcfile
+from common.image import check_mask_for_label, scale_mrcfile
 from common.metadata import AnnotationMetadata
 from importers.base_importer import BaseImporter
+from common.config import DepositionImportConfig
 from common.finders import (
     BaseFinder,
     BaseLiteralValueFinder,
@@ -23,52 +25,6 @@ from common.finders import (
 
 if TYPE_CHECKING:
     pass
-
-class AnnotationFinder(BaseFinder):
-    def __init__(self, list_glob: str, match_regex: str, header_key: str):
-        self.list_glob = list_glob
-        self.header_key = header_key
-        if not match_regex:
-            self.match_regex = re.compile(".*")
-        else:
-            self.match_regex = re.compile(match_regex)
-
-    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
-        annotations = []
-        # make this a dict so we can pass by reference
-        vs = self.parents["voxel_spacing"]
-        current_identifier = {"identifier": 100}
-        existing_annotations = vs.get_existing_annotation_metadatas(config.fs)
-        configs = config._get_object_configs(cls.type_key, **parents)
-        for annotation_config in configs:
-            metadata = AnnotationMetadata(config.fs, config.deposition_id, annotation_config["metadata"])
-            identifier = cls.get_identifier(metadata, existing_annotations, current_identifier)
-            annotations.append(
-                AnnotationImporter(
-                    identifier=identifier,
-                    config=config,
-                    annotation_metadata=metadata,
-                    annotation_config=annotation_config,
-                    metadata=annotation_config["metadata"],  # TODO this is redundant and should probably be fixed?
-                    parents=parents,
-                ),
-            )
-            identifier += 1
-
-        # Annotation has to have at least one valid source to be imported.
-        annotations = [a for a in annotations if a.has_valid_source()]
-
-        return annotations
-
-
-class AnnotationImporterFactory(DepositionObjectImporterFactory):
-    def load(
-        self,
-        config: DepositionImportConfig,
-        **parent_objects: dict[str, Any] | None,
-    ) -> BaseFinder:
-        source = self.source
-        return AnnotationFinder(source)
 
 class AnnotationObject(TypedDict):
     name: str
@@ -109,6 +65,17 @@ class BaseAnnotationSource:
         # To be overridden by subclasses to communicate whether this source contains valid information for this run.
         return True
 
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
+        pass
+
 
 class VolumeAnnotationSource(BaseAnnotationSource):
     shape: str
@@ -148,9 +115,23 @@ class SegmentationMaskFile(VolumeAnnotationSource):
         if self.file_format not in ["mrc"]:
             raise NotImplementedError("We only support MRC files for segmentation masks")
 
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float):
-        input_file = self.get_source_file(fs, input_prefix)
-        return scale_mrcfile(fs, self.get_output_filename(output_prefix), input_file, voxel_spacing=voxel_spacing)
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
+        return scale_mrcfile(
+            fs,
+            self.get_output_filename(output_prefix),
+            self.get_source_file(fs, input_prefix),
+            write_mrc=write_mrc,
+            write_zarr=write_zarr,
+            voxel_spacing=voxel_spacing,
+        )
 
 
 class SemanticSegmentationMaskFile(VolumeAnnotationSource):
@@ -172,14 +153,22 @@ class SemanticSegmentationMaskFile(VolumeAnnotationSource):
         if self.file_format not in ["mrc"]:
             raise NotImplementedError("We only support MRC files for segmentation masks")
 
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float = None):
-        input_file = self.get_source_file(fs, input_prefix)
-        return scale_maskfile(
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float = None,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
+        return scale_mrcfile(
             fs,
             self.get_output_filename(output_prefix),
-            input_file,
-            self.label,
-            write=True,
+            self.get_source_file(fs, input_prefix),
+            label=self.label,
+            write_mrc=write_mrc,
+            write_zarr=write_zarr,
             voxel_spacing=voxel_spacing,
         )
 
@@ -266,7 +255,15 @@ class PointFile(BaseAnnotationSource):
             annotations = ndjson.load(f)
         return annotations
 
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float):
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
         filename = self.get_output_filename(output_prefix)
         annotations = self.load(fs, self.get_source_file(fs, input_prefix))
         with fs.open(filename, "w") as fh:
@@ -358,11 +355,7 @@ class InstanceSegmentationFile(OrientedPointFile):
         # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
         return len(set(ids))
 
-    def load(
-        self,
-        fs: FileSystemApi,
-        filename: str,
-    ):
+    def load(self, fs: FileSystemApi, filename: str):
         method = self.map_functions[self.file_format]
         local_file = fs.localreadable(filename)
 
@@ -375,7 +368,15 @@ class InstanceSegmentationFile(OrientedPointFile):
 
         return points
 
-    def convert(self, fs: FileSystemApi, input_prefix: str, output_prefix: str, voxel_spacing: float):
+    def convert(
+        self,
+        fs: FileSystemApi,
+        input_prefix: str,
+        output_prefix: str,
+        voxel_spacing: float,
+        write_mrc: bool = True,
+        write_zarr: bool = True,
+    ):
         filename = self.get_output_filename(output_prefix)
         annotations = self.load(fs, self.get_source_file(fs, input_prefix))
 
@@ -396,6 +397,15 @@ def annotation_source_factory(source_config, glob_vars):
         return InstanceSegmentationFile(**source_config, glob_vars=glob_vars)
     raise NotImplementedError(f"Unknown shape {source_config['shape']}")
 
+
+class AnnotationImporterFactory(DepositionObjectImporterFactory):
+    def load(
+        self,
+        config: DepositionImportConfig,
+        **parent_objects: dict[str, Any] | None,
+    ) -> BaseFinder:
+        source = self.source
+        return AnnotationFinder(source)
 
 class AnnotationImporter(BaseImporter):
     type_key = "annotation"
@@ -443,7 +453,6 @@ class AnnotationImporter(BaseImporter):
         return self.annotation_metadata.get_filename_prefix(output_dir, self.identifier)
 
     def import_item(self):
-        run_name = self.get_run().name
         dest_prefix = self.get_output_path()
         for source in self.sources:
             # Don't panic if we don't have a source file for this annotation source
@@ -452,7 +461,14 @@ class AnnotationImporter(BaseImporter):
             except Exception:
                 print(f"Skipping writing annotations for run {run_name} due to missing files")
                 continue
-            source.convert(self.config.fs, self.config.input_path, dest_prefix, self.get_voxel_spacing().as_float())
+            source.convert(
+                self.config.fs,
+                self.config.input_path,
+                dest_prefix,
+                self.parent.get_voxel_spacing(),
+                self.config.write_mrc,
+                self.config.write_zarr,
+            )
 
     def import_metadata(self):
         run_name = self.get_run().name
@@ -501,3 +517,39 @@ class AnnotationImporter(BaseImporter):
         return_value = current_identifier["identifier"]
         current_identifier["identifier"] += 1
         return return_value
+
+class AnnotationFinder(BaseFinder):
+    def __init__(self, list_glob: str, match_regex: str, header_key: str):
+        self.list_glob = list_glob
+        self.header_key = header_key
+        if not match_regex:
+            self.match_regex = re.compile(".*")
+        else:
+            self.match_regex = re.compile(match_regex)
+
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
+        annotations = []
+        # make this a dict so we can pass by reference
+        vs = self.parents["voxel_spacing"]
+        current_identifier = {"identifier": 100}
+        existing_annotations = vs.get_existing_annotation_metadatas(config.fs)
+        configs = config._get_object_configs(cls.type_key, **parents)
+        for annotation_config in configs:
+            metadata = AnnotationMetadata(config.fs, config.deposition_id, annotation_config["metadata"])
+            identifier = cls.get_identifier(metadata, existing_annotations, current_identifier)
+            annotations.append(
+                AnnotationImporter(
+                    identifier=identifier,
+                    config=config,
+                    annotation_metadata=metadata,
+                    annotation_config=annotation_config,
+                    metadata=annotation_config["metadata"],  # TODO this is redundant and should probably be fixed?
+                    parents=parents,
+                )
+            )
+            identifier += 1
+
+        # Annotation has to have at least one valid source to be imported.
+        annotations = [a for a in annotations if a.has_valid_source()]
+
+        return annotations

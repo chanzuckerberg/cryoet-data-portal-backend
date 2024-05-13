@@ -93,7 +93,6 @@ def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dic
         parents = dict(parents)
     for import_class, child_import_classes in tree.items():
         if import_class not in to_iterate:
-            print(f"Skipping iteration for {import_class}")
             continue
         print(f"Iterating {import_class}")
         filter_patterns = [re.compile(pattern) for pattern in kwargs.get(f"filter_{import_class.type_key}_name", [])]
