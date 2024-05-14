@@ -243,7 +243,10 @@ class DepositionImportConfig:
         output_prefix = self.output_prefix
         glob_vars = obj.get_glob_vars()
         path = os.path.join(output_prefix, paths[key].format(**glob_vars))
-        self.fs.makedirs(os.path.dirname(path))
+        if ".json" in path or ".mrc" in path or ".zarr" in path:
+            self.fs.makedirs(os.path.dirname(path))
+        else:
+            self.fs.makedirs(path)
         return path
 
     def glob_files(self, obj: BaseImporter, globstring: str) -> list[str]:

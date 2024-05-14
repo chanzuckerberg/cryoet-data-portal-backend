@@ -94,7 +94,6 @@ def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dic
     for import_class, child_import_classes in tree.items():
         if import_class not in to_iterate:
             continue
-        print(f"Iterating {import_class}")
         filter_patterns = [re.compile(pattern) for pattern in kwargs.get(f"filter_{import_class.type_key}_name", [])]
         exclude_patterns = [re.compile(pattern) for pattern in kwargs.get(f"exclude_{import_class.type_key}_name", [])]
 
@@ -105,14 +104,15 @@ def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dic
 
         items = import_class.finder(config, **parent_args)
         for item in items:
+            print(f"Iterating {type(item)}: {item.name}")
             if list(filter(lambda x: x.match(item.name), exclude_patterns)):
                 print(f"Excluding {item.name}..")
                 continue
             if filter_patterns and not list(filter(lambda x: x.match(item.name), filter_patterns)):
                 print(f"Skipping {item.name}..")
                 continue
-            if import_class in to_import:
-                print(f"Importing {import_class.type_key}")
+            if kwargs.get(f"import_{import_class.plural_key}"):
+                print(f"Importing {import_class.type_key} {item.name}")
                 item.import_item()
             if child_import_classes:
                 sub_parents = {import_class.type_key: item}
@@ -122,7 +122,6 @@ def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dic
             if kwargs.get(f"import_{import_class.type_key}_metadata"):
                 print(f"Importing {import_class.type_key} metadata")
                 item.import_metadata()
-        exit()
 
 
 @cli.command()

@@ -32,6 +32,6 @@ class RunImporter(BaseImporter):
 
     def import_metadata(self) -> None:
         dest_run_metadata = self.get_metadata_path()
-        metadata = RunMetadata(self.config.fs, self.config.deposition_id, self.config.run_template)
+        metadata = RunMetadata(self.config.fs, self.config.deposition_id, self.metadata)
         merge_data = {"run_name": self.name}
         metadata.write_metadata(dest_run_metadata, merge_data)

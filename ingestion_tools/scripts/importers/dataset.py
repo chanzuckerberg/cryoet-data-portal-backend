@@ -14,7 +14,7 @@ class DatasetImporter(BaseImporter):
         pass
 
     def import_metadata(self) -> None:
-        meta = DatasetMetadata(self.config.fs, self.config.deposition_id, self.metadata)
+        meta = DatasetMetadata(self.config.fs, self.config.deposition_id, self.get_base_metadata())
         extra_data = self.load_extra_metadata()
         meta.write_metadata(self.get_metadata_path(), extra_data)
 

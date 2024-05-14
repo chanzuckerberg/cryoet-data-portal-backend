@@ -26,17 +26,21 @@ class TiltSeriesImporter(VolumeImporter):
         )
 
     def get_frames_count(self) -> int:
-        return len(FrameImporter.find_all_frames(self.config, self.get_run()))
+        parent_args = dict(self.parents)
+        parent_args["tiltseries"] = self
+        num_frames = 0
+        for _ in FrameImporter.finder(self.config, **parent_args):
+            num_frames += 1
+        return num_frames
 
-    def import_metadata(self, write: bool) -> None:
+    def import_metadata(self) -> None:
         dest_ts_metadata = self.get_metadata_path()
         merge_data = self.load_extra_metadata()
         merge_data["frames_count"] = self.get_frames_count()
         base_metadata = self.get_base_metadata()
         merge_data["pixel_spacing"] = self.get_pixel_spacing()
         metadata = TiltSeriesMetadata(self.config.fs, self.config.deposition_id, base_metadata)
-        if write:
-            metadata.write_metadata(dest_ts_metadata, merge_data)
+        metadata.write_metadata(dest_ts_metadata, merge_data)
 
     def get_pixel_spacing(self) -> float:
         pixel_spacing = self.get_base_metadata().get("pixel_spacing")

@@ -179,7 +179,7 @@ class LocalFilesystem(FileSystemApi):
     def copy(self, src_path: str, dest_path: str) -> None:
         shutil.copy(src_path, dest_path)
 
-    def read_block(self, path: str, start: int, end: int) -> str:
+    def read_block(self, path: str, start: int = 0, end: int = 0) -> str:
         return path
 
     def push(self, path: str) -> None:
