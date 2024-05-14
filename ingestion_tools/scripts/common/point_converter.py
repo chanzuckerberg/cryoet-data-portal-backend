@@ -170,9 +170,10 @@ def from_tardis(
 
 def from_mod(
     local_file: Union[str, os.PathLike],
-    micrograph_name: str = "",
+    filter_value: str = "",
     binning: float = 1.0,
     order="xyz",
+    delimiter: str = None,
 ) -> List[Point]:
     """Read IMOD model file and convert to list of points."""
 

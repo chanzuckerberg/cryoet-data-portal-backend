@@ -189,6 +189,23 @@ ingest_points_test_cases = [
             {"type": "point", "location": {"x": 0, "y": 1.5, "z": 0}},
         ],
     },
+    # IMOD mod
+    {
+        "case": "mod, binning 2",
+        "source_cfg": {
+            "file_format": "mod",
+            "glob_string": "annotations/points.mod",
+            "shape": "Point",
+            "is_visualization_default": False,
+            "binning": 2,
+        },
+        "count": 3,
+        "out_data": [
+            {"type": "point", "location": {"x": 0.5, "y": 1, "z": 1.5}},
+            {"type": "point", "location": {"x": 1, "y": 1, "z": 1}},
+            {"type": "point", "location": {"x": 0, "y": 1.5, "z": 0}},
+        ],
+    },
 ]
 
 
