@@ -1,5 +1,6 @@
 import json
 from os.path import basename
+from typing import Any, Dict
 
 import ndjson
 import pytest
@@ -113,3 +114,236 @@ def test_import_annotation_metadata(
     with s3_fs.open(anno_file, "r") as fh:
         points = ndjson.load(fh)
     assert len(points) == 3
+
+
+ingest_csv_test_cases = [
+    {
+        "case": "comma delimiter, binning 1",
+        "source_cfg": {
+            "columns": "xyz",
+            "file_format": "csv",
+            "glob_string": "annotations/points.csv",
+            "shape": "Point",
+            "is_visualization_default": False,
+        },
+        "count": 3,
+        "locations": [{"x": 1, "y": 2, "z": 3}, {"x": 2, "y": 2, "z": 2}, {"x": 0, "y": 3, "z": 0}],
+    },
+    {
+        "case": "tab delimiter, binning 2",
+        "source_cfg": {
+            "columns": "xyz",
+            "file_format": "csv",
+            "glob_string": "annotations/points_tab_delim.csv",
+            "shape": "Point",
+            "is_visualization_default": False,
+            "binning": 2,
+            "delimiter": "\t",
+        },
+        "count": 3,
+        "locations": [{"x": 0.5, "y": 1, "z": 1.5}, {"x": 1, "y": 1, "z": 1}, {"x": 0, "y": 1.5, "z": 0}],
+    },
+]
+
+
+@pytest.mark.parametrize("case", ingest_csv_test_cases)
+def test_ingest_csv_data(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    tomo_importer: TomogramImporter,
+    dataset_config: DataImportConfig,
+    s3_client: S3Client,
+    case: Dict[str, Any],
+) -> None:
+
+    # loop through test cases
+    anno_config = {
+        "metadata": default_anno_metadata,
+        "sources": [
+            case["source_cfg"],
+        ],
+    }
+    anno_metadata = AnnotationMetadata(dataset_config.fs, anno_config["metadata"])
+    anno = AnnotationImporter(
+        identifier="100",
+        config=dataset_config,
+        parent=tomo_importer,
+        annotation_metadata=anno_metadata,
+        annotation_config=anno_config,
+    )
+    anno.import_annotations(True)
+
+    # Strip the bucket name and annotation name from the annotation's output path.
+    anno_file = anno.get_output_path() + "_point.ndjson"
+
+    # Sanity check the ndjson file
+    with s3_fs.open(anno_file, "r") as fh:
+        points = ndjson.load(fh)
+
+    # Check length of points
+    assert len(points) == case["count"], f"Incorrect number of points for {case['case']}"
+
+    # Check locations
+    for i, loc in enumerate(case["locations"]):
+        assert points[i]["location"] == loc, f"Incorrect location for point {i} in {case['case']}"
+
+
+ingest_csv_with_header_test_cases = [
+    {
+        "case": "comma delimiter, binning 1",
+        "source_cfg": {
+            "columns": "xyz",
+            "file_format": "csv_with_header",
+            "glob_string": "annotations/points.csv",
+            "shape": "Point",
+            "is_visualization_default": False,
+        },
+        "count": 3,
+        "locations": [{"x": 1, "y": 2, "z": 3}, {"x": 2, "y": 2, "z": 2}, {"x": 0, "y": 3, "z": 0}],
+    },
+    {
+        "case": "tab delimiter, binning 2",
+        "source_cfg": {
+            "columns": "xyz",
+            "file_format": "csv_with_header",
+            "glob_string": "annotations/points_tab_delim.csv",
+            "shape": "Point",
+            "is_visualization_default": False,
+            "binning": 2,
+            "delimiter": "|",
+        },
+        "count": 3,
+        "locations": [{"x": 0.5, "y": 1, "z": 1.5}, {"x": 1, "y": 1, "z": 1}, {"x": 0, "y": 1.5, "z": 0}],
+    },
+]
+
+
+@pytest.mark.parametrize("case", ingest_csv_with_header_test_cases)
+def test_ingest_csv_with_header_data(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    tomo_importer: TomogramImporter,
+    dataset_config: DataImportConfig,
+    s3_client: S3Client,
+    case: Dict[str, Any],
+) -> None:
+    anno_config = {
+        "metadata": default_anno_metadata,
+        "sources": [
+            case["source_cfg"],
+        ],
+    }
+    anno_metadata = AnnotationMetadata(dataset_config.fs, anno_config["metadata"])
+    anno = AnnotationImporter(
+        identifier="100",
+        config=dataset_config,
+        parent=tomo_importer,
+        annotation_metadata=anno_metadata,
+        annotation_config=anno_config,
+    )
+    anno.import_annotations(True)
+
+    # Strip the bucket name and annotation name from the annotation's output path.
+    anno_file = anno.get_output_path() + "_point.ndjson"
+
+    # Sanity check the ndjson file
+    with s3_fs.open(anno_file, "r") as fh:
+        points = ndjson.load(fh)
+
+    # Check length of points
+    assert len(points) == 3, f"Incorrect number of points for {case['case']}"
+
+    # Check locations
+    for i, loc in enumerate(case["locations"]):
+        assert points[i]["location"] == loc, f"Incorrect location for point {i} in {case['case']}"
+
+
+# ingest_relion_3_star_test_cases = [
+#     {
+#         "filter_value": "tomo_1.tomostar",
+#         "binning": 4,
+#         "count": 2,
+#         "locations": [{"x": 1, "y": 2, "z": 3}, {"x": 2, "y": 2, "z": 2}],
+#     },
+#     {
+#         "filter_value": "tomo_2.tomostar",
+#         "binning": 2,
+#         "count": 3,
+#         "locations": [{"x": 1, "y": 2, "z": 3}, {"x": 2, "y": 2, "z": 2}, {"x": 0, "y": 3, "z": 0}],
+#     },
+#     {
+#         "filter_value": "tomo_3.tomostar",
+#         "binning": 1,
+#         "count": 1,
+#         "locations": [{"x": 1, "y": 2, "z": 3}],
+#     },
+# ]
+#
+#
+# def test_ingest_relion_3_star_data(
+#     s3_fs: FileSystemApi,
+#     test_output_bucket: str,
+#     tomo_importer: TomogramImporter,
+#     dataset_config: DataImportConfig,
+#     s3_client: S3Client,
+#     case: Dict[str, Any],
+# ) -> None:
+#
+#     # Test Filter, Binning, Count, Locations
+#     test_cases = [
+#         {
+#             "filter_value": "tomo_1.tomostar",
+#             "binning": 4,
+#             "count": 2,
+#             "locations": [{"x": 1, "y": 2, "z": 3}, {"x": 2, "y": 2, "z": 2}],
+#         },
+#         {
+#             "filter_value": "tomo_2.tomostar",
+#             "binning": 2,
+#             "count": 3,
+#             "locations": [{"x": 1, "y": 2, "z": 3}, {"x": 2, "y": 2, "z": 2}, {"x": 0, "y": 3, "z": 0}],
+#         },
+#         {
+#             "filter_value": "tomo_3.tomostar",
+#             "binning": 1,
+#             "count": 1,
+#             "locations": [{"x": 1, "y": 2, "z": 3}],
+#         },
+#     ]
+#
+#     for fv in filter_values:
+#         anno_config = {
+#             "metadata": default_anno_metadata,
+#             "sources": [
+#                 {
+#                     "order": "xyz",
+#                     "file_format": "relion3_star",
+#                     "glob_string": "annotations/relion_3_star.star",
+#                     "binning": 4,
+#                     "shape": "OrientedPoint",
+#                     "filter_value": fv,
+#                     "is_visualization_default": False,
+#                 },
+#             ],
+#         }
+#         anno_metadata = AnnotationMetadata(dataset_config.fs, anno_config["metadata"])
+#         anno = AnnotationImporter(
+#             identifier="100",
+#             config=dataset_config,
+#             parent=tomo_importer,
+#             annotation_metadata=anno_metadata,
+#             annotation_config=anno_config,
+#         )
+#         anno.import_annotations(True)
+#
+#         # Strip the bucket name and annotation name from the annotation's output path.
+#         anno_file = anno.get_output_path() + "_point.ndjson"
+#
+#         # Sanity check the ndjson file
+#         with s3_fs.open(anno_file, "r") as fh:
+#             points = ndjson.load(fh)
+#
+#         assert len(points) == 3
+#         assert points[0]["location"] == {"x": 1, "y": 2, "z": 3}
+#         assert points[0]["location"] == {"x": 2, "y": 2, "z": 2}
+#         assert points[0]["location"] == {"x": 0, "y": 3, "z": 0}
