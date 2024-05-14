@@ -32,10 +32,7 @@ class Point:
 
 
 @dataclass
-class OrientedPoint:
-    x_coord: float
-    y_coord: float
-    z_coord: float
+class OrientedPoint(Point):
     rot_matrix: np.ndarray
 
     def to_dict(self):
@@ -51,10 +48,7 @@ class OrientedPoint:
 
 
 @dataclass
-class InstancePoint:
-    x_coord: float
-    y_coord: float
-    z_coord: float
+class InstancePoint(Point):
     ID: int
 
     def to_dict(self):
