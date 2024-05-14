@@ -1,6 +1,6 @@
 import json
 from os.path import basename
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 import ndjson
 import pytest
@@ -54,7 +54,7 @@ def tomo_importer(dataset_config: DataImportConfig) -> TomogramImporter:
     return tomo
 
 
-def list_dir(s3_client: S3Client, bucket: str, prefix: str) -> None:
+def list_dir(s3_client: S3Client, bucket: str, prefix: str) -> List[str]:
     files = s3_client.list_objects(Bucket=bucket, Prefix=prefix)
     fnames = []
     for item in files["Contents"]:

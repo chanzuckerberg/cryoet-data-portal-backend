@@ -4,8 +4,8 @@ Various conversion of euler angle to rotation matrix
 
 import contextlib
 import csv
-from dataclasses import dataclass
 import os
+from dataclasses import dataclass
 from typing import List, Tuple, Union
 
 import imodmodel
@@ -185,7 +185,7 @@ def from_mod(
                 x_coord=coords[axis_order[0]] / binning,
                 y_coord=coords[axis_order[1]] / binning,
                 z_coord=coords[axis_order[2]] / binning,
-            )
+            ),
         )
 
     return points
@@ -216,7 +216,7 @@ def from_trf(
                 y_coord=coords[axis_order[1]] / binning,
                 z_coord=coords[axis_order[2]] / binning,
                 rot_matrix=matrix_transform(rot),
-            )
+            ),
         )
 
     return points
@@ -257,9 +257,9 @@ def from_stopgap_star(
                 y_coord=positions[i, axis_order[1]],
                 z_coord=positions[i, axis_order[2]],
                 rot_matrix=matrix_transform(
-                    Rotation.from_euler(angles=euler_angles[i], seq="zxz", degrees=True).as_matrix()
+                    Rotation.from_euler(angles=euler_angles[i], seq="zxz", degrees=True).as_matrix(),
                 ),
-            )
+            ),
         )
 
     return points
@@ -293,9 +293,9 @@ def from_relion4_star(
                 y_coord=positions[i, axis_order[1]],
                 z_coord=positions[i, axis_order[2]],
                 rot_matrix=matrix_transform(
-                    Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).as_matrix()
+                    Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).as_matrix(),
                 ),
-            )
+            ),
         )
 
     return points
@@ -338,9 +338,9 @@ def _from_relion3_star_filtered(
                 y_coord=positions[i, axis_order[1]],
                 z_coord=positions[i, axis_order[2]],
                 rot_matrix=matrix_transform(
-                    Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).as_matrix()
+                    Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).as_matrix(),
                 ),
-            )
+            ),
         )
 
     return points

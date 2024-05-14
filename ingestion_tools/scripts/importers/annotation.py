@@ -198,7 +198,7 @@ class AbstractPointFile(BaseAnnotationSource):
         valid_formats = self.map_functions.keys()
         if file_format not in valid_formats:
             raise NotImplementedError(
-                f"We only support {', '.join(valid_formats)} files for {self.output_type} annotations."
+                f"We only support {', '.join(valid_formats)} files for {self.output_type} annotations.",
             )
 
     def load(
