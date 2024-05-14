@@ -22,7 +22,7 @@ class NeuroglancerImporter(BaseImporter):
 
     def import_item(self) -> str:
         dest_file = self.get_output_path()
-        ng_contents = self.get_config_json(self.parent.get_output_path() + ".zarr")
+        ng_contents = self.get_config_json(self.get_tomogram().get_output_path() + ".zarr")
         meta = NeuroglancerMetadata(self.config.fs, self.config.deposition_id, ng_contents)
         meta.write_metadata(dest_file)
         return dest_file
@@ -30,8 +30,8 @@ class NeuroglancerImporter(BaseImporter):
     def get_config_json(self, zarr_dir: str) -> dict[str, Any]:
         zarr_dir_url_path = zarr_dir.removeprefix(self.config.output_prefix)
         zarr_url = urljoin(self.config.https_prefix, zarr_dir_url_path)
-        voxel_size = self.parent.get_voxel_spacing()
-        volume_header = self.parent.get_output_header()
+        voxel_size = self.get_voxel_spacing().as_float()
+        volume_header = self.get_tomogram().get_output_header()
         dimensions = {k: [voxel_size * 1e-10, "m"] for k in "xyz"}
         return {
             "dimensions": dimensions,

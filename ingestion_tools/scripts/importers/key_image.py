@@ -48,19 +48,17 @@ class KeyImageImporter(BaseImporter):
         if preview is None:
             preview, tomo_width = self.generate_preview_from_tomo()
 
-        for image_type, width in self.width_sizes.items():
-            if width == "orig":
-                # resize matplotlib render to original tomogram dimensions
-                image = process_key_image(preview, aspect_ratio=None, width=tomo_width, rotate=False)
-            else:
-                image = process_key_image(preview, aspect_ratio="4:3", width=width, rotate=True)
-            filename = self.config.fs.localwritable(os.path.join(dir, self.get_file_name(image_type)))
+        width = self.width_sizes[self.name]
+        if width == "orig":
+            # resize matplotlib render to original tomogram dimensions
+            image = process_key_image(preview, aspect_ratio=None, width=tomo_width, rotate=False)
+        else:
+            image = process_key_image(preview, aspect_ratio="4:3", width=width, rotate=True)
+        filename = self.config.fs.localwritable(os.path.join(dir, self.get_file_name(image_type)))
 
-            imageio.imsave(filename, image)
-            print(f"key photo saved at {filename}")
-
-            if upload:
-                self.config.fs.push(filename)
+        imageio.imsave(filename, image)
+        print(f"key photo saved at {filename}")
+        self.config.fs.push(filename)
 
     def get_existing_preview(self) -> tuple[np.ndarray | None, int | None]:
         config = self.config
