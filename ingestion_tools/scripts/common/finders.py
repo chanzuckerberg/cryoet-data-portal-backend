@@ -130,6 +130,56 @@ class DepositionObjectImporterFactory(ABC):
     ) -> BaseFinder:
         pass
 
+    def _should_search(self, **parent_objects: dict[str, Any] | None) -> bool:
+        for parent_key, parent_obj in parent_objects.items():
+            # Apply include/exclude filters
+            if self.exclude_parents.get(parent_key):
+                for regex in self.exclude_parents[parent_key]:
+                    if regex.search(parent_obj.name):
+                        return False
+            if self.include_parents.get(parent_key):
+                for regex in self.include_parents[parent_key]:
+                    if not regex.search(parent_obj.name):
+                        return False
+        return True
+
+    def _get_glob_vars(self, **parent_objects: dict[str, Any] | None):
+        glob_vars = {}
+        for _, parent_obj in parent_objects.items():
+            glob_vars.update(parent_obj.get_glob_vars())
+            # These are *only* used by source glob finder, which is kindof a hack :'(
+            glob_vars[f"{parent_obj.type_key}_output_path"] = parent_obj.get_output_path()
+        return glob_vars
+
+    def _instantiate(
+        self,
+        cls,
+        config: DepositionImportConfig,
+        metadata: dict[str, Any],
+        name: str,
+        path: str,
+        parents: dict[str, Any] | None,
+    ):
+        return cls(config=config, metadata=metadata, name=name, path=path, parents=parents)
+
+    def _get_results(
+        self,
+        cls,
+        config: DepositionImportConfig,
+        metadata: dict[str, Any],
+        **parent_objects: dict[str, Any] | None
+    ):
+        loader = self.load(config, **parent_objects)
+        glob_vars = self._get_glob_vars(**parent_objects)
+        found = loader.find(config, glob_vars)
+        results = []
+        for name, path in found.items():
+            item = self._instantiate(cls, config, metadata, name, path, parent_objects)
+            if item:
+                results.append(item)
+        return results
+
+    # This is the main entrypoint into this class that should be called by the importer
     def find(
         self,
         cls,
@@ -137,28 +187,9 @@ class DepositionObjectImporterFactory(ABC):
         metadata: dict[str, Any],
         **parent_objects: dict[str, Any] | None,
     ):
-        loader = self.load(config, **parent_objects)
-        glob_vars = {}
-        for _, parent in parent_objects.items():
-            glob_vars.update(parent.get_glob_vars())
-        for parent_key, parent_obj in parent_objects.items():
-            # Apply include/exclude filters
-            if self.exclude_parents.get(parent_key):
-                for regex in self.exclude_parents[parent_key]:
-                    if regex.search(parent_obj.name):
-                        return []
-            if self.include_parents.get(parent_key):
-                for regex in self.include_parents[parent_key]:
-                    if not regex.search(parent_obj.name):
-                        return []
-            # These are *only* used by source glob finder, which is kindof a hack :'(
-            glob_vars[f"{parent_obj.type_key}_output_path"] = parent_obj.get_output_path()
-
-        found = loader.find(config, glob_vars)
-        results = []
-        for name, path in found.items():
-            results.append(cls(config=config, metadata=metadata, name=name, path=path, parents=parent_objects))
-        return results
+        if not self._should_search(**parent_objects):
+            return []
+        return self._get_results(cls, config, metadata, **parent_objects)
 
 
 class DefaultImporterFactory(DepositionObjectImporterFactory):

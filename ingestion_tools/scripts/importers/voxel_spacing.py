@@ -1,5 +1,3 @@
-import contextlib
-import json
 import os
 import re
 from typing import TYPE_CHECKING, Any
@@ -107,13 +105,3 @@ class VoxelSpacingImporter(BaseImporter):
 
     def import_item(self):
         pass
-
-    def get_existing_annotation_metadatas(self, fs):
-        # TODO use an annotation finder object here when we have one.
-        metadata_glob = f"{self.config.resolve_output_path('annotation', self)}/*.json"
-        metadatas = {}
-        for file in fs.glob(metadata_glob):
-            identifier = os.path.basename(file).split("-")[0]
-            with contextlib.suppress(ValueError, TypeError):
-                metadatas[int(identifier)] = json.loads(fs.open(file, "r").read())
-        return metadatas
