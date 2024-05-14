@@ -1,13 +1,9 @@
-import csv
 import os
 import os.path
 from typing import TYPE_CHECKING, Any, Dict, List, TypedDict
 
 import ndjson
-import numpy as np
 
-# from common import instance_point_converter as ipc
-# from common import oriented_point_converter as opc
 from common import point_converter as pc
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, scale_mrcfile
@@ -240,7 +236,9 @@ class AbstractPointFile(BaseAnnotationSource):
         return len(self.get_output_data(fs, output_prefix))
 
     def get_output_data(
-        self, fs: FileSystemApi, output_prefix: str
+        self,
+        fs: FileSystemApi,
+        output_prefix: str,
     ) -> List[pc.Point | pc.InstancePoint | pc.OrientedPoint]:
         with fs.open(self.get_output_filename(output_prefix), "r") as f:
             annotations = ndjson.load(f)

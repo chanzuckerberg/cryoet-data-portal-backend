@@ -3,7 +3,6 @@ from os.path import basename
 from typing import Any, Dict
 
 import ndjson
-import numpy as np
 import pytest
 from importers.annotation import AnnotationImporter
 from importers.dataset import DatasetImporter
@@ -240,7 +239,8 @@ def test_ingest_point_data(
         exp_loc = exp_point["location"]
         for dim in ["x", "y", "z"]:
             assert loc[dim] == pytest.approx(
-                exp_loc[dim], abs=NUMERICAL_PRECISION
+                exp_loc[dim],
+                abs=NUMERICAL_PRECISION,
             ), f"Incorrect point data for {case['case']}"
 
 
@@ -663,7 +663,8 @@ def test_ingest_oriented_point_data(
         exp_loc = exp_point["location"]
         for dim in ["x", "y", "z"]:
             assert loc[dim] == pytest.approx(
-                exp_loc[dim], abs=NUMERICAL_PRECISION
+                exp_loc[dim],
+                abs=NUMERICAL_PRECISION,
             ), f"Incorrect point data for {case['case']}"
 
         # Check orientation
@@ -671,14 +672,15 @@ def test_ingest_oriented_point_data(
         exp_ori = exp_point["rotation_matrix"]
         for i in range(3):
             assert ori[i] == pytest.approx(
-                exp_ori[i], abs=NUMERICAL_PRECISION
+                exp_ori[i],
+                abs=NUMERICAL_PRECISION,
             ), f"Incorrect orientation for {case['case']}"
 
 
 ingest_instance_points_test_cases = [
     # tardis
     {
-        "case": "tardis, filter value 3, binning 2",
+        "case": "tardis, binning 2",
         "source_cfg": {
             "order": "xyz",
             "file_format": "tardis",
@@ -771,7 +773,8 @@ def test_ingest_instance_point_data(
         exp_loc = exp_point["location"]
         for dim in ["x", "y", "z"]:
             assert loc[dim] == pytest.approx(
-                exp_loc[dim], abs=NUMERICAL_PRECISION
+                exp_loc[dim],
+                abs=NUMERICAL_PRECISION,
             ), f"Incorrect point data for {case['case']}"
 
         # Check id
