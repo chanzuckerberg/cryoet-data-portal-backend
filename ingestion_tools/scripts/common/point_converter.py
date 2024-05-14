@@ -169,7 +169,10 @@ def from_tardis(
 
 
 def from_mod(
-    local_file: Union[str, os.PathLike], micrograph_name: str = "", binning: float = 1.0, order="xyz",
+    local_file: Union[str, os.PathLike],
+    micrograph_name: str = "",
+    binning: float = 1.0,
+    order="xyz",
 ) -> List[Point]:
     """Read IMOD model file and convert to list of points."""
 
@@ -192,7 +195,10 @@ def from_mod(
 
 
 def from_trf(
-    local_file: Union[str, os.PathLike], micrograph_name: str = "", binning: float = 1.0, order: str = "xyz",
+    local_file: Union[str, os.PathLike],
+    micrograph_name: str = "",
+    binning: float = 1.0,
+    order: str = "xyz",
 ) -> List[OrientedPoint]:
     """Read TRF file and convert to list of points."""
 
@@ -223,7 +229,10 @@ def from_trf(
 
 
 def from_stopgap_star(
-    local_file: Union[str, os.PathLike], filter_value: str, binning: float = 1.0, order: str = "xyz",
+    local_file: Union[str, os.PathLike],
+    filter_value: str,
+    binning: float = 1.0,
+    order: str = "xyz",
 ) -> List[OrientedPoint]:
     """
     STOPGAP star format convertion to position and rotation matrix
@@ -266,7 +275,10 @@ def from_stopgap_star(
 
 
 def from_relion4_star(
-    local_file: Union[str, os.PathLike], filter_value: str, binning: float = 1.0, order: str = "xyz",
+    local_file: Union[str, os.PathLike],
+    filter_value: str,
+    binning: float = 1.0,
+    order: str = "xyz",
 ) -> List[OrientedPoint]:
     """
     Relion4 star format convertion to position and rotation matrix
@@ -347,7 +359,10 @@ def _from_relion3_star_filtered(
 
 
 def from_relion3_star(
-    file_path: Union[str, os.PathLike], filter_value: str, binning: float = 1.0, order: str = "xyz",
+    file_path: Union[str, os.PathLike],
+    filter_value: str,
+    binning: float = 1.0,
+    order: str = "xyz",
 ) -> List[OrientedPoint]:
     """
     Relion3 star format convertion to position and rotation matrix
@@ -358,7 +373,10 @@ def from_relion3_star(
 
 
 def from_tomoman_relion_star(
-    file_path: Union[str, os.PathLike], filter_value: str, binning: float = 1.0, order: str = "xyz",
+    file_path: Union[str, os.PathLike],
+    filter_value: str,
+    binning: float = 1.0,
+    order: str = "xyz",
 ) -> List[OrientedPoint]:
     """
     Tomoman Relion3 star format convertion to position and rotation matrix
