@@ -157,6 +157,8 @@ def convert(
                     tomo.import_metadata(True)
                 if iterate_ng:
                     for item in NeuroglancerImporter.find_ng(config, tomo):
+                        if not annotations:
+                            annotations = AnnotationImporter.find_annotations(config, tomo)
                         item.import_neuroglancer(annotations)
         if iterate_frames:
             frame_imports = FramesImporter.find_frames(config, run)

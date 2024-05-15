@@ -1,6 +1,9 @@
 import distinctipy as distinctipy
 
-_INSTANCE_SEG_COLORS = [
+INT_COLOR_TYPE = tuple[int, int, int]
+FLOAT_COLOR_TYPE = tuple[float, float, float]
+COLORS_TYPE = tuple[list[INT_COLOR_TYPE], list[FLOAT_COLOR_TYPE]]
+INSTANCE_SEG_COLORS = [
     (0.0, 1.0, 0.0),
     (1.0, 0.0, 1.0),
     (0.0, 0.5, 1.0),
@@ -52,23 +55,37 @@ _INSTANCE_SEG_COLORS = [
     (0.8834038803590787, 0.2884272728311682, 0.5728981112942894),
     (0.0064370328390882525, 0.044420907145303334, 0.6326152256411088),
 ]
-INSTANCE_SEG_COLORS_COUNT = len(_INSTANCE_SEG_COLORS)
+INSTANCE_SEG_COLORS_COUNT = len(INSTANCE_SEG_COLORS)
 
 
-def _convert_colors_to_int(input_colors: list[tuple[float, float, float]]) -> list[tuple[int, int, int]]:
+def _convert_colors_to_int(input_colors: list[FLOAT_COLOR_TYPE]) -> list[INT_COLOR_TYPE]:
     return [tuple(round(c * 255) for c in color) for color in input_colors]
 
 
-INSTANCE_SEG_COLORS_AS_INT = _convert_colors_to_int(_INSTANCE_SEG_COLORS)
+INSTANCE_SEG_COLORS_AS_INT = _convert_colors_to_int(INSTANCE_SEG_COLORS)
 
 
-def get_int_colors(n_colors: int, exclude: list[tuple[float, float, float]]) -> list[tuple[int, int, int]]:
-    return _convert_colors_to_int(distinctipy.get_colors(n_colors, exclude_colors=exclude))
+def _convert_colors_to_hex(input_colors: list[FLOAT_COLOR_TYPE]) -> list[str]:
+    return [f"#{''.join(f'{round(c * 255):02x}' for c in color)}" for color in input_colors]
 
 
-def get_instance_seg_colors(n_colors: int) -> list[tuple[int, int, int]]:
+def get_colors(n_colors: int, exclude: list[FLOAT_COLOR_TYPE]) -> list[FLOAT_COLOR_TYPE]:
+    return distinctipy.get_colors(n_colors, exclude_colors=exclude)
+
+
+def get_int_colors(n_colors: int, exclude: list[FLOAT_COLOR_TYPE]) -> COLORS_TYPE:
+    colors = get_colors(n_colors, exclude=exclude)
+    return _convert_colors_to_int(colors), colors
+
+
+def get_hex_colors(n_colors: int, exclude: list[FLOAT_COLOR_TYPE]) -> tuple[list[str], list[FLOAT_COLOR_TYPE]]:
+    colors = get_colors(n_colors, exclude=exclude)
+    return _convert_colors_to_hex(colors), colors
+
+
+def get_instance_seg_colors(n_colors: int) -> list[INT_COLOR_TYPE]:
     if n_colors <= INSTANCE_SEG_COLORS_COUNT:
         return INSTANCE_SEG_COLORS_AS_INT[:n_colors].copy()
 
-    additional_colors = get_int_colors(n_colors - INSTANCE_SEG_COLORS_COUNT, exclude=_INSTANCE_SEG_COLORS)
-    return INSTANCE_SEG_COLORS_AS_INT + additional_colors
+    new_colors, _ = get_int_colors(n_colors - INSTANCE_SEG_COLORS_COUNT, exclude=INSTANCE_SEG_COLORS)
+    return INSTANCE_SEG_COLORS_AS_INT + new_colors
