@@ -125,7 +125,7 @@ annotations:
     sources:
       - file_format: relion4_star
         glob_string: motl_star/czii-remapped-points.star
-        order: zyx
+        order: xyz
         shape: OrientedPoint
         binning: 2
         filter_value: '{run_name}'

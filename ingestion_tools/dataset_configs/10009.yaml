@@ -175,7 +175,7 @@ annotations:
       - shape: OrientedPoint
         file_format: stopgap_star
         binning: 2
-        order: zyx
+        order: xyz
         glob_string: "motivelists/allmotl_S_newbin2_3.star"
         filter_value: "{run_name}"
         is_visualization_default: true
@@ -202,7 +202,7 @@ annotations:
       - shape: OrientedPoint
         file_format: stopgap_star
         binning: 2
-        order: zyx
+        order: xyz
         glob_string: 'motivelists/allmotl_Y_newbin2_3.star'
         filter_value: "{run_name}"
         is_visualization_default: true
@@ -229,7 +229,7 @@ annotations:
       - shape: OrientedPoint
         file_format: stopgap_star
         binning: 2
-        order: zyx
+        order: xyz
         glob_string: 'motivelists/allmotl_H_cleanbin2.star'
         filter_value: "{run_name}"
         is_visualization_default: true
@@ -256,7 +256,7 @@ annotations:
       - shape: OrientedPoint
         file_format: stopgap_star
         binning: 2
-        order: zyx
+        order: xyz
         glob_string: 'motivelists/MTD_MIP_bin2_recentered_shiftedorg_9.star'
         filter_value: "{run_name}"
         is_visualization_default: true
@@ -283,7 +283,7 @@ annotations:
       - shape: OrientedPoint
         file_format: stopgap_star
         binning: 2
-        order: zyx
+        order: xyz
         glob_string: 'motivelists/allmotl_B2_newbin2_3.star'
         filter_value: "{run_name}"
         is_visualization_default: true
@@ -310,7 +310,7 @@ annotations:
       - shape: OrientedPoint
         file_format: stopgap_star
         binning: 2
-        order: zyx
+        order: xyz
         glob_string: 'motivelists/allmotl_A2_newbin2_3.star'
         filter_value: "{run_name}"
         is_visualization_default: true
@@ -337,7 +337,7 @@ annotations:
       - shape: OrientedPoint
         file_format: stopgap_star
         binning: 2
-        order: zyx
+        order: xyz
         glob_string: 'motivelists/allmotl_D_newbin2_3.star'
         filter_value: "{run_name}"
         is_visualization_default: true

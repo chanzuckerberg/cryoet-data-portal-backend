@@ -110,7 +110,7 @@ annotations:
       - shape: OrientedPoint
         file_format: stopgap_star
         binning: 2
-        order: zyx
+        order: xyz
         glob_string: 'subtomo/hdcr/hdcr_tm_bin2_motl_12.star'
         filter_value: "{run_name}"
         is_visualization_default: true
@@ -137,7 +137,7 @@ annotations:
       - shape: OrientedPoint
         file_format: stopgap_star
         binning: 4
-        order: zyx
+        order: xyz
         glob_string: 'subtomo/ribo/ribo_tm_bin1_motl_12.star'
         filter_value: "{run_name}"
         is_visualization_default: true
