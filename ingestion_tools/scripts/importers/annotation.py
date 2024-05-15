@@ -62,9 +62,9 @@ class BaseAnnotationSource:
         # To be overridden by subclasses to communicate whether this source contains valid information for this run.
         return True
 
-    def get_local_neuroglancer_path(self, fs: FileSystemApi, annotation_path: str, output_prefix: str) -> str:
+    def get_neuroglancer_precompute_path(self, annotation_path: str, output_prefix: str) -> str:
         file_name = os.path.basename(f"{annotation_path}_{self.shape.lower()}")
-        return fs.localwritable(os.path.join(output_prefix, file_name, ""))
+        return os.path.join(output_prefix, file_name, "")
 
     def neuroglancer_precompute(
         self,
@@ -294,7 +294,8 @@ class PointFile(BaseAnnotationSource):
         output_prefix: str,
         voxel_spacing: float,
     ):
-        tmp_path = self.get_local_neuroglancer_path(fs, annotation_path, output_prefix)
+        precompute_path = self.get_neuroglancer_precompute_path(annotation_path, output_prefix)
+        tmp_path = fs.localwritable(precompute_path)
         annotation_metadata_path = fs.localreadable(f"{annotation_path}.json")
         with open(annotation_metadata_path) as f:
             annotation_metadata = json.load(f)
