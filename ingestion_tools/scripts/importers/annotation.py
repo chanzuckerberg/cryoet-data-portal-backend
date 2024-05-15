@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, Any, TypedDict
 import ndjson
 import numpy as np
 
+from common import colors
 from common import instance_point_converter as ipc
 from common import oriented_point_converter as opc
 from common.fs import FileSystemApi
@@ -19,8 +20,7 @@ if TYPE_CHECKING:
     from importers.tomogram import TomogramImporter
 
 
-from cryo_et_neuroglancer.write_annotations import process_annotation as encode_point_annotation
-from cryo_et_neuroglancer.write_segmentation import main as encode_segmentation
+from cryoet_data_portal_neuroglancer.precompute import points
 
 
 class AnnotationObject(TypedDict):
@@ -142,25 +142,6 @@ class SegmentationMaskFile(VolumeAnnotationSource):
             write_zarr=write_zarr,
             voxel_spacing=voxel_spacing,
         )
-
-    def neuroglancer_precompute(
-        self,
-        fs: FileSystemApi,
-        annotation_path: str,
-        output_prefix: str,
-        voxel_spacing: float,
-    ):
-        tmp_path = self.get_local_neuroglancer_path(fs, annotation_path, output_prefix)
-        annotation_zarr_path = fs.destformat(self.get_output_filename(annotation_path, "zarr"))
-        resolution = voxel_spacing / 10
-
-        encode_segmentation(
-            filename=annotation_zarr_path,
-            output_path=Path(tmp_path),
-            delete_existing_output_directory=True,
-            resolution=(resolution, resolution, resolution),
-        )
-        fs.push(tmp_path)
 
 
 class SemanticSegmentationMaskFile(SegmentationMaskFile):
@@ -298,6 +279,14 @@ class PointFile(BaseAnnotationSource):
         with fs.open(filename, "w") as fh:
             ndjson.dump(annotations, fh)
 
+    def neuroglancer_precompute_args(
+        self,
+        fs: FileSystemApi,
+        output_prefix: str,
+        metadata: dict[str, Any],
+    ) -> dict[str, Any]:
+        return {}
+
     def neuroglancer_precompute(
         self,
         fs: FileSystemApi,
@@ -309,11 +298,12 @@ class PointFile(BaseAnnotationSource):
         annotation_metadata_path = fs.localreadable(f"{annotation_path}.json")
         with open(annotation_metadata_path) as f:
             annotation_metadata = json.load(f)
-        annotation_data = (annotation_metadata, self.get_output_data(fs, annotation_path))
-        encode_point_annotation(
-            annotation_data,
+        points.encode_annotation(
+            self.get_output_data(fs, annotation_path),
+            annotation_metadata,
             Path(tmp_path),
-            voxel_spacing / 10,
+            voxel_spacing * 1e-10,
+            **self.neuroglancer_precompute_args(fs, output_prefix, annotation_metadata),
         )
         fs.push(tmp_path)
 
@@ -389,19 +379,23 @@ class OrientedPointFile(PointFile):
             annotation_set.append(self.oriented_point(positions[rownum], rotations[rownum]))
         return annotation_set
 
+    def neuroglancer_precompute_args(
+        self,
+        fs: FileSystemApi,
+        output_prefix: str,
+        metadata: dict[str, Any],
+    ) -> dict[str, Any]:
+        return {"is_oriented": True}
+
 
 class InstanceSegmentationFile(OrientedPointFile):
     map_functions = {
         "tardis": ipc.from_tardis,
     }
 
-    def get_object_count(self, fs, output_prefix):
-        data = self.get_output_data(fs, output_prefix)
-
-        ids = [d["instance_id"] for d in data]
-
+    def get_object_count(self, fs: FileSystemApi, output_prefix: str):
         # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
-        return len(set(ids))
+        return len(self._get_distinct_ids(fs, output_prefix))
 
     def load(self, fs: FileSystemApi, filename: str):
         method = self.map_functions[self.file_format]
@@ -430,6 +424,26 @@ class InstanceSegmentationFile(OrientedPointFile):
 
         with fs.open(filename, "w") as fh:
             ndjson.dump([a.to_dict() for a in annotations], fh)
+
+    def neuroglancer_precompute_args(
+        self,
+        fs: FileSystemApi,
+        output_prefix: str,
+        metadata: dict[str, Any],
+    ) -> dict[str, Any]:
+        ids = self._get_distinct_ids(fs, output_prefix)
+        color_map = dict(zip(ids, colors.get_instance_seg_colors(len(ids))))
+        object_name = metadata.get("annotation_object", {}).get("name", "")
+        names_by_id = {id: f"{object_name} {id}" for id in ids}
+        return {
+            "names_by_id": names_by_id,
+            "label_key_mapper": lambda x: x["instance_id"],
+            "color_mapper": lambda x: color_map.get(x["instance_id"], (255, 255, 255)),
+        }
+
+    def _get_distinct_ids(self, fs: FileSystemApi, output_prefix: str) -> set[int]:
+        data = self.get_output_data(fs, output_prefix)
+        return {d["instance_id"] for d in data}
 
 
 def annotation_source_factory(source_config, glob_vars):
@@ -547,7 +561,7 @@ class AnnotationImporter(BaseImporter):
             )
 
     @classmethod
-    def find_annotations(cls, config, tomo: "TomogramImporter"):
+    def find_annotations(cls, config, tomo: "TomogramImporter") -> list["AnnotationImporter"]:
         annotations = []
         identifier = 100
         for annotation_config in config.annotation_template:
@@ -564,6 +578,4 @@ class AnnotationImporter(BaseImporter):
             identifier += 1
 
         # Annotation has to have at least one valid source to be imported.
-        annotations = [a for a in annotations if a.has_valid_source()]
-
-        return annotations
+        return [a for a in annotations if a.has_valid_source()]

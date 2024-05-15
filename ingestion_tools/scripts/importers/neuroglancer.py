@@ -5,6 +5,7 @@ import numpy as np
 
 from common.config import DataImportConfig
 from common.metadata import NeuroglancerMetadata
+from importers.annotation import AnnotationImporter
 from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
@@ -16,7 +17,7 @@ else:
 class NeuroglancerImporter(BaseImporter):
     type_key = "neuroglancer"
 
-    def import_neuroglancer(self) -> str:
+    def import_neuroglancer(self, annotations: list[AnnotationImporter]) -> str:
         dest_file = self.get_output_path()
         ng_contents = self.get_config_json(self.parent.get_output_path() + ".zarr")
         meta = NeuroglancerMetadata(self.config.fs, ng_contents)

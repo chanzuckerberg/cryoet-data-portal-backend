@@ -140,8 +140,10 @@ def convert(
                     run.set_voxel_spacing(tomo.get_voxel_spacing())
                 if import_tomograms:
                     tomo.import_tomogram(write_mrc=write_mrc, write_zarr=write_zarr)
+                annotations = []
                 if iterate_annotations:
-                    for annotation in AnnotationImporter.find_annotations(config, tomo):
+                    annotations = AnnotationImporter.find_annotations(config, tomo)
+                    for annotation in annotations:
                         if import_annotations:
                             annotation.import_annotations(write_mrc=write_mrc, write_zarr=write_zarr)
                         if import_annotation_metadata:
@@ -155,7 +157,7 @@ def convert(
                     tomo.import_metadata(True)
                 if iterate_ng:
                     for item in NeuroglancerImporter.find_ng(config, tomo):
-                        item.import_neuroglancer()
+                        item.import_neuroglancer(annotations)
         if iterate_frames:
             frame_imports = FramesImporter.find_frames(config, run)
             for importer in frame_imports:
