@@ -1,4 +1,6 @@
 import csv
+from functools import partial
+from collections import defaultdict
 import json
 import re
 import os
@@ -26,7 +28,9 @@ from common.finders import (
 )
 
 if TYPE_CHECKING:
-    pass
+    from importers.voxel_spacing import VoxelSpacingImporter
+else:
+    VoxelSpacingImporter = "VoxelSpacingImporter"
 
 class AnnotationObject(TypedDict):
     name: str
@@ -51,6 +55,46 @@ class AnnotationMap(TypedDict):
     metadata: dict[str, Any]
     sources: list[AnnotationSource]
 
+# This class is basically a global var that lets us cache metadata and identifiers for annotations, 
+# so we can generate non-conflicting sequential identifiers for annotations as they're imported.
+class AnnotationIdentifierHelper():
+    next_identifier: dict[str, int] = defaultdict(partial(int, 100))
+    cached_metadatas: dict[str, dict[int, Any]] = {}
+
+    @classmethod
+    def load_metadata(cls, cache_key: str, config: DepositionImportConfig, vs: VoxelSpacingImporter):
+        if cache_key not in cls.cached_metadatas:
+            metadatas = {}
+            metadata_glob = f"{config.resolve_output_path('annotation', vs)}/*.json"
+            for file in config.fs.glob(metadata_glob):
+                identifier = os.path.basename(file).split("-")[0]
+                with contextlib.suppress(ValueError, TypeError):
+                    metadatas[identifier] = json.loads(config.fs.open(file, "r").read())
+            cls.cached_metadatas[cache_key] = metadatas
+            cls.next_identifier[cache_key] = max(metadatas.keys(), default=100) + 1
+        return cls.cached_metadatas[cache_key]
+
+    @classmethod
+    def get_identifier(cls, config: DepositionImportConfig, metadata: dict[str, Any], parents: dict[str, Any]):
+        vs = parents["voxel_spacing"]
+        cache_key = vs.get_output_path()
+        
+        existing_metadatas = cls.load_metadata(cache_key, config, vs)
+        for identifier, portaldata in existing_metadatas.items():
+            if all(
+                [
+                    (not portaldata.get("deposition_id") or portaldata["deposition_id"] == config.deposition_id),
+                    portaldata["annotation_object"]["description"] == metadata["annotation_object"]["description"],
+                    portaldata["annotation_object"]["name"] == metadata["annotation_object"]["name"],
+                    portaldata["annotation_method"] == metadata["annotation_method"],
+                ],
+            ):
+                return identifier
+
+        return_value = cls.next_identifier[cache_key]
+        cls.next_identifier[cache_key] += 1
+        return return_value
+
 class AnnotationImporterFactory(DepositionObjectImporterFactory):
     def load(
         self,
@@ -73,7 +117,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
         del source_args["shape"]
         del source_args["glob_string"]
         instance_args = {
-            "identifier": 100,
+            "identifier": AnnotationIdentifierHelper.get_identifier(config, metadata, parents),
             "config": config,
             "metadata": metadata,
             "name": name,
@@ -98,39 +142,12 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             return anno
 
 
-    def xxfind(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
-        annotations = []
-        # make this a dict so we can pass by reference
-        vs = self.parents["voxel_spacing"]
-        current_identifier = {"identifier": 100}
-        existing_annotations = vs.get_existing_annotation_metadatas(config.fs)
-        configs = config._get_object_configs(cls.type_key, **parents)
-        for annotation_config in configs:
-            metadata = AnnotationMetadata(config.fs, config.deposition_id, annotation_config["metadata"])
-            identifier = AnnotationImporter.get_identifier(metadata, existing_annotations, current_identifier)
-            annotations.append(
-                AnnotationImporter(
-                    identifier=identifier,
-                    config=config,
-                    annotation_metadata=metadata,
-                    annotation_config=annotation_config,
-                    metadata=annotation_config["metadata"],  # TODO this is redundant and should probably be fixed?
-                    parents=parents,
-                )
-            )
-            identifier += 1
-
-        # Annotation has to have at least one valid source to be imported.
-        annotations = [a for a in annotations if a.has_valid_source()]
-
-        return annotations
-
 class AnnotationImporter(BaseImporter):
     type_key = "annotation"
     plural_key = "annotations"
     finder_factory = AnnotationImporterFactory
     has_metadata = True
-    written_metadata_files = [] # This is a class variable that helps us avoid writing metadata files multiple times.
+    written_metadata_files = [] # This is a *class* variable that helps us avoid writing metadata files multiple times.
 
     def __init__(
         self,
@@ -148,28 +165,10 @@ class AnnotationImporter(BaseImporter):
         dest_prefix = self.get_output_path()
         self.convert(
             self.config.fs,
-            self.config.input_path,
             dest_prefix,
         )
 
     # Functions to support writing annotation metadata
-    def has_valid_source(self):
-        return len(self.sources) > 0
-
-    def get_output_files(self, fs, output_dir):
-        path = os.path.relpath(output_dir, self.config.output_prefix)
-        files = []
-        for source in self.sources:
-            files.extend(source.get_metadata(path))
-        return files
-
-    def get_object_count(self) -> int:
-        object_counts = []
-        dest_prefix = self.get_output_path()
-        for source in self.sources:
-            object_counts.append(source.get_object_count(self.config.fs, dest_prefix))
-        return max(object_counts) if object_counts else 0
-
     def get_output_path(self):
         output_dir = super().get_output_path()
         return self.annotation_metadata.get_filename_prefix(output_dir, self.identifier)
@@ -180,50 +179,20 @@ class AnnotationImporter(BaseImporter):
         if filename in self.written_metadata_files:
             return  # We've already written this metadata file
 
+        anno_files = [item for item in AnnotationImporter.finder(self.config, **self.parents) if item.identifier == self.identifier]
         run_name = self.get_run().name
         print(f"importing annotations for {run_name}")
-        real_sources = 0
-        for source in self.sources:
-            # Don't panic if we don't have a source file for this annotation source
-            try:
-                source.path
-                real_sources += 1
-            except Exception:
-                continue
-        if not real_sources:
-            print(f"Skipping writing metadata for run {run_name} due to missing files")
-            return
-        self.local_metadata["object_count"] = self.get_object_count()
-        self.local_metadata["files"] = self.get_output_files(self.config.fs, dest_prefix)
 
-        print(filename)
+        output_dir = self.get_output_path()
+        path = os.path.relpath(output_dir, self.config.output_prefix)
+        files = []
+        for source in anno_files:
+            files.extend(source.get_metadata(path))
+
+        self.local_metadata["object_count"] = max(**[anno.get_object_count() for anno in anno_files])
+        self.local_metadata["files"] = files
+
         self.annotation_metadata.write_metadata(filename, self.local_metadata)
-
-    @classmethod
-    def get_identifier(
-        cls,
-        metadata_obj: AnnotationMetadata,
-        existing_annotations: list[dict[str, Any]],
-        current_identifier: dict[str, int],
-    ):
-        # See if we have an exact match we should use
-        for annotation_id, existing_metadata in existing_annotations.items():
-            if all(
-                [
-                    existing_metadata.get("deposition_id") == metadata_obj.deposition_id,
-                    existing_metadata["annotation_object"]["description"]
-                    == metadata_obj.metadata["annotation_object"]["description"],
-                    existing_metadata["annotation_object"]["name"]
-                    == metadata_obj.metadata["annotation_object"]["name"],
-                    existing_metadata["annotation_method"] == metadata_obj.metadata["annotation_method"],
-                ],
-            ):
-                return annotation_id
-        if existing_annotations and current_identifier["identifier"] <= max(existing_annotations.keys()):
-            current_identifier["identifier"] = max(existing_annotations.keys()) + 1
-        return_value = current_identifier["identifier"]
-        current_identifier["identifier"] += 1
-        return return_value
 
 class BaseAnnotationSource(AnnotationImporter):
     is_visualization_default: bool
@@ -261,7 +230,6 @@ class BaseAnnotationSource(AnnotationImporter):
     def convert(
         self,
         fs: FileSystemApi,
-        input_prefix: str,
         output_prefix: str,
     ):
         pass
@@ -291,22 +259,10 @@ class VolumeAnnotationSource(BaseAnnotationSource):
 
 class SegmentationMaskAnnotation(VolumeAnnotationSource):
     shape = "SegmentationMask"  # Don't expose SemanticSegmentationMask to the public portal.
-
-    mask_label: int
-
-    def __init__(
-        self,
-        mask_label: int,
-        *args,
-        **kwargs,
-    ) -> None:
-        self.mask_label = mask_label
-        super().__init__(*args, **kwargs)
         
     def convert(
         self,
         fs: FileSystemApi,
-        input_prefix: str,
         output_prefix: str,
     ):
         return scale_mrcfile(
@@ -322,10 +278,22 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
 class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
     shape = "SegmentationMask"  # Don't expose SemanticSegmentationMask to the public portal.
 
+    mask_label: int
+
+    def __init__(
+        self,
+        mask_label: int | None = None,
+        *args,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        if not mask_label:
+            mask_label = 1
+        self.mask_label = mask_label
+
     def convert(
         self,
         fs: FileSystemApi,
-        input_prefix: str,
         output_prefix: str,
     ):
         return scale_mrcfile(
@@ -425,7 +393,6 @@ class PointAnnotation(BaseAnnotationSource):
     def convert(
         self,
         fs: FileSystemApi,
-        input_prefix: str,
         output_prefix: str,
     ):
         filename = self.get_output_filename(output_prefix)
@@ -529,7 +496,6 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
     def convert(
         self,
         fs: FileSystemApi,
-        input_prefix: str,
         output_prefix: str,
     ):
         filename = self.get_output_filename(output_prefix)
