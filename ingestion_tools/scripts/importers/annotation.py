@@ -254,14 +254,14 @@ class PointFile(BaseAnnotationSource):
         return metadata
 
     def get_output_filename(self, output_prefix: str):
-        filename = f"{output_prefix}_{self.shape.lower()}.ndjson"
-        return filename
+        return f"{output_prefix}_{self.shape.lower()}.ndjson"
 
     def get_object_count(self, fs: FileSystemApi, output_prefix: str):
         return len(self.get_output_data(fs, output_prefix))
 
     def get_output_data(self, fs: FileSystemApi, output_prefix: str):
-        with fs.open(self.get_output_filename(output_prefix), "r") as f:
+        path = fs.localreadable(self.get_output_filename(output_prefix))
+        with open(path, "r") as f:
             annotations = ndjson.load(f)
         return annotations
 

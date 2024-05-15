@@ -58,7 +58,7 @@ def getlink(
         for tomo in TomogramImporter.find_tomograms(config, iter_run):
             iter_run.set_voxel_spacing(tomo.get_voxel_spacing())
             for item in NeuroglancerImporter.find_ng(config, tomo):
-                ng_contents = item.get_config_json(item.parent.get_output_path() + ".zarr")
+                ng_contents = item.create_config_json(item.parent.get_output_path() + ".zarr")
                 print(format_ng_link(ng_contents))
                 return
     print("run not found")

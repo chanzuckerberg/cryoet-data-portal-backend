@@ -117,8 +117,8 @@ def convert(
         import_datasets = True
         import_dataset_metadata = True
         import_neuroglancer_precompute = True
-        make_neuroglancer_config = True
-        make_key_image = True
+        iterate_ng = True
+        iterate_keyimages = True
 
     exclude_run_name_patterns = [re.compile(pattern) for pattern in exclude_run_name]
     filter_run_name_patterns = [re.compile(pattern) for pattern in filter_run_name]
