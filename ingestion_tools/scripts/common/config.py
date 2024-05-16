@@ -16,6 +16,22 @@ else:
     BaseImporter = "BaseImporter"
 
 
+APPEND_STATIC_CONFIG: str = """
+neuroglancer:
+  - sources:
+      - literal:
+          value:
+            - neuroglancer
+key_images:
+  - sources:
+      - literal:
+          value:
+            - original
+            - snapshot
+            - thumbnail
+            - expanded
+"""
+
 class RunOverride:
     run_regex: re.Pattern[str]
     tiltseries: dict[str, Any] | None
@@ -73,7 +89,8 @@ class DepositionImportConfig:
         self.write_zarr: bool = True
 
         with open(config_path, "r") as conffile:
-            config = yaml.safe_load(conffile)
+            confdata = conffile.read() + APPEND_STATIC_CONFIG
+            config = yaml.safe_load(confdata)
 
             self.object_configs = {}
             for item in object_classes:

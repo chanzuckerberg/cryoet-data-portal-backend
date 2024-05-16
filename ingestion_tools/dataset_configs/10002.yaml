@@ -79,192 +79,173 @@ annotations:
     glob_string: prediction/{run_name}_*.mrc
     is_visualization_default: false
     shape: SemanticSegmentationMask
-dataset:
-  authors: &id003
-  - ORCID: 0000-0002-4691-9501
-    name: Irene de Teresa Trueba
-    primary_author_status: true
-  - ORCID: 0000-0002-9903-3667
-    name: Sara Goetz
-  - ORCID: 0000-0003-0901-8701
-    name: Alexander Mattausch
-  - ORCID: 0000-0002-4327-1068
-    name: Frosina Stojanovska
-  - ORCID: 0000-0003-4388-1349
-    name: Christian Eugen Zimmerli
-  - ORCID: 0000-0001-5333-3640
-    name: Mauricio Toro-Nahuelpan
-  - name: Dorothy W. C. Cheng
-  - name: Fergus Tollervey
-  - ORCID: 0000-0001-6562-7187
-    name: Constantin Pape
-  - ORCID: 0000-0002-7397-1321
-    name: Martin Beck
-  - ORCID: 0000-0001-6864-8901
-    name: Alba Diz-Munoz
-  - ORCID: 0000-0003-1334-6388
-    name: Anna Kreshuk
-  - ORCID: 0000-0001-6968-041X
-    corresponding_author_status: true
-    name: Julia Mahamid
-  - ORCID: 0000-0001-8324-4040
-    corresponding_author_status: true
-    name: Judith B. Zaugg
-  cell_component:
-    id: null
-    name: null
-  cell_type:
-    id: CL:0002586
-    name: Retinal pigment epithelial-1
-  cross_references:
-    dataset_publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
-    related_database_entries: EMPIAR-10989
-  dataset_description: Cryo-electron tomograms of RPE1 cells. Comprehensive annotation
-    of actin filaments and microtubules
-  dataset_identifier: 10002
-  dataset_title: RPE1 cytosol with actin stress fiber
-  dates: *id002
-  funding:
-  - funding_agency_name: European Research Council (ERC)
-    grant_id: '760067'
-  grid_preparation: 'model: Quantifoil, material: GOLD, support_film_film_type_id:
-    1, support_film_film_topology: HOLEY, support_film_instance_type: support_film,
-    pretreatment_type_: PLASMA CLEANING'
-  key_photos:
-    snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10989-l.gif
-    thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10989.gif
-  organism:
-    name: Homo sapiens
-    taxonomy_id: 9606
-  sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, cryo_protectant:
-    None, instance_type: tomography_preparation'
-  sample_type: cell
-  tissue:
-    id: BTO:0001175
-    name: retina
-overrides:
-  - match:
-      run: ^00011$
-    sources:
-      voxel_spacing:
-        literal:
-          value:
-          - 13.8
-    metadata:
-      tiltseries:
-        pixel_spacing: 3.45
-  - match:
-      run: ^00012$
-    sources:
-      voxel_spacing:
-        literal:
-          value:
-          - 13.8
-    metadata:
-      tiltseries:
-        pixel_spacing: 3.45
-runs: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10989-l.gif
+        thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10989.gif
+datasets:
+- metadata:
+    authors: &id003
+    - ORCID: 0000-0002-4691-9501
+      name: Irene de Teresa Trueba
+      primary_author_status: true
+    - ORCID: 0000-0002-9903-3667
+      name: Sara Goetz
+    - ORCID: 0000-0003-0901-8701
+      name: Alexander Mattausch
+    - ORCID: 0000-0002-4327-1068
+      name: Frosina Stojanovska
+    - ORCID: 0000-0003-4388-1349
+      name: Christian Eugen Zimmerli
+    - ORCID: 0000-0001-5333-3640
+      name: Mauricio Toro-Nahuelpan
+    - name: Dorothy W. C. Cheng
+    - name: Fergus Tollervey
+    - ORCID: 0000-0001-6562-7187
+      name: Constantin Pape
+    - ORCID: 0000-0002-7397-1321
+      name: Martin Beck
+    - ORCID: 0000-0001-6864-8901
+      name: Alba Diz-Munoz
+    - ORCID: 0000-0003-1334-6388
+      name: Anna Kreshuk
+    - ORCID: 0000-0001-6968-041X
+      corresponding_author_status: true
+      name: Julia Mahamid
+    - ORCID: 0000-0001-8324-4040
+      corresponding_author_status: true
+      name: Judith B. Zaugg
+    cell_component:
+      id: null
+      name: null
+    cell_type:
+      id: CL:0002586
+      name: Retinal pigment epithelial-1
+    cross_references:
+      dataset_publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
+      related_database_entries: EMPIAR-10989
+    dataset_description: Cryo-electron tomograms of RPE1 cells. Comprehensive annotation
+      of actin filaments and microtubules
+    dataset_identifier: 10002
+    dataset_title: RPE1 cytosol with actin stress fiber
+    dates: *id002
+    funding:
+    - funding_agency_name: European Research Council (ERC)
+      grant_id: '760067'
+    grid_preparation: 'model: Quantifoil, material: GOLD, support_film_film_type_id:
+      1, support_film_film_topology: HOLEY, support_film_instance_type: support_film,
+      pretreatment_type_: PLASMA CLEANING'
+    organism:
+      name: Homo sapiens
+      taxonomy_id: 9606
+    sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, cryo_protectant:
+      None, instance_type: tomography_preparation'
+    sample_type: cell
+    tissue:
+      id: BTO:0001175
+      name: retina
+  sources:
+  - literal:
+      value:
+      - '10002'
+gains:
+- sources:
+  - source_glob:
+      list_glob: CountRef_{mapped_frame_name}-range.dm4
+key_images:
+- sources:
+  - literal:
+      value:
+      - from_tomogram
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_glob:
+      - metadata/{run_name}_sq_df_sorted_fid.xf
+      - metadata/{run_name}.mdoc
+runs:
+- sources:
+  - source_glob:
+      list_glob: tomograms/*.rec
+      match_regex: .*
+      name_regex: (.*)_sq_df_sorted.rec
 standardization_config:
-  dataset:
-    source:
-      literal:
-        value:
-        - '10002'
-  frame:
-    source:
-      source_glob:
-        list_glob: frames/{mapped_frame_name}_*.tif
-  gain:
-    source:
-      source_glob:
-        list_glob: CountRef_{mapped_frame_name}-range.dm4
-  rawtlt:
-    source:
-      source_multi_glob:
-        list_globs:
-        - metadata/{run_name}_sq_df_sorted_fid.xf
-        - metadata/{run_name}.mdoc
-  run:
-    source:
-      source_glob:
-        list_glob: tomograms/*.rec
-        match_regex: .*
-        name_regex: (.*)_sq_df_sorted.rec
+  deposition_id: 10002
   run_data_map_file: run_data_map.csv
   run_to_frame_map_csv: run_to_frame_name_map.csv
   source_prefix: julia/RPE1
-  tilt_series:
-    source:
-      source_glob:
-        list_glob: stack/{run_name}_sq_df_sorted_orig.st
-        name_regex: .*
-  tomo_format: mrc
-  tomo_voxel_size: ''
-  tomogram:
-    source:
-      source_glob:
-        list_glob: tomograms/{run_name}_*.rec
-        match_regex: .*
-  voxel_spacing:
-    source:
-      literal:
-        value:
-        - 13.480
 tiltseries:
-  acceleration_voltage: 300000
-  alignment_binning_factor: null
-  binning_from_frames: 1
-  camera:
-    manufacturer: Gatan
-    model: K2 SUMMIT
-  data_acquisition_software: SerialEM
-  is_aligned: false
-  microscope:
-    manufacturer: TFS
-    model: KRIOS
-  microscope_optical_setup:
-    energy_filter: GIF Quantum LS
-    image_corrector: null
-    phase_plate: VOLTA PHASE PLATE
-  pixel_spacing: '{run_pixel_spacing}'
-  related_empiar_entry: null
-  scales: []
-  spherical_aberration_constant: 2.7
-  tilt_axis: 79
-  tilt_range:
-    max: 60
-    min: -60
-  tilt_series_quality: 5
-  tilt_step: 3
-  tilting_scheme: Dose symmetric from 0.0 degrees
-  total_flux: 125
+- metadata:
+    acceleration_voltage: 300000
+    alignment_binning_factor: null
+    binning_from_frames: 1
+    camera:
+      manufacturer: Gatan
+      model: K2 SUMMIT
+    data_acquisition_software: SerialEM
+    is_aligned: false
+    microscope:
+      manufacturer: TFS
+      model: KRIOS
+    microscope_optical_setup:
+      energy_filter: GIF Quantum LS
+      image_corrector: null
+      phase_plate: VOLTA PHASE PLATE
+    pixel_spacing: '{run_pixel_spacing}'
+    related_empiar_entry: null
+    scales: []
+    spherical_aberration_constant: 2.7
+    tilt_axis: 79
+    tilt_range:
+      max: 60
+      min: -60
+    tilt_series_quality: 5
+    tilt_step: 3
+    tilting_scheme: Dose symmetric from 0.0 degrees
+    total_flux: 125
+  sources:
+  - source_glob:
+      list_glob: stack/{run_name}_sq_df_sorted_orig.st
+      name_regex: .*
 tomograms:
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - -1
-    - 0
-  - - 0
-    - 0
-    - 625
-    - 1
-  authors: *id003
-  ctf_corrected: false
-  fiducial_alignment_status: NON_FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
-  tomogram_version: 1
-  voxel_spacing: '{run_voxel_spacing}'
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - -1
+      - 0
+    - - 0
+      - 0
+      - 625
+      - 1
+    authors: *id003
+    ctf_corrected: false
+    fiducial_alignment_status: NON_FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: Weighted back projection
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: '{run_voxel_spacing}'
+  sources:
+  - source_glob:
+      list_glob: tomograms/{run_name}_*.rec
+      match_regex: .*
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - '{run_voxel_spacing}'
