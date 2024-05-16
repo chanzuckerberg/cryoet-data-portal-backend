@@ -86,7 +86,7 @@ def flatten_dependency_tree(tree):
     return treedict
 
 
-def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dict[str, Any]] = None):
+def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, parents: Optional[dict[str, Any]] = None):
     if parents is None:
         parents = {}
     else:
@@ -110,17 +110,18 @@ def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dic
             if filter_patterns and not list(filter(lambda x: x.match(item.name), filter_patterns)):
                 print(f"Skipping {item.name}..")
                 continue
-            if kwargs.get(f"import_{import_class.plural_key}"):
+            if import_class in to_import:
                 print(f"Importing {import_class.type_key} {item.name}")
                 item.import_item()
             if child_import_classes:
                 sub_parents = {import_class.type_key: item}
                 sub_parents.update(parents)
-                do_import(config, child_import_classes, to_import, to_iterate, kwargs, sub_parents)
+                do_import(config, child_import_classes, metadata_import, to_import, to_iterate, kwargs, sub_parents)
             # Not all importers have metadata, but we don't expose the option for it unless it's supported
-            if kwargs.get(f"import_{import_class.type_key}_metadata"):
+            if import_class in metadata_import:
                 print(f"Importing {import_class.type_key} metadata")
-                item.import_metadata()
+                if item.has_metadata:
+                    item.import_metadata()
 
 
 @cli.command()
@@ -160,12 +161,14 @@ def convert(
     iteration_deps = flatten_dependency_tree(IMPORTER_DEP_TREE).items()
     if import_everything:
         to_import = set(IMPORTERS)
+        metadata_import = set(IMPORTERS)
+        to_iterate = set(IMPORTERS)
     else:
         to_import = {k for k in IMPORTERS if kwargs.get(f"import_{k.plural_key}")}
-        to_import.update({k for k in IMPORTERS if kwargs.get(f"import_{k.type_key}_metadata")})
-    to_iterate = to_import
-    to_iterate = to_iterate.union({k for k, v in iteration_deps if to_import.intersection(v)})
-    do_import(config, IMPORTER_DEP_TREE, to_import, to_iterate, kwargs)
+        metadata_import = {k for k in IMPORTERS if kwargs.get(f"import_{k.type_key}_metadata")}
+        needs_iteration = to_import.union(metadata_import)
+        to_iterate = needs_iteration.union({k for k, v in iteration_deps if needs_iteration.intersection(v)})
+    do_import(config, IMPORTER_DEP_TREE, to_import, metadata_import, to_iterate, kwargs)
     exit()
 
 

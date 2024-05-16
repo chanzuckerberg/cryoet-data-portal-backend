@@ -20,7 +20,6 @@ class TomogramImporter(VolumeImporter):
     has_metadata = True
 
     def import_item(self) -> None:
-        print("importing item")
         self.scale_mrcfile(
             write_mrc=self.config.write_mrc, write_zarr=self.config.write_zarr, voxel_spacing=self.get_voxel_spacing().as_float(),
         )

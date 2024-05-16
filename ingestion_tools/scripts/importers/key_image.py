@@ -54,7 +54,7 @@ class KeyImageImporter(BaseImporter):
             image = process_key_image(preview, aspect_ratio=None, width=tomo_width, rotate=False)
         else:
             image = process_key_image(preview, aspect_ratio="4:3", width=width, rotate=True)
-        filename = self.config.fs.localwritable(os.path.join(dir, self.get_file_name(image_type)))
+        filename = self.config.fs.localwritable(os.path.join(dir, self.get_file_name(self.name)))
 
         imageio.imsave(filename, image)
         print(f"key photo saved at {filename}")
@@ -72,19 +72,18 @@ class KeyImageImporter(BaseImporter):
         return None, None
 
     def load_annotations(self) -> Generator[np.ndarray, None, None]:
-        for annotation in AnnotationImporter.find_annotations(self.config, self.get_tomogram()):
-            for source in annotation.sources:
-                if source.shape.lower() not in ["orientedpoint", "point"]:
-                    continue
-                annotation_path = annotation.get_output_path()
-                try:
-                    annotation_data = source.get_output_data(self.config.fs, annotation_path)
-                    yield annotation_data
-                    # We prefer point files over oriented point files, so stop if we just processed that.
-                    if source.shape.lower() == "point":
-                        break
-                except FileNotFoundError:
-                    print(f"Unable to load annotation data for {source.get_output_filename(annotation_path)}")
+        for annotation in AnnotationImporter.finder(self.config, **self.parents):
+            if annotation.shape.lower() not in ["orientedpoint", "point"]:
+                continue
+            annotation_path = annotation.get_output_path()
+            try:
+                annotation_data = annotation.get_output_data(self.config.fs, annotation_path)
+                yield annotation_data
+                # We prefer point files over oriented point files, so stop if we just processed that.
+                if annotation.shape.lower() == "point":
+                    break
+            except FileNotFoundError:
+                print(f"Unable to load annotation data for {annotation.get_output_filename(annotation_path)}")
 
     def generate_preview_from_tomo(self) -> tuple[np.ndarray, np.ndarray]:
         tomo_filename = self.get_tomogram().get_output_path() + ".zarr"
