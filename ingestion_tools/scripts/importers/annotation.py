@@ -59,40 +59,55 @@ class AnnotationMap(TypedDict):
 # so we can generate non-conflicting sequential identifiers for annotations as they're imported.
 class AnnotationIdentifierHelper():
     next_identifier: dict[str, int] = defaultdict(partial(int, 100))
-    cached_metadatas: dict[str, dict[int, Any]] = {}
+    cached_identifiers: dict[str, int] = {}
+    loaded_vs_metadatas: dict[str, bool] = {}
 
     @classmethod
-    def load_metadata(cls, cache_key: str, config: DepositionImportConfig, vs: VoxelSpacingImporter):
-        if cache_key not in cls.cached_metadatas:
-            metadatas = {}
-            metadata_glob = f"{config.resolve_output_path('annotation', vs)}/*.json"
-            for file in config.fs.glob(metadata_glob):
-                identifier = os.path.basename(file).split("-")[0]
-                with contextlib.suppress(ValueError, TypeError):
-                    metadatas[identifier] = json.loads(config.fs.open(file, "r").read())
-            cls.cached_metadatas[cache_key] = metadatas
-            cls.next_identifier[cache_key] = max(metadatas.keys(), default=100) + 1
-        return cls.cached_metadatas[cache_key]
+    def load_current_ids(cls, next_id_key: str, config: DepositionImportConfig, vs: VoxelSpacingImporter):
+        if next_id_key in cls.loaded_vs_metadatas:
+            return
+        metadatas = {}
+        vs_path = config.resolve_output_path('annotation', vs)
+        metadata_glob = f"{vs_path}/*.json"
+        for file in config.fs.glob(metadata_glob):
+            identifier = int(os.path.basename(file).split("-")[0])
+            if identifier >= cls.next_identifier[next_id_key]:
+                cls.next_identifier[next_id_key] = identifier + 1
+            metadata = json.loads(config.fs.open(file, "r").read())
+            metadatas[identifier] = metadata
+            current_ids_key = "-".join([
+                next_id_key,
+                # If there isn't a deposition id in the existing metadata, default
+                # to the ID in the current annotation. This is imperfect, but we
+                # need a bandaid until all annotations get updated with depositions
+                str(metadata.get("deposition_id", config.deposition_id)),
+                metadata["annotation_object"]["description"],
+                metadata["annotation_object"]["name"],
+                metadata["annotation_method"],
+            ])
+            cls.cached_identifiers[current_ids_key] = identifier
+        cls.loaded_vs_metadatas[next_id_key] = True
 
     @classmethod
     def get_identifier(cls, config: DepositionImportConfig, metadata: dict[str, Any], parents: dict[str, Any]):
         vs = parents["voxel_spacing"]
-        cache_key = vs.get_output_path()
-        
-        existing_metadatas = cls.load_metadata(cache_key, config, vs)
-        for identifier, portaldata in existing_metadatas.items():
-            if all(
-                [
-                    (not portaldata.get("deposition_id") or portaldata["deposition_id"] == config.deposition_id),
-                    portaldata["annotation_object"]["description"] == metadata["annotation_object"]["description"],
-                    portaldata["annotation_object"]["name"] == metadata["annotation_object"]["name"],
-                    portaldata["annotation_method"] == metadata["annotation_method"],
-                ],
-            ):
-                return identifier
+        next_id_key = vs.get_output_path()
 
-        return_value = cls.next_identifier[cache_key]
-        cls.next_identifier[cache_key] += 1
+        current_ids_key = "-".join([
+            next_id_key,
+            str(config.deposition_id),
+            metadata["annotation_object"]["description"],
+            metadata["annotation_object"]["name"],
+            metadata["annotation_method"],
+        ])
+        cls.load_current_ids(next_id_key, config, vs)
+
+        if cached_id := cls.cached_identifiers.get(current_ids_key):
+            return cached_id
+
+        return_value = cls.next_identifier[next_id_key]
+        cls.cached_identifiers[current_ids_key] = return_value
+        cls.next_identifier[next_id_key] += 1
         return return_value
 
 class AnnotationImporterFactory(DepositionObjectImporterFactory):
@@ -113,9 +128,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
         path: str,
         parents: dict[str, Any] | None,
     ):
-        source_args = dict(self.source)
-        del source_args["shape"]
-        del source_args["glob_string"]
+        source_args = {k: v for k, v in self.source.items() if k not in ["shape", "glob_string"]}
         instance_args = {
             "identifier": AnnotationIdentifierHelper.get_identifier(config, metadata, parents),
             "config": config,
@@ -181,7 +194,6 @@ class AnnotationImporter(BaseImporter):
 
         anno_files = [item for item in AnnotationImporter.finder(self.config, **self.parents) if item.identifier == self.identifier]
         run_name = self.get_run().name
-        print(f"importing annotations for {run_name}")
 
         output_dir = self.get_output_path()
         path = os.path.relpath(output_dir, self.config.output_prefix)
@@ -189,9 +201,10 @@ class AnnotationImporter(BaseImporter):
         for source in anno_files:
             files.extend(source.get_metadata(path))
 
-        self.local_metadata["object_count"] = max(**[anno.get_object_count() for anno in anno_files])
+        self.local_metadata["object_count"] = max([anno.get_object_count(output_dir) for anno in anno_files], default=0)
         self.local_metadata["files"] = files
 
+        self.written_metadata_files.append(filename)
         self.annotation_metadata.write_metadata(filename, self.local_metadata)
 
 class BaseAnnotationSource(AnnotationImporter):
@@ -219,7 +232,7 @@ class BaseAnnotationSource(AnnotationImporter):
         super().__init__(*args, **kwargs)
 
 
-    def get_object_count(self, fs: FileSystemApi, output_prefix: str):
+    def get_object_count(self, output_prefix: str):
         # We currently don't count objects in segmentation masks.
         return 0
 
@@ -382,8 +395,8 @@ class PointAnnotation(BaseAnnotationSource):
         filename = f"{output_prefix}_{self.shape.lower()}.ndjson"
         return filename
 
-    def get_object_count(self, fs, output_prefix):
-        return len(self.get_output_data(fs, output_prefix))
+    def get_object_count(self, output_prefix):
+        return len(self.get_output_data(self.config.fs, output_prefix))
 
     def get_output_data(self, fs, output_prefix):
         with fs.open(self.get_output_filename(output_prefix), "r") as f:
@@ -472,8 +485,8 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
         "tardis": ipc.from_tardis,
     }
 
-    def get_object_count(self, fs, output_prefix):
-        data = self.get_output_data(fs, output_prefix)
+    def get_object_count(self, output_prefix):
+        data = self.get_output_data(self.config.fs, output_prefix)
 
         ids = [d["instance_id"] for d in data]
 
@@ -485,7 +498,6 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
         local_file = fs.localreadable(filename)
 
         try:
-            print(self.binning)
             points = method(local_file, self.filter_value, self.binning, self.order)
         except ValueError as err:
             print(err)

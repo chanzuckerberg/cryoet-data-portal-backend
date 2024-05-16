@@ -104,7 +104,6 @@ def do_import(config, tree, to_import, to_iterate, kwargs, parents: Optional[dic
 
         items = import_class.finder(config, **parent_args)
         for item in items:
-            print(f"Iterating {type(item)}: {item.name}")
             if list(filter(lambda x: x.match(item.name), exclude_patterns)):
                 print(f"Excluding {item.name}..")
                 continue

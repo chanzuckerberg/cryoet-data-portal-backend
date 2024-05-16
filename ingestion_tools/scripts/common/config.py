@@ -76,7 +76,6 @@ class DepositionImportConfig:
             config = yaml.safe_load(conffile)
 
             self.object_configs = {}
-            print(object_classes)
             for item in object_classes:
                 if config.get(item.plural_key):
                     self.object_configs[item.type_key] = config[item.plural_key]
