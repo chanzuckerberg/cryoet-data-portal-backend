@@ -83,7 +83,7 @@ annotations:
       - shape: OrientedPoint
         file_format: relion3_star
         binning: 4
-        order: zyx
+        order: xyz
         glob_string: run_ct17_it034_data.star
         filter_value: '{mapped_tomo_name}.tomostar'
         is_visualization_default: true

@@ -2,18 +2,14 @@ import csv
 from functools import partial
 from collections import defaultdict
 import json
-import re
 import os
 import os.path
 from typing import TYPE_CHECKING, Any, TypedDict
 
 import ndjson
 import numpy as np
-import contextlib
 
-from common import instance_point_converter as ipc
-from common import oriented_point_converter as opc
-from common.finders import DefaultImporterFactory
+from common import point_converter as pc
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, scale_mrcfile
 from common.metadata import AnnotationMetadata
@@ -21,9 +17,7 @@ from importers.base_importer import BaseImporter
 from common.config import DepositionImportConfig
 from common.finders import (
     BaseFinder,
-    BaseLiteralValueFinder,
     DepositionObjectImporterFactory,
-    DestinationGlobFinder,
     SourceGlobFinder,
 )
 
@@ -271,7 +265,7 @@ class VolumeAnnotationSource(BaseAnnotationSource):
 
 class SegmentationMaskAnnotation(VolumeAnnotationSource):
     shape = "SegmentationMask"  # Don't expose SemanticSegmentationMask to the public portal.
-        
+
     def convert(
         self,
         fs: FileSystemApi,
@@ -328,56 +322,60 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
 
 class PointAnnotation(BaseAnnotationSource):
     shape = "Point"
-    valid_file_formats = ["csv", "csv_with_header"]
+    map_functions = {
+        "csv": pc.from_csv,
+        "csv_with_header": pc.from_csv_with_header,
+        "mod": pc.from_mod,
+    }
+    valid_file_formats = [k for k in map_functions.keys()]
 
     columns: str
     delimiter: str
 
     def __init__(
         self,
-        columns: str,
-        delimiter: str | None,
+        columns: str | None = None,
+        delimiter: str | None = None,
+        binning: int | None = None,
         *args,
         **kwargs,
     ) -> None:
-        self.columns = columns
         if not delimiter:
             delimiter = ","
         self.delimiter = delimiter
 
+        if not columns:
+            columns = "xyz"
+        self.columns = columns
+
+        if not binning:
+            binning = 1
+        self.binning = binning
+
         super().__init__(*args, **kwargs)
 
-    def point(self, x: int, y: int, z: int):
-        annotation = {
-            "type": "point",
-            "location": {"x": x, "y": y, "z": z},
+    def get_converter_args(self):
+        return {
+            "binning": self.binning,
+            "order": self.columns,
+            "delimiter": self.delimiter,
         }
-        return annotation
 
     def load(
         self,
         fs: FileSystemApi,
-        csvfilename: str,
-    ):
-        skip_header = self.file_format == "csv_with_header"
-        # Convert to xyz order
-        coord_order = [0, 1, 2]
-        if self.columns == "zyx":
-            coord_order = [2, 1, 0]
-        annotation_set = []
-        with fs.open(csvfilename, "r") as data:
-            points = csv.reader(data, delimiter=self.delimiter)
-            if skip_header:
-                next(points)
-            for coord in points:
-                annotation_set.append(
-                    self.point(
-                        float(coord[coord_order[0]]),
-                        float(coord[coord_order[1]]),
-                        float(coord[coord_order[2]]),
-                    ),
-                )
-        return annotation_set
+        filename: str,
+    ) -> list[pc.Point | pc.InstancePoint | pc.OrientedPoint]:
+        method = self.map_functions[self.file_format]
+        local_file = fs.localreadable(filename)
+
+        try:
+            points = method(local_file, **self.converter_args)
+        except ValueError as err:
+            print(err)
+            return []
+
+        return points
 
     def get_metadata(self, output_prefix: str):
         metadata = [
@@ -416,10 +414,10 @@ class PointAnnotation(BaseAnnotationSource):
 class OrientedPointAnnotation(PointAnnotation):
     shape = "OrientedPoint"
     map_functions = {
-        "relion3_star": opc.from_relion3_star,
-        "relion4_star": opc.from_relion4_star,
-        "tomoman_relion_star": opc.from_tomoman_relion_star,
-        "stopgap_star": opc.from_stopgap_star,
+        "relion3_star": pc.from_relion3_star,
+        "relion4_star": pc.from_relion4_star,
+        "tomoman_relion_star": pc.from_tomoman_relion_star,
+        "stopgap_star": pc.from_stopgap_star,
     }
     valid_file_formats = [k for k in map_functions.keys()]
 
@@ -429,60 +427,36 @@ class OrientedPointAnnotation(PointAnnotation):
 
     def __init__(
         self,
-        binning: int,
-        filter_value: str,
+        filter_value: str | None = None,
         order: str | None = None,
         *args,
         **kwargs,
     ) -> None:
-        self.binning = binning
         self.order = order
         super().__init__(*args, **kwargs)
         if filter_value:
             self.filter_value = filter_value.format(**self.get_glob_vars())
 
-
-    def oriented_point(
-        self,
-        position: np.ndarray,
-        rot_matrix: np.ndarray,
-    ):
-        position = position.tolist()
-        rot_matrix = rot_matrix.tolist()
-        annotation = {
-            "type": "orientedPoint",
-            "location": {
-                "x": position[2],
-                "y": position[1],
-                "z": position[0],
-            },
-            "xyz_rotation_matrix": rot_matrix,
+    def get_converter_args(self):
+        return {
+            "binning": self.binning,
+            "order": self.order,
+            "filter_value": self.filter_value,
         }
-        return annotation
-
-    def load(
-        self,
-        fs: FileSystemApi,
-        starfilename: str,
-    ):
-        method = self.map_functions[self.file_format]
-        local_file = fs.localreadable(starfilename)
-        annotation_set = []
-        try:
-            positions, rotations = method(local_file, self.filter_value, self.binning, self.order)
-        except ValueError as err:
-            print(err)
-            return []
-        for rownum in range(len(positions)):
-            annotation_set.append(self.oriented_point(positions[rownum], rotations[rownum]))
-        return annotation_set
 
 
 class InstanceSegmentationAnnotation(OrientedPointAnnotation):
     shape = "InstanceSegmentation"
     map_functions = {
-        "tardis": ipc.from_tardis,
+        "tardis": pc.from_tardis,
     }
+
+    def get_converter_args(self):
+        return {
+            "order": self.order,
+            "binning": self.binning,
+            "filter_value": self.filter_value,
+        }
 
     def get_object_count(self, output_prefix):
         data = self.get_output_data(self.config.fs, output_prefix)
@@ -491,26 +465,3 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
 
         # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
         return len(set(ids))
-
-    def load(self, fs: FileSystemApi, filename: str):
-        method = self.map_functions[self.file_format]
-        local_file = fs.localreadable(filename)
-
-        try:
-            points = method(local_file, self.filter_value, self.binning, self.order)
-        except ValueError as err:
-            print(err)
-            return []
-
-        return points
-
-    def convert(
-        self,
-        fs: FileSystemApi,
-        output_prefix: str,
-    ):
-        filename = self.get_output_filename(output_prefix)
-        annotations = self.load(fs, self.path)
-
-        with fs.open(filename, "w") as fh:
-            ndjson.dump([a.to_dict() for a in annotations], fh)
