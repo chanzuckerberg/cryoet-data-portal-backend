@@ -193,7 +193,6 @@ class AnnotationImporter(BaseImporter):
             return  # We've already written this metadata file
 
         anno_files = [item for item in AnnotationImporter.finder(self.config, **self.parents) if item.identifier == self.identifier]
-        run_name = self.get_run().name
 
         output_dir = self.get_output_path()
         path = os.path.relpath(output_dir, self.config.output_prefix)

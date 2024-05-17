@@ -119,8 +119,8 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
                 do_import(config, child_import_classes, metadata_import, to_import, to_iterate, kwargs, sub_parents)
             # Not all importers have metadata, but we don't expose the option for it unless it's supported
             if import_class in metadata_import:
-                print(f"Importing {import_class.type_key} metadata")
                 if item.has_metadata:
+                    print(f"Importing {import_class.type_key} metadata")
                     item.import_metadata()
 
 

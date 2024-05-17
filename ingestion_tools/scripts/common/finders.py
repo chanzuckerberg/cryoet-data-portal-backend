@@ -52,13 +52,12 @@ class SourceGlobFinder(BaseFinder):
     ):
         self.list_glob = list_glob
         if not match_regex:
-            self.match_regex = re.compile(".*")
-        else:
-            self.match_regex = re.compile(match_regex)
+            match_regex = ".*"
+        self.match_regex = re.compile(match_regex)
+
         if not name_regex:
-            self.name_regex = re.compile("(.*)")
-        else:
-            self.name_regex = re.compile(name_regex)
+            name_regex = "(.*)"
+        self.name_regex = re.compile(name_regex)
 
     def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
         path = os.path.join(config.deposition_root_dir, self.list_glob.format(**glob_vars))

@@ -1,136 +1,136 @@
 annotations: []
-dataset:
-  authors: &id001
-  - ORCID: 0000-0001-0001-0001
-    name: Author 1
-    primary_author_status: true
-  - ORCID: 0000-0002-0002-0002
-    name: Author 2
-  - ORCID: 0000-0003-0003-0003
-    corresponding_author_status: true
-    name: Author 3
-  cell_component:
-    id: null
-    name: null
-  cell_strain:
-    id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=88888
-    name: Strain 1
-  cross_references:
-    dataset_publications: doi:10.1101/2022.01.01.00001
-    related_database_entries: EMPIAR-00001, EMD-00001, EMD-00002
-  dataset_description: Description for Dataset 1
-  dataset_identifier: 20002
-  dataset_title: Dataset 1
-  dates:
-    deposition_date: 2023-04-01
-    last_modified_date: 2023-06-01
-    release_date: 2023-06-01
-  funding:
-  - funding_agency_name: Super Funding Agency
-    grant_id: '100001'
-  grid_preparation: 'material: COPPER,'
-  organism:
-    name: Organism 1
-    taxonomy_id: 9999
-  sample_preparation: 'buffer_ph: 7.0'
-  sample_type: organism
-runs: {}
+datasets:
+- metadata:
+    authors: &id001
+    - ORCID: 0000-0001-0001-0001
+      name: Author 1
+      primary_author_status: true
+    - ORCID: 0000-0002-0002-0002
+      name: Author 2
+    - ORCID: 0000-0003-0003-0003
+      corresponding_author_status: true
+      name: Author 3
+    cell_component:
+      id: null
+      name: null
+    cell_strain:
+      id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=88888
+      name: Strain 1
+    cross_references:
+      dataset_publications: doi:10.1101/2022.01.01.00001
+      related_database_entries: EMPIAR-00001, EMD-00001, EMD-00002
+    dataset_description: Description for Dataset 1
+    dataset_identifier: 20002
+    dataset_title: Dataset 1
+    dates:
+      deposition_date: 2023-04-01
+      last_modified_date: 2023-06-01
+      release_date: 2023-06-01
+    funding:
+    - funding_agency_name: Super Funding Agency
+      grant_id: '100001'
+    grid_preparation: 'material: COPPER,'
+    organism:
+      name: Organism 1
+      taxonomy_id: 9999
+    sample_preparation: 'buffer_ph: 7.0'
+    sample_type: organism
+  sources:
+  - literal:
+      value:
+      - '20002'
+gains:
+- sources:
+  - source_glob:
+      list_glob: ''
+key_images:
+- sources:
+  - literal:
+      value:
+      - from_tomogram
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_glob: []
+runs:
+- sources:
+  - source_glob:
+      list_glob: tomograms/*.rec
+      match_regex: .*
+      name_regex: (.*).rec
 standardization_config:
-  dataset:
-    source:
-      literal:
-        value:
-        - '20002'
-  frame:
-    source:
-      source_glob:
-        list_glob: frames/{run_name}_*.tif
-  gain:
-    source:
-      source_glob:
-        list_glob: ''
-  rawtilt:
-    source:
-      source_multi_glob:
-        list_globs: []
-  run:
-    source:
-      source_glob:
-        list_glob: tomograms/*.rec
-        match_regex: .*
-        name_regex: (.*).rec
+  deposition_id: 20002
   source_prefix: input_bucket/20002
-  tilt_series:
-    source:
-      source_glob:
-        list_glob: metadata/{run_name}.st
-        name_regex: (.*)\.rec
-  tomo_format: mrc
-  tomogram:
-    source:
-      source_glob:
-        list_glob: tomograms/{run_name}.rec
-        match_regex: .*\.rec
-  voxel_spacing:
-    source:
-      literal:
-        value:
-        - 1.1234
 tiltseries:
-  acceleration_voltage: 300000
-  alignment_binning_factor: null
-  binning_from_frames: 1
-  camera:
-    manufacturer: Gatan
-    model: K2 SUMMIT
-  data_acquisition_software: SerialEM
-  is_aligned: false
-  microscope:
-    manufacturer: TFS
-    model: Krios
-  microscope_optical_setup:
-    energy_filter: GIF Quantum LS
-    image_corrector: None
-    phase_plate: Volta Phase Plate
-  pixel_spacing: 3.3702
-  related_empiar_entry: EMPIAR-10988
-  scales: []
-  spherical_aberration_constant: 2.7
-  tilt_axis: 70.1
-  tilt_range:
-    max: 60
-    min: -40
-  tilt_series_quality: 5
-  tilt_step: 2
-  tilting_scheme: Dose symmetric from 0.0 degrees
-  total_flux: 122
+- metadata:
+    acceleration_voltage: 300000
+    alignment_binning_factor: null
+    binning_from_frames: 1
+    camera:
+      manufacturer: Gatan
+      model: K2 SUMMIT
+    data_acquisition_software: SerialEM
+    is_aligned: false
+    microscope:
+      manufacturer: TFS
+      model: Krios
+    microscope_optical_setup:
+      energy_filter: GIF Quantum LS
+      image_corrector: None
+      phase_plate: Volta Phase Plate
+    pixel_spacing: 3.3702
+    related_empiar_entry: EMPIAR-10988
+    scales: []
+    spherical_aberration_constant: 2.7
+    tilt_axis: 70.1
+    tilt_range:
+      max: 60
+      min: -40
+    tilt_series_quality: 5
+    tilt_step: 2
+    tilting_scheme: Dose symmetric from 0.0 degrees
+    total_flux: 122
+  sources:
+  - source_glob:
+      list_glob: metadata/{run_name}.st
+      name_regex: (.*)\.rec
 tomograms:
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  authors: *id001
-  ctf_corrected: false
-  fiducial_alignment_status: NON_FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
-  tomogram_version: 1
-  voxel_spacing: 1.1234
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id001
+    ctf_corrected: false
+    fiducial_alignment_status: NON_FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: Weighted back projection
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: 1.1234
+  sources:
+  - source_glob:
+      list_glob: tomograms/{run_name}.rec
+      match_regex: .*\.rec
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 1.1234

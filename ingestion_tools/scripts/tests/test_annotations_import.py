@@ -3,15 +3,17 @@ from os.path import basename
 
 import ndjson
 import pytest
-from importers.annotation import AnnotationImporter
+from importers.annotation import AnnotationImporter, PointAnnotation
 from importers.dataset import DatasetImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
 from mypy_boto3_s3 import S3Client
 
-from common.config import DataImportConfig
+from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
 from common.metadata import AnnotationMetadata
+from importers.voxel_spacing import VoxelSpacingImporter
+from standardize_dirs import IMPORTERS
 
 default_anno_metadata = {
     "annotation_object": {
@@ -35,19 +37,20 @@ default_anno_metadata = {
 
 
 @pytest.fixture
-def dataset_config(s3_fs: FileSystemApi, test_output_bucket: str) -> DataImportConfig:
+def dataset_config(s3_fs: FileSystemApi, test_output_bucket: str) -> DepositionImportConfig:
     config_file = "tests/fixtures/annotations/anno_config.yaml"
     output_path = f"{test_output_bucket}/output"
     input_bucket = "test-public-bucket"
-    config = DataImportConfig(s3_fs, config_file, output_path, input_bucket)
+    config = DepositionImportConfig(s3_fs, config_file, output_path, input_bucket, IMPORTERS)
     return config
 
 
 @pytest.fixture
-def tomo_importer(dataset_config: DataImportConfig) -> TomogramImporter:
-    dataset = DatasetImporter(dataset_config, None)
-    run = RunImporter(config=dataset_config, parent=dataset, path="run1")
-    tomo = TomogramImporter(config=dataset_config, parent=run, path="run1")
+def tomo_importer(dataset_config: DepositionImportConfig) -> TomogramImporter:
+    dataset = DatasetImporter(config=dataset_config, metadata={}, name="dataset1", path="dataset1")
+    run = RunImporter(config=dataset_config, metadata={}, name="00011", path="00011", parents={"dataset": dataset})
+    vs = VoxelSpacingImporter(config=dataset_config, metadata={}, name="10.0", path="vs1", parents={"dataset": dataset, "run": run})
+    tomo = TomogramImporter(config=dataset_config, metadata={}, name="tomo1", path="run1", parents={"dataset": dataset, "run": run, "voxel_spacing": vs})
     return tomo
 
 
@@ -63,30 +66,20 @@ def test_import_annotation_metadata(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     tomo_importer: TomogramImporter,
-    dataset_config: DataImportConfig,
+    dataset_config: DepositionImportConfig,
     s3_client: S3Client,
 ) -> None:
-    anno_config = {
-        "metadata": default_anno_metadata,
-        "sources": [
-            {
-                "columns": "xyz",
-                "file_format": "csv",
-                "glob_string": "annotations/points.csv",
-                "shape": "Point",
-                "is_visualization_default": False,
-            },
-        ],
-    }
-    anno_metadata = AnnotationMetadata(dataset_config.fs, anno_config["metadata"])
-    anno = AnnotationImporter(
-        identifier="100",
+    anno = PointAnnotation(
         config=dataset_config,
-        parent=tomo_importer,
-        annotation_metadata=anno_metadata,
-        annotation_config=anno_config,
+        metadata=default_anno_metadata,
+        path="test-public-bucket/input_bucket/20002/annotations/points.csv",
+        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        identifier=100,
+        columns="xyz",
+        delimiter=",",
+        file_format="csv",
     )
-    anno.import_annotations(True)
+    anno.import_item()
     anno.import_metadata()
 
     # Strip the bucket name and annotation name from the annotation's output path.

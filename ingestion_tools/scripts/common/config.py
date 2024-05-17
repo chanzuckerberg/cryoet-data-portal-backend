@@ -134,9 +134,13 @@ class DepositionImportConfig:
                 mapdata[row["run_name"]] = row
         return mapdata
 
-    def _get_object_configs(self, key: str, **parent_objs) -> Any:
+    def get_object_configs(self, key: str) -> Any:
         items = self.object_configs.get(key, [])
         return items
+
+    # This is for tests only. Please don't use it!
+    def _set_object_configs(self, key: str, config: list[dict[str, Any]]) -> None:
+        self.object_configs[key] = config
 
     def load_run_csv_file(self, file_attr: str) -> dict[str, Any]:
         mapdata = {}

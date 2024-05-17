@@ -97,7 +97,7 @@ class BaseImporter:
 
     @classmethod
     def finder(cls, config: DepositionImportConfig, **parents: dict[str, "BaseImporter"]) -> list["BaseImporter"]:
-        finder_configs = config._get_object_configs(cls.type_key, **parents)
+        finder_configs = config.get_object_configs(cls.type_key)
         for finder in finder_configs:
             metadata = finder.get("metadata", {})
             sources = finder.get("sources", [])

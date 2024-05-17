@@ -23,145 +23,145 @@ annotations:
     file_format: csv
     glob_string: particle_lists/{run_name}_fas.csv
     shape: Point
-dataset:
-  authors: &id002
-  - ORCID: 0000-0001-0001-0001
-    name: Author 1
-    primary_author_status: true
-  - ORCID: 0000-0002-0002-0002
-    name: Author 2
-  - ORCID: 0000-0003-0003-0003
-    corresponding_author_status: true
-    name: Author 3
-  cell_component:
-    id: null
-    name: null
-  cell_strain:
-    id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=88888
-    name: Strain 1
-  cross_references:
-    dataset_publications: doi:10.1101/2022.01.01.00001
-    related_database_entries: EMPIAR-00001, EMD-00001, EMD-00002
-  dataset_description: Description for Dataset 1
-  dataset_identifier: 10001
-  dataset_title: Dataset 1
-  dates: *id001
-  funding:
-  - funding_agency_name: Super Funding Agency
-    grant_id: '100001'
-  grid_preparation: 'material: COPPER,'
-  key_photos:
-    snapshot: http://nginx:80/input_bucket/snapshot.gif
-    thumbnail: http://nginx:80/input_bucket/thumbnail.gif
-  organism:
-    name: Organism 1
-    taxonomy_id: 9999
-  sample_preparation: 'buffer_ph: 7.0'
-  sample_type: organism
-runs: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: http://nginx:80/input_bucket/snapshot.gif
+        thumbnail: http://nginx:80/input_bucket/thumbnail.gif
+datasets:
+- metadata:
+    authors: &id002
+    - ORCID: 0000-0001-0001-0001
+      name: Author 1
+      primary_author_status: true
+    - ORCID: 0000-0002-0002-0002
+      name: Author 2
+    - ORCID: 0000-0003-0003-0003
+      corresponding_author_status: true
+      name: Author 3
+    cell_component:
+      id: null
+      name: null
+    cell_strain:
+      id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=88888
+      name: Strain 1
+    cross_references:
+      dataset_publications: doi:10.1101/2022.01.01.00001
+      related_database_entries: EMPIAR-00001, EMD-00001, EMD-00002
+    dataset_description: Description for Dataset 1
+    dataset_identifier: 10001
+    dataset_title: Dataset 1
+    dates: *id001
+    funding:
+    - funding_agency_name: Super Funding Agency
+      grant_id: '100001'
+    grid_preparation: 'material: COPPER,'
+    organism:
+      name: Organism 1
+      taxonomy_id: 9999
+    sample_preparation: 'buffer_ph: 7.0'
+    sample_type: organism
+  sources:
+  - literal:
+      value:
+      - '10001'
+gains:
+- sources:
+  - source_glob:
+      list_glob: VPP/frames/CountRef_{run_name}.dm4
+key_images:
+- sources:
+  - literal:
+      value:
+      - from_tomogram
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_glob:
+      - metadata/{run_name}.rawtlt
+      - metadata/{run_name}.xf
+      - metadata/mdocs_modified/{run_name}.mdoc
+runs:
+- sources:
+  - source_glob:
+      list_glob: tomograms/TS_*.rec
+      match_regex: .*
+      name_regex: (.*).rec
 standardization_config:
-  deposition_id: 999
-  dataset:
-    source:
-      literal:
-        value:
-        - '10001'
-  frame:
-    source:
-      source_glob:
-        list_glob: frames/{run_name}_*.tif
-  gain:
-    source:
-      source_glob:
-        list_glob: VPP/frames/CountRef_{run_name}.dm4
-  rawtilt:
-    source:
-      source_multi_glob:
-        list_globs:
-        - metadata/{run_name}.rawtlt
-        - metadata/{run_name}.xf
-        - metadata/mdocs_modified/{run_name}.mdoc
-  run:
-    source:
-      source_glob:
-        list_glob: tomograms/TS_*.rec
-        match_regex: .*
-        name_regex: (.*).rec
+  deposition_id: 10001
   run_to_tomo_map_csv: null
   source_prefix: 10001_input
-  tilt_series:
-    source:
-      source_glob:
-        list_glob: metadata/{run_name}.st
-        name_regex: (.*)\.rec
-  tomo_format: mrc
-  tomo_voxel_size: '13.48'
-  tomogram:
-    source:
-      source_glob:
-        list_glob: tomograms/{run_name}.rec
-        match_regex: .*\.rec
-  voxel_spacing:
-    source:
-      source_glob:
-        list_glob: '*'
-        match_regex: .*
-        name_regex: (.*)
 tiltseries:
-  acceleration_voltage: 300000
-  alignment_binning_factor: null
-  binning_from_frames: 1
-  camera:
-    manufacturer: Gatan
-    model: K2 SUMMIT
-  data_acquisition_software: SerialEM
-  is_aligned: false
-  microscope:
-    manufacturer: TFS
-    model: Krios
-  microscope_optical_setup:
-    energy_filter: GIF Quantum LS
-    image_corrector: None
-    phase_plate: Volta Phase Plate
-  pixel_spacing: 3.3702
-  related_empiar_entry: EMPIAR-10988
-  scales: []
-  spherical_aberration_constant: 2.7
-  tilt_axis: 70.1
-  tilt_range:
-    max: 60
-    min: -40
-  tilt_series_quality: 5
-  tilt_step: 2
-  tilting_scheme: Dose symmetric from 0.0 degrees
-  total_flux: 122
+- metadata:
+    acceleration_voltage: 300000
+    alignment_binning_factor: null
+    binning_from_frames: 1
+    camera:
+      manufacturer: Gatan
+      model: K2 SUMMIT
+    data_acquisition_software: SerialEM
+    is_aligned: false
+    microscope:
+      manufacturer: TFS
+      model: Krios
+    microscope_optical_setup:
+      energy_filter: GIF Quantum LS
+      image_corrector: None
+      phase_plate: Volta Phase Plate
+    pixel_spacing: 3.3702
+    related_empiar_entry: EMPIAR-10988
+    scales: []
+    spherical_aberration_constant: 2.7
+    tilt_axis: 70.1
+    tilt_range:
+      max: 60
+      min: -40
+    tilt_series_quality: 5
+    tilt_step: 2
+    tilting_scheme: Dose symmetric from 0.0 degrees
+    total_flux: 122
+  sources:
+  - source_glob:
+      list_glob: metadata/{run_name}.st
+      name_regex: (.*)\.rec
 tomograms:
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  authors: *id002
-  ctf_corrected: false
-  fiducial_alignment_status: NON_FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
-  tomogram_version: 1
-  voxel_spacing: 13.48
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id002
+    ctf_corrected: false
+    fiducial_alignment_status: NON_FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: Weighted back projection
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: 13.48
+  sources:
+  - source_glob:
+      list_glob: tomograms/{run_name}.rec
+      match_regex: .*\.rec
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 13.48
