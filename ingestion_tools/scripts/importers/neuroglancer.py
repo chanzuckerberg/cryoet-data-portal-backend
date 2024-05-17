@@ -1,3 +1,6 @@
+import json
+import os.path
+from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import cryoet_data_portal_neuroglancer.state_generator as state_generator
@@ -5,8 +8,6 @@ import cryoet_data_portal_neuroglancer.state_generator as state_generator
 from common import colors
 from common.config import DataImportConfig
 from common.metadata import NeuroglancerMetadata
-from importers import annotation
-from importers.annotation import AnnotationImporter
 from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
@@ -18,15 +19,15 @@ else:
 class NeuroglancerImporter(BaseImporter):
     type_key = "neuroglancer"
 
-    def import_neuroglancer(self, annotations: list[AnnotationImporter]) -> str:
+    def import_neuroglancer_config(self) -> str:
         dest_file = self.get_output_path()
         tomogram_zarr_dir = self.parent.get_output_path() + ".zarr"
-        ng_contents = self.create_config_json(tomogram_zarr_dir, annotations)
+        ng_contents = self.create_config_json(tomogram_zarr_dir)
         meta = NeuroglancerMetadata(self.config.fs, ng_contents)
         meta.write_metadata(dest_file)
         return dest_file
 
-    def create_config_json(self, zarr_dir: str, annotations: list[AnnotationImporter]) -> dict[str, Any]:
+    def create_config_json(self, zarr_dir: str) -> dict[str, Any]:
         zarr_dir_path = zarr_dir.removeprefix(self.config.output_prefix).removeprefix("/")
         voxel_size = self.parent.get_voxel_spacing()
         resolution = (voxel_size * 1e-10, voxel_size * 1e-10, voxel_size * 1e-10)
@@ -45,46 +46,50 @@ class NeuroglancerImporter(BaseImporter):
         )
         layers = [image_layer]
         colors_used = []
-        for anno in annotations:
-            output_prefix = anno.get_output_path()
-            name = anno.metadata.get("annotation_object", {}).get("name")
-            for source in anno.sources:
+
+        ng_output_path = self.config.resolve_output_path("neuroglancer_precompute", run_name, voxel_size)
+        annotation_metadata_paths = self._get_annotation_metadata_files(run_name, voxel_size)
+        for annotation_metadata_path in annotation_metadata_paths:
+            local_path = self.config.fs.localreadable(annotation_metadata_path)
+            with open(local_path, "r") as f:
+                metadata = json.load(f)
+            stemmed_metadata_path = Path(annotation_metadata_path).stem
+            anno_identifier = int(stemmed_metadata_path.split("-")[0])
+            name = metadata.get("annotation_object", {}).get("name")
+            for file in metadata.get("files", []):
+                file_format = file.get("format")
+                if file_format == "mrc":
+                    continue
+
+                shape = file.get("shape")
                 hex_colors, float_colors = colors.get_hex_colors(1, exclude=colors_used)
-                if isinstance(source, annotation.SegmentationMaskFile):
-                    source_path = (
-                        source.get_output_filename(output_prefix, "zarr")
-                        .removeprefix(self.config.output_prefix)
-                        .removeprefix("/")
-                    )
+                if shape == "SegmentationMask":
                     layer = state_generator.generate_image_volume_layer(
-                        source_path,
-                        f"{anno.identifier} {name} segmentation",
+                        file.get("path"),
+                        f"{anno_identifier} {name} segmentation",
                         self.config.https_prefix,
                         color=hex_colors[0],
                         scale=resolution,
-                        is_visible=source.is_visualization_default,
+                        is_visible=file.get("is_visualization_default"),
                         rendering_depth=15000,
                     )
                     colors_used.append(float_colors[0])
                     layers.append(layer)
-                elif isinstance(source, annotation.PointFile):
-                    ng_output_path = self.config.resolve_output_path("neuroglancer_precompute", run_name, voxel_size)
-                    source_path = (
-                        source.get_neuroglancer_precompute_path(output_prefix, ng_output_path)
-                        .removeprefix(self.config.output_prefix)
-                        .removeprefix("/")
+                elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
+                    source_path = os.path.join(ng_output_path, f"{stemmed_metadata_path}_{shape.lower()}").removeprefix(
+                        self.config.output_prefix,
                     )
-                    is_instance_segmentation = type(source) is annotation.InstanceSegmentationFile
+                    is_instance_segmentation = shape == "InstanceSegmentation"
                     layer = state_generator.generate_point_layer(
                         source_path,
-                        f"{anno.identifier} {name} point",
+                        f"{anno_identifier} {name} point",
                         self.config.https_prefix,
                         color=hex_colors,
                         scale=resolution,
-                        is_visible=source.is_visualization_default,
+                        is_visible=file.get("is_visualization_default"),
                         is_instance_segmentation=is_instance_segmentation,
                     )
-                    if is_instance_segmentation:
+                    if not is_instance_segmentation:
                         colors_used.append(float_colors[0])
                     layers.append(layer)
 
@@ -93,3 +98,11 @@ class NeuroglancerImporter(BaseImporter):
     @classmethod
     def find_ng(cls, config: DataImportConfig, tomo: TomogramImporter) -> list["NeuroglancerImporter"]:
         return [cls(config=config, parent=tomo)]
+
+    def _get_path(self, key: str, run_name: str, voxel_size: str) -> str:
+        return self.config.resolve_output_path(key, run_name, voxel_size)
+
+    def _get_annotation_metadata_files(self, run_name: str, voxel_size: float) -> list[str]:
+        annotation_path = self._get_path("annotation_metadata", run_name, "{:.3f}".format(voxel_size))
+        pattern = os.path.join(annotation_path, "*.json")
+        return self.config.fs.glob(pattern)
