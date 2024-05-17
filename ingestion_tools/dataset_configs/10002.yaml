@@ -208,7 +208,7 @@ tiltseries:
   sources:
   - source_glob:
       list_glob: stack/{run_name}_sq_df_sorted_orig.st
-      name_regex: .*
+      name_regex: (.*)
 tomograms:
 - metadata:
     affine_transformation_matrix:
