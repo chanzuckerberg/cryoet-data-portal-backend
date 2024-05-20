@@ -1,115 +1,142 @@
-dataset:
-  dataset_identifier: 10160
-  dataset_description: This is 1st of 2 sets of data studying Hylemonella gracilis
-    collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb.
-  dataset_title: Hylemonella + Bdellovibrio
-  authors: &id001
-  - name: Yi-Wei Chang
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Hylemonella gracilis
-    taxonomy_id: 887062
-  sample_type: Organism
-  sample_preparation: "Hylemonella grown 48 hr in Broth 233 at 26\xB0C without antibiotics,\
-    \ Final OD600 < 0.1, incubated with attack-phase Bdellovibrio for 3 days, Spun\
-    \ down by 1000 rcf for 5 min and concentrated by ~10x for plunge freezing"
-  grid_preparation: 'Vitrobot setting: 100% humidity, 4 ul sample, 10 nm BSA treated
-    gold, -3 offset, 4 s blot time, no drain, ethane/propane mix'
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/ycw2013-01-03-1/keyimg_ycw2013-01-03-1.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/ycw2013-01-03-1/keyimg_ycw2013-01-03-1_s.jpg
-  cell_strain:
-    name: ATCC 19624
-    id: null
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: counting
-    manufacturer: Gatan
-    model: K2
-  data_acquisition_software: UCSFTomo
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: FEI
-    model: Polara
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: 4.036
-  spherical_aberration_constant: 2.0
-  tilt_alignment_software: RAPTOR
-  tilt_axis: 84.3
-  tilt_range:
-    max: 60.0
-    min: -60.0
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: 4
-  tilt_step: float {ts-tilt_step}
-  tilting_scheme: starting tilt to max then min
-  total_flux: 100.0
-tomograms:
-  voxel_spacing: 16.145
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
-  fiducial_alignment_status: FIDUCIAL
-  ctf_corrected: null
-  processing: raw
-  processing_software: null
-  align_softwares:
-  - RAPTOR
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  authors: *id001
-  tomogram_version: 1
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/ycw2013-01-03-1/keyimg_ycw2013-01-03-1.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/ycw2013-01-03-1/keyimg_ycw2013-01-03-1_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Yi-Wei Chang
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: ATCC 19624
+    dataset_description: This is 1st of 2 sets of data studying Hylemonella gracilis
+      collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb.
+    dataset_identifier: 10160
+    dataset_title: Hylemonella + Bdellovibrio
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: 'Vitrobot setting: 100% humidity, 4 ul sample, 10 nm BSA treated
+      gold, -3 offset, 4 s blot time, no drain, ethane/propane mix'
+    organism:
+      name: Hylemonella gracilis
+      taxonomy_id: 887062
+    sample_preparation: "Hylemonella grown 48 hr in Broth 233 at 26\xB0C without antibiotics,\
+      \ Final OD600 < 0.1, incubated with attack-phase Bdellovibrio for 3 days, Spun\
+      \ down by 1000 rcf for 5 min and concentrated by ~10x for plunge freezing"
+    sample_type: Organism
+  sources:
+  - literal:
+      value:
+      - '10160'
+gains:
+- sources:
+  - source_glob:
+      list_glob: null
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_glob:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/3dimage_*/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (ycw2013-01-03-1|ycw2013-01-03-2|ycw2013-01-03-4|ycw2013-01-03-5|ycw2013-01-03-6|ycw2013-01-03-7|ycw2013-01-03-8|ycw2013-01-03-9|ycw2013-01-03-11|ycw2013-01-03-12|ycw2013-01-03-14|ycw2013-01-03-15|ycw2013-01-03-16|ycw2013-01-03-17|ycw2013-01-03-18|ycw2013-01-03-19|ycw2013-01-03-20|ycw2013-01-03-21|ycw2013-01-03-22|ycw2013-01-03-23|ycw2013-01-03-24|ycw2013-01-03-25|ycw2013-01-03-26|ycw2013-01-03-27|ycw2013-01-03-28)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10160'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/3dimage_*/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/3dimage_*/*'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (ycw2013-01-03-1|ycw2013-01-03-2|ycw2013-01-03-4|ycw2013-01-03-5|ycw2013-01-03-6|ycw2013-01-03-7|ycw2013-01-03-8|ycw2013-01-03-9|ycw2013-01-03-11|ycw2013-01-03-12|ycw2013-01-03-14|ycw2013-01-03-15|ycw2013-01-03-16|ycw2013-01-03-17|ycw2013-01-03-18|ycw2013-01-03-19|ycw2013-01-03-20|ycw2013-01-03-21|ycw2013-01-03-22|ycw2013-01-03-23|ycw2013-01-03-24|ycw2013-01-03-25|ycw2013-01-03-26|ycw2013-01-03-27|ycw2013-01-03-28)$
-  run_name_regex: (.*)
+  deposition_id: 10160
   run_data_map_file: run_data_map/10160.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: counting
+      manufacturer: Gatan
+      model: K2
+    data_acquisition_software: UCSFTomo
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: FEI
+      model: Polara
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: 4.036
+    spherical_aberration_constant: 2.0
+    tilt_alignment_software: RAPTOR
+    tilt_axis: 84.3
+    tilt_range:
+      max: 60.0
+      min: -60.0
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: 4
+    tilt_step: float {ts-tilt_step}
+    tilting_scheme: starting tilt to max then min
+    total_flux: 100.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares:
+    - RAPTOR
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: null
+    reconstruction_method: Weighted back projection
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: 16.145
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/3dimage_*/*'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 16.145

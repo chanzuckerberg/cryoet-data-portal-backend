@@ -1,186 +1,231 @@
-dataset:
-  dataset_identifier: 10007
-  dataset_title: S. cerevisiae
-  dataset_description: Cryo-electron tomograms of S.cerevisiae of plasma FIB-SEM lamella. with CryoDRGN reconstructed 80S ribosome.
-  authors: &dataset_authors
-    - name: Ramya Rangan
-      ORCID: 0000-0002-0960-0825
-      primary_author_status: true
-    - name: Sagar Khavnekar
-      ORCID: 0000-0003-2020-3561
-    - name: Adam Lerer
-      ORCID: 0000-0002-5216-6542
-    - name: Jake Johnston
-      ORCID: 0000-0003-3060-7738
+annotations:
+- metadata:
+    annotation_method: crYOLO picking
+    annotation_object:
+      description: Cytosolic ribosome
+      id: GO:0009326
+      name: cytosolic ribosome
+      state: null
+    annotation_publications: doi:10.1101/2023.08.18.553799
+    annotation_software: null
+    authors:
+    - ORCID: 0000-0002-0960-0825
+      name: Ramya Rangan
+      primary_annotator_status: true
+    - ORCID: 0000-0003-2020-3561
+      name: Sagar Khavnekar
+    - ORCID: 0000-0002-5216-6542
+      name: Adam Lerer
+    - ORCID: 0000-0003-3060-7738
+      name: Jake Johnston
     - name: Ron Kelley
     - name: Martin Obr
-    - name: Abhay Kotecha
-      ORCID: 0000-0002-4480-5439
+    - ORCID: 0000-0002-4480-5439
       corresponding_author_status: true
-    - name: Ellen D. Zhong
-      ORCID: 0000-0001-6345-1907
+      name: Abhay Kotecha
+    - ORCID: 0000-0001-6345-1907
       corresponding_author_status: true
-  funding:
+      name: Ellen D. Zhong
+    confidence:
+      ground_truth_used: null
+      precision: null
+      recall: null
+    dates: &id001
+      deposition_date: 2023-09-01
+      last_modified_date: 2023-11-15
+      release_date: 2023-11-30
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: automated
+    version: '1.0'
+  sources:
+  - binning: 4
+    file_format: tomoman_relion_star
+    filter_value: null
+    glob_string: '{run_name}/metadata/particles/*.star'
+    is_visualization_default: true
+    order: xyz
+    shape: OrientedPoint
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11658-l.gif
+        thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11658.gif
+datasets:
+- metadata:
+    authors: &id002
+    - ORCID: 0000-0002-0960-0825
+      name: Ramya Rangan
+      primary_author_status: true
+    - ORCID: 0000-0003-2020-3561
+      name: Sagar Khavnekar
+    - ORCID: 0000-0002-5216-6542
+      name: Adam Lerer
+    - ORCID: 0000-0003-3060-7738
+      name: Jake Johnston
+    - name: Ron Kelley
+    - name: Martin Obr
+    - ORCID: 0000-0002-4480-5439
+      corresponding_author_status: true
+      name: Abhay Kotecha
+    - ORCID: 0000-0001-6345-1907
+      corresponding_author_status: true
+      name: Ellen D. Zhong
+    cell_component:
+      id: null
+      name: null
+    cell_strain:
+      id: null
+      name: null
+    cross_references:
+      dataset_publications: EMPIAR-11658, doi:10.1101/2023.08.18.553799
+    dataset_description: Cryo-electron tomograms of S.cerevisiae of plasma FIB-SEM
+      lamella. with CryoDRGN reconstructed 80S ribosome.
+    dataset_identifier: 10007
+    dataset_title: S. cerevisiae
+    dates: *id001
+    funding:
     - funding_agency_name: Max Planck Society
       grant_id: null
     - funding_agency_name: Other private
       grant_id: null
-  sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type: subtomogram_averaging_preparation'
-  grid_preparation: "Grid\nModel: Quantifoil R1.2/3\nMaterial: COPPER\n\nPretreatment: Type: GLOW DISCHARGE\nAtmosphere: Air\n\nSupport Film:\nMaterial: Carbon \nTopology: Holey\nThickness: –\n\nVitrification:\nCryogen Name: ETHANE \nInstrument: Vitrobot Mark IV\n"
-  sample_type: Organism
-  dates: &repo-dates
-    deposition_date: 2023-09-01
-    release_date: 2023-11-30
-    last_modified_date: 2023-11-15
-  cell_strain:
-    name: ~
-    id: ~
-  cross_references:
-    dataset_publications: EMPIAR-11658, doi:10.1101/2023.08.18.553799
-  cell_component:
-    name: ~
-    id: ~
-  organism:
-    name: Saccharomyces cerevisiae
-  key_photos:
-    snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11658-l.gif
-    thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11658.gif
-annotations:
-  - metadata:
-      annotation_object:
-        id: GO:0009326
-        name: cytosolic ribosome
-        description: Cytosolic ribosome
-        state: ~
-      dates: *repo-dates
-      annotation_method: crYOLO picking
-      method_type: automated
-      annotation_publications: doi:10.1101/2023.08.18.553799
-      ground_truth_status: False
-      authors:
-        - name: Ramya Rangan
-          ORCID: 0000-0002-0960-0825
-          primary_annotator_status: true
-        - name: Sagar Khavnekar
-          ORCID: 0000-0003-2020-3561
-        - name: Adam Lerer
-          ORCID: 0000-0002-5216-6542
-        - name: Jake Johnston
-          ORCID: 0000-0003-3060-7738
-        - name: Ron Kelley
-        - name: Martin Obr
-        - name: Abhay Kotecha
-          ORCID: 0000-0002-4480-5439
-          corresponding_author_status: true
-        - name: Ellen D. Zhong
-          ORCID: 0000-0001-6345-1907
-          corresponding_author_status: true
-      annotation_software: ~
-      version: '1.0'
-      confidence:
-        precision: ~
-        recall: ~
-        ground_truth_used: ~
-      is_curator_recommended: true
-    sources:
-      - shape: OrientedPoint
-        file_format: tomoman_relion_star
-        binning: 4
-        order: xyz
-        glob_string: '{run_name}/metadata/particles/*.star'
-        filter_value: ~
-        is_visualization_default: true
-runs: {}
-tiltseries:
-  scales: []
-  microscope:
-    manufacturer: FEI
-    model: TITAN KRIOS
-  spherical_aberration_constant: 2.7
-  microscope_optical_setup:
-    energy_filter: Selectris X
-    phase_plate: None
-    image_corrector: None
-  camera:
-    manufacturer: FEI
-    model: FALCON IV
-  acceleration_voltage: 300000
-  tilting_scheme: Dose symmetric from lamella pre-tilt
-  tilt_axis: -87
-  tilt_step: 3
-  tilt_range:
-    min: -60
-    max: 60
-  total_flux: 143.5
-  data_acquisition_software: TEM Tomography 5
-  binning_from_frames: 4
-  tilt_series_quality: 5
-  related_empiar_entry: EMPIAR-11658
-  pixel_spacing: 1.96
-  is_aligned: false
-  alignment_binning_factor: ~
-tomograms:
-  voxel_spacing: 7.84
-  fiducial_alignment_status: NON_FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  affine_transformation_matrix: [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
-  reconstruction_method: Weighted back projection
-  reconstruction_software: cryoDRGN
-  ctf_corrected: false
-  processing: denoised
-  authors: *dataset_authors
-  tomogram_version: 1
-overrides_by_run:
-  - run_regex: "ay08102021_grid_3_lamella3_pos12"
-    tiltseries:
-      pixel_spacing: 1.82
-  - run_regex: "ay18112021_grid2_lamella1_position2"
-    tiltseries:
-      pixel_spacing: 1.82
-  - run_regex: "ay18112021_grid2_lamella4_position11"
-    tiltseries:
-      pixel_spacing: 1.82
-  - run_regex: "ay18112021_grid2_lamella4_position13"
-    tiltseries:
-      pixel_spacing: 1.82
-  - run_regex: "ay18112021_grid2_lamella5_position16"
-    tiltseries:
-      pixel_spacing: 1.82
-  - run_regex: "ay18112021_gridX_lamella1_pos5"
-    tiltseries:
-      pixel_spacing: 1.82
-  - run_regex: "ay18112021_gridX_lamella8_pos6"
-    tiltseries:
-      pixel_spacing: 1.82
+    grid_preparation: "Grid\nModel: Quantifoil R1.2/3\nMaterial: COPPER\n\nPretreatment:\
+      \ Type: GLOW DISCHARGE\nAtmosphere: Air\n\nSupport Film:\nMaterial: Carbon \n\
+      Topology: Holey\nThickness: \u2013\n\nVitrification:\nCryogen Name: ETHANE \n\
+      Instrument: Vitrobot Mark IV\n"
+    organism:
+      name: Saccharomyces cerevisiae
+    sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type:
+      subtomogram_averaging_preparation'
+    sample_type: Organism
+  sources:
+  - literal:
+      value:
+      - '10007'
+gains:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/*.gain'
+key_images:
+- sources:
+  - literal:
+      value:
+      - from_tomogram
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_glob:
+      - '{run_name}/*_dose-filt.rawtlt'
+      - '{run_name}/AreTomo/*_dose-filt.xf'
+      - '{run_name}/*.mdoc'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*_pos*'
+      match_regex: .*
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10007'
-  source_prefix: 'Abhay_yeast'
-  frames_glob: '{run_name}/frames/*.eer'
-  gain_glob: '{run_name}/*.gain'
-  rawtlt_files:
-    - '{run_name}/*_dose-filt.rawtlt'
-    - '{run_name}/AreTomo/*_dose-filt.xf'
-    - '{run_name}/*.mdoc'
-  run_to_tomo_map_csv: 'run_to_tomo_map.csv'
-  tiltseries_glob: '{run_name}/*.st'
-  tomo_format: mrc
-  tomo_glob: 'bin4_cryocare/{mapped_tomo_name}.rec'
-  tomo_voxel_size: '7.84'
-  run_glob: '*_pos*'
-  run_regex: .*
-  run_name_regex: (.*)
-# skip_runs:
-#  - ay08102021_grid_3_lamella3_pos12
-#  - ay18112021_grid2_lamella1_position2
-#  - ay18112021_grid2_lamella4_position11
-#  - ay18112021_grid2_lamella4_position13
-#  - ay18112021_grid2_lamella5_position15
-#  - ay18112021_grid2_lamella5_position16
-#  - ay18112021_gridX_lamella1_pos5
-#  - ay18112021_gridX_lamella8_pos6
-#  - ay19102021_grid_2_atc_lamella1_position4
-#  - ay19102021_grid_2_atc_lamella1_position5
-#  - ay19102021_grid_2_atc_lamella1_position6
+  deposition_id: 10007
+  run_to_tomo_map_csv: run_to_tomo_map.csv
+  source_prefix: Abhay_yeast
+tiltseries:
+- metadata: &ts_metadata
+    acceleration_voltage: 300000
+    alignment_binning_factor: null
+    binning_from_frames: 4
+    camera:
+      manufacturer: FEI
+      model: FALCON IV
+    data_acquisition_software: TEM Tomography 5
+    is_aligned: false
+    microscope:
+      manufacturer: FEI
+      model: TITAN KRIOS
+    microscope_optical_setup:
+      energy_filter: Selectris X
+      image_corrector: None
+      phase_plate: None
+    pixel_spacing: 1.96
+    related_empiar_entry: EMPIAR-11658
+    scales: []
+    spherical_aberration_constant: 2.7
+    tilt_axis: -87
+    tilt_range:
+      max: 60
+      min: -60
+    tilt_series_quality: 5
+    tilt_step: 3
+    tilting_scheme: Dose symmetric from lamella pre-tilt
+    total_flux: 143.5
+  sources:
+  - source_glob: &ts_source
+      list_glob: '{run_name}/*.st'
+      name_regex: .*
+     parent_filters:
+       exclude:
+         run:
+           - "ay08102021_grid_3_lamella3_pos12"
+           - "ay08102021_grid_3_lamella3_pos12"
+           - "ay18112021_grid2_lamella1_position2"
+           - "ay18112021_grid2_lamella4_position11"
+           - "ay18112021_grid2_lamella4_position13"
+           - "ay18112021_grid2_lamella5_position16"
+           - "ay18112021_gridX_lamella1_pos5"
+           - "ay18112021_gridX_lamella8_pos6"
+- metadata:
+    pixel_spacing: 3.40
+    <<: *ts_metadata
+  sources:
+  - source_glob: *ts_source
+    parent_filters:
+      include:
+        run:
+          - "ay08102021_grid_3_lamella3_pos12"
+          - "ay08102021_grid_3_lamella3_pos12"
+          - "ay18112021_grid2_lamella1_position2"
+          - "ay18112021_grid2_lamella4_position11"
+          - "ay18112021_grid2_lamella4_position13"
+          - "ay18112021_grid2_lamella5_position16"
+          - "ay18112021_gridX_lamella1_pos5"
+          - "ay18112021_gridX_lamella8_pos6"
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id002
+    ctf_corrected: false
+    fiducial_alignment_status: NON_FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: denoised
+    reconstruction_method: Weighted back projection
+    reconstruction_software: cryoDRGN
+    tomogram_version: 1
+    voxel_spacing: 7.84
+  sources:
+  - source_glob:
+      list_glob: bin4_cryocare/{mapped_tomo_name}.rec
+      match_regex: .*
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 7.84

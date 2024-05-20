@@ -239,7 +239,7 @@ tomograms:
     reconstruction_method: Weighted back projection
     reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: '{run_voxel_spacing}'
+    voxel_spacing: 'float {run_voxel_spacing}'
   sources:
   - source_glob:
       list_glob: tomograms/{run_name}_*.rec
@@ -248,4 +248,4 @@ voxel_spacings:
 - sources:
   - literal:
       value:
-      - '{run_voxel_spacing}'
+      - 'float {run_voxel_spacing}'

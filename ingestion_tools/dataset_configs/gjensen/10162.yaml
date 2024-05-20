@@ -1,115 +1,142 @@
-dataset:
-  dataset_identifier: 10162
-  dataset_description: This is 1st of 5 sets of data studying Hyphomonas neptunium
-    collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb. ParA-like
-    protein, HNE0708, venus, helical structure
-  dataset_title: Hyphomonas
-  authors: &id001
-  - name: Yi-Wei Chang
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Hyphomonas neptunium
-    taxonomy_id: 228405
-  sample_type: Organism
-  sample_preparation: Cells grown overnight in Marine Broth (MB) medium at 30 degrees.
-    Expression of Venus labeled HNK0708 was induced by adding final 300 uM CuCl2 and
-    incubated at 30 degrees for 24 hr.
-  grid_preparation: "Vitrobot settings: 100% humidity, 3\xB5l sample, 10 nm BSA treated\
-    \ gold. -3 offset, 4 sec blot time, no drain. Ethane/propane mix."
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/ycw2012-03-12-3/keyimg_ycw2012-03-12-3.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/ycw2012-03-12-3/keyimg_ycw2012-03-12-3_s.jpg
-  cell_strain:
-    name: ATCC 15444
-    id: null
-runs: {}
-tiltseries:
-  pixel_spacing: 7.74
-  tilt_step: 1.0
-  total_flux: 120.0
-  data_acquisition_software: UCSF Tomo
-  tilt_series_quality: 4
-  binning_from_frames: null
-  tilt_alignment_software: RAPTOR
-  acceleration_voltage: 300000
-  spherical_aberration_constant: 2.0
-  microscope:
-    manufacturer: FEI
-    model: Polara
-    additional_scope_info: ''
-  camera:
-    manufacturer: Gatan
-    model: UltraCam
-    acquire_mode: null
-  tilting_scheme: starting tilt to max then min
-  tilt_axis: 0.0
-  tilt_series_path: rawdata/2012Mar12_10003.mrc
-  microscope_optical_setup:
-    phase_plate: false
-    image_corrector: null
-    energy_filter: GIF
-  is_aligned: false
-  tilt_range:
-    min: -60.0
-    max: 60.0
-tomograms:
-  voxel_spacing: 15.48
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
-  fiducial_alignment_status: FIDUCIAL
-  ctf_corrected: null
-  processing: raw
-  processing_software: null
-  align_softwares:
-  - RAPTOR
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  authors: *id001
-  tomogram_version: 1
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/ycw2012-03-12-3/keyimg_ycw2012-03-12-3.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/ycw2012-03-12-3/keyimg_ycw2012-03-12-3_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Yi-Wei Chang
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: ATCC 15444
+    dataset_description: This is 1st of 5 sets of data studying Hyphomonas neptunium
+      collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb. ParA-like
+      protein, HNE0708, venus, helical structure
+    dataset_identifier: 10162
+    dataset_title: Hyphomonas
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: "Vitrobot settings: 100% humidity, 3\xB5l sample, 10 nm BSA\
+      \ treated gold. -3 offset, 4 sec blot time, no drain. Ethane/propane mix."
+    organism:
+      name: Hyphomonas neptunium
+      taxonomy_id: 228405
+    sample_preparation: Cells grown overnight in Marine Broth (MB) medium at 30 degrees.
+      Expression of Venus labeled HNK0708 was induced by adding final 300 uM CuCl2
+      and incubated at 30 degrees for 24 hr.
+    sample_type: Organism
+  sources:
+  - literal:
+      value:
+      - '10162'
+gains:
+- sources:
+  - source_glob:
+      list_glob: null
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_glob:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/3dimage_*/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (ycw2012-03-12-3)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10162'
+  deposition_id: 10162
   source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/3dimage_*/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/3dimage_*/*'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (ycw2012-03-12-3)$
-  run_name_regex: (.*)
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: null
+      manufacturer: Gatan
+      model: UltraCam
+    data_acquisition_software: UCSF Tomo
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: FEI
+      model: Polara
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: 7.74
+    spherical_aberration_constant: 2.0
+    tilt_alignment_software: RAPTOR
+    tilt_axis: 0.0
+    tilt_range:
+      max: 60.0
+      min: -60.0
+    tilt_series_path: rawdata/2012Mar12_10003.mrc
+    tilt_series_quality: 4
+    tilt_step: 1.0
+    tilting_scheme: starting tilt to max then min
+    total_flux: 120.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares:
+    - RAPTOR
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: null
+    reconstruction_method: Weighted back projection
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: 15.48
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/3dimage_*/*'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 15.48

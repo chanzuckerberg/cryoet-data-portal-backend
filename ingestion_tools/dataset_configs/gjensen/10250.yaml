@@ -1,114 +1,141 @@
-dataset:
-  dataset_identifier: 10250
-  dataset_description: This is 1st of 3 sets of data studying Treponema primitia collected
-    by Elitza Tocheva and is a part of Caltech Jensen  lab etdb. Cells were digested
-    with lysozyme after the OM was removed
-  dataset_title: T. primitia lysozyme
-  authors: &id001
-  - name: Elitza Tocheva
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Treponema primitia
-    taxonomy_id: 545694
-  sample_type: Organism
-  sample_preparation: cells were digested with 5mg/ml of lysozyme for 15min
-  grid_preparation: Vitrobot
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/etl2012-04-26-17/keyimg_etl2012-04-26-17.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/etl2012-04-26-17/keyimg_etl2012-04-26-17_s.jpg
-  cell_strain:
-    name: ZAS-2
-    id: null
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: null
-    manufacturer: Gatan
-    model: UltraCam
-  data_acquisition_software: UCSFTomo
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: FEI
-    model: Polara
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: 9.46
-  spherical_aberration_constant: 2.0
-  tilt_alignment_software: '{ts-tilt_alignment_software}'
-  tilt_axis: 0.0
-  tilt_range:
-    max: float {ts-tilt_range-max}
-    min: float {ts-tilt_range-min}
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: int {ts-tilt_series_quality}
-  tilt_step: 1.0
-  tilting_scheme: starting tilt to max then min
-  total_flux: 200.0
-tomograms:
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  align_softwares: '{tomo-align_softwares}'
-  authors: *id001
-  ctf_corrected: null
-  fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  processing_software: null
-  reconstruction_method: '{tomo-reconstruction_method}'
-  reconstruction_software: '{tomo-reconstruction_software}'
-  tomogram_version: 1
-  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/etl2012-04-26-17/keyimg_etl2012-04-26-17.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/etl2012-04-26-17/keyimg_etl2012-04-26-17_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Elitza Tocheva
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: ZAS-2
+    dataset_description: This is 1st of 3 sets of data studying Treponema primitia
+      collected by Elitza Tocheva and is a part of Caltech Jensen  lab etdb. Cells
+      were digested with lysozyme after the OM was removed
+    dataset_identifier: 10250
+    dataset_title: T. primitia lysozyme
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: Vitrobot
+    organism:
+      name: Treponema primitia
+      taxonomy_id: 545694
+    sample_preparation: cells were digested with 5mg/ml of lysozyme for 15min
+    sample_type: Organism
+  sources:
+  - literal:
+      value:
+      - '10250'
+gains:
+- sources:
+  - source_glob:
+      list_glob: null
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_glob:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/{mapped_frame_name}/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (etl2012-04-26-17|etl2012-04-26-19|etl2012-04-26-20|etl2012-04-26-21|etl2012-04-26-22|etl2012-04-26-23|etl2012-04-26-24|etl2012-04-26-25|etl2012-04-26-26|etl2012-04-26-27|etl2012-04-26-28|etl2012-04-26-29|etl2012-04-26-30|etl2012-05-13-20|etl2012-05-13-21|etl2012-05-13-22|etl2012-05-13-23|etl2012-05-13-24|etl2012-05-13-25|etl2012-05-13-26|etl2012-05-13-27|etl2012-05-14-1|etl2012-05-14-2|etl2012-05-14-3|etl2012-05-14-4|etl2012-05-14-6|etl2012-05-14-7|etl2012-05-14-8|etl2012-05-14-9|etl2012-05-14-10|etl2012-05-14-11)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10250'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/{mapped_frame_name}/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/{mapped_tomo_name}'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (etl2012-04-26-17|etl2012-04-26-19|etl2012-04-26-20|etl2012-04-26-21|etl2012-04-26-22|etl2012-04-26-23|etl2012-04-26-24|etl2012-04-26-25|etl2012-04-26-26|etl2012-04-26-27|etl2012-04-26-28|etl2012-04-26-29|etl2012-04-26-30|etl2012-05-13-20|etl2012-05-13-21|etl2012-05-13-22|etl2012-05-13-23|etl2012-05-13-24|etl2012-05-13-25|etl2012-05-13-26|etl2012-05-13-27|etl2012-05-14-1|etl2012-05-14-2|etl2012-05-14-3|etl2012-05-14-4|etl2012-05-14-6|etl2012-05-14-7|etl2012-05-14-8|etl2012-05-14-9|etl2012-05-14-10|etl2012-05-14-11)$
-  run_name_regex: (.*)
+  deposition_id: 10250
   run_data_map_file: run_data_map/10250.csv
-  run_to_tomo_map_csv: run_tomo_map/10250.csv
   run_to_frame_map_csv: run_frames_map/10250.csv
+  run_to_tomo_map_csv: run_tomo_map/10250.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: null
+      manufacturer: Gatan
+      model: UltraCam
+    data_acquisition_software: UCSFTomo
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: FEI
+      model: Polara
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: 9.46
+    spherical_aberration_constant: 2.0
+    tilt_alignment_software: '{ts-tilt_alignment_software}'
+    tilt_axis: 0.0
+    tilt_range:
+      max: float {ts-tilt_range-max}
+      min: float {ts-tilt_range-min}
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: int {ts-tilt_series_quality}
+    tilt_step: 1.0
+    tilting_scheme: starting tilt to max then min
+    total_flux: 200.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares: '{tomo-align_softwares}'
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: null
+    reconstruction_method: '{tomo-reconstruction_method}'
+    reconstruction_software: '{tomo-reconstruction_software}'
+    tomogram_version: 1
+    voxel_spacing: 'float {tomo-voxel_spacing}'
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/{mapped_tomo_name}'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 'float {tomo-voxel_spacing}'

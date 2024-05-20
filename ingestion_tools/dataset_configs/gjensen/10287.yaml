@@ -1,111 +1,138 @@
-dataset:
-  dataset_identifier: 10287
-  dataset_description: ' and is a part of Caltech Jensen  lab etdb. Helicobacter hepaticus
-    cell poles'
-  dataset_title: H.hepaticus
-  authors: &id001
-  - name: Ariane Briegel
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Helicobacter hepaticus
-    taxonomy_id: 235279
-  sample_type: Organism
-  sample_preparation: grown in the Mazmanian lab
-  grid_preparation: null
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/aba2013-04-06-7/keyimg_aba2013-04-06-7.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/aba2013-04-06-7/keyimg_aba2013-04-06-7_s.jpg
-  cell_strain:
-    name: ATCC 51449
-    id: null
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: counting
-    manufacturer: Gatan
-    model: K2
-  data_acquisition_software: UCSFTomo
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: FEI
-    model: Polara
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: 2.707
-  spherical_aberration_constant: 2.0
-  tilt_alignment_software: '{ts-tilt_alignment_software}'
-  tilt_axis: 84.3
-  tilt_range:
-    max: 66.0
-    min: -66.0
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: 4
-  tilt_step: 1.0
-  tilting_scheme: starting tilt to max then min
-  total_flux: 165.0
-tomograms:
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  align_softwares: '{tomo-align_softwares}'
-  authors: *id001
-  ctf_corrected: null
-  fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  processing_software: null
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
-  tomogram_version: 1
-  voxel_spacing: 10.829
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/aba2013-04-06-7/keyimg_aba2013-04-06-7.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/aba2013-04-06-7/keyimg_aba2013-04-06-7_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Ariane Briegel
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: ATCC 51449
+    dataset_description: ' and is a part of Caltech Jensen  lab etdb. Helicobacter
+      hepaticus cell poles'
+    dataset_identifier: 10287
+    dataset_title: H.hepaticus
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: null
+    organism:
+      name: Helicobacter hepaticus
+      taxonomy_id: 235279
+    sample_preparation: grown in the Mazmanian lab
+    sample_type: Organism
+  sources:
+  - literal:
+      value:
+      - '10287'
+gains:
+- sources:
+  - source_glob:
+      list_glob: null
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_glob:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/3dimage_*/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (aba2013-04-06-7|aba2013-04-06-8|aba2013-04-06-9|aba2013-04-06-10|aba2013-04-06-11|aba2013-04-06-12|aba2013-04-06-13|aba2013-04-06-14|aba2013-04-06-15|aba2013-04-06-16|aba2013-04-06-17|aba2013-04-06-18|aba2013-04-06-19|aba2013-04-06-20|aba2013-04-06-21|aba2013-04-06-22)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10287'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/3dimage_*/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/3dimage_*/*'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (aba2013-04-06-7|aba2013-04-06-8|aba2013-04-06-9|aba2013-04-06-10|aba2013-04-06-11|aba2013-04-06-12|aba2013-04-06-13|aba2013-04-06-14|aba2013-04-06-15|aba2013-04-06-16|aba2013-04-06-17|aba2013-04-06-18|aba2013-04-06-19|aba2013-04-06-20|aba2013-04-06-21|aba2013-04-06-22)$
-  run_name_regex: (.*)
+  deposition_id: 10287
   run_data_map_file: run_data_map/10287.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: counting
+      manufacturer: Gatan
+      model: K2
+    data_acquisition_software: UCSFTomo
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: FEI
+      model: Polara
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: 2.707
+    spherical_aberration_constant: 2.0
+    tilt_alignment_software: '{ts-tilt_alignment_software}'
+    tilt_axis: 84.3
+    tilt_range:
+      max: 66.0
+      min: -66.0
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: 4
+    tilt_step: 1.0
+    tilting_scheme: starting tilt to max then min
+    total_flux: 165.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares: '{tomo-align_softwares}'
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: null
+    reconstruction_method: Weighted back projection
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: 10.829
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/3dimage_*/*'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 10.829

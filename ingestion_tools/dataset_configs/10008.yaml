@@ -1,34 +1,134 @@
-dataset:
-  dataset_identifier: 10008
-  dataset_title: Hydrogen-dependent CO2 reductase
-  dataset_description: Cryo-electron tomograms of T. kivui of FIB-SEM lamella.
-  authors: &dataset_authors
-    - name: Helge Markus Dietrich
-      ORCID: 0000-0002-4416-0271
-      primary_author_status: True
-    - name: Ricardo D Righetto
-      ORCID: 0000-0003-4247-4303
-      primary_author_status: True
-    - name: Anuj Kumar
-      ORCID: 0000-0002-7237-3119
-    - name: Wojciech Wietrzynski
-      ORCID: 0000-0001-8898-2392
+annotations:
+- metadata:
+    annotation_method: Template matching + manual filtering + 3D classification filtering
+    annotation_object:
+      description: null
+      id: GO:0009326
+      name: hydrogen-dependent CO2 reductase filament
+      state: null
+    annotation_publications: doi:10.1038/s41586-022-04971-z
+    annotation_software: STOPGAP
+    authors: &id001
+    - ORCID: 0000-0002-4416-0271
+      name: Helge Markus Dietrich
+      primary_annotator_status: true
+    - ORCID: 0000-0003-4247-4303
+      name: Ricardo D Righetto
+      primary_annotator_status: true
+    - ORCID: 0000-0002-7237-3119
+      name: Anuj Kumar
+    - ORCID: 0000-0001-8898-2392
+      name: Wojciech Wietrzynski
     - name: Raphael Trischler
-    - name: Sandra Katharina Schuller
-      ORCID: 0000-0002-1800-8014
-    - name: Jonathan Wagner
-      ORCID: 0000-0003-0932-7600
+    - ORCID: 0000-0002-1800-8014
+      name: Sandra Katharina Schuller
+    - ORCID: 0000-0003-0932-7600
+      name: Jonathan Wagner
     - name: Fabian M. Schwarz
-    - name: Benjamin D. Engel
-      ORCID: 0000-0002-0941-4387
+    - ORCID: 0000-0002-0941-4387
       corresponding_author_status: true
-    - name: "Volker Müller"
-      ORCID: 0000-0001-7955-5508
+      name: Benjamin D. Engel
+    - ORCID: 0000-0001-7955-5508
       corresponding_author_status: true
-    - name: Jan Michael Schuller
-      ORCID: 0000-0002-9121-1764
+      name: "Volker M\xFCller"
+    - ORCID: 0000-0002-9121-1764
       corresponding_author_status: true
-  funding:
+      name: Jan Michael Schuller
+    confidence:
+      ground_truth_used: null
+      precision: null
+      recall: null
+    dates: &id002
+      deposition_date: 2022-05-29
+      last_modified_date: 2023-11-21
+      release_date: 2022-06-07
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: '1.0'
+  sources:
+  - binning: 2
+    file_format: stopgap_star
+    filter_value: '{run_name}'
+    glob_string: subtomo/hdcr/hdcr_tm_bin2_motl_12.star
+    is_visualization_default: true
+    order: xyz
+    shape: OrientedPoint
+- metadata:
+    annotation_method: Template matching + manual filtering + 3D classification filtering
+    annotation_object:
+      description: null
+      id: GO:0022626
+      name: cytosolic ribosome
+      state: null
+    annotation_publications: doi:10.1038/s41586-022-04971-z
+    annotation_software: STOPGAP
+    authors: *id001
+    confidence:
+      ground_truth_used: null
+      precision: null
+      recall: null
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: '1.0'
+  sources:
+  - binning: 4
+    file_format: stopgap_star
+    filter_value: '{run_name}'
+    glob_string: subtomo/ribo/ribo_tm_bin1_motl_12.star
+    is_visualization_default: true
+    order: xyz
+    shape: OrientedPoint
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11058-l.gif
+        thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11058.gif
+datasets:
+- metadata:
+    authors: &id003
+    - ORCID: 0000-0002-4416-0271
+      name: Helge Markus Dietrich
+      primary_author_status: true
+    - ORCID: 0000-0003-4247-4303
+      name: Ricardo D Righetto
+      primary_author_status: true
+    - ORCID: 0000-0002-7237-3119
+      name: Anuj Kumar
+    - ORCID: 0000-0001-8898-2392
+      name: Wojciech Wietrzynski
+    - name: Raphael Trischler
+    - ORCID: 0000-0002-1800-8014
+      name: Sandra Katharina Schuller
+    - ORCID: 0000-0003-0932-7600
+      name: Jonathan Wagner
+    - name: Fabian M. Schwarz
+    - ORCID: 0000-0002-0941-4387
+      corresponding_author_status: true
+      name: Benjamin D. Engel
+    - ORCID: 0000-0001-7955-5508
+      corresponding_author_status: true
+      name: "Volker M\xFCller"
+    - ORCID: 0000-0002-9121-1764
+      corresponding_author_status: true
+      name: Jan Michael Schuller
+    cell_component:
+      id: null
+      name: null
+    cell_strain:
+      id: NCBI:txid2325
+      name: LKT-1
+    cross_references:
+      dataset_publications: doi:10.1038/s41586-022-04971-z
+      related_database_entries: EMPIAR-11058
+    dataset_description: Cryo-electron tomograms of T. kivui of FIB-SEM lamella.
+    dataset_identifier: 10008
+    dataset_title: Hydrogen-dependent CO2 reductase
+    dates: *id002
+    funding:
     - funding_agency_name: German Research Foundation (DFG)
       grant_id: SCHU 3364/1-1
     - funding_agency_name: European Research Council (ERC)
@@ -39,166 +139,116 @@ dataset:
       grant_id: null
     - funding_agency_name: German Research Foundation (DFG)
       grant_id: 20016/446
-  sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE-PROPANE, vitrification_instrument: FEI VITROBOT MARK IV, instance_type: subtomogram_averaging_preparation'
-  grid_preparation: 'model: Quantifoil R2/1, material: COPPER, support_film_film_type_id: 1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type: support_film, pretreatment_type_: GLOW DISCHARGE, pretreatment_atmosphere: AIR'
-  sample_type: Organism
-  dates: &repo-dates
-    deposition_date: 2022-05-29
-    release_date: 2022-06-07
-    last_modified_date: 2023-11-21
-  cell_strain:
-    name: LKT-1
-    id: NCBI:txid2325
-  cross_references:
-    dataset_publications: &publications doi:10.1038/s41586-022-04971-z
-    related_database_entries: EMPIAR-11058
-  cell_component:
-    name: ~
-    id: ~
-  organism:
-    name: Thermoanaerobacter kivui
-    id: 'NCBITaxon:2325'
-  key_photos:
-    snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11058-l.gif
-    thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11058.gif
-annotations:
-  - metadata:
-      annotation_object:
-        id: GO:0009326
-        name: hydrogen-dependent CO2 reductase filament
-        description: ~
-        state: ~
-      dates: *repo-dates
-      annotation_method: Template matching + manual filtering + 3D classification filtering
-      method_type: hybrid
-      annotation_publications: *publications
-      ground_truth_status: true
-      authors: &annotation_authors
-        - name: Helge Markus Dietrich
-          ORCID: 0000-0002-4416-0271
-          primary_annotator_status: True
-        - name: Ricardo D Righetto
-          ORCID: 0000-0003-4247-4303
-          primary_annotator_status: True
-        - name: Anuj Kumar
-          ORCID: 0000-0002-7237-3119
-        - name: Wojciech Wietrzynski
-          ORCID: 0000-0001-8898-2392
-        - name: Raphael Trischler
-        - name: Sandra Katharina Schuller
-          ORCID: 0000-0002-1800-8014
-        - name: Jonathan Wagner
-          ORCID: 0000-0003-0932-7600
-        - name: Fabian M. Schwarz
-        - name: Benjamin D. Engel
-          ORCID: 0000-0002-0941-4387
-          corresponding_author_status: true
-        - name: "Volker Müller"
-          ORCID: 0000-0001-7955-5508
-          corresponding_author_status: true
-        - name: Jan Michael Schuller
-          ORCID: 0000-0002-9121-1764
-          corresponding_author_status: true
-      annotation_software: STOPGAP
-      version: '1.0'
-      confidence:
-        precision: ~
-        recall: ~
-        ground_truth_used: ~
-      is_curator_recommended: true
-    sources:
-      - shape: OrientedPoint
-        file_format: stopgap_star
-        binning: 2
-        order: xyz
-        glob_string: 'subtomo/hdcr/hdcr_tm_bin2_motl_12.star'
-        filter_value: "{run_name}"
-        is_visualization_default: true
-  - metadata:
-      annotation_object:
-        id: GO:0022626
-        name: cytosolic ribosome
-        description: ~
-        state: ~
-      dates: *repo-dates
-      annotation_method: Template matching + manual filtering + 3D classification filtering
-      method_type: hybrid
-      annotation_publications: *publications
-      ground_truth_status: true
-      authors: *annotation_authors
-      annotation_software: STOPGAP
-      version: '1.0'
-      confidence:
-        precision: ~
-        recall: ~
-        ground_truth_used: ~
-      is_curator_recommended: true
-    sources:
-      - shape: OrientedPoint
-        file_format: stopgap_star
-        binning: 4
-        order: xyz
-        glob_string: 'subtomo/ribo/ribo_tm_bin1_motl_12.star'
-        filter_value: "{run_name}"
-        is_visualization_default: true
-runs: {}
-tiltseries:
-  scales: []
-  microscope:
-    manufacturer: TFS
-    model: KRIOS
-  spherical_aberration_constant: 2.7
-  microscope_optical_setup:
-    energy_filter: GIF Quantum LS
-    phase_plate: null
-    image_corrector: null
-  camera:
-    manufacturer: Gatan
-    model: K2 SUMMIT
-  acceleration_voltage: 300000
-  tilting_scheme: Dose symmetric from lamella pre-tilt
-  tilt_axis: 1.36
-  tilt_step: 2
-  tilt_range:
-    min: -50
-    max: 70
-  total_flux: 120
-  data_acquisition_software: SerialEM
-  binning_from_frames: 14.08
-  tilt_series_quality: 5
-  related_empiar_entry: EMD-15053
-  pixel_spacing: 3.52
-  is_aligned: false
-  alignment_binning_factor: ~
-tomograms:
-  voxel_spacing: 14.08
-  fiducial_alignment_status: FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  affine_transformation_matrix: [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
-  reconstruction_method: Weighted back projection
-  reconstruction_software: STOPGAP
-  ctf_corrected: false
-  processing: denoised
-  authors: *dataset_authors
-  tomogram_version: 1
+    grid_preparation: 'model: Quantifoil R2/1, material: COPPER, support_film_film_type_id:
+      1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type:
+      support_film, pretreatment_type_: GLOW DISCHARGE, pretreatment_atmosphere: AIR'
+    organism:
+      id: NCBITaxon:2325
+      name: Thermoanaerobacter kivui
+    sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE-PROPANE,
+      vitrification_instrument: FEI VITROBOT MARK IV, instance_type: subtomogram_averaging_preparation'
+    sample_type: Organism
+  sources:
+  - literal:
+      value:
+      - '10008'
+gains:
+- sources:
+  - source_glob:
+      list_glob: null
+key_images:
+- sources:
+  - literal:
+      value:
+      - from_tomogram
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_glob:
+      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.tlt
+      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.xf
+      - tomo/raw_stacks/{mapped_ts_name}/SerialEM/{mapped_frame_name}.st.mdoc
+runs:
+- sources:
+  - source_glob:
+      list_glob: tomo/bin4_denoised/*.rec
+      match_regex: .*
+      name_regex: (.*).rec
 standardization_config:
-  destination_prefix: '10008'
+  deposition_id: 10008
+  run_to_frame_map_csv: tomo_frame_map.csv
+  run_to_ts_map_csv: tomo_ts_map.csv
   source_prefix: Ben_T_kivui
-  frames_glob: 'tomo/raw_stacks/{mapped_ts_name}/frames/*{mapped_frame_name}_*.tif'
-  gain_glob: ~
-  rawtlt_files:
-    - 'tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.tlt'
-    - 'tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.xf'
-    - 'tomo/raw_stacks/{mapped_ts_name}/SerialEM/{mapped_frame_name}.st.mdoc'
-  run_to_frame_map_csv: 'tomo_frame_map.csv'
-  run_to_ts_map_csv: 'tomo_ts_map.csv'
-  tiltseries_glob: 'tomo/raw_stacks/{mapped_ts_name}/SerialEM/{mapped_frame_name}.st'
-  tomo_format: mrc
-  tomo_glob: 'tomo/bin4_denoised/{run_name}.rec'
-  tomo_voxel_size: '14.08'
-  run_glob: 'tomo/bin4_denoised/*.rec'
-  run_regex: '.*'
-  run_name_regex: '(.*).rec'
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    alignment_binning_factor: null
+    binning_from_frames: 14.08
+    camera:
+      manufacturer: Gatan
+      model: K2 SUMMIT
+    data_acquisition_software: SerialEM
+    is_aligned: false
+    microscope:
+      manufacturer: TFS
+      model: KRIOS
+    microscope_optical_setup:
+      energy_filter: GIF Quantum LS
+      image_corrector: null
+      phase_plate: null
+    pixel_spacing: 3.52
+    related_empiar_entry: EMD-15053
+    scales: []
+    spherical_aberration_constant: 2.7
+    tilt_axis: 1.36
+    tilt_range:
+      max: 70
+      min: -50
+    tilt_series_quality: 5
+    tilt_step: 2
+    tilting_scheme: Dose symmetric from lamella pre-tilt
+    total_flux: 120
+  sources:
+  - source_glob:
+      list_glob: tomo/raw_stacks/{mapped_ts_name}/SerialEM/{mapped_frame_name}.st
+      name_regex: .*
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id003
+    ctf_corrected: false
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: denoised
+    reconstruction_method: Weighted back projection
+    reconstruction_software: STOPGAP
+    tomogram_version: 1
+    voxel_spacing: 14.08
+  sources:
+  - source_glob:
+      list_glob: tomo/bin4_denoised/{run_name}.rec
+      match_regex: .*
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 14.08
