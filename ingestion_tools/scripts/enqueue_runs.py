@@ -150,6 +150,7 @@ def run_job(
     default=False,
     help="Create neuroglancer config for run",
 )
+@click.option("--import-neuroglancer-precompute", type=bool, is_flag=True, default=False)
 @click.option(
     "--write-mrc/--no-write-mrc",
     default=True,
@@ -189,6 +190,7 @@ def queue(
     skip_until_run_name: str,
     make_key_image: bool,
     make_neuroglancer_config: bool,
+    import_neuroglancer_precompute: bool,
     write_mrc: bool,
     write_zarr: bool,
     memory: int | None,
@@ -219,6 +221,7 @@ def queue(
         "import-everything": import_everything,
         "make-key-image": make_key_image,
         "make-neuroglancer-config": make_neuroglancer_config,
+        "import-neuroglancer-precompute": import_neuroglancer_precompute,
         "no-write-mrc": not write_mrc,
         "no-write-zarr": not write_zarr,
     }
