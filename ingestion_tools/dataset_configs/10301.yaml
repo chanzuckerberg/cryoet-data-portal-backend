@@ -126,7 +126,7 @@ annotations:
       - file_format: stopgap_star
         filter_value: "{annotation_micrograph_name}"
         binning: 4
-        order: zyx
+        order: xyz
         glob_string: "{run_name}/metadata/particles/f1atpase_*.star"
         shape: OrientedPoint
         is_visualization_default: true
@@ -150,7 +150,7 @@ annotations:
       - file_format: stopgap_star
         filter_value: "{annotation_micrograph_name}"
         binning: 4
-        order: zyx
+        order: xyz
         glob_string: "{run_name}/metadata/particles/f1atpase_mito_*.star"
         shape: OrientedPoint
         is_visualization_default: true
@@ -174,7 +174,7 @@ annotations:
       - file_format: stopgap_star
         filter_value: "{annotation_micrograph_name}"
         binning: 4
-        order: zyx
+        order: xyz
         glob_string: "{run_name}/metadata/particles/ribosome_*.star"
         shape: OrientedPoint
         is_visualization_default: true
@@ -197,7 +197,7 @@ annotations:
       - file_format: stopgap_star
         filter_value: "{annotation_micrograph_name}"
         binning: 4
-        order: zyx
+        order: xyz
         glob_string: "{run_name}/metadata/particles/nucleosome_*.star"
         shape: OrientedPoint
         is_visualization_default: true
@@ -221,7 +221,7 @@ annotations:
       - file_format: stopgap_star
         filter_value: "{annotation_micrograph_name}"
         binning: 4
-        order: zyx
+        order: xyz
         glob_string: "{run_name}/metadata/particles/rubisco_*.star"
         shape: OrientedPoint
         is_visualization_default: true
@@ -244,7 +244,7 @@ annotations:
       - file_format: stopgap_star
         filter_value: "{annotation_micrograph_name}"
         binning: 4
-        order: zyx
+        order: xyz
         glob_string: "{run_name}/metadata/particles/microtubule_*.star"
         shape: OrientedPoint
         is_visualization_default: true
