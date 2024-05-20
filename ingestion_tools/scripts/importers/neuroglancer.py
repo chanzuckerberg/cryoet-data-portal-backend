@@ -76,8 +76,10 @@ class NeuroglancerImporter(BaseImporter):
                     colors_used.append(float_colors[0])
                     layers.append(layer)
                 elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
-                    source_path = os.path.join(ng_output_path, f"{stemmed_metadata_path}_{shape.lower()}").removeprefix(
-                        self.config.output_prefix,
+                    source_path = (
+                        os.path.join(ng_output_path, f"{stemmed_metadata_path}_{shape.lower()}")
+                        .removeprefix(self.config.output_prefix)
+                        .removeprefix("/")
                     )
                     is_instance_segmentation = shape == "InstanceSegmentation"
                     layer = state_generator.generate_point_layer(

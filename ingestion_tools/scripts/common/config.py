@@ -258,10 +258,11 @@ class DataImportConfig:
             "neuroglancer": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/CanonicalTomogram/neuroglancer_config.json",
             "neuroglancer_precompute": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/NeuroglancerPrecompute",
         }
+        voxelsize_str = f"{voxelsize:.3f}" if isinstance(voxelsize, float) else voxelsize
         path = os.path.join(
             self.output_prefix,
             self.destination_prefix,
-            paths[key].format(run_name=run_name, voxelsize=voxelsize),
+            paths[key].format(run_name=run_name, voxelsize=voxelsize_str),
         )
         self.fs.makedirs(path)
         return path
