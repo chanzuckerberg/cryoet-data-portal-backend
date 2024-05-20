@@ -51,7 +51,7 @@ class BaseAnnotationSource:
             return file
         raise Exception(f"No annotation source file found for {source_path}!")
 
-    def get_object_count(self, fs: FileSystemApi, output_prefix: str):
+    def get_object_count(self, fs: FileSystemApi, output_prefix: str) -> int:
         # We currently don't count objects in segmentation masks.
         return 0
 
@@ -392,7 +392,34 @@ class InstanceSegmentationFile(AbstractPointFile):
         "tardis": pc.from_tardis,
     }
 
-    def get_object_count(self, fs: FileSystemApi, output_prefix: str):
+    def __init__(
+        self,
+        shape: str,
+        glob_string: str,
+        glob_vars: dict[str, str],
+        file_format: str,
+        is_visualization_default: bool = False,
+        binning: int = 1,
+        order: str | None = None,
+        filter_value: str | None = None,
+    ):
+        super().__init__(shape, glob_string, glob_vars, file_format, is_visualization_default)
+
+        # Converter arguments
+        if filter_value:
+            self.filter_value = filter_value.format(**glob_vars)
+        else:
+            self.filter_value = ""
+
+        self.order = order
+        self.binning = binning
+        self.converter_args = {
+            "order": self.order,
+            "binning": self.binning,
+            "filter_value": self.filter_value,
+        }
+
+    def get_object_count(self, fs: FileSystemApi, output_prefix: str) -> int:
         # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
         return len(self._get_distinct_ids(fs, output_prefix))
 
