@@ -134,4 +134,4 @@ voxel_spacings:
 - sources:
   - literal:
       value:
-      - '{run_voxel_spacing}'
+      - 'float {run_voxel_spacing}'

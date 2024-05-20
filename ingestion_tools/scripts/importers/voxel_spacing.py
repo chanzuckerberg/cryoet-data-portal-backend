@@ -32,13 +32,14 @@ class VoxelSpacingLiteralValueFinder(BaseLiteralValueFinder):
 
 
 class TomogramHeaderFinder(BaseFinder):
-    def __init__(self, list_glob: str, match_regex: str, header_key: str):
+    def __init__(self, list_glob: str, match_regex: str | None = None, header_key: str | None = None):
         self.list_glob = list_glob
+        if not header_key:
+            header_key = "voxel_size"
         self.header_key = header_key
         if not match_regex:
-            self.match_regex = re.compile(".*")
-        else:
-            self.match_regex = re.compile(match_regex)
+            match_regex = ".*"
+        self.match_regex = re.compile(match_regex)
 
     def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
         # Expand voxel spacing based on tomogram metadata. This is for reverse compatibility with certain configs with run overrides.

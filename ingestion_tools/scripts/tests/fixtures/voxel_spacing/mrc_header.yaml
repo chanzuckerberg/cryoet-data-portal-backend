@@ -131,6 +131,5 @@ tomograms:
       match_regex: .*\.rec
 voxel_spacings:
 - sources:
-  - literal:
-      value:
-      - null
+  - tomogram_header:
+      list_glob: tomograms/{run_name}.rec

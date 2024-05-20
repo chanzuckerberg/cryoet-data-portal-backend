@@ -4,7 +4,7 @@ from typing import Any, Dict, List
 
 import ndjson
 import pytest
-from importers.annotation import PointAnnotation, OrientedPointAnnotation
+from importers.annotation import PointAnnotation, OrientedPointAnnotation, InstanceSegmentationAnnotation
 from importers.dataset import DatasetImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
@@ -235,18 +235,18 @@ def test_ingest_point_data(
     anno = PointAnnotation(
         config=dataset_config,
         metadata=default_anno_metadata,
-        path="test-public-bucket/input_bucket/20002/annotations/points.csv",
+        path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["glob_string"],
         parents={"tomogram": tomo_importer, **tomo_importer.parents},
         identifier=100,
         columns=anno_config["sources"][0].get("columns"),
         delimiter=anno_config["sources"][0].get("delimiter"),
         file_format=anno_config["sources"][0]["file_format"],
+        binning=anno_config["sources"][0].get("binning"),
     )
     anno.import_item()
-    anno.import_metadata()
 
     # Strip the bucket name and annotation name from the annotation's output path.
-    anno_file = anno.get_output_path() + "_point.ndjson"
+    anno_file = anno.get_output_filename(anno.get_output_path())
 
     # Sanity check the ndjson file
     with s3_fs.open(anno_file, "r") as fh:
@@ -666,6 +666,7 @@ def test_ingest_oriented_point_data(
         path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["glob_string"],
         parents={"tomogram": tomo_importer, **tomo_importer.parents},
         identifier=100,
+        binning=case["source_cfg"].get("binning"),
         file_format=case["source_cfg"]["file_format"],
         filter_value=case["source_cfg"]["filter_value"],
         order=case["source_cfg"]["order"],
@@ -775,14 +776,13 @@ def test_ingest_instance_point_data(
     }
     dataset_config._set_object_configs("annotation", [anno_config])
 
-    anno = PointAnnotation(
+    anno = InstanceSegmentationAnnotation(
         config=dataset_config,
         metadata=default_anno_metadata,
-        path="test-public-bucket/input_bucket/20002/annotations/points.csv",
+        path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["glob_string"],
         parents={"tomogram": tomo_importer, **tomo_importer.parents},
         identifier=100,
-        columns=anno_config["sources"][0].get("columns"),
-        delimiter=anno_config["sources"][0].get("delimiter"),
+        binning=case["source_cfg"].get("binning"),
         file_format=anno_config["sources"][0]["file_format"],
     )
     anno.import_item()
