@@ -181,7 +181,7 @@ tiltseries:
   sources:
   - source_glob:
       list_glob: '{run_name}/*.st'
-      name_regex: .*
+      match_regex: .*
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -220,5 +220,4 @@ tomograms:
 voxel_spacings:
 - sources:
   - literal:
-      value:
-      - 7.56
+      value: 7.56

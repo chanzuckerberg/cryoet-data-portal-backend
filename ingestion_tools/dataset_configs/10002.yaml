@@ -208,7 +208,7 @@ tiltseries:
   sources:
   - source_glob:
       list_glob: stack/{run_name}_sq_df_sorted_orig.st
-      name_regex: (.*)
+      match_regex: .*
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -239,7 +239,7 @@ tomograms:
     reconstruction_method: Weighted back projection
     reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: 'float {run_voxel_spacing}'
+    voxel_spacing: '{run_voxel_spacing}'
   sources:
   - source_glob:
       list_glob: tomograms/{run_name}_*.rec
@@ -247,5 +247,4 @@ tomograms:
 voxel_spacings:
 - sources:
   - literal:
-      value:
-      - 'float {run_voxel_spacing}'
+      value: float {run_voxel_spacing}

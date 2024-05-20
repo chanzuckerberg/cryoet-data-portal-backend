@@ -38,11 +38,11 @@ IMPORTER_DEP_TREE = {
     DatasetImporter: {
         RunImporter: {
             VoxelSpacingImporter: {
+                AnnotationImporter: {},
                 TomogramImporter: {
                     KeyImageImporter: {},
                     NeuroglancerImporter: {},
                 },
-                AnnotationImporter: {},
             },
             FrameImporter: {
                 GainImporter: {},

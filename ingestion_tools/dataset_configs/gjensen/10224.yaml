@@ -93,7 +93,7 @@ tiltseries:
   sources:
   - source_glob:
       list_glob: '{run_name}/rawdata/*'
-      name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -127,7 +127,7 @@ tomograms:
     reconstruction_method: SIRT
     reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: 'float {tomo-voxel_spacing}'
+    voxel_spacing: '{tomo-voxel_spacing}'
   sources:
   - source_glob:
       list_glob: '{run_name}/3dimage_*/*'
@@ -135,5 +135,4 @@ tomograms:
 voxel_spacings:
 - sources:
   - literal:
-      value:
-      - 'float {tomo-voxel_spacing}'
+      value: float {tomo-voxel_spacing}

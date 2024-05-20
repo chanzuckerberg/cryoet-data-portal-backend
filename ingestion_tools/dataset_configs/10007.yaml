@@ -161,18 +161,18 @@ tiltseries:
   sources:
   - source_glob: &ts_source
       list_glob: '{run_name}/*.st'
-      name_regex: .*
-     parent_filters:
-       exclude:
-         run:
-           - "ay08102021_grid_3_lamella3_pos12"
-           - "ay08102021_grid_3_lamella3_pos12"
-           - "ay18112021_grid2_lamella1_position2"
-           - "ay18112021_grid2_lamella4_position11"
-           - "ay18112021_grid2_lamella4_position13"
-           - "ay18112021_grid2_lamella5_position16"
-           - "ay18112021_gridX_lamella1_pos5"
-           - "ay18112021_gridX_lamella8_pos6"
+      name_regex: (.*)
+    parent_filters:
+      exclude:
+        run:
+          - "ay08102021_grid_3_lamella3_pos12"
+          - "ay08102021_grid_3_lamella3_pos12"
+          - "ay18112021_grid2_lamella1_position2"
+          - "ay18112021_grid2_lamella4_position11"
+          - "ay18112021_grid2_lamella4_position13"
+          - "ay18112021_grid2_lamella5_position16"
+          - "ay18112021_gridX_lamella1_pos5"
+          - "ay18112021_gridX_lamella8_pos6"
 - metadata:
     pixel_spacing: 3.40
     <<: *ts_metadata

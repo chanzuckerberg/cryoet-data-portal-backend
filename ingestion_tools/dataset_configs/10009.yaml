@@ -366,13 +366,12 @@ tiltseries:
   sources:
   - source_glob: &ts_source
       list_glob: Tomo{run_name}/*.ali
-      name_regex: .*
     parent_filters:
       exclude:
         run:
           - "^14$"
           - "^1$"
-          - "TS_11$"
+          - "^11$"
 - metadata:
     tilting_scheme: bi-directional
     <<: *ts_metadata
@@ -381,7 +380,7 @@ tiltseries:
     parent_filters:
       include:
         run:
-          - "TS_11$"
+          - "^11$"
 - metadata:
     pixel_spacing: 13.68
     <<: *ts_metadata

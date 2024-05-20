@@ -172,7 +172,7 @@ tiltseries:
   sources:
   - source_glob:
       list_glob: aligned_tilt_series/si20220214_{run_name}.mrc
-      name_regex: .*
+      match_regex: .*
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -211,5 +211,4 @@ tomograms:
 voxel_spacings:
 - sources:
   - literal:
-      value:
-      - 5.224
+      value: 5.224

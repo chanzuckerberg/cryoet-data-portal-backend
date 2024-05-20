@@ -70,7 +70,7 @@ def update_file(filename: str) -> None:
                     {
                         "source_glob": {
                             "list_glob": standardization_config["tiltseries_glob"],
-                            "name_regex": standardization_config.get("ts_name_regex", ".*"),
+                            "match_regex": standardization_config.get("ts_name_regex", ".*"),
                         },
                     },
                 ],
@@ -141,11 +141,15 @@ def update_file(filename: str) -> None:
             },
         ]
     if not data.get("voxel_spacing"):
+        vs = data["tomograms"][0]["metadata"]["voxel_spacing"]
+        # Make sure voxel spacing is a float.
+        if isinstance(vs, str) and "{" in vs:
+            vs = f"float {vs}"
         data["voxel_spacings"] = [
             {
                 "sources": [
                     {
-                        "literal": {"value": [data["tomograms"][0]["metadata"]["voxel_spacing"]]},
+                        "literal": {"value": vs},
                     },
                 ],
             },
