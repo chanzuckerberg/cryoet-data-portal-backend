@@ -1,4 +1,3 @@
-import csv
 import json
 import os
 import os.path
@@ -7,7 +6,6 @@ from functools import partial
 from typing import TYPE_CHECKING, Any, TypedDict
 
 import ndjson
-import numpy as np
 
 from common import point_converter as pc
 from common.config import DepositionImportConfig
@@ -25,6 +23,7 @@ if TYPE_CHECKING:
     from importers.voxel_spacing import VoxelSpacingImporter
 else:
     VoxelSpacingImporter = "VoxelSpacingImporter"
+
 
 class AnnotationObject(TypedDict):
     name: str
@@ -49,9 +48,10 @@ class AnnotationMap(TypedDict):
     metadata: dict[str, Any]
     sources: list[AnnotationSource]
 
-# This class is basically a global var that lets us cache metadata and identifiers for annotations, 
+
+# This class is basically a global var that lets us cache metadata and identifiers for annotations,
 # so we can generate non-conflicting sequential identifiers for annotations as they're imported.
-class AnnotationIdentifierHelper():
+class AnnotationIdentifierHelper:
     next_identifier: dict[str, int] = defaultdict(partial(int, 100))
     cached_identifiers: dict[str, int] = {}
     loaded_vs_metadatas: dict[str, bool] = {}
@@ -61,7 +61,7 @@ class AnnotationIdentifierHelper():
         if next_id_key in cls.loaded_vs_metadatas:
             return
         metadatas = {}
-        vs_path = config.resolve_output_path('annotation', vs)
+        vs_path = config.resolve_output_path("annotation", vs)
         metadata_glob = f"{vs_path}/*.json"
         for file in config.fs.glob(metadata_glob):
             identifier = int(os.path.basename(file).split("-")[0])
@@ -69,16 +69,18 @@ class AnnotationIdentifierHelper():
                 cls.next_identifier[next_id_key] = identifier + 1
             metadata = json.loads(config.fs.open(file, "r").read())
             metadatas[identifier] = metadata
-            current_ids_key = "-".join([
-                next_id_key,
-                # If there isn't a deposition id in the existing metadata, default
-                # to the ID in the current annotation. This is imperfect, but we
-                # need a bandaid until all annotations get updated with depositions
-                str(metadata.get("deposition_id", config.deposition_id)),
-                metadata["annotation_object"]["description"],
-                metadata["annotation_object"]["name"],
-                metadata["annotation_method"],
-            ])
+            current_ids_key = "-".join(
+                [
+                    next_id_key,
+                    # If there isn't a deposition id in the existing metadata, default
+                    # to the ID in the current annotation. This is imperfect, but we
+                    # need a bandaid until all annotations get updated with depositions
+                    str(metadata.get("deposition_id", config.deposition_id)),
+                    metadata["annotation_object"]["description"],
+                    metadata["annotation_object"]["name"],
+                    metadata["annotation_method"],
+                ],
+            )
             cls.cached_identifiers[current_ids_key] = identifier
         cls.loaded_vs_metadatas[next_id_key] = True
 
@@ -87,13 +89,15 @@ class AnnotationIdentifierHelper():
         vs = parents["voxel_spacing"]
         next_id_key = vs.get_output_path()
 
-        current_ids_key = "-".join([
-            next_id_key,
-            str(config.deposition_id),
-            metadata["annotation_object"]["description"],
-            metadata["annotation_object"]["name"],
-            metadata["annotation_method"],
-        ])
+        current_ids_key = "-".join(
+            [
+                next_id_key,
+                str(config.deposition_id),
+                metadata["annotation_object"]["description"],
+                metadata["annotation_object"]["name"],
+                metadata["annotation_method"],
+            ],
+        )
         cls.load_current_ids(next_id_key, config, vs)
 
         if cached_id := cls.cached_identifiers.get(current_ids_key):
@@ -103,6 +107,7 @@ class AnnotationIdentifierHelper():
         cls.cached_identifiers[current_ids_key] = return_value
         cls.next_identifier[next_id_key] += 1
         return return_value
+
 
 class AnnotationImporterFactory(DepositionObjectImporterFactory):
     def load(
@@ -154,7 +159,7 @@ class AnnotationImporter(BaseImporter):
     plural_key = "annotations"
     finder_factory = AnnotationImporterFactory
     has_metadata = True
-    written_metadata_files = [] # This is a *class* variable that helps us avoid writing metadata files multiple times.
+    written_metadata_files = []  # This is a *class* variable that helps us avoid writing metadata files multiple times.
 
     def __init__(
         self,
@@ -186,7 +191,11 @@ class AnnotationImporter(BaseImporter):
         if filename in self.written_metadata_files:
             return  # We've already written this metadata file
 
-        anno_files = [item for item in AnnotationImporter.finder(self.config, **self.parents) if item.identifier == self.identifier]
+        anno_files = [
+            item
+            for item in AnnotationImporter.finder(self.config, **self.parents)
+            if item.identifier == self.identifier
+        ]
 
         output_dir = self.get_output_path()
         path = os.path.relpath(output_dir, self.config.output_prefix)
@@ -199,6 +208,7 @@ class AnnotationImporter(BaseImporter):
 
         self.written_metadata_files.append(filename)
         self.annotation_metadata.write_metadata(filename, self.local_metadata)
+
 
 class BaseAnnotationSource(AnnotationImporter):
     is_visualization_default: bool
@@ -223,7 +233,6 @@ class BaseAnnotationSource(AnnotationImporter):
             raise Exception("Invalid file format")
 
         super().__init__(*args, **kwargs)
-
 
     def get_object_count(self, output_prefix: str):
         # We currently don't count objects in segmentation masks.
@@ -389,6 +398,7 @@ class AbstractPointAnnotation(BaseAnnotationSource):
         with fs.open(filename, "w") as fh:
             ndjson.dump([a.to_dict() for a in annotations], fh)
 
+
 class PointAnnotation(AbstractPointAnnotation):
     shape = "Point"
     map_functions = {
@@ -396,7 +406,7 @@ class PointAnnotation(AbstractPointAnnotation):
         "csv_with_header": pc.from_csv_with_header,
         "mod": pc.from_mod,
     }
-    valid_file_formats = [k for k in map_functions.keys()]
+    valid_file_formats = list(map_functions.keys())
 
     columns: str
     delimiter: str
@@ -425,6 +435,7 @@ class PointAnnotation(AbstractPointAnnotation):
             "delimiter": self.delimiter,
         }
 
+
 class OrientedPointAnnotation(AbstractPointAnnotation):
     shape = "OrientedPoint"
     map_functions = {
@@ -433,7 +444,7 @@ class OrientedPointAnnotation(AbstractPointAnnotation):
         "tomoman_relion_star": pc.from_tomoman_relion_star,
         "stopgap_star": pc.from_stopgap_star,
     }
-    valid_file_formats = [k for k in map_functions.keys()]
+    valid_file_formats = list(map_functions.keys())
 
     binning: int
     order: str | None
@@ -465,7 +476,7 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
     map_functions = {
         "tardis": pc.from_tardis,
     }
-    valid_file_formats = [k for k in map_functions.keys()]
+    valid_file_formats = list(map_functions.keys())
 
     def get_object_count(self, output_prefix):
         data = self.get_output_data(self.config.fs, output_prefix)

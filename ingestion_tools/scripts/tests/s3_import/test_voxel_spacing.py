@@ -3,10 +3,10 @@ from importers.dataset import DatasetImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
 from importers.voxel_spacing import VoxelSpacingImporter
+from standardize_dirs import IMPORTERS
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
-from standardize_dirs import IMPORTERS
 
 
 @pytest.mark.parametrize(

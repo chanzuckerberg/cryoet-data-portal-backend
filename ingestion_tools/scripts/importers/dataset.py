@@ -20,7 +20,13 @@ class DatasetImporter(BaseImporter):
 
     # TODO fixme we should see what's best here.
     def load_extra_metadata(self) -> dict[str, dict[str, str]]:
-        key_photo_importer = DatasetKeyPhotoImporter(self.config, metadata={}, name=None, path=None, parents={"dataset": self})
+        key_photo_importer = DatasetKeyPhotoImporter(
+            self.config,
+            metadata={},
+            name=None,
+            path=None,
+            parents={"dataset": self},
+        )
 
         return {
             "key_photos": key_photo_importer.get_metadata(),

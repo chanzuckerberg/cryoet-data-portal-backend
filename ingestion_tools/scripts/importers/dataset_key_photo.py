@@ -1,7 +1,6 @@
 import os
 from typing import TYPE_CHECKING, Optional
 
-from common.config import DepositionImportConfig
 from common.copy import copy_by_src
 from common.finders import DefaultImporterFactory
 from importers.base_importer import BaseImporter

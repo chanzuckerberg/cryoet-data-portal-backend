@@ -5,7 +5,6 @@ import imageio
 import numpy as np
 from PIL import Image
 
-from common.config import DepositionImportConfig
 from common.finders import DefaultImporterFactory
 from common.image import ZarrReader
 from common.make_key_image import generate_preview, process_key_image

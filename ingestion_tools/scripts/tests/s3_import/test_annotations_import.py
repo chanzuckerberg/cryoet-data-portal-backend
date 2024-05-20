@@ -4,7 +4,7 @@ from typing import Any, Dict, List
 
 import ndjson
 import pytest
-from importers.annotation import PointAnnotation, OrientedPointAnnotation, InstanceSegmentationAnnotation
+from importers.annotation import InstanceSegmentationAnnotation, OrientedPointAnnotation, PointAnnotation
 from importers.dataset import DatasetImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
@@ -52,8 +52,20 @@ def dataset_config(s3_fs: FileSystemApi, test_output_bucket: str) -> DepositionI
 def tomo_importer(dataset_config: DepositionImportConfig) -> TomogramImporter:
     dataset = DatasetImporter(config=dataset_config, metadata={}, name="dataset1", path="dataset1")
     run = RunImporter(config=dataset_config, metadata={}, name="run1", path="run1", parents={"dataset": dataset})
-    vs = VoxelSpacingImporter(config=dataset_config, metadata={}, name="10.0", path="vs1", parents={"dataset": dataset, "run": run})
-    tomo = TomogramImporter(config=dataset_config, metadata={}, name="tomo1", path="run1", parents={"dataset": dataset, "run": run, "voxel_spacing": vs})
+    vs = VoxelSpacingImporter(
+        config=dataset_config,
+        metadata={},
+        name="10.0",
+        path="vs1",
+        parents={"dataset": dataset, "run": run},
+    )
+    tomo = TomogramImporter(
+        config=dataset_config,
+        metadata={},
+        name="tomo1",
+        path="run1",
+        parents={"dataset": dataset, "run": run, "voxel_spacing": vs},
+    )
     return tomo
 
 
@@ -74,13 +86,15 @@ def test_import_annotation_metadata(
 ) -> None:
     anno_config = {
         "metadata": default_anno_metadata,
-        "sources": [{
-            "file_format": "csv",
-            "delimiter": ",",
-            "shape": "Point",
-            "glob_string": "annotations/*.csv",
-            "columns": "xyz",
-        }]
+        "sources": [
+            {
+                "file_format": "csv",
+                "delimiter": ",",
+                "shape": "Point",
+                "glob_string": "annotations/*.csv",
+                "columns": "xyz",
+            },
+        ],
     }
     dataset_config._set_object_configs("annotation", [anno_config])
 
@@ -121,6 +135,7 @@ def test_import_annotation_metadata(
     with s3_fs.open(anno_file, "r") as fh:
         points = ndjson.load(fh)
     assert len(points) == 3
+
 
 ingest_points_test_cases = [
     # csv

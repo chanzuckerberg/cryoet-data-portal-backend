@@ -1,19 +1,16 @@
 import json
-import os
-import os.path
 import re
 import time
 
 import boto3
-from boto3 import Session
 import click
 from boto3 import Session
 from importers.dataset import DatasetImporter
 from importers.run import RunImporter
+from standardize_dirs import IMPORTERS, common_options
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
-from standardize_dirs import common_options, IMPORTERS
 
 
 @click.group()
@@ -75,6 +72,7 @@ def run_job(
         input=json.dumps(sfn_input_json),
     )
 
+
 def get_aws_env(env_name):
     # Learn more about our AWS environment
     swipe_comms_bucket = None
@@ -102,6 +100,7 @@ def get_aws_env(env_name):
     }
     return aws_env
 
+
 def to_args(config_file, input_bucket, output_path, **kwargs) -> list[str]:
     args = [
         config_file,
@@ -111,7 +110,7 @@ def to_args(config_file, input_bucket, output_path, **kwargs) -> list[str]:
     for k, v in kwargs.items():
         if not v:
             continue
-        if type(v) == bool:
+        if isinstance(v, bool):
             args.append(f"--{k.replace('_', '-')}")
         elif isinstance(v, tuple):
             for item in v:
@@ -121,6 +120,7 @@ def to_args(config_file, input_bucket, output_path, **kwargs) -> list[str]:
             args.append(f"--{k.replace('_', '-')}")
             args.append(str(v))
     return args
+
 
 @cli.command()
 @click.argument("config_file", required=True, type=str)
@@ -183,7 +183,7 @@ def queue(
     swipe_wdl_key: str,
     memory: int | None,
     skip_until_run_name: str,
-    **kwargs
+    **kwargs,
 ):
     fs_mode = "s3"
     fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=force_overwrite)
@@ -193,7 +193,6 @@ def queue(
     config.write_zarr = write_zarr
     config.load_map_files()
 
-
     skip_run_until_regex = None
     skip_run = False
     if skip_until_run_name:
@@ -202,10 +201,10 @@ def queue(
 
     aws_env = get_aws_env(env_name)
 
-    filter_runs = [re.compile(pattern) for pattern in kwargs.get(f"filter_run_name", [])]
-    exclude_runs = [re.compile(pattern) for pattern in kwargs.get(f"exclude_run_name", [])]
-    filter_datasets = [re.compile(pattern) for pattern in kwargs.get(f"filter_dataset_name", [])]
-    exclude_datasets = [re.compile(pattern) for pattern in kwargs.get(f"exclude_dataset_name", [])]
+    filter_runs = [re.compile(pattern) for pattern in kwargs.get("filter_run_name", [])]
+    exclude_runs = [re.compile(pattern) for pattern in kwargs.get("exclude_run_name", [])]
+    filter_datasets = [re.compile(pattern) for pattern in kwargs.get("filter_dataset_name", [])]
+    exclude_datasets = [re.compile(pattern) for pattern in kwargs.get("exclude_dataset_name", [])]
 
     # Always iterate over datasets and runs.
     datasets = DatasetImporter.finder(config)
@@ -233,8 +232,15 @@ def queue(
 
             new_args = {k: v for k, v in kwargs.items() if "run" not in k and "dataset" not in k}
             new_args = to_args(
-                config_file, input_bucket, output_path,
-                import_everything=import_everything, write_mrc=write_mrc, write_zarr=write_zarr, force_overwrite=force_overwrite, **kwargs)  # make a copy
+                config_file,
+                input_bucket,
+                output_path,
+                import_everything=import_everything,
+                write_mrc=write_mrc,
+                write_zarr=write_zarr,
+                force_overwrite=force_overwrite,
+                **kwargs,
+            )  # make a copy
             new_args.append(f"--filter-dataset-name '^{dataset.name}$'")
             new_args.append(f"--filter-run-name '^{run.name}$'")
 

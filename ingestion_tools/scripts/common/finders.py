@@ -95,6 +95,7 @@ class DestinationGlobFinder(BaseFinder):
             responses[obj_name] = path
         return responses
 
+
 class BaseLiteralValueFinder:
     literal_value: list[Any]
 
@@ -166,7 +167,7 @@ class DepositionObjectImporterFactory(ABC):
         cls,
         config: DepositionImportConfig,
         metadata: dict[str, Any],
-        **parent_objects: dict[str, Any] | None
+        **parent_objects: dict[str, Any] | None,
     ):
         loader = self.load(config, **parent_objects)
         glob_vars = self._get_glob_vars(**parent_objects)

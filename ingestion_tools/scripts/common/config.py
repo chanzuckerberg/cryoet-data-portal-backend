@@ -32,6 +32,7 @@ key_images:
             - expanded
 """
 
+
 class RunOverride:
     run_regex: re.Pattern[str]
     tiltseries: dict[str, Any] | None
@@ -223,11 +224,6 @@ class DepositionImportConfig:
 
     def get_expanded_metadata(self, obj: BaseImporter) -> dict[str, Any]:
         metadata_type = obj.type_key
-        # hacky pluralization, look away!!
-        plural_map = {
-            "tomogram": "tomograms",
-            "tiltseries": "tiltseries",
-        }
         base_metadata = deepcopy(obj.metadata)
         if metadata_type not in ["tomogram", "tiltseries"]:
             return base_metadata

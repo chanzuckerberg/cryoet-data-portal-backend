@@ -3,10 +3,10 @@ import json
 from importers.dataset import DatasetImporter
 from importers.dataset_key_photo import DatasetKeyPhotoImporter
 from mypy_boto3_s3 import S3Client
+from standardize_dirs import IMPORTERS
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
-from standardize_dirs import IMPORTERS
 
 
 def test_import_dataset_metadata(s3_fs: FileSystemApi, test_output_bucket: str) -> None:

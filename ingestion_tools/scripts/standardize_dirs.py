@@ -87,10 +87,7 @@ def flatten_dependency_tree(tree):
 
 
 def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, parents: Optional[dict[str, Any]] = None):
-    if parents is None:
-        parents = {}
-    else:
-        parents = dict(parents)
+    parents = dict(parents) if parents else {}
     for import_class, child_import_classes in tree.items():
         if import_class not in to_iterate:
             continue
@@ -98,7 +95,7 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
         exclude_patterns = [re.compile(pattern) for pattern in kwargs.get(f"exclude_{import_class.type_key}_name", [])]
 
         # It's probably clearer to send a flat dict of parents instead of
-        # requiring importers to recurse through a single parent to find 
+        # requiring importers to recurse through a single parent to find
         # all ancestors
         parent_args = dict(parents)
 
@@ -118,10 +115,9 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
                 sub_parents.update(parents)
                 do_import(config, child_import_classes, metadata_import, to_import, to_iterate, kwargs, sub_parents)
             # Not all importers have metadata, but we don't expose the option for it unless it's supported
-            if import_class in metadata_import:
-                if item.has_metadata:
-                    print(f"Importing {import_class.type_key} metadata")
-                    item.import_metadata()
+            if import_class in metadata_import and item.has_metadata:
+                print(f"Importing {import_class.type_key} metadata")
+                item.import_metadata()
 
 
 @cli.command()
