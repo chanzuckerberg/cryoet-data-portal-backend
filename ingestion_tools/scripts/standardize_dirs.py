@@ -44,9 +44,8 @@ IMPORTER_DEP_TREE = {
                     NeuroglancerImporter: {},
                 },
             },
-            FrameImporter: {
-                GainImporter: {},
-            },
+            GainImporter: {},
+            FrameImporter: {},
             TiltSeriesImporter: {},
             RawTiltImporter: {},
         },
