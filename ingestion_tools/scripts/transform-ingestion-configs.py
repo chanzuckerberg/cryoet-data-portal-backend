@@ -38,7 +38,7 @@ def update_file(filename: str) -> None:
                 ],
             },
         ]
-    if not data.get("gains"):
+    if not data.get("gains") and standardization_config.get("gain_glob"):
         data["gains"] = [
             {
                 "sources": [
@@ -50,8 +50,8 @@ def update_file(filename: str) -> None:
                 ],
             },
         ]
-    if not data.get("frames"):
-        standardization_config["frames"] = [
+    if not data.get("frames") and standardization_config.get("frames_glob"):
+        data["frames"] = [
             {
                 "sources": [
                     {
@@ -62,7 +62,7 @@ def update_file(filename: str) -> None:
                 ],
             },
         ]
-    if not data.get("tiltseries", {}).get("sources"):
+    if not data.get("tiltseries", {}).get("sources") and standardization_config.get("tiltseries_glob"):
         data["tiltseries"] = [
             {
                 "metadata": data.get("tiltseries"),
@@ -70,7 +70,7 @@ def update_file(filename: str) -> None:
                     {
                         "source_glob": {
                             "list_glob": standardization_config["tiltseries_glob"],
-                            "name_regex": standardization_config.get("ts_name_regex", ".*"),
+                            "match_regex": standardization_config.get("ts_name_regex", ".*"),
                         },
                     },
                 ],
@@ -128,24 +128,28 @@ def update_file(filename: str) -> None:
                     ],
                 },
             ]
-    if not data.get("rawtilts"):
+    if not data.get("rawtilts") and standardization_config.get("rawtlt_files"):
         data["rawtilts"] = [
             {
                 "sources": [
                     {
                         "source_multi_glob": {
-                            "list_glob": standardization_config["rawtlt_files"],
+                            "list_globs": standardization_config["rawtlt_files"],
                         },
                     },
                 ],
             },
         ]
     if not data.get("voxel_spacing"):
+        vs = data["tomograms"][0]["metadata"]["voxel_spacing"]
+        # Make sure voxel spacing is a float.
+        if isinstance(vs, str) and "{" in vs:
+            vs = f"float {vs}"
         data["voxel_spacings"] = [
             {
                 "sources": [
                     {
-                        "literal": {"value": [data["tomograms"][0]["metadata"]["voxel_spacing"]]},
+                        "literal": {"value": [vs]},
                     },
                 ],
             },

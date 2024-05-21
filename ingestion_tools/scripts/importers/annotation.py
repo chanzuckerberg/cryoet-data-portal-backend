@@ -69,35 +69,28 @@ class AnnotationIdentifierHelper:
                 cls.next_identifier[next_id_key] = identifier + 1
             metadata = json.loads(config.fs.open(file, "r").read())
             metadatas[identifier] = metadata
-            current_ids_key = "-".join(
-                [
-                    next_id_key,
-                    # If there isn't a deposition id in the existing metadata, default
-                    # to the ID in the current annotation. This is imperfect, but we
-                    # need a bandaid until all annotations get updated with depositions
-                    str(metadata.get("deposition_id", config.deposition_id)),
-                    metadata["annotation_object"]["description"],
-                    metadata["annotation_object"]["name"],
-                    metadata["annotation_method"],
-                ],
-            )
+            current_ids_key = cls.get_ids_key(next_id_key, config, metadata)
             cls.cached_identifiers[current_ids_key] = identifier
         cls.loaded_vs_metadatas[next_id_key] = True
+
+    @classmethod
+    def get_ids_key(cls, next_id_key, config, metadata):
+        return "-".join(
+            [
+                next_id_key,
+                str(metadata.get("deposition_id", config.deposition_id)),
+                metadata["annotation_object"].get("description") or "",
+                metadata["annotation_object"]["name"],
+                metadata["annotation_method"],
+            ],
+        )
 
     @classmethod
     def get_identifier(cls, config: DepositionImportConfig, metadata: dict[str, Any], parents: dict[str, Any]):
         vs = parents["voxel_spacing"]
         next_id_key = vs.get_output_path()
 
-        current_ids_key = "-".join(
-            [
-                next_id_key,
-                str(config.deposition_id),
-                metadata["annotation_object"]["description"],
-                metadata["annotation_object"]["name"],
-                metadata["annotation_method"],
-            ],
-        )
+        current_ids_key = cls.get_ids_key(next_id_key, config, metadata)
         cls.load_current_ids(next_id_key, config, vs)
 
         if cached_id := cls.cached_identifiers.get(current_ids_key):

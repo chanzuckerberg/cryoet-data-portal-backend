@@ -1,115 +1,138 @@
-dataset:
-  dataset_identifier: 10054
-  dataset_description: This is 2nd of 5 sets of data studying Coxiella burnetii collected
-    by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Nine Mile phase II
-    clone 4 (NMIIC4) strain. Wild-type  cells day-5 culture.
-  dataset_title: Coxiella burnetii_wt
-  authors: &id001
-  - name: Debnath Ghosal
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Coxiella burnetii
-    taxonomy_id: 777
-  sample_type: Organism
-  sample_preparation: Cells were grown in Robert Heinzen's lab @NIAID and ~50 ul cells
-    were sent to us.
-  grid_preparation: Refer to Heinzen lab
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2016-09-08-1/keyimg_dga2016-09-08-1.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2016-09-08-1/keyimg_dga2016-09-08-1_s.jpg
-  cell_strain:
-    name: Nine Mile phase II clone 4
-    id: null
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: counting
-    manufacturer: Gatan
-    model: K2
-  data_acquisition_software: UCSFTomo
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: FEI
-    model: Polara
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: 4.036
-  spherical_aberration_constant: 2.0
-  tilt_alignment_software: '{ts-tilt_alignment_software}'
-  tilt_axis: 84.3
-  tilt_range:
-    max: 60.0
-    min: -60.0
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: 4
-  tilt_step: float {ts-tilt_step}
-  tilting_scheme: starting tilt to max then min
-  total_flux: 130.0
-tomograms:
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  align_softwares: '{tomo-align_softwares}'
-  authors: *id001
-  ctf_corrected: null
-  fiducial_alignment_status: FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  processing_software: '{tomo-processing_software}'
-  reconstruction_method: '{tomo-reconstruction_method}'
-  reconstruction_software: '{tomo-reconstruction_software}'
-  tomogram_version: 1
-  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2016-09-08-1/keyimg_dga2016-09-08-1.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2016-09-08-1/keyimg_dga2016-09-08-1_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Debnath Ghosal
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: Nine Mile phase II clone 4
+    dataset_description: This is 2nd of 5 sets of data studying Coxiella burnetii
+      collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Nine
+      Mile phase II clone 4 (NMIIC4) strain. Wild-type  cells day-5 culture.
+    dataset_identifier: 10054
+    dataset_title: Coxiella burnetii_wt
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: Refer to Heinzen lab
+    organism:
+      name: Coxiella burnetii
+      taxonomy_id: 777
+    sample_preparation: Cells were grown in Robert Heinzen's lab @NIAID and ~50 ul
+      cells were sent to us.
+    sample_type: Organism
+  sources:
+  - literal:
+      value:
+      - '10054'
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/{mapped_frame_name}/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (dga2016-09-08-1|dga2016-09-08-2|dga2016-09-08-3|dga2016-09-08-4|dga2016-09-08-5|dga2016-09-09-1|dga2016-09-09-2|dga2016-09-09-3|dga2016-09-09-4|dga2016-09-09-5|dga2016-09-09-6|dga2016-09-09-7|dga2016-09-09-8|dga2016-09-09-9|dga2016-09-09-10|dga2016-09-09-11|dga2016-09-09-12|dga2016-09-09-13|dga2016-09-09-14|dga2016-09-09-15|dga2016-09-09-16|dga2016-09-09-17|dga2016-09-09-18|dga2016-09-09-19|dga2016-09-09-20|dga2016-09-09-21|dga2016-09-09-22|dga2016-09-09-23|dga2016-09-09-24|dga2016-09-09-25|dga2016-09-09-26|dga2016-09-09-27|dga2016-09-09-28|dga2016-09-09-29|dga2016-09-09-30|dga2016-09-09-31|dga2016-09-09-32|dga2016-09-09-33|dga2016-09-09-34|dga2016-09-09-35|dga2016-09-09-36|dga2016-09-09-37|dga2016-09-09-38|dga2016-09-09-39|dga2016-09-09-40|dga2016-09-09-41|dga2016-09-09-42|dga2016-09-09-43|dga2016-09-09-44|dga2016-09-09-45|dga2016-09-09-46|dga2016-09-09-47|dga2016-09-09-48|dga2016-09-09-49|dga2016-09-09-50|dga2016-09-09-51|dga2016-09-09-52|dga2016-09-09-53|dga2016-09-09-54|dga2016-09-09-55|dga2016-09-09-56|dga2016-09-09-57|dga2016-09-09-58|dga2016-09-09-59|dga2016-09-09-60|dga2016-09-09-61|dga2016-09-09-62|dga2016-09-09-63|dga2016-09-09-64|dga2016-09-09-65|dga2016-09-09-66|dga2016-09-09-67|dga2016-09-09-68|dga2016-09-09-69|dga2016-09-09-70|dga2016-09-09-71|dga2016-09-09-72|dga2016-09-09-73|dga2016-09-09-74|dga2016-09-09-75|dga2016-09-09-76|dga2016-09-09-77|dga2016-09-09-78|dga2016-09-09-79|dga2016-09-09-80|dga2016-09-09-81|dga2016-09-09-82|dga2016-09-09-83|dga2016-09-09-84|dga2016-09-09-85|dga2016-09-09-86)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10054'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/{mapped_frame_name}/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/{mapped_tomo_name}'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (dga2016-09-08-1|dga2016-09-08-2|dga2016-09-08-3|dga2016-09-08-4|dga2016-09-08-5|dga2016-09-09-1|dga2016-09-09-2|dga2016-09-09-3|dga2016-09-09-4|dga2016-09-09-5|dga2016-09-09-6|dga2016-09-09-7|dga2016-09-09-8|dga2016-09-09-9|dga2016-09-09-10|dga2016-09-09-11|dga2016-09-09-12|dga2016-09-09-13|dga2016-09-09-14|dga2016-09-09-15|dga2016-09-09-16|dga2016-09-09-17|dga2016-09-09-18|dga2016-09-09-19|dga2016-09-09-20|dga2016-09-09-21|dga2016-09-09-22|dga2016-09-09-23|dga2016-09-09-24|dga2016-09-09-25|dga2016-09-09-26|dga2016-09-09-27|dga2016-09-09-28|dga2016-09-09-29|dga2016-09-09-30|dga2016-09-09-31|dga2016-09-09-32|dga2016-09-09-33|dga2016-09-09-34|dga2016-09-09-35|dga2016-09-09-36|dga2016-09-09-37|dga2016-09-09-38|dga2016-09-09-39|dga2016-09-09-40|dga2016-09-09-41|dga2016-09-09-42|dga2016-09-09-43|dga2016-09-09-44|dga2016-09-09-45|dga2016-09-09-46|dga2016-09-09-47|dga2016-09-09-48|dga2016-09-09-49|dga2016-09-09-50|dga2016-09-09-51|dga2016-09-09-52|dga2016-09-09-53|dga2016-09-09-54|dga2016-09-09-55|dga2016-09-09-56|dga2016-09-09-57|dga2016-09-09-58|dga2016-09-09-59|dga2016-09-09-60|dga2016-09-09-61|dga2016-09-09-62|dga2016-09-09-63|dga2016-09-09-64|dga2016-09-09-65|dga2016-09-09-66|dga2016-09-09-67|dga2016-09-09-68|dga2016-09-09-69|dga2016-09-09-70|dga2016-09-09-71|dga2016-09-09-72|dga2016-09-09-73|dga2016-09-09-74|dga2016-09-09-75|dga2016-09-09-76|dga2016-09-09-77|dga2016-09-09-78|dga2016-09-09-79|dga2016-09-09-80|dga2016-09-09-81|dga2016-09-09-82|dga2016-09-09-83|dga2016-09-09-84|dga2016-09-09-85|dga2016-09-09-86)$
-  run_name_regex: (.*)
+  deposition_id: 10054
   run_data_map_file: run_data_map/10054.csv
-  run_to_tomo_map_csv: run_tomo_map/10054.csv
   run_to_frame_map_csv: run_frames_map/10054.csv
+  run_to_tomo_map_csv: run_tomo_map/10054.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: counting
+      manufacturer: Gatan
+      model: K2
+    data_acquisition_software: UCSFTomo
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: FEI
+      model: Polara
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: 4.036
+    spherical_aberration_constant: 2.0
+    tilt_alignment_software: '{ts-tilt_alignment_software}'
+    tilt_axis: 84.3
+    tilt_range:
+      max: 60.0
+      min: -60.0
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: 4
+    tilt_step: float {ts-tilt_step}
+    tilting_scheme: starting tilt to max then min
+    total_flux: 130.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares: '{tomo-align_softwares}'
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: '{tomo-processing_software}'
+    reconstruction_method: '{tomo-reconstruction_method}'
+    reconstruction_software: '{tomo-reconstruction_software}'
+    tomogram_version: 1
+    voxel_spacing: '{tomo-voxel_spacing}'
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/{mapped_tomo_name}'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - float {tomo-voxel_spacing}

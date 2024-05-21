@@ -2,10 +2,6 @@ from common.finders import DefaultImporterFactory
 from importers.base_importer import BaseFileImporter
 
 
-class FrameImporterFactory(DefaultImporterFactory):
-    pass
-
-
 class FrameImporter(BaseFileImporter):
     type_key = "frame"
     plural_key = "frames"

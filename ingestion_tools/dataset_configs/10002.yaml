@@ -150,6 +150,10 @@ datasets:
   - literal:
       value:
       - '10002'
+frames:
+- sources:
+  - source_glob:
+      list_glob: frames/{mapped_frame_name}_*.tif
 gains:
 - sources:
   - source_glob:
@@ -162,7 +166,7 @@ key_images:
 rawtilts:
 - sources:
   - source_multi_glob:
-      list_glob:
+      list_globs:
       - metadata/{run_name}_sq_df_sorted_fid.xf
       - metadata/{run_name}.mdoc
 runs:
@@ -208,7 +212,7 @@ tiltseries:
   sources:
   - source_glob:
       list_glob: stack/{run_name}_sq_df_sorted_orig.st
-      name_regex: (.*)
+      match_regex: .*
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -248,4 +252,4 @@ voxel_spacings:
 - sources:
   - literal:
       value:
-      - '{run_voxel_spacing}'
+      - float {run_voxel_spacing}

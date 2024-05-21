@@ -1,119 +1,142 @@
-dataset:
-  dataset_identifier: 10050
-  dataset_description: This is 8th of 10 sets of data studying Helicobacter pylori
-    collected by Mohammed Kaplan and is a part of Caltech Jensen  lab etdb. These
-    are H. pylori cells that do not have a complete FliP. In addition, FlgS was knocked
-    out in these cells. The aim is to study the assembly of the flagellar motor and
-    the core complex.
-  dataset_title: Hpylori_dflgS
-  authors: &id001
-  - name: Mohammed Kaplan
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Helicobacter pylori
-    taxonomy_id: 85962
-  sample_type: Organism
-  sample_preparation: I grew the cells on blood agar plates from -80 stock at 37C
-    with 5% CO2. the cells were grown . for 48 hours and then spread on a new plate
-    with a cotton swab and left to grow for 24 hours. . The grids were prepared from
-    both batches (48 hours, and 24 hours, separately).
-  grid_preparation: 'The samples were prepared with Vitrobot IV. Blotting conditions
-    were either: blot force 6, blot . time 3, drain time 1 OR blot force -3, blot
-    time 4, drain time 1. 100% humidity. Cu grids. 10 nm . gold.'
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mka2019-11-23-49/keyimg_mka2019-11-23-49.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mka2019-11-23-49/keyimg_mka2019-11-23-49_s.jpg
-  cell_strain:
-    name: '26695'
-    id: null
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: counting
-    manufacturer: Gatan
-    model: K3
-  data_acquisition_software: Serial EM
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: TFS
-    model: Krios
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: 4.494
-  spherical_aberration_constant: 2.7
-  tilt_alignment_software: '{ts-tilt_alignment_software}'
-  tilt_axis: 84.3
-  tilt_range:
-    max: 60.0
-    min: -60.0
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: int {ts-tilt_series_quality}
-  tilt_step: 3.0
-  tilting_scheme: min to max tilt
-  total_flux: 120.0
-tomograms:
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  align_softwares: '{tomo-align_softwares}'
-  authors: *id001
-  ctf_corrected: null
-  fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  processing_software: '{tomo-processing_software}'
-  reconstruction_method: '{tomo-reconstruction_method}'
-  reconstruction_software: '{tomo-reconstruction_software}'
-  tomogram_version: 1
-  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mka2019-11-23-49/keyimg_mka2019-11-23-49.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mka2019-11-23-49/keyimg_mka2019-11-23-49_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Mohammed Kaplan
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: '26695'
+    dataset_description: This is 8th of 10 sets of data studying Helicobacter pylori
+      collected by Mohammed Kaplan and is a part of Caltech Jensen  lab etdb. These
+      are H. pylori cells that do not have a complete FliP. In addition, FlgS was
+      knocked out in these cells. The aim is to study the assembly of the flagellar
+      motor and the core complex.
+    dataset_identifier: 10050
+    dataset_title: Hpylori_dflgS
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: 'The samples were prepared with Vitrobot IV. Blotting conditions
+      were either: blot force 6, blot . time 3, drain time 1 OR blot force -3, blot
+      time 4, drain time 1. 100% humidity. Cu grids. 10 nm . gold.'
+    organism:
+      name: Helicobacter pylori
+      taxonomy_id: 85962
+    sample_preparation: I grew the cells on blood agar plates from -80 stock at 37C
+      with 5% CO2. the cells were grown . for 48 hours and then spread on a new plate
+      with a cotton swab and left to grow for 24 hours. . The grids were prepared
+      from both batches (48 hours, and 24 hours, separately).
+    sample_type: Organism
+  sources:
+  - literal:
+      value:
+      - '10050'
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/3dimage_*/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (mka2019-11-23-49|mka2019-11-23-50|mka2019-11-23-51|mka2019-11-23-52|mka2019-11-23-53|mka2019-11-23-54|mka2019-11-23-55|mka2019-11-23-56|mka2019-11-23-57|mka2019-11-23-58|mka2019-11-23-59|mka2019-11-23-60|mka2019-11-23-61|mka2019-11-23-62|mka2019-11-23-63|mka2019-11-23-64|mka2019-11-23-65|mka2019-11-23-66|mka2019-11-23-67|mka2019-11-23-68|mka2019-11-23-69|mka2019-11-23-70|mka2019-11-23-71|mka2019-11-23-72|mka2019-11-23-73|mka2019-11-23-74)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10050'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/3dimage_*/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/3dimage_*/*'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (mka2019-11-23-49|mka2019-11-23-50|mka2019-11-23-51|mka2019-11-23-52|mka2019-11-23-53|mka2019-11-23-54|mka2019-11-23-55|mka2019-11-23-56|mka2019-11-23-57|mka2019-11-23-58|mka2019-11-23-59|mka2019-11-23-60|mka2019-11-23-61|mka2019-11-23-62|mka2019-11-23-63|mka2019-11-23-64|mka2019-11-23-65|mka2019-11-23-66|mka2019-11-23-67|mka2019-11-23-68|mka2019-11-23-69|mka2019-11-23-70|mka2019-11-23-71|mka2019-11-23-72|mka2019-11-23-73|mka2019-11-23-74)$
-  run_name_regex: (.*)
+  deposition_id: 10050
   run_data_map_file: run_data_map/10050.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: counting
+      manufacturer: Gatan
+      model: K3
+    data_acquisition_software: Serial EM
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: TFS
+      model: Krios
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: 4.494
+    spherical_aberration_constant: 2.7
+    tilt_alignment_software: '{ts-tilt_alignment_software}'
+    tilt_axis: 84.3
+    tilt_range:
+      max: 60.0
+      min: -60.0
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: int {ts-tilt_series_quality}
+    tilt_step: 3.0
+    tilting_scheme: min to max tilt
+    total_flux: 120.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares: '{tomo-align_softwares}'
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: '{tomo-processing_software}'
+    reconstruction_method: '{tomo-reconstruction_method}'
+    reconstruction_software: '{tomo-reconstruction_software}'
+    tomogram_version: 1
+    voxel_spacing: '{tomo-voxel_spacing}'
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/3dimage_*/*'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - float {tomo-voxel_spacing}
