@@ -48,6 +48,7 @@ IMPORTER_DEP_TREE = {
                 GainImporter: {},
             },
             TiltSeriesImporter: {},
+            RawTiltImporter: {},
         },
         DatasetKeyPhotoImporter: {},
     },

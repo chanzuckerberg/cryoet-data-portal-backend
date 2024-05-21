@@ -166,7 +166,7 @@ key_images:
 rawtilts:
 - sources:
   - source_multi_glob:
-      list_glob:
+      list_globs:
       - metadata/{run_name}_sq_df_sorted_fid.xf
       - metadata/{run_name}.mdoc
 runs:

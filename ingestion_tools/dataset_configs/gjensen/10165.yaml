@@ -48,7 +48,7 @@ key_images:
 rawtilts:
 - sources:
   - source_multi_glob:
-      list_glob:
+      list_globs:
       - '{run_name}/rawdata/*.mdoc'
       - '{run_name}/file_*/*.rawtlt'
       - '{run_name}/3dimage_*/*.rawtlt'

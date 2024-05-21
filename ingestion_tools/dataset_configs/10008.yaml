@@ -164,7 +164,7 @@ key_images:
 rawtilts:
 - sources:
   - source_multi_glob:
-      list_glob:
+      list_globs:
       - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.tlt
       - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.xf
       - tomo/raw_stacks/{mapped_ts_name}/SerialEM/{mapped_frame_name}.st.mdoc

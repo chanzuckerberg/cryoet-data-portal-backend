@@ -20,8 +20,6 @@ class BaseFinder(ABC):
 
 class SourceMultiGlobFinder(BaseFinder):
     list_glob: str
-    match_regex: re.Pattern[str]
-    name_regex: re.Pattern[str]
 
     def __init__(self, list_globs: str):
         self.list_globs = list_globs
@@ -31,11 +29,8 @@ class SourceMultiGlobFinder(BaseFinder):
         for list_glob in self.list_globs:
             path = os.path.join(config.deposition_root_dir, list_glob.format(**glob_vars))
             for fname in config.fs.glob(path):
-                if not self.match_regex.search(fname):
-                    continue
                 path = fname
-                obj_name = self.name_regex.match(os.path.basename(path))[1]
-                responses[obj_name] = path
+                responses[path] = path
         return responses
 
 

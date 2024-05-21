@@ -134,7 +134,7 @@ def update_file(filename: str) -> None:
                 "sources": [
                     {
                         "source_multi_glob": {
-                            "list_glob": standardization_config["rawtlt_files"],
+                            "list_globs": standardization_config["rawtlt_files"],
                         },
                     },
                 ],

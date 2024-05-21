@@ -322,7 +322,7 @@ key_images:
 rawtilts:
 - sources:
   - source_multi_glob:
-      list_glob:
+      list_globs:
       - Tomo{run_name}/raw_data/imod_metadata/*.tlt
       - Tomo{run_name}/raw_data/imod_metadata/*.xf
       - Tomo{run_name}/raw_data/mdocs/*.mdoc
