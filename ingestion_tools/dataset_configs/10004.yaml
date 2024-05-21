@@ -124,6 +124,10 @@ datasets:
   - literal:
       value:
       - '10004'
+frames:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/frames/*.eer'
 gains:
 - sources:
   - source_glob:
@@ -220,4 +224,5 @@ tomograms:
 voxel_spacings:
 - sources:
   - literal:
-      value: 7.56
+      value:
+      - 7.56

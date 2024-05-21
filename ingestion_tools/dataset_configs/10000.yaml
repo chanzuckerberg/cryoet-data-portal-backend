@@ -480,6 +480,10 @@ datasets:
   - literal:
       value:
       - '10000'
+frames:
+- sources:
+  - source_glob:
+      list_glob: frames/{run_name}_*.tif
 gains:
 - sources:
   - source_glob:
@@ -577,4 +581,5 @@ tomograms:
 voxel_spacings:
 - sources:
   - literal:
-      value: 13.48
+      value:
+      - 13.48

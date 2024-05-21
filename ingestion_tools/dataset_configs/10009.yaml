@@ -310,10 +310,10 @@ datasets:
   - literal:
       value:
       - '10009'
-gains:
+frames:
 - sources:
   - source_glob:
-      list_glob: null
+      list_glob: Tomo{run_name}/raw_data/raw_frames/*.mrc.bz2
 key_images:
 - sources:
   - literal:

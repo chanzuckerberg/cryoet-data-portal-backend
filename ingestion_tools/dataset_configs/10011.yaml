@@ -73,6 +73,10 @@ datasets:
   - literal:
       value:
       - '10011'
+frames:
+- sources:
+  - source_glob:
+      list_glob: frames/{run_name}_*.tif
 gains:
 - sources:
   - source_glob:
@@ -128,7 +132,7 @@ tiltseries:
   sources:
   - source_glob:
       list_glob: metadata/{run_name}.st
-      name_regex: .*
+      match_regex: .*
 tomograms:
 - metadata:
     affine_transformation_matrix:

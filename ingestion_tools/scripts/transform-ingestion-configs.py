@@ -38,7 +38,7 @@ def update_file(filename: str) -> None:
                 ],
             },
         ]
-    if not data.get("gains"):
+    if not data.get("gains") and standardization_config.get("gain_glob"):
         data["gains"] = [
             {
                 "sources": [
@@ -50,8 +50,8 @@ def update_file(filename: str) -> None:
                 ],
             },
         ]
-    if not data.get("frames"):
-        standardization_config["frames"] = [
+    if not data.get("frames") and standardization_config.get("frames_glob"):
+        data["frames"] = [
             {
                 "sources": [
                     {
@@ -62,7 +62,7 @@ def update_file(filename: str) -> None:
                 ],
             },
         ]
-    if not data.get("tiltseries", {}).get("sources"):
+    if not data.get("tiltseries", {}).get("sources") and standardization_config.get("tiltseries_glob"):
         data["tiltseries"] = [
             {
                 "metadata": data.get("tiltseries"),
@@ -128,7 +128,7 @@ def update_file(filename: str) -> None:
                     ],
                 },
             ]
-    if not data.get("rawtilts"):
+    if not data.get("rawtilts") and standardization_config.get("rawtlt_files"):
         data["rawtilts"] = [
             {
                 "sources": [
@@ -149,7 +149,7 @@ def update_file(filename: str) -> None:
             {
                 "sources": [
                     {
-                        "literal": {"value": vs},
+                        "literal": {"value": [vs]},
                     },
                 ],
             },

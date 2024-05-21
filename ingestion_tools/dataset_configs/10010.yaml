@@ -131,10 +131,10 @@ datasets:
   - literal:
       value:
       - '10010'
-gains:
+frames:
 - sources:
   - source_glob:
-      list_glob: null
+      list_glob: frames/{run_name}_*.tif
 key_images:
 - sources:
   - literal:
@@ -186,7 +186,7 @@ tiltseries:
   sources:
   - source_glob:
       list_glob: Tilt_Series/{run_name}.mrc
-      name_regex: .*
+      match_regex: .*
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -226,4 +226,4 @@ voxel_spacings:
 - sources:
   - literal:
       value:
-      - 'float {tomograms_voxel_spacing}'
+      - float float {tomograms_voxel_spacing}

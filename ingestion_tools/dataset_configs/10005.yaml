@@ -119,19 +119,11 @@ datasets:
   - literal:
       value:
       - '10005'
-gains:
-- sources:
-  - source_glob:
-      list_glob: ''
 key_images:
 - sources:
   - literal:
       value:
       - from_tomogram
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_glob: null
 runs:
 - sources:
   - source_glob:
@@ -211,4 +203,5 @@ tomograms:
 voxel_spacings:
 - sources:
   - literal:
-      value: 5.224
+      value:
+      - 5.224

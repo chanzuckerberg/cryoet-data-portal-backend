@@ -152,10 +152,10 @@ datasets:
   - literal:
       value:
       - '10008'
-gains:
+frames:
 - sources:
   - source_glob:
-      list_glob: null
+      list_glob: tomo/raw_stacks/{mapped_ts_name}/frames/*{mapped_frame_name}_*.tif
 key_images:
 - sources:
   - literal:
@@ -250,4 +250,5 @@ tomograms:
 voxel_spacings:
 - sources:
   - literal:
-      value: 14.08
+      value:
+      - 14.08

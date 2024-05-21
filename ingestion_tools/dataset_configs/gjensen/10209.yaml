@@ -35,10 +35,6 @@ datasets:
   - literal:
       value:
       - '10209'
-gains:
-- sources:
-  - source_glob:
-      list_glob: null
 key_images:
 - sources:
   - source_glob:
@@ -135,4 +131,5 @@ tomograms:
 voxel_spacings:
 - sources:
   - literal:
-      value: 7.8
+      value:
+      - 7.8

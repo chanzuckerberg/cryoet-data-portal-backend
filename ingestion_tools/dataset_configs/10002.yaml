@@ -150,6 +150,10 @@ datasets:
   - literal:
       value:
       - '10002'
+frames:
+- sources:
+  - source_glob:
+      list_glob: frames/{mapped_frame_name}_*.tif
 gains:
 - sources:
   - source_glob:
@@ -247,4 +251,5 @@ tomograms:
 voxel_spacings:
 - sources:
   - literal:
-      value: float {run_voxel_spacing}
+      value:
+      - float {run_voxel_spacing}
