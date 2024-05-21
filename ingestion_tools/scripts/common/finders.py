@@ -117,7 +117,7 @@ class DepositionObjectImporterFactory(ABC):
         parent_filters = source.get("parent_filters", {})
         self.exclude_parents = {}
         self.include_parents = {}
-        for parent_key, regex_list in parent_filters.get("require", {}).items():
+        for parent_key, regex_list in parent_filters.get("include", {}).items():
             self.include_parents[parent_key] = [re.compile(regex_str) for regex_str in regex_list]
         for parent_key, regex_list in parent_filters.get("exclude", {}).items():
             self.exclude_parents[parent_key] = [re.compile(regex_str) for regex_str in regex_list]

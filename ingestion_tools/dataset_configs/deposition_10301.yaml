@@ -47,7 +47,7 @@ runs:
       list_glob: '{dataset_name}/*'
       match_regex: .*
       name_regex: (.*)
-tomogram_voxel_spacings:
+voxel_spacings:
 - sources:
   - destination_glob:
       list_glob: '{run_output_path}/Tomograms/VoxelSpacing*'
