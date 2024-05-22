@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - jesstest
     paths:
       - "ingestion_tools/**"
       - ".github/workflows/push-ingestor-build.yaml"
@@ -27,10 +28,16 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           role-duration-seconds: 1200
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Build and push Docker image
-        env:
-          ECR_REPO: ${{ secrets.ECR_REPO }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-        run: make push-ingestor-build ecr_repo=$ECR_REPO tag=latest aws_region=$AWS_REGION
+      - name: Docker build & Push
+        uses: docker/build-push-action@v4
+        with:
+          context: ./ingestion_tools
+          file: ./ingestion_tools/Dockerfile
+          tags: ${{ secrets.ECR_REPO }}:${{ github.head_ref || github.ref_name }}
+          push: true
+          provenance: false
