@@ -149,7 +149,7 @@ def to_args(config_file, input_bucket, output_path, **kwargs) -> list[str]:
     type=str,
     required=True,
     default="main",
-    help="Specify docker image tag, defaults to 'ci-staging'",
+    help="Specify docker image tag, defaults to 'main'",
 )
 @click.option(
     "--swipe-wdl-key",
