@@ -1,13 +1,12 @@
 import os
 from typing import TYPE_CHECKING, Optional
 
+from common.copy import copy_by_src
+from common.finders import DefaultImporterFactory
 from importers.base_importer import BaseImporter
 from importers.key_image import KeyImageImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
-
-from common.copy import copy_by_src
-from common.finders import DefaultImporterFactory
 from importers.voxel_spacing import VoxelSpacingImporter
 
 if TYPE_CHECKING:
@@ -51,7 +50,9 @@ class DatasetKeyPhotoImporter(BaseImporter):
         for run in RunImporter.finder(self.config, **self.parents):
             for vs in VoxelSpacingImporter.finder(self.config, run=run, **self.parents):
                 for tomo in TomogramImporter.finder(self.config, voxel_spacing=vs, run=run, **self.parents):
-                    key_photos = list(KeyImageImporter.finder(self.config, voxel_spacing=vs, run=run, tomogram=tomo, **self.parents))[0].get_metadata()
+                    key_photos = list(
+                        KeyImageImporter.finder(self.config, voxel_spacing=vs, run=run, tomogram=tomo, **self.parents),
+                    )[0].get_metadata()
                     if all(image_key in key_photos for image_key in self.image_keys):
                         img_path = os.path.join(self.config.output_prefix, key_photos.get(key))
                         if self.config.fs.exists(img_path):
