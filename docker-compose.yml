@@ -8,9 +8,9 @@ services:
   motoserver:
     image: motoserver/moto:4.1.0
     ports:
-      - "4000:4000"
+      - "5000:5000"
     environment:
-      - MOTO_PORT=4000
+      - MOTO_PORT=5000
       - S3_IGNORE_SUBDOMAIN_BUCKETNAME=True
     volumes:
       - ./bin:/moto/bin
