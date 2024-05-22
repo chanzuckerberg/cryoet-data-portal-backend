@@ -1,113 +1,136 @@
-dataset:
-  dataset_identifier: 10190
-  dataset_description: This is 2nd of 5 sets of data studying Escherichia coli collected
-    by Matt Swulius and is a part of Caltech Jensen  lab etdb. e. coli from Larry
-    Rothfield containing plasmid carrying WT MreB.
-  dataset_title: E. coli (pLE6, 20 um IPTG)
-  authors: &id001
-  - name: Matt Swulius
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Escherichia coli
-    taxonomy_id: 562
-  sample_type: Organism
-  sample_preparation: null
-  grid_preparation: Induced with 20um IPTG for 2 hours starting at OD600=0.2.
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mst2011-07-29-1/keyimg_mst2011-07-29-1.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mst2011-07-29-1/keyimg_mst2011-07-29-1_s.jpg
-  cell_strain:
-    name: ''
-    id: null
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: null
-    manufacturer: Gatan
-    model: UltraCam
-  data_acquisition_software: Leginon
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: FEI
-    model: Polara
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: 9.46
-  spherical_aberration_constant: 2.0
-  tilt_alignment_software: RAPTOR
-  tilt_axis: 0.0
-  tilt_range:
-    max: 60.0
-    min: -60.0
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: 4
-  tilt_step: 1.0
-  tilting_scheme: starting tilt to max then min
-  total_flux: 180.0
-tomograms:
-  voxel_spacing: 18.92
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
-  fiducial_alignment_status: FIDUCIAL
-  ctf_corrected: null
-  processing: raw
-  processing_software: null
-  align_softwares:
-  - RAPTOR
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  authors: *id001
-  tomogram_version: 1
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mst2011-07-29-1/keyimg_mst2011-07-29-1.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mst2011-07-29-1/keyimg_mst2011-07-29-1_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Matt Swulius
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: ''
+    dataset_description: This is 2nd of 5 sets of data studying Escherichia coli collected
+      by Matt Swulius and is a part of Caltech Jensen  lab etdb. e. coli from Larry
+      Rothfield containing plasmid carrying WT MreB.
+    dataset_identifier: 10190
+    dataset_title: E. coli (pLE6, 20 um IPTG)
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: Induced with 20um IPTG for 2 hours starting at OD600=0.2.
+    organism:
+      name: Escherichia coli
+      taxonomy_id: 562
+    sample_preparation: null
+    sample_type: Organism
+  sources:
+  - literal:
+      value:
+      - '10190'
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/3dimage_*/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (mst2011-07-29-1|mst2011-07-29-2|mst2011-07-29-3|mst2011-07-29-4|mst2011-07-29-5|mst2011-07-29-6|mst2011-07-29-7|mst2011-07-29-8|mst2011-07-29-9|mst2011-07-29-10|mst2011-07-29-11|mst2011-07-29-12|mst2011-07-29-13|mst2011-07-29-14|mst2011-07-29-15|mst2011-07-29-16|mst2011-07-29-17|mst2011-07-29-18|mst2011-07-29-19|mst2011-07-29-20|mst2011-07-29-21|mst2011-07-29-22|mst2011-07-29-23|mst2011-07-29-24)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10190'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/3dimage_*/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/3dimage_*/*'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (mst2011-07-29-1|mst2011-07-29-2|mst2011-07-29-3|mst2011-07-29-4|mst2011-07-29-5|mst2011-07-29-6|mst2011-07-29-7|mst2011-07-29-8|mst2011-07-29-9|mst2011-07-29-10|mst2011-07-29-11|mst2011-07-29-12|mst2011-07-29-13|mst2011-07-29-14|mst2011-07-29-15|mst2011-07-29-16|mst2011-07-29-17|mst2011-07-29-18|mst2011-07-29-19|mst2011-07-29-20|mst2011-07-29-21|mst2011-07-29-22|mst2011-07-29-23|mst2011-07-29-24)$
-  run_name_regex: (.*)
+  deposition_id: 10190
   run_data_map_file: run_data_map/10190.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: null
+      manufacturer: Gatan
+      model: UltraCam
+    data_acquisition_software: Leginon
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: FEI
+      model: Polara
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: 9.46
+    spherical_aberration_constant: 2.0
+    tilt_alignment_software: RAPTOR
+    tilt_axis: 0.0
+    tilt_range:
+      max: 60.0
+      min: -60.0
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: 4
+    tilt_step: 1.0
+    tilting_scheme: starting tilt to max then min
+    total_flux: 180.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares:
+    - RAPTOR
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: null
+    reconstruction_method: Weighted back projection
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: 18.92
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/3dimage_*/*'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 18.92

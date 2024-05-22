@@ -1,183 +1,235 @@
-dataset:
-  dataset_identifier: 10010
-  dataset_title: Organellar membranes
-  dataset_description: "Cryo-electron tomograms of mouse embryonic fibroblasts from FIB-SEM lamella. Used to develop surface morphometrics toolkit to quantify organellar membrane ultrastructure."
-  authors: &dataset_authors
-    - name: Benjamin A. Barad
-      ORCID: 0000-0002-1016-862X
-      corresponding_author_status: false
-      primary_author_status: true
-    - name: Michaela Medina
-      ORCID: 0000-0001-6346-5137
-      corresponding_author_status: false
-      primary_author_status: false
-    - name: Daniel Fuentes
-      ORCID: 0000-0002-9687-0902
-      corresponding_author_status: false
-      primary_author_status: false
-    - name: R. Luke Wiseman
-      ORCID: 0000-0001-9287-6840
-      corresponding_author_status: false
-      primary_author_status: false
-    - name: Danielle A Grotjahn
-      ORCID: 0000-0001-5908-7882
-      corresponding_author_status: true
-      primary_author_status: false
-  funding: []
-  sample_preparation: ~
-  grid_preparation: ~
-  sample_type: cell
-  dates: &repo-dates
-    deposition_date: 2023-10-01
-    release_date: 2023-12-01
-    last_modified_date: 2023-12-01
-  cell_strain:
-    name: ~
-    id: ~
-  cell_type:
-    id: CL:2000042
-    name: Embryonic fibroblast
-  organism:
-    name: Mus musculus
-    id: NCBITaxon:10090
-  tissue:
-    id: BTO:00000421
-    name: connective tissue
-  cross_references:
-    dataset_publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440, EMPIAR-11370
-  cell_component:
-    name: Outer Mitochondrial Membrane
-    id: GO:0005741
-runs: {}
-tiltseries:
-  microscope:
-    manufacturer: TFS
-    model: Krios
-  spherical_aberration_constant: 2.7
-  microscope_optical_setup:
-    energy_filter: '{energy_filter}'
-    phase_plate: None
-    image_corrector: None
-  camera:
-    manufacturer: Gatan
-    model: K2 SUMMIT
-  acceleration_voltage: 300000
-  tilting_scheme: min to max tilt
-  tilt_axis: ~
-  tilt_step: 2
-  tilt_range:
-    min: -60
-    max: 60
-  total_flux: 'float {tilt_series_total_flux}'
-  data_acquisition_software: REQUIRED
-  binning_from_frames: REQUIRED
-  tilt_series_quality: 'int {tilt_series_quality}'
-  related_empiar_entry: ~
-  pixel_spacing: 'float {tilt_series_pixel_spacing}'
-  is_aligned: false
-  alignment_binning_factor: ~
-tomograms:
-  voxel_spacing: 'float {tomograms_voxel_spacing}'
-  fiducial_alignment_status: NON_FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  affine_transformation_matrix: [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
-  ctf_corrected: false
-  processing: raw
-  authors: *dataset_authors
-  tomogram_version: 1
 annotations:
-  - metadata:
-      annotation_object:
-        id: GO:0005741
-        name: mitochondrial outer membrane
-        description: ~
-        state: ~
-      dates: *repo-dates
-      annotation_method: &annotation_methods TomoSegMemTV segmentation + manual correction in TFS Amira
-      method_type: hybrid
-      annotation_publications: &annotation_pubs 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
-      ground_truth_status: true
-      authors: &annotation_authors
-        - name: Michaela Medina
-          ORCID: 0000-0001-6346-5137
-          primary_annotator_status: true
-        - name: Danielle A. Grotjahn
-          ORCID: 0000-0001-5908-7882
-          corresponding_author_status: true
-      annotation_software: TomoSegMemTV+AMIRA
-      version: "1.0"
-      confidence: &annotation_confidence
-        precision: ~
-        recall: ~
-        ground_truth_used: ~
-      is_curator_recommended: true
-    sources:
-      - file_format: mrc
-        shape: SemanticSegmentationMask
-        glob_string: &segmentation_glob 'Voxel_Segmentations/{run_name}_labels.rec.mrc'
-        mask_label: 1
-        is_visualization_default: true
-  - metadata:
-      annotation_object:
-        id: GO:0005743
-        name: mitochondrial inner membrane
-        description: ~
-        state: ~
-      dates: *repo-dates
-      annotation_method: *annotation_methods
-      method_type: hybrid
-      annotation_publications: *annotation_pubs
-      ground_truth_status: true
-      authors: *annotation_authors
-      annotation_software: TomoSegMemTV+AMIRA
-      version: "1.0"
-      confidence: *annotation_confidence
-      is_curator_recommended: true
-    sources:
-      - file_format: mrc
-        shape: SemanticSegmentationMask
-        glob_string: *segmentation_glob
-        mask_label: 2
-        is_visualization_default: true
-  - metadata:
-      annotation_object:
-        id: GO:0005789
-        name: endoplasmic reticulum membrane
-        description: ~
-        state: ~
-      dates: *repo-dates
-      annotation_method: *annotation_methods
-      method_type: hybrid
-      annotation_publications: *annotation_pubs
-      ground_truth_status: true
-      authors: *annotation_authors
-      annotation_software: TomoSegMemTV+AMIRA
-      version: "1.0"
-      confidence: *annotation_confidence
-      is_curator_recommended: true
-    sources:
-      - file_format: mrc
-        shape: SemanticSegmentationMask
-        glob_string: *segmentation_glob
-        mask_label: 3
-        is_visualization_default: true
+- metadata:
+    annotation_method: TomoSegMemTV segmentation + manual correction in TFS Amira
+    annotation_object:
+      description: null
+      id: GO:0005741
+      name: mitochondrial outer membrane
+      state: null
+    annotation_publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
+    annotation_software: TomoSegMemTV+AMIRA
+    authors: &id001
+    - ORCID: 0000-0001-6346-5137
+      name: Michaela Medina
+      primary_annotator_status: true
+    - ORCID: 0000-0001-5908-7882
+      corresponding_author_status: true
+      name: Danielle A. Grotjahn
+    confidence: &id002
+      ground_truth_used: null
+      precision: null
+      recall: null
+    dates: &id003
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: '1.0'
+  sources:
+  - file_format: mrc
+    glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+    is_visualization_default: true
+    mask_label: 1
+    shape: SemanticSegmentationMask
+- metadata:
+    annotation_method: TomoSegMemTV segmentation + manual correction in TFS Amira
+    annotation_object:
+      description: null
+      id: GO:0005743
+      name: mitochondrial inner membrane
+      state: null
+    annotation_publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
+    annotation_software: TomoSegMemTV+AMIRA
+    authors: *id001
+    confidence: *id002
+    dates: *id003
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: '1.0'
+  sources:
+  - file_format: mrc
+    glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+    is_visualization_default: true
+    mask_label: 2
+    shape: SemanticSegmentationMask
+- metadata:
+    annotation_method: TomoSegMemTV segmentation + manual correction in TFS Amira
+    annotation_object:
+      description: null
+      id: GO:0005789
+      name: endoplasmic reticulum membrane
+      state: null
+    annotation_publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
+    annotation_software: TomoSegMemTV+AMIRA
+    authors: *id001
+    confidence: *id002
+    dates: *id003
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: '1.0'
+  sources:
+  - file_format: mrc
+    glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+    is_visualization_default: true
+    mask_label: 3
+    shape: SemanticSegmentationMask
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
+datasets:
+- metadata:
+    authors: &id004
+    - ORCID: 0000-0002-1016-862X
+      corresponding_author_status: false
+      name: Benjamin A. Barad
+      primary_author_status: true
+    - ORCID: 0000-0001-6346-5137
+      corresponding_author_status: false
+      name: Michaela Medina
+      primary_author_status: false
+    - ORCID: 0000-0002-9687-0902
+      corresponding_author_status: false
+      name: Daniel Fuentes
+      primary_author_status: false
+    - ORCID: 0000-0001-9287-6840
+      corresponding_author_status: false
+      name: R. Luke Wiseman
+      primary_author_status: false
+    - ORCID: 0000-0001-5908-7882
+      corresponding_author_status: true
+      name: Danielle A Grotjahn
+      primary_author_status: false
+    cell_component:
+      id: GO:0005741
+      name: Outer Mitochondrial Membrane
+    cell_strain:
+      id: null
+      name: null
+    cell_type:
+      id: CL:2000042
+      name: Embryonic fibroblast
+    cross_references:
+      dataset_publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440, EMPIAR-11370
+    dataset_description: Cryo-electron tomograms of mouse embryonic fibroblasts from
+      FIB-SEM lamella. Used to develop surface morphometrics toolkit to quantify organellar
+      membrane ultrastructure.
+    dataset_identifier: 10010
+    dataset_title: Organellar membranes
+    dates: *id003
+    funding: []
+    grid_preparation: null
+    organism:
+      id: NCBITaxon:10090
+      name: Mus musculus
+    sample_preparation: null
+    sample_type: cell
+    tissue:
+      id: BTO:00000421
+      name: connective tissue
+  sources:
+  - literal:
+      value:
+      - '10010'
+frames:
+- sources:
+  - source_glob:
+      list_glob: frames/{run_name}_*.tif
+key_images:
+- sources:
+  - literal:
+      value:
+      - from_tomogram
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - Tilt_series_mdocs/{run_name}.mrc.mdoc
+runs:
+- sources:
+  - source_glob:
+      list_glob: Tilt_Series/*.mrc
+      match_regex: .*
+      name_regex: (.*).mrc
 standardization_config:
-  destination_prefix: '10010'
-  source_prefix: Grotjahn
-  frames_glob: frames/{run_name}_*.tif
-  gain_glob: ~
-  rawtlt_files:
-    - Tilt_series_mdocs/{run_name}.mrc.mdoc
-  tiltseries_glob: Tilt_Series/{run_name}.mrc
-  tomo_format: mrc
-  tomo_glob: Tomograms/{run_name}_*.mrc
+  deposition_id: 10010
   run_data_map_file: per_run_metadata_fixed_tiltqual_fixed_pixel_spacing.tsv
-  tomo_voxel_size: '{tomograms_voxel_spacing}'
-  run_glob: Tilt_Series/*.mrc
-  run_regex: .*
-  run_name_regex: '(.*).mrc'
+  source_prefix: Grotjahn
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    alignment_binning_factor: null
+    binning_from_frames: REQUIRED
+    camera:
+      manufacturer: Gatan
+      model: K2 SUMMIT
+    data_acquisition_software: REQUIRED
+    is_aligned: false
+    microscope:
+      manufacturer: TFS
+      model: Krios
+    microscope_optical_setup:
+      energy_filter: '{energy_filter}'
+      image_corrector: None
+      phase_plate: None
+    pixel_spacing: float {tilt_series_pixel_spacing}
+    related_empiar_entry: null
+    spherical_aberration_constant: 2.7
+    tilt_axis: null
+    tilt_range:
+      max: 60
+      min: -60
+    tilt_series_quality: int {tilt_series_quality}
+    tilt_step: 2
+    tilting_scheme: min to max tilt
+    total_flux: float {tilt_series_total_flux}
+  sources:
+  - source_glob:
+      list_glob: Tilt_Series/{run_name}.mrc
+      match_regex: .*
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id004
+    ctf_corrected: false
+    fiducial_alignment_status: NON_FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: Weighted back projection
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: float {tomograms_voxel_spacing}
+  sources:
+  - source_glob:
+      list_glob: Tomograms/{run_name}_*.mrc
+      match_regex: .*
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - float float {tomograms_voxel_spacing}

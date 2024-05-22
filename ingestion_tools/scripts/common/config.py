@@ -16,6 +16,23 @@ else:
     BaseImporter = "BaseImporter"
 
 
+APPEND_STATIC_CONFIG: str = """
+neuroglancer:
+  - sources:
+      - literal:
+          value:
+            - neuroglancer
+key_images:
+  - sources:
+      - literal:
+          value:
+            - original
+            - snapshot
+            - thumbnail
+            - expanded
+"""
+
+
 class RunOverride:
     run_regex: re.Pattern[str]
     tiltseries: dict[str, Any] | None
@@ -27,83 +44,71 @@ class RunOverride:
         self.tomograms = tomograms
 
 
-class DataImportConfig:
+class DepositionImportConfig:
     https_prefix = os.getenv("DOMAIN_NAME", "https://files.cryoetdataportal.cziscience.com")
     source_prefix: str
-    destination_prefix: str
+    output_prefix: str
     fs: FileSystemApi
-    run_glob: str
-    run_regex: re.Pattern[str]
-    tomo_glob: str
     tomo_format: str
-    tomo_regex: re.Pattern[str] | None = None
     tomo_key_photo_glob: str | None = None
     tomo_voxel_size: str
-    ts_name_regex: re.Pattern[str] | None = None
-    run_name_regex: re.Pattern[str]
-    frames_name_regex: re.Pattern[str] | None = None
-    frames_glob: str
-    tiltseries_glob: str | None = None
+    # Override handling
+    overrides: list[dict[str, Any]] | None = None
+    # Core metadata
+    deposition_id: str
+    # Override configuration
     run_to_tomo_map_file: str | None = None
     run_to_tomo_map: dict[str, str] | None = None
     run_to_frame_map_csv: str | None = None
     run_to_frame_map: dict[str, str] | None = None
     run_to_ts_map_csv: str | None = None
     run_to_ts_map: dict[str, str] | None = None
-    gain_glob: str
-    rawtlt_files: list[str] | None = None
-    # metadata templates
-    dataset_template: dict[str, Any]
-    run_template: dict[str, Any]
-    tomogram_template: dict[str, Any]
-    tiltseries_template: dict[str, Any]
-    annotation_template: dict[str, Any]
-    output_prefix: str
-    input_prefix: str
-    overrides_by_run: list[RunOverride] | None = None
+    rawtilt_files: list[str] | None = None
     run_data_map: dict[str, Any]
     run_data_map_file: str | None = None
 
-    def __init__(self, fs: FileSystemApi, config_path: str, output_prefix: str, input_bucket: str):
+    # Stash the configs we handle for each type of object we support
+    object_configs: dict[str, Any] | None = None
+
+    def __init__(
+        self,
+        fs: FileSystemApi,
+        config_path: str,
+        output_prefix: str,
+        input_bucket: str,
+        object_classes: list[BaseImporter],
+    ):
         self.output_prefix = output_prefix
         self.fs = fs
         self.run_to_tomo_map = {}
         self.run_data_map = {}
         self.run_to_frame_map = {}
         self.run_to_ts_map = {}
-        with open(config_path, "r") as conffile:
-            dataset_config = yaml.safe_load(conffile)
-            config = dataset_config["standardization_config"]
 
-            for k, v in config.items():
+        # TODO these are controlled by CLI flags, which we should probably handle as a group.
+        self.write_mrc: bool = True
+        self.write_zarr: bool = True
+
+        with open(config_path, "r") as conffile:
+            confdata = conffile.read() + APPEND_STATIC_CONFIG
+            config = yaml.safe_load(confdata)
+
+            self.object_configs = {}
+            for item in object_classes:
+                if config.get(item.plural_key):
+                    self.object_configs[item.type_key] = config[item.plural_key]
+                    del config[item.plural_key]
+
+            # Copy the remaining standardization config keys over to this object.
+            for k, v in config.get("standardization_config", {}).items():
                 if "regex" in k:
                     v = re.compile(v)
                 setattr(self, k, v)
 
-            self.overrides_by_run = []
-            try:
-                for item in dataset_config["overrides_by_run"]:
-                    override = RunOverride(
-                        run_regex=re.compile(item["run_regex"]),
-                        tomograms=item.get("tomograms"),
-                        tiltseries=item.get("tiltseries"),
-                    )
-                    self.overrides_by_run.append(override)
-            except KeyError:
-                # This isn't a required field
-                pass
-
-        template_configs = {
-            "runs": "run",
-            "tomograms": "tomogram",
-            "tiltseries": "tiltseries",
-            "dataset": "dataset",
-            "annotations": "annotation",
-        }
-        for config_key, template_key in template_configs.items():
-            setattr(self, f"{template_key}_template", dataset_config[config_key])
+        self.overrides = config.get("overrides")
         self.input_path = f"{input_bucket}/{self.source_prefix}"
         self.dataset_root_dir = f"{input_bucket}/{self.source_prefix}"
+        self.deposition_root_dir = f"{input_bucket}/{self.source_prefix}"
 
     def load_run_data_map(self) -> None:
         self.run_data_map = self.load_run_metadata_file("run_data_map_file")
@@ -130,6 +135,14 @@ class DataImportConfig:
                 mapdata[row["run_name"]] = row
         return mapdata
 
+    def get_object_configs(self, key: str) -> Any:
+        items = self.object_configs.get(key, [])
+        return items
+
+    # This is for tests only. Please don't use it!
+    def _set_object_configs(self, key: str, config: list[dict[str, Any]]) -> None:
+        self.object_configs[key] = config
+
     def load_run_csv_file(self, file_attr: str) -> dict[str, Any]:
         mapdata = {}
         map_filename = None
@@ -153,28 +166,28 @@ class DataImportConfig:
         self.run_to_ts_map = self.load_run_csv_file("run_to_ts_map_csv")
 
     @classmethod
-    def get_run_name(cls, obj: BaseImporter) -> str:
+    def get_dataset_name(cls, obj: BaseImporter) -> str:
         try:
-            run = obj.get_run()
-            if run:
-                return run.run_name
+            ds = obj.get_dataset()
+            if ds:
+                return ds.name
         except ValueError:
             pass
         return ""
 
     @classmethod
-    def get_run_voxelsize(cls, obj: BaseImporter) -> float:
+    def get_run_name(cls, obj: BaseImporter) -> str:
         try:
             run = obj.get_run()
             if run:
-                return run.voxel_spacing
+                return run.name
         except ValueError:
             pass
-        return 0
+        return ""
 
     def get_output_path(self, obj: BaseImporter) -> str:
         key = f"{obj.type_key}"
-        return self.resolve_output_path(key, self.get_run_name(obj), self.get_run_voxelsize(obj))
+        return self.resolve_output_path(key, obj)
 
     def get_run_data_map(self, run_name: str) -> dict[str, Any]:
         if map_vars := self.run_data_map.get(run_name):
@@ -211,67 +224,54 @@ class DataImportConfig:
 
     def get_expanded_metadata(self, obj: BaseImporter) -> dict[str, Any]:
         metadata_type = obj.type_key
-        # hacky pluralization, look away!!
-        plural_map = {
-            "tomogram": "tomograms",
-            "tiltseries": "tiltseries",
-        }
-        base_metadata = deepcopy(getattr(self, f"{metadata_type}_template"))
+        base_metadata = deepcopy(obj.metadata)
         if metadata_type not in ["tomogram", "tiltseries"]:
             return base_metadata
 
         run_name = self.get_run_name(obj)
         base_metadata = self.expand_metadata(run_name, base_metadata)
-        if override_data := self.get_run_override(run_name):
-            map_key = plural_map[metadata_type]
-            if extra_metadata := getattr(override_data, map_key):
-                base_metadata.update(extra_metadata)
         return base_metadata
-
-    def get_run_override(self, run_name: str) -> RunOverride | None:
-        if not self.overrides_by_run:
-            return
-        for item in self.overrides_by_run:
-            if item.run_regex.match(run_name):
-                return item
-        return
 
     def get_metadata_path(self, obj: BaseImporter) -> str:
         key = f"{obj.type_key}_metadata"
-        return self.resolve_output_path(key, self.get_run_name(obj), self.get_run_voxelsize(obj))
+        return self.resolve_output_path(key, obj)
 
-    def resolve_output_path(self, key: str, run_name: str, voxelsize: float | str) -> str:
+    def resolve_output_path(self, key: str, obj: BaseImporter) -> str:
         paths = {
-            "tomogram": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/CanonicalTomogram",
-            "key_image": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/KeyPhotos",
-            "tiltseries": "{run_name}/TiltSeries",
-            "frames": "{run_name}/Frames",
-            "annotation": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/Annotations",
-            "annotation_metadata": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/Annotations",
-            "run_metadata": "{run_name}/run_metadata.json",
-            "tomogram_metadata": (
-                "{run_name}/Tomograms/VoxelSpacing{voxelsize}/CanonicalTomogram/tomogram_metadata.json"
-            ),
-            "tiltseries_metadata": "{run_name}/TiltSeries/tiltseries_metadata.json",
-            "dataset_metadata": "dataset_metadata.json",
-            "dataset_keyphoto": "Images",
-            "neuroglancer": "{run_name}/Tomograms/VoxelSpacing{voxelsize}/CanonicalTomogram/neuroglancer_config.json",
+            "voxel_spacing": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}",
+            "tomogram": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram",
+            "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos",
+            "tiltseries": "{dataset_name}/{run_name}/TiltSeries",
+            "gain": "{dataset_name}/{run_name}/Frames/{run_name}_gain.mrc",
+            "frame": "{dataset_name}/{run_name}/Frames",
+            "rawtilt": "{dataset_name}/{run_name}/TiltSeries",
+            "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
+            "annotation_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
+            "run_metadata": "{dataset_name}/{run_name}/run_metadata.json",
+            "tomogram_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/tomogram_metadata.json",
+            "tiltseries_metadata": "{dataset_name}/{run_name}/TiltSeries/tiltseries_metadata.json",
+            "dataset_metadata": "{dataset_name}/dataset_metadata.json",
+            "run": "{dataset_name}/{run_name}",
+            "dataset": "{dataset_name}",
+            "dataset_keyphoto": "{dataset_name}/Images",
+            "neuroglancer": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/neuroglancer_config.json",
         }
-        path = os.path.join(
-            self.output_prefix,
-            self.destination_prefix,
-            paths[key].format(run_name=run_name, voxelsize=voxelsize),
-        )
-        self.fs.makedirs(path)
+        output_prefix = self.output_prefix
+        glob_vars = obj.get_glob_vars()
+        path = os.path.join(output_prefix, paths[key].format(**glob_vars))
+        if ".json" in path or ".mrc" in path or ".zarr" in path:
+            self.fs.makedirs(os.path.dirname(path))
+        else:
+            self.fs.makedirs(path)
         return path
 
     def glob_files(self, obj: BaseImporter, globstring: str) -> list[str]:
         run = obj.get_run()
         if not globstring:
             return []
-        globvars = run.get_glob_vars()
+        globvars = obj.get_glob_vars()
         with contextlib.suppress(ValueError):
-            globvars["int_run_name"] = int(run.run_name)
+            globvars["int_run_name"] = int(run.name)
         expanded_glob = os.path.join(self.dataset_root_dir, globstring.format(**globvars))
         results = self.fs.glob(expanded_glob)
         if not results:

@@ -1,112 +1,135 @@
-dataset:
-  dataset_identifier: 10196
-  dataset_description: This is 3rd of 3 sets of data studying Vibrio cholerae collected
-    by Matt Swulius and is a part of Caltech Jensen  lab etdb. WT Vibrio carrying
-    pMMb67 plasmid without GFP-MreB
-  dataset_title: Vibrio cholerae (WT w/plasmid)
-  authors: &id001
-  - name: Matt Swulius
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Vibrio cholerae
-    taxonomy_id: 666
-  sample_type: Organism
-  sample_preparation: null
-  grid_preparation: No induction of GFP-MreB
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mst2010-12-12-1/keyimg_mst2010-12-12-1.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mst2010-12-12-1/keyimg_mst2010-12-12-1_s.jpg
-  cell_strain:
-    name: TRH7000
-    id: null
-runs: {}
-tiltseries:
-  pixel_spacing: null
-  tilt_step: 1
-  total_flux: 180.0
-  data_acquisition_software: Leginon
-  tilt_series_quality: 4
-  binning_from_frames: null
-  tilt_alignment_software: RAPTOR
-  acceleration_voltage: 300000
-  spherical_aberration_constant: 2.0
-  microscope:
-    manufacturer: FEI
-    model: Polara
-    additional_scope_info: ''
-  camera:
-    manufacturer: Gatan
-    model: UltraCam
-    acquire_mode: null
-  tilting_scheme: bidirectional
-  tilt_axis: 0.0
-  tilt_series_path: null
-  microscope_optical_setup:
-    phase_plate: false
-    image_corrector: null
-    energy_filter: GIF
-  is_aligned: false
-  tilt_range:
-    min: -63
-    max: 63
-tomograms:
-  voxel_spacing: 19.24
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
-  fiducial_alignment_status: FIDUCIAL
-  ctf_corrected: null
-  processing: raw
-  processing_software: null
-  align_softwares:
-  - RAPTOR
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  authors: *id001
-  tomogram_version: 1
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mst2010-12-12-1/keyimg_mst2010-12-12-1.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mst2010-12-12-1/keyimg_mst2010-12-12-1_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Matt Swulius
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: TRH7000
+    dataset_description: This is 3rd of 3 sets of data studying Vibrio cholerae collected
+      by Matt Swulius and is a part of Caltech Jensen  lab etdb. WT Vibrio carrying
+      pMMb67 plasmid without GFP-MreB
+    dataset_identifier: 10196
+    dataset_title: Vibrio cholerae (WT w/plasmid)
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: No induction of GFP-MreB
+    organism:
+      name: Vibrio cholerae
+      taxonomy_id: 666
+    sample_preparation: null
+    sample_type: Organism
+  sources:
+  - literal:
+      value:
+      - '10196'
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/3dimage_*/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (mst2010-12-12-1|mst2010-12-12-2|mst2010-12-12-3|mst2010-12-12-4|mst2010-12-12-5|mst2010-12-12-6|mst2010-12-12-7|mst2010-12-12-8|mst2010-12-12-9|mst2010-12-12-10|mst2010-12-12-11|mst2010-12-12-12|mst2010-12-12-13|mst2010-12-12-14|mst2010-12-12-15|mst2010-12-12-16|mst2010-12-12-17|mst2010-12-12-18|mst2010-12-12-19|mst2010-12-12-20|mst2010-12-12-21|mst2010-12-12-22|mst2010-12-12-23|mst2010-12-12-24|mst2010-12-12-25|mst2010-12-12-26|mst2010-12-12-27)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10196'
+  deposition_id: 10196
   source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/3dimage_*/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/3dimage_*/*'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (mst2010-12-12-1|mst2010-12-12-2|mst2010-12-12-3|mst2010-12-12-4|mst2010-12-12-5|mst2010-12-12-6|mst2010-12-12-7|mst2010-12-12-8|mst2010-12-12-9|mst2010-12-12-10|mst2010-12-12-11|mst2010-12-12-12|mst2010-12-12-13|mst2010-12-12-14|mst2010-12-12-15|mst2010-12-12-16|mst2010-12-12-17|mst2010-12-12-18|mst2010-12-12-19|mst2010-12-12-20|mst2010-12-12-21|mst2010-12-12-22|mst2010-12-12-23|mst2010-12-12-24|mst2010-12-12-25|mst2010-12-12-26|mst2010-12-12-27)$
-  run_name_regex: (.*)
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: null
+      manufacturer: Gatan
+      model: UltraCam
+    data_acquisition_software: Leginon
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: FEI
+      model: Polara
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: null
+    spherical_aberration_constant: 2.0
+    tilt_alignment_software: RAPTOR
+    tilt_axis: 0.0
+    tilt_range:
+      max: 63
+      min: -63
+    tilt_series_path: null
+    tilt_series_quality: 4
+    tilt_step: 1
+    tilting_scheme: bidirectional
+    total_flux: 180.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares:
+    - RAPTOR
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: null
+    reconstruction_method: Weighted back projection
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: 19.24
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/3dimage_*/*'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 19.24

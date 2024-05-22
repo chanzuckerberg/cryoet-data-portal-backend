@@ -1,113 +1,136 @@
-dataset:
-  dataset_identifier: 10115
-  dataset_description: ' and is a part of Caltech Jensen  lab etdb. search for ESCRT
-    in dividing cells'
-  dataset_title: S. acidocaldarius Sulfolobus cells synchronized fo
-  authors: &id001
-  - name: Rasika Ramdasi
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Sulfolobus acidocaldarius
-    taxonomy_id: 2285
-  sample_type: Organism
-  sample_preparation: grown in Brock's Medium at 80C, synchronize with Baby Machine
-  grid_preparation: frozen at Kay Grunewald's lab. Harrick plasma cleaner. Blotted
-    on both sides, 5 sec, sponge for humidity
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/rra2014-02-04-3/keyimg_rra2014-02-04-3.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/rra2014-02-04-3/keyimg_rra2014-02-04-3_s.jpg
-  cell_strain:
-    name: ''
-    id: null
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: counting
-    manufacturer: Gatan
-    model: K2
-  data_acquisition_software: UCSFTomo
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: FEI
-    model: Polara
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: 4.036
-  spherical_aberration_constant: 2.0
-  tilt_alignment_software: RAPTOR
-  tilt_axis: 84.3
-  tilt_range:
-    max: 55.0
-    min: -55.0
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: 4
-  tilt_step: 1.0
-  tilting_scheme: starting tilt to max then min
-  total_flux: 180.0
-tomograms:
-  voxel_spacing: 16.145
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
-  fiducial_alignment_status: FIDUCIAL
-  ctf_corrected: null
-  processing: raw
-  processing_software: null
-  align_softwares:
-  - RAPTOR
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  authors: *id001
-  tomogram_version: 1
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/rra2014-02-04-3/keyimg_rra2014-02-04-3.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/rra2014-02-04-3/keyimg_rra2014-02-04-3_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Rasika Ramdasi
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: ''
+    dataset_description: ' and is a part of Caltech Jensen  lab etdb. search for ESCRT
+      in dividing cells'
+    dataset_identifier: 10115
+    dataset_title: S. acidocaldarius Sulfolobus cells synchronized fo
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: frozen at Kay Grunewald's lab. Harrick plasma cleaner. Blotted
+      on both sides, 5 sec, sponge for humidity
+    organism:
+      name: Sulfolobus acidocaldarius
+      taxonomy_id: 2285
+    sample_preparation: grown in Brock's Medium at 80C, synchronize with Baby Machine
+    sample_type: Organism
+  sources:
+  - literal:
+      value:
+      - '10115'
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/3dimage_*/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (rra2014-02-04-3|rra2014-02-04-5|rra2014-02-04-6|rra2014-02-04-8|rra2014-02-04-9|rra2014-02-04-10|rra2014-02-04-11|rra2014-02-04-12|rra2014-02-04-13|rra2014-02-04-15|rra2014-02-04-16|rra2014-02-04-19|rra2014-02-04-23|rra2014-02-04-28|rra2014-02-04-30|rra2014-02-04-31|rra2014-02-04-32|rra2014-02-04-33|rra2014-02-04-34|rra2014-02-04-35|rra2014-02-04-36|rra2014-02-04-38|rra2014-02-04-39|rra2014-02-04-41|rra2014-02-04-42|rra2014-02-04-43|rra2014-02-04-44|rra2014-02-04-45|rra2014-02-04-46)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10115'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/3dimage_*/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/3dimage_*/*'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (rra2014-02-04-3|rra2014-02-04-5|rra2014-02-04-6|rra2014-02-04-8|rra2014-02-04-9|rra2014-02-04-10|rra2014-02-04-11|rra2014-02-04-12|rra2014-02-04-13|rra2014-02-04-15|rra2014-02-04-16|rra2014-02-04-19|rra2014-02-04-23|rra2014-02-04-28|rra2014-02-04-30|rra2014-02-04-31|rra2014-02-04-32|rra2014-02-04-33|rra2014-02-04-34|rra2014-02-04-35|rra2014-02-04-36|rra2014-02-04-38|rra2014-02-04-39|rra2014-02-04-41|rra2014-02-04-42|rra2014-02-04-43|rra2014-02-04-44|rra2014-02-04-45|rra2014-02-04-46)$
-  run_name_regex: (.*)
+  deposition_id: 10115
   run_data_map_file: run_data_map/10115.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: counting
+      manufacturer: Gatan
+      model: K2
+    data_acquisition_software: UCSFTomo
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: FEI
+      model: Polara
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: 4.036
+    spherical_aberration_constant: 2.0
+    tilt_alignment_software: RAPTOR
+    tilt_axis: 84.3
+    tilt_range:
+      max: 55.0
+      min: -55.0
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: 4
+    tilt_step: 1.0
+    tilting_scheme: starting tilt to max then min
+    total_flux: 180.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares:
+    - RAPTOR
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: null
+    reconstruction_method: Weighted back projection
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: 16.145
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/3dimage_*/*'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 16.145
