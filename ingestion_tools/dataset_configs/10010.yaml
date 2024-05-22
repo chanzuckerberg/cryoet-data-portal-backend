@@ -77,6 +77,12 @@ annotations:
     is_visualization_default: true
     mask_label: 3
     shape: SemanticSegmentationMask
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
 datasets:
 - metadata:
     authors: &id004

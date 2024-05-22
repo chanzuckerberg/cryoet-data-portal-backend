@@ -62,6 +62,12 @@ annotations:
     glob_string: '{run_name}/annoRibosome_bin4.txt'
     is_visualization_default: true
     shape: Point
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
 datasets:
 - metadata:
     authors: &id002

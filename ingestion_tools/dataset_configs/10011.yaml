@@ -29,6 +29,12 @@ annotations:
     file_format: csv
     glob_string: aaaa/bbb/{ts_name}.csv
     shape: REQUIRED
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
 datasets:
 - metadata:
     authors:

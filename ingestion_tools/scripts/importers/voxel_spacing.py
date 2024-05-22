@@ -95,7 +95,7 @@ class VoxelSpacingImporter(BaseImporter):
         self.name = self.format_voxel_spacing(float(voxel_spacing))
 
     @classmethod
-    def format_voxel_spacing(cls, voxel_spacing: float) -> None:
+    def format_voxel_spacing(cls, voxel_spacing: float) -> str:
         return "{:.3f}".format(round(voxel_spacing, 3))
 
     def as_float(self) -> float:

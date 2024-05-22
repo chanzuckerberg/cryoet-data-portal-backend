@@ -20,7 +20,6 @@ else:
     TomogramImporter = "TomogramImporter"
     VoxelSpacingImporter = "VoxelSpacingImporter"
     DepositionImportConfig = "DepositionImportConfig"
-    FileSystemApi = "FileSystemApi"
 
 
 class BaseImporter:
@@ -28,7 +27,7 @@ class BaseImporter:
     plural_key: str
     cached_find_results: dict[str, "BaseImporter"] = {}
     finder_factory: DepositionObjectImporterFactory | None = None
-    parents: dict[str, "BaseImporter"] | None = None
+    parents: dict[str, "BaseImporter"]
 
     def __init__(
         self,

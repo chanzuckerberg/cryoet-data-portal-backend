@@ -14,17 +14,17 @@ else:
 ###
 class BaseFinder(ABC):
     @abstractmethod
-    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]) -> dict[str, str]:
         pass
 
 
 class SourceMultiGlobFinder(BaseFinder):
-    list_glob: str
+    list_glob: list[str]
 
-    def __init__(self, list_globs: str):
+    def __init__(self, list_globs: list[str]):
         self.list_globs = list_globs
 
-    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]) -> dict[str, str]:
         responses = {}
         for list_glob in self.list_globs:
             path = os.path.join(config.deposition_root_dir, list_glob.format(**glob_vars))
@@ -42,8 +42,8 @@ class SourceGlobFinder(BaseFinder):
     def __init__(
         self,
         list_glob: str,
-        match_regex: re.Pattern[str] | None = None,
-        name_regex: re.Pattern[str] | None = None,
+        match_regex: str | None = None,
+        name_regex: str | None = None,
     ):
         self.list_glob = list_glob
         if not match_regex:
@@ -54,7 +54,7 @@ class SourceGlobFinder(BaseFinder):
             name_regex = "(.*)"
         self.name_regex = re.compile(name_regex)
 
-    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]) -> dict[str, str]:
         path = os.path.join(config.deposition_root_dir, self.list_glob.format(**glob_vars))
         responses = {}
         for fname in config.fs.glob(path):
@@ -74,12 +74,17 @@ class DestinationGlobFinder(BaseFinder):
     match_regex: re.Pattern[str]
     name_regex: re.Pattern[str]
 
-    def __init__(self, list_glob: str, match_regex: re.Pattern[str], name_regex: re.Pattern[str]):
+    def __init__(self, list_glob: str, match_regex: str | None, name_regex: str):
         self.list_glob = list_glob
+        if not match_regex:
+            match_regex = ".*"
         self.match_regex = re.compile(match_regex)
+
+        if not name_regex:
+            name_regex = "(.*)"
         self.name_regex = re.compile(name_regex)
 
-    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]) -> dict[str, str]:
         path = os.path.join(self.list_glob.format(**glob_vars))
         responses = {}
         for fname in config.fs.glob(path):
@@ -92,12 +97,12 @@ class DestinationGlobFinder(BaseFinder):
 
 
 class BaseLiteralValueFinder:
-    literal_value: list[Any]
+    literal_value: list[str] | dict[str, str | None]
 
-    def __init__(self, value: dict[str, str] | list[str]):
+    def __init__(self, value: dict[str, str | None] | list[str]):
         self.literal_value = value
 
-    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]) -> dict[str, str | None]:
         if isinstance(self.literal_value, dict):
             return self.literal_value
         return {item: None for item in self.literal_value}

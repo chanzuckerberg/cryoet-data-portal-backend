@@ -90,18 +90,23 @@ def update_file(filename: str) -> None:
                 ],
             },
         ]
-    if not data.get("dataset_keyphotos") and data["datasets"][0]["metadata"].get("key_photos"):
+    if not data.get("dataset_keyphotos"):
+        if data["datasets"][0]["metadata"].get("key_photos"):
+            keyphotos = data["datasets"][0]["metadata"]["key_photos"]
+            del data["datasets"][0]["metadata"]["key_photos"]
+        else:
+            keyphotos = {"snapshot": None, "thumbnail": None}
+
         data["dataset_keyphotos"] = [
             {
                 "sources": [
                     {
                         # TODO what if we don't have keyphotos defined?
-                        "literal": {"value": data["datasets"][0]["metadata"]["key_photos"]},
+                        "literal": {"value": keyphotos},
                     },
                 ],
             },
         ]
-        del data["datasets"][0]["metadata"]["key_photos"]
     if not data.get("key_images"):
         if standardization_config.get("tomo_key_photo_glob"):
             # TODO what if we don't have key images defined?
