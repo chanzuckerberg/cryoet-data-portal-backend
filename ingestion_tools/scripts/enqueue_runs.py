@@ -101,12 +101,8 @@ def get_aws_env(env_name):
     return aws_env
 
 
-def to_args(config_file, input_bucket, output_path, **kwargs) -> list[str]:
-    args = [
-        config_file,
-        input_bucket,
-        output_path,
-    ]
+def to_args(**kwargs) -> list[str]:
+    args = []
     for k, v in kwargs.items():
         if not v:
             continue
@@ -232,9 +228,6 @@ def queue(
 
             new_args = {k: v for k, v in kwargs.items() if "run" not in k and "dataset" not in k}
             new_args = to_args(
-                config_file,
-                input_bucket,
-                output_path,
                 import_everything=import_everything,
                 write_mrc=write_mrc,
                 write_zarr=write_zarr,

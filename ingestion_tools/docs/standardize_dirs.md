@@ -37,10 +37,10 @@ source ../.venv/bin/activate
 EXPORT AWS_PROFILE=cryoet-dev
 
 # Main args
-# python3 enqueue_runs.py queue [path to dataset config] [source bucket] [destination bucket] [--stuff-to-import]
+# python3 standardize_dirs.py convert [path to dataset config] [source bucket] [destination bucket] [--stuff-to-import]
 
-# Get information on what types of stuff we can import
-python3 standardize_dirs.py queue --help
+# Get information on what types of data we can import and how to select them.
+python3 standardize_dirs.py convert --help
 
 # Example
 python3 standardize_dirs.py convert dataset_configs/10000.yaml cryoetportal-rawdatasets-dev cryoetportal-output-test --import-everything
