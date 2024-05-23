@@ -9,7 +9,7 @@ stop:
 
 .PHONY: build
 build:
-	$(docker_compose) --profile '*' build
+	$(docker_compose) --profile '*' build $(image)
 
 .PHONY: start
 start:

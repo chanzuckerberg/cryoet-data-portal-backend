@@ -148,7 +148,7 @@ def to_args(config_file, input_bucket, output_path, **kwargs) -> list[str]:
     "--ecr-tag",
     type=str,
     required=True,
-    default="ci-staging",
+    default="main",
     help="Specify docker image tag, defaults to 'main'",
 )
 @click.option(
