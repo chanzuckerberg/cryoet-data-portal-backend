@@ -1,35 +1,34 @@
 annotations:
   - metadata:
       annotation_object:
-        id: GO:0016020
-        name: membrane
+        id: GO:0009431
+        name: flagellar basal body, MS ring
         description: ~
         state: ~
       dates: &repo-dates
-        deposition_date: 2024-02-20
-        last_modified_date: 2024-02-20
-        release_date: 2024-02-20
-      annotation_method: TARDIS
-      method_type: automated
+        deposition_date: 2024-05-20
+        last_modified_date: 2024-05-20
+        release_date: 2024-05-20
+      annotation_method: "manual labeling."
+      method_type: manual
       annotation_publications: ~
       ground_truth_status: False
       authors: &annotation_authors
-        - name: Robert Kiewisz
+        - name: Mohammed Kaplan
           primary_annotator_status: true
-        - name: Tristan Bepler
           corresponding_author_status: true
-      annotation_software: TARDIS
+      annotation_software: "IMOD"
       version: '1.0'
       confidence:
         precision: ~
         recall: ~
-      is_curator_recommended: False
+      is_curator_recommended: True
     sources:
       - file_format: mod
         binning: 1
         shape: Point
         glob_string: "{dataset_name}/{run_name}_MS.mod"
-        is_visualization_default: false
+        is_visualization_default: true
 datasets:
 - sources:
   - source_glob:
