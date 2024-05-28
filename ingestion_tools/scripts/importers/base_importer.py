@@ -6,7 +6,7 @@ import numpy as np
 from mrcfile.mrcobject import MrcObject
 
 from common.finders import DepositionObjectImporterFactory
-from common.image import get_header, get_tomo_metadata, get_voxel_size, scale_mrcfile
+from common.image import get_volume_info, get_tomo_metadata, get_voxel_size, make_pyramids, VolumeInfo
 
 if TYPE_CHECKING:
     from common.config import DepositionImportConfig
@@ -119,12 +119,9 @@ class VolumeImporter(BaseImporter):
     def get_voxel_size(self) -> np.float32:
         return get_voxel_size(self.config.fs, self.volume_filename)
 
-    def get_header(self) -> MrcObject:
-        return get_header(self.config.fs, self.volume_filename)
-
-    def get_output_header(self) -> MrcObject:
+    def get_output_volume_info(self) -> VolumeInfo:
         output_prefix = self.get_output_path()
-        return get_header(self.config.fs, f"{output_prefix}.mrc")
+        return get_volume_info(self.config.fs, f"{output_prefix}.mrc")
 
     def scale_mrcfile(
         self,
@@ -134,7 +131,7 @@ class VolumeImporter(BaseImporter):
         voxel_spacing: float | None = None,
     ) -> dict[str, Any]:
         output_prefix = self.get_output_path()
-        return scale_mrcfile(
+        return make_pyramids(
             self.config.fs,
             output_prefix,
             self.volume_filename,

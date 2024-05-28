@@ -15,7 +15,7 @@ from common.finders import (
     SourceGlobFinder,
 )
 from common.fs import FileSystemApi
-from common.image import check_mask_for_label, scale_mrcfile
+from common.image import check_mask_for_label, make_pyramids
 from common.metadata import AnnotationMetadata
 from importers.base_importer import BaseImporter
 
@@ -273,7 +273,7 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
         fs: FileSystemApi,
         output_prefix: str,
     ):
-        return scale_mrcfile(
+        return make_pyramids(
             fs,
             self.get_output_filename(output_prefix),
             self.path,
@@ -304,7 +304,7 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
         fs: FileSystemApi,
         output_prefix: str,
     ):
-        return scale_mrcfile(
+        return make_pyramids(
             fs,
             self.get_output_filename(output_prefix),
             self.path,
