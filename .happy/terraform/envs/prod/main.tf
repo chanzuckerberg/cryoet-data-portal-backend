@@ -24,7 +24,8 @@ module "stack" {
   services = {
     cryoet-api = {
       name              = "cryoet-api",
-      desired_count     = 1,
+      desired_count     = 2,
+      max_count         = 5,
       port              = 8080,
       memory            = "1500Mi"
       cpu               = "1500m"
