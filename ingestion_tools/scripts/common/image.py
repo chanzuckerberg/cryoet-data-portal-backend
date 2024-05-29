@@ -15,11 +15,12 @@ from mrcfile.mrcobject import MrcObject
 from skimage.transform import downscale_local_mean
 from dataclasses import dataclass
 import numpy as np
-from ome_zarr.io import parse_url as zarr_parse_url
+from ome_zarr.io import parse_url as zarr_parse_url, ZarrLocation
+from abc import ABC, abstractmethod
 from ome_zarr.reader import Reader as ZarrReader
 
 
-from common.fs import FileSystemApi
+from common.fs import FileSystemApi, S3FileSystem
 
 @dataclass
 class VolumeInfo:
@@ -61,8 +62,17 @@ class ZarrReader:
 
 
 class ZarrWriter:
-    def __init__(self, zarrdir: str):
-        self.loc = ome_zarr.io.parse_url(zarrdir, mode="w")
+    def __init__(self, fs: FileSystemApi, zarrdir: str):
+
+        # if isinstance(fs, S3FileSystem):
+        if True:
+            print("====")
+            print("using s3 fs thingie from omezarr")
+            print("====")
+            fsstore = zarr.storage.FSStore(url=zarrdir, mode="w", fs=fs.s3fs)
+            self.loc = ZarrLocation(fsstore)
+        else:
+            self.loc = ome_zarr.io.parse_url(zarrdir, mode="w")
         self.root_group = zarr.group(self.loc.store, overwrite=True)
 
     def ome_zarr_axes(self) -> List[Dict[str, str]]:
@@ -126,10 +136,10 @@ class VolumeReader(ABC):
     def get_volume_info(self) -> VolumeInfo:
         pass
 
-    def get_mrc_extended_header() -> np.rec.array | None:
+    def get_mrc_extended_header() -> np.record | None:
         return None
 
-    def get_mrc_header() -> np.rec.array | None:
+    def get_mrc_header() -> np.record | None:
         return None
 
 class MRCReader(VolumeReader):
@@ -151,10 +161,10 @@ class MRCReader(VolumeReader):
             self.extended_header = mrc.extended_header
             self.data: np.ndarray = mrc.data
 
-    def get_mrc_header() -> np.rec.array:
+    def get_mrc_header(self) -> np.rec.array:
         return self.header
     
-    def get_mrc_extended_header() -> np.rec.array:
+    def get_mrc_extended_header(self) -> np.rec.array:
         return self.extended_header
 
     def get_pyramid_base_data(self) -> np.ndarray:
@@ -300,7 +310,7 @@ class TomoConverter:
         destination_zarrdir = fs.destformat(zarrdir)
         # Write zarr data as 256^3 voxel chunks
         if write:
-            writer = ZarrWriter(destination_zarrdir)
+            writer = ZarrWriter(fs, destination_zarrdir)
             writer.write_data(pyramid, voxel_spacing=pyramid_voxel_spacing, chunk_size=(256, 256, 256))
         else:
             print(f"skipping remote push for {destination_zarrdir}")
@@ -326,10 +336,10 @@ class TomoConverter:
             header.extra1 = old_header.extra1
             header.extra2 = old_header.extra2
             if old_header.exttyp.item().decode().strip():
-                if ext := self.tomo_reader.get_mrc_extended_header():
-                    mrcfile.set_extended_header(ext)
                 header.nsymbt = old_header.nsymbt
                 header.exttyp = old_header.exttyp
+                if ext := self.tomo_reader.get_mrc_extended_header():
+                    mrcfile.set_extended_header(ext)
 
         if header_mapper:
             header_mapper(header)
