@@ -3,10 +3,9 @@ import os
 from typing import TYPE_CHECKING, Any, Optional
 
 import numpy as np
-from mrcfile.mrcobject import MrcObject
 
 from common.finders import DepositionObjectImporterFactory
-from common.image import get_volume_info, get_tomo_metadata, get_voxel_size, make_pyramids, VolumeInfo
+from common.image import VolumeInfo, get_tomo_metadata, get_volume_info, get_voxel_size, make_pyramids
 
 if TYPE_CHECKING:
     from common.config import DepositionImportConfig

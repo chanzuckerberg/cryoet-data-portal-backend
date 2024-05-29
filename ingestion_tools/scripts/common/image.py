@@ -1,6 +1,8 @@
 import json
 import os
 import os.path
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Callable, Dict, List, Tuple
 
@@ -12,15 +14,12 @@ import ome_zarr.writer
 import zarr
 from mrcfile.mrcfile import MrcFile
 from mrcfile.mrcobject import MrcObject
-from skimage.transform import downscale_local_mean
-from dataclasses import dataclass
-import numpy as np
-from ome_zarr.io import parse_url as zarr_parse_url, ZarrLocation
-from abc import ABC, abstractmethod
+from ome_zarr.io import ZarrLocation
 from ome_zarr.reader import Reader as Reader
-
+from skimage.transform import downscale_local_mean
 
 from common.fs import FileSystemApi, S3Filesystem
+
 
 @dataclass
 class VolumeInfo:
@@ -39,13 +38,13 @@ class VolumeInfo:
     # Data we save
     rms: float
     dmean: float
-    
+
     def get_dimensions(self) -> Dict[str, int]:
         return {d: getattr(self, f"{d}end") - getattr(self, f"n{d}start") for d in "xyz"}
 
     def get_max_dimension(self) -> int:
         return max(self.get_dimensions().values())
-    
+
     def get_center_coords(self) -> List[int]:
         return [np.round(np.mean([getattr(self, f"{d}end"), getattr(self, f"{d}start")])) for d in "xyz"]
 
@@ -138,6 +137,7 @@ class VolumeReader(ABC):
     def get_mrc_header(self) -> np.record | None:
         return None
 
+
 class MRCReader(VolumeReader):
     filename: str
     header: np.rec.array
@@ -159,7 +159,7 @@ class MRCReader(VolumeReader):
 
     def get_mrc_header(self) -> np.rec.array:
         return self.header
-    
+
     def get_mrc_extended_header(self) -> np.rec.array:
         return self.extended_header
 
@@ -176,7 +176,8 @@ class MRCReader(VolumeReader):
             self.header.ny.item(),
             self.header.nz.item(),
             self.header.rms.item(),
-            self.header.dmean.item())
+            self.header.dmean.item(),
+        )
 
 
 class OMEZarrReader(VolumeReader):
@@ -193,7 +194,7 @@ class OMEZarrReader(VolumeReader):
         else:
             self.loc = ome_zarr.io.parse_url(filename, mode="w")
 
-        #parsed_url = zarr_parse_url(filename, mode="r")
+        # parsed_url = zarr_parse_url(filename, mode="r")
         reader = Reader(self.loc)
 
         nodes = list(reader())
@@ -228,6 +229,7 @@ class OMEZarrReader(VolumeReader):
             dmean,
         )
 
+
 class TomoConverter:
     def __init__(self, fs: FileSystemApi, filename: str, header_only: bool = False):
         if ".zarr" in filename:
@@ -238,7 +240,7 @@ class TomoConverter:
     @classmethod
     def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:
         return data
-    
+
     def get_voxel_size(self) -> np.float32:
         return self.get_volume_info().voxel_size
 
@@ -331,7 +333,7 @@ class TomoConverter:
         header.cella.z = isotropic_voxel_size * data.shape[0]
         header.label[0] = "{0:40s}{1:>39s}".format("Validated by cryoET data portal.", time)
         header.rms = np.sqrt(np.mean((data - np.mean(data)) ** 2))
-        
+
         header.nsymbt = np.array(0, dtype="i4")
         header.exttyp = np.array(b"MRCO", dtype="S4")
 

@@ -1,11 +1,10 @@
 import mrcfile
 import zarr
-import ome_zarr
-import ome_zarr.io
+from ome_zarr.io import parse_url
+from ome_zarr.reader import Reader as Reader
+
 from common.fs import FileSystemApi
 from common.image import make_pyramids
-from ome_zarr.io import parse_url as ZarrLocation
-from ome_zarr.reader import Reader as Reader
 
 
 def test_convert_mrc_to_mrc(s3_fs: FileSystemApi, test_output_bucket: str) -> None:
@@ -34,6 +33,7 @@ def test_convert_mrc_to_mrc(s3_fs: FileSystemApi, test_output_bucket: str) -> No
     assert mrc.header.my.item() == 4
     assert mrc.header.mz.item() == 4
 
+
 def test_convert_zarr_to_mrc(s3_fs: FileSystemApi, test_output_bucket: str) -> None:
     output_path = f"{test_output_bucket}/output"
     input_file = "test-public-bucket/input_bucket/sample_tomos/input_omezarr.zarr"
@@ -60,14 +60,14 @@ def test_convert_zarr_to_mrc(s3_fs: FileSystemApi, test_output_bucket: str) -> N
     assert mrc.header.my.item() == 4
     assert mrc.header.mz.item() == 4
 
+
 def test_convert_mrc_to_omezarr(s3_fs: FileSystemApi, test_output_bucket: str) -> None:
     output_path = f"{test_output_bucket}/output"
     input_file = "test-public-bucket/input_bucket/sample_tomos/input_mrc.mrc"
     make_pyramids(s3_fs, output_path, input_file)
 
     fsstore = zarr.storage.FSStore(url=f"{output_path}.zarr", mode="r", fs=s3_fs.s3fs)
-    loc = ZarrLocation(fsstore)
-    root_group = zarr.group(loc.store)
+    loc = parse_url(fsstore)
     attrs = loc.root_attrs
     assert attrs["multiscales"][0]["axes"][0] == {"name": "z", "unit": "angstrom", "type": "space"}
 
@@ -76,7 +76,7 @@ def test_convert_mrc_to_omezarr(s3_fs: FileSystemApi, test_output_bucket: str) -
     for ds in attrs["multiscales"][0]["datasets"]:
         assert ds["coordinateTransformations"][0]["scale"] == [spacing, spacing, spacing]
         spacing *= 2
-    
+
     reader = Reader(loc)
     nodes = list(reader())
     assert len(nodes[0].data) == 3
@@ -85,14 +85,14 @@ def test_convert_mrc_to_omezarr(s3_fs: FileSystemApi, test_output_bucket: str) -
         assert node.shape == (img_dim, img_dim, img_dim)
         img_dim /= 2
 
+
 def test_convert_omezarr_to_omezarr(s3_fs: FileSystemApi, test_output_bucket: str) -> None:
     output_path = f"{test_output_bucket}/output"
     input_file = "test-public-bucket/input_bucket/sample_tomos/input_omezarr.zarr"
     make_pyramids(s3_fs, output_path, input_file)
 
     fsstore = zarr.storage.FSStore(url=f"{output_path}.zarr", mode="r", fs=s3_fs.s3fs)
-    loc = ZarrLocation(fsstore)
-    root_group = zarr.group(loc.store)
+    loc = parse_url(fsstore)
     attrs = loc.root_attrs
     assert attrs["multiscales"][0]["axes"][0] == {"name": "z", "unit": "angstrom", "type": "space"}
 
@@ -101,7 +101,7 @@ def test_convert_omezarr_to_omezarr(s3_fs: FileSystemApi, test_output_bucket: st
     for ds in attrs["multiscales"][0]["datasets"]:
         assert ds["coordinateTransformations"][0]["scale"] == [spacing, spacing, spacing]
         spacing *= 2
-    
+
     reader = Reader(loc)
     nodes = list(reader())
     assert len(nodes[0].data) == 3

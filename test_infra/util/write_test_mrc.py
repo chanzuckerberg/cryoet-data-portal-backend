@@ -1,7 +1,6 @@
 import mrcfile
 import numpy as np
 import ome_zarr
-
 import ome_zarr.io
 import ome_zarr.writer
 import zarr

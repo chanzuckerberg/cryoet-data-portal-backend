@@ -1,16 +1,14 @@
 from typing import TYPE_CHECKING, Any
 from urllib.parse import urljoin
 
-import numpy as np
-
 from common.config import DepositionImportConfig
 from common.finders import DefaultImporterFactory
 from common.metadata import NeuroglancerMetadata
 from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
-    from importers.tomogram import TomogramImporter
     from common.image import VolumeInfo
+    from importers.tomogram import TomogramImporter
 else:
     TomogramImporter = "TomogramImporter"
     VolumeInfo = "VolumeInfo"
