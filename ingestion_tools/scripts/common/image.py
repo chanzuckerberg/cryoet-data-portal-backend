@@ -64,7 +64,7 @@ class ZarrWriter:
     def __init__(self, fs: FileSystemApi, zarrdir: str):
 
         if isinstance(fs, S3Filesystem):
-            fsstore = zarr.storage.FSStore(url=zarrdir, mode="w", fs=fs.s3fs)
+            fsstore = zarr.storage.FSStore(url=zarrdir, mode="w", fs=fs.s3fs, dimension_separator="/")
             self.loc = ZarrLocation(fsstore)
         else:
             self.loc = ome_zarr.io.parse_url(zarrdir, mode="w")
