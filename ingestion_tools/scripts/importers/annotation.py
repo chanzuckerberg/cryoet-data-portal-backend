@@ -244,7 +244,7 @@ class BaseAnnotationSource(AnnotationImporter):
 
 
 class VolumeAnnotationSource(BaseAnnotationSource):
-    valid_file_formats: list[str] = ["mrc"]
+    valid_file_formats: list[str] = ["mrc", "zarr"]
 
     def get_output_filename(self, output_prefix: str, extension: str | None = None):
         filename = f"{output_prefix}_{self.shape.lower()}"
