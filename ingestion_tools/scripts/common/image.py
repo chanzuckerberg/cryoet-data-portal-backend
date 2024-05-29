@@ -17,10 +17,10 @@ from dataclasses import dataclass
 import numpy as np
 from ome_zarr.io import parse_url as zarr_parse_url, ZarrLocation
 from abc import ABC, abstractmethod
-from ome_zarr.reader import Reader as ZarrReader
+from ome_zarr.reader import Reader as Reader
 
 
-from common.fs import FileSystemApi, S3FileSystem
+from common.fs import FileSystemApi, S3Filesystem
 
 @dataclass
 class VolumeInfo:
@@ -64,11 +64,7 @@ class ZarrReader:
 class ZarrWriter:
     def __init__(self, fs: FileSystemApi, zarrdir: str):
 
-        # if isinstance(fs, S3FileSystem):
-        if True:
-            print("====")
-            print("using s3 fs thingie from omezarr")
-            print("====")
+        if isinstance(fs, S3Filesystem):
             fsstore = zarr.storage.FSStore(url=zarrdir, mode="w", fs=fs.s3fs)
             self.loc = ZarrLocation(fsstore)
         else:
@@ -136,10 +132,10 @@ class VolumeReader(ABC):
     def get_volume_info(self) -> VolumeInfo:
         pass
 
-    def get_mrc_extended_header() -> np.record | None:
+    def get_mrc_extended_header(self) -> np.record | None:
         return None
 
-    def get_mrc_header() -> np.record | None:
+    def get_mrc_header(self) -> np.record | None:
         return None
 
 class MRCReader(VolumeReader):
@@ -183,21 +179,29 @@ class MRCReader(VolumeReader):
             self.header.dmean.item())
 
 
-class OMEZarrReader(ZarrReader):
+class OMEZarrReader(VolumeReader):
     _header_only: bool
     _attrs: dict[str, Any]
     data: np.ndarray
 
     def __init__(self, fs: FileSystemApi, filename: str, header_only: bool = False):
         self.filename = filename
-        parsed_url = zarr_parse_url(filename, mode="r")
-        reader = ZarrReader(parsed_url)
+
+        if isinstance(fs, S3Filesystem):
+            fsstore = zarr.storage.FSStore(url=filename, mode="w", fs=fs.s3fs)
+            self.loc = ZarrLocation(fsstore)
+        else:
+            self.loc = ome_zarr.io.parse_url(filename, mode="w")
+
+        #parsed_url = zarr_parse_url(filename, mode="r")
+        reader = Reader(self.loc)
+
         nodes = list(reader())
-        self._attrs = parsed_url.attrs()
+        self._attrs = self.loc.root_attrs
         self._header_only = header_only
 
         if not header_only:
-            self.data = nodes[0].data[0]
+            self.data = np.asarray(nodes[0].data[0])
 
     def get_pyramid_base_data(self) -> np.ndarray:
         return self.data.astype(np.float32)
