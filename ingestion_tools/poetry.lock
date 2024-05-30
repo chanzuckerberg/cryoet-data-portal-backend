@@ -2772,20 +2772,20 @@ six = ">=1.6.1"
 
 [[package]]
 name = "ome-zarr"
-version = "0.8.3"
+version = "0.9.0"
 description = "Implementation of images in Zarr files."
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "ome-zarr-0.8.3.tar.gz", hash = "sha256:e98762e6a3cc82e8f6ef50c938e23fc579498d94d1991f3476ccf9726209997b"},
-    {file = "ome_zarr-0.8.3-py3-none-any.whl", hash = "sha256:550543fe4a06f1f5c3f860d000ea84836f29a44b83666f7404102e1672b116ce"},
+    {file = "ome-zarr-0.9.0.tar.gz", hash = "sha256:01392f1d1fc54d6b819a0125c99550c14ab89a24e1fccdfd58f09a2c4f2326dc"},
+    {file = "ome_zarr-0.9.0-py3-none-any.whl", hash = "sha256:f8e0fc5ecb5ef8803615be22fb12906f2b9b937baccbee44a534cc1c426f9f97"},
 ]
 
 [package.dependencies]
 aiohttp = "<4"
 dask = "*"
 distributed = "*"
-fsspec = {version = ">=0.8,<2021.07.0 || >2021.07.0,<2023.09.0 || >2023.09.0", extras = ["s3"]}
+fsspec = {version = ">=0.8,<2021.07.0 || >2021.07.0", extras = ["s3"]}
 numpy = "*"
 requests = "*"
 scikit-image = "*"

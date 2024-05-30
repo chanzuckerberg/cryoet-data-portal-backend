@@ -1,6 +1,8 @@
 import json
 import os
 import os.path
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Callable, Dict, List, Tuple
 
@@ -12,9 +14,39 @@ import ome_zarr.writer
 import zarr
 from mrcfile.mrcfile import MrcFile
 from mrcfile.mrcobject import MrcObject
+from ome_zarr.io import ZarrLocation
+from ome_zarr.reader import Reader as Reader
 from skimage.transform import downscale_local_mean
 
-from common.fs import FileSystemApi
+from common.fs import FileSystemApi, S3Filesystem
+
+
+@dataclass
+class VolumeInfo:
+    voxel_size: float
+
+    # start coords
+    xstart: int
+    ystart: int
+    zstart: int
+
+    # end coords
+    xend: int
+    yend: int
+    zend: int
+
+    # Data we save
+    rms: float
+    dmean: float
+
+    def get_dimensions(self) -> Dict[str, int]:
+        return {d: getattr(self, f"{d}end") - getattr(self, f"{d}start") for d in "xyz"}
+
+    def get_max_dimension(self) -> int:
+        return max(self.get_dimensions().values())
+
+    def get_center_coords(self) -> List[int]:
+        return [np.round(np.mean([getattr(self, f"{d}end"), getattr(self, f"{d}start")])) for d in "xyz"]
 
 
 class ZarrReader:
@@ -29,8 +61,12 @@ class ZarrReader:
 
 
 class ZarrWriter:
-    def __init__(self, zarrdir: str):
-        self.loc = ome_zarr.io.parse_url(zarrdir, mode="w")
+    def __init__(self, fs: FileSystemApi, zarrdir: str):
+        if isinstance(fs, S3Filesystem):
+            fsstore = zarr.storage.FSStore(url=zarrdir, mode="w", fs=fs.s3fs, dimension_separator="/")
+            self.loc = ZarrLocation(fsstore)
+        else:
+            self.loc = ome_zarr.io.parse_url(zarrdir, mode="w")
         self.root_group = zarr.group(self.loc.store, overwrite=True)
 
     def ome_zarr_axes(self) -> List[Dict[str, str]]:
@@ -85,26 +121,130 @@ class ZarrWriter:
         )
 
 
-class TomoConverter:
-    def __init__(self, fs: FileSystemApi, mrc_filename: str, header_only: bool = False):
+class VolumeReader(ABC):
+    @abstractmethod
+    def get_pyramid_base_data(self) -> np.ndarray:
+        pass
+
+    @abstractmethod
+    def get_volume_info(self) -> VolumeInfo:
+        pass
+
+    def get_mrc_extended_header(self) -> np.record | None:
+        return None
+
+    def get_mrc_header(self) -> np.record | None:
+        return None
+
+
+class MRCReader(VolumeReader):
+    filename: str
+    header: np.rec.array
+    extended_header: np.rec.array
+    _voxel_size: float
+
+    def __init__(self, fs: FileSystemApi, filename: str, header_only: bool = False):
         if header_only:
-            self.mrc_filename = fs.read_block(mrc_filename)
+            self.filename = fs.read_block(filename)
         else:
-            self.mrc_filename = fs.localreadable(mrc_filename)
-        with mrcfile.open(self.mrc_filename, permissive=True, header_only=header_only) as mrc:
+            self.filename = fs.localreadable(filename)
+        with mrcfile.open(self.filename, permissive=True, header_only=header_only) as mrc:
             if mrc.data is None and not header_only:
                 raise Exception("missing mrc data")
             self.header = mrc.header
+            self._voxel_size = mrc.voxel_size.y.item()
             self.extended_header = mrc.extended_header
-            self.voxel_size: np.rec.array = mrc.voxel_size
             self.data: np.ndarray = mrc.data
+
+    def get_mrc_header(self) -> np.rec.array:
+        return self.header
+
+    def get_mrc_extended_header(self) -> np.rec.array:
+        return self.extended_header
 
     def get_pyramid_base_data(self) -> np.ndarray:
         return self.data.astype(np.float32)
 
+    def get_volume_info(self) -> VolumeInfo:
+        return VolumeInfo(
+            self._voxel_size,
+            self.header.nxstart.item(),
+            self.header.nystart.item(),
+            self.header.nzstart.item(),
+            self.header.nx.item(),
+            self.header.ny.item(),
+            self.header.nz.item(),
+            self.header.rms.item(),
+            self.header.dmean.item(),
+        )
+
+
+class OMEZarrReader(VolumeReader):
+    _header_only: bool
+    _attrs: dict[str, Any]
+    data: np.ndarray
+
+    def __init__(self, fs: FileSystemApi, filename: str, header_only: bool = False):
+        self.filename = filename
+
+        if isinstance(fs, S3Filesystem):
+            fsstore = zarr.storage.FSStore(url=filename, mode="w", fs=fs.s3fs)
+            self.loc = ZarrLocation(fsstore)
+        else:
+            self.loc = ome_zarr.io.parse_url(filename, mode="w")
+
+        # parsed_url = zarr_parse_url(filename, mode="r")
+        reader = Reader(self.loc)
+
+        nodes = list(reader())
+        self._attrs = self.loc.root_attrs
+        self._header_only = header_only
+
+        if not header_only:
+            self.data = np.asarray(nodes[0].data[0])
+
+    def get_pyramid_base_data(self) -> np.ndarray:
+        return self.data.astype(np.float32)
+
+    def get_volume_info(self) -> VolumeInfo:
+        rms = 0.0
+        dmean = 0.0
+
+        # TODO - We don't currently need to return dmean/rms for zarrs, so let's skip it for now.
+        # if not self._header_only:
+        #     rms = np.sqrt(np.mean((self.data - np.mean(self.data)) ** 2))  # Calculate RMS,
+        #     dmean = np.mean(self.data)  # Calculate dmean
+
+        z, y, x = self.data.shape
+        return VolumeInfo(
+            self._attrs["multiscales"][0]["datasets"][0]["coordinateTransformations"][0]["scale"][1],
+            0,
+            0,
+            0,
+            x,
+            y,
+            z,
+            rms,
+            dmean,
+        )
+
+
+class TomoConverter:
+    def __init__(self, fs: FileSystemApi, filename: str, header_only: bool = False):
+        if ".zarr" in filename:
+            self.tomo_reader = OMEZarrReader(fs, filename, header_only)
+        else:
+            self.tomo_reader = MRCReader(fs, filename, header_only)
+
     @classmethod
     def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:
         return data
+
+    def get_voxel_size(self) -> np.float32:
+        return self.get_volume_info().voxel_size
+
+    def get_volume_info(self) -> VolumeInfo:
+        return self.tomo_reader.get_volume_info()
 
     # Make an array of an original size image, plus `max_layers` half-scaled images
     def make_pyramid(
@@ -120,7 +260,7 @@ class TomoConverter:
         # Ensure voxel spacing rounded to 3rd digit
         voxel_spacing = round(voxel_spacing, 3)
 
-        pyramid = [self.get_pyramid_base_data()]
+        pyramid = [self.tomo_reader.get_pyramid_base_data()]
         pyramid_voxel_spacing = [(voxel_spacing, voxel_spacing, voxel_spacing)]
         z_scale = 2 if scale_z_axis else 1
         # Then make a pyramid of 100/50/25 percent scale volumes
@@ -141,7 +281,7 @@ class TomoConverter:
         self,
         fs: FileSystemApi,
         pyramid: List[np.ndarray],
-        mrc_filename: str,
+        filename: str,
         write: bool = True,
         header_mapper: Callable[[np.array], None] = None,
         voxel_spacing: float = None,
@@ -150,7 +290,7 @@ class TomoConverter:
         # NOTE - 2023-10-24
         # We are no longer binning tomograms to multiple scales. We can include multiscale
         # in our omezarr's but generating smaller MRC's just confuses everyone.
-        filename = fs.localwritable(mrc_filename)
+        filename = fs.localwritable(filename)
         mrcfiles.append(os.path.basename(filename))
 
         if write:
@@ -175,14 +315,11 @@ class TomoConverter:
         destination_zarrdir = fs.destformat(zarrdir)
         # Write zarr data as 256^3 voxel chunks
         if write:
-            writer = ZarrWriter(destination_zarrdir)
+            writer = ZarrWriter(fs, destination_zarrdir)
             writer.write_data(pyramid, voxel_spacing=pyramid_voxel_spacing, chunk_size=(256, 256, 256))
         else:
             print(f"skipping remote push for {destination_zarrdir}")
         return os.path.basename(zarrdir)
-
-    def get_voxel_size(self) -> np.float32:
-        return self.voxel_size.y
 
     def update_headers(self, mrcfile: MrcFile, header_mapper, voxel_spacing):
         header = mrcfile.header
@@ -195,24 +332,27 @@ class TomoConverter:
         header.cella.z = isotropic_voxel_size * data.shape[0]
         header.label[0] = "{0:40s}{1:>39s}".format("Validated by cryoET data portal.", time)
         header.rms = np.sqrt(np.mean((data - np.mean(data)) ** 2))
-        header.extra1 = self.header.extra1
-        header.extra2 = self.header.extra2
 
-        if self.header.exttyp.item().decode().strip():
-            mrcfile.set_extended_header(self.extended_header)
-            header.nsymbt = self.header.nsymbt
-            header.exttyp = self.header.exttyp
-        else:
-            header.nsymbt = np.array(0, dtype="i4")
-            header.exttyp = np.array(b"MRCO", dtype="S4")
+        header.nsymbt = np.array(0, dtype="i4")
+        header.exttyp = np.array(b"MRCO", dtype="S4")
+
+        # If we're converting an MRC to another MRC, copy over some header info.
+        if old_header := self.tomo_reader.get_mrc_header():
+            header.extra1 = old_header.extra1
+            header.extra2 = old_header.extra2
+            if old_header.exttyp.item().decode().strip():
+                header.nsymbt = old_header.nsymbt
+                header.exttyp = old_header.exttyp
+                if ext := self.tomo_reader.get_mrc_extended_header():
+                    mrcfile.set_extended_header(ext)
 
         if header_mapper:
             header_mapper(header)
 
 
 class MaskConverter(TomoConverter):
-    def __init__(self, fs: FileSystemApi, mrc_filename: str, label: int = 1, header_only: bool = False):
-        super().__init__(fs, mrc_filename, header_only)
+    def __init__(self, fs: FileSystemApi, filename: str, label: int = 1, header_only: bool = False):
+        super().__init__(fs, filename, header_only)
         self.label = label
 
     def get_pyramid_base_data(self) -> np.ndarray:
@@ -261,8 +401,8 @@ def get_voxel_size(fs: FileSystemApi, tomo_filename: str) -> np.float32:
     return TomoConverter(fs, tomo_filename, header_only=True).get_voxel_size()
 
 
-def get_header(fs: FileSystemApi, tomo_filename: str) -> MrcObject:
-    return TomoConverter(fs, tomo_filename, header_only=True).header
+def get_volume_info(fs: FileSystemApi, tomo_filename: str) -> MrcObject:
+    return TomoConverter(fs, tomo_filename, header_only=True).volume_info()
 
 
 def get_converter(fs: FileSystemApi, tomo_filename: str, label: int | None = None):
@@ -271,7 +411,7 @@ def get_converter(fs: FileSystemApi, tomo_filename: str, label: int | None = Non
     return TomoConverter(fs, tomo_filename)
 
 
-def scale_mrcfile(
+def make_pyramids(
     fs: FileSystemApi,
     output_prefix: str,
     tomo_filename: str,

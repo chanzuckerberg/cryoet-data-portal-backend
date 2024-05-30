@@ -36,25 +36,25 @@ class NeuroglancerImporter(BaseImporter):
 
     def _get_config_json(self, zarr_dir: str) -> dict[str, Any]:
         zarr_dir_path = zarr_dir.removeprefix(self.config.output_prefix).removeprefix("/")
-        voxel_size = self.get_voxel_spacing().as_float()
+        volume_info = self.get_tomogram().get_output_volume_info()
+        voxel_size = volume_info.voxel_size
         resolution = (voxel_size * 1e-10, voxel_size * 1e-10, voxel_size * 1e-10)
-        volume_header = self.get_tomogram().get_output_header()
         run_name = self.get_run().name
 
         image_layer = state_generator.generate_image_layer(
             zarr_dir_path,
             scale=resolution,
             url=self.config.https_prefix,
-            size={d: volume_header[f"n{d}"].item() for d in "xyz"},
+            size=volume_info.get_dimensions(),
             name=run_name,
-            mean=volume_header.dmean.item(),
-            rms=volume_header.rms.item(),
-            start={d: volume_header[f"n{d}start"].item() for d in "xyz"},
+            mean=volume_info.dmean,
+            rms=volume_info.rms,
+            start={d: getattr(volume_info, f"{d}start") for d in "xyz"},
         )
         layers = [image_layer]
         colors_used = []
 
-        ng_output_path = self.config.resolve_output_path("neuroglancer_precompute", run_name, voxel_size)
+        ng_output_path = self.config.resolve_output_path("neuroglancer_precompute", self)
         for annotation_metadata_path in self._get_annotation_metadata_files():
             local_path = self.config.fs.localreadable(annotation_metadata_path)
             with open(local_path, "r") as f:
