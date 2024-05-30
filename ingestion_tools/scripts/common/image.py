@@ -40,7 +40,7 @@ class VolumeInfo:
     dmean: float
 
     def get_dimensions(self) -> Dict[str, int]:
-        return {d: getattr(self, f"{d}end") - getattr(self, f"n{d}start") for d in "xyz"}
+        return {d: getattr(self, f"{d}end") - getattr(self, f"{d}start") for d in "xyz"}
 
     def get_max_dimension(self) -> int:
         return max(self.get_dimensions().values())
@@ -62,7 +62,6 @@ class ZarrReader:
 
 class ZarrWriter:
     def __init__(self, fs: FileSystemApi, zarrdir: str):
-
         if isinstance(fs, S3Filesystem):
             fsstore = zarr.storage.FSStore(url=zarrdir, mode="w", fs=fs.s3fs, dimension_separator="/")
             self.loc = ZarrLocation(fsstore)
