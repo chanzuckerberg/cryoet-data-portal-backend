@@ -84,6 +84,7 @@ def test_convert_mrc_to_omezarr(s3_fs: FileSystemApi, test_output_bucket: str) -
     for node in nodes[0].data:
         assert node.shape == (img_dim, img_dim, img_dim)
         img_dim /= 2
+    assert s3_fs.exists(f"{output_path}.zarr/0/0/0/0")
 
 
 def test_convert_omezarr_to_omezarr(s3_fs: FileSystemApi, test_output_bucket: str) -> None:
@@ -109,3 +110,4 @@ def test_convert_omezarr_to_omezarr(s3_fs: FileSystemApi, test_output_bucket: st
     for node in nodes[0].data:
         assert node.shape == (img_dim, img_dim, img_dim)
         img_dim /= 2
+    assert s3_fs.exists(f"{output_path}.zarr/0/0/0/0")
