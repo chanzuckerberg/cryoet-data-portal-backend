@@ -1,17 +1,17 @@
 from typing import TYPE_CHECKING, Any
 from urllib.parse import urljoin
 
-import numpy as np
-
 from common.config import DepositionImportConfig
 from common.finders import DefaultImporterFactory
 from common.metadata import NeuroglancerMetadata
 from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
+    from common.image import VolumeInfo
     from importers.tomogram import TomogramImporter
 else:
     TomogramImporter = "TomogramImporter"
+    VolumeInfo = "VolumeInfo"
 
 
 class NeuroglancerImporter(BaseImporter):
@@ -31,12 +31,12 @@ class NeuroglancerImporter(BaseImporter):
         zarr_dir_url_path = zarr_dir.removeprefix(self.config.output_prefix)
         zarr_url = urljoin(self.config.https_prefix, zarr_dir_url_path)
         voxel_size = self.get_voxel_spacing().as_float()
-        volume_header = self.get_tomogram().get_output_header()
+        volume_info = self.get_tomogram().get_output_volume_info()
         dimensions = {k: [voxel_size * 1e-10, "m"] for k in "xyz"}
         return {
             "dimensions": dimensions,
-            "position": self.get_position(volume_header),
-            "crossSectionScale": self.get_cross_section_scale(volume_header),
+            "position": self.get_position(volume_info),
+            "crossSectionScale": self.get_cross_section_scale(volume_info),
             "crossSectionBackgroundColor": "#000000",
             "layers": [
                 {
@@ -44,7 +44,7 @@ class NeuroglancerImporter(BaseImporter):
                     "source": f"zarr://{zarr_url}",
                     "opacity": 0.51,
                     "shader": "#uicontrol invlerp normalized\n\nvoid main() {\n  emitGrayscale(normalized());\n}\n",
-                    "shaderControls": self.get_shader_controller(volume_header),
+                    "shaderControls": self.get_shader_controller(volume_info),
                     "name": "tomogram",
                 },
             ],
@@ -53,20 +53,20 @@ class NeuroglancerImporter(BaseImporter):
         }
 
     @classmethod
-    def get_cross_section_scale(cls, header: np.recarray) -> float:
+    def get_cross_section_scale(cls, vol_info: VolumeInfo) -> float:
         avg_cross_section_render_height = 400
-        largest_dimension = max([header[f"n{d}"].item() - header[f"n{d}start"].item() for d in "xyz"])
+        largest_dimension = vol_info.get_max_dimension()
         return max(largest_dimension / avg_cross_section_render_height, 1)
 
     @classmethod
-    def get_position(cls, header: np.recarray) -> list[float]:
-        return [np.round(np.mean([header[f"n{d}"].item(), header[f"n{d}start"].item()])) for d in "xyz"]
+    def get_position(cls, vol_info: VolumeInfo) -> list[float]:
+        return vol_info.get_center_coords()
 
     @classmethod
-    def get_shader_controller(cls, tomo_header: np.recarray) -> dict[str, Any]:
-        width = 3 * tomo_header.rms.item()
+    def get_shader_controller(cls, vol_info: VolumeInfo) -> dict[str, Any]:
+        width = 3 * vol_info.rms
 
-        mean = tomo_header.dmean.item()
+        mean = vol_info.dmean
         start = mean - width
         end = mean + width
 

@@ -46,7 +46,7 @@ class TiltSeriesImporter(VolumeImporter):
         pixel_spacing = self.get_base_metadata().get("pixel_spacing")
         if pixel_spacing:
             return float(pixel_spacing)
-        return round(self.get_voxel_size().item(), 3)
+        return round(self.get_voxel_size(), 3)
 
     def mrc_header_mapper(self, header) -> None:
         header.ispg = 0
