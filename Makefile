@@ -23,7 +23,6 @@ ingestor-init:
 .PHONY: api-init
 api-init:
 	docker compose --profile api up -d
-	cd ./test_infra/; ./seed_moto.sh
 	docker compose cp test_infra/sql db:/tmp/sql
 	docker compose exec db sh -c 'cat /tmp/sql/seed_db_data.sql | psql postgres://postgres:postgres@127.0.0.1:5432/cryoet'
 
