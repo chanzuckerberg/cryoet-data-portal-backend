@@ -32,7 +32,7 @@ datasets:
       name: Pseudomonas aeruginosa
       taxonomy_id: 287
     sample_preparation: The cells were grown overnight in LB at 37 C.
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

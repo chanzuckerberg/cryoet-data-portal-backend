@@ -30,7 +30,7 @@ datasets:
       name: Magnetospirillum magneticum
       taxonomy_id: 342108
     sample_preparation: null
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

@@ -36,7 +36,7 @@ datasets:
       with 5% CO2. the cells were grown . for 48 hours and then spread on a new plate
       with a cotton swab and left to grow for 24 hours. . The grids were prepared
       from both batches (48 hours, and 24 hours, separately).
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

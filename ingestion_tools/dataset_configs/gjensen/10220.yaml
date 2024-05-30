@@ -35,7 +35,7 @@ datasets:
       taxonomy_id: 407148
     sample_preparation: Medium magnification tomograms of whole FlgP mutant Campylobacter
       cells
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

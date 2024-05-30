@@ -30,7 +30,7 @@ datasets:
       name: Pseudomonas aeruginosa
       taxonomy_id: 287
     sample_preparation: Pseudomonas aeruginosa delta aer2
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

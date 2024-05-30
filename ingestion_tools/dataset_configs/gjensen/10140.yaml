@@ -37,7 +37,7 @@ datasets:
       bovine serum at 37 degrees in microaerobic chamber with GasPak EZ Campy Sachets
       for 3 days, OD600=0.4.  Spun cells down at 3000rpm for 5 minutes to concentrate
       before using; resuspended pellet.
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

@@ -34,7 +34,7 @@ datasets:
       taxonomy_id: 338192
     sample_preparation: Nmar cells, looking for ESCRt related structures in dividing
       cells
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

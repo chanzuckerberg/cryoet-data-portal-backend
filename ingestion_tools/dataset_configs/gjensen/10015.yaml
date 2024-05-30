@@ -37,7 +37,7 @@ datasets:
       taxonomy_id: 315271
     sample_preparation: Purification based on Lakshmanan et al., Nature Protocols
       (2017). After purification GvpC was removed by dialysis in 6M urea.
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

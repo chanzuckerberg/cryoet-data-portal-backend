@@ -32,7 +32,7 @@ datasets:
       taxonomy_id: 714995
     sample_preparation: Overnight 6mL culture - Shaken, centrif 2500rcf 10min 30C,
       resuspended in 0.5mL SH medium.
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

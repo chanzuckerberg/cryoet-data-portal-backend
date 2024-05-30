@@ -31,7 +31,7 @@ datasets:
       taxonomy_id: 287
     sample_preparation: Pseudomonas aeruginosa strain PW 1305. Acquired from the Transposon
       mutant collection. (F7 CheW PW1305 phoAwp03q4D05).
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

@@ -36,7 +36,7 @@ datasets:
     sample_preparation: 'The samples were prepared with Vitrobot IV. Blotting conditions
       were either: blot force 6, blot . time 3, drain time 1 OR blot force -3, blot
       time 4, drain time 1, 100%  humidity. Cu grids. 10 nm . gold'
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

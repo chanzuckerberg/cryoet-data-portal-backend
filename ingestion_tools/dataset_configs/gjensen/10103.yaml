@@ -30,7 +30,7 @@ datasets:
       name: MLV
       taxonomy_id: 0
     sample_preparation: MLV 17.5
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

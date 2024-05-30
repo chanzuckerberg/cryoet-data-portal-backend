@@ -34,7 +34,7 @@ datasets:
       taxonomy_id: 338192
     sample_preparation: 'Nmar cells grown to mid log phase. Not concentrated, looking
       for cell division related CDV proteins.(Pipeline:  autoprocref_1396627728)'
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

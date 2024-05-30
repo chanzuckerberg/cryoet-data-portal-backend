@@ -33,7 +33,7 @@ datasets:
       taxonomy_id: 686
     sample_preparation: "grown 24 hrs in LB at 30C, diluted 150 \xB5l into 2 ml Ca-HEPES\
       \ buffer, grown 16 hours at 30C"
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

@@ -32,7 +32,7 @@ datasets:
       name: Escherichia coli
       taxonomy_id: 562
     sample_preparation: LB 37 Degrees
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

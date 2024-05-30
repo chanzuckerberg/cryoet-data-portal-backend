@@ -32,7 +32,7 @@ datasets:
       taxonomy_id: 714995
     sample_preparation: Static culture overnight - Spun down 2x5min 2000rcf 24deg
       - pellet resuspended in 0.5mL - put back at 30deg for 3 hours
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

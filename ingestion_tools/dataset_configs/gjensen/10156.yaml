@@ -32,7 +32,7 @@ datasets:
       name: Bdellovibrio bacteriovorus
       taxonomy_id: 264462
     sample_preparation: Bdellovibrio/E. coli minicell
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

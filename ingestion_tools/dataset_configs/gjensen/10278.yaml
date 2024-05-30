@@ -30,7 +30,7 @@ datasets:
       name: Pseudomonas aeruginosa
       taxonomy_id: 287
     sample_preparation: Pseudomonas aeruginosa PAO1 Wild Type
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

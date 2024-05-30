@@ -30,7 +30,7 @@ datasets:
       name: Caulobacter crescentus
       taxonomy_id: 565050
     sample_preparation: exponential phase in PYE media, EB 0.02mg/ml overnight 4degree...
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

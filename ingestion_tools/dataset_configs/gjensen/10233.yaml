@@ -33,7 +33,7 @@ datasets:
       taxonomy_id: 99287
     sample_preparation: 'Salomella rabbit ears: 30min penicillin treatment with sucrose
       and MgSO4'
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:
