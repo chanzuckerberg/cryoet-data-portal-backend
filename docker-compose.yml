@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   nginx:
     image: nginx
@@ -9,9 +8,9 @@ services:
   motoserver:
     image: motoserver/moto:4.1.0
     ports:
-      - "4000:4000"
+      - "5566:5566"
     environment:
-      - MOTO_PORT=4000
+      - MOTO_PORT=5566
       - S3_IGNORE_SUBDOMAIN_BUCKETNAME=True
     volumes:
       - ./bin:/moto/bin

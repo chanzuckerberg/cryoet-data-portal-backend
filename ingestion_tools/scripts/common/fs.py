@@ -58,7 +58,11 @@ class FileSystemApi(ABC):
         pass
 
     @abstractmethod
-    def read_block(self, path: str, start: int, end: int) -> str:
+    def exists(self, path: str) -> bool:
+        pass
+
+    @abstractmethod
+    def read_block(self, path: str, start: int | None = None, end: int | None = None) -> str:
         pass
 
 
@@ -116,6 +120,9 @@ class S3Filesystem(FileSystemApi):
         print(f"Pushing {path} to {remote_file}")
         self.s3fs.put_file(path, remote_file)
 
+    def exists(self, path: str) -> bool:
+        return self.s3fs.exists(path)
+
     # Copy from one s3 location to another
     def copy(self, src_path: str, dest_path: str) -> None:
         # Don't re-copy it if it's already available.
@@ -136,7 +143,11 @@ class S3Filesystem(FileSystemApi):
         # square brackets [] in them, and that breaks its copy method.
         # self.s3fs.copy(src_path, dest_path, expand=False)
 
-    def read_block(self, path: str, start: int = 0, end: int = 1024) -> str:
+    def read_block(self, path: str, start: int | None = None, end: int | None = None) -> str:
+        if start is None:
+            start = 0
+        if end is None:
+            end = 1024
         local_dest_file = self.localwritable(path)
         if os.path.exists(local_dest_file):
             remote_checksum = self.s3fs.info(path)["ETag"].strip('"')
@@ -179,8 +190,11 @@ class LocalFilesystem(FileSystemApi):
     def copy(self, src_path: str, dest_path: str) -> None:
         shutil.copy(src_path, dest_path)
 
-    def read_block(self, path: str, start: int, end: int) -> str:
+    def read_block(self, path: str, start: int | None = None, end: int | None = None) -> str:
         return path
 
     def push(self, path: str) -> None:
         pass
+
+    def exists(self, path: str) -> bool:
+        return os.path.exists(path)

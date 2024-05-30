@@ -1,44 +1,288 @@
-dataset:
-  dataset_identifier: 10009
-  dataset_title: C. reinhardtii ciliary transition zone
-  dataset_description: Cryo-electron tomograms of Chlamydomonasfrom FIB-SEM lamella.
-  authors: &dataset_authors
-    - name: Hugo G. van den Hoek
-      ORCID: 0000-0003-4978-8516
-      primary_author_status: true
-    - name: Nikolai Klena
-      ORCID: 0000-0002-2631-2294
-      primary_author_status: true
-    - name: Mareike Jordan
-      ORCID: 0000-0001-6248-8863
+annotations:
+- metadata:
+    annotation_method: manual picking + line fit + pick on line + CC based filtering
+    annotation_object:
+      description: null
+      id: GO:0035869
+      name: stellate
+      state: null
+    annotation_publications: doi:10.1126/science.abm6704
+    annotation_software: 3dmod, STOPGAP
+    authors: &id001
+    - ORCID: 0000-0003-4978-8516
+      name: Hugo G. van den Hoek
+      primary_annotator_status: true
+    - ORCID: 0000-0002-2631-2294
+      name: Nikolai Klena
+      primary_annotator_status: true
+    - ORCID: 0000-0001-6248-8863
+      name: Mareike Jordan
     - name: Alvarez Viar G
-    - name: Ricardo D. Righetto
-      ORCID: 0000-0003-4247-4303
-    - name: Miroslava Schaffer
-      ORCID: 0000-0001-8748-1748
-    - name: Philipp Erdmann
-      ORCID: 0000-0001-8289-9133
-    - name: William Wan
-      ORCID: 0000-0003-2497-3010
-    - name: Stefan Geimer
-      ORCID: 0000-0001-6095-9721
-    - name: Juergen Plitzko
-      ORCID: 0000-0002-6402-8315
-    - name: Wolfgang Baumeister
-      ORCID: 0000-0001-8154-8809
-    - name: Gaia Pigino
-      ORCID: 0000-0002-2295-9568
+    - ORCID: 0000-0003-4247-4303
+      name: Ricardo D. Righetto
+    - ORCID: 0000-0001-8748-1748
+      name: Miroslava Schaffer
+    - ORCID: 0000-0001-8289-9133
+      name: Philipp Erdmann
+    - ORCID: 0000-0003-2497-3010
+      name: William Wan
+    - ORCID: 0000-0001-6095-9721
+      name: Stefan Geimer
+    - ORCID: 0000-0002-6402-8315
+      name: Juergen Plitzko
+    - ORCID: 0000-0001-8154-8809
+      name: Wolfgang Baumeister
+    - ORCID: 0000-0002-2295-9568
       corresponding_author_status: true
-    - name: Virginie Hamel
-      ORCID: 0000-0001-5092-2343
+      name: Gaia Pigino
+    - ORCID: 0000-0001-5092-2343
       corresponding_author_status: true
-    - name: Paul Guichard
-      ORCID: 0000-0002-0363-1049
+      name: Virginie Hamel
+    - ORCID: 0000-0002-0363-1049
       corresponding_author_status: true
-    - name: Benjamin D. Engel
-      ORCID: 0000-0002-0941-4387
+      name: Paul Guichard
+    - ORCID: 0000-0002-0941-4387
       corresponding_author_status: true
-  funding:
+      name: Benjamin D. Engel
+    confidence:
+      ground_truth_used: null
+      precision: null
+      recall: null
+    dates: &id002
+      deposition_date: 2023-11-01
+      last_modified_date: 2023-11-30
+      release_date: 2023-12-01
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: manual
+    version: '1.0'
+  sources:
+  - binning: 2
+    file_format: stopgap_star
+    filter_value: '{run_name}'
+    glob_string: motivelists/allmotl_S_newbin2_3.star
+    is_visualization_default: true
+    order: xyz
+    shape: OrientedPoint
+- metadata:
+    annotation_method: manual picking + line fit + pick on line + CC based filtering
+    annotation_object:
+      description: null
+      id: GO:0097537
+      name: Y-shaped link
+      state: null
+    annotation_publications: doi:10.1126/science.abm6704
+    annotation_software: 3dmod, STOPGAP
+    authors: *id001
+    confidence:
+      ground_truth_used: null
+      precision: null
+      recall: null
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: manual
+    version: '1.0'
+  sources:
+  - binning: 2
+    file_format: stopgap_star
+    filter_value: '{run_name}'
+    glob_string: motivelists/allmotl_Y_newbin2_3.star
+    is_visualization_default: true
+    order: xyz
+    shape: OrientedPoint
+- metadata:
+    annotation_method: manual picking + line fit + pick on line + CC based filtering
+    annotation_object:
+      description: null
+      id: GO:0035869
+      name: MTD sleeve
+      state: null
+    annotation_publications: doi:10.1126/science.abm6704
+    annotation_software: 3dmod, STOPGAP
+    authors: *id001
+    confidence:
+      ground_truth_used: null
+      precision: null
+      recall: null
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: manual
+    version: '1.0'
+  sources:
+  - binning: 2
+    file_format: stopgap_star
+    filter_value: '{run_name}'
+    glob_string: motivelists/allmotl_H_cleanbin2.star
+    is_visualization_default: true
+    order: xyz
+    shape: OrientedPoint
+- metadata:
+    annotation_method: manual picking + line fit + pick on line + CC based filtering
+    annotation_object:
+      description: null
+      id: GO:0035869
+      name: MTD stellate / Y-shaped link
+      state: null
+    annotation_publications: doi:10.1126/science.abm6704
+    annotation_software: 3dmod, STOPGAP
+    authors: *id001
+    confidence:
+      ground_truth_used: null
+      precision: null
+      recall: null
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: manual
+    version: '1.0'
+  sources:
+  - binning: 2
+    file_format: stopgap_star
+    filter_value: '{run_name}'
+    glob_string: motivelists/MTD_MIP_bin2_recentered_shiftedorg_9.star
+    is_visualization_default: true
+    order: xyz
+    shape: OrientedPoint
+- metadata:
+    annotation_method: manual picking + line fit + pick on line + CC based filtering
+    annotation_object:
+      description: null
+      id: GO:0030992
+      name: IFT-B
+      state: null
+    annotation_publications: doi:10.1126/science.abm6704
+    annotation_software: 3dmod, STOPGAP
+    authors: *id001
+    confidence:
+      ground_truth_used: null
+      precision: null
+      recall: null
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: manual
+    version: '1.0'
+  sources:
+  - binning: 2
+    file_format: stopgap_star
+    filter_value: '{run_name}'
+    glob_string: motivelists/allmotl_B2_newbin2_3.star
+    is_visualization_default: true
+    order: xyz
+    shape: OrientedPoint
+- metadata:
+    annotation_method: manual picking + line fit + pick on line + CC based filtering
+    annotation_object:
+      description: null
+      id: GO:0030991
+      name: IFT-A
+      state: null
+    annotation_publications: doi:10.1126/science.abm6704
+    annotation_software: 3dmod, STOPGAP
+    authors: *id001
+    confidence:
+      ground_truth_used: null
+      precision: null
+      recall: null
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: manual
+    version: '1.0'
+  sources:
+  - binning: 2
+    file_format: stopgap_star
+    filter_value: '{run_name}'
+    glob_string: motivelists/allmotl_A2_newbin2_3.star
+    is_visualization_default: true
+    order: xyz
+    shape: OrientedPoint
+- metadata:
+    annotation_method: manual picking + line fit + pick on line + CC based filtering
+    annotation_object:
+      description: null
+      id: GO:0005858
+      name: Dynein-1b
+      state: null
+    annotation_publications: doi:10.1126/science.abm6704
+    annotation_software: 3dmod, STOPGAP
+    authors: *id001
+    confidence:
+      ground_truth_used: null
+      precision: null
+      recall: null
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: manual
+    version: '1.0'
+  sources:
+  - binning: 2
+    file_format: stopgap_star
+    filter_value: '{run_name}'
+    glob_string: motivelists/allmotl_D_newbin2_3.star
+    is_visualization_default: true
+    order: xyz
+    shape: OrientedPoint
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11078-l.gif
+        thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11078.gif
+datasets:
+- metadata:
+    authors: &id003
+    - ORCID: 0000-0003-4978-8516
+      name: Hugo G. van den Hoek
+      primary_author_status: true
+    - ORCID: 0000-0002-2631-2294
+      name: Nikolai Klena
+      primary_author_status: true
+    - ORCID: 0000-0001-6248-8863
+      name: Mareike Jordan
+    - name: Alvarez Viar G
+    - ORCID: 0000-0003-4247-4303
+      name: Ricardo D. Righetto
+    - ORCID: 0000-0001-8748-1748
+      name: Miroslava Schaffer
+    - ORCID: 0000-0001-8289-9133
+      name: Philipp Erdmann
+    - ORCID: 0000-0003-2497-3010
+      name: William Wan
+    - ORCID: 0000-0001-6095-9721
+      name: Stefan Geimer
+    - ORCID: 0000-0002-6402-8315
+      name: Juergen Plitzko
+    - ORCID: 0000-0001-8154-8809
+      name: Wolfgang Baumeister
+    - ORCID: 0000-0002-2295-9568
+      corresponding_author_status: true
+      name: Gaia Pigino
+    - ORCID: 0000-0001-5092-2343
+      corresponding_author_status: true
+      name: Virginie Hamel
+    - ORCID: 0000-0002-0363-1049
+      corresponding_author_status: true
+      name: Paul Guichard
+    - ORCID: 0000-0002-0941-4387
+      corresponding_author_status: true
+      name: Benjamin D. Engel
+    cell_component:
+      id: GO:0005929
+      name: Cilium
+    cell_strain:
+      id: null
+      name: CC-3994
+    cross_references:
+      dataset_publications: doi:10.1126/science.abm6704, EMPIAR-11078
+    dataset_description: Cryo-electron tomograms of Chlamydomonasfrom FIB-SEM lamella.
+    dataset_identifier: 10009
+    dataset_title: C. reinhardtii ciliary transition zone
+    dates: *id002
+    funding:
     - funding_agency_name: European Molecular Biology Organization (EMBO)
       grant_id: ALTF 537-2021
     - funding_agency_name: Alexander von Humboldt Foundation
@@ -53,317 +297,137 @@ dataset:
       grant_id: null
     - funding_agency_name: Helmholtz Association
       grant_id: null
-  sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE-PROPANE, vitrification_instrument: FEI VITROBOT MARK IV, instance_type: tomography_preparation'
-  grid_preparation: 'model: Quantifoil R2/1, material: COPPER, support_film_film_type_id: 1, support_film_film_material: CARBON, support_film_film_topology: CONTINUOUS, support_film_instance_type: support_film, pretreatment_type_: GLOW DISCHARGE'
-  sample_type: organism
-  dates: &repo-dates
-    deposition_date: 2023-11-01
-    release_date: 2023-12-01
-    last_modified_date: 2023-11-30
-  cell_strain:
-    name: CC-3994
-    id: ~
-  cross_references:
-    dataset_publications: doi:10.1126/science.abm6704, EMPIAR-11078
-  cell_component:
-    name: Cilium
-    id: GO:0005929
-  organism:
-    name: Chlamydomonas reinhardtii
-    taxonomy_id: 3055
-  key_photos:
-    snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11078-l.gif
-    thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11078.gif
-runs: {}
-tiltseries:
-  microscope:
-    manufacturer: FEI
-    model: TITAN KRIOS
-  spherical_aberration_constant: 2.7
-  microscope_optical_setup:
-    energy_filter: GIF Quantum LS
-    phase_plate: null
-    image_corrector: null
-  camera:
-    manufacturer: Gatan
-    model: K2 SUMMIT
-  acceleration_voltage: 300000
-  tilting_scheme: Dose-symmetric
-  tilt_axis: ~
-  tilt_step: 2.0
-  tilt_range:
-    min: -60
-    max: 60
-  total_flux: 100
-  data_acquisition_software: SerialEM
-  binning_from_frames: REQUIRED
-  tilt_series_quality: 5
-  related_empiar_entry: EMPIAR-11078
-  pixel_spacing: 3.42
-  is_aligned: true
-  alignment_binning_factor: # TODO this needs to be computed on the fly
-tomograms:
-  voxel_spacing: 13.68
-  fiducial_alignment_status: FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  affine_transformation_matrix: [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
-  reconstruction_method: Weighted back projection
-  reconstruction_software: STOPGAP
-  ctf_corrected: true
-  processing: denoised
-  authors: *dataset_authors
-  tomogram_version: 1
-annotations:
-  - metadata:
-      annotation_object:
-        id: GO:0035869
-        name: stellate
-        description: ~
-        state: ~
-      dates: *repo-dates
-      annotation_method: &annotation_method manual picking + line fit + pick on line + CC based filtering
-      method_type: manual
-      annotation_publications: &annotation_publications doi:10.1126/science.abm6704
-      ground_truth_status: true
-      authors: &annotation_authors
-        - name: Hugo G. van den Hoek
-          ORCID: 0000-0003-4978-8516
-          primary_annotator_status: true
-        - name: Nikolai Klena
-          ORCID: 0000-0002-2631-2294
-          primary_annotator_status: true
-        - name: Mareike Jordan
-          ORCID: 0000-0001-6248-8863
-        - name: Alvarez Viar G
-        - name: Ricardo D. Righetto
-          ORCID: 0000-0003-4247-4303
-        - name: Miroslava Schaffer
-          ORCID: 0000-0001-8748-1748
-        - name: Philipp Erdmann
-          ORCID: 0000-0001-8289-9133
-        - name: William Wan
-          ORCID: 0000-0003-2497-3010
-        - name: Stefan Geimer
-          ORCID: 0000-0001-6095-9721
-        - name: Juergen Plitzko
-          ORCID: 0000-0002-6402-8315
-        - name: Wolfgang Baumeister
-          ORCID: 0000-0001-8154-8809
-        - name: Gaia Pigino
-          ORCID: 0000-0002-2295-9568
-          corresponding_author_status: true
-        - name: Virginie Hamel
-          ORCID: 0000-0001-5092-2343
-          corresponding_author_status: true
-        - name: Paul Guichard
-          ORCID: 0000-0002-0363-1049
-          corresponding_author_status: true
-        - name: Benjamin D. Engel
-          ORCID: 0000-0002-0941-4387
-          corresponding_author_status: true
-      annotation_software: 3dmod, STOPGAP
-      version: '1.0'
-      confidence:
-        precision: ~
-        recall: ~
-        ground_truth_used: ~
-      is_curator_recommended: true
-    sources:
-      - shape: OrientedPoint
-        file_format: stopgap_star
-        binning: 2
-        order: zyx
-        glob_string: "motivelists/allmotl_S_newbin2_3.star"
-        filter_value: "{run_name}"
-        is_visualization_default: true
-  - metadata:
-      annotation_object:
-        id: GO:0097537
-        name: Y-shaped link
-        description: ~
-        state: ~
-      dates: *repo-dates
-      annotation_method: *annotation_method
-      method_type: manual
-      annotation_publications: *annotation_publications
-      ground_truth_status: true
-      authors: *annotation_authors
-      annotation_software: 3dmod, STOPGAP
-      version: '1.0'
-      confidence:
-        precision: ~
-        recall: ~
-        ground_truth_used: ~
-      is_curator_recommended: true
-    sources:
-      - shape: OrientedPoint
-        file_format: stopgap_star
-        binning: 2
-        order: zyx
-        glob_string: 'motivelists/allmotl_Y_newbin2_3.star'
-        filter_value: "{run_name}"
-        is_visualization_default: true
-  - metadata:
-      annotation_object:
-        id: GO:0035869
-        name: MTD sleeve
-        description: ~
-        state: ~
-      dates: *repo-dates
-      annotation_method: *annotation_method
-      method_type: manual
-      annotation_publications: *annotation_publications
-      ground_truth_status: true
-      authors: *annotation_authors
-      annotation_software: 3dmod, STOPGAP
-      version: '1.0'
-      confidence:
-        precision: ~
-        recall: ~
-        ground_truth_used: ~
-      is_curator_recommended: true
-    sources:
-      - shape: OrientedPoint
-        file_format: stopgap_star
-        binning: 2
-        order: zyx
-        glob_string: 'motivelists/allmotl_H_cleanbin2.star'
-        filter_value: "{run_name}"
-        is_visualization_default: true
-  - metadata:
-      annotation_object:
-        id: GO:0035869
-        name: MTD stellate / Y-shaped link
-        description: ~
-        state: ~
-      dates: *repo-dates
-      annotation_method: *annotation_method
-      method_type: manual
-      annotation_publications: *annotation_publications
-      ground_truth_status: true
-      authors: *annotation_authors
-      annotation_software: 3dmod, STOPGAP
-      version: '1.0'
-      confidence:
-        precision: ~
-        recall: ~
-        ground_truth_used: ~
-      is_curator_recommended: true
-    sources:
-      - shape: OrientedPoint
-        file_format: stopgap_star
-        binning: 2
-        order: zyx
-        glob_string: 'motivelists/MTD_MIP_bin2_recentered_shiftedorg_9.star'
-        filter_value: "{run_name}"
-        is_visualization_default: true
-  - metadata:
-      annotation_object:
-        id: GO:0030992
-        name: IFT-B
-        description: ~
-        state: ~
-      dates: *repo-dates
-      annotation_method: *annotation_method
-      method_type: manual
-      annotation_publications: *annotation_publications
-      ground_truth_status: true
-      authors: *annotation_authors
-      annotation_software: 3dmod, STOPGAP
-      version: '1.0'
-      confidence:
-        precision: ~
-        recall: ~
-        ground_truth_used: ~
-      is_curator_recommended: true
-    sources:
-      - shape: OrientedPoint
-        file_format: stopgap_star
-        binning: 2
-        order: zyx
-        glob_string: 'motivelists/allmotl_B2_newbin2_3.star'
-        filter_value: "{run_name}"
-        is_visualization_default: true
-  - metadata:
-      annotation_object:
-        id: GO:0030991
-        name: IFT-A
-        description: ~
-        state: ~
-      dates: *repo-dates
-      annotation_method: *annotation_method
-      method_type: manual
-      annotation_publications: *annotation_publications
-      ground_truth_status: true
-      authors: *annotation_authors
-      annotation_software: 3dmod, STOPGAP
-      version: '1.0'
-      confidence:
-        precision: ~
-        recall: ~
-        ground_truth_used: ~
-      is_curator_recommended: true
-    sources:
-      - shape: OrientedPoint
-        file_format: stopgap_star
-        binning: 2
-        order: zyx
-        glob_string: 'motivelists/allmotl_A2_newbin2_3.star'
-        filter_value: "{run_name}"
-        is_visualization_default: true
-  - metadata:
-      annotation_object:
-        id: GO:0005858
-        name: Dynein-1b
-        description: ~
-        state: ~
-      dates: *repo-dates
-      annotation_method: *annotation_method
-      method_type: manual
-      annotation_publications: *annotation_publications
-      ground_truth_status: true
-      authors: *annotation_authors
-      annotation_software: 3dmod, STOPGAP
-      version: '1.0'
-      confidence:
-        precision: ~
-        recall: ~
-        ground_truth_used: ~
-      is_curator_recommended: true
-    sources:
-      - shape: OrientedPoint
-        file_format: stopgap_star
-        binning: 2
-        order: zyx
-        glob_string: 'motivelists/allmotl_D_newbin2_3.star'
-        filter_value: "{run_name}"
-        is_visualization_default: true
-overrides_by_run: # The tiltseries / tomograms dicts will be hit with a originaldict.update(dict from this section)
-  - run_regex: "TS_11$"
-    tiltseries:
-      tilting_scheme: bi-directional
-  - run_regex: "^1$"
-    tiltseries:
-      pixel_spacing: 13.68
-  - run_regex: "^14$"
-    tiltseries:
-      pixel_spacing: 13.68
+    grid_preparation: 'model: Quantifoil R2/1, material: COPPER, support_film_film_type_id:
+      1, support_film_film_material: CARBON, support_film_film_topology: CONTINUOUS,
+      support_film_instance_type: support_film, pretreatment_type_: GLOW DISCHARGE'
+    organism:
+      name: Chlamydomonas reinhardtii
+      taxonomy_id: 3055
+    sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE-PROPANE,
+      vitrification_instrument: FEI VITROBOT MARK IV, instance_type: tomography_preparation'
+    sample_type: organism
+  sources:
+  - literal:
+      value:
+      - '10009'
+frames:
+- sources:
+  - source_glob:
+      list_glob: Tomo{run_name}/raw_data/raw_frames/*.mrc.bz2
+key_images:
+- sources:
+  - literal:
+      value:
+      - from_tomogram
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - Tomo{run_name}/raw_data/imod_metadata/*.tlt
+      - Tomo{run_name}/raw_data/imod_metadata/*.xf
+      - Tomo{run_name}/raw_data/mdocs/*.mdoc
+runs:
+- sources:
+  - source_glob:
+      list_glob: Tomo*
+      match_regex: .*
+      name_regex: Tomo(.*)
 standardization_config:
-  destination_prefix: '10009'
+  deposition_id: 10009
   source_prefix: Ben_C_rein
-  frames_glob: Tomo{run_name}/raw_data/raw_frames/*.mrc.bz2
-  gain_glob: ~
-  rawtlt_files:
-    - Tomo{run_name}/raw_data/imod_metadata/*.tlt
-    - Tomo{run_name}/raw_data/imod_metadata/*.xf
-    - Tomo{run_name}/raw_data/mdocs/*.mdoc
-  tiltseries_glob: Tomo{run_name}/*.ali
-  tomo_format: mrc
-  tomo_glob: bin4_deconvoluted_tomos_forvisualisation/t{run_name}.rec
-  tomo_voxel_size: '13.68'
-  run_glob: Tomo*
-  run_regex: .*
-  run_name_regex: Tomo(.*)
+tiltseries:
+- metadata: &ts_metadata
+    acceleration_voltage: 300000
+    alignment_binning_factor: null
+    binning_from_frames: REQUIRED
+    camera:
+      manufacturer: Gatan
+      model: K2 SUMMIT
+    data_acquisition_software: SerialEM
+    is_aligned: true
+    microscope:
+      manufacturer: FEI
+      model: TITAN KRIOS
+    microscope_optical_setup:
+      energy_filter: GIF Quantum LS
+      image_corrector: null
+      phase_plate: null
+    pixel_spacing: 3.42
+    related_empiar_entry: EMPIAR-11078
+    spherical_aberration_constant: 2.7
+    tilt_axis: null
+    tilt_range:
+      max: 60
+      min: -60
+    tilt_series_quality: 5
+    tilt_step: 2.0
+    tilting_scheme: Dose-symmetric
+    total_flux: 100
+  sources:
+  - source_glob: &ts_source
+      list_glob: Tomo{run_name}/*.ali
+    parent_filters:
+      exclude:
+        run:
+          - "^14$"
+          - "^1$"
+          - "^11$"
+- metadata:
+    tilting_scheme: bi-directional
+    <<: *ts_metadata
+  sources:
+  - source_glob: *ts_source
+    parent_filters:
+      include:
+        run:
+          - "^11$"
+- metadata:
+    pixel_spacing: 13.68
+    <<: *ts_metadata
+  sources:
+  - source_glob: *ts_source
+    parent_filters:
+      include:
+        run:
+          - "^14$"
+          - "^1$"
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id003
+    ctf_corrected: true
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: denoised
+    reconstruction_method: Weighted back projection
+    reconstruction_software: STOPGAP
+    tomogram_version: 1
+    voxel_spacing: 13.68
+  sources:
+  - source_glob:
+      list_glob: bin4_deconvoluted_tomos_forvisualisation/t{run_name}.rec
+      match_regex: .*
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 13.68

@@ -1,111 +1,134 @@
-dataset:
-  dataset_identifier: 10218
-  dataset_description: This is 18th of 24 sets of data studying Campylobacter jejuni
-    collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
-  dataset_title: High magnification tomograms of whole WT Campylobacter cells
-  authors: &id001
-  - name: Morgan Beeby
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Campylobacter jejuni
-    taxonomy_id: 407148
-  sample_type: organism
-  sample_preparation: High magnification tomograms of whole WT Campylobacter cells
-  grid_preparation: null
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mba2010-08-27-1/keyimg_mba2010-08-27-1.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mba2010-08-27-1/keyimg_mba2010-08-27-1_s.jpg
-  cell_strain:
-    name: subsp. jejuni 81116
-    id: null
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: null
-    manufacturer: Gatan
-    model: UltraCam
-  data_acquisition_software: Leginon
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: FEI
-    model: Polara
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: 5.12
-  spherical_aberration_constant: 2.0
-  tilt_alignment_software: '{ts-tilt_alignment_software}'
-  tilt_axis: 0.0
-  tilt_range:
-    max: float {ts-tilt_range-max}
-    min: float {ts-tilt_range-min}
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: 4
-  tilt_step: float {ts-tilt_step}
-  tilting_scheme: starting tilt to max then min
-  total_flux: 200.0
-tomograms:
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  align_softwares: '{tomo-align_softwares}'
-  authors: *id001
-  ctf_corrected: null
-  fiducial_alignment_status: FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  processing_software: null
-  reconstruction_method: '{tomo-reconstruction_method}'
-  reconstruction_software: IMOD
-  tomogram_version: 1
-  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mba2010-08-27-1/keyimg_mba2010-08-27-1.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mba2010-08-27-1/keyimg_mba2010-08-27-1_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Morgan Beeby
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: subsp. jejuni 81116
+    dataset_description: This is 18th of 24 sets of data studying Campylobacter jejuni
+      collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
+    dataset_identifier: 10218
+    dataset_title: High magnification tomograms of whole WT Campylobacter cells
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: null
+    organism:
+      name: Campylobacter jejuni
+      taxonomy_id: 407148
+    sample_preparation: High magnification tomograms of whole WT Campylobacter cells
+    sample_type: organism
+  sources:
+  - literal:
+      value:
+      - '10218'
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/3dimage_*/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (mba2010-08-27-1|mba2010-08-27-2|mba2010-08-27-3|mba2010-08-27-4|mba2010-08-27-5|mba2011-02-16-1|mba2011-02-16-3|mba2011-02-16-4|mba2011-02-16-5|mba2011-02-16-6|mba2011-02-16-7|mba2011-02-16-8|mba2011-02-16-9|mba2011-02-16-10|mba2011-02-16-11|mba2011-02-16-12|mba2011-02-16-13|mba2011-02-16-14|mba2011-02-16-15|mba2011-02-16-16|mba2011-02-16-17|mba2011-02-16-18|mba2011-02-16-19|mba2011-02-16-20|mba2011-02-16-21|mba2011-02-16-22|mba2011-02-16-23|mba2011-02-16-24|mba2011-02-16-25|mba2011-02-16-26|mba2011-02-16-27|mba2011-02-16-28|mba2011-02-16-29|mba2011-02-16-30|mba2011-02-16-31|mba2011-02-16-32|mba2011-02-16-33|mba2011-02-16-34|mba2011-02-16-35|mba2011-02-16-36|mba2011-02-16-37|mba2011-02-16-38|mba2011-02-16-39|mba2011-02-16-40|mba2011-02-16-41|mba2011-02-16-42|mba2011-02-16-43|mba2011-02-16-44|mba2011-02-16-45|mba2011-02-16-46|mba2011-02-16-47|mba2011-02-16-48|mba2011-02-16-49|mba2011-02-16-50|mba2011-02-16-51|mba2011-02-16-52|mba2011-02-16-53|mba2011-02-16-54|mba2011-02-16-55|mba2011-02-16-56|mba2011-02-16-57|mba2011-02-16-58|mba2011-02-16-59|mba2011-02-16-60|mba2011-02-16-61|mba2011-02-16-62|mba2011-02-16-63|mba2011-02-16-64|mba2011-02-16-65|mba2011-02-16-66|mba2011-02-16-67|mba2011-02-16-68|mba2011-02-16-69|mba2011-02-16-70|mba2011-02-16-71|mba2011-02-16-72|mba2011-02-16-73|mba2011-02-16-74|mba2011-02-16-75|mba2011-02-16-76|mba2011-02-16-77|mba2011-02-16-78|mba2011-02-16-79|mba2011-02-16-80|mba2011-02-16-81|mba2011-02-16-82|mba2011-02-16-83|mba2011-02-16-84|mba2011-02-16-85|mba2011-02-16-86|mba2011-02-16-87|mba2011-02-16-88|mba2011-02-16-89|mba2011-02-16-90|mba2011-02-16-91|mba2011-02-16-92|mba2011-02-16-93|mba2011-02-16-94|mba2011-02-16-95|mba2011-02-16-96|mba2011-02-16-97|mba2011-02-16-98|mba2011-02-16-99|mba2011-02-16-100|mba2011-02-16-101|mba2011-02-16-102|mba2011-02-16-103|mba2011-02-16-104|mba2011-02-16-105|mba2011-02-16-106|mba2011-02-16-107|mba2011-02-16-108|mba2011-02-16-109|mba2011-02-16-110|mba2011-02-16-111|mba2011-02-16-112|mba2011-02-16-113|mba2011-02-16-114|mba2011-02-16-115|mba2011-02-16-116|mba2011-02-16-117|mba2011-02-16-118|mba2011-02-16-119|mba2011-02-16-120|mba2011-02-16-121|mba2011-02-16-122|mba2011-02-16-123|mba2011-02-16-124|mba2011-02-16-125|mba2011-02-16-126|mba2011-02-16-127|mba2011-02-16-128|mba2011-02-16-129|mba2011-02-16-130|mba2011-02-16-131|mba2011-02-16-132|mba2011-02-16-133|mba2011-02-16-134|mba2011-02-16-135|mba2011-02-16-136|mba2011-02-16-137|mba2011-02-16-138|mba2011-02-16-139|mba2011-02-16-140|mba2011-02-16-141|mba2011-02-16-142|mba2011-02-16-143|mba2011-02-16-144|mba2011-02-16-145|mba2011-02-16-146|mba2011-02-16-147|mba2011-02-16-148|mba2011-02-16-149|mba2011-02-16-150|mba2011-02-16-151|mba2011-02-16-152|mba2011-02-16-153|mba2011-02-16-154|mba2011-02-16-155|mba2011-02-16-156|mba2011-02-16-157|mba2011-02-16-158|mba2011-02-16-159|mba2011-02-16-160|mba2011-02-16-161|mba2011-02-16-162|mba2011-02-16-163|mba2011-02-16-164|mba2011-02-16-165|mba2011-02-16-166|mba2011-02-16-167|mba2011-02-16-168|mba2011-02-16-169|mba2011-02-16-170|mba2011-02-16-171|mba2011-02-16-172|mba2011-02-16-173|mba2011-02-16-174|mba2011-02-16-175|mba2011-02-16-176|mba2011-02-16-177|mba2011-02-16-178|mba2011-02-16-179)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10218'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/3dimage_*/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/3dimage_*/*'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (mba2010-08-27-1|mba2010-08-27-2|mba2010-08-27-3|mba2010-08-27-4|mba2010-08-27-5|mba2011-02-16-1|mba2011-02-16-3|mba2011-02-16-4|mba2011-02-16-5|mba2011-02-16-6|mba2011-02-16-7|mba2011-02-16-8|mba2011-02-16-9|mba2011-02-16-10|mba2011-02-16-11|mba2011-02-16-12|mba2011-02-16-13|mba2011-02-16-14|mba2011-02-16-15|mba2011-02-16-16|mba2011-02-16-17|mba2011-02-16-18|mba2011-02-16-19|mba2011-02-16-20|mba2011-02-16-21|mba2011-02-16-22|mba2011-02-16-23|mba2011-02-16-24|mba2011-02-16-25|mba2011-02-16-26|mba2011-02-16-27|mba2011-02-16-28|mba2011-02-16-29|mba2011-02-16-30|mba2011-02-16-31|mba2011-02-16-32|mba2011-02-16-33|mba2011-02-16-34|mba2011-02-16-35|mba2011-02-16-36|mba2011-02-16-37|mba2011-02-16-38|mba2011-02-16-39|mba2011-02-16-40|mba2011-02-16-41|mba2011-02-16-42|mba2011-02-16-43|mba2011-02-16-44|mba2011-02-16-45|mba2011-02-16-46|mba2011-02-16-47|mba2011-02-16-48|mba2011-02-16-49|mba2011-02-16-50|mba2011-02-16-51|mba2011-02-16-52|mba2011-02-16-53|mba2011-02-16-54|mba2011-02-16-55|mba2011-02-16-56|mba2011-02-16-57|mba2011-02-16-58|mba2011-02-16-59|mba2011-02-16-60|mba2011-02-16-61|mba2011-02-16-62|mba2011-02-16-63|mba2011-02-16-64|mba2011-02-16-65|mba2011-02-16-66|mba2011-02-16-67|mba2011-02-16-68|mba2011-02-16-69|mba2011-02-16-70|mba2011-02-16-71|mba2011-02-16-72|mba2011-02-16-73|mba2011-02-16-74|mba2011-02-16-75|mba2011-02-16-76|mba2011-02-16-77|mba2011-02-16-78|mba2011-02-16-79|mba2011-02-16-80|mba2011-02-16-81|mba2011-02-16-82|mba2011-02-16-83|mba2011-02-16-84|mba2011-02-16-85|mba2011-02-16-86|mba2011-02-16-87|mba2011-02-16-88|mba2011-02-16-89|mba2011-02-16-90|mba2011-02-16-91|mba2011-02-16-92|mba2011-02-16-93|mba2011-02-16-94|mba2011-02-16-95|mba2011-02-16-96|mba2011-02-16-97|mba2011-02-16-98|mba2011-02-16-99|mba2011-02-16-100|mba2011-02-16-101|mba2011-02-16-102|mba2011-02-16-103|mba2011-02-16-104|mba2011-02-16-105|mba2011-02-16-106|mba2011-02-16-107|mba2011-02-16-108|mba2011-02-16-109|mba2011-02-16-110|mba2011-02-16-111|mba2011-02-16-112|mba2011-02-16-113|mba2011-02-16-114|mba2011-02-16-115|mba2011-02-16-116|mba2011-02-16-117|mba2011-02-16-118|mba2011-02-16-119|mba2011-02-16-120|mba2011-02-16-121|mba2011-02-16-122|mba2011-02-16-123|mba2011-02-16-124|mba2011-02-16-125|mba2011-02-16-126|mba2011-02-16-127|mba2011-02-16-128|mba2011-02-16-129|mba2011-02-16-130|mba2011-02-16-131|mba2011-02-16-132|mba2011-02-16-133|mba2011-02-16-134|mba2011-02-16-135|mba2011-02-16-136|mba2011-02-16-137|mba2011-02-16-138|mba2011-02-16-139|mba2011-02-16-140|mba2011-02-16-141|mba2011-02-16-142|mba2011-02-16-143|mba2011-02-16-144|mba2011-02-16-145|mba2011-02-16-146|mba2011-02-16-147|mba2011-02-16-148|mba2011-02-16-149|mba2011-02-16-150|mba2011-02-16-151|mba2011-02-16-152|mba2011-02-16-153|mba2011-02-16-154|mba2011-02-16-155|mba2011-02-16-156|mba2011-02-16-157|mba2011-02-16-158|mba2011-02-16-159|mba2011-02-16-160|mba2011-02-16-161|mba2011-02-16-162|mba2011-02-16-163|mba2011-02-16-164|mba2011-02-16-165|mba2011-02-16-166|mba2011-02-16-167|mba2011-02-16-168|mba2011-02-16-169|mba2011-02-16-170|mba2011-02-16-171|mba2011-02-16-172|mba2011-02-16-173|mba2011-02-16-174|mba2011-02-16-175|mba2011-02-16-176|mba2011-02-16-177|mba2011-02-16-178|mba2011-02-16-179)$
-  run_name_regex: (.*)
+  deposition_id: 10218
   run_data_map_file: run_data_map/10218.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: null
+      manufacturer: Gatan
+      model: UltraCam
+    data_acquisition_software: Leginon
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: FEI
+      model: Polara
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: 5.12
+    spherical_aberration_constant: 2.0
+    tilt_alignment_software: '{ts-tilt_alignment_software}'
+    tilt_axis: 0.0
+    tilt_range:
+      max: float {ts-tilt_range-max}
+      min: float {ts-tilt_range-min}
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: 4
+    tilt_step: float {ts-tilt_step}
+    tilting_scheme: starting tilt to max then min
+    total_flux: 200.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares: '{tomo-align_softwares}'
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: null
+    reconstruction_method: '{tomo-reconstruction_method}'
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: '{tomo-voxel_spacing}'
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/3dimage_*/*'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - float {tomo-voxel_spacing}

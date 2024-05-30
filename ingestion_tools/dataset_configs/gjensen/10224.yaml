@@ -1,112 +1,135 @@
-dataset:
-  dataset_identifier: 10224
-  dataset_description: This is 24th of 24 sets of data studying Campylobacter jejuni
-    collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
-  dataset_title: flgP deletion Campy mutants
-  authors: &id001
-  - name: Morgan Beeby
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Campylobacter jejuni
-    taxonomy_id: 407148
-  sample_type: organism
-  sample_preparation: flgP deletion Campy mutants
-  grid_preparation: null
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mba2011-08-10-1/keyimg_mba2011-08-10-1.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mba2011-08-10-1/keyimg_mba2011-08-10-1_s.jpg
-  cell_strain:
-    name: subsp. jejuni 81116
-    id: null
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: null
-    manufacturer: Gatan
-    model: UltraCam
-  data_acquisition_software: Leginon
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: FEI
-    model: Polara
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: 5.12
-  spherical_aberration_constant: 2.0
-  tilt_alignment_software: RAPTOR
-  tilt_axis: 0.0
-  tilt_range:
-    max: 65.0
-    min: -65.0
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: 4
-  tilt_step: 1.0
-  tilting_scheme: starting tilt to max then min
-  total_flux: 200.0
-tomograms:
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  align_softwares:
-  - RAPTOR
-  authors: *id001
-  ctf_corrected: null
-  fiducial_alignment_status: FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  processing_software: null
-  reconstruction_method: SIRT
-  reconstruction_software: IMOD
-  tomogram_version: 1
-  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mba2011-08-10-1/keyimg_mba2011-08-10-1.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mba2011-08-10-1/keyimg_mba2011-08-10-1_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Morgan Beeby
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: subsp. jejuni 81116
+    dataset_description: This is 24th of 24 sets of data studying Campylobacter jejuni
+      collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
+    dataset_identifier: 10224
+    dataset_title: flgP deletion Campy mutants
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: null
+    organism:
+      name: Campylobacter jejuni
+      taxonomy_id: 407148
+    sample_preparation: flgP deletion Campy mutants
+    sample_type: organism
+  sources:
+  - literal:
+      value:
+      - '10224'
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/3dimage_*/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (mba2011-08-10-1|mba2011-08-10-2|mba2011-08-10-3|mba2011-08-10-4|mba2011-08-10-5|mba2011-08-10-6|mba2011-08-10-7|mba2011-08-10-8|mba2011-08-10-9|mba2011-08-10-10|mba2011-08-10-11|mba2011-08-10-12|mba2011-08-10-13|mba2011-08-10-14|mba2011-08-10-15|mba2011-08-10-16|mba2011-08-10-17|mba2011-08-10-18|mba2011-08-10-19|mba2011-08-10-20|mba2011-08-10-21|mba2011-08-10-22|mba2011-08-10-23|mba2011-08-10-24|mba2011-08-10-25|mba2011-08-10-26|mba2011-08-10-27|mba2011-08-10-28|mba2011-08-10-29|mba2011-08-10-30|mba2011-08-10-31|mba2011-08-10-32|mba2011-08-10-33|mba2011-08-10-34|mba2011-08-10-35|mba2011-08-10-36|mba2011-08-10-37|mba2011-08-10-38|mba2011-08-10-39|mba2011-08-10-40|mba2011-08-10-41|mba2011-08-10-42)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10224'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/3dimage_*/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/3dimage_*/*'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (mba2011-08-10-1|mba2011-08-10-2|mba2011-08-10-3|mba2011-08-10-4|mba2011-08-10-5|mba2011-08-10-6|mba2011-08-10-7|mba2011-08-10-8|mba2011-08-10-9|mba2011-08-10-10|mba2011-08-10-11|mba2011-08-10-12|mba2011-08-10-13|mba2011-08-10-14|mba2011-08-10-15|mba2011-08-10-16|mba2011-08-10-17|mba2011-08-10-18|mba2011-08-10-19|mba2011-08-10-20|mba2011-08-10-21|mba2011-08-10-22|mba2011-08-10-23|mba2011-08-10-24|mba2011-08-10-25|mba2011-08-10-26|mba2011-08-10-27|mba2011-08-10-28|mba2011-08-10-29|mba2011-08-10-30|mba2011-08-10-31|mba2011-08-10-32|mba2011-08-10-33|mba2011-08-10-34|mba2011-08-10-35|mba2011-08-10-36|mba2011-08-10-37|mba2011-08-10-38|mba2011-08-10-39|mba2011-08-10-40|mba2011-08-10-41|mba2011-08-10-42)$
-  run_name_regex: (.*)
+  deposition_id: 10224
   run_data_map_file: run_data_map/10224.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: null
+      manufacturer: Gatan
+      model: UltraCam
+    data_acquisition_software: Leginon
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: FEI
+      model: Polara
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: 5.12
+    spherical_aberration_constant: 2.0
+    tilt_alignment_software: RAPTOR
+    tilt_axis: 0.0
+    tilt_range:
+      max: 65.0
+      min: -65.0
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: 4
+    tilt_step: 1.0
+    tilting_scheme: starting tilt to max then min
+    total_flux: 200.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares:
+    - RAPTOR
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: null
+    reconstruction_method: SIRT
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: '{tomo-voxel_spacing}'
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/3dimage_*/*'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - float {tomo-voxel_spacing}

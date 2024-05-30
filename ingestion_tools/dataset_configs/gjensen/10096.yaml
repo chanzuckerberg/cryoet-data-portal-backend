@@ -1,117 +1,140 @@
-dataset:
-  dataset_identifier: 10096
-  dataset_description: This is 39th of 41 sets of data studying Legionella pneumophila
-    collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. WT Lp02
-    cells were fixed with GA and re-suspended in  PBS.
-  dataset_title: L. pneumophila Lp02-fixed
-  authors: &id001
-  - name: Debnath Ghosal
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Legionella pneumophila
-    taxonomy_id: 1080311
-  sample_type: organism
-  sample_preparation: Shuman Lab
-  grid_preparation: "6 grids were frozen, cell density was increased to 2x by centrifugation.\
-    \ Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot force 6, blot\
-    \ time 4.5 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane mix. Grid: Quantifoil\
-    \ Cu 2/2 200. Add gold to cells prior to freezing: 1ul of gold to 4 ul of cells,\
-    \ freeze."
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-11-20-1/keyimg_dga2017-11-20-1.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-11-20-1/keyimg_dga2017-11-20-1_s.jpg
-  cell_strain:
-    name: Philadelphia-1_Lp02
-    id: null
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: counting
-    manufacturer: Gatan
-    model: K2
-  data_acquisition_software: UCSFTomo
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: FEI
-    model: Polara
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: 4.036
-  spherical_aberration_constant: 2.0
-  tilt_alignment_software: RAPTOR
-  tilt_axis: 84.3
-  tilt_range:
-    max: 60.0
-    min: -60.0
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: 4
-  tilt_step: 1.5
-  tilting_scheme: starting tilt to max then min
-  total_flux: 100.0
-tomograms:
-  voxel_spacing: 16.145
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
-  fiducial_alignment_status: FIDUCIAL
-  ctf_corrected: null
-  processing: raw
-  processing_software: null
-  align_softwares:
-  - RAPTOR
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  authors: *id001
-  tomogram_version: 1
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-11-20-1/keyimg_dga2017-11-20-1.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-11-20-1/keyimg_dga2017-11-20-1_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Debnath Ghosal
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: Philadelphia-1_Lp02
+    dataset_description: This is 39th of 41 sets of data studying Legionella pneumophila
+      collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. WT Lp02
+      cells were fixed with GA and re-suspended in  PBS.
+    dataset_identifier: 10096
+    dataset_title: L. pneumophila Lp02-fixed
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: "6 grids were frozen, cell density was increased to 2x by centrifugation.\
+      \ Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot force 6, blot\
+      \ time 4.5 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane mix. Grid:\
+      \ Quantifoil Cu 2/2 200. Add gold to cells prior to freezing: 1ul of gold to\
+      \ 4 ul of cells, freeze."
+    organism:
+      name: Legionella pneumophila
+      taxonomy_id: 1080311
+    sample_preparation: Shuman Lab
+    sample_type: organism
+  sources:
+  - literal:
+      value:
+      - '10096'
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/3dimage_*/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (dga2017-11-20-1|dga2017-11-20-2|dga2017-11-20-6|dga2017-11-20-8|dga2017-11-20-9|dga2017-11-20-10|dga2017-11-20-11|dga2017-11-20-12|dga2017-11-20-16|dga2017-11-20-17|dga2017-11-20-21|dga2017-11-20-23|dga2017-11-20-25|dga2017-11-20-29|dga2017-11-20-32|dga2017-11-20-34|dga2017-11-20-35|dga2017-11-20-36|dga2017-11-20-37|dga2017-11-20-38|dga2017-11-20-39|dga2017-11-20-40|dga2017-11-20-41|dga2017-11-20-43|dga2017-11-20-44|dga2017-11-20-45|dga2017-11-20-50|dga2017-11-21-2|dga2017-11-21-5|dga2017-11-21-12|dga2017-11-21-19|dga2017-11-21-33|dga2017-11-21-34|dga2017-11-21-39|dga2017-11-21-51|dga2017-11-21-55|dga2017-11-21-56|dga2017-11-21-57|dga2017-11-21-58|dga2017-11-21-62|dga2017-11-21-73)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10096'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/3dimage_*/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/3dimage_*/*'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (dga2017-11-20-1|dga2017-11-20-2|dga2017-11-20-6|dga2017-11-20-8|dga2017-11-20-9|dga2017-11-20-10|dga2017-11-20-11|dga2017-11-20-12|dga2017-11-20-16|dga2017-11-20-17|dga2017-11-20-21|dga2017-11-20-23|dga2017-11-20-25|dga2017-11-20-29|dga2017-11-20-32|dga2017-11-20-34|dga2017-11-20-35|dga2017-11-20-36|dga2017-11-20-37|dga2017-11-20-38|dga2017-11-20-39|dga2017-11-20-40|dga2017-11-20-41|dga2017-11-20-43|dga2017-11-20-44|dga2017-11-20-45|dga2017-11-20-50|dga2017-11-21-2|dga2017-11-21-5|dga2017-11-21-12|dga2017-11-21-19|dga2017-11-21-33|dga2017-11-21-34|dga2017-11-21-39|dga2017-11-21-51|dga2017-11-21-55|dga2017-11-21-56|dga2017-11-21-57|dga2017-11-21-58|dga2017-11-21-62|dga2017-11-21-73)$
-  run_name_regex: (.*)
+  deposition_id: 10096
   run_data_map_file: run_data_map/10096.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: counting
+      manufacturer: Gatan
+      model: K2
+    data_acquisition_software: UCSFTomo
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: FEI
+      model: Polara
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: 4.036
+    spherical_aberration_constant: 2.0
+    tilt_alignment_software: RAPTOR
+    tilt_axis: 84.3
+    tilt_range:
+      max: 60.0
+      min: -60.0
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: 4
+    tilt_step: 1.5
+    tilting_scheme: starting tilt to max then min
+    total_flux: 100.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares:
+    - RAPTOR
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: null
+    reconstruction_method: Weighted back projection
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: 16.145
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/3dimage_*/*'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 16.145

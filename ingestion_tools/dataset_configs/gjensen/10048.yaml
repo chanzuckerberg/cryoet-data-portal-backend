@@ -1,117 +1,140 @@
-dataset:
-  dataset_identifier: 10048
-  dataset_description: This is 6th of 10 sets of data studying Helicobacter pylori
-    collected by Mohammed Kaplan and is a part of Caltech Jensen  lab etdb. These
-    are H_pylori cells that are lacking FliP protein. In these cells, FliF protein
-    was knocked out to examine its relation to the hat-like complex.
-  dataset_title: Hpylori_dFliF_FISE
-  authors: &id001
-  - name: Mohammed Kaplan
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Helicobacter pylori
-    taxonomy_id: 85962
-  sample_type: organism
-  sample_preparation: 'The samples were prepared with Vitrobot IV. Blotting conditions
-    were either: blot force 6, blot . time 3, drain time 1 OR blot force -3, blot
-    time 4, drain time 1, 100%  humidity. Cu grids. 10 nm . gold'
-  grid_preparation: 'The samples were prepared with Vitrobot IV. Blotting conditions
-    were either: blot force 6, blot . time 3, drain time 1 OR blot force -3, blot
-    time 4, drain time 1, 100%  humidity. Cu grids. 20 nm . gold.'
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mka2020-10-08-1/keyimg_mka2020-10-08-1.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mka2020-10-08-1/keyimg_mka2020-10-08-1_s.jpg
-  cell_strain:
-    name: '26695'
-    id: null
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: counting
-    manufacturer: Gatan
-    model: K3
-  data_acquisition_software: Serial EM
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: TFS
-    model: Krios
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: 4.516
-  spherical_aberration_constant: 2.7
-  tilt_alignment_software: '{ts-tilt_alignment_software}'
-  tilt_axis: 84.3
-  tilt_range:
-    max: 60.0
-    min: -60.0
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: int {ts-tilt_series_quality}
-  tilt_step: 3.0
-  tilting_scheme: min to max tilt
-  total_flux: 120.0
-tomograms:
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  align_softwares: '{tomo-align_softwares}'
-  authors: *id001
-  ctf_corrected: null
-  fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  processing_software: '{tomo-processing_software}'
-  reconstruction_method: '{tomo-reconstruction_method}'
-  reconstruction_software: '{tomo-reconstruction_software}'
-  tomogram_version: 1
-  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mka2020-10-08-1/keyimg_mka2020-10-08-1.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mka2020-10-08-1/keyimg_mka2020-10-08-1_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Mohammed Kaplan
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: '26695'
+    dataset_description: This is 6th of 10 sets of data studying Helicobacter pylori
+      collected by Mohammed Kaplan and is a part of Caltech Jensen  lab etdb. These
+      are H_pylori cells that are lacking FliP protein. In these cells, FliF protein
+      was knocked out to examine its relation to the hat-like complex.
+    dataset_identifier: 10048
+    dataset_title: Hpylori_dFliF_FISE
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: 'The samples were prepared with Vitrobot IV. Blotting conditions
+      were either: blot force 6, blot . time 3, drain time 1 OR blot force -3, blot
+      time 4, drain time 1, 100%  humidity. Cu grids. 20 nm . gold.'
+    organism:
+      name: Helicobacter pylori
+      taxonomy_id: 85962
+    sample_preparation: 'The samples were prepared with Vitrobot IV. Blotting conditions
+      were either: blot force 6, blot . time 3, drain time 1 OR blot force -3, blot
+      time 4, drain time 1, 100%  humidity. Cu grids. 10 nm . gold'
+    sample_type: organism
+  sources:
+  - literal:
+      value:
+      - '10048'
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/3dimage_*/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (mka2020-10-08-1|mka2020-10-08-2|mka2020-10-08-3|mka2020-10-08-4|mka2020-10-08-5|mka2020-10-08-6|mka2020-10-08-7|mka2020-10-08-8|mka2020-10-08-9|mka2020-10-08-10|mka2020-10-08-11|mka2020-10-08-12|mka2020-10-08-13|mka2020-10-08-14|mka2020-10-08-15|mka2020-10-08-16|mka2020-10-08-17|mka2020-10-08-18|mka2020-10-08-19|mka2020-10-08-20|mka2020-10-08-21|mka2020-10-08-22|mka2020-10-08-23|mka2020-10-08-24|mka2020-10-08-25|mka2020-10-08-26|mka2020-10-08-27|mka2020-10-08-28|mka2020-10-08-29|mka2020-10-08-30|mka2020-10-08-31|mka2020-10-08-32|mka2020-10-08-33|mka2020-10-08-34|mka2020-10-08-35|mka2020-10-08-36|mka2020-10-08-37|mka2020-10-08-38|mka2020-10-08-39|mka2020-10-08-40|mka2020-10-08-41|mka2020-10-08-42|mka2020-10-08-43|mka2020-10-08-44|mka2020-10-08-45|mka2020-10-08-46|mka2020-10-08-47|mka2020-10-08-48|mka2020-10-08-49|mka2020-10-08-50|mka2020-10-08-51|mka2020-10-08-52|mka2020-10-08-53|mka2020-10-08-54|mka2020-10-08-55|mka2020-10-08-56|mka2020-10-08-57|mka2020-10-08-58|mka2020-10-08-59|mka2020-10-08-60|mka2020-10-08-61|mka2020-10-08-62|mka2020-10-08-63|mka2020-10-08-64|mka2020-10-08-65|mka2020-10-08-66|mka2020-10-08-67|mka2020-10-08-68|mka2020-10-08-69|mka2020-10-08-70|mka2020-10-08-71|mka2020-10-08-72|mka2020-10-08-73|mka2020-10-08-74|mka2020-10-08-75|mka2020-10-08-76|mka2020-10-08-77|mka2020-10-08-78|mka2020-10-08-79|mka2020-10-08-80|mka2020-10-08-81|mka2020-10-08-82|mka2020-10-08-83|mka2020-10-08-84|mka2020-10-08-85|mka2020-10-08-86|mka2020-10-08-87|mka2020-10-08-88|mka2020-10-08-89|mka2020-10-08-90|mka2020-10-08-91|mka2020-10-08-92|mka2020-10-08-93|mka2020-10-08-94|mka2020-10-08-95|mka2020-10-08-96|mka2020-10-08-97|mka2020-10-08-98|mka2020-10-08-99|mka2020-10-08-100|mka2020-10-08-101|mka2020-10-08-102|mka2020-10-08-103|mka2020-10-08-104|mka2020-10-08-105|mka2020-10-08-106|mka2020-10-08-107|mka2020-10-08-108|mka2020-10-08-109|mka2020-10-08-110|mka2020-10-08-111|mka2020-10-08-112|mka2020-10-08-113|mka2020-10-08-114|mka2020-10-08-115|mka2020-10-08-116|mka2020-10-08-117|mka2020-10-08-118|mka2020-10-08-119|mka2020-10-08-120|mka2020-10-08-121|mka2020-10-08-122|mka2020-10-08-123|mka2020-10-08-124|mka2020-10-08-125|mka2020-10-08-126|mka2020-10-08-127|mka2020-10-08-128|mka2020-10-08-129|mka2020-10-08-130|mka2020-10-08-131|mka2020-10-08-132|mka2020-10-08-133|mka2020-10-08-134|mka2020-10-08-135|mka2020-10-08-136|mka2020-10-08-137|mka2020-10-08-138|mka2020-10-08-139|mka2020-10-08-140|mka2020-10-08-141|mka2020-10-08-142|mka2020-10-08-143|mka2020-10-08-144|mka2020-10-08-145|mka2020-10-08-146|mka2020-10-08-147|mka2020-10-08-148|mka2020-10-08-149|mka2020-10-08-150|mka2020-10-08-151|mka2020-10-08-152|mka2020-10-08-153|mka2020-10-08-154|mka2020-10-08-155|mka2020-10-08-156|mka2020-10-08-157|mka2020-10-08-158|mka2020-10-08-159|mka2020-10-08-160|mka2020-10-08-161|mka2020-10-08-162|mka2020-10-08-163|mka2020-10-08-164|mka2020-10-08-165|mka2020-10-08-166|mka2020-10-08-167|mka2020-10-08-168|mka2020-10-08-169|mka2020-10-08-170|mka2020-10-08-171|mka2020-10-08-172|mka2020-10-08-173|mka2020-10-08-174|mka2020-10-08-175|mka2020-10-08-176|mka2020-10-08-177|mka2020-10-08-178|mka2020-10-08-179|mka2020-10-08-180|mka2020-10-08-181|mka2020-10-08-182|mka2020-10-08-183|mka2020-10-08-184|mka2020-10-08-185|mka2020-10-08-186|mka2020-10-08-187|mka2020-10-08-188|mka2020-10-08-189|mka2020-10-08-190|mka2020-10-08-191|mka2020-10-08-192|mka2020-10-08-193|mka2020-10-08-194|mka2020-10-08-195|mka2020-10-08-196|mka2020-10-08-197|mka2020-10-08-198|mka2020-10-08-199|mka2020-10-08-200|mka2020-10-08-201|mka2020-10-08-202|mka2020-10-08-203|mka2020-10-08-204|mka2020-10-08-205|mka2020-10-08-206|mka2020-10-08-207|mka2020-10-08-208|mka2020-10-08-209|mka2020-10-08-210|mka2020-10-08-211|mka2020-10-08-212|mka2020-10-08-213|mka2020-10-08-214|mka2020-10-08-215|mka2020-10-08-216|mka2020-10-08-217|mka2020-10-08-218|mka2020-10-08-219|mka2020-10-08-220|mka2020-10-08-221|mka2020-10-08-222|mka2020-10-08-223|mka2020-10-08-224|mka2020-10-08-225|mka2020-10-08-226|mka2020-10-08-227|mka2020-10-08-228|mka2020-10-08-229|mka2020-10-08-230|mka2020-10-08-231|mka2020-10-08-232|mka2020-10-08-233|mka2020-10-08-234|mka2020-10-08-235|mka2020-10-08-236|mka2020-10-08-237|mka2020-10-08-238|mka2020-10-08-239|mka2020-10-08-240|mka2020-10-08-241|mka2020-10-08-242|mka2020-10-08-243|mka2020-10-08-244|mka2020-10-08-245|mka2020-10-08-246|mka2020-10-08-247|mka2020-10-08-248|mka2020-10-08-249|mka2020-10-08-250|mka2020-10-08-251|mka2020-10-08-252|mka2020-10-08-253|mka2020-10-08-254|mka2020-10-08-255|mka2020-10-08-256|mka2020-10-08-257|mka2020-10-08-258|mka2020-10-08-259|mka2020-10-08-260|mka2020-10-08-261|mka2020-10-08-262|mka2020-10-08-263|mka2020-10-08-264|mka2020-10-08-265|mka2020-10-08-266|mka2020-10-08-267|mka2020-10-08-268|mka2020-10-08-269|mka2020-10-08-270|mka2020-10-08-271|mka2020-10-08-272|mka2020-10-08-273|mka2020-10-08-274|mka2020-10-08-275|mka2020-10-08-276|mka2020-10-08-277|mka2020-10-08-278|mka2020-10-08-279|mka2020-10-08-280|mka2020-10-08-281|mka2020-10-08-282|mka2020-10-08-283|mka2020-10-08-284|mka2020-10-08-285|mka2020-10-08-286|mka2020-10-08-287|mka2020-10-08-288|mka2020-10-08-289|mka2020-10-08-290|mka2020-10-08-291|mka2020-10-08-292|mka2020-10-08-293|mka2020-10-08-294|mka2020-10-08-295|mka2020-10-08-296|mka2020-10-08-297|mka2020-10-08-298|mka2020-10-08-299|mka2020-10-08-300|mka2020-10-08-301|mka2020-10-08-302|mka2020-10-08-303|mka2020-10-08-304|mka2020-10-08-305|mka2020-10-08-306|mka2020-10-08-307|mka2020-10-08-308|mka2020-10-08-309|mka2020-10-08-310|mka2020-10-08-311|mka2020-10-08-312|mka2020-10-08-313|mka2020-10-08-314|mka2020-10-08-315|mka2020-10-08-316|mka2020-10-08-317|mka2020-10-08-318|mka2020-10-08-319|mka2020-10-08-320|mka2020-10-08-321|mka2020-10-08-322|mka2020-10-08-323|mka2020-10-08-324|mka2020-10-08-325|mka2020-10-08-326|mka2020-10-08-327|mka2020-10-08-328|mka2020-10-08-329|mka2020-10-08-330|mka2020-10-08-331|mka2020-10-08-332|mka2020-10-08-333|mka2020-10-08-334|mka2020-10-08-335|mka2020-10-08-336|mka2020-10-08-337|mka2020-10-08-338|mka2020-10-08-339|mka2020-10-08-340|mka2020-10-08-341|mka2020-10-08-342|mka2020-10-08-343|mka2020-10-08-344|mka2020-10-08-345|mka2020-10-08-346|mka2020-10-08-347|mka2020-10-08-348|mka2020-10-08-349|mka2020-10-08-350|mka2020-10-08-351|mka2020-10-08-352|mka2020-10-08-353|mka2020-10-08-354|mka2020-10-08-355|mka2020-10-08-356|mka2020-10-08-357|mka2020-10-08-358|mka2020-10-08-359|mka2020-10-08-360|mka2020-10-08-361|mka2020-10-08-362|mka2020-10-08-363|mka2020-10-08-364|mka2020-10-08-365|mka2020-10-08-366|mka2020-10-08-367|mka2020-10-08-368|mka2020-10-08-369|mka2020-10-08-370|mka2020-10-08-371|mka2020-10-08-372|mka2020-10-08-373|mka2020-10-08-374|mka2020-10-08-375|mka2020-10-08-376|mka2020-10-08-377|mka2020-10-08-378|mka2020-10-08-379|mka2020-10-08-380|mka2020-10-08-381|mka2020-10-08-382|mka2020-10-08-383|mka2020-10-08-384|mka2020-10-08-385|mka2020-10-08-386|mka2020-10-08-387|mka2020-10-08-388|mka2020-10-08-389|mka2020-10-08-390|mka2020-10-08-391|mka2020-10-08-392|mka2020-10-08-393|mka2020-10-08-394|mka2020-10-08-395|mka2020-10-08-396|mka2020-10-08-397|mka2020-10-08-398|mka2020-10-08-399|mka2020-10-08-400|mka2020-10-08-401|mka2020-10-08-402|mka2020-10-08-403|mka2020-10-08-404|mka2020-10-08-405|mka2020-10-08-406|mka2020-10-08-407|mka2020-10-08-408|mka2020-10-08-409|mka2020-10-08-410|mka2020-10-08-411|mka2020-10-08-412|mka2020-10-08-413|mka2020-10-08-414|mka2020-10-08-415|mka2020-10-08-416|mka2020-10-08-417|mka2020-10-08-418|mka2020-10-08-419|mka2020-10-08-420|mka2020-10-08-421|mka2020-10-08-422|mka2020-10-08-423|mka2020-10-08-424|mka2020-10-08-425|mka2020-10-08-426|mka2020-10-08-427|mka2020-10-08-428|mka2020-10-08-429|mka2020-10-08-430|mka2020-10-08-431|mka2020-10-08-432|mka2020-10-08-433|mka2020-10-08-434|mka2020-10-08-435|mka2020-10-08-436|mka2020-10-08-437|mka2020-10-08-438|mka2020-10-08-439|mka2020-10-08-440|mka2020-10-08-441|mka2020-10-08-442|mka2020-10-08-443|mka2020-10-08-444|mka2020-10-08-445|mka2020-10-08-446|mka2020-10-08-447|mka2020-10-08-448|mka2020-10-08-449|mka2020-10-08-450|mka2020-10-08-451|mka2020-10-08-452|mka2020-10-08-453|mka2020-10-08-454|mka2020-10-08-455)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10048'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/3dimage_*/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/3dimage_*/*'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (mka2020-10-08-1|mka2020-10-08-2|mka2020-10-08-3|mka2020-10-08-4|mka2020-10-08-5|mka2020-10-08-6|mka2020-10-08-7|mka2020-10-08-8|mka2020-10-08-9|mka2020-10-08-10|mka2020-10-08-11|mka2020-10-08-12|mka2020-10-08-13|mka2020-10-08-14|mka2020-10-08-15|mka2020-10-08-16|mka2020-10-08-17|mka2020-10-08-18|mka2020-10-08-19|mka2020-10-08-20|mka2020-10-08-21|mka2020-10-08-22|mka2020-10-08-23|mka2020-10-08-24|mka2020-10-08-25|mka2020-10-08-26|mka2020-10-08-27|mka2020-10-08-28|mka2020-10-08-29|mka2020-10-08-30|mka2020-10-08-31|mka2020-10-08-32|mka2020-10-08-33|mka2020-10-08-34|mka2020-10-08-35|mka2020-10-08-36|mka2020-10-08-37|mka2020-10-08-38|mka2020-10-08-39|mka2020-10-08-40|mka2020-10-08-41|mka2020-10-08-42|mka2020-10-08-43|mka2020-10-08-44|mka2020-10-08-45|mka2020-10-08-46|mka2020-10-08-47|mka2020-10-08-48|mka2020-10-08-49|mka2020-10-08-50|mka2020-10-08-51|mka2020-10-08-52|mka2020-10-08-53|mka2020-10-08-54|mka2020-10-08-55|mka2020-10-08-56|mka2020-10-08-57|mka2020-10-08-58|mka2020-10-08-59|mka2020-10-08-60|mka2020-10-08-61|mka2020-10-08-62|mka2020-10-08-63|mka2020-10-08-64|mka2020-10-08-65|mka2020-10-08-66|mka2020-10-08-67|mka2020-10-08-68|mka2020-10-08-69|mka2020-10-08-70|mka2020-10-08-71|mka2020-10-08-72|mka2020-10-08-73|mka2020-10-08-74|mka2020-10-08-75|mka2020-10-08-76|mka2020-10-08-77|mka2020-10-08-78|mka2020-10-08-79|mka2020-10-08-80|mka2020-10-08-81|mka2020-10-08-82|mka2020-10-08-83|mka2020-10-08-84|mka2020-10-08-85|mka2020-10-08-86|mka2020-10-08-87|mka2020-10-08-88|mka2020-10-08-89|mka2020-10-08-90|mka2020-10-08-91|mka2020-10-08-92|mka2020-10-08-93|mka2020-10-08-94|mka2020-10-08-95|mka2020-10-08-96|mka2020-10-08-97|mka2020-10-08-98|mka2020-10-08-99|mka2020-10-08-100|mka2020-10-08-101|mka2020-10-08-102|mka2020-10-08-103|mka2020-10-08-104|mka2020-10-08-105|mka2020-10-08-106|mka2020-10-08-107|mka2020-10-08-108|mka2020-10-08-109|mka2020-10-08-110|mka2020-10-08-111|mka2020-10-08-112|mka2020-10-08-113|mka2020-10-08-114|mka2020-10-08-115|mka2020-10-08-116|mka2020-10-08-117|mka2020-10-08-118|mka2020-10-08-119|mka2020-10-08-120|mka2020-10-08-121|mka2020-10-08-122|mka2020-10-08-123|mka2020-10-08-124|mka2020-10-08-125|mka2020-10-08-126|mka2020-10-08-127|mka2020-10-08-128|mka2020-10-08-129|mka2020-10-08-130|mka2020-10-08-131|mka2020-10-08-132|mka2020-10-08-133|mka2020-10-08-134|mka2020-10-08-135|mka2020-10-08-136|mka2020-10-08-137|mka2020-10-08-138|mka2020-10-08-139|mka2020-10-08-140|mka2020-10-08-141|mka2020-10-08-142|mka2020-10-08-143|mka2020-10-08-144|mka2020-10-08-145|mka2020-10-08-146|mka2020-10-08-147|mka2020-10-08-148|mka2020-10-08-149|mka2020-10-08-150|mka2020-10-08-151|mka2020-10-08-152|mka2020-10-08-153|mka2020-10-08-154|mka2020-10-08-155|mka2020-10-08-156|mka2020-10-08-157|mka2020-10-08-158|mka2020-10-08-159|mka2020-10-08-160|mka2020-10-08-161|mka2020-10-08-162|mka2020-10-08-163|mka2020-10-08-164|mka2020-10-08-165|mka2020-10-08-166|mka2020-10-08-167|mka2020-10-08-168|mka2020-10-08-169|mka2020-10-08-170|mka2020-10-08-171|mka2020-10-08-172|mka2020-10-08-173|mka2020-10-08-174|mka2020-10-08-175|mka2020-10-08-176|mka2020-10-08-177|mka2020-10-08-178|mka2020-10-08-179|mka2020-10-08-180|mka2020-10-08-181|mka2020-10-08-182|mka2020-10-08-183|mka2020-10-08-184|mka2020-10-08-185|mka2020-10-08-186|mka2020-10-08-187|mka2020-10-08-188|mka2020-10-08-189|mka2020-10-08-190|mka2020-10-08-191|mka2020-10-08-192|mka2020-10-08-193|mka2020-10-08-194|mka2020-10-08-195|mka2020-10-08-196|mka2020-10-08-197|mka2020-10-08-198|mka2020-10-08-199|mka2020-10-08-200|mka2020-10-08-201|mka2020-10-08-202|mka2020-10-08-203|mka2020-10-08-204|mka2020-10-08-205|mka2020-10-08-206|mka2020-10-08-207|mka2020-10-08-208|mka2020-10-08-209|mka2020-10-08-210|mka2020-10-08-211|mka2020-10-08-212|mka2020-10-08-213|mka2020-10-08-214|mka2020-10-08-215|mka2020-10-08-216|mka2020-10-08-217|mka2020-10-08-218|mka2020-10-08-219|mka2020-10-08-220|mka2020-10-08-221|mka2020-10-08-222|mka2020-10-08-223|mka2020-10-08-224|mka2020-10-08-225|mka2020-10-08-226|mka2020-10-08-227|mka2020-10-08-228|mka2020-10-08-229|mka2020-10-08-230|mka2020-10-08-231|mka2020-10-08-232|mka2020-10-08-233|mka2020-10-08-234|mka2020-10-08-235|mka2020-10-08-236|mka2020-10-08-237|mka2020-10-08-238|mka2020-10-08-239|mka2020-10-08-240|mka2020-10-08-241|mka2020-10-08-242|mka2020-10-08-243|mka2020-10-08-244|mka2020-10-08-245|mka2020-10-08-246|mka2020-10-08-247|mka2020-10-08-248|mka2020-10-08-249|mka2020-10-08-250|mka2020-10-08-251|mka2020-10-08-252|mka2020-10-08-253|mka2020-10-08-254|mka2020-10-08-255|mka2020-10-08-256|mka2020-10-08-257|mka2020-10-08-258|mka2020-10-08-259|mka2020-10-08-260|mka2020-10-08-261|mka2020-10-08-262|mka2020-10-08-263|mka2020-10-08-264|mka2020-10-08-265|mka2020-10-08-266|mka2020-10-08-267|mka2020-10-08-268|mka2020-10-08-269|mka2020-10-08-270|mka2020-10-08-271|mka2020-10-08-272|mka2020-10-08-273|mka2020-10-08-274|mka2020-10-08-275|mka2020-10-08-276|mka2020-10-08-277|mka2020-10-08-278|mka2020-10-08-279|mka2020-10-08-280|mka2020-10-08-281|mka2020-10-08-282|mka2020-10-08-283|mka2020-10-08-284|mka2020-10-08-285|mka2020-10-08-286|mka2020-10-08-287|mka2020-10-08-288|mka2020-10-08-289|mka2020-10-08-290|mka2020-10-08-291|mka2020-10-08-292|mka2020-10-08-293|mka2020-10-08-294|mka2020-10-08-295|mka2020-10-08-296|mka2020-10-08-297|mka2020-10-08-298|mka2020-10-08-299|mka2020-10-08-300|mka2020-10-08-301|mka2020-10-08-302|mka2020-10-08-303|mka2020-10-08-304|mka2020-10-08-305|mka2020-10-08-306|mka2020-10-08-307|mka2020-10-08-308|mka2020-10-08-309|mka2020-10-08-310|mka2020-10-08-311|mka2020-10-08-312|mka2020-10-08-313|mka2020-10-08-314|mka2020-10-08-315|mka2020-10-08-316|mka2020-10-08-317|mka2020-10-08-318|mka2020-10-08-319|mka2020-10-08-320|mka2020-10-08-321|mka2020-10-08-322|mka2020-10-08-323|mka2020-10-08-324|mka2020-10-08-325|mka2020-10-08-326|mka2020-10-08-327|mka2020-10-08-328|mka2020-10-08-329|mka2020-10-08-330|mka2020-10-08-331|mka2020-10-08-332|mka2020-10-08-333|mka2020-10-08-334|mka2020-10-08-335|mka2020-10-08-336|mka2020-10-08-337|mka2020-10-08-338|mka2020-10-08-339|mka2020-10-08-340|mka2020-10-08-341|mka2020-10-08-342|mka2020-10-08-343|mka2020-10-08-344|mka2020-10-08-345|mka2020-10-08-346|mka2020-10-08-347|mka2020-10-08-348|mka2020-10-08-349|mka2020-10-08-350|mka2020-10-08-351|mka2020-10-08-352|mka2020-10-08-353|mka2020-10-08-354|mka2020-10-08-355|mka2020-10-08-356|mka2020-10-08-357|mka2020-10-08-358|mka2020-10-08-359|mka2020-10-08-360|mka2020-10-08-361|mka2020-10-08-362|mka2020-10-08-363|mka2020-10-08-364|mka2020-10-08-365|mka2020-10-08-366|mka2020-10-08-367|mka2020-10-08-368|mka2020-10-08-369|mka2020-10-08-370|mka2020-10-08-371|mka2020-10-08-372|mka2020-10-08-373|mka2020-10-08-374|mka2020-10-08-375|mka2020-10-08-376|mka2020-10-08-377|mka2020-10-08-378|mka2020-10-08-379|mka2020-10-08-380|mka2020-10-08-381|mka2020-10-08-382|mka2020-10-08-383|mka2020-10-08-384|mka2020-10-08-385|mka2020-10-08-386|mka2020-10-08-387|mka2020-10-08-388|mka2020-10-08-389|mka2020-10-08-390|mka2020-10-08-391|mka2020-10-08-392|mka2020-10-08-393|mka2020-10-08-394|mka2020-10-08-395|mka2020-10-08-396|mka2020-10-08-397|mka2020-10-08-398|mka2020-10-08-399|mka2020-10-08-400|mka2020-10-08-401|mka2020-10-08-402|mka2020-10-08-403|mka2020-10-08-404|mka2020-10-08-405|mka2020-10-08-406|mka2020-10-08-407|mka2020-10-08-408|mka2020-10-08-409|mka2020-10-08-410|mka2020-10-08-411|mka2020-10-08-412|mka2020-10-08-413|mka2020-10-08-414|mka2020-10-08-415|mka2020-10-08-416|mka2020-10-08-417|mka2020-10-08-418|mka2020-10-08-419|mka2020-10-08-420|mka2020-10-08-421|mka2020-10-08-422|mka2020-10-08-423|mka2020-10-08-424|mka2020-10-08-425|mka2020-10-08-426|mka2020-10-08-427|mka2020-10-08-428|mka2020-10-08-429|mka2020-10-08-430|mka2020-10-08-431|mka2020-10-08-432|mka2020-10-08-433|mka2020-10-08-434|mka2020-10-08-435|mka2020-10-08-436|mka2020-10-08-437|mka2020-10-08-438|mka2020-10-08-439|mka2020-10-08-440|mka2020-10-08-441|mka2020-10-08-442|mka2020-10-08-443|mka2020-10-08-444|mka2020-10-08-445|mka2020-10-08-446|mka2020-10-08-447|mka2020-10-08-448|mka2020-10-08-449|mka2020-10-08-450|mka2020-10-08-451|mka2020-10-08-452|mka2020-10-08-453|mka2020-10-08-454|mka2020-10-08-455)$
-  run_name_regex: (.*)
+  deposition_id: 10048
   run_data_map_file: run_data_map/10048.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: counting
+      manufacturer: Gatan
+      model: K3
+    data_acquisition_software: Serial EM
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: TFS
+      model: Krios
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: 4.516
+    spherical_aberration_constant: 2.7
+    tilt_alignment_software: '{ts-tilt_alignment_software}'
+    tilt_axis: 84.3
+    tilt_range:
+      max: 60.0
+      min: -60.0
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: int {ts-tilt_series_quality}
+    tilt_step: 3.0
+    tilting_scheme: min to max tilt
+    total_flux: 120.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares: '{tomo-align_softwares}'
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: '{tomo-processing_software}'
+    reconstruction_method: '{tomo-reconstruction_method}'
+    reconstruction_software: '{tomo-reconstruction_software}'
+    tomogram_version: 1
+    voxel_spacing: '{tomo-voxel_spacing}'
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/3dimage_*/*'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - float {tomo-voxel_spacing}

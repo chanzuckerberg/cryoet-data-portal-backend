@@ -1,116 +1,139 @@
-dataset:
-  dataset_identifier: 10094
-  dataset_description: This is 37th of 41 sets of data studying Legionella pneumophila
-    collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb.
-  dataset_title: "L. pneumophila Lp02 \u2206lspDE"
-  authors: &id001
-  - name: Debnath Ghosal
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Legionella pneumophila
-    taxonomy_id: 1080311
-  sample_type: organism
-  sample_preparation: null
-  grid_preparation: "4 grids were frozen for this strain at OD= 3 Vitrobot (MK iv)\
-    \ settings: 100% humidity, 4\xB5l sample, Blot force 6, blot time 3 sec. Wait\
-    \ time 0 sec. Drain time 1 sec. Ethane/propane mix. Grid: Quantifoil Cu 2/2 200.\
-    \ Add gold to cells prior to freezing: 1ul of gold to 4 ul of cells, freeze."
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-03-02-40/keyimg_dga2017-03-02-40.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-03-02-40/keyimg_dga2017-03-02-40_s.jpg
-  cell_strain:
-    name: Philadelphia-1_Lp02
-    id: null
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: counting
-    manufacturer: Gatan
-    model: K2
-  data_acquisition_software: UCSFTomo
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: FEI
-    model: Polara
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: 4.036
-  spherical_aberration_constant: 2.0
-  tilt_alignment_software: '{ts-tilt_alignment_software}'
-  tilt_axis: 84.3
-  tilt_range:
-    max: 60.0
-    min: -60.0
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: 4
-  tilt_step: 1.5
-  tilting_scheme: starting tilt to max then min
-  total_flux: 100.0
-tomograms:
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  align_softwares: '{tomo-align_softwares}'
-  authors: *id001
-  ctf_corrected: null
-  fiducial_alignment_status: FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  processing_software: '{tomo-processing_software}'
-  reconstruction_method: '{tomo-reconstruction_method}'
-  reconstruction_software: '{tomo-reconstruction_software}'
-  tomogram_version: 1
-  voxel_spacing: 16.145
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-03-02-40/keyimg_dga2017-03-02-40.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-03-02-40/keyimg_dga2017-03-02-40_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Debnath Ghosal
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: Philadelphia-1_Lp02
+    dataset_description: This is 37th of 41 sets of data studying Legionella pneumophila
+      collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb.
+    dataset_identifier: 10094
+    dataset_title: "L. pneumophila Lp02 \u2206lspDE"
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: "4 grids were frozen for this strain at OD= 3 Vitrobot (MK iv)\
+      \ settings: 100% humidity, 4\xB5l sample, Blot force 6, blot time 3 sec. Wait\
+      \ time 0 sec. Drain time 1 sec. Ethane/propane mix. Grid: Quantifoil Cu 2/2\
+      \ 200. Add gold to cells prior to freezing: 1ul of gold to 4 ul of cells, freeze."
+    organism:
+      name: Legionella pneumophila
+      taxonomy_id: 1080311
+    sample_preparation: null
+    sample_type: organism
+  sources:
+  - literal:
+      value:
+      - '10094'
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/{mapped_frame_name}/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (dga2017-03-02-40|dga2017-03-02-41|dga2017-03-02-42|dga2017-03-02-43|dga2017-03-02-44|dga2017-03-02-45|dga2017-03-02-46|dga2017-03-02-47|dga2017-03-02-48|dga2017-03-02-49|dga2017-03-02-50|dga2017-03-02-51|dga2017-03-02-52|dga2017-03-02-53|dga2017-03-02-54|dga2017-03-02-55|dga2017-03-02-57|dga2017-03-02-58|dga2017-03-02-59|dga2017-03-02-61|dga2017-03-02-62|dga2017-03-02-63|dga2017-03-02-64|dga2017-03-02-68|dga2017-03-02-69|dga2017-03-02-70|dga2017-03-02-71)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10094'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/{mapped_frame_name}/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/{mapped_tomo_name}'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (dga2017-03-02-40|dga2017-03-02-41|dga2017-03-02-42|dga2017-03-02-43|dga2017-03-02-44|dga2017-03-02-45|dga2017-03-02-46|dga2017-03-02-47|dga2017-03-02-48|dga2017-03-02-49|dga2017-03-02-50|dga2017-03-02-51|dga2017-03-02-52|dga2017-03-02-53|dga2017-03-02-54|dga2017-03-02-55|dga2017-03-02-57|dga2017-03-02-58|dga2017-03-02-59|dga2017-03-02-61|dga2017-03-02-62|dga2017-03-02-63|dga2017-03-02-64|dga2017-03-02-68|dga2017-03-02-69|dga2017-03-02-70|dga2017-03-02-71)$
-  run_name_regex: (.*)
+  deposition_id: 10094
   run_data_map_file: run_data_map/10094.csv
-  run_to_tomo_map_csv: run_tomo_map/10094.csv
   run_to_frame_map_csv: run_frames_map/10094.csv
+  run_to_tomo_map_csv: run_tomo_map/10094.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: counting
+      manufacturer: Gatan
+      model: K2
+    data_acquisition_software: UCSFTomo
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: FEI
+      model: Polara
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: 4.036
+    spherical_aberration_constant: 2.0
+    tilt_alignment_software: '{ts-tilt_alignment_software}'
+    tilt_axis: 84.3
+    tilt_range:
+      max: 60.0
+      min: -60.0
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: 4
+    tilt_step: 1.5
+    tilting_scheme: starting tilt to max then min
+    total_flux: 100.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares: '{tomo-align_softwares}'
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: '{tomo-processing_software}'
+    reconstruction_method: '{tomo-reconstruction_method}'
+    reconstruction_software: '{tomo-reconstruction_software}'
+    tomogram_version: 1
+    voxel_spacing: 16.145
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/{mapped_tomo_name}'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 16.145

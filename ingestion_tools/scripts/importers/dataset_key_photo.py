@@ -1,12 +1,13 @@
 import os
 from typing import TYPE_CHECKING, Optional
 
-from common.config import DataImportConfig
 from common.copy import copy_by_src
+from common.finders import DefaultImporterFactory
 from importers.base_importer import BaseImporter
 from importers.key_image import KeyImageImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
+from importers.voxel_spacing import VoxelSpacingImporter
 
 if TYPE_CHECKING:
     from importers.dataset import DatasetImporter
@@ -16,12 +17,14 @@ else:
 
 class DatasetKeyPhotoImporter(BaseImporter):
     type_key = "dataset_keyphoto"
+    plural_key = "dataset_keyphotos"
     image_keys = ["snapshot", "thumbnail"]
+    finder_factory = DefaultImporterFactory
+    has_metadata = False
 
-    def import_key_photo(self) -> None:
+    def import_item(self) -> None:
         path = self.config.get_output_path(self)
-        for image_type in ["snapshot", "thumbnail"]:
-            self.save_image(image_type, path)
+        self.save_image(self.name, path)
 
     def get_metadata(self) -> dict[str, str]:
         path = self.config.get_output_path(self)
@@ -35,9 +38,7 @@ class DatasetKeyPhotoImporter(BaseImporter):
         return None
 
     def save_image(self, key: str, path: str) -> Optional[str]:
-        image_src = self.config.dataset_template.get("key_photos", {}).get(key) or self.get_first_valid_tomo_key_photo(
-            key,
-        )
+        image_src = self.path or self.get_first_valid_tomo_key_photo(key)
         if not image_src:
             raise RuntimeError("Image source file not found")
         _, extension = os.path.splitext(image_src)
@@ -46,13 +47,14 @@ class DatasetKeyPhotoImporter(BaseImporter):
         return os.path.relpath(dest_path, self.config.output_prefix)
 
     def get_first_valid_tomo_key_photo(self, key: str) -> Optional[str]:
-        for run in RunImporter.find_runs(self.config, self.get_dataset()):
-            for tomo in TomogramImporter.find_tomograms(self.config, run):
-                key_photos = KeyImageImporter(self.config, parent=tomo).get_metadata()
-                if all(image_key in key_photos for image_key in self.image_keys):
-                    return os.path.join(self.config.output_prefix, key_photos.get(key))
+        for run in RunImporter.finder(self.config, **self.parents):
+            for vs in VoxelSpacingImporter.finder(self.config, run=run, **self.parents):
+                for tomo in TomogramImporter.finder(self.config, voxel_spacing=vs, run=run, **self.parents):
+                    key_photos = list(
+                        KeyImageImporter.finder(self.config, voxel_spacing=vs, run=run, tomogram=tomo, **self.parents),
+                    )[0].get_metadata()
+                    if all(image_key in key_photos for image_key in self.image_keys):
+                        img_path = os.path.join(self.config.output_prefix, key_photos.get(key))
+                        if self.config.fs.exists(img_path):
+                            return img_path
         return None
-
-    @classmethod
-    def find_dataset_key_photos(cls, config: DataImportConfig, dataset: "DatasetImporter") -> "DatasetKeyPhotoImporter":
-        return cls(config=config, parent=dataset)

@@ -1,3 +1,4 @@
+local_data
 **/*.pyc
 **/*.swp
 **/*.swo

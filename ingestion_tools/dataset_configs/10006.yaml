@@ -1,43 +1,122 @@
-dataset:
-  dataset_identifier: 10006
-  dataset_title: Severe acute respiratory syndrome coronavirus 2
-  dataset_description: Cryo-electron tomograms of SARS-CoV-2 spike proteins on intact virions.
-  authors: &dataset_authors
-    - name: Zunlong Ke
-      ORCID: 0000-0002-8408-850X
-      primary_author_status: true
-    - name: Joaquin Oton
-      ORCID: 0000-0002-2195-4730
-      primary_author_status: true
-    - name: Kun Qu
-      ORCID: 0000-0002-3152-2237
-      primary_author_status: true
-    - name: Mirko Cortese
-      ORCID: 0000-0003-1786-4211
-    - name: Vojtech Zila
-      ORCID: 0000-0003-2032-3600
+annotations:
+- metadata:
+    annotation_method: Template matching + 3D classification filtering
+    annotation_object:
+      description: SARS-CoV2 Spike protein
+      id: GO:0019062
+      name: SARS-CoV2 spike protein
+    annotation_publications: doi:10.1038/s41586-020-2665-2
+    annotation_software: TOM/AV3 + RELION
+    authors:
+    - ORCID: 0000-0002-8408-850X
+      name: Zunlong Ke
+      primary_annotator_status: true
+    - ORCID: 0000-0002-2195-4730
+      name: Joaquin Oton
+      primary_annotator_status: true
+    - ORCID: 0000-0002-3152-2237
+      name: Kun Qu
+      primary_annotator_status: true
+    - ORCID: 0000-0003-1786-4211
+      name: Mirko Cortese
+    - ORCID: 0000-0003-2032-3600
+      name: Vojtech Zila
     - name: Lesley McKeane
-    - name: Takanori Nakane
-      ORCID: 0000-0003-2697-2767
+    - ORCID: 0000-0003-2697-2767
+      name: Takanori Nakane
     - name: Jasenko Zivanov
-    - name: Christopher Neufeldt
-      ORCID: 0000-0002-4551-1811
+    - ORCID: 0000-0002-4551-1811
+      name: Christopher Neufeldt
     - name: Berati Cerikan
-    - name: John Lu
-      ORCID: 0000-0002-3972-8854
-    - name: Julia Peukes
-      ORCID: 0000-0001-8560-7407
-    - name: Xiaoli Xiong
-      ORCID: 0000-0002-4632-9122
-    - name: "Hans-Georg Kräusslich"
-    - name: Sjors H. W. Scheres
-      ORCID: 0000-0002-0462-6540
-    - name: Ralf Bartenschlager
-      ORCID: 0000-0001-5601-9307
-    - name: John Briggs
-      ORCID: 0000-0003-3990-6910
+    - ORCID: 0000-0002-3972-8854
+      name: John Lu
+    - ORCID: 0000-0001-8560-7407
+      name: Julia Peukes
+    - ORCID: 0000-0002-4632-9122
+      name: Xiaoli Xiong
+    - name: "Hans-Georg Kr\xE4usslich"
+    - ORCID: 0000-0002-0462-6540
+      name: Sjors H. W. Scheres
+    - ORCID: 0000-0001-5601-9307
+      name: Ralf Bartenschlager
+    - ORCID: 0000-0003-3990-6910
       corresponding_author_status: true
-  funding:
+      name: John Briggs
+    confidence:
+      ground_truth_used: author estimation
+    dates: &id001
+      deposition_date: 2023-10-11
+      last_modified_date: 2023-11-20
+      release_date: 2023-12-10
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: automated
+    version: '1.0'
+  sources:
+  - binning: 2
+    file_format: relion4_star
+    filter_value: '{run_name}'
+    glob_string: motl_star/czii-remapped-points.star
+    is_visualization_default: true
+    order: xyz
+    shape: OrientedPoint
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10493-l.gif
+        thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10493.gif
+datasets:
+- metadata:
+    authors: &id002
+    - ORCID: 0000-0002-8408-850X
+      name: Zunlong Ke
+      primary_author_status: true
+    - ORCID: 0000-0002-2195-4730
+      name: Joaquin Oton
+      primary_author_status: true
+    - ORCID: 0000-0002-3152-2237
+      name: Kun Qu
+      primary_author_status: true
+    - ORCID: 0000-0003-1786-4211
+      name: Mirko Cortese
+    - ORCID: 0000-0003-2032-3600
+      name: Vojtech Zila
+    - name: Lesley McKeane
+    - ORCID: 0000-0003-2697-2767
+      name: Takanori Nakane
+    - name: Jasenko Zivanov
+    - ORCID: 0000-0002-4551-1811
+      name: Christopher Neufeldt
+    - name: Berati Cerikan
+    - ORCID: 0000-0002-3972-8854
+      name: John Lu
+    - ORCID: 0000-0001-8560-7407
+      name: Julia Peukes
+    - ORCID: 0000-0002-4632-9122
+      name: Xiaoli Xiong
+    - name: "Hans-Georg Kr\xE4usslich"
+    - ORCID: 0000-0002-0462-6540
+      name: Sjors H. W. Scheres
+    - ORCID: 0000-0001-5601-9307
+      name: Ralf Bartenschlager
+    - ORCID: 0000-0003-3990-6910
+      corresponding_author_status: true
+      name: John Briggs
+    cell_component:
+      id: null
+      name: null
+    cell_strain:
+      name: Germany/BavPat1/2020
+    cross_references:
+      dataset_publications: doi:10.1038/s41586-020-2665-2
+      related_database_entries: EMPIAR-10493
+    dataset_description: Cryo-electron tomograms of SARS-CoV-2 spike proteins on intact
+      virions.
+    dataset_identifier: 10006
+    dataset_title: Severe acute respiratory syndrome coronavirus 2
+    dates: *id001
+    funding:
     - funding_agency_name: European Research Council (ERC)
       grant_id: ERC-CoG-648432
     - funding_agency_name: Medical Research Council (MRC, United Kingdom)
@@ -48,139 +127,88 @@ dataset:
       grant_id: null
     - funding_agency_name: German Research Foundation (DFG)
       grant_id: 240245660-SFB 1129
-  sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, vitrification_instrument: LEICA EM GP, instance_type: subtomogram_averaging_preparation'
-  grid_preparation: 'model: C-flat-2/2, support_film_film_type_id: 1, support_film_film_material: CARBON, support_film_film_topology: HOLEY ARRAY, support_film_instance_type: support_film, pretreatment_type_: GLOW DISCHARGE'
-  sample_type: Virus
-  dates: &repo-dates
-    deposition_date: 2023-10-11
-    release_date: 2023-12-10
-    last_modified_date: 2023-11-20
-  cell_strain:
-    name: Germany/BavPat1/2020
-  cross_references:
-    dataset_publications: doi:10.1038/s41586-020-2665-2
-    related_database_entries: EMPIAR-10493
-  cell_component:
-    name: ~
-    id: ~
-  organism:
-    name: Severe acute respiratory syndrome coronavirus 2
-    id: 'NCBITaxon: 2697049'
-  key_photos:
-    snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10493-l.gif
-    thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10493.gif
-annotations:
-  - metadata:
-      annotation_object:
-        id: GO:0019062
-        name: SARS-CoV2 spike protein
-        description: SARS-CoV2 Spike protein
-      dates: *repo-dates
-      annotation_method: Template matching + 3D classification filtering
-      method_type: automated
-      annotation_publications: doi:10.1038/s41586-020-2665-2
-      ground_truth_status: true
-      authors:
-        - name: Zunlong Ke
-          ORCID: 0000-0002-8408-850X
-          primary_annotator_status: true
-        - name: Joaquin Oton
-          ORCID: 0000-0002-2195-4730
-          primary_annotator_status: true
-        - name: Kun Qu
-          ORCID: 0000-0002-3152-2237
-          primary_annotator_status: true
-        - name: Mirko Cortese
-          ORCID: 0000-0003-1786-4211
-        - name: Vojtech Zila
-          ORCID: 0000-0003-2032-3600
-        - name: Lesley McKeane
-        - name: Takanori Nakane
-          ORCID: 0000-0003-2697-2767
-        - name: Jasenko Zivanov
-        - name: Christopher Neufeldt
-          ORCID: 0000-0002-4551-1811
-        - name: Berati Cerikan
-        - name: John Lu
-          ORCID: 0000-0002-3972-8854
-        - name: Julia Peukes
-          ORCID: 0000-0001-8560-7407
-        - name: Xiaoli Xiong
-          ORCID: 0000-0002-4632-9122
-        - name: "Hans-Georg Kräusslich"
-        - name: Sjors H. W. Scheres
-          ORCID: 0000-0002-0462-6540
-        - name: Ralf Bartenschlager
-          ORCID: 0000-0001-5601-9307
-        - name: John Briggs
-          ORCID: 0000-0003-3990-6910
-          corresponding_author_status: true
-      annotation_software: TOM/AV3 + RELION
-      version: '1.0'
-      confidence:
-#        precision: REQUIRED IF ground_truth_used is specified
-#        recall: REQUIRED IF ground_truth_used is specified
-        ground_truth_used: author estimation
-      is_curator_recommended: true
-    sources:
-      - file_format: relion4_star
-        glob_string: motl_star/czii-remapped-points.star
-        order: zyx
-        shape: OrientedPoint
-        binning: 2
-        filter_value: '{run_name}'
-        is_visualization_default: true
-runs: {}
+    grid_preparation: 'model: C-flat-2/2, support_film_film_type_id: 1, support_film_film_material:
+      CARBON, support_film_film_topology: HOLEY ARRAY, support_film_instance_type:
+      support_film, pretreatment_type_: GLOW DISCHARGE'
+    organism:
+      id: 'NCBITaxon: 2697049'
+      name: Severe acute respiratory syndrome coronavirus 2
+    sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, vitrification_instrument:
+      LEICA EM GP, instance_type: subtomogram_averaging_preparation'
+    sample_type: Virus
+  sources:
+  - literal:
+      value:
+      - '10006'
+frames:
+- sources:
+  - source_glob:
+      list_glob: Frames/{run_name}_acquisition-order_angle.tif
+gains:
+- sources:
+  - source_glob:
+      list_glob: gainRef/CountRef_mapped-{run_name}_acquisition-order_-0.0.dm4
+key_images:
+- sources:
+  - literal:
+      value:
+      - from_tomogram
+runs:
+- sources:
+  - source_glob:
+      list_glob: tomos_bin4/*
+      match_regex: /TS_\d\d\d_dose-filt_lp50.rec$
+      name_regex: (.*)_dose-filt_lp50\.rec
+standardization_config:
+  deposition_id: 10006
+  source_prefix: jbriggs-sc2
 tiltseries:
-  scales: []
+  acceleration_voltage: 300000
+  binning_from_frames: 1
+  camera:
+    manufacturer: Gatan
+    model: K2 SUMMIT
+  data_acquisition_software: SerialEM
+  is_aligned: false
   microscope:
     manufacturer: FEI
     model: TITAN
     optical_setup: GIF Bioquantum
-  spherical_aberration_constant: 2.7
   microscope_optical_setup:
     energy_filter: GIF Bioquantum
-    phase_plate: null
     image_corrector: null
-  camera:
-    manufacturer: Gatan
-    model: K2 SUMMIT
-  acceleration_voltage: 300000
-  tilting_scheme: Dose symmetric from 0.0 degrees
-  tilt_axis: 85.6°
-  tilt_step: 3
-  tilt_range:
-    min: -60
-    max: 60
-  total_flux: 120
-  data_acquisition_software: SerialEM
-  binning_from_frames: 1
-  tilt_series_quality: 5
+    phase_plate: null
   pixel_spacing: 1.532
-  is_aligned: false
+  scales: []
+  spherical_aberration_constant: 2.7
+  tilt_axis: "85.6\xB0"
+  tilt_range:
+    max: 60
+    min: -60
+  tilt_series_quality: 5
+  tilt_step: 3
+  tilting_scheme: Dose symmetric from 0.0 degrees
+  total_flux: 120
 tomograms:
-  voxel_spacing: 6.128
-  fiducial_alignment_status: FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  reconstruction_method: Weighted back projection
-  reconstruction_software: novaCTF
-  ctf_corrected: true
-  processing: raw
-  authors: *dataset_authors
-  tomogram_version: 1
-standardization_config:
-  destination_prefix: '10006'
-  source_prefix: jbriggs-sc2
-  frames_glob: Frames/{run_name}_acquisition-order_angle.tif
-  gain_glob: gainRef/CountRef_mapped-{run_name}_acquisition-order_-0.0.dm4
-  tiltseries_glob: null
-  rawtlt_files: null
-  tomo_format: mrc
-  tomo_glob: 'tomos_bin4/{run_name}_dose-filt_lp50.rec'
-  tomo_voxel_size: '6.128'
-  run_glob: 'tomos_bin4/*'
-  run_regex: '/TS_\d\d\d_dose-filt_lp50.rec$'
-  run_name_regex: '(.*)_dose-filt_lp50\.rec'
+- metadata:
+    authors: *id002
+    ctf_corrected: true
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: Weighted back projection
+    reconstruction_software: novaCTF
+    tomogram_version: 1
+    voxel_spacing: 6.128
+  sources:
+  - source_glob:
+      list_glob: tomos_bin4/{run_name}_dose-filt_lp50.rec
+      match_regex: .*
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 6.128
