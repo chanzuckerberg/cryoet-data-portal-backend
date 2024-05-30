@@ -1,110 +1,133 @@
-dataset:
-  dataset_identifier: 10100
-  dataset_description: This is a part of Caltech Jensen  lab etdb.
-  dataset_title: caulobacter rs_deletion
-  authors: &id001
-  - name: Debnath Ghosal
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Caulobacter crescentus
-    taxonomy_id: 565050
-  sample_type: Organism
-  sample_preparation: null
-  grid_preparation: null
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2019-08-06-1/keyimg_dga2019-08-06-1.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2019-08-06-1/keyimg_dga2019-08-06-1_s.jpg
-  cell_strain:
-    name: NA1000
-    id: null
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: counting
-    manufacturer: Gatan
-    model: K3
-  data_acquisition_software: '{ts-data_acquisition_software}'
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: TFS
-    model: Krios
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: '{ts-pixel_spacing}'
-  spherical_aberration_constant: 2.7
-  tilt_alignment_software: '{ts-tilt_alignment_software}'
-  tilt_axis: 84.3
-  tilt_range:
-    max: float {ts-tilt_range-max}
-    min: float {ts-tilt_range-min}
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: int {ts-tilt_series_quality}
-  tilt_step: 3.0
-  tilting_scheme: min to max tilt
-  total_flux: '{ts-total_flux}'
-tomograms:
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  align_softwares: '{tomo-align_softwares}'
-  authors: *id001
-  ctf_corrected: null
-  fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  processing_software: '{tomo-processing_software}'
-  reconstruction_method: '{tomo-reconstruction_method}'
-  reconstruction_software: '{tomo-reconstruction_software}'
-  tomogram_version: 1
-  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2019-08-06-1/keyimg_dga2019-08-06-1.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2019-08-06-1/keyimg_dga2019-08-06-1_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Debnath Ghosal
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: NA1000
+    dataset_description: This is a part of Caltech Jensen  lab etdb.
+    dataset_identifier: 10100
+    dataset_title: caulobacter rs_deletion
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: null
+    organism:
+      name: Caulobacter crescentus
+      taxonomy_id: 565050
+    sample_preparation: null
+    sample_type: Organism
+  sources:
+  - literal:
+      value:
+      - '10100'
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/3dimage_*/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (dga2019-08-06-1|dga2019-08-06-2|dga2019-08-06-3|dga2019-08-06-4|dga2019-08-06-5|dga2019-08-06-6|dga2019-08-06-7|dga2019-08-06-8|dga2019-08-06-9|dga2019-08-06-10|dga2019-08-06-11|dga2019-08-06-12|dga2019-08-06-13|dga2019-08-06-14|dga2019-08-06-15|dga2019-08-06-16|dga2019-08-06-17|dga2019-08-06-18|dga2019-08-06-19|dga2019-08-06-20|dga2019-08-06-21|dga2019-08-06-26|dga2019-08-06-27|dga2019-12-07-84|dga2019-12-07-85|dga2019-12-07-86|dga2019-12-07-88|dga2019-12-07-89|dga2019-12-07-90|dga2019-12-07-91|dga2019-12-07-93|dga2019-12-07-94|dga2019-12-07-95|dga2019-12-07-96|dga2019-12-07-97|dga2019-12-07-98|dga2019-12-07-99|dga2019-12-07-100|dga2019-12-07-101|dga2019-12-07-102|dga2019-12-07-103|dga2019-12-07-104|dga2019-12-07-105|dga2019-12-07-106|dga2019-12-07-107|dga2019-12-07-108|dga2019-12-07-109|dga2019-12-07-110|dga2019-12-07-111|dga2019-12-07-112|dga2019-12-07-113|dga2019-12-07-114|dga2019-12-07-115|dga2019-12-07-116|dga2019-12-07-117|dga2019-12-07-118|dga2019-12-07-119|dga2019-12-07-120|dga2019-12-07-121|dga2019-12-07-122|dga2019-12-07-124|dga2019-12-07-125|dga2019-12-07-126|dga2019-12-07-127|dga2019-12-07-128|dga2019-12-07-129|dga2019-12-07-130|dga2019-12-07-131|dga2019-12-07-132|dga2019-12-07-133|dga2019-12-07-136|dga2019-12-07-137|dga2019-12-07-138|dga2019-12-07-139|dga2019-12-07-140|dga2019-12-07-142|dga2019-12-07-143|dga2019-12-07-144|dga2019-12-07-145|dga2019-12-07-146|dga2019-12-07-147|dga2019-12-07-148|dga2019-12-07-149|dga2019-12-07-150|dga2019-12-07-151|dga2019-12-07-152|dga2019-12-07-153|dga2019-12-07-154|dga2019-12-07-155|dga2019-12-07-156|dga2019-12-07-157|dga2019-12-07-158|dga2019-12-07-159|dga2019-12-07-160|dga2019-12-07-161|dga2019-12-07-162|dga2019-12-07-164|dga2019-12-07-165|dga2019-12-07-166)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10100'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/3dimage_*/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/3dimage_*/*'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (dga2019-08-06-1|dga2019-08-06-2|dga2019-08-06-3|dga2019-08-06-4|dga2019-08-06-5|dga2019-08-06-6|dga2019-08-06-7|dga2019-08-06-8|dga2019-08-06-9|dga2019-08-06-10|dga2019-08-06-11|dga2019-08-06-12|dga2019-08-06-13|dga2019-08-06-14|dga2019-08-06-15|dga2019-08-06-16|dga2019-08-06-17|dga2019-08-06-18|dga2019-08-06-19|dga2019-08-06-20|dga2019-08-06-21|dga2019-08-06-26|dga2019-08-06-27|dga2019-12-07-84|dga2019-12-07-85|dga2019-12-07-86|dga2019-12-07-88|dga2019-12-07-89|dga2019-12-07-90|dga2019-12-07-91|dga2019-12-07-93|dga2019-12-07-94|dga2019-12-07-95|dga2019-12-07-96|dga2019-12-07-97|dga2019-12-07-98|dga2019-12-07-99|dga2019-12-07-100|dga2019-12-07-101|dga2019-12-07-102|dga2019-12-07-103|dga2019-12-07-104|dga2019-12-07-105|dga2019-12-07-106|dga2019-12-07-107|dga2019-12-07-108|dga2019-12-07-109|dga2019-12-07-110|dga2019-12-07-111|dga2019-12-07-112|dga2019-12-07-113|dga2019-12-07-114|dga2019-12-07-115|dga2019-12-07-116|dga2019-12-07-117|dga2019-12-07-118|dga2019-12-07-119|dga2019-12-07-120|dga2019-12-07-121|dga2019-12-07-122|dga2019-12-07-124|dga2019-12-07-125|dga2019-12-07-126|dga2019-12-07-127|dga2019-12-07-128|dga2019-12-07-129|dga2019-12-07-130|dga2019-12-07-131|dga2019-12-07-132|dga2019-12-07-133|dga2019-12-07-136|dga2019-12-07-137|dga2019-12-07-138|dga2019-12-07-139|dga2019-12-07-140|dga2019-12-07-142|dga2019-12-07-143|dga2019-12-07-144|dga2019-12-07-145|dga2019-12-07-146|dga2019-12-07-147|dga2019-12-07-148|dga2019-12-07-149|dga2019-12-07-150|dga2019-12-07-151|dga2019-12-07-152|dga2019-12-07-153|dga2019-12-07-154|dga2019-12-07-155|dga2019-12-07-156|dga2019-12-07-157|dga2019-12-07-158|dga2019-12-07-159|dga2019-12-07-160|dga2019-12-07-161|dga2019-12-07-162|dga2019-12-07-164|dga2019-12-07-165|dga2019-12-07-166)$
-  run_name_regex: (.*)
+  deposition_id: 10100
   run_data_map_file: run_data_map/10100.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: counting
+      manufacturer: Gatan
+      model: K3
+    data_acquisition_software: '{ts-data_acquisition_software}'
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: TFS
+      model: Krios
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: '{ts-pixel_spacing}'
+    spherical_aberration_constant: 2.7
+    tilt_alignment_software: '{ts-tilt_alignment_software}'
+    tilt_axis: 84.3
+    tilt_range:
+      max: float {ts-tilt_range-max}
+      min: float {ts-tilt_range-min}
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: int {ts-tilt_series_quality}
+    tilt_step: 3.0
+    tilting_scheme: min to max tilt
+    total_flux: '{ts-total_flux}'
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares: '{tomo-align_softwares}'
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: '{tomo-processing_software}'
+    reconstruction_method: '{tomo-reconstruction_method}'
+    reconstruction_software: '{tomo-reconstruction_software}'
+    tomogram_version: 1
+    voxel_spacing: '{tomo-voxel_spacing}'
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/3dimage_*/*'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - float {tomo-voxel_spacing}

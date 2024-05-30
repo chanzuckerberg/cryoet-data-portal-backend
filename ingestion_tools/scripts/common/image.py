@@ -23,7 +23,7 @@ class ZarrReader:
         self.zarrdir = zarrdir
 
     def get_data(self):
-        loc = ome_zarr.io.ZarrLocation(f"s3://{self.zarrdir}")
+        loc = ome_zarr.io.ZarrLocation(self.fs.destformat(self.zarrdir))
         data = loc.load("0")
         return data
 

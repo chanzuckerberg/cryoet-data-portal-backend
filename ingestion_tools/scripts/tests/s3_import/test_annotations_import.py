@@ -4,20 +4,22 @@ from typing import Any, Dict, List
 
 import ndjson
 import pytest
-from importers.annotation import AnnotationImporter
+from importers.annotation import InstanceSegmentationAnnotation, OrientedPointAnnotation, PointAnnotation
 from importers.dataset import DatasetImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
+from importers.voxel_spacing import VoxelSpacingImporter
 from mypy_boto3_s3 import S3Client
+from standardize_dirs import IMPORTERS
 
-from common.config import DataImportConfig
+from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
-from common.metadata import AnnotationMetadata
 
 default_anno_metadata = {
     "annotation_object": {
         "id": "GO:0001234",
         "name": "some protein",
+        "description": "some protein",
     },
     "dates": {
         "deposition_date": "2022-02-02",
@@ -38,19 +40,32 @@ NUMERICAL_PRECISION = 1e-8
 
 
 @pytest.fixture
-def dataset_config(s3_fs: FileSystemApi, test_output_bucket: str) -> DataImportConfig:
+def dataset_config(s3_fs: FileSystemApi, test_output_bucket: str) -> DepositionImportConfig:
     config_file = "tests/fixtures/annotations/anno_config.yaml"
     output_path = f"{test_output_bucket}/output"
     input_bucket = "test-public-bucket"
-    config = DataImportConfig(s3_fs, config_file, output_path, input_bucket)
+    config = DepositionImportConfig(s3_fs, config_file, output_path, input_bucket, IMPORTERS)
     return config
 
 
 @pytest.fixture
-def tomo_importer(dataset_config: DataImportConfig) -> TomogramImporter:
-    dataset = DatasetImporter(dataset_config, None)
-    run = RunImporter(config=dataset_config, parent=dataset, path="run1")
-    tomo = TomogramImporter(config=dataset_config, parent=run, path="run1")
+def tomo_importer(dataset_config: DepositionImportConfig) -> TomogramImporter:
+    dataset = DatasetImporter(config=dataset_config, metadata={}, name="dataset1", path="dataset1")
+    run = RunImporter(config=dataset_config, metadata={}, name="run1", path="run1", parents={"dataset": dataset})
+    vs = VoxelSpacingImporter(
+        config=dataset_config,
+        metadata={},
+        name="10.0",
+        path="vs1",
+        parents={"dataset": dataset, "run": run},
+    )
+    tomo = TomogramImporter(
+        config=dataset_config,
+        metadata={},
+        name="tomo1",
+        path="run1",
+        parents={"dataset": dataset, "run": run, "voxel_spacing": vs},
+    )
     return tomo
 
 
@@ -66,30 +81,34 @@ def test_import_annotation_metadata(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     tomo_importer: TomogramImporter,
-    dataset_config: DataImportConfig,
+    dataset_config: DepositionImportConfig,
     s3_client: S3Client,
 ) -> None:
     anno_config = {
         "metadata": default_anno_metadata,
         "sources": [
             {
-                "columns": "xyz",
                 "file_format": "csv",
-                "glob_string": "annotations/points.csv",
+                "delimiter": ",",
                 "shape": "Point",
-                "is_visualization_default": False,
+                "glob_string": "annotations/*.csv",
+                "columns": "xyz",
             },
         ],
     }
-    anno_metadata = AnnotationMetadata(dataset_config.fs, anno_config["metadata"])
-    anno = AnnotationImporter(
-        identifier="100",
+    dataset_config._set_object_configs("annotation", [anno_config])
+
+    anno = PointAnnotation(
         config=dataset_config,
-        parent=tomo_importer,
-        annotation_metadata=anno_metadata,
-        annotation_config=anno_config,
+        metadata=default_anno_metadata,
+        path="test-public-bucket/input_bucket/20002/annotations/points.csv",
+        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        identifier=100,
+        columns=anno_config["sources"][0].get("columns"),
+        delimiter=anno_config["sources"][0].get("delimiter"),
+        file_format=anno_config["sources"][0]["file_format"],
     )
-    anno.import_annotations(True)
+    anno.import_item()
     anno.import_metadata()
 
     # Strip the bucket name and annotation name from the annotation's output path.
@@ -214,7 +233,7 @@ def test_ingest_point_data(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     tomo_importer: TomogramImporter,
-    dataset_config: DataImportConfig,
+    dataset_config: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
 ) -> None:
@@ -226,18 +245,23 @@ def test_ingest_point_data(
             case["source_cfg"],
         ],
     }
-    anno_metadata = AnnotationMetadata(dataset_config.fs, anno_config["metadata"])
-    anno = AnnotationImporter(
-        identifier="100",
+    dataset_config._set_object_configs("annotation", [anno_config])
+
+    anno = PointAnnotation(
         config=dataset_config,
-        parent=tomo_importer,
-        annotation_metadata=anno_metadata,
-        annotation_config=anno_config,
+        metadata=default_anno_metadata,
+        path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["glob_string"],
+        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        identifier=100,
+        columns=anno_config["sources"][0].get("columns"),
+        delimiter=anno_config["sources"][0].get("delimiter"),
+        file_format=anno_config["sources"][0]["file_format"],
+        binning=anno_config["sources"][0].get("binning"),
     )
-    anno.import_annotations(True)
+    anno.import_item()
 
     # Strip the bucket name and annotation name from the annotation's output path.
-    anno_file = anno.get_output_path() + "_point.ndjson"
+    anno_file = anno.get_output_filename(anno.get_output_path())
 
     # Sanity check the ndjson file
     with s3_fs.open(anno_file, "r") as fh:
@@ -638,7 +662,7 @@ def test_ingest_oriented_point_data(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     tomo_importer: TomogramImporter,
-    dataset_config: DataImportConfig,
+    dataset_config: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
 ) -> None:
@@ -650,15 +674,20 @@ def test_ingest_oriented_point_data(
             case["source_cfg"],
         ],
     }
-    anno_metadata = AnnotationMetadata(dataset_config.fs, anno_config["metadata"])
-    anno = AnnotationImporter(
-        identifier="100",
+    dataset_config._set_object_configs("annotation", [anno_config])
+    anno = OrientedPointAnnotation(
         config=dataset_config,
-        parent=tomo_importer,
-        annotation_metadata=anno_metadata,
-        annotation_config=anno_config,
+        metadata=default_anno_metadata,
+        path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["glob_string"],
+        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        identifier=100,
+        binning=case["source_cfg"].get("binning"),
+        file_format=case["source_cfg"]["file_format"],
+        filter_value=case["source_cfg"]["filter_value"],
+        order=case["source_cfg"]["order"],
     )
-    anno.import_annotations(True)
+    anno.import_item()
+    anno.import_metadata()
 
     # Strip the bucket name and annotation name from the annotation's output path.
     anno_file = anno.get_output_path() + "_orientedpoint.ndjson"
@@ -748,7 +777,7 @@ def test_ingest_instance_point_data(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     tomo_importer: TomogramImporter,
-    dataset_config: DataImportConfig,
+    dataset_config: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
 ) -> None:
@@ -760,15 +789,19 @@ def test_ingest_instance_point_data(
             case["source_cfg"],
         ],
     }
-    anno_metadata = AnnotationMetadata(dataset_config.fs, anno_config["metadata"])
-    anno = AnnotationImporter(
-        identifier="100",
+    dataset_config._set_object_configs("annotation", [anno_config])
+
+    anno = InstanceSegmentationAnnotation(
         config=dataset_config,
-        parent=tomo_importer,
-        annotation_metadata=anno_metadata,
-        annotation_config=anno_config,
+        metadata=default_anno_metadata,
+        path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["glob_string"],
+        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        identifier=100,
+        binning=case["source_cfg"].get("binning"),
+        file_format=anno_config["sources"][0]["file_format"],
     )
-    anno.import_annotations(True)
+    anno.import_item()
+    anno.import_metadata()
 
     # Strip the bucket name and annotation name from the annotation's output path.
     anno_file = anno.get_output_path() + "_instancesegmentation.ndjson"

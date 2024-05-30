@@ -1,24 +1,83 @@
-dataset:
-  dataset_identifier: 10003
-  dataset_title: 70S ribosome with chloramphenicol
-  dataset_description: 'Cryo-electron tomograms of native M. pneumoniae cells. Cells treated with chloramphenicol'
-  authors: &dataset_authors
-    - name: Tegunov Dimitry
-      ORCID: 0000-0001-7019-3221
+annotations:
+- metadata:
+    annotation_method: Template matching + manual filtering + 3D classification filtering
+    annotation_object:
+      description: chloramphenicol bound 70S ribosome
+      id: GO:0022626
+      name: cytosolic ribosome
+      state: null
+    annotation_publications: null
+    annotation_software: pyTOM + RELION
+    authors:
+    - ORCID: 0000-0003-4368-2526
+      corresponding_author_status: false
+      name: Liang Xue
+      primary_annotator_status: true
+    - ORCID: 0000-0001-5454-7755
       corresponding_author_status: true
+      name: Cramer Patrick
+    - ORCID: 0000-0001-6968-041X
+      corresponding_author_status: true
+      name: Julia Mahamid
+    confidence:
+      ground_truth_used: author estimation
+      precision: 95
+      recall: 90
+    dates: &id001
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-10-23
+      release_date: 2023-11-01
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: '1.0'
+  sources:
+  - binning: 4
+    file_format: relion3_star
+    filter_value: '{mapped_tomo_name}.tomostar'
+    glob_string: run_ct17_it034_data.star
+    is_visualization_default: true
+    order: xyz
+    shape: OrientedPoint
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10731-l.gif
+        thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10731.gif
+datasets:
+- metadata:
+    authors: &id002
+    - ORCID: 0000-0001-7019-3221
+      corresponding_author_status: true
+      name: Tegunov Dimitry
       primary_author_status: true
-    - name: Xue Liang
-      ORCID: 0000-0003-4368-2526
+    - ORCID: 0000-0003-4368-2526
+      name: Xue Liang
       primary_author_status: true
-    - name: Dienemann Christian
-      ORCID: 0000-0002-2172-5110
-    - name: Cramer Patrick
-      ORCID: 0000-0001-5454-7755
+    - ORCID: 0000-0002-2172-5110
+      name: Dienemann Christian
+    - ORCID: 0000-0001-5454-7755
       corresponding_author_status: true
-    - name: Julia Mahamid
-      ORCID: 0000-0001-6968-041X
+      name: Cramer Patrick
+    - ORCID: 0000-0001-6968-041X
       corresponding_author_status: true
-  funding:
+      name: Julia Mahamid
+    cell_component:
+      id: null
+      name: null
+    cell_strain:
+      id: M129
+      name: Mycoplasmoides pneumoniae
+    cross_references:
+      dataset_publications: doi:10.1038/s41586-022-05255-2, doi:10.1038/s41592-020-01054-7
+      related_database_entries: EMPIAR-10731, EMPIAR-10499
+    dataset_description: Cryo-electron tomograms of native M. pneumoniae cells. Cells
+      treated with chloramphenicol
+    dataset_identifier: 10003
+    dataset_title: 70S ribosome with chloramphenicol
+    dates: *id001
+    funding:
     - funding_agency_name: German Research Foundation (DFG)
       grant_id: SFB860
     - funding_agency_name: German Research Foundation (DFG)
@@ -27,120 +86,105 @@ dataset:
       grant_id: '693023'
     - funding_agency_name: European Research Council (ERC)
       grant_id: '760067'
-  sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type: subtomogram_averaging_preparation'
-  grid_preparation:
-  sample_type: organism
-  dates: &repo-dates
-    deposition_date: 2023-10-01
-    release_date: 2023-11-01
-    last_modified_date: 2023-10-23
-  cell_strain:
-    name: Mycoplasmoides pneumoniae
-    id: M129
-  cross_references:
-    dataset_publications: doi:10.1038/s41586-022-05255-2, doi:10.1038/s41592-020-01054-7
-    related_database_entries: EMPIAR-10731, EMPIAR-10499
-  cell_component:
-    name: ~
-    id: ~
-  key_photos:
-    snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10731-l.gif
-    thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10731.gif
-  organism:
-    name: Mycoplasma pneumoniae
-    taxonomy_id: 2104
-annotations:
-  - metadata:
-      annotation_object:
-        id: GO:0022626
-        name: cytosolic ribosome
-        description: chloramphenicol bound 70S ribosome
-        state: ~
-      dates: *repo-dates
-      annotation_method: 'Template matching + manual filtering + 3D classification filtering'
-      method_type: hybrid
-      annotation_publications:
-      ground_truth_status: true
-      authors:
-        - name: Liang Xue
-          ORCID: 0000-0003-4368-2526
-          primary_annotator_status: true
-          corresponding_author_status: false
-        - name: Cramer Patrick
-          ORCID: 0000-0001-5454-7755
-          corresponding_author_status: true
-        - name: Julia Mahamid
-          ORCID: 0000-0001-6968-041X
-          corresponding_author_status: true
-      annotation_software: pyTOM + RELION
-      confidence:
-        precision: 95
-        recall: 90
-        ground_truth_used: author estimation
-      version: '1.0'
-      is_curator_recommended: true
-    sources:
-      - shape: OrientedPoint
-        file_format: relion3_star
-        binning: 4
-        order: xyz
-        glob_string: run_ct17_it034_data.star
-        filter_value: '{mapped_tomo_name}.tomostar'
-        is_visualization_default: true
-runs: {}
+    grid_preparation: null
+    organism:
+      name: Mycoplasma pneumoniae
+      taxonomy_id: 2104
+    sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type:
+      subtomogram_averaging_preparation'
+    sample_type: organism
+  sources:
+  - literal:
+      value:
+      - '10003'
+frames:
+- sources:
+  - source_glob:
+      list_glob: frames/{run_name}/*.tif
+gains:
+- sources:
+  - source_glob:
+      list_glob: frames/{run_name}/*.dm4
+key_images:
+- sources:
+  - literal:
+      value:
+      - from_tomogram
+runs:
+- sources:
+  - source_glob:
+      list_glob: frames/*
+      match_regex: /TS_\d\d$
+      name_regex: (.*)
+standardization_config:
+  deposition_id: 10003
+  run_to_tomo_map_csv: fixed raw data TS name and tomo name tracking sheet.csv
+  source_prefix: mPneumoniae
 tiltseries:
-  scales: []
-  microscope:
-    manufacturer: FEI
-    model: TITAN KRIOS
-  spherical_aberration_constant: 2.7
-  microscope_optical_setup:
-    energy_filter: ~
-    phase_plate: ~
-    image_corrector: ~
+  acceleration_voltage: 300000
+  alignment_binning_factor: null
+  binning_from_frames: 1
   camera:
     manufacturer: Gatan
     model: K2 SUMMIT
-  acceleration_voltage: 300000
-  tilting_scheme: Dose symmetric from 0.0 degrees
-  tilt_axis: 175
-  tilt_step: 3.0
-  tilt_range:
-    min: -60
-    max: 60
-  total_flux: 120
   data_acquisition_software: SerialEM
-  binning_from_frames: 1
-  tilt_series_quality: 5
-  related_empiar_entry: EMPIAR-10499
+  is_aligned: null
+  microscope:
+    manufacturer: FEI
+    model: TITAN KRIOS
+  microscope_optical_setup:
+    energy_filter: null
+    image_corrector: null
+    phase_plate: null
   pixel_spacing: 1.7005
-  is_aligned: ~ # No tiltseries for this dataset
-  alignment_binning_factor: ~ # No tiltseries for this dataset.
+  related_empiar_entry: EMPIAR-10499
+  scales: []
+  spherical_aberration_constant: 2.7
+  tilt_axis: 175
+  tilt_range:
+    max: 60
+    min: -60
+  tilt_series_quality: 5
+  tilt_step: 3.0
+  tilting_scheme: Dose symmetric from 0.0 degrees
+  total_flux: 120
 tomograms:
-  voxel_spacing: 6.802
-  fiducial_alignment_status: FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  affine_transformation_matrix: [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
-  reconstruction_method: FOURIER SPACE
-  reconstruction_software: Warp
-  ctf_corrected: true
-  processing: raw
-  authors: *dataset_authors
-  tomogram_version: 1
-standardization_config:
-  destination_prefix: '10003'
-  source_prefix: mPneumoniae
-  run_to_tomo_map_csv: 'fixed raw data TS name and tomo name tracking sheet.csv'
-  frames_glob: frames/{run_name}/*.tif
-  gain_glob: frames/{run_name}/*.dm4
-  rawtlt_files: ~
-  tiltseries_glob: ~
-  tomo_format: mrc
-  tomo_glob: reconstructions/{mapped_tomo_name}*.mrc
-  tomo_voxel_size: '6.802'
-  run_glob: frames/*
-  run_regex: /TS_\d\d$
-  run_name_regex: (.*)
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id002
+    ctf_corrected: true
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: FOURIER SPACE
+    reconstruction_software: Warp
+    tomogram_version: 1
+    voxel_spacing: 6.802
+  sources:
+  - source_glob:
+      list_glob: reconstructions/{mapped_tomo_name}*.mrc
+      match_regex: .*
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 6.802

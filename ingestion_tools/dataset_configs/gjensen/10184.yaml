@@ -1,121 +1,144 @@
-dataset:
-  dataset_identifier: 10184
-  dataset_description: This is 13th of 17 sets of data studying HUVECs collected by
-    Cora Woodward and is a part of Caltech Jensen  lab etdb.
-  dataset_title: HUVECs infx pNLGFP
-  authors: &id001
-  - name: Cora Woodward
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: HUVECs
-    taxonomy_id: 9606
-  sample_type: Cell
-  sample_preparation: Whole cells were grown on Au finder grids and infected with
-    pNLGFP- VSVG. Sample frozen 36h post infection
-  grid_preparation: manual blotting
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/cwl2013-07-03-1/keyimg_cwl2013-07-03-1.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/cwl2013-07-03-1/keyimg_cwl2013-07-03-1_s.jpg
-  cell_strain:
-    name: ''
-    id: null
-  cell_type:
-    cell_name: umbilical vein endothelial cell
-    cell_type_id: http://purl.obolibrary.org/obo/BTO_0001949
-  tissue:
-    tissue_name: blood vessel endothelium
-    tissue_id: http://purl.obolibrary.org/obo/BTO_0000766
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: counting
-    manufacturer: Gatan
-    model: K2
-  data_acquisition_software: UCSFTomo
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: '{ts-microscope-manufacturer}'
-    model: '{ts-microscope-model}'
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: '{ts-pixel_spacing}'
-  spherical_aberration_constant: '{ts-spherical_aberration_constant}'
-  tilt_alignment_software: RAPTOR
-  tilt_axis: 84.3
-  tilt_range:
-    max: 60.0
-    min: -60.0
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: 4
-  tilt_step: 1.0
-  tilting_scheme: starting tilt to max then min
-  total_flux: '{ts-total_flux}'
-tomograms:
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  align_softwares:
-  - RAPTOR
-  authors: *id001
-  ctf_corrected: null
-  fiducial_alignment_status: FIDUCIAL
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  processing: raw
-  processing_software: null
-  reconstruction_method: Weighted back projection
-  reconstruction_software: IMOD
-  tomogram_version: 1
-  voxel_spacing: '{tomo-voxel_spacing}'
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/cwl2013-07-03-1/keyimg_cwl2013-07-03-1.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/cwl2013-07-03-1/keyimg_cwl2013-07-03-1_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Cora Woodward
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: ''
+    cell_type:
+      cell_name: umbilical vein endothelial cell
+      cell_type_id: http://purl.obolibrary.org/obo/BTO_0001949
+    dataset_description: This is 13th of 17 sets of data studying HUVECs collected
+      by Cora Woodward and is a part of Caltech Jensen  lab etdb.
+    dataset_identifier: 10184
+    dataset_title: HUVECs infx pNLGFP
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: manual blotting
+    organism:
+      name: HUVECs
+      taxonomy_id: 9606
+    sample_preparation: Whole cells were grown on Au finder grids and infected with
+      pNLGFP- VSVG. Sample frozen 36h post infection
+    sample_type: Cell
+    tissue:
+      tissue_id: http://purl.obolibrary.org/obo/BTO_0000766
+      tissue_name: blood vessel endothelium
+  sources:
+  - literal:
+      value:
+      - '10184'
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/{mapped_frame_name}/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (cwl2013-07-03-1|cwl2013-07-03-2|cwl2013-07-03-4|cwl2013-07-03-5|cwl2013-07-03-6|cwl2013-07-03-7|cwl2013-07-03-8|cwl2013-07-03-9|cwl2013-07-03-10|cwl2013-07-03-13|cwl2013-07-03-16|cwl2013-07-03-17|cwl2013-07-03-18|cwl2013-07-03-19|cwl2013-07-03-20|cwl2013-07-03-21|cwl2013-07-03-27|cwl2013-07-03-28|cwl2013-07-03-29|cwl2013-07-03-30|cwl2013-07-03-35|cwl2013-07-03-36|cwl2013-07-03-37|cwl2013-07-03-39|cwl2013-07-03-40|cwl2013-07-03-41|cwl2013-07-03-42|cwl2013-07-03-43|cwl2013-07-03-45|cwl2013-07-03-48|cwl2013-07-03-49|cwl2013-07-03-50|cwl2013-07-03-51|cwl2013-07-03-52|cwl2013-07-03-53|cwl2013-07-05-1|cwl2013-07-05-2|cwl2013-07-05-3|cwl2013-07-05-4|cwl2013-07-05-5|cwl2013-07-05-6|cwl2013-07-05-7|cwl2013-07-05-8|cwl2013-07-05-9|cwl2013-07-05-10|cwl2013-07-05-11|cwl2013-07-05-12|cwl2013-07-05-13|cwl2013-07-05-14|cwl2013-07-05-15|cwl2013-07-05-16|cwl2013-07-05-17|cwl2013-07-05-18|cwl2013-07-05-19|cwl2013-07-05-20|cwl2013-07-05-21|cwl2013-07-05-22|cwl2013-07-05-23|cwl2013-07-05-24|cwl2013-07-05-25|cwl2013-07-05-27|cwl2013-07-05-28|cwl2013-07-05-29|cwl2013-07-06-1|cwl2013-07-06-2|cwl2013-07-06-3|cwl2013-07-06-4|cwl2013-07-06-5|cwl2013-07-06-6|cwl2013-07-06-7|cwl2013-07-06-10|cwl2013-07-06-11|cwl2013-07-06-12|cwl2013-07-06-13|cwl2013-07-06-14|cwl2013-07-06-15|cwl2013-07-06-16|cwl2013-07-06-17|cwl2013-07-06-18|cwl2013-07-06-19|cwl2013-07-06-20|cwl2013-07-06-21|cwl2013-07-06-23|cwl2013-10-22-3|cwl2013-10-22-4|cwl2013-10-22-5|cwl2013-10-22-6|cwl2013-10-22-7|cwl2013-10-22-8|cwl2013-10-22-10|cwl2013-10-22-11|cwl2013-10-22-12|cwl2013-10-22-13|cwl2013-11-08-2|cwl2013-11-08-3|cwl2013-11-08-4|cwl2013-11-08-5|cwl2013-11-08-6|cwl2013-11-08-7|cwl2013-11-08-8|cwl2013-11-08-9|cwl2013-11-08-10|cwl2013-11-08-11|cwl2013-11-08-12|cwl2013-11-08-13|cwl2013-11-08-14|cwl2013-11-08-15|cwl2013-11-08-17|cwl2013-11-08-18|cwl2013-11-08-19|cwl2013-11-08-20|cwl2013-11-08-21|cwl2013-11-08-22|cwl2013-11-08-23|cwl2013-11-08-24|cwl2013-11-08-25)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10184'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/{mapped_frame_name}/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/{mapped_tomo_name}'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (cwl2013-07-03-1|cwl2013-07-03-2|cwl2013-07-03-4|cwl2013-07-03-5|cwl2013-07-03-6|cwl2013-07-03-7|cwl2013-07-03-8|cwl2013-07-03-9|cwl2013-07-03-10|cwl2013-07-03-13|cwl2013-07-03-16|cwl2013-07-03-17|cwl2013-07-03-18|cwl2013-07-03-19|cwl2013-07-03-20|cwl2013-07-03-21|cwl2013-07-03-27|cwl2013-07-03-28|cwl2013-07-03-29|cwl2013-07-03-30|cwl2013-07-03-35|cwl2013-07-03-36|cwl2013-07-03-37|cwl2013-07-03-39|cwl2013-07-03-40|cwl2013-07-03-41|cwl2013-07-03-42|cwl2013-07-03-43|cwl2013-07-03-45|cwl2013-07-03-48|cwl2013-07-03-49|cwl2013-07-03-50|cwl2013-07-03-51|cwl2013-07-03-52|cwl2013-07-03-53|cwl2013-07-05-1|cwl2013-07-05-2|cwl2013-07-05-3|cwl2013-07-05-4|cwl2013-07-05-5|cwl2013-07-05-6|cwl2013-07-05-7|cwl2013-07-05-8|cwl2013-07-05-9|cwl2013-07-05-10|cwl2013-07-05-11|cwl2013-07-05-12|cwl2013-07-05-13|cwl2013-07-05-14|cwl2013-07-05-15|cwl2013-07-05-16|cwl2013-07-05-17|cwl2013-07-05-18|cwl2013-07-05-19|cwl2013-07-05-20|cwl2013-07-05-21|cwl2013-07-05-22|cwl2013-07-05-23|cwl2013-07-05-24|cwl2013-07-05-25|cwl2013-07-05-27|cwl2013-07-05-28|cwl2013-07-05-29|cwl2013-07-06-1|cwl2013-07-06-2|cwl2013-07-06-3|cwl2013-07-06-4|cwl2013-07-06-5|cwl2013-07-06-6|cwl2013-07-06-7|cwl2013-07-06-10|cwl2013-07-06-11|cwl2013-07-06-12|cwl2013-07-06-13|cwl2013-07-06-14|cwl2013-07-06-15|cwl2013-07-06-16|cwl2013-07-06-17|cwl2013-07-06-18|cwl2013-07-06-19|cwl2013-07-06-20|cwl2013-07-06-21|cwl2013-07-06-23|cwl2013-10-22-3|cwl2013-10-22-4|cwl2013-10-22-5|cwl2013-10-22-6|cwl2013-10-22-7|cwl2013-10-22-8|cwl2013-10-22-10|cwl2013-10-22-11|cwl2013-10-22-12|cwl2013-10-22-13|cwl2013-11-08-2|cwl2013-11-08-3|cwl2013-11-08-4|cwl2013-11-08-5|cwl2013-11-08-6|cwl2013-11-08-7|cwl2013-11-08-8|cwl2013-11-08-9|cwl2013-11-08-10|cwl2013-11-08-11|cwl2013-11-08-12|cwl2013-11-08-13|cwl2013-11-08-14|cwl2013-11-08-15|cwl2013-11-08-17|cwl2013-11-08-18|cwl2013-11-08-19|cwl2013-11-08-20|cwl2013-11-08-21|cwl2013-11-08-22|cwl2013-11-08-23|cwl2013-11-08-24|cwl2013-11-08-25)$
-  run_name_regex: (.*)
+  deposition_id: 10184
   run_data_map_file: run_data_map/10184.csv
-  run_to_tomo_map_csv: run_tomo_map/10184.csv
   run_to_frame_map_csv: run_frames_map/10184.csv
+  run_to_tomo_map_csv: run_tomo_map/10184.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: counting
+      manufacturer: Gatan
+      model: K2
+    data_acquisition_software: UCSFTomo
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: '{ts-microscope-manufacturer}'
+      model: '{ts-microscope-model}'
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: '{ts-pixel_spacing}'
+    spherical_aberration_constant: '{ts-spherical_aberration_constant}'
+    tilt_alignment_software: RAPTOR
+    tilt_axis: 84.3
+    tilt_range:
+      max: 60.0
+      min: -60.0
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: 4
+    tilt_step: 1.0
+    tilting_scheme: starting tilt to max then min
+    total_flux: '{ts-total_flux}'
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares:
+    - RAPTOR
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: null
+    reconstruction_method: Weighted back projection
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: '{tomo-voxel_spacing}'
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/{mapped_tomo_name}'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - float {tomo-voxel_spacing}

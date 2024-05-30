@@ -6,7 +6,8 @@ from typing import TYPE_CHECKING, Any
 import cryoet_data_portal_neuroglancer.state_generator as state_generator
 
 from common import colors
-from common.config import DataImportConfig
+from common.config import DepositionImportConfig
+from common.finders import DefaultImporterFactory
 from common.metadata import NeuroglancerMetadata
 from importers.base_importer import BaseImporter
 
@@ -18,21 +19,27 @@ else:
 
 class NeuroglancerImporter(BaseImporter):
     type_key = "neuroglancer"
+    plural_key = "neuroglancer"
+    finder_factory = DefaultImporterFactory
+    has_metadata = False
 
-    def import_neuroglancer_config(self) -> str:
+    def import_item(self) -> str:
         dest_file = self.get_output_path()
-        tomogram_zarr_dir = self.parent.get_output_path() + ".zarr"
-        ng_contents = self.create_config_json(tomogram_zarr_dir)
-        meta = NeuroglancerMetadata(self.config.fs, ng_contents)
+        ng_contents = self._get_config_json(self.get_tomogram().get_output_path() + ".zarr")
+        meta = NeuroglancerMetadata(self.config.fs, self.config.deposition_id, ng_contents)
         meta.write_metadata(dest_file)
         return dest_file
 
-    def create_config_json(self, zarr_dir: str) -> dict[str, Any]:
+    def _get_annotation_metadata_files(self) -> list[str]:
+        annotation_path = self.config.resolve_output_path("annotation_metadata", self)
+        return self.config.fs.glob(os.path.join(annotation_path, "*.json"))
+
+    def _get_config_json(self, zarr_dir: str) -> dict[str, Any]:
         zarr_dir_path = zarr_dir.removeprefix(self.config.output_prefix).removeprefix("/")
-        voxel_size = self.parent.get_voxel_spacing()
+        voxel_size = self.get_voxel_spacing().as_float()
         resolution = (voxel_size * 1e-10, voxel_size * 1e-10, voxel_size * 1e-10)
-        volume_header = self.parent.get_output_header()
-        run_name = self.parent.get_run().run_name
+        volume_header = self.get_tomogram().get_output_header()
+        run_name = self.get_run().name
 
         image_layer = state_generator.generate_image_layer(
             zarr_dir_path,
@@ -48,8 +55,7 @@ class NeuroglancerImporter(BaseImporter):
         colors_used = []
 
         ng_output_path = self.config.resolve_output_path("neuroglancer_precompute", run_name, voxel_size)
-        annotation_metadata_paths = self._get_annotation_metadata_files(run_name, voxel_size)
-        for annotation_metadata_path in annotation_metadata_paths:
+        for annotation_metadata_path in self._get_annotation_metadata_files():
             local_path = self.config.fs.localreadable(annotation_metadata_path)
             with open(local_path, "r") as f:
                 metadata = json.load(f)
@@ -98,13 +104,5 @@ class NeuroglancerImporter(BaseImporter):
         return state_generator.combine_json_layers(layers, scale=resolution)
 
     @classmethod
-    def find_ng(cls, config: DataImportConfig, tomo: TomogramImporter) -> list["NeuroglancerImporter"]:
+    def find_ng(cls, config: DepositionImportConfig, tomo: TomogramImporter) -> list["NeuroglancerImporter"]:
         return [cls(config=config, parent=tomo)]
-
-    def _get_path(self, key: str, run_name: str, voxel_size: str) -> str:
-        return self.config.resolve_output_path(key, run_name, voxel_size)
-
-    def _get_annotation_metadata_files(self, run_name: str, voxel_size: float) -> list[str]:
-        annotation_path = self._get_path("annotation_metadata", run_name, "{:.3f}".format(voxel_size))
-        pattern = os.path.join(annotation_path, "*.json")
-        return self.config.fs.glob(pattern)

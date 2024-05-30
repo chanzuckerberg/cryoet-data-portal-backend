@@ -7,6 +7,10 @@ init: ingestor-init api-init
 stop:
 	$(docker_compose) --profile '*' stop
 
+.PHONY: build
+build:
+	$(docker_compose) --profile '*' build $(image)
+
 .PHONY: start
 start:
 	$(docker_compose) --profile ingestor start

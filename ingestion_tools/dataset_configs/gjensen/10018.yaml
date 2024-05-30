@@ -1,115 +1,138 @@
-dataset:
-  dataset_identifier: 10018
-  dataset_description: This is 5th of 7 sets of data studying Dolichospermum flos-aquae
-    collected by Przemek Dutka and is a part of Caltech Jensen  lab etdb.
-  dataset_title: D. flos-aquae GV DNA clusters
-  authors: &id001
-  - name: Przemek Dutka
-    primary_author_status: true
-    corresponding_author_status: false
-  - name: Grant Jensen
-    primary_author_status: false
-    corresponding_author_status: true
-  organism:
-    name: Dolichospermum flos-aquae
-    taxonomy_id: 315271
-  sample_type: Organism
-  sample_preparation: "Lakshmanan et al. Nat Protoc 12, 2050\u20132080 (2017). Sample\
-    \ in 10 mM Tris-HCl (pH 7.5), 10 mM NaCl, 1 mM EDTA with 5 mg/ml DNA solution(Herring\
-    \ sperm DNA, Promega); OD 15"
-  grid_preparation: Quantifoil C2/2 200mesh extra thick carbon, 10nm BSA-gold, 100%
-    humidity, temp 4C, manual blot
-  dates:
-    deposition_date: 2023-10-01
-    last_modified_date: 2023-12-01
-    release_date: 2023-12-01
-  key_photos:
-    snapshot: cryoetportal-rawdatasets-dev/GJensen_full/pda2021-03-03-10/keyimg_pda2021-03-03-10.jpg
-    thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/pda2021-03-03-10/keyimg_pda2021-03-03-10_s.jpg
-  cell_strain:
-    name: CCAP 1403/13F
-    id: null
-runs: {}
-tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: null
-  camera:
-    acquire_mode: counting
-    manufacturer: Gatan
-    model: K3
-  data_acquisition_software: Serial EM
-  is_aligned: false
-  microscope:
-    additional_scope_info: ''
-    manufacturer: TFS
-    model: Krios
-  microscope_optical_setup:
-    energy_filter: GIF
-    image_corrector: null
-    phase_plate: false
-  pixel_spacing: 3.332
-  spherical_aberration_constant: 2.7
-  tilt_alignment_software: IMOD
-  tilt_axis: 84.3
-  tilt_range:
-    max: 60.0
-    min: -60.0
-  tilt_series_path: '{ts-tilt_series_path}'
-  tilt_series_quality: 4
-  tilt_step: 3.0
-  tilting_scheme: min to max tilt
-  total_flux: 50.0
-tomograms:
-  voxel_spacing: 6.664
-  reconstruction_method: SIRT
-  reconstruction_software: IMOD
-  fiducial_alignment_status: FIDUCIAL
-  ctf_corrected: null
-  processing: raw
-  processing_software: IMOD
-  align_softwares:
-  - IMOD
-  offset:
-    x: 0
-    y: 0
-    z: 0
-  affine_transformation_matrix:
-  - - 1
-    - 0
-    - 0
-    - 0
-  - - 0
-    - 1
-    - 0
-    - 0
-  - - 0
-    - 0
-    - 1
-    - 0
-  - - 0
-    - 0
-    - 0
-    - 1
-  authors: *id001
-  tomogram_version: 1
 annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/pda2021-03-03-10/keyimg_pda2021-03-03-10.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/pda2021-03-03-10/keyimg_pda2021-03-03-10_s.jpg
+datasets:
+- metadata:
+    authors: &id001
+    - corresponding_author_status: false
+      name: Przemek Dutka
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Grant Jensen
+      primary_author_status: false
+    cell_strain:
+      id: null
+      name: CCAP 1403/13F
+    dataset_description: This is 5th of 7 sets of data studying Dolichospermum flos-aquae
+      collected by Przemek Dutka and is a part of Caltech Jensen  lab etdb.
+    dataset_identifier: 10018
+    dataset_title: D. flos-aquae GV DNA clusters
+    dates:
+      deposition_date: 2023-10-01
+      last_modified_date: 2023-12-01
+      release_date: 2023-12-01
+    grid_preparation: Quantifoil C2/2 200mesh extra thick carbon, 10nm BSA-gold, 100%
+      humidity, temp 4C, manual blot
+    organism:
+      name: Dolichospermum flos-aquae
+      taxonomy_id: 315271
+    sample_preparation: "Lakshmanan et al. Nat Protoc 12, 2050\u20132080 (2017). Sample\
+      \ in 10 mM Tris-HCl (pH 7.5), 10 mM NaCl, 1 mM EDTA with 5 mg/ml DNA solution(Herring\
+      \ sperm DNA, Promega); OD 15"
+    sample_type: Organism
+  sources:
+  - literal:
+      value:
+      - '10018'
+key_images:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/keyimg_{run_name}.jpg'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/3dimage_*/*.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*'
+      match_regex: (pda2021-03-03-10|pda2021-03-03-11|pda2021-03-03-12|pda2021-03-03-13|pda2021-03-03-14|pda2021-03-03-15|pda2021-03-03-16|pda2021-03-03-17)$
+      name_regex: (.*)
 standardization_config:
-  destination_prefix: '10018'
-  source_prefix: GJensen_full
-  frames_glob: null
-  gain_glob: null
-  rawtlt_files:
-  - '{run_name}/rawdata/*.mdoc'
-  - '{run_name}/file_*/*.rawtlt'
-  - '{run_name}/3dimage_*/*.rawtlt'
-  tiltseries_glob: '{run_name}/rawdata/*'
-  ts_name_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
-  tomo_format: mrc
-  tomo_glob: '{run_name}/3dimage_*/*'
-  tomo_regex: .*\.(mrc|rec)$
-  tomo_voxel_size: ''
-  tomo_key_photo_glob: '{run_name}/keyimg_{run_name}.jpg'
-  run_glob: '*'
-  run_regex: (pda2021-03-03-10|pda2021-03-03-11|pda2021-03-03-12|pda2021-03-03-13|pda2021-03-03-14|pda2021-03-03-15|pda2021-03-03-16|pda2021-03-03-17)$
-  run_name_regex: (.*)
+  deposition_id: 10018
   run_data_map_file: run_data_map/10018.csv
+  source_prefix: GJensen_full
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: null
+    camera:
+      acquire_mode: counting
+      manufacturer: Gatan
+      model: K3
+    data_acquisition_software: Serial EM
+    is_aligned: false
+    microscope:
+      additional_scope_info: ''
+      manufacturer: TFS
+      model: Krios
+    microscope_optical_setup:
+      energy_filter: GIF
+      image_corrector: null
+      phase_plate: false
+    pixel_spacing: 3.332
+    spherical_aberration_constant: 2.7
+    tilt_alignment_software: IMOD
+    tilt_axis: 84.3
+    tilt_range:
+      max: 60.0
+      min: -60.0
+    tilt_series_path: '{ts-tilt_series_path}'
+    tilt_series_quality: 4
+    tilt_step: 3.0
+    tilting_scheme: min to max tilt
+    total_flux: 50.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/rawdata/*'
+      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_softwares:
+    - IMOD
+    authors: *id001
+    ctf_corrected: null
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: IMOD
+    reconstruction_method: SIRT
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: 6.664
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/3dimage_*/*'
+      match_regex: .*\.(mrc|rec)$
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 6.664
