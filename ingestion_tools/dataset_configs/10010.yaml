@@ -130,9 +130,6 @@ datasets:
       name: Mus musculus
     sample_preparation: null
     sample_type: cell
-    tissue:
-      id: BTO:00000421
-      name: connective tissue
   sources:
   - literal:
       value:
