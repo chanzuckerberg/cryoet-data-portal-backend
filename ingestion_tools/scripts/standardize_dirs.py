@@ -76,7 +76,7 @@ def common_options(func):
     return func
 
 
-def flatten_dependency_tree(tree):
+def flatten_dependency_tree(tree) -> dict[type, set[type]]:
     treedict = {}
     for k, v in tree.items():
         treedict[k] = set()

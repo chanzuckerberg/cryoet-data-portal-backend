@@ -13,7 +13,6 @@ import ome_zarr.io
 import ome_zarr.writer
 import zarr
 from mrcfile.mrcfile import MrcFile
-from mrcfile.mrcobject import MrcObject
 from ome_zarr.io import ZarrLocation
 from ome_zarr.reader import Reader as Reader
 from skimage.transform import downscale_local_mean
@@ -240,7 +239,7 @@ class TomoConverter:
     def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:
         return data
 
-    def get_voxel_size(self) -> np.float32:
+    def get_voxel_size(self) -> float:
         return self.get_volume_info().voxel_size
 
     def get_volume_info(self) -> VolumeInfo:
@@ -397,15 +396,15 @@ def get_tomo_metadata(
     return output_json
 
 
-def get_voxel_size(fs: FileSystemApi, tomo_filename: str) -> np.float32:
-    return TomoConverter(fs, tomo_filename, header_only=True).get_voxel_size()
+def get_voxel_size(fs: FileSystemApi, tomo_filename: str) -> float:
+    return get_volume_info(fs, tomo_filename).voxel_size
 
 
-def get_volume_info(fs: FileSystemApi, tomo_filename: str) -> MrcObject:
-    return TomoConverter(fs, tomo_filename, header_only=True).volume_info()
+def get_volume_info(fs: FileSystemApi, tomo_filename: str) -> VolumeInfo:
+    return TomoConverter(fs, tomo_filename, header_only=True).get_volume_info()
 
 
-def get_converter(fs: FileSystemApi, tomo_filename: str, label: int | None = None):
+def get_converter(fs: FileSystemApi, tomo_filename: str, label: int | None = None) -> TomoConverter | MaskConverter:
     if label is not None:
         return MaskConverter(fs, tomo_filename, label)
     return TomoConverter(fs, tomo_filename)

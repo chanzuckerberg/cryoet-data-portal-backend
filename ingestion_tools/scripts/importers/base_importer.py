@@ -2,8 +2,6 @@ import contextlib
 import os
 from typing import TYPE_CHECKING, Any, Optional
 
-import numpy as np
-
 from common.finders import DepositionObjectImporterFactory
 from common.image import VolumeInfo, get_tomo_metadata, get_volume_info, get_voxel_size, make_pyramids
 
@@ -115,7 +113,7 @@ class VolumeImporter(BaseImporter):
         super().__init__(*args, **kwargs)
         self.volume_filename = path
 
-    def get_voxel_size(self) -> np.float32:
+    def get_voxel_size(self) -> float:
         return get_voxel_size(self.config.fs, self.volume_filename)
 
     def get_output_volume_info(self) -> VolumeInfo:

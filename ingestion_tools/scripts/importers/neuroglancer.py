@@ -1,3 +1,4 @@
+import hashlib
 import json
 import os.path
 from pathlib import Path
@@ -6,8 +7,8 @@ from typing import TYPE_CHECKING, Any
 import cryoet_data_portal_neuroglancer.state_generator as state_generator
 
 from common import colors
-from common.config import DepositionImportConfig
 from common.finders import DefaultImporterFactory
+from common.image import VolumeInfo
 from common.metadata import NeuroglancerMetadata
 from importers.base_importer import BaseImporter
 
@@ -15,6 +16,14 @@ if TYPE_CHECKING:
     from importers.tomogram import TomogramImporter
 else:
     TomogramImporter = "TomogramImporter"
+
+_MAX_SEED_VALUE = int(2**32 - 1)
+_KEYS_FOR_COLOR_SEED = {"annotation_method", "annotation_object", "deposition_id", "ground_truth_status"}
+
+
+def generate_hash(hash_input: dict[str, Any]) -> int:
+    md5_hash = hashlib.md5(json.dumps(hash_input, sort_keys=True).encode("utf-8"))
+    return int(md5_hash.hexdigest(), 16) % _MAX_SEED_VALUE
 
 
 class NeuroglancerImporter(BaseImporter):
@@ -24,85 +33,127 @@ class NeuroglancerImporter(BaseImporter):
     has_metadata = False
 
     def import_item(self) -> str:
-        dest_file = self.get_output_path()
-        ng_contents = self._get_config_json(self.get_tomogram().get_output_path() + ".zarr")
+        ng_contents = self._create_config()
         meta = NeuroglancerMetadata(self.config.fs, self.config.deposition_id, ng_contents)
+        dest_file = self.get_output_path()
         meta.write_metadata(dest_file)
         return dest_file
 
     def _get_annotation_metadata_files(self) -> list[str]:
+        # Getting a list of paths to the annotation metadata files using glob instead of using the annotation finder
+        # to get all the annotations and not just the ones associated with the current deposition
         annotation_path = self.config.resolve_output_path("annotation_metadata", self)
         return self.config.fs.glob(os.path.join(annotation_path, "*.json"))
 
-    def _get_config_json(self, zarr_dir: str) -> dict[str, Any]:
-        zarr_dir_path = zarr_dir.removeprefix(self.config.output_prefix).removeprefix("/")
-        volume_info = self.get_tomogram().get_output_volume_info()
-        voxel_size = volume_info.voxel_size
-        resolution = (voxel_size * 1e-10, voxel_size * 1e-10, voxel_size * 1e-10)
-        run_name = self.get_run().name
+    def _to_directory_path(self, path: str) -> str:
+        return path.removeprefix(self.config.output_prefix).removeprefix("/")
 
-        image_layer = state_generator.generate_image_layer(
+    def _to_tomogram_layer(
+        self,
+        tomogram: TomogramImporter,
+        volume_info: VolumeInfo,
+        resolution: tuple[float, float, float],
+    ) -> dict[str, Any]:
+        zarr_dir_path = self._to_directory_path(f"{tomogram.get_output_path()}.zarr")
+        return state_generator.generate_image_layer(
             zarr_dir_path,
             scale=resolution,
             url=self.config.https_prefix,
             size=volume_info.get_dimensions(),
-            name=run_name,
+            name=self.get_run().name,
             mean=volume_info.dmean,
             rms=volume_info.rms,
             start={d: getattr(volume_info, f"{d}start") for d in "xyz"},
         )
-        layers = [image_layer]
+
+    def _to_segmentation_mask_layer(
+        self,
+        file_metadata: dict[str, Any],
+        name_prefix: str,
+        color: str,
+        resolution: tuple[float, float, float],
+    ) -> dict[str, Any]:
+        return state_generator.generate_image_volume_layer(
+            file_metadata.get("path"),
+            f"{name_prefix} segmentation",
+            self.config.https_prefix,
+            color=color,
+            scale=resolution,
+            is_visible=file_metadata.get("is_visualization_default"),
+            rendering_depth=15000,
+        )
+
+    def _to_point_layer(
+        self,
+        source_path: str,
+        file_metadata: dict[str, Any],
+        name_prefix: str,
+        color: str,
+        resolution: tuple[float, float, float],
+        is_instance_segmentation: bool,
+    ) -> dict[str, Any]:
+        return state_generator.generate_point_layer(
+            source_path,
+            f"{name_prefix} point",
+            self.config.https_prefix,
+            color=color,
+            scale=resolution,
+            is_visible=file_metadata.get("is_visualization_default"),
+            is_instance_segmentation=is_instance_segmentation,
+        )
+
+    def _create_config(self) -> dict[str, Any]:
+        tomogram = self.get_tomogram()
+        volume_info = tomogram.get_output_volume_info()
+        voxel_size = round(volume_info.voxel_size, 3)
+        resolution = (voxel_size * 1e-10,) * 3
+        layers = [self._to_tomogram_layer(tomogram, volume_info, resolution)]
+
+        precompute_path = self.config.resolve_output_path("neuroglancer_precompute", self)
         colors_used = []
 
-        ng_output_path = self.config.resolve_output_path("neuroglancer_precompute", self)
         for annotation_metadata_path in self._get_annotation_metadata_files():
-            local_path = self.config.fs.localreadable(annotation_metadata_path)
-            with open(local_path, "r") as f:
+            with open(self.config.fs.localreadable(annotation_metadata_path), "r") as f:
                 metadata = json.load(f)
-            stemmed_metadata_path = Path(annotation_metadata_path).stem
-            anno_identifier = int(stemmed_metadata_path.split("-")[0])
-            name = metadata.get("annotation_object", {}).get("name")
+            annotation_hash_input = self._get_annotation_hash_input(metadata)
+            metadata_file_name = Path(annotation_metadata_path).stem
+            name_prefix = self._get_annotation_name_prefix(metadata, metadata_file_name)
+
             for file in metadata.get("files", []):
-                file_format = file.get("format")
-                if file_format == "mrc":
+                # Skip mrc files as we will only generate layers for zarr volumes and ndjson files
+                if file.get("format") not in {"zarr", "ndjson"}:
                     continue
 
                 shape = file.get("shape")
-                hex_colors, float_colors = colors.get_hex_colors(1, exclude=colors_used)
+                color_seed = generate_hash({**annotation_hash_input, **{"shape": shape}})
+                hex_colors, float_colors = colors.get_hex_colors(1, exclude=colors_used, seed=color_seed)
+
                 if shape == "SegmentationMask":
-                    layer = state_generator.generate_image_volume_layer(
-                        file.get("path"),
-                        f"{anno_identifier} {name} segmentation",
-                        self.config.https_prefix,
-                        color=hex_colors[0],
-                        scale=resolution,
-                        is_visible=file.get("is_visualization_default"),
-                        rendering_depth=15000,
-                    )
+                    layers.append(self._to_segmentation_mask_layer(file, name_prefix, hex_colors[0], resolution))
                     colors_used.append(float_colors[0])
-                    layers.append(layer)
                 elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
-                    source_path = (
-                        os.path.join(ng_output_path, f"{stemmed_metadata_path}_{shape.lower()}")
-                        .removeprefix(self.config.output_prefix)
-                        .removeprefix("/")
+                    is_instance_seg = shape == "InstanceSegmentation"
+                    path = self._to_directory_path(
+                        os.path.join(precompute_path, f"{metadata_file_name}_{shape.lower()}"),
                     )
-                    is_instance_segmentation = shape == "InstanceSegmentation"
-                    layer = state_generator.generate_point_layer(
-                        source_path,
-                        f"{anno_identifier} {name} point",
-                        self.config.https_prefix,
-                        color=hex_colors,
-                        scale=resolution,
-                        is_visible=file.get("is_visualization_default"),
-                        is_instance_segmentation=is_instance_segmentation,
-                    )
-                    if not is_instance_segmentation:
+                    layer = self._to_point_layer(path, file, name_prefix, hex_colors[0], resolution, is_instance_seg)
+                    if not is_instance_seg:
                         colors_used.append(float_colors[0])
                     layers.append(layer)
+                else:
+                    print(f"Skipping file with unknown shape {shape}")
 
         return state_generator.combine_json_layers(layers, scale=resolution)
 
     @classmethod
-    def find_ng(cls, config: DepositionImportConfig, tomo: TomogramImporter) -> list["NeuroglancerImporter"]:
-        return [cls(config=config, parent=tomo)]
+    def _get_annotation_hash_input(cls, metadata: dict[str, Any]) -> dict[str, Any]:
+        hash_input = {key: metadata.get(key) for key in _KEYS_FOR_COLOR_SEED}
+        if anno_obj := hash_input["annotation_object"]:
+            hash_input["annotation_object"] = {key: anno_obj.get(key) for key in {"id", "name"}}
+        return hash_input
+
+    @classmethod
+    def _get_annotation_name_prefix(cls, metadata: dict[str, Any], stemmed_metadata_path: str) -> str:
+        name = metadata.get("annotation_object", {}).get("name", "Annotation")
+        anno_identifier = int(stemmed_metadata_path.split("-")[0])
+        return f"{anno_identifier} {name}"

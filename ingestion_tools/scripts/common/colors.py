@@ -1,4 +1,6 @@
-import distinctipy as distinctipy
+import colorsys
+
+import distinctipy
 
 INT_COLOR_TYPE = tuple[int, int, int]
 FLOAT_COLOR_TYPE = tuple[float, float, float]
@@ -69,23 +71,38 @@ def _convert_colors_to_hex(input_colors: list[FLOAT_COLOR_TYPE]) -> list[str]:
     return [f"#{''.join(f'{round(c * 255):02x}' for c in color)}" for color in input_colors]
 
 
-def get_colors(n_colors: int, exclude: list[FLOAT_COLOR_TYPE]) -> list[FLOAT_COLOR_TYPE]:
-    return distinctipy.get_colors(n_colors, exclude_colors=exclude)
+def _is_valid_color(color: FLOAT_COLOR_TYPE) -> bool:
+    # Filter out very light colors and very dark colors
+    # as they are hard to see on the neuroglancer UI
+    _, s, v = colorsys.rgb_to_hsv(*color)
+    return s > 0.15 and v > 0.25
 
 
-def get_int_colors(n_colors: int, exclude: list[FLOAT_COLOR_TYPE]) -> COLORS_TYPE:
-    colors = get_colors(n_colors, exclude=exclude)
+def _get_colors(n_colors: int, exclude: list[FLOAT_COLOR_TYPE], seed=None) -> list[FLOAT_COLOR_TYPE]:
+    colors = distinctipy.get_colors(n_colors, exclude_colors=exclude, rng=seed)
+    output_colors = [color for color in colors if _is_valid_color(color)]
+    if len(output_colors) < n_colors:
+        return output_colors + _get_colors(n_colors - len(output_colors), exclude=exclude + colors)
+    return output_colors
+
+
+def get_int_colors(n_colors: int, exclude: list[FLOAT_COLOR_TYPE], seed=None) -> COLORS_TYPE:
+    colors = _get_colors(n_colors, exclude=exclude, seed=seed)
     return _convert_colors_to_int(colors), colors
 
 
-def get_hex_colors(n_colors: int, exclude: list[FLOAT_COLOR_TYPE]) -> tuple[list[str], list[FLOAT_COLOR_TYPE]]:
-    colors = get_colors(n_colors, exclude=exclude)
+def get_hex_colors(
+    n_colors: int,
+    exclude: list[FLOAT_COLOR_TYPE],
+    seed=None,
+) -> tuple[list[str], list[FLOAT_COLOR_TYPE]]:
+    colors = _get_colors(n_colors, exclude=exclude, seed=seed)
     return _convert_colors_to_hex(colors), colors
 
 
-def get_instance_seg_colors(n_colors: int) -> list[INT_COLOR_TYPE]:
+def get_instance_seg_colors(n_colors: int, seed=None) -> list[INT_COLOR_TYPE]:
     if n_colors <= INSTANCE_SEG_COLORS_COUNT:
         return INSTANCE_SEG_COLORS_AS_INT[:n_colors].copy()
 
-    new_colors, _ = get_int_colors(n_colors - INSTANCE_SEG_COLORS_COUNT, exclude=INSTANCE_SEG_COLORS)
+    new_colors, _ = get_int_colors(n_colors - INSTANCE_SEG_COLORS_COUNT, exclude=INSTANCE_SEG_COLORS, seed=seed)
     return INSTANCE_SEG_COLORS_AS_INT + new_colors
