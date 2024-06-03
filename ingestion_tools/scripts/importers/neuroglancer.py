@@ -1,4 +1,3 @@
-import hashlib
 import json
 import os.path
 from pathlib import Path
@@ -7,6 +6,7 @@ from typing import TYPE_CHECKING, Any
 import cryoet_data_portal_neuroglancer.state_generator as state_generator
 
 from common import colors
+from common.colors import generate_hash, to_base_hash_input
 from common.finders import DefaultImporterFactory
 from common.image import VolumeInfo
 from common.metadata import NeuroglancerMetadata
@@ -16,14 +16,6 @@ if TYPE_CHECKING:
     from importers.tomogram import TomogramImporter
 else:
     TomogramImporter = "TomogramImporter"
-
-_MAX_SEED_VALUE = int(2**32 - 1)
-_KEYS_FOR_COLOR_SEED = {"annotation_method", "annotation_object", "deposition_id", "ground_truth_status"}
-
-
-def generate_hash(hash_input: dict[str, Any]) -> int:
-    md5_hash = hashlib.md5(json.dumps(hash_input, sort_keys=True).encode("utf-8"))
-    return int(md5_hash.hexdigest(), 16) % _MAX_SEED_VALUE
 
 
 class NeuroglancerImporter(BaseImporter):
@@ -109,12 +101,14 @@ class NeuroglancerImporter(BaseImporter):
         layers = [self._to_tomogram_layer(tomogram, volume_info, resolution)]
 
         precompute_path = self.config.resolve_output_path("viz_precompute", self)
-        colors_used = []
 
-        for annotation_metadata_path in self._get_annotation_metadata_files():
+        annotation_metadata_paths = self._get_annotation_metadata_files()
+        colors_used = self._get_colors_used_in_precompute(annotation_metadata_paths)
+
+        for annotation_metadata_path in annotation_metadata_paths:
             with open(self.config.fs.localreadable(annotation_metadata_path), "r") as f:
                 metadata = json.load(f)
-            annotation_hash_input = self._get_annotation_hash_input(metadata)
+            annotation_hash_input = to_base_hash_input(metadata)
             metadata_file_name = Path(annotation_metadata_path).stem
             name_prefix = self._get_annotation_name_prefix(metadata, metadata_file_name)
 
@@ -136,20 +130,26 @@ class NeuroglancerImporter(BaseImporter):
                         os.path.join(precompute_path, f"{metadata_file_name}_{shape.lower()}"),
                     )
                     layer = self._to_point_layer(path, file, name_prefix, hex_colors[0], resolution, is_instance_seg)
+                    layers.append(layer)
                     if not is_instance_seg:
                         colors_used.append(float_colors[0])
-                    layers.append(layer)
                 else:
                     print(f"Skipping file with unknown shape {shape}")
 
         return state_generator.combine_json_layers(layers, scale=resolution)
 
-    @classmethod
-    def _get_annotation_hash_input(cls, metadata: dict[str, Any]) -> dict[str, Any]:
-        hash_input = {key: metadata.get(key) for key in _KEYS_FOR_COLOR_SEED}
-        if anno_obj := hash_input["annotation_object"]:
-            hash_input["annotation_object"] = {key: anno_obj.get(key) for key in {"id", "name"}}
-        return hash_input
+    def _get_colors_used_in_precompute(self, annotation_metadata_paths: list[str]) -> list[colors.FLOAT_COLOR]:
+        colors_used = []
+        for annotation_metadata_path in annotation_metadata_paths:
+            with open(self.config.fs.localreadable(annotation_metadata_path), "r") as f:
+                metadata = json.load(f)
+            if "InstanceSegmentation" in {file.get("shape") for file in metadata.get("files", [])}:
+                annotation_hash_input = to_base_hash_input(metadata)
+                color_seed = generate_hash({**annotation_hash_input, **{"shape": "InstanceSegmentation"}})
+                object_count = metadata.get("object_count", 1)
+                _, float_colors = colors.get_hex_colors(object_count, exclude=colors_used, seed=color_seed)
+                colors_used += float_colors
+        return colors_used
 
     @classmethod
     def _get_annotation_name_prefix(cls, metadata: dict[str, Any], stemmed_metadata_path: str) -> str:

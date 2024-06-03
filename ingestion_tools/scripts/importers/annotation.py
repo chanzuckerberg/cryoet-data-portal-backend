@@ -10,6 +10,7 @@ import ndjson
 
 from common import colors
 from common import point_converter as pc
+from common.colors import generate_hash
 from common.config import DepositionImportConfig
 from common.finders import (
     BaseFinder,
@@ -210,7 +211,7 @@ class AnnotationImporter(BaseImporter):
     def convert(self, fs: FileSystemApi, output_prefix: str):
         pass
 
-    def neuroglancer_precompute(self, output_prefix: str):
+    def neuroglancer_precompute(self, output_prefix: str) -> None:
         pass
 
 
@@ -236,14 +237,14 @@ class BaseAnnotationSource(AnnotationImporter):
 
         super().__init__(*args, **kwargs)
 
-    def get_object_count(self, output_prefix: str):
+    def get_object_count(self, output_prefix: str) -> int:
         return 0
 
-    def is_valid(self, *args, **kwargs):
+    def is_valid(self, *args, **kwargs) -> bool:
         # To be overridden by subclasses to communicate whether this source contains valid information for this run.
         return True
 
-    def get_output_filename(self, output_prefix: str, extension: str | None = None):
+    def get_output_filename(self, output_prefix: str, extension: str | None = None) -> str:
         filename = f"{output_prefix}_{self.shape.lower()}"
         if extension:
             filename = f"{filename}.{extension}"
@@ -253,7 +254,7 @@ class BaseAnnotationSource(AnnotationImporter):
 class VolumeAnnotationSource(BaseAnnotationSource):
     valid_file_formats: list[str] = ["mrc", "zarr"]
 
-    def get_metadata(self, output_prefix: str):
+    def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
         metadata = [
             {
                 "format": fmt,
@@ -359,7 +360,7 @@ class AbstractPointAnnotation(BaseAnnotationSource):
 
         return points
 
-    def get_metadata(self, output_prefix: str):
+    def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
         metadata = [
             {
                 "format": "ndjson",
@@ -370,13 +371,13 @@ class AbstractPointAnnotation(BaseAnnotationSource):
         ]
         return metadata
 
-    def get_output_filename(self, output_prefix: str):
+    def get_output_filename(self, output_prefix: str, extension: str | None = None) -> str:
         return f"{output_prefix}_{self.shape.lower()}.ndjson"
 
-    def get_object_count(self, output_prefix: str):
+    def get_object_count(self, output_prefix: str) -> int:
         return len(self.get_output_data(self.config.fs, output_prefix))
 
-    def get_output_data(self, fs, output_prefix):
+    def get_output_data(self, fs, output_prefix) -> list[dict[str, Any]]:
         with fs.open(self.get_output_filename(output_prefix), "r") as f:
             annotations = ndjson.load(f)
         return annotations
@@ -500,10 +501,14 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
         return len(self._get_distinct_ids(output_prefix))
 
     def _neuroglancer_precompute_args(self, output_prefix: str, metadata: dict[str, Any]) -> dict[str, Any]:
-        ids = self._get_distinct_ids(output_prefix)
-        color_map = dict(zip(ids, colors.get_instance_seg_colors(len(ids))))
+        instance_ids = self._get_distinct_ids(output_prefix)
+
+        annotation_hash_input = colors.to_base_hash_input(metadata)
+        color_seed = generate_hash({**annotation_hash_input, **{"shape": "InstanceSegmentation"}})
+        color_values = colors.get_int_colors(len(instance_ids), seed=color_seed)[0]
+        color_map = dict(zip(instance_ids, color_values))
         object_name = metadata.get("annotation_object", {}).get("name", "")
-        names_by_id = {id: f"{object_name} {id}" for id in ids}
+        names_by_id = {instance_id: f"{object_name} {instance_id}" for instance_id in instance_ids}
         return {
             "names_by_id": names_by_id,
             "label_key_mapper": lambda x: x["instance_id"],

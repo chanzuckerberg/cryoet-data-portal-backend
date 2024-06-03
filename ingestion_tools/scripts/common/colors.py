@@ -1,84 +1,35 @@
 import colorsys
+import hashlib
+import json
+from typing import Any
 
 import distinctipy
 
-INT_COLOR_TYPE = tuple[int, int, int]
-FLOAT_COLOR_TYPE = tuple[float, float, float]
-COLORS_TYPE = tuple[list[INT_COLOR_TYPE], list[FLOAT_COLOR_TYPE]]
-INSTANCE_SEG_COLORS = [
-    (0.0, 1.0, 0.0),
-    (1.0, 0.0, 1.0),
-    (0.0, 0.5, 1.0),
-    (1.0, 0.5, 0.0),
-    (0.5, 0.75, 0.5),
-    (0.35067817872594464, 0.04055701959667157, 0.6099922267328842),
-    (0.7636418271124971, 0.007394321060059994, 0.08872992487267328),
-    (0.029389221458024473, 0.49120949618552123, 0.20127596636512213),
-    (0.0, 1.0, 1.0),
-    (0.9964709213963908, 0.4590633184873746, 0.7195437688812351),
-    (1.0, 1.0, 0.0),
-    (0.0, 1.0, 0.5),
-    (0.0, 0.0, 1.0),
-    (0.5198960752438522, 0.34219116466283017, 0.9605347216017598),
-    (0.5480561572777951, 0.3360940781025593, 0.33220799451530314),
-    (0.48085482201891616, 0.7796625983545481, 0.010095251837932806),
-    (0.4851649468728506, 0.9977385701398681, 0.8739822668144862),
-    (0.013479012532436774, 0.31955213468416255, 0.5978706411405401),
-    (0.9524952402939147, 0.877336220094235, 0.5003412590615334),
-    (1.0, 0.0, 0.5),
-    (0.06872798112105316, 0.6612761068331485, 0.6062999545425902),
-    (0.5, 0.0, 1.0),
-    (0.7762441241906177, 0.7137818795891349, 0.8814245830821527),
-    (0.3743457349684708, 0.6541978852310812, 0.9188661327565537),
-    (0.34523205256229805, 0.2656365289964474, 0.0019110771984314212),
-    (0.9137484986577942, 0.2560486911315898, 0.26494761151394597),
-    (0.7244738473410858, 0.12135640438203688, 0.707257537971504),
-    (0.0026260095090059332, 0.03714511660780795, 0.3693972381881062),
-    (0.1257755536108085, 0.7851307559386904, 0.23543420966558237),
-    (0.8371980841710804, 0.7320273266924207, 0.1650907195086393),
-    (0.6344377898190179, 0.969211722148414, 0.2736614861359754),
-    (0.6451417350769376, 0.49866281325385675, 0.6259135809273638),
-    (0.41404542370642905, 0.062466899899706996, 0.24418547663864165),
-    (0.9490365700058192, 0.26039939177544036, 0.9759816708049827),
-    (0.6431306920103899, 0.48850252200703304, 0.025154052567387897),
-    (0.15218776894913078, 0.2593911596633477, 0.8832147663025691),
-    (0.3091710034298172, 0.5513438308202985, 0.37280862157025074),
-    (0.02122947608440584, 0.2285847320445581, 0.1491277207779066),
-    (0.3431442866437796, 0.9881557474644496, 0.45420015742806574),
-    (0.6897973871650852, 0.9612181003310644, 0.6189821989688842),
-    (0.31045911892492695, 0.5287126170428659, 0.0052470853251815885),
-    (0.8934823097565536, 0.517540884261257, 0.3709361160574892),
-    (0.3272510826975118, 0.38677522865796043, 0.6181359767558168),
-    (0.23895945163787535, 0.8579846858077568, 0.7030593143669256),
-    (0.798540549734587, 0.49779134564332916, 0.985914129183078),
-    (0.24545996811491, 0.2186764244009054, 0.4055199512365971),
-    (0.008243951561085039, 0.7170027977736602, 0.8890303424810868),
-    (0.6657401542842443, 0.10099568861366015, 0.3916906783231253),
-    (0.8834038803590787, 0.2884272728311682, 0.5728981112942894),
-    (0.0064370328390882525, 0.044420907145303334, 0.6326152256411088),
-]
-INSTANCE_SEG_COLORS_COUNT = len(INSTANCE_SEG_COLORS)
+INT_COLOR = tuple[int, int, int]  # Returns RGB colors in the range [0, 255]
+FLOAT_COLOR = tuple[float, float, float]  # Returns RGB colors in the range [0, 1]
+HEX_COLOR = str
+INT_COLOR_PAIR = tuple[list[INT_COLOR], list[FLOAT_COLOR]]
+HEX_COLOR_PAIR = tuple[list[HEX_COLOR], list[FLOAT_COLOR]]
+_MAX_SEED_VALUE = int(2**32 - 1)
+_KEYS_FOR_COLOR_SEED = {"annotation_method", "annotation_object", "deposition_id", "ground_truth_status"}
 
 
-def _convert_colors_to_int(input_colors: list[FLOAT_COLOR_TYPE]) -> list[INT_COLOR_TYPE]:
+def _convert_colors_to_int(input_colors: list[FLOAT_COLOR]) -> list[INT_COLOR]:
     return [tuple(round(c * 255) for c in color) for color in input_colors]
 
 
-INSTANCE_SEG_COLORS_AS_INT = _convert_colors_to_int(INSTANCE_SEG_COLORS)
-
-
-def _convert_colors_to_hex(input_colors: list[FLOAT_COLOR_TYPE]) -> list[str]:
+def _convert_colors_to_hex(input_colors: list[FLOAT_COLOR]) -> list[HEX_COLOR]:
     return [f"#{''.join(f'{round(c * 255):02x}' for c in color)}" for color in input_colors]
 
 
-def _is_valid_color(color: FLOAT_COLOR_TYPE) -> bool:
+def _is_valid_color(color: FLOAT_COLOR) -> bool:
     # Filter out very light colors and very dark colors
     # as they are hard to see on the neuroglancer UI
     _, s, v = colorsys.rgb_to_hsv(*color)
     return s > 0.15 and v > 0.25
 
 
-def _get_colors(n_colors: int, exclude: list[FLOAT_COLOR_TYPE], seed=None) -> list[FLOAT_COLOR_TYPE]:
+def _get_colors(n_colors: int, exclude: list[FLOAT_COLOR], seed: int = None) -> list[FLOAT_COLOR]:
     colors = distinctipy.get_colors(n_colors, exclude_colors=exclude, rng=seed)
     output_colors = [color for color in colors if _is_valid_color(color)]
     if len(output_colors) < n_colors:
@@ -86,23 +37,27 @@ def _get_colors(n_colors: int, exclude: list[FLOAT_COLOR_TYPE], seed=None) -> li
     return output_colors
 
 
-def get_int_colors(n_colors: int, exclude: list[FLOAT_COLOR_TYPE], seed=None) -> COLORS_TYPE:
+def get_int_colors(n_colors: int, exclude: list[FLOAT_COLOR], seed: int = None) -> INT_COLOR_PAIR:
     colors = _get_colors(n_colors, exclude=exclude, seed=seed)
     return _convert_colors_to_int(colors), colors
 
 
 def get_hex_colors(
     n_colors: int,
-    exclude: list[FLOAT_COLOR_TYPE],
-    seed=None,
-) -> tuple[list[str], list[FLOAT_COLOR_TYPE]]:
+    exclude: list[FLOAT_COLOR],
+    seed: int = None,
+) -> tuple[list[HEX_COLOR], list[FLOAT_COLOR]]:
     colors = _get_colors(n_colors, exclude=exclude, seed=seed)
     return _convert_colors_to_hex(colors), colors
 
 
-def get_instance_seg_colors(n_colors: int, seed=None) -> list[INT_COLOR_TYPE]:
-    if n_colors <= INSTANCE_SEG_COLORS_COUNT:
-        return INSTANCE_SEG_COLORS_AS_INT[:n_colors].copy()
+def generate_hash(hash_input: dict[str, Any]) -> int:
+    md5_hash = hashlib.md5(json.dumps(hash_input, sort_keys=True).encode("utf-8"))
+    return int(md5_hash.hexdigest(), 16) % _MAX_SEED_VALUE
 
-    new_colors, _ = get_int_colors(n_colors - INSTANCE_SEG_COLORS_COUNT, exclude=INSTANCE_SEG_COLORS, seed=seed)
-    return INSTANCE_SEG_COLORS_AS_INT + new_colors
+
+def to_base_hash_input(metadata: dict[str, Any]) -> dict[str, Any]:
+    hash_input = {key: metadata.get(key) for key in _KEYS_FOR_COLOR_SEED}
+    if anno_obj := hash_input["annotation_object"]:
+        hash_input["annotation_object"] = {key: anno_obj.get(key) for key in {"id", "name"}}
+    return hash_input
