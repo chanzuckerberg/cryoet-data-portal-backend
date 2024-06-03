@@ -22,7 +22,7 @@ annotations:
           ORCID: 0009-0009-6482-1303
           primary_annotator_status: true
           corresponding_author_status: false
-        - name: Yujia Gao
+        - name: Min Xu
           ORCID: 0000-0002-0881-5891
           primary_annotator_status: false
           corresponding_author_status: true
