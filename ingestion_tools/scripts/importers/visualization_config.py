@@ -18,9 +18,9 @@ else:
     TomogramImporter = "TomogramImporter"
 
 
-class NeuroglancerImporter(BaseImporter):
-    type_key = "neuroglancer"
-    plural_key = "neuroglancer"
+class VisualizationConfigImporter(BaseImporter):
+    type_key = "viz_config"
+    plural_key = "viz_config"
     finder_factory = DefaultImporterFactory
     has_metadata = False
 

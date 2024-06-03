@@ -2,12 +2,13 @@ from common.finders import DefaultImporterFactory
 from importers.base_importer import BaseImporter
 
 
-class VisualizationPrecomputeImporter(BaseImporter):
-    type_key = "viz_precompute"
-    plural_key = "viz_precompute"
+class AnnotationVisualizationImporter(BaseImporter):
+    type_key = "annotation_viz"
+    plural_key = "annotations_viz"
     finder_factory = DefaultImporterFactory
     has_metadata = False
 
     def import_item(self) -> None:
+        precompute_path = self.get_output_path()
         annotation = self.get_annotation()
-        annotation.neuroglancer_precompute(self.get_output_path())
+        annotation.neuroglancer_precompute(precompute_path)

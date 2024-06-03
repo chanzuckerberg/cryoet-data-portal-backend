@@ -8,12 +8,12 @@ from importers.dataset_key_photo import DatasetKeyPhotoImporter
 from importers.frame import FrameImporter
 from importers.gain import GainImporter
 from importers.key_image import KeyImageImporter
-from importers.neuroglancer import NeuroglancerImporter
+from importers.neuroglancer import VisualizationConfigImporter
 from importers.rawtilt import RawTiltImporter
 from importers.run import RunImporter
 from importers.tiltseries import TiltSeriesImporter
 from importers.tomogram import TomogramImporter
-from importers.visualization_precompute import VisualizationPrecomputeImporter
+from importers.visualization_precompute import AnnotationVisualizationImporter
 from importers.voxel_spacing import VoxelSpacingImporter
 
 from common.config import DepositionImportConfig
@@ -24,7 +24,7 @@ IMPORTERS = [
     DatasetKeyPhotoImporter,
     DatasetImporter,
     FrameImporter,
-    NeuroglancerImporter,
+    VisualizationConfigImporter,
     TomogramImporter,
     GainImporter,
     KeyImageImporter,
@@ -33,7 +33,7 @@ IMPORTERS = [
     TiltSeriesImporter,
     TomogramImporter,
     VoxelSpacingImporter,
-    VisualizationPrecomputeImporter,
+    AnnotationVisualizationImporter,
 ]
 IMPORTER_DICT = {cls.type_key: cls for cls in IMPORTERS}
 # NOTE - ordering of keys is important here, the importer will respect it!
@@ -42,11 +42,11 @@ IMPORTER_DEP_TREE = {
         RunImporter: {
             VoxelSpacingImporter: {
                 AnnotationImporter: {
-                    VisualizationPrecomputeImporter: {},
+                    AnnotationVisualizationImporter: {},
                 },
                 TomogramImporter: {
                     KeyImageImporter: {},
-                    NeuroglancerImporter: {},
+                    VisualizationConfigImporter: {},
                 },
             },
             GainImporter: {},

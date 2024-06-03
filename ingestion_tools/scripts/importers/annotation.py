@@ -137,6 +137,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             **source_args,
         }
         shape = self.source["shape"]
+        anno = None
         if shape == "SegmentationMask":
             anno = SegmentationMaskAnnotation(**instance_args)
         if shape == "SemanticSegmentationMask":
@@ -149,7 +150,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             anno = InstanceSegmentationAnnotation(**instance_args)
         if not anno:
             raise NotImplementedError(f"Unknown shape {shape}")
-        if anno.is_valid(config.fs):
+        if anno.is_valid():
             return anno
 
 
@@ -174,10 +175,7 @@ class AnnotationImporter(BaseImporter):
     # Functions to support writing annotation data
     def import_item(self):
         dest_prefix = self.get_output_path()
-        self.convert(
-            self.config.fs,
-            dest_prefix,
-        )
+        self.convert(dest_prefix)
 
     # Functions to support writing annotation metadata
     def get_output_path(self):
@@ -208,12 +206,6 @@ class AnnotationImporter(BaseImporter):
         self.written_metadata_files.append(filename)
         self.annotation_metadata.write_metadata(filename, self.local_metadata)
 
-    def convert(self, fs: FileSystemApi, output_prefix: str):
-        pass
-
-    def neuroglancer_precompute(self, output_prefix: str) -> None:
-        pass
-
 
 class BaseAnnotationSource(AnnotationImporter):
     is_visualization_default: bool
@@ -236,6 +228,13 @@ class BaseAnnotationSource(AnnotationImporter):
             raise Exception("Invalid file format")
 
         super().__init__(*args, **kwargs)
+
+    def convert(self, output_prefix: str):
+        pass
+
+    def neuroglancer_precompute(self, output_prefix: str) -> None:
+        print("No precompute needed for this source")
+        return
 
     def get_object_count(self, output_prefix: str) -> int:
         return 0
@@ -270,13 +269,9 @@ class VolumeAnnotationSource(BaseAnnotationSource):
 class SegmentationMaskAnnotation(VolumeAnnotationSource):
     shape = "SegmentationMask"  # Don't expose SemanticSegmentationMask to the public portal.
 
-    def convert(
-        self,
-        fs: FileSystemApi,
-        output_prefix: str,
-    ):
+    def convert(self, output_prefix: str):
         return make_pyramids(
-            fs,
+            self.config.fs,
             self.get_output_filename(output_prefix),
             self.path,
             write_mrc=self.config.write_mrc,
@@ -287,7 +282,6 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
 
 class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
     shape = "SegmentationMask"  # Don't expose SemanticSegmentationMask to the public portal.
-
     mask_label: int
 
     def __init__(
@@ -301,13 +295,9 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
             mask_label = 1
         self.mask_label = mask_label
 
-    def convert(
-        self,
-        fs: FileSystemApi,
-        output_prefix: str,
-    ):
+    def convert(self, output_prefix: str):
         return make_pyramids(
-            fs,
+            self.config.fs,
             self.get_output_filename(output_prefix),
             self.path,
             label=self.mask_label,
@@ -316,10 +306,10 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
             voxel_spacing=self.get_voxel_spacing().as_float(),
         )
 
-    def is_valid(self, fs: FileSystemApi) -> bool:
+    def is_valid(self) -> bool:
         try:
             input_file = self.path
-            return check_mask_for_label(fs, input_file, self.mask_label)
+            return check_mask_for_label(self.config.fs, input_file, self.mask_label)
         except Exception:
             return False
 
@@ -382,10 +372,10 @@ class AbstractPointAnnotation(BaseAnnotationSource):
             annotations = ndjson.load(f)
         return annotations
 
-    def convert(self, fs: FileSystemApi, output_prefix: str):
+    def convert(self, output_prefix: str):
         filename = self.get_output_filename(output_prefix)
-        annotations = self.load(fs, self.path)
-        with fs.open(filename, "w") as fh:
+        annotations = self.load(self.config.fs, self.path)
+        with self.config.fs.open(filename, "w") as fh:
             ndjson.dump([a.to_dict() for a in annotations], fh)
 
     def _neuroglancer_precompute_args(self, output_prefix: str, metadata: dict[str, Any]) -> dict[str, Any]:
@@ -505,7 +495,7 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
 
         annotation_hash_input = colors.to_base_hash_input(metadata)
         color_seed = generate_hash({**annotation_hash_input, **{"shape": "InstanceSegmentation"}})
-        color_values = colors.get_int_colors(len(instance_ids), seed=color_seed)[0]
+        color_values, _ = colors.get_int_colors(len(instance_ids), exclude=[], seed=color_seed)
         color_map = dict(zip(instance_ids, color_values))
         object_name = metadata.get("annotation_object", {}).get("name", "")
         names_by_id = {instance_id: f"{object_name} {instance_id}" for instance_id in instance_ids}

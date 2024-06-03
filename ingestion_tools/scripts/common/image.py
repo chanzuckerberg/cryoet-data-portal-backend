@@ -121,6 +121,9 @@ class ZarrWriter:
 
 
 class VolumeReader(ABC):
+    data: np.ndarray
+    filename: str
+
     @abstractmethod
     def get_pyramid_base_data(self) -> np.ndarray:
         pass
@@ -181,7 +184,6 @@ class MRCReader(VolumeReader):
 class OMEZarrReader(VolumeReader):
     _header_only: bool
     _attrs: dict[str, Any]
-    data: np.ndarray
 
     def __init__(self, fs: FileSystemApi, filename: str, header_only: bool = False):
         self.filename = filename
@@ -231,9 +233,9 @@ class OMEZarrReader(VolumeReader):
 class TomoConverter:
     def __init__(self, fs: FileSystemApi, filename: str, header_only: bool = False):
         if ".zarr" in filename:
-            self.tomo_reader = OMEZarrReader(fs, filename, header_only)
+            self.volume_reader = OMEZarrReader(fs, filename, header_only)
         else:
-            self.tomo_reader = MRCReader(fs, filename, header_only)
+            self.volume_reader = MRCReader(fs, filename, header_only)
 
     @classmethod
     def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:
@@ -243,7 +245,7 @@ class TomoConverter:
         return self.get_volume_info().voxel_size
 
     def get_volume_info(self) -> VolumeInfo:
-        return self.tomo_reader.get_volume_info()
+        return self.volume_reader.get_volume_info()
 
     # Make an array of an original size image, plus `max_layers` half-scaled images
     def make_pyramid(
@@ -259,7 +261,7 @@ class TomoConverter:
         # Ensure voxel spacing rounded to 3rd digit
         voxel_spacing = round(voxel_spacing, 3)
 
-        pyramid = [self.tomo_reader.get_pyramid_base_data()]
+        pyramid = [self.volume_reader.get_pyramid_base_data()]
         pyramid_voxel_spacing = [(voxel_spacing, voxel_spacing, voxel_spacing)]
         z_scale = 2 if scale_z_axis else 1
         # Then make a pyramid of 100/50/25 percent scale volumes
@@ -336,13 +338,13 @@ class TomoConverter:
         header.exttyp = np.array(b"MRCO", dtype="S4")
 
         # If we're converting an MRC to another MRC, copy over some header info.
-        if old_header := self.tomo_reader.get_mrc_header():
+        if old_header := self.volume_reader.get_mrc_header():
             header.extra1 = old_header.extra1
             header.extra2 = old_header.extra2
             if old_header.exttyp.item().decode().strip():
                 header.nsymbt = old_header.nsymbt
                 header.exttyp = old_header.exttyp
-                if ext := self.tomo_reader.get_mrc_extended_header():
+                if ext := self.volume_reader.get_mrc_extended_header():
                     mrcfile.set_extended_header(ext)
 
         if header_mapper:
@@ -355,7 +357,7 @@ class MaskConverter(TomoConverter):
         self.label = label
 
     def get_pyramid_base_data(self) -> np.ndarray:
-        return (self.data == self.label).astype(np.int8)
+        return (self.volume_reader.data == self.label).astype(np.int8)
 
     @classmethod
     def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:
@@ -364,7 +366,7 @@ class MaskConverter(TomoConverter):
         return (data > 0).astype(np.int8)
 
     def has_label(self) -> bool:
-        return np.any(self.data == self.label)
+        return np.any(self.volume_reader.data == self.label)
 
 
 def get_tomo_metadata(
