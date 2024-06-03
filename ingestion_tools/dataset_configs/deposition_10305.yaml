@@ -6,9 +6,9 @@ annotations:
         description: ~
         state: ~
       dates: &repo-dates
-        deposition_date: 2024-05-29
-        last_modified_date: 2024-05-29
-        release_date: 2024-05-29
+        deposition_date: 2024-06-03
+        last_modified_date: 2024-06-03
+        release_date: 2024-06-03
       annotation_method: "manual labeling."
       method_type: manual
       annotation_publications: ~
@@ -48,5 +48,5 @@ voxel_spacings:
       match_regex: .*
       name_regex: VoxelSpacing(.*)
 standardization_config:
-  deposition_id: #TODO
+  deposition_id: 10305
   source_prefix: 'braxton_owens_05_2024/d1_t4p_common'
