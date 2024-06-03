@@ -13,6 +13,7 @@ from importers.rawtilt import RawTiltImporter
 from importers.run import RunImporter
 from importers.tiltseries import TiltSeriesImporter
 from importers.tomogram import TomogramImporter
+from importers.visualization_precompute import VisualizationPrecomputeImporter
 from importers.voxel_spacing import VoxelSpacingImporter
 
 from common.config import DepositionImportConfig
@@ -32,6 +33,7 @@ IMPORTERS = [
     TiltSeriesImporter,
     TomogramImporter,
     VoxelSpacingImporter,
+    VisualizationPrecomputeImporter,
 ]
 IMPORTER_DICT = {cls.type_key: cls for cls in IMPORTERS}
 # NOTE - ordering of keys is important here, the importer will respect it!
@@ -39,7 +41,9 @@ IMPORTER_DEP_TREE = {
     DatasetImporter: {
         RunImporter: {
             VoxelSpacingImporter: {
-                AnnotationImporter: {},
+                AnnotationImporter: {
+                    VisualizationPrecomputeImporter: {},
+                },
                 TomogramImporter: {
                     KeyImageImporter: {},
                     NeuroglancerImporter: {},

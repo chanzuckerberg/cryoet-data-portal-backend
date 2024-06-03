@@ -22,6 +22,11 @@ neuroglancer:
       - literal:
           value:
             - neuroglancer
+viz_precompute:
+  - sources:
+      - literal:
+          value:
+            - viz_precompute
 key_images:
   - sources:
       - literal:
@@ -255,7 +260,9 @@ class DepositionImportConfig:
             "dataset": "{dataset_name}",
             "dataset_keyphoto": "{dataset_name}/Images",
             "neuroglancer": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/neuroglancer_config.json",
-            "neuroglancer_precompute": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute",
+            "viz_precompute": (
+                "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute"
+            ),
         }
         output_prefix = self.output_prefix
         glob_vars = obj.get_glob_vars()

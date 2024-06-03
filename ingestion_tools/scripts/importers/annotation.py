@@ -207,22 +207,11 @@ class AnnotationImporter(BaseImporter):
         self.written_metadata_files.append(filename)
         self.annotation_metadata.write_metadata(filename, self.local_metadata)
 
-    def import_neuroglancer_component(self):
-        run_name = self.parent.get_run().run_name
-        voxel_size = self.config.get_run_voxelsize(self)
-        ng_output_path = self.config.resolve_output_path("neuroglancer_precompute", run_name, voxel_size)
-        for source in self.sources:
-            try:
-                source.get_source_file(self.config.fs, self.config.input_path)
-            except Exception:
-                print(f"Skipping generating annotations neuroglancer config for run {run_name} due to missing files")
-                continue
-            source.neuroglancer_precompute(
-                self.config.fs,
-                self.get_output_path(),
-                ng_output_path,
-                float(voxel_size),
-            )
+    def convert(self, fs: FileSystemApi, output_prefix: str):
+        pass
+
+    def neuroglancer_precompute(self, output_prefix: str):
+        pass
 
 
 class BaseAnnotationSource(AnnotationImporter):
@@ -254,35 +243,15 @@ class BaseAnnotationSource(AnnotationImporter):
         # To be overridden by subclasses to communicate whether this source contains valid information for this run.
         return True
 
-    def get_neuroglancer_precompute_path(self, annotation_path: str, output_prefix: str) -> str:
-        file_name = os.path.basename(f"{annotation_path}_{self.shape.lower()}")
-        return os.path.join(output_prefix, file_name, "")
-
-    def neuroglancer_precompute(
-        self,
-        fs: FileSystemApi,
-        annotation_path: str,
-        output_prefix: str,
-        voxel_spacing: float,
-    ):
-        pass
-
-    def convert(
-        self,
-        fs: FileSystemApi,
-        output_prefix: str,
-    ):
-        pass
-
-
-class VolumeAnnotationSource(BaseAnnotationSource):
-    valid_file_formats: list[str] = ["mrc", "zarr"]
-
     def get_output_filename(self, output_prefix: str, extension: str | None = None):
         filename = f"{output_prefix}_{self.shape.lower()}"
         if extension:
             filename = f"{filename}.{extension}"
         return filename
+
+
+class VolumeAnnotationSource(BaseAnnotationSource):
+    valid_file_formats: list[str] = ["mrc", "zarr"]
 
     def get_metadata(self, output_prefix: str):
         metadata = [
@@ -412,42 +381,30 @@ class AbstractPointAnnotation(BaseAnnotationSource):
             annotations = ndjson.load(f)
         return annotations
 
-    def convert(
-        self,
-        fs: FileSystemApi,
-        output_prefix: str,
-    ):
+    def convert(self, fs: FileSystemApi, output_prefix: str):
         filename = self.get_output_filename(output_prefix)
         annotations = self.load(fs, self.path)
         with fs.open(filename, "w") as fh:
             ndjson.dump([a.to_dict() for a in annotations], fh)
 
-    def neuroglancer_precompute_args(
-        self,
-        fs: FileSystemApi,
-        output_prefix: str,
-        metadata: dict[str, Any],
-    ) -> dict[str, Any]:
+    def _neuroglancer_precompute_args(self, output_prefix: str, metadata: dict[str, Any]) -> dict[str, Any]:
         return {}
 
-    def neuroglancer_precompute(
-        self,
-        fs: FileSystemApi,
-        annotation_path: str,
-        output_prefix: str,
-        voxel_spacing: float,
-    ):
-        precompute_path = self.get_neuroglancer_precompute_path(annotation_path, output_prefix)
+    def _get_neuroglancer_precompute_path(self, annotation_path: str, output_prefix: str) -> str:
+        file_name = os.path.basename(f"{annotation_path}_{self.shape.lower()}")
+        return os.path.join(output_prefix, file_name, "")
+
+    def neuroglancer_precompute(self, output_prefix: str) -> None:
+        fs = self.config.fs
+        annotation_path = self.get_output_path()
+        precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
         tmp_path = fs.localwritable(precompute_path)
-        annotation_metadata_path = fs.localreadable(f"{annotation_path}.json")
-        with open(annotation_metadata_path) as f:
-            annotation_metadata = json.load(f)
         points.encode_annotation(
             self.get_output_data(fs, annotation_path),
-            annotation_metadata,
+            self.metadata,
             Path(tmp_path),
-            voxel_spacing * 1e-10,
-            **self.neuroglancer_precompute_args(fs, output_prefix, annotation_metadata),
+            self.get_voxel_spacing().as_float() * 1e-10,
+            **self._neuroglancer_precompute_args(output_prefix, self.metadata),
         )
         fs.push(tmp_path)
 
@@ -523,12 +480,7 @@ class OrientedPointAnnotation(AbstractPointAnnotation):
             "filter_value": self.filter_value,
         }
 
-    def neuroglancer_precompute_args(
-        self,
-        fs: FileSystemApi,
-        output_prefix: str,
-        metadata: dict[str, Any],
-    ) -> dict[str, Any]:
+    def _neuroglancer_precompute_args(self, output_prefix: str, metadata: dict[str, Any]) -> dict[str, Any]:
         return {"is_oriented": True}
 
 
@@ -543,17 +495,12 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
         data = self.get_output_data(self.config.fs, output_prefix)
         return {d["instance_id"] for d in data}
 
-    def get_object_count(self, output_prefix):
+    def get_object_count(self, output_prefix) -> int:
         # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
         return len(self._get_distinct_ids(output_prefix))
 
-    def neuroglancer_precompute_args(
-        self,
-        fs: FileSystemApi,
-        output_prefix: str,
-        metadata: dict[str, Any],
-    ) -> dict[str, Any]:
-        ids = self._get_distinct_ids(fs, output_prefix)
+    def _neuroglancer_precompute_args(self, output_prefix: str, metadata: dict[str, Any]) -> dict[str, Any]:
+        ids = self._get_distinct_ids(output_prefix)
         color_map = dict(zip(ids, colors.get_instance_seg_colors(len(ids))))
         object_name = metadata.get("annotation_object", {}).get("name", "")
         names_by_id = {id: f"{object_name} {id}" for id in ids}

@@ -7,6 +7,7 @@ from common.image import VolumeInfo, get_tomo_metadata, get_volume_info, get_vox
 
 if TYPE_CHECKING:
     from common.config import DepositionImportConfig
+    from importers.annotation import AnnotationImporter
     from importers.dataset import DatasetImporter
     from importers.run import RunImporter
     from importers.tomogram import TomogramImporter
@@ -17,6 +18,7 @@ else:
     TomogramImporter = "TomogramImporter"
     VoxelSpacingImporter = "VoxelSpacingImporter"
     DepositionImportConfig = "DepositionImportConfig"
+    AnnotationImporter = "AnnotationImporter"
 
 
 class BaseImporter:
@@ -81,6 +83,9 @@ class BaseImporter:
 
     def get_voxel_spacing(self) -> VoxelSpacingImporter:
         return self.parent_getter("voxel_spacing")
+
+    def get_annotation(self) -> AnnotationImporter:
+        return self.parent_getter("annotation")
 
     def get_output_path(self) -> str:
         return self.config.get_output_path(self)

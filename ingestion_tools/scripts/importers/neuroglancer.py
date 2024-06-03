@@ -32,12 +32,11 @@ class NeuroglancerImporter(BaseImporter):
     finder_factory = DefaultImporterFactory
     has_metadata = False
 
-    def import_item(self) -> str:
+    def import_item(self) -> None:
         ng_contents = self._create_config()
         meta = NeuroglancerMetadata(self.config.fs, self.config.deposition_id, ng_contents)
         dest_file = self.get_output_path()
         meta.write_metadata(dest_file)
-        return dest_file
 
     def _get_annotation_metadata_files(self) -> list[str]:
         # Getting a list of paths to the annotation metadata files using glob instead of using the annotation finder
@@ -109,7 +108,7 @@ class NeuroglancerImporter(BaseImporter):
         resolution = (voxel_size * 1e-10,) * 3
         layers = [self._to_tomogram_layer(tomogram, volume_info, resolution)]
 
-        precompute_path = self.config.resolve_output_path("neuroglancer_precompute", self)
+        precompute_path = self.config.resolve_output_path("viz_precompute", self)
         colors_used = []
 
         for annotation_metadata_path in self._get_annotation_metadata_files():
