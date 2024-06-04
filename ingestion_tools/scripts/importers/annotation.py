@@ -131,6 +131,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             **source_args,
         }
         shape = self.source["shape"]
+        anno = None
         if shape == "SegmentationMask":
             anno = SegmentationMaskAnnotation(**instance_args)
         if shape == "SemanticSegmentationMask":
@@ -143,7 +144,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             anno = InstanceSegmentationAnnotation(**instance_args)
         if not anno:
             raise NotImplementedError(f"Unknown shape {shape}")
-        if anno.is_valid(config.fs):
+        if anno.is_valid():
             return anno
 
 
@@ -168,10 +169,7 @@ class AnnotationImporter(BaseImporter):
     # Functions to support writing annotation data
     def import_item(self):
         dest_prefix = self.get_output_path()
-        self.convert(
-            self.config.fs,
-            dest_prefix,
-        )
+        self.convert(dest_prefix)
 
     # Functions to support writing annotation metadata
     def get_output_path(self):
@@ -210,8 +208,6 @@ class BaseAnnotationSource(AnnotationImporter):
     shape: str
     file_format: str
 
-    is_visualization_default: bool | None
-
     def __init__(
         self,
         file_format: str,
@@ -227,32 +223,27 @@ class BaseAnnotationSource(AnnotationImporter):
 
         super().__init__(*args, **kwargs)
 
-    def get_object_count(self, output_prefix: str):
-        # We currently don't count objects in segmentation masks.
+    def convert(self, output_prefix: str):
+        pass
+
+    def get_object_count(self, output_prefix: str) -> int:
         return 0
 
-    def is_valid(self, *args, **kwargs):
+    def is_valid(self, *args, **kwargs) -> bool:
         # To be overridden by subclasses to communicate whether this source contains valid information for this run.
         return True
 
-    def convert(
-        self,
-        fs: FileSystemApi,
-        output_prefix: str,
-    ):
-        pass
-
-
-class VolumeAnnotationSource(BaseAnnotationSource):
-    valid_file_formats: list[str] = ["mrc", "zarr"]
-
-    def get_output_filename(self, output_prefix: str, extension: str | None = None):
+    def get_output_filename(self, output_prefix: str, extension: str | None = None) -> str:
         filename = f"{output_prefix}_{self.shape.lower()}"
         if extension:
             filename = f"{filename}.{extension}"
         return filename
 
-    def get_metadata(self, output_prefix: str):
+
+class VolumeAnnotationSource(BaseAnnotationSource):
+    valid_file_formats: list[str] = ["mrc", "zarr"]
+
+    def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
         metadata = [
             {
                 "format": fmt,
@@ -268,13 +259,9 @@ class VolumeAnnotationSource(BaseAnnotationSource):
 class SegmentationMaskAnnotation(VolumeAnnotationSource):
     shape = "SegmentationMask"  # Don't expose SemanticSegmentationMask to the public portal.
 
-    def convert(
-        self,
-        fs: FileSystemApi,
-        output_prefix: str,
-    ):
+    def convert(self, output_prefix: str):
         return make_pyramids(
-            fs,
+            self.config.fs,
             self.get_output_filename(output_prefix),
             self.path,
             write_mrc=self.config.write_mrc,
@@ -285,7 +272,6 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
 
 class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
     shape = "SegmentationMask"  # Don't expose SemanticSegmentationMask to the public portal.
-
     mask_label: int
 
     def __init__(
@@ -299,13 +285,9 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
             mask_label = 1
         self.mask_label = mask_label
 
-    def convert(
-        self,
-        fs: FileSystemApi,
-        output_prefix: str,
-    ):
+    def convert(self, output_prefix: str):
         return make_pyramids(
-            fs,
+            self.config.fs,
             self.get_output_filename(output_prefix),
             self.path,
             label=self.mask_label,
@@ -314,10 +296,10 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
             voxel_spacing=self.get_voxel_spacing().as_float(),
         )
 
-    def is_valid(self, fs: FileSystemApi) -> bool:
+    def is_valid(self) -> bool:
         try:
             input_file = self.path
-            return check_mask_for_label(fs, input_file, self.mask_label)
+            return check_mask_for_label(self.config.fs, input_file, self.mask_label)
         except Exception:
             return False
 
@@ -358,7 +340,7 @@ class AbstractPointAnnotation(BaseAnnotationSource):
 
         return points
 
-    def get_metadata(self, output_prefix: str):
+    def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
         metadata = [
             {
                 "format": "ndjson",
@@ -369,26 +351,21 @@ class AbstractPointAnnotation(BaseAnnotationSource):
         ]
         return metadata
 
-    def get_output_filename(self, output_prefix: str):
-        filename = f"{output_prefix}_{self.shape.lower()}.ndjson"
-        return filename
+    def get_output_filename(self, output_prefix: str, extension: str | None = None) -> str:
+        return f"{output_prefix}_{self.shape.lower()}.ndjson"
 
-    def get_object_count(self, output_prefix):
-        return len(self.get_output_data(self.config.fs, output_prefix))
+    def get_object_count(self, output_prefix: str) -> int:
+        return len(self.get_output_data(output_prefix))
 
-    def get_output_data(self, fs, output_prefix):
-        with fs.open(self.get_output_filename(output_prefix), "r") as f:
+    def get_output_data(self, output_prefix) -> list[dict[str, Any]]:
+        with self.config.fs.open(self.get_output_filename(output_prefix), "r") as f:
             annotations = ndjson.load(f)
         return annotations
 
-    def convert(
-        self,
-        fs: FileSystemApi,
-        output_prefix: str,
-    ):
+    def convert(self, output_prefix: str):
         filename = self.get_output_filename(output_prefix)
-        annotations = self.load(fs, self.path)
-        with fs.open(filename, "w") as fh:
+        annotations = self.load(self.config.fs, self.path)
+        with self.config.fs.open(filename, "w") as fh:
             ndjson.dump([a.to_dict() for a in annotations], fh)
 
 
@@ -471,10 +448,10 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
     }
     valid_file_formats = list(map_functions.keys())
 
-    def get_object_count(self, output_prefix):
-        data = self.get_output_data(self.config.fs, output_prefix)
+    def get_distinct_ids(self, output_prefix: str) -> set[int]:
+        data = self.get_output_data(output_prefix)
+        return {d["instance_id"] for d in data}
 
-        ids = [d["instance_id"] for d in data]
-
+    def get_object_count(self, output_prefix) -> int:
         # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
-        return len(set(ids))
+        return len(self.get_distinct_ids(output_prefix))

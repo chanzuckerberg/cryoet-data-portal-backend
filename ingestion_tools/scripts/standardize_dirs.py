@@ -8,11 +8,12 @@ from importers.dataset_key_photo import DatasetKeyPhotoImporter
 from importers.frame import FrameImporter
 from importers.gain import GainImporter
 from importers.key_image import KeyImageImporter
-from importers.neuroglancer import NeuroglancerImporter
 from importers.rawtilt import RawTiltImporter
 from importers.run import RunImporter
 from importers.tiltseries import TiltSeriesImporter
 from importers.tomogram import TomogramImporter
+from importers.visualization_config import VisualizationConfigImporter
+from importers.visualization_precompute import AnnotationVisualizationImporter
 from importers.voxel_spacing import VoxelSpacingImporter
 
 from common.config import DepositionImportConfig
@@ -23,7 +24,7 @@ IMPORTERS = [
     DatasetKeyPhotoImporter,
     DatasetImporter,
     FrameImporter,
-    NeuroglancerImporter,
+    VisualizationConfigImporter,
     TomogramImporter,
     GainImporter,
     KeyImageImporter,
@@ -32,6 +33,7 @@ IMPORTERS = [
     TiltSeriesImporter,
     TomogramImporter,
     VoxelSpacingImporter,
+    AnnotationVisualizationImporter,
 ]
 IMPORTER_DICT = {cls.type_key: cls for cls in IMPORTERS}
 # NOTE - ordering of keys is important here, the importer will respect it!
@@ -39,10 +41,12 @@ IMPORTER_DEP_TREE = {
     DatasetImporter: {
         RunImporter: {
             VoxelSpacingImporter: {
-                AnnotationImporter: {},
+                AnnotationImporter: {
+                    AnnotationVisualizationImporter: {},
+                },
                 TomogramImporter: {
                     KeyImageImporter: {},
-                    NeuroglancerImporter: {},
+                    VisualizationConfigImporter: {},
                 },
             },
             GainImporter: {},
@@ -76,7 +80,7 @@ def common_options(func):
     return func
 
 
-def flatten_dependency_tree(tree):
+def flatten_dependency_tree(tree) -> dict[type, set[type]]:
     treedict = {}
     for k, v in tree.items():
         treedict[k] = set()

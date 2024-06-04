@@ -121,7 +121,9 @@ class ZarrWriter:
 
 
 class VolumeReader(ABC):
+
     data: np.ndarray | None
+    filename: str
 
     @abstractmethod
     def get_pyramid_base_data(self) -> np.ndarray:
@@ -407,14 +409,14 @@ def get_tomo_metadata(
 
 
 def get_voxel_size(fs: FileSystemApi, tomo_filename: str) -> float:
-    return TomoConverter(fs, tomo_filename, header_only=True).get_voxel_size()
+    return get_volume_info(fs, tomo_filename).voxel_size
 
 
 def get_volume_info(fs: FileSystemApi, tomo_filename: str) -> VolumeInfo:
     return TomoConverter(fs, tomo_filename, header_only=True).get_volume_info()
 
 
-def get_converter(fs: FileSystemApi, tomo_filename: str, label: int | None = None):
+def get_converter(fs: FileSystemApi, tomo_filename: str, label: int | None = None) -> TomoConverter | MaskConverter:
     if label is not None:
         return MaskConverter(fs, tomo_filename, label)
     return TomoConverter(fs, tomo_filename)

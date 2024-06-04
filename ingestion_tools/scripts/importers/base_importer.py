@@ -2,13 +2,12 @@ import contextlib
 import os
 from typing import TYPE_CHECKING, Any, Optional
 
-import numpy as np
-
 from common.finders import DepositionObjectImporterFactory
 from common.image import VolumeInfo, get_tomo_metadata, get_volume_info, get_voxel_size, make_pyramids
 
 if TYPE_CHECKING:
     from common.config import DepositionImportConfig
+    from importers.annotation import BaseAnnotationSource
     from importers.dataset import DatasetImporter
     from importers.run import RunImporter
     from importers.tomogram import TomogramImporter
@@ -19,6 +18,7 @@ else:
     TomogramImporter = "TomogramImporter"
     VoxelSpacingImporter = "VoxelSpacingImporter"
     DepositionImportConfig = "DepositionImportConfig"
+    BaseAnnotationSource = "BaseAnnotationSource"
 
 
 class BaseImporter:
@@ -84,6 +84,9 @@ class BaseImporter:
     def get_voxel_spacing(self) -> VoxelSpacingImporter:
         return self.parent_getter("voxel_spacing")
 
+    def get_annotation(self) -> BaseAnnotationSource:
+        return self.parent_getter("annotation")
+
     def get_output_path(self) -> str:
         return self.config.get_output_path(self)
 
@@ -115,7 +118,7 @@ class VolumeImporter(BaseImporter):
         super().__init__(*args, **kwargs)
         self.volume_filename = path
 
-    def get_voxel_size(self) -> np.float32:
+    def get_voxel_size(self) -> float:
         return get_voxel_size(self.config.fs, self.volume_filename)
 
     def get_output_volume_info(self) -> VolumeInfo:

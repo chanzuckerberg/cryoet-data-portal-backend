@@ -123,8 +123,16 @@ def to_args(**kwargs) -> list[str]:
 @click.argument("input_bucket", required=True, type=str)
 @click.argument("output_path", required=True, type=str)
 @click.option("--import-everything", is_flag=True, default=False)
-@click.option("--write-mrc/--no-write-mrc", default=True)
-@click.option("--write-zarr/--no-write-zarr", default=True)
+@click.option(
+    "--write-mrc/--no-write-mrc",
+    default=True,
+    help="Specify if mrc volumes should be written, defaults to True.",
+)
+@click.option(
+    "--write-zarr/--no-write-zarr",
+    default=True,
+    help="Specify if zarr volumes should be written, defaults to True.",
+)
 @click.option("--force-overwrite", is_flag=True, default=False)
 @click.option(
     "--env-name",
