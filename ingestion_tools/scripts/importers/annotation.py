@@ -3,14 +3,11 @@ import os
 import os.path
 from collections import defaultdict
 from functools import partial
-from pathlib import Path
 from typing import TYPE_CHECKING, Any, TypedDict
 
 import ndjson
 
-from common import colors
 from common import point_converter as pc
-from common.colors import generate_hash
 from common.config import DepositionImportConfig
 from common.finders import (
     BaseFinder,
@@ -26,9 +23,6 @@ if TYPE_CHECKING:
     from importers.voxel_spacing import VoxelSpacingImporter
 else:
     VoxelSpacingImporter = "VoxelSpacingImporter"
-
-
-from cryoet_data_portal_neuroglancer.precompute import points
 
 
 class AnnotationObject(TypedDict):
@@ -232,10 +226,6 @@ class BaseAnnotationSource(AnnotationImporter):
     def convert(self, output_prefix: str):
         pass
 
-    def neuroglancer_precompute(self, output_prefix: str) -> None:
-        print("No precompute needed for this source")
-        return
-
     def get_object_count(self, output_prefix: str) -> int:
         return 0
 
@@ -365,10 +355,10 @@ class AbstractPointAnnotation(BaseAnnotationSource):
         return f"{output_prefix}_{self.shape.lower()}.ndjson"
 
     def get_object_count(self, output_prefix: str) -> int:
-        return len(self.get_output_data(self.config.fs, output_prefix))
+        return len(self.get_output_data(output_prefix))
 
-    def get_output_data(self, fs, output_prefix) -> list[dict[str, Any]]:
-        with fs.open(self.get_output_filename(output_prefix), "r") as f:
+    def get_output_data(self, output_prefix) -> list[dict[str, Any]]:
+        with self.config.fs.open(self.get_output_filename(output_prefix), "r") as f:
             annotations = ndjson.load(f)
         return annotations
 
@@ -377,27 +367,6 @@ class AbstractPointAnnotation(BaseAnnotationSource):
         annotations = self.load(self.config.fs, self.path)
         with self.config.fs.open(filename, "w") as fh:
             ndjson.dump([a.to_dict() for a in annotations], fh)
-
-    def _neuroglancer_precompute_args(self, output_prefix: str, metadata: dict[str, Any]) -> dict[str, Any]:
-        return {}
-
-    def _get_neuroglancer_precompute_path(self, annotation_path: str, output_prefix: str) -> str:
-        file_name = os.path.basename(f"{annotation_path}_{self.shape.lower()}")
-        return os.path.join(output_prefix, file_name, "")
-
-    def neuroglancer_precompute(self, output_prefix: str) -> None:
-        fs = self.config.fs
-        annotation_path = self.get_output_path()
-        precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
-        tmp_path = fs.localwritable(precompute_path)
-        points.encode_annotation(
-            self.get_output_data(fs, annotation_path),
-            self.metadata,
-            Path(tmp_path),
-            self.get_voxel_spacing().as_float() * 1e-10,
-            **self._neuroglancer_precompute_args(output_prefix, self.metadata),
-        )
-        fs.push(tmp_path)
 
 
 class PointAnnotation(AbstractPointAnnotation):
@@ -471,9 +440,6 @@ class OrientedPointAnnotation(AbstractPointAnnotation):
             "filter_value": self.filter_value,
         }
 
-    def _neuroglancer_precompute_args(self, output_prefix: str, metadata: dict[str, Any]) -> dict[str, Any]:
-        return {"is_oriented": True}
-
 
 class InstanceSegmentationAnnotation(OrientedPointAnnotation):
     shape = "InstanceSegmentation"
@@ -482,25 +448,10 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
     }
     valid_file_formats = list(map_functions.keys())
 
-    def _get_distinct_ids(self, output_prefix: str) -> set[int]:
-        data = self.get_output_data(self.config.fs, output_prefix)
+    def get_distinct_ids(self, output_prefix: str) -> set[int]:
+        data = self.get_output_data(output_prefix)
         return {d["instance_id"] for d in data}
 
     def get_object_count(self, output_prefix) -> int:
         # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
-        return len(self._get_distinct_ids(output_prefix))
-
-    def _neuroglancer_precompute_args(self, output_prefix: str, metadata: dict[str, Any]) -> dict[str, Any]:
-        instance_ids = self._get_distinct_ids(output_prefix)
-
-        annotation_hash_input = colors.to_base_hash_input(metadata)
-        color_seed = generate_hash({**annotation_hash_input, **{"shape": "InstanceSegmentation"}})
-        color_values, _ = colors.get_int_colors(len(instance_ids), exclude=[], seed=color_seed)
-        color_map = dict(zip(instance_ids, color_values))
-        object_name = metadata.get("annotation_object", {}).get("name", "")
-        names_by_id = {instance_id: f"{object_name} {instance_id}" for instance_id in instance_ids}
-        return {
-            "names_by_id": names_by_id,
-            "label_key_mapper": lambda x: x["instance_id"],
-            "color_mapper": lambda x: color_map.get(x["instance_id"], (255, 255, 255)),
-        }
+        return len(self.get_distinct_ids(output_prefix))

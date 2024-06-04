@@ -100,7 +100,7 @@ class VisualizationConfigImporter(BaseImporter):
         resolution = (voxel_size * 1e-10,) * 3
         layers = [self._to_tomogram_layer(tomogram, volume_info, resolution)]
 
-        precompute_path = self.config.resolve_output_path("viz_precompute", self)
+        precompute_path = self.config.resolve_output_path("annotation_viz", self)
 
         annotation_metadata_paths = self._get_annotation_metadata_files()
         colors_used = self._get_colors_used_in_precompute(annotation_metadata_paths)

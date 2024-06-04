@@ -17,16 +17,16 @@ else:
 
 
 APPEND_STATIC_CONFIG: str = """
-neuroglancer:
+viz_config:
   - sources:
       - literal:
           value:
             - neuroglancer
-viz_precompute:
+annotation_viz:
   - sources:
       - literal:
           value:
-            - viz_precompute
+            - neuroglancer
 key_images:
   - sources:
       - literal:
@@ -259,8 +259,8 @@ class DepositionImportConfig:
             "run": "{dataset_name}/{run_name}",
             "dataset": "{dataset_name}",
             "dataset_keyphoto": "{dataset_name}/Images",
-            "neuroglancer": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/neuroglancer_config.json",
-            "viz_precompute": (
+            "viz_config": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/neuroglancer_config.json",
+            "annotation_viz": (
                 "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute"
             ),
         }
