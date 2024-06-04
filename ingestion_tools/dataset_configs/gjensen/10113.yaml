@@ -36,7 +36,7 @@ datasets:
       name: 'Sulfolobus solfataricus '
       taxonomy_id: 273057
     sample_preparation: null
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

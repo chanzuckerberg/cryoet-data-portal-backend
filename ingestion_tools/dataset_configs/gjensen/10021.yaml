@@ -31,7 +31,7 @@ datasets:
       name: Halothiobacillus neapolitanus
       taxonomy_id: 555778
     sample_preparation: purified by the Savage lab
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

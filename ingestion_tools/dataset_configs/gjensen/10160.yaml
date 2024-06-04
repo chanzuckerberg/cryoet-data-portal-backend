@@ -33,7 +33,7 @@ datasets:
     sample_preparation: "Hylemonella grown 48 hr in Broth 233 at 26\xB0C without antibiotics,\
       \ Final OD600 < 0.1, incubated with attack-phase Bdellovibrio for 3 days, Spun\
       \ down by 1000 rcf for 5 min and concentrated by ~10x for plunge freezing"
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

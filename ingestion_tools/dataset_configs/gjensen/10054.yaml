@@ -32,7 +32,7 @@ datasets:
       taxonomy_id: 777
     sample_preparation: Cells were grown in Robert Heinzen's lab @NIAID and ~50 ul
       cells were sent to us.
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

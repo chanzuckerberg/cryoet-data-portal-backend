@@ -29,7 +29,7 @@ datasets:
       name: Thermococcus kodakarensis
       taxonomy_id: 69014
     sample_preparation: null
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

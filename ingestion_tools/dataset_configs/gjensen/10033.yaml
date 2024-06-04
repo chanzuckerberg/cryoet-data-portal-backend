@@ -32,7 +32,7 @@ datasets:
       taxonomy_id: 714995
     sample_preparation: "Static cultures 18h old - Shaken, spun down (2500rcf - 10min\
       \ - 30\xB0C) - resuspended in 0.5mL - incubated at 30\xB0C for 4h"
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

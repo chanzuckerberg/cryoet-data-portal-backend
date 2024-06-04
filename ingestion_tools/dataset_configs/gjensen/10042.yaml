@@ -39,7 +39,7 @@ datasets:
       of LB (with 100 ug/ml gentamicin) and incubated . for 16 hours at 37 C with
       175 rpm. After cells were mixed with gold beads (coated with BSA), . 4 ul were
       added to the grids, blotted and plunge frozen.
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

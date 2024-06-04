@@ -16,7 +16,10 @@ datasets:
       primary_author_status: false
     cell_strain:
       id: null
-      name: Clone E6-1
+      name: Jurkat Clone E6-1
+    cell_type:
+      cell_name: T cell
+      cell_type_id: CL:0000084
     dataset_description: This is 3rd of 3 sets of data studying Jurkat Human T-cell
       collected by Cora Woodward and is a part of Caltech Jensen  lab etdb. Jurkats
       were cell-cycle synchronized (Sarah Cheng) using nocodazole then HP frozen and
@@ -29,10 +32,10 @@ datasets:
       release_date: 2023-12-01
     grid_preparation: cryo-sectioned by Mark Ladinsky
     organism:
-      name: Jurkat Human T-cell
-      taxonomy_id: 0
+      name: Homo sapiens
+      taxonomy_id: 9606
     sample_preparation: nocodazole synchronized
-    sample_type: Organism
+    sample_type: cell
   sources:
   - literal:
       value:

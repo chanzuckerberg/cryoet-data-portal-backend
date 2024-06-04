@@ -32,7 +32,7 @@ datasets:
       taxonomy_id: 287
     sample_preparation: Pseudomonas aeruginosa, strain PW3654.Acquired from the Transposon
       mutant collection. PW3654- lacZwp06q3 (CheW of F6 system)
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

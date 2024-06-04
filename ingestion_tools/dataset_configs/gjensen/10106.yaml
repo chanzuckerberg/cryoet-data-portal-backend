@@ -16,7 +16,10 @@ datasets:
       primary_author_status: false
     cell_strain:
       id: null
-      name: ''
+      name: INS-1E
+    cell_type:
+      cell_name: pancreatic beta cell
+      cell_type_id: CL:0000169
     dataset_description: This is 2nd of 4 sets of data studying Rat INS-1E pancreatic
       beta cells collected by Stephen Carter and is a part of Caltech Jensen  lab
       etdb.
@@ -28,10 +31,10 @@ datasets:
       release_date: 2023-12-01
     grid_preparation: null
     organism:
-      name: Rat INS-1E pancreatic beta cells
+      name: Rattus norvegicus
       taxonomy_id: 10116
     sample_preparation: null
-    sample_type: Organism
+    sample_type: cell
   sources:
   - literal:
       value:

@@ -36,7 +36,7 @@ datasets:
       cells were pelleted and resuspended into 10 ml MB, incubate for 5 hr at 30 degrees.
       Further concentration was made by pelleted down whole culture solution and resuspended
       into 50 ul fresh MB.
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

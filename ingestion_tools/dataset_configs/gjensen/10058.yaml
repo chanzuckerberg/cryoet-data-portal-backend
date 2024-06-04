@@ -38,7 +38,7 @@ datasets:
       \ Blot force 6, blot time 3 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane\
       \ mix. Grid: Quantifoil Cu 2/2 200. Add gold to cells prior to freezing: 1ul\
       \ of gold to 4 ul of cells, freeze."
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

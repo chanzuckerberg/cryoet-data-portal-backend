@@ -121,7 +121,8 @@ class ZarrWriter:
 
 
 class VolumeReader(ABC):
-    data: np.ndarray
+
+    data: np.ndarray | None
     filename: str
 
     @abstractmethod
@@ -165,6 +166,15 @@ class MRCReader(VolumeReader):
         return self.extended_header
 
     def get_pyramid_base_data(self) -> np.ndarray:
+        # We have some tomograms that were written before the 2014 spec was finalized and
+        # decided that MRC type 0 should store *signed* integers. The older mrc's store each
+        # voxel value as *unsigned* int8, while the MRC library reads that data as signed
+        # int8. Here we're remapping the overflowed/mangled uint8 data to a continuous
+        # range of int8 data. We're using the `dtype` header field to determine whether data
+        # has likely overflowed and needs to be corrected. This field is marked as optional in
+        # the spec, so it's possible some volumes that need correction will escape this check.
+        if self.header.dmax > 127 and self.data.dtype == np.int8:
+            return np.where(self.data < 0, 128 + self.data, -128 + self.data).astype(np.float32)
         return self.data.astype(np.float32)
 
     def get_volume_info(self) -> VolumeInfo:

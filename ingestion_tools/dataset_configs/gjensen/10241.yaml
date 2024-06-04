@@ -30,7 +30,7 @@ datasets:
       name: Salmonella typhimurium
       taxonomy_id: 99287
     sample_preparation: Salmonella minicells for fliL flagella, and T3SS.
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

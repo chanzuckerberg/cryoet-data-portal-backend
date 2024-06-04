@@ -35,7 +35,7 @@ datasets:
       bovine serum at 37 degrees in microaerobic chamber with GasPak EZ Campy Sachets
       for 2 days, OD600=0.4 Hs.746T cells cultivated on QF Au finder grid for 2 day
       in RPMI + 10% FBS. Infect by pylori for 3 hr.
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

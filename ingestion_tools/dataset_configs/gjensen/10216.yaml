@@ -33,7 +33,7 @@ datasets:
       taxonomy_id: 407148
     sample_preparation: High magnification tomograms of whole FlgQ mutant Campylobacter
       cells
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

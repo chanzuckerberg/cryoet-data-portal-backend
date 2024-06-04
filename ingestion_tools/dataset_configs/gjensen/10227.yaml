@@ -31,7 +31,7 @@ datasets:
       name: Salmonella typhimurium
       taxonomy_id: 99287
     sample_preparation: Salmonella fliHIJ knockout minicells
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

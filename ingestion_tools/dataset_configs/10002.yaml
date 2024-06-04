@@ -143,9 +143,6 @@ datasets:
     sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, cryo_protectant:
       None, instance_type: tomography_preparation'
     sample_type: cell
-    tissue:
-      id: BTO:0001175
-      name: retina
   sources:
   - literal:
       value:

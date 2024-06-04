@@ -33,7 +33,7 @@ datasets:
       taxonomy_id: 342108
     sample_preparation: This is the wild type in which the entire island of genes
       responsible for magnetosome formation has been deleted
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

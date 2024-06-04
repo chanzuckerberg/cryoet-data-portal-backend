@@ -26,10 +26,10 @@ datasets:
       release_date: 2023-12-01
     grid_preparation: null
     organism:
-      name: CHMP1B tubes
-      taxonomy_id: 0
+      name: Homo sapiens
+      taxonomy_id: 9606
     sample_preparation: null
-    sample_type: Organism
+    sample_type: in_vitro
   sources:
   - literal:
       value:

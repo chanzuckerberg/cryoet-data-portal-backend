@@ -35,7 +35,7 @@ datasets:
     sample_preparation: Cells grown in BLBB + 10% heat inactivated fetal bovine serum
       at 37 degrees in microaerobic chamber with GasPak EZ Campy Sachets for 2 days,
       OD600=0.4
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

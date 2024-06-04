@@ -33,7 +33,7 @@ datasets:
       taxonomy_id: 714995
     sample_preparation: Little Petri dishes were inoculateed with 1mL of Ghansenii
       cultures with a gold grid layed at the bottom. Incubated at 30C for 6 hours
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

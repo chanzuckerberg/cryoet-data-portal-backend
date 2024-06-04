@@ -42,7 +42,7 @@ datasets:
       a dilution series. Start O/N culture with all of them and freeze cells next
       day from the one in early stationary phase that is OD ~ 3.0. Added gold before
       freezing.'
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

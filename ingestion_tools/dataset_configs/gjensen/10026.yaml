@@ -34,7 +34,7 @@ datasets:
     sample_preparation: 6do culture was vigorously shaken until turbid medium.1mL
       of turbid medium was transferred in little petri dishes with 4 Quantifoil grids
       Au R 2/2 grids at 11:30am
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

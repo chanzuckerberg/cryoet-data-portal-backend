@@ -36,7 +36,7 @@ datasets:
       serum at 37 degrees in 5% CO2 chamber for O/N, OD600=~1.3. Back dilute to OD
       0.3, grew to OD 0.6 for infection. AGS cells cultivated on QF Au finder grid
       for 1 day in RPMI + 10% FBS. Infect by pylori for 4 hr.
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

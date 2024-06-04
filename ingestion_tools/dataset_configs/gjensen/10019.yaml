@@ -32,7 +32,7 @@ datasets:
       taxonomy_id: 315271
     sample_preparation: "Lakshmanan et al. Nat Protoc 12, 2050\u20132080 (2017). Sample\
       \ in PBS with 500 mM CaCl2; OD 15"
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

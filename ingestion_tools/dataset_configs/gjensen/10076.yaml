@@ -39,7 +39,7 @@ datasets:
       dissolve in the media, adjust the cell density to 0.6 and make a dilution series.
       Start O/N culture with all of them and freeze cells next day from the one in
       early stationary phase that is OD ~ 3.0. This time cell density was ~2.6'
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

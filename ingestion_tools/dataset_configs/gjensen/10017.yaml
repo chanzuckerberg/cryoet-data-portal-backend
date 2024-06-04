@@ -34,7 +34,7 @@ datasets:
       \ biogenic gas . vesicle nanostructures for use as contrast agents for ultrasound\
       \ and . MRI. Nat Protoc 12, 2050\u20132080 (2017). . https://doi.org/10.1038/nprot.2017.081.\
       \ Sample in 10mM Hepes, pH7.4; OD 5.0"
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:
