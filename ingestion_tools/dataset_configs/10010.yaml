@@ -229,4 +229,4 @@ voxel_spacings:
 - sources:
   - literal:
       value:
-      - float float {tomograms_voxel_spacing}
+      - float {tomograms_voxel_spacing}
