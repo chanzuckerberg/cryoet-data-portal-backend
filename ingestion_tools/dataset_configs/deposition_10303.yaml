@@ -83,7 +83,7 @@ datasets:
 - sources:
   - source_glob:
       list_glob: '10???'
-      match_regex: .*
+      match_regex: '^(?!(10014|10015|10016|10017|10018|10019|10020)).*$'
       name_regex: (.*)
 runs:
 - sources:
