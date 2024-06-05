@@ -32,7 +32,7 @@ datasets:
       taxonomy_id: 714995
     sample_preparation: Static overnight culture (20h) - Spun down 10min - 27C - 2000rcf
       - resuspended in 0.5mL - put back at 30C for 4h.
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

@@ -31,7 +31,7 @@ datasets:
       name: Caulobacter crescentus
       taxonomy_id: 565050
     sample_preparation: delta-tipN (strain 5993) + 20 mg/ml Nalidixic acid for 5hr
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

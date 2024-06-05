@@ -34,7 +34,7 @@ datasets:
     sample_preparation: Cells grown overnight in Marine Broth (MB) medium at 30 degrees.
       Expression of Venus labeled HNK0708 was induced by adding final 300 uM CuCl2
       and incubated at 30 degrees for 24 hr.
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

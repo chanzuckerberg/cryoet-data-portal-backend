@@ -31,7 +31,7 @@ datasets:
       name: Helicobacter pylori
       taxonomy_id: 85962
     sample_preparation: null
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

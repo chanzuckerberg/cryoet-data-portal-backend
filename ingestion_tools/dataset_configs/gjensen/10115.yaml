@@ -31,7 +31,7 @@ datasets:
       name: Sulfolobus acidocaldarius
       taxonomy_id: 2285
     sample_preparation: grown in Brock's Medium at 80C, synchronize with Baby Machine
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

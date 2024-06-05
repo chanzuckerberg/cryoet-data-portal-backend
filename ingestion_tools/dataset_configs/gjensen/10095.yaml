@@ -33,7 +33,7 @@ datasets:
       name: Legionella pneumophila
       taxonomy_id: 1080311
     sample_preparation: null
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

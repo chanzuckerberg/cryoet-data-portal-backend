@@ -34,7 +34,7 @@ datasets:
       taxonomy_id: 714995
     sample_preparation: I inoculated 10 petri dishes filled with 1mL of SH with a
       biofilm from 12.02.19. 5 grids will be incubated 3 hours at 30C, static conditions
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

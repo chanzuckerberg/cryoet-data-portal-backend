@@ -35,7 +35,7 @@ datasets:
       taxonomy_id: 1080311
     sample_preparation: 'Cells were grown in AYE liquid culture with following supplements:
       ferric nitrate, cysteine hydrochloride and thymidine.'
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

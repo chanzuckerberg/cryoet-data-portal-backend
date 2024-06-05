@@ -31,7 +31,7 @@ datasets:
       taxonomy_id: 563041
     sample_preparation: Cells grown in Brucella broth (Fluka) + 10% heat inactivated
       fetal bovine serum at 37 degrees + 5% CO2, OD600=0.3
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

@@ -31,7 +31,7 @@ datasets:
       name: Escherichia coli
       taxonomy_id: 562
     sample_preparation: LB, 30 Degrees Celsius, OD600 ~ 0.6
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

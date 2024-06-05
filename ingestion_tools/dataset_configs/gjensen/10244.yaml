@@ -30,7 +30,7 @@ datasets:
       name: Streptococcus pneumoniae
       taxonomy_id: 1313
     sample_preparation: null
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

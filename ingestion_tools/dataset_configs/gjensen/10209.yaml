@@ -30,7 +30,7 @@ datasets:
       name: Campylobacter jejuni
       taxonomy_id: 407148
     sample_preparation: Campy flhBc cells
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

@@ -19,7 +19,7 @@ datasets:
       name: ''
     cell_type:
       cell_name: umbilical vein endothelial cell
-      cell_type_id: http://purl.obolibrary.org/obo/BTO_0001949
+      cell_type_id: CL:0002618
     dataset_description: This is 7th of 17 sets of data studying HUVECs collected
       by Cora Woodward and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10178
@@ -30,14 +30,11 @@ datasets:
       release_date: 2023-12-01
     grid_preparation: manual blotting
     organism:
-      name: HUVECs
+      name: Homo sapiens
       taxonomy_id: 9606
     sample_preparation: Whole cells were grown on Au finder grids and infected with
       pNLGFPBglI. Sample frozen 24h post infection
-    sample_type: Cell
-    tissue:
-      tissue_id: http://purl.obolibrary.org/obo/BTO_0000766
-      tissue_name: blood vessel endothelium
+    sample_type: cell
   sources:
   - literal:
       value:

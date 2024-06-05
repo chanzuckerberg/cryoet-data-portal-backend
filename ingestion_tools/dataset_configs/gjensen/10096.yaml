@@ -35,7 +35,7 @@ datasets:
       name: Legionella pneumophila
       taxonomy_id: 1080311
     sample_preparation: Shuman Lab
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

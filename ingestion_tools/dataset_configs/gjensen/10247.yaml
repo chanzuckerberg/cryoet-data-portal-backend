@@ -30,7 +30,7 @@ datasets:
       name: Bacillus subtilis
       taxonomy_id: 224308
     sample_preparation: sporulation media
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

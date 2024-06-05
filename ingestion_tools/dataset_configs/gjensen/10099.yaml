@@ -33,7 +33,7 @@ datasets:
       name: Halobacterium salinarum
       taxonomy_id: 64091
     sample_preparation: Standard H. salinarum medium
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

@@ -34,7 +34,7 @@ datasets:
     sample_preparation: "Cell grown 48 hr in Broth 233 at 26\xB0C without antibiotics,\
       \ Final OD600 < 0.1, Spun down by 1000 rcf for 5 min and concentrated by ~10x\
       \ for plunge freezing"
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

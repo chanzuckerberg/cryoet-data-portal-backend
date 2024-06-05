@@ -234,13 +234,19 @@ def queue(
                 continue
             print(f"Processing {run.name}...")
 
-            new_args = {k: v for k, v in kwargs.items() if "run" not in k and "dataset" not in k}
+            per_run_args = {}
+            # Don't copy over dataset and run name filters to the queued jobs - they're intended to be batched into 1-run chunks.
+            excluded_args = ["filter_dataset_name", "filter_run_name"]
+            for k, v in kwargs.items():
+                if any(substring in k for substring in excluded_args):
+                    break
+                per_run_args[k] = v
             new_args = to_args(
                 import_everything=import_everything,
                 write_mrc=write_mrc,
                 write_zarr=write_zarr,
                 force_overwrite=force_overwrite,
-                **kwargs,
+                **per_run_args,
             )  # make a copy
             new_args.append(f"--filter-dataset-name '^{dataset.name}$'")
             new_args.append(f"--filter-run-name '^{run.name}$'")

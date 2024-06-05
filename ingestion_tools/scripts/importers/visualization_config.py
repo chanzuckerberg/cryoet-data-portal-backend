@@ -128,7 +128,6 @@ class VisualizationConfigImporter(BaseImporter):
                     colors_used.append(float_colors[0])
                 elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                     is_instance_seg = shape == "InstanceSegmentation"
-
                     layer = self._to_point_layer(path, file, name_prefix, hex_colors[0], resolution, is_instance_seg)
                     layers.append(layer)
                     if not is_instance_seg:
