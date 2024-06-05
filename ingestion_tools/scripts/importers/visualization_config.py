@@ -59,19 +59,19 @@ class VisualizationConfigImporter(BaseImporter):
 
     def _to_segmentation_mask_layer(
         self,
+        source_path: str,
         file_metadata: dict[str, Any],
         name_prefix: str,
         color: str,
         resolution: tuple[float, float, float],
     ) -> dict[str, Any]:
-        return state_generator.generate_image_volume_layer(
-            file_metadata.get("path"),
+        return state_generator.generate_segmentation_mask_layer(
+            source_path,
             f"{name_prefix} segmentation",
             self.config.https_prefix,
             color=color,
             scale=resolution,
             is_visible=file_metadata.get("is_visualization_default"),
-            rendering_depth=15000,
         )
 
     def _to_point_layer(
@@ -120,15 +120,15 @@ class VisualizationConfigImporter(BaseImporter):
                 shape = file.get("shape")
                 color_seed = generate_hash({**annotation_hash_input, **{"shape": shape}})
                 hex_colors, float_colors = colors.get_hex_colors(1, exclude=colors_used, seed=color_seed)
-
+                path = self._to_directory_path(
+                    os.path.join(precompute_path, f"{metadata_file_name}_{shape.lower()}"),
+                )
                 if shape == "SegmentationMask":
-                    layers.append(self._to_segmentation_mask_layer(file, name_prefix, hex_colors[0], resolution))
+                    layers.append(self._to_segmentation_mask_layer(path, file, name_prefix, hex_colors[0], resolution))
                     colors_used.append(float_colors[0])
                 elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                     is_instance_seg = shape == "InstanceSegmentation"
-                    path = self._to_directory_path(
-                        os.path.join(precompute_path, f"{metadata_file_name}_{shape.lower()}"),
-                    )
+
                     layer = self._to_point_layer(path, file, name_prefix, hex_colors[0], resolution, is_instance_seg)
                     layers.append(layer)
                     if not is_instance_seg:
