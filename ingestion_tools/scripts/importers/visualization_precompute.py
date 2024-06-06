@@ -2,12 +2,17 @@ import os
 from pathlib import Path
 from typing import Any
 
-from cryoet_data_portal_neuroglancer.precompute import points
+from cryoet_data_portal_neuroglancer.precompute import points, segmentation_mask
 
 from common import colors
 from common.config import DepositionImportConfig
 from common.finders import DefaultImporterFactory
-from importers.annotation import AbstractPointAnnotation, BaseAnnotationSource, InstanceSegmentationAnnotation
+from importers.annotation import (
+    AbstractPointAnnotation,
+    BaseAnnotationSource,
+    InstanceSegmentationAnnotation,
+    VolumeAnnotationSource,
+)
 from importers.base_importer import BaseImporter
 
 
@@ -32,6 +37,13 @@ class BaseAnnotationPrecompute:
         self.annotation = annotation
         self.config = config
 
+    def _get_shape(self) -> str:
+        return self.annotation.shape
+
+    def _get_neuroglancer_precompute_path(self, annotation_path: str, output_prefix: str) -> str:
+        file_name = os.path.basename(f"{annotation_path}_{self._get_shape().lower()}")
+        return os.path.join(output_prefix, file_name, "")
+
     def neuroglancer_precompute(self, *args, **kwargs) -> None:
         pass
 
@@ -47,6 +59,8 @@ class AnnotationPrecomputeFactory:
             return OrientedPointAnnotationPrecompute(**params)
         elif shape == "InstanceSegmentation":
             return InstanceSegmentationAnnotationPrecompute(**params)
+        elif shape == "SegmentationMask" or shape == "SemanticSegmentationMask":
+            return SegmentationMaskAnnotationPrecompute(**params)
 
         print(f"No precompute for {shape} shape")
         return None
@@ -57,10 +71,6 @@ class PointAnnotationPrecompute(BaseAnnotationPrecompute):
 
     def neuroglancer_precompute_args(self, output_prefix: str, metadata: dict[str, Any]) -> dict[str, Any]:
         return {}
-
-    def _get_neuroglancer_precompute_path(self, annotation_path: str, output_prefix: str) -> str:
-        file_name = os.path.basename(f"{annotation_path}_{self.annotation.shape.lower()}")
-        return os.path.join(output_prefix, file_name, "")
 
     def neuroglancer_precompute(self, output_prefix: str, voxel_spacing: float) -> None:
         fs = self.config.fs
@@ -100,3 +110,25 @@ class InstanceSegmentationAnnotationPrecompute(PointAnnotationPrecompute):
             "label_key_mapper": lambda x: x["instance_id"],
             "color_mapper": lambda x: color_map.get(x["instance_id"], (255, 255, 255)),
         }
+
+
+class SegmentationMaskAnnotationPrecompute(BaseAnnotationPrecompute):
+    annotation: VolumeAnnotationSource
+
+    def _get_shape(self) -> str:
+        return "SegmentationMask"
+
+    def neuroglancer_precompute(self, output_prefix: str, voxel_spacing: float) -> None:
+        fs = self.config.fs
+        annotation_path = self.annotation.get_output_path()
+        precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
+        tmp_path = fs.localwritable(precompute_path)
+        zarr_file_path = fs.destformat(self.annotation.get_output_filename(annotation_path, "zarr"))
+        segmentation_mask.encode_segmentation(
+            zarr_file_path,
+            Path(tmp_path),
+            resolution=(voxel_spacing,) * 3,
+            delete_existing=True,
+            include_mesh=True,
+        )
+        fs.push(tmp_path)

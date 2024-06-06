@@ -121,7 +121,6 @@ class ZarrWriter:
 
 
 class VolumeReader(ABC):
-
     data: np.ndarray | None
     filename: str
 
