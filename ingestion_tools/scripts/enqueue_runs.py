@@ -1,6 +1,8 @@
 import json
 import re
 import time
+from concurrent.futures import ProcessPoolExecutor, wait
+from functools import partial
 
 import boto3
 import click
@@ -122,6 +124,7 @@ def to_args(**kwargs) -> list[str]:
 @click.argument("config_file", required=True, type=str)
 @click.argument("input_bucket", required=True, type=str)
 @click.argument("output_path", required=True, type=str)
+@click.option("--parallelism", required=True, type=int, default=20)
 @click.option("--import-everything", is_flag=True, default=False)
 @click.option(
     "--write-mrc/--no-write-mrc",
@@ -177,6 +180,7 @@ def queue(
     config_file: str,
     input_bucket: str,
     output_path: str,
+    parallelism: int,
     import_everything: bool,
     write_mrc: bool,
     write_zarr: bool,
@@ -220,61 +224,69 @@ def queue(
             print(f"Skipping {dataset.name}..")
             continue
         runs = RunImporter.finder(config, dataset=dataset)
-        for run in runs:
-            if skip_run and not skip_run_until_regex.match(run.name):
-                print(f"Skipping {run.name}..")
-                continue
-            skip_run = False
+        futures = []
+        with ProcessPoolExecutor(max_workers=parallelism) as workerpool:
+            for run in runs:
+                if skip_run and not skip_run_until_regex.match(run.name):
+                    print(f"Skipping {run.name}..")
+                    continue
+                skip_run = False
 
-            if list(filter(lambda x: x.match(run.name), exclude_runs)):
-                print(f"Excluding {run.name}..")
-                continue
-            if filter_runs and not list(filter(lambda x: x.match(run.name), filter_runs)):
-                print(f"Skipping {run.name}..")
-                continue
-            print(f"Processing {run.name}...")
+                if list(filter(lambda x: x.match(run.name), exclude_runs)):
+                    print(f"Excluding {run.name}..")
+                    continue
+                if filter_runs and not list(filter(lambda x: x.match(run.name), filter_runs)):
+                    print(f"Skipping {run.name}..")
+                    continue
+                print(f"Processing {run.name}...")
 
-            per_run_args = {}
-            # Don't copy over dataset and run name filters to the queued jobs - they're intended to be batched into 1-run chunks.
-            excluded_args = ["filter_dataset_name", "filter_run_name"]
-            for k, v in kwargs.items():
-                if any(substring in k for substring in excluded_args):
-                    break
-                per_run_args[k] = v
-            new_args = to_args(
-                import_everything=import_everything,
-                write_mrc=write_mrc,
-                write_zarr=write_zarr,
-                force_overwrite=force_overwrite,
-                **per_run_args,
-            )  # make a copy
-            new_args.append(f"--filter-dataset-name '^{dataset.name}$'")
-            new_args.append(f"--filter-run-name '^{run.name}$'")
+                per_run_args = {}
+                # Don't copy over dataset and run name filters to the queued jobs - they're intended to be batched into 1-run chunks.
+                excluded_args = ["filter_dataset_name", "filter_run_name"]
+                for k, v in kwargs.items():
+                    if any(substring in k for substring in excluded_args):
+                        break
+                    per_run_args[k] = v
+                new_args = to_args(
+                    import_everything=import_everything,
+                    write_mrc=write_mrc,
+                    write_zarr=write_zarr,
+                    force_overwrite=force_overwrite,
+                    **per_run_args,
+                )  # make a copy
+                new_args.append(f"--filter-dataset-name '^{dataset.name}$'")
+                new_args.append(f"--filter-run-name '^{run.name}$'")
 
-            dataset_id = dataset.name
-            deposition_id = config.deposition_id
-            execution_name = f"{int(time.time())}-dep{deposition_id}-ds{dataset_id}-run{run.name}"
+                dataset_id = dataset.name
+                deposition_id = config.deposition_id
+                execution_name = f"{int(time.time())}-dep{deposition_id}-ds{dataset_id}-run{run.name}"
 
-            # execution name greater than 80 chars causes boto ValidationException
-            if len(execution_name) > 80:
-                execution_name = execution_name[-80:]
+                # execution name greater than 80 chars causes boto ValidationException
+                if len(execution_name) > 80:
+                    execution_name = execution_name[-80:]
 
-            run_job(
-                execution_name,
-                config_file,
-                input_bucket,
-                output_path,
-                " ".join(new_args),
-                aws_region=aws_env["aws_region"],
-                aws_account_id=aws_env["aws_account_id"],
-                sfn_name=aws_env["sfn_name"],
-                swipe_comms_bucket=aws_env["swipe_comms_bucket"],
-                swipe_wdl_bucket=aws_env["swipe_wdl_bucket"],
-                swipe_wdl_key=swipe_wdl_key,
-                ecr_repo=ecr_repo,
-                ecr_tag=ecr_tag,
-                memory=memory,
-            )
+                futures.append(
+                    workerpool.submit(
+                        partial(
+                            run_job,
+                            execution_name,
+                            config_file,
+                            input_bucket,
+                            output_path,
+                            " ".join(new_args),
+                            aws_region=aws_env["aws_region"],
+                            aws_account_id=aws_env["aws_account_id"],
+                            sfn_name=aws_env["sfn_name"],
+                            swipe_comms_bucket=aws_env["swipe_comms_bucket"],
+                            swipe_wdl_bucket=aws_env["swipe_wdl_bucket"],
+                            swipe_wdl_key=swipe_wdl_key,
+                            ecr_repo=ecr_repo,
+                            ecr_tag=ecr_tag,
+                            memory=memory,
+                        ),
+                    ),
+                )
+            wait(futures)
 
 
 if __name__ == "__main__":
