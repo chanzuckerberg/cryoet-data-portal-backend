@@ -18,8 +18,8 @@ datasets:
       id: null
       name: Jurkat Clone E6-1
     cell_type:
-      cell_name: T cell
-      cell_type_id: CL:0000084
+      name: T cell
+      id: CL:0000084
     dataset_description: This is 2nd of 3 sets of data studying Jurkat Human T-cell
       collected by Cora Woodward and is a part of Caltech Jensen  lab etdb. Jurkats
       infected by spinoculation with VSVG-pNL4GFP, collected 30 min after synchronous
