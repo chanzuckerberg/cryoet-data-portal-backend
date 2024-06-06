@@ -75,26 +75,17 @@ class PointAnnotationPrecompute(BaseAnnotationPrecompute):
     def neuroglancer_precompute(self, output_prefix: str, voxel_spacing: float) -> None:
         fs = self.config.fs
         annotation_path = self.annotation.get_output_path()
-        data = self.get_annotation_output_data(annotation_path)
-        if not data:
-            return
         precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
         metadata = self.annotation.metadata
         tmp_path = fs.localwritable(precompute_path)
         points.encode_annotation(
-            data,
+            self.annotation.get_output_data(annotation_path),
             metadata,
             Path(tmp_path),
             voxel_spacing * 1e-10,
             **self.neuroglancer_precompute_args(output_prefix, metadata),
         )
         fs.push(tmp_path)
-
-    def get_annotation_output_data(self, annotation_path: str) -> list[dict[str, Any]] | None:
-        try:
-            return self.annotation.get_output_data(annotation_path)
-        except FileNotFoundError:
-            return None
 
 
 class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
