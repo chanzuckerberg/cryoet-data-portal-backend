@@ -18,8 +18,8 @@ datasets:
       id: null
       name: Jurkat Clone E6-1
     cell_type:
-      cell_name: T cell
-      cell_type_id: CL:0000084
+      name: T cell
+      id: CL:0000084
     dataset_description: This is 1st of 3 sets of data studying Jurkat Human T-cell
       collected by Cora Woodward and is a part of Caltech Jensen  lab etdb. Jurkats
       were infected with pNLGFP virus then HP frozen and cryo-sectioned by Mark Ladinsky
