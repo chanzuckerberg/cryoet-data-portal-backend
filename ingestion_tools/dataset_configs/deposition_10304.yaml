@@ -2,7 +2,7 @@ annotations:
   - metadata:
       annotation_object: &annotated_object
         id: GO:0016020
-        name: Membrane
+        name: membrane
         description:
         state: ~
       dates: &repo-dates

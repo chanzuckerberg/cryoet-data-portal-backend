@@ -9,7 +9,7 @@ annotations:
         deposition_date: 2024-02-20
         last_modified_date: 2024-02-20
         release_date: 2024-02-20
-      annotation_method: TARDIS
+      annotation_method: intensity normalization + rescaling + FNET segmentation + skeletonization + DIST segmentation
       method_type: automated
       annotation_publications: ~
       ground_truth_status: False
