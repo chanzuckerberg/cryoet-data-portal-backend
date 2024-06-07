@@ -303,7 +303,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 1.3, "y": 2.6, "z": 3.8},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [-0.0, 1.0, 0.0],
                     [-0.7071067811865475, -0.0, 0.7071067811865475],
                     [0.7071067811865475, 0.0, 0.7071067811865475],
@@ -312,7 +312,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 0.2, "y": 0.4, "z": 0.7},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [0.6123724356957945, -0.3535533905932737, 0.7071067811865475],
                     [0.6123724356957947, -0.35355339059327356, -0.7071067811865475],
                     [0.4999999999999998, 0.8660254037844386, 0.0],
@@ -336,7 +336,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 3.5, "y": 3, "z": 2.5},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [0, 0.0, 1.0],
                     [0.0, 1.0, 0.0],
                     [-1.0, 0.0, 0],
@@ -345,7 +345,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": -1.5, "y": 2.0, "z": -0.5},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [0.6424020199109172, -0.7244443697168013, -0.24999999999999983],
                     [0.5950348471655409, 0.6770771969714244, -0.4330127018922193],
                     [0.48296291314453405, 0.12940952255126045, 0.8660254037844386],
@@ -354,7 +354,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 4.0, "y": 0.5, "z": 1.0},
-                "rotation_matrix": [[0, -0.0, -1.0], [0.0, 1.0, -0.0], [1.0, 0.0, 0]],
+                "xyz_rotation_matrix": [[0, -0.0, -1.0], [0.0, 1.0, -0.0], [1.0, 0.0, 0]],
             },
         ],
     },
@@ -373,7 +373,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 1, "y": 0, "z": -1},
-                "rotation_matrix": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+                "xyz_rotation_matrix": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
             },
         ],
     },
@@ -394,7 +394,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 1.3, "y": 2.6, "z": 3.8},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [-0.0, 1.0, 0.0],
                     [-0.7071067811865475, -0.0, 0.7071067811865475],
                     [0.7071067811865475, 0.0, 0.7071067811865475],
@@ -403,7 +403,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 0.2, "y": 0.4, "z": 0.7},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [0.6123724356957945, -0.3535533905932737, 0.7071067811865475],
                     [0.6123724356957947, -0.35355339059327356, -0.7071067811865475],
                     [0.4999999999999998, 0.8660254037844386, 0.0],
@@ -427,7 +427,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 3.5, "y": 3, "z": 2.5},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [0, 0.0, 1.0],
                     [0.0, 1.0, 0.0],
                     [-1.0, 0.0, 0],
@@ -436,7 +436,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": -1.5, "y": 2.0, "z": -0.5},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [0.6424020199109172, -0.7244443697168013, -0.24999999999999983],
                     [0.5950348471655409, 0.6770771969714244, -0.4330127018922193],
                     [0.48296291314453405, 0.12940952255126045, 0.8660254037844386],
@@ -445,7 +445,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 4.0, "y": 0.5, "z": 1.0},
-                "rotation_matrix": [[0, -0.0, -1.0], [0.0, 1.0, -0.0], [1.0, 0.0, 0]],
+                "xyz_rotation_matrix": [[0, -0.0, -1.0], [0.0, 1.0, -0.0], [1.0, 0.0, 0]],
             },
         ],
     },
@@ -464,7 +464,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 1, "y": 0, "z": -1},
-                "rotation_matrix": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+                "xyz_rotation_matrix": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
             },
         ],
     },
@@ -485,7 +485,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 1.3, "y": 2.6, "z": 3.8},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [-0.0, 1.0, 0.0],
                     [-0.7071067811865475, -0.0, 0.7071067811865475],
                     [0.7071067811865475, 0.0, 0.7071067811865475],
@@ -494,7 +494,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 0.2, "y": 0.4, "z": 0.7},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [0.6123724356957945, -0.3535533905932737, 0.7071067811865475],
                     [0.6123724356957947, -0.35355339059327356, -0.7071067811865475],
                     [0.4999999999999998, 0.8660254037844386, 0.0],
@@ -518,7 +518,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 3.5, "y": 3, "z": 2.5},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [0, 0.0, 1.0],
                     [0.0, 1.0, 0.0],
                     [-1.0, 0.0, 0],
@@ -527,7 +527,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": -1.5, "y": 2.0, "z": -0.5},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [0.6424020199109172, -0.7244443697168013, -0.24999999999999983],
                     [0.5950348471655409, 0.6770771969714244, -0.4330127018922193],
                     [0.48296291314453405, 0.12940952255126045, 0.8660254037844386],
@@ -536,7 +536,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 4.0, "y": 0.5, "z": 1.0},
-                "rotation_matrix": [[0, -0.0, -1.0], [0.0, 1.0, -0.0], [1.0, 0.0, 0]],
+                "xyz_rotation_matrix": [[0, -0.0, -1.0], [0.0, 1.0, -0.0], [1.0, 0.0, 0]],
             },
         ],
     },
@@ -555,7 +555,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 1, "y": 0, "z": -1},
-                "rotation_matrix": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+                "xyz_rotation_matrix": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
             },
         ],
     },
@@ -576,7 +576,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 0.7, "y": 1.4, "z": 2.2},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [0.0, 1.0, 0.0],
                     [-0.7071067811865475, -0.0, 0.7071067811865475],
                     [0.7071067811865475, 0.0, 0.7071067811865475],
@@ -585,7 +585,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 1.8, "y": 1.6, "z": 1.3},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [-0.35355339059327356, -0.3535533905932737, 0.8660254037844386],
                     [0.6123724356957947, 0.6123724356957945, 0.4999999999999998],
                     [-0.7071067811865475, 0.7071067811865475, 0.0],
@@ -609,7 +609,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 2.5, "y": 1.0, "z": -0.5},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [1.0, 0.0, 0.0],
                     [0.0, 0.0, -1.0],
                     [0.0, 1.0, 0.0],
@@ -618,7 +618,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 1.5, "y": 4.0, "z": 0.5},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [0.6770771969714244, -0.7244443697168013, 0.12940952255126045],
                     [0.5950348471655409, 0.6424020199109172, 0.48296291314453405],
                     [-0.4330127018922193, -0.24999999999999983, 0.8660254037844386],
@@ -627,7 +627,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 4.0, "y": 3.5, "z": 1.0},
-                "rotation_matrix": [
+                "xyz_rotation_matrix": [
                     [1.0, -0.0, 0.0],
                     [0.0, 0.0, 1.0],
                     [-0.0, -1.0, 0.0],
@@ -650,7 +650,7 @@ ingest_oriented_points_test_cases = [
             {
                 "type": "orientedPoint",
                 "location": {"x": 5, "y": 4, "z": 3},
-                "rotation_matrix": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+                "xyz_rotation_matrix": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
             },
         ],
     },
@@ -714,8 +714,8 @@ def test_ingest_oriented_point_data(
             ), f"Incorrect point data for {case['case']}"
 
         # Check orientation
-        ori = point["rotation_matrix"]
-        exp_ori = exp_point["rotation_matrix"]
+        ori = point["xyz_rotation_matrix"]
+        exp_ori = exp_point["xyz_rotation_matrix"]
         for i in range(3):
             assert ori[i] == pytest.approx(
                 exp_ori[i],

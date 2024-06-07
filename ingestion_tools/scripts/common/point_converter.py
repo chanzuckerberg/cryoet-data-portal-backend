@@ -43,7 +43,7 @@ class OrientedPoint(Point):
                 "y": self.y_coord,
                 "z": self.z_coord,
             },
-            "rotation_matrix": self.rot_matrix.tolist(),
+            "xyz_rotation_matrix": self.rot_matrix.tolist(),
         }
 
 
