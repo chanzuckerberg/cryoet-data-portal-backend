@@ -1,30 +1,29 @@
 import json
-from typing import Any
-from importers.db.base_importer import DBImportConfig
-from botocore import UNSIGNED
-
-
+import logging
 import re
 import time
 from concurrent.futures import ProcessPoolExecutor, wait
 from functools import partial
-from importers.db.dataset import DatasetAuthorDBImporter, DatasetDBImporter, DatasetFundingDBImporter
-from botocore.config import Config
+from typing import Any
 
 import boto3
 import click
 from boto3 import Session
+from botocore import UNSIGNED
+from botocore.config import Config
+from db_import import db_import_options
 from importers.dataset import DatasetImporter
+from importers.db.base_importer import DBImportConfig
+from importers.db.dataset import DatasetDBImporter
 from importers.run import RunImporter
 from standardize_dirs import IMPORTERS, common_options
-from db_import import db_import_options
 
 from common.config import DepositionImportConfig
-import logging
 from common.fs import FileSystemApi
 
 logger = logging.getLogger("db_import")
 logging.basicConfig(level=logging.INFO)
+
 
 @click.group()
 @click.pass_context
@@ -163,6 +162,7 @@ def to_args(**kwargs) -> list[str]:
 @click.argument("output_bucket", required=True, type=str)
 @click.argument("output_path", required=True, type=str)
 @click.option("--delete-files", is_flag=True, default=False)
+@click.option("--dryrun", is_flag=True, default=False)
 @click.option(
     "--swipe-wdl-key",
     type=str,
@@ -178,12 +178,60 @@ def sync(
     output_bucket: str,
     output_path: str,
     delete_files: bool,
+    dryrun: bool,
     swipe_wdl_key: str,
     **kwargs,
 ):
     # Sync data from staging to prod s3 buckets
-    print("Sorry, this is not implemented yet")
-    exit(1)
+
+    # Default to using a lot less memory than the ingestion job.
+    if not ctx.obj.get("memory"):
+        ctx.obj["memory"] = 8000
+
+    s3_config = Config(signature_version=UNSIGNED) if kwargs.get("anonymous") else None
+    s3_client = boto3.client("s3", config=s3_config)
+    config = DBImportConfig(s3_client, s3_bucket, https_prefix)
+
+    futures = []
+    with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
+        for dataset in DatasetDBImporter.get_items(config, s3_prefix):
+            if filter_dataset and dataset.dir_prefix not in filter_dataset:
+                logger.info("Skipping %s...", dataset.dir_prefix)
+                continue
+
+            print(f"Processing dataset {dataset.dir_prefix}...")
+
+            new_args = to_args(**kwargs)
+            if delete_files:
+                new_args.append("--delete")
+            if dryrun:
+                new_args.append("--dryrun")
+
+            execution_name = f"{int(time.time())}-dbimport-{dataset.dir_prefix}"
+
+            # execution name greater than 80 chars causes boto ValidationException
+            if len(execution_name) > 80:
+                execution_name = execution_name[-80:]
+
+            wdl_args = {
+                "input_bucket": input_bucket,
+                "input_path": input_path,
+                "output_bucket": output_bucket,
+                "output_path": output_path,
+                "flags": " ".join(new_args),
+            }
+            futures.append(
+                workerpool.submit(
+                    partial(
+                        run_job,
+                        execution_name,
+                        wdl_args,
+                        swipe_wdl_key=swipe_wdl_key,
+                        **ctx.obj,
+                    ),
+                ),
+            )
+        wait(futures)
 
 
 @cli.command(name="db-import")

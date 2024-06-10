@@ -18,7 +18,7 @@ task cryoet_data_sync_workflow {
         ls -l 1>&2
         pwd 1>&2
         cd /usr/src/app/ingestion_tools/scripts
-        aws s3 sync ~{flags} ~{input_bucket}~{input_path} ~{output_bucket}~{output_path} ~{flags} 1>&2
+        aws s3 sync ~{flags} ~{input_bucket}~{input_path} ~{output_bucket}~{output_path} 1>&2
     >>>
 
     runtime {
