@@ -215,7 +215,9 @@ def from_oriented_mod(
         #         inverse of the Slicer rotation required to orient the particle
         #         like the reference.
         rot = Rotation.from_euler(
-            angles=(-row["x_rot"], -row["y_rot"], -row["z_rot"]), seq="xyz", degrees=True,
+            angles=(-row["x_rot"], -row["y_rot"], -row["z_rot"]),
+            seq="xyz",
+            degrees=True,
         ).as_matrix()
 
         points.append(
