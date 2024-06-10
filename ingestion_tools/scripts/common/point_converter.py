@@ -300,7 +300,7 @@ def from_relion4_star(
                 y_coord=positions[i, axis_order[1]],
                 z_coord=positions[i, axis_order[2]],
                 rot_matrix=matrix_transform(
-                    Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).as_matrix(),
+                    Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).inv().as_matrix(),
                 ),
             ),
         )
@@ -345,7 +345,7 @@ def _from_relion3_star_filtered(
                 y_coord=positions[i, axis_order[1]],
                 z_coord=positions[i, axis_order[2]],
                 rot_matrix=matrix_transform(
-                    Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).as_matrix(),
+                    Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).inv().as_matrix(),
                 ),
             ),
         )
