@@ -26,9 +26,10 @@ annotations:
     sources:
       - file_format: mod
         binning: 1
-        shape: Point
+        shape: OrientedPoint
         glob_string: "{dataset_name}/{run_name}_MS.mod"
         is_visualization_default: true
+        order: xyz
 datasets:
 - sources:
   - source_glob:

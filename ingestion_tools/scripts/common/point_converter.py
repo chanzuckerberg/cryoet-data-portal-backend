@@ -189,6 +189,49 @@ def from_mod(
     return points
 
 
+def from_oriented_mod(
+    local_file: Union[str, os.PathLike],
+    filter_value: str,
+    binning: float = 1.0,
+    order: str = "xyz",
+) -> List[OrientedPoint]:
+    """
+    Read positions and orientations from IMOD model file and convert to list of points.
+    """
+
+    axis_order = AXIS_ORDER[order]
+    matrix_transform = MATRIX_TRANSFORM[order]
+
+    model = imodmodel.read(local_file, annotation="slan")
+
+    points = []
+    for _, row in model.iterrows():
+        coords = (row["center_x"], row["center_y"], row["center_z"])
+        # From PEET slicer2motl documentation:
+        #   Note: Slicer angles (Z-Y-X) express a rotation to be applied to the particle.
+        #         coordinates. Conversely, motive list entries reflect how to
+        #         rotate the reference to the particle. As a result, the required
+        #         motive list entires are the Euler angles corresponding to the
+        #         inverse of the Slicer rotation required to orient the particle
+        #         like the reference.
+        rot = Rotation.from_euler(
+            angles=(-row["x_rot"], -row["y_rot"], -row["z_rot"]),
+            seq="xyz",
+            degrees=True,
+        ).as_matrix()
+
+        points.append(
+            OrientedPoint(
+                x_coord=coords[axis_order[0]] / binning,
+                y_coord=coords[axis_order[1]] / binning,
+                z_coord=coords[axis_order[2]] / binning,
+                rot_matrix=matrix_transform(rot),
+            ),
+        )
+
+    return points
+
+
 def from_trf(
     local_file: Union[str, os.PathLike],
     micrograph_name: str = "",

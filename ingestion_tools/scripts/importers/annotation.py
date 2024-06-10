@@ -413,6 +413,7 @@ class OrientedPointAnnotation(AbstractPointAnnotation):
         "relion4_star": pc.from_relion4_star,
         "tomoman_relion_star": pc.from_tomoman_relion_star,
         "stopgap_star": pc.from_stopgap_star,
+        "mod": pc.from_oriented_mod,
     }
     valid_file_formats = list(map_functions.keys())
 

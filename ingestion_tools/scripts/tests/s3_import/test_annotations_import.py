@@ -666,6 +666,56 @@ ingest_oriented_points_test_cases = [
             },
         ],
     },
+    {
+        "case": "imod with SLAN angles, binning 1",
+        "source_cfg": {
+            "order": "xyz",
+            "file_format": "mod",
+            "glob_string": "annotations/oriented_points.mod",
+            "shape": "OrientedPoint",
+            "is_visualization_default": False,
+            "filter_value": None,
+        },
+        "count": 4,
+        "out_data": [
+            {
+                "type": "orientedPoint",
+                "location": {"x": 235.5195770263672, "y": 682.744140625, "z": 302.0},
+                "xyz_rotation_matrix": [
+                    [0.8642748, -0.48992935, -0.11401013],
+                    [0.50301996, 0.84178288, 0.19588902],
+                    [0.0, -0.22665131, 0.97397597],
+                ],
+            },
+            {
+                "type": "orientedPoint",
+                "location": {"x": 221.94244384765625, "y": 661.1932373046875, "z": 327.0},
+                "xyz_rotation_matrix": [
+                    [6.73012504e-01, -5.54805465e-01, 4.89126840e-01],
+                    [7.39631104e-01, 5.04834117e-01, -4.45071168e-01],
+                    [2.77555756e-17, 6.61311885e-01, 7.50111052e-01],
+                ],
+            },
+            {
+                "type": "orientedPoint",
+                "location": {"x": 232.7907257080078, "y": 671.33203125, "z": 327.0},
+                "xyz_rotation_matrix": [
+                    [7.45476009e-01, -4.99973365e-01, 4.40785838e-01],
+                    [6.66532460e-01, 5.59189793e-01, -4.92992145e-01],
+                    [-5.55111512e-17, 6.61311885e-01, 7.50111052e-01],
+                ],
+            },
+            {
+                "type": "orientedPoint",
+                "location": {"x": 240.12918090820312, "y": 679.9277954101562, "z": 324.0},
+                "xyz_rotation_matrix": [
+                    [8.09016994e-01, -4.78525095e-01, 3.41328633e-01],
+                    [5.87785252e-01, 6.58633290e-01, -4.69798560e-01],
+                    [-2.77555756e-17, 5.80702956e-01, 8.14115518e-01],
+                ],
+            },
+        ],
+    },
 ]
 
 
