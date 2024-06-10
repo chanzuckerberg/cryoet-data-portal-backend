@@ -1,8 +1,15 @@
 import json
+from typing import Any
+from importers.db.base_importer import DBImportConfig
+from botocore import UNSIGNED
+
+
 import re
 import time
 from concurrent.futures import ProcessPoolExecutor, wait
 from functools import partial
+from importers.db.dataset import DatasetAuthorDBImporter, DatasetDBImporter, DatasetFundingDBImporter
+from botocore.config import Config
 
 import boto3
 import click
@@ -10,10 +17,14 @@ from boto3 import Session
 from importers.dataset import DatasetImporter
 from importers.run import RunImporter
 from standardize_dirs import IMPORTERS, common_options
+from db_import import db_import_options
 
 from common.config import DepositionImportConfig
+import logging
 from common.fs import FileSystemApi
 
+logger = logging.getLogger("db_import")
+logging.basicConfig(level=logging.INFO)
 
 @click.group()
 @click.pass_context
@@ -39,23 +50,22 @@ from common.fs import FileSystemApi
     help="Specify docker image tag, defaults to 'main'",
 )
 @click.option("--memory", type=int, default=None, help="Specify memory allocation override")
+@click.option("--parallelism", required=True, type=int, default=20)
 @click.pass_context
-def cli(ctx, env_name: str, ecr_repo: str, ecr_tag: str, memory: int):
+def cli(ctx, env_name: str, ecr_repo: str, ecr_tag: str, memory: int, parallelism: int):
     ctx.obj = {
         "env_name": env_name,
         "ecr_repo": ecr_repo,
         "ecr_tag": ecr_tag,
         "memory": memory,
+        "parallelism": parallelism,
         **get_aws_env(env_name),
     }
 
 
 def run_job(
     execution_name: str,
-    config_file: str,
-    input_bucket: str,
-    output_path: str,
-    flags: str,
+    wdl_args: dict[str, Any],
     aws_region: str,
     aws_account_id: str,
     sfn_name: str,
@@ -65,7 +75,7 @@ def run_job(
     ecr_repo: str,
     ecr_tag: str,
     memory: int | None = None,
-    **kwargs,
+    **kwargs,  # Ignore any the extra vars this method doesn't need.
 ):
     if not memory:
         memory = 24000
@@ -78,10 +88,7 @@ def run_job(
             "Run": {
                 "aws_region": aws_region,
                 "docker_image_id": f"{aws_account_id}.dkr.ecr.{aws_region}.amazonaws.com/{ecr_repo}:{ecr_tag}",
-                "config_file": config_file,
-                "input_bucket": input_bucket,
-                "output_path": output_path,
-                "flags": flags,
+                **wdl_args,
             },
         },
         "OutputPrefix": f"s3://{swipe_comms_bucket}/swipe/swipe-job-output/{execution_name}/results",
@@ -182,7 +189,8 @@ def sync(
 @cli.command(name="db-import")
 @click.argument("s3_bucket", required=True, type=str)
 @click.argument("https_prefix", required=True, type=str)
-@click.argument("output_path", required=True, type=str)
+@click.option("--s3-prefix", required=True, default="", type=str)
+@click.option("--filter-dataset", type=str, default=None, multiple=True)
 @click.option(
     "--swipe-wdl-key",
     type=str,
@@ -190,24 +198,68 @@ def sync(
     default="db_import-v0.0.1.wdl",
     help="Specify wdl key for custom workload",
 )
+@db_import_options
 @click.pass_context
 def db_import(
     ctx,
     s3_bucket: str,
     https_prefix: str,
-    output_path: str,
+    s3_prefix: str,
+    filter_dataset: list[str],
     swipe_wdl_key: str,
     **kwargs,
 ):
     # Import data from S3 into the DB.
-    pass
+
+    # Default to using a lot less memory than the ingestion job.
+    if not ctx.obj.get("memory"):
+        ctx.obj["memory"] = 8000
+
+    s3_config = Config(signature_version=UNSIGNED) if kwargs.get("anonymous") else None
+    s3_client = boto3.client("s3", config=s3_config)
+    config = DBImportConfig(s3_client, s3_bucket, https_prefix)
+
+    futures = []
+    with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
+        for dataset in DatasetDBImporter.get_items(config, s3_prefix):
+            if filter_dataset and dataset.dir_prefix not in filter_dataset:
+                logger.info("Skipping %s...", dataset.dir_prefix)
+                continue
+
+            print(f"Processing dataset {dataset.dir_prefix}...")
+
+            new_args = to_args(**kwargs)
+            new_args.append(f"--filter_dataset {dataset.dir_prefix}")
+
+            execution_name = f"{int(time.time())}-dbimport-{dataset.dir_prefix}"
+
+            # execution name greater than 80 chars causes boto ValidationException
+            if len(execution_name) > 80:
+                execution_name = execution_name[-80:]
+
+            wdl_args = {
+                "s3_bucket": s3_bucket,
+                "https_prefix": https_prefix,
+                "flags": " ".join(new_args),
+            }
+            futures.append(
+                workerpool.submit(
+                    partial(
+                        run_job,
+                        execution_name,
+                        wdl_args,
+                        swipe_wdl_key=swipe_wdl_key,
+                        **ctx.obj,
+                    ),
+                ),
+            )
+        wait(futures)
 
 
 @cli.command()
 @click.argument("config_file", required=True, type=str)
 @click.argument("input_bucket", required=True, type=str)
 @click.argument("output_path", required=True, type=str)
-@click.option("--parallelism", required=True, type=int, default=20)
 @click.option("--import-everything", is_flag=True, default=False)
 @click.option(
     "--write-mrc/--no-write-mrc",
@@ -241,16 +293,11 @@ def queue(
     config_file: str,
     input_bucket: str,
     output_path: str,
-    parallelism: int,
     import_everything: bool,
     write_mrc: bool,
     write_zarr: bool,
     force_overwrite: bool,
-    env_name: str,
-    ecr_repo: str,
-    ecr_tag: str,
     swipe_wdl_key: str,
-    memory: int | None,
     skip_until_run_name: str,
     **kwargs,
 ):
@@ -284,7 +331,7 @@ def queue(
             continue
         runs = RunImporter.finder(config, dataset=dataset)
         futures = []
-        with ProcessPoolExecutor(max_workers=parallelism) as workerpool:
+        with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
             for run in runs:
                 if skip_run and not skip_run_until_regex.match(run.name):
                     print(f"Skipping {run.name}..")
@@ -324,15 +371,18 @@ def queue(
                 if len(execution_name) > 80:
                     execution_name = execution_name[-80:]
 
+                wdl_args = {
+                    "config_file": config_file,
+                    "input_bucket": input_bucket,
+                    "output_path": output_path,
+                    "flags": " ".join(new_args),
+                }
                 futures.append(
                     workerpool.submit(
                         partial(
                             run_job,
                             execution_name,
-                            config_file,
-                            input_bucket,
-                            output_path,
-                            " ".join(new_args),
+                            wdl_args,
                             swipe_wdl_key=swipe_wdl_key,
                             **ctx.obj,
                         ),
