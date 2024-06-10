@@ -17,8 +17,37 @@ from common.fs import FileSystemApi
 
 @click.group()
 @click.pass_context
-def cli(ctx):
-    pass
+@click.option(
+    "--env-name",
+    type=str,
+    required=True,
+    default="staging",
+    help="Specify environment, defaults to staging",
+)
+@click.option(
+    "--ecr-repo",
+    type=str,
+    required=True,
+    default="cryoet-staging",
+    help="Specify ecr-repo name, defaults to 'cryoet-staging'",
+)
+@click.option(
+    "--ecr-tag",
+    type=str,
+    required=True,
+    default="main",
+    help="Specify docker image tag, defaults to 'main'",
+)
+@click.option("--memory", type=int, default=None, help="Specify memory allocation override")
+@click.pass_context
+def cli(ctx, env_name: str, ecr_repo: str, ecr_tag: str, memory: int):
+    ctx.obj = {
+        "env_name": env_name,
+        "ecr_repo": ecr_repo,
+        "ecr_tag": ecr_tag,
+        "memory": memory,
+        **get_aws_env(env_name),
+    }
 
 
 def run_job(
@@ -36,6 +65,7 @@ def run_job(
     ecr_repo: str,
     ecr_tag: str,
     memory: int | None = None,
+    **kwargs,
 ):
     if not memory:
         memory = 24000
@@ -54,7 +84,7 @@ def run_job(
                 "flags": flags,
             },
         },
-        "OutputPrefix": f"s3://{swipe_comms_bucket}/swipe/standardize-dirs-sfn/{execution_name}/results",
+        "OutputPrefix": f"s3://{swipe_comms_bucket}/swipe/swipe-job-output/{execution_name}/results",
         "RUN_WDL_URI": f"s3://{swipe_wdl_bucket}/{swipe_wdl_key}",
         "RunEC2Memory": memory,
         "RunEC2Vcpu": 1,
@@ -120,6 +150,59 @@ def to_args(**kwargs) -> list[str]:
     return args
 
 
+@cli.command(name="sync")
+@click.argument("input_bucket", required=True, type=str)
+@click.argument("input_path", required=True, type=str)
+@click.argument("output_bucket", required=True, type=str)
+@click.argument("output_path", required=True, type=str)
+@click.option("--delete-files", is_flag=True, default=False)
+@click.option(
+    "--swipe-wdl-key",
+    type=str,
+    required=True,
+    default="sync-v0.0.1.wdl",
+    help="Specify wdl key for custom workload",
+)
+@click.pass_context
+def sync(
+    ctx,
+    input_bucket: str,
+    input_path: str,
+    output_bucket: str,
+    output_path: str,
+    delete_files: bool,
+    swipe_wdl_key: str,
+    **kwargs,
+):
+    # Sync data from staging to prod s3 buckets
+    print("Sorry, this is not implemented yet")
+    exit(1)
+
+
+@cli.command(name="db-import")
+@click.argument("s3_bucket", required=True, type=str)
+@click.argument("https_prefix", required=True, type=str)
+@click.argument("output_path", required=True, type=str)
+@click.option(
+    "--swipe-wdl-key",
+    type=str,
+    required=True,
+    default="db_import-v0.0.1.wdl",
+    help="Specify wdl key for custom workload",
+)
+@click.pass_context
+def db_import(
+    ctx,
+    s3_bucket: str,
+    https_prefix: str,
+    output_path: str,
+    swipe_wdl_key: str,
+    **kwargs,
+):
+    # Import data from S3 into the DB.
+    pass
+
+
 @cli.command()
 @click.argument("config_file", required=True, type=str)
 @click.argument("input_bucket", required=True, type=str)
@@ -138,34 +221,12 @@ def to_args(**kwargs) -> list[str]:
 )
 @click.option("--force-overwrite", is_flag=True, default=False)
 @click.option(
-    "--env-name",
-    type=str,
-    required=True,
-    default="staging",
-    help="Specify environment, defaults to staging",
-)
-@click.option(
-    "--ecr-repo",
-    type=str,
-    required=True,
-    default="cryoet-staging",
-    help="Specify ecr-repo name, defaults to 'cryoet-staging'",
-)
-@click.option(
-    "--ecr-tag",
-    type=str,
-    required=True,
-    default="main",
-    help="Specify docker image tag, defaults to 'main'",
-)
-@click.option(
     "--swipe-wdl-key",
     type=str,
     required=True,
     default="standardize_dirs.wdl-v0.0.1.wdl",
     help="Specify wdl key for custom workload",
 )
-@click.option("--memory", type=int, default=None, help="Specify memory allocation override")
 @click.option(
     "--skip-until-run-name",
     type=str,
@@ -206,8 +267,6 @@ def queue(
     if skip_until_run_name:
         skip_run = True
         skip_run_until_regex = re.compile(skip_until_run_name)
-
-    aws_env = get_aws_env(env_name)
 
     filter_runs = [re.compile(pattern) for pattern in kwargs.get("filter_run_name", [])]
     exclude_runs = [re.compile(pattern) for pattern in kwargs.get("exclude_run_name", [])]
@@ -274,15 +333,8 @@ def queue(
                             input_bucket,
                             output_path,
                             " ".join(new_args),
-                            aws_region=aws_env["aws_region"],
-                            aws_account_id=aws_env["aws_account_id"],
-                            sfn_name=aws_env["sfn_name"],
-                            swipe_comms_bucket=aws_env["swipe_comms_bucket"],
-                            swipe_wdl_bucket=aws_env["swipe_wdl_bucket"],
                             swipe_wdl_key=swipe_wdl_key,
-                            ecr_repo=ecr_repo,
-                            ecr_tag=ecr_tag,
-                            memory=memory,
+                            **ctx.obj,
                         ),
                     ),
                 )

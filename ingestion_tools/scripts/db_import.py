@@ -22,6 +22,23 @@ logging.basicConfig(level=logging.INFO)
 def cli():
     pass
 
+def db_import_options(func):
+    options = []
+    options.append(click.option("--filter-dataset", type=str, default=None, multiple=True))
+    options.append(click.option("--import-annotations", is_flag=True, default=False))
+    options.append(click.option("--import-annotation-authors", is_flag=True, default=False))
+    options.append(click.option("--import-dataset-authors", is_flag=True, default=False))
+    options.append(click.option("--import-dataset-funding", is_flag=True, default=False))
+    options.append(click.option("--import-runs", is_flag=True, default=False))
+    options.append(click.option("--import-tiltseries", is_flag=True, default=False))
+    options.append(click.option("--import-tomograms", is_flag=True, default=False))
+    options.append(click.option("--import-tomogram-authors", is_flag=True, default=False))
+    options.append(click.option("--import-tomogram-voxel-spacing", is_flag=True, default=False))
+    options.append(click.option("--import-everything", is_flag=True, default=False))
+    options.append(click.option("--endpoint-url", type=str, default=None))
+    for option in options:
+        func = option(func)
+    return func
 
 @cli.command()
 @click.argument("s3_bucket", required=True, type=str)
@@ -44,18 +61,7 @@ def cli():
     type=bool,
     help="Print DB Queries",
 )
-@click.option("--filter-dataset", type=str, default=None, multiple=True)
-@click.option("--import-annotations", is_flag=True, default=False)
-@click.option("--import-annotation-authors", is_flag=True, default=False)
-@click.option("--import-dataset-authors", is_flag=True, default=False)
-@click.option("--import-dataset-funding", is_flag=True, default=False)
-@click.option("--import-runs", is_flag=True, default=False)
-@click.option("--import-tiltseries", is_flag=True, default=False)
-@click.option("--import-tomograms", is_flag=True, default=False)
-@click.option("--import-tomogram-authors", is_flag=True, default=False)
-@click.option("--import-tomogram-voxel-spacing", is_flag=True, default=False)
-@click.option("--import-everything", is_flag=True, default=False)
-@click.option("--endpoint-url", type=str, default=None)
+@db_import_options
 def load(
     s3_bucket: str,
     https_prefix: str,
