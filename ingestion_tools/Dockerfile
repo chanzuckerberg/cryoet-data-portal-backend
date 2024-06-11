@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 RUN mkdir ingestion_tools
 
 # Base utilities
-RUN apt update && apt install -y wget unzip
+RUN apt update && apt install -y wget unzip jq
 
 # IMOD helps with MRC ingestion
 # bio3d.colorado.edu isn't sending an intermediate cert, which breaks openssl (no AIA support). So we're installing it here.

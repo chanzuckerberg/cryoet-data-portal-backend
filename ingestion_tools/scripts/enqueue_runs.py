@@ -25,41 +25,61 @@ logger = logging.getLogger("db_import")
 logging.basicConfig(level=logging.INFO)
 
 
+def common_options(func):
+    options = []
+    options.append(
+        click.option(
+            "--environment",
+            type=str,
+            required=True,
+            default="staging",
+            help="Specify environment, defaults to staging",
+        ),
+    )
+    options.append(
+        click.option(
+            "--ecr-repo",
+            type=str,
+            required=True,
+            default="cryoet-staging",
+            help="Specify ecr-repo name, defaults to 'cryoet-staging'",
+        ),
+    )
+    options.append(
+        click.option(
+            "--ecr-tag",
+            type=str,
+            required=True,
+            default="main",
+            help="Specify docker image tag, defaults to 'main'",
+        ),
+    )
+    options.append(click.option("--memory", type=int, default=None, help="Specify memory allocation override"))
+    options.append(click.option("--parallelism", required=True, type=int, default=20))
+    for option in options:
+        func = option(func)
+    return func
+
+
+def handle_common_options(ctx, kwargs):
+    ctx.obj = {
+        "environment": kwargs["environment"],
+        "ecr_repo": kwargs["ecr_repo"],
+        "ecr_tag": kwargs["ecr_tag"],
+        "memory": kwargs["memory"],
+        "parallelism": kwargs["parallelism"],
+        **get_aws_env(kwargs["environment"]),
+    }
+    common_options = ["environment", "ecr_repo", "ecr_tag", "memory", "parallelism"]
+    # Make sure to remove these common options from the list of args processed by commands.
+    for opt in common_options:
+        del kwargs[opt]
+
+
 @click.group()
 @click.pass_context
-@click.option(
-    "--env-name",
-    type=str,
-    required=True,
-    default="staging",
-    help="Specify environment, defaults to staging",
-)
-@click.option(
-    "--ecr-repo",
-    type=str,
-    required=True,
-    default="cryoet-staging",
-    help="Specify ecr-repo name, defaults to 'cryoet-staging'",
-)
-@click.option(
-    "--ecr-tag",
-    type=str,
-    required=True,
-    default="main",
-    help="Specify docker image tag, defaults to 'main'",
-)
-@click.option("--memory", type=int, default=None, help="Specify memory allocation override")
-@click.option("--parallelism", required=True, type=int, default=20)
-@click.pass_context
-def cli(ctx, env_name: str, ecr_repo: str, ecr_tag: str, memory: int, parallelism: int):
-    ctx.obj = {
-        "env_name": env_name,
-        "ecr_repo": ecr_repo,
-        "ecr_tag": ecr_tag,
-        "memory": memory,
-        "parallelism": parallelism,
-        **get_aws_env(env_name),
-    }
+def cli(ctx):
+    ctx.obj = {}
 
 
 def run_job(
@@ -111,11 +131,11 @@ def run_job(
     )
 
 
-def get_aws_env(env_name):
+def get_aws_env(environment):
     # Learn more about our AWS environment
     swipe_comms_bucket = None
     swipe_wdl_bucket = None
-    sfn_name = f"cryoet-ingestion-{env_name}-default-wdl"
+    sfn_name = f"cryoet-ingestion-{environment}-default-wdl"
 
     sts = boto3.client("sts")
     aws_account_id = sts.get_caller_identity()["Account"]
@@ -125,9 +145,9 @@ def get_aws_env(env_name):
     buckets = s3_client.list_buckets()
     for bucket in buckets["Buckets"]:
         bucket_name = bucket["Name"]
-        if "swipe-wdl" in bucket_name and env_name in bucket_name:
+        if "swipe-wdl" in bucket_name and environment in bucket_name:
             swipe_wdl_bucket = bucket_name
-        if "swipe-comms" in bucket_name and env_name in bucket_name:
+        if "swipe-comms" in bucket_name and environment in bucket_name:
             swipe_comms_bucket = bucket_name
     aws_env = {
         "aws_region": aws_region,
@@ -170,6 +190,7 @@ def to_args(**kwargs) -> list[str]:
     default="sync-v0.0.1.wdl",
     help="Specify wdl key for custom workload",
 )
+@common_options
 @click.pass_context
 def sync(
     ctx,
@@ -182,6 +203,7 @@ def sync(
     swipe_wdl_key: str,
     **kwargs,
 ):
+    handle_common_options(ctx, kwargs)
     # Sync data from staging to prod s3 buckets
 
     # Default to using a lot less memory than the ingestion job.
@@ -219,6 +241,7 @@ def sync(
                 "output_bucket": output_bucket,
                 "output_path": output_path,
                 "flags": " ".join(new_args),
+                "environment": ctx.obj["environment"],
             }
             futures.append(
                 workerpool.submit(
@@ -238,7 +261,8 @@ def sync(
 @click.argument("s3_bucket", required=True, type=str)
 @click.argument("https_prefix", required=True, type=str)
 @click.option("--s3-prefix", required=True, default="", type=str)
-@click.option("--filter-dataset", type=str, default=None, multiple=True)
+@click.option("--filter-datasets", type=str, default=None, multiple=True)
+@click.option("--include-dataset", type=str, default=None, multiple=True)
 @click.option(
     "--swipe-wdl-key",
     type=str,
@@ -247,39 +271,51 @@ def sync(
     help="Specify wdl key for custom workload",
 )
 @db_import_options
+@common_options
 @click.pass_context
 def db_import(
     ctx,
     s3_bucket: str,
     https_prefix: str,
     s3_prefix: str,
-    filter_dataset: list[str],
+    filter_datasets: list[str],
+    include_dataset: list[str],
     swipe_wdl_key: str,
     **kwargs,
 ):
+    handle_common_options(ctx, kwargs)
     # Import data from S3 into the DB.
 
     # Default to using a lot less memory than the ingestion job.
     if not ctx.obj.get("memory"):
         ctx.obj["memory"] = 8000
 
+    filter_datasets = [re.compile(pattern) for pattern in filter_datasets]
     s3_config = Config(signature_version=UNSIGNED) if kwargs.get("anonymous") else None
     s3_client = boto3.client("s3", config=s3_config)
     config = DBImportConfig(s3_client, s3_bucket, https_prefix)
 
     futures = []
+    datasets_to_check = []
+    if include_dataset:
+        for ds in include_dataset:
+            datasets_to_check.extend(DatasetDBImporter.get_items(config, ds))
+    else:
+        datasets_to_check = DatasetDBImporter.get_items(config, s3_prefix)
+
     with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
-        for dataset in DatasetDBImporter.get_items(config, s3_prefix):
-            if filter_dataset and dataset.dir_prefix not in filter_dataset:
+        for dataset in datasets_to_check:
+            dataset_id = dataset.dir_prefix.strip("/")
+            if filter_datasets and not list(filter(lambda x: x.match(dataset_id), filter_datasets)):
                 logger.info("Skipping %s...", dataset.dir_prefix)
                 continue
 
-            print(f"Processing dataset {dataset.dir_prefix}...")
+            print(f"Processing dataset {dataset_id}...")
 
             new_args = to_args(**kwargs)
-            new_args.append(f"--filter_dataset {dataset.dir_prefix}")
+            new_args.append(f"--s3-prefix {dataset_id}")
 
-            execution_name = f"{int(time.time())}-dbimport-{dataset.dir_prefix}"
+            execution_name = f"{int(time.time())}-dbimport-{dataset_id}"
 
             # execution name greater than 80 chars causes boto ValidationException
             if len(execution_name) > 80:
@@ -289,6 +325,7 @@ def db_import(
                 "s3_bucket": s3_bucket,
                 "https_prefix": https_prefix,
                 "flags": " ".join(new_args),
+                "environment": ctx.obj["environment"],
             }
             futures.append(
                 workerpool.submit(
@@ -349,6 +386,7 @@ def queue(
     skip_until_run_name: str,
     **kwargs,
 ):
+    handle_common_options(ctx, kwargs)
     fs_mode = "s3"
     fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=force_overwrite)
 
