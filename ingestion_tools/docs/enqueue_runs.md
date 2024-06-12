@@ -94,8 +94,7 @@ python3 enqueue_runs.py db-import --environment prod --import-annotation-authors
 | Option | Default | Explanation |
 | --- | --- | -- |
 | --environment | staging | Whether to import data into the `staging` (default) or `prod` database/api |
-| --s3-bucket | `cryoet-data-portal-staging` in staging, or `cryoet-data-portal-public` in prod| Which S3 bucket to read files and metadata from |
-
+| --s3-bucket | `cryoet-data-portal-staging` in staging, or `cryoet-data-portal-public` in prod | Which S3 bucket to read files and metadata from |
 | --https-prefix | `https://files.cryoet.staging.si.czi.technology` in staging or `https://files.cryoetdataportal.cziscience.com` in prod | This is the https protocol and domain that will be prefixed to all file paths. It's used to generate the https url's for files referenced by the api |
 | --ecr-tag | main | If you're experimenting with code/config changes, you may have pushed a docker image to the image registry with a different tag, such as `my_name_here`. Use this flag to tell the workers to use the image with this tag to process the dataset. |
 | --import-everything | | If this flag is passed in, the script will attempt to ingest all data specified in the dataset config, (datasets, runs, annotations, etc etc) |
@@ -105,6 +104,7 @@ python3 enqueue_runs.py db-import --environment prod --import-annotation-authors
 | --- | --- | -- |
 | --filter-datasets | null | Supply a regular expression to apply to the list of available dataset ID's, to only run import for certain datasets. This option can be specified multiple times with multiple regular expressions |
 | --include-datasets | null | Specify specific datasets to import. This option can be specified multiple times with multiple dataset id's |
+| --s3-prefix | null | Only look for datasets in a particular subdirectory (this is faster than the filter/include filters) when importing a single dataset |
 
 
 ## Building and pushing up a dev/test image:
