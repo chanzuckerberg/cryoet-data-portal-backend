@@ -181,6 +181,14 @@ def to_args(**kwargs) -> list[str]:
 @click.option("--s3-bucket", required=False, type=str, help="S3 bucket to read from")
 @click.option("--https-prefix", required=False, type=str, help="protocol + domain for where to fetch files via HTTP")
 @click.option("--s3-prefix", required=True, default="", type=str)
+@click.option(
+    "--debug/--no-debug",
+    is_flag=True,
+    required=True,
+    default=True,
+    type=bool,
+    help="Print DB Queries",
+)
 @click.option("--filter-datasets", type=str, default=None, multiple=True)
 @click.option("--include-dataset", type=str, default=None, multiple=True)
 @click.option(
@@ -198,6 +206,7 @@ def db_import(
     s3_bucket: str | None,
     https_prefix: str | None,
     s3_prefix: str,
+    debug: bool,
     filter_datasets: list[str],
     include_dataset: list[str],
     swipe_wdl_key: str,
@@ -245,6 +254,8 @@ def db_import(
 
             new_args = to_args(**kwargs)
             new_args.append(f"--s3-prefix {dataset_id}")
+            if debug:
+                new_args.append("--debug")
 
             execution_name = f"{int(time.time())}-dbimport-{dataset_id}"
 
