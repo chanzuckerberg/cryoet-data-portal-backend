@@ -106,7 +106,7 @@ def run_job(
         "Input": {
             "Run": {
                 "aws_region": aws_region,
-                "docker_image_id": f"{aws_account_id}.dkr.ecr.{aws_region}.amazonaws.com/{ecr_repo}:{ecr_tag}",
+                "docker_image_id": f"908710317728.dkr.ecr.{aws_region}.amazonaws.com/{ecr_repo}:{ecr_tag}",
                 **wdl_args,
             },
         },
