@@ -93,7 +93,7 @@ python3 enqueue_runs.py db-import --environment prod --import-annotation-authors
 | Option | Default | Explanation |
 | --- | --- | -- |
 | --environment | staging | Whether to import data into the `staging` (default) or `prod` database/api |
-| --s3-bucket | `cryoet-data-portal-staging` in staging, or `cryoet-data-portal-public` in prod| Which S3 bucket to read files and metadata from |
+| --s3-bucket | `cryoet-data-portal-staging` in staging, or `cryoet-data-portal-public` in prod | Which S3 bucket to read files and metadata from |
 | --https-prefix | `https://files.cryoet.staging.si.czi.technology` in staging or `https://files.cryoetdataportal.cziscience.com` in prod | This is the https protocol and domain that will be prefixed to all file paths. It's used to generate the https url's for files referenced by the api |
 | --ecr-tag | main | If you're experimenting with code/config changes, you may have pushed a docker image to the image registry with a different tag, such as `my_name_here`. Use this flag to tell the workers to use the image with this tag to process the dataset. |
 | --import-everything | | If this flag is passed in, the script will attempt to ingest all data specified in the dataset config, (datasets, runs, annotations, etc etc) |
@@ -103,6 +103,8 @@ python3 enqueue_runs.py db-import --environment prod --import-annotation-authors
 | --- | --- | -- |
 | --filter-datasets | null | Supply a regular expression to apply to the list of available dataset ID's, to only run import for certain datasets. This option can be specified multiple times with multiple regular expressions |
 | --include-dataset | null | Specify specific datasets to import. This option can be specified multiple times with multiple dataset id's |
+| --s3-prefix | null | Only look for datasets in a particular subdirectory (this is faster than the filter/include filters) when importing a single dataset |
+
 
 
 ## S3 File Sync (`sync` subcommand)
@@ -134,9 +136,9 @@ python3 enqueue_runs.py sync --exclude '*' --include 'Annotations/*.json' --s3-p
 | Option | Default | Explanation |
 | --- | --- | -- |
 | --include | `*` | Which filenames should be sync'd. The order of `--include/--exclude` flags matters, please [see the AWS docs on this topic](https://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters) for more information. |
-| --exclude | none | Which filenames should not be sync'd. The order of `--include/--exclude` flags matters, please [see the AWS docs on this topic](https://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters) for more information. |
+| --exclude | | Which filenames should not be sync'd. The order of `--include/--exclude` flags matters, please [see the AWS docs on this topic](https://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters) for more information. |
 | --dryrun | False | Only print files that *would* be modified, but don't actually copy or delete data |
-| --delete-files | none | Use this flag to delete files from the destination that don't exist in the source |
+| --delete-files | False | Use this flag to delete files from the destination that don't exist in the source |
 
 ### Other interesting options to be aware of
 | Option | Default | Explanation |
