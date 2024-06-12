@@ -13,12 +13,7 @@ task cryoet_data_sync_workflow {
 
     command <<<
         set -euxo pipefail
-        export PYTHONUNBUFFERED=1
-        python --version 1>&2
-        ls -l 1>&2
-        pwd 1>&2
-        cd /usr/src/app/ingestion_tools/scripts
-        aws s3 sync ~{flags} ~{input_bucket}~{input_path} ~{output_bucket}~{output_path} 1>&2
+        aws s3 sync ~{flags} s3://~{input_bucket}/~{input_path} s3://~{output_bucket}/~{output_path} 1>&2
     >>>
 
     runtime {

@@ -160,6 +160,27 @@ def get_aws_env(environment):
     return aws_env
 
 
+def get_datasets(s3_bucket, https_prefix, filter_datasets, include_dataset, s3_prefix, anonymous: bool):
+    filter_datasets = [re.compile(pattern) for pattern in filter_datasets]
+    s3_config = Config(signature_version=UNSIGNED) if anonymous else None
+    s3_client = boto3.client("s3", config=s3_config)
+    config = DBImportConfig(s3_client, s3_bucket, https_prefix)
+
+    datasets_to_check = []
+    if include_dataset:
+        for ds in include_dataset:
+            datasets_to_check.extend(DatasetDBImporter.get_items(config, ds))
+    else:
+        datasets_to_check = DatasetDBImporter.get_items(config, s3_prefix)
+
+    for dataset in datasets_to_check:
+        dataset_id = dataset.dir_prefix.strip("/")
+        if filter_datasets and not list(filter(lambda x: x.match(dataset_id), filter_datasets)):
+            logger.info("Skipping %s...", dataset.dir_prefix)
+            continue
+        yield dataset_id, dataset
+
+
 def to_args(**kwargs) -> list[str]:
     args = []
     for k, v in kwargs.items():
@@ -228,28 +249,18 @@ def db_import(
 
     # Default to using a lot less memory than the ingestion job.
     if not ctx.obj.get("memory"):
-        ctx.obj["memory"] = 8000
-
-    filter_datasets = [re.compile(pattern) for pattern in filter_datasets]
-    s3_config = Config(signature_version=UNSIGNED) if kwargs.get("anonymous") else None
-    s3_client = boto3.client("s3", config=s3_config)
-    config = DBImportConfig(s3_client, s3_bucket, https_prefix)
+        ctx.obj["memory"] = 4000
 
     futures = []
-    datasets_to_check = []
-    if include_dataset:
-        for ds in include_dataset:
-            datasets_to_check.extend(DatasetDBImporter.get_items(config, ds))
-    else:
-        datasets_to_check = DatasetDBImporter.get_items(config, s3_prefix)
-
     with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
-        for dataset in datasets_to_check:
-            dataset_id = dataset.dir_prefix.strip("/")
-            if filter_datasets and not list(filter(lambda x: x.match(dataset_id), filter_datasets)):
-                logger.info("Skipping %s...", dataset.dir_prefix)
-                continue
-
+        for dataset_id, _ in get_datasets(
+            s3_bucket,
+            https_prefix,
+            filter_datasets,
+            include_dataset,
+            s3_prefix,
+            kwargs.get("anonymous"),
+        ):
             print(f"Processing dataset {dataset_id}...")
 
             new_args = to_args(**kwargs)
@@ -418,6 +429,99 @@ def queue(
                     ),
                 )
             wait(futures)
+
+
+class OrderedSyncFilters(click.Command):
+    _options = []
+
+    def parse_args(self, ctx, args):
+        parser = self.make_parser(ctx)
+        opts, _, param_order = parser.parse_args(args=list(args))
+        for param in param_order:
+            if param.name not in ["include", "exclude"]:
+                continue
+            type(self)._options.append((param, opts[param.name].pop(0)))
+
+        return super().parse_args(ctx, args)
+
+
+@cli.command(name="sync", cls=OrderedSyncFilters)
+@click.option("--input-bucket", required=True, type=str, default="cryoet-data-portal-staging")
+@click.option("--output-bucket", required=True, type=str, default="cryoet-data-portal-public")
+@click.option("--include", type=str, default=None, multiple=True, help="--include option to send to `aws s3 sync`")
+@click.option("--exclude", type=str, default=None, multiple=True, help="--exclude option to send to `aws s3 sync`")
+@click.option("--delete-files", is_flag=True, default=False)
+@click.option("--dryrun", is_flag=True, default=False)
+@click.option("--s3-prefix", required=True, default="", type=str)
+@click.option("--filter-datasets", type=str, default=None, multiple=True)
+@click.option("--include-dataset", type=str, default=None, multiple=True)
+@click.option(
+    "--swipe-wdl-key",
+    type=str,
+    required=True,
+    default="sync-v0.0.1.wdl",
+    help="Specify wdl key for custom workload",
+)
+@enqueue_common_options
+@click.pass_context
+def sync(
+    ctx,
+    input_bucket: str,
+    output_bucket: str,
+    delete_files: bool,
+    dryrun: bool,
+    s3_prefix: str | None,
+    filter_datasets: list[str],
+    include_dataset: list[str],
+    swipe_wdl_key: str,
+    **kwargs,
+):
+    handle_common_options(ctx, kwargs)
+    # Sync data from staging to prod s3 bucket
+
+    # Default to using a lot less memory than the ingestion job.
+    if not ctx.obj.get("memory"):
+        ctx.obj["memory"] = 4000
+
+    new_args = []
+    if delete_files:
+        new_args.append("--delete")
+    if dryrun:
+        new_args.append("--dryrun")
+
+    for param, value in OrderedSyncFilters._options:
+        new_args.append(f"--{param.name} '{value}'")
+
+    futures = []
+    with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
+        for dataset_id, _ in get_datasets(input_bucket, "", filter_datasets, include_dataset, s3_prefix, False):
+            print(f"Processing dataset {dataset_id}...")
+
+            execution_name = f"{int(time.time())}-sync-{dataset_id}"
+
+            # execution name greater than 80 chars causes boto ValidationException
+            if len(execution_name) > 80:
+                execution_name = execution_name[-80:]
+
+            wdl_args = {
+                "input_bucket": input_bucket,
+                "input_path": dataset_id,
+                "output_bucket": output_bucket,
+                "output_path": dataset_id,
+                "flags": " ".join(new_args),
+            }
+            futures.append(
+                workerpool.submit(
+                    partial(
+                        run_job,
+                        execution_name,
+                        wdl_args,
+                        swipe_wdl_key=swipe_wdl_key,
+                        **ctx.obj,
+                    ),
+                ),
+            )
+        wait(futures)
 
 
 if __name__ == "__main__":
