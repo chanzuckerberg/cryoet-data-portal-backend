@@ -83,7 +83,7 @@ class PointAnnotationPrecompute(BaseAnnotationPrecompute):
             metadata,
             Path(tmp_path),
             voxel_spacing * 1e-10,
-            **self.neuroglancer_precompute_args(output_prefix, metadata),
+            **self.neuroglancer_precompute_args(annotation_path, metadata),
         )
         fs.push(tmp_path)
 
