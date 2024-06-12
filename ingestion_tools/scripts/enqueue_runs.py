@@ -16,7 +16,8 @@ from importers.dataset import DatasetImporter
 from importers.db.base_importer import DBImportConfig
 from importers.db.dataset import DatasetDBImporter
 from importers.run import RunImporter
-from standardize_dirs import IMPORTERS, common_options
+from standardize_dirs import IMPORTERS
+from standardize_dirs import common_options as ingest_common_options
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
@@ -25,7 +26,7 @@ logger = logging.getLogger("db_import")
 logging.basicConfig(level=logging.INFO)
 
 
-def common_options(func):
+def enqueue_common_options(func):
     options = []
     options.append(
         click.option(
@@ -70,9 +71,9 @@ def handle_common_options(ctx, kwargs):
         "parallelism": kwargs["parallelism"],
         **get_aws_env(kwargs["environment"]),
     }
-    common_options = ["environment", "ecr_repo", "ecr_tag", "memory", "parallelism"]
+    enqueue_common_keys = ["environment", "ecr_repo", "ecr_tag", "memory", "parallelism"]
     # Make sure to remove these common options from the list of args processed by commands.
-    for opt in common_options:
+    for opt in enqueue_common_keys:
         del kwargs[opt]
 
 
@@ -190,7 +191,7 @@ def to_args(**kwargs) -> list[str]:
     help="Specify wdl key for custom workload",
 )
 @db_import_options
-@common_options
+@enqueue_common_options
 @click.pass_context
 def db_import(
     ctx,
@@ -301,7 +302,8 @@ def db_import(
     multiple=False,
     help="Exclude runs matching this regex. If not specified, all runs are processed",
 )
-@common_options
+@ingest_common_options
+@enqueue_common_options
 @click.pass_context
 def queue(
     ctx,
