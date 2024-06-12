@@ -79,7 +79,7 @@ def verify_dataset_import(
     expected_dataset: dict[str, Any],
 ) -> Callable[[list[str]], Dataset]:
     def _verify(additional_inputs: list[str]) -> Dataset:
-        input_args = default_inputs + ["--s3_prefix", str(DATASET_ID)] + additional_inputs
+        input_args = default_inputs + ["--s3-prefix", str(DATASET_ID)] + additional_inputs
         result = CliRunner().invoke(load, input_args)
         assert result.exit_code == 0, "Execution didn't complete successfully"
         actual = Dataset.get(id=DATASET_ID)

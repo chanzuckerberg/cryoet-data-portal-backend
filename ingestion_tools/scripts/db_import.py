@@ -23,19 +23,40 @@ def cli():
     pass
 
 
+def db_import_options(func):
+    options = []
+    options.append(click.option("--import-annotations", is_flag=True, default=False))
+    options.append(click.option("--import-annotation-authors", is_flag=True, default=False))
+    options.append(click.option("--import-dataset-authors", is_flag=True, default=False))
+    options.append(click.option("--import-dataset-funding", is_flag=True, default=False))
+    options.append(click.option("--import-runs", is_flag=True, default=False))
+    options.append(click.option("--import-tiltseries", is_flag=True, default=False))
+    options.append(click.option("--import-tomograms", is_flag=True, default=False))
+    options.append(click.option("--import-tomogram-authors", is_flag=True, default=False))
+    options.append(click.option("--import-tomogram-voxel-spacing", is_flag=True, default=False))
+    options.append(click.option("--import-everything", is_flag=True, default=False))
+    options.append(
+        click.option(
+            "--anonymous",
+            is_flag=True,
+            required=True,
+            default=False,
+            type=bool,
+            help="Use anonymous access to S3",
+        ),
+    )
+    for option in options:
+        func = option(func)
+    return func
+
+
 @cli.command()
 @click.argument("s3_bucket", required=True, type=str)
 @click.argument("https_prefix", required=True, type=str)
 @click.argument("postgres_url", required=True, type=str)
-@click.option("--s3_prefix", required=True, default="", type=str)
-@click.option(
-    "--anonymous",
-    is_flag=True,
-    required=True,
-    default=False,
-    type=bool,
-    help="Use anonymous access to S3",
-)
+@click.option("--filter-dataset", type=str, default=None, multiple=True)
+@click.option("--s3-prefix", required=True, default="", type=str)
+@click.option("--endpoint-url", type=str, default=None)
 @click.option(
     "--debug/--no-debug",
     is_flag=True,
@@ -44,18 +65,7 @@ def cli():
     type=bool,
     help="Print DB Queries",
 )
-@click.option("--filter-dataset", type=str, default=None, multiple=True)
-@click.option("--import-annotations", is_flag=True, default=False)
-@click.option("--import-annotation-authors", is_flag=True, default=False)
-@click.option("--import-dataset-authors", is_flag=True, default=False)
-@click.option("--import-dataset-funding", is_flag=True, default=False)
-@click.option("--import-runs", is_flag=True, default=False)
-@click.option("--import-tiltseries", is_flag=True, default=False)
-@click.option("--import-tomograms", is_flag=True, default=False)
-@click.option("--import-tomogram-authors", is_flag=True, default=False)
-@click.option("--import-tomogram-voxel-spacing", is_flag=True, default=False)
-@click.option("--import-everything", is_flag=True, default=False)
-@click.option("--endpoint-url", type=str, default=None)
+@db_import_options
 def load(
     s3_bucket: str,
     https_prefix: str,
