@@ -20,7 +20,7 @@ ENV IMOD_DIR /usr/local/IMOD
 
 # Get our packaging house in order
 RUN pip install --upgrade pip
-ENV POETRY_VERSION=1.8.2
+ENV POETRY_VERSION=1.8.3
 RUN python3 -m pip install --no-cache-dir poetry==$POETRY_VERSION
 
 # Install our dependencies
