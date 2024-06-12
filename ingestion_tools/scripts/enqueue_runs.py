@@ -258,8 +258,8 @@ def sync(
 
 
 @cli.command(name="db-import")
-@click.argument("s3_bucket", required=True, type=str)
-@click.argument("https_prefix", required=True, type=str)
+@click.option("--s3-bucket", required=False, type=str, help="S3 bucket to read from")
+@click.option("--https-prefix", required=False, type=str, help="protocol + domain for where to fetch files via HTTP")
 @click.option("--s3-prefix", required=True, default="", type=str)
 @click.option("--filter-datasets", type=str, default=None, multiple=True)
 @click.option("--include-dataset", type=str, default=None, multiple=True)
@@ -275,8 +275,8 @@ def sync(
 @click.pass_context
 def db_import(
     ctx,
-    s3_bucket: str,
-    https_prefix: str,
+    s3_bucket: str | None,
+    https_prefix: str | None,
     s3_prefix: str,
     filter_datasets: list[str],
     include_dataset: list[str],
@@ -285,6 +285,17 @@ def db_import(
 ):
     handle_common_options(ctx, kwargs)
     # Import data from S3 into the DB.
+
+    # Set per-env defaults if values weren't provided.
+    env = ctx.obj["environment"]
+    if not s3_bucket:
+        s3_bucket = "cryoet-data-portal-staging"
+        if env == "prod":
+            s3_bucket = "cryoet-data-portal-public"
+    if not https_prefix:
+        https_prefix = "https://files.cryoet.staging.si.czi.technology"
+        if env == "prod":
+            https_prefix = "https://files.cryoetdataportal.cziscience.com"
 
     # Default to using a lot less memory than the ingestion job.
     if not ctx.obj.get("memory"):
