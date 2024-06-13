@@ -103,7 +103,7 @@ class VisualizationConfigImporter(BaseImporter):
         precompute_path = self.config.resolve_output_path("annotation_viz", self)
 
         annotation_metadata_paths = self._get_annotation_metadata_files()
-        colors_used = self._get_colors_used_in_precompute(annotation_metadata_paths)
+        colors_used = []
 
         for annotation_metadata_path in annotation_metadata_paths:
             with open(self.config.fs.localreadable(annotation_metadata_path), "r") as f:
@@ -136,19 +136,6 @@ class VisualizationConfigImporter(BaseImporter):
                     print(f"Skipping file with unknown shape {shape}")
 
         return state_generator.combine_json_layers(layers, scale=resolution)
-
-    def _get_colors_used_in_precompute(self, annotation_metadata_paths: list[str]) -> list[colors.FLOAT_COLOR]:
-        colors_used = []
-        for annotation_metadata_path in annotation_metadata_paths:
-            with open(self.config.fs.localreadable(annotation_metadata_path), "r") as f:
-                metadata = json.load(f)
-            if "InstanceSegmentation" in {file.get("shape") for file in metadata.get("files", [])}:
-                annotation_hash_input = to_base_hash_input(metadata)
-                color_seed = generate_hash({**annotation_hash_input, **{"shape": "InstanceSegmentation"}})
-                object_count = metadata.get("object_count", 1)
-                _, float_colors = colors.get_hex_colors(object_count, exclude=colors_used, seed=color_seed)
-                colors_used += float_colors
-        return colors_used
 
     @classmethod
     def _get_annotation_name_prefix(cls, metadata: dict[str, Any], stemmed_metadata_path: str) -> str:
