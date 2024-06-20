@@ -89,7 +89,6 @@ python3 enqueue_runs.py db-import --environment prod --import-annotation-authors
 
 ```
 
-
 ### Commonly used options
 | Option | Default | Explanation |
 | --- | --- | -- |
@@ -103,7 +102,49 @@ python3 enqueue_runs.py db-import --environment prod --import-annotation-authors
 | Option | Default | Explanation |
 | --- | --- | -- |
 | --filter-datasets | null | Supply a regular expression to apply to the list of available dataset ID's, to only run import for certain datasets. This option can be specified multiple times with multiple regular expressions |
-| --include-datasets | null | Specify specific datasets to import. This option can be specified multiple times with multiple dataset id's |
+| --include-dataset | null | Specify specific datasets to import. This option can be specified multiple times with multiple dataset id's |
+| --s3-prefix | null | Only look for datasets in a particular subdirectory (this is faster than the filter/include filters) when importing a single dataset |
+
+
+
+## S3 File Sync (`sync` subcommand)
+
+The `enqueue_runs.py sync` command queues up jobs to sync data from the staging s3 bucket to the production s3 bucket. It launches one task per **dataset** and by default it will sync **all datasets** unless filters or a list of specific datasets to sync are provided.
+
+### tl;dr:
+```bash
+cd ingestion_tools/scripts
+
+# Activate a python virtualenv
+source ../.venv/bin/activate
+
+# Set up any required AWS env vars
+EXPORT AWS_PROFILE=cryoet-dev
+
+# Main args
+# python3 enqueue_runs.py sync [--include|--exclude]
+
+# Get information on what types of stuff we can import
+python3 enqueue_runs.py sync --help
+
+# Example
+python3 enqueue_runs.py sync --exclude '*' --include 'Annotations/*.json' --s3-prefix 10002 --dryrun
+
+```
+
+### Commonly used options
+| Option | Default | Explanation |
+| --- | --- | -- |
+| --include | `*` | Which filenames should be sync'd. The order of `--include/--exclude` flags matters, please [see the AWS docs on this topic](https://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters) for more information. |
+| --exclude | | Which filenames should not be sync'd. The order of `--include/--exclude` flags matters, please [see the AWS docs on this topic](https://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters) for more information. |
+| --dryrun | False | Only print files that *would* be modified, but don't actually copy or delete data |
+| --delete-files | False | Use this flag to delete files from the destination that don't exist in the source |
+
+### Other interesting options to be aware of
+| Option | Default | Explanation |
+| --- | --- | -- |
+| --filter-datasets | null | Supply a regular expression to apply to the list of available dataset ID's, to only run import for certain datasets. This option can be specified multiple times with multiple regular expressions |
+| --include-dataset | null | Specify specific datasets to import. This option can be specified multiple times with multiple dataset id's |
 | --s3-prefix | null | Only look for datasets in a particular subdirectory (this is faster than the filter/include filters) when importing a single dataset |
 
 
