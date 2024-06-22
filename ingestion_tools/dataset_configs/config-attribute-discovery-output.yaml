@@ -1,5 +1,5 @@
 annotations:
-  metadata:
+- metadata:
     annotation_confidence:
       ground_truth_used: Author estimation
       precision: 95
@@ -13,7 +13,7 @@ annotations:
     annotation_publications: OPTIONAL
     annotation_software: IMOD
     authors:
-      ORCID: 0000-XXXXXX
+    - ORCID: 0000-XXXXXX
       corresponding_author_status: true
       name: Mohammed Kaplan
       primary_annotator_status: true
@@ -30,7 +30,7 @@ annotations:
     method_type: manual
     version: '1.0'
   sources:
-    binning: 1
+  - binning: 1
     columns: zyx
     delimiter: OPTIONAL
     file_format: mod
@@ -41,15 +41,15 @@ annotations:
     order: xyz
     shape: OrientedPoint
 dataset_keyphotos:
-  sources:
-    literal:
+- sources:
+  - literal:
       value:
         snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-07-08-1/keyimg_dga2017-07-08-1.jpg
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-07-08-1/keyimg_dga2017-07-08-1_s.jpg
 datasets:
-  metadata:
+- metadata:
     authors:
-      ORCID: 0000-0002-8147-208X
+    - ORCID: 0000-0002-8147-208X
       corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
@@ -76,7 +76,7 @@ datasets:
       last_modified_date: 2023-12-01
       release_date: 2023-12-01
     funding:
-      funding_agency_name: Not funded
+    - funding_agency_name: Not funded
       grant_id: '760067'
     grid_preparation: "6 grids were frozen for the JV9114 strain (2x concentrated\
       \ culture); Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot force\
@@ -95,7 +95,7 @@ datasets:
       early stationary phase that is OD ~ 3.0. This time cell density was 2.8'
     sample_type: organism
   sources:
-    literal:
+  - literal:
       value:
       - '10084'
     source_glob:
@@ -103,30 +103,30 @@ datasets:
       match_regex: .*
       name_regex: (.*)
 frames:
-  sources:
-    source_glob:
+- sources:
+  - source_glob:
       list_glob: frames/{run_name}_*.tif
 gains:
-  sources:
-    source_glob:
+- sources:
+  - source_glob:
       list_glob: frames/CountRef.dm4
 key_images:
-  sources:
-    literal:
+- sources:
+  - literal:
       value:
       - from_tomogram
     source_glob:
       list_glob: '{run_name}/keyimg_{run_name}.jpg'
 rawtilts:
-  sources:
-    source_multi_glob:
+- sources:
+  - source_multi_glob:
       list_globs:
       - '{run_name}/rawdata/*.mdoc'
       - '{run_name}/file_*/*.rawtlt'
       - '{run_name}/{mapped_frame_name}/*.rawtlt'
 runs:
-  sources:
-    source_glob:
+- sources:
+  - source_glob:
       list_glob: '*'
       match_regex: (dga2017-07-08-1|dga2017-07-08-2|dga2017-07-08-3|dga2017-07-08-4|dga2017-07-08-5|dga2017-07-08-6|dga2017-07-08-7|dga2017-07-08-8|dga2017-07-08-9|dga2017-07-08-10|dga2017-07-08-11|dga2017-07-08-13|dga2017-07-08-14|dga2017-07-08-15|dga2017-07-08-16|dga2017-07-08-17|dga2017-07-08-18|dga2017-07-08-19|dga2017-07-08-20|dga2017-07-08-21|dga2017-07-08-22|dga2017-07-08-23|dga2017-07-08-24|dga2017-07-08-25|dga2017-07-08-26|dga2017-07-08-27|dga2017-07-08-28|dga2017-07-08-29|dga2017-07-08-30|dga2017-07-08-31|dga2017-07-08-32|dga2017-07-08-33|dga2017-07-08-34|dga2017-07-08-35|dga2017-07-08-36|dga2017-07-08-37|dga2017-07-08-38|dga2017-07-08-39|dga2017-07-08-40|dga2017-07-08-41|dga2017-07-08-42|dga2017-07-08-43|dga2017-07-08-44|dga2017-07-08-45|dga2017-07-08-46|dga2017-07-08-47|dga2017-07-08-48|dga2017-07-08-49|dga2017-07-08-50|dga2017-07-08-51|dga2017-07-08-52|dga2017-07-08-53|dga2017-07-08-54|dga2017-07-08-55|dga2017-07-08-56|dga2017-07-08-57|dga2017-07-08-58|dga2017-07-08-59|dga2017-07-08-60|dga2017-07-08-61|dga2017-07-08-62|dga2017-07-08-63|dga2017-07-08-64|dga2017-07-08-65|dga2017-07-08-66|dga2017-07-08-67|dga2017-07-08-68|dga2017-07-08-69|dga2017-07-08-70|dga2017-07-08-71|dga2017-07-08-72|dga2017-07-08-73|dga2017-07-08-74|dga2017-07-08-75|dga2017-07-08-76|dga2017-07-08-77|dga2017-07-08-78|dga2017-07-08-79|dga2017-07-08-80|dga2017-07-08-81|dga2017-07-08-82|dga2017-07-08-83|dga2017-07-08-84|dga2017-07-08-85|dga2017-07-08-86|dga2017-07-08-87|dga2017-07-08-88|dga2017-07-08-89|dga2017-07-08-90|dga2017-07-08-91|dga2017-07-08-92|dga2017-07-08-93|dga2017-07-08-94|dga2017-07-08-95|dga2017-07-08-96|dga2017-07-08-97|dga2017-07-08-98|dga2017-07-08-99|dga2017-07-08-100|dga2017-07-08-101|dga2017-07-08-102|dga2017-07-08-103|dga2017-07-08-104|dga2017-07-08-105)$
       name_regex: (.*)
@@ -138,7 +138,7 @@ standardization_config:
   run_to_ts_map_csv: tomo_ts_map.csv
   source_prefix: GJensen_full
 tiltseries:
-  acceleration_voltage: 300000
+- acceleration_voltage: 300000
   binning_from_frames: 1
   camera:
     manufacturer: Gatan
@@ -185,7 +185,7 @@ tiltseries:
   pixel_spacing: 1.7005
   related_empiar_entry: EMPIAR-10499
   sources:
-    parent_filters:
+  - parent_filters:
       exclude:
         run:
         - ^ay08102021_grid_3_lamella3_pos12$
@@ -218,7 +218,7 @@ tiltseries:
   tilting_scheme: Dose symmetric from 0.0 degrees
   total_flux: 120
 tomograms:
-  metadata:
+- metadata:
     affine_transformation_matrix:
     - - 1
       - 0
@@ -239,7 +239,7 @@ tomograms:
     align_softwares:
     - RAPTOR
     authors:
-      ORCID: 0000-0001-8324-4040
+    - ORCID: 0000-0001-8324-4040
       corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
@@ -256,12 +256,12 @@ tomograms:
     tomogram_version: 1
     voxel_spacing: 16.8
   sources:
-    source_glob:
+  - source_glob:
       list_glob: '{run_name}/{mapped_tomo_name}'
       match_regex: .*\.(mrc|rec)$
 voxel_spacings:
-  sources:
-    destination_glob:
+- sources:
+  - destination_glob:
       list_glob: '{run_output_path}/Tomograms/VoxelSpacing*'
       match_regex: .*
       name_regex: VoxelSpacing(.*)

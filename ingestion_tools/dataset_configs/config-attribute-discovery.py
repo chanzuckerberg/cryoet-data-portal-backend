@@ -20,22 +20,55 @@ import os
 
 import yaml
 
-WHITELIST = ["./validate.yaml", "./config-attribute-discovery-output.yaml", "./template.yaml"]
+EXCLUDE_LIST = ["./validate.yaml", "./config-attribute-discovery-output.yaml", "./template.yaml"]
 
 """
 This function is a helper function for recursive_dict_update. It is used when the new value is a list and the current value is a list.
 Since we don't care about the actual values in the list (unless it's more dictionaries), and instead just the structure, we can just keep
 a single element from the new list. If it is a dictionary, we will recurse on it. If it is a list, we will just keep the list (since we don't care about the values,
 but it might be insightful to have an example of the list structure).
+
+The function returns a list of one element if that element has dictionary descendants, otherwise the original list.
 """
 
 
 def recursive_dict_update_list_helper(current_entries, key, new_entries):
+    # nothing to update with
+    if len(new_entries) == 0:
+        return current_entries
+
     for i in range(len(new_entries)):
+        # if there are nested dictionaries, recurse as neccessary
         if isinstance(new_entries[i], dict):
-            current_entries[key] = recursive_dict_update(current_entries.get(key, {}), new_entries[i])
+            # dictionary entry that corresponds to the new_entries[i] dictionary (the value that all the new_entries dicts are getting merged into)
+            # default empty dict
+            corresponding_entry = {}
+            # if a corresponding value alrady exists:
+            if key in current_entries:
+                # if it's a list, then it should have been created by this function
+                # it is a list to represent the fact that it's a multivalued element (so that when the yaml gets generated, it is noted as a multivalued attribute)
+                # this is only reason why it's a list: inside the list it should just have the dictionary that is new_entries[i]'s corresponding value
+                if isinstance(current_entries[key], list):
+                    assert len(current_entries[key]) == 1
+                    # assign accordingly
+                    corresponding_entry = current_entries[key][0]
+                # if it's a dictionary, we just use it
+                # note that it will never be a dictionary again, because after updating this multivalued field (we know so because we have new_entries as list),
+                # it will become a list element with one dict element
+                elif isinstance(current_entries[key], dict):
+                    corresponding_entry = current_entries[key]
+                else:
+                    raise ValueError(
+                        f"Unresolvable conflict for {current_entries[key]} (type: {type(current_entries[key])}), {new_entries[i]} (type: {type(new_entries[i])})",
+                    )
+
+            current_entries[key] = recursive_dict_update(corresponding_entry, new_entries[i])
         else:
             current_entries[key] = new_entries
+    # if new_entries was a list of dictionaries, the current_entries[key] will be a dictionary instead of a list (recursive_dict_update returns a dictionary)
+    # so we need to convert it back to a list
+    if not isinstance(current_entries[key], list):
+        current_entries[key] = [current_entries[key]]
     return current_entries
 
 
@@ -108,7 +141,7 @@ def main():
 
     # get all yaml files, except for the whitelist, and attempt to merge them
     for file in all_files:
-        if file.endswith(".yaml") and file not in WHITELIST:
+        if file.endswith(".yaml") and file not in EXCLUDE_LIST:
             with open(file, "r") as stream:
                 try:
                     config_file = yaml.safe_load(stream)
