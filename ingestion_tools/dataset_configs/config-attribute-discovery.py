@@ -1,3 +1,4 @@
+# TODO: add which files each attribute appears in? and what % of files it appears in?
 """
 This file is intended to be run from the ingestion/dataset_configs directory. Intended for ensuring that all existing dataset config files' schema are covered by the linkml/Pydantic models.
 It will read all .yaml files in the directory and its subdirectories, except for the files in the whitelist.
@@ -20,7 +21,47 @@ import os
 
 import yaml
 
-EXCLUDE_LIST = ["./validate.yaml", "./config-attribute-discovery-output.yaml", "./template.yaml"]
+EXCLUDE_LIST = [
+    "./validate.yaml",
+    "./config-attribute-discovery-output.yaml",
+    "./template.yaml",
+    "./template_draft.yaml",
+]
+
+"""
+Runs a data check on non-dict items and reports any warnings about potential different-type attributes across files.
+
+Returns False when there are conflicting datatypes, otherwise true.
+"""
+
+
+def raw_data_check(original_value, new_value):
+    if original_value is None:
+        return True
+
+    type_original_value = type(original_value)
+    type_new_value = type(new_value)
+
+    if type_original_value is dict:
+        print(f"Warning: Ran raw data check on {original_value}")
+
+    if type_new_value is dict:
+        print(f"Warning: Ran raw data check on {new_value}")
+
+    # TODO: potential check bypasses?
+    # if type_original_value in [int, float] and type_new_value in [int, float]:
+    #     return True
+    # if type_original_value in [int, float] and type_new_value is str and (len(new_value) == 0 or ("{" in new_value and "}" in new_value)):
+    #     return True
+    # if type_original_value is str and (len(original_value) == 0 or ("{" in original_value and "{" in original_value)) and type_new_value in [int, float]:
+    #     return True
+
+    if type_original_value is not type_new_value:
+        print(f"Warning: Data type conflict: {original_value} | {new_value}")
+        return False
+
+    return True
+
 
 """
 This function is a helper function for recursive_dict_update. It is used when the new value is a list and the current value is a list.
@@ -64,6 +105,7 @@ def recursive_dict_update_list_helper(current_entries, key, new_entries):
 
             current_entries[key] = recursive_dict_update(corresponding_entry, new_entries[i])
         else:
+            raw_data_check(current_entries.get(key), new_entries)
             current_entries[key] = new_entries
     # if new_entries was a list of dictionaries, the current_entries[key] will be a dictionary instead of a list (recursive_dict_update returns a dictionary)
     # so we need to convert it back to a list
@@ -125,6 +167,7 @@ def recursive_dict_update(current_entries, new_entries):
                 print("Current: ", current_entries.get(key))
                 print("New: ", new_value)
         else:
+            raw_data_check(current_entries.get(key, None), new_value)
             current_entries[key] = new_value
 
     return current_entries
