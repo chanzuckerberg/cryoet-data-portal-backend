@@ -1,7 +1,8 @@
-# TODO: character-limit strings?  
+# TODO: character-limit strings?
 # TODO: null checks might be weird (how linkml interprets null and nested nulls and whatnot)
-# TODO: nullable (REQUIRED) values? 
-# TODO: one to one matching between attributes? 
+# TODO: nullable (REQUIRED) values? - these should be handled as if they were not there by linkML - so putting a null in a config file for a REQUIRED will fail
+# TODO: given that a field is required, by all of it's attributes are optional, should it be implied that there exist at least one attribute?
+# TODO: one to one matching between attributes?
 # TODO: some types may be wrong (type conflicts)
 # TODO: discuss values that are in template.yaml but not found in any of the files, primarily in standardization_config
 # TODO: how to deal with curly-braced values? e.g., {ts-tilt_alignment_software}
@@ -10,71 +11,71 @@ annotations: OPTIONAL
 - metadata: REQUIRED
     annotation_confidence: REQUIRED [?]
       ground_truth_used: OPTIONAL, BOOLEAN
-      precision: REQUIRED IF ground_truth_used, FLOAT
-      recall: REQUIRED IF ground_truth_used, FLOAT
+      precision: REQUIRED IF ground_truth_used, FLOAT ([0, 1])
+      recall: REQUIRED IF ground_truth_used, FLOAT ([0, 1])
     annotation_method: REQUIRED, STRING
     annotation_object: REQUIRED
       description: OPTIONAL, STRING
       id: REQUIRED, STRING (^GO[0-9]{7}$)
       name: REQUIRED, STRING
       state: OPTIONAL, STRING
-    annotation_publications: OPTIONAL, STRING # TODO: string list? 
+    annotation_publications: OPTIONAL, STRING # TODO: string list?
     annotation_software: OPTIONAL, STRING, recommended
     authors: OPTIONAL, recommended [?, children are also ?]
     - ORCID: OPTIONAL, STRING (^0000-[0-9]{4}-[0-9]{4}-[0-9]{4}$)
-      corresponding_author_status: OPTIONAL, BOOLEAN
+      corresponding_author_status: OPTIONAL, BOOLEAN # TODO: constraint check to ensure max. one true value
       name: OPTIONAL, STRING
-      primary_annotator_status: OPTIONAL, BOOLEAN
+      primary_annotator_status: OPTIONAL, BOOLEAN # TODO: see corresp. author status
     confidence: # TODO: annotation_confidence conflict? mostly annotation_confidence, but they contain largely null values
-      ground_truth_used: 
-      precision: 
-      recall: 
-    dates: REQUIRED [?] # TODO: what should date format be? 
-      deposition_date: REQUIRED, STRING, DATE 
+      ground_truth_used:
+      precision:
+      recall:
+    dates: REQUIRED [?] # TODO: what should date format be? XXXX-XX-XX?
+      deposition_date: REQUIRED, STRING, DATE # TODO: require this to be before last_modified_date and release_date?
       last_modified_date: REQUIRED, STRING, DATE
       release_date: REQUIRED, STRING, DATE
     ground_truth_status: REQUIRED, BOOLEAN
-    is_curator_recommended: OPTIONAL, BOOLEAN # TODO: Default value of false? 
+    is_curator_recommended: OPTIONAL, BOOLEAN # TODO: Default value of false?
     method_type: REQUIRED, ENUM (manual, hybrid, automated)
-    version: REQUIRED, STRING [?] # TODO: regex? 
+    version: REQUIRED, STRING [?] # TODO: regex?
   sources: REQUIRED [?] # TODO: existence constraints for children
-  - binning: OPTIONAL, INTEGER # doesn't exist in template.yaml
+  - binning: OPTIONAL, INTEGER
     columns: OPTIONAL, STRING # TODO: multivalued? regex? enum?
     delimiter: OPTIONAL, STRING # TODO: regex?
-    file_format: OPTIONAL, STRING # TODO: ENUM? 
+    file_format: OPTIONAL, STRING # TODO: ENUM?
     filter_value: OPTIONAL, STRING # TODO: should this be a string, not in template.yaml
-    glob_string: OPTIONAL, STRING # TODO: regex? 
-    is_visualization_default: OPTIONAL, BOOLEAN 
-    mask_label: OPTIONAL, INTEGER
+    glob_string: OPTIONAL, STRING # TODO: regex?
+    is_visualization_default: OPTIONAL, BOOLEAN
+    mask_label: OPTIONAL, INTEGER > 0 # REQUIRED for SemanticSegmentationMask?
     order: OPTIONAL, STRING # TODO: multivalued? regex? enum?, not in template.yaml
-    shape: OPTIONAL, ENUM (InstanceSegmentation, OrientedPoint, Point, SemanticSegmentationMask) # what are ENUM values? 
+    shape: OPTIONAL, ENUM (InstanceSegmentation, OrientedPoint, Point, SemanticSegmentationMask) # what are ENUM values?
 dataset_keyphotos: REQUIRED IF datasets EXISTS, ELSE NULL [?]
 - sources: REQUIRED
   - literal: REQUIRED
       value: REQUIRED
         snapshot: REQUIRED, STRING # regex for allowed file formats?
-        thumbnail: REQUIRED, STRING # regex for allowed file formats? 
+        thumbnail: REQUIRED, STRING # regex for allowed file formats?
 datasets: REQUIRED [?]
 - metadata: REQUIRED
     authors: OPTIONAL, recommended [?] (See annotations authors?)
-    - ORCID: 
-      corresponding_author_status: 
-      name: 
+    - ORCID:
+      corresponding_author_status:
+      name:
       primary_author_status:
     cell_component: EXISTS IF (...) DON'T EXIST [?]
       id: REQUIRED, STRING (^GO[0-9]{7})
       name: OPTIONAL
     cell_strain: EXISTS IF (...) DON'T EXIST [?]
-      id: REQUIRED, STRING # TODO: (seems like it can be url, id, just regular string too?) | is it actually required if cell_strain exists? or is just id fine? 
+      id: REQUIRED, STRING # TODO: (seems like it can be url, id, just regular string too?)
       name: OPTIONAL
     cell_type: EXISTS IF (...) DON'T EXIST [?]
       id: REQUIRED, STRING # TODO: regex? | see cell_type id
       name: OPTIONAL
     cross_references: OPTIONAL
-      dataset_publications: OPTIONAL, STRING # regex? 
-      related_database_entries: OPTIONAL, STRING # string list? 
+      dataset_publications: OPTIONAL, STRING # regex?
+      related_database_entries: OPTIONAL, STRING # string list?
     dataset_description: REQUIRED, STRING
-    dataset_identifier: REQUIRED, INTEGER # TODO: regex? 
+    dataset_identifier: REQUIRED, INTEGER # TODO: regex?
     dataset_title: REQUIRED, STRING
     dates: SEE annotations dates
       deposition_date:
@@ -85,7 +86,7 @@ datasets: REQUIRED [?]
       grant_id: OPTIONAL, STRING, recommended
     grid_preparation: OPTIONAL, STRING, recommended
     organism: REQUIRED
-      id: REQUIRED, INTEGER # same as taxonomy_id? or different? 
+      id: REQUIRED, INTEGER # same as taxonomy_id? or different?
       name: REQUIRED, STRING
       taxonomy_id: REQUIRED, INTEGER
     sample_preparation: OPTIONAL, STRING, recommended
@@ -96,15 +97,15 @@ datasets: REQUIRED [?]
   sources: REQUIRED [?], not sure about whole thing
   - literal: REQUIRED
       value: REQUIRED
-      - REQUIRED, STRING, INTEGER? 
-    source_glob: OPTIONAL [?] # TODO: what is this? 
+      - REQUIRED, STRING, INTEGER?
+    source_glob: OPTIONAL [?] # TODO: what is this?
       list_glob: REQUIRED, STRING [?]
       match_regex: OPTIONAL, STRING [?]
       name_regex: OPTIONAL, STRING [?]
 frames: REQUIRED IF datasets EXISTS, ELSE NULL [?]
 - sources: REQUIRED
   - source_glob: REQUIRED
-      list_glob: REQUIRED, STRING # TODO: why is it called list_glob? 
+      list_glob: REQUIRED, STRING # TODO: why is it called list_glob?
 gains: SEE frames
 - sources:
   - source_glob:
@@ -129,26 +130,26 @@ runs: SEE frames # TODO: has match_regex (Should this be in all sources -> sourc
       list_glob: '*'
       match_regex: (dga2017-07-08-1|dga2017-07-08-2|dga2017-07-08-3|dga2017-07-08-4|dga2017-07-08-5|dga2017-07-08-6|dga2017-07-08-7|dga2017-07-08-8|dga2017-07-08-9|dga2017-07-08-10|dga2017-07-08-11|dga2017-07-08-13|dga2017-07-08-14|dga2017-07-08-15|dga2017-07-08-16|dga2017-07-08-17|dga2017-07-08-18|dga2017-07-08-19|dga2017-07-08-20|dga2017-07-08-21|dga2017-07-08-22|dga2017-07-08-23|dga2017-07-08-24|dga2017-07-08-25|dga2017-07-08-26|dga2017-07-08-27|dga2017-07-08-28|dga2017-07-08-29|dga2017-07-08-30|dga2017-07-08-31|dga2017-07-08-32|dga2017-07-08-33|dga2017-07-08-34|dga2017-07-08-35|dga2017-07-08-36|dga2017-07-08-37|dga2017-07-08-38|dga2017-07-08-39|dga2017-07-08-40|dga2017-07-08-41|dga2017-07-08-42|dga2017-07-08-43|dga2017-07-08-44|dga2017-07-08-45|dga2017-07-08-46|dga2017-07-08-47|dga2017-07-08-48|dga2017-07-08-49|dga2017-07-08-50|dga2017-07-08-51|dga2017-07-08-52|dga2017-07-08-53|dga2017-07-08-54|dga2017-07-08-55|dga2017-07-08-56|dga2017-07-08-57|dga2017-07-08-58|dga2017-07-08-59|dga2017-07-08-60|dga2017-07-08-61|dga2017-07-08-62|dga2017-07-08-63|dga2017-07-08-64|dga2017-07-08-65|dga2017-07-08-66|dga2017-07-08-67|dga2017-07-08-68|dga2017-07-08-69|dga2017-07-08-70|dga2017-07-08-71|dga2017-07-08-72|dga2017-07-08-73|dga2017-07-08-74|dga2017-07-08-75|dga2017-07-08-76|dga2017-07-08-77|dga2017-07-08-78|dga2017-07-08-79|dga2017-07-08-80|dga2017-07-08-81|dga2017-07-08-82|dga2017-07-08-83|dga2017-07-08-84|dga2017-07-08-85|dga2017-07-08-86|dga2017-07-08-87|dga2017-07-08-88|dga2017-07-08-89|dga2017-07-08-90|dga2017-07-08-91|dga2017-07-08-92|dga2017-07-08-93|dga2017-07-08-94|dga2017-07-08-95|dga2017-07-08-96|dga2017-07-08-97|dga2017-07-08-98|dga2017-07-08-99|dga2017-07-08-100|dga2017-07-08-101|dga2017-07-08-102|dga2017-07-08-103|dga2017-07-08-104|dga2017-07-08-105)$
       name_regex: (.*)
-standardization_config: REQUIRED # reference template.yaml, some of the fields in there never show up 
+standardization_config: REQUIRED # reference template.yaml, some of the fields in there never show up
   deposition_id: REQUIRED, INTEGER
   run_data_map_file: REQUIRED IF datasets [?], STRING # regex for file format (ex. run_data_map/10084.csv)
-  run_to_frame_map_csv: REQUIRED IF frames [?], STRING # regex? 
+  run_to_frame_map_csv: REQUIRED IF frames [?], STRING # regex?
   run_to_tomo_map_csv: REQUIRED IF tomograms [?], STRING # regex?
-  run_to_ts_map_csv: REQUIRED IF tiltseries [?], STRING # regex? 
+  run_to_ts_map_csv: REQUIRED IF tiltseries [?], STRING # regex?
   source_prefix: REQUIRED, STRING
 tiltseries: REQUIRED IF datasets EXISTS, ELSE NULL [?]
-- acceleration_voltage: # seems to be a conflict dupliate metadata entry 
-  binning_from_frames: 
-  camera: 
+- acceleration_voltage: # seems to be a conflict dupliate metadata entry
+  binning_from_frames:
+  camera:
     manufacturer:
     model:
   data_acquisition_software:
   is_aligned:
   metadata: REQUIRED [?]
     acceleration_voltage: REQUIRED, INTEGER
-    aligned_tiltseries_binning: REQUIRED, INTEGER 
+    aligned_tiltseries_binning: REQUIRED, INTEGER
     alignment_binning_factor: REQUIRED if is_aligned, FLOAT
-    binning_from_frames: REQUIRED, INTEGER 
+    binning_from_frames: REQUIRED, INTEGER
     camera: REQUIRED
       acquire_mode: REQUIRED, STRING, ENUM [?]
       manufacturer: REQUIRED, STRING
@@ -177,14 +178,14 @@ tiltseries: REQUIRED IF datasets EXISTS, ELSE NULL [?]
     tilting_scheme: OPTIONAL, STRING, recommended
     total_flux: REQUIRED
   microscope: # cont. start conflict, see above in tiltseries
-    manufacturer: 
+    manufacturer:
     model:
-    optical_setup: # conflicts microscope_optical_setup?  
+    optical_setup: # conflicts microscope_optical_setup?
   microscope_optical_setup:
-    energy_filter: 
+    energy_filter:
   pixel_spacing:
-  related_empiar_entry: 
-  # end conflict 
+  related_empiar_entry:
+  # end conflict
   sources: REQUIRED [?]
   - parent_filters: REQUIRED [?]
       exclude: OPTIONAL
@@ -210,16 +211,16 @@ tiltseries: REQUIRED IF datasets EXISTS, ELSE NULL [?]
       match_regex: OPTIONAL, STRING
       name_regex: OPTIONAL, STRING
   # start conflict again
-  spherical_aberration_constant: 
-  tilt_axis: 
+  spherical_aberration_constant:
+  tilt_axis:
   tilt_range:
-    max: 
-    min: 
+    max:
+    min:
   tilt_series_quality:
-  tilt_step: 
-  tilting_scheme: 
-  total_flux: 
-  # end conflict 
+  tilt_step:
+  tilting_scheme:
+  total_flux:
+  # end conflict
 tomograms: REQUIRED IF datasets EXISTS, ELSE NULL [?]
 - metadata: REQUIRED
     affine_transformation_matrix: REQUIRED [?] [4X4 matrix?]
@@ -242,12 +243,12 @@ tomograms: REQUIRED IF datasets EXISTS, ELSE NULL [?]
     align_softwares: OPTIONAL # not in template.yaml
     - REQUIRED, STRING
     authors: REQUIRED [?] see annotations authors
-    - ORCID: 
-      corresponding_author_status: 
+    - ORCID:
+      corresponding_author_status:
       name:
-      primary_author_status: 
+      primary_author_status:
     ctf_corrected: REQUIRED, BOOLEAN
-    fiducial_alignment_status: REQUIRED, BOOLEAN # has type conflicts 
+    fiducial_alignment_status: REQUIRED, BOOLEAN # has type conflicts
     offset: REQUIRED
       x: REQUIRED, FLOAT [?]
       y: REQUIRED, FLOAT [?]
@@ -258,7 +259,7 @@ tomograms: REQUIRED IF datasets EXISTS, ELSE NULL [?]
     reconstruction_software: REQUIRED, STRING
     tomogram_version: REQUIRED, INTEGER # or string regex? in files, are basically all 1
     voxel_spacing: REQUIRED, FLOAT
-  sources: REQUIRED 
+  sources: REQUIRED
   - source_glob: REQUIRED [?]
       list_glob: REQUIRED, STRING [?]
       match_regex: REQUIRED, STRING [?]
@@ -270,4 +271,4 @@ voxel_spacings: REQUIRED IF datasets EXISTS, ELSE NULL [?]
       name_regex: REQUIRED, STRING [?]
     literal: REQUIRED [?]
       value: REQUIRED
-      - REQUIRED, FLOAT 
+      - REQUIRED, FLOAT
