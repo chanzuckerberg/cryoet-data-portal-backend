@@ -53,7 +53,7 @@ annotations:
   - binning: 4
     file_format: stopgap_star
     filter_value: '{annotation_micrograph_name}'
-    glob_string: '{run_name}/metadata/particles/f1atpase_*.star'
+    glob_string: '{run_name}/metadata/particles/f1atpase_bin*.star'
     is_visualization_default: true
     order: xyz
     shape: OrientedPoint
