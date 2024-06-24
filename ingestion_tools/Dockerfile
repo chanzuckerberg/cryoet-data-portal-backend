@@ -6,6 +6,10 @@ RUN mkdir ingestion_tools
 # Base utilities
 RUN apt update && apt install -y wget unzip jq
 
+# Install DB TLS certs
+ADD https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem /usr/local/share/ca-certificates/global-bundle.crt
+RUN update-ca-certificates
+
 # IMOD helps with MRC ingestion
 # bio3d.colorado.edu isn't sending an intermediate cert, which breaks openssl (no AIA support). So we're installing it here.
 RUN wget http://crt.sectigo.com/SectigoRSAOrganizationValidationSecureServerCA.crt && \
