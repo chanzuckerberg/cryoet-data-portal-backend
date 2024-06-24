@@ -160,8 +160,17 @@ def get_aws_env(environment):
     return aws_env
 
 
-def get_datasets(s3_bucket, https_prefix, filter_datasets, include_dataset, s3_prefix, anonymous: bool):
+def get_datasets(
+    s3_bucket,
+    https_prefix,
+    filter_datasets,
+    include_dataset,
+    exclude_dataset,
+    s3_prefix,
+    anonymous: bool,
+):
     filter_datasets = [re.compile(pattern) for pattern in filter_datasets]
+    exclude_datasets = [re.compile(pattern) for pattern in exclude_dataset]
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     s3_client = boto3.client("s3", config=s3_config)
     config = DBImportConfig(s3_client, s3_bucket, https_prefix)
@@ -177,6 +186,9 @@ def get_datasets(s3_bucket, https_prefix, filter_datasets, include_dataset, s3_p
         dataset_id = dataset.dir_prefix.strip("/")
         if filter_datasets and not list(filter(lambda x: x.match(dataset_id), filter_datasets)):
             logger.info("Skipping %s...", dataset.dir_prefix)
+            continue
+        if exclude_dataset and list(filter(lambda x: x.match(dataset_id), exclude_datasets)):
+            logger.info("Excluding %s...", dataset.dir_prefix)
             continue
         yield dataset_id, dataset
 
@@ -212,6 +224,7 @@ def to_args(**kwargs) -> list[str]:
 )
 @click.option("--filter-datasets", type=str, default=None, multiple=True)
 @click.option("--include-dataset", type=str, default=None, multiple=True)
+@click.option("--exclude-dataset", type=str, default=None, multiple=True)
 @click.option(
     "--swipe-wdl-key",
     type=str,
@@ -230,6 +243,7 @@ def db_import(
     debug: bool,
     filter_datasets: list[str],
     include_dataset: list[str],
+    exclude_dataset: list[str],
     swipe_wdl_key: str,
     **kwargs,
 ):
@@ -258,6 +272,7 @@ def db_import(
             https_prefix,
             filter_datasets,
             include_dataset,
+            exclude_dataset,
             s3_prefix,
             kwargs.get("anonymous"),
         ):
@@ -455,6 +470,7 @@ class OrderedSyncFilters(click.Command):
 @click.option("--s3-prefix", required=True, default="", type=str)
 @click.option("--filter-datasets", type=str, default=None, multiple=True)
 @click.option("--include-dataset", type=str, default=None, multiple=True)
+@click.option("--exclude-dataset", type=str, default=None, multiple=True)
 @click.option(
     "--swipe-wdl-key",
     type=str,
@@ -473,6 +489,7 @@ def sync(
     s3_prefix: str | None,
     filter_datasets: list[str],
     include_dataset: list[str],
+    exclude_dataset: list[str],
     swipe_wdl_key: str,
     **kwargs,
 ):
@@ -494,7 +511,15 @@ def sync(
 
     futures = []
     with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
-        for dataset_id, _ in get_datasets(input_bucket, "", filter_datasets, include_dataset, s3_prefix, False):
+        for dataset_id, _ in get_datasets(
+            input_bucket,
+            "",
+            filter_datasets,
+            include_dataset,
+            exclude_dataset,
+            s3_prefix,
+            False,
+        ):
             print(f"Processing dataset {dataset_id}...")
 
             execution_name = f"{int(time.time())}-sync-{dataset_id}"
