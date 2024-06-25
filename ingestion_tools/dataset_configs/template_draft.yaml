@@ -1,11 +1,10 @@
 # TODO: character-limit strings?
 # TODO: null checks might be weird (how linkml interprets null and nested nulls and whatnot)
 # TODO: nullable (REQUIRED) values? - these should be handled as if they were not there by linkML - so putting a null in a config file for a REQUIRED will fail
-# TODO: given that a field is required, by all of it's attributes are optional, should it be implied that there exist at least one attribute?
-# TODO: one to one matching between attributes?
-# TODO: some types may be wrong (type conflicts)
-# TODO: discuss values that are in template.yaml but not found in any of the files, primarily in standardization_config
-# TODO: how to deal with curly-braced values? e.g., {ts-tilt_alignment_software}
+# TODO: QUESTION: given that a field is required, but all of its attributes are optional, should it be implied that there exist at least one attribute?
+# TODO: DISCUSS: some types may be wrong (type conflicts)
+# TODO: DISCUSS: how to deal with curly-braced values? e.g., {ts-tilt_alignment_software}
+# TODO: DISCUSS: values that are in template.yaml but not found in any of the files, primarily in standardization_config
 # TODO: varying nature of sources means that there are inherently different source structures?
 annotations: OPTIONAL
 - metadata: REQUIRED
@@ -138,14 +137,7 @@ standardization_config: REQUIRED # reference template.yaml, some of the fields i
   run_to_ts_map_csv: REQUIRED IF tiltseries [?], STRING # regex?
   source_prefix: REQUIRED, STRING
 tiltseries: REQUIRED IF datasets EXISTS, ELSE NULL [?]
-- acceleration_voltage: # seems to be a conflict dupliate metadata entry
-  binning_from_frames:
-  camera:
-    manufacturer:
-    model:
-  data_acquisition_software:
-  is_aligned:
-  metadata: REQUIRED [?]
+- metadata: REQUIRED [?]
     acceleration_voltage: REQUIRED, INTEGER
     aligned_tiltseries_binning: REQUIRED, INTEGER
     alignment_binning_factor: REQUIRED if is_aligned, FLOAT
@@ -177,15 +169,6 @@ tiltseries: REQUIRED IF datasets EXISTS, ELSE NULL [?]
     tilt_step: OPTIONAL, FLOAT
     tilting_scheme: OPTIONAL, STRING, recommended
     total_flux: REQUIRED
-  microscope: # cont. start conflict, see above in tiltseries
-    manufacturer:
-    model:
-    optical_setup: # conflicts microscope_optical_setup?
-  microscope_optical_setup:
-    energy_filter:
-  pixel_spacing:
-  related_empiar_entry:
-  # end conflict
   sources: REQUIRED [?]
   - parent_filters: REQUIRED [?]
       exclude: OPTIONAL
@@ -210,17 +193,6 @@ tiltseries: REQUIRED IF datasets EXISTS, ELSE NULL [?]
       list_glob: OPTIONAL, STRING
       match_regex: OPTIONAL, STRING
       name_regex: OPTIONAL, STRING
-  # start conflict again
-  spherical_aberration_constant:
-  tilt_axis:
-  tilt_range:
-    max:
-    min:
-  tilt_series_quality:
-  tilt_step:
-  tilting_scheme:
-  total_flux:
-  # end conflict
 tomograms: REQUIRED IF datasets EXISTS, ELSE NULL [?]
 - metadata: REQUIRED
     affine_transformation_matrix: REQUIRED [?] [4X4 matrix?]
