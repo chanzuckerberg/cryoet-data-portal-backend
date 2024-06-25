@@ -14,18 +14,34 @@ annotations:
     annotation_software: IMOD
     authors:
     - ORCID: 0000-XXXXXX
-      corresponding_author_status: true
+      corresponding_author_status:
+      - OPTIONAL
+      - true
       name: Mohammed Kaplan
-      primary_annotator_status: true
+      primary_annotator_status:
+      - OPTIONAL
+      - true
     confidence:
       ground_truth_used: OPTIONAL
-      precision: REQUIRED IF ground_truth_used is specified
-      recall: REQUIRED IF ground_truth_used is specified
+      precision:
+      - REQUIRED IF ground_truth_used is specified
+      - 95
+      recall:
+      - REQUIRED IF ground_truth_used is specified
+      - 90
     dates:
-      deposition_date: 2024-05-20
-      last_modified_date: 2024-05-20
-      release_date: 2024-05-20
-    ground_truth_status: false
+      deposition_date:
+      - 2023-XX-XX
+      - &id001 2023-04-01
+      last_modified_date:
+      - 2023-XX-XX
+      - &id002 2023-06-01
+      release_date:
+      - 2023-XX-XX
+      - &id003 2023-06-01
+    ground_truth_status:
+    - REQUIRED
+    - true
     is_curator_recommended: true
     method_type: manual
     version: '1.0'
@@ -72,9 +88,15 @@ datasets:
     dataset_identifier: 10084
     dataset_title: L. pneumophila JV9114
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date:
+      - 2023-XX-XX
+      - *id001
+      last_modified_date:
+      - 2023-XX-XX
+      - *id002
+      release_date:
+      - 2023-XX-XX
+      - *id003
     funding:
     - funding_agency_name: Not funded
       grant_id: '760067'
@@ -97,7 +119,7 @@ datasets:
   sources:
   - literal:
       value:
-      - '10084'
+      - '10009'
     source_glob:
       list_glob: 100??
       match_regex: .*
@@ -121,9 +143,7 @@ rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/rawdata/*.mdoc'
-      - '{run_name}/file_*/*.rawtlt'
-      - '{run_name}/{mapped_frame_name}/*.rawtlt'
+      - Tomo{run_name}/raw_data/imod_metadata/*.tlt
 runs:
 - sources:
   - source_glob:
@@ -148,7 +168,10 @@ tiltseries:
   metadata:
     acceleration_voltage: 300000
     aligned_tiltseries_binning: 1
-    binning_from_frames: REQUIRED
+    binning_from_frames:
+    - 1
+    - REQUIRED
+    - 14.08
     camera:
       acquire_mode: counting
       manufacturer: Gatan
@@ -162,20 +185,43 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: None
-      phase_plate: false
-    pixel_spacing: 4.2
+      phase_plate:
+      - false
+      - None
+    pixel_spacing:
+    - '{run_pixel_spacing}'
+    - 1.96
     related_empiar_entry: OPTIONAL
-    spherical_aberration_constant: 2.7
+    spherical_aberration_constant:
+    - '{ts-spherical_aberration_constant}'
+    - 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: 84.3
+    tilt_axis:
+    - float {tilt_series_tilt_axis_angle}
+    - 6.4
+    - 79
     tilt_range:
-      max: 60.0
-      min: -60.0
+      max:
+      - float {tilt_series_max_tilt}
+      - 40
+      - 65.0
+      min:
+      - float {tilt_series_min_tilt}
+      - -60
+      - -65.0
     tilt_series_path: '{ts-tilt_series_path}'
-    tilt_series_quality: 4
-    tilt_step: 2.0
+    tilt_series_quality:
+    - int {tilt_series_quality}
+    - 5
+    tilt_step:
+    - 3
+    - 2.0
+    - OPTIONAL (float)
     tilting_scheme: starting tilt to max then min
-    total_flux: 100.0
+    total_flux:
+    - float {tilt_series_total_flux}
+    - 100
+    - 143.5
   microscope:
     manufacturer: FEI
     model: TITAN KRIOS
@@ -188,33 +234,25 @@ tiltseries:
   - parent_filters:
       exclude:
         run:
-        - ^ay08102021_grid_3_lamella3_pos12$
-        - ^ay18112021_grid2_lamella1_position2$
-        - ^ay18112021_grid2_lamella4_position11$
-        - ^ay18112021_grid2_lamella4_position13
-        - ^ay18112021_grid2_lamella5_position16$
-        - ^ay18112021_gridX_lamella1_pos5$
-        - ^ay18112021_gridX_lamella8_pos6$
+        - ^14$
       include:
         run:
-        - ^ay08102021_grid_3_lamella3_pos12$
-        - ^ay18112021_grid2_lamella1_position2$
-        - ^ay18112021_grid2_lamella4_position11$
-        - ^ay18112021_grid2_lamella4_position13$
-        - ^ay18112021_grid2_lamella5_position16$
-        - ^ay18112021_gridX_lamella1_pos5$
-        - ^ay18112021_gridX_lamella8_pos6$
+        - ^11$
     source_glob:
       list_glob: '{run_name}/rawdata/*'
       match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
       name_regex: (.*)
   spherical_aberration_constant: 2.7
-  tilt_axis: 175
+  tilt_axis:
+  - 175
+  - "85.6\xB0"
   tilt_range:
     max: 60
     min: -60
   tilt_series_quality: 5
-  tilt_step: 3.0
+  tilt_step:
+  - 3.0
+  - 3
   tilting_scheme: Dose symmetric from 0.0 degrees
   total_flux: 120
 tomograms:
@@ -224,18 +262,6 @@ tomograms:
       - 0
       - 0
       - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
     align_softwares:
     - RAPTOR
     authors:
@@ -243,8 +269,12 @@ tomograms:
       corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
-    ctf_corrected: true
-    fiducial_alignment_status: FIDUCIAL
+    ctf_corrected:
+    - REQUIRED
+    - false
+    fiducial_alignment_status:
+    - false
+    - NON_FIDUCIAL
     offset:
       x: 0
       y: 0
@@ -254,7 +284,9 @@ tomograms:
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: '{tomo-reconstruction_software}'
     tomogram_version: 1
-    voxel_spacing: 16.8
+    voxel_spacing:
+    - '{run_voxel_spacing}'
+    - 7.84
   sources:
   - source_glob:
       list_glob: '{run_name}/{mapped_tomo_name}'
@@ -267,4 +299,5 @@ voxel_spacings:
       name_regex: VoxelSpacing(.*)
     literal:
       value:
-      - 16.8
+      - 13.68
+      - float {run_voxel_spacing}
