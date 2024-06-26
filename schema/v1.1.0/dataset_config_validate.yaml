@@ -1,0 +1,57 @@
+# TODO: include non-validation documentation / attributes in this and dataset_config.yaml
+
+name: cdp-dataset-config-validate
+id: cdp-dataset-config-validate
+version: 1.1.0
+description: Validate dataset configs
+imports:
+- linkml:types
+- ./dataset_config
+prefixes:
+  linkml:
+    prefix_prefix: linkml
+    prefix_reference: https://w3id.org/linkml/
+
+# For the sources only attributes, refine the types of sources that exist
+
+classes:
+  Container:
+    tree_root: true
+    attributes: 
+      annotations:
+        multivalued: true
+        range: AnnotationContainer
+      dataset_keyphotos:
+        multivalued: true
+        range: DatasetKeyPhotoContainer
+      datasets:
+        multivalued: true
+        range: DatasetContainer
+      frames:
+        multivalued: true
+        range: FrameContainer
+      gains:
+        multivalued: true
+        range: GainContainer
+      key_images:
+        multivalued: true
+        range: KeyImageContainer
+      rawtilts:
+        multivalued: true
+        range: RawTiltContainer
+      runs:
+        multivalued: true
+        range: RunContainer
+      standardization_config:
+        range: StandardizationConfig
+      tiltseries:
+        multivalued: true
+        range: TiltSeriesContainer
+      tomograms:
+        multivalued: true
+        range: TomogramContainer
+      voxel_spacings:
+        multivalued: true
+        range: VoxelSpacingContainer
+    
+source_file: ../../schema/v1.1.0/metadata

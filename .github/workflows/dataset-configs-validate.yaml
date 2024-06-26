@@ -4,14 +4,9 @@ on:
   push:
     branches:
       - main
+      # TODO: remove this after PR
       - dataset-config-validation-workflow
-    paths:
-      - "ingestion_tools/dataset_configs/**"
-      - ".github/workflows/dataset-configs-validate.yaml"
   pull_request:
-    paths: 
-      - "ingestion_tools/dataset_configs/**"
-      - ".github/workflows/dataset-configs-validate.yaml"
   workflow_dispatch:
 
 jobs:
@@ -29,5 +24,5 @@ jobs:
         run: pip install linkml
       - name: Validate dataset configs
         run: |
-          bash validate.sh
-        working-directory: ingestion_tools/dataset_configs
+          bash dataset_config_validate.sh
+        working-directory: ingestion_tools/scripts

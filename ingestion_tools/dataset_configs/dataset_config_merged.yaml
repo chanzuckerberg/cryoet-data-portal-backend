@@ -30,15 +30,9 @@ annotations:
       - REQUIRED IF ground_truth_used is specified
       - 90
     dates:
-      deposition_date:
-      - 2023-XX-XX
-      - &id001 2023-04-01
-      last_modified_date:
-      - 2023-XX-XX
-      - &id002 2023-06-01
-      release_date:
-      - 2023-XX-XX
-      - &id003 2023-06-01
+      deposition_date: '2024-05-20'
+      last_modified_date: '2024-05-20'
+      release_date: '2024-05-20'
     ground_truth_status:
     - REQUIRED
     - true
@@ -88,15 +82,9 @@ datasets:
     dataset_identifier: 10084
     dataset_title: L. pneumophila JV9114
     dates:
-      deposition_date:
-      - 2023-XX-XX
-      - *id001
-      last_modified_date:
-      - 2023-XX-XX
-      - *id002
-      release_date:
-      - 2023-XX-XX
-      - *id003
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     funding:
     - funding_agency_name: Not funded
       grant_id: '760067'
@@ -272,9 +260,7 @@ tomograms:
     ctf_corrected:
     - REQUIRED
     - false
-    fiducial_alignment_status:
-    - false
-    - NON_FIDUCIAL
+    fiducial_alignment_status: FIDUCIAL
     offset:
       x: 0
       y: 0

@@ -59,7 +59,7 @@ classes:
       is_corresponding:
         exact_mappings:
           - cdp-common:author_corresponding_author_status
-      is_primary_author:
+      primary_author_status:
         exact_mappings:
           - cdp-common:author_primary_author_status
       ORCID:
@@ -440,12 +440,15 @@ classes:
       x:
         exact_mappings:
           - cdp-common:tomogram_offset_x
+        range: float
       y:
         exact_mappings:
           - cdp-common:tomogram_offset_y
+        range: float
       z:
         exact_mappings:
           - cdp-common:tomogram_offset_z
+        range: float
   # ============================================================================
 
   # ============================================================================

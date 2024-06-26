@@ -16,7 +16,7 @@ Edge cases:
 Some basic warnings will be printed out if there are conflicts, but the output will still be generated.
 
 Usage (from ingestion_tools/scripts directory):
-python config-attribute-discovery.py
+python dataset_config_merge.py
 """
 
 import datetime
@@ -26,14 +26,13 @@ from typing import Union
 import yaml
 
 EXCLUDE_LIST = [
-    "validate.yaml",
-    "config-attribute-discovery-output.yaml",
+    "dataset_config_merged.yaml",
     "template.yaml",
     "template_draft.yaml",
 ]
 ALLOWED_PRIMITIVE_TYPES = [int, float, str, bool, list, datetime.date]
 DATASET_CONFIGS_FOLDER = "../dataset_configs/"
-OUTPUT_FILE = DATASET_CONFIGS_FOLDER + "config-attribute-discovery-output.yaml"
+OUTPUT_FILE = DATASET_CONFIGS_FOLDER + "dataset_config_merged.yaml"
 
 """
 Merges two lists together, keeping only values that are of unique types (values are arbitrary, as long as they are unique).

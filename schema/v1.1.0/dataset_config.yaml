@@ -1,0 +1,210 @@
+name: cdp-dataset-config
+id: cdp-dataset-config
+version: 1.1.0
+description: Schema for dataset configs
+imports:
+- linkml:types
+- ./metadata_materialized
+- ./common
+prefixes:
+  linkml:
+    prefix_prefix: linkml
+    prefix_reference: https://w3id.org/linkml/
+
+# TODO: need to confirm required state of each sources' values
+# TODO: add sources to the non-source-only classes
+# For the sources only attributes, refine the types of sources that exist
+
+classes:
+  # ============================================================================
+  # Reused / general classes
+  # ============================================================================
+
+  SourceMultiGlob:
+    attributes:
+      list_globs:
+        multivalued: true
+        range: string
+        required: true
+
+  GeneralGlob:
+    abstract: true
+    attributes:
+      list_glob:
+        range: string
+        required: true
+      match_regex:
+        range: string
+      name_regex:
+        range: string
+
+  SourceGlob:
+    is_a: GeneralGlob
+
+  DestinationGlob:
+    is_a: GeneralGlob
+
+  # ============================================================================
+  # Dataset config classes
+  # ============================================================================
+  AnnotationContainer:
+    attributes:
+      metadata:
+        range: Annotation
+        required: true
+      sources:
+
+  DatasetContainer:
+    attributes:
+      metadata:
+        range: Dataset
+        required: true
+      sources:
+
+  DatasetKeyPhotoContainer:
+    attributes:
+      sources:
+        multivalued: true
+        range: DatasetKeyPhotoSource
+        required: true
+  
+  DatasetKeyPhotoSource:
+    attributes:
+      literal: 
+        range: DatasetKeyPhotoLiteral
+
+  DatasetKeyPhotoLiteral:
+    attributes:
+      value:
+        range: DatasetKeyPhotoValue
+
+  DatasetKeyPhotoValue:
+    attributes:
+      snapshot: 
+        range: string
+        required: true
+      thumbnail:
+        range: string
+        required: true
+
+  FrameContainer:
+    attributes:
+      sources:
+        multivalued: true
+        range: FrameSource
+        required: true
+
+  FrameSource:
+    attributes:
+      source_glob:
+        range: SourceGlob
+
+  GainContainer:
+    attributes:
+      sources:
+        multivalued: true
+        range: GainSource
+        required: true
+
+  GainSource:
+    attributes:
+      source_glob:
+        range: SourceGlob
+
+  KeyImageContainer:
+    attributes:
+      sources:
+        multivalued: true
+        range: KeyImageSource
+        required: true
+
+  KeyImageSource:
+    attributes:
+      source_glob:
+        range: SourceGlob
+      literal: 
+        range: KeyImageLiteral
+
+  KeyImageLiteral:
+    attributes:
+      value:
+        multivalued: true
+        range: string
+        required: true
+
+  RawTiltContainer:
+    attributes:
+      sources:
+        multivalued: true
+        range: RawTiltSource
+        required: true
+
+  RawTiltSource:
+    attributes:
+      source_multi_glob:
+        range: SourceMultiGlob
+
+  RunContainer:
+    attributes:
+      sources:
+        multivalued: true
+        range: RunSource
+        required: true
+
+  RunSource:
+    attributes:
+      source_glob:
+        range: SourceGlob
+
+  StandardizationConfig:
+    attributes:
+      deposition_id:
+        range: integer
+        required: true
+      run_data_map_file:
+        range: string
+      run_to_frame_map_csv:
+        range: string
+      run_to_tomo_map_csv:
+        range: string
+      run_to_ts_map_csv:
+        range: string
+      source_prefix:
+        range: string
+        required: true
+  
+  TiltSeriesContainer:
+    attributes:
+      metadata:
+        range: TiltSeries
+        required: true
+      sources:
+
+  TomogramContainer:
+    attributes:
+      metadata:
+        range: Tomogram
+        required: true
+      sources:
+
+  VoxelSpacingContainer:
+    attributes:
+      sources:
+        multivalued: true
+        range: VoxelSpacingSource
+        required: true
+
+  VoxelSpacingSource:
+    attributes:
+      destination_glob:
+        range: DestinationGlob
+      literal: 
+        range: VoxelSpacingLiteral
+
+  VoxelSpacingLiteral:
+    attributes:
+      value:
+        multivalued: true
+        range: float
+
+source_file: ../../schema/v1.1.0/metadata

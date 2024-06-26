@@ -232,13 +232,13 @@ classes:
         range: boolean
         inlined: true
         inlined_as_list: true
-      is_primary_author:
-        name: is_primary_author
+      primary_author_status:
+        name: primary_author_status
         description: Whether the author is a primary author.
         from_schema: metadata
         exact_mappings:
         - cdp-common:author_primary_author_status
-        alias: is_primary_author
+        alias: primary_author_status
         owner: Author
         domain_of:
         - Author
@@ -416,7 +416,6 @@ classes:
     description: A set of dates at which a data item was deposited, published and
       last modified.
     from_schema: metadata
-    abstract: true
     slots:
     - deposition_date
     - release_date
@@ -629,7 +628,7 @@ classes:
         owner: Organism
         domain_of:
         - Organism
-        range: string
+        range: integer
         inlined: true
         inlined_as_list: true
   Tissue:
@@ -842,7 +841,7 @@ classes:
       other_setup:
         name: other_setup
         description: Describes other setup not covered by sample preparation or grid
-          preparation that may make this dataset unique in   the same publication.
+          preparation that may make this dataset unique in the same publication.
         from_schema: metadata
         exact_mappings:
         - cdp-common:preparation_other_setup
@@ -923,7 +922,7 @@ classes:
       dataset_identifier:
         name: dataset_identifier
         description: An identifier for a CryoET dataset, assigned by the Data Portal.
-          Used to identify the dataset as the directory  name in data tree.
+          Used to identify the dataset as the directory name in data tree.
         from_schema: metadata
         exact_mappings:
         - cdp-common:dataset_identifier
@@ -1069,7 +1068,7 @@ classes:
       other_setup:
         name: other_setup
         description: Describes other setup not covered by sample preparation or grid
-          preparation that may make this dataset unique in   the same publication.
+          preparation that may make this dataset unique in the same publication.
         from_schema: metadata
         exact_mappings:
         - cdp-common:preparation_other_setup
@@ -1560,7 +1559,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: string
+        range: float
         inlined: true
         inlined_as_list: true
       y:
@@ -1573,7 +1572,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: string
+        range: float
         inlined: true
         inlined_as_list: true
       z:
@@ -1586,7 +1585,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: string
+        range: float
         inlined: true
         inlined_as_list: true
   Tomogram:
