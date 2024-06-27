@@ -416,7 +416,6 @@ classes:
     description: A set of dates at which a data item was deposited, published and
       last modified.
     from_schema: metadata
-    abstract: true
     slots:
     - deposition_date
     - release_date

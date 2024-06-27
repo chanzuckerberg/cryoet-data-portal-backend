@@ -653,7 +653,6 @@ classes:
   # Deposition, release and last modified dates
   # ============================================================================
   DateStamp:
-    abstract: true
     description: A set of dates at which a data item was deposited, published and last modified.
     slots:
       - deposition_date
