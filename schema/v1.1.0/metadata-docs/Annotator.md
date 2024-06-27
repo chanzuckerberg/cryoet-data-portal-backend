@@ -1,3 +1,5 @@
+
+
 # Class: Annotator
 
 
@@ -12,42 +14,85 @@ URI: [cdp-meta:Annotator](metadataAnnotator)
 
 
 
+
+
 ```mermaid
  classDiagram
     class Annotator
+    click Annotator href "../Annotator"
       Annotator : affiliation_address
+        
+          
+    
+    
+    Annotator --> "0..1" String : affiliation_address
+    click String href "../String"
 
-          Annotator --> string : affiliation_address
-
+        
       Annotator : affiliation_identifier
+        
+          
+    
+    
+    Annotator --> "0..1 _recommended_" String : affiliation_identifier
+    click String href "../String"
 
-          Annotator --> string : affiliation_identifier
-
+        
       Annotator : affiliation_name
+        
+          
+    
+    
+    Annotator --> "0..1" String : affiliation_name
+    click String href "../String"
 
-          Annotator --> string : affiliation_name
-
+        
       Annotator : email
+        
+          
+    
+    
+    Annotator --> "0..1" String : email
+    click String href "../String"
 
-          Annotator --> string : email
-
+        
       Annotator : is_corresponding
+        
+          
+    
+    
+    Annotator --> "0..1" String : is_corresponding
+    click String href "../String"
 
-          Annotator --> string : is_corresponding
-
+        
       Annotator : is_primary_annotator
+        
+          
+    
+    
+    Annotator --> "0..1" Boolean : is_primary_annotator
+    click Boolean href "../Boolean"
 
-          Annotator --> boolean : is_primary_annotator
-
+        
       Annotator : name
+        
+          
+    
+    
+    Annotator --> "0..1" String : name
+    click String href "../String"
 
-          Annotator --> string : name
-
+        
       Annotator : ORCID
+        
+          
+    
+    
+    Annotator --> "0..1 _recommended_" String : ORCID
+    click String href "../String"
 
-          Annotator --> string : ORCID
-
-
+        
+      
 ```
 
 

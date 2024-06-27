@@ -1,30 +1,70 @@
-# Slot: tissue
 
-URI: [cdp-meta:tissue](metadatatissue)
+
+# Class: Tissue
+
+
+_The type of tissue from which the sample was derived._
+
+
+
+
+
+URI: [cdp-meta:Tissue](metadataTissue)
+
+
+
+
+
+
+```mermaid
+ classDiagram
+    class Tissue
+    click Tissue href "../Tissue"
+      Tissue : id
+        
+          
+    
+    
+    Tissue --> "0..1" String : id
+    click String href "../String"
+
+        
+      Tissue : name
+        
+          
+    
+    
+    Tissue --> "0..1" String : name
+    click String href "../String"
+
+        
+      
+```
+
 
 
 
 <!-- no inheritance hierarchy -->
 
 
+## Slots
 
-
-## Applicable Classes
-
-| Name | Description | Modifies Slot |
-| --- | --- | --- |
-[ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET da... |  no  |
-[Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
-
+| Name | Cardinality and Range | Description | Inheritance |
+| ---  | --- | --- | --- |
+| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
+| [id](id.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The UBERON identifier for the tissue | direct |
 
 
 
 
 
+## Usages
 
-## Properties
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [ExperimentalMetadata](ExperimentalMetadata.md) | [tissue](tissue.md) | range | [Tissue](Tissue.md) |
+| [Dataset](Dataset.md) | [tissue](tissue.md) | range | [Tissue](Tissue.md) |
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
 
 
 
@@ -38,17 +78,124 @@ URI: [cdp-meta:tissue](metadatatissue)
 
 
 
+### Schema Source
+
+
+* from schema: metadata
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:Tissue |
+| native | cdp-meta:Tissue |
+
+
+
+
 
 ## LinkML Source
 
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
 <details>
 ```yaml
-name: tissue
-alias: tissue
-domain_of:
-- ExperimentalMetadata
-- Dataset
-range: string
+name: Tissue
+description: The type of tissue from which the sample was derived.
+from_schema: metadata
+attributes:
+  name:
+    name: name
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:tissue_name
+    alias: name
+    owner: Tissue
+    domain_of:
+    - Author
+    - Annotator
+    - Organism
+    - Tissue
+    - CellType
+    - CellStrain
+    - CellComponent
+    - AnnotationObject
+    range: string
+    inlined: true
+    inlined_as_list: true
+  id:
+    name: id
+    description: The UBERON identifier for the tissue.
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:tissue_id
+    rank: 1000
+    alias: id
+    owner: Tissue
+    domain_of:
+    - Tissue
+    - CellType
+    - CellStrain
+    - CellComponent
+    - AnnotationObject
+    range: string
+    inlined: true
+    inlined_as_list: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Tissue
+description: The type of tissue from which the sample was derived.
+from_schema: metadata
+attributes:
+  name:
+    name: name
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:tissue_name
+    alias: name
+    owner: Tissue
+    domain_of:
+    - Author
+    - Annotator
+    - Organism
+    - Tissue
+    - CellType
+    - CellStrain
+    - CellComponent
+    - AnnotationObject
+    range: string
+    inlined: true
+    inlined_as_list: true
+  id:
+    name: id
+    description: The UBERON identifier for the tissue.
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:tissue_id
+    rank: 1000
+    alias: id
+    owner: Tissue
+    domain_of:
+    - Tissue
+    - CellType
+    - CellStrain
+    - CellComponent
+    - AnnotationObject
+    range: string
+    inlined: true
+    inlined_as_list: true
 
 ```
 </details>

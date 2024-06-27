@@ -1,11 +1,13 @@
-# Slot: is_primary_author
+
+
+# Slot: primary_author_status
 
 
 _Whether the author is a primary author._
 
 
 
-URI: [cdp-meta:is_primary_author](metadatais_primary_author)
+URI: [cdp-meta:primary_author_status](metadataprimary_author_status)
 
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:is_primary_author](metadatais_primary_author)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Author](Author.md) | Author of a scientific data entity |  no  |
+| [Author](Author.md) | Author of a scientific data entity |  no  |
 
 
 
@@ -54,13 +57,13 @@ URI: [cdp-meta:is_primary_author](metadatais_primary_author)
 
 <details>
 ```yaml
-name: is_primary_author
+name: primary_author_status
 description: Whether the author is a primary author.
 from_schema: metadata
 exact_mappings:
 - cdp-common:author_primary_author_status
 rank: 1000
-alias: is_primary_author
+alias: primary_author_status
 owner: Author
 domain_of:
 - Author

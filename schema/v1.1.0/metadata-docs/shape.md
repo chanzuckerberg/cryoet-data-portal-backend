@@ -1,3 +1,5 @@
+
+
 # Slot: shape
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:shape](metadatashape)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[AnnotationFile](AnnotationFile.md) | Metadata describing a file containing an annotation |  no  |
+| [AnnotationFile](AnnotationFile.md) | Metadata describing a file containing an annotation |  no  |
 
 
 

@@ -1,3 +1,5 @@
+
+
 # Slot: frames_count
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:frames_count](metadataframes_count)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 

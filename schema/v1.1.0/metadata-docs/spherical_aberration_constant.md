@@ -1,3 +1,5 @@
+
+
 # Slot: spherical_aberration_constant
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:spherical_aberration_constant](metadataspherical_aberration_const
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 

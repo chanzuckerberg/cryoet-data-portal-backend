@@ -1,3 +1,5 @@
+
+
 # Slot: object_count
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:object_count](metadataobject_count)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 

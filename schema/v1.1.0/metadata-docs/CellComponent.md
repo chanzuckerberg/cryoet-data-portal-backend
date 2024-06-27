@@ -1,3 +1,5 @@
+
+
 # Class: CellComponent
 
 
@@ -12,18 +14,31 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
 
 
 
+
+
 ```mermaid
  classDiagram
     class CellComponent
+    click CellComponent href "../CellComponent"
       CellComponent : id
+        
+          
+    
+    
+    CellComponent --> "0..1" String : id
+    click String href "../String"
 
-          CellComponent --> string : id
-
+        
       CellComponent : name
+        
+          
+    
+    
+    CellComponent --> "0..1" String : name
+    click String href "../String"
 
-          CellComponent --> string : name
-
-
+        
+      
 ```
 
 

@@ -1,3 +1,5 @@
+
+
 # Slot: image_corrector
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:image_corrector](metadataimage_corrector)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series |  no  |
+| [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series |  no  |
 
 
 

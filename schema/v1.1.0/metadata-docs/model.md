@@ -1,3 +1,5 @@
+
+
 # Slot: model
 
 URI: [cdp-meta:model](metadatamodel)
@@ -9,12 +11,13 @@ URI: [cdp-meta:model](metadatamodel)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Camera](Camera.md) | The camera used to collect the tilt series |  no  |
-[Microscope](Microscope.md) | The microscope used to collect the tilt series |  no  |
+| [Microscope](Microscope.md) | The microscope used to collect the tilt series |  no  |
+| [Camera](Camera.md) | The camera used to collect the tilt series |  no  |
 
 
 

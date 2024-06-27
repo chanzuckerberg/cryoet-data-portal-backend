@@ -1,3 +1,5 @@
+
+
 # Class: Annotation
 
 
@@ -12,61 +14,126 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 
 
 
+
+
 ```mermaid
  classDiagram
     class Annotation
+    click Annotation href "../Annotation"
       DatestampedEntity <|-- Annotation
+        click DatestampedEntity href "../DatestampedEntity"
       AnnotatoredEntity <|-- Annotation
-
+        click AnnotatoredEntity href "../AnnotatoredEntity"
+      
       Annotation : annotation_method
+        
+          
+    
+    
+    Annotation --> "0..1" String : annotation_method
+    click String href "../String"
 
-          Annotation --> string : annotation_method
-
+        
       Annotation : annotation_method_type
+        
+          
+    
+    
+    Annotation --> "0..1" AnnotationMethodTypeEnum : annotation_method_type
+    click AnnotationMethodTypeEnum href "../AnnotationMethodTypeEnum"
 
-          Annotation --> annotation_method_type_enum : annotation_method_type
-
+        
       Annotation : annotation_object
+        
+          
+    
+    
+    Annotation --> "0..1" AnnotationObject : annotation_object
+    click AnnotationObject href "../AnnotationObject"
 
-          Annotation --> AnnotationObject : annotation_object
-
+        
       Annotation : annotation_publications
+        
+          
+    
+    
+    Annotation --> "0..1" String : annotation_publications
+    click String href "../String"
 
-          Annotation --> string : annotation_publications
-
+        
       Annotation : annotation_software
+        
+          
+    
+    
+    Annotation --> "0..1" String : annotation_software
+    click String href "../String"
 
-          Annotation --> string : annotation_software
-
+        
       Annotation : authors
+        
+          
+    
+    
+    Annotation --> "1..*" Annotator : authors
+    click Annotator href "../Annotator"
 
-          Annotation --> Annotator : authors
-
+        
       Annotation : confidence
+        
+          
+    
+    
+    Annotation --> "0..1" AnnotationConfidence : confidence
+    click AnnotationConfidence href "../AnnotationConfidence"
 
-          Annotation --> AnnotationConfidence : confidence
-
+        
       Annotation : dates
+        
+          
+    
+    
+    Annotation --> "1" DateStamp : dates
+    click DateStamp href "../DateStamp"
 
-          Annotation --> DateStamp : dates
-
+        
       Annotation : files
+        
+          
+    
+    
+    Annotation --> "*" AnnotationFile : files
+    click AnnotationFile href "../AnnotationFile"
 
-          Annotation --> AnnotationFile : files
-
+        
       Annotation : ground_truth_status
+        
+          
+    
+    
+    Annotation --> "0..1" Boolean : ground_truth_status
+    click Boolean href "../Boolean"
 
-          Annotation --> boolean : ground_truth_status
-
+        
       Annotation : is_curator_recommended
+        
+          
+    
+    
+    Annotation --> "0..1" Boolean : is_curator_recommended
+    click Boolean href "../Boolean"
 
-          Annotation --> boolean : is_curator_recommended
-
+        
       Annotation : object_count
+        
+          
+    
+    
+    Annotation --> "0..1" Integer : object_count
+    click Integer href "../Integer"
 
-          Annotation --> integer : object_count
-
-
+        
+      
 ```
 
 
@@ -89,10 +156,10 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 | [ground_truth_status](ground_truth_status.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | Whether an annotation is considered ground truth, as determined by the annota... | direct |
 | [object_count](object_count.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | Number of objects identified | direct |
 | [is_curator_recommended](is_curator_recommended.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | This annotation is recommended by the curator to be preferred for this object... | direct |
-| [files](files.md) | 0..* <br/> [AnnotationFile](AnnotationFile.md) | Metadata describing a file containing an annotation | direct |
+| [files](files.md) | * <br/> [AnnotationFile](AnnotationFile.md) | Metadata describing a file containing an annotation | direct |
 | [confidence](confidence.md) | 0..1 <br/> [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation | direct |
 | [annotation_object](annotation_object.md) | 0..1 <br/> [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated | direct |
-| [dates](dates.md) | 1..1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
+| [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
 | [authors](authors.md) | 1..* <br/> [Annotator](Annotator.md) | Annotator of a scientific data entity | direct |
 
 

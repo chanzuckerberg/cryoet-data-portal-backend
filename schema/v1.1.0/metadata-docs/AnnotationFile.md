@@ -1,3 +1,5 @@
+
+
 # Class: AnnotationFile
 
 
@@ -12,26 +14,49 @@ URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
 
 
 
+
+
 ```mermaid
  classDiagram
     class AnnotationFile
+    click AnnotationFile href "../AnnotationFile"
       AnnotationFile : format
+        
+          
+    
+    
+    AnnotationFile --> "0..1" String : format
+    click String href "../String"
 
-          AnnotationFile --> string : format
-
+        
       AnnotationFile : is_visualization_default
+        
+          
+    
+    
+    AnnotationFile --> "0..1" Boolean : is_visualization_default
+    click Boolean href "../Boolean"
 
-          AnnotationFile --> boolean : is_visualization_default
-
+        
       AnnotationFile : path
+        
+          
+    
+    
+    AnnotationFile --> "0..1" String : path
+    click String href "../String"
 
-          AnnotationFile --> string : path
-
+        
       AnnotationFile : shape
+        
+          
+    
+    
+    AnnotationFile --> "0..1" String : shape
+    click String href "../String"
 
-          AnnotationFile --> string : shape
-
-
+        
+      
 ```
 
 

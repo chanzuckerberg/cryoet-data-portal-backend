@@ -1,3 +1,5 @@
+
+
 # Slot: affiliation_address
 
 URI: [cdp-meta:affiliation_address](metadataaffiliation_address)
@@ -9,12 +11,13 @@ URI: [cdp-meta:affiliation_address](metadataaffiliation_address)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Author](Author.md) | Author of a scientific data entity |  no  |
-[Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
+| [Author](Author.md) | Author of a scientific data entity |  no  |
+| [Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
 
 
 

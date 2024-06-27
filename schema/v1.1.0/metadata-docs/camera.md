@@ -1,13 +1,13 @@
 
 
-# Slot: tilt_series_quality
+# Slot: camera
 
 
-_Author assessment of tilt series quality within the dataset (1-5, 5 is best)_
+_The camera used to collect the tilt series._
 
 
 
-URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
+URI: [cdp-meta:camera](metadatacamera)
 
 
 
@@ -31,7 +31,7 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 ## Properties
 
-* Range: [xsd:integer](http://www.w3.org/2001/XMLSchema#integer)
+* Range: [Camera](Camera.md)
 
 
 
@@ -57,18 +57,15 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 <details>
 ```yaml
-name: tilt_series_quality
-description: Author assessment of tilt series quality within the dataset (1-5, 5 is
-  best)
+name: camera
+description: The camera used to collect the tilt series.
 from_schema: metadata
-exact_mappings:
-- cdp-common:tiltseries_tilt_series_quality
 rank: 1000
-alias: tilt_series_quality
+alias: camera
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: integer
+range: Camera
 inlined: true
 inlined_as_list: true
 

@@ -1,3 +1,5 @@
+
+
 # Slot: processing
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:processing](metadataprocessing)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 

@@ -1,3 +1,5 @@
+
+
 # Class: FundedEntity
 
 
@@ -14,16 +16,25 @@ URI: [cdp-meta:FundedEntity](metadataFundedEntity)
 
 
 
+
+
 ```mermaid
  classDiagram
     class FundedEntity
+    click FundedEntity href "../FundedEntity"
       FundedEntity <|-- Dataset
-
+        click Dataset href "../Dataset"
+      
       FundedEntity : funding
+        
+          
+    
+    
+    FundedEntity --> "* _recommended_" Funding : funding
+    click Funding href "../Funding"
 
-          FundedEntity --> Funding : funding
-
-
+        
+      
 ```
 
 
@@ -36,7 +47,7 @@ URI: [cdp-meta:FundedEntity](metadataFundedEntity)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [funding](funding.md) | 0..* _recommended_ <br/> [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
+| [funding](funding.md) | * _recommended_ <br/> [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
 
 
 

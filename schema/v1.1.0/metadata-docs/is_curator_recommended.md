@@ -1,3 +1,5 @@
+
+
 # Slot: is_curator_recommended
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:is_curator_recommended](metadatais_curator_recommended)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 

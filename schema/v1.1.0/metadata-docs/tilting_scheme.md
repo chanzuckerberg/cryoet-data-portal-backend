@@ -1,3 +1,5 @@
+
+
 # Slot: tilting_scheme
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:tilting_scheme](metadatatilting_scheme)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 

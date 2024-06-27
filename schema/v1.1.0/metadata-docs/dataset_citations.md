@@ -1,3 +1,5 @@
+
+
 # Slot: dataset_citations
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:dataset_citations](metadatadataset_citations)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
+| [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
 
 
 

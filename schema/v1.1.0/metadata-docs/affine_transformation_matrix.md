@@ -1,3 +1,5 @@
+
+
 # Slot: affine_transformation_matrix
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:affine_transformation_matrix](metadataaffine_transformation_matri
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 

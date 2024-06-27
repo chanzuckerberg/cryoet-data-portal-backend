@@ -96,7 +96,6 @@ Name: cdp-meta
 | [is_corresponding](is_corresponding.md) | Whether the author is a corresponding author |
 | [is_curator_recommended](is_curator_recommended.md) | This annotation is recommended by the curator to be preferred for this object... |
 | [is_primary_annotator](is_primary_annotator.md) | Whether the author is a primary author |
-| [is_primary_author](is_primary_author.md) | Whether the author is a primary author |
 | [is_visualization_default](is_visualization_default.md) | This annotation will be rendered in neuroglancer by default |
 | [key_photos](key_photos.md) | A set of paths to representative images of a piece of data |
 | [last_modified_date](last_modified_date.md) | The date a piece of data was last modified on the cryoET data portal |
@@ -117,6 +116,7 @@ Name: cdp-meta
 | [phase_plate](phase_plate.md) | Phase plate configuration |
 | [pixel_spacing](pixel_spacing.md) | Pixel spacing for the tilt series |
 | [precision](precision.md) | Describe the confidence level of the annotation |
+| [primary_author_status](primary_author_status.md) | Whether the author is a primary author |
 | [processing](processing.md) | Describe additional processing used to derive the tomogram |
 | [processing_software](processing_software.md) | Processing software used to derive the tomogram |
 | [recall](recall.md) | Describe the confidence level of the annotation |

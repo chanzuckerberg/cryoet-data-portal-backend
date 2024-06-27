@@ -1,3 +1,5 @@
+
+
 # Slot: binning_from_frames
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:binning_from_frames](metadatabinning_from_frames)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 

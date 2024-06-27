@@ -1,3 +1,5 @@
+
+
 # Class: ExperimentalMetadata
 
 
@@ -14,48 +16,97 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 
 
+
+
 ```mermaid
  classDiagram
     class ExperimentalMetadata
+    click ExperimentalMetadata href "../ExperimentalMetadata"
       ExperimentalMetadata <|-- Dataset
-
+        click Dataset href "../Dataset"
+      
       ExperimentalMetadata : cell_component
+        
+          
+    
+    
+    ExperimentalMetadata --> "0..1" CellComponent : cell_component
+    click CellComponent href "../CellComponent"
 
-          ExperimentalMetadata --> CellComponent : cell_component
-
+        
       ExperimentalMetadata : cell_strain
+        
+          
+    
+    
+    ExperimentalMetadata --> "0..1" CellStrain : cell_strain
+    click CellStrain href "../CellStrain"
 
-          ExperimentalMetadata --> CellStrain : cell_strain
-
+        
       ExperimentalMetadata : cell_type
+        
+          
+    
+    
+    ExperimentalMetadata --> "0..1" CellType : cell_type
+    click CellType href "../CellType"
 
-          ExperimentalMetadata --> CellType : cell_type
-
+        
       ExperimentalMetadata : grid_preparation
+        
+          
+    
+    
+    ExperimentalMetadata --> "0..1" String : grid_preparation
+    click String href "../String"
 
-          ExperimentalMetadata --> string : grid_preparation
-
+        
       ExperimentalMetadata : organism
+        
+          
+    
+    
+    ExperimentalMetadata --> "0..1" Organism : organism
+    click Organism href "../Organism"
 
-          ExperimentalMetadata --> Organism : organism
-
+        
       ExperimentalMetadata : other_setup
+        
+          
+    
+    
+    ExperimentalMetadata --> "0..1" String : other_setup
+    click String href "../String"
 
-          ExperimentalMetadata --> string : other_setup
-
+        
       ExperimentalMetadata : sample_preparation
+        
+          
+    
+    
+    ExperimentalMetadata --> "0..1" String : sample_preparation
+    click String href "../String"
 
-          ExperimentalMetadata --> string : sample_preparation
-
+        
       ExperimentalMetadata : sample_type
+        
+          
+    
+    
+    ExperimentalMetadata --> "0..1" SampleTypeEnum : sample_type
+    click SampleTypeEnum href "../SampleTypeEnum"
 
-          ExperimentalMetadata --> sample_type_enum : sample_type
-
+        
       ExperimentalMetadata : tissue
+        
+          
+    
+    
+    ExperimentalMetadata --> "0..1" Tissue : tissue
+    click Tissue href "../Tissue"
 
-          ExperimentalMetadata --> Tissue : tissue
-
-
+        
+      
 ```
 
 
@@ -176,7 +227,7 @@ attributes:
   other_setup:
     name: other_setup
     description: Describes other setup not covered by sample preparation or grid preparation
-      that may make this dataset unique in   the same publication.
+      that may make this dataset unique in the same publication.
     from_schema: metadata
     exact_mappings:
     - cdp-common:preparation_other_setup
@@ -316,7 +367,7 @@ attributes:
   other_setup:
     name: other_setup
     description: Describes other setup not covered by sample preparation or grid preparation
-      that may make this dataset unique in   the same publication.
+      that may make this dataset unique in the same publication.
     from_schema: metadata
     exact_mappings:
     - cdp-common:preparation_other_setup

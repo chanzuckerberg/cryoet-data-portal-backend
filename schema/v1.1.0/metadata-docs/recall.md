@@ -1,3 +1,5 @@
+
+
 # Slot: recall
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:recall](metadatarecall)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation |  no  |
+| [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation |  no  |
 
 
 

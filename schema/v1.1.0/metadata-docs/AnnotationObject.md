@@ -1,3 +1,5 @@
+
+
 # Class: AnnotationObject
 
 
@@ -12,26 +14,49 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 
 
+
+
 ```mermaid
  classDiagram
     class AnnotationObject
+    click AnnotationObject href "../AnnotationObject"
       AnnotationObject : description
+        
+          
+    
+    
+    AnnotationObject --> "0..1" String : description
+    click String href "../String"
 
-          AnnotationObject --> string : description
-
+        
       AnnotationObject : id
+        
+          
+    
+    
+    AnnotationObject --> "0..1" String : id
+    click String href "../String"
 
-          AnnotationObject --> string : id
-
+        
       AnnotationObject : name
+        
+          
+    
+    
+    AnnotationObject --> "0..1" String : name
+    click String href "../String"
 
-          AnnotationObject --> string : name
-
+        
       AnnotationObject : state
+        
+          
+    
+    
+    AnnotationObject --> "0..1" String : state
+    click String href "../String"
 
-          AnnotationObject --> string : state
-
-
+        
+      
 ```
 
 

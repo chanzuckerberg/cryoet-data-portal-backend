@@ -1,3 +1,5 @@
+
+
 # Slot: email
 
 URI: [cdp-meta:email](metadataemail)
@@ -9,12 +11,13 @@ URI: [cdp-meta:email](metadataemail)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Author](Author.md) | Author of a scientific data entity |  no  |
-[Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
+| [Author](Author.md) | Author of a scientific data entity |  no  |
+| [Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
 
 
 

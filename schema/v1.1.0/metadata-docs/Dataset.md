@@ -1,3 +1,5 @@
+
+
 # Class: Dataset
 
 
@@ -12,85 +14,179 @@ URI: [cdp-meta:Dataset](metadataDataset)
 
 
 
+
+
 ```mermaid
  classDiagram
     class Dataset
+    click Dataset href "../Dataset"
       DatestampedEntity <|-- Dataset
+        click DatestampedEntity href "../DatestampedEntity"
       AuthoredEntity <|-- Dataset
+        click AuthoredEntity href "../AuthoredEntity"
       FundedEntity <|-- Dataset
+        click FundedEntity href "../FundedEntity"
       PicturedEntity <|-- Dataset
+        click PicturedEntity href "../PicturedEntity"
       CrossReferencedEntity <|-- Dataset
+        click CrossReferencedEntity href "../CrossReferencedEntity"
       ExperimentalMetadata <|-- Dataset
-
+        click ExperimentalMetadata href "../ExperimentalMetadata"
+      
       Dataset : authors
+        
+          
+    
+    
+    Dataset --> "1..*" Author : authors
+    click Author href "../Author"
 
-          Dataset --> Author : authors
-
+        
       Dataset : cell_component
+        
+          
+    
+    
+    Dataset --> "0..1" CellComponent : cell_component
+    click CellComponent href "../CellComponent"
 
-          Dataset --> CellComponent : cell_component
-
+        
       Dataset : cell_strain
+        
+          
+    
+    
+    Dataset --> "0..1" CellStrain : cell_strain
+    click CellStrain href "../CellStrain"
 
-          Dataset --> CellStrain : cell_strain
-
+        
       Dataset : cell_type
+        
+          
+    
+    
+    Dataset --> "0..1" CellType : cell_type
+    click CellType href "../CellType"
 
-          Dataset --> CellType : cell_type
-
+        
       Dataset : cross_references
+        
+          
+    
+    
+    Dataset --> "0..1" CrossReferences : cross_references
+    click CrossReferences href "../CrossReferences"
 
-          Dataset --> CrossReferences : cross_references
-
+        
       Dataset : dataset_description
+        
+          
+    
+    
+    Dataset --> "0..1" String : dataset_description
+    click String href "../String"
 
-          Dataset --> string : dataset_description
-
+        
       Dataset : dataset_identifier
+        
+          
+    
+    
+    Dataset --> "0..1" Integer : dataset_identifier
+    click Integer href "../Integer"
 
-          Dataset --> integer : dataset_identifier
-
+        
       Dataset : dataset_title
+        
+          
+    
+    
+    Dataset --> "0..1" String : dataset_title
+    click String href "../String"
 
-          Dataset --> string : dataset_title
-
+        
       Dataset : dates
+        
+          
+    
+    
+    Dataset --> "1" DateStamp : dates
+    click DateStamp href "../DateStamp"
 
-          Dataset --> DateStamp : dates
-
+        
       Dataset : funding
+        
+          
+    
+    
+    Dataset --> "* _recommended_" Funding : funding
+    click Funding href "../Funding"
 
-          Dataset --> Funding : funding
-
+        
       Dataset : grid_preparation
+        
+          
+    
+    
+    Dataset --> "0..1" String : grid_preparation
+    click String href "../String"
 
-          Dataset --> string : grid_preparation
-
+        
       Dataset : key_photos
+        
+          
+    
+    
+    Dataset --> "1" PicturePath : key_photos
+    click PicturePath href "../PicturePath"
 
-          Dataset --> PicturePath : key_photos
-
+        
       Dataset : organism
+        
+          
+    
+    
+    Dataset --> "0..1" Organism : organism
+    click Organism href "../Organism"
 
-          Dataset --> Organism : organism
-
+        
       Dataset : other_setup
+        
+          
+    
+    
+    Dataset --> "0..1" String : other_setup
+    click String href "../String"
 
-          Dataset --> string : other_setup
-
+        
       Dataset : sample_preparation
+        
+          
+    
+    
+    Dataset --> "0..1" String : sample_preparation
+    click String href "../String"
 
-          Dataset --> string : sample_preparation
-
+        
       Dataset : sample_type
+        
+          
+    
+    
+    Dataset --> "0..1" String : sample_type
+    click String href "../String"
 
-          Dataset --> string : sample_type
-
+        
       Dataset : tissue
+        
+          
+    
+    
+    Dataset --> "0..1" Tissue : tissue
+    click Tissue href "../Tissue"
 
-          Dataset --> Tissue : tissue
-
-
+        
+      
 ```
 
 
@@ -109,10 +205,10 @@ URI: [cdp-meta:Dataset](metadataDataset)
 | [dataset_identifier](dataset_identifier.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | An identifier for a CryoET dataset, assigned by the Data Portal | direct |
 | [dataset_title](dataset_title.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Title of a CryoET dataset | direct |
 | [dataset_description](dataset_description.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | A short description of a CryoET dataset, similar to an abstract for a journal... | direct |
-| [dates](dates.md) | 1..1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
+| [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
-| [funding](funding.md) | 0..* _recommended_ <br/> [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
-| [key_photos](key_photos.md) | 1..1 <br/> [PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data | direct |
+| [funding](funding.md) | * _recommended_ <br/> [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
+| [key_photos](key_photos.md) | 1 <br/> [PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data | direct |
 | [cross_references](cross_references.md) | 0..1 <br/> [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications | direct |
 | [sample_type](sample_type.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Type of sample imaged in a CryoET study | direct |
 | [sample_preparation](sample_preparation.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Describes how the sample was prepared | direct |
@@ -182,7 +278,7 @@ attributes:
   dataset_identifier:
     name: dataset_identifier
     description: An identifier for a CryoET dataset, assigned by the Data Portal.
-      Used to identify the dataset as the directory  name in data tree.
+      Used to identify the dataset as the directory name in data tree.
     from_schema: metadata
     exact_mappings:
     - cdp-common:dataset_identifier
@@ -343,7 +439,7 @@ attributes:
   other_setup:
     name: other_setup
     description: Describes other setup not covered by sample preparation or grid preparation
-      that may make this dataset unique in   the same publication.
+      that may make this dataset unique in the same publication.
     from_schema: metadata
     exact_mappings:
     - cdp-common:preparation_other_setup
@@ -437,7 +533,7 @@ attributes:
   dataset_identifier:
     name: dataset_identifier
     description: An identifier for a CryoET dataset, assigned by the Data Portal.
-      Used to identify the dataset as the directory  name in data tree.
+      Used to identify the dataset as the directory name in data tree.
     from_schema: metadata
     exact_mappings:
     - cdp-common:dataset_identifier
@@ -598,7 +694,7 @@ attributes:
   other_setup:
     name: other_setup
     description: Describes other setup not covered by sample preparation or grid preparation
-      that may make this dataset unique in   the same publication.
+      that may make this dataset unique in the same publication.
     from_schema: metadata
     exact_mappings:
     - cdp-common:preparation_other_setup

@@ -1,3 +1,5 @@
+
+
 # Slot: data_acquisition_software
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:data_acquisition_software](metadatadata_acquisition_software)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 

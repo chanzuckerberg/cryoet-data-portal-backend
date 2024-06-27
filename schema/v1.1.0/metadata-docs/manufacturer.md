@@ -1,3 +1,5 @@
+
+
 # Slot: manufacturer
 
 URI: [cdp-meta:manufacturer](metadatamanufacturer)
@@ -9,12 +11,13 @@ URI: [cdp-meta:manufacturer](metadatamanufacturer)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Camera](Camera.md) | The camera used to collect the tilt series |  no  |
-[Microscope](Microscope.md) | The microscope used to collect the tilt series |  no  |
+| [Microscope](Microscope.md) | The microscope used to collect the tilt series |  no  |
+| [Camera](Camera.md) | The camera used to collect the tilt series |  no  |
 
 
 

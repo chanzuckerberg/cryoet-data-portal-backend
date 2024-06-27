@@ -1,3 +1,5 @@
+
+
 # Slot: funding_agency_name
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:funding_agency_name](metadatafunding_agency_name)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... |  no  |
+| [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... |  no  |
 
 
 

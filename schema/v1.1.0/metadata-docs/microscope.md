@@ -1,13 +1,13 @@
 
 
-# Slot: tilt_series_quality
+# Slot: microscope
 
 
-_Author assessment of tilt series quality within the dataset (1-5, 5 is best)_
+_The microscope used to collect the tilt series._
 
 
 
-URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
+URI: [cdp-meta:microscope](metadatamicroscope)
 
 
 
@@ -31,7 +31,7 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 ## Properties
 
-* Range: [xsd:integer](http://www.w3.org/2001/XMLSchema#integer)
+* Range: [Microscope](Microscope.md)
 
 
 
@@ -57,18 +57,15 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 <details>
 ```yaml
-name: tilt_series_quality
-description: Author assessment of tilt series quality within the dataset (1-5, 5 is
-  best)
+name: microscope
+description: The microscope used to collect the tilt series.
 from_schema: metadata
-exact_mappings:
-- cdp-common:tiltseries_tilt_series_quality
 rank: 1000
-alias: tilt_series_quality
+alias: microscope
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: integer
+range: Microscope
 inlined: true
 inlined_as_list: true
 

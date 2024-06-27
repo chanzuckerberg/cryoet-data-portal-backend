@@ -1,3 +1,5 @@
+
+
 # Slot: state
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:state](metadatastate)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated |  no  |
+| [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated |  no  |
 
 
 

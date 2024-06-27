@@ -1,3 +1,5 @@
+
+
 # Slot: energy_filter
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:energy_filter](metadataenergy_filter)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series |  no  |
+| [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series |  no  |
 
 
 

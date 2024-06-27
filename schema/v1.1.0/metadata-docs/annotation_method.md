@@ -1,3 +1,5 @@
+
+
 # Slot: annotation_method
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:annotation_method](metadataannotation_method)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 

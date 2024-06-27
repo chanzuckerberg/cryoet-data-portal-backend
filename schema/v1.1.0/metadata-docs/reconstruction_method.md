@@ -1,3 +1,5 @@
+
+
 # Slot: reconstruction_method
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:reconstruction_method](metadatareconstruction_method)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 

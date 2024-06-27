@@ -1,3 +1,5 @@
+
+
 # Class: TiltSeries
 
 
@@ -12,78 +14,166 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 
 
 
+
+
 ```mermaid
  classDiagram
     class TiltSeries
+    click TiltSeries href "../TiltSeries"
       TiltSeries : acceleration_voltage
+        
+          
+    
+    
+    TiltSeries --> "0..1" Integer : acceleration_voltage
+    click Integer href "../Integer"
 
-          TiltSeries --> integer : acceleration_voltage
-
+        
       TiltSeries : aligned_tiltseries_binning
+        
+          
+    
+    
+    TiltSeries --> "0..1" Integer : aligned_tiltseries_binning
+    click Integer href "../Integer"
 
-          TiltSeries --> integer : aligned_tiltseries_binning
-
+        
       TiltSeries : binning_from_frames
+        
+          
+    
+    
+    TiltSeries --> "0..1" Float : binning_from_frames
+    click Float href "../Float"
 
-          TiltSeries --> float : binning_from_frames
-
+        
       TiltSeries : camera
+        
+          
+    
+    
+    TiltSeries --> "0..1" Camera : camera
+    click Camera href "../Camera"
 
-          TiltSeries --> Camera : camera
-
+        
       TiltSeries : data_acquisition_software
+        
+          
+    
+    
+    TiltSeries --> "0..1" String : data_acquisition_software
+    click String href "../String"
 
-          TiltSeries --> string : data_acquisition_software
-
+        
       TiltSeries : frames_count
+        
+          
+    
+    
+    TiltSeries --> "0..1" Integer : frames_count
+    click Integer href "../Integer"
 
-          TiltSeries --> integer : frames_count
-
+        
       TiltSeries : microscope
+        
+          
+    
+    
+    TiltSeries --> "0..1" Microscope : microscope
+    click Microscope href "../Microscope"
 
-          TiltSeries --> Microscope : microscope
-
+        
       TiltSeries : microscope_additional_info
+        
+          
+    
+    
+    TiltSeries --> "0..1" String : microscope_additional_info
+    click String href "../String"
 
-          TiltSeries --> string : microscope_additional_info
-
+        
       TiltSeries : microscope_optical_setup
+        
+          
+    
+    
+    TiltSeries --> "0..1" MicroscopeOpticalSetup : microscope_optical_setup
+    click MicroscopeOpticalSetup href "../MicroscopeOpticalSetup"
 
-          TiltSeries --> MicroscopeOpticalSetup : microscope_optical_setup
-
+        
       TiltSeries : pixel_spacing
+        
+          
+    
+    
+    TiltSeries --> "0..1" Float : pixel_spacing
+    click Float href "../Float"
 
-          TiltSeries --> float : pixel_spacing
-
+        
       TiltSeries : spherical_aberration_constant
+        
+          
+    
+    
+    TiltSeries --> "0..1" Float : spherical_aberration_constant
+    click Float href "../Float"
 
-          TiltSeries --> float : spherical_aberration_constant
-
+        
       TiltSeries : tilt_axis
+        
+          
+    
+    
+    TiltSeries --> "0..1" Float : tilt_axis
+    click Float href "../Float"
 
-          TiltSeries --> float : tilt_axis
-
+        
       TiltSeries : tilt_range
+        
+          
+    
+    
+    TiltSeries --> "0..1" TiltRange : tilt_range
+    click TiltRange href "../TiltRange"
 
-          TiltSeries --> TiltRange : tilt_range
-
+        
       TiltSeries : tilt_series_quality
+        
+          
+    
+    
+    TiltSeries --> "0..1" Integer : tilt_series_quality
+    click Integer href "../Integer"
 
-          TiltSeries --> integer : tilt_series_quality
-
+        
       TiltSeries : tilt_step
+        
+          
+    
+    
+    TiltSeries --> "0..1" Float : tilt_step
+    click Float href "../Float"
 
-          TiltSeries --> float : tilt_step
-
+        
       TiltSeries : tilting_scheme
+        
+          
+    
+    
+    TiltSeries --> "0..1" String : tilting_scheme
+    click String href "../String"
 
-          TiltSeries --> string : tilting_scheme
-
+        
       TiltSeries : total_flux
+        
+          
+    
+    
+    TiltSeries --> "0..1" Float : total_flux
+    click Float href "../Float"
 
-          TiltSeries --> float : total_flux
-
-
+        
+      
 ```
 
 

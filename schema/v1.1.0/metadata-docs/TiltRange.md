@@ -1,3 +1,5 @@
+
+
 # Class: TiltRange
 
 
@@ -12,18 +14,31 @@ URI: [cdp-meta:TiltRange](metadataTiltRange)
 
 
 
+
+
 ```mermaid
  classDiagram
     class TiltRange
+    click TiltRange href "../TiltRange"
       TiltRange : max
+        
+          
+    
+    
+    TiltRange --> "0..1" Float : max
+    click Float href "../Float"
 
-          TiltRange --> float : max
-
+        
       TiltRange : min
+        
+          
+    
+    
+    TiltRange --> "0..1" Float : min
+    click Float href "../Float"
 
-          TiltRange --> float : min
-
-
+        
+      
 ```
 
 

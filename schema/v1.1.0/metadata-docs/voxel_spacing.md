@@ -1,3 +1,5 @@
+
+
 # Slot: voxel_spacing
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 

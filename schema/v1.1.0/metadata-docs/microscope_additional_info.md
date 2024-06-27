@@ -1,3 +1,5 @@
+
+
 # Slot: microscope_additional_info
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:microscope_additional_info](metadatamicroscope_additional_info)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 

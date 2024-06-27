@@ -1,3 +1,5 @@
+
+
 # Class: AuthoredEntity
 
 
@@ -14,17 +16,27 @@ URI: [cdp-meta:AuthoredEntity](metadataAuthoredEntity)
 
 
 
+
+
 ```mermaid
  classDiagram
     class AuthoredEntity
+    click AuthoredEntity href "../AuthoredEntity"
       AuthoredEntity <|-- Dataset
+        click Dataset href "../Dataset"
       AuthoredEntity <|-- Tomogram
-
+        click Tomogram href "../Tomogram"
+      
       AuthoredEntity : authors
+        
+          
+    
+    
+    AuthoredEntity --> "1..*" Author : authors
+    click Author href "../Author"
 
-          AuthoredEntity --> Author : authors
-
-
+        
+      
 ```
 
 

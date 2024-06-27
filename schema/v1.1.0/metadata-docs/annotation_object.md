@@ -1,3 +1,5 @@
+
+
 # Slot: annotation_object
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:annotation_object](metadataannotation_object)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 

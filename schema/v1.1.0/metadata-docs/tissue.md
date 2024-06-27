@@ -1,8 +1,8 @@
 
 
-# Slot: sample_preparation
+# Slot: tissue
 
-URI: [cdp-meta:sample_preparation](metadatasample_preparation)
+URI: [cdp-meta:tissue](metadatatissue)
 
 
 
@@ -46,8 +46,8 @@ URI: [cdp-meta:sample_preparation](metadatasample_preparation)
 
 <details>
 ```yaml
-name: sample_preparation
-alias: sample_preparation
+name: tissue
+alias: tissue
 domain_of:
 - ExperimentalMetadata
 - Dataset

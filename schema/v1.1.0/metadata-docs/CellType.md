@@ -1,3 +1,5 @@
+
+
 # Class: CellType
 
 
@@ -12,18 +14,31 @@ URI: [cdp-meta:CellType](metadataCellType)
 
 
 
+
+
 ```mermaid
  classDiagram
     class CellType
+    click CellType href "../CellType"
       CellType : id
+        
+          
+    
+    
+    CellType --> "0..1" String : id
+    click String href "../String"
 
-          CellType --> string : id
-
+        
       CellType : name
+        
+          
+    
+    
+    CellType --> "0..1" String : name
+    click String href "../String"
 
-          CellType --> string : name
-
-
+        
+      
 ```
 
 

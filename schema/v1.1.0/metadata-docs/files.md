@@ -1,3 +1,5 @@
+
+
 # Slot: files
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:files](metadatafiles)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 

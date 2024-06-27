@@ -1,30 +1,70 @@
-# Slot: funding
 
-URI: [cdp-meta:funding](metadatafunding)
+
+# Class: Funding
+
+
+_A funding source for a scientific data entity (base for JSON and DB representation)._
+
+
+
+
+
+URI: [cdp-meta:Funding](metadataFunding)
+
+
+
+
+
+
+```mermaid
+ classDiagram
+    class Funding
+    click Funding href "../Funding"
+      Funding : funding_agency_name
+        
+          
+    
+    
+    Funding --> "0..1" String : funding_agency_name
+    click String href "../String"
+
+        
+      Funding : grant_id
+        
+          
+    
+    
+    Funding --> "0..1" String : grant_id
+    click String href "../String"
+
+        
+      
+```
+
 
 
 
 <!-- no inheritance hierarchy -->
 
 
+## Slots
 
-
-## Applicable Classes
-
-| Name | Description | Modifies Slot |
-| --- | --- | --- |
-[FundedEntity](FundedEntity.md) | An entity with associated funding sources |  no  |
-[Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
-
+| Name | Cardinality and Range | Description | Inheritance |
+| ---  | --- | --- | --- |
+| [funding_agency_name](funding_agency_name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The name of the funding source | direct |
+| [grant_id](grant_id.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Grant identifier provided by the funding agency | direct |
 
 
 
 
 
+## Usages
 
-## Properties
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [FundedEntity](FundedEntity.md) | [funding](funding.md) | range | [Funding](Funding.md) |
+| [Dataset](Dataset.md) | [funding](funding.md) | range | [Funding](Funding.md) |
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
 
 
 
@@ -38,17 +78,106 @@ URI: [cdp-meta:funding](metadatafunding)
 
 
 
+### Schema Source
+
+
+* from schema: metadata
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:Funding |
+| native | cdp-meta:Funding |
+
+
+
+
 
 ## LinkML Source
 
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
 <details>
 ```yaml
-name: funding
-alias: funding
-domain_of:
-- FundedEntity
-- Dataset
-range: string
+name: Funding
+description: A funding source for a scientific data entity (base for JSON and DB representation).
+from_schema: metadata
+attributes:
+  funding_agency_name:
+    name: funding_agency_name
+    description: The name of the funding source.
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:funding_agency_name
+    rank: 1000
+    alias: funding_agency_name
+    owner: Funding
+    domain_of:
+    - Funding
+    range: string
+    inlined: true
+    inlined_as_list: true
+  grant_id:
+    name: grant_id
+    description: Grant identifier provided by the funding agency
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:funding_grant_id
+    rank: 1000
+    alias: grant_id
+    owner: Funding
+    domain_of:
+    - Funding
+    range: string
+    inlined: true
+    inlined_as_list: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Funding
+description: A funding source for a scientific data entity (base for JSON and DB representation).
+from_schema: metadata
+attributes:
+  funding_agency_name:
+    name: funding_agency_name
+    description: The name of the funding source.
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:funding_agency_name
+    rank: 1000
+    alias: funding_agency_name
+    owner: Funding
+    domain_of:
+    - Funding
+    range: string
+    inlined: true
+    inlined_as_list: true
+  grant_id:
+    name: grant_id
+    description: Grant identifier provided by the funding agency
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:funding_grant_id
+    rank: 1000
+    alias: grant_id
+    owner: Funding
+    domain_of:
+    - Funding
+    range: string
+    inlined: true
+    inlined_as_list: true
 
 ```
 </details>

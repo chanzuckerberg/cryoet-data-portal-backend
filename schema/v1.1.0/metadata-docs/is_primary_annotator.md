@@ -1,3 +1,5 @@
+
+
 # Slot: is_primary_annotator
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:is_primary_annotator](metadatais_primary_annotator)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
+| [Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
 
 
 

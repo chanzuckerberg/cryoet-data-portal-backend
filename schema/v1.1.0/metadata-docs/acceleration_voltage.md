@@ -1,3 +1,5 @@
+
+
 # Slot: acceleration_voltage
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:acceleration_voltage](metadataacceleration_voltage)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 

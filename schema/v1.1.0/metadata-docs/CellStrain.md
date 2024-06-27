@@ -1,3 +1,5 @@
+
+
 # Class: CellStrain
 
 
@@ -12,18 +14,31 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
 
 
 
+
+
 ```mermaid
  classDiagram
     class CellStrain
+    click CellStrain href "../CellStrain"
       CellStrain : id
+        
+          
+    
+    
+    CellStrain --> "0..1" String : id
+    click String href "../String"
 
-          CellStrain --> string : id
-
+        
       CellStrain : name
+        
+          
+    
+    
+    CellStrain --> "0..1" String : name
+    click String href "../String"
 
-          CellStrain --> string : name
-
-
+        
+      
 ```
 
 

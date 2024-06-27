@@ -1,3 +1,5 @@
+
+
 # Slot: dataset_title
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:dataset_title](metadatadataset_title)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 
 
 

@@ -1,3 +1,5 @@
+
+
 # Class: Author
 
 
@@ -12,42 +14,85 @@ URI: [cdp-meta:Author](metadataAuthor)
 
 
 
+
+
 ```mermaid
  classDiagram
     class Author
+    click Author href "../Author"
       Author : affiliation_address
+        
+          
+    
+    
+    Author --> "0..1" String : affiliation_address
+    click String href "../String"
 
-          Author --> string : affiliation_address
-
+        
       Author : affiliation_identifier
+        
+          
+    
+    
+    Author --> "0..1 _recommended_" String : affiliation_identifier
+    click String href "../String"
 
-          Author --> string : affiliation_identifier
-
+        
       Author : affiliation_name
+        
+          
+    
+    
+    Author --> "0..1" String : affiliation_name
+    click String href "../String"
 
-          Author --> string : affiliation_name
-
+        
       Author : email
+        
+          
+    
+    
+    Author --> "0..1" String : email
+    click String href "../String"
 
-          Author --> string : email
-
+        
       Author : is_corresponding
+        
+          
+    
+    
+    Author --> "0..1" Boolean : is_corresponding
+    click Boolean href "../Boolean"
 
-          Author --> boolean : is_corresponding
-
-      Author : is_primary_author
-
-          Author --> boolean : is_primary_author
-
+        
       Author : name
+        
+          
+    
+    
+    Author --> "0..1" String : name
+    click String href "../String"
 
-          Author --> string : name
-
+        
       Author : ORCID
+        
+          
+    
+    
+    Author --> "0..1 _recommended_" String : ORCID
+    click String href "../String"
 
-          Author --> string : ORCID
+        
+      Author : primary_author_status
+        
+          
+    
+    
+    Author --> "0..1" Boolean : primary_author_status
+    click Boolean href "../Boolean"
 
-
+        
+      
 ```
 
 
@@ -66,7 +111,7 @@ URI: [cdp-meta:Author](metadataAuthor)
 | [affiliation_address](affiliation_address.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The address of the author's affiliation | direct |
 | [affiliation_identifier](affiliation_identifier.md) | 0..1 _recommended_ <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | A Research Organization Registry (ROR) identifier | direct |
 | [is_corresponding](is_corresponding.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | Whether the author is a corresponding author | direct |
-| [is_primary_author](is_primary_author.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | Whether the author is a primary author | direct |
+| [primary_author_status](primary_author_status.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | Whether the author is a primary author | direct |
 | [ORCID](ORCID.md) | 0..1 _recommended_ <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | A unique, persistent identifier for researchers, provided by ORCID | direct |
 
 
@@ -224,14 +269,14 @@ attributes:
     range: boolean
     inlined: true
     inlined_as_list: true
-  is_primary_author:
-    name: is_primary_author
+  primary_author_status:
+    name: primary_author_status
     description: Whether the author is a primary author.
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_primary_author_status
     rank: 1000
-    alias: is_primary_author
+    alias: primary_author_status
     owner: Author
     domain_of:
     - Author
@@ -365,14 +410,14 @@ attributes:
     range: boolean
     inlined: true
     inlined_as_list: true
-  is_primary_author:
-    name: is_primary_author
+  primary_author_status:
+    name: primary_author_status
     description: Whether the author is a primary author.
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_primary_author_status
     rank: 1000
-    alias: is_primary_author
+    alias: primary_author_status
     owner: Author
     domain_of:
     - Author

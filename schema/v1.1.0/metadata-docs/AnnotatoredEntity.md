@@ -1,3 +1,5 @@
+
+
 # Class: AnnotatoredEntity
 
 
@@ -14,16 +16,25 @@ URI: [cdp-meta:AnnotatoredEntity](metadataAnnotatoredEntity)
 
 
 
+
+
 ```mermaid
  classDiagram
     class AnnotatoredEntity
+    click AnnotatoredEntity href "../AnnotatoredEntity"
       AnnotatoredEntity <|-- Annotation
-
+        click Annotation href "../Annotation"
+      
       AnnotatoredEntity : authors
+        
+          
+    
+    
+    AnnotatoredEntity --> "1..*" Annotator : authors
+    click Annotator href "../Annotator"
 
-          AnnotatoredEntity --> Annotator : authors
-
-
+        
+      
 ```
 
 

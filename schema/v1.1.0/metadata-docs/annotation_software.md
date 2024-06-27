@@ -1,3 +1,5 @@
+
+
 # Slot: annotation_software
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:annotation_software](metadataannotation_software)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 

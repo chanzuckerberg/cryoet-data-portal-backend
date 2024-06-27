@@ -1,3 +1,5 @@
+
+
 # Slot: related_database_links
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:related_database_links](metadatarelated_database_links)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
+| [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
 
 
 

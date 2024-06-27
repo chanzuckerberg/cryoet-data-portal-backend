@@ -1,3 +1,5 @@
+
+
 # Slot: is_corresponding
 
 URI: [cdp-meta:is_corresponding](metadatais_corresponding)
@@ -9,12 +11,13 @@ URI: [cdp-meta:is_corresponding](metadatais_corresponding)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Author](Author.md) | Author of a scientific data entity |  no  |
-[Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
+| [Author](Author.md) | Author of a scientific data entity |  no  |
+| [Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
 
 
 

@@ -1,3 +1,5 @@
+
+
 # Slot: release_date
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:release_date](metadatarelease_date)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |  yes  |
+| [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |  yes  |
 
 
 
