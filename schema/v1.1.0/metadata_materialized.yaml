@@ -916,7 +916,6 @@ classes:
     - DatestampedEntity
     - AuthoredEntity
     - FundedEntity
-    - PicturedEntity
     - CrossReferencedEntity
     - ExperimentalMetadata
     attributes:
@@ -1002,18 +1001,6 @@ classes:
         - FundedEntity
         range: Funding
         recommended: true
-        inlined: true
-        inlined_as_list: true
-      key_photos:
-        name: key_photos
-        description: A set of paths to representative images of a piece of data.
-        from_schema: metadata
-        alias: key_photos
-        owner: Dataset
-        domain_of:
-        - PicturedEntity
-        range: PicturePath
-        required: true
         inlined: true
         inlined_as_list: true
       cross_references:
@@ -1595,7 +1582,6 @@ classes:
     from_schema: metadata
     mixins:
     - AuthoredEntity
-    - PicturedEntity
     attributes:
       voxel_spacing:
         name: voxel_spacing
@@ -1754,18 +1740,6 @@ classes:
         - AuthoredEntity
         - AnnotatoredEntity
         range: Author
-        required: true
-        inlined: true
-        inlined_as_list: true
-      key_photos:
-        name: key_photos
-        description: A set of paths to representative images of a piece of data.
-        from_schema: metadata
-        alias: key_photos
-        owner: Tomogram
-        domain_of:
-        - PicturedEntity
-        range: PicturePath
         required: true
         inlined: true
         inlined_as_list: true

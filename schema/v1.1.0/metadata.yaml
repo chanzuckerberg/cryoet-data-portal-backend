@@ -294,7 +294,6 @@ classes:
       - DatestampedEntity
       - AuthoredEntity
       - FundedEntity
-      - PicturedEntity
       - CrossReferencedEntity
       - ExperimentalMetadata
 
@@ -455,7 +454,6 @@ classes:
     description: Metadata describing a tomogram.
     mixins:
       - AuthoredEntity
-      - PicturedEntity
 
     attributes:
       voxel_spacing:

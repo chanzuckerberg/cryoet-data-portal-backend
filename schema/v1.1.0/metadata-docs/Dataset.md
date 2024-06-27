@@ -26,8 +26,6 @@ URI: [cdp-meta:Dataset](metadataDataset)
         click AuthoredEntity href "../AuthoredEntity"
       FundedEntity <|-- Dataset
         click FundedEntity href "../FundedEntity"
-      PicturedEntity <|-- Dataset
-        click PicturedEntity href "../PicturedEntity"
       CrossReferencedEntity <|-- Dataset
         click CrossReferencedEntity href "../CrossReferencedEntity"
       ExperimentalMetadata <|-- Dataset
@@ -132,15 +130,6 @@ URI: [cdp-meta:Dataset](metadataDataset)
     click String href "../String"
 
         
-      Dataset : key_photos
-        
-          
-    
-    
-    Dataset --> "1" PicturePath : key_photos
-    click PicturePath href "../PicturePath"
-
-        
       Dataset : organism
         
           
@@ -194,7 +183,7 @@ URI: [cdp-meta:Dataset](metadataDataset)
 
 
 ## Inheritance
-* **Dataset** [ [DatestampedEntity](DatestampedEntity.md) [AuthoredEntity](AuthoredEntity.md) [FundedEntity](FundedEntity.md) [PicturedEntity](PicturedEntity.md) [CrossReferencedEntity](CrossReferencedEntity.md) [ExperimentalMetadata](ExperimentalMetadata.md)]
+* **Dataset** [ [DatestampedEntity](DatestampedEntity.md) [AuthoredEntity](AuthoredEntity.md) [FundedEntity](FundedEntity.md) [CrossReferencedEntity](CrossReferencedEntity.md) [ExperimentalMetadata](ExperimentalMetadata.md)]
 
 
 
@@ -208,7 +197,6 @@ URI: [cdp-meta:Dataset](metadataDataset)
 | [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
 | [funding](funding.md) | * _recommended_ <br/> [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
-| [key_photos](key_photos.md) | 1 <br/> [PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data | direct |
 | [cross_references](cross_references.md) | 0..1 <br/> [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications | direct |
 | [sample_type](sample_type.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Type of sample imaged in a CryoET study | direct |
 | [sample_preparation](sample_preparation.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Describes how the sample was prepared | direct |
@@ -271,7 +259,6 @@ mixins:
 - DatestampedEntity
 - AuthoredEntity
 - FundedEntity
-- PicturedEntity
 - CrossReferencedEntity
 - ExperimentalMetadata
 attributes:
@@ -366,20 +353,6 @@ attributes:
     - Dataset
     range: Funding
     recommended: true
-    inlined: true
-    inlined_as_list: true
-  key_photos:
-    name: key_photos
-    description: A set of paths to representative images of a piece of data.
-    from_schema: metadata
-    alias: key_photos
-    owner: Dataset
-    domain_of:
-    - PicturedEntity
-    - Dataset
-    - Tomogram
-    range: PicturePath
-    required: true
     inlined: true
     inlined_as_list: true
   cross_references:
@@ -526,7 +499,6 @@ mixins:
 - DatestampedEntity
 - AuthoredEntity
 - FundedEntity
-- PicturedEntity
 - CrossReferencedEntity
 - ExperimentalMetadata
 attributes:
@@ -621,20 +593,6 @@ attributes:
     - Dataset
     range: Funding
     recommended: true
-    inlined: true
-    inlined_as_list: true
-  key_photos:
-    name: key_photos
-    description: A set of paths to representative images of a piece of data.
-    from_schema: metadata
-    alias: key_photos
-    owner: Dataset
-    domain_of:
-    - PicturedEntity
-    - Dataset
-    - Tomogram
-    range: PicturePath
-    required: true
     inlined: true
     inlined_as_list: true
   cross_references:

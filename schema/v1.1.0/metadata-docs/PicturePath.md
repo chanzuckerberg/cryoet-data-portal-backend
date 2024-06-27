@@ -63,8 +63,6 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
 | [PicturedEntity](PicturedEntity.md) | [key_photos](key_photos.md) | range | [PicturePath](PicturePath.md) |
-| [Dataset](Dataset.md) | [key_photos](key_photos.md) | range | [PicturePath](PicturePath.md) |
-| [Tomogram](Tomogram.md) | [key_photos](key_photos.md) | range | [PicturePath](PicturePath.md) |
 
 
 

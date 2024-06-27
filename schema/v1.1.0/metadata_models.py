@@ -284,7 +284,7 @@ class ExperimentalMetadata(ConfiguredBaseModel):
     cell_component: Optional[CellComponent] = Field(None, description="""The cellular component from which the sample was derived.""")
 
 
-class Dataset(ExperimentalMetadata, PicturedEntity, CrossReferencedEntity, FundedEntity, AuthoredEntity, DatestampedEntity):
+class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, AuthoredEntity, DatestampedEntity):
     """
     High-level description of a cryoET dataset.
     """
@@ -294,7 +294,6 @@ class Dataset(ExperimentalMetadata, PicturedEntity, CrossReferencedEntity, Funde
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""")
     authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""")
     funding: Optional[List[Funding]] = Field(default_factory=list, description="""A funding source for a scientific data entity (base for JSON and DB representation).""")
-    key_photos: PicturePath = Field(..., description="""A set of paths to representative images of a piece of data.""")
     cross_references: Optional[CrossReferences] = Field(None, description="""A set of cross-references to other databases and publications.""")
     sample_type: Optional[str] = Field(None, description="""Type of sample imaged in a CryoET study.""")
     sample_preparation: Optional[str] = Field(None, description="""Describes how the sample was prepared.""")
@@ -381,7 +380,7 @@ class TomogramOffset(ConfiguredBaseModel):
     z: Optional[str] = Field(None)
 
 
-class Tomogram(PicturedEntity, AuthoredEntity):
+class Tomogram(AuthoredEntity):
     """
     Metadata describing a tomogram.
     """
@@ -397,7 +396,6 @@ class Tomogram(PicturedEntity, AuthoredEntity):
     size: Optional[TomogramSize] = Field(None, description="""The size of a tomogram in voxels in each dimension.""")
     offset: Optional[TomogramOffset] = Field(None, description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""")
     authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""")
-    key_photos: PicturePath = Field(..., description="""A set of paths to representative images of a piece of data.""")
 
 
 class AnnotationFile(ConfiguredBaseModel):

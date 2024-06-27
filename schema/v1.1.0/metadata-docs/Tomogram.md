@@ -22,8 +22,6 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
     click Tomogram href "../Tomogram"
       AuthoredEntity <|-- Tomogram
         click AuthoredEntity href "../AuthoredEntity"
-      PicturedEntity <|-- Tomogram
-        click PicturedEntity href "../PicturedEntity"
       
       Tomogram : affine_transformation_matrix
         
@@ -59,15 +57,6 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
     
     Tomogram --> "0..1" FiducialAlignmentStatusEnum : fiducial_alignment_status
     click FiducialAlignmentStatusEnum href "../FiducialAlignmentStatusEnum"
-
-        
-      Tomogram : key_photos
-        
-          
-    
-    
-    Tomogram --> "1" PicturePath : key_photos
-    click PicturePath href "../PicturePath"
 
         
       Tomogram : offset
@@ -150,7 +139,7 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 
 ## Inheritance
-* **Tomogram** [ [AuthoredEntity](AuthoredEntity.md) [PicturedEntity](PicturedEntity.md)]
+* **Tomogram** [ [AuthoredEntity](AuthoredEntity.md)]
 
 
 
@@ -170,7 +159,6 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 | [size](size.md) | 0..1 <br/> [TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension | direct |
 | [offset](offset.md) | 0..1 <br/> [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
-| [key_photos](key_photos.md) | 1 <br/> [PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data | direct |
 
 
 
@@ -221,7 +209,6 @@ description: Metadata describing a tomogram.
 from_schema: metadata
 mixins:
 - AuthoredEntity
-- PicturedEntity
 attributes:
   voxel_spacing:
     name: voxel_spacing
@@ -393,20 +380,6 @@ attributes:
     - Tomogram
     - Annotation
     range: Author
-    required: true
-    inlined: true
-    inlined_as_list: true
-  key_photos:
-    name: key_photos
-    description: A set of paths to representative images of a piece of data.
-    from_schema: metadata
-    alias: key_photos
-    owner: Tomogram
-    domain_of:
-    - PicturedEntity
-    - Dataset
-    - Tomogram
-    range: PicturePath
     required: true
     inlined: true
     inlined_as_list: true
@@ -423,7 +396,6 @@ description: Metadata describing a tomogram.
 from_schema: metadata
 mixins:
 - AuthoredEntity
-- PicturedEntity
 attributes:
   voxel_spacing:
     name: voxel_spacing
@@ -595,20 +567,6 @@ attributes:
     - Tomogram
     - Annotation
     range: Author
-    required: true
-    inlined: true
-    inlined_as_list: true
-  key_photos:
-    name: key_photos
-    description: A set of paths to representative images of a piece of data.
-    from_schema: metadata
-    alias: key_photos
-    owner: Tomogram
-    domain_of:
-    - PicturedEntity
-    - Dataset
-    - Tomogram
-    range: PicturePath
     required: true
     inlined: true
     inlined_as_list: true

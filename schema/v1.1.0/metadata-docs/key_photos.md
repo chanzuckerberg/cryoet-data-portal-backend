@@ -2,6 +2,11 @@
 
 # Slot: key_photos
 
+
+_A set of paths to representative images of a piece of data._
+
+
+
 URI: [cdp-meta:key_photos](metadatakey_photos)
 
 
@@ -16,8 +21,6 @@ URI: [cdp-meta:key_photos](metadatakey_photos)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
-| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 | [PicturedEntity](PicturedEntity.md) | An entity with associated preview images |  no  |
 
 
@@ -28,7 +31,9 @@ URI: [cdp-meta:key_photos](metadatakey_photos)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [PicturePath](PicturePath.md)
+
+* Required: True
 
 
 
@@ -42,18 +47,30 @@ URI: [cdp-meta:key_photos](metadatakey_photos)
 
 
 
+### Schema Source
+
+
+* from schema: metadata
+
+
+
 
 ## LinkML Source
 
 <details>
 ```yaml
 name: key_photos
+description: A set of paths to representative images of a piece of data.
+from_schema: metadata
+rank: 1000
 alias: key_photos
+owner: PicturedEntity
 domain_of:
 - PicturedEntity
-- Dataset
-- Tomogram
-range: string
+range: PicturePath
+required: true
+inlined: true
+inlined_as_list: true
 
 ```
 </details>

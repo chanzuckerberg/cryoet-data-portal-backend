@@ -22,11 +22,6 @@ URI: [cdp-meta:PicturedEntity](metadataPicturedEntity)
  classDiagram
     class PicturedEntity
     click PicturedEntity href "../PicturedEntity"
-      PicturedEntity <|-- Dataset
-        click Dataset href "../Dataset"
-      PicturedEntity <|-- Tomogram
-        click Tomogram href "../Tomogram"
-      
       PicturedEntity : key_photos
         
           
@@ -109,8 +104,6 @@ attributes:
     owner: PicturedEntity
     domain_of:
     - PicturedEntity
-    - Dataset
-    - Tomogram
     range: PicturePath
     required: true
     inlined: true
@@ -137,8 +130,6 @@ attributes:
     owner: PicturedEntity
     domain_of:
     - PicturedEntity
-    - Dataset
-    - Tomogram
     range: PicturePath
     required: true
     inlined: true
