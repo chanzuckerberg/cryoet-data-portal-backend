@@ -11,7 +11,7 @@ annotations:
     authors: &id001
     - ORCID: 0000-0002-9903-3667
       name: Sara Goetz
-      primary_annotator_status: true
+      primary_author_status: true
     - ORCID: 0000-0002-4691-9501
       name: Irene de Teresa Trueba
     - ORCID: 0000-0003-0901-8701

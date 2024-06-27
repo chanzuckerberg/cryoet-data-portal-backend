@@ -12,7 +12,7 @@ annotations:
     - ORCID: 0000-0003-4368-2526
       corresponding_author_status: false
       name: Liang Xue
-      primary_annotator_status: true
+      primary_author_status: true
     - ORCID: 0000-0001-5454-7755
       corresponding_author_status: true
       name: Cramer Patrick

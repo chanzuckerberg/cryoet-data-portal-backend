@@ -15,7 +15,7 @@ annotations:
       ground_truth_status: False
       authors: &annotation_authors
         - name: Robert Kiewisz
-          primary_annotator_status: true
+          primary_author_status: true
         - name: Tristan Bepler
           corresponding_author_status: true
       annotation_software: TARDIS

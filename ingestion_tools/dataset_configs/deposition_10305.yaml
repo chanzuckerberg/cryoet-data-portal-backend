@@ -15,7 +15,7 @@ annotations:
       ground_truth_status: True
       authors: &annotation_authors
         - name: Mohammed Kaplan
-          primary_annotator_status: true
+          primary_author_status: true
           corresponding_author_status: true
       annotation_software: "IMOD"
       version: '1.0'

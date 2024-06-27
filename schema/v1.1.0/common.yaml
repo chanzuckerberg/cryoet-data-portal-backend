@@ -95,11 +95,6 @@ slots:
     description: >-
       Whether the author is a primary author.
 
-  author_primary_annotator_status:
-    range: boolean
-    description: >-
-      Whether the author is a primary annotator.
-
   author_list_order:
     range: integer
     required: true

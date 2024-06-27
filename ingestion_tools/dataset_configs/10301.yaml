@@ -10,13 +10,13 @@ annotations:
     authors: &id001
     - corresponding_author_status: false
       name: Ron Kelley
-      primary_annotator_status: true
+      primary_author_status: true
     - name: Xianjun Zhang
     - name: Martin Obr
     - ORCID: 0000-0003-2020-3561
       corresponding_author_status: true
       name: Sagar Khavnekar
-      primary_annotator_status: true
+      primary_author_status: true
     - corresponding_author_status: false
       name: Ricardo D. Righetto
     - corresponding_author_status: false

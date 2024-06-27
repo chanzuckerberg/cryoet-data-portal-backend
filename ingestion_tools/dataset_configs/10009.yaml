@@ -11,10 +11,10 @@ annotations:
     authors: &id001
     - ORCID: 0000-0003-4978-8516
       name: Hugo G. van den Hoek
-      primary_annotator_status: true
+      primary_author_status: true
     - ORCID: 0000-0002-2631-2294
       name: Nikolai Klena
-      primary_annotator_status: true
+      primary_author_status: true
     - ORCID: 0000-0001-6248-8863
       name: Mareike Jordan
     - name: Alvarez Viar G

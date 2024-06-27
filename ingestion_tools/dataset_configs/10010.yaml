@@ -11,7 +11,7 @@ annotations:
     authors: &id001
     - ORCID: 0000-0001-6346-5137
       name: Michaela Medina
-      primary_annotator_status: true
+      primary_author_status: true
     - ORCID: 0000-0001-5908-7882
       corresponding_author_status: true
       name: Danielle A. Grotjahn

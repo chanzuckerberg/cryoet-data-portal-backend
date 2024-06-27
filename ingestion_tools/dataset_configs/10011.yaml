@@ -12,7 +12,7 @@ annotations:
     - ORCID: 0000-XXXXXX
       corresponding_author_status: OPTIONAL
       name: RECOMMENDED
-      primary_annotator_status: OPTIONAL
+      primary_author_status: OPTIONAL
     confidence:
       ground_truth_used: OPTIONAL
       precision: REQUIRED IF ground_truth_used is specified

@@ -15,39 +15,39 @@ annotations:
     - ORCID: 0000-0002-1632-7820
       corresponding_author_status: false
       name: Florian Beck
-      primary_annotator_status: true
+      primary_author_status: true
     - ORCID: 0009-0008-3301-8270
       corresponding_author_status: false
       name: "Oda Helene Schi\xF8tz"
-      primary_annotator_status: false
+      primary_author_status: false
     - ORCID: 0000-0002-8481-6845
       corresponding_author_status: false
       name: Christoph J.O. Kaiser
-      primary_annotator_status: false
+      primary_author_status: false
     - ORCID: 0000-0002-8350-6503
       corresponding_author_status: false
       name: Sven Klumpe
-      primary_annotator_status: false
+      primary_author_status: false
     - ORCID: 0000-0003-4693-3220
       corresponding_author_status: false
       name: Dustin R. Morado
-      primary_annotator_status: false
+      primary_author_status: false
     - ORCID: 0000-0003-2331-4638
       corresponding_author_status: false
       name: Matthias Poege
-      primary_annotator_status: false
+      primary_author_status: false
     - ORCID: 0000-0002-5060-529X
       corresponding_author_status: false
       name: Jonathan Schneider
-      primary_annotator_status: false
+      primary_author_status: false
     - ORCID: 0000-0003-2240-093X
       corresponding_author_status: false
       name: Christopher Thompson
-      primary_annotator_status: false
+      primary_author_status: false
     - ORCID: 0000-0002-6402-8315
       corresponding_author_status: true
       name: "M. J\xFCrgen Plitzko"
-      primary_annotator_status: false
+      primary_author_status: false
     dates: &id001
       deposition_date: '2023-05-01'
       last_modified_date: '2023-06-01'

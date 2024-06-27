@@ -16,15 +16,15 @@ annotations:
       authors: &annotation_authors
         - name: Xueying Zhan
           ORCID: 0000-0002-8252-0178
-          primary_annotator_status: true
+          primary_author_status: true
           corresponding_author_status: false
         - name: Yujia Gao
           ORCID: 0009-0009-6482-1303
-          primary_annotator_status: true
+          primary_author_status: true
           corresponding_author_status: false
         - name: Min Xu
           ORCID: 0000-0002-0881-5891
-          primary_annotator_status: false
+          primary_author_status: false
           corresponding_author_status: true
       annotation_software: "membrain-seg 0.0.1"
       version: '1.0'

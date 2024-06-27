@@ -16,11 +16,11 @@ annotations:
       authors: &annotation_authors
         - name: Utz Heinrich Ermel
           ORCID: 0000-0003-4685-037X
-          primary_annotator_status: true
+          primary_author_status: true
           corresponding_author_status: true
         - name: Kyle I. S. Harrington
           ORCID: 0000-0002-7237-1973
-          primary_annotator_status: false
+          primary_author_status: false
           corresponding_author_status: false
       annotation_software: "membrain-seg 0.0.1"
       version: '1.0'
