@@ -43,9 +43,9 @@ annotations:
       precision: null
       recall: null
     dates: &id002
-      deposition_date: 2023-05-01
-      last_modified_date: 2023-11-08
-      release_date: 2023-11-30
+      deposition_date: '2023-05-01'
+      last_modified_date: '2023-11-08'
+      release_date: '2023-11-30'
     ground_truth_status: true
     is_curator_recommended: true
     method_type: manual

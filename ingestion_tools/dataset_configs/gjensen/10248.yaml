@@ -23,9 +23,9 @@ datasets:
     dataset_identifier: 10248
     dataset_title: wild type B. subtilis
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: quantifoil grid R2/2, 20nm gold, 100% humidity
     organism:
       name: Bacillus subtilis

@@ -22,9 +22,9 @@ datasets:
     dataset_identifier: 10160
     dataset_title: Hylemonella + Bdellovibrio
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: 'Vitrobot setting: 100% humidity, 4 ul sample, 10 nm BSA treated
       gold, -3 offset, 4 s blot time, no drain, ethane/propane mix'
     organism:

@@ -27,9 +27,9 @@ datasets:
     dataset_identifier: 10170
     dataset_title: Cryo-sectioned Jurkat VSVG-pNL4GFP
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: cryo-sectioned by Mark Ladinsky
     organism:
       name: Homo sapiens

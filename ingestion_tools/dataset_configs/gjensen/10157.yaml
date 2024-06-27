@@ -22,9 +22,9 @@ datasets:
     dataset_identifier: 10157
     dataset_title: Bdellovibrio/Vibrio cholerae
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: "Vitrobot settings: 100% humidity, 3\xB5l sample, 10 nm BSA\
       \ treated gold. -3 offset, 4 sec blot time, no drain. Ethane/propane mix. Quantifoil\
       \ Cu R2/2 200 grid"

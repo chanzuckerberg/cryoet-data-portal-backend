@@ -45,9 +45,9 @@ annotations:
     confidence:
       ground_truth_used: author estimation
     dates: &id001
-      deposition_date: 2023-10-11
-      last_modified_date: 2023-11-20
-      release_date: 2023-12-10
+      deposition_date: '2023-10-11'
+      last_modified_date: '2023-11-20'
+      release_date: '2023-12-10'
     ground_truth_status: true
     is_curator_recommended: true
     method_type: automated

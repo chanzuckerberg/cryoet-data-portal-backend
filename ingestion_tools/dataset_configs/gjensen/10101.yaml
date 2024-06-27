@@ -22,9 +22,9 @@ datasets:
     dataset_identifier: 10101
     dataset_title: P. mirabilis Planktonic cell of Proteus
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: 'single tilt. constant angular increment, step: 1.0. tilt range:
       (-60, 60). dosage: 195/A2. defocus: -10um. magnification: 22500.'
     organism:

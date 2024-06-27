@@ -23,9 +23,9 @@ datasets:
     dataset_identifier: 10081
     dataset_title: L. pneumophila JV9082
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: "6 grids were frozen for the JV9082 strain (2x concentrated\
       \ culture); Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot force\
       \ 6, blot time 4.5 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane mix.\

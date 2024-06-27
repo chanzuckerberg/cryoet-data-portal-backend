@@ -23,9 +23,9 @@ datasets:
     dataset_identifier: 10054
     dataset_title: Coxiella burnetii_wt
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: Refer to Heinzen lab
     organism:
       name: Coxiella burnetii
