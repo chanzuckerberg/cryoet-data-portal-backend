@@ -575,19 +575,46 @@ slots:
   annotation_file_s3_path:
     range: string
     description: S3 path for the annotation file
-  annotation_file_shape_type:
-    range: string
-    description: Describe whether this is a Point, OrientedPoint, or SegmentationMask file
   annotation_file_annotation_id:
     range: integer
     description: Reference to the annotation this file applies to
   annotation_file_path:
     range: string
     description: Path to the annotation file relative to the dataset root.
+  annotation_file_glob_string:
+    range: string
+    description: Glob string to match annotation files in the dataset.
   annotation_file_is_visualization_default:
     range: boolean
     description: This annotation will be rendered in neuroglancer by default.
   #Annotation (Annotation): The annotation this file is a part of
+
+  # ============================================================================
+  # Annotation File shape-specific slots
+  # ============================================================================
+  annotation_file_oriented_point_binning:
+    range: integer
+    description: The binning factor for a oriented point annotation file.
+  annotation_file_oriented_point_filter_value:
+    range: string
+    description: The filter value for a oriented point annotation file.
+  annotation_file_oriented_point_order:
+    range: string
+    description: The order of axes for a oriented point annotation file.
+  annotation_file_point_columns:
+    range: string
+    description: The columns used in a point annotation file.
+  annotation_file_point_delimiter:
+    range: string
+    description: The delimiter used in a oriented point annotation file.
+  annotation_file_point_order:
+    range: string
+    description: The order of axes for a point annotation file.
+  annotation_file_semantic_segmentation_mask_label:
+    range: integer
+    description: The mask label for a semantic segmentation mask annotation file.
+
+  # ============================================================================
 
 enums:
   # ============================================================================
@@ -640,15 +667,21 @@ enums:
   annotation_shape_enum:
     description: Annotation shape types available on the data portal.
     permissible_values:
+      InstanceSegmentation: 
+        description: Annotation that identifies individual instances of object shapes.
       Point:
-        description: Annotations were generated manually.
+        description: Annotation that identifies points in the volume.
       OrientedPoint:
-        description: Annotations were generated semi-automatically.
+        description: Annotation that identifies points along with orientation in the volume.
       SegmentationMask:
-        description: Annotations were generated automatically.
+        description: Annotation that identifies an object.
+      SemanticSegmentationMask:
+        description: Annotation that identifies classes of objects.
 
 
 classes:
+  Any:
+    class_uri: linkml:Any
   # ============================================================================
   # Deposition, release and last modified dates
   # ============================================================================

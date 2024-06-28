@@ -41,7 +41,7 @@ class AnnotationSource(TypedDict):
     order: str | None
     filter_value: str | None
     is_visualization_default: bool | None
-    mask_label: str | None
+    mask_label: int | None
 
 
 class AnnotationMap(TypedDict):

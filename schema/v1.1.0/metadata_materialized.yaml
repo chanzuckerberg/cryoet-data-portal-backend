@@ -96,15 +96,22 @@ enums:
     description: Annotation shape types available on the data portal.
     from_schema: metadata
     permissible_values:
+      InstanceSegmentation:
+        text: InstanceSegmentation
+        description: Annotation that identifies individual instances of object shapes.
       Point:
         text: Point
-        description: Annotations were generated manually.
+        description: Annotation that identifies points in the volume.
       OrientedPoint:
         text: OrientedPoint
-        description: Annotations were generated semi-automatically.
+        description: Annotation that identifies points along with orientation in the
+          volume.
       SegmentationMask:
         text: SegmentationMask
-        description: Annotations were generated automatically.
+        description: Annotation that identifies an object.
+      SemanticSegmentationMask:
+        text: SemanticSegmentationMask
+        description: Annotation that identifies classes of objects.
 classes:
   PicturePath:
     name: PicturePath
@@ -1546,7 +1553,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: string
+        range: integer
         inlined: true
         inlined_as_list: true
       y:
@@ -1559,7 +1566,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: string
+        range: integer
         inlined: true
         inlined_as_list: true
       z:
@@ -1572,7 +1579,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: string
+        range: integer
         inlined: true
         inlined_as_list: true
   Tomogram:
@@ -1742,64 +1749,6 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-  AnnotationFile:
-    name: AnnotationFile
-    description: Metadata describing a file containing an annotation.
-    from_schema: metadata
-    attributes:
-      format:
-        name: format
-        description: File format for this file
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_file_format
-        alias: format
-        owner: AnnotationFile
-        domain_of:
-        - AnnotationFile
-        range: string
-        inlined: true
-        inlined_as_list: true
-      shape:
-        name: shape
-        description: Describe whether this is a Point, OrientedPoint, or SegmentationMask
-          file
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_file_shape_type
-        alias: shape
-        owner: AnnotationFile
-        domain_of:
-        - AnnotationFile
-        range: string
-        inlined: true
-        inlined_as_list: true
-      path:
-        name: path
-        description: Path to the annotation file relative to the dataset root.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_file_path
-        alias: path
-        owner: AnnotationFile
-        domain_of:
-        - AnnotationFile
-        range: string
-        inlined: true
-        inlined_as_list: true
-      is_visualization_default:
-        name: is_visualization_default
-        description: This annotation will be rendered in neuroglancer by default.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_file_is_visualization_default
-        alias: is_visualization_default
-        owner: AnnotationFile
-        domain_of:
-        - AnnotationFile
-        range: boolean
-        inlined: true
-        inlined_as_list: true
   AnnotationConfidence:
     name: AnnotationConfidence
     description: Metadata describing the confidence of an annotation.
@@ -1914,6 +1863,411 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
+  AnnotationFile:
+    name: AnnotationFile
+    description: File and sourcing data for an annotation.
+    from_schema: metadata
+    attributes:
+      file_format:
+        name: file_format
+        description: File format for this file
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_format
+        alias: file_format
+        owner: AnnotationFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        description: Glob string to match annotation files in the dataset.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_glob_string
+        alias: glob_string
+        owner: AnnotationFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        description: This annotation will be rendered in neuroglancer by default.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_is_visualization_default
+        alias: is_visualization_default
+        owner: AnnotationFile
+        domain_of:
+        - AnnotationFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+  AnnotationOrientedPointFile:
+    name: AnnotationOrientedPointFile
+    description: File and sourcing data for an oriented point annotation.
+    from_schema: metadata
+    aliases:
+    - OrientedPoint
+    is_a: AnnotationFile
+    attributes:
+      binning:
+        name: binning
+        description: The binning factor for a oriented point annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_oriented_point_binning
+        alias: binning
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationPointFile
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      filter_value:
+        name: filter_value
+        description: The filter value for a oriented point annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_oriented_point_filter_value
+        alias: filter_value
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      order:
+        name: order
+        description: The order of axes for a oriented point annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_oriented_point_order
+        alias: order
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      file_format:
+        name: file_format
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_format
+        alias: file_format
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_glob_string
+        alias: glob_string
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_is_visualization_default
+        alias: is_visualization_default
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+  AnnotationInstanceSegmentationFile:
+    name: AnnotationInstanceSegmentationFile
+    description: File and sourcing data for an instance segmentation annotation.
+    from_schema: metadata
+    aliases:
+    - InstanceSegmentation
+    is_a: AnnotationOrientedPointFile
+    attributes:
+      binning:
+        name: binning
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_oriented_point_binning
+        alias: binning
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationPointFile
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      filter_value:
+        name: filter_value
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_oriented_point_filter_value
+        alias: filter_value
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      order:
+        name: order
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_oriented_point_order
+        alias: order
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      file_format:
+        name: file_format
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_format
+        alias: file_format
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_glob_string
+        alias: glob_string
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_is_visualization_default
+        alias: is_visualization_default
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+  AnnotationPointFile:
+    name: AnnotationPointFile
+    description: File and sourcing data for a point annotation.
+    from_schema: metadata
+    aliases:
+    - Point
+    is_a: AnnotationFile
+    attributes:
+      binning:
+        name: binning
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_point_binning
+        alias: binning
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationPointFile
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      columns:
+        name: columns
+        description: The columns used in a point annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_point_columns
+        alias: columns
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      delimiter:
+        name: delimiter
+        description: The delimiter used in a oriented point annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_point_delimiter
+        alias: delimiter
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      file_format:
+        name: file_format
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_format
+        alias: file_format
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_glob_string
+        alias: glob_string
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_is_visualization_default
+        alias: is_visualization_default
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+  AnnotationSegmentationMaskFile:
+    name: AnnotationSegmentationMaskFile
+    description: File and sourcing data for a segmentation mask annotation.
+    from_schema: metadata
+    aliases:
+    - SegmentationMask
+    is_a: AnnotationFile
+    attributes:
+      file_format:
+        name: file_format
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_format
+        alias: file_format
+        owner: AnnotationSegmentationMaskFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_glob_string
+        alias: glob_string
+        owner: AnnotationSegmentationMaskFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_is_visualization_default
+        alias: is_visualization_default
+        owner: AnnotationSegmentationMaskFile
+        domain_of:
+        - AnnotationFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+  AnnotationSemanticSegmentationMaskFile:
+    name: AnnotationSemanticSegmentationMaskFile
+    description: File and sourcing data for a semantic segmentation mask annotation.
+    from_schema: metadata
+    aliases:
+    - SemanticSegmentationMask
+    is_a: AnnotationFile
+    attributes:
+      mask_label:
+        name: mask_label
+        description: The mask label for a semantic segmentation mask annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_semantic_segmentation_mask_label
+        alias: mask_label
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationSemanticSegmentationMaskFile
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      file_format:
+        name: file_format
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_format
+        alias: file_format
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_glob_string
+        alias: glob_string
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_file_is_visualization_default
+        alias: is_visualization_default
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
   Annotation:
     name: Annotation
     description: Metadata describing an annotation.
@@ -2019,7 +2373,7 @@ classes:
         inlined_as_list: true
       files:
         name: files
-        description: Metadata describing a file containing an annotation.
+        description: File and sourcing data for an annotation.
         from_schema: metadata
         multivalued: true
         list_elements_ordered: true
@@ -2080,6 +2434,10 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+  Any:
+    name: Any
+    from_schema: metadata
+    class_uri: linkml:Any
   CrossReferences:
     name: CrossReferences
     description: A set of cross-references to other databases and publications.

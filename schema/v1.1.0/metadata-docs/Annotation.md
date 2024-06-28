@@ -156,7 +156,7 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 | [ground_truth_status](ground_truth_status.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | Whether an annotation is considered ground truth, as determined by the annota... | direct |
 | [object_count](object_count.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | Number of objects identified | direct |
 | [is_curator_recommended](is_curator_recommended.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | This annotation is recommended by the curator to be preferred for this object... | direct |
-| [files](files.md) | * <br/> [AnnotationFile](AnnotationFile.md) | Metadata describing a file containing an annotation | direct |
+| [files](files.md) | * <br/> [AnnotationFile](AnnotationFile.md) | File and sourcing data for an annotation | direct |
 | [confidence](confidence.md) | 0..1 <br/> [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation | direct |
 | [annotation_object](annotation_object.md) | 0..1 <br/> [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated | direct |
 | [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
@@ -317,7 +317,7 @@ attributes:
     inlined_as_list: true
   files:
     name: files
-    description: Metadata describing a file containing an annotation.
+    description: File and sourcing data for an annotation.
     from_schema: metadata
     rank: 1000
     multivalued: true
@@ -505,7 +505,7 @@ attributes:
     inlined_as_list: true
   files:
     name: files
-    description: Metadata describing a file containing an annotation.
+    description: File and sourcing data for an annotation.
     from_schema: metadata
     rank: 1000
     multivalued: true

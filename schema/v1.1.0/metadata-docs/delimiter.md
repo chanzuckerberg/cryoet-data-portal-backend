@@ -1,13 +1,13 @@
 
 
-# Slot: shape
+# Slot: delimiter
 
 
-_Describe whether this is a Point, OrientedPoint, or SegmentationMask file_
+_The delimiter used in a oriented point annotation file._
 
 
 
-URI: [cdp-meta:shape](metadatashape)
+URI: [cdp-meta:delimiter](metadatadelimiter)
 
 
 
@@ -21,7 +21,7 @@ URI: [cdp-meta:shape](metadatashape)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [AnnotationFile](AnnotationFile.md) | Metadata describing a file containing an annotation |  no  |
+| [AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation |  no  |
 
 
 
@@ -57,17 +57,16 @@ URI: [cdp-meta:shape](metadatashape)
 
 <details>
 ```yaml
-name: shape
-description: Describe whether this is a Point, OrientedPoint, or SegmentationMask
-  file
+name: delimiter
+description: The delimiter used in a oriented point annotation file.
 from_schema: metadata
 exact_mappings:
-- cdp-common:annotation_file_shape_type
+- cdp-common:annotation_file_point_delimiter
 rank: 1000
-alias: shape
-owner: AnnotationFile
+alias: delimiter
+owner: AnnotationPointFile
 domain_of:
-- AnnotationFile
+- AnnotationPointFile
 range: string
 inlined: true
 inlined_as_list: true

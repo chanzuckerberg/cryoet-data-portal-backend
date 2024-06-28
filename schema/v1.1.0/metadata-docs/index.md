@@ -14,10 +14,16 @@ Name: cdp-meta
 | --- | --- |
 | [Annotation](Annotation.md) | Metadata describing an annotation. |
 | [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation. |
-| [AnnotationFile](AnnotationFile.md) | Metadata describing a file containing an annotation. |
+| [AnnotationFile](AnnotationFile.md) | File and sourcing data for an annotation. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationSegmentationMaskFile](AnnotationSegmentationMaskFile.md) | File and sourcing data for a segmentation mask annotation. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationSemanticSegmentationMaskFile](AnnotationSemanticSegmentationMaskFile.md) | File and sourcing data for a semantic segmentation mask annotation. |
 | [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated. |
 | [Annotator](Annotator.md) | Annotator of a scientific data entity. |
 | [AnnotatoredEntity](AnnotatoredEntity.md) | An entity with associated annotation authors. |
+| [Any](Any.md) | None |
 | [Author](Author.md) | Author of a scientific data entity. |
 | [AuthoredEntity](AuthoredEntity.md) | An entity with associated authors. |
 | [Camera](Camera.md) | The camera used to collect the tilt series. |
@@ -62,11 +68,13 @@ Name: cdp-meta
 | [annotation_publications](annotation_publications.md) | DOIs for publications that describe the dataset |
 | [annotation_software](annotation_software.md) | Software used for generating this annotation |
 | [authors](authors.md) | Author of a scientific data entity |
+| [binning](binning.md) | The binning factor for a oriented point annotation file |
 | [binning_from_frames](binning_from_frames.md) | Describes the binning factor from frames to tilt series file |
 | [camera](camera.md) | The camera used to collect the tilt series |
 | [cell_component](cell_component.md) | The cellular component from which the sample was derived |
 | [cell_strain](cell_strain.md) | The strain or cell line from which the sample was derived |
 | [cell_type](cell_type.md) | The cell type from which the sample was derived |
+| [columns](columns.md) | The columns used in a point annotation file |
 | [confidence](confidence.md) | Metadata describing the confidence of an annotation |
 | [cross_references](cross_references.md) | A set of cross-references to other databases and publications |
 | [ctf_corrected](ctf_corrected.md) | Whether this tomogram is CTF corrected |
@@ -77,16 +85,19 @@ Name: cdp-meta
 | [dataset_publications](dataset_publications.md) | Comma-separated list of DOIs for publications associated with the dataset |
 | [dataset_title](dataset_title.md) | Title of a CryoET dataset |
 | [dates](dates.md) | A set of dates at which a data item was deposited, published and last modifie... |
+| [delimiter](delimiter.md) | The delimiter used in a oriented point annotation file |
 | [deposition_date](deposition_date.md) | The date a data item was received by the cryoET data portal |
 | [description](description.md) | A textual description of the annotation object, can be a longer description t... |
 | [email](email.md) | The email address of the author |
 | [energy_filter](energy_filter.md) | Energy filter setup used |
 | [fiducial_alignment_status](fiducial_alignment_status.md) | Whether the tomographic alignment was computed based on fiducial markers |
-| [files](files.md) | Metadata describing a file containing an annotation |
-| [format](format.md) | File format for this file |
+| [file_format](file_format.md) | File format for this file |
+| [files](files.md) | File and sourcing data for an annotation |
+| [filter_value](filter_value.md) | The filter value for a oriented point annotation file |
 | [frames_count](frames_count.md) | Number of frames associated with this tiltseries |
 | [funding](funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... |
 | [funding_agency_name](funding_agency_name.md) | The name of the funding source |
+| [glob_string](glob_string.md) | Glob string to match annotation files in the dataset |
 | [grant_id](grant_id.md) | Grant identifier provided by the funding agency |
 | [grid_preparation](grid_preparation.md) | Describes Cryo-ET grid preparation |
 | [ground_truth_status](ground_truth_status.md) | Whether an annotation is considered ground truth, as determined by the annota... |
@@ -100,6 +111,7 @@ Name: cdp-meta
 | [key_photos](key_photos.md) | A set of paths to representative images of a piece of data |
 | [last_modified_date](last_modified_date.md) | The date a piece of data was last modified on the cryoET data portal |
 | [manufacturer](manufacturer.md) | Name of the camera manufacturer |
+| [mask_label](mask_label.md) | The mask label for a semantic segmentation mask annotation file |
 | [max](max.md) | Maximal tilt angle in degrees |
 | [microscope](microscope.md) | The microscope used to collect the tilt series |
 | [microscope_additional_info](microscope_additional_info.md) | Other microscope optical setup information, in addition to energy filter, pha... |
@@ -110,9 +122,9 @@ Name: cdp-meta
 | [object_count](object_count.md) | Number of objects identified |
 | [offset](offset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... |
 | [ORCID](ORCID.md) | A unique, persistent identifier for researchers, provided by ORCID |
+| [order](order.md) | The order of axes for a oriented point annotation file |
 | [organism](organism.md) | The species from which the sample was derived |
 | [other_setup](other_setup.md) | Describes other setup not covered by sample preparation or grid preparation t... |
-| [path](path.md) | Path to the annotation file relative to the dataset root |
 | [phase_plate](phase_plate.md) | Phase plate configuration |
 | [pixel_spacing](pixel_spacing.md) | Pixel spacing for the tilt series |
 | [precision](precision.md) | Describe the confidence level of the annotation |
@@ -127,7 +139,6 @@ Name: cdp-meta
 | [release_date](release_date.md) | The date a data item was received by the cryoET data portal |
 | [sample_preparation](sample_preparation.md) | Describes how the sample was prepared |
 | [sample_type](sample_type.md) | Type of sample imaged in a CryoET study |
-| [shape](shape.md) | Describe whether this is a Point, OrientedPoint, or SegmentationMask file |
 | [size](size.md) | The size of a tomogram in voxels in each dimension |
 | [snapshot](snapshot.md) | Path to the dataset preview image relative to the dataset directory root |
 | [spherical_aberration_constant](spherical_aberration_constant.md) | Spherical Aberration Constant of the objective lens in millimeters |

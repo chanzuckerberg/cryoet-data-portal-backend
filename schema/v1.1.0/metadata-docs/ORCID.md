@@ -16,8 +16,8 @@ URI: [cdp-meta:ORCID](metadataORCID)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
 | [Author](Author.md) | Author of a scientific data entity |  no  |
+| [Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
 
 
 

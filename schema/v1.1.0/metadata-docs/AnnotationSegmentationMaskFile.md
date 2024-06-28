@@ -1,15 +1,15 @@
 
 
-# Class: AnnotationFile
+# Class: AnnotationSegmentationMaskFile
 
 
-_File and sourcing data for an annotation._
+_File and sourcing data for a segmentation mask annotation._
 
 
 
 
 
-URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
+URI: [cdp-meta:AnnotationSegmentationMaskFile](metadataAnnotationSegmentationMaskFile)
 
 
 
@@ -18,41 +18,35 @@ URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
 
 ```mermaid
  classDiagram
-    class AnnotationFile
-    click AnnotationFile href "../AnnotationFile"
-      AnnotationFile <|-- AnnotationOrientedPointFile
-        click AnnotationOrientedPointFile href "../AnnotationOrientedPointFile"
-      AnnotationFile <|-- AnnotationPointFile
-        click AnnotationPointFile href "../AnnotationPointFile"
+    class AnnotationSegmentationMaskFile
+    click AnnotationSegmentationMaskFile href "../AnnotationSegmentationMaskFile"
       AnnotationFile <|-- AnnotationSegmentationMaskFile
-        click AnnotationSegmentationMaskFile href "../AnnotationSegmentationMaskFile"
-      AnnotationFile <|-- AnnotationSemanticSegmentationMaskFile
-        click AnnotationSemanticSegmentationMaskFile href "../AnnotationSemanticSegmentationMaskFile"
+        click AnnotationFile href "../AnnotationFile"
       
-      AnnotationFile : file_format
+      AnnotationSegmentationMaskFile : file_format
         
           
     
     
-    AnnotationFile --> "1" String : file_format
+    AnnotationSegmentationMaskFile --> "1" String : file_format
     click String href "../String"
 
         
-      AnnotationFile : glob_string
+      AnnotationSegmentationMaskFile : glob_string
         
           
     
     
-    AnnotationFile --> "1" String : glob_string
+    AnnotationSegmentationMaskFile --> "1" String : glob_string
     click String href "../String"
 
         
-      AnnotationFile : is_visualization_default
+      AnnotationSegmentationMaskFile : is_visualization_default
         
           
     
     
-    AnnotationFile --> "0..1" Boolean : is_visualization_default
+    AnnotationSegmentationMaskFile --> "0..1" Boolean : is_visualization_default
     click Boolean href "../Boolean"
 
         
@@ -64,11 +58,8 @@ URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
 
 
 ## Inheritance
-* **AnnotationFile**
-    * [AnnotationOrientedPointFile](AnnotationOrientedPointFile.md)
-    * [AnnotationPointFile](AnnotationPointFile.md)
-    * [AnnotationSegmentationMaskFile](AnnotationSegmentationMaskFile.md)
-    * [AnnotationSemanticSegmentationMaskFile](AnnotationSemanticSegmentationMaskFile.md)
+* [AnnotationFile](AnnotationFile.md)
+    * **AnnotationSegmentationMaskFile**
 
 
 
@@ -76,22 +67,20 @@ URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [file_format](file_format.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | File format for this file | direct |
-| [glob_string](glob_string.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Glob string to match annotation files in the dataset | direct |
-| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | This annotation will be rendered in neuroglancer by default | direct |
+| [file_format](file_format.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
+| [glob_string](glob_string.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
+| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) |  | direct |
 
 
 
 
 
-## Usages
-
-| used by | used in | type | used |
-| ---  | --- | --- | --- |
-| [Annotation](Annotation.md) | [files](files.md) | range | [AnnotationFile](AnnotationFile.md) |
 
 
+## Aliases
 
+
+* SegmentationMask
 
 
 
@@ -116,8 +105,8 @@ URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:AnnotationFile |
-| native | cdp-meta:AnnotationFile |
+| self | cdp-meta:AnnotationSegmentationMaskFile |
+| native | cdp-meta:AnnotationSegmentationMaskFile |
 
 
 
@@ -131,19 +120,20 @@ URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
 
 <details>
 ```yaml
-name: AnnotationFile
-description: File and sourcing data for an annotation.
+name: AnnotationSegmentationMaskFile
+description: File and sourcing data for a segmentation mask annotation.
 from_schema: metadata
+aliases:
+- SegmentationMask
+is_a: AnnotationFile
 attributes:
   file_format:
     name: file_format
-    description: File format for this file
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_file_format
-    rank: 1000
     alias: file_format
-    owner: AnnotationFile
+    owner: AnnotationSegmentationMaskFile
     domain_of:
     - AnnotationFile
     - AnnotationOrientedPointFile
@@ -157,13 +147,11 @@ attributes:
     inlined_as_list: true
   glob_string:
     name: glob_string
-    description: Glob string to match annotation files in the dataset.
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_file_glob_string
-    rank: 1000
     alias: glob_string
-    owner: AnnotationFile
+    owner: AnnotationSegmentationMaskFile
     domain_of:
     - AnnotationFile
     - AnnotationOrientedPointFile
@@ -177,13 +165,11 @@ attributes:
     inlined_as_list: true
   is_visualization_default:
     name: is_visualization_default
-    description: This annotation will be rendered in neuroglancer by default.
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_file_is_visualization_default
-    rank: 1000
     alias: is_visualization_default
-    owner: AnnotationFile
+    owner: AnnotationSegmentationMaskFile
     domain_of:
     - AnnotationFile
     - AnnotationOrientedPointFile
@@ -202,19 +188,20 @@ attributes:
 
 <details>
 ```yaml
-name: AnnotationFile
-description: File and sourcing data for an annotation.
+name: AnnotationSegmentationMaskFile
+description: File and sourcing data for a segmentation mask annotation.
 from_schema: metadata
+aliases:
+- SegmentationMask
+is_a: AnnotationFile
 attributes:
   file_format:
     name: file_format
-    description: File format for this file
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_file_format
-    rank: 1000
     alias: file_format
-    owner: AnnotationFile
+    owner: AnnotationSegmentationMaskFile
     domain_of:
     - AnnotationFile
     - AnnotationOrientedPointFile
@@ -228,13 +215,11 @@ attributes:
     inlined_as_list: true
   glob_string:
     name: glob_string
-    description: Glob string to match annotation files in the dataset.
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_file_glob_string
-    rank: 1000
     alias: glob_string
-    owner: AnnotationFile
+    owner: AnnotationSegmentationMaskFile
     domain_of:
     - AnnotationFile
     - AnnotationOrientedPointFile
@@ -248,13 +233,11 @@ attributes:
     inlined_as_list: true
   is_visualization_default:
     name: is_visualization_default
-    description: This annotation will be rendered in neuroglancer by default.
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_file_is_visualization_default
-    rank: 1000
     alias: is_visualization_default
-    owner: AnnotationFile
+    owner: AnnotationSegmentationMaskFile
     domain_of:
     - AnnotationFile
     - AnnotationOrientedPointFile

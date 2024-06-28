@@ -1,13 +1,13 @@
 
 
-# Slot: path
+# Slot: columns
 
 
-_Path to the annotation file relative to the dataset root._
+_The columns used in a point annotation file._
 
 
 
-URI: [cdp-meta:path](metadatapath)
+URI: [cdp-meta:columns](metadatacolumns)
 
 
 
@@ -21,7 +21,7 @@ URI: [cdp-meta:path](metadatapath)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [AnnotationFile](AnnotationFile.md) | Metadata describing a file containing an annotation |  no  |
+| [AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation |  no  |
 
 
 
@@ -57,16 +57,16 @@ URI: [cdp-meta:path](metadatapath)
 
 <details>
 ```yaml
-name: path
-description: Path to the annotation file relative to the dataset root.
+name: columns
+description: The columns used in a point annotation file.
 from_schema: metadata
 exact_mappings:
-- cdp-common:annotation_file_path
+- cdp-common:annotation_file_point_columns
 rank: 1000
-alias: path
-owner: AnnotationFile
+alias: columns
+owner: AnnotationPointFile
 domain_of:
-- AnnotationFile
+- AnnotationPointFile
 range: string
 inlined: true
 inlined_as_list: true

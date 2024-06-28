@@ -1,8 +1,8 @@
 
 
-# Slot: is_visualization_default
+# Slot: glob_string
 
-URI: [cdp-meta:is_visualization_default](metadatais_visualization_default)
+URI: [cdp-meta:glob_string](metadataglob_string)
 
 
 
@@ -50,8 +50,8 @@ URI: [cdp-meta:is_visualization_default](metadatais_visualization_default)
 
 <details>
 ```yaml
-name: is_visualization_default
-alias: is_visualization_default
+name: glob_string
+alias: glob_string
 domain_of:
 - AnnotationFile
 - AnnotationOrientedPointFile

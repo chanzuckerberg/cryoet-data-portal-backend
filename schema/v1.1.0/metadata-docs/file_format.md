@@ -1,8 +1,8 @@
 
 
-# Slot: is_visualization_default
+# Slot: file_format
 
-URI: [cdp-meta:is_visualization_default](metadatais_visualization_default)
+URI: [cdp-meta:file_format](metadatafile_format)
 
 
 
@@ -50,8 +50,8 @@ URI: [cdp-meta:is_visualization_default](metadatais_visualization_default)
 
 <details>
 ```yaml
-name: is_visualization_default
-alias: is_visualization_default
+name: file_format
+alias: file_format
 domain_of:
 - AnnotationFile
 - AnnotationOrientedPointFile
