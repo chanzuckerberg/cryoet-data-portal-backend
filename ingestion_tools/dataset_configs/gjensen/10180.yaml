@@ -18,8 +18,8 @@ datasets:
       id: null
       name: ''
     cell_type:
-      name: umbilical vein endothelial cell
       id: CL:0002618
+      name: umbilical vein endothelial cell
     dataset_description: This is 9th of 17 sets of data studying HUVECs collected
       by Cora Woodward and is a part of Caltech Jensen  lab etdb. HUVECs cells transfected
       with VPS4DN construct and then infected with pNLEGFP-VSVG

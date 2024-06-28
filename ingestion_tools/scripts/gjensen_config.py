@@ -10,6 +10,7 @@ from typing import Any, Callable, Optional
 
 import click
 import yaml
+from transform_ingestion_configs import update_file
 
 from common.fs import LocalFilesystem
 from common.normalize_fields import normalize_fiducial_alignment
@@ -46,7 +47,7 @@ def to_dataset_author(data: dict[str, Any]) -> list[dict[str, Any]]:
     )
 
 
-def clean(val: str) -> str:
+def clean(val: str) -> str | None:
     if not val:
         return None
 
@@ -90,7 +91,11 @@ def to_dataset_config(dataset_id: int, data: dict[str, Any], authors: list[dict[
     if dataset["cellular_strain"]:
         config["cell_strain"] = dataset["cellular_strain"]
     if dataset["cell_type"]:
-        config["cell_type"] = dataset["cell_type"]
+        cell_type = dataset["cell_type"]
+        config["cell_type"] = {
+            "id": cell_type.get("id") or cell_type.get("cell_type_id"),
+            "name": cell_type.get("name") or cell_type.get("cell_name"),
+        }
     if dataset["tissue"]:
         config["tissue"] = dataset["tissue"]
 
@@ -332,7 +337,6 @@ def cli(ctx):
 @click.argument("output_dir", required=True, type=str)
 @click.pass_context
 def create(ctx, input_dir: str, output_dir: str) -> None:
-    dataset_id = 10014
     fs = LocalFilesystem(force_overwrite=True)
     fs.makedirs(output_dir)
     run_data_map_path = os.path.join(output_dir, "run_data_map")
@@ -341,48 +345,53 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     fs.makedirs(run_data_map_path)
     fs.makedirs(run_tomo_map_path)
     fs.makedirs(run_frames_map_path)
-    file_paths = fs.glob(os.path.join(input_dir, "[0-9]*.json"))
+    file_paths = fs.glob(os.path.join(input_dir, "portal_[0-9]*.json"))
     file_paths.sort()
     for file_path in file_paths:
         with open(file_path, "r") as file:
-            config = json.load(file)
-        print(f"Reading file {file_path}")
-        for _key, val in config.items():
-            authors = to_dataset_author(val.get("dataset"))
-            run_data_map = defaultdict(dict)
-            dataset_config = {
-                "dataset": to_dataset_config(dataset_id, val, authors),
-                "runs": {},
-                "tiltseries": to_config_by_run(
-                    dataset_id,
-                    val.get("runs"),
-                    run_data_map,
-                    partial(to_tiltseries),
-                    "ts",
-                ),
-                "tomograms": to_config_by_run(
-                    dataset_id,
-                    val.get("runs"),
-                    run_data_map,
-                    partial(to_tomogram, authors),
-                    "tomo",
-                ),
-                "annotations": {},
-                "standardization_config": to_standardization_config(
-                    dataset_id,
-                    val,
-                    run_data_map,
-                    run_data_map_path,
-                    run_tomo_map_path,
-                    run_frames_map_path,
-                ),
-            }
+            val = json.load(file)
+        print(f"Processing file {file_path}")
+        dataset_id = val.get("dataset", {}).get("czportal_dataset_id")
+        if not dataset_id or dataset_id > 10300:
+            print(f"Skipping dataset with id: {dataset_id}")
+            continue
 
-            print(f"Writing file for {dataset_id}")
-            with open(os.path.join(output_dir, f"{dataset_id}.yaml"), "w") as outfile:
-                yaml.dump(dataset_config, outfile, sort_keys=False)
+        authors = to_dataset_author(val.get("dataset"))
+        run_data_map = defaultdict(dict)
+        dataset_config = {
+            "dataset": to_dataset_config(dataset_id, val, authors),
+            "runs": {},
+            "tiltseries": to_config_by_run(
+                dataset_id,
+                val.get("runs"),
+                run_data_map,
+                partial(to_tiltseries),
+                "ts",
+            ),
+            "tomograms": to_config_by_run(
+                dataset_id,
+                val.get("runs"),
+                run_data_map,
+                partial(to_tomogram, authors),
+                "tomo",
+            ),
+            "annotations": {},
+            "standardization_config": to_standardization_config(
+                dataset_id,
+                val,
+                run_data_map,
+                run_data_map_path,
+                run_tomo_map_path,
+                run_frames_map_path,
+            ),
+        }
 
-            dataset_id += 1
+        print(f"Writing file for {dataset_id}")
+        dataset_config_file_path = os.path.join(output_dir, f"{dataset_id}.yaml")
+        with open(dataset_config_file_path, "w") as outfile:
+            yaml.dump(dataset_config, outfile, sort_keys=False)
+
+        update_file(dataset_config_file_path)
 
 
 if __name__ == "__main__":
