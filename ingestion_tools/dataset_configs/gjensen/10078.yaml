@@ -62,7 +62,7 @@ runs:
       match_regex: (dga2016-01-12-41|dga2016-01-12-42|dga2016-01-12-43|dga2016-01-12-45|dga2016-01-12-46|dga2016-01-12-48|dga2016-01-12-49|dga2016-01-12-52|dga2016-01-12-56|dga2016-01-12-57|dga2016-01-12-59|dga2016-01-12-60|dga2016-01-12-61|dga2016-01-12-63|dga2016-01-12-64|dga2016-01-12-65|dga2016-01-12-66|dga2016-01-12-67|dga2016-01-12-68|dga2016-01-12-70|dga2016-01-12-73|dga2016-01-12-74|dga2016-01-12-75|dga2016-01-12-76|dga2016-01-12-79|dga2016-01-12-82)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10078
+  deposition_id: 10038
   run_data_map_file: run_data_map/10078.csv
   source_prefix: GJensen_full
 tiltseries:

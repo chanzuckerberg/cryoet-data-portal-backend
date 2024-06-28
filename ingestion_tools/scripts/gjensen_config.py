@@ -119,6 +119,7 @@ def to_standardization_config(
     run_data_map_path: str,
     run_tomo_map_path: str,
     run_frames_map_path: str,
+    deposition_id: int | None,
 ) -> dict[str, Any]:
     run_names = []
     mapped_tomo_name = {}
@@ -133,6 +134,7 @@ def to_standardization_config(
     tomo_path = "{mapped_tomo_name}" if run_has_multiple_tomos else "3dimage_*/*"
 
     config = {
+        "deposition_id": deposition_id,
         "destination_prefix": str(dataset_id),
         "source_prefix": "GJensen_full",
         "frames_glob": None,
@@ -332,6 +334,26 @@ def cli(ctx):
     pass
 
 
+def get_deposition_map(input_dir: str) -> dict[int, int]:
+    with open(os.path.join(input_dir, "portal_dataset_grouping.json"), "r") as file:
+        groupings = json.load(file)
+
+    deposition_id = 10014
+    data = next(entry["data"] for entry in groupings if entry["type"] == "table" and entry["name"] == "SubDatasetData")
+
+    dataset_deposition_id_mapping = {}
+    deposition_id_mapping = {}
+    for entry in data:
+        dataset_group = int(entry["dataset_group"])
+        if dataset_group not in deposition_id_mapping:
+            deposition_id_mapping[dataset_group] = deposition_id
+            deposition_id += 1
+        dataset_id = int(entry["czportal_dataset_id"])
+        dataset_deposition_id_mapping[dataset_id] = deposition_id_mapping[dataset_group]
+
+    return dataset_deposition_id_mapping
+
+
 @cli.command()
 @click.argument("input_dir", required=True, type=str)
 @click.argument("output_dir", required=True, type=str)
@@ -345,6 +367,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     fs.makedirs(run_data_map_path)
     fs.makedirs(run_tomo_map_path)
     fs.makedirs(run_frames_map_path)
+    deposition_mapping = get_deposition_map(input_dir)
     file_paths = fs.glob(os.path.join(input_dir, "portal_[0-9]*.json"))
     file_paths.sort()
     for file_path in file_paths:
@@ -383,6 +406,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
                 run_data_map_path,
                 run_tomo_map_path,
                 run_frames_map_path,
+                deposition_mapping.get(dataset_id),
             ),
         }
 

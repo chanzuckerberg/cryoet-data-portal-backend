@@ -57,7 +57,7 @@ runs:
       match_regex: (rra2014-10-17-5|rra2014-10-17-10|rra2014-10-17-23|rra2014-10-17-24|rra2014-10-17-32|rra2014-10-17-33|rra2014-10-17-34|rra2014-10-17-35|rra2014-11-26-1|rra2014-11-26-2|rra2014-11-26-3|rra2014-11-26-4|rra2014-11-26-5|rra2014-11-26-6|rra2014-11-26-8|rra2014-11-26-50|rra2014-11-26-51|rra2014-11-26-52|rra2014-11-26-54)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10117
+  deposition_id: 10027
   run_data_map_file: run_data_map/10117.csv
   source_prefix: GJensen_full
 tiltseries:

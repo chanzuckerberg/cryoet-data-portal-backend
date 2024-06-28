@@ -53,7 +53,7 @@ runs:
       match_regex: (psa2015-04-13-1|psa2015-04-13-2|psa2015-04-13-3|psa2015-04-13-4|psa2015-04-13-5|psa2015-04-13-6|psa2015-04-13-7|psa2015-04-13-8|psa2015-04-13-9|psa2015-04-13-10|psa2015-04-13-11|psa2015-04-13-12|psa2015-04-13-13)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10135
+  deposition_id: 10028
   run_data_map_file: run_data_map/10135.csv
   source_prefix: GJensen_full
 tiltseries:

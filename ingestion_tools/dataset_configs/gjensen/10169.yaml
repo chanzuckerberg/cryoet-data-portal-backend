@@ -57,7 +57,7 @@ runs:
       match_regex: (cwl2011-10-23-1|cwl2011-10-23-2|cwl2011-10-23-3|cwl2011-10-23-4|cwl2011-10-23-5|cwl2011-10-24-1|cwl2011-10-24-2|cwl2011-10-24-3|cwl2011-10-31-1|cwl2011-10-31-2|cwl2011-10-31-3|cwl2011-10-31-4|cwl2011-10-31-5|cwl2011-10-31-6|cwl2012-03-29-1|cwl2012-03-29-2|cwl2012-03-29-3|cwl2012-03-29-4|cwl2012-03-29-5|cwl2012-03-29-6|cwl2012-03-29-7|cwl2012-03-29-8|cwl2012-03-29-9|cwl2012-03-29-10|cwl2012-03-29-11|cwl2012-03-29-12)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10169
+  deposition_id: 10033
   run_data_map_file: run_data_map/10169.csv
   source_prefix: GJensen_full
 tiltseries:

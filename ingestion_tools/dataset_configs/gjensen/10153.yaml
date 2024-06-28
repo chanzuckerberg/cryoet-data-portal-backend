@@ -53,7 +53,7 @@ runs:
       match_regex: (ycw2018-03-14-2|ycw2018-03-14-6|ycw2018-03-14-7|ycw2018-03-14-8|ycw2018-03-14-9|ycw2018-03-14-10|ycw2018-03-14-11|ycw2018-03-14-12|ycw2018-03-14-13|ycw2018-03-14-14|ycw2018-03-14-16|ycw2018-03-14-17|ycw2018-03-14-19|ycw2018-03-14-21|ycw2018-03-14-22|ycw2018-03-14-23|ycw2018-03-14-25|ycw2018-03-14-29|ycw2018-03-14-30|ycw2018-03-14-31|ycw2018-03-14-32|ycw2018-03-14-33|ycw2018-03-14-34|ycw2018-03-14-35|ycw2018-03-14-36|ycw2018-03-14-37|ycw2018-03-14-38|ycw2018-03-14-39|ycw2018-03-14-40|ycw2018-03-14-41|ycw2018-03-14-43|ycw2018-03-14-44|ycw2018-03-14-45)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10153
+  deposition_id: 10017
   run_data_map_file: run_data_map/10153.csv
   source_prefix: GJensen_full
 tiltseries:

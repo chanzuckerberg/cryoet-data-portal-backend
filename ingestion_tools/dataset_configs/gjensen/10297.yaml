@@ -53,7 +53,7 @@ runs:
       match_regex: (jsa2009-10-17-1|jsa2009-10-17-2|jsa2009-10-17-3|jsa2009-10-17-4|jsa2009-10-17-5|jsa2009-10-17-6|jsa2009-10-17-7|jsa2009-10-17-8|jsa2009-10-17-9|jsa2009-10-17-10|jsa2009-10-17-11|jsa2009-10-17-12|jsa2009-10-17-13|jsa2009-10-17-14|jsa2009-10-17-15|jsa2009-10-17-16|jsa2009-10-17-17|jsa2009-10-17-18|jsa2009-10-17-19|jsa2009-10-17-20|jsa2009-10-17-21|jsa2009-10-17-22|jsa2009-10-17-23|jsa2009-10-17-24|jsa2009-10-17-25)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10297
+  deposition_id: 10043
   run_data_map_file: run_data_map/10297.csv
   run_to_frame_map_csv: run_frames_map/10297.csv
   run_to_tomo_map_csv: run_tomo_map/10297.csv

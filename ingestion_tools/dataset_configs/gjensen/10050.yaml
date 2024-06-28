@@ -61,7 +61,7 @@ runs:
       match_regex: (mka2019-11-23-49|mka2019-11-23-50|mka2019-11-23-51|mka2019-11-23-52|mka2019-11-23-53|mka2019-11-23-54|mka2019-11-23-55|mka2019-11-23-56|mka2019-11-23-57|mka2019-11-23-58|mka2019-11-23-59|mka2019-11-23-60|mka2019-11-23-61|mka2019-11-23-62|mka2019-11-23-63|mka2019-11-23-64|mka2019-11-23-65|mka2019-11-23-66|mka2019-11-23-67|mka2019-11-23-68|mka2019-11-23-69|mka2019-11-23-70|mka2019-11-23-71|mka2019-11-23-72|mka2019-11-23-73|mka2019-11-23-74)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10050
+  deposition_id: 10030
   run_data_map_file: run_data_map/10050.csv
   source_prefix: GJensen_full
 tiltseries:

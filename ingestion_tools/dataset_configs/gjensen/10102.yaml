@@ -54,7 +54,7 @@ runs:
       match_regex: (qya2015-11-19-1|qya2015-11-19-2|qya2015-11-19-6|qya2015-11-19-7|qya2015-11-19-11|qya2015-11-19-12|qya2015-11-19-13|qya2015-11-19-14|qya2015-11-19-15|qya2015-11-19-16|qya2015-11-19-21|qya2015-11-19-22|qya2015-11-19-24|qya2015-11-19-25|qya2015-11-19-26|qya2015-11-19-27|qya2015-11-19-28|qya2015-11-19-29|qya2015-11-19-30|qya2015-11-19-31|qya2015-12-07-9|qya2015-12-07-10|qya2015-12-07-11|qya2015-12-07-12|qya2015-12-07-13|qya2015-12-07-14|qya2015-12-07-17|qya2015-12-07-18|qya2015-12-07-19|qya2015-12-07-20|qya2015-12-07-21|qya2015-12-07-22|qya2015-12-07-23|qya2015-12-07-25|qya2015-12-07-26|qya2015-12-07-31)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10102
+  deposition_id: 10034
   run_data_map_file: run_data_map/10102.csv
   run_to_frame_map_csv: run_frames_map/10102.csv
   run_to_tomo_map_csv: run_tomo_map/10102.csv

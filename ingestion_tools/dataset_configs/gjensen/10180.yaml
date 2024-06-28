@@ -58,7 +58,7 @@ runs:
       match_regex: (cwl2011-07-24-7|cwl2011-07-24-8|cwl2011-07-24-9|cwl2011-07-24-10|cwl2011-07-24-11|cwl2011-07-24-12)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10180
+  deposition_id: 10025
   run_data_map_file: run_data_map/10180.csv
   source_prefix: GJensen_full
 tiltseries:

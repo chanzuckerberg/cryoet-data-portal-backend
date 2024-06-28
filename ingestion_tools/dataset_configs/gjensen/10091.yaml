@@ -57,7 +57,7 @@ runs:
       match_regex: (dga2019-05-28-181|dga2019-05-28-182|dga2019-05-28-183|dga2019-05-28-184|dga2019-05-28-185|dga2019-05-28-186|dga2019-05-28-187|dga2019-05-28-188|dga2019-05-28-189|dga2019-05-28-190|dga2019-05-28-191|dga2019-05-28-192)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10091
+  deposition_id: 10038
   run_data_map_file: run_data_map/10091.csv
   source_prefix: GJensen_full
 tiltseries:

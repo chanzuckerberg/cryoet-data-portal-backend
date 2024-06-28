@@ -57,7 +57,7 @@ runs:
       match_regex: (scd2018-07-15-1|scd2018-07-15-2|scd2018-07-15-3|scd2018-07-15-4|scd2018-07-15-5|scd2018-07-15-6|scd2018-07-15-7|scd2018-07-15-8|scd2018-07-15-9|scd2018-07-15-10|scd2018-07-15-11|scd2018-07-15-12|scd2018-07-15-13|scd2018-07-15-14|scd2018-07-15-15|scd2018-07-15-16|scd2018-07-15-17|scd2018-07-15-18)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10105
+  deposition_id: 10036
   run_data_map_file: run_data_map/10105.csv
   run_to_frame_map_csv: run_frames_map/10105.csv
   run_to_tomo_map_csv: run_tomo_map/10105.csv

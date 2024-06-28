@@ -56,7 +56,7 @@ runs:
       match_regex: (ycw2012-09-07-1|ycw2012-09-07-2|ycw2012-09-07-3|ycw2012-09-07-4|ycw2012-09-07-5|ycw2012-09-07-6|ycw2012-09-07-7|ycw2012-09-07-8|ycw2012-09-07-9|ycw2012-09-07-10|ycw2012-09-07-11|ycw2012-09-07-12|ycw2012-09-07-13|ycw2012-09-07-14|ycw2012-09-07-17|ycw2012-09-07-18|ycw2012-09-07-19|ycw2012-09-07-20|ycw2012-09-07-21|ycw2012-09-07-22|ycw2012-09-07-23|ycw2012-09-07-24|ycw2012-09-07-25|ycw2012-09-07-26|ycw2012-09-07-27|ycw2012-09-07-30|ycw2012-10-08-1|ycw2012-10-08-2|ycw2012-10-08-3|ycw2012-10-08-4|ycw2012-10-08-5|ycw2012-10-08-6|ycw2012-10-08-7)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10166
+  deposition_id: 10046
   run_data_map_file: run_data_map/10166.csv
   run_to_frame_map_csv: run_frames_map/10166.csv
   run_to_tomo_map_csv: run_tomo_map/10166.csv

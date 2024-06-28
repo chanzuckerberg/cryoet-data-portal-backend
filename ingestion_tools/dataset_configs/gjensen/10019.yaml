@@ -55,7 +55,7 @@ runs:
       match_regex: (pda2021-03-03-1|pda2021-03-03-2|pda2021-03-03-3|pda2021-03-03-4|pda2021-03-03-5|pda2021-03-03-6|pda2021-03-03-7|pda2021-03-03-8|pda2021-03-03-9)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10019
+  deposition_id: 10014
   run_data_map_file: run_data_map/10019.csv
   source_prefix: GJensen_full
 tiltseries:

@@ -57,7 +57,7 @@ runs:
       match_regex: (wnj2019-09-08-1|wnj2019-09-08-4|wnj2019-09-08-5|wnj2019-09-08-6|wnj2019-09-08-7|wnj2019-09-08-8|wnj2019-09-08-9|wnj2019-09-08-10|wnj2019-09-08-11|wnj2019-09-08-12|wnj2019-09-08-13|wnj2019-09-08-14|wnj2019-09-08-15|wnj2019-09-08-16|wnj2019-09-08-17|wnj2019-09-08-18|wnj2019-09-08-19|wnj2019-09-08-20|wnj2019-09-08-21|wnj2019-09-08-22|wnj2019-09-08-23|wnj2019-09-08-24|wnj2019-09-08-25)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10023
+  deposition_id: 10018
   run_data_map_file: run_data_map/10023.csv
   run_to_frame_map_csv: run_frames_map/10023.csv
   run_to_tomo_map_csv: run_tomo_map/10023.csv

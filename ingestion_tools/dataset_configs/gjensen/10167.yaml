@@ -54,7 +54,7 @@ runs:
       match_regex: (ycw2017-12-01-1|ycw2017-12-01-2|ycw2017-12-01-3|ycw2017-12-01-4|ycw2017-12-01-5|ycw2017-12-01-6|ycw2017-12-01-8|ycw2017-12-01-9|ycw2017-12-01-10|ycw2017-12-01-11|ycw2017-12-01-12|ycw2017-12-01-13|ycw2017-12-01-14|ycw2017-12-01-16|ycw2017-12-01-17|ycw2017-12-01-18|ycw2017-12-01-20|ycw2017-12-01-21|ycw2017-12-01-23|ycw2017-12-01-24|ycw2017-12-01-25|ycw2017-12-01-26|ycw2017-12-01-27|ycw2017-12-01-29|ycw2017-12-01-30|ycw2017-12-01-31|ycw2017-12-01-32|ycw2017-12-01-33|ycw2017-12-01-34|ycw2017-12-01-35|ycw2017-12-01-36)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10167
+  deposition_id: 10056
   run_data_map_file: run_data_map/10167.csv
   source_prefix: GJensen_full
 tiltseries:

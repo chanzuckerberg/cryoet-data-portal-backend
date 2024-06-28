@@ -55,7 +55,7 @@ runs:
       match_regex: (wnj2019-02-21-4|wnj2019-02-21-5)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10027
+  deposition_id: 10018
   run_data_map_file: run_data_map/10027.csv
   source_prefix: GJensen_full
 tiltseries:

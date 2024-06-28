@@ -57,7 +57,7 @@ runs:
       match_regex: (ycw2012-03-12-3)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10162
+  deposition_id: 10046
   source_prefix: GJensen_full
 tiltseries:
 - metadata:

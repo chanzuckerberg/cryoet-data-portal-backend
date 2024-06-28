@@ -53,7 +53,7 @@ runs:
       match_regex: (etl2012-09-01-8|etl2012-09-01-9|etl2012-09-01-10|etl2012-09-01-11|etl2012-09-01-12|etl2012-09-01-13|etl2012-09-02-30|etl2012-09-02-31|etl2012-09-02-32|etl2012-09-02-33|etl2012-09-02-34|etl2012-09-02-35|etl2012-09-02-36|etl2012-09-02-37|etl2012-09-02-38|etl2012-09-02-39|etl2012-09-02-40)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10247
+  deposition_id: 10019
   run_data_map_file: run_data_map/10247.csv
   run_to_frame_map_csv: run_frames_map/10247.csv
   run_to_tomo_map_csv: run_tomo_map/10247.csv

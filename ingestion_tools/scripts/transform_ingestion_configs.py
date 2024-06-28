@@ -16,7 +16,8 @@ def update_file(filename: str) -> None:
         # translate these manually than deal with automating it.
         del data["overrides_by_run"]
     if not data.get("datasets"):
-        data["standardization_config"]["deposition_id"] = data["dataset"]["dataset_identifier"]
+        if not data["standardization_config"]["deposition_id"]:
+            data["standardization_config"]["deposition_id"] = data["dataset"]["dataset_identifier"]
         data["datasets"] = [
             {
                 "metadata": data.get("dataset"),

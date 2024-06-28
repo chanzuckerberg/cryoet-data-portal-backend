@@ -54,7 +54,7 @@ runs:
       match_regex: (mst2010-12-12-1|mst2010-12-12-2|mst2010-12-12-3|mst2010-12-12-4|mst2010-12-12-5|mst2010-12-12-6|mst2010-12-12-7|mst2010-12-12-8|mst2010-12-12-9|mst2010-12-12-10|mst2010-12-12-11|mst2010-12-12-12|mst2010-12-12-13|mst2010-12-12-14|mst2010-12-12-15|mst2010-12-12-16|mst2010-12-12-17|mst2010-12-12-18|mst2010-12-12-19|mst2010-12-12-20|mst2010-12-12-21|mst2010-12-12-22|mst2010-12-12-23|mst2010-12-12-24|mst2010-12-12-25|mst2010-12-12-26|mst2010-12-12-27)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10196
+  deposition_id: 10031
   source_prefix: GJensen_full
 tiltseries:
 - metadata:

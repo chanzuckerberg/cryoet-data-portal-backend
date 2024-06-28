@@ -54,7 +54,7 @@ runs:
       match_regex: (aba2015-07-15-1|aba2015-07-15-3|aba2015-07-15-4|aba2015-07-15-5|aba2015-07-15-6|aba2015-07-15-7|aba2015-07-15-8|aba2015-07-15-9|aba2015-07-15-10|aba2015-07-15-13|aba2015-07-15-14|aba2015-07-15-15|aba2015-07-15-16|aba2015-07-15-17|aba2015-07-15-18|aba2015-07-15-19|aba2015-07-15-20|aba2015-07-15-22|aba2015-07-15-23|aba2015-07-15-24|aba2015-07-15-25|aba2015-07-15-26|aba2015-07-15-27|aba2015-07-15-29|aba2015-07-15-30|aba2015-07-15-31|aba2015-07-15-32|aba2015-07-15-33|aba2015-07-15-34|aba2015-07-15-35)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10271
+  deposition_id: 10021
   run_data_map_file: run_data_map/10271.csv
   source_prefix: GJensen_full
 tiltseries:

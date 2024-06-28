@@ -54,7 +54,7 @@ runs:
       match_regex: (etl2012-04-26-17|etl2012-04-26-19|etl2012-04-26-20|etl2012-04-26-21|etl2012-04-26-22|etl2012-04-26-23|etl2012-04-26-24|etl2012-04-26-25|etl2012-04-26-26|etl2012-04-26-27|etl2012-04-26-28|etl2012-04-26-29|etl2012-04-26-30|etl2012-05-13-20|etl2012-05-13-21|etl2012-05-13-22|etl2012-05-13-23|etl2012-05-13-24|etl2012-05-13-25|etl2012-05-13-26|etl2012-05-13-27|etl2012-05-14-1|etl2012-05-14-2|etl2012-05-14-3|etl2012-05-14-4|etl2012-05-14-6|etl2012-05-14-7|etl2012-05-14-8|etl2012-05-14-9|etl2012-05-14-10|etl2012-05-14-11)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10250
+  deposition_id: 10035
   run_data_map_file: run_data_map/10250.csv
   run_to_frame_map_csv: run_frames_map/10250.csv
   run_to_tomo_map_csv: run_tomo_map/10250.csv

@@ -55,7 +55,7 @@ runs:
       match_regex: (aba2014-04-10-3|aba2014-04-10-4|aba2014-04-10-5|aba2014-04-10-6|aba2014-04-10-7|aba2014-04-10-8|aba2014-04-10-9|aba2014-04-10-10|aba2014-04-10-11|aba2014-04-10-12|aba2014-04-10-13|aba2014-04-10-14|aba2014-04-10-15|aba2014-04-10-16|aba2014-04-10-17|aba2014-04-10-18|aba2014-04-10-19|aba2014-04-10-20|aba2014-04-10-21|aba2014-04-10-22|aba2014-04-10-23|aba2014-04-10-24|aba2014-04-10-25|aba2014-04-10-26|aba2014-04-10-27|aba2014-04-10-28|aba2014-04-10-29|aba2014-04-10-30|aba2014-04-10-31|aba2014-04-10-32|aba2014-04-10-33)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10276
+  deposition_id: 10021
   run_data_map_file: run_data_map/10276.csv
   run_to_frame_map_csv: run_frames_map/10276.csv
   run_to_tomo_map_csv: run_tomo_map/10276.csv

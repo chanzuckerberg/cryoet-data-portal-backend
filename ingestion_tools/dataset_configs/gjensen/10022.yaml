@@ -55,7 +55,7 @@ runs:
       match_regex: (wnj2018-03-07-3)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10022
+  deposition_id: 10018
   source_prefix: GJensen_full
 tiltseries:
 - metadata:

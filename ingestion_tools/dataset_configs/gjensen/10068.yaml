@@ -62,7 +62,7 @@ runs:
       match_regex: (dga2016-01-14-1|dga2016-01-14-2|dga2016-01-14-3|dga2016-01-14-4|dga2016-01-14-5|dga2016-01-14-6|dga2016-01-14-7|dga2016-01-14-8|dga2016-01-14-9|dga2016-01-14-10|dga2016-01-14-11|dga2016-01-14-12|dga2016-01-14-13|dga2016-01-14-14|dga2016-01-14-15|dga2016-01-14-16|dga2016-01-14-17|dga2016-01-14-18|dga2016-01-14-19|dga2016-01-14-20|dga2016-01-14-21|dga2016-01-14-22|dga2016-01-14-23|dga2016-01-14-24|dga2016-01-14-25|dga2016-01-14-26)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10068
+  deposition_id: 10038
   run_data_map_file: run_data_map/10068.csv
   run_to_frame_map_csv: run_frames_map/10068.csv
   run_to_tomo_map_csv: run_tomo_map/10068.csv
