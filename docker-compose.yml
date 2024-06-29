@@ -33,6 +33,7 @@ services:
       - ./test_infra:/test_infra
     ports:
       - '5432:5432'
+      - '5433:5432' # for connecting to the db from localhost
   cryoet-api:
     platform: linux/arm64
     profiles: ["api"]

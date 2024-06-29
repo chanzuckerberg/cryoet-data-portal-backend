@@ -1,13 +1,21 @@
 # Community Tomography Data Portal Backend
 CryoET Portal API server and ingestion tools
 
-To launch a local dev environment:
+To launch a local dev environment (Docker required):
 ```
 make init
 ```
 
 Wait another ~10s and then visit http://localhost:9695/ in your browser.
 
+## Testing
+
+To initialize the database with test data:
+```
+make ingestor-test-db-init
+```
+
+For ingestion process testing, see the [ingestion_tools README](ingestion_tools/README.md).
 
 ## Code of Conduct
 
