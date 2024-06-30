@@ -1863,9 +1863,10 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
-  AnnotationFile:
-    name: AnnotationFile
-    description: File and sourcing data for an annotation.
+  AnnotationSourceFile:
+    name: AnnotationSourceFile
+    description: File and sourcing data for an annotation. Represents an entry in
+      annotation.sources.
     from_schema: metadata
     attributes:
       file_format:
@@ -1873,11 +1874,11 @@ classes:
         description: File format for this file
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_format
+        - cdp-common:annotation_source_file_format
         alias: file_format
-        owner: AnnotationFile
+        owner: AnnotationSourceFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: string
         required: true
         inlined: true
@@ -1887,11 +1888,11 @@ classes:
         description: Glob string to match annotation files in the dataset.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_glob_string
+        - cdp-common:annotation_source_file_glob_string
         alias: glob_string
-        owner: AnnotationFile
+        owner: AnnotationSourceFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: string
         required: true
         inlined: true
@@ -1901,11 +1902,11 @@ classes:
         description: This annotation will be rendered in neuroglancer by default.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_is_visualization_default
+        - cdp-common:annotation_source_file_is_visualization_default
         alias: is_visualization_default
-        owner: AnnotationFile
+        owner: AnnotationSourceFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: boolean
         inlined: true
         inlined_as_list: true
@@ -1915,14 +1916,14 @@ classes:
     from_schema: metadata
     aliases:
     - OrientedPoint
-    is_a: AnnotationFile
+    is_a: AnnotationSourceFile
     attributes:
       binning:
         name: binning
         description: The binning factor for a oriented point annotation file.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_oriented_point_binning
+        - cdp-common:annotation_source_file_oriented_point_binning
         alias: binning
         owner: AnnotationOrientedPointFile
         domain_of:
@@ -1936,7 +1937,7 @@ classes:
         description: The filter value for a oriented point annotation file.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_oriented_point_filter_value
+        - cdp-common:annotation_source_file_oriented_point_filter_value
         alias: filter_value
         owner: AnnotationOrientedPointFile
         domain_of:
@@ -1949,7 +1950,7 @@ classes:
         description: The order of axes for a oriented point annotation file.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_oriented_point_order
+        - cdp-common:annotation_source_file_oriented_point_order
         alias: order
         owner: AnnotationOrientedPointFile
         domain_of:
@@ -1961,11 +1962,11 @@ classes:
         name: file_format
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_format
+        - cdp-common:annotation_source_file_format
         alias: file_format
         owner: AnnotationOrientedPointFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: string
         required: true
         inlined: true
@@ -1974,11 +1975,11 @@ classes:
         name: glob_string
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_glob_string
+        - cdp-common:annotation_source_file_glob_string
         alias: glob_string
         owner: AnnotationOrientedPointFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: string
         required: true
         inlined: true
@@ -1987,11 +1988,11 @@ classes:
         name: is_visualization_default
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_is_visualization_default
+        - cdp-common:annotation_source_file_is_visualization_default
         alias: is_visualization_default
         owner: AnnotationOrientedPointFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: boolean
         inlined: true
         inlined_as_list: true
@@ -2007,7 +2008,7 @@ classes:
         name: binning
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_oriented_point_binning
+        - cdp-common:annotation_source_file_oriented_point_binning
         alias: binning
         owner: AnnotationInstanceSegmentationFile
         domain_of:
@@ -2020,7 +2021,7 @@ classes:
         name: filter_value
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_oriented_point_filter_value
+        - cdp-common:annotation_source_file_oriented_point_filter_value
         alias: filter_value
         owner: AnnotationInstanceSegmentationFile
         domain_of:
@@ -2032,7 +2033,7 @@ classes:
         name: order
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_oriented_point_order
+        - cdp-common:annotation_source_file_oriented_point_order
         alias: order
         owner: AnnotationInstanceSegmentationFile
         domain_of:
@@ -2044,11 +2045,11 @@ classes:
         name: file_format
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_format
+        - cdp-common:annotation_source_file_format
         alias: file_format
         owner: AnnotationInstanceSegmentationFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: string
         required: true
         inlined: true
@@ -2057,11 +2058,11 @@ classes:
         name: glob_string
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_glob_string
+        - cdp-common:annotation_source_file_glob_string
         alias: glob_string
         owner: AnnotationInstanceSegmentationFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: string
         required: true
         inlined: true
@@ -2070,11 +2071,11 @@ classes:
         name: is_visualization_default
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_is_visualization_default
+        - cdp-common:annotation_source_file_is_visualization_default
         alias: is_visualization_default
         owner: AnnotationInstanceSegmentationFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: boolean
         inlined: true
         inlined_as_list: true
@@ -2084,13 +2085,13 @@ classes:
     from_schema: metadata
     aliases:
     - Point
-    is_a: AnnotationFile
+    is_a: AnnotationSourceFile
     attributes:
       binning:
         name: binning
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_point_binning
+        - cdp-common:annotation_source_file_point_binning
         alias: binning
         owner: AnnotationPointFile
         domain_of:
@@ -2104,7 +2105,7 @@ classes:
         description: The columns used in a point annotation file.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_point_columns
+        - cdp-common:annotation_source_file_point_columns
         alias: columns
         owner: AnnotationPointFile
         domain_of:
@@ -2117,7 +2118,7 @@ classes:
         description: The delimiter used in a oriented point annotation file.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_point_delimiter
+        - cdp-common:annotation_source_file_point_delimiter
         alias: delimiter
         owner: AnnotationPointFile
         domain_of:
@@ -2129,11 +2130,11 @@ classes:
         name: file_format
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_format
+        - cdp-common:annotation_source_file_format
         alias: file_format
         owner: AnnotationPointFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: string
         required: true
         inlined: true
@@ -2142,11 +2143,11 @@ classes:
         name: glob_string
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_glob_string
+        - cdp-common:annotation_source_file_glob_string
         alias: glob_string
         owner: AnnotationPointFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: string
         required: true
         inlined: true
@@ -2155,11 +2156,11 @@ classes:
         name: is_visualization_default
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_is_visualization_default
+        - cdp-common:annotation_source_file_is_visualization_default
         alias: is_visualization_default
         owner: AnnotationPointFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: boolean
         inlined: true
         inlined_as_list: true
@@ -2169,17 +2170,17 @@ classes:
     from_schema: metadata
     aliases:
     - SegmentationMask
-    is_a: AnnotationFile
+    is_a: AnnotationSourceFile
     attributes:
       file_format:
         name: file_format
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_format
+        - cdp-common:annotation_source_file_format
         alias: file_format
         owner: AnnotationSegmentationMaskFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: string
         required: true
         inlined: true
@@ -2188,11 +2189,11 @@ classes:
         name: glob_string
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_glob_string
+        - cdp-common:annotation_source_file_glob_string
         alias: glob_string
         owner: AnnotationSegmentationMaskFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: string
         required: true
         inlined: true
@@ -2201,11 +2202,11 @@ classes:
         name: is_visualization_default
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_is_visualization_default
+        - cdp-common:annotation_source_file_is_visualization_default
         alias: is_visualization_default
         owner: AnnotationSegmentationMaskFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: boolean
         inlined: true
         inlined_as_list: true
@@ -2215,14 +2216,14 @@ classes:
     from_schema: metadata
     aliases:
     - SemanticSegmentationMask
-    is_a: AnnotationFile
+    is_a: AnnotationSourceFile
     attributes:
       mask_label:
         name: mask_label
         description: The mask label for a semantic segmentation mask annotation file.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_semantic_segmentation_mask_label
+        - cdp-common:annotation_source_file_semantic_segmentation_mask_label
         alias: mask_label
         owner: AnnotationSemanticSegmentationMaskFile
         domain_of:
@@ -2234,11 +2235,11 @@ classes:
         name: file_format
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_format
+        - cdp-common:annotation_source_file_format
         alias: file_format
         owner: AnnotationSemanticSegmentationMaskFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: string
         required: true
         inlined: true
@@ -2247,11 +2248,11 @@ classes:
         name: glob_string
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_glob_string
+        - cdp-common:annotation_source_file_glob_string
         alias: glob_string
         owner: AnnotationSemanticSegmentationMaskFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: string
         required: true
         inlined: true
@@ -2260,11 +2261,11 @@ classes:
         name: is_visualization_default
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_file_is_visualization_default
+        - cdp-common:annotation_source_file_is_visualization_default
         alias: is_visualization_default
         owner: AnnotationSemanticSegmentationMaskFile
         domain_of:
-        - AnnotationFile
+        - AnnotationSourceFile
         range: boolean
         inlined: true
         inlined_as_list: true
@@ -2373,7 +2374,8 @@ classes:
         inlined_as_list: true
       files:
         name: files
-        description: File and sourcing data for an annotation.
+        description: File and sourcing data for an annotation. Represents an entry
+          in annotation.sources.
         from_schema: metadata
         multivalued: true
         list_elements_ordered: true
@@ -2381,7 +2383,7 @@ classes:
         owner: Annotation
         domain_of:
         - Annotation
-        range: AnnotationFile
+        range: AnnotationSourceFile
         inlined: true
         inlined_as_list: true
       confidence:

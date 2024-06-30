@@ -421,16 +421,16 @@ class AnnotationObject(ConfiguredBaseModel):
     state: Optional[str] = Field(None, description="""Molecule state annotated (e.g. open, closed)""")
 
 
-class AnnotationFile(ConfiguredBaseModel):
+class AnnotationSourceFile(ConfiguredBaseModel):
     """
-    File and sourcing data for an annotation.
+    File and sourcing data for an annotation. Represents an entry in annotation.sources.
     """
     file_format: str = Field(..., description="""File format for this file""")
     glob_string: str = Field(..., description="""Glob string to match annotation files in the dataset.""")
     is_visualization_default: Optional[bool] = Field(None, description="""This annotation will be rendered in neuroglancer by default.""")
 
 
-class AnnotationOrientedPointFile(AnnotationFile):
+class AnnotationOrientedPointFile(AnnotationSourceFile):
     """
     File and sourcing data for an oriented point annotation.
     """
@@ -454,7 +454,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
     is_visualization_default: Optional[bool] = Field(None)
 
 
-class AnnotationPointFile(AnnotationFile):
+class AnnotationPointFile(AnnotationSourceFile):
     """
     File and sourcing data for a point annotation.
     """
@@ -466,7 +466,7 @@ class AnnotationPointFile(AnnotationFile):
     is_visualization_default: Optional[bool] = Field(None)
 
 
-class AnnotationSegmentationMaskFile(AnnotationFile):
+class AnnotationSegmentationMaskFile(AnnotationSourceFile):
     """
     File and sourcing data for a segmentation mask annotation.
     """
@@ -475,7 +475,7 @@ class AnnotationSegmentationMaskFile(AnnotationFile):
     is_visualization_default: Optional[bool] = Field(None)
 
 
-class AnnotationSemanticSegmentationMaskFile(AnnotationFile):
+class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
     """
     File and sourcing data for a semantic segmentation mask annotation.
     """
@@ -496,7 +496,7 @@ class Annotation(AnnotatoredEntity, DatestampedEntity):
     ground_truth_status: Optional[bool] = Field(None, description="""Whether an annotation is considered ground truth, as determined by the annotator.""")
     object_count: Optional[int] = Field(None, description="""Number of objects identified""")
     is_curator_recommended: Optional[bool] = Field(None, description="""This annotation is recommended by the curator to be preferred for this object type.""")
-    files: Optional[List[AnnotationFile]] = Field(default_factory=list, description="""File and sourcing data for an annotation.""")
+    files: Optional[List[AnnotationSourceFile]] = Field(default_factory=list, description="""File and sourcing data for an annotation. Represents an entry in annotation.sources.""")
     confidence: Optional[AnnotationConfidence] = Field(None, description="""Metadata describing the confidence of an annotation.""")
     annotation_object: Optional[AnnotationObject] = Field(None, description="""Metadata describing the object being annotated.""")
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""")
@@ -543,7 +543,7 @@ TomogramOffset.model_rebuild()
 Tomogram.model_rebuild()
 AnnotationConfidence.model_rebuild()
 AnnotationObject.model_rebuild()
-AnnotationFile.model_rebuild()
+AnnotationSourceFile.model_rebuild()
 AnnotationOrientedPointFile.model_rebuild()
 AnnotationInstanceSegmentationFile.model_rebuild()
 AnnotationPointFile.model_rebuild()

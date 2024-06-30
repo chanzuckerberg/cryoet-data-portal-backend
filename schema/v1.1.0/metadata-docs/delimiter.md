@@ -61,7 +61,7 @@ name: delimiter
 description: The delimiter used in a oriented point annotation file.
 from_schema: metadata
 exact_mappings:
-- cdp-common:annotation_file_point_delimiter
+- cdp-common:annotation_source_file_point_delimiter
 rank: 1000
 alias: delimiter
 owner: AnnotationPointFile

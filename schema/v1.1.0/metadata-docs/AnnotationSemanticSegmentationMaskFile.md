@@ -20,8 +20,8 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
  classDiagram
     class AnnotationSemanticSegmentationMaskFile
     click AnnotationSemanticSegmentationMaskFile href "../AnnotationSemanticSegmentationMaskFile"
-      AnnotationFile <|-- AnnotationSemanticSegmentationMaskFile
-        click AnnotationFile href "../AnnotationFile"
+      AnnotationSourceFile <|-- AnnotationSemanticSegmentationMaskFile
+        click AnnotationSourceFile href "../AnnotationSourceFile"
       
       AnnotationSemanticSegmentationMaskFile : file_format
         
@@ -67,7 +67,7 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
 
 
 ## Inheritance
-* [AnnotationFile](AnnotationFile.md)
+* [AnnotationSourceFile](AnnotationSourceFile.md)
     * **AnnotationSemanticSegmentationMaskFile**
 
 
@@ -135,14 +135,14 @@ description: File and sourcing data for a semantic segmentation mask annotation.
 from_schema: metadata
 aliases:
 - SemanticSegmentationMask
-is_a: AnnotationFile
+is_a: AnnotationSourceFile
 attributes:
   mask_label:
     name: mask_label
     description: The mask label for a semantic segmentation mask annotation file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_semantic_segmentation_mask_label
+    - cdp-common:annotation_source_file_semantic_segmentation_mask_label
     rank: 1000
     alias: mask_label
     owner: AnnotationSemanticSegmentationMaskFile
@@ -155,11 +155,11 @@ attributes:
     name: file_format
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_format
+    - cdp-common:annotation_source_file_format
     alias: file_format
     owner: AnnotationSemanticSegmentationMaskFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -173,11 +173,11 @@ attributes:
     name: glob_string
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_glob_string
+    - cdp-common:annotation_source_file_glob_string
     alias: glob_string
     owner: AnnotationSemanticSegmentationMaskFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -191,11 +191,11 @@ attributes:
     name: is_visualization_default
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_is_visualization_default
+    - cdp-common:annotation_source_file_is_visualization_default
     alias: is_visualization_default
     owner: AnnotationSemanticSegmentationMaskFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -217,14 +217,14 @@ description: File and sourcing data for a semantic segmentation mask annotation.
 from_schema: metadata
 aliases:
 - SemanticSegmentationMask
-is_a: AnnotationFile
+is_a: AnnotationSourceFile
 attributes:
   mask_label:
     name: mask_label
     description: The mask label for a semantic segmentation mask annotation file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_semantic_segmentation_mask_label
+    - cdp-common:annotation_source_file_semantic_segmentation_mask_label
     rank: 1000
     alias: mask_label
     owner: AnnotationSemanticSegmentationMaskFile
@@ -237,11 +237,11 @@ attributes:
     name: file_format
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_format
+    - cdp-common:annotation_source_file_format
     alias: file_format
     owner: AnnotationSemanticSegmentationMaskFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -255,11 +255,11 @@ attributes:
     name: glob_string
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_glob_string
+    - cdp-common:annotation_source_file_glob_string
     alias: glob_string
     owner: AnnotationSemanticSegmentationMaskFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -273,11 +273,11 @@ attributes:
     name: is_visualization_default
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_is_visualization_default
+    - cdp-common:annotation_source_file_is_visualization_default
     alias: is_visualization_default
     owner: AnnotationSemanticSegmentationMaskFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile

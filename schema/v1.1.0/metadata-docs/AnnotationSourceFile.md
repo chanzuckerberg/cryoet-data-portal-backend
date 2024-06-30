@@ -1,15 +1,15 @@
 
 
-# Class: AnnotationFile
+# Class: AnnotationSourceFile
 
 
-_File and sourcing data for an annotation._
+_File and sourcing data for an annotation. Represents an entry in annotation.sources._
 
 
 
 
 
-URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
+URI: [cdp-meta:AnnotationSourceFile](metadataAnnotationSourceFile)
 
 
 
@@ -18,41 +18,41 @@ URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
 
 ```mermaid
  classDiagram
-    class AnnotationFile
-    click AnnotationFile href "../AnnotationFile"
-      AnnotationFile <|-- AnnotationOrientedPointFile
+    class AnnotationSourceFile
+    click AnnotationSourceFile href "../AnnotationSourceFile"
+      AnnotationSourceFile <|-- AnnotationOrientedPointFile
         click AnnotationOrientedPointFile href "../AnnotationOrientedPointFile"
-      AnnotationFile <|-- AnnotationPointFile
+      AnnotationSourceFile <|-- AnnotationPointFile
         click AnnotationPointFile href "../AnnotationPointFile"
-      AnnotationFile <|-- AnnotationSegmentationMaskFile
+      AnnotationSourceFile <|-- AnnotationSegmentationMaskFile
         click AnnotationSegmentationMaskFile href "../AnnotationSegmentationMaskFile"
-      AnnotationFile <|-- AnnotationSemanticSegmentationMaskFile
+      AnnotationSourceFile <|-- AnnotationSemanticSegmentationMaskFile
         click AnnotationSemanticSegmentationMaskFile href "../AnnotationSemanticSegmentationMaskFile"
       
-      AnnotationFile : file_format
+      AnnotationSourceFile : file_format
         
           
     
     
-    AnnotationFile --> "1" String : file_format
+    AnnotationSourceFile --> "1" String : file_format
     click String href "../String"
 
         
-      AnnotationFile : glob_string
+      AnnotationSourceFile : glob_string
         
           
     
     
-    AnnotationFile --> "1" String : glob_string
+    AnnotationSourceFile --> "1" String : glob_string
     click String href "../String"
 
         
-      AnnotationFile : is_visualization_default
+      AnnotationSourceFile : is_visualization_default
         
           
     
     
-    AnnotationFile --> "0..1" Boolean : is_visualization_default
+    AnnotationSourceFile --> "0..1" Boolean : is_visualization_default
     click Boolean href "../Boolean"
 
         
@@ -64,7 +64,7 @@ URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
 
 
 ## Inheritance
-* **AnnotationFile**
+* **AnnotationSourceFile**
     * [AnnotationOrientedPointFile](AnnotationOrientedPointFile.md)
     * [AnnotationPointFile](AnnotationPointFile.md)
     * [AnnotationSegmentationMaskFile](AnnotationSegmentationMaskFile.md)
@@ -88,7 +88,7 @@ URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [Annotation](Annotation.md) | [files](files.md) | range | [AnnotationFile](AnnotationFile.md) |
+| [Annotation](Annotation.md) | [files](files.md) | range | [AnnotationSourceFile](AnnotationSourceFile.md) |
 
 
 
@@ -116,8 +116,8 @@ URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:AnnotationFile |
-| native | cdp-meta:AnnotationFile |
+| self | cdp-meta:AnnotationSourceFile |
+| native | cdp-meta:AnnotationSourceFile |
 
 
 
@@ -131,8 +131,8 @@ URI: [cdp-meta:AnnotationFile](metadataAnnotationFile)
 
 <details>
 ```yaml
-name: AnnotationFile
-description: File and sourcing data for an annotation.
+name: AnnotationSourceFile
+description: File and sourcing data for an annotation. Represents an entry in annotation.sources.
 from_schema: metadata
 attributes:
   file_format:
@@ -140,12 +140,12 @@ attributes:
     description: File format for this file
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_format
+    - cdp-common:annotation_source_file_format
     rank: 1000
     alias: file_format
-    owner: AnnotationFile
+    owner: AnnotationSourceFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -160,12 +160,12 @@ attributes:
     description: Glob string to match annotation files in the dataset.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_glob_string
+    - cdp-common:annotation_source_file_glob_string
     rank: 1000
     alias: glob_string
-    owner: AnnotationFile
+    owner: AnnotationSourceFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -180,12 +180,12 @@ attributes:
     description: This annotation will be rendered in neuroglancer by default.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_is_visualization_default
+    - cdp-common:annotation_source_file_is_visualization_default
     rank: 1000
     alias: is_visualization_default
-    owner: AnnotationFile
+    owner: AnnotationSourceFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -202,8 +202,8 @@ attributes:
 
 <details>
 ```yaml
-name: AnnotationFile
-description: File and sourcing data for an annotation.
+name: AnnotationSourceFile
+description: File and sourcing data for an annotation. Represents an entry in annotation.sources.
 from_schema: metadata
 attributes:
   file_format:
@@ -211,12 +211,12 @@ attributes:
     description: File format for this file
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_format
+    - cdp-common:annotation_source_file_format
     rank: 1000
     alias: file_format
-    owner: AnnotationFile
+    owner: AnnotationSourceFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -231,12 +231,12 @@ attributes:
     description: Glob string to match annotation files in the dataset.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_glob_string
+    - cdp-common:annotation_source_file_glob_string
     rank: 1000
     alias: glob_string
-    owner: AnnotationFile
+    owner: AnnotationSourceFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -251,12 +251,12 @@ attributes:
     description: This annotation will be rendered in neuroglancer by default.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_is_visualization_default
+    - cdp-common:annotation_source_file_is_visualization_default
     rank: 1000
     alias: is_visualization_default
-    owner: AnnotationFile
+    owner: AnnotationSourceFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile

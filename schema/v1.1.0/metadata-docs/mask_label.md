@@ -61,7 +61,7 @@ name: mask_label
 description: The mask label for a semantic segmentation mask annotation file.
 from_schema: metadata
 exact_mappings:
-- cdp-common:annotation_file_semantic_segmentation_mask_label
+- cdp-common:annotation_source_file_semantic_segmentation_mask_label
 rank: 1000
 alias: mask_label
 owner: AnnotationSemanticSegmentationMaskFile

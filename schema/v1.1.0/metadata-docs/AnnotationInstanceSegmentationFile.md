@@ -85,7 +85,7 @@ URI: [cdp-meta:AnnotationInstanceSegmentationFile](metadataAnnotationInstanceSeg
 
 
 ## Inheritance
-* [AnnotationFile](AnnotationFile.md)
+* [AnnotationSourceFile](AnnotationSourceFile.md)
     * [AnnotationOrientedPointFile](AnnotationOrientedPointFile.md)
         * **AnnotationInstanceSegmentationFile**
 
@@ -162,7 +162,7 @@ attributes:
     name: binning
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_oriented_point_binning
+    - cdp-common:annotation_source_file_oriented_point_binning
     alias: binning
     owner: AnnotationInstanceSegmentationFile
     domain_of:
@@ -176,7 +176,7 @@ attributes:
     name: filter_value
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_oriented_point_filter_value
+    - cdp-common:annotation_source_file_oriented_point_filter_value
     alias: filter_value
     owner: AnnotationInstanceSegmentationFile
     domain_of:
@@ -189,7 +189,7 @@ attributes:
     name: order
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_oriented_point_order
+    - cdp-common:annotation_source_file_oriented_point_order
     alias: order
     owner: AnnotationInstanceSegmentationFile
     domain_of:
@@ -202,11 +202,11 @@ attributes:
     name: file_format
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_format
+    - cdp-common:annotation_source_file_format
     alias: file_format
     owner: AnnotationInstanceSegmentationFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -220,11 +220,11 @@ attributes:
     name: glob_string
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_glob_string
+    - cdp-common:annotation_source_file_glob_string
     alias: glob_string
     owner: AnnotationInstanceSegmentationFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -238,11 +238,11 @@ attributes:
     name: is_visualization_default
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_is_visualization_default
+    - cdp-common:annotation_source_file_is_visualization_default
     alias: is_visualization_default
     owner: AnnotationInstanceSegmentationFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -270,7 +270,7 @@ attributes:
     name: binning
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_oriented_point_binning
+    - cdp-common:annotation_source_file_oriented_point_binning
     alias: binning
     owner: AnnotationInstanceSegmentationFile
     domain_of:
@@ -284,7 +284,7 @@ attributes:
     name: filter_value
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_oriented_point_filter_value
+    - cdp-common:annotation_source_file_oriented_point_filter_value
     alias: filter_value
     owner: AnnotationInstanceSegmentationFile
     domain_of:
@@ -297,7 +297,7 @@ attributes:
     name: order
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_oriented_point_order
+    - cdp-common:annotation_source_file_oriented_point_order
     alias: order
     owner: AnnotationInstanceSegmentationFile
     domain_of:
@@ -310,11 +310,11 @@ attributes:
     name: file_format
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_format
+    - cdp-common:annotation_source_file_format
     alias: file_format
     owner: AnnotationInstanceSegmentationFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -328,11 +328,11 @@ attributes:
     name: glob_string
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_glob_string
+    - cdp-common:annotation_source_file_glob_string
     alias: glob_string
     owner: AnnotationInstanceSegmentationFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -346,11 +346,11 @@ attributes:
     name: is_visualization_default
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_is_visualization_default
+    - cdp-common:annotation_source_file_is_visualization_default
     alias: is_visualization_default
     owner: AnnotationInstanceSegmentationFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile

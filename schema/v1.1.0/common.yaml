@@ -563,54 +563,54 @@ slots:
     description: This annotation is recommended by the curator to be preferred for this object type.
 
   # ============================================================================
-  # Annotation File slots
+  # Annotation Source File  slots
   # ============================================================================
   #id (int): Numeric identifier (May change!)
-  annotation_file_format:
+  annotation_source_file_format:
     range: string
     description: File format for this file
-  annotation_file_https_path:
+  annotation_source_file_https_path:
     range: string
     description: HTTPS url for the annotation file
-  annotation_file_s3_path:
+  annotation_source_file_s3_path:
     range: string
     description: S3 path for the annotation file
-  annotation_file_annotation_id:
+  annotation_source_file_annotation_id:
     range: integer
     description: Reference to the annotation this file applies to
-  annotation_file_path:
+  annotation_source_file_path:
     range: string
     description: Path to the annotation file relative to the dataset root.
-  annotation_file_glob_string:
+  annotation_source_file_glob_string:
     range: string
     description: Glob string to match annotation files in the dataset.
-  annotation_file_is_visualization_default:
+  annotation_source_file_is_visualization_default:
     range: boolean
     description: This annotation will be rendered in neuroglancer by default.
   #Annotation (Annotation): The annotation this file is a part of
 
   # ============================================================================
-  # Annotation File shape-specific slots
+  # Annotation Source File shape-specific slots
   # ============================================================================
-  annotation_file_oriented_point_binning:
+  annotation_source_file_oriented_point_binning:
     range: integer
     description: The binning factor for a oriented point annotation file.
-  annotation_file_oriented_point_filter_value:
+  annotation_source_file_oriented_point_filter_value:
     range: string
     description: The filter value for a oriented point annotation file.
-  annotation_file_oriented_point_order:
+  annotation_source_file_oriented_point_order:
     range: string
     description: The order of axes for a oriented point annotation file.
-  annotation_file_point_columns:
+  annotation_source_file_point_columns:
     range: string
     description: The columns used in a point annotation file.
-  annotation_file_point_delimiter:
+  annotation_source_file_point_delimiter:
     range: string
     description: The delimiter used in a oriented point annotation file.
-  annotation_file_point_order:
+  annotation_source_file_point_order:
     range: string
     description: The order of axes for a point annotation file.
-  annotation_file_semantic_segmentation_mask_label:
+  annotation_source_file_semantic_segmentation_mask_label:
     range: integer
     description: The mask label for a semantic segmentation mask annotation file.
 

@@ -61,7 +61,7 @@ name: columns
 description: The columns used in a point annotation file.
 from_schema: metadata
 exact_mappings:
-- cdp-common:annotation_file_point_columns
+- cdp-common:annotation_source_file_point_columns
 rank: 1000
 alias: columns
 owner: AnnotationPointFile

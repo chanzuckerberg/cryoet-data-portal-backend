@@ -20,8 +20,8 @@ URI: [cdp-meta:AnnotationPointFile](metadataAnnotationPointFile)
  classDiagram
     class AnnotationPointFile
     click AnnotationPointFile href "../AnnotationPointFile"
-      AnnotationFile <|-- AnnotationPointFile
-        click AnnotationFile href "../AnnotationFile"
+      AnnotationSourceFile <|-- AnnotationPointFile
+        click AnnotationSourceFile href "../AnnotationSourceFile"
       
       AnnotationPointFile : binning
         
@@ -85,7 +85,7 @@ URI: [cdp-meta:AnnotationPointFile](metadataAnnotationPointFile)
 
 
 ## Inheritance
-* [AnnotationFile](AnnotationFile.md)
+* [AnnotationSourceFile](AnnotationSourceFile.md)
     * **AnnotationPointFile**
 
 
@@ -155,13 +155,13 @@ description: File and sourcing data for a point annotation.
 from_schema: metadata
 aliases:
 - Point
-is_a: AnnotationFile
+is_a: AnnotationSourceFile
 attributes:
   binning:
     name: binning
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_point_binning
+    - cdp-common:annotation_source_file_point_binning
     alias: binning
     owner: AnnotationPointFile
     domain_of:
@@ -176,7 +176,7 @@ attributes:
     description: The columns used in a point annotation file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_point_columns
+    - cdp-common:annotation_source_file_point_columns
     rank: 1000
     alias: columns
     owner: AnnotationPointFile
@@ -190,7 +190,7 @@ attributes:
     description: The delimiter used in a oriented point annotation file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_point_delimiter
+    - cdp-common:annotation_source_file_point_delimiter
     rank: 1000
     alias: delimiter
     owner: AnnotationPointFile
@@ -203,11 +203,11 @@ attributes:
     name: file_format
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_format
+    - cdp-common:annotation_source_file_format
     alias: file_format
     owner: AnnotationPointFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -221,11 +221,11 @@ attributes:
     name: glob_string
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_glob_string
+    - cdp-common:annotation_source_file_glob_string
     alias: glob_string
     owner: AnnotationPointFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -239,11 +239,11 @@ attributes:
     name: is_visualization_default
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_is_visualization_default
+    - cdp-common:annotation_source_file_is_visualization_default
     alias: is_visualization_default
     owner: AnnotationPointFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -265,13 +265,13 @@ description: File and sourcing data for a point annotation.
 from_schema: metadata
 aliases:
 - Point
-is_a: AnnotationFile
+is_a: AnnotationSourceFile
 attributes:
   binning:
     name: binning
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_point_binning
+    - cdp-common:annotation_source_file_point_binning
     alias: binning
     owner: AnnotationPointFile
     domain_of:
@@ -286,7 +286,7 @@ attributes:
     description: The columns used in a point annotation file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_point_columns
+    - cdp-common:annotation_source_file_point_columns
     rank: 1000
     alias: columns
     owner: AnnotationPointFile
@@ -300,7 +300,7 @@ attributes:
     description: The delimiter used in a oriented point annotation file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_point_delimiter
+    - cdp-common:annotation_source_file_point_delimiter
     rank: 1000
     alias: delimiter
     owner: AnnotationPointFile
@@ -313,11 +313,11 @@ attributes:
     name: file_format
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_format
+    - cdp-common:annotation_source_file_format
     alias: file_format
     owner: AnnotationPointFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -331,11 +331,11 @@ attributes:
     name: glob_string
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_glob_string
+    - cdp-common:annotation_source_file_glob_string
     alias: glob_string
     owner: AnnotationPointFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -349,11 +349,11 @@ attributes:
     name: is_visualization_default
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_is_visualization_default
+    - cdp-common:annotation_source_file_is_visualization_default
     alias: is_visualization_default
     owner: AnnotationPointFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile

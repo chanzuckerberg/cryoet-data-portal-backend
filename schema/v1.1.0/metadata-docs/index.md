@@ -14,13 +14,13 @@ Name: cdp-meta
 | --- | --- |
 | [Annotation](Annotation.md) | Metadata describing an annotation. |
 | [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation. |
-| [AnnotationFile](AnnotationFile.md) | File and sourcing data for an annotation. |
+| [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated. |
+| [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation. Represents an entry in annotation.sources. |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation. |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation. |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation. |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationSegmentationMaskFile](AnnotationSegmentationMaskFile.md) | File and sourcing data for a segmentation mask annotation. |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationSemanticSegmentationMaskFile](AnnotationSemanticSegmentationMaskFile.md) | File and sourcing data for a semantic segmentation mask annotation. |
-| [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated. |
 | [Annotator](Annotator.md) | Annotator of a scientific data entity. |
 | [AnnotatoredEntity](AnnotatoredEntity.md) | An entity with associated annotation authors. |
 | [Any](Any.md) | None |

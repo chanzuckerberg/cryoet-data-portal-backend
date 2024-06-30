@@ -526,26 +526,26 @@ classes:
         exact_mappings:
           - cdp-common:annotation_object_state
 
-  AnnotationFile:
-    description: &desc_annotation_file File and sourcing data for an annotation.
+  AnnotationSourceFile:
+    description: &desc_annotation_source_file File and sourcing data for an annotation. Represents an entry in annotation.sources. 
     attributes:
       file_format:
         range: string
         required: true
         exact_mappings:
-          - cdp-common:annotation_file_format
+          - cdp-common:annotation_source_file_format
       glob_string:
         range: string
         required: true
         exact_mappings:
-          - cdp-common:annotation_file_glob_string
+          - cdp-common:annotation_source_file_glob_string
       is_visualization_default:
         range: boolean
         exact_mappings:
-          - cdp-common:annotation_file_is_visualization_default
+          - cdp-common:annotation_source_file_is_visualization_default
 
   AnnotationOrientedPointFile:
-    is_a: AnnotationFile
+    is_a: AnnotationSourceFile
     aliases: 
     - OrientedPoint
     description: File and sourcing data for an oriented point annotation.
@@ -553,15 +553,15 @@ classes:
       binning: 
         range: integer
         exact_mappings:
-          - cdp-common:annotation_file_oriented_point_binning
+          - cdp-common:annotation_source_file_oriented_point_binning
       filter_value:
         range: string
         exact_mappings:
-          - cdp-common:annotation_file_oriented_point_filter_value
+          - cdp-common:annotation_source_file_oriented_point_filter_value
       order:
         range: string
         exact_mappings:
-          - cdp-common:annotation_file_oriented_point_order
+          - cdp-common:annotation_source_file_oriented_point_order
   
   AnnotationInstanceSegmentationFile:
     is_a: AnnotationOrientedPointFile
@@ -571,7 +571,7 @@ classes:
     attributes: # no extended attributes
 
   AnnotationPointFile:
-    is_a: AnnotationFile
+    is_a: AnnotationSourceFile
     aliases:
     - Point
     description: File and sourcing data for a point annotation.
@@ -579,25 +579,25 @@ classes:
       binning: 
         range: integer
         exact_mappings:
-          - cdp-common:annotation_file_point_binning
+          - cdp-common:annotation_source_file_point_binning
       columns:
         range: string
         exact_mappings:
-          - cdp-common:annotation_file_point_columns
+          - cdp-common:annotation_source_file_point_columns
       delimiter:
         range: string
         exact_mappings:
-          - cdp-common:annotation_file_point_delimiter
+          - cdp-common:annotation_source_file_point_delimiter
 
   AnnotationSegmentationMaskFile:
-    is_a: AnnotationFile
+    is_a: AnnotationSourceFile
     aliases: 
     - SegmentationMask
     description: File and sourcing data for a segmentation mask annotation.
     attributes: # no extended attributes
 
   AnnotationSemanticSegmentationMaskFile:
-    is_a: AnnotationFile
+    is_a: AnnotationSourceFile
     aliases: 
     - SemanticSegmentationMask
     description: File and sourcing data for a semantic segmentation mask annotation.
@@ -605,7 +605,7 @@ classes:
       mask_label:
         range: integer
         exact_mappings:
-          - cdp-common:annotation_file_semantic_segmentation_mask_label
+          - cdp-common:annotation_source_file_semantic_segmentation_mask_label
 
   # ============================================================================
 
@@ -641,8 +641,8 @@ classes:
         exact_mappings:
           - cdp-common:annotation_is_curator_recommended
       files:
-        description: *desc_annotation_file
-        range: AnnotationFile
+        description: *desc_annotation_source_file
+        range: AnnotationSourceFile
         multivalued: true
         inlined_as_list: true
         list_elements_ordered: true

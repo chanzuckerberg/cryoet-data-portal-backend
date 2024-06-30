@@ -20,8 +20,8 @@ URI: [cdp-meta:AnnotationSegmentationMaskFile](metadataAnnotationSegmentationMas
  classDiagram
     class AnnotationSegmentationMaskFile
     click AnnotationSegmentationMaskFile href "../AnnotationSegmentationMaskFile"
-      AnnotationFile <|-- AnnotationSegmentationMaskFile
-        click AnnotationFile href "../AnnotationFile"
+      AnnotationSourceFile <|-- AnnotationSegmentationMaskFile
+        click AnnotationSourceFile href "../AnnotationSourceFile"
       
       AnnotationSegmentationMaskFile : file_format
         
@@ -58,7 +58,7 @@ URI: [cdp-meta:AnnotationSegmentationMaskFile](metadataAnnotationSegmentationMas
 
 
 ## Inheritance
-* [AnnotationFile](AnnotationFile.md)
+* [AnnotationSourceFile](AnnotationSourceFile.md)
     * **AnnotationSegmentationMaskFile**
 
 
@@ -125,17 +125,17 @@ description: File and sourcing data for a segmentation mask annotation.
 from_schema: metadata
 aliases:
 - SegmentationMask
-is_a: AnnotationFile
+is_a: AnnotationSourceFile
 attributes:
   file_format:
     name: file_format
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_format
+    - cdp-common:annotation_source_file_format
     alias: file_format
     owner: AnnotationSegmentationMaskFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -149,11 +149,11 @@ attributes:
     name: glob_string
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_glob_string
+    - cdp-common:annotation_source_file_glob_string
     alias: glob_string
     owner: AnnotationSegmentationMaskFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -167,11 +167,11 @@ attributes:
     name: is_visualization_default
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_is_visualization_default
+    - cdp-common:annotation_source_file_is_visualization_default
     alias: is_visualization_default
     owner: AnnotationSegmentationMaskFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -193,17 +193,17 @@ description: File and sourcing data for a segmentation mask annotation.
 from_schema: metadata
 aliases:
 - SegmentationMask
-is_a: AnnotationFile
+is_a: AnnotationSourceFile
 attributes:
   file_format:
     name: file_format
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_format
+    - cdp-common:annotation_source_file_format
     alias: file_format
     owner: AnnotationSegmentationMaskFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -217,11 +217,11 @@ attributes:
     name: glob_string
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_glob_string
+    - cdp-common:annotation_source_file_glob_string
     alias: glob_string
     owner: AnnotationSegmentationMaskFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
@@ -235,11 +235,11 @@ attributes:
     name: is_visualization_default
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_file_is_visualization_default
+    - cdp-common:annotation_source_file_is_visualization_default
     alias: is_visualization_default
     owner: AnnotationSegmentationMaskFile
     domain_of:
-    - AnnotationFile
+    - AnnotationSourceFile
     - AnnotationOrientedPointFile
     - AnnotationInstanceSegmentationFile
     - AnnotationPointFile
