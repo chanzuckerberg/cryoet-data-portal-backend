@@ -487,7 +487,7 @@ slots:
     range: integer
     description: Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
   tomogram_version:
-    range: string
+    range: VersionString
     description: Version of tomogram using the same software and post-processing. Version of tomogram using the same software and post-processing. This will be presented as the latest version
   #tomogram_voxel_spacing (TomogramVoxelSpacing): An object relationship with a specific voxel spacing for this experiment run
   tomogram_type:
@@ -678,10 +678,36 @@ enums:
       SemanticSegmentationMask:
         description: Annotation that identifies classes of objects.
 
+types: 
+  AnyNumberFormattedString:
+    description: A formatted string that represents any number.
+    base: string
+    pattern: '^(int|float|)[ ]*\{[a-zA-Z0-9_-]+\}$'
+
+  OnlyNumberFormattedString:
+    description: A formatted string that represents a number without a prefix.
+    base: string
+    pattern: '^-?[0-9]+(\.[0-9]+)?$'
+
+  FloatFormattedString:
+    description: A formatted string that represents a floating point number.
+    base: string
+    pattern: '^float[ ]*\{[a-zA-Z0-9_-]+\}$'
+
+  IntegerFormattedString:
+    description: A formatted string that represents an integer.
+    base: string
+    pattern: '^int[ ]*\{[a-zA-Z0-9_-]+\}$'
+
+  VersionString:
+    description: A string that represents a version number. 1, 1.0, 1.0.0, etc.
+    base: string
+    pattern: '^[0-9]+(\.[0-9]+){0,2}$'
 
 classes:
   Any:
     class_uri: linkml:Any
+
   # ============================================================================
   # Deposition, release and last modified dates
   # ============================================================================

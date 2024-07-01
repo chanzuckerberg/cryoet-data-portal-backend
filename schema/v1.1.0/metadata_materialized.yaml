@@ -635,7 +635,7 @@ classes:
         owner: Organism
         domain_of:
         - Organism
-        range: string
+        range: integer
         inlined: true
         inlined_as_list: true
   Tissue:
