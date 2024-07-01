@@ -31,7 +31,7 @@ URI: [cdp-meta:reconstruction_software](metadatareconstruction_software)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

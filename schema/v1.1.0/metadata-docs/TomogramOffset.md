@@ -22,30 +22,9 @@ URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
     click TomogramOffset href "../TomogramOffset"
       TomogramOffset : x
         
-          
-    
-    
-    TomogramOffset --> "0..1" Integer : x
-    click Integer href "../Integer"
-
-        
       TomogramOffset : y
         
-          
-    
-    
-    TomogramOffset --> "0..1" Integer : y
-    click Integer href "../Integer"
-
-        
       TomogramOffset : z
-        
-          
-    
-    
-    TomogramOffset --> "0..1" Integer : z
-    click Integer href "../Integer"
-
         
       
 ```
@@ -60,9 +39,9 @@ URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [x](x.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) |  | direct |
-| [y](y.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) |  | direct |
-| [z](z.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) |  | direct |
+| [x](x.md) | 0..1 <br/> [Integer](Integer.md) |  | direct |
+| [y](y.md) | 0..1 <br/> [Integer](Integer.md) |  | direct |
+| [z](z.md) | 0..1 <br/> [Integer](Integer.md) |  | direct |
 
 
 

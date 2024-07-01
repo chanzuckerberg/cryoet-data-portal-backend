@@ -22,21 +22,7 @@ URI: [cdp-meta:Camera](metadataCamera)
     click Camera href "../Camera"
       Camera : manufacturer
         
-          
-    
-    
-    Camera --> "0..1" String : manufacturer
-    click String href "../String"
-
-        
       Camera : model
-        
-          
-    
-    
-    Camera --> "0..1" String : model
-    click String href "../String"
-
         
       
 ```
@@ -51,8 +37,8 @@ URI: [cdp-meta:Camera](metadataCamera)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [manufacturer](manufacturer.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Name of the camera manufacturer | direct |
-| [model](model.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Camera model name | direct |
+| [manufacturer](manufacturer.md) | 0..1 <br/> [String](String.md) | Name of the camera manufacturer | direct |
+| [model](model.md) | 0..1 <br/> [String](String.md) | Camera model name | direct |
 
 
 

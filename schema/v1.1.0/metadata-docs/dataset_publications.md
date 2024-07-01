@@ -31,7 +31,7 @@ URI: [cdp-meta:dataset_publications](metadatadataset_publications)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 * Recommended: True
 

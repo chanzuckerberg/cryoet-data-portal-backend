@@ -81,6 +81,9 @@ def materialize(ctx, schema_file: str, common_schema_file: str, output_path: str
     common_schema = SchemaView(common_schema_file)
 
     # Copy common elements from common definitions to schema
+    for t in common_schema.all_types():
+        schema.add_type(common_schema.get_type(t))
+
     _materialize_classes(common_schema)
     for c in common_schema.all_classes():
         schema.add_class(common_schema.get_class(c))

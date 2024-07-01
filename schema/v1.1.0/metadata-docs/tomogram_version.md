@@ -31,7 +31,7 @@ URI: [cdp-meta:tomogram_version](metadatatomogram_version)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [VersionString](VersionString.md)
 
 
 
@@ -69,7 +69,7 @@ alias: tomogram_version
 owner: Tomogram
 domain_of:
 - Tomogram
-range: string
+range: VersionString
 inlined: true
 inlined_as_list: true
 

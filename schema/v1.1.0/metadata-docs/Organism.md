@@ -22,21 +22,7 @@ URI: [cdp-meta:Organism](metadataOrganism)
     click Organism href "../Organism"
       Organism : name
         
-          
-    
-    
-    Organism --> "0..1" String : name
-    click String href "../String"
-
-        
       Organism : taxonomy_id
-        
-          
-    
-    
-    Organism --> "0..1" String : taxonomy_id
-    click String href "../String"
-
         
       
 ```
@@ -51,8 +37,8 @@ URI: [cdp-meta:Organism](metadataOrganism)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [taxonomy_id](taxonomy_id.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | NCBI taxonomy identifier for the organism, e | direct |
+| [name](name.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [taxonomy_id](taxonomy_id.md) | 0..1 <br/> [String](String.md) | NCBI taxonomy identifier for the organism, e | direct |
 
 
 

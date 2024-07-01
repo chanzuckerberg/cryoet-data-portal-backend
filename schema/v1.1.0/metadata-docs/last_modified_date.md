@@ -31,7 +31,7 @@ URI: [cdp-meta:last_modified_date](metadatalast_modified_date)
 
 ## Properties
 
-* Range: [xsd:date](http://www.w3.org/2001/XMLSchema#date)
+* Range: [Date](Date.md)
 
 * Required: True
 

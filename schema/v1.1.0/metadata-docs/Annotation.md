@@ -27,13 +27,6 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
       
       Annotation : annotation_method
         
-          
-    
-    
-    Annotation --> "0..1" String : annotation_method
-    click String href "../String"
-
-        
       Annotation : annotation_method_type
         
           
@@ -54,21 +47,7 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
         
       Annotation : annotation_publications
         
-          
-    
-    
-    Annotation --> "0..1" String : annotation_publications
-    click String href "../String"
-
-        
       Annotation : annotation_software
-        
-          
-    
-    
-    Annotation --> "0..1" String : annotation_software
-    click String href "../String"
-
         
       Annotation : authors
         
@@ -108,30 +87,9 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
         
       Annotation : ground_truth_status
         
-          
-    
-    
-    Annotation --> "0..1" Boolean : ground_truth_status
-    click Boolean href "../Boolean"
-
-        
       Annotation : is_curator_recommended
         
-          
-    
-    
-    Annotation --> "0..1" Boolean : is_curator_recommended
-    click Boolean href "../Boolean"
-
-        
       Annotation : object_count
-        
-          
-    
-    
-    Annotation --> "0..1" Integer : object_count
-    click Integer href "../Integer"
-
         
       
 ```
@@ -149,13 +107,13 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [annotation_method](annotation_method.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Describe how the annotation is made (e | direct |
+| [annotation_method](annotation_method.md) | 0..1 <br/> [String](String.md) | Describe how the annotation is made (e | direct |
 | [annotation_method_type](annotation_method_type.md) | 0..1 <br/> [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Classification of the annotation method based on supervision | direct |
-| [annotation_publications](annotation_publications.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | DOIs for publications that describe the dataset | direct |
-| [annotation_software](annotation_software.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Software used for generating this annotation | direct |
-| [ground_truth_status](ground_truth_status.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | Whether an annotation is considered ground truth, as determined by the annota... | direct |
-| [object_count](object_count.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | Number of objects identified | direct |
-| [is_curator_recommended](is_curator_recommended.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | This annotation is recommended by the curator to be preferred for this object... | direct |
+| [annotation_publications](annotation_publications.md) | 0..1 <br/> [String](String.md) | DOIs for publications that describe the dataset | direct |
+| [annotation_software](annotation_software.md) | 0..1 <br/> [String](String.md) | Software used for generating this annotation | direct |
+| [ground_truth_status](ground_truth_status.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether an annotation is considered ground truth, as determined by the annota... | direct |
+| [object_count](object_count.md) | 0..1 <br/> [Integer](Integer.md) | Number of objects identified | direct |
+| [is_curator_recommended](is_curator_recommended.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation is recommended by the curator to be preferred for this object... | direct |
 | [files](files.md) | * <br/> [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation | direct |
 | [confidence](confidence.md) | 0..1 <br/> [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation | direct |
 | [annotation_object](annotation_object.md) | 0..1 <br/> [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated | direct |

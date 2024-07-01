@@ -31,7 +31,7 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
 
 
 

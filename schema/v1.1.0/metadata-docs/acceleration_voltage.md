@@ -31,7 +31,7 @@ URI: [cdp-meta:acceleration_voltage](metadataacceleration_voltage)
 
 ## Properties
 
-* Range: [xsd:integer](http://www.w3.org/2001/XMLSchema#integer)
+* Range: [Integer](Integer.md)
 
 
 

@@ -22,21 +22,7 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
     click PicturePath href "../PicturePath"
       PicturePath : snapshot
         
-          
-    
-    
-    PicturePath --> "0..1" String : snapshot
-    click String href "../String"
-
-        
       PicturePath : thumbnail
-        
-          
-    
-    
-    PicturePath --> "0..1" String : thumbnail
-    click String href "../String"
-
         
       
 ```
@@ -51,8 +37,8 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [snapshot](snapshot.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Path to the dataset preview image relative to the dataset directory root | direct |
-| [thumbnail](thumbnail.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Path to the thumbnail of preview image relative to the dataset directory root | direct |
+| [snapshot](snapshot.md) | 0..1 <br/> [String](String.md) | Path to the dataset preview image relative to the dataset directory root | direct |
+| [thumbnail](thumbnail.md) | 0..1 <br/> [String](String.md) | Path to the thumbnail of preview image relative to the dataset directory root | direct |
 
 
 

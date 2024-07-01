@@ -27,7 +27,7 @@ URI: [cdp-meta:organism](metadataorganism)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

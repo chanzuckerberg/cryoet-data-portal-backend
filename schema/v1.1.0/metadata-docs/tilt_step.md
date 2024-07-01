@@ -31,7 +31,7 @@ URI: [cdp-meta:tilt_step](metadatatilt_step)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
 
 
 

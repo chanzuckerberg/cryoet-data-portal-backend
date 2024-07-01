@@ -22,30 +22,9 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
     click DateStamp href "../DateStamp"
       DateStamp : deposition_date
         
-          
-    
-    
-    DateStamp --> "1" Date : deposition_date
-    click Date href "../Date"
-
-        
       DateStamp : last_modified_date
         
-          
-    
-    
-    DateStamp --> "1 _recommended_" Date : last_modified_date
-    click Date href "../Date"
-
-        
       DateStamp : release_date
-        
-          
-    
-    
-    DateStamp --> "1 _recommended_" Date : release_date
-    click Date href "../Date"
-
         
       
 ```
@@ -60,12 +39,12 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [deposition_date](deposition_date.md) | 1 <br/> [xsd:date](http://www.w3.org/2001/XMLSchema#date) | The date a data item was received by the cryoET data portal | direct |
-| [release_date](release_date.md) | 1 _recommended_ <br/> [xsd:date](http://www.w3.org/2001/XMLSchema#date) | The date a data item was received by the cryoET data portal | direct |
-| [last_modified_date](last_modified_date.md) | 1 _recommended_ <br/> [xsd:date](http://www.w3.org/2001/XMLSchema#date) | The date a piece of data was last modified on the cryoET data portal | direct |
-| [deposition_date](deposition_date.md) | 1 <br/> [xsd:date](http://www.w3.org/2001/XMLSchema#date) | The date a data item was received by the cryoET data portal | direct |
-| [release_date](release_date.md) | 1 _recommended_ <br/> [xsd:date](http://www.w3.org/2001/XMLSchema#date) | The date a data item was received by the cryoET data portal | direct |
-| [last_modified_date](last_modified_date.md) | 1 _recommended_ <br/> [xsd:date](http://www.w3.org/2001/XMLSchema#date) | The date a piece of data was last modified on the cryoET data portal | direct |
+| [deposition_date](deposition_date.md) | 1 <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
+| [release_date](release_date.md) | 1 _recommended_ <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
+| [last_modified_date](last_modified_date.md) | 1 _recommended_ <br/> [Date](Date.md) | The date a piece of data was last modified on the cryoET data portal | direct |
+| [deposition_date](deposition_date.md) | 1 <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
+| [release_date](release_date.md) | 1 _recommended_ <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
+| [last_modified_date](last_modified_date.md) | 1 _recommended_ <br/> [Date](Date.md) | The date a piece of data was last modified on the cryoET data portal | direct |
 
 
 

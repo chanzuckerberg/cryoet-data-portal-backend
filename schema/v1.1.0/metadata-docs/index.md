@@ -79,7 +79,6 @@ Name: cdp-meta
 | [cross_references](cross_references.md) | A set of cross-references to other databases and publications |
 | [ctf_corrected](ctf_corrected.md) | Whether this tomogram is CTF corrected |
 | [data_acquisition_software](data_acquisition_software.md) | Software used to collect data |
-| [dataset_citations](dataset_citations.md) | Comma-separated list of DOIs for publications citing the dataset |
 | [dataset_description](dataset_description.md) | A short description of a CryoET dataset, similar to an abstract for a journal... |
 | [dataset_identifier](dataset_identifier.md) | An identifier for a CryoET dataset, assigned by the Data Portal |
 | [dataset_publications](dataset_publications.md) | Comma-separated list of DOIs for publications associated with the dataset |
@@ -135,7 +134,6 @@ Name: cdp-meta
 | [reconstruction_method](reconstruction_method.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) |
 | [reconstruction_software](reconstruction_software.md) | Name of software used for reconstruction |
 | [related_database_entries](related_database_entries.md) | Comma-separated list of related database entries for the dataset |
-| [related_database_links](related_database_links.md) | Comma-separated list of related database links for the dataset |
 | [release_date](release_date.md) | The date a data item was received by the cryoET data portal |
 | [sample_preparation](sample_preparation.md) | Describes how the sample was prepared |
 | [sample_type](sample_type.md) | Type of sample imaged in a CryoET study |
@@ -174,6 +172,30 @@ Name: cdp-meta
 
 | Type | Description |
 | --- | --- |
+| [AnyNumberFormattedString](AnyNumberFormattedString.md) | A formatted string that represents any number |
+| [Boolean](Boolean.md) | A binary (true or false) value |
+| [Curie](Curie.md) | a compact URI |
+| [Date](Date.md) | a date (year, month and day) in an idealized calendar |
+| [DateOrDatetime](DateOrDatetime.md) | Either a date or a datetime |
+| [Datetime](Datetime.md) | The combination of a date and time |
+| [Decimal](Decimal.md) | A real number with arbitrary precision that conforms to the xsd:decimal speci... |
+| [Double](Double.md) | A real number that conforms to the xsd:double specification |
+| [Float](Float.md) | A real number that conforms to the xsd:float specification |
+| [FloatFormattedString](FloatFormattedString.md) | A formatted string that represents a floating point number |
+| [Integer](Integer.md) | An integer |
+| [IntegerFormattedString](IntegerFormattedString.md) | A formatted string that represents an integer |
+| [Jsonpath](Jsonpath.md) | A string encoding a JSON Path |
+| [Jsonpointer](Jsonpointer.md) | A string encoding a JSON Pointer |
+| [Ncname](Ncname.md) | Prefix part of CURIE |
+| [Nodeidentifier](Nodeidentifier.md) | A URI, CURIE or BNODE that represents a node in a model |
+| [Objectidentifier](Objectidentifier.md) | A URI or CURIE that represents an object in the model |
+| [OnlyNumberFormattedString](OnlyNumberFormattedString.md) | A formatted string that represents a number without a prefix |
+| [Sparqlpath](Sparqlpath.md) | A string encoding a SPARQL Property Path |
+| [String](String.md) | A character string |
+| [Time](Time.md) | A time object represents a (local) time of day, independent of any particular... |
+| [Uri](Uri.md) | a complete URI |
+| [Uriorcurie](Uriorcurie.md) | a URI or a CURIE |
+| [VersionString](VersionString.md) | A string that represents a version number |
 
 
 ## Subsets

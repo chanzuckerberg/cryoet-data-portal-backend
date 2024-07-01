@@ -25,39 +25,11 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
       
       AnnotationSemanticSegmentationMaskFile : file_format
         
-          
-    
-    
-    AnnotationSemanticSegmentationMaskFile --> "1" String : file_format
-    click String href "../String"
-
-        
       AnnotationSemanticSegmentationMaskFile : glob_string
-        
-          
-    
-    
-    AnnotationSemanticSegmentationMaskFile --> "1" String : glob_string
-    click String href "../String"
-
         
       AnnotationSemanticSegmentationMaskFile : is_visualization_default
         
-          
-    
-    
-    AnnotationSemanticSegmentationMaskFile --> "0..1" Boolean : is_visualization_default
-    click Boolean href "../Boolean"
-
-        
       AnnotationSemanticSegmentationMaskFile : mask_label
-        
-          
-    
-    
-    AnnotationSemanticSegmentationMaskFile --> "0..1" Integer : mask_label
-    click Integer href "../Integer"
-
         
       
 ```
@@ -76,10 +48,10 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [mask_label](mask_label.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | The mask label for a semantic segmentation mask annotation file | direct |
-| [file_format](file_format.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [glob_string](glob_string.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) |  | direct |
+| [mask_label](mask_label.md) | 0..1 <br/> [Integer](Integer.md) | The mask label for a semantic segmentation mask annotation file | direct |
+| [file_format](file_format.md) | 1 <br/> [String](String.md) |  | direct |
+| [glob_string](glob_string.md) | 1 <br/> [String](String.md) |  | direct |
+| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) |  | direct |
 
 
 

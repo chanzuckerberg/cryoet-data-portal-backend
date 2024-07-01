@@ -22,21 +22,7 @@ URI: [cdp-meta:CellType](metadataCellType)
     click CellType href "../CellType"
       CellType : id
         
-          
-    
-    
-    CellType --> "0..1" String : id
-    click String href "../String"
-
-        
       CellType : name
-        
-          
-    
-    
-    CellType --> "0..1" String : name
-    click String href "../String"
-
         
       
 ```
@@ -51,8 +37,8 @@ URI: [cdp-meta:CellType](metadataCellType)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [id](id.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
+| [name](name.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [id](id.md) | 0..1 <br/> [String](String.md) |  | direct |
 
 
 

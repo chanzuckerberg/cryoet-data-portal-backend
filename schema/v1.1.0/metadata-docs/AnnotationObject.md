@@ -22,39 +22,11 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
     click AnnotationObject href "../AnnotationObject"
       AnnotationObject : description
         
-          
-    
-    
-    AnnotationObject --> "0..1" String : description
-    click String href "../String"
-
-        
       AnnotationObject : id
-        
-          
-    
-    
-    AnnotationObject --> "0..1" String : id
-    click String href "../String"
-
         
       AnnotationObject : name
         
-          
-    
-    
-    AnnotationObject --> "0..1" String : name
-    click String href "../String"
-
-        
       AnnotationObject : state
-        
-          
-    
-    
-    AnnotationObject --> "0..1" String : state
-    click String href "../String"
-
         
       
 ```
@@ -69,10 +41,10 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [id](id.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [description](description.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | A textual description of the annotation object, can be a longer description t... | direct |
-| [state](state.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Molecule state annotated (e | direct |
+| [id](id.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [name](name.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [description](description.md) | 0..1 <br/> [String](String.md) | A textual description of the annotation object, can be a longer description t... | direct |
+| [state](state.md) | 0..1 <br/> [String](String.md) | Molecule state annotated (e | direct |
 
 
 

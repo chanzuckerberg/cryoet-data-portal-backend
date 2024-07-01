@@ -22,21 +22,7 @@ URI: [cdp-meta:Funding](metadataFunding)
     click Funding href "../Funding"
       Funding : funding_agency_name
         
-          
-    
-    
-    Funding --> "0..1" String : funding_agency_name
-    click String href "../String"
-
-        
       Funding : grant_id
-        
-          
-    
-    
-    Funding --> "0..1" String : grant_id
-    click String href "../String"
-
         
       
 ```
@@ -51,8 +37,8 @@ URI: [cdp-meta:Funding](metadataFunding)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [funding_agency_name](funding_agency_name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The name of the funding source | direct |
-| [grant_id](grant_id.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Grant identifier provided by the funding agency | direct |
+| [funding_agency_name](funding_agency_name.md) | 0..1 <br/> [String](String.md) | The name of the funding source | direct |
+| [grant_id](grant_id.md) | 0..1 <br/> [String](String.md) | Grant identifier provided by the funding agency | direct |
 
 
 

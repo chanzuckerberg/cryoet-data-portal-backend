@@ -31,7 +31,7 @@ URI: [cdp-meta:funding_agency_name](metadatafunding_agency_name)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

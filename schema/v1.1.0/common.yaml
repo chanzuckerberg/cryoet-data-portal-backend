@@ -742,9 +742,9 @@ classes:
         range: string
         recommended: true
         description: Comma-separated list of related database entries for the dataset.
-      related_database_links:
+      related_database_links: # DEPRECATED
         range: string
         description: Comma-separated list of related database links for the dataset.
-      dataset_citations:
+      dataset_citations: # DEPRECATED
         range: string
         description: Comma-separated list of DOIs for publications citing the dataset.

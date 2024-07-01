@@ -31,30 +31,9 @@ URI: [cdp-meta:AnnotationSourceFile](metadataAnnotationSourceFile)
       
       AnnotationSourceFile : file_format
         
-          
-    
-    
-    AnnotationSourceFile --> "1" String : file_format
-    click String href "../String"
-
-        
       AnnotationSourceFile : glob_string
         
-          
-    
-    
-    AnnotationSourceFile --> "1" String : glob_string
-    click String href "../String"
-
-        
       AnnotationSourceFile : is_visualization_default
-        
-          
-    
-    
-    AnnotationSourceFile --> "0..1" Boolean : is_visualization_default
-    click Boolean href "../Boolean"
-
         
       
 ```
@@ -76,9 +55,9 @@ URI: [cdp-meta:AnnotationSourceFile](metadataAnnotationSourceFile)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [file_format](file_format.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | File format for this file | direct |
-| [glob_string](glob_string.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Glob string to match annotation files in the dataset | direct |
-| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | This annotation will be rendered in neuroglancer by default | direct |
+| [file_format](file_format.md) | 1 <br/> [String](String.md) | File format for this file | direct |
+| [glob_string](glob_string.md) | 1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
+| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation will be rendered in neuroglancer by default | direct |
 
 
 

@@ -22,30 +22,9 @@ URI: [cdp-meta:MicroscopeOpticalSetup](metadataMicroscopeOpticalSetup)
     click MicroscopeOpticalSetup href "../MicroscopeOpticalSetup"
       MicroscopeOpticalSetup : energy_filter
         
-          
-    
-    
-    MicroscopeOpticalSetup --> "0..1" String : energy_filter
-    click String href "../String"
-
-        
       MicroscopeOpticalSetup : image_corrector
         
-          
-    
-    
-    MicroscopeOpticalSetup --> "0..1" String : image_corrector
-    click String href "../String"
-
-        
       MicroscopeOpticalSetup : phase_plate
-        
-          
-    
-    
-    MicroscopeOpticalSetup --> "0..1" String : phase_plate
-    click String href "../String"
-
         
       
 ```
@@ -60,9 +39,9 @@ URI: [cdp-meta:MicroscopeOpticalSetup](metadataMicroscopeOpticalSetup)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [energy_filter](energy_filter.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Energy filter setup used | direct |
-| [phase_plate](phase_plate.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Phase plate configuration | direct |
-| [image_corrector](image_corrector.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Image corrector setup | direct |
+| [energy_filter](energy_filter.md) | 0..1 <br/> [String](String.md) | Energy filter setup used | direct |
+| [phase_plate](phase_plate.md) | 0..1 <br/> [String](String.md) | Phase plate configuration | direct |
+| [image_corrector](image_corrector.md) | 0..1 <br/> [String](String.md) | Image corrector setup | direct |
 
 
 

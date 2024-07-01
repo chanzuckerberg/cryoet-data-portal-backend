@@ -22,75 +22,19 @@ URI: [cdp-meta:Annotator](metadataAnnotator)
     click Annotator href "../Annotator"
       Annotator : affiliation_address
         
-          
-    
-    
-    Annotator --> "0..1" String : affiliation_address
-    click String href "../String"
-
-        
       Annotator : affiliation_identifier
-        
-          
-    
-    
-    Annotator --> "0..1 _recommended_" String : affiliation_identifier
-    click String href "../String"
-
         
       Annotator : affiliation_name
         
-          
-    
-    
-    Annotator --> "0..1" String : affiliation_name
-    click String href "../String"
-
-        
       Annotator : email
-        
-          
-    
-    
-    Annotator --> "0..1" String : email
-    click String href "../String"
-
         
       Annotator : is_corresponding
         
-          
-    
-    
-    Annotator --> "0..1" String : is_corresponding
-    click String href "../String"
-
-        
       Annotator : is_primary_annotator
-        
-          
-    
-    
-    Annotator --> "0..1" Boolean : is_primary_annotator
-    click Boolean href "../Boolean"
-
         
       Annotator : name
         
-          
-    
-    
-    Annotator --> "0..1" String : name
-    click String href "../String"
-
-        
       Annotator : ORCID
-        
-          
-    
-    
-    Annotator --> "0..1 _recommended_" String : ORCID
-    click String href "../String"
-
         
       
 ```
@@ -105,14 +49,14 @@ URI: [cdp-meta:Annotator](metadataAnnotator)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [email](email.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [affiliation_name](affiliation_name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [affiliation_address](affiliation_address.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [affiliation_identifier](affiliation_identifier.md) | 0..1 _recommended_ <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [is_corresponding](is_corresponding.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [is_primary_annotator](is_primary_annotator.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | Whether the author is a primary author | direct |
-| [ORCID](ORCID.md) | 0..1 _recommended_ <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
+| [name](name.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [email](email.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [affiliation_name](affiliation_name.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [affiliation_address](affiliation_address.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [affiliation_identifier](affiliation_identifier.md) | 0..1 _recommended_ <br/> [String](String.md) |  | direct |
+| [is_corresponding](is_corresponding.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [is_primary_annotator](is_primary_annotator.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether the author is a primary author | direct |
+| [ORCID](ORCID.md) | 0..1 _recommended_ <br/> [String](String.md) |  | direct |
 
 
 

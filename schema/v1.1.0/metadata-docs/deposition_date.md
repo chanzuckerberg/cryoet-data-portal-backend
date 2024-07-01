@@ -31,7 +31,7 @@ URI: [cdp-meta:deposition_date](metadatadeposition_date)
 
 ## Properties
 
-* Range: [xsd:date](http://www.w3.org/2001/XMLSchema#date)
+* Range: [Date](Date.md)
 
 * Required: True
 

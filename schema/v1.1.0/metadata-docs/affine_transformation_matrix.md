@@ -31,7 +31,7 @@ URI: [cdp-meta:affine_transformation_matrix](metadataaffine_transformation_matri
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

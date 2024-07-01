@@ -31,7 +31,7 @@ URI: [cdp-meta:spherical_aberration_constant](metadataspherical_aberration_const
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
 
 
 

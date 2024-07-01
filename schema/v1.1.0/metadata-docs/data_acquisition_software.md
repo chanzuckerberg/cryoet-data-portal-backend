@@ -31,7 +31,7 @@ URI: [cdp-meta:data_acquisition_software](metadatadata_acquisition_software)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

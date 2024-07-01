@@ -25,30 +25,9 @@ URI: [cdp-meta:AnnotationSegmentationMaskFile](metadataAnnotationSegmentationMas
       
       AnnotationSegmentationMaskFile : file_format
         
-          
-    
-    
-    AnnotationSegmentationMaskFile --> "1" String : file_format
-    click String href "../String"
-
-        
       AnnotationSegmentationMaskFile : glob_string
         
-          
-    
-    
-    AnnotationSegmentationMaskFile --> "1" String : glob_string
-    click String href "../String"
-
-        
       AnnotationSegmentationMaskFile : is_visualization_default
-        
-          
-    
-    
-    AnnotationSegmentationMaskFile --> "0..1" Boolean : is_visualization_default
-    click Boolean href "../Boolean"
-
         
       
 ```
@@ -67,9 +46,9 @@ URI: [cdp-meta:AnnotationSegmentationMaskFile](metadataAnnotationSegmentationMas
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [file_format](file_format.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [glob_string](glob_string.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) |  | direct |
+| [file_format](file_format.md) | 1 <br/> [String](String.md) |  | direct |
+| [glob_string](glob_string.md) | 1 <br/> [String](String.md) |  | direct |
+| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) |  | direct |
 
 
 

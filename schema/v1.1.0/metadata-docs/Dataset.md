@@ -78,30 +78,9 @@ URI: [cdp-meta:Dataset](metadataDataset)
         
       Dataset : dataset_description
         
-          
-    
-    
-    Dataset --> "0..1" String : dataset_description
-    click String href "../String"
-
-        
       Dataset : dataset_identifier
         
-          
-    
-    
-    Dataset --> "0..1" Integer : dataset_identifier
-    click Integer href "../Integer"
-
-        
       Dataset : dataset_title
-        
-          
-    
-    
-    Dataset --> "0..1" String : dataset_title
-    click String href "../String"
-
         
       Dataset : dates
         
@@ -123,13 +102,6 @@ URI: [cdp-meta:Dataset](metadataDataset)
         
       Dataset : grid_preparation
         
-          
-    
-    
-    Dataset --> "0..1" String : grid_preparation
-    click String href "../String"
-
-        
       Dataset : organism
         
           
@@ -141,30 +113,9 @@ URI: [cdp-meta:Dataset](metadataDataset)
         
       Dataset : other_setup
         
-          
-    
-    
-    Dataset --> "0..1" String : other_setup
-    click String href "../String"
-
-        
       Dataset : sample_preparation
         
-          
-    
-    
-    Dataset --> "0..1" String : sample_preparation
-    click String href "../String"
-
-        
       Dataset : sample_type
-        
-          
-    
-    
-    Dataset --> "0..1" String : sample_type
-    click String href "../String"
-
         
       Dataset : tissue
         
@@ -191,17 +142,17 @@ URI: [cdp-meta:Dataset](metadataDataset)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [dataset_identifier](dataset_identifier.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | An identifier for a CryoET dataset, assigned by the Data Portal | direct |
-| [dataset_title](dataset_title.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Title of a CryoET dataset | direct |
-| [dataset_description](dataset_description.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | A short description of a CryoET dataset, similar to an abstract for a journal... | direct |
+| [dataset_identifier](dataset_identifier.md) | 0..1 <br/> [Integer](Integer.md) | An identifier for a CryoET dataset, assigned by the Data Portal | direct |
+| [dataset_title](dataset_title.md) | 0..1 <br/> [String](String.md) | Title of a CryoET dataset | direct |
+| [dataset_description](dataset_description.md) | 0..1 <br/> [String](String.md) | A short description of a CryoET dataset, similar to an abstract for a journal... | direct |
 | [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
 | [funding](funding.md) | * _recommended_ <br/> [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
 | [cross_references](cross_references.md) | 0..1 <br/> [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications | direct |
-| [sample_type](sample_type.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Type of sample imaged in a CryoET study | direct |
-| [sample_preparation](sample_preparation.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Describes how the sample was prepared | direct |
-| [grid_preparation](grid_preparation.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Describes Cryo-ET grid preparation | direct |
-| [other_setup](other_setup.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Describes other setup not covered by sample preparation or grid preparation t... | direct |
+| [sample_type](sample_type.md) | 0..1 <br/> [String](String.md) | Type of sample imaged in a CryoET study | direct |
+| [sample_preparation](sample_preparation.md) | 0..1 <br/> [String](String.md) | Describes how the sample was prepared | direct |
+| [grid_preparation](grid_preparation.md) | 0..1 <br/> [String](String.md) | Describes Cryo-ET grid preparation | direct |
+| [other_setup](other_setup.md) | 0..1 <br/> [String](String.md) | Describes other setup not covered by sample preparation or grid preparation t... | direct |
 | [organism](organism.md) | 0..1 <br/> [Organism](Organism.md) | The species from which the sample was derived | direct |
 | [tissue](tissue.md) | 0..1 <br/> [Tissue](Tissue.md) | The type of tissue from which the sample was derived | direct |
 | [cell_type](cell_type.md) | 0..1 <br/> [CellType](CellType.md) | The cell type from which the sample was derived | direct |

@@ -22,75 +22,19 @@ URI: [cdp-meta:Author](metadataAuthor)
     click Author href "../Author"
       Author : affiliation_address
         
-          
-    
-    
-    Author --> "0..1" String : affiliation_address
-    click String href "../String"
-
-        
       Author : affiliation_identifier
-        
-          
-    
-    
-    Author --> "0..1 _recommended_" String : affiliation_identifier
-    click String href "../String"
-
         
       Author : affiliation_name
         
-          
-    
-    
-    Author --> "0..1" String : affiliation_name
-    click String href "../String"
-
-        
       Author : email
-        
-          
-    
-    
-    Author --> "0..1" String : email
-    click String href "../String"
-
         
       Author : is_corresponding
         
-          
-    
-    
-    Author --> "0..1" Boolean : is_corresponding
-    click Boolean href "../Boolean"
-
-        
       Author : name
-        
-          
-    
-    
-    Author --> "0..1" String : name
-    click String href "../String"
-
         
       Author : ORCID
         
-          
-    
-    
-    Author --> "0..1 _recommended_" String : ORCID
-    click String href "../String"
-
-        
       Author : primary_author_status
-        
-          
-    
-    
-    Author --> "0..1" Boolean : primary_author_status
-    click Boolean href "../Boolean"
-
         
       
 ```
@@ -105,14 +49,14 @@ URI: [cdp-meta:Author](metadataAuthor)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The full name of the author | direct |
-| [email](email.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The email address of the author | direct |
-| [affiliation_name](affiliation_name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The name of the author's affiliation | direct |
-| [affiliation_address](affiliation_address.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The address of the author's affiliation | direct |
-| [affiliation_identifier](affiliation_identifier.md) | 0..1 _recommended_ <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | A Research Organization Registry (ROR) identifier | direct |
-| [is_corresponding](is_corresponding.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | Whether the author is a corresponding author | direct |
-| [primary_author_status](primary_author_status.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | Whether the author is a primary author | direct |
-| [ORCID](ORCID.md) | 0..1 _recommended_ <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | A unique, persistent identifier for researchers, provided by ORCID | direct |
+| [name](name.md) | 0..1 <br/> [String](String.md) | The full name of the author | direct |
+| [email](email.md) | 0..1 <br/> [String](String.md) | The email address of the author | direct |
+| [affiliation_name](affiliation_name.md) | 0..1 <br/> [String](String.md) | The name of the author's affiliation | direct |
+| [affiliation_address](affiliation_address.md) | 0..1 <br/> [String](String.md) | The address of the author's affiliation | direct |
+| [affiliation_identifier](affiliation_identifier.md) | 0..1 _recommended_ <br/> [String](String.md) | A Research Organization Registry (ROR) identifier | direct |
+| [is_corresponding](is_corresponding.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether the author is a corresponding author | direct |
+| [primary_author_status](primary_author_status.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether the author is a primary author | direct |
+| [ORCID](ORCID.md) | 0..1 _recommended_ <br/> [String](String.md) | A unique, persistent identifier for researchers, provided by ORCID | direct |
 
 
 

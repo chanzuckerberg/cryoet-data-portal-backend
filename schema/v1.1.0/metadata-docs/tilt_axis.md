@@ -31,7 +31,7 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
 
 
 

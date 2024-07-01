@@ -22,21 +22,7 @@ URI: [cdp-meta:Microscope](metadataMicroscope)
     click Microscope href "../Microscope"
       Microscope : manufacturer
         
-          
-    
-    
-    Microscope --> "0..1" String : manufacturer
-    click String href "../String"
-
-        
       Microscope : model
-        
-          
-    
-    
-    Microscope --> "0..1" String : model
-    click String href "../String"
-
         
       
 ```
@@ -51,8 +37,8 @@ URI: [cdp-meta:Microscope](metadataMicroscope)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [manufacturer](manufacturer.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [model](model.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
+| [manufacturer](manufacturer.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [model](model.md) | 0..1 <br/> [String](String.md) |  | direct |
 
 
 

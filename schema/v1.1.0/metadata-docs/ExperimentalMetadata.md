@@ -54,13 +54,6 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
         
       ExperimentalMetadata : grid_preparation
         
-          
-    
-    
-    ExperimentalMetadata --> "0..1" String : grid_preparation
-    click String href "../String"
-
-        
       ExperimentalMetadata : organism
         
           
@@ -72,21 +65,7 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
         
       ExperimentalMetadata : other_setup
         
-          
-    
-    
-    ExperimentalMetadata --> "0..1" String : other_setup
-    click String href "../String"
-
-        
       ExperimentalMetadata : sample_preparation
-        
-          
-    
-    
-    ExperimentalMetadata --> "0..1" String : sample_preparation
-    click String href "../String"
-
         
       ExperimentalMetadata : sample_type
         
@@ -120,9 +99,9 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [sample_type](sample_type.md) | 0..1 <br/> [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study | direct |
-| [sample_preparation](sample_preparation.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Describes how the sample was prepared | direct |
-| [grid_preparation](grid_preparation.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Describes Cryo-ET grid preparation | direct |
-| [other_setup](other_setup.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Describes other setup not covered by sample preparation or grid preparation t... | direct |
+| [sample_preparation](sample_preparation.md) | 0..1 <br/> [String](String.md) | Describes how the sample was prepared | direct |
+| [grid_preparation](grid_preparation.md) | 0..1 <br/> [String](String.md) | Describes Cryo-ET grid preparation | direct |
+| [other_setup](other_setup.md) | 0..1 <br/> [String](String.md) | Describes other setup not covered by sample preparation or grid preparation t... | direct |
 | [organism](organism.md) | 0..1 <br/> [Organism](Organism.md) | The species from which the sample was derived | direct |
 | [tissue](tissue.md) | 0..1 <br/> [Tissue](Tissue.md) | The type of tissue from which the sample was derived | direct |
 | [cell_type](cell_type.md) | 0..1 <br/> [CellType](CellType.md) | The cell type from which the sample was derived | direct |

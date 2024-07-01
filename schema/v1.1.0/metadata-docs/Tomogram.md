@@ -25,13 +25,6 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
       
       Tomogram : affine_transformation_matrix
         
-          
-    
-    
-    Tomogram --> "0..1" String : affine_transformation_matrix
-    click String href "../String"
-
-        
       Tomogram : authors
         
           
@@ -42,13 +35,6 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
         
       Tomogram : ctf_corrected
-        
-          
-    
-    
-    Tomogram --> "0..1" Boolean : ctf_corrected
-    click Boolean href "../Boolean"
-
         
       Tomogram : fiducial_alignment_status
         
@@ -70,39 +56,11 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
         
       Tomogram : processing
         
-          
-    
-    
-    Tomogram --> "0..1" String : processing
-    click String href "../String"
-
-        
       Tomogram : processing_software
-        
-          
-    
-    
-    Tomogram --> "0..1" String : processing_software
-    click String href "../String"
-
         
       Tomogram : reconstruction_method
         
-          
-    
-    
-    Tomogram --> "0..1" String : reconstruction_method
-    click String href "../String"
-
-        
       Tomogram : reconstruction_software
-        
-          
-    
-    
-    Tomogram --> "0..1" String : reconstruction_software
-    click String href "../String"
-
         
       Tomogram : size
         
@@ -115,21 +73,7 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
         
       Tomogram : tomogram_version
         
-          
-    
-    
-    Tomogram --> "0..1" String : tomogram_version
-    click String href "../String"
-
-        
       Tomogram : voxel_spacing
-        
-          
-    
-    
-    Tomogram --> "0..1" Float : voxel_spacing
-    click Float href "../Float"
-
         
       
 ```
@@ -147,15 +91,15 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [voxel_spacing](voxel_spacing.md) | 0..1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Voxel spacing equal in all three axes in angstroms | direct |
+| [voxel_spacing](voxel_spacing.md) | 0..1 <br/> [Float](Float.md) | Voxel spacing equal in all three axes in angstroms | direct |
 | [fiducial_alignment_status](fiducial_alignment_status.md) | 0..1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
-| [ctf_corrected](ctf_corrected.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | Whether this tomogram is CTF corrected | direct |
-| [reconstruction_method](reconstruction_method.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Describe reconstruction method (Weighted back-projection, SART, SIRT) | direct |
-| [reconstruction_software](reconstruction_software.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Name of software used for reconstruction | direct |
-| [processing](processing.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Describe additional processing used to derive the tomogram | direct |
-| [processing_software](processing_software.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Processing software used to derive the tomogram | direct |
-| [tomogram_version](tomogram_version.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Version of tomogram using the same software and post-processing | direct |
-| [affine_transformation_matrix](affine_transformation_matrix.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The flip or rotation transformation of this author submitted tomogram is indi... | direct |
+| [ctf_corrected](ctf_corrected.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether this tomogram is CTF corrected | direct |
+| [reconstruction_method](reconstruction_method.md) | 0..1 <br/> [String](String.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) | direct |
+| [reconstruction_software](reconstruction_software.md) | 0..1 <br/> [String](String.md) | Name of software used for reconstruction | direct |
+| [processing](processing.md) | 0..1 <br/> [String](String.md) | Describe additional processing used to derive the tomogram | direct |
+| [processing_software](processing_software.md) | 0..1 <br/> [String](String.md) | Processing software used to derive the tomogram | direct |
+| [tomogram_version](tomogram_version.md) | 0..1 <br/> [VersionString](VersionString.md) | Version of tomogram using the same software and post-processing | direct |
+| [affine_transformation_matrix](affine_transformation_matrix.md) | 0..1 <br/> [String](String.md) | The flip or rotation transformation of this author submitted tomogram is indi... | direct |
 | [size](size.md) | 0..1 <br/> [TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension | direct |
 | [offset](offset.md) | 0..1 <br/> [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
@@ -322,7 +266,7 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: string
+    range: VersionString
     inlined: true
     inlined_as_list: true
   affine_transformation_matrix:
@@ -509,7 +453,7 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: string
+    range: VersionString
     inlined: true
     inlined_as_list: true
   affine_transformation_matrix:

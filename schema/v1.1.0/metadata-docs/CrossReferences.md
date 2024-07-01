@@ -20,41 +20,9 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
  classDiagram
     class CrossReferences
     click CrossReferences href "../CrossReferences"
-      CrossReferences : dataset_citations
-        
-          
-    
-    
-    CrossReferences --> "0..1" String : dataset_citations
-    click String href "../String"
-
-        
       CrossReferences : dataset_publications
         
-          
-    
-    
-    CrossReferences --> "0..1 _recommended_" String : dataset_publications
-    click String href "../String"
-
-        
       CrossReferences : related_database_entries
-        
-          
-    
-    
-    CrossReferences --> "0..1 _recommended_" String : related_database_entries
-    click String href "../String"
-
-        
-      CrossReferences : related_database_links
-        
-          
-    
-    
-    CrossReferences --> "0..1" String : related_database_links
-    click String href "../String"
-
         
       
 ```
@@ -69,10 +37,8 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [dataset_publications](dataset_publications.md) | 0..1 _recommended_ <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Comma-separated list of DOIs for publications associated with the dataset | direct |
-| [related_database_entries](related_database_entries.md) | 0..1 _recommended_ <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Comma-separated list of related database entries for the dataset | direct |
-| [related_database_links](related_database_links.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Comma-separated list of related database links for the dataset | direct |
-| [dataset_citations](dataset_citations.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Comma-separated list of DOIs for publications citing the dataset | direct |
+| [dataset_publications](dataset_publications.md) | 0..1 _recommended_ <br/> [String](String.md) | Comma-separated list of DOIs for publications associated with the dataset | direct |
+| [related_database_entries](related_database_entries.md) | 0..1 _recommended_ <br/> [String](String.md) | Comma-separated list of related database entries for the dataset | direct |
 
 
 
@@ -157,30 +123,6 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
-  related_database_links:
-    name: related_database_links
-    description: Comma-separated list of related database links for the dataset.
-    from_schema: metadata
-    rank: 1000
-    alias: related_database_links
-    owner: CrossReferences
-    domain_of:
-    - CrossReferences
-    range: string
-    inlined: true
-    inlined_as_list: true
-  dataset_citations:
-    name: dataset_citations
-    description: Comma-separated list of DOIs for publications citing the dataset.
-    from_schema: metadata
-    rank: 1000
-    alias: dataset_citations
-    owner: CrossReferences
-    domain_of:
-    - CrossReferences
-    range: string
-    inlined: true
-    inlined_as_list: true
 
 ```
 </details>
@@ -218,30 +160,6 @@ attributes:
     - CrossReferences
     range: string
     recommended: true
-    inlined: true
-    inlined_as_list: true
-  related_database_links:
-    name: related_database_links
-    description: Comma-separated list of related database links for the dataset.
-    from_schema: metadata
-    rank: 1000
-    alias: related_database_links
-    owner: CrossReferences
-    domain_of:
-    - CrossReferences
-    range: string
-    inlined: true
-    inlined_as_list: true
-  dataset_citations:
-    name: dataset_citations
-    description: Comma-separated list of DOIs for publications citing the dataset.
-    from_schema: metadata
-    rank: 1000
-    alias: dataset_citations
-    owner: CrossReferences
-    domain_of:
-    - CrossReferences
-    range: string
     inlined: true
     inlined_as_list: true
 

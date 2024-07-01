@@ -22,30 +22,9 @@ URI: [cdp-meta:AnnotationConfidence](metadataAnnotationConfidence)
     click AnnotationConfidence href "../AnnotationConfidence"
       AnnotationConfidence : ground_truth_used
         
-          
-    
-    
-    AnnotationConfidence --> "0..1" String : ground_truth_used
-    click String href "../String"
-
-        
       AnnotationConfidence : precision
         
-          
-    
-    
-    AnnotationConfidence --> "0..1" Float : precision
-    click Float href "../Float"
-
-        
       AnnotationConfidence : recall
-        
-          
-    
-    
-    AnnotationConfidence --> "0..1" Float : recall
-    click Float href "../Float"
-
         
       
 ```
@@ -60,9 +39,9 @@ URI: [cdp-meta:AnnotationConfidence](metadataAnnotationConfidence)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [precision](precision.md) | 0..1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Describe the confidence level of the annotation | direct |
-| [recall](recall.md) | 0..1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Describe the confidence level of the annotation | direct |
-| [ground_truth_used](ground_truth_used.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Annotation filename used as ground truth for precision and recall | direct |
+| [precision](precision.md) | 0..1 <br/> [Float](Float.md) | Describe the confidence level of the annotation | direct |
+| [recall](recall.md) | 0..1 <br/> [Float](Float.md) | Describe the confidence level of the annotation | direct |
+| [ground_truth_used](ground_truth_used.md) | 0..1 <br/> [String](String.md) | Annotation filename used as ground truth for precision and recall | direct |
 
 
 

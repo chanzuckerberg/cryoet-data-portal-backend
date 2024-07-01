@@ -25,57 +25,15 @@ URI: [cdp-meta:AnnotationInstanceSegmentationFile](metadataAnnotationInstanceSeg
       
       AnnotationInstanceSegmentationFile : binning
         
-          
-    
-    
-    AnnotationInstanceSegmentationFile --> "0..1" Integer : binning
-    click Integer href "../Integer"
-
-        
       AnnotationInstanceSegmentationFile : file_format
-        
-          
-    
-    
-    AnnotationInstanceSegmentationFile --> "1" String : file_format
-    click String href "../String"
-
         
       AnnotationInstanceSegmentationFile : filter_value
         
-          
-    
-    
-    AnnotationInstanceSegmentationFile --> "0..1" String : filter_value
-    click String href "../String"
-
-        
       AnnotationInstanceSegmentationFile : glob_string
-        
-          
-    
-    
-    AnnotationInstanceSegmentationFile --> "1" String : glob_string
-    click String href "../String"
-
         
       AnnotationInstanceSegmentationFile : is_visualization_default
         
-          
-    
-    
-    AnnotationInstanceSegmentationFile --> "0..1" Boolean : is_visualization_default
-    click Boolean href "../Boolean"
-
-        
       AnnotationInstanceSegmentationFile : order
-        
-          
-    
-    
-    AnnotationInstanceSegmentationFile --> "0..1" String : order
-    click String href "../String"
-
         
       
 ```
@@ -95,12 +53,12 @@ URI: [cdp-meta:AnnotationInstanceSegmentationFile](metadataAnnotationInstanceSeg
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [binning](binning.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) |  | direct |
-| [filter_value](filter_value.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [order](order.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [file_format](file_format.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [glob_string](glob_string.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) |  | direct |
+| [binning](binning.md) | 0..1 <br/> [Integer](Integer.md) |  | direct |
+| [filter_value](filter_value.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [order](order.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [file_format](file_format.md) | 1 <br/> [String](String.md) |  | direct |
+| [glob_string](glob_string.md) | 1 <br/> [String](String.md) |  | direct |
+| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) |  | direct |
 
 
 

@@ -395,7 +395,7 @@ class Tomogram(AuthoredEntity):
     reconstruction_software: Optional[str] = Field(None, description="""Name of software used for reconstruction""")
     processing: Optional[str] = Field(None, description="""Describe additional processing used to derive the tomogram""")
     processing_software: Optional[str] = Field(None, description="""Processing software used to derive the tomogram""")
-    tomogram_version: Optional[str] = Field(None, description="""Version of tomogram using the same software and post-processing. Version of tomogram using the same software and post-processing. This will be presented as the latest version""")
+    tomogram_version: Optional[string] = Field(None, description="""Version of tomogram using the same software and post-processing. Version of tomogram using the same software and post-processing. This will be presented as the latest version""")
     affine_transformation_matrix: Optional[str] = Field(None, description="""The flip or rotation transformation of this author submitted tomogram is indicated here""")
     size: Optional[TomogramSize] = Field(None, description="""The size of a tomogram in voxels in each dimension.""")
     offset: Optional[TomogramOffset] = Field(None, description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""")
@@ -509,8 +509,6 @@ class CrossReferences(ConfiguredBaseModel):
     """
     dataset_publications: Optional[str] = Field(None, description="""Comma-separated list of DOIs for publications associated with the dataset.""")
     related_database_entries: Optional[str] = Field(None, description="""Comma-separated list of related database entries for the dataset.""")
-    related_database_links: Optional[str] = Field(None, description="""Comma-separated list of related database links for the dataset.""")
-    dataset_citations: Optional[str] = Field(None, description="""Comma-separated list of DOIs for publications citing the dataset.""")
 
 
 # Model rebuild
