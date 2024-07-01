@@ -23,6 +23,8 @@ datasets:
       starting at OD600=0.2.
     dataset_identifier: 10192
     dataset_title: E. coli pLE6
+    cross_references:
+      dataset_publications: 10.1128/JB.00505-12
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

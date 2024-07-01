@@ -21,6 +21,8 @@ datasets:
       collected by Qing Yao and is a part of Caltech Jensen  lab etdb. PG layer
     dataset_identifier: 10101
     dataset_title: P. mirabilis Planktonic cell of Proteus
+    cross_references:
+      dataset_publications: 10.15252/embj.201696235
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

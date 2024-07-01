@@ -25,6 +25,8 @@ datasets:
       with pNLGFP and cultured additional 24 h in presence of protease inhibitor.
     dataset_identifier: 10181
     dataset_title: HUVECs infected w/ pNLGFP
+    cross_references:
+      dataset_publications: 10.1128/JVI.02997-14
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

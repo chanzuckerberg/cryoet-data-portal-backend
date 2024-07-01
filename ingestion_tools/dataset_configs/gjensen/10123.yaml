@@ -22,6 +22,8 @@ datasets:
       etdb. strain is inducible for dQ
     dataset_identifier: 10123
     dataset_title: M. magneticum dK203_8h_induced
+    cross_references:
+      dataset_publications: 10.1128/mBio.01898-15
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

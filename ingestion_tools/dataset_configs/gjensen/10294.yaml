@@ -21,6 +21,8 @@ datasets:
       collected by Jian Shi and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10294
     dataset_title: M. pneumoniae MP P200 27.5KX
+    cross_references:
+      dataset_publications: 10.1111/mmi.13937
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

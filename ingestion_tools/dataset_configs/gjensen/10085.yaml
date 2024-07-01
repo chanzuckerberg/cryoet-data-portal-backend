@@ -22,6 +22,8 @@ datasets:
       \ thyA \u2206dotB. Lacks dotB ATPase."
     dataset_identifier: 10085
     dataset_title: "L. pneumophila JV918 Legionella thyA \u2206dotB"
+    cross_references:
+      dataset_publications: 10.1038/s41564-019-0427-4
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

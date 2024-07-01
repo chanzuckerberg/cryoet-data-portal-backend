@@ -23,6 +23,8 @@ datasets:
       and an inducible '
     dataset_identifier: 10126
     dataset_title: M. magneticum dQ167_14h_induced
+    cross_references:
+      dataset_publications: 10.1128/mBio.01898-15
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

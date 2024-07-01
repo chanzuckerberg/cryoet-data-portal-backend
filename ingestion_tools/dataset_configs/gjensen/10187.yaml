@@ -25,6 +25,8 @@ datasets:
       spinoculation with VSVGpNL4GFP
     dataset_identifier: 10187
     dataset_title: VSVGpNL4GFP entry HUVECs
+    cross_references:
+      dataset_publications: 10.1128/JVI.02997-14
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

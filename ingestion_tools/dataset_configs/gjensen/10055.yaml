@@ -22,6 +22,9 @@ datasets:
       Mile phase II clone 4 (NMIIC4) strain. Wild-type cells day-15 culture.
     dataset_identifier: 10055
     dataset_title: Coxiella burnetii_wt_D15
+    cross_references:
+      dataset_publications: 10.1016/j.isci.2023.107210
+      related_database_entries: EMD-28281, EMD-28282, EMD-28283
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

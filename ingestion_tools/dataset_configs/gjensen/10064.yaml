@@ -22,6 +22,8 @@ datasets:
       \ Legionella thyA \u2206IcmX"
     dataset_identifier: 10064
     dataset_title: L. pneumophila JV2067
+    cross_references:
+      dataset_publications: 10.1038/s41564-019-0427-4
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

@@ -21,6 +21,8 @@ datasets:
       by Matt Swulius and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10194
     dataset_title: Vibrio cholerae (GFP-MreB)
+    cross_references:
+      dataset_publications: 10.1016/j.bbrc.2011.03.062
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

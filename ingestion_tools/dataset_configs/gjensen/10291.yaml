@@ -22,6 +22,8 @@ datasets:
       pneumonia II3 mutant, ok
     dataset_identifier: 10291
     dataset_title: M. pneumoniae MP II3 27.5KX
+    cross_references:
+      dataset_publications: 10.1111/mmi.13937
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

@@ -23,6 +23,8 @@ datasets:
       is only inducible for dQ
     dataset_identifier: 10118
     dataset_title: M. magneticum dK 203 0.5h induced
+    cross_references:
+      dataset_publications: 10.1128/mBio.01898-15
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

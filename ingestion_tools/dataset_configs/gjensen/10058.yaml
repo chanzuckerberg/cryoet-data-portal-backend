@@ -23,6 +23,9 @@ datasets:
       dotO."
     dataset_identifier: 10058
     dataset_title: 'L. pneumophila '
+    cross_references:
+      dataset_publications: 10.1038/s41564-019-0427-4
+      related_database_entries: EMD-0566
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

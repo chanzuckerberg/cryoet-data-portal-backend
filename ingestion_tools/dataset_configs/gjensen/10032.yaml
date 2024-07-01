@@ -21,6 +21,8 @@ datasets:
       hansenii collected by William Nicolas and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10032
     dataset_title: G. hansenii gh7-2
+    cross_references:
+      dataset_publications: 10.1128/JB.00371-20
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

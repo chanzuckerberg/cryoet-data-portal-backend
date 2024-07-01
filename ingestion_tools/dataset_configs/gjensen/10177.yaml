@@ -25,6 +25,8 @@ datasets:
       by spinoculation with VSVG-pNL4GFP, frozen 24 h after synchronized entry.
     dataset_identifier: 10177
     dataset_title: HUVECs 24h Infx pNLgfp
+    cross_references:
+      dataset_publications: 10.1128/JVI.02997-14
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01

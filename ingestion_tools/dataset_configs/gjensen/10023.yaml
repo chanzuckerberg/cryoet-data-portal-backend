@@ -22,6 +22,8 @@ datasets:
       IT 0.8s
     dataset_identifier: 10023
     dataset_title: G. hansenii bio12-2
+    cross_references:
+      dataset_publications: 10.1128/JB.00371-20
     dates:
       deposition_date: 2023-10-01
       last_modified_date: 2023-12-01
