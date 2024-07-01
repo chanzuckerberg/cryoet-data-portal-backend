@@ -14,10 +14,14 @@ annotations: OPTIONAL
     annotation_publications: OPTIONAL, STRING
     annotation_software: OPTIONAL BUT RECOMMENDED, STRING
     authors:  OPTIONAL BUT RECOMMENDED
-    - ORCID: OPTIONAL, STRING (ORCID)
+    - name: REQUIRED, STRING
+      email: OPTIONAL, STRING
+      affiliation_name: OPTIONAL, STRING
+      affiliation_address: OPTIONAL, STRING
+      affiliation_identifier: OPTIONAL, STRING
       corresponding_author_status: OPTIONAL, BOOLEAN (DEFAULT FALSE)
-      name: REQUIRED, STRING
       primary_author_status: OPTIONAL, BOOLEAN (DEFAULT FALSE)
+      ORCID: OPTIONAL, STRING (ORCID)
     dates: REQUIRED
       deposition_date: REQUIRED, STRING, DATE FORMAT YYYY-MM-DD
       last_modified_date: REQUIRED, STRING, DATE FORMAT YYYY-MM-DD
@@ -66,6 +70,7 @@ datasets: REQUIRED
     - funding_agency_name: OPTIONAL BUT RECOMMENDED, STRING
       grant_id: OPTIONAL BUT RECOMMENDED, STRING
     grid_preparation: OPTIONAL BUT RECOMMENDED, STRING
+    other_setup: OPTIONAL, STRING
     organism: OPTIONAL
       name: REQUIRED, STRING
       taxonomy_id: OPTIONAL, INTEGER
@@ -83,16 +88,16 @@ datasets: REQUIRED
   - source_multi_glob:
       list_globs:
         - REQUIRED, STRING
-    parent_filters: SEE source_glob.parent_filters
+    parent_filters: SEE runs.sources.parent_filters
   - destination_glob: OPTIONAL
       list_glob: REQUIRED, STRING (REGEX)
       match_regex: OPTIONAL, STRING (REGEX)
       name_regex: OPTIONAL, STRING (REGEX)
-    parent_filters: SEE source_glob.parent_filters
+    parent_filters: SEE runs.sources.parent_filters
   - literal: OPTIONAL
       value:
       - REQUIRED, STRING
-    parent_filters: SEE source_glob.parent_filters
+    parent_filters: SEE runs.sources.parent_filters
 frames: OPTIONAL
 - sources: SEE datasets.sources and runs.sources.parent_filters (source_glob, source_multi_glob)
 gains: OPTIONAL
@@ -128,12 +133,13 @@ tiltseries: OPTIONAL
     alignment_binning_factor: # DEPRECATED
     binning_from_frames: OPTIONAL, FLOAT
     camera: REQUIRED
+      acquire_mode: OPTIONAL, STRING
       manufacturer: REQUIRED, STRING
       model: REQUIRED, STRING
     data_acquisition_software: REQUIRED, STRING
     is_aligned: REQUIRED, BOOLEAN (DEFAULT FALSE)
     microscope: REQUIRED
-      additional_scope_info: OPTIONAL, STRING
+      additional_info: OPTIONAL, STRING
       manufacturer: REQUIRED, STRING
       model: REQUIRED, STRING
     microscope_optical_setup: REQUIRED
@@ -166,6 +172,10 @@ tomograms: OPTIONAL
     ctf_corrected: OPTIONAL BUT RECOMMENDED, BOOLEAN
     fiducial_alignment_status: REQUIRED, STRING (ENUM [FIDUCIAL, NON_FIDUCIAL])
     offset: REQUIRED
+      x: REQUIRED, INTEGER
+      y: REQUIRED, INTEGER
+      z: REQUIRED, INTEGER
+    size: OPTIONAL
       x: REQUIRED, INTEGER
       y: REQUIRED, INTEGER
       z: REQUIRED, INTEGER
