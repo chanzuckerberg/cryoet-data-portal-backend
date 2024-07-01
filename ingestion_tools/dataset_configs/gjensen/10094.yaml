@@ -126,7 +126,7 @@ tomograms:
     processing_software: '{tomo-processing_software}'
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: '{tomo-reconstruction_software}'
-    tomogram_version: 1
+    tomogram_version: '1'
     voxel_spacing: 16.145
   sources:
   - source_glob:

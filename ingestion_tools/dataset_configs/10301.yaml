@@ -337,7 +337,7 @@ tomograms:
     processing: denoised
     reconstruction_method: WBP
     reconstruction_software: IMOD
-    tomogram_version: 1
+    tomogram_version: '1'
     voxel_spacing: 7.84
   sources:
   - source_glob:

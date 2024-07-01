@@ -123,7 +123,7 @@ tomograms:
     processing: raw
     reconstruction_method: Weighted back projection
     reconstruction_software: IMOD
-    tomogram_version: 1
+    tomogram_version: '1'
   sources:
   - source_glob:
       list_glob: tomograms/{run_name}.rec

@@ -177,7 +177,7 @@ tomograms:
     processing: raw
     reconstruction_method: FOURIER SPACE
     reconstruction_software: Warp
-    tomogram_version: 1
+    tomogram_version: '1'
     voxel_spacing: 6.802
   sources:
   - source_glob:

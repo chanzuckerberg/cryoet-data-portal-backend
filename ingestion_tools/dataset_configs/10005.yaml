@@ -194,7 +194,7 @@ tomograms:
     processing: raw
     reconstruction_method: ''
     reconstruction_software: Tomo3D
-    tomogram_version: 1
+    tomogram_version: '1'
     voxel_spacing: 5.224
   sources:
   - source_glob:

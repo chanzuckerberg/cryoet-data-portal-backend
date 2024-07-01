@@ -122,7 +122,7 @@ tomograms:
     processing_software: null
     reconstruction_method: SIRT
     reconstruction_software: IMOD
-    tomogram_version: 1
+    tomogram_version: '1'
     voxel_spacing: 6.26
   sources:
   - source_glob:

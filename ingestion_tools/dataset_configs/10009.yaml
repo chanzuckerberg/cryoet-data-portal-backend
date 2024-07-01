@@ -420,7 +420,7 @@ tomograms:
     processing: denoised
     reconstruction_method: Weighted back projection
     reconstruction_software: STOPGAP
-    tomogram_version: 1
+    tomogram_version: '1'
     voxel_spacing: 13.68
   sources:
   - source_glob:

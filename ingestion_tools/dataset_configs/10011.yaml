@@ -167,7 +167,7 @@ tomograms:
     processing: REQUIRED
     reconstruction_method: null
     reconstruction_software: Dynamo
-    tomogram_version: 1
+    tomogram_version: '1'
     voxel_spacing: null
   sources:
   - source_glob:

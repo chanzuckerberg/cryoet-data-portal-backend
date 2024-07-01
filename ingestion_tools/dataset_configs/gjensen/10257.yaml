@@ -121,7 +121,7 @@ tomograms:
     processing_software: null
     reconstruction_method: Weighted back projection
     reconstruction_software: IMOD
-    tomogram_version: 1
+    tomogram_version: '1'
     voxel_spacing: 16.145
   sources:
   - source_glob:
