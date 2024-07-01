@@ -404,6 +404,7 @@ slots:
   tomogram_ctf_corrected:
     range: boolean
     description: Whether this tomogram is CTF corrected
+    recommended: true
   #dataset (Dataset): An object relationship with the dataset this tomogram is a part of
   tomogram_dataset_id:
     range: integer
@@ -456,6 +457,7 @@ slots:
   tomogram_processing_software:
     range: string
     description: Processing software used to derive the tomogram
+    recommended: true
   tomogram_reconstruction_method:
     range: string
     description: Describe reconstruction method (Weighted back-projection, SART, SIRT)
@@ -517,6 +519,7 @@ slots:
   annotation_software:
     range: string
     description: Software used for generating this annotation
+    recommended: true
   #authors (list[Author]): An array relationship with the authors of this annotation
   annotation_confidence_precision:
     range: float
