@@ -1,3 +1,5 @@
+# TODO: handle parent_filters and inlcude and exclude (valid for nearly all sources)
+
 name: cdp-dataset-config
 id: cdp-dataset-config
 version: 1.1.0
@@ -20,13 +22,6 @@ classes:
   # Reused / general classes
   # ============================================================================
 
-  SourceMultiGlob:
-    attributes:
-      list_globs:
-        multivalued: true
-        range: string
-        required: true
-
   GeneralGlob:
     abstract: true
     attributes:
@@ -38,11 +33,77 @@ classes:
       name_regex:
         range: string
 
-  SourceGlob:
-    is_a: GeneralGlob
-
   DestinationGlob:
     is_a: GeneralGlob
+
+  SourceGlob:
+    is_a: GeneralGlob
+  
+  SourceMultiGlob:
+    attributes:
+      list_globs:
+        multivalued: true
+        range: string
+  
+  # TODO: LinkML doesn't support all the validation for sources, so we'll need to extend it more in Python / JSON Schema 
+  DefaultSource:
+    attributes:
+      destination_glob:
+        range: DestinationGlob
+      source_glob:
+        range: SourceGlob
+      source_multi_glob:
+        range: SourceMultiGlob
+      # Would also have literal here, but literal schema varies by class
+      # Would also have parent_filters here, but sometimes parent_filters doesn't apply (e.g., Dataset)
+
+  SourceParentFiltersContainer:
+    attributes:
+      parent_filters:
+        range: SourceParentFilters
+  
+  SourceParentFilters:
+    attributes:
+      include:
+        range: SourceParent
+      exclude:
+        range: SourceParent
+
+  SourceParent:
+    attributes:
+      annotation:
+        multivalued: true
+        range: string
+      dataset:
+        multivalued: true
+        range: string
+      dataset_keyphoto:
+        multivalued: true
+        range: string
+      frame:
+        multivalued: true
+        range: string
+      gain:
+        multivalued: true
+        range: string
+      key_image:
+        multivalued: true
+        range: string
+      raw_tilt:
+        multivalued: true
+        range: string
+      run:
+        multivalued: true
+        range: string      
+      tiltseries:
+        multivalued: true
+        range: string      
+      tomogram:
+        multivalued: true
+        range: string      
+      voxel_spacing:
+        multivalued: true
+        range: string
 
   # ============================================================================
   # Dataset config classes
@@ -53,13 +114,48 @@ classes:
         range: Annotation
         required: true
       sources:
+        multivalued: true
+        range: AnnotationSource
+        required: true
 
+  AnnotationSource:
+    attributes:
+      instance_segmentation:
+        range: AnnotationInstanceSegmentationFile
+      oriented_point:
+        range: AnnotationOrientedPointFile
+      point:
+        range: AnnotationPointFile
+      segmentation_mask:
+        range: AnnotationSegmentationMaskFile
+      semantic_segmentation_mask: 
+        range: AnnotationSemanticSegmentationMaskFile
+      parent_filters:
+        range: SourceParentFilters
+          
   DatasetContainer:
     attributes:
       metadata:
         range: Dataset
         required: true
       sources:
+        multivalued: true
+        range: DatasetSource
+        required: true
+
+  DatasetSource:
+    mixins:
+      - DefaultSource
+    attributes:
+      literal:
+        range: DatasetLiteral
+
+  DatasetLiteral:
+    attributes:
+      value:
+        multivalued: true
+        range: string
+        required: true
 
   DatasetKeyPhotoContainer:
     attributes:
@@ -69,6 +165,8 @@ classes:
         required: true
   
   DatasetKeyPhotoSource:
+    mixins:
+      - SourceParentFiltersContainer
     attributes:
       literal: 
         range: DatasetKeyPhotoLiteral
@@ -95,9 +193,9 @@ classes:
         required: true
 
   FrameSource:
-    attributes:
-      source_glob:
-        range: SourceGlob
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
 
   GainContainer:
     attributes:
@@ -107,9 +205,9 @@ classes:
         required: true
 
   GainSource:
-    attributes:
-      source_glob:
-        range: SourceGlob
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
 
   KeyImageContainer:
     attributes:
@@ -119,9 +217,10 @@ classes:
         required: true
 
   KeyImageSource:
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
     attributes:
-      source_glob:
-        range: SourceGlob
       literal: 
         range: KeyImageLiteral
 
@@ -140,9 +239,9 @@ classes:
         required: true
 
   RawTiltSource:
-    attributes:
-      source_multi_glob:
-        range: SourceMultiGlob
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
 
   RunContainer:
     attributes:
@@ -152,9 +251,9 @@ classes:
         required: true
 
   RunSource:
-    attributes:
-      source_glob:
-        range: SourceGlob
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
 
   StandardizationConfig:
     attributes:
@@ -179,6 +278,14 @@ classes:
         range: TiltSeries
         required: true
       sources:
+        multivalued: true
+        range: TiltSeriesSource
+        required: true
+  
+  TiltSeriesSource:
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
 
   TomogramContainer:
     attributes:
@@ -186,6 +293,14 @@ classes:
         range: Tomogram
         required: true
       sources:
+        multivalued: true
+        range: TomogramSource
+        required: true
+
+  TomogramSource:
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
 
   VoxelSpacingContainer:
     attributes:
@@ -195,9 +310,10 @@ classes:
         required: true
 
   VoxelSpacingSource:
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
     attributes:
-      destination_glob:
-        range: DestinationGlob
       literal: 
         range: VoxelSpacingLiteral
 

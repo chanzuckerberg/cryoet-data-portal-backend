@@ -5,6 +5,7 @@
 readonly SCHEMA_VERSION="v1.1.0"
 readonly DATASET_CONFIGS_DIR=../dataset_configs/
 readonly DATASET_CONFIG_VALIDATION_FILE="../../schema/$SCHEMA_VERSION/dataset_config_validate.yaml"
+readonly ERRORS_OUTPUT_DIR=./dataset_config_validate_errors
 readonly EXCLUDE_LIST=("template.yaml" "template_draft.yaml" "dataset_config_merged.yaml")
 
 if [ ! -f $DATASET_CONFIG_VALIDATION_FILE ]; then
@@ -26,13 +27,15 @@ for file in $all_files; {
 
 # Run linkml-validate if there are files to validate
 if [ ${#files_to_validate[@]} -gt 0 ]; then
-    if linkml-validate -s $DATASET_CONFIG_VALIDATION_FILE "${files_to_validate[@]}" > dataset_config_validate_errors.txt ; then
+    rm -rf $ERRORS_OUTPUT_DIR
+    mkdir -p $ERRORS_OUTPUT_DIR
+    if linkml-validate -s $DATASET_CONFIG_VALIDATION_FILE "${files_to_validate[@]}" > $ERRORS_OUTPUT_DIR/dataset_config_validate_errors.txt ; then
         echo "All files passed validation."
     else
         # Filter out the error message that includes the file path to get a more concise error log file (losing some context, but easier to read)
-        sed -e 's/\[ERROR\] [\[\.\/a-zA-Z0-9_]*\] //g' dataset_config_validate_errors.txt | sort -u > dataset_config_validate_errors_filtered.txt 
+        sed -e 's/\[ERROR\] [\[\.\/a-zA-Z0-9_]*\] //g' $ERRORS_OUTPUT_DIR/dataset_config_validate_errors.txt | sort -u > $ERRORS_OUTPUT_DIR/dataset_config_validate_errors_filtered.txt 
         # Filter again, losing more context but getting a more concise error log file
-        sed -e 's/ in \/[a-z]*\/[0-9]*\/[a-zA-Z\/_0-9]*$//g' dataset_config_validate_errors_filtered.txt | sort -u > dataset_config_validate_errors_filtered2.txt 
+        sed -e 's/ in \/[a-z]*\/[0-9]*\/[a-zA-Z\/_0-9]*$//g' $ERRORS_OUTPUT_DIR/dataset_config_validate_errors_filtered.txt | sort -u > $ERRORS_OUTPUT_DIR/dataset_config_validate_errors_filtered2.txt 
         echo "Validation failed. See dataset_config_validate_errors_temp.txt for details."
         exit 1
     fi
