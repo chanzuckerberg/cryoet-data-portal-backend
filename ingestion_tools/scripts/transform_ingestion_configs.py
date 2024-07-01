@@ -1,3 +1,5 @@
+from typing import Any
+
 import click
 import yaml
 
@@ -7,9 +9,7 @@ def cli():
     pass
 
 
-def update_file(filename: str) -> None:
-    with open(filename, "r") as fh:
-        data = yaml.safe_load(fh.read())
+def update_config(data: dict[str, Any]) -> dict[str, Any]:
     standardization_config = data["standardization_config"]
     if data.get("overrides_by_run"):
         # We only have two datasets that specify overrides. It's easier to just
@@ -171,6 +171,14 @@ def update_file(filename: str) -> None:
     data["standardization_config"] = {
         k: v for k, v in data["standardization_config"].items() if k in valid_standardization_keys
     }
+    return data
+
+
+def update_file(filename: str) -> None:
+    with open(filename, "r") as fh:
+        data = yaml.safe_load(fh.read())
+
+    data = update_config(data)
 
     with open(filename, "w") as fh:
         fh.write(yaml.dump(data))

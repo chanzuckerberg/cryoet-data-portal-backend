@@ -10,7 +10,7 @@ from typing import Any, Callable, Optional
 
 import click
 import yaml
-from transform_ingestion_configs import update_file
+from transform_ingestion_configs import update_config
 
 from common.fs import LocalFilesystem
 from common.normalize_fields import normalize_fiducial_alignment
@@ -413,9 +413,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
         print(f"Writing file for {dataset_id}")
         dataset_config_file_path = os.path.join(output_dir, f"{dataset_id}.yaml")
         with open(dataset_config_file_path, "w") as outfile:
-            yaml.dump(dataset_config, outfile, sort_keys=False)
-
-        update_file(dataset_config_file_path)
+            yaml.dump(update_config(dataset_config), outfile, sort_keys=True)
 
 
 if __name__ == "__main__":
