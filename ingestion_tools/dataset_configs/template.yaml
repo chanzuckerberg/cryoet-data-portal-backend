@@ -13,7 +13,7 @@ annotations: OPTIONAL
       state: OPTIONAL, STRING
     annotation_publications: OPTIONAL, STRING
     annotation_software: OPTIONAL BUT RECOMMENDED, STRING
-    authors:  OPTIONAL BUT RECOMMENDED
+    authors: REQUIRED
     - name: REQUIRED, STRING
       email: OPTIONAL, STRING
       affiliation_name: OPTIONAL, STRING
