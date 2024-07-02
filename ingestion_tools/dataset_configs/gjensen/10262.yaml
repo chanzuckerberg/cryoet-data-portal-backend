@@ -17,6 +17,9 @@ datasets:
     cell_strain:
       id: null
       name: ''
+    cross_references:
+      dataset_publications: 10.15252/embr.201744070
+      related_database_entries: EMD-8603
     dataset_description: ' and is a part of Caltech Jensen  lab etdb.'
     dataset_identifier: 10262
     dataset_title: Thermococcus kodakarensis

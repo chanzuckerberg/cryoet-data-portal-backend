@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: Philadelphia-1_Lp02
+    cross_references:
+      dataset_publications: 10.1038/s41564-019-0427-4
     dataset_description: 'This is 27th of 41 sets of data studying Legionella pneumophila
       collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. JV9114:
       DotC-sfGFP fusion to the wild-type gene on the chromosome (thyA).'

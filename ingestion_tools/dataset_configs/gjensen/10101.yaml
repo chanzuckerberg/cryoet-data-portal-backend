@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: HI4320
+    cross_references:
+      dataset_publications: 10.15252/embj.201696235
     dataset_description: This is 1st of 2 sets of data studying Proteus mirabilis
       collected by Qing Yao and is a part of Caltech Jensen  lab etdb. PG layer
     dataset_identifier: 10101

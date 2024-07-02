@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: deltaQ 167
+    cross_references:
+      dataset_publications: 10.1128/mBio.01898-15
     dataset_description: This is 17th of 17 sets of data studying Magnetospirillum
       magneticum  collected by Poorna Subramanian and is a part of Caltech Jensen  lab
       etdb.

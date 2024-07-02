@@ -58,7 +58,12 @@ def clean(val: str) -> str | None:
     )
 
 
-def to_dataset_config(dataset_id: int, data: dict[str, Any], authors: list[dict[str, Any]]) -> dict[str, Any]:
+def to_dataset_config(
+    dataset_id: int,
+    data: dict[str, Any],
+    authors: list[dict[str, Any]],
+    cross_reference: dict[str, str] | None,
+) -> dict[str, Any]:
     dataset = data.get("dataset")
 
     config = {
@@ -98,6 +103,8 @@ def to_dataset_config(dataset_id: int, data: dict[str, Any], authors: list[dict[
         }
     if dataset["tissue"]:
         config["tissue"] = dataset["tissue"]
+    if cross_reference:
+        config["cross_references"] = cross_reference
 
     return config
 
@@ -354,6 +361,12 @@ def get_deposition_map(input_dir: str) -> dict[int, int]:
     return dataset_deposition_id_mapping
 
 
+def get_cross_reference_mapping(input_dir: str) -> dict[int, dict[str, str]]:
+    with open(os.path.join(input_dir, "cross_references.json"), "r") as file:
+        data = json.load(file)
+    return {int(key): val for key, val in data.items()}
+
+
 @cli.command()
 @click.argument("input_dir", required=True, type=str)
 @click.argument("output_dir", required=True, type=str)
@@ -368,6 +381,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     fs.makedirs(run_tomo_map_path)
     fs.makedirs(run_frames_map_path)
     deposition_mapping = get_deposition_map(input_dir)
+    cross_reference_mapping = get_cross_reference_mapping(input_dir)
     file_paths = fs.glob(os.path.join(input_dir, "portal_[0-9]*.json"))
     file_paths.sort()
     for file_path in file_paths:
@@ -382,7 +396,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
         authors = to_dataset_author(val.get("dataset"))
         run_data_map = defaultdict(dict)
         dataset_config = {
-            "dataset": to_dataset_config(dataset_id, val, authors),
+            "dataset": to_dataset_config(dataset_id, val, authors, cross_reference_mapping.get(dataset_id, {})),
             "runs": {},
             "tiltseries": to_config_by_run(
                 dataset_id,

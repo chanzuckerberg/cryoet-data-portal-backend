@@ -17,6 +17,9 @@ datasets:
     cell_strain:
       id: null
       name: CCAP 1403/13F
+    cross_references:
+      dataset_publications: 10.1016/j.str.2023.03.011
+      related_database_entries: EMD-29922, EMD-29923, EMD-29925, EMD-29924
     dataset_description: This is 1st of 7 sets of data studying Dolichospermum flos-aquae
       collected by Przemek Dutka and is a part of Caltech Jensen  lab etdb. Gas vesicles,
       GvpA. GvpC present.

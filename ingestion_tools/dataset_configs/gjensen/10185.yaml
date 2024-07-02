@@ -20,6 +20,8 @@ datasets:
     cell_type:
       id: CL:0002618
       name: umbilical vein endothelial cell
+    cross_references:
+      dataset_publications: 10.1128/JVI.02997-14
     dataset_description: This is 14th of 17 sets of data studying HUVECs collected
       by Cora Woodward and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10185
