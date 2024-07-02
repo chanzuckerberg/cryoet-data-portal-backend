@@ -273,6 +273,9 @@ classes:
   Camera:
     description: &desc_camera The camera used to collect the tilt series.
     attributes:
+      acquire_mode: 
+        exact_mappings:
+          - cdp-common:tiltseries_camera_acquire_mode
       manufacturer:
         exact_mappings:
           - cdp-common:tiltseries_camera_manufacturer
@@ -324,15 +327,51 @@ classes:
       acceleration_voltage:
         exact_mappings:
           - cdp-common:tiltseries_acceleration_voltage
-      spherical_aberration_constant:
+      aligned_tiltseries_binning:
         exact_mappings:
-          - cdp-common:tiltseries_spherical_aberration_constant
+          - cdp-common:tiltseries_aligned_tiltseries_binning
+      binning_from_frames:
+        exact_mappings:
+          - cdp-common:tiltseries_binning_from_frames
+      camera:
+        description: *desc_camera
+        range: Camera
+      data_acquisition_software:
+        exact_mappings:
+          - cdp-common:tiltseries_data_acquisition_software
+      frames_count:
+        exact_mappings:
+          - cdp-common:tiltseries_frames_count
+      is_aligned:
+        exact_mappings:
+          - cdp-common:tiltseries_is_aligned
+      microscope:
+        description: *desc_microscope
+        range: Microscope
       microscope_additional_info:
         exact_mappings:
           - cdp-common:tiltseries_microscope_additional_info
+      microscope_optical_setup:
+        description: *desc_microscope_optical_setup
+        range: MicroscopeOpticalSetup
+      related_empiar_entry:
+        exact_mappings:
+          - cdp-common:tiltseries_related_empiar_entry
+      spherical_aberration_constant:
+        exact_mappings:
+          - cdp-common:tiltseries_spherical_aberration_constant
+      tilt_alignment_software:
+        exact_mappings:
+          - cdp-common:tiltseries_tilt_alignment_software
       tilt_axis:
         exact_mappings:
           - cdp-common:tiltseries_tilt_axis
+      tilt_range:
+        description: *desc_tilt_range
+        range: TiltRange
+      tilt_series_quality:
+        exact_mappings:
+          - cdp-common:tiltseries_tilt_series_quality
       tilt_step:
         exact_mappings:
           - cdp-common:tiltseries_tilt_step
@@ -342,36 +381,9 @@ classes:
       total_flux:
         exact_mappings:
           - cdp-common:tiltseries_total_flux
-      data_acquisition_software:
-        exact_mappings:
-          - cdp-common:tiltseries_data_acquisition_software
-      binning_from_frames:
-        exact_mappings:
-          - cdp-common:tiltseries_binning_from_frames
-      tilt_series_quality:
-        exact_mappings:
-          - cdp-common:tiltseries_tilt_series_quality
       pixel_spacing:
         exact_mappings:
           - cdp-common:tiltseries_pixel_spacing
-      aligned_tiltseries_binning:
-        exact_mappings:
-          - cdp-common:tiltseries_aligned_tiltseries_binning
-      frames_count:
-        exact_mappings:
-          - cdp-common:tiltseries_frames_count
-      camera:
-        description: *desc_camera
-        range: Camera
-      microscope:
-        description: *desc_microscope
-        range: Microscope
-      microscope_optical_setup:
-        description: *desc_microscope_optical_setup
-        range: MicroscopeOpticalSetup
-      tilt_range:
-        description: *desc_tilt_range
-        range: TiltRange
   # ============================================================================
 
   # ============================================================================
@@ -580,34 +592,38 @@ classes:
       annotation_method:
         exact_mappings:
           - cdp-common:annotation_method
-      method_type:
-        exact_mappings:
-          - cdp-common:annotation_method_type
+      annotation_object:
+        description: *desc_annotation_object
+        range: AnnotationObject
       annotation_publications:
         exact_mappings:
           - cdp-common:annotation_publication
       annotation_software:
         exact_mappings:
           - cdp-common:annotation_software
-      ground_truth_status:
-        exact_mappings:
-          - cdp-common:annotation_ground_truth_status
-      object_count:
-        exact_mappings:
-          - cdp-common:annotation_object_count
-      is_curator_recommended:
-        exact_mappings:
-          - cdp-common:annotation_is_curator_recommended
+      confidence:
+        description: *desc_annotation_confidence
+        range: AnnotationConfidence
       files:
         description: *desc_annotation_source_file
         range: AnnotationSourceFile
         multivalued: true
         inlined_as_list: true
         list_elements_ordered: true
-      confidence:
-        description: *desc_annotation_confidence
-        range: AnnotationConfidence
-      annotation_object:
-        description: *desc_annotation_object
-        range: AnnotationObject
+      ground_truth_status:
+        exact_mappings:
+          - cdp-common:annotation_ground_truth_status
+      is_curator_recommended:
+        exact_mappings:
+          - cdp-common:annotation_is_curator_recommended
+      method_type:
+        exact_mappings:
+          - cdp-common:annotation_method_type
+      object_count:
+        exact_mappings:
+          - cdp-common:annotation_object_count
+      version:
+        exact_mappings:
+          - cdp-common:annotation_version
+      
   # ============================================================================

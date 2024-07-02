@@ -1,8 +1,13 @@
 
 
-# Slot: model
+# Slot: acquire_mode
 
-URI: [cdp-meta:model](metadatamodel)
+
+_Camera acquisition mode_
+
+
+
+URI: [cdp-meta:acquire_mode](metadataacquire_mode)
 
 
 
@@ -17,7 +22,6 @@ URI: [cdp-meta:model](metadatamodel)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [Camera](Camera.md) | The camera used to collect the tilt series |  no  |
-| [Microscope](Microscope.md) | The microscope used to collect the tilt series |  no  |
 
 
 
@@ -41,17 +45,31 @@ URI: [cdp-meta:model](metadatamodel)
 
 
 
+### Schema Source
+
+
+* from schema: metadata
+
+
+
 
 ## LinkML Source
 
 <details>
 ```yaml
-name: model
-alias: model
+name: acquire_mode
+description: Camera acquisition mode
+from_schema: metadata
+exact_mappings:
+- cdp-common:tiltseries_camera_acquire_mode
+rank: 1000
+alias: acquire_mode
+owner: Camera
 domain_of:
 - Camera
-- Microscope
 range: string
+inlined: true
+inlined_as_list: true
 
 ```
 </details>

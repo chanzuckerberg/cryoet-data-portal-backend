@@ -163,32 +163,31 @@ standardization_config:
   deposition_id: 10006
   source_prefix: jbriggs-sc2
 tiltseries:
-  acceleration_voltage: 300000
-  binning_from_frames: 1
-  camera:
-    manufacturer: Gatan
-    model: K2 SUMMIT
-  data_acquisition_software: SerialEM
-  is_aligned: false
-  microscope:
-    manufacturer: FEI
-    model: TITAN
-    optical_setup: GIF Bioquantum
-  microscope_optical_setup:
-    energy_filter: GIF Bioquantum
-    image_corrector: null
-    phase_plate: null
-  pixel_spacing: 1.532
-  scales: []
-  spherical_aberration_constant: 2.7
-  tilt_axis: "85.6\xB0"
-  tilt_range:
-    max: 60
-    min: -60
-  tilt_series_quality: 5
-  tilt_step: 3
-  tilting_scheme: Dose symmetric from 0.0 degrees
-  total_flux: 120
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: 1
+    camera:
+      manufacturer: Gatan
+      model: K2 SUMMIT
+    data_acquisition_software: SerialEM
+    is_aligned: false
+    microscope:
+      manufacturer: FEI
+      model: TITAN
+    microscope_optical_setup:
+      energy_filter: GIF Bioquantum
+      image_corrector: null
+      phase_plate: null
+    pixel_spacing: 1.532
+    spherical_aberration_constant: 2.7
+    tilt_axis: 85.6
+    tilt_range:
+      max: 60
+      min: -60
+    tilt_series_quality: 5
+    tilt_step: 3
+    tilting_scheme: Dose symmetric from 0.0 degrees
+    total_flux: 120
 tomograms:
 - metadata:
     authors: *id002

@@ -182,7 +182,6 @@ standardization_config:
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    alignment_binning_factor: null
     binning_from_frames: 14.08
     camera:
       manufacturer: Gatan
@@ -198,7 +197,6 @@ tiltseries:
       phase_plate: null
     pixel_spacing: 3.52
     related_empiar_entry: EMD-15053
-    scales: []
     spherical_aberration_constant: 2.7
     tilt_axis: 1.36
     tilt_range:

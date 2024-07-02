@@ -276,6 +276,9 @@ slots:
   tiltseries_binning_from_frames:
     range: float
     description: Describes the binning factor from frames to tilt series file
+  tiltseries_camera_acquire_mode:
+    range: string
+    description: Camera acquisition mode
   tiltseries_camera_manufacturer:
     range: string
     description: Name of the camera manufacturer
@@ -288,6 +291,9 @@ slots:
   tiltseries_frames_count:
     range: integer
     description: Number of frames associated with this tiltseries
+  tiltseries_is_aligned:
+    range: boolean
+    description: Whether this tilt series is aligned
   tiltseries_https_alignment_file:
     range: string
     description: HTTPS path to the alignment file for this tiltseries
@@ -351,6 +357,9 @@ slots:
     unit:
       descriptive_name: millimeters
       symbol: mm
+  tiltseries_tilt_alignment_software:
+    range: string
+    description: Software used for tilt alignment
   tiltseries_tilt_axis:
     range: float
     description: Rotation angle in degrees
@@ -563,9 +572,12 @@ slots:
   annotation_is_curator_recommended:
     range: boolean
     description: This annotation is recommended by the curator to be preferred for this object type.
+  annotation_version:
+    range: VersionString
+    description: Version of annotation.
 
   # ============================================================================
-  # Annotation Source File  slots
+  # Annotation Source File slots
   # ============================================================================
   #id (int): Numeric identifier (May change!)
   annotation_source_file_format:

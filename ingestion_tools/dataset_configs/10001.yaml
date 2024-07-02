@@ -513,7 +513,6 @@ standardization_config:
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    alignment_binning_factor: null
     binning_from_frames: 1
     camera:
       manufacturer: Gatan
@@ -529,7 +528,6 @@ tiltseries:
       phase_plate: Volta Phase Plate
     pixel_spacing: 3.3702
     related_empiar_entry: EMPIAR-10988
-    scales: []
     spherical_aberration_constant: 2.7
     tilt_axis: 84.7
     tilt_range:

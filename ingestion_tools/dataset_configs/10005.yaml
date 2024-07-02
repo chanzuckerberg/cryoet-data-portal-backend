@@ -151,7 +151,6 @@ tiltseries:
       image_corrector: null
       phase_plate: null
     pixel_spacing: 2.612
-    scales: []
     spherical_aberration_constant: 2.7
     tilt_axis: 6.4
     tilt_range:

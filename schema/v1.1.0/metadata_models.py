@@ -293,6 +293,7 @@ class Camera(ConfiguredBaseModel):
     """
     The camera used to collect the tilt series.
     """
+    acquire_mode: Optional[str] = Field(None, description="""Camera acquisition mode""")
     manufacturer: Optional[str] = Field(None, description="""Name of the camera manufacturer""")
     model: Optional[str] = Field(None, description="""Camera model name""")
 
@@ -327,22 +328,25 @@ class TiltSeries(ConfiguredBaseModel):
     Metadata describing a tilt series.
     """
     acceleration_voltage: Optional[int] = Field(None, description="""Electron Microscope Accelerator voltage in volts""")
-    spherical_aberration_constant: Optional[float] = Field(None, description="""Spherical Aberration Constant of the objective lens in millimeters""")
+    aligned_tiltseries_binning: Optional[int] = Field(None, description="""Binning factor of the aligned tilt series""")
+    binning_from_frames: Optional[float] = Field(None, description="""Describes the binning factor from frames to tilt series file""")
+    camera: Optional[Camera] = Field(None, description="""The camera used to collect the tilt series.""")
+    data_acquisition_software: Optional[str] = Field(None, description="""Software used to collect data""")
+    frames_count: Optional[int] = Field(None, description="""Number of frames associated with this tiltseries""")
+    is_aligned: Optional[bool] = Field(None, description="""Whether this tilt series is aligned""")
+    microscope: Optional[Microscope] = Field(None, description="""The microscope used to collect the tilt series.""")
     microscope_additional_info: Optional[str] = Field(None, description="""Other microscope optical setup information, in addition to energy filter, phase plate and image corrector""")
+    microscope_optical_setup: Optional[MicroscopeOpticalSetup] = Field(None, description="""The optical setup of the microscope used to collect the tilt series.""")
+    related_empiar_entry: Optional[str] = Field(None, description="""If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier""")
+    spherical_aberration_constant: Optional[float] = Field(None, description="""Spherical Aberration Constant of the objective lens in millimeters""")
+    tilt_alignment_software: Optional[str] = Field(None, description="""Software used for tilt alignment""")
     tilt_axis: Optional[float] = Field(None, description="""Rotation angle in degrees""")
+    tilt_range: Optional[TiltRange] = Field(None, description="""The range of tilt angles in the tilt series.""")
+    tilt_series_quality: Optional[int] = Field(None, description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""")
     tilt_step: Optional[float] = Field(None, description="""Tilt step in degrees""")
     tilting_scheme: Optional[str] = Field(None, description="""The order of stage tilting during acquisition of the data""")
     total_flux: Optional[float] = Field(None, description="""Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series""")
-    data_acquisition_software: Optional[str] = Field(None, description="""Software used to collect data""")
-    binning_from_frames: Optional[float] = Field(None, description="""Describes the binning factor from frames to tilt series file""")
-    tilt_series_quality: Optional[int] = Field(None, description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""")
     pixel_spacing: Optional[float] = Field(None, description="""Pixel spacing for the tilt series""")
-    aligned_tiltseries_binning: Optional[int] = Field(None, description="""Binning factor of the aligned tilt series""")
-    frames_count: Optional[int] = Field(None, description="""Number of frames associated with this tiltseries""")
-    camera: Optional[Camera] = Field(None, description="""The camera used to collect the tilt series.""")
-    microscope: Optional[Microscope] = Field(None, description="""The microscope used to collect the tilt series.""")
-    microscope_optical_setup: Optional[MicroscopeOpticalSetup] = Field(None, description="""The optical setup of the microscope used to collect the tilt series.""")
-    tilt_range: Optional[TiltRange] = Field(None, description="""The range of tilt angles in the tilt series.""")
 
 
 class TomogramSize(ConfiguredBaseModel):
@@ -469,15 +473,16 @@ class Annotation(AuthoredEntity, DatestampedEntity):
     Metadata describing an annotation.
     """
     annotation_method: Optional[str] = Field(None, description="""Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)""")
-    method_type: Optional[AnnotationMethodTypeEnum] = Field(None, description="""Classification of the annotation method based on supervision.""")
+    annotation_object: Optional[AnnotationObject] = Field(None, description="""Metadata describing the object being annotated.""")
     annotation_publications: Optional[str] = Field(None, description="""DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.""")
     annotation_software: Optional[str] = Field(None, description="""Software used for generating this annotation""")
-    ground_truth_status: Optional[bool] = Field(None, description="""Whether an annotation is considered ground truth, as determined by the annotator.""")
-    object_count: Optional[int] = Field(None, description="""Number of objects identified""")
-    is_curator_recommended: Optional[bool] = Field(None, description="""This annotation is recommended by the curator to be preferred for this object type.""")
-    files: Optional[List[AnnotationSourceFile]] = Field(default_factory=list, description="""File and sourcing data for an annotation. Represents an entry in annotation.sources.""")
     confidence: Optional[AnnotationConfidence] = Field(None, description="""Metadata describing the confidence of an annotation.""")
-    annotation_object: Optional[AnnotationObject] = Field(None, description="""Metadata describing the object being annotated.""")
+    files: Optional[List[AnnotationSourceFile]] = Field(default_factory=list, description="""File and sourcing data for an annotation. Represents an entry in annotation.sources.""")
+    ground_truth_status: Optional[bool] = Field(None, description="""Whether an annotation is considered ground truth, as determined by the annotator.""")
+    is_curator_recommended: Optional[bool] = Field(None, description="""This annotation is recommended by the curator to be preferred for this object type.""")
+    method_type: Optional[AnnotationMethodTypeEnum] = Field(None, description="""Classification of the annotation method based on supervision.""")
+    object_count: Optional[int] = Field(None, description="""Number of objects identified""")
+    version: Optional[string] = Field(None, description="""Version of annotation.""")
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""")
     authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""")
 

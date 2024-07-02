@@ -91,6 +91,8 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
         
       Annotation : object_count
         
+      Annotation : version
+        
       
 ```
 
@@ -108,15 +110,16 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [annotation_method](annotation_method.md) | 0..1 <br/> [String](String.md) | Describe how the annotation is made (e | direct |
-| [method_type](method_type.md) | 0..1 <br/> [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Classification of the annotation method based on supervision | direct |
+| [annotation_object](annotation_object.md) | 0..1 <br/> [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated | direct |
 | [annotation_publications](annotation_publications.md) | 0..1 <br/> [String](String.md) | DOIs for publications that describe the dataset | direct |
 | [annotation_software](annotation_software.md) | 0..1 <br/> [String](String.md) | Software used for generating this annotation | direct |
-| [ground_truth_status](ground_truth_status.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether an annotation is considered ground truth, as determined by the annota... | direct |
-| [object_count](object_count.md) | 0..1 <br/> [Integer](Integer.md) | Number of objects identified | direct |
-| [is_curator_recommended](is_curator_recommended.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation is recommended by the curator to be preferred for this object... | direct |
-| [files](files.md) | * <br/> [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation | direct |
 | [confidence](confidence.md) | 0..1 <br/> [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation | direct |
-| [annotation_object](annotation_object.md) | 0..1 <br/> [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated | direct |
+| [files](files.md) | * <br/> [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation | direct |
+| [ground_truth_status](ground_truth_status.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether an annotation is considered ground truth, as determined by the annota... | direct |
+| [is_curator_recommended](is_curator_recommended.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation is recommended by the curator to be preferred for this object... | direct |
+| [method_type](method_type.md) | 0..1 <br/> [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Classification of the annotation method based on supervision | direct |
+| [object_count](object_count.md) | 0..1 <br/> [Integer](Integer.md) | Number of objects identified | direct |
+| [version](version.md) | 0..1 <br/> [VersionString](VersionString.md) | Version of annotation | direct |
 | [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
 
@@ -186,18 +189,16 @@ attributes:
     range: string
     inlined: true
     inlined_as_list: true
-  method_type:
-    name: method_type
-    description: Classification of the annotation method based on supervision.
+  annotation_object:
+    name: annotation_object
+    description: Metadata describing the object being annotated.
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:annotation_method_type
     rank: 1000
-    alias: method_type
+    alias: annotation_object
     owner: Annotation
     domain_of:
     - Annotation
-    range: annotation_method_type_enum
+    range: AnnotationObject
     inlined: true
     inlined_as_list: true
   annotation_publications:
@@ -229,48 +230,16 @@ attributes:
     range: string
     inlined: true
     inlined_as_list: true
-  ground_truth_status:
-    name: ground_truth_status
-    description: Whether an annotation is considered ground truth, as determined by
-      the annotator.
+  confidence:
+    name: confidence
+    description: Metadata describing the confidence of an annotation.
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:annotation_ground_truth_status
     rank: 1000
-    alias: ground_truth_status
+    alias: confidence
     owner: Annotation
     domain_of:
     - Annotation
-    range: boolean
-    inlined: true
-    inlined_as_list: true
-  object_count:
-    name: object_count
-    description: Number of objects identified
-    from_schema: metadata
-    exact_mappings:
-    - cdp-common:annotation_object_count
-    rank: 1000
-    alias: object_count
-    owner: Annotation
-    domain_of:
-    - Annotation
-    range: integer
-    inlined: true
-    inlined_as_list: true
-  is_curator_recommended:
-    name: is_curator_recommended
-    description: This annotation is recommended by the curator to be preferred for
-      this object type.
-    from_schema: metadata
-    exact_mappings:
-    - cdp-common:annotation_is_curator_recommended
-    rank: 1000
-    alias: is_curator_recommended
-    owner: Annotation
-    domain_of:
-    - Annotation
-    range: boolean
+    range: AnnotationConfidence
     inlined: true
     inlined_as_list: true
   files:
@@ -288,28 +257,76 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
-  confidence:
-    name: confidence
-    description: Metadata describing the confidence of an annotation.
+  ground_truth_status:
+    name: ground_truth_status
+    description: Whether an annotation is considered ground truth, as determined by
+      the annotator.
     from_schema: metadata
+    exact_mappings:
+    - cdp-common:annotation_ground_truth_status
     rank: 1000
-    alias: confidence
+    alias: ground_truth_status
     owner: Annotation
     domain_of:
     - Annotation
-    range: AnnotationConfidence
+    range: boolean
     inlined: true
     inlined_as_list: true
-  annotation_object:
-    name: annotation_object
-    description: Metadata describing the object being annotated.
+  is_curator_recommended:
+    name: is_curator_recommended
+    description: This annotation is recommended by the curator to be preferred for
+      this object type.
     from_schema: metadata
+    exact_mappings:
+    - cdp-common:annotation_is_curator_recommended
     rank: 1000
-    alias: annotation_object
+    alias: is_curator_recommended
     owner: Annotation
     domain_of:
     - Annotation
-    range: AnnotationObject
+    range: boolean
+    inlined: true
+    inlined_as_list: true
+  method_type:
+    name: method_type
+    description: Classification of the annotation method based on supervision.
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:annotation_method_type
+    rank: 1000
+    alias: method_type
+    owner: Annotation
+    domain_of:
+    - Annotation
+    range: annotation_method_type_enum
+    inlined: true
+    inlined_as_list: true
+  object_count:
+    name: object_count
+    description: Number of objects identified
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:annotation_object_count
+    rank: 1000
+    alias: object_count
+    owner: Annotation
+    domain_of:
+    - Annotation
+    range: integer
+    inlined: true
+    inlined_as_list: true
+  version:
+    name: version
+    description: Version of annotation.
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:annotation_version
+    rank: 1000
+    alias: version
+    owner: Annotation
+    domain_of:
+    - Annotation
+    range: VersionString
     inlined: true
     inlined_as_list: true
   dates:
@@ -374,18 +391,16 @@ attributes:
     range: string
     inlined: true
     inlined_as_list: true
-  method_type:
-    name: method_type
-    description: Classification of the annotation method based on supervision.
+  annotation_object:
+    name: annotation_object
+    description: Metadata describing the object being annotated.
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:annotation_method_type
     rank: 1000
-    alias: method_type
+    alias: annotation_object
     owner: Annotation
     domain_of:
     - Annotation
-    range: annotation_method_type_enum
+    range: AnnotationObject
     inlined: true
     inlined_as_list: true
   annotation_publications:
@@ -417,48 +432,16 @@ attributes:
     range: string
     inlined: true
     inlined_as_list: true
-  ground_truth_status:
-    name: ground_truth_status
-    description: Whether an annotation is considered ground truth, as determined by
-      the annotator.
+  confidence:
+    name: confidence
+    description: Metadata describing the confidence of an annotation.
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:annotation_ground_truth_status
     rank: 1000
-    alias: ground_truth_status
+    alias: confidence
     owner: Annotation
     domain_of:
     - Annotation
-    range: boolean
-    inlined: true
-    inlined_as_list: true
-  object_count:
-    name: object_count
-    description: Number of objects identified
-    from_schema: metadata
-    exact_mappings:
-    - cdp-common:annotation_object_count
-    rank: 1000
-    alias: object_count
-    owner: Annotation
-    domain_of:
-    - Annotation
-    range: integer
-    inlined: true
-    inlined_as_list: true
-  is_curator_recommended:
-    name: is_curator_recommended
-    description: This annotation is recommended by the curator to be preferred for
-      this object type.
-    from_schema: metadata
-    exact_mappings:
-    - cdp-common:annotation_is_curator_recommended
-    rank: 1000
-    alias: is_curator_recommended
-    owner: Annotation
-    domain_of:
-    - Annotation
-    range: boolean
+    range: AnnotationConfidence
     inlined: true
     inlined_as_list: true
   files:
@@ -476,28 +459,76 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
-  confidence:
-    name: confidence
-    description: Metadata describing the confidence of an annotation.
+  ground_truth_status:
+    name: ground_truth_status
+    description: Whether an annotation is considered ground truth, as determined by
+      the annotator.
     from_schema: metadata
+    exact_mappings:
+    - cdp-common:annotation_ground_truth_status
     rank: 1000
-    alias: confidence
+    alias: ground_truth_status
     owner: Annotation
     domain_of:
     - Annotation
-    range: AnnotationConfidence
+    range: boolean
     inlined: true
     inlined_as_list: true
-  annotation_object:
-    name: annotation_object
-    description: Metadata describing the object being annotated.
+  is_curator_recommended:
+    name: is_curator_recommended
+    description: This annotation is recommended by the curator to be preferred for
+      this object type.
     from_schema: metadata
+    exact_mappings:
+    - cdp-common:annotation_is_curator_recommended
     rank: 1000
-    alias: annotation_object
+    alias: is_curator_recommended
     owner: Annotation
     domain_of:
     - Annotation
-    range: AnnotationObject
+    range: boolean
+    inlined: true
+    inlined_as_list: true
+  method_type:
+    name: method_type
+    description: Classification of the annotation method based on supervision.
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:annotation_method_type
+    rank: 1000
+    alias: method_type
+    owner: Annotation
+    domain_of:
+    - Annotation
+    range: annotation_method_type_enum
+    inlined: true
+    inlined_as_list: true
+  object_count:
+    name: object_count
+    description: Number of objects identified
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:annotation_object_count
+    rank: 1000
+    alias: object_count
+    owner: Annotation
+    domain_of:
+    - Annotation
+    range: integer
+    inlined: true
+    inlined_as_list: true
+  version:
+    name: version
+    description: Version of annotation.
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:annotation_version
+    rank: 1000
+    alias: version
+    owner: Annotation
+    domain_of:
+    - Annotation
+    range: VersionString
     inlined: true
     inlined_as_list: true
   dates:

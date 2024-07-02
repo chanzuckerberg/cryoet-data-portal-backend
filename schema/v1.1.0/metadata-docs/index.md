@@ -55,6 +55,7 @@ Name: cdp-meta
 | Slot | Description |
 | --- | --- |
 | [acceleration_voltage](acceleration_voltage.md) | Electron Microscope Accelerator voltage in volts |
+| [acquire_mode](acquire_mode.md) | Camera acquisition mode |
 | [affiliation_address](affiliation_address.md) | The address of the author's affiliation |
 | [affiliation_identifier](affiliation_identifier.md) | A Research Organization Registry (ROR) identifier |
 | [affiliation_name](affiliation_name.md) | The name of the author's affiliation |
@@ -102,6 +103,7 @@ Name: cdp-meta
 | [ground_truth_used](ground_truth_used.md) | Annotation filename used as ground truth for precision and recall |
 | [id](id.md) | The UBERON identifier for the tissue |
 | [image_corrector](image_corrector.md) | Image corrector setup |
+| [is_aligned](is_aligned.md) | Whether this tilt series is aligned |
 | [is_curator_recommended](is_curator_recommended.md) | This annotation is recommended by the curator to be preferred for this object... |
 | [is_visualization_default](is_visualization_default.md) | This annotation will be rendered in neuroglancer by default |
 | [key_photos](key_photos.md) | A set of paths to representative images of a piece of data |
@@ -133,6 +135,7 @@ Name: cdp-meta
 | [reconstruction_software](reconstruction_software.md) | Name of software used for reconstruction |
 | [related_database_entries](related_database_entries.md) | Comma-separated list of related database entries for the dataset |
 | [related_database_links](related_database_links.md) | Comma-separated list of related database links for the dataset |
+| [related_empiar_entry](related_empiar_entry.md) | If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifie... |
 | [release_date](release_date.md) | The date a data item was received by the cryoET data portal |
 | [sample_preparation](sample_preparation.md) | Describes how the sample was prepared |
 | [sample_type](sample_type.md) | Type of sample imaged in a CryoET study |
@@ -142,6 +145,7 @@ Name: cdp-meta
 | [state](state.md) | Molecule state annotated (e |
 | [taxonomy_id](taxonomy_id.md) | NCBI taxonomy identifier for the organism, e |
 | [thumbnail](thumbnail.md) | Path to the thumbnail of preview image relative to the dataset directory root |
+| [tilt_alignment_software](tilt_alignment_software.md) | Software used for tilt alignment |
 | [tilt_axis](tilt_axis.md) | Rotation angle in degrees |
 | [tilt_range](tilt_range.md) | The range of tilt angles in the tilt series |
 | [tilt_series_quality](tilt_series_quality.md) | Author assessment of tilt series quality within the dataset (1-5, 5 is best) |
@@ -150,6 +154,7 @@ Name: cdp-meta
 | [tissue](tissue.md) | The type of tissue from which the sample was derived |
 | [tomogram_version](tomogram_version.md) | Version of tomogram using the same software and post-processing |
 | [total_flux](total_flux.md) | Number of Electrons reaching the specimen in a square Angstrom area for the e... |
+| [version](version.md) | Version of annotation |
 | [voxel_spacing](voxel_spacing.md) | Voxel spacing equal in all three axes in angstroms |
 | [x](x.md) | Number of pixels in the 3D data fast axis |
 | [y](y.md) | Number of pixels in the 3D data medium axis |

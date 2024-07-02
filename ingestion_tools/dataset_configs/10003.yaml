@@ -121,33 +121,32 @@ standardization_config:
   run_to_tomo_map_csv: fixed raw data TS name and tomo name tracking sheet.csv
   source_prefix: mPneumoniae
 tiltseries:
-  acceleration_voltage: 300000
-  alignment_binning_factor: null
-  binning_from_frames: 1
-  camera:
-    manufacturer: Gatan
-    model: K2 SUMMIT
-  data_acquisition_software: SerialEM
-  is_aligned: null
-  microscope:
-    manufacturer: FEI
-    model: TITAN KRIOS
-  microscope_optical_setup:
-    energy_filter: null
-    image_corrector: null
-    phase_plate: null
-  pixel_spacing: 1.7005
-  related_empiar_entry: EMPIAR-10499
-  scales: []
-  spherical_aberration_constant: 2.7
-  tilt_axis: 175
-  tilt_range:
-    max: 60
-    min: -60
-  tilt_series_quality: 5
-  tilt_step: 3.0
-  tilting_scheme: Dose symmetric from 0.0 degrees
-  total_flux: 120
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: 1
+    camera:
+      manufacturer: Gatan
+      model: K2 SUMMIT
+    data_acquisition_software: SerialEM
+    is_aligned: null
+    microscope:
+      manufacturer: FEI
+      model: TITAN KRIOS
+    microscope_optical_setup:
+      energy_filter: null
+      image_corrector: null
+      phase_plate: null
+    pixel_spacing: 1.7005
+    related_empiar_entry: EMPIAR-10499
+    spherical_aberration_constant: 2.7
+    tilt_axis: 175
+    tilt_range:
+      max: 60
+      min: -60
+    tilt_series_quality: 5
+    tilt_step: 3.0
+    tilting_scheme: Dose symmetric from 0.0 degrees
+    total_flux: 120
 tomograms:
 - metadata:
     affine_transformation_matrix:
