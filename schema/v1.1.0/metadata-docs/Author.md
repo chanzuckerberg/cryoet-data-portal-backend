@@ -26,9 +26,9 @@ URI: [cdp-meta:Author](metadataAuthor)
         
       Author : affiliation_name
         
-      Author : email
+      Author : corresponding_author_status
         
-      Author : is_corresponding
+      Author : email
         
       Author : name
         
@@ -54,7 +54,7 @@ URI: [cdp-meta:Author](metadataAuthor)
 | [affiliation_name](affiliation_name.md) | 0..1 <br/> [String](String.md) | The name of the author's affiliation | direct |
 | [affiliation_address](affiliation_address.md) | 0..1 <br/> [String](String.md) | The address of the author's affiliation | direct |
 | [affiliation_identifier](affiliation_identifier.md) | 0..1 _recommended_ <br/> [String](String.md) | A Research Organization Registry (ROR) identifier | direct |
-| [is_corresponding](is_corresponding.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether the author is a corresponding author | direct |
+| [corresponding_author_status](corresponding_author_status.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether the author is a corresponding author | direct |
 | [primary_author_status](primary_author_status.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether the author is a primary author | direct |
 | [ORCID](ORCID.md) | 0..1 _recommended_ <br/> [String](String.md) | A unique, persistent identifier for researchers, provided by ORCID | direct |
 
@@ -69,6 +69,7 @@ URI: [cdp-meta:Author](metadataAuthor)
 | [AuthoredEntity](AuthoredEntity.md) | [authors](authors.md) | range | [Author](Author.md) |
 | [Dataset](Dataset.md) | [authors](authors.md) | range | [Author](Author.md) |
 | [Tomogram](Tomogram.md) | [authors](authors.md) | range | [Author](Author.md) |
+| [Annotation](Annotation.md) | [authors](authors.md) | range | [Author](Author.md) |
 
 
 
@@ -126,7 +127,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType
@@ -147,7 +147,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     inlined: true
     inlined_as_list: true
@@ -162,7 +161,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     inlined: true
     inlined_as_list: true
@@ -177,7 +175,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     inlined: true
     inlined_as_list: true
@@ -192,24 +189,22 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     recommended: true
     inlined: true
     inlined_as_list: true
     pattern: ^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$
-  is_corresponding:
-    name: is_corresponding
+  corresponding_author_status:
+    name: corresponding_author_status
     description: Whether the author is a corresponding author.
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_corresponding_author_status
     rank: 1000
-    alias: is_corresponding
+    alias: corresponding_author_status
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: boolean
     inlined: true
     inlined_as_list: true
@@ -238,7 +233,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     recommended: true
     inlined: true
@@ -267,7 +261,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType
@@ -288,7 +281,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     inlined: true
     inlined_as_list: true
@@ -303,7 +295,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     inlined: true
     inlined_as_list: true
@@ -318,7 +309,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     inlined: true
     inlined_as_list: true
@@ -333,24 +323,22 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     recommended: true
     inlined: true
     inlined_as_list: true
     pattern: ^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$
-  is_corresponding:
-    name: is_corresponding
+  corresponding_author_status:
+    name: corresponding_author_status
     description: Whether the author is a corresponding author.
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_corresponding_author_status
     rank: 1000
-    alias: is_corresponding
+    alias: corresponding_author_status
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: boolean
     inlined: true
     inlined_as_list: true
@@ -379,7 +367,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     recommended: true
     inlined: true

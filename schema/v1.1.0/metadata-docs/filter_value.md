@@ -16,8 +16,8 @@ URI: [cdp-meta:filter_value](metadatafilter_value)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation |  no  |
 | [AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation |  no  |
+| [AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation |  no  |
 
 
 

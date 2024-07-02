@@ -1,13 +1,13 @@
 
 
-# Slot: annotation_method_type
+# Slot: method_type
 
 
 _Classification of the annotation method based on supervision._
 
 
 
-URI: [cdp-meta:annotation_method_type](metadataannotation_method_type)
+URI: [cdp-meta:method_type](metadatamethod_type)
 
 
 
@@ -57,13 +57,13 @@ URI: [cdp-meta:annotation_method_type](metadataannotation_method_type)
 
 <details>
 ```yaml
-name: annotation_method_type
+name: method_type
 description: Classification of the annotation method based on supervision.
 from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_method_type
 rank: 1000
-alias: annotation_method_type
+alias: method_type
 owner: Annotation
 domain_of:
 - Annotation

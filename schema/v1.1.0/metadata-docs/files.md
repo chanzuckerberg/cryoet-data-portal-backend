@@ -63,13 +63,13 @@ name: files
 description: File and sourcing data for an annotation. Represents an entry in annotation.sources.
 from_schema: metadata
 rank: 1000
-multivalued: true
 list_elements_ordered: true
 alias: files
 owner: Annotation
 domain_of:
 - Annotation
 range: AnnotationSourceFile
+multivalued: true
 inlined: true
 inlined_as_list: true
 

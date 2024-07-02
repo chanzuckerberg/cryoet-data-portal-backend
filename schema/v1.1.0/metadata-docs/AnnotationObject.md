@@ -126,7 +126,6 @@ attributes:
     owner: AnnotationObject
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType
@@ -203,7 +202,6 @@ attributes:
     owner: AnnotationObject
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType

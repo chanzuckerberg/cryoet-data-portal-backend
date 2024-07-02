@@ -38,7 +38,7 @@ URI: [cdp-meta:Organism](metadataOrganism)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [name](name.md) | 0..1 <br/> [String](String.md) |  | direct |
-| [taxonomy_id](taxonomy_id.md) | 0..1 <br/> [String](String.md) | NCBI taxonomy identifier for the organism, e | direct |
+| [taxonomy_id](taxonomy_id.md) | 0..1 <br/> [Integer](Integer.md) | NCBI taxonomy identifier for the organism, e | direct |
 
 
 
@@ -105,7 +105,6 @@ attributes:
     owner: Organism
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType
@@ -126,7 +125,7 @@ attributes:
     owner: Organism
     domain_of:
     - Organism
-    range: string
+    range: integer
     inlined: true
     inlined_as_list: true
 
@@ -150,7 +149,6 @@ attributes:
     owner: Organism
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType
@@ -171,7 +169,7 @@ attributes:
     owner: Organism
     domain_of:
     - Organism
-    range: string
+    range: integer
     inlined: true
     inlined_as_list: true
 

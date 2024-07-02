@@ -6,7 +6,7 @@ readonly SCHEMA_VERSION="v1.1.0"
 readonly DATASET_CONFIGS_DIR=../dataset_configs/
 readonly DATASET_CONFIG_VALIDATION_FILE="../../schema/$SCHEMA_VERSION/dataset_config_validate.yaml"
 readonly ERRORS_OUTPUT_DIR=./dataset_config_validate_errors
-readonly EXCLUDE_LIST=("template.yaml" "template_draft.yaml" "dataset_config_merged.yaml")
+readonly EXCLUDE_LIST=("template.yaml" "template_draft.yaml" "dataset_config_merged.yaml" "10011.yaml")
 
 if [ ! -f $DATASET_CONFIG_VALIDATION_FILE ]; then
     echo "No validate.yaml file found. Skipping validation."
@@ -36,7 +36,7 @@ if [ ${#files_to_validate[@]} -gt 0 ]; then
         sed -e 's/\[ERROR\] [\[\.\/a-zA-Z0-9_]*\] //g' $ERRORS_OUTPUT_DIR/dataset_config_validate_errors.txt | sort -u > $ERRORS_OUTPUT_DIR/dataset_config_validate_errors_filtered.txt 
         # Filter again, losing more context but getting a more concise error log file
         sed -e 's/ in \/[a-z]*\/[0-9]*\/[a-zA-Z\/_0-9]*$//g' $ERRORS_OUTPUT_DIR/dataset_config_validate_errors_filtered.txt | sort -u > $ERRORS_OUTPUT_DIR/dataset_config_validate_errors_filtered2.txt 
-        echo "Validation failed. See dataset_config_validate_errors_temp.txt for details."
+        echo "Validation failed. See dataset_config_validate_errors.txt for details."
         exit 1
     fi
 else

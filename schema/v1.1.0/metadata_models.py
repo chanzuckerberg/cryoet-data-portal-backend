@@ -131,7 +131,7 @@ class Author(ConfiguredBaseModel):
     affiliation_name: Optional[str] = Field(None, description="""The name of the author's affiliation.""")
     affiliation_address: Optional[str] = Field(None, description="""The address of the author's affiliation.""")
     affiliation_identifier: Optional[str] = Field(None, description="""A Research Organization Registry (ROR) identifier.""")
-    is_corresponding: Optional[bool] = Field(None, description="""Whether the author is a corresponding author.""")
+    corresponding_author_status: Optional[bool] = Field(None, description="""Whether the author is a corresponding author.""")
     primary_author_status: Optional[bool] = Field(None, description="""Whether the author is a primary author.""")
     ORCID: Optional[str] = Field(None, description="""A unique, persistent identifier for researchers, provided by ORCID.""")
 
@@ -158,20 +158,6 @@ class Author(ConfiguredBaseModel):
             if not pattern.match(v):
                 raise ValueError(f"Invalid ORCID format: {v}")
         return v
-
-
-class Annotator(ConfiguredBaseModel):
-    """
-    Annotator of a scientific data entity.
-    """
-    name: Optional[str] = Field(None)
-    email: Optional[str] = Field(None)
-    affiliation_name: Optional[str] = Field(None)
-    affiliation_address: Optional[str] = Field(None)
-    affiliation_identifier: Optional[str] = Field(None)
-    is_corresponding: Optional[str] = Field(None)
-    is_primary_annotator: Optional[bool] = Field(None, description="""Whether the author is a primary author.""")
-    ORCID: Optional[str] = Field(None)
 
 
 class Funding(ConfiguredBaseModel):
@@ -205,13 +191,6 @@ class AuthoredEntity(ConfiguredBaseModel):
     authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""")
 
 
-class AnnotatoredEntity(ConfiguredBaseModel):
-    """
-    An entity with associated annotation authors.
-    """
-    authors: List[Annotator] = Field(default_factory=list, description="""Annotator of a scientific data entity.""")
-
-
 class FundedEntity(ConfiguredBaseModel):
     """
     An entity with associated funding sources.
@@ -238,7 +217,7 @@ class Organism(ConfiguredBaseModel):
     The species from which the sample was derived.
     """
     name: Optional[str] = Field(None)
-    taxonomy_id: Optional[str] = Field(None, description="""NCBI taxonomy identifier for the organism, e.g. 9606""")
+    taxonomy_id: Optional[int] = Field(None, description="""NCBI taxonomy identifier for the organism, e.g. 9606""")
 
 
 class Tissue(ConfiguredBaseModel):
@@ -396,7 +375,7 @@ class Tomogram(AuthoredEntity):
     processing: Optional[str] = Field(None, description="""Describe additional processing used to derive the tomogram""")
     processing_software: Optional[str] = Field(None, description="""Processing software used to derive the tomogram""")
     tomogram_version: Optional[string] = Field(None, description="""Version of tomogram using the same software and post-processing. Version of tomogram using the same software and post-processing. This will be presented as the latest version""")
-    affine_transformation_matrix: Optional[str] = Field(None, description="""The flip or rotation transformation of this author submitted tomogram is indicated here""")
+    affine_transformation_matrix: Optional[Any] = Field(None)
     size: Optional[TomogramSize] = Field(None, description="""The size of a tomogram in voxels in each dimension.""")
     offset: Optional[TomogramOffset] = Field(None, description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""")
     authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""")
@@ -485,12 +464,12 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
     is_visualization_default: Optional[bool] = Field(None)
 
 
-class Annotation(AnnotatoredEntity, DatestampedEntity):
+class Annotation(AuthoredEntity, DatestampedEntity):
     """
     Metadata describing an annotation.
     """
     annotation_method: Optional[str] = Field(None, description="""Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)""")
-    annotation_method_type: Optional[AnnotationMethodTypeEnum] = Field(None, description="""Classification of the annotation method based on supervision.""")
+    method_type: Optional[AnnotationMethodTypeEnum] = Field(None, description="""Classification of the annotation method based on supervision.""")
     annotation_publications: Optional[str] = Field(None, description="""DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.""")
     annotation_software: Optional[str] = Field(None, description="""Software used for generating this annotation""")
     ground_truth_status: Optional[bool] = Field(None, description="""Whether an annotation is considered ground truth, as determined by the annotator.""")
@@ -500,7 +479,7 @@ class Annotation(AnnotatoredEntity, DatestampedEntity):
     confidence: Optional[AnnotationConfidence] = Field(None, description="""Metadata describing the confidence of an annotation.""")
     annotation_object: Optional[AnnotationObject] = Field(None, description="""Metadata describing the object being annotated.""")
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""")
-    authors: List[Annotator] = Field(default_factory=list, description="""Annotator of a scientific data entity.""")
+    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""")
 
 
 class CrossReferences(ConfiguredBaseModel):
@@ -509,18 +488,18 @@ class CrossReferences(ConfiguredBaseModel):
     """
     dataset_publications: Optional[str] = Field(None, description="""Comma-separated list of DOIs for publications associated with the dataset.""")
     related_database_entries: Optional[str] = Field(None, description="""Comma-separated list of related database entries for the dataset.""")
+    related_database_links: Optional[str] = Field(None, description="""Comma-separated list of related database links for the dataset.""")
+    dataset_citations: Optional[str] = Field(None, description="""Comma-separated list of DOIs for publications citing the dataset.""")
 
 
 # Model rebuild
 # see https://pydantic-docs.helpmanual.io/usage/models/#rebuilding-a-model
 PicturePath.model_rebuild()
 Author.model_rebuild()
-Annotator.model_rebuild()
 Funding.model_rebuild()
 DateStamp.model_rebuild()
 DatestampedEntity.model_rebuild()
 AuthoredEntity.model_rebuild()
-AnnotatoredEntity.model_rebuild()
 FundedEntity.model_rebuild()
 CrossReferencedEntity.model_rebuild()
 PicturedEntity.model_rebuild()

@@ -105,7 +105,6 @@ attributes:
     owner: CellStrain
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType
@@ -152,7 +151,6 @@ attributes:
     owner: CellStrain
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType

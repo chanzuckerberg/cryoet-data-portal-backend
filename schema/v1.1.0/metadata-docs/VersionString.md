@@ -14,7 +14,6 @@ URI: [cdp-meta:VersionString](metadataVersionString)
 
 
 
-* [pattern](https://w3id.org/linkml/pattern): `^[0-9]+(\.[0-9]+){0,2}$`
 
 
 

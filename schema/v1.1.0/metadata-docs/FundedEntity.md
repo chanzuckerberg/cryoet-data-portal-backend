@@ -104,7 +104,6 @@ attributes:
       DB representation).
     from_schema: metadata
     rank: 1000
-    multivalued: true
     list_elements_ordered: true
     alias: funding
     owner: FundedEntity
@@ -113,6 +112,7 @@ attributes:
     - Dataset
     range: Funding
     recommended: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
 
@@ -134,7 +134,6 @@ attributes:
       DB representation).
     from_schema: metadata
     rank: 1000
-    multivalued: true
     list_elements_ordered: true
     alias: funding
     owner: FundedEntity
@@ -143,6 +142,7 @@ attributes:
     - Dataset
     range: Funding
     recommended: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
 

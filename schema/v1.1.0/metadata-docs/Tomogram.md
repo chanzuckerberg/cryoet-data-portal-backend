@@ -25,6 +25,13 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
       
       Tomogram : affine_transformation_matrix
         
+          
+    
+    
+    Tomogram --> "0..1" Any : affine_transformation_matrix
+    click Any href "../Any"
+
+        
       Tomogram : authors
         
           
@@ -99,7 +106,7 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 | [processing](processing.md) | 0..1 <br/> [String](String.md) | Describe additional processing used to derive the tomogram | direct |
 | [processing_software](processing_software.md) | 0..1 <br/> [String](String.md) | Processing software used to derive the tomogram | direct |
 | [tomogram_version](tomogram_version.md) | 0..1 <br/> [VersionString](VersionString.md) | Version of tomogram using the same software and post-processing | direct |
-| [affine_transformation_matrix](affine_transformation_matrix.md) | 0..1 <br/> [String](String.md) | The flip or rotation transformation of this author submitted tomogram is indi... | direct |
+| [affine_transformation_matrix](affine_transformation_matrix.md) | 0..1 <br/> [Any](Any.md) |  | direct |
 | [size](size.md) | 0..1 <br/> [TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension | direct |
 | [offset](offset.md) | 0..1 <br/> [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
@@ -271,17 +278,13 @@ attributes:
     inlined_as_list: true
   affine_transformation_matrix:
     name: affine_transformation_matrix
-    description: The flip or rotation transformation of this author submitted tomogram
-      is indicated here
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_affine_transformation_matrix
     rank: 1000
     alias: affine_transformation_matrix
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: string
+    range: Any
     inlined: true
     inlined_as_list: true
   size:
@@ -313,18 +316,17 @@ attributes:
     name: authors
     description: Author of a scientific data entity.
     from_schema: metadata
-    multivalued: true
     list_elements_ordered: true
     alias: authors
     owner: Tomogram
     domain_of:
     - AuthoredEntity
-    - AnnotatoredEntity
     - Dataset
     - Tomogram
     - Annotation
     range: Author
     required: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
 
@@ -458,17 +460,13 @@ attributes:
     inlined_as_list: true
   affine_transformation_matrix:
     name: affine_transformation_matrix
-    description: The flip or rotation transformation of this author submitted tomogram
-      is indicated here
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_affine_transformation_matrix
     rank: 1000
     alias: affine_transformation_matrix
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: string
+    range: Any
     inlined: true
     inlined_as_list: true
   size:
@@ -500,18 +498,17 @@ attributes:
     name: authors
     description: Author of a scientific data entity.
     from_schema: metadata
-    multivalued: true
     list_elements_ordered: true
     alias: authors
     owner: Tomogram
     domain_of:
     - AuthoredEntity
-    - AnnotatoredEntity
     - Dataset
     - Tomogram
     - Annotation
     range: Author
     required: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
 

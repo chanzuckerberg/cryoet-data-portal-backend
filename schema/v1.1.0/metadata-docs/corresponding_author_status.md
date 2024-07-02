@@ -1,13 +1,13 @@
 
 
-# Slot: is_primary_annotator
+# Slot: corresponding_author_status
 
 
-_Whether the author is a primary author._
+_Whether the author is a corresponding author._
 
 
 
-URI: [cdp-meta:is_primary_annotator](metadatais_primary_annotator)
+URI: [cdp-meta:corresponding_author_status](metadatacorresponding_author_status)
 
 
 
@@ -21,7 +21,7 @@ URI: [cdp-meta:is_primary_annotator](metadatais_primary_annotator)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
+| [Author](Author.md) | Author of a scientific data entity |  no  |
 
 
 
@@ -57,16 +57,16 @@ URI: [cdp-meta:is_primary_annotator](metadatais_primary_annotator)
 
 <details>
 ```yaml
-name: is_primary_annotator
-description: Whether the author is a primary author.
+name: corresponding_author_status
+description: Whether the author is a corresponding author.
 from_schema: metadata
 exact_mappings:
-- cdp-common:author_primary_author_status
+- cdp-common:author_corresponding_author_status
 rank: 1000
-alias: is_primary_annotator
-owner: Annotator
+alias: corresponding_author_status
+owner: Author
 domain_of:
-- Annotator
+- Author
 range: boolean
 inlined: true
 inlined_as_list: true

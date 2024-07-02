@@ -287,7 +287,6 @@ types:
     description: A string that represents a version number. 1, 1.0, 1.0.0, etc.
     from_schema: metadata
     base: string
-    pattern: ^[0-9]+(\.[0-9]+){0,2}$
 enums:
   sample_type_enum:
     name: sample_type_enum
@@ -418,7 +417,6 @@ classes:
         owner: Author
         domain_of:
         - Author
-        - Annotator
         - Organism
         - Tissue
         - CellType
@@ -438,7 +436,6 @@ classes:
         owner: Author
         domain_of:
         - Author
-        - Annotator
         range: string
         inlined: true
         inlined_as_list: true
@@ -452,7 +449,6 @@ classes:
         owner: Author
         domain_of:
         - Author
-        - Annotator
         range: string
         inlined: true
         inlined_as_list: true
@@ -466,7 +462,6 @@ classes:
         owner: Author
         domain_of:
         - Author
-        - Annotator
         range: string
         inlined: true
         inlined_as_list: true
@@ -480,23 +475,21 @@ classes:
         owner: Author
         domain_of:
         - Author
-        - Annotator
         range: string
         recommended: true
         inlined: true
         inlined_as_list: true
         pattern: ^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$
-      is_corresponding:
-        name: is_corresponding
+      corresponding_author_status:
+        name: corresponding_author_status
         description: Whether the author is a corresponding author.
         from_schema: metadata
         exact_mappings:
         - cdp-common:author_corresponding_author_status
-        alias: is_corresponding
+        alias: corresponding_author_status
         owner: Author
         domain_of:
         - Author
-        - Annotator
         range: boolean
         inlined: true
         inlined_as_list: true
@@ -524,129 +517,11 @@ classes:
         owner: Author
         domain_of:
         - Author
-        - Annotator
         range: string
         recommended: true
         inlined: true
         inlined_as_list: true
         pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
-  Annotator:
-    name: Annotator
-    description: Annotator of a scientific data entity.
-    from_schema: metadata
-    attributes:
-      name:
-        name: name
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_name
-        alias: name
-        owner: Annotator
-        domain_of:
-        - Author
-        - Annotator
-        - Organism
-        - Tissue
-        - CellType
-        - CellStrain
-        - CellComponent
-        - AnnotationObject
-        range: string
-        inlined: true
-        inlined_as_list: true
-      email:
-        name: email
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_email
-        alias: email
-        owner: Annotator
-        domain_of:
-        - Author
-        - Annotator
-        range: string
-        inlined: true
-        inlined_as_list: true
-      affiliation_name:
-        name: affiliation_name
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_affiliation_name
-        alias: affiliation_name
-        owner: Annotator
-        domain_of:
-        - Author
-        - Annotator
-        range: string
-        inlined: true
-        inlined_as_list: true
-      affiliation_address:
-        name: affiliation_address
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_affiliation_address
-        alias: affiliation_address
-        owner: Annotator
-        domain_of:
-        - Author
-        - Annotator
-        range: string
-        inlined: true
-        inlined_as_list: true
-      affiliation_identifier:
-        name: affiliation_identifier
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:affiliation_identifier
-        alias: affiliation_identifier
-        owner: Annotator
-        domain_of:
-        - Author
-        - Annotator
-        range: string
-        recommended: true
-        inlined: true
-        inlined_as_list: true
-      is_corresponding:
-        name: is_corresponding
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_corresponding_author_status
-        alias: is_corresponding
-        owner: Annotator
-        domain_of:
-        - Author
-        - Annotator
-        range: string
-        inlined: true
-        inlined_as_list: true
-      is_primary_annotator:
-        name: is_primary_annotator
-        description: Whether the author is a primary author.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_primary_author_status
-        alias: is_primary_annotator
-        owner: Annotator
-        domain_of:
-        - Annotator
-        range: boolean
-        inlined: true
-        inlined_as_list: true
-      ORCID:
-        name: ORCID
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:orcid
-        alias: ORCID
-        owner: Annotator
-        domain_of:
-        - Author
-        - Annotator
-        range: string
-        recommended: true
-        inlined: true
-        inlined_as_list: true
   Funding:
     name: Funding
     description: A funding source for a scientific data entity (base for JSON and
@@ -773,36 +648,14 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
-        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: AuthoredEntity
         domain_of:
         - AuthoredEntity
-        - AnnotatoredEntity
         range: Author
         required: true
-        inlined: true
-        inlined_as_list: true
-  AnnotatoredEntity:
-    name: AnnotatoredEntity
-    description: An entity with associated annotation authors.
-    from_schema: metadata
-    abstract: true
-    attributes:
-      authors:
-        name: authors
-        description: Annotator of a scientific data entity.
-        from_schema: metadata
         multivalued: true
-        list_elements_ordered: true
-        alias: authors
-        owner: AnnotatoredEntity
-        domain_of:
-        - AuthoredEntity
-        - AnnotatoredEntity
-        range: Annotator
-        required: true
         inlined: true
         inlined_as_list: true
   FundedEntity:
@@ -816,7 +669,6 @@ classes:
         description: A funding source for a scientific data entity (base for JSON
           and DB representation).
         from_schema: metadata
-        multivalued: true
         list_elements_ordered: true
         alias: funding
         owner: FundedEntity
@@ -824,6 +676,7 @@ classes:
         - FundedEntity
         range: Funding
         recommended: true
+        multivalued: true
         inlined: true
         inlined_as_list: true
   CrossReferencedEntity:
@@ -876,7 +729,6 @@ classes:
         owner: Organism
         domain_of:
         - Author
-        - Annotator
         - Organism
         - Tissue
         - CellType
@@ -896,7 +748,7 @@ classes:
         owner: Organism
         domain_of:
         - Organism
-        range: string
+        range: integer
         inlined: true
         inlined_as_list: true
   Tissue:
@@ -913,7 +765,6 @@ classes:
         owner: Tissue
         domain_of:
         - Author
-        - Annotator
         - Organism
         - Tissue
         - CellType
@@ -954,7 +805,6 @@ classes:
         owner: CellType
         domain_of:
         - Author
-        - Annotator
         - Organism
         - Tissue
         - CellType
@@ -994,7 +844,6 @@ classes:
         owner: CellStrain
         domain_of:
         - Author
-        - Annotator
         - Organism
         - Tissue
         - CellType
@@ -1034,7 +883,6 @@ classes:
         owner: CellComponent
         domain_of:
         - Author
-        - Annotator
         - Organism
         - Tissue
         - CellType
@@ -1244,15 +1092,14 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
-        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: Dataset
         domain_of:
         - AuthoredEntity
-        - AnnotatoredEntity
         range: Author
         required: true
+        multivalued: true
         inlined: true
         inlined_as_list: true
       funding:
@@ -1260,7 +1107,6 @@ classes:
         description: A funding source for a scientific data entity (base for JSON
           and DB representation).
         from_schema: metadata
-        multivalued: true
         list_elements_ordered: true
         alias: funding
         owner: Dataset
@@ -1268,6 +1114,7 @@ classes:
         - FundedEntity
         range: Funding
         recommended: true
+        multivalued: true
         inlined: true
         inlined_as_list: true
       cross_references:
@@ -1960,16 +1807,12 @@ classes:
         inlined_as_list: true
       affine_transformation_matrix:
         name: affine_transformation_matrix
-        description: The flip or rotation transformation of this author submitted
-          tomogram is indicated here
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tomogram_affine_transformation_matrix
         alias: affine_transformation_matrix
         owner: Tomogram
         domain_of:
         - Tomogram
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
       size:
@@ -1999,15 +1842,14 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
-        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: Tomogram
         domain_of:
         - AuthoredEntity
-        - AnnotatoredEntity
         range: Author
         required: true
+        multivalued: true
         inlined: true
         inlined_as_list: true
   AnnotationConfidence:
@@ -2086,7 +1928,6 @@ classes:
         owner: AnnotationObject
         domain_of:
         - Author
-        - Annotator
         - Organism
         - Tissue
         - CellType
@@ -2536,7 +2377,7 @@ classes:
     from_schema: metadata
     mixins:
     - DatestampedEntity
-    - AnnotatoredEntity
+    - AuthoredEntity
     attributes:
       annotation_method:
         name: annotation_method
@@ -2552,13 +2393,13 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
-      annotation_method_type:
-        name: annotation_method_type
+      method_type:
+        name: method_type
         description: Classification of the annotation method based on supervision.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_method_type
-        alias: annotation_method_type
+        alias: method_type
         owner: Annotation
         domain_of:
         - Annotation
@@ -2638,13 +2479,13 @@ classes:
         description: File and sourcing data for an annotation. Represents an entry
           in annotation.sources.
         from_schema: metadata
-        multivalued: true
         list_elements_ordered: true
         alias: files
         owner: Annotation
         domain_of:
         - Annotation
         range: AnnotationSourceFile
+        multivalued: true
         inlined: true
         inlined_as_list: true
       confidence:
@@ -2684,17 +2525,16 @@ classes:
         inlined_as_list: true
       authors:
         name: authors
-        description: Annotator of a scientific data entity.
+        description: Author of a scientific data entity.
         from_schema: metadata
-        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: Annotation
         domain_of:
         - AuthoredEntity
-        - AnnotatoredEntity
-        range: Annotator
+        range: Author
         required: true
+        multivalued: true
         inlined: true
         inlined_as_list: true
   Any:
@@ -2729,6 +2569,28 @@ classes:
         - CrossReferences
         range: string
         recommended: true
+        inlined: true
+        inlined_as_list: true
+      related_database_links:
+        name: related_database_links
+        description: Comma-separated list of related database links for the dataset.
+        from_schema: metadata
+        alias: related_database_links
+        owner: CrossReferences
+        domain_of:
+        - CrossReferences
+        range: string
+        inlined: true
+        inlined_as_list: true
+      dataset_citations:
+        name: dataset_citations
+        description: Comma-separated list of DOIs for publications citing the dataset.
+        from_schema: metadata
+        alias: dataset_citations
+        owner: CrossReferences
+        domain_of:
+        - CrossReferences
+        range: string
         inlined: true
         inlined_as_list: true
 source_file: metadata.yaml

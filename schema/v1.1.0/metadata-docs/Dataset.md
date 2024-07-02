@@ -276,18 +276,17 @@ attributes:
     name: authors
     description: Author of a scientific data entity.
     from_schema: metadata
-    multivalued: true
     list_elements_ordered: true
     alias: authors
     owner: Dataset
     domain_of:
     - AuthoredEntity
-    - AnnotatoredEntity
     - Dataset
     - Tomogram
     - Annotation
     range: Author
     required: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
   funding:
@@ -295,7 +294,6 @@ attributes:
     description: A funding source for a scientific data entity (base for JSON and
       DB representation).
     from_schema: metadata
-    multivalued: true
     list_elements_ordered: true
     alias: funding
     owner: Dataset
@@ -304,6 +302,7 @@ attributes:
     - Dataset
     range: Funding
     recommended: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
   cross_references:
@@ -516,18 +515,17 @@ attributes:
     name: authors
     description: Author of a scientific data entity.
     from_schema: metadata
-    multivalued: true
     list_elements_ordered: true
     alias: authors
     owner: Dataset
     domain_of:
     - AuthoredEntity
-    - AnnotatoredEntity
     - Dataset
     - Tomogram
     - Annotation
     range: Author
     required: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
   funding:
@@ -535,7 +533,6 @@ attributes:
     description: A funding source for a scientific data entity (base for JSON and
       DB representation).
     from_schema: metadata
-    multivalued: true
     list_elements_ordered: true
     alias: funding
     owner: Dataset
@@ -544,6 +541,7 @@ attributes:
     - Dataset
     range: Funding
     recommended: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
   cross_references:

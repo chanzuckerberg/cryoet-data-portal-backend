@@ -105,7 +105,6 @@ attributes:
     owner: CellComponent
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType
@@ -152,7 +151,6 @@ attributes:
     owner: CellComponent
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType

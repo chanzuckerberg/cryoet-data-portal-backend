@@ -31,7 +31,7 @@ URI: [cdp-meta:taxonomy_id](metadatataxonomy_id)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Integer](Integer.md)
 
 
 
@@ -67,7 +67,7 @@ alias: taxonomy_id
 owner: Organism
 domain_of:
 - Organism
-range: string
+range: integer
 inlined: true
 inlined_as_list: true
 

@@ -56,41 +56,10 @@ classes:
         exact_mappings:
           - cdp-common:affiliation_identifier
         recommended: true
-      is_corresponding:
+      corresponding_author_status:
         exact_mappings:
           - cdp-common:author_corresponding_author_status
       primary_author_status:
-        exact_mappings:
-          - cdp-common:author_primary_author_status
-      ORCID:
-        exact_mappings:
-          - cdp-common:orcid
-        recommended: true
-
-  Annotator:
-    description: >-
-      Annotator of a scientific data entity.
-    attributes:
-      name:
-        exact_mappings:
-          - cdp-common:author_name
-      email:
-        exact_mappings:
-          - cdp-common:author_email
-      affiliation_name:
-        exact_mappings:
-          - cdp-common:author_affiliation_name
-      affiliation_address:
-        exact_mappings:
-          - cdp-common:author_affiliation_address
-      affiliation_identifier:
-        exact_mappings:
-          - cdp-common:affiliation_identifier
-        recommended: true
-      is_corresponding:
-        exact_mappings:
-          - cdp-common:author_corresponding_author_status
-      is_primary_annotator:
         exact_mappings:
           - cdp-common:author_primary_author_status
       ORCID:
@@ -154,18 +123,6 @@ classes:
         range: Author
         required: true
         description: An ordered list of authors of the entity.
-        multivalued: true
-        inlined_as_list: true
-        list_elements_ordered: true
-
-  AnnotatoredEntity:
-    abstract: true
-    description: An entity with associated annotation authors.
-    attributes:
-      authors:
-        range: Annotator
-        required: true
-        description: An ordered list of annotation authors of the entity.
         multivalued: true
         inlined_as_list: true
         list_elements_ordered: true
@@ -483,9 +440,10 @@ classes:
       tomogram_version:
         exact_mappings:
           - cdp-common:tomogram_version
+      # TODO: figure out validation for this
       affine_transformation_matrix:
-        exact_mappings:
-          - cdp-common:tomogram_affine_transformation_matrix
+          description: The flip or rotation transformation of this author submitted tomogram is indicated here
+          range: Any
       size:
         description: *desc_tomogram_size
         range: TomogramSize
@@ -616,13 +574,13 @@ classes:
     description: Metadata describing an annotation.
     mixins:
     - DatestampedEntity
-    - AnnotatoredEntity
+    - AuthoredEntity
 
     attributes:
       annotation_method:
         exact_mappings:
           - cdp-common:annotation_method
-      annotation_method_type:
+      method_type:
         exact_mappings:
           - cdp-common:annotation_method_type
       annotation_publications:

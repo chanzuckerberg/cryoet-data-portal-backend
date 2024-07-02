@@ -105,7 +105,6 @@ attributes:
     owner: Tissue
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType
@@ -154,7 +153,6 @@ attributes:
     owner: Tissue
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType

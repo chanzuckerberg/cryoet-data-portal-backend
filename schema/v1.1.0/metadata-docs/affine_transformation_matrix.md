@@ -2,11 +2,6 @@
 
 # Slot: affine_transformation_matrix
 
-
-_The flip or rotation transformation of this author submitted tomogram is indicated here_
-
-
-
 URI: [cdp-meta:affine_transformation_matrix](metadataaffine_transformation_matrix)
 
 
@@ -31,7 +26,7 @@ URI: [cdp-meta:affine_transformation_matrix](metadataaffine_transformation_matri
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -58,17 +53,13 @@ URI: [cdp-meta:affine_transformation_matrix](metadataaffine_transformation_matri
 <details>
 ```yaml
 name: affine_transformation_matrix
-description: The flip or rotation transformation of this author submitted tomogram
-  is indicated here
 from_schema: metadata
-exact_mappings:
-- cdp-common:tomogram_affine_transformation_matrix
 rank: 1000
 alias: affine_transformation_matrix
 owner: Tomogram
 domain_of:
 - Tomogram
-range: string
+range: Any
 inlined: true
 inlined_as_list: true
 

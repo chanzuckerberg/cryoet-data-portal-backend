@@ -21,8 +21,6 @@ Name: cdp-meta
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation. |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationSegmentationMaskFile](AnnotationSegmentationMaskFile.md) | File and sourcing data for a segmentation mask annotation. |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationSemanticSegmentationMaskFile](AnnotationSemanticSegmentationMaskFile.md) | File and sourcing data for a semantic segmentation mask annotation. |
-| [Annotator](Annotator.md) | Annotator of a scientific data entity. |
-| [AnnotatoredEntity](AnnotatoredEntity.md) | An entity with associated annotation authors. |
 | [Any](Any.md) | None |
 | [Author](Author.md) | Author of a scientific data entity. |
 | [AuthoredEntity](AuthoredEntity.md) | An entity with associated authors. |
@@ -60,10 +58,9 @@ Name: cdp-meta
 | [affiliation_address](affiliation_address.md) | The address of the author's affiliation |
 | [affiliation_identifier](affiliation_identifier.md) | A Research Organization Registry (ROR) identifier |
 | [affiliation_name](affiliation_name.md) | The name of the author's affiliation |
-| [affine_transformation_matrix](affine_transformation_matrix.md) | The flip or rotation transformation of this author submitted tomogram is indi... |
+| [affine_transformation_matrix](affine_transformation_matrix.md) |  |
 | [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | Binning factor of the aligned tilt series |
 | [annotation_method](annotation_method.md) | Describe how the annotation is made (e |
-| [annotation_method_type](annotation_method_type.md) | Classification of the annotation method based on supervision |
 | [annotation_object](annotation_object.md) | Metadata describing the object being annotated |
 | [annotation_publications](annotation_publications.md) | DOIs for publications that describe the dataset |
 | [annotation_software](annotation_software.md) | Software used for generating this annotation |
@@ -76,9 +73,11 @@ Name: cdp-meta
 | [cell_type](cell_type.md) | The cell type from which the sample was derived |
 | [columns](columns.md) | The columns used in a point annotation file |
 | [confidence](confidence.md) | Metadata describing the confidence of an annotation |
+| [corresponding_author_status](corresponding_author_status.md) | Whether the author is a corresponding author |
 | [cross_references](cross_references.md) | A set of cross-references to other databases and publications |
 | [ctf_corrected](ctf_corrected.md) | Whether this tomogram is CTF corrected |
 | [data_acquisition_software](data_acquisition_software.md) | Software used to collect data |
+| [dataset_citations](dataset_citations.md) | Comma-separated list of DOIs for publications citing the dataset |
 | [dataset_description](dataset_description.md) | A short description of a CryoET dataset, similar to an abstract for a journal... |
 | [dataset_identifier](dataset_identifier.md) | An identifier for a CryoET dataset, assigned by the Data Portal |
 | [dataset_publications](dataset_publications.md) | Comma-separated list of DOIs for publications associated with the dataset |
@@ -103,15 +102,14 @@ Name: cdp-meta
 | [ground_truth_used](ground_truth_used.md) | Annotation filename used as ground truth for precision and recall |
 | [id](id.md) | The UBERON identifier for the tissue |
 | [image_corrector](image_corrector.md) | Image corrector setup |
-| [is_corresponding](is_corresponding.md) | Whether the author is a corresponding author |
 | [is_curator_recommended](is_curator_recommended.md) | This annotation is recommended by the curator to be preferred for this object... |
-| [is_primary_annotator](is_primary_annotator.md) | Whether the author is a primary author |
 | [is_visualization_default](is_visualization_default.md) | This annotation will be rendered in neuroglancer by default |
 | [key_photos](key_photos.md) | A set of paths to representative images of a piece of data |
 | [last_modified_date](last_modified_date.md) | The date a piece of data was last modified on the cryoET data portal |
 | [manufacturer](manufacturer.md) | Name of the camera manufacturer |
 | [mask_label](mask_label.md) | The mask label for a semantic segmentation mask annotation file |
 | [max](max.md) | Maximal tilt angle in degrees |
+| [method_type](method_type.md) | Classification of the annotation method based on supervision |
 | [microscope](microscope.md) | The microscope used to collect the tilt series |
 | [microscope_additional_info](microscope_additional_info.md) | Other microscope optical setup information, in addition to energy filter, pha... |
 | [microscope_optical_setup](microscope_optical_setup.md) | The optical setup of the microscope used to collect the tilt series |
@@ -134,6 +132,7 @@ Name: cdp-meta
 | [reconstruction_method](reconstruction_method.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) |
 | [reconstruction_software](reconstruction_software.md) | Name of software used for reconstruction |
 | [related_database_entries](related_database_entries.md) | Comma-separated list of related database entries for the dataset |
+| [related_database_links](related_database_links.md) | Comma-separated list of related database links for the dataset |
 | [release_date](release_date.md) | The date a data item was received by the cryoET data portal |
 | [sample_preparation](sample_preparation.md) | Describes how the sample was prepared |
 | [sample_type](sample_type.md) | Type of sample imaged in a CryoET study |

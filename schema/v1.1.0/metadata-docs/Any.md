@@ -33,6 +33,13 @@ URI: [linkml:Any](https://w3id.org/linkml/Any)
 
 
 
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Tomogram](Tomogram.md) | [affine_transformation_matrix](affine_transformation_matrix.md) | range | [Any](Any.md) |
+
+
 
 
 
