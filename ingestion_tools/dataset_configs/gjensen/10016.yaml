@@ -91,7 +91,6 @@ tiltseries:
     tilt_range:
       max: 45.0
       min: -45.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 3.0
     tilting_scheme: min to max tilt

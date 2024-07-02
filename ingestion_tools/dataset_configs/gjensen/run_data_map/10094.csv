@@ -1,28 +1,28 @@
-run_name,tomo-align_softwares,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software,ts-tilt_series_path
-dga2017-03-02-40,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D,rawdata/Lg_DeltaDE_201703020001.mrc
-dga2017-03-02-41,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020002.mrc
-dga2017-03-02-42,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020003.mrc
-dga2017-03-02-43,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020004.mrc
-dga2017-03-02-44,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020005.mrc
-dga2017-03-02-45,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020006.mrc
-dga2017-03-02-46,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020007.mrc
-dga2017-03-02-47,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020008.mrc
-dga2017-03-02-48,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020009.mrc
-dga2017-03-02-49,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020010.mrc
-dga2017-03-02-50,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020011.mrc
-dga2017-03-02-51,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020012.mrc
-dga2017-03-02-52,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020013.mrc
-dga2017-03-02-53,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020014.mrc
-dga2017-03-02-54,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020015.mrc
-dga2017-03-02-55,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020016.mrc
-dga2017-03-02-57,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020018.mrc
-dga2017-03-02-58,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020019.mrc
-dga2017-03-02-59,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020020.mrc
-dga2017-03-02-61,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020022.mrc
-dga2017-03-02-62,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020023.mrc
-dga2017-03-02-63,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020024.mrc
-dga2017-03-02-64,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020025.mrc
-dga2017-03-02-68,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020029.mrc
-dga2017-03-02-69,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020030.mrc
-dga2017-03-02-70,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020031.mrc
-dga2017-03-02-71,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR,rawdata/Lg_DeltaDE_201703020032.mrc
+run_name,tomo-align_softwares,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,ts-tilt_alignment_software
+dga2017-03-02-40,['TOMO3D'],tomo3D,SIRT,TOMO3D,TOMO3D
+dga2017-03-02-41,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-42,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-43,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-44,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-45,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-46,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-47,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-48,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-49,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-50,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-51,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-52,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-53,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-54,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-55,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-57,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-58,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-59,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-61,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-62,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-63,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-64,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-68,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-69,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-70,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR
+dga2017-03-02-71,['RAPTOR'],,Weighted back projection,IMOD,RAPTOR

@@ -1,9 +1,9 @@
-run_name,tomo-align_softwares,tomo-voxel_spacing,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_series_path
-wnj2018-04-19-7,['RAPTOR'],18.276,Serial EM,RAPTOR,rawdata/wn16-4_sq1_cell3.mrc
-wnj2018-04-19-8,['RAPTOR'],9.138,Serial EM,RAPTOR,rawdata/wn16-4_sq2_cell1.mrc
-wnj2018-04-19-9,['RAPTOR'],9.138,Undefined,RAPTOR,rawdata/wn16-4_sq2_cell2.mrc
-wnj2018-04-19-10,['RAPTOR'],9.138,Serial EM,RAPTOR,rawdata/wn16-4_sq2_cell3.mrc
-wnj2018-04-19-11,['RAPTOR'],9.138,Serial EM,RAPTOR,rawdata/wn16-4_sq2_cell4.mrc
-wnj2018-04-19-12,['RAPTOR'],9.138,Serial EM,RAPTOR,rawdata/wn16-4_sq2_cell5.mrc
-wnj2018-04-19-13,['IMOD'],9.138,Serial EM,IMOD,rawdata/wn16-4_sq2_cell6.mrc
-wnj2018-04-19-14,['RAPTOR'],9.138,Serial EM,RAPTOR,rawdata/wn16-4_sq3_cell1.mrc
+run_name,tomo-align_softwares,tomo-voxel_spacing,ts-data_acquisition_software,ts-tilt_alignment_software
+wnj2018-04-19-7,['RAPTOR'],18.276,Serial EM,RAPTOR
+wnj2018-04-19-8,['RAPTOR'],9.138,Serial EM,RAPTOR
+wnj2018-04-19-10,['RAPTOR'],9.138,Serial EM,RAPTOR
+wnj2018-04-19-11,['RAPTOR'],9.138,Serial EM,RAPTOR
+wnj2018-04-19-12,['RAPTOR'],9.138,Serial EM,RAPTOR
+wnj2018-04-19-14,['RAPTOR'],9.138,Serial EM,RAPTOR
+wnj2018-04-19-9,['RAPTOR'],9.138,Undefined,RAPTOR
+wnj2018-04-19-13,['IMOD'],9.138,Serial EM,IMOD

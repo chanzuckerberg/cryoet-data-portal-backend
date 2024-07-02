@@ -1,7 +1,7 @@
-run_name,tomo-align_softwares,ts-pixel_spacing,ts-tilt_alignment_software,ts-tilt_series_path
-mba2011-02-03-1,['IMOD'],7.74,IMOD,rawdata/11feb03c_fliS_010.st
-mba2011-02-03-3,['RAPTOR'],,RAPTOR,
-mba2011-02-03-4,['RAPTOR'],,RAPTOR,
-mba2011-02-03-5,['RAPTOR'],,RAPTOR,
-mba2011-02-03-6,['RAPTOR'],,RAPTOR,
-mba2011-02-03-7,['RAPTOR'],,RAPTOR,
+run_name,tomo-align_softwares,ts-pixel_spacing,ts-tilt_alignment_software
+mba2011-02-03-1,['IMOD'],7.74,IMOD
+mba2011-02-03-3,['RAPTOR'],,RAPTOR
+mba2011-02-03-4,['RAPTOR'],,RAPTOR
+mba2011-02-03-5,['RAPTOR'],,RAPTOR
+mba2011-02-03-6,['RAPTOR'],,RAPTOR
+mba2011-02-03-7,['RAPTOR'],,RAPTOR

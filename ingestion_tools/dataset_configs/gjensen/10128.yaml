@@ -57,7 +57,6 @@ runs:
       name_regex: (.*)
 standardization_config:
   deposition_id: 10039
-  run_data_map_file: run_data_map/10128.csv
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -84,7 +83,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min

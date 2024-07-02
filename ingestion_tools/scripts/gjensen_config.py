@@ -262,6 +262,8 @@ def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
 
     tilt_series["tilt_series_quality"] = 4 if len(data["tomograms"]) else 1
     tilt_series["pixel_spacing"] = round(tilt_series["pixel_spacing"], 3) if tilt_series.get("pixel_spacing") else None
+
+    tilt_series.pop("tilt_series_path", None)
     return tilt_series
 
 
