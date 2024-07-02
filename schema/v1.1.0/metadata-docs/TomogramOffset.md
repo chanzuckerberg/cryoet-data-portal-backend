@@ -1,3 +1,5 @@
+
+
 # Class: TomogramOffset
 
 
@@ -12,22 +14,19 @@ URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
 
 
 
+
+
 ```mermaid
  classDiagram
     class TomogramOffset
+    click TomogramOffset href "../TomogramOffset"
       TomogramOffset : x
-
-          TomogramOffset --> string : x
-
+        
       TomogramOffset : y
-
-          TomogramOffset --> string : y
-
+        
       TomogramOffset : z
-
-          TomogramOffset --> string : z
-
-
+        
+      
 ```
 
 
@@ -40,9 +39,9 @@ URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [x](x.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [y](y.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [z](z.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
+| [x](x.md) | 0..1 <br/> [Integer](Integer.md) |  | direct |
+| [y](y.md) | 0..1 <br/> [Integer](Integer.md) |  | direct |
+| [z](z.md) | 0..1 <br/> [Integer](Integer.md) |  | direct |
 
 
 
@@ -110,7 +109,7 @@ attributes:
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: string
+    range: integer
     inlined: true
     inlined_as_list: true
   y:
@@ -123,7 +122,7 @@ attributes:
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: string
+    range: integer
     inlined: true
     inlined_as_list: true
   z:
@@ -136,7 +135,7 @@ attributes:
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: string
+    range: integer
     inlined: true
     inlined_as_list: true
 
@@ -162,7 +161,7 @@ attributes:
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: string
+    range: integer
     inlined: true
     inlined_as_list: true
   y:
@@ -175,7 +174,7 @@ attributes:
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: string
+    range: integer
     inlined: true
     inlined_as_list: true
   z:
@@ -188,7 +187,7 @@ attributes:
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: string
+    range: integer
     inlined: true
     inlined_as_list: true
 

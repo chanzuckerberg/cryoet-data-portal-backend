@@ -1,3 +1,5 @@
+
+
 # Slot: taxonomy_id
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:taxonomy_id](metadatataxonomy_id)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Organism](Organism.md) | The species from which the sample was derived |  no  |
+| [Organism](Organism.md) | The species from which the sample was derived |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:taxonomy_id](metadatataxonomy_id)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [Integer](Integer.md)
 
 
 
@@ -64,7 +67,7 @@ alias: taxonomy_id
 owner: Organism
 domain_of:
 - Organism
-range: string
+range: integer
 inlined: true
 inlined_as_list: true
 

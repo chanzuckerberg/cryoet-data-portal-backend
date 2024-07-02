@@ -1,3 +1,5 @@
+
+
 # Slot: state
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:state](metadatastate)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated |  no  |
+| [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:state](metadatastate)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

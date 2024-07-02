@@ -1,3 +1,5 @@
+
+
 # Class: CrossReferencedEntity
 
 
@@ -14,16 +16,25 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 
 
 
+
+
 ```mermaid
  classDiagram
     class CrossReferencedEntity
+    click CrossReferencedEntity href "../CrossReferencedEntity"
       CrossReferencedEntity <|-- Dataset
-
+        click Dataset href "../Dataset"
+      
       CrossReferencedEntity : cross_references
+        
+          
+    
+    
+    CrossReferencedEntity --> "0..1" CrossReferences : cross_references
+    click CrossReferences href "../CrossReferences"
 
-          CrossReferencedEntity --> CrossReferences : cross_references
-
-
+        
+      
 ```
 
 

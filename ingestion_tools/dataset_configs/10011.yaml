@@ -12,7 +12,7 @@ annotations:
     - ORCID: 0000-XXXXXX
       corresponding_author_status: OPTIONAL
       name: RECOMMENDED
-      primary_annotator_status: OPTIONAL
+      primary_author_status: OPTIONAL
     confidence:
       ground_truth_used: OPTIONAL
       precision: REQUIRED IF ground_truth_used is specified
@@ -125,7 +125,6 @@ tiltseries:
       phase_plate: null
     pixel_spacing: REQUIRED
     related_empiar_entry: OPTIONAL
-    scales: []
     spherical_aberration_constant: 2.7
     tilt_axis: OPTIONAL (float)
     tilt_range:
@@ -167,7 +166,7 @@ tomograms:
     processing: REQUIRED
     reconstruction_method: null
     reconstruction_software: Dynamo
-    tomogram_version: 1
+    tomogram_version: '1'
     voxel_spacing: null
   sources:
   - source_glob:

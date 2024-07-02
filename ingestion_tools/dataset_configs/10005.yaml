@@ -11,7 +11,7 @@ annotations:
     - ORCID: null
       corresponding_author_status: false
       name: Zhen Chen
-      primary_annotator_status: true
+      primary_author_status: true
     - ORCID: 0000-0003-3460-2758
       corresponding_author_status: true
       name: Ron Vale
@@ -19,9 +19,9 @@ annotations:
       corresponding_author_status: true
       name: David A. Agard
     dates: &id002
-      deposition_date: 2023-09-01
-      last_modified_date: 2023-11-20
-      release_date: 2023-12-10
+      deposition_date: '2023-09-01'
+      last_modified_date: '2023-11-20'
+      release_date: '2023-12-10'
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
@@ -151,7 +151,6 @@ tiltseries:
       image_corrector: null
       phase_plate: null
     pixel_spacing: 2.612
-    scales: []
     spherical_aberration_constant: 2.7
     tilt_axis: 6.4
     tilt_range:
@@ -194,7 +193,7 @@ tomograms:
     processing: raw
     reconstruction_method: ''
     reconstruction_software: Tomo3D
-    tomogram_version: 1
+    tomogram_version: '1'
     voxel_spacing: 5.224
   sources:
   - source_glob:

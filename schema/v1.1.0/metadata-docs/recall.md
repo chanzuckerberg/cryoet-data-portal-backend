@@ -1,3 +1,5 @@
+
+
 # Slot: recall
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:recall](metadatarecall)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation |  no  |
+| [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:recall](metadatarecall)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
 
 
 

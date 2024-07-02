@@ -1,0 +1,28 @@
+name: Validate dataset configs
+
+on:
+  push:
+    branches:
+      - main
+      # TODO: remove this after PR
+      - dataset-config-validation-workflow
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  run-validation:
+    name: Validate dataset configs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install linkml
+        run: pip install linkml
+      - name: Validate dataset configs
+        run: |
+          bash dataset_config_validate.sh
+        working-directory: ingestion_tools/scripts

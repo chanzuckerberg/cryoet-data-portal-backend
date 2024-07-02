@@ -1,3 +1,5 @@
+
+
 # Slot: dates
 
 URI: [cdp-meta:dates](metadatadates)
@@ -9,13 +11,14 @@ URI: [cdp-meta:dates](metadatadates)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[DatestampedEntity](DatestampedEntity.md) | An entity with associated deposition, release and last modified dates |  no  |
-[Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+| [DatestampedEntity](DatestampedEntity.md) | An entity with associated deposition, release and last modified dates |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -25,7 +28,7 @@ URI: [cdp-meta:dates](metadatadates)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

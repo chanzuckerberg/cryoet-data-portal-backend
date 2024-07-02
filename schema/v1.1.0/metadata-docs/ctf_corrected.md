@@ -1,3 +1,5 @@
+
+
 # Slot: ctf_corrected
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:ctf_corrected](metadatactf_corrected)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:ctf_corrected](metadatactf_corrected)
 
 ## Properties
 
-* Range: [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean)
+* Range: [Boolean](Boolean.md)
 
 
 

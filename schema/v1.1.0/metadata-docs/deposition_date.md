@@ -1,3 +1,5 @@
+
+
 # Slot: deposition_date
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:deposition_date](metadatadeposition_date)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |  yes  |
+| [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |  yes  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:deposition_date](metadatadeposition_date)
 
 ## Properties
 
-* Range: [xsd:date](http://www.w3.org/2001/XMLSchema#date)
+* Range: [Date](Date.md)
 
 * Required: True
 

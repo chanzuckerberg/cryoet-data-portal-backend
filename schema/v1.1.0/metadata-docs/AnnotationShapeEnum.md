@@ -13,9 +13,11 @@ URI: [AnnotationShapeEnum](AnnotationShapeEnum.md)
 
 | Value | Meaning | Description |
 | --- | --- | --- |
-| Point | None | Annotations were generated manually |
-| OrientedPoint | None | Annotations were generated semi-automatically |
-| SegmentationMask | None | Annotations were generated automatically |
+| InstanceSegmentation | None | Annotation that identifies individual instances of object shapes |
+| Point | None | Annotation that identifies points in the volume |
+| OrientedPoint | None | Annotation that identifies points along with orientation in the volume |
+| SegmentationMask | None | Annotation that identifies an object |
+| SemanticSegmentationMask | None | Annotation that identifies classes of objects |
 
 
 
@@ -50,15 +52,21 @@ description: Annotation shape types available on the data portal.
 from_schema: metadata
 rank: 1000
 permissible_values:
+  InstanceSegmentation:
+    text: InstanceSegmentation
+    description: Annotation that identifies individual instances of object shapes.
   Point:
     text: Point
-    description: Annotations were generated manually.
+    description: Annotation that identifies points in the volume.
   OrientedPoint:
     text: OrientedPoint
-    description: Annotations were generated semi-automatically.
+    description: Annotation that identifies points along with orientation in the volume.
   SegmentationMask:
     text: SegmentationMask
-    description: Annotations were generated automatically.
+    description: Annotation that identifies an object.
+  SemanticSegmentationMask:
+    text: SemanticSegmentationMask
+    description: Annotation that identifies classes of objects.
 
 ```
 </details>

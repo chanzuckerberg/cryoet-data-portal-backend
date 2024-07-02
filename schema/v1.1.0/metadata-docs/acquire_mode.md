@@ -1,11 +1,13 @@
-# Slot: format
 
 
-_File format for this file_
+# Slot: acquire_mode
+
+
+_Camera acquisition mode_
 
 
 
-URI: [cdp-meta:format](metadataformat)
+URI: [cdp-meta:acquire_mode](metadataacquire_mode)
 
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:format](metadataformat)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[AnnotationFile](AnnotationFile.md) | Metadata describing a file containing an annotation |  no  |
+| [Camera](Camera.md) | The camera used to collect the tilt series |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:format](metadataformat)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 
@@ -54,16 +57,16 @@ URI: [cdp-meta:format](metadataformat)
 
 <details>
 ```yaml
-name: format
-description: File format for this file
+name: acquire_mode
+description: Camera acquisition mode
 from_schema: metadata
 exact_mappings:
-- cdp-common:annotation_file_format
+- cdp-common:tiltseries_camera_acquire_mode
 rank: 1000
-alias: format
-owner: AnnotationFile
+alias: acquire_mode
+owner: Camera
 domain_of:
-- AnnotationFile
+- Camera
 range: string
 inlined: true
 inlined_as_list: true

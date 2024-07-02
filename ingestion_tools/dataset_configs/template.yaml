@@ -111,7 +111,7 @@ tomograms:
   processing: REQUIRED #(valid values: denoised, filtered, or raw)
   reconstruction_method: REQUIRED
   reconstruction_software: REQUIRED
-  tomogram_version: 1
+  tomogram_version: '1'
   voxel_spacing: REQUIRED
   authors: *dataset_authors
 

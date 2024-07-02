@@ -1,3 +1,5 @@
+
+
 # Slot: frames_count
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:frames_count](metadataframes_count)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:frames_count](metadataframes_count)
 
 ## Properties
 
-* Range: [xsd:integer](http://www.w3.org/2001/XMLSchema#integer)
+* Range: [Integer](Integer.md)
 
 
 

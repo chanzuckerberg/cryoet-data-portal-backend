@@ -1,3 +1,5 @@
+
+
 # Class: TomogramSize
 
 
@@ -12,22 +14,19 @@ URI: [cdp-meta:TomogramSize](metadataTomogramSize)
 
 
 
+
+
 ```mermaid
  classDiagram
     class TomogramSize
+    click TomogramSize href "../TomogramSize"
       TomogramSize : x
-
-          TomogramSize --> integer : x
-
+        
       TomogramSize : y
-
-          TomogramSize --> integer : y
-
+        
       TomogramSize : z
-
-          TomogramSize --> integer : z
-
-
+        
+      
 ```
 
 
@@ -40,9 +39,9 @@ URI: [cdp-meta:TomogramSize](metadataTomogramSize)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [x](x.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | Number of pixels in the 3D data fast axis | direct |
-| [y](y.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | Number of pixels in the 3D data medium axis | direct |
-| [z](z.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | Number of pixels in the 3D data slow axis | direct |
+| [x](x.md) | 0..1 <br/> [Integer](Integer.md) | Number of pixels in the 3D data fast axis | direct |
+| [y](y.md) | 0..1 <br/> [Integer](Integer.md) | Number of pixels in the 3D data medium axis | direct |
+| [z](z.md) | 0..1 <br/> [Integer](Integer.md) | Number of pixels in the 3D data slow axis | direct |
 
 
 

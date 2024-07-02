@@ -11,7 +11,7 @@ annotations:
     authors: &id001
     - ORCID: 0000-0001-6346-5137
       name: Michaela Medina
-      primary_annotator_status: true
+      primary_author_status: true
     - ORCID: 0000-0001-5908-7882
       corresponding_author_status: true
       name: Danielle A. Grotjahn
@@ -20,9 +20,9 @@ annotations:
       precision: null
       recall: null
     dates: &id003
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
@@ -161,7 +161,6 @@ standardization_config:
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    alignment_binning_factor: null
     binning_from_frames: REQUIRED
     camera:
       manufacturer: Gatan
@@ -219,7 +218,7 @@ tomograms:
     processing: raw
     reconstruction_method: Weighted back projection
     reconstruction_software: IMOD
-    tomogram_version: 1
+    tomogram_version: '1'
     voxel_spacing: float {tomograms_voxel_spacing}
   sources:
   - source_glob:

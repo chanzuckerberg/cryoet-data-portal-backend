@@ -24,7 +24,7 @@ URI: [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md)
 
 | Name | Description |
 | ---  | --- |
-| [annotation_method_type](annotation_method_type.md) | Classification of the annotation method based on supervision |
+| [method_type](method_type.md) | Classification of the annotation method based on supervision |
 
 
 

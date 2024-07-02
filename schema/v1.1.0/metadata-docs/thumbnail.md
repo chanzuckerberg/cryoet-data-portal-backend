@@ -1,3 +1,5 @@
+
+
 # Slot: thumbnail
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data |  no  |
+| [PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

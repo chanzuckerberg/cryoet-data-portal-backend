@@ -1,3 +1,5 @@
+
+
 # Slot: is_curator_recommended
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:is_curator_recommended](metadatais_curator_recommended)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:is_curator_recommended](metadatais_curator_recommended)
 
 ## Properties
 
-* Range: [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean)
+* Range: [Boolean](Boolean.md)
 
 
 

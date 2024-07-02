@@ -1,3 +1,5 @@
+
+
 # Slot: tilt_range
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:tilt_range](metadatatilt_range)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 

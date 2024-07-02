@@ -88,11 +88,12 @@ def test_import_annotation_metadata(
         "metadata": default_anno_metadata,
         "sources": [
             {
-                "file_format": "csv",
-                "delimiter": ",",
-                "shape": "Point",
-                "glob_string": "annotations/*.csv",
-                "columns": "xyz",
+                "Point": {
+                    "file_format": "csv",
+                    "delimiter": ",",
+                    "glob_string": "annotations/*.csv",
+                    "columns": "xyz",
+                }
             },
         ],
     }
@@ -104,9 +105,9 @@ def test_import_annotation_metadata(
         path="test-public-bucket/input_bucket/20002/annotations/points.csv",
         parents={"tomogram": tomo_importer, **tomo_importer.parents},
         identifier=100,
-        columns=anno_config["sources"][0].get("columns"),
-        delimiter=anno_config["sources"][0].get("delimiter"),
-        file_format=anno_config["sources"][0]["file_format"],
+        columns=anno_config["sources"][0]["Point"].get("columns"),
+        delimiter=anno_config["sources"][0]["Point"].get("delimiter"),
+        file_format=anno_config["sources"][0]["Point"].get("file_format"),
     )
     anno.import_item()
     anno.import_metadata()
@@ -142,11 +143,12 @@ ingest_points_test_cases = [
     {
         "case": "csv, comma delimiter, binning 1",
         "source_cfg": {
-            "columns": "xyz",
-            "file_format": "csv",
-            "glob_string": "annotations/points.csv",
-            "shape": "Point",
-            "is_visualization_default": False,
+            "Point": {
+                "columns": "xyz",
+                "file_format": "csv",
+                "glob_string": "annotations/points.csv",
+                "is_visualization_default": False,
+            }
         },
         "count": 3,
         "out_data": [
@@ -158,13 +160,14 @@ ingest_points_test_cases = [
     {
         "case": "csv, tab delimiter, binning 2",
         "source_cfg": {
-            "columns": "xyz",
-            "file_format": "csv",
-            "glob_string": "annotations/points_tab_delim.csv",
-            "shape": "Point",
-            "is_visualization_default": False,
-            "binning": 2,
-            "delimiter": "\t",
+            "Point": {
+                "columns": "xyz",
+                "file_format": "csv",
+                "glob_string": "annotations/points_tab_delim.csv",
+                "is_visualization_default": False,
+                "binning": 2,
+                "delimiter": "\t",
+            }
         },
         "count": 3,
         "out_data": [
@@ -177,11 +180,12 @@ ingest_points_test_cases = [
     {
         "case": "csv_with_header, comma delimiter, binning 1",
         "source_cfg": {
-            "columns": "xyz",
-            "file_format": "csv_with_header",
-            "glob_string": "annotations/points_with_header.csv",
-            "shape": "Point",
-            "is_visualization_default": False,
+            "Point": {
+                "columns": "xyz",
+                "file_format": "csv_with_header",
+                "glob_string": "annotations/points_with_header.csv",
+                "is_visualization_default": False,
+            }
         },
         "count": 3,
         "out_data": [
@@ -193,13 +197,14 @@ ingest_points_test_cases = [
     {
         "case": "csv_with_header, pipe delimiter, binning 2",
         "source_cfg": {
-            "columns": "xyz",
-            "file_format": "csv_with_header",
-            "glob_string": "annotations/points_with_header_pipe_delim.csv",
-            "shape": "Point",
-            "is_visualization_default": False,
-            "binning": 2,
-            "delimiter": "|",
+            "Point": {
+                "columns": "xyz",
+                "file_format": "csv_with_header",
+                "glob_string": "annotations/points_with_header_pipe_delim.csv",
+                "is_visualization_default": False,
+                "binning": 2,
+                "delimiter": "|",
+            }
         },
         "count": 3,
         "out_data": [
@@ -212,11 +217,12 @@ ingest_points_test_cases = [
     {
         "case": "mod, binning 2",
         "source_cfg": {
-            "file_format": "mod",
-            "glob_string": "annotations/points.mod",
-            "shape": "Point",
-            "is_visualization_default": False,
-            "binning": 2,
+            "Point": {
+                "file_format": "mod",
+                "glob_string": "annotations/points.mod",
+                "is_visualization_default": False,
+                "binning": 2,
+            }
         },
         "count": 3,
         "out_data": [
@@ -250,13 +256,13 @@ def test_ingest_point_data(
     anno = PointAnnotation(
         config=dataset_config,
         metadata=default_anno_metadata,
-        path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["glob_string"],
+        path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["Point"].get("glob_string"),
         parents={"tomogram": tomo_importer, **tomo_importer.parents},
         identifier=100,
-        columns=anno_config["sources"][0].get("columns"),
-        delimiter=anno_config["sources"][0].get("delimiter"),
-        file_format=anno_config["sources"][0]["file_format"],
-        binning=anno_config["sources"][0].get("binning"),
+        columns=anno_config["sources"][0]["Point"].get("columns"),
+        delimiter=anno_config["sources"][0]["Point"].get("delimiter"),
+        file_format=anno_config["sources"][0]["Point"]["file_format"],
+        binning=anno_config["sources"][0]["Point"].get("binning"),
     )
     anno.import_item()
 
@@ -290,13 +296,14 @@ ingest_oriented_points_test_cases = [
     {
         "case": "relion3_star, filter value 1, binning 4",
         "source_cfg": {
-            "order": "xyz",
-            "file_format": "relion3_star",
-            "glob_string": "annotations/relion_3_star.star",
-            "shape": "OrientedPoint",
-            "is_visualization_default": False,
-            "filter_value": "tomo_1.tomostar",
-            "binning": 4,
+            "OrientedPoint": {
+                "order": "xyz",
+                "file_format": "relion3_star",
+                "glob_string": "annotations/relion_3_star.star",
+                "is_visualization_default": False,
+                "filter_value": "tomo_1.tomostar",
+                "binning": 4,
+            }
         },
         "count": 2,
         "out_data": [
@@ -323,13 +330,14 @@ ingest_oriented_points_test_cases = [
     {
         "case": "relion3_star, filter value 2, binning 2, rotation convention",
         "source_cfg": {
-            "order": "xyz",
-            "file_format": "relion3_star",
-            "glob_string": "annotations/relion_3_star.star",
-            "shape": "OrientedPoint",
-            "is_visualization_default": False,
-            "filter_value": "tomo_2.tomostar",
-            "binning": 2,
+            "OrientedPoint": {
+                "order": "xyz",
+                "file_format": "relion3_star",
+                "glob_string": "annotations/relion_3_star.star",
+                "is_visualization_default": False,
+                "filter_value": "tomo_2.tomostar",
+                "binning": 2,
+            }
         },
         "count": 3,
         "out_data": [
@@ -365,12 +373,13 @@ ingest_oriented_points_test_cases = [
     {
         "case": "relion3_star, filter value 3, binning 1, single point",
         "source_cfg": {
-            "order": "xyz",
-            "file_format": "relion3_star",
-            "glob_string": "annotations/relion_3_star.star",
-            "shape": "OrientedPoint",
-            "is_visualization_default": False,
-            "filter_value": "tomo_3.tomostar",
+            "OrientedPoint": {
+                "order": "xyz",
+                "file_format": "relion3_star",
+                "glob_string": "annotations/relion_3_star.star",
+                "is_visualization_default": False,
+                "filter_value": "tomo_3.tomostar",
+            }
         },
         "count": 1,
         "out_data": [
@@ -385,13 +394,14 @@ ingest_oriented_points_test_cases = [
     {
         "case": "tomoman_relion_star, filter value 1, binning 4",
         "source_cfg": {
-            "order": "xyz",
-            "file_format": "tomoman_relion_star",
-            "glob_string": "annotations/tomoman_relion_star.star",
-            "shape": "OrientedPoint",
-            "is_visualization_default": False,
-            "filter_value": "grid_1_lamella1_pos1",
-            "binning": 4,
+            "OrientedPoint": {
+                "order": "xyz",
+                "file_format": "tomoman_relion_star",
+                "glob_string": "annotations/tomoman_relion_star.star",
+                "is_visualization_default": False,
+                "filter_value": "grid_1_lamella1_pos1",
+                "binning": 4,
+            }
         },
         "count": 2,
         "out_data": [
@@ -418,13 +428,14 @@ ingest_oriented_points_test_cases = [
     {
         "case": "tomoman_relion_star, filter value 2, binning 2, rotation convention",
         "source_cfg": {
-            "order": "xyz",
-            "file_format": "tomoman_relion_star",
-            "glob_string": "annotations/tomoman_relion_star.star",
-            "shape": "OrientedPoint",
-            "is_visualization_default": False,
-            "filter_value": "grid_1_lamella1_pos2",
-            "binning": 2,
+            "OrientedPoint": {
+                "order": "xyz",
+                "file_format": "tomoman_relion_star",
+                "glob_string": "annotations/tomoman_relion_star.star",
+                "is_visualization_default": False,
+                "filter_value": "grid_1_lamella1_pos2",
+                "binning": 2,
+            }
         },
         "count": 3,
         "out_data": [
@@ -460,12 +471,13 @@ ingest_oriented_points_test_cases = [
     {
         "case": "tomoman_relion_star, filter value 3, binning 1, single point",
         "source_cfg": {
-            "order": "xyz",
-            "file_format": "tomoman_relion_star",
-            "glob_string": "annotations/tomoman_relion_star.star",
-            "shape": "OrientedPoint",
-            "is_visualization_default": False,
-            "filter_value": "grid_1_lamella1_pos3",
+            "OrientedPoint": {
+                "order": "xyz",
+                "file_format": "tomoman_relion_star",
+                "glob_string": "annotations/tomoman_relion_star.star",
+                "is_visualization_default": False,
+                "filter_value": "grid_1_lamella1_pos3",
+            }
         },
         "count": 1,
         "out_data": [
@@ -480,13 +492,14 @@ ingest_oriented_points_test_cases = [
     {
         "case": "relion4_star, filter value 1, binning 4",
         "source_cfg": {
-            "order": "xyz",
-            "file_format": "relion4_star",
-            "glob_string": "annotations/relion_4_star.star",
-            "shape": "OrientedPoint",
-            "is_visualization_default": False,
-            "filter_value": "TS_001",
-            "binning": 4,
+            "OrientedPoint": {
+                "order": "xyz",
+                "file_format": "relion4_star",
+                "glob_string": "annotations/relion_4_star.star",
+                "is_visualization_default": False,
+                "filter_value": "TS_001",
+                "binning": 4,
+            }
         },
         "count": 2,
         "out_data": [
@@ -513,13 +526,14 @@ ingest_oriented_points_test_cases = [
     {
         "case": "relion4_star, filter value 2, binning 2, rotation convention",
         "source_cfg": {
-            "order": "xyz",
-            "file_format": "relion4_star",
-            "glob_string": "annotations/relion_4_star.star",
-            "shape": "OrientedPoint",
-            "is_visualization_default": False,
-            "filter_value": "TS_002",
-            "binning": 2,
+            "OrientedPoint": {
+                "order": "xyz",
+                "file_format": "relion4_star",
+                "glob_string": "annotations/relion_4_star.star",
+                "is_visualization_default": False,
+                "filter_value": "TS_002",
+                "binning": 2,
+            }
         },
         "count": 3,
         "out_data": [
@@ -555,12 +569,13 @@ ingest_oriented_points_test_cases = [
     {
         "case": "relion4_star, filter value 3, binning 1, single point",
         "source_cfg": {
-            "order": "xyz",
-            "file_format": "relion4_star",
-            "glob_string": "annotations/relion_4_star.star",
-            "shape": "OrientedPoint",
-            "is_visualization_default": False,
-            "filter_value": "TS_003",
+            "OrientedPoint": {
+                "order": "xyz",
+                "file_format": "relion4_star",
+                "glob_string": "annotations/relion_4_star.star",
+                "is_visualization_default": False,
+                "filter_value": "TS_003",
+            }
         },
         "count": 1,
         "out_data": [
@@ -575,13 +590,14 @@ ingest_oriented_points_test_cases = [
     {
         "case": "stopgap_star, filter value 1, binning 4",
         "source_cfg": {
-            "order": "xyz",
-            "file_format": "stopgap_star",
-            "glob_string": "annotations/stopgap_star.star",
-            "shape": "OrientedPoint",
-            "is_visualization_default": False,
-            "filter_value": "1",
-            "binning": 4,
+            "OrientedPoint": {
+                "order": "xyz",
+                "file_format": "stopgap_star",
+                "glob_string": "annotations/stopgap_star.star",
+                "is_visualization_default": False,
+                "filter_value": "1",
+                "binning": 4,
+            }
         },
         "count": 2,
         "out_data": [
@@ -608,13 +624,14 @@ ingest_oriented_points_test_cases = [
     {
         "case": "stopgap_star, filter value 2, binning 2, rotation convention",
         "source_cfg": {
-            "order": "xyz",
-            "file_format": "stopgap_star",
-            "glob_string": "annotations/stopgap_star.star",
-            "shape": "OrientedPoint",
-            "is_visualization_default": False,
-            "filter_value": "2",
-            "binning": 2,
+            "OrientedPoint": {
+                "order": "xyz",
+                "file_format": "stopgap_star",
+                "glob_string": "annotations/stopgap_star.star",
+                "is_visualization_default": False,
+                "filter_value": "2",
+                "binning": 2,
+            }
         },
         "count": 3,
         "out_data": [
@@ -650,12 +667,13 @@ ingest_oriented_points_test_cases = [
     {
         "case": "stopgap_star, filter value 3, binning 1, single point",
         "source_cfg": {
-            "order": "xyz",
-            "file_format": "stopgap_star",
-            "glob_string": "annotations/stopgap_star.star",
-            "shape": "OrientedPoint",
-            "is_visualization_default": False,
-            "filter_value": "3",
+            "OrientedPoint": {
+                "order": "xyz",
+                "file_format": "stopgap_star",
+                "glob_string": "annotations/stopgap_star.star",
+                "is_visualization_default": False,
+                "filter_value": "3",
+            }
         },
         "count": 1,
         "out_data": [
@@ -669,12 +687,13 @@ ingest_oriented_points_test_cases = [
     {
         "case": "imod with SLAN angles, binning 1",
         "source_cfg": {
-            "order": "xyz",
-            "file_format": "mod",
-            "glob_string": "annotations/oriented_points.mod",
-            "shape": "OrientedPoint",
-            "is_visualization_default": False,
-            "filter_value": None,
+            "OrientedPoint": {
+                "order": "xyz",
+                "file_format": "mod",
+                "glob_string": "annotations/oriented_points.mod",
+                "is_visualization_default": False,
+                "filter_value": None,
+            }
         },
         "count": 4,
         "out_data": [
@@ -740,13 +759,13 @@ def test_ingest_oriented_point_data(
     anno = OrientedPointAnnotation(
         config=dataset_config,
         metadata=default_anno_metadata,
-        path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["glob_string"],
+        path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["OrientedPoint"].get("glob_string"),
         parents={"tomogram": tomo_importer, **tomo_importer.parents},
         identifier=100,
-        binning=case["source_cfg"].get("binning"),
-        file_format=case["source_cfg"]["file_format"],
-        filter_value=case["source_cfg"]["filter_value"],
-        order=case["source_cfg"]["order"],
+        binning=case["source_cfg"]["OrientedPoint"].get("binning"),
+        file_format=case["source_cfg"]["OrientedPoint"]["file_format"],
+        filter_value=case["source_cfg"]["OrientedPoint"].get("filter_value"),
+        order=case["source_cfg"]["OrientedPoint"].get("order")
     )
     anno.import_item()
     anno.import_metadata()
@@ -790,12 +809,13 @@ ingest_instance_points_test_cases = [
     {
         "case": "tardis, binning 2",
         "source_cfg": {
-            "order": "xyz",
-            "file_format": "tardis",
-            "glob_string": "annotations/tardis.csv",
-            "shape": "InstanceSegmentation",
-            "is_visualization_default": False,
-            "binning": 2,
+            "InstanceSegmentation": {
+                "order": "xyz",
+                "file_format": "tardis",
+                "glob_string": "annotations/tardis.csv",
+                "is_visualization_default": False,
+                "binning": 2,
+            }
         },
         "count": 6,
         "out_data": [
@@ -856,11 +876,11 @@ def test_ingest_instance_point_data(
     anno = InstanceSegmentationAnnotation(
         config=dataset_config,
         metadata=default_anno_metadata,
-        path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["glob_string"],
+        path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["InstanceSegmentation"].get("glob_string"),
         parents={"tomogram": tomo_importer, **tomo_importer.parents},
         identifier=100,
-        binning=case["source_cfg"].get("binning"),
-        file_format=anno_config["sources"][0]["file_format"],
+        binning=case["source_cfg"]["InstanceSegmentation"].get("binning"),
+        file_format=anno_config["sources"][0]["InstanceSegmentation"]["file_format"],
     )
     anno.import_item()
     anno.import_metadata()

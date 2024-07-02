@@ -1,3 +1,5 @@
+
+
 # Class: CellStrain
 
 
@@ -12,18 +14,17 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
 
 
 
+
+
 ```mermaid
  classDiagram
     class CellStrain
+    click CellStrain href "../CellStrain"
       CellStrain : id
-
-          CellStrain --> string : id
-
+        
       CellStrain : name
-
-          CellStrain --> string : name
-
-
+        
+      
 ```
 
 
@@ -36,8 +37,8 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [id](id.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
+| [name](name.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [id](id.md) | 0..1 <br/> [String](String.md) |  | direct |
 
 
 
@@ -104,7 +105,6 @@ attributes:
     owner: CellStrain
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType
@@ -151,7 +151,6 @@ attributes:
     owner: CellStrain
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType

@@ -1,3 +1,5 @@
+
+
 # Class: CellComponent
 
 
@@ -12,18 +14,17 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
 
 
 
+
+
 ```mermaid
  classDiagram
     class CellComponent
+    click CellComponent href "../CellComponent"
       CellComponent : id
-
-          CellComponent --> string : id
-
+        
       CellComponent : name
-
-          CellComponent --> string : name
-
-
+        
+      
 ```
 
 
@@ -36,8 +37,8 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [id](id.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
+| [name](name.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [id](id.md) | 0..1 <br/> [String](String.md) |  | direct |
 
 
 
@@ -104,7 +105,6 @@ attributes:
     owner: CellComponent
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType
@@ -151,7 +151,6 @@ attributes:
     owner: CellComponent
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType

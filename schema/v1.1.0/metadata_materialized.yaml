@@ -27,6 +27,266 @@ prefixes:
     prefix_reference: http://purl.obolibrary.org/obo/GO_
 default_prefix: cdp-meta
 default_range: string
+types:
+  string:
+    name: string
+    description: A character string
+    notes:
+    - In RDF serializations, a slot with range of string is treated as a literal or
+      type xsd:string.   If you are authoring schemas in LinkML YAML, the type is
+      referenced with the lower case "string".
+    from_schema: metadata
+    exact_mappings:
+    - schema:Text
+    base: str
+    uri: xsd:string
+  integer:
+    name: integer
+    description: An integer
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "integer".
+    from_schema: metadata
+    exact_mappings:
+    - schema:Integer
+    base: int
+    uri: xsd:integer
+  boolean:
+    name: boolean
+    description: A binary (true or false) value
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "boolean".
+    from_schema: metadata
+    exact_mappings:
+    - schema:Boolean
+    base: Bool
+    uri: xsd:boolean
+    repr: bool
+  float:
+    name: float
+    description: A real number that conforms to the xsd:float specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "float".
+    from_schema: metadata
+    exact_mappings:
+    - schema:Float
+    base: float
+    uri: xsd:float
+  double:
+    name: double
+    description: A real number that conforms to the xsd:double specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "double".
+    from_schema: metadata
+    close_mappings:
+    - schema:Float
+    base: float
+    uri: xsd:double
+  decimal:
+    name: decimal
+    description: A real number with arbitrary precision that conforms to the xsd:decimal
+      specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "decimal".
+    from_schema: metadata
+    broad_mappings:
+    - schema:Number
+    base: Decimal
+    uri: xsd:decimal
+  time:
+    name: time
+    description: A time object represents a (local) time of day, independent of any
+      particular day
+    notes:
+    - URI is dateTime because OWL reasoners do not work with straight date or time
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "time".
+    from_schema: metadata
+    exact_mappings:
+    - schema:Time
+    base: XSDTime
+    uri: xsd:time
+    repr: str
+  date:
+    name: date
+    description: a date (year, month and day) in an idealized calendar
+    notes:
+    - URI is dateTime because OWL reasoners don't work with straight date or time
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "date".
+    from_schema: metadata
+    exact_mappings:
+    - schema:Date
+    base: XSDDate
+    uri: xsd:date
+    repr: str
+  datetime:
+    name: datetime
+    description: The combination of a date and time
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "datetime".
+    from_schema: metadata
+    exact_mappings:
+    - schema:DateTime
+    base: XSDDateTime
+    uri: xsd:dateTime
+    repr: str
+  date_or_datetime:
+    name: date_or_datetime
+    description: Either a date or a datetime
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "date_or_datetime".
+    from_schema: metadata
+    base: str
+    uri: linkml:DateOrDatetime
+    repr: str
+  uriorcurie:
+    name: uriorcurie
+    description: a URI or a CURIE
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "uriorcurie".
+    from_schema: metadata
+    base: URIorCURIE
+    uri: xsd:anyURI
+    repr: str
+  curie:
+    name: curie
+    conforms_to: https://www.w3.org/TR/curie/
+    description: a compact URI
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "curie".
+    comments:
+    - in RDF serializations this MUST be expanded to a URI
+    - in non-RDF serializations MAY be serialized as the compact representation
+    from_schema: metadata
+    base: Curie
+    uri: xsd:string
+    repr: str
+  uri:
+    name: uri
+    conforms_to: https://www.ietf.org/rfc/rfc3987.txt
+    description: a complete URI
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "uri".
+    comments:
+    - in RDF serializations a slot with range of uri is treated as a literal or type
+      xsd:anyURI unless it is an identifier or a reference to an identifier, in which
+      case it is translated directly to a node
+    from_schema: metadata
+    close_mappings:
+    - schema:URL
+    base: URI
+    uri: xsd:anyURI
+    repr: str
+  ncname:
+    name: ncname
+    description: Prefix part of CURIE
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "ncname".
+    from_schema: metadata
+    base: NCName
+    uri: xsd:string
+    repr: str
+  objectidentifier:
+    name: objectidentifier
+    description: A URI or CURIE that represents an object in the model.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "objectidentifier".
+    comments:
+    - Used for inheritance and type checking
+    from_schema: metadata
+    base: ElementIdentifier
+    uri: shex:iri
+    repr: str
+  nodeidentifier:
+    name: nodeidentifier
+    description: A URI, CURIE or BNODE that represents a node in a model.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "nodeidentifier".
+    from_schema: metadata
+    base: NodeIdentifier
+    uri: shex:nonLiteral
+    repr: str
+  jsonpointer:
+    name: jsonpointer
+    conforms_to: https://datatracker.ietf.org/doc/html/rfc6901
+    description: A string encoding a JSON Pointer. The value of the string MUST conform
+      to JSON Point syntax and SHOULD dereference to a valid object within the current
+      instance document when encoded in tree form.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "jsonpointer".
+    from_schema: metadata
+    base: str
+    uri: xsd:string
+    repr: str
+  jsonpath:
+    name: jsonpath
+    conforms_to: https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html
+    description: A string encoding a JSON Path. The value of the string MUST conform
+      to JSON Point syntax and SHOULD dereference to zero or more valid objects within
+      the current instance document when encoded in tree form.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "jsonpath".
+    from_schema: metadata
+    base: str
+    uri: xsd:string
+    repr: str
+  sparqlpath:
+    name: sparqlpath
+    conforms_to: https://www.w3.org/TR/sparql11-query/#propertypaths
+    description: A string encoding a SPARQL Property Path. The value of the string
+      MUST conform to SPARQL syntax and SHOULD dereference to zero or more valid objects
+      within the current instance document when encoded as RDF.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "sparqlpath".
+    from_schema: metadata
+    base: str
+    uri: xsd:string
+    repr: str
+  AnyNumberFormattedString:
+    name: AnyNumberFormattedString
+    description: A formatted string that represents any number.
+    from_schema: metadata
+    base: string
+    pattern: ^(int|float|)[ ]*\{[a-zA-Z0-9_-]+\}$
+  OnlyNumberFormattedString:
+    name: OnlyNumberFormattedString
+    description: A formatted string that represents a number without a prefix.
+    from_schema: metadata
+    base: string
+    pattern: ^-?[0-9]+(\.[0-9]+)?$
+  FloatFormattedString:
+    name: FloatFormattedString
+    description: A formatted string that represents a floating point number.
+    from_schema: metadata
+    base: string
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}$
+  IntegerFormattedString:
+    name: IntegerFormattedString
+    description: A formatted string that represents an integer.
+    from_schema: metadata
+    base: string
+    pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}$
+  VersionString:
+    name: VersionString
+    description: A string that represents a version number. 1, 1.0, 1.0.0, etc.
+    from_schema: metadata
+    base: string
 enums:
   sample_type_enum:
     name: sample_type_enum
@@ -96,15 +356,22 @@ enums:
     description: Annotation shape types available on the data portal.
     from_schema: metadata
     permissible_values:
+      InstanceSegmentation:
+        text: InstanceSegmentation
+        description: Annotation that identifies individual instances of object shapes.
       Point:
         text: Point
-        description: Annotations were generated manually.
+        description: Annotation that identifies points in the volume.
       OrientedPoint:
         text: OrientedPoint
-        description: Annotations were generated semi-automatically.
+        description: Annotation that identifies points along with orientation in the
+          volume.
       SegmentationMask:
         text: SegmentationMask
-        description: Annotations were generated automatically.
+        description: Annotation that identifies an object.
+      SemanticSegmentationMask:
+        text: SemanticSegmentationMask
+        description: Annotation that identifies classes of objects.
 classes:
   PicturePath:
     name: PicturePath
@@ -150,7 +417,6 @@ classes:
         owner: Author
         domain_of:
         - Author
-        - Annotator
         - Organism
         - Tissue
         - CellType
@@ -170,7 +436,6 @@ classes:
         owner: Author
         domain_of:
         - Author
-        - Annotator
         range: string
         inlined: true
         inlined_as_list: true
@@ -184,7 +449,6 @@ classes:
         owner: Author
         domain_of:
         - Author
-        - Annotator
         range: string
         inlined: true
         inlined_as_list: true
@@ -198,7 +462,6 @@ classes:
         owner: Author
         domain_of:
         - Author
-        - Annotator
         range: string
         inlined: true
         inlined_as_list: true
@@ -212,33 +475,31 @@ classes:
         owner: Author
         domain_of:
         - Author
-        - Annotator
         range: string
         recommended: true
         inlined: true
         inlined_as_list: true
         pattern: ^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$
-      is_corresponding:
-        name: is_corresponding
+      corresponding_author_status:
+        name: corresponding_author_status
         description: Whether the author is a corresponding author.
         from_schema: metadata
         exact_mappings:
         - cdp-common:author_corresponding_author_status
-        alias: is_corresponding
+        alias: corresponding_author_status
         owner: Author
         domain_of:
         - Author
-        - Annotator
         range: boolean
         inlined: true
         inlined_as_list: true
-      is_primary_author:
-        name: is_primary_author
+      primary_author_status:
+        name: primary_author_status
         description: Whether the author is a primary author.
         from_schema: metadata
         exact_mappings:
         - cdp-common:author_primary_author_status
-        alias: is_primary_author
+        alias: primary_author_status
         owner: Author
         domain_of:
         - Author
@@ -256,129 +517,11 @@ classes:
         owner: Author
         domain_of:
         - Author
-        - Annotator
         range: string
         recommended: true
         inlined: true
         inlined_as_list: true
         pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
-  Annotator:
-    name: Annotator
-    description: Annotator of a scientific data entity.
-    from_schema: metadata
-    attributes:
-      name:
-        name: name
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_name
-        alias: name
-        owner: Annotator
-        domain_of:
-        - Author
-        - Annotator
-        - Organism
-        - Tissue
-        - CellType
-        - CellStrain
-        - CellComponent
-        - AnnotationObject
-        range: string
-        inlined: true
-        inlined_as_list: true
-      email:
-        name: email
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_email
-        alias: email
-        owner: Annotator
-        domain_of:
-        - Author
-        - Annotator
-        range: string
-        inlined: true
-        inlined_as_list: true
-      affiliation_name:
-        name: affiliation_name
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_affiliation_name
-        alias: affiliation_name
-        owner: Annotator
-        domain_of:
-        - Author
-        - Annotator
-        range: string
-        inlined: true
-        inlined_as_list: true
-      affiliation_address:
-        name: affiliation_address
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_affiliation_address
-        alias: affiliation_address
-        owner: Annotator
-        domain_of:
-        - Author
-        - Annotator
-        range: string
-        inlined: true
-        inlined_as_list: true
-      affiliation_identifier:
-        name: affiliation_identifier
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:affiliation_identifier
-        alias: affiliation_identifier
-        owner: Annotator
-        domain_of:
-        - Author
-        - Annotator
-        range: string
-        recommended: true
-        inlined: true
-        inlined_as_list: true
-      is_corresponding:
-        name: is_corresponding
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_corresponding_author_status
-        alias: is_corresponding
-        owner: Annotator
-        domain_of:
-        - Author
-        - Annotator
-        range: string
-        inlined: true
-        inlined_as_list: true
-      is_primary_annotator:
-        name: is_primary_annotator
-        description: Whether the author is a primary author.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_primary_author_status
-        alias: is_primary_annotator
-        owner: Annotator
-        domain_of:
-        - Annotator
-        range: boolean
-        inlined: true
-        inlined_as_list: true
-      ORCID:
-        name: ORCID
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:orcid
-        alias: ORCID
-        owner: Annotator
-        domain_of:
-        - Author
-        - Annotator
-        range: string
-        recommended: true
-        inlined: true
-        inlined_as_list: true
   Funding:
     name: Funding
     description: A funding source for a scientific data entity (base for JSON and
@@ -416,7 +559,6 @@ classes:
     description: A set of dates at which a data item was deposited, published and
       last modified.
     from_schema: metadata
-    abstract: true
     slots:
     - deposition_date
     - release_date
@@ -506,36 +648,14 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
-        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: AuthoredEntity
         domain_of:
         - AuthoredEntity
-        - AnnotatoredEntity
         range: Author
         required: true
-        inlined: true
-        inlined_as_list: true
-  AnnotatoredEntity:
-    name: AnnotatoredEntity
-    description: An entity with associated annotation authors.
-    from_schema: metadata
-    abstract: true
-    attributes:
-      authors:
-        name: authors
-        description: Annotator of a scientific data entity.
-        from_schema: metadata
         multivalued: true
-        list_elements_ordered: true
-        alias: authors
-        owner: AnnotatoredEntity
-        domain_of:
-        - AuthoredEntity
-        - AnnotatoredEntity
-        range: Annotator
-        required: true
         inlined: true
         inlined_as_list: true
   FundedEntity:
@@ -549,7 +669,6 @@ classes:
         description: A funding source for a scientific data entity (base for JSON
           and DB representation).
         from_schema: metadata
-        multivalued: true
         list_elements_ordered: true
         alias: funding
         owner: FundedEntity
@@ -557,6 +676,7 @@ classes:
         - FundedEntity
         range: Funding
         recommended: true
+        multivalued: true
         inlined: true
         inlined_as_list: true
   CrossReferencedEntity:
@@ -609,7 +729,6 @@ classes:
         owner: Organism
         domain_of:
         - Author
-        - Annotator
         - Organism
         - Tissue
         - CellType
@@ -629,7 +748,7 @@ classes:
         owner: Organism
         domain_of:
         - Organism
-        range: string
+        range: integer
         inlined: true
         inlined_as_list: true
   Tissue:
@@ -646,7 +765,6 @@ classes:
         owner: Tissue
         domain_of:
         - Author
-        - Annotator
         - Organism
         - Tissue
         - CellType
@@ -687,7 +805,6 @@ classes:
         owner: CellType
         domain_of:
         - Author
-        - Annotator
         - Organism
         - Tissue
         - CellType
@@ -727,7 +844,6 @@ classes:
         owner: CellStrain
         domain_of:
         - Author
-        - Annotator
         - Organism
         - Tissue
         - CellType
@@ -767,7 +883,6 @@ classes:
         owner: CellComponent
         domain_of:
         - Author
-        - Annotator
         - Organism
         - Tissue
         - CellType
@@ -842,7 +957,7 @@ classes:
       other_setup:
         name: other_setup
         description: Describes other setup not covered by sample preparation or grid
-          preparation that may make this dataset unique in   the same publication.
+          preparation that may make this dataset unique in the same publication.
         from_schema: metadata
         exact_mappings:
         - cdp-common:preparation_other_setup
@@ -916,14 +1031,13 @@ classes:
     - DatestampedEntity
     - AuthoredEntity
     - FundedEntity
-    - PicturedEntity
     - CrossReferencedEntity
     - ExperimentalMetadata
     attributes:
       dataset_identifier:
         name: dataset_identifier
         description: An identifier for a CryoET dataset, assigned by the Data Portal.
-          Used to identify the dataset as the directory  name in data tree.
+          Used to identify the dataset as the directory name in data tree.
         from_schema: metadata
         exact_mappings:
         - cdp-common:dataset_identifier
@@ -978,15 +1092,14 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
-        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: Dataset
         domain_of:
         - AuthoredEntity
-        - AnnotatoredEntity
         range: Author
         required: true
+        multivalued: true
         inlined: true
         inlined_as_list: true
       funding:
@@ -994,7 +1107,6 @@ classes:
         description: A funding source for a scientific data entity (base for JSON
           and DB representation).
         from_schema: metadata
-        multivalued: true
         list_elements_ordered: true
         alias: funding
         owner: Dataset
@@ -1002,18 +1114,7 @@ classes:
         - FundedEntity
         range: Funding
         recommended: true
-        inlined: true
-        inlined_as_list: true
-      key_photos:
-        name: key_photos
-        description: A set of paths to representative images of a piece of data.
-        from_schema: metadata
-        alias: key_photos
-        owner: Dataset
-        domain_of:
-        - PicturedEntity
-        range: PicturePath
-        required: true
+        multivalued: true
         inlined: true
         inlined_as_list: true
       cross_references:
@@ -1069,7 +1170,7 @@ classes:
       other_setup:
         name: other_setup
         description: Describes other setup not covered by sample preparation or grid
-          preparation that may make this dataset unique in   the same publication.
+          preparation that may make this dataset unique in the same publication.
         from_schema: metadata
         exact_mappings:
         - cdp-common:preparation_other_setup
@@ -1140,6 +1241,19 @@ classes:
     description: The camera used to collect the tilt series.
     from_schema: metadata
     attributes:
+      acquire_mode:
+        name: acquire_mode
+        description: Camera acquisition mode
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:tiltseries_camera_acquire_mode
+        alias: acquire_mode
+        owner: Camera
+        domain_of:
+        - Camera
+        range: string
+        inlined: true
+        inlined_as_list: true
       manufacturer:
         name: manufacturer
         description: Name of the camera manufacturer
@@ -1292,6 +1406,133 @@ classes:
         range: integer
         inlined: true
         inlined_as_list: true
+      aligned_tiltseries_binning:
+        name: aligned_tiltseries_binning
+        description: Binning factor of the aligned tilt series
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:tiltseries_aligned_tiltseries_binning
+        alias: aligned_tiltseries_binning
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      binning_from_frames:
+        name: binning_from_frames
+        description: Describes the binning factor from frames to tilt series file
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:tiltseries_binning_from_frames
+        alias: binning_from_frames
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: float
+        inlined: true
+        inlined_as_list: true
+      camera:
+        name: camera
+        description: The camera used to collect the tilt series.
+        from_schema: metadata
+        alias: camera
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: Camera
+        inlined: true
+        inlined_as_list: true
+      data_acquisition_software:
+        name: data_acquisition_software
+        description: Software used to collect data
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:tiltseries_data_acquisition_software
+        alias: data_acquisition_software
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: string
+        inlined: true
+        inlined_as_list: true
+      frames_count:
+        name: frames_count
+        description: Number of frames associated with this tiltseries
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:tiltseries_frames_count
+        alias: frames_count
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      is_aligned:
+        name: is_aligned
+        description: Whether this tilt series is aligned
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:tiltseries_is_aligned
+        alias: is_aligned
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      microscope:
+        name: microscope
+        description: The microscope used to collect the tilt series.
+        from_schema: metadata
+        alias: microscope
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: Microscope
+        inlined: true
+        inlined_as_list: true
+      microscope_additional_info:
+        name: microscope_additional_info
+        description: Other microscope optical setup information, in addition to energy
+          filter, phase plate and image corrector
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:tiltseries_microscope_additional_info
+        alias: microscope_additional_info
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: string
+        inlined: true
+        inlined_as_list: true
+      microscope_optical_setup:
+        name: microscope_optical_setup
+        description: The optical setup of the microscope used to collect the tilt
+          series.
+        from_schema: metadata
+        alias: microscope_optical_setup
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: MicroscopeOpticalSetup
+        inlined: true
+        inlined_as_list: true
+      related_empiar_entry:
+        name: related_empiar_entry
+        description: If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset
+          identifier
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:tiltseries_related_empiar_entry
+        alias: related_empiar_entry
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: string
+        inlined: true
+        inlined_as_list: true
       spherical_aberration_constant:
         name: spherical_aberration_constant
         description: Spherical Aberration Constant of the objective lens in millimeters
@@ -1305,14 +1546,13 @@ classes:
         range: float
         inlined: true
         inlined_as_list: true
-      microscope_additional_info:
-        name: microscope_additional_info
-        description: Other microscope optical setup information, in addition to energy
-          filter, phase plate and image corrector
+      tilt_alignment_software:
+        name: tilt_alignment_software
+        description: Software used for tilt alignment
         from_schema: metadata
         exact_mappings:
-        - cdp-common:tiltseries_microscope_additional_info
-        alias: microscope_additional_info
+        - cdp-common:tiltseries_tilt_alignment_software
+        alias: tilt_alignment_software
         owner: TiltSeries
         domain_of:
         - TiltSeries
@@ -1330,6 +1570,31 @@ classes:
         domain_of:
         - TiltSeries
         range: float
+        inlined: true
+        inlined_as_list: true
+      tilt_range:
+        name: tilt_range
+        description: The range of tilt angles in the tilt series.
+        from_schema: metadata
+        alias: tilt_range
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: TiltRange
+        inlined: true
+        inlined_as_list: true
+      tilt_series_quality:
+        name: tilt_series_quality
+        description: Author assessment of tilt series quality within the dataset (1-5,
+          5 is best)
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:tiltseries_tilt_series_quality
+        alias: tilt_series_quality
+        owner: TiltSeries
+        domain_of:
+        - TiltSeries
+        range: integer
         inlined: true
         inlined_as_list: true
       tilt_step:
@@ -1372,46 +1637,6 @@ classes:
         range: float
         inlined: true
         inlined_as_list: true
-      data_acquisition_software:
-        name: data_acquisition_software
-        description: Software used to collect data
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_data_acquisition_software
-        alias: data_acquisition_software
-        owner: TiltSeries
-        domain_of:
-        - TiltSeries
-        range: string
-        inlined: true
-        inlined_as_list: true
-      binning_from_frames:
-        name: binning_from_frames
-        description: Describes the binning factor from frames to tilt series file
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_binning_from_frames
-        alias: binning_from_frames
-        owner: TiltSeries
-        domain_of:
-        - TiltSeries
-        range: float
-        inlined: true
-        inlined_as_list: true
-      tilt_series_quality:
-        name: tilt_series_quality
-        description: Author assessment of tilt series quality within the dataset (1-5,
-          5 is best)
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_tilt_series_quality
-        alias: tilt_series_quality
-        owner: TiltSeries
-        domain_of:
-        - TiltSeries
-        range: integer
-        inlined: true
-        inlined_as_list: true
       pixel_spacing:
         name: pixel_spacing
         description: Pixel spacing for the tilt series
@@ -1423,77 +1648,6 @@ classes:
         domain_of:
         - TiltSeries
         range: float
-        inlined: true
-        inlined_as_list: true
-      aligned_tiltseries_binning:
-        name: aligned_tiltseries_binning
-        description: Binning factor of the aligned tilt series
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_aligned_tiltseries_binning
-        alias: aligned_tiltseries_binning
-        owner: TiltSeries
-        domain_of:
-        - TiltSeries
-        range: integer
-        inlined: true
-        inlined_as_list: true
-      frames_count:
-        name: frames_count
-        description: Number of frames associated with this tiltseries
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_frames_count
-        alias: frames_count
-        owner: TiltSeries
-        domain_of:
-        - TiltSeries
-        range: integer
-        inlined: true
-        inlined_as_list: true
-      camera:
-        name: camera
-        description: The camera used to collect the tilt series.
-        from_schema: metadata
-        alias: camera
-        owner: TiltSeries
-        domain_of:
-        - TiltSeries
-        range: Camera
-        inlined: true
-        inlined_as_list: true
-      microscope:
-        name: microscope
-        description: The microscope used to collect the tilt series.
-        from_schema: metadata
-        alias: microscope
-        owner: TiltSeries
-        domain_of:
-        - TiltSeries
-        range: Microscope
-        inlined: true
-        inlined_as_list: true
-      microscope_optical_setup:
-        name: microscope_optical_setup
-        description: The optical setup of the microscope used to collect the tilt
-          series.
-        from_schema: metadata
-        alias: microscope_optical_setup
-        owner: TiltSeries
-        domain_of:
-        - TiltSeries
-        range: MicroscopeOpticalSetup
-        inlined: true
-        inlined_as_list: true
-      tilt_range:
-        name: tilt_range
-        description: The range of tilt angles in the tilt series.
-        from_schema: metadata
-        alias: tilt_range
-        owner: TiltSeries
-        domain_of:
-        - TiltSeries
-        range: TiltRange
         inlined: true
         inlined_as_list: true
   TomogramSize:
@@ -1560,7 +1714,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: string
+        range: integer
         inlined: true
         inlined_as_list: true
       y:
@@ -1573,7 +1727,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: string
+        range: integer
         inlined: true
         inlined_as_list: true
       z:
@@ -1586,7 +1740,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: string
+        range: integer
         inlined: true
         inlined_as_list: true
   Tomogram:
@@ -1595,7 +1749,6 @@ classes:
     from_schema: metadata
     mixins:
     - AuthoredEntity
-    - PicturedEntity
     attributes:
       voxel_spacing:
         name: voxel_spacing
@@ -1702,21 +1855,17 @@ classes:
         owner: Tomogram
         domain_of:
         - Tomogram
-        range: string
+        range: VersionString
         inlined: true
         inlined_as_list: true
       affine_transformation_matrix:
         name: affine_transformation_matrix
-        description: The flip or rotation transformation of this author submitted
-          tomogram is indicated here
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tomogram_affine_transformation_matrix
         alias: affine_transformation_matrix
         owner: Tomogram
         domain_of:
         - Tomogram
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
       size:
@@ -1746,85 +1895,14 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
-        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: Tomogram
         domain_of:
         - AuthoredEntity
-        - AnnotatoredEntity
         range: Author
         required: true
-        inlined: true
-        inlined_as_list: true
-      key_photos:
-        name: key_photos
-        description: A set of paths to representative images of a piece of data.
-        from_schema: metadata
-        alias: key_photos
-        owner: Tomogram
-        domain_of:
-        - PicturedEntity
-        range: PicturePath
-        required: true
-        inlined: true
-        inlined_as_list: true
-  AnnotationFile:
-    name: AnnotationFile
-    description: Metadata describing a file containing an annotation.
-    from_schema: metadata
-    attributes:
-      format:
-        name: format
-        description: File format for this file
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_file_format
-        alias: format
-        owner: AnnotationFile
-        domain_of:
-        - AnnotationFile
-        range: string
-        inlined: true
-        inlined_as_list: true
-      shape:
-        name: shape
-        description: Describe whether this is a Point, OrientedPoint, or SegmentationMask
-          file
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_file_shape_type
-        alias: shape
-        owner: AnnotationFile
-        domain_of:
-        - AnnotationFile
-        range: string
-        inlined: true
-        inlined_as_list: true
-      path:
-        name: path
-        description: Path to the annotation file relative to the dataset root.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_file_path
-        alias: path
-        owner: AnnotationFile
-        domain_of:
-        - AnnotationFile
-        range: string
-        inlined: true
-        inlined_as_list: true
-      is_visualization_default:
-        name: is_visualization_default
-        description: This annotation will be rendered in neuroglancer by default.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_file_is_visualization_default
-        alias: is_visualization_default
-        owner: AnnotationFile
-        domain_of:
-        - AnnotationFile
-        range: boolean
+        multivalued: true
         inlined: true
         inlined_as_list: true
   AnnotationConfidence:
@@ -1903,7 +1981,6 @@ classes:
         owner: AnnotationObject
         domain_of:
         - Author
-        - Annotator
         - Organism
         - Tissue
         - CellType
@@ -1941,13 +2018,419 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
+  AnnotationSourceFile:
+    name: AnnotationSourceFile
+    description: File and sourcing data for an annotation. Represents an entry in
+      annotation.sources.
+    from_schema: metadata
+    attributes:
+      file_format:
+        name: file_format
+        description: File format for this file
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_format
+        alias: file_format
+        owner: AnnotationSourceFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        description: Glob string to match annotation files in the dataset.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_string
+        alias: glob_string
+        owner: AnnotationSourceFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        description: This annotation will be rendered in neuroglancer by default.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_visualization_default
+        alias: is_visualization_default
+        owner: AnnotationSourceFile
+        domain_of:
+        - AnnotationSourceFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+  AnnotationOrientedPointFile:
+    name: AnnotationOrientedPointFile
+    description: File and sourcing data for an oriented point annotation.
+    from_schema: metadata
+    aliases:
+    - OrientedPoint
+    is_a: AnnotationSourceFile
+    attributes:
+      binning:
+        name: binning
+        description: The binning factor for a oriented point annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_oriented_point_binning
+        alias: binning
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationPointFile
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      filter_value:
+        name: filter_value
+        description: The filter value for a oriented point annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_oriented_point_filter_value
+        alias: filter_value
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      order:
+        name: order
+        description: The order of axes for a oriented point annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_oriented_point_order
+        alias: order
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      file_format:
+        name: file_format
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_format
+        alias: file_format
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_string
+        alias: glob_string
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_visualization_default
+        alias: is_visualization_default
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationSourceFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+  AnnotationInstanceSegmentationFile:
+    name: AnnotationInstanceSegmentationFile
+    description: File and sourcing data for an instance segmentation annotation.
+    from_schema: metadata
+    aliases:
+    - InstanceSegmentation
+    is_a: AnnotationOrientedPointFile
+    attributes:
+      binning:
+        name: binning
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_oriented_point_binning
+        alias: binning
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationPointFile
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      filter_value:
+        name: filter_value
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_oriented_point_filter_value
+        alias: filter_value
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      order:
+        name: order
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_oriented_point_order
+        alias: order
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      file_format:
+        name: file_format
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_format
+        alias: file_format
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_string
+        alias: glob_string
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_visualization_default
+        alias: is_visualization_default
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationSourceFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+  AnnotationPointFile:
+    name: AnnotationPointFile
+    description: File and sourcing data for a point annotation.
+    from_schema: metadata
+    aliases:
+    - Point
+    is_a: AnnotationSourceFile
+    attributes:
+      binning:
+        name: binning
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_point_binning
+        alias: binning
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationPointFile
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      columns:
+        name: columns
+        description: The columns used in a point annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_point_columns
+        alias: columns
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      delimiter:
+        name: delimiter
+        description: The delimiter used in a oriented point annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_point_delimiter
+        alias: delimiter
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      file_format:
+        name: file_format
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_format
+        alias: file_format
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_string
+        alias: glob_string
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_visualization_default
+        alias: is_visualization_default
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationSourceFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+  AnnotationSegmentationMaskFile:
+    name: AnnotationSegmentationMaskFile
+    description: File and sourcing data for a segmentation mask annotation.
+    from_schema: metadata
+    aliases:
+    - SegmentationMask
+    is_a: AnnotationSourceFile
+    attributes:
+      file_format:
+        name: file_format
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_format
+        alias: file_format
+        owner: AnnotationSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_string
+        alias: glob_string
+        owner: AnnotationSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_visualization_default
+        alias: is_visualization_default
+        owner: AnnotationSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+  AnnotationSemanticSegmentationMaskFile:
+    name: AnnotationSemanticSegmentationMaskFile
+    description: File and sourcing data for a semantic segmentation mask annotation.
+    from_schema: metadata
+    aliases:
+    - SemanticSegmentationMask
+    is_a: AnnotationSourceFile
+    attributes:
+      mask_label:
+        name: mask_label
+        description: The mask label for a semantic segmentation mask annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_semantic_segmentation_mask_label
+        alias: mask_label
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationSemanticSegmentationMaskFile
+        range: integer
+        inlined: true
+        inlined_as_list: true
+      file_format:
+        name: file_format
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_format
+        alias: file_format
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_string
+        alias: glob_string
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_visualization_default
+        alias: is_visualization_default
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
   Annotation:
     name: Annotation
     description: Metadata describing an annotation.
     from_schema: metadata
     mixins:
     - DatestampedEntity
-    - AnnotatoredEntity
+    - AuthoredEntity
     attributes:
       annotation_method:
         name: annotation_method
@@ -1963,17 +2446,15 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
-      annotation_method_type:
-        name: annotation_method_type
-        description: Classification of the annotation method based on supervision.
+      annotation_object:
+        name: annotation_object
+        description: Metadata describing the object being annotated.
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_method_type
-        alias: annotation_method_type
+        alias: annotation_object
         owner: Annotation
         domain_of:
         - Annotation
-        range: annotation_method_type_enum
+        range: AnnotationObject
         inlined: true
         inlined_as_list: true
       annotation_publications:
@@ -2003,6 +2484,31 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
+      confidence:
+        name: confidence
+        description: Metadata describing the confidence of an annotation.
+        from_schema: metadata
+        alias: confidence
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: AnnotationConfidence
+        inlined: true
+        inlined_as_list: true
+      files:
+        name: files
+        description: File and sourcing data for an annotation. Represents an entry
+          in annotation.sources.
+        from_schema: metadata
+        list_elements_ordered: true
+        alias: files
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: AnnotationSourceFile
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
       ground_truth_status:
         name: ground_truth_status
         description: Whether an annotation is considered ground truth, as determined
@@ -2015,19 +2521,6 @@ classes:
         domain_of:
         - Annotation
         range: boolean
-        inlined: true
-        inlined_as_list: true
-      object_count:
-        name: object_count
-        description: Number of objects identified
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_object_count
-        alias: object_count
-        owner: Annotation
-        domain_of:
-        - Annotation
-        range: integer
         inlined: true
         inlined_as_list: true
       is_curator_recommended:
@@ -2044,39 +2537,43 @@ classes:
         range: boolean
         inlined: true
         inlined_as_list: true
-      files:
-        name: files
-        description: Metadata describing a file containing an annotation.
+      method_type:
+        name: method_type
+        description: Classification of the annotation method based on supervision.
         from_schema: metadata
-        multivalued: true
-        list_elements_ordered: true
-        alias: files
+        exact_mappings:
+        - cdp-common:annotation_method_type
+        alias: method_type
         owner: Annotation
         domain_of:
         - Annotation
-        range: AnnotationFile
+        range: annotation_method_type_enum
         inlined: true
         inlined_as_list: true
-      confidence:
-        name: confidence
-        description: Metadata describing the confidence of an annotation.
+      object_count:
+        name: object_count
+        description: Number of objects identified
         from_schema: metadata
-        alias: confidence
+        exact_mappings:
+        - cdp-common:annotation_object_count
+        alias: object_count
         owner: Annotation
         domain_of:
         - Annotation
-        range: AnnotationConfidence
+        range: integer
         inlined: true
         inlined_as_list: true
-      annotation_object:
-        name: annotation_object
-        description: Metadata describing the object being annotated.
+      version:
+        name: version
+        description: Version of annotation.
         from_schema: metadata
-        alias: annotation_object
+        exact_mappings:
+        - cdp-common:annotation_version
+        alias: version
         owner: Annotation
         domain_of:
         - Annotation
-        range: AnnotationObject
+        range: VersionString
         inlined: true
         inlined_as_list: true
       dates:
@@ -2094,19 +2591,22 @@ classes:
         inlined_as_list: true
       authors:
         name: authors
-        description: Annotator of a scientific data entity.
+        description: Author of a scientific data entity.
         from_schema: metadata
-        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: Annotation
         domain_of:
         - AuthoredEntity
-        - AnnotatoredEntity
-        range: Annotator
+        range: Author
         required: true
+        multivalued: true
         inlined: true
         inlined_as_list: true
+  Any:
+    name: Any
+    from_schema: metadata
+    class_uri: linkml:Any
   CrossReferences:
     name: CrossReferences
     description: A set of cross-references to other databases and publications.

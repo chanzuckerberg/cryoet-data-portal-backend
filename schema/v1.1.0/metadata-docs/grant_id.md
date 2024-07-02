@@ -1,3 +1,5 @@
+
+
 # Slot: grant_id
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:grant_id](metadatagrant_id)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... |  no  |
+| [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:grant_id](metadatagrant_id)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

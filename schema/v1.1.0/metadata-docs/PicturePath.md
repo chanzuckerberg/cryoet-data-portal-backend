@@ -1,3 +1,5 @@
+
+
 # Class: PicturePath
 
 
@@ -12,18 +14,17 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 
 
+
+
 ```mermaid
  classDiagram
     class PicturePath
+    click PicturePath href "../PicturePath"
       PicturePath : snapshot
-
-          PicturePath --> string : snapshot
-
+        
       PicturePath : thumbnail
-
-          PicturePath --> string : thumbnail
-
-
+        
+      
 ```
 
 
@@ -36,8 +37,8 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [snapshot](snapshot.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Path to the dataset preview image relative to the dataset directory root | direct |
-| [thumbnail](thumbnail.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Path to the thumbnail of preview image relative to the dataset directory root | direct |
+| [snapshot](snapshot.md) | 0..1 <br/> [String](String.md) | Path to the dataset preview image relative to the dataset directory root | direct |
+| [thumbnail](thumbnail.md) | 0..1 <br/> [String](String.md) | Path to the thumbnail of preview image relative to the dataset directory root | direct |
 
 
 
@@ -48,8 +49,6 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
 | [PicturedEntity](PicturedEntity.md) | [key_photos](key_photos.md) | range | [PicturePath](PicturePath.md) |
-| [Dataset](Dataset.md) | [key_photos](key_photos.md) | range | [PicturePath](PicturePath.md) |
-| [Tomogram](Tomogram.md) | [key_photos](key_photos.md) | range | [PicturePath](PicturePath.md) |
 
 
 

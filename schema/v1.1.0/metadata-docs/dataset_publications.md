@@ -1,3 +1,5 @@
+
+
 # Slot: dataset_publications
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:dataset_publications](metadatadataset_publications)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
+| [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:dataset_publications](metadatadataset_publications)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 * Recommended: True
 

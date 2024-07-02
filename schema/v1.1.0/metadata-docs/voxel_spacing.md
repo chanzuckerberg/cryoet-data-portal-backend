@@ -1,3 +1,5 @@
+
+
 # Slot: voxel_spacing
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
 
 
 

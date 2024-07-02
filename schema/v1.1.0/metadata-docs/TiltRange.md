@@ -1,3 +1,5 @@
+
+
 # Class: TiltRange
 
 
@@ -12,18 +14,17 @@ URI: [cdp-meta:TiltRange](metadataTiltRange)
 
 
 
+
+
 ```mermaid
  classDiagram
     class TiltRange
+    click TiltRange href "../TiltRange"
       TiltRange : max
-
-          TiltRange --> float : max
-
+        
       TiltRange : min
-
-          TiltRange --> float : min
-
-
+        
+      
 ```
 
 
@@ -36,8 +37,8 @@ URI: [cdp-meta:TiltRange](metadataTiltRange)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [min](min.md) | 0..1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Minimal tilt angle in degrees | direct |
-| [max](max.md) | 0..1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Maximal tilt angle in degrees | direct |
+| [min](min.md) | 0..1 <br/> [Float](Float.md) | Minimal tilt angle in degrees | direct |
+| [max](max.md) | 0..1 <br/> [Float](Float.md) | Maximal tilt angle in degrees | direct |
 
 
 

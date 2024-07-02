@@ -1,3 +1,5 @@
+
+
 # Slot: tilting_scheme
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:tilting_scheme](metadatatilting_scheme)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:tilting_scheme](metadatatilting_scheme)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

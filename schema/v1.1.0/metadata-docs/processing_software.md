@@ -1,3 +1,5 @@
+
+
 # Slot: processing_software
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:processing_software](metadataprocessing_software)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:processing_software](metadataprocessing_software)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

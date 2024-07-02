@@ -1,3 +1,5 @@
+
+
 # Slot: max
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:max](metadatamax)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltRange](TiltRange.md) | The range of tilt angles in the tilt series |  no  |
+| [TiltRange](TiltRange.md) | The range of tilt angles in the tilt series |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:max](metadatamax)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
 
 
 

@@ -1,3 +1,5 @@
+
+
 # Class: DateStamp
 
 
@@ -6,10 +8,10 @@ _A set of dates at which a data item was deposited, published and last modified.
 
 
 
-* __NOTE__: this is an abstract class and should not be instantiated directly
-
 
 URI: [cdp-meta:DateStamp](metadataDateStamp)
+
+
 
 
 
@@ -17,19 +19,14 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 ```mermaid
  classDiagram
     class DateStamp
+    click DateStamp href "../DateStamp"
       DateStamp : deposition_date
-
-          DateStamp --> date : deposition_date
-
+        
       DateStamp : last_modified_date
-
-          DateStamp --> date : last_modified_date
-
+        
       DateStamp : release_date
-
-          DateStamp --> date : release_date
-
-
+        
+      
 ```
 
 
@@ -42,12 +39,12 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [deposition_date](deposition_date.md) | 1..1 <br/> [xsd:date](http://www.w3.org/2001/XMLSchema#date) | The date a data item was received by the cryoET data portal | direct |
-| [release_date](release_date.md) | 1..1 _recommended_ <br/> [xsd:date](http://www.w3.org/2001/XMLSchema#date) | The date a data item was received by the cryoET data portal | direct |
-| [last_modified_date](last_modified_date.md) | 1..1 _recommended_ <br/> [xsd:date](http://www.w3.org/2001/XMLSchema#date) | The date a piece of data was last modified on the cryoET data portal | direct |
-| [deposition_date](deposition_date.md) | 1..1 <br/> [xsd:date](http://www.w3.org/2001/XMLSchema#date) | The date a data item was received by the cryoET data portal | direct |
-| [release_date](release_date.md) | 1..1 _recommended_ <br/> [xsd:date](http://www.w3.org/2001/XMLSchema#date) | The date a data item was received by the cryoET data portal | direct |
-| [last_modified_date](last_modified_date.md) | 1..1 _recommended_ <br/> [xsd:date](http://www.w3.org/2001/XMLSchema#date) | The date a piece of data was last modified on the cryoET data portal | direct |
+| [deposition_date](deposition_date.md) | 1 <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
+| [release_date](release_date.md) | 1 _recommended_ <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
+| [last_modified_date](last_modified_date.md) | 1 _recommended_ <br/> [Date](Date.md) | The date a piece of data was last modified on the cryoET data portal | direct |
+| [deposition_date](deposition_date.md) | 1 <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
+| [release_date](release_date.md) | 1 _recommended_ <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
+| [last_modified_date](last_modified_date.md) | 1 _recommended_ <br/> [Date](Date.md) | The date a piece of data was last modified on the cryoET data portal | direct |
 
 
 
@@ -106,7 +103,6 @@ name: DateStamp
 description: A set of dates at which a data item was deposited, published and last
   modified.
 from_schema: metadata
-abstract: true
 slots:
 - deposition_date
 - release_date
@@ -181,7 +177,6 @@ name: DateStamp
 description: A set of dates at which a data item was deposited, published and last
   modified.
 from_schema: metadata
-abstract: true
 slot_usage:
   deposition_date:
     name: deposition_date

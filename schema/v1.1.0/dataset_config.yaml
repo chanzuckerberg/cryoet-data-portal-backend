@@ -1,0 +1,328 @@
+# TODO: handle parent_filters and inlcude and exclude (valid for nearly all sources)
+
+name: cdp-dataset-config
+id: cdp-dataset-config
+version: 1.1.0
+description: Schema for dataset configs
+imports:
+- linkml:types
+- ./metadata_materialized
+- ./common
+prefixes:
+  linkml:
+    prefix_prefix: linkml
+    prefix_reference: https://w3id.org/linkml/
+
+# TODO: need to confirm required state of each sources' values
+# TODO: add sources to the non-source-only classes
+# For the sources only attributes, refine the types of sources that exist
+
+classes:
+  # ============================================================================
+  # Reused / general classes
+  # ============================================================================
+
+  GeneralGlob:
+    abstract: true
+    attributes:
+      list_glob:
+        range: string
+        required: true
+      match_regex:
+        range: string
+      name_regex:
+        range: string
+
+  DestinationGlob:
+    is_a: GeneralGlob
+
+  SourceGlob:
+    is_a: GeneralGlob
+  
+  SourceMultiGlob:
+    attributes:
+      list_globs:
+        multivalued: true
+        range: string
+  
+  # TODO: LinkML doesn't support all the validation for sources, so we'll need to extend it more in Python / JSON Schema 
+  DefaultSource:
+    attributes:
+      destination_glob:
+        range: DestinationGlob
+      source_glob:
+        range: SourceGlob
+      source_multi_glob:
+        range: SourceMultiGlob
+      # Would also have literal here, but literal schema varies by class
+      # Would also have parent_filters here, but sometimes parent_filters doesn't apply (e.g., Dataset)
+
+  SourceParentFiltersContainer:
+    attributes:
+      parent_filters:
+        range: SourceParentFilters
+  
+  SourceParentFilters:
+    attributes:
+      include:
+        range: SourceParent
+      exclude:
+        range: SourceParent
+
+  SourceParent:
+    attributes:
+      annotation:
+        multivalued: true
+        range: string
+      dataset:
+        multivalued: true
+        range: string
+      dataset_keyphoto:
+        multivalued: true
+        range: string
+      frame:
+        multivalued: true
+        range: string
+      gain:
+        multivalued: true
+        range: string
+      key_image:
+        multivalued: true
+        range: string
+      raw_tilt:
+        multivalued: true
+        range: string
+      run:
+        multivalued: true
+        range: string      
+      tiltseries:
+        multivalued: true
+        range: string      
+      tomogram:
+        multivalued: true
+        range: string      
+      voxel_spacing:
+        multivalued: true
+        range: string
+
+  # ============================================================================
+  # Dataset config classes
+  # ============================================================================
+  AnnotationContainer:
+    attributes:
+      metadata:
+        range: Annotation
+        required: true
+      sources:
+        multivalued: true
+        range: AnnotationSource
+        required: true
+
+  AnnotationSource:
+    attributes:
+      instance_segmentation:
+        range: AnnotationInstanceSegmentationFile
+      oriented_point:
+        range: AnnotationOrientedPointFile
+      point:
+        range: AnnotationPointFile
+      segmentation_mask:
+        range: AnnotationSegmentationMaskFile
+      semantic_segmentation_mask: 
+        range: AnnotationSemanticSegmentationMaskFile
+      parent_filters:
+        range: SourceParentFilters
+          
+  DatasetContainer:
+    attributes:
+      metadata:
+        range: Dataset
+        required: true
+      sources:
+        multivalued: true
+        range: DatasetSource
+        required: true
+
+  DatasetSource:
+    mixins:
+      - DefaultSource
+    attributes:
+      literal:
+        range: DatasetLiteral
+
+  DatasetLiteral:
+    attributes:
+      value:
+        multivalued: true
+        range: string
+        required: true
+
+  DatasetKeyPhotoContainer:
+    attributes:
+      sources:
+        multivalued: true
+        range: DatasetKeyPhotoSource
+        required: true
+  
+  DatasetKeyPhotoSource:
+    mixins:
+      - SourceParentFiltersContainer
+    attributes:
+      literal: 
+        range: DatasetKeyPhotoLiteral
+
+  DatasetKeyPhotoLiteral:
+    attributes:
+      value:
+        range: DatasetKeyPhotoValue
+
+  DatasetKeyPhotoValue:
+    attributes:
+      snapshot: 
+        range: string
+        required: true
+      thumbnail:
+        range: string
+        required: true
+
+  FrameContainer:
+    attributes:
+      sources:
+        multivalued: true
+        range: FrameSource
+        required: true
+
+  FrameSource:
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
+
+  GainContainer:
+    attributes:
+      sources:
+        multivalued: true
+        range: GainSource
+        required: true
+
+  GainSource:
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
+
+  KeyImageContainer:
+    attributes:
+      sources:
+        multivalued: true
+        range: KeyImageSource
+        required: true
+
+  KeyImageSource:
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
+    attributes:
+      literal: 
+        range: KeyImageLiteral
+
+  KeyImageLiteral:
+    attributes:
+      value:
+        multivalued: true
+        range: string
+        required: true
+
+  RawTiltContainer:
+    attributes:
+      sources:
+        multivalued: true
+        range: RawTiltSource
+        required: true
+
+  RawTiltSource:
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
+
+  RunContainer:
+    attributes:
+      sources:
+        multivalued: true
+        range: RunSource
+        required: true
+
+  RunSource:
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
+
+  StandardizationConfig:
+    attributes:
+      deposition_id:
+        range: integer
+        required: true
+      run_data_map_file:
+        range: string
+      run_to_frame_map_csv:
+        range: string
+      run_to_tomo_map_csv:
+        range: string
+      run_to_ts_map_csv:
+        range: string
+      source_prefix:
+        range: string
+        required: true
+  
+  TiltSeriesContainer:
+    attributes:
+      metadata:
+        range: TiltSeries
+        required: true
+      sources:
+        multivalued: true
+        range: TiltSeriesSource
+        required: true
+  
+  TiltSeriesSource:
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
+
+  TomogramContainer:
+    attributes:
+      metadata:
+        range: Tomogram
+        required: true
+      sources:
+        multivalued: true
+        range: TomogramSource
+        required: true
+
+  TomogramSource:
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
+
+  VoxelSpacingContainer:
+    attributes:
+      sources:
+        multivalued: true
+        range: VoxelSpacingSource
+        required: true
+
+  VoxelSpacingSource:
+    mixins:
+      - DefaultSource
+      - SourceParentFiltersContainer
+    attributes:
+      literal: 
+        range: VoxelSpacingLiteral
+
+  VoxelSpacingLiteral:
+    attributes:
+      value:
+        multivalued: true
+        any_of: 
+          - range: float
+          - range: AnyNumberFormattedString
+
+source_file: ../../schema/v1.1.0/metadata

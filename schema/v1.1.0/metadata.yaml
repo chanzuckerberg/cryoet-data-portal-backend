@@ -56,41 +56,10 @@ classes:
         exact_mappings:
           - cdp-common:affiliation_identifier
         recommended: true
-      is_corresponding:
+      corresponding_author_status:
         exact_mappings:
           - cdp-common:author_corresponding_author_status
-      is_primary_author:
-        exact_mappings:
-          - cdp-common:author_primary_author_status
-      ORCID:
-        exact_mappings:
-          - cdp-common:orcid
-        recommended: true
-
-  Annotator:
-    description: >-
-      Annotator of a scientific data entity.
-    attributes:
-      name:
-        exact_mappings:
-          - cdp-common:author_name
-      email:
-        exact_mappings:
-          - cdp-common:author_email
-      affiliation_name:
-        exact_mappings:
-          - cdp-common:author_affiliation_name
-      affiliation_address:
-        exact_mappings:
-          - cdp-common:author_affiliation_address
-      affiliation_identifier:
-        exact_mappings:
-          - cdp-common:affiliation_identifier
-        recommended: true
-      is_corresponding:
-        exact_mappings:
-          - cdp-common:author_corresponding_author_status
-      is_primary_annotator:
+      primary_author_status:
         exact_mappings:
           - cdp-common:author_primary_author_status
       ORCID:
@@ -154,18 +123,6 @@ classes:
         range: Author
         required: true
         description: An ordered list of authors of the entity.
-        multivalued: true
-        inlined_as_list: true
-        list_elements_ordered: true
-
-  AnnotatoredEntity:
-    abstract: true
-    description: An entity with associated annotation authors.
-    attributes:
-      authors:
-        range: Annotator
-        required: true
-        description: An ordered list of annotation authors of the entity.
         multivalued: true
         inlined_as_list: true
         list_elements_ordered: true
@@ -294,7 +251,6 @@ classes:
       - DatestampedEntity
       - AuthoredEntity
       - FundedEntity
-      - PicturedEntity
       - CrossReferencedEntity
       - ExperimentalMetadata
 
@@ -317,6 +273,9 @@ classes:
   Camera:
     description: &desc_camera The camera used to collect the tilt series.
     attributes:
+      acquire_mode: 
+        exact_mappings:
+          - cdp-common:tiltseries_camera_acquire_mode
       manufacturer:
         exact_mappings:
           - cdp-common:tiltseries_camera_manufacturer
@@ -368,15 +327,51 @@ classes:
       acceleration_voltage:
         exact_mappings:
           - cdp-common:tiltseries_acceleration_voltage
-      spherical_aberration_constant:
+      aligned_tiltseries_binning:
         exact_mappings:
-          - cdp-common:tiltseries_spherical_aberration_constant
+          - cdp-common:tiltseries_aligned_tiltseries_binning
+      binning_from_frames:
+        exact_mappings:
+          - cdp-common:tiltseries_binning_from_frames
+      camera:
+        description: *desc_camera
+        range: Camera
+      data_acquisition_software:
+        exact_mappings:
+          - cdp-common:tiltseries_data_acquisition_software
+      frames_count:
+        exact_mappings:
+          - cdp-common:tiltseries_frames_count
+      is_aligned:
+        exact_mappings:
+          - cdp-common:tiltseries_is_aligned
+      microscope:
+        description: *desc_microscope
+        range: Microscope
       microscope_additional_info:
         exact_mappings:
           - cdp-common:tiltseries_microscope_additional_info
+      microscope_optical_setup:
+        description: *desc_microscope_optical_setup
+        range: MicroscopeOpticalSetup
+      related_empiar_entry:
+        exact_mappings:
+          - cdp-common:tiltseries_related_empiar_entry
+      spherical_aberration_constant:
+        exact_mappings:
+          - cdp-common:tiltseries_spherical_aberration_constant
+      tilt_alignment_software:
+        exact_mappings:
+          - cdp-common:tiltseries_tilt_alignment_software
       tilt_axis:
         exact_mappings:
           - cdp-common:tiltseries_tilt_axis
+      tilt_range:
+        description: *desc_tilt_range
+        range: TiltRange
+      tilt_series_quality:
+        exact_mappings:
+          - cdp-common:tiltseries_tilt_series_quality
       tilt_step:
         exact_mappings:
           - cdp-common:tiltseries_tilt_step
@@ -386,36 +381,9 @@ classes:
       total_flux:
         exact_mappings:
           - cdp-common:tiltseries_total_flux
-      data_acquisition_software:
-        exact_mappings:
-          - cdp-common:tiltseries_data_acquisition_software
-      binning_from_frames:
-        exact_mappings:
-          - cdp-common:tiltseries_binning_from_frames
-      tilt_series_quality:
-        exact_mappings:
-          - cdp-common:tiltseries_tilt_series_quality
       pixel_spacing:
         exact_mappings:
           - cdp-common:tiltseries_pixel_spacing
-      aligned_tiltseries_binning:
-        exact_mappings:
-          - cdp-common:tiltseries_aligned_tiltseries_binning
-      frames_count:
-        exact_mappings:
-          - cdp-common:tiltseries_frames_count
-      camera:
-        description: *desc_camera
-        range: Camera
-      microscope:
-        description: *desc_microscope
-        range: Microscope
-      microscope_optical_setup:
-        description: *desc_microscope_optical_setup
-        range: MicroscopeOpticalSetup
-      tilt_range:
-        description: *desc_tilt_range
-        range: TiltRange
   # ============================================================================
 
   # ============================================================================
@@ -440,12 +408,15 @@ classes:
       x:
         exact_mappings:
           - cdp-common:tomogram_offset_x
+        range: integer
       y:
         exact_mappings:
           - cdp-common:tomogram_offset_y
+        range: integer
       z:
         exact_mappings:
           - cdp-common:tomogram_offset_z
+        range: integer
   # ============================================================================
 
   # ============================================================================
@@ -455,7 +426,6 @@ classes:
     description: Metadata describing a tomogram.
     mixins:
       - AuthoredEntity
-      - PicturedEntity
 
     attributes:
       voxel_spacing:
@@ -482,9 +452,10 @@ classes:
       tomogram_version:
         exact_mappings:
           - cdp-common:tomogram_version
+      # TODO: figure out validation for this
       affine_transformation_matrix:
-        exact_mappings:
-          - cdp-common:tomogram_affine_transformation_matrix
+          description: The flip or rotation transformation of this author submitted tomogram is indicated here
+          range: Any
       size:
         description: *desc_tomogram_size
         range: TomogramSize
@@ -496,22 +467,6 @@ classes:
   # ============================================================================
   # Annotation metadata
   # ============================================================================
-  AnnotationFile:
-    description: &desc_annotation_file Metadata describing a file containing an annotation.
-    attributes:
-      format:
-        exact_mappings:
-          - cdp-common:annotation_file_format
-      shape:
-        exact_mappings:
-          - cdp-common:annotation_file_shape_type
-      path:
-        exact_mappings:
-          - cdp-common:annotation_file_path
-      is_visualization_default:
-        exact_mappings:
-          - cdp-common:annotation_file_is_visualization_default
-
   AnnotationConfidence:
     description: &desc_annotation_confidence Metadata describing the confidence of an annotation.
     attributes:
@@ -540,6 +495,88 @@ classes:
       state:
         exact_mappings:
           - cdp-common:annotation_object_state
+
+  AnnotationSourceFile:
+    description: &desc_annotation_source_file File and sourcing data for an annotation. Represents an entry in annotation.sources. 
+    attributes:
+      file_format:
+        range: string
+        required: true
+        exact_mappings:
+          - cdp-common:annotation_source_file_format
+      glob_string:
+        range: string
+        required: true
+        exact_mappings:
+          - cdp-common:annotation_source_file_glob_string
+      is_visualization_default:
+        range: boolean
+        exact_mappings:
+          - cdp-common:annotation_source_file_is_visualization_default
+
+  AnnotationOrientedPointFile:
+    is_a: AnnotationSourceFile
+    aliases: 
+    - OrientedPoint
+    description: File and sourcing data for an oriented point annotation.
+    attributes:
+      binning: 
+        range: integer
+        exact_mappings:
+          - cdp-common:annotation_source_file_oriented_point_binning
+      filter_value:
+        range: string
+        exact_mappings:
+          - cdp-common:annotation_source_file_oriented_point_filter_value
+      order:
+        range: string
+        exact_mappings:
+          - cdp-common:annotation_source_file_oriented_point_order
+  
+  AnnotationInstanceSegmentationFile:
+    is_a: AnnotationOrientedPointFile
+    aliases: 
+    - InstanceSegmentation
+    description: File and sourcing data for an instance segmentation annotation.
+    attributes: # no extended attributes
+
+  AnnotationPointFile:
+    is_a: AnnotationSourceFile
+    aliases:
+    - Point
+    description: File and sourcing data for a point annotation.
+    attributes:
+      binning: 
+        range: integer
+        exact_mappings:
+          - cdp-common:annotation_source_file_point_binning
+      columns:
+        range: string
+        exact_mappings:
+          - cdp-common:annotation_source_file_point_columns
+      delimiter:
+        range: string
+        exact_mappings:
+          - cdp-common:annotation_source_file_point_delimiter
+
+  AnnotationSegmentationMaskFile:
+    is_a: AnnotationSourceFile
+    aliases: 
+    - SegmentationMask
+    description: File and sourcing data for a segmentation mask annotation.
+    attributes: # no extended attributes
+
+  AnnotationSemanticSegmentationMaskFile:
+    is_a: AnnotationSourceFile
+    aliases: 
+    - SemanticSegmentationMask
+    description: File and sourcing data for a semantic segmentation mask annotation.
+    attributes:
+      mask_label:
+        range: integer
+        exact_mappings:
+          - cdp-common:annotation_source_file_semantic_segmentation_mask_label
+
   # ============================================================================
 
   # ============================================================================
@@ -549,40 +586,44 @@ classes:
     description: Metadata describing an annotation.
     mixins:
     - DatestampedEntity
-    - AnnotatoredEntity
+    - AuthoredEntity
 
     attributes:
       annotation_method:
         exact_mappings:
           - cdp-common:annotation_method
-      annotation_method_type:
-        exact_mappings:
-          - cdp-common:annotation_method_type
+      annotation_object:
+        description: *desc_annotation_object
+        range: AnnotationObject
       annotation_publications:
         exact_mappings:
           - cdp-common:annotation_publication
       annotation_software:
         exact_mappings:
           - cdp-common:annotation_software
-      ground_truth_status:
-        exact_mappings:
-          - cdp-common:annotation_ground_truth_status
-      object_count:
-        exact_mappings:
-          - cdp-common:annotation_object_count
-      is_curator_recommended:
-        exact_mappings:
-          - cdp-common:annotation_is_curator_recommended
-      files:
-        description: *desc_annotation_file
-        range: AnnotationFile
-        multivalued: true
-        inlined_as_list: true
-        list_elements_ordered: true
       confidence:
         description: *desc_annotation_confidence
         range: AnnotationConfidence
-      annotation_object:
-        description: *desc_annotation_object
-        range: AnnotationObject
+      files:
+        description: *desc_annotation_source_file
+        range: AnnotationSourceFile
+        multivalued: true
+        inlined_as_list: true
+        list_elements_ordered: true
+      ground_truth_status:
+        exact_mappings:
+          - cdp-common:annotation_ground_truth_status
+      is_curator_recommended:
+        exact_mappings:
+          - cdp-common:annotation_is_curator_recommended
+      method_type:
+        exact_mappings:
+          - cdp-common:annotation_method_type
+      object_count:
+        exact_mappings:
+          - cdp-common:annotation_object_count
+      version:
+        exact_mappings:
+          - cdp-common:annotation_version
+      
   # ============================================================================

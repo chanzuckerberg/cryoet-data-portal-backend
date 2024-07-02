@@ -1,3 +1,5 @@
+
+
 # Class: AnnotationObject
 
 
@@ -12,26 +14,21 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 
 
+
+
 ```mermaid
  classDiagram
     class AnnotationObject
+    click AnnotationObject href "../AnnotationObject"
       AnnotationObject : description
-
-          AnnotationObject --> string : description
-
+        
       AnnotationObject : id
-
-          AnnotationObject --> string : id
-
+        
       AnnotationObject : name
-
-          AnnotationObject --> string : name
-
+        
       AnnotationObject : state
-
-          AnnotationObject --> string : state
-
-
+        
+      
 ```
 
 
@@ -44,10 +41,10 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [id](id.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [description](description.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | A textual description of the annotation object, can be a longer description t... | direct |
-| [state](state.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Molecule state annotated (e | direct |
+| [id](id.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [name](name.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [description](description.md) | 0..1 <br/> [String](String.md) | A textual description of the annotation object, can be a longer description t... | direct |
+| [state](state.md) | 0..1 <br/> [String](String.md) | Molecule state annotated (e | direct |
 
 
 
@@ -129,7 +126,6 @@ attributes:
     owner: AnnotationObject
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType
@@ -206,7 +202,6 @@ attributes:
     owner: AnnotationObject
     domain_of:
     - Author
-    - Annotator
     - Organism
     - Tissue
     - CellType

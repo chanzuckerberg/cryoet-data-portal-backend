@@ -6,16 +6,16 @@ annotations:
         description: ~
         state: ~
       dates: &repo-dates
-        deposition_date: 2024-02-20
-        last_modified_date: 2024-02-20
-        release_date: 2024-02-20
+        deposition_date: '2024-02-20'
+        last_modified_date: '2024-02-20'
+        release_date: '2024-02-20'
       annotation_method: intensity normalization + rescaling + FNET segmentation + skeletonization + DIST segmentation
       method_type: automated
       annotation_publications: ~
       ground_truth_status: False
       authors: &annotation_authors
         - name: Robert Kiewisz
-          primary_annotator_status: true
+          primary_author_status: true
         - name: Tristan Bepler
           corresponding_author_status: true
       annotation_software: TARDIS

@@ -1,3 +1,5 @@
+
+
 # Slot: annotation_publications
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:annotation_publications](metadataannotation_publications)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:annotation_publications](metadataannotation_publications)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

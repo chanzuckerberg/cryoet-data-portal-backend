@@ -1,3 +1,5 @@
+
+
 # Class: PicturedEntity
 
 
@@ -14,17 +16,22 @@ URI: [cdp-meta:PicturedEntity](metadataPicturedEntity)
 
 
 
+
+
 ```mermaid
  classDiagram
     class PicturedEntity
-      PicturedEntity <|-- Dataset
-      PicturedEntity <|-- Tomogram
-
+    click PicturedEntity href "../PicturedEntity"
       PicturedEntity : key_photos
+        
+          
+    
+    
+    PicturedEntity --> "1" PicturePath : key_photos
+    click PicturePath href "../PicturePath"
 
-          PicturedEntity --> PicturePath : key_photos
-
-
+        
+      
 ```
 
 
@@ -37,7 +44,7 @@ URI: [cdp-meta:PicturedEntity](metadataPicturedEntity)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [key_photos](key_photos.md) | 1..1 <br/> [PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data | direct |
+| [key_photos](key_photos.md) | 1 <br/> [PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data | direct |
 
 
 
@@ -97,8 +104,6 @@ attributes:
     owner: PicturedEntity
     domain_of:
     - PicturedEntity
-    - Dataset
-    - Tomogram
     range: PicturePath
     required: true
     inlined: true
@@ -125,8 +130,6 @@ attributes:
     owner: PicturedEntity
     domain_of:
     - PicturedEntity
-    - Dataset
-    - Tomogram
     range: PicturePath
     required: true
     inlined: true
