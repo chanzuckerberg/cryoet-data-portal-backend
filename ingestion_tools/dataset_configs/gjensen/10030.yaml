@@ -123,7 +123,7 @@ tomograms:
     processing_software: null
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: IMOD
-    tomogram_version: '1'
+    tomogram_version: 1
     voxel_spacing: '{tomo-voxel_spacing}'
   sources:
   - source_glob:

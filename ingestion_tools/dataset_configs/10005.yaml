@@ -25,7 +25,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
   - columns: xyz
     delimiter: ' '
@@ -50,7 +50,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
   - columns: xyz
     delimiter: ' '
@@ -193,7 +193,7 @@ tomograms:
     processing: raw
     reconstruction_method: ''
     reconstruction_software: Tomo3D
-    tomogram_version: '1'
+    tomogram_version: 1
     voxel_spacing: 5.224
   sources:
   - source_glob:

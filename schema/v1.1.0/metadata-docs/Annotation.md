@@ -147,14 +147,13 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Annotation |
 | native | cdp-meta:Annotation |
-
-
 
 
 

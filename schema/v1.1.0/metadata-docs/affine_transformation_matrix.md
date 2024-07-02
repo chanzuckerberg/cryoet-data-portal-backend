@@ -48,16 +48,6 @@ URI: [cdp-meta:affine_transformation_matrix](metadataaffine_transformation_matri
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:affine_transformation_matrix |
-| native | cdp-meta:affine_transformation_matrix |
-
-
-
-
 ## LinkML Source
 
 <details>

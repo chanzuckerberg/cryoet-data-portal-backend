@@ -53,16 +53,6 @@ URI: [cdp-meta:related_database_links](metadatarelated_database_links)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:related_database_links |
-| native | cdp-meta:related_database_links |
-
-
-
-
 ## LinkML Source
 
 <details>

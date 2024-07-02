@@ -75,14 +75,13 @@ URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:DatestampedEntity |
 | native | cdp-meta:DatestampedEntity |
-
-
 
 
 

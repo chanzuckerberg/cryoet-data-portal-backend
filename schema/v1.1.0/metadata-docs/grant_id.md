@@ -53,17 +53,6 @@ URI: [cdp-meta:grant_id](metadatagrant_id)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:grant_id |
-| native | cdp-meta:grant_id |
-| exact | cdp-common:funding_grant_id |
-
-
-
-
 ## LinkML Source
 
 <details>

@@ -53,16 +53,6 @@ URI: [cdp-meta:microscope_optical_setup](metadatamicroscope_optical_setup)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:microscope_optical_setup |
-| native | cdp-meta:microscope_optical_setup |
-
-
-
-
 ## LinkML Source
 
 <details>

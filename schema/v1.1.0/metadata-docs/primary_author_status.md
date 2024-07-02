@@ -53,17 +53,6 @@ URI: [cdp-meta:primary_author_status](metadataprimary_author_status)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:primary_author_status |
-| native | cdp-meta:primary_author_status |
-| exact | cdp-common:author_primary_author_status |
-
-
-
-
 ## LinkML Source
 
 <details>

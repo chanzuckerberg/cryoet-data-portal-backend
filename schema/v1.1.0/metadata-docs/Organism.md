@@ -72,14 +72,13 @@ URI: [cdp-meta:Organism](metadataOrganism)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Organism |
 | native | cdp-meta:Organism |
-
-
 
 
 

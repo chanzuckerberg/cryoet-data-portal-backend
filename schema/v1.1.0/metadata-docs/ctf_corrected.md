@@ -53,17 +53,6 @@ URI: [cdp-meta:ctf_corrected](metadatactf_corrected)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:ctf_corrected |
-| native | cdp-meta:ctf_corrected |
-| exact | cdp-common:tomogram_ctf_corrected |
-
-
-
-
 ## LinkML Source
 
 <details>

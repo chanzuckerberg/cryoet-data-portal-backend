@@ -53,17 +53,6 @@ URI: [cdp-meta:columns](metadatacolumns)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:columns |
-| native | cdp-meta:columns |
-| exact | cdp-common:annotation_source_file_columns |
-
-
-
-
 ## LinkML Source
 
 <details>

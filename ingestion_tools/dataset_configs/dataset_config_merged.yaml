@@ -38,7 +38,7 @@ annotations:
     - true
     is_curator_recommended: true
     method_type: manual
-    version: '1.0'
+    version: 1.0
   sources:
   - binning: 1
     columns: zyx
@@ -221,7 +221,7 @@ tomograms:
       - 0
       - 0
       - 0
-    align_software: RAPTOR
+    align_software: '{tomo-align_softwares}'
     authors:
     - ORCID: 0000-0001-8324-4040
       corresponding_author_status: true
@@ -239,7 +239,7 @@ tomograms:
     processing_software: '{tomo-processing_software}'
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: '{tomo-reconstruction_software}'
-    tomogram_version: '1'
+    tomogram_version: 1
     voxel_spacing:
     - '{run_voxel_spacing}'
     - 7.84

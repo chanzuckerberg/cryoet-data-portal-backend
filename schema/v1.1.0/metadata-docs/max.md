@@ -53,17 +53,6 @@ URI: [cdp-meta:max](metadatamax)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:max |
-| native | cdp-meta:max |
-| exact | cdp-common:tiltseries_tilt_max |
-
-
-
-
 ## LinkML Source
 
 <details>

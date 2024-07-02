@@ -53,17 +53,6 @@ URI: [cdp-meta:pixel_spacing](metadatapixel_spacing)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:pixel_spacing |
-| native | cdp-meta:pixel_spacing |
-| exact | cdp-common:tiltseries_pixel_spacing |
-
-
-
-
 ## LinkML Source
 
 <details>

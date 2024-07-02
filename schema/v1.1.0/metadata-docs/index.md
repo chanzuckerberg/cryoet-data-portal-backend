@@ -16,11 +16,11 @@ Name: cdp-meta
 | [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation. |
 | [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated. |
 | [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation. Represents an entry in annotation.sources. |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation. |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation. |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation. |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationSegmentationMaskFile](AnnotationSegmentationMaskFile.md) | File and sourcing data for a segmentation mask annotation. |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationSemanticSegmentationMaskFile](AnnotationSemanticSegmentationMaskFile.md) | File and sourcing data for a semantic segmentation mask annotation. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation. Annotation that identifies points along with orientation in the volume. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation. Annotation that identifies individual instances of object shapes. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation. Annotation that identifies points in the volume. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationSegmentationMaskFile](AnnotationSegmentationMaskFile.md) | File and sourcing data for a segmentation mask annotation. Annotation that identifies an object. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationSemanticSegmentationMaskFile](AnnotationSemanticSegmentationMaskFile.md) | File and sourcing data for a semantic segmentation mask annotation. Annotation that identifies classes of objects. |
 | [Any](Any.md) | None |
 | [Author](Author.md) | Author of a scientific data entity. |
 | [AuthoredEntity](AuthoredEntity.md) | An entity with associated authors. |
@@ -167,7 +167,6 @@ Name: cdp-meta
 | Enumeration | Description |
 | --- | --- |
 | [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Describes how the annotations were generated |
-| [AnnotationShapeEnum](AnnotationShapeEnum.md) | Annotation shape types available on the data portal |
 | [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Fiducial Alignment method |
 | [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study |
 | [TomogramTypeEnum](TomogramTypeEnum.md) | Tomogram type |

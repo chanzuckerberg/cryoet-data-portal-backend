@@ -19,7 +19,7 @@ annotations:
         - name: Tristan Bepler
           corresponding_author_status: true
       annotation_software: TARDIS
-      version: '1.0'
+      version: 1.0
       confidence:
         precision: ~
         recall: ~

@@ -72,14 +72,13 @@ URI: [cdp-meta:Tissue](metadataTissue)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Tissue |
 | native | cdp-meta:Tissue |
-
-
 
 
 

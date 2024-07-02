@@ -90,14 +90,13 @@ URI: [cdp-meta:AnnotationSourceFile](metadataAnnotationSourceFile)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationSourceFile |
 | native | cdp-meta:AnnotationSourceFile |
-
-
 
 
 

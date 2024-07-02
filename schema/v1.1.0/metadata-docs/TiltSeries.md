@@ -146,14 +146,13 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:TiltSeries |
 | native | cdp-meta:TiltSeries |
-
-
 
 
 

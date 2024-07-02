@@ -74,14 +74,13 @@ URI: [cdp-meta:MicroscopeOpticalSetup](metadataMicroscopeOpticalSetup)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:MicroscopeOpticalSetup |
 | native | cdp-meta:MicroscopeOpticalSetup |
-
-
 
 
 

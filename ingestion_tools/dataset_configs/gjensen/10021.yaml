@@ -122,7 +122,7 @@ tomograms:
     processing_software: novaCTF
     reconstruction_method: Weighted back projection
     reconstruction_software: novaCTF
-    tomogram_version: '1'
+    tomogram_version: 1
     voxel_spacing: 8.832
   sources:
   - source_glob:

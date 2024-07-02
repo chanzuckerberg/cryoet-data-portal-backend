@@ -3,7 +3,7 @@
 # Class: AnnotationPointFile
 
 
-_File and sourcing data for a point annotation._
+_File and sourcing data for a point annotation. Annotation that identifies points in the volume._
 
 
 
@@ -88,14 +88,13 @@ URI: [cdp-meta:AnnotationPointFile](metadataAnnotationPointFile)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationPointFile |
 | native | cdp-meta:AnnotationPointFile |
-
-
 
 
 
@@ -110,7 +109,8 @@ URI: [cdp-meta:AnnotationPointFile](metadataAnnotationPointFile)
 <details>
 ```yaml
 name: AnnotationPointFile
-description: File and sourcing data for a point annotation.
+description: File and sourcing data for a point annotation. Annotation that identifies
+  points in the volume.
 from_schema: metadata
 aliases:
 - Point
@@ -222,7 +222,8 @@ attributes:
 <details>
 ```yaml
 name: AnnotationPointFile
-description: File and sourcing data for a point annotation.
+description: File and sourcing data for a point annotation. Annotation that identifies
+  points in the volume.
 from_schema: metadata
 aliases:
 - Point

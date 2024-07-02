@@ -55,16 +55,6 @@ URI: [cdp-meta:release_date](metadatarelease_date)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:release_date |
-| native | cdp-meta:release_date |
-
-
-
-
 ## LinkML Source
 
 <details>

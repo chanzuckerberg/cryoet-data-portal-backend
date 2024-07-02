@@ -53,17 +53,6 @@ URI: [cdp-meta:annotation_publications](metadataannotation_publications)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:annotation_publications |
-| native | cdp-meta:annotation_publications |
-| exact | cdp-common:annotation_publication |
-
-
-
-
 ## LinkML Source
 
 <details>

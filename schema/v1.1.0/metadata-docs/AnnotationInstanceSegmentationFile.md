@@ -3,7 +3,7 @@
 # Class: AnnotationInstanceSegmentationFile
 
 
-_File and sourcing data for an instance segmentation annotation._
+_File and sourcing data for an instance segmentation annotation. Annotation that identifies individual instances of object shapes._
 
 
 
@@ -89,14 +89,13 @@ URI: [cdp-meta:AnnotationInstanceSegmentationFile](metadataAnnotationInstanceSeg
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationInstanceSegmentationFile |
 | native | cdp-meta:AnnotationInstanceSegmentationFile |
-
-
 
 
 
@@ -111,7 +110,8 @@ URI: [cdp-meta:AnnotationInstanceSegmentationFile](metadataAnnotationInstanceSeg
 <details>
 ```yaml
 name: AnnotationInstanceSegmentationFile
-description: File and sourcing data for an instance segmentation annotation.
+description: File and sourcing data for an instance segmentation annotation. Annotation
+  that identifies individual instances of object shapes.
 from_schema: metadata
 aliases:
 - InstanceSegmentation
@@ -219,7 +219,8 @@ attributes:
 <details>
 ```yaml
 name: AnnotationInstanceSegmentationFile
-description: File and sourcing data for an instance segmentation annotation.
+description: File and sourcing data for an instance segmentation annotation. Annotation
+  that identifies individual instances of object shapes.
 from_schema: metadata
 aliases:
 - InstanceSegmentation

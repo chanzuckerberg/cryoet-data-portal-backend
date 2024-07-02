@@ -53,17 +53,6 @@ URI: [cdp-meta:version](metadataversion)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:version |
-| native | cdp-meta:version |
-| exact | cdp-common:annotation_version |
-
-
-
-
 ## LinkML Source
 
 <details>

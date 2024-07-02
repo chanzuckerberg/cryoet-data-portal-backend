@@ -53,17 +53,6 @@ URI: [cdp-meta:is_aligned](metadatais_aligned)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:is_aligned |
-| native | cdp-meta:is_aligned |
-| exact | cdp-common:tiltseries_is_aligned |
-
-
-
-
 ## LinkML Source
 
 <details>

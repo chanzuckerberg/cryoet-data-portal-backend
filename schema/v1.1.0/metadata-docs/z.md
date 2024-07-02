@@ -16,8 +16,8 @@ URI: [cdp-meta:z](metadataz)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... |  no  |
 | [TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension |  no  |
+| [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... |  no  |
 
 
 
@@ -38,16 +38,6 @@ URI: [cdp-meta:z](metadataz)
 
 
 
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:z |
-| native | cdp-meta:z |
 
 
 

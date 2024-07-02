@@ -310,6 +310,8 @@ classes:
     attributes:
       literal: 
         range: VoxelSpacingLiteral
+      tomogram_header:
+        range: TomogramHeader
 
   VoxelSpacingLiteral:
     attributes:
@@ -318,5 +320,17 @@ classes:
         any_of: 
           - range: float
           - range: AnyNumberFormattedString
+
+  TomogramHeader:
+    attributes:
+      list_glob: 
+        range: string
+        required: true
+      match_regex:
+        range: string
+        ifabsent: string(.*)
+      header_key:
+        range: string
+        ifabsent: string(voxel_size)
 
 source_file: ../../schema/v1.1.0/metadata

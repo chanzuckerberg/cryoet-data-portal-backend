@@ -16,8 +16,8 @@ URI: [cdp-meta:model](metadatamodel)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Camera](Camera.md) | The camera used to collect the tilt series |  no  |
 | [Microscope](Microscope.md) | The microscope used to collect the tilt series |  no  |
+| [Camera](Camera.md) | The camera used to collect the tilt series |  no  |
 
 
 
@@ -38,16 +38,6 @@ URI: [cdp-meta:model](metadatamodel)
 
 
 
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:model |
-| native | cdp-meta:model |
 
 
 

@@ -53,17 +53,6 @@ URI: [cdp-meta:email](metadataemail)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:email |
-| native | cdp-meta:email |
-| exact | cdp-common:author_email |
-
-
-
-
 ## LinkML Source
 
 <details>

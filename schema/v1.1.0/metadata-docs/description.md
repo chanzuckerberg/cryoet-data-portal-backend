@@ -53,17 +53,6 @@ URI: [cdp-meta:description](metadatadescription)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:description |
-| native | cdp-meta:description |
-| exact | cdp-common:annotation_object_description |
-
-
-
-
 ## LinkML Source
 
 <details>

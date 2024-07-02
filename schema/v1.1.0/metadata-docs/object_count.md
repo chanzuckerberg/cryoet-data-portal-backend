@@ -53,17 +53,6 @@ URI: [cdp-meta:object_count](metadataobject_count)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:object_count |
-| native | cdp-meta:object_count |
-| exact | cdp-common:annotation_object_count |
-
-
-
-
 ## LinkML Source
 
 <details>

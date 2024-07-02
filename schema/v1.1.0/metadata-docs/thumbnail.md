@@ -55,16 +55,6 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:thumbnail |
-| native | cdp-meta:thumbnail |
-
-
-
-
 ## LinkML Source
 
 <details>

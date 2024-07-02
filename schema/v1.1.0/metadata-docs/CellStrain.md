@@ -72,14 +72,13 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CellStrain |
 | native | cdp-meta:CellStrain |
-
-
 
 
 

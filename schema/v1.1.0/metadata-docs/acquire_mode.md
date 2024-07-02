@@ -53,17 +53,6 @@ URI: [cdp-meta:acquire_mode](metadataacquire_mode)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:acquire_mode |
-| native | cdp-meta:acquire_mode |
-| exact | cdp-common:tiltseries_camera_acquire_mode |
-
-
-
-
 ## LinkML Source
 
 <details>

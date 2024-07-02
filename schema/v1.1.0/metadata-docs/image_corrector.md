@@ -53,17 +53,6 @@ URI: [cdp-meta:image_corrector](metadataimage_corrector)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:image_corrector |
-| native | cdp-meta:image_corrector |
-| exact | cdp-common:tiltseries_microscope_image_corrector |
-
-
-
-
 ## LinkML Source
 
 <details>

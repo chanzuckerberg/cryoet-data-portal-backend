@@ -53,17 +53,6 @@ URI: [cdp-meta:method_type](metadatamethod_type)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:method_type |
-| native | cdp-meta:method_type |
-| exact | cdp-common:annotation_method_type |
-
-
-
-
 ## LinkML Source
 
 <details>

@@ -53,17 +53,6 @@ URI: [cdp-meta:fiducial_alignment_status](metadatafiducial_alignment_status)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:fiducial_alignment_status |
-| native | cdp-meta:fiducial_alignment_status |
-| exact | cdp-common:tomogram_fiducial_alignment_status |
-
-
-
-
 ## LinkML Source
 
 <details>

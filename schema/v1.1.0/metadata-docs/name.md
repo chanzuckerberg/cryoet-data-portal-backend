@@ -17,12 +17,12 @@ URI: [cdp-meta:name](metadataname)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [CellComponent](CellComponent.md) | The cellular component from which the sample was derived |  no  |
-| [CellType](CellType.md) | The cell type from which the sample was derived |  no  |
-| [CellStrain](CellStrain.md) | The strain or cell line from which the sample was derived |  no  |
 | [Tissue](Tissue.md) | The type of tissue from which the sample was derived |  no  |
 | [Organism](Organism.md) | The species from which the sample was derived |  no  |
-| [Author](Author.md) | Author of a scientific data entity |  no  |
 | [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated |  no  |
+| [CellStrain](CellStrain.md) | The strain or cell line from which the sample was derived |  no  |
+| [Author](Author.md) | Author of a scientific data entity |  no  |
+| [CellType](CellType.md) | The cell type from which the sample was derived |  no  |
 
 
 
@@ -43,16 +43,6 @@ URI: [cdp-meta:name](metadataname)
 
 
 
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:name |
-| native | cdp-meta:name |
 
 
 

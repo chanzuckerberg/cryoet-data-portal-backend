@@ -55,16 +55,6 @@ URI: [cdp-meta:last_modified_date](metadatalast_modified_date)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:last_modified_date |
-| native | cdp-meta:last_modified_date |
-
-
-
-
 ## LinkML Source
 
 <details>

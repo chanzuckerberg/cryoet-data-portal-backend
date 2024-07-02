@@ -17,7 +17,7 @@ annotations:
       last_modified_date: '2023-06-01'
       release_date: '2023-06-01'
     ground_truth_status: true
-    version: '1.0'
+    version: 1.0
   sources:
   - columns: xyz
     file_format: csv
@@ -152,7 +152,7 @@ tomograms:
     processing: raw
     reconstruction_method: Weighted back projection
     reconstruction_software: IMOD
-    tomogram_version: '1'
+    tomogram_version: 1
     voxel_spacing: 13.48
   sources:
   - source_glob:

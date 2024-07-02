@@ -53,17 +53,6 @@ URI: [cdp-meta:tilt_alignment_software](metadatatilt_alignment_software)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:tilt_alignment_software |
-| native | cdp-meta:tilt_alignment_software |
-| exact | cdp-common:tiltseries_tilt_alignment_software |
-
-
-
-
 ## LinkML Source
 
 <details>

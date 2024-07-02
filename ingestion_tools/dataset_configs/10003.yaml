@@ -30,7 +30,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
   - binning: 4
     file_format: relion3_star
@@ -176,7 +176,7 @@ tomograms:
     processing: raw
     reconstruction_method: FOURIER SPACE
     reconstruction_software: Warp
-    tomogram_version: '1'
+    tomogram_version: 1
     voxel_spacing: 6.802
   sources:
   - source_glob:

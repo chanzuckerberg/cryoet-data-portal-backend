@@ -183,14 +183,13 @@ URI: [cdp-meta:Dataset](metadataDataset)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Dataset |
 | native | cdp-meta:Dataset |
-
-
 
 
 

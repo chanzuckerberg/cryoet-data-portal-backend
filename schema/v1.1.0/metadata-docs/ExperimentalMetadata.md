@@ -132,14 +132,13 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:ExperimentalMetadata |
 | native | cdp-meta:ExperimentalMetadata |
-
-
 
 
 

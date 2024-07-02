@@ -3,7 +3,7 @@
 # Class: AnnotationSemanticSegmentationMaskFile
 
 
-_File and sourcing data for a semantic segmentation mask annotation._
+_File and sourcing data for a semantic segmentation mask annotation. Annotation that identifies classes of objects._
 
 
 
@@ -82,14 +82,13 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationSemanticSegmentationMaskFile |
 | native | cdp-meta:AnnotationSemanticSegmentationMaskFile |
-
-
 
 
 
@@ -104,7 +103,8 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
 <details>
 ```yaml
 name: AnnotationSemanticSegmentationMaskFile
-description: File and sourcing data for a semantic segmentation mask annotation.
+description: File and sourcing data for a semantic segmentation mask annotation. Annotation
+  that identifies classes of objects.
 from_schema: metadata
 aliases:
 - SemanticSegmentationMask
@@ -187,7 +187,8 @@ attributes:
 <details>
 ```yaml
 name: AnnotationSemanticSegmentationMaskFile
-description: File and sourcing data for a semantic segmentation mask annotation.
+description: File and sourcing data for a semantic segmentation mask annotation. Annotation
+  that identifies classes of objects.
 from_schema: metadata
 aliases:
 - SemanticSegmentationMask

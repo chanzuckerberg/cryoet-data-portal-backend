@@ -53,17 +53,6 @@ URI: [cdp-meta:related_empiar_entry](metadatarelated_empiar_entry)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:related_empiar_entry |
-| native | cdp-meta:related_empiar_entry |
-| exact | cdp-common:tiltseries_related_empiar_entry |
-
-
-
-
 ## LinkML Source
 
 <details>

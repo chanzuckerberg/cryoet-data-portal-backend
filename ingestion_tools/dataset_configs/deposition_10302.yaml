@@ -18,7 +18,7 @@ annotations:
           primary_author_status: true
           corresponding_author_status: true
       annotation_software: "IMOD"
-      version: '1.0'
+      version: 1.0
       confidence:
         precision: ~
         recall: ~

@@ -77,14 +77,13 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationObject |
 | native | cdp-meta:AnnotationObject |
-
-
 
 
 

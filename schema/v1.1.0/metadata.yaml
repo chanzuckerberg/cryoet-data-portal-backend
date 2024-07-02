@@ -522,7 +522,7 @@ classes:
     is_a: AnnotationSourceFile
     aliases: 
     - OrientedPoint
-    description: File and sourcing data for an oriented point annotation.
+    description: File and sourcing data for an oriented point annotation. Annotation that identifies points along with orientation in the volume.
     attributes:
       binning: 
         range: integer
@@ -541,14 +541,14 @@ classes:
     is_a: AnnotationOrientedPointFile
     aliases: 
     - InstanceSegmentation
-    description: File and sourcing data for an instance segmentation annotation.
+    description: File and sourcing data for an instance segmentation annotation. Annotation that identifies individual instances of object shapes.
     attributes: # no extended attributes
 
   AnnotationPointFile:
     is_a: AnnotationSourceFile
     aliases:
     - Point
-    description: File and sourcing data for a point annotation.
+    description: File and sourcing data for a point annotation. Annotation that identifies points in the volume.
     attributes:
       binning: 
         range: integer
@@ -567,14 +567,14 @@ classes:
     is_a: AnnotationSourceFile
     aliases: 
     - SegmentationMask
-    description: File and sourcing data for a segmentation mask annotation.
+    description: File and sourcing data for a segmentation mask annotation. Annotation that identifies an object.
     attributes: # no extended attributes
 
   AnnotationSemanticSegmentationMaskFile:
     is_a: AnnotationSourceFile
     aliases: 
     - SemanticSegmentationMask
-    description: File and sourcing data for a semantic segmentation mask annotation.
+    description: File and sourcing data for a semantic segmentation mask annotation. Annotation that identifies classes of objects.
     attributes:
       mask_label:
         range: integer

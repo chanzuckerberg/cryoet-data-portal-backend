@@ -391,6 +391,8 @@ slots:
   tiltseries_tilt_series_quality:
     range: integer
     description: Author assessment of tilt series quality within the dataset (1-5, 5 is best)
+    minimum_value: 1
+    maximum_value: 5
   tiltseries_tilt_step:
     range: float
     description: Tilt step in degrees
@@ -497,12 +499,21 @@ slots:
   tomogram_size_x:
     range: integer
     description: Number of pixels in the 3D data fast axis
+    unit: 
+      descriptive_name: pixels
+      symbol: px
   tomogram_size_y:
     range: integer
     description: Number of pixels in the 3D data medium axis
+    unit:
+      descriptive_name: pixels
+      symbol: px
   tomogram_size_z:
     range: integer
     description: Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
+    unit:
+      descriptive_name: pixels
+      symbol: px
   tomogram_version:
     range: VersionString
     description: Version of tomogram
@@ -539,9 +550,15 @@ slots:
   annotation_confidence_precision:
     range: float
     description: Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive
+    unit: 
+      descriptive_name: percentage
+      symbol: '%'
   annotation_confidence_recall:
     range: float
     description: Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly
+    unit: 
+      descriptive_name: percentage
+      symbol: '%'
   #deposition_date (date): Date when an annotation set is initially received by the Data Portal.
   annotation_ground_truth_status:
     range: boolean
@@ -688,20 +705,6 @@ enums:
         description: Annotations were generated semi-automatically.
       hybrid:
         description: Annotations were generated automatically.
-
-  annotation_shape_enum:
-    description: Annotation shape types available on the data portal.
-    permissible_values:
-      InstanceSegmentation: 
-        description: Annotation that identifies individual instances of object shapes.
-      Point:
-        description: Annotation that identifies points in the volume.
-      OrientedPoint:
-        description: Annotation that identifies points along with orientation in the volume.
-      SegmentationMask:
-        description: Annotation that identifies an object.
-      SemanticSegmentationMask:
-        description: Annotation that identifies classes of objects.
 
 types: 
   AnyNumberFormattedString:

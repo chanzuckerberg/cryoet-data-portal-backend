@@ -77,14 +77,13 @@ URI: [cdp-meta:AuthoredEntity](metadataAuthoredEntity)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AuthoredEntity |
 | native | cdp-meta:AuthoredEntity |
-
-
 
 
 

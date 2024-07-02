@@ -53,17 +53,6 @@ URI: [cdp-meta:recall](metadatarecall)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:recall |
-| native | cdp-meta:recall |
-| exact | cdp-common:annotation_confidence_recall |
-
-
-
-
 ## LinkML Source
 
 <details>

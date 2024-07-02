@@ -35,13 +35,3 @@ URI: [cdp-meta:VersionString](metadataVersionString)
 
 
 
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:VersionString |
-| native | cdp-meta:VersionString |
-
-
-

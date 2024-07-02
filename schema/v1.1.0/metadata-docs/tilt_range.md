@@ -53,16 +53,6 @@ URI: [cdp-meta:tilt_range](metadatatilt_range)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:tilt_range |
-| native | cdp-meta:tilt_range |
-
-
-
-
 ## LinkML Source
 
 <details>

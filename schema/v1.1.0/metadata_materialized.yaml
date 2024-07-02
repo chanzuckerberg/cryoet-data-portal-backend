@@ -351,27 +351,6 @@ enums:
       hybrid:
         text: hybrid
         description: Annotations were generated automatically.
-  annotation_shape_enum:
-    name: annotation_shape_enum
-    description: Annotation shape types available on the data portal.
-    from_schema: metadata
-    permissible_values:
-      InstanceSegmentation:
-        text: InstanceSegmentation
-        description: Annotation that identifies individual instances of object shapes.
-      Point:
-        text: Point
-        description: Annotation that identifies points in the volume.
-      OrientedPoint:
-        text: OrientedPoint
-        description: Annotation that identifies points along with orientation in the
-          volume.
-      SegmentationMask:
-        text: SegmentationMask
-        description: Annotation that identifies an object.
-      SemanticSegmentationMask:
-        text: SemanticSegmentationMask
-        description: Annotation that identifies classes of objects.
 classes:
   PicturePath:
     name: PicturePath
@@ -2085,7 +2064,8 @@ classes:
         inlined_as_list: true
   AnnotationOrientedPointFile:
     name: AnnotationOrientedPointFile
-    description: File and sourcing data for an oriented point annotation.
+    description: File and sourcing data for an oriented point annotation. Annotation
+      that identifies points along with orientation in the volume.
     from_schema: metadata
     aliases:
     - OrientedPoint
@@ -2175,7 +2155,8 @@ classes:
         inlined_as_list: true
   AnnotationInstanceSegmentationFile:
     name: AnnotationInstanceSegmentationFile
-    description: File and sourcing data for an instance segmentation annotation.
+    description: File and sourcing data for an instance segmentation annotation. Annotation
+      that identifies individual instances of object shapes.
     from_schema: metadata
     aliases:
     - InstanceSegmentation
@@ -2258,7 +2239,8 @@ classes:
         inlined_as_list: true
   AnnotationPointFile:
     name: AnnotationPointFile
-    description: File and sourcing data for a point annotation.
+    description: File and sourcing data for a point annotation. Annotation that identifies
+      points in the volume.
     from_schema: metadata
     aliases:
     - Point
@@ -2345,7 +2327,8 @@ classes:
         inlined_as_list: true
   AnnotationSegmentationMaskFile:
     name: AnnotationSegmentationMaskFile
-    description: File and sourcing data for a segmentation mask annotation.
+    description: File and sourcing data for a segmentation mask annotation. Annotation
+      that identifies an object.
     from_schema: metadata
     aliases:
     - SegmentationMask
@@ -2392,6 +2375,7 @@ classes:
   AnnotationSemanticSegmentationMaskFile:
     name: AnnotationSemanticSegmentationMaskFile
     description: File and sourcing data for a semantic segmentation mask annotation.
+      Annotation that identifies classes of objects.
     from_schema: metadata
     aliases:
     - SemanticSegmentationMask

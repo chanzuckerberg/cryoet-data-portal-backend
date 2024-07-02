@@ -3,7 +3,7 @@
 # Class: AnnotationOrientedPointFile
 
 
-_File and sourcing data for an oriented point annotation._
+_File and sourcing data for an oriented point annotation. Annotation that identifies points along with orientation in the volume._
 
 
 
@@ -94,14 +94,13 @@ URI: [cdp-meta:AnnotationOrientedPointFile](metadataAnnotationOrientedPointFile)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationOrientedPointFile |
 | native | cdp-meta:AnnotationOrientedPointFile |
-
-
 
 
 
@@ -116,7 +115,8 @@ URI: [cdp-meta:AnnotationOrientedPointFile](metadataAnnotationOrientedPointFile)
 <details>
 ```yaml
 name: AnnotationOrientedPointFile
-description: File and sourcing data for an oriented point annotation.
+description: File and sourcing data for an oriented point annotation. Annotation that
+  identifies points along with orientation in the volume.
 from_schema: metadata
 aliases:
 - OrientedPoint
@@ -234,7 +234,8 @@ attributes:
 <details>
 ```yaml
 name: AnnotationOrientedPointFile
-description: File and sourcing data for an oriented point annotation.
+description: File and sourcing data for an oriented point annotation. Annotation that
+  identifies points along with orientation in the volume.
 from_schema: metadata
 aliases:
 - OrientedPoint

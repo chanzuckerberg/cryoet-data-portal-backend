@@ -49,7 +49,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: manual
-    version: '1.0'
+    version: 1.0
   sources:
   - file_format: mrc
     glob_string: labels/{run_name}_actin_ground_truth.mrc
@@ -73,7 +73,7 @@ annotations:
     ground_truth_status: false
     is_curator_recommended: false
     method_type: automated
-    version: '1.0'
+    version: 1.0
   sources:
   - file_format: mrc
     glob_string: prediction/{run_name}_*.mrc
@@ -237,7 +237,7 @@ tomograms:
     processing: raw
     reconstruction_method: Weighted back projection
     reconstruction_software: IMOD
-    tomogram_version: '1'
+    tomogram_version: 1
     voxel_spacing: '{run_voxel_spacing}'
   sources:
   - source_glob:

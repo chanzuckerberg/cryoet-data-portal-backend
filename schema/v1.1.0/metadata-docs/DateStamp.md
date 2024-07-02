@@ -79,14 +79,13 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:DateStamp |
 | native | cdp-meta:DateStamp |
-
-
 
 
 

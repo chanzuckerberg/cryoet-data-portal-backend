@@ -53,17 +53,6 @@ URI: [cdp-meta:annotation_software](metadataannotation_software)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:annotation_software |
-| native | cdp-meta:annotation_software |
-| exact | cdp-common:annotation_software |
-
-
-
-
 ## LinkML Source
 
 <details>

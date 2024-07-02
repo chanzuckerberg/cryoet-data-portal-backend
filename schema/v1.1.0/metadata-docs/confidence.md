@@ -53,16 +53,6 @@ URI: [cdp-meta:confidence](metadataconfidence)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:confidence |
-| native | cdp-meta:confidence |
-
-
-
-
 ## LinkML Source
 
 <details>

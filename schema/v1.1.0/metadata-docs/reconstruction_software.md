@@ -53,17 +53,6 @@ URI: [cdp-meta:reconstruction_software](metadatareconstruction_software)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:reconstruction_software |
-| native | cdp-meta:reconstruction_software |
-| exact | cdp-common:tomogram_reconstruction_software |
-
-
-
-
 ## LinkML Source
 
 <details>

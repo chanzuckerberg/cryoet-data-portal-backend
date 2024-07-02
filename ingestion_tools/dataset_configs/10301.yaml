@@ -48,7 +48,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
   - binning: 4
     file_format: stopgap_star
@@ -70,7 +70,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
   - binning: 4
     file_format: stopgap_star
@@ -92,7 +92,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
   - binning: 4
     file_format: stopgap_star
@@ -113,7 +113,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
   - binning: 4
     file_format: stopgap_star
@@ -135,7 +135,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
   - binning: 4
     file_format: stopgap_star
@@ -156,7 +156,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
   - binning: 4
     file_format: stopgap_star
@@ -335,7 +335,7 @@ tomograms:
     processing: denoised
     reconstruction_method: WBP
     reconstruction_software: IMOD
-    tomogram_version: '1'
+    tomogram_version: 1
     voxel_spacing: 7.84
   sources:
   - source_glob:

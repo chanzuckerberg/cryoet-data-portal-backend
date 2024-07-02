@@ -16,8 +16,8 @@ URI: [cdp-meta:y](metadatay)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... |  no  |
 | [TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension |  no  |
+| [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... |  no  |
 
 
 
@@ -38,16 +38,6 @@ URI: [cdp-meta:y](metadatay)
 
 
 
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:y |
-| native | cdp-meta:y |
 
 
 

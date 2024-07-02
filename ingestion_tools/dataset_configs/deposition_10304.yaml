@@ -27,7 +27,7 @@ annotations:
           primary_author_status: false
           corresponding_author_status: true
       annotation_software: "membrain-seg 0.0.1"
-      version: '1.0'
+      version: 1.0
       confidence:
         precision: ~
         recall: ~

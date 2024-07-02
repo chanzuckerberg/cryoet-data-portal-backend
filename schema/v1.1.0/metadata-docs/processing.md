@@ -53,17 +53,6 @@ URI: [cdp-meta:processing](metadataprocessing)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:processing |
-| native | cdp-meta:processing |
-| exact | cdp-common:tomogram_processing |
-
-
-
-
 ## LinkML Source
 
 <details>

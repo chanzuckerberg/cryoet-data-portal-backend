@@ -16,8 +16,8 @@ URI: [cdp-meta:filter_value](metadatafilter_value)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation |  no  |
 | [AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation |  no  |
+| [AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation |  no  |
 
 
 
@@ -38,16 +38,6 @@ URI: [cdp-meta:filter_value](metadatafilter_value)
 
 
 
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:filter_value |
-| native | cdp-meta:filter_value |
 
 
 

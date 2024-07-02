@@ -74,14 +74,13 @@ URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:TomogramOffset |
 | native | cdp-meta:TomogramOffset |
-
-
 
 
 

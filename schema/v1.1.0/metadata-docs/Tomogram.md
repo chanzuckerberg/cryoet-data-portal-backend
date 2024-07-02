@@ -138,14 +138,13 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Tomogram |
 | native | cdp-meta:Tomogram |
-
-
 
 
 

@@ -53,17 +53,6 @@ URI: [cdp-meta:tomogram_version](metadatatomogram_version)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:tomogram_version |
-| native | cdp-meta:tomogram_version |
-| exact | cdp-common:tomogram_version |
-
-
-
-
 ## LinkML Source
 
 <details>

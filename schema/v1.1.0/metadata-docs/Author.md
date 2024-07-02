@@ -92,14 +92,13 @@ URI: [cdp-meta:Author](metadataAuthor)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Author |
 | native | cdp-meta:Author |
-
-
 
 
 
