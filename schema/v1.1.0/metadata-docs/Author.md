@@ -92,13 +92,14 @@ URI: [cdp-meta:Author](metadataAuthor)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Author |
 | native | cdp-meta:Author |
+
+
 
 
 
@@ -201,6 +202,7 @@ attributes:
     exact_mappings:
     - cdp-common:author_corresponding_author_status
     rank: 1000
+    ifabsent: 'False'
     alias: corresponding_author_status
     owner: Author
     domain_of:
@@ -215,6 +217,7 @@ attributes:
     exact_mappings:
     - cdp-common:author_primary_author_status
     rank: 1000
+    ifabsent: 'False'
     alias: primary_author_status
     owner: Author
     domain_of:
@@ -335,6 +338,7 @@ attributes:
     exact_mappings:
     - cdp-common:author_corresponding_author_status
     rank: 1000
+    ifabsent: 'False'
     alias: corresponding_author_status
     owner: Author
     domain_of:
@@ -349,6 +353,7 @@ attributes:
     exact_mappings:
     - cdp-common:author_primary_author_status
     rank: 1000
+    ifabsent: 'False'
     alias: primary_author_status
     owner: Author
     domain_of:

@@ -37,8 +37,8 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [snapshot](snapshot.md) | 0..1 <br/> [String](String.md) | Path to the dataset preview image relative to the dataset directory root | direct |
-| [thumbnail](thumbnail.md) | 0..1 <br/> [String](String.md) | Path to the thumbnail of preview image relative to the dataset directory root | direct |
+| [snapshot](snapshot.md) | 1 <br/> [String](String.md) | Path to the dataset preview image relative to the dataset directory root | direct |
+| [thumbnail](thumbnail.md) | 1 <br/> [String](String.md) | Path to the thumbnail of preview image relative to the dataset directory root | direct |
 
 
 
@@ -71,13 +71,14 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:PicturePath |
 | native | cdp-meta:PicturePath |
+
+
 
 
 
@@ -106,6 +107,7 @@ attributes:
     domain_of:
     - PicturePath
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   thumbnail:
@@ -119,6 +121,7 @@ attributes:
     domain_of:
     - PicturePath
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
 
@@ -144,6 +147,7 @@ attributes:
     domain_of:
     - PicturePath
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   thumbnail:
@@ -157,6 +161,7 @@ attributes:
     domain_of:
     - PicturePath
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
 

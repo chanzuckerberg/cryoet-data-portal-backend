@@ -131,7 +131,7 @@ datasets:
       CARBON, support_film_film_topology: HOLEY ARRAY, support_film_instance_type:
       support_film, pretreatment_type_: GLOW DISCHARGE'
     organism:
-      id: 'NCBITaxon: 2697049'
+      taxonomy_id: 2697049
       name: Severe acute respiratory syndrome coronavirus 2
     sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, vitrification_instrument:
       LEICA EM GP, instance_type: subtomogram_averaging_preparation'

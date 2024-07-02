@@ -33,6 +33,8 @@ URI: [cdp-meta:snapshot](metadatasnapshot)
 
 * Range: [String](String.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,16 @@ URI: [cdp-meta:snapshot](metadatasnapshot)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:snapshot |
+| native | cdp-meta:snapshot |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -66,6 +78,7 @@ owner: PicturePath
 domain_of:
 - PicturePath
 range: string
+required: true
 inlined: true
 inlined_as_list: true
 

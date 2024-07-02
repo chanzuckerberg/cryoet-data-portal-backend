@@ -33,6 +33,8 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 * Range: [String](String.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,16 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:thumbnail |
+| native | cdp-meta:thumbnail |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -67,6 +79,7 @@ owner: PicturePath
 domain_of:
 - PicturePath
 range: string
+required: true
 inlined: true
 inlined_as_list: true
 

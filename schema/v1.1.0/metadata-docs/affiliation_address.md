@@ -53,6 +53,17 @@ URI: [cdp-meta:affiliation_address](metadataaffiliation_address)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:affiliation_address |
+| native | cdp-meta:affiliation_address |
+| exact | cdp-common:author_affiliation_address |
+
+
+
+
 ## LinkML Source
 
 <details>

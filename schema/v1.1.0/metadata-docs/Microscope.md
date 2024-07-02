@@ -71,13 +71,14 @@ URI: [cdp-meta:Microscope](metadataMicroscope)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Microscope |
 | native | cdp-meta:Microscope |
+
+
 
 
 

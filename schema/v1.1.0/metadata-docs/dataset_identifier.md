@@ -53,6 +53,17 @@ URI: [cdp-meta:dataset_identifier](metadatadataset_identifier)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:dataset_identifier |
+| native | cdp-meta:dataset_identifier |
+| exact | cdp-common:dataset_identifier |
+
+
+
+
 ## LinkML Source
 
 <details>

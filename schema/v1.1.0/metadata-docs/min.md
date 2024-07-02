@@ -53,6 +53,17 @@ URI: [cdp-meta:min](metadatamin)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:min |
+| native | cdp-meta:min |
+| exact | cdp-common:tiltseries_tilt_min |
+
+
+
+
 ## LinkML Source
 
 <details>

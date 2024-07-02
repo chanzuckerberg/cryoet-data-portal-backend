@@ -53,6 +53,17 @@ URI: [cdp-meta:taxonomy_id](metadatataxonomy_id)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:taxonomy_id |
+| native | cdp-meta:taxonomy_id |
+| exact | cdp-common:organism_taxid |
+
+
+
+
 ## LinkML Source
 
 <details>

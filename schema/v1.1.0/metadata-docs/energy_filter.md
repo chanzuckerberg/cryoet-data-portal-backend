@@ -53,6 +53,17 @@ URI: [cdp-meta:energy_filter](metadataenergy_filter)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:energy_filter |
+| native | cdp-meta:energy_filter |
+| exact | cdp-common:tiltseries_microscope_energy_filter |
+
+
+
+
 ## LinkML Source
 
 <details>

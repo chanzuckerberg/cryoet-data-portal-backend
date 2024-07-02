@@ -3,13 +3,13 @@
 
 
 
-_A string that represents a version number. 1, 1.0, 1.0.0, etc._
+_A version number (only major, minor versions)_
 
 
 
 URI: [cdp-meta:VersionString](metadataVersionString)
 
-* [base](https://w3id.org/linkml/base): string
+* [base](https://w3id.org/linkml/base): float
 
 
 
@@ -32,6 +32,16 @@ URI: [cdp-meta:VersionString](metadataVersionString)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:VersionString |
+| native | cdp-meta:VersionString |
 
 
 

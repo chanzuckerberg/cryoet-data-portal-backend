@@ -70,13 +70,14 @@ URI: [cdp-meta:PicturedEntity](metadataPicturedEntity)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:PicturedEntity |
 | native | cdp-meta:PicturedEntity |
+
+
 
 
 

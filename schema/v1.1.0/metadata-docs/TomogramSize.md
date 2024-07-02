@@ -74,13 +74,14 @@ URI: [cdp-meta:TomogramSize](metadataTomogramSize)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:TomogramSize |
 | native | cdp-meta:TomogramSize |
+
+
 
 
 

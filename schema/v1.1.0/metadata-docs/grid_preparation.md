@@ -42,6 +42,16 @@ URI: [cdp-meta:grid_preparation](metadatagrid_preparation)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:grid_preparation |
+| native | cdp-meta:grid_preparation |
+
+
+
+
 ## LinkML Source
 
 <details>

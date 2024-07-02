@@ -53,6 +53,17 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:voxel_spacing |
+| native | cdp-meta:voxel_spacing |
+| exact | cdp-common:tomogram_voxel_spacing |
+
+
+
+
 ## LinkML Source
 
 <details>

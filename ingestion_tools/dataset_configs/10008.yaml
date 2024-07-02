@@ -143,7 +143,7 @@ datasets:
       1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type:
       support_film, pretreatment_type_: GLOW DISCHARGE, pretreatment_atmosphere: AIR'
     organism:
-      id: NCBITaxon:2325
+      taxonomy_id: 2325
       name: Thermoanaerobacter kivui
     sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE-PROPANE,
       vitrification_instrument: FEI VITROBOT MARK IV, instance_type: subtomogram_averaging_preparation'

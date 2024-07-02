@@ -53,6 +53,17 @@ URI: [cdp-meta:corresponding_author_status](metadatacorresponding_author_status)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:corresponding_author_status |
+| native | cdp-meta:corresponding_author_status |
+| exact | cdp-common:author_corresponding_author_status |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -63,6 +74,7 @@ from_schema: metadata
 exact_mappings:
 - cdp-common:author_corresponding_author_status
 rank: 1000
+ifabsent: 'False'
 alias: corresponding_author_status
 owner: Author
 domain_of:

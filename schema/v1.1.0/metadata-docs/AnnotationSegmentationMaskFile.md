@@ -79,13 +79,14 @@ URI: [cdp-meta:AnnotationSegmentationMaskFile](metadataAnnotationSegmentationMas
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationSegmentationMaskFile |
 | native | cdp-meta:AnnotationSegmentationMaskFile |
+
+
 
 
 

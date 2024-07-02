@@ -1,13 +1,13 @@
 
 
-# Slot: ctf_corrected
+# Slot: align_software
 
 
-_Whether this tomogram is CTF corrected_
+_Software used for alignment_
 
 
 
-URI: [cdp-meta:ctf_corrected](metadatactf_corrected)
+URI: [cdp-meta:align_software](metadataalign_software)
 
 
 
@@ -31,7 +31,7 @@ URI: [cdp-meta:ctf_corrected](metadatactf_corrected)
 
 ## Properties
 
-* Range: [Boolean](Boolean.md)
+* Range: [String](String.md)
 
 
 
@@ -57,9 +57,9 @@ URI: [cdp-meta:ctf_corrected](metadatactf_corrected)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:ctf_corrected |
-| native | cdp-meta:ctf_corrected |
-| exact | cdp-common:tomogram_ctf_corrected |
+| self | cdp-meta:align_software |
+| native | cdp-meta:align_software |
+| exact | cdp-common:tomogram_align_software |
 
 
 
@@ -68,17 +68,17 @@ URI: [cdp-meta:ctf_corrected](metadatactf_corrected)
 
 <details>
 ```yaml
-name: ctf_corrected
-description: Whether this tomogram is CTF corrected
+name: align_software
+description: Software used for alignment
 from_schema: metadata
 exact_mappings:
-- cdp-common:tomogram_ctf_corrected
+- cdp-common:tomogram_align_software
 rank: 1000
-alias: ctf_corrected
+alias: align_software
 owner: Tomogram
 domain_of:
 - Tomogram
-range: boolean
+range: string
 inlined: true
 inlined_as_list: true
 

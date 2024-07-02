@@ -82,13 +82,14 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationSemanticSegmentationMaskFile |
 | native | cdp-meta:AnnotationSemanticSegmentationMaskFile |
+
+
 
 
 
@@ -114,8 +115,9 @@ attributes:
     description: The mask label for a semantic segmentation mask annotation file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_semantic_segmentation_mask_label
+    - cdp-common:annotation_source_file_mask_label
     rank: 1000
+    ifabsent: int(1)
     alias: mask_label
     owner: AnnotationSemanticSegmentationMaskFile
     domain_of:
@@ -196,8 +198,9 @@ attributes:
     description: The mask label for a semantic segmentation mask annotation file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_semantic_segmentation_mask_label
+    - cdp-common:annotation_source_file_mask_label
     rank: 1000
+    ifabsent: int(1)
     alias: mask_label
     owner: AnnotationSemanticSegmentationMaskFile
     domain_of:

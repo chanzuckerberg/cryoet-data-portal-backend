@@ -3,7 +3,7 @@
 # Slot: delimiter
 
 
-_The delimiter used in a oriented point annotation file._
+_The delimiter used in a point annotation file._
 
 
 
@@ -53,16 +53,28 @@ URI: [cdp-meta:delimiter](metadatadelimiter)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:delimiter |
+| native | cdp-meta:delimiter |
+| exact | cdp-common:annotation_source_file_delimiter |
+
+
+
+
 ## LinkML Source
 
 <details>
 ```yaml
 name: delimiter
-description: The delimiter used in a oriented point annotation file.
+description: The delimiter used in a point annotation file.
 from_schema: metadata
 exact_mappings:
-- cdp-common:annotation_source_file_point_delimiter
+- cdp-common:annotation_source_file_delimiter
 rank: 1000
+ifabsent: string(,)
 alias: delimiter
 owner: AnnotationPointFile
 domain_of:

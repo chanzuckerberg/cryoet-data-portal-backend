@@ -90,13 +90,14 @@ URI: [cdp-meta:AnnotationSourceFile](metadataAnnotationSourceFile)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationSourceFile |
 | native | cdp-meta:AnnotationSourceFile |
+
+
 
 
 
@@ -161,6 +162,7 @@ attributes:
     exact_mappings:
     - cdp-common:annotation_source_file_is_visualization_default
     rank: 1000
+    ifabsent: 'False'
     alias: is_visualization_default
     owner: AnnotationSourceFile
     domain_of:
@@ -232,6 +234,7 @@ attributes:
     exact_mappings:
     - cdp-common:annotation_source_file_is_visualization_default
     rank: 1000
+    ifabsent: 'False'
     alias: is_visualization_default
     owner: AnnotationSourceFile
     domain_of:

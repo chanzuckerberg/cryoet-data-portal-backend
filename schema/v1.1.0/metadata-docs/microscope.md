@@ -53,6 +53,16 @@ URI: [cdp-meta:microscope](metadatamicroscope)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:microscope |
+| native | cdp-meta:microscope |
+
+
+
+
 ## LinkML Source
 
 <details>

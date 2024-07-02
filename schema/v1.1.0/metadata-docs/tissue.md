@@ -42,6 +42,16 @@ URI: [cdp-meta:tissue](metadatatissue)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tissue |
+| native | cdp-meta:tissue |
+
+
+
+
 ## LinkML Source
 
 <details>

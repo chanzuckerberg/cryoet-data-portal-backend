@@ -55,6 +55,16 @@ URI: [cdp-meta:deposition_date](metadatadeposition_date)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:deposition_date |
+| native | cdp-meta:deposition_date |
+
+
+
+
 ## LinkML Source
 
 <details>

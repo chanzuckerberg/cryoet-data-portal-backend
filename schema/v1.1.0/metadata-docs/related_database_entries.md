@@ -55,6 +55,16 @@ URI: [cdp-meta:related_database_entries](metadatarelated_database_entries)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:related_database_entries |
+| native | cdp-meta:related_database_entries |
+
+
+
+
 ## LinkML Source
 
 <details>

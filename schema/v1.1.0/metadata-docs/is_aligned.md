@@ -53,6 +53,17 @@ URI: [cdp-meta:is_aligned](metadatais_aligned)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:is_aligned |
+| native | cdp-meta:is_aligned |
+| exact | cdp-common:tiltseries_is_aligned |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -63,6 +74,7 @@ from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_is_aligned
 rank: 1000
+ifabsent: 'False'
 alias: is_aligned
 owner: TiltSeries
 domain_of:

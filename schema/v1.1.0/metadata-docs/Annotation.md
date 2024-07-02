@@ -147,13 +147,14 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Annotation |
 | native | cdp-meta:Annotation |
+
+
 
 
 
@@ -265,6 +266,7 @@ attributes:
     exact_mappings:
     - cdp-common:annotation_ground_truth_status
     rank: 1000
+    ifabsent: 'False'
     alias: ground_truth_status
     owner: Annotation
     domain_of:
@@ -280,6 +282,7 @@ attributes:
     exact_mappings:
     - cdp-common:annotation_is_curator_recommended
     rank: 1000
+    ifabsent: 'False'
     alias: is_curator_recommended
     owner: Annotation
     domain_of:
@@ -467,6 +470,7 @@ attributes:
     exact_mappings:
     - cdp-common:annotation_ground_truth_status
     rank: 1000
+    ifabsent: 'False'
     alias: ground_truth_status
     owner: Annotation
     domain_of:
@@ -482,6 +486,7 @@ attributes:
     exact_mappings:
     - cdp-common:annotation_is_curator_recommended
     rank: 1000
+    ifabsent: 'False'
     alias: is_curator_recommended
     owner: Annotation
     domain_of:

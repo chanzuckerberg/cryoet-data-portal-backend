@@ -53,6 +53,16 @@ URI: [cdp-meta:camera](metadatacamera)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:camera |
+| native | cdp-meta:camera |
+
+
+
+
 ## LinkML Source
 
 <details>

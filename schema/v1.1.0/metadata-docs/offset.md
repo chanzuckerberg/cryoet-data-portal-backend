@@ -53,6 +53,16 @@ URI: [cdp-meta:offset](metadataoffset)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:offset |
+| native | cdp-meta:offset |
+
+
+
+
 ## LinkML Source
 
 <details>

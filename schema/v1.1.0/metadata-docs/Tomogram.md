@@ -32,6 +32,8 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
     click Any href "../Any"
 
         
+      Tomogram : align_software
+        
       Tomogram : authors
         
           
@@ -101,11 +103,12 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 | [voxel_spacing](voxel_spacing.md) | 0..1 <br/> [Float](Float.md) | Voxel spacing equal in all three axes in angstroms | direct |
 | [fiducial_alignment_status](fiducial_alignment_status.md) | 0..1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
 | [ctf_corrected](ctf_corrected.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether this tomogram is CTF corrected | direct |
+| [align_software](align_software.md) | 0..1 <br/> [String](String.md) | Software used for alignment | direct |
 | [reconstruction_method](reconstruction_method.md) | 0..1 <br/> [String](String.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) | direct |
 | [reconstruction_software](reconstruction_software.md) | 0..1 <br/> [String](String.md) | Name of software used for reconstruction | direct |
 | [processing](processing.md) | 0..1 <br/> [String](String.md) | Describe additional processing used to derive the tomogram | direct |
 | [processing_software](processing_software.md) | 0..1 <br/> [String](String.md) | Processing software used to derive the tomogram | direct |
-| [tomogram_version](tomogram_version.md) | 0..1 <br/> [VersionString](VersionString.md) | Version of tomogram using the same software and post-processing | direct |
+| [tomogram_version](tomogram_version.md) | 0..1 <br/> [VersionString](VersionString.md) | Version of tomogram | direct |
 | [affine_transformation_matrix](affine_transformation_matrix.md) | 0..1 <br/> [Any](Any.md) |  | direct |
 | [size](size.md) | 0..1 <br/> [TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension | direct |
 | [offset](offset.md) | 0..1 <br/> [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... | direct |
@@ -135,13 +138,14 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Tomogram |
 | native | cdp-meta:Tomogram |
+
+
 
 
 
@@ -204,6 +208,20 @@ attributes:
     range: boolean
     inlined: true
     inlined_as_list: true
+  align_software:
+    name: align_software
+    description: Software used for alignment
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:tomogram_align_software
+    rank: 1000
+    alias: align_software
+    owner: Tomogram
+    domain_of:
+    - Tomogram
+    range: string
+    inlined: true
+    inlined_as_list: true
   reconstruction_method:
     name: reconstruction_method
     description: Describe reconstruction method (Weighted back-projection, SART, SIRT)
@@ -262,9 +280,7 @@ attributes:
     inlined_as_list: true
   tomogram_version:
     name: tomogram_version
-    description: Version of tomogram using the same software and post-processing.
-      Version of tomogram using the same software and post-processing. This will be
-      presented as the latest version
+    description: Version of tomogram
     from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_version
@@ -386,6 +402,20 @@ attributes:
     range: boolean
     inlined: true
     inlined_as_list: true
+  align_software:
+    name: align_software
+    description: Software used for alignment
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:tomogram_align_software
+    rank: 1000
+    alias: align_software
+    owner: Tomogram
+    domain_of:
+    - Tomogram
+    range: string
+    inlined: true
+    inlined_as_list: true
   reconstruction_method:
     name: reconstruction_method
     description: Describe reconstruction method (Weighted back-projection, SART, SIRT)
@@ -444,9 +474,7 @@ attributes:
     inlined_as_list: true
   tomogram_version:
     name: tomogram_version
-    description: Version of tomogram using the same software and post-processing.
-      Version of tomogram using the same software and post-processing. This will be
-      presented as the latest version
+    description: Version of tomogram
     from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_version

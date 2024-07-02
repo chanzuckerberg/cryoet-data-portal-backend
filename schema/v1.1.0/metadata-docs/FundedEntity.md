@@ -73,13 +73,14 @@ URI: [cdp-meta:FundedEntity](metadataFundedEntity)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:FundedEntity |
 | native | cdp-meta:FundedEntity |
+
+
 
 
 

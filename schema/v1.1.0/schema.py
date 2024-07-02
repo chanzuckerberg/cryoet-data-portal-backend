@@ -3,7 +3,6 @@ from linkml.utils.helpers import write_to_file
 from linkml_runtime.dumpers import yaml_dumper
 from linkml_runtime.utils.schemaview import SchemaView
 
-
 def _materialize_classes(schema: SchemaView) -> None:
     all_classes = schema.all_classes()
 
@@ -45,6 +44,7 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
             slot["range"] = common_slot["range"]
             slot["description"] = common_slot["description"]
             slot["pattern"] = common_slot["pattern"]
+            slot["ifabsent"] = common_slot["ifabsent"]
 
     # Make sure the descriptions from mixin classes are carried over
     for c in schema.all_classes():

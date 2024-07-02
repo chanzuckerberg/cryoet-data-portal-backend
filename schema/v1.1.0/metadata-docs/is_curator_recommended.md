@@ -53,6 +53,17 @@ URI: [cdp-meta:is_curator_recommended](metadatais_curator_recommended)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:is_curator_recommended |
+| native | cdp-meta:is_curator_recommended |
+| exact | cdp-common:annotation_is_curator_recommended |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -64,6 +75,7 @@ from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_is_curator_recommended
 rank: 1000
+ifabsent: 'False'
 alias: is_curator_recommended
 owner: Annotation
 domain_of:

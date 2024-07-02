@@ -126,7 +126,7 @@ datasets:
     funding: []
     grid_preparation: null
     organism:
-      id: NCBITaxon:10090
+      taxonomy_id: 10090
       name: Mus musculus
     sample_preparation: null
     sample_type: cell

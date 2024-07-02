@@ -72,13 +72,14 @@ URI: [cdp-meta:Funding](metadataFunding)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Funding |
 | native | cdp-meta:Funding |
+
+
 
 
 

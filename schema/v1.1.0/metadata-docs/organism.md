@@ -42,6 +42,16 @@ URI: [cdp-meta:organism](metadataorganism)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:organism |
+| native | cdp-meta:organism |
+
+
+
+
 ## LinkML Source
 
 <details>

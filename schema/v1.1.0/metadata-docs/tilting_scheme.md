@@ -53,6 +53,17 @@ URI: [cdp-meta:tilting_scheme](metadatatilting_scheme)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tilting_scheme |
+| native | cdp-meta:tilting_scheme |
+| exact | cdp-common:tiltseries_tilting_scheme |
+
+
+
+
 ## LinkML Source
 
 <details>

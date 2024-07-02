@@ -30,8 +30,10 @@ classes:
         required: true
       match_regex:
         range: string
+        ifabsent: string(.*)
       name_regex:
         range: string
+        ifabsent: string((.*))
 
   DestinationGlob:
     is_a: GeneralGlob
@@ -57,7 +59,7 @@ classes:
       # Would also have literal here, but literal schema varies by class
       # Would also have parent_filters here, but sometimes parent_filters doesn't apply (e.g., Dataset)
 
-  SourceParentFiltersContainer:
+  SourceParentFiltersEntity:
     attributes:
       parent_filters:
         range: SourceParentFilters
@@ -108,7 +110,7 @@ classes:
   # ============================================================================
   # Dataset config classes
   # ============================================================================
-  AnnotationContainer:
+  AnnotationEntity:
     attributes:
       metadata:
         range: Annotation
@@ -133,7 +135,7 @@ classes:
       parent_filters:
         range: SourceParentFilters
           
-  DatasetContainer:
+  DatasetEntity:
     attributes:
       metadata:
         range: Dataset
@@ -157,7 +159,7 @@ classes:
         range: string
         required: true
 
-  DatasetKeyPhotoContainer:
+  DatasetKeyPhotoEntity:
     attributes:
       sources:
         multivalued: true
@@ -166,7 +168,7 @@ classes:
   
   DatasetKeyPhotoSource:
     mixins:
-      - SourceParentFiltersContainer
+      - SourceParentFiltersEntity
     attributes:
       literal: 
         range: DatasetKeyPhotoLiteral
@@ -174,18 +176,9 @@ classes:
   DatasetKeyPhotoLiteral:
     attributes:
       value:
-        range: DatasetKeyPhotoValue
+        range: PicturePath
 
-  DatasetKeyPhotoValue:
-    attributes:
-      snapshot: 
-        range: string
-        required: true
-      thumbnail:
-        range: string
-        required: true
-
-  FrameContainer:
+  FrameEntity:
     attributes:
       sources:
         multivalued: true
@@ -195,9 +188,9 @@ classes:
   FrameSource:
     mixins:
       - DefaultSource
-      - SourceParentFiltersContainer
+      - SourceParentFiltersEntity
 
-  GainContainer:
+  GainEntity:
     attributes:
       sources:
         multivalued: true
@@ -207,9 +200,9 @@ classes:
   GainSource:
     mixins:
       - DefaultSource
-      - SourceParentFiltersContainer
+      - SourceParentFiltersEntity
 
-  KeyImageContainer:
+  KeyImageEntity:
     attributes:
       sources:
         multivalued: true
@@ -219,7 +212,7 @@ classes:
   KeyImageSource:
     mixins:
       - DefaultSource
-      - SourceParentFiltersContainer
+      - SourceParentFiltersEntity
     attributes:
       literal: 
         range: KeyImageLiteral
@@ -231,7 +224,7 @@ classes:
         range: string
         required: true
 
-  RawTiltContainer:
+  RawTiltEntity:
     attributes:
       sources:
         multivalued: true
@@ -241,9 +234,9 @@ classes:
   RawTiltSource:
     mixins:
       - DefaultSource
-      - SourceParentFiltersContainer
+      - SourceParentFiltersEntity
 
-  RunContainer:
+  RunEntity:
     attributes:
       sources:
         multivalued: true
@@ -253,7 +246,7 @@ classes:
   RunSource:
     mixins:
       - DefaultSource
-      - SourceParentFiltersContainer
+      - SourceParentFiltersEntity
 
   StandardizationConfig:
     attributes:
@@ -272,7 +265,7 @@ classes:
         range: string
         required: true
   
-  TiltSeriesContainer:
+  TiltSeriesEntity:
     attributes:
       metadata:
         range: TiltSeries
@@ -285,9 +278,9 @@ classes:
   TiltSeriesSource:
     mixins:
       - DefaultSource
-      - SourceParentFiltersContainer
+      - SourceParentFiltersEntity
 
-  TomogramContainer:
+  TomogramEntity:
     attributes:
       metadata:
         range: Tomogram
@@ -300,19 +293,20 @@ classes:
   TomogramSource:
     mixins:
       - DefaultSource
-      - SourceParentFiltersContainer
+      - SourceParentFiltersEntity
 
-  VoxelSpacingContainer:
+  VoxelSpacingEntity:
     attributes:
       sources:
         multivalued: true
         range: VoxelSpacingSource
         required: true
 
+  # TODO: can't have source_multi_glob, and need to add tomogram_header)
   VoxelSpacingSource:
     mixins:
       - DefaultSource
-      - SourceParentFiltersContainer
+      - SourceParentFiltersEntity
     attributes:
       literal: 
         range: VoxelSpacingLiteral

@@ -3,7 +3,7 @@
 # Slot: tomogram_version
 
 
-_Version of tomogram using the same software and post-processing. Version of tomogram using the same software and post-processing. This will be presented as the latest version_
+_Version of tomogram_
 
 
 
@@ -53,14 +53,23 @@ URI: [cdp-meta:tomogram_version](metadatatomogram_version)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tomogram_version |
+| native | cdp-meta:tomogram_version |
+| exact | cdp-common:tomogram_version |
+
+
+
+
 ## LinkML Source
 
 <details>
 ```yaml
 name: tomogram_version
-description: Version of tomogram using the same software and post-processing. Version
-  of tomogram using the same software and post-processing. This will be presented
-  as the latest version
+description: Version of tomogram
 from_schema: metadata
 exact_mappings:
 - cdp-common:tomogram_version

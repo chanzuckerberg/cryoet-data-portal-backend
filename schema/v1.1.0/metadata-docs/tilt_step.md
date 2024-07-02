@@ -53,6 +53,17 @@ URI: [cdp-meta:tilt_step](metadatatilt_step)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tilt_step |
+| native | cdp-meta:tilt_step |
+| exact | cdp-common:tiltseries_tilt_step |
+
+
+
+
 ## LinkML Source
 
 <details>

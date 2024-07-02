@@ -53,6 +53,17 @@ URI: [cdp-meta:funding_agency_name](metadatafunding_agency_name)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:funding_agency_name |
+| native | cdp-meta:funding_agency_name |
+| exact | cdp-common:funding_agency_name |
+
+
+
+
 ## LinkML Source
 
 <details>

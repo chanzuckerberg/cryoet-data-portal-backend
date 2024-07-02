@@ -53,6 +53,17 @@ URI: [cdp-meta:processing_software](metadataprocessing_software)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:processing_software |
+| native | cdp-meta:processing_software |
+| exact | cdp-common:tomogram_processing_software |
+
+
+
+
 ## LinkML Source
 
 <details>

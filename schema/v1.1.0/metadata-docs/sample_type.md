@@ -42,6 +42,16 @@ URI: [cdp-meta:sample_type](metadatasample_type)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:sample_type |
+| native | cdp-meta:sample_type |
+
+
+
+
 ## LinkML Source
 
 <details>

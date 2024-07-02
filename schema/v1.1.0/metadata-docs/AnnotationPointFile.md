@@ -54,7 +54,7 @@ URI: [cdp-meta:AnnotationPointFile](metadataAnnotationPointFile)
 | ---  | --- | --- | --- |
 | [binning](binning.md) | 0..1 <br/> [Integer](Integer.md) |  | direct |
 | [columns](columns.md) | 0..1 <br/> [String](String.md) | The columns used in a point annotation file | direct |
-| [delimiter](delimiter.md) | 0..1 <br/> [String](String.md) | The delimiter used in a oriented point annotation file | direct |
+| [delimiter](delimiter.md) | 0..1 <br/> [String](String.md) | The delimiter used in a point annotation file | direct |
 | [file_format](file_format.md) | 1 <br/> [String](String.md) |  | direct |
 | [glob_string](glob_string.md) | 1 <br/> [String](String.md) |  | direct |
 | [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) |  | direct |
@@ -88,13 +88,14 @@ URI: [cdp-meta:AnnotationPointFile](metadataAnnotationPointFile)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationPointFile |
 | native | cdp-meta:AnnotationPointFile |
+
+
 
 
 
@@ -119,7 +120,7 @@ attributes:
     name: binning
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_point_binning
+    - cdp-common:annotation_source_file_binning
     alias: binning
     owner: AnnotationPointFile
     domain_of:
@@ -134,8 +135,9 @@ attributes:
     description: The columns used in a point annotation file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_point_columns
+    - cdp-common:annotation_source_file_columns
     rank: 1000
+    ifabsent: string(xyz)
     alias: columns
     owner: AnnotationPointFile
     domain_of:
@@ -145,11 +147,12 @@ attributes:
     inlined_as_list: true
   delimiter:
     name: delimiter
-    description: The delimiter used in a oriented point annotation file.
+    description: The delimiter used in a point annotation file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_point_delimiter
+    - cdp-common:annotation_source_file_delimiter
     rank: 1000
+    ifabsent: string(,)
     alias: delimiter
     owner: AnnotationPointFile
     domain_of:
@@ -229,7 +232,7 @@ attributes:
     name: binning
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_point_binning
+    - cdp-common:annotation_source_file_binning
     alias: binning
     owner: AnnotationPointFile
     domain_of:
@@ -244,8 +247,9 @@ attributes:
     description: The columns used in a point annotation file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_point_columns
+    - cdp-common:annotation_source_file_columns
     rank: 1000
+    ifabsent: string(xyz)
     alias: columns
     owner: AnnotationPointFile
     domain_of:
@@ -255,11 +259,12 @@ attributes:
     inlined_as_list: true
   delimiter:
     name: delimiter
-    description: The delimiter used in a oriented point annotation file.
+    description: The delimiter used in a point annotation file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_point_delimiter
+    - cdp-common:annotation_source_file_delimiter
     rank: 1000
+    ifabsent: string(,)
     alias: delimiter
     owner: AnnotationPointFile
     domain_of:

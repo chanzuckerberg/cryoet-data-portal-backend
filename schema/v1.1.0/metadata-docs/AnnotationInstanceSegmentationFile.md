@@ -89,13 +89,14 @@ URI: [cdp-meta:AnnotationInstanceSegmentationFile](metadataAnnotationInstanceSeg
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationInstanceSegmentationFile |
 | native | cdp-meta:AnnotationInstanceSegmentationFile |
+
+
 
 
 
@@ -120,7 +121,7 @@ attributes:
     name: binning
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_oriented_point_binning
+    - cdp-common:annotation_source_file_binning
     alias: binning
     owner: AnnotationInstanceSegmentationFile
     domain_of:
@@ -134,7 +135,7 @@ attributes:
     name: filter_value
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_oriented_point_filter_value
+    - cdp-common:annotation_source_file_filter_value
     alias: filter_value
     owner: AnnotationInstanceSegmentationFile
     domain_of:
@@ -147,7 +148,7 @@ attributes:
     name: order
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_oriented_point_order
+    - cdp-common:annotation_source_file_order
     alias: order
     owner: AnnotationInstanceSegmentationFile
     domain_of:
@@ -228,7 +229,7 @@ attributes:
     name: binning
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_oriented_point_binning
+    - cdp-common:annotation_source_file_binning
     alias: binning
     owner: AnnotationInstanceSegmentationFile
     domain_of:
@@ -242,7 +243,7 @@ attributes:
     name: filter_value
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_oriented_point_filter_value
+    - cdp-common:annotation_source_file_filter_value
     alias: filter_value
     owner: AnnotationInstanceSegmentationFile
     domain_of:
@@ -255,7 +256,7 @@ attributes:
     name: order
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_oriented_point_order
+    - cdp-common:annotation_source_file_order
     alias: order
     owner: AnnotationInstanceSegmentationFile
     domain_of:

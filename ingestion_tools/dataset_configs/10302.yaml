@@ -153,7 +153,7 @@ tomograms:
       - 1
     authors: *id001
     ctf_corrected: true
-    fiducial_alignment_status: false
+    fiducial_alignment_status: NON_FIDUCIAL
     offset:
       x: 0
       y: 0

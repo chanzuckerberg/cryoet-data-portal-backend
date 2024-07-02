@@ -53,6 +53,17 @@ URI: [cdp-meta:columns](metadatacolumns)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:columns |
+| native | cdp-meta:columns |
+| exact | cdp-common:annotation_source_file_columns |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -61,8 +72,9 @@ name: columns
 description: The columns used in a point annotation file.
 from_schema: metadata
 exact_mappings:
-- cdp-common:annotation_source_file_point_columns
+- cdp-common:annotation_source_file_columns
 rank: 1000
+ifabsent: string(xyz)
 alias: columns
 owner: AnnotationPointFile
 domain_of:

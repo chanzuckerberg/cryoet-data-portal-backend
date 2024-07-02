@@ -53,6 +53,17 @@ URI: [cdp-meta:data_acquisition_software](metadatadata_acquisition_software)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:data_acquisition_software |
+| native | cdp-meta:data_acquisition_software |
+| exact | cdp-common:tiltseries_data_acquisition_software |
+
+
+
+
 ## LinkML Source
 
 <details>

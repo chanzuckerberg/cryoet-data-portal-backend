@@ -53,6 +53,17 @@ URI: [cdp-meta:acceleration_voltage](metadataacceleration_voltage)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:acceleration_voltage |
+| native | cdp-meta:acceleration_voltage |
+| exact | cdp-common:tiltseries_acceleration_voltage |
+
+
+
+
 ## LinkML Source
 
 <details>

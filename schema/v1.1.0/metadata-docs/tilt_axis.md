@@ -53,6 +53,17 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tilt_axis |
+| native | cdp-meta:tilt_axis |
+| exact | cdp-common:tiltseries_tilt_axis |
+
+
+
+
 ## LinkML Source
 
 <details>

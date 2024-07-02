@@ -60,13 +60,14 @@ Name: cdp-meta
 | [affiliation_identifier](affiliation_identifier.md) | A Research Organization Registry (ROR) identifier |
 | [affiliation_name](affiliation_name.md) | The name of the author's affiliation |
 | [affine_transformation_matrix](affine_transformation_matrix.md) |  |
+| [align_software](align_software.md) | Software used for alignment |
 | [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | Binning factor of the aligned tilt series |
 | [annotation_method](annotation_method.md) | Describe how the annotation is made (e |
 | [annotation_object](annotation_object.md) | Metadata describing the object being annotated |
 | [annotation_publications](annotation_publications.md) | DOIs for publications that describe the dataset |
 | [annotation_software](annotation_software.md) | Software used for generating this annotation |
 | [authors](authors.md) | Author of a scientific data entity |
-| [binning](binning.md) | The binning factor for a oriented point annotation file |
+| [binning](binning.md) | The binning factor for a point / oriented point / instance segmentation annot... |
 | [binning_from_frames](binning_from_frames.md) | Describes the binning factor from frames to tilt series file |
 | [camera](camera.md) | The camera used to collect the tilt series |
 | [cell_component](cell_component.md) | The cellular component from which the sample was derived |
@@ -84,7 +85,7 @@ Name: cdp-meta
 | [dataset_publications](dataset_publications.md) | Comma-separated list of DOIs for publications associated with the dataset |
 | [dataset_title](dataset_title.md) | Title of a CryoET dataset |
 | [dates](dates.md) | A set of dates at which a data item was deposited, published and last modifie... |
-| [delimiter](delimiter.md) | The delimiter used in a oriented point annotation file |
+| [delimiter](delimiter.md) | The delimiter used in a point annotation file |
 | [deposition_date](deposition_date.md) | The date a data item was received by the cryoET data portal |
 | [description](description.md) | A textual description of the annotation object, can be a longer description t... |
 | [email](email.md) | The email address of the author |
@@ -92,7 +93,7 @@ Name: cdp-meta
 | [fiducial_alignment_status](fiducial_alignment_status.md) | Whether the tomographic alignment was computed based on fiducial markers |
 | [file_format](file_format.md) | File format for this file |
 | [files](files.md) | File and sourcing data for an annotation |
-| [filter_value](filter_value.md) | The filter value for a oriented point annotation file |
+| [filter_value](filter_value.md) | The filter value for an oriented point / instance segmentation annotation fil... |
 | [frames_count](frames_count.md) | Number of frames associated with this tiltseries |
 | [funding](funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... |
 | [funding_agency_name](funding_agency_name.md) | The name of the funding source |
@@ -121,7 +122,7 @@ Name: cdp-meta
 | [object_count](object_count.md) | Number of objects identified |
 | [offset](offset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... |
 | [ORCID](ORCID.md) | A unique, persistent identifier for researchers, provided by ORCID |
-| [order](order.md) | The order of axes for a oriented point annotation file |
+| [order](order.md) | The order of axes for an oriented point / instance segmentation annotation fi... |
 | [organism](organism.md) | The species from which the sample was derived |
 | [other_setup](other_setup.md) | Describes other setup not covered by sample preparation or grid preparation t... |
 | [phase_plate](phase_plate.md) | Phase plate configuration |
@@ -152,7 +153,7 @@ Name: cdp-meta
 | [tilt_step](tilt_step.md) | Tilt step in degrees |
 | [tilting_scheme](tilting_scheme.md) | The order of stage tilting during acquisition of the data |
 | [tissue](tissue.md) | The type of tissue from which the sample was derived |
-| [tomogram_version](tomogram_version.md) | Version of tomogram using the same software and post-processing |
+| [tomogram_version](tomogram_version.md) | Version of tomogram |
 | [total_flux](total_flux.md) | Number of Electrons reaching the specimen in a square Angstrom area for the e... |
 | [version](version.md) | Version of annotation |
 | [voxel_spacing](voxel_spacing.md) | Voxel spacing equal in all three axes in angstroms |
@@ -199,7 +200,7 @@ Name: cdp-meta
 | [Time](Time.md) | A time object represents a (local) time of day, independent of any particular... |
 | [Uri](Uri.md) | a complete URI |
 | [Uriorcurie](Uriorcurie.md) | a URI or a CURIE |
-| [VersionString](VersionString.md) | A string that represents a version number |
+| [VersionString](VersionString.md) | A version number (only major, minor versions) |
 
 
 ## Subsets

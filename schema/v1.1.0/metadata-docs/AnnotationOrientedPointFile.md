@@ -58,9 +58,9 @@ URI: [cdp-meta:AnnotationOrientedPointFile](metadataAnnotationOrientedPointFile)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [binning](binning.md) | 0..1 <br/> [Integer](Integer.md) | The binning factor for a oriented point annotation file | direct |
-| [filter_value](filter_value.md) | 0..1 <br/> [String](String.md) | The filter value for a oriented point annotation file | direct |
-| [order](order.md) | 0..1 <br/> [String](String.md) | The order of axes for a oriented point annotation file | direct |
+| [binning](binning.md) | 0..1 <br/> [Integer](Integer.md) | The binning factor for a point / oriented point / instance segmentation annot... | direct |
+| [filter_value](filter_value.md) | 0..1 <br/> [String](String.md) | The filter value for an oriented point / instance segmentation annotation fil... | direct |
+| [order](order.md) | 0..1 <br/> [String](String.md) | The order of axes for an oriented point / instance segmentation annotation fi... | direct |
 | [file_format](file_format.md) | 1 <br/> [String](String.md) |  | direct |
 | [glob_string](glob_string.md) | 1 <br/> [String](String.md) |  | direct |
 | [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) |  | direct |
@@ -94,13 +94,14 @@ URI: [cdp-meta:AnnotationOrientedPointFile](metadataAnnotationOrientedPointFile)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationOrientedPointFile |
 | native | cdp-meta:AnnotationOrientedPointFile |
+
+
 
 
 
@@ -123,11 +124,13 @@ is_a: AnnotationSourceFile
 attributes:
   binning:
     name: binning
-    description: The binning factor for a oriented point annotation file.
+    description: The binning factor for a point / oriented point / instance segmentation
+      annotation file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_oriented_point_binning
+    - cdp-common:annotation_source_file_binning
     rank: 1000
+    ifabsent: int(1)
     alias: binning
     owner: AnnotationOrientedPointFile
     domain_of:
@@ -139,10 +142,11 @@ attributes:
     inlined_as_list: true
   filter_value:
     name: filter_value
-    description: The filter value for a oriented point annotation file.
+    description: The filter value for an oriented point / instance segmentation annotation
+      file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_oriented_point_filter_value
+    - cdp-common:annotation_source_file_filter_value
     rank: 1000
     alias: filter_value
     owner: AnnotationOrientedPointFile
@@ -154,10 +158,11 @@ attributes:
     inlined_as_list: true
   order:
     name: order
-    description: The order of axes for a oriented point annotation file.
+    description: The order of axes for an oriented point / instance segmentation annotation
+      file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_oriented_point_order
+    - cdp-common:annotation_source_file_order
     rank: 1000
     alias: order
     owner: AnnotationOrientedPointFile
@@ -237,11 +242,13 @@ is_a: AnnotationSourceFile
 attributes:
   binning:
     name: binning
-    description: The binning factor for a oriented point annotation file.
+    description: The binning factor for a point / oriented point / instance segmentation
+      annotation file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_oriented_point_binning
+    - cdp-common:annotation_source_file_binning
     rank: 1000
+    ifabsent: int(1)
     alias: binning
     owner: AnnotationOrientedPointFile
     domain_of:
@@ -253,10 +260,11 @@ attributes:
     inlined_as_list: true
   filter_value:
     name: filter_value
-    description: The filter value for a oriented point annotation file.
+    description: The filter value for an oriented point / instance segmentation annotation
+      file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_oriented_point_filter_value
+    - cdp-common:annotation_source_file_filter_value
     rank: 1000
     alias: filter_value
     owner: AnnotationOrientedPointFile
@@ -268,10 +276,11 @@ attributes:
     inlined_as_list: true
   order:
     name: order
-    description: The order of axes for a oriented point annotation file.
+    description: The order of axes for an oriented point / instance segmentation annotation
+      file.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:annotation_source_file_oriented_point_order
+    - cdp-common:annotation_source_file_order
     rank: 1000
     alias: order
     owner: AnnotationOrientedPointFile

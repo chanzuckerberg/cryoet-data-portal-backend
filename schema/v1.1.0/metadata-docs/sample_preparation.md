@@ -42,6 +42,16 @@ URI: [cdp-meta:sample_preparation](metadatasample_preparation)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:sample_preparation |
+| native | cdp-meta:sample_preparation |
+
+
+
+
 ## LinkML Source
 
 <details>

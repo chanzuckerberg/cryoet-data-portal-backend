@@ -53,6 +53,17 @@ URI: [cdp-meta:precision](metadataprecision)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:precision |
+| native | cdp-meta:precision |
+| exact | cdp-common:annotation_confidence_precision |
+
+
+
+
 ## LinkML Source
 
 <details>

@@ -42,6 +42,16 @@ URI: [cdp-meta:cell_strain](metadatacell_strain)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:cell_strain |
+| native | cdp-meta:cell_strain |
+
+
+
+
 ## LinkML Source
 
 <details>

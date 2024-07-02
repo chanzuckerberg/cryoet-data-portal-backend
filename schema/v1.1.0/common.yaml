@@ -89,11 +89,13 @@ slots:
     range: boolean
     description: >-
       Whether the author is a corresponding author.
+    ifabsent: false
 
   author_primary_author_status:
     range: boolean
     description: >-
       Whether the author is a primary author.
+    ifabsent: false
 
   author_list_order:
     range: integer
@@ -273,6 +275,7 @@ slots:
   tiltseries_aligned_tiltseries_binning:
     range: integer
     description: Binning factor of the aligned tilt series
+    ifabsent: 'int(1)'
   tiltseries_binning_from_frames:
     range: float
     description: Describes the binning factor from frames to tilt series file
@@ -294,6 +297,7 @@ slots:
   tiltseries_is_aligned:
     range: boolean
     description: Whether this tilt series is aligned
+    ifabsent: false
   tiltseries_https_alignment_file:
     range: string
     description: HTTPS path to the alignment file for this tiltseries
@@ -459,6 +463,9 @@ slots:
     unit:
       descriptive_name: pixels
       symbol: px
+  tomogram_align_software: 
+    range: string
+    description: Software used for alignment
   tomogram_processing:
     range: string
     description: Describe additional processing used to derive the tomogram
@@ -498,7 +505,7 @@ slots:
     description: Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
   tomogram_version:
     range: VersionString
-    description: Version of tomogram using the same software and post-processing. Version of tomogram using the same software and post-processing. This will be presented as the latest version
+    description: Version of tomogram
   #tomogram_voxel_spacing (TomogramVoxelSpacing): An object relationship with a specific voxel spacing for this experiment run
   tomogram_type:
     range: string
@@ -539,6 +546,7 @@ slots:
   annotation_ground_truth_status:
     range: boolean
     description: Whether an annotation is considered ground truth, as determined by the annotator.
+    ifabsent: false
   annotation_ground_truth_used:
     range: string
     description: Annotation filename used as ground truth for precision and recall
@@ -572,6 +580,7 @@ slots:
   annotation_is_curator_recommended:
     range: boolean
     description: This annotation is recommended by the curator to be preferred for this object type.
+    ifabsent: false
   annotation_version:
     range: VersionString
     description: Version of annotation.
@@ -601,32 +610,34 @@ slots:
   annotation_source_file_is_visualization_default:
     range: boolean
     description: This annotation will be rendered in neuroglancer by default.
+    ifabsent: false
   #Annotation (Annotation): The annotation this file is a part of
 
   # ============================================================================
   # Annotation Source File shape-specific slots
   # ============================================================================
-  annotation_source_file_oriented_point_binning:
+  annotation_source_file_binning:
     range: integer
-    description: The binning factor for a oriented point annotation file.
-  annotation_source_file_oriented_point_filter_value:
-    range: string
-    description: The filter value for a oriented point annotation file.
-  annotation_source_file_oriented_point_order:
-    range: string
-    description: The order of axes for a oriented point annotation file.
-  annotation_source_file_point_columns:
+    description: The binning factor for a point / oriented point / instance segmentation annotation file.
+    ifabsent: 'int(1)'
+  annotation_source_file_columns:
     range: string
     description: The columns used in a point annotation file.
-  annotation_source_file_point_delimiter:
+    ifabsent: string(xyz)
+  annotation_source_file_delimiter:
     range: string
-    description: The delimiter used in a oriented point annotation file.
-  annotation_source_file_point_order:
+    description: The delimiter used in a point annotation file.
+    ifabsent: string(,)
+  annotation_source_file_filter_value:
     range: string
-    description: The order of axes for a point annotation file.
-  annotation_source_file_semantic_segmentation_mask_label:
+    description: The filter value for an oriented point / instance segmentation annotation file.
+  annotation_source_file_order:
+    range: string
+    description: The order of axes for an oriented point / instance segmentation annotation file.
+  annotation_source_file_mask_label:
     range: integer
     description: The mask label for a semantic segmentation mask annotation file.
+    ifabsent: 'int(1)'
 
   # ============================================================================
 
@@ -713,11 +724,9 @@ types:
     base: string
     pattern: '^int[ ]*\{[a-zA-Z0-9_-]+\}$'
 
-  # TODO: tentative
   VersionString:
-    description: A string that represents a version number. 1, 1.0, 1.0.0, etc.
-    base: string
-    # pattern: '^[0-9]+(\.[0-9]+){0,2}$'
+    description: A version number (only major, minor versions)
+    base: float
 
 classes:
   Any:

@@ -284,9 +284,9 @@ types:
     pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}$
   VersionString:
     name: VersionString
-    description: A string that represents a version number. 1, 1.0, 1.0.0, etc.
+    description: A version number (only major, minor versions)
     from_schema: metadata
-    base: string
+    base: float
 enums:
   sample_type_enum:
     name: sample_type_enum
@@ -388,6 +388,7 @@ classes:
         domain_of:
         - PicturePath
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       thumbnail:
@@ -400,6 +401,7 @@ classes:
         domain_of:
         - PicturePath
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
   Author:
@@ -486,6 +488,7 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:author_corresponding_author_status
+        ifabsent: 'False'
         alias: corresponding_author_status
         owner: Author
         domain_of:
@@ -499,6 +502,7 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:author_primary_author_status
+        ifabsent: 'False'
         alias: primary_author_status
         owner: Author
         domain_of:
@@ -1412,6 +1416,7 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_aligned_tiltseries_binning
+        ifabsent: int(1)
         alias: aligned_tiltseries_binning
         owner: TiltSeries
         domain_of:
@@ -1475,6 +1480,7 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_is_aligned
+        ifabsent: 'False'
         alias: is_aligned
         owner: TiltSeries
         domain_of:
@@ -1790,6 +1796,19 @@ classes:
         range: boolean
         inlined: true
         inlined_as_list: true
+      align_software:
+        name: align_software
+        description: Software used for alignment
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:tomogram_align_software
+        alias: align_software
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        range: string
+        inlined: true
+        inlined_as_list: true
       reconstruction_method:
         name: reconstruction_method
         description: Describe reconstruction method (Weighted back-projection, SART,
@@ -1845,9 +1864,7 @@ classes:
         inlined_as_list: true
       tomogram_version:
         name: tomogram_version
-        description: Version of tomogram using the same software and post-processing.
-          Version of tomogram using the same software and post-processing. This will
-          be presented as the latest version
+        description: Version of tomogram
         from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_version
@@ -2058,6 +2075,7 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_is_visualization_default
+        ifabsent: 'False'
         alias: is_visualization_default
         owner: AnnotationSourceFile
         domain_of:
@@ -2075,10 +2093,12 @@ classes:
     attributes:
       binning:
         name: binning
-        description: The binning factor for a oriented point annotation file.
+        description: The binning factor for a point / oriented point / instance segmentation
+          annotation file.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_source_file_oriented_point_binning
+        - cdp-common:annotation_source_file_binning
+        ifabsent: int(1)
         alias: binning
         owner: AnnotationOrientedPointFile
         domain_of:
@@ -2089,10 +2109,11 @@ classes:
         inlined_as_list: true
       filter_value:
         name: filter_value
-        description: The filter value for a oriented point annotation file.
+        description: The filter value for an oriented point / instance segmentation
+          annotation file.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_source_file_oriented_point_filter_value
+        - cdp-common:annotation_source_file_filter_value
         alias: filter_value
         owner: AnnotationOrientedPointFile
         domain_of:
@@ -2102,10 +2123,11 @@ classes:
         inlined_as_list: true
       order:
         name: order
-        description: The order of axes for a oriented point annotation file.
+        description: The order of axes for an oriented point / instance segmentation
+          annotation file.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_source_file_oriented_point_order
+        - cdp-common:annotation_source_file_order
         alias: order
         owner: AnnotationOrientedPointFile
         domain_of:
@@ -2163,7 +2185,7 @@ classes:
         name: binning
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_source_file_oriented_point_binning
+        - cdp-common:annotation_source_file_binning
         alias: binning
         owner: AnnotationInstanceSegmentationFile
         domain_of:
@@ -2176,7 +2198,7 @@ classes:
         name: filter_value
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_source_file_oriented_point_filter_value
+        - cdp-common:annotation_source_file_filter_value
         alias: filter_value
         owner: AnnotationInstanceSegmentationFile
         domain_of:
@@ -2188,7 +2210,7 @@ classes:
         name: order
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_source_file_oriented_point_order
+        - cdp-common:annotation_source_file_order
         alias: order
         owner: AnnotationInstanceSegmentationFile
         domain_of:
@@ -2246,7 +2268,7 @@ classes:
         name: binning
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_source_file_point_binning
+        - cdp-common:annotation_source_file_binning
         alias: binning
         owner: AnnotationPointFile
         domain_of:
@@ -2260,7 +2282,8 @@ classes:
         description: The columns used in a point annotation file.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_source_file_point_columns
+        - cdp-common:annotation_source_file_columns
+        ifabsent: string(xyz)
         alias: columns
         owner: AnnotationPointFile
         domain_of:
@@ -2270,10 +2293,11 @@ classes:
         inlined_as_list: true
       delimiter:
         name: delimiter
-        description: The delimiter used in a oriented point annotation file.
+        description: The delimiter used in a point annotation file.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_source_file_point_delimiter
+        - cdp-common:annotation_source_file_delimiter
+        ifabsent: string(,)
         alias: delimiter
         owner: AnnotationPointFile
         domain_of:
@@ -2378,7 +2402,8 @@ classes:
         description: The mask label for a semantic segmentation mask annotation file.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_source_file_semantic_segmentation_mask_label
+        - cdp-common:annotation_source_file_mask_label
+        ifabsent: int(1)
         alias: mask_label
         owner: AnnotationSemanticSegmentationMaskFile
         domain_of:
@@ -2516,6 +2541,7 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_ground_truth_status
+        ifabsent: 'False'
         alias: ground_truth_status
         owner: Annotation
         domain_of:
@@ -2530,6 +2556,7 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_is_curator_recommended
+        ifabsent: 'False'
         alias: is_curator_recommended
         owner: Annotation
         domain_of:

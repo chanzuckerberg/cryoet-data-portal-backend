@@ -74,13 +74,14 @@ URI: [cdp-meta:Camera](metadataCamera)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Camera |
 | native | cdp-meta:Camera |
+
+
 
 
 

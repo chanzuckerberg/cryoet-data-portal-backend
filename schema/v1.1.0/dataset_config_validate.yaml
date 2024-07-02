@@ -20,38 +20,38 @@ classes:
     attributes: 
       annotations:
         multivalued: true
-        range: AnnotationContainer
+        range: AnnotationEntity
       dataset_keyphotos:
         multivalued: true
-        range: DatasetKeyPhotoContainer
+        range: DatasetKeyPhotoEntity
       datasets:
         multivalued: true
-        range: DatasetContainer
+        range: DatasetEntity
       frames:
         multivalued: true
-        range: FrameContainer
+        range: FrameEntity
       gains:
         multivalued: true
-        range: GainContainer
+        range: GainEntity
       key_images:
         multivalued: true
-        range: KeyImageContainer
+        range: KeyImageEntity
       rawtilts:
         multivalued: true
-        range: RawTiltContainer
+        range: RawTiltEntity
       runs:
         multivalued: true
-        range: RunContainer
+        range: RunEntity
       standardization_config:
         range: StandardizationConfig
       tiltseries:
         multivalued: true
-        range: TiltSeriesContainer
+        range: TiltSeriesEntity
       tomograms:
         multivalued: true
-        range: TomogramContainer
+        range: TomogramEntity
       voxel_spacings:
         multivalued: true
-        range: VoxelSpacingContainer
+        range: VoxelSpacingEntity
     
 source_file: ../../schema/v1.1.0/metadata

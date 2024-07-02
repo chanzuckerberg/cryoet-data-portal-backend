@@ -53,6 +53,16 @@ URI: [cdp-meta:annotation_object](metadataannotation_object)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:annotation_object |
+| native | cdp-meta:annotation_object |
+
+
+
+
 ## LinkML Source
 
 <details>

@@ -42,6 +42,16 @@ URI: [cdp-meta:y](metadatay)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:y |
+| native | cdp-meta:y |
+
+
+
+
 ## LinkML Source
 
 <details>

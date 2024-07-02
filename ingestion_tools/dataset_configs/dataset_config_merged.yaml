@@ -18,7 +18,7 @@ annotations:
       - OPTIONAL
       - true
       name: Mohammed Kaplan
-      primary_annotator_status:
+      primary_author_status:
       - OPTIONAL
       - true
     confidence:
@@ -95,7 +95,6 @@ datasets:
       \ three finder grids (JV9114F). Add gold to cells prior to freezing: 1ul of\
       \ gold to 4 ul of cells, freeze."
     organism:
-      id: NCBITaxon:10090
       name: Legionella pneumophila
       taxonomy_id: 1080311
     sample_preparation: 'Cells were grown in AYE liquid culture with following supplements:
@@ -146,14 +145,7 @@ standardization_config:
   run_to_ts_map_csv: tomo_ts_map.csv
   source_prefix: GJensen_full
 tiltseries:
-- acceleration_voltage: 300000
-  binning_from_frames: 1
-  camera:
-    manufacturer: Gatan
-    model: K2 SUMMIT
-  data_acquisition_software: SerialEM
-  is_aligned: false
-  metadata:
+- metadata:
     acceleration_voltage: 300000
     aligned_tiltseries_binning: 1
     binning_from_frames:
@@ -210,14 +202,6 @@ tiltseries:
     - float {tilt_series_total_flux}
     - 100
     - 143.5
-  microscope:
-    manufacturer: FEI
-    model: TITAN KRIOS
-    optical_setup: GIF Bioquantum
-  microscope_optical_setup:
-    energy_filter: GIF Bioquantum
-  pixel_spacing: 1.7005
-  related_empiar_entry: EMPIAR-10499
   sources:
   - parent_filters:
       exclude:
@@ -230,19 +214,6 @@ tiltseries:
       list_glob: '{run_name}/rawdata/*'
       match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
       name_regex: (.*)
-  spherical_aberration_constant: 2.7
-  tilt_axis:
-  - 175
-  - "85.6\xB0"
-  tilt_range:
-    max: 60
-    min: -60
-  tilt_series_quality: 5
-  tilt_step:
-  - 3.0
-  - 3
-  tilting_scheme: Dose symmetric from 0.0 degrees
-  total_flux: 120
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -250,8 +221,7 @@ tomograms:
       - 0
       - 0
       - 0
-    align_softwares:
-    - RAPTOR
+    align_software: RAPTOR
     authors:
     - ORCID: 0000-0001-8324-4040
       corresponding_author_status: true

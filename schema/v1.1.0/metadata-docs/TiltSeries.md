@@ -146,13 +146,14 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:TiltSeries |
 | native | cdp-meta:TiltSeries |
+
+
 
 
 
@@ -191,6 +192,7 @@ attributes:
     exact_mappings:
     - cdp-common:tiltseries_aligned_tiltseries_binning
     rank: 1000
+    ifabsent: int(1)
     alias: aligned_tiltseries_binning
     owner: TiltSeries
     domain_of:
@@ -259,6 +261,7 @@ attributes:
     exact_mappings:
     - cdp-common:tiltseries_is_aligned
     rank: 1000
+    ifabsent: 'False'
     alias: is_aligned
     owner: TiltSeries
     domain_of:
@@ -479,6 +482,7 @@ attributes:
     exact_mappings:
     - cdp-common:tiltseries_aligned_tiltseries_binning
     rank: 1000
+    ifabsent: int(1)
     alias: aligned_tiltseries_binning
     owner: TiltSeries
     domain_of:
@@ -547,6 +551,7 @@ attributes:
     exact_mappings:
     - cdp-common:tiltseries_is_aligned
     rank: 1000
+    ifabsent: 'False'
     alias: is_aligned
     owner: TiltSeries
     domain_of:

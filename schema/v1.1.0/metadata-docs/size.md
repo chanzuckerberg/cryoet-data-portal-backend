@@ -53,6 +53,16 @@ URI: [cdp-meta:size](metadatasize)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:size |
+| native | cdp-meta:size |
+
+
+
+
 ## LinkML Source
 
 <details>

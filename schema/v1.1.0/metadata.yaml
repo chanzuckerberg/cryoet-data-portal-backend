@@ -22,13 +22,14 @@ classes:
 
   PicturePath:
     description: A set of paths to representative images of a piece of data.
-
     attributes:
       snapshot:
         range: string
+        required: true
         description: Path to the dataset preview image relative to the dataset directory root.
       thumbnail:
         range: string
+        required: true
         description: Path to the thumbnail of preview image relative to the dataset directory root.
 
   # ============================================================================
@@ -437,6 +438,9 @@ classes:
       ctf_corrected:
         exact_mappings:
           - cdp-common:tomogram_ctf_corrected
+      align_software:
+        exact_mappings:
+          - cdp-common:tomogram_align_software
       reconstruction_method:
         exact_mappings:
           - cdp-common:tomogram_reconstruction_method
@@ -523,15 +527,15 @@ classes:
       binning: 
         range: integer
         exact_mappings:
-          - cdp-common:annotation_source_file_oriented_point_binning
+          - cdp-common:annotation_source_file_binning
       filter_value:
         range: string
         exact_mappings:
-          - cdp-common:annotation_source_file_oriented_point_filter_value
+          - cdp-common:annotation_source_file_filter_value
       order:
         range: string
         exact_mappings:
-          - cdp-common:annotation_source_file_oriented_point_order
+          - cdp-common:annotation_source_file_order
   
   AnnotationInstanceSegmentationFile:
     is_a: AnnotationOrientedPointFile
@@ -549,15 +553,15 @@ classes:
       binning: 
         range: integer
         exact_mappings:
-          - cdp-common:annotation_source_file_point_binning
+          - cdp-common:annotation_source_file_binning
       columns:
         range: string
         exact_mappings:
-          - cdp-common:annotation_source_file_point_columns
+          - cdp-common:annotation_source_file_columns
       delimiter:
         range: string
         exact_mappings:
-          - cdp-common:annotation_source_file_point_delimiter
+          - cdp-common:annotation_source_file_delimiter
 
   AnnotationSegmentationMaskFile:
     is_a: AnnotationSourceFile
@@ -575,7 +579,7 @@ classes:
       mask_label:
         range: integer
         exact_mappings:
-          - cdp-common:annotation_source_file_semantic_segmentation_mask_label
+          - cdp-common:annotation_source_file_mask_label
 
   # ============================================================================
 

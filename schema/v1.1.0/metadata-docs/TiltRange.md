@@ -71,13 +71,14 @@ URI: [cdp-meta:TiltRange](metadataTiltRange)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:TiltRange |
 | native | cdp-meta:TiltRange |
+
+
 
 
 

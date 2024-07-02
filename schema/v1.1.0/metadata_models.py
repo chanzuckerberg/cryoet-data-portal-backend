@@ -9,6 +9,7 @@ import re
 import sys
 from typing import (
     Any,
+    ClassVar,
     List,
     Literal,
     Dict,
@@ -21,6 +22,7 @@ if int(PYDANTIC_VERSION[0])>=2:
         BaseModel,
         ConfigDict,
         Field,
+        RootModel,
         field_validator
     )
 else:
@@ -45,6 +47,24 @@ class ConfiguredBaseModel(BaseModel):
     )
     pass
 
+
+
+
+class LinkMLMeta(RootModel):
+    root: Dict[str, Any] = {}
+    model_config = ConfigDict(frozen=True)
+
+    def __getattr__(self, key:str):
+        return getattr(self.root, key)
+
+    def __getitem__(self, key:str):
+        return self.root[key]
+
+    def __setitem__(self, key:str, value):
+        self.root[key] = value
+
+
+linkml_meta = LinkMLMeta({'default_prefix': 'metadata/', 'id': 'metadata', 'name': 'cdp-meta'} )
 
 class SampleTypeEnum(str, Enum):
     """
@@ -114,26 +134,57 @@ class AnnotationShapeEnum(str, Enum):
     SemanticSegmentationMask = "SemanticSegmentationMask"
 
 
+
 class PicturePath(ConfiguredBaseModel):
     """
     A set of paths to representative images of a piece of data.
     """
-    snapshot: Optional[str] = Field(None, description="""Path to the dataset preview image relative to the dataset directory root.""")
-    thumbnail: Optional[str] = Field(None, description="""Path to the thumbnail of preview image relative to the dataset directory root.""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    snapshot: str = Field(..., description="""Path to the dataset preview image relative to the dataset directory root.""", json_schema_extra = { "linkml_meta": {'alias': 'snapshot', 'domain_of': ['PicturePath']} })
+    thumbnail: str = Field(..., description="""Path to the thumbnail of preview image relative to the dataset directory root.""", json_schema_extra = { "linkml_meta": {'alias': 'thumbnail', 'domain_of': ['PicturePath']} })
 
 
 class Author(ConfiguredBaseModel):
     """
     Author of a scientific data entity.
     """
-    name: Optional[str] = Field(None, description="""The full name of the author.""")
-    email: Optional[str] = Field(None, description="""The email address of the author.""")
-    affiliation_name: Optional[str] = Field(None, description="""The name of the author's affiliation.""")
-    affiliation_address: Optional[str] = Field(None, description="""The address of the author's affiliation.""")
-    affiliation_identifier: Optional[str] = Field(None, description="""A Research Organization Registry (ROR) identifier.""")
-    corresponding_author_status: Optional[bool] = Field(None, description="""Whether the author is a corresponding author.""")
-    primary_author_status: Optional[bool] = Field(None, description="""Whether the author is a primary author.""")
-    ORCID: Optional[str] = Field(None, description="""A unique, persistent identifier for researchers, provided by ORCID.""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    name: Optional[str] = Field(None, description="""The full name of the author.""", json_schema_extra = { "linkml_meta": {'alias': 'name',
+         'domain_of': ['Author',
+                       'Organism',
+                       'Tissue',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:author_name']} })
+    email: Optional[str] = Field(None, description="""The email address of the author.""", json_schema_extra = { "linkml_meta": {'alias': 'email',
+         'domain_of': ['Author'],
+         'exact_mappings': ['cdp-common:author_email']} })
+    affiliation_name: Optional[str] = Field(None, description="""The name of the author's affiliation.""", json_schema_extra = { "linkml_meta": {'alias': 'affiliation_name',
+         'domain_of': ['Author'],
+         'exact_mappings': ['cdp-common:author_affiliation_name']} })
+    affiliation_address: Optional[str] = Field(None, description="""The address of the author's affiliation.""", json_schema_extra = { "linkml_meta": {'alias': 'affiliation_address',
+         'domain_of': ['Author'],
+         'exact_mappings': ['cdp-common:author_affiliation_address']} })
+    affiliation_identifier: Optional[str] = Field(None, description="""A Research Organization Registry (ROR) identifier.""", json_schema_extra = { "linkml_meta": {'alias': 'affiliation_identifier',
+         'domain_of': ['Author'],
+         'exact_mappings': ['cdp-common:affiliation_identifier'],
+         'recommended': True} })
+    corresponding_author_status: Optional[bool] = Field(False, description="""Whether the author is a corresponding author.""", json_schema_extra = { "linkml_meta": {'alias': 'corresponding_author_status',
+         'domain_of': ['Author'],
+         'exact_mappings': ['cdp-common:author_corresponding_author_status'],
+         'ifabsent': 'False'} })
+    primary_author_status: Optional[bool] = Field(False, description="""Whether the author is a primary author.""", json_schema_extra = { "linkml_meta": {'alias': 'primary_author_status',
+         'domain_of': ['Author'],
+         'exact_mappings': ['cdp-common:author_primary_author_status'],
+         'ifabsent': 'False'} })
+    ORCID: Optional[str] = Field(None, description="""A unique, persistent identifier for researchers, provided by ORCID.""", json_schema_extra = { "linkml_meta": {'alias': 'ORCID',
+         'domain_of': ['Author'],
+         'exact_mappings': ['cdp-common:orcid'],
+         'recommended': True} })
 
     @field_validator('affiliation_identifier')
     def pattern_affiliation_identifier(cls, v):
@@ -164,337 +215,813 @@ class Funding(ConfiguredBaseModel):
     """
     A funding source for a scientific data entity (base for JSON and DB representation).
     """
-    funding_agency_name: Optional[str] = Field(None, description="""The name of the funding source.""")
-    grant_id: Optional[str] = Field(None, description="""Grant identifier provided by the funding agency""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    funding_agency_name: Optional[str] = Field(None, description="""The name of the funding source.""", json_schema_extra = { "linkml_meta": {'alias': 'funding_agency_name',
+         'domain_of': ['Funding'],
+         'exact_mappings': ['cdp-common:funding_agency_name']} })
+    grant_id: Optional[str] = Field(None, description="""Grant identifier provided by the funding agency""", json_schema_extra = { "linkml_meta": {'alias': 'grant_id',
+         'domain_of': ['Funding'],
+         'exact_mappings': ['cdp-common:funding_grant_id']} })
 
 
 class DateStamp(ConfiguredBaseModel):
     """
     A set of dates at which a data item was deposited, published and last modified.
     """
-    deposition_date: date = Field(..., description="""The date a data item was received by the cryoET data portal.""")
-    release_date: date = Field(..., description="""The date a data item was received by the cryoET data portal.""")
-    last_modified_date: date = Field(..., description="""The date a piece of data was last modified on the cryoET data portal.""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata',
+         'slot_usage': {'deposition_date': {'domain_of': ['DateStamp'],
+                                            'name': 'deposition_date',
+                                            'required': True},
+                        'last_modified_date': {'domain_of': ['DateStamp'],
+                                               'name': 'last_modified_date',
+                                               'recommended': True},
+                        'release_date': {'domain_of': ['DateStamp'],
+                                         'name': 'release_date',
+                                         'recommended': True}}})
+
+    deposition_date: date = Field(..., description="""The date a data item was received by the cryoET data portal.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition_date', 'domain_of': ['DateStamp']} })
+    release_date: date = Field(..., description="""The date a data item was received by the cryoET data portal.""", json_schema_extra = { "linkml_meta": {'alias': 'release_date', 'domain_of': ['DateStamp'], 'recommended': True} })
+    last_modified_date: date = Field(..., description="""The date a piece of data was last modified on the cryoET data portal.""", json_schema_extra = { "linkml_meta": {'alias': 'last_modified_date', 'domain_of': ['DateStamp'], 'recommended': True} })
 
 
 class DatestampedEntity(ConfiguredBaseModel):
     """
     An entity with associated deposition, release and last modified dates.
     """
-    dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True, 'from_schema': 'metadata'})
+
+    dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates', 'domain_of': ['DatestampedEntity', 'Dataset', 'Annotation']} })
 
 
 class AuthoredEntity(ConfiguredBaseModel):
     """
     An entity with associated authors.
     """
-    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True, 'from_schema': 'metadata'})
+
+    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
+         'domain_of': ['AuthoredEntity', 'Dataset', 'Tomogram', 'Annotation'],
+         'list_elements_ordered': True} })
 
 
 class FundedEntity(ConfiguredBaseModel):
     """
     An entity with associated funding sources.
     """
-    funding: Optional[List[Funding]] = Field(default_factory=list, description="""A funding source for a scientific data entity (base for JSON and DB representation).""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True, 'from_schema': 'metadata'})
+
+    funding: Optional[List[Funding]] = Field(default_factory=list, description="""A funding source for a scientific data entity (base for JSON and DB representation).""", json_schema_extra = { "linkml_meta": {'alias': 'funding',
+         'domain_of': ['FundedEntity', 'Dataset'],
+         'list_elements_ordered': True,
+         'recommended': True} })
 
 
 class CrossReferencedEntity(ConfiguredBaseModel):
     """
     An entity with associated cross-references to other databases and publications.
     """
-    cross_references: Optional[CrossReferences] = Field(None, description="""A set of cross-references to other databases and publications.""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True, 'from_schema': 'metadata'})
+
+    cross_references: Optional[CrossReferences] = Field(None, description="""A set of cross-references to other databases and publications.""", json_schema_extra = { "linkml_meta": {'alias': 'cross_references', 'domain_of': ['CrossReferencedEntity', 'Dataset']} })
 
 
 class PicturedEntity(ConfiguredBaseModel):
     """
     An entity with associated preview images.
     """
-    key_photos: PicturePath = Field(..., description="""A set of paths to representative images of a piece of data.""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True, 'from_schema': 'metadata'})
+
+    key_photos: PicturePath = Field(..., description="""A set of paths to representative images of a piece of data.""", json_schema_extra = { "linkml_meta": {'alias': 'key_photos', 'domain_of': ['PicturedEntity']} })
 
 
 class Organism(ConfiguredBaseModel):
     """
     The species from which the sample was derived.
     """
-    name: Optional[str] = Field(None)
-    taxonomy_id: Optional[int] = Field(None, description="""NCBI taxonomy identifier for the organism, e.g. 9606""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    name: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'name',
+         'domain_of': ['Author',
+                       'Organism',
+                       'Tissue',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:organism_name']} })
+    taxonomy_id: Optional[int] = Field(None, description="""NCBI taxonomy identifier for the organism, e.g. 9606""", json_schema_extra = { "linkml_meta": {'alias': 'taxonomy_id',
+         'domain_of': ['Organism'],
+         'exact_mappings': ['cdp-common:organism_taxid']} })
 
 
 class Tissue(ConfiguredBaseModel):
     """
     The type of tissue from which the sample was derived.
     """
-    name: Optional[str] = Field(None)
-    id: Optional[str] = Field(None, description="""The UBERON identifier for the tissue.""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    name: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'name',
+         'domain_of': ['Author',
+                       'Organism',
+                       'Tissue',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:tissue_name']} })
+    id: Optional[str] = Field(None, description="""The UBERON identifier for the tissue.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
+         'domain_of': ['Tissue',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:tissue_id']} })
 
 
 class CellType(ConfiguredBaseModel):
     """
     The cell type from which the sample was derived.
     """
-    name: Optional[str] = Field(None)
-    id: Optional[str] = Field(None)
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    name: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'name',
+         'domain_of': ['Author',
+                       'Organism',
+                       'Tissue',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:cell_name']} })
+    id: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'id',
+         'domain_of': ['Tissue',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:cell_type_id']} })
 
 
 class CellStrain(ConfiguredBaseModel):
     """
     The strain or cell line from which the sample was derived.
     """
-    name: Optional[str] = Field(None)
-    id: Optional[str] = Field(None)
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    name: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'name',
+         'domain_of': ['Author',
+                       'Organism',
+                       'Tissue',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:cell_strain_name']} })
+    id: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'id',
+         'domain_of': ['Tissue',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:cell_strain_id']} })
 
 
 class CellComponent(ConfiguredBaseModel):
     """
     The cellular component from which the sample was derived.
     """
-    name: Optional[str] = Field(None)
-    id: Optional[str] = Field(None)
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    name: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'name',
+         'domain_of': ['Author',
+                       'Organism',
+                       'Tissue',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:cell_component_name']} })
+    id: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'id',
+         'domain_of': ['Tissue',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:cell_component_id']} })
 
 
 class ExperimentalMetadata(ConfiguredBaseModel):
     """
     Metadata describing sample and sample preparation methods used in a cryoET dataset.
     """
-    sample_type: Optional[SampleTypeEnum] = Field(None, description="""Type of sample imaged in a CryoET study.""")
-    sample_preparation: Optional[str] = Field(None, description="""Describes how the sample was prepared.""")
-    grid_preparation: Optional[str] = Field(None, description="""Describes Cryo-ET grid preparation.""")
-    other_setup: Optional[str] = Field(None, description="""Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication.""")
-    organism: Optional[Organism] = Field(None, description="""The species from which the sample was derived.""")
-    tissue: Optional[Tissue] = Field(None, description="""The type of tissue from which the sample was derived.""")
-    cell_type: Optional[CellType] = Field(None, description="""The cell type from which the sample was derived.""")
-    cell_strain: Optional[CellStrain] = Field(None, description="""The strain or cell line from which the sample was derived.""")
-    cell_component: Optional[CellComponent] = Field(None, description="""The cellular component from which the sample was derived.""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True, 'from_schema': 'metadata'})
+
+    sample_type: Optional[SampleTypeEnum] = Field(None, description="""Type of sample imaged in a CryoET study.""", json_schema_extra = { "linkml_meta": {'alias': 'sample_type',
+         'domain_of': ['ExperimentalMetadata', 'Dataset'],
+         'exact_mappings': ['cdp-common:preparation_sample_type']} })
+    sample_preparation: Optional[str] = Field(None, description="""Describes how the sample was prepared.""", json_schema_extra = { "linkml_meta": {'alias': 'sample_preparation',
+         'domain_of': ['ExperimentalMetadata', 'Dataset'],
+         'exact_mappings': ['cdp-common:sample_preparation']} })
+    grid_preparation: Optional[str] = Field(None, description="""Describes Cryo-ET grid preparation.""", json_schema_extra = { "linkml_meta": {'alias': 'grid_preparation',
+         'domain_of': ['ExperimentalMetadata', 'Dataset'],
+         'exact_mappings': ['cdp-common:grid_preparation']} })
+    other_setup: Optional[str] = Field(None, description="""Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication.""", json_schema_extra = { "linkml_meta": {'alias': 'other_setup',
+         'domain_of': ['ExperimentalMetadata', 'Dataset'],
+         'exact_mappings': ['cdp-common:preparation_other_setup']} })
+    organism: Optional[Organism] = Field(None, description="""The species from which the sample was derived.""", json_schema_extra = { "linkml_meta": {'alias': 'organism', 'domain_of': ['ExperimentalMetadata', 'Dataset']} })
+    tissue: Optional[Tissue] = Field(None, description="""The type of tissue from which the sample was derived.""", json_schema_extra = { "linkml_meta": {'alias': 'tissue', 'domain_of': ['ExperimentalMetadata', 'Dataset']} })
+    cell_type: Optional[CellType] = Field(None, description="""The cell type from which the sample was derived.""", json_schema_extra = { "linkml_meta": {'alias': 'cell_type', 'domain_of': ['ExperimentalMetadata', 'Dataset']} })
+    cell_strain: Optional[CellStrain] = Field(None, description="""The strain or cell line from which the sample was derived.""", json_schema_extra = { "linkml_meta": {'alias': 'cell_strain', 'domain_of': ['ExperimentalMetadata', 'Dataset']} })
+    cell_component: Optional[CellComponent] = Field(None, description="""The cellular component from which the sample was derived.""", json_schema_extra = { "linkml_meta": {'alias': 'cell_component', 'domain_of': ['ExperimentalMetadata', 'Dataset']} })
 
 
 class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, AuthoredEntity, DatestampedEntity):
     """
     High-level description of a cryoET dataset.
     """
-    dataset_identifier: Optional[int] = Field(None, description="""An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree.""")
-    dataset_title: Optional[str] = Field(None, description="""Title of a CryoET dataset.""")
-    dataset_description: Optional[str] = Field(None, description="""A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.""")
-    dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""")
-    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""")
-    funding: Optional[List[Funding]] = Field(default_factory=list, description="""A funding source for a scientific data entity (base for JSON and DB representation).""")
-    cross_references: Optional[CrossReferences] = Field(None, description="""A set of cross-references to other databases and publications.""")
-    sample_type: Optional[str] = Field(None, description="""Type of sample imaged in a CryoET study.""")
-    sample_preparation: Optional[str] = Field(None, description="""Describes how the sample was prepared.""")
-    grid_preparation: Optional[str] = Field(None, description="""Describes Cryo-ET grid preparation.""")
-    other_setup: Optional[str] = Field(None, description="""Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication.""")
-    organism: Optional[Organism] = Field(None, description="""The species from which the sample was derived.""")
-    tissue: Optional[Tissue] = Field(None, description="""The type of tissue from which the sample was derived.""")
-    cell_type: Optional[CellType] = Field(None, description="""The cell type from which the sample was derived.""")
-    cell_strain: Optional[CellStrain] = Field(None, description="""The strain or cell line from which the sample was derived.""")
-    cell_component: Optional[CellComponent] = Field(None, description="""The cellular component from which the sample was derived.""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata',
+         'mixins': ['DatestampedEntity',
+                    'AuthoredEntity',
+                    'FundedEntity',
+                    'CrossReferencedEntity',
+                    'ExperimentalMetadata']})
+
+    dataset_identifier: Optional[int] = Field(None, description="""An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset_identifier',
+         'domain_of': ['Dataset'],
+         'exact_mappings': ['cdp-common:dataset_identifier']} })
+    dataset_title: Optional[str] = Field(None, description="""Title of a CryoET dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset_title',
+         'domain_of': ['Dataset'],
+         'exact_mappings': ['cdp-common:dataset_title']} })
+    dataset_description: Optional[str] = Field(None, description="""A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset_description',
+         'domain_of': ['Dataset'],
+         'exact_mappings': ['cdp-common:dataset_description']} })
+    dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates', 'domain_of': ['DatestampedEntity', 'Dataset', 'Annotation']} })
+    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
+         'domain_of': ['AuthoredEntity', 'Dataset', 'Tomogram', 'Annotation'],
+         'list_elements_ordered': True} })
+    funding: Optional[List[Funding]] = Field(default_factory=list, description="""A funding source for a scientific data entity (base for JSON and DB representation).""", json_schema_extra = { "linkml_meta": {'alias': 'funding',
+         'domain_of': ['FundedEntity', 'Dataset'],
+         'list_elements_ordered': True,
+         'recommended': True} })
+    cross_references: Optional[CrossReferences] = Field(None, description="""A set of cross-references to other databases and publications.""", json_schema_extra = { "linkml_meta": {'alias': 'cross_references', 'domain_of': ['CrossReferencedEntity', 'Dataset']} })
+    sample_type: Optional[str] = Field(None, description="""Type of sample imaged in a CryoET study.""", json_schema_extra = { "linkml_meta": {'alias': 'sample_type',
+         'domain_of': ['ExperimentalMetadata', 'Dataset'],
+         'exact_mappings': ['cdp-common:preparation_sample_type']} })
+    sample_preparation: Optional[str] = Field(None, description="""Describes how the sample was prepared.""", json_schema_extra = { "linkml_meta": {'alias': 'sample_preparation',
+         'domain_of': ['ExperimentalMetadata', 'Dataset'],
+         'exact_mappings': ['cdp-common:sample_preparation']} })
+    grid_preparation: Optional[str] = Field(None, description="""Describes Cryo-ET grid preparation.""", json_schema_extra = { "linkml_meta": {'alias': 'grid_preparation',
+         'domain_of': ['ExperimentalMetadata', 'Dataset'],
+         'exact_mappings': ['cdp-common:grid_preparation']} })
+    other_setup: Optional[str] = Field(None, description="""Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication.""", json_schema_extra = { "linkml_meta": {'alias': 'other_setup',
+         'domain_of': ['ExperimentalMetadata', 'Dataset'],
+         'exact_mappings': ['cdp-common:preparation_other_setup']} })
+    organism: Optional[Organism] = Field(None, description="""The species from which the sample was derived.""", json_schema_extra = { "linkml_meta": {'alias': 'organism', 'domain_of': ['ExperimentalMetadata', 'Dataset']} })
+    tissue: Optional[Tissue] = Field(None, description="""The type of tissue from which the sample was derived.""", json_schema_extra = { "linkml_meta": {'alias': 'tissue', 'domain_of': ['ExperimentalMetadata', 'Dataset']} })
+    cell_type: Optional[CellType] = Field(None, description="""The cell type from which the sample was derived.""", json_schema_extra = { "linkml_meta": {'alias': 'cell_type', 'domain_of': ['ExperimentalMetadata', 'Dataset']} })
+    cell_strain: Optional[CellStrain] = Field(None, description="""The strain or cell line from which the sample was derived.""", json_schema_extra = { "linkml_meta": {'alias': 'cell_strain', 'domain_of': ['ExperimentalMetadata', 'Dataset']} })
+    cell_component: Optional[CellComponent] = Field(None, description="""The cellular component from which the sample was derived.""", json_schema_extra = { "linkml_meta": {'alias': 'cell_component', 'domain_of': ['ExperimentalMetadata', 'Dataset']} })
 
 
 class Camera(ConfiguredBaseModel):
     """
     The camera used to collect the tilt series.
     """
-    acquire_mode: Optional[str] = Field(None, description="""Camera acquisition mode""")
-    manufacturer: Optional[str] = Field(None, description="""Name of the camera manufacturer""")
-    model: Optional[str] = Field(None, description="""Camera model name""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    acquire_mode: Optional[str] = Field(None, description="""Camera acquisition mode""", json_schema_extra = { "linkml_meta": {'alias': 'acquire_mode',
+         'domain_of': ['Camera'],
+         'exact_mappings': ['cdp-common:tiltseries_camera_acquire_mode']} })
+    manufacturer: Optional[str] = Field(None, description="""Name of the camera manufacturer""", json_schema_extra = { "linkml_meta": {'alias': 'manufacturer',
+         'domain_of': ['Camera', 'Microscope'],
+         'exact_mappings': ['cdp-common:tiltseries_camera_manufacturer']} })
+    model: Optional[str] = Field(None, description="""Camera model name""", json_schema_extra = { "linkml_meta": {'alias': 'model',
+         'domain_of': ['Camera', 'Microscope'],
+         'exact_mappings': ['cdp-common:tiltseries_camera_model']} })
 
 
 class Microscope(ConfiguredBaseModel):
     """
     The microscope used to collect the tilt series.
     """
-    manufacturer: Optional[str] = Field(None)
-    model: Optional[str] = Field(None)
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    manufacturer: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'manufacturer',
+         'domain_of': ['Camera', 'Microscope'],
+         'exact_mappings': ['cdp-common:tiltseries_microscope_manufacturer']} })
+    model: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'model',
+         'domain_of': ['Camera', 'Microscope'],
+         'exact_mappings': ['cdp-common:tiltseries_microscope_model']} })
 
 
 class MicroscopeOpticalSetup(ConfiguredBaseModel):
     """
     The optical setup of the microscope used to collect the tilt series.
     """
-    energy_filter: Optional[str] = Field(None, description="""Energy filter setup used""")
-    phase_plate: Optional[str] = Field(None, description="""Phase plate configuration""")
-    image_corrector: Optional[str] = Field(None, description="""Image corrector setup""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    energy_filter: Optional[str] = Field(None, description="""Energy filter setup used""", json_schema_extra = { "linkml_meta": {'alias': 'energy_filter',
+         'domain_of': ['MicroscopeOpticalSetup'],
+         'exact_mappings': ['cdp-common:tiltseries_microscope_energy_filter']} })
+    phase_plate: Optional[str] = Field(None, description="""Phase plate configuration""", json_schema_extra = { "linkml_meta": {'alias': 'phase_plate',
+         'domain_of': ['MicroscopeOpticalSetup'],
+         'exact_mappings': ['cdp-common:tiltseries_microscope_phase_plate']} })
+    image_corrector: Optional[str] = Field(None, description="""Image corrector setup""", json_schema_extra = { "linkml_meta": {'alias': 'image_corrector',
+         'domain_of': ['MicroscopeOpticalSetup'],
+         'exact_mappings': ['cdp-common:tiltseries_microscope_image_corrector']} })
 
 
 class TiltRange(ConfiguredBaseModel):
     """
     The range of tilt angles in the tilt series.
     """
-    min: Optional[float] = Field(None, description="""Minimal tilt angle in degrees""")
-    max: Optional[float] = Field(None, description="""Maximal tilt angle in degrees""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    min: Optional[float] = Field(None, description="""Minimal tilt angle in degrees""", json_schema_extra = { "linkml_meta": {'alias': 'min',
+         'domain_of': ['TiltRange'],
+         'exact_mappings': ['cdp-common:tiltseries_tilt_min']} })
+    max: Optional[float] = Field(None, description="""Maximal tilt angle in degrees""", json_schema_extra = { "linkml_meta": {'alias': 'max',
+         'domain_of': ['TiltRange'],
+         'exact_mappings': ['cdp-common:tiltseries_tilt_max']} })
 
 
 class TiltSeries(ConfiguredBaseModel):
     """
     Metadata describing a tilt series.
     """
-    acceleration_voltage: Optional[int] = Field(None, description="""Electron Microscope Accelerator voltage in volts""")
-    aligned_tiltseries_binning: Optional[int] = Field(None, description="""Binning factor of the aligned tilt series""")
-    binning_from_frames: Optional[float] = Field(None, description="""Describes the binning factor from frames to tilt series file""")
-    camera: Optional[Camera] = Field(None, description="""The camera used to collect the tilt series.""")
-    data_acquisition_software: Optional[str] = Field(None, description="""Software used to collect data""")
-    frames_count: Optional[int] = Field(None, description="""Number of frames associated with this tiltseries""")
-    is_aligned: Optional[bool] = Field(None, description="""Whether this tilt series is aligned""")
-    microscope: Optional[Microscope] = Field(None, description="""The microscope used to collect the tilt series.""")
-    microscope_additional_info: Optional[str] = Field(None, description="""Other microscope optical setup information, in addition to energy filter, phase plate and image corrector""")
-    microscope_optical_setup: Optional[MicroscopeOpticalSetup] = Field(None, description="""The optical setup of the microscope used to collect the tilt series.""")
-    related_empiar_entry: Optional[str] = Field(None, description="""If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier""")
-    spherical_aberration_constant: Optional[float] = Field(None, description="""Spherical Aberration Constant of the objective lens in millimeters""")
-    tilt_alignment_software: Optional[str] = Field(None, description="""Software used for tilt alignment""")
-    tilt_axis: Optional[float] = Field(None, description="""Rotation angle in degrees""")
-    tilt_range: Optional[TiltRange] = Field(None, description="""The range of tilt angles in the tilt series.""")
-    tilt_series_quality: Optional[int] = Field(None, description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""")
-    tilt_step: Optional[float] = Field(None, description="""Tilt step in degrees""")
-    tilting_scheme: Optional[str] = Field(None, description="""The order of stage tilting during acquisition of the data""")
-    total_flux: Optional[float] = Field(None, description="""Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series""")
-    pixel_spacing: Optional[float] = Field(None, description="""Pixel spacing for the tilt series""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    acceleration_voltage: Optional[int] = Field(None, description="""Electron Microscope Accelerator voltage in volts""", json_schema_extra = { "linkml_meta": {'alias': 'acceleration_voltage',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_acceleration_voltage']} })
+    aligned_tiltseries_binning: Optional[int] = Field(1, description="""Binning factor of the aligned tilt series""", json_schema_extra = { "linkml_meta": {'alias': 'aligned_tiltseries_binning',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_aligned_tiltseries_binning'],
+         'ifabsent': 'int(1)'} })
+    binning_from_frames: Optional[float] = Field(None, description="""Describes the binning factor from frames to tilt series file""", json_schema_extra = { "linkml_meta": {'alias': 'binning_from_frames',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_binning_from_frames']} })
+    camera: Optional[Camera] = Field(None, description="""The camera used to collect the tilt series.""", json_schema_extra = { "linkml_meta": {'alias': 'camera', 'domain_of': ['TiltSeries']} })
+    data_acquisition_software: Optional[str] = Field(None, description="""Software used to collect data""", json_schema_extra = { "linkml_meta": {'alias': 'data_acquisition_software',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_data_acquisition_software']} })
+    frames_count: Optional[int] = Field(None, description="""Number of frames associated with this tiltseries""", json_schema_extra = { "linkml_meta": {'alias': 'frames_count',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_frames_count']} })
+    is_aligned: Optional[bool] = Field(False, description="""Whether this tilt series is aligned""", json_schema_extra = { "linkml_meta": {'alias': 'is_aligned',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_is_aligned'],
+         'ifabsent': 'False'} })
+    microscope: Optional[Microscope] = Field(None, description="""The microscope used to collect the tilt series.""", json_schema_extra = { "linkml_meta": {'alias': 'microscope', 'domain_of': ['TiltSeries']} })
+    microscope_additional_info: Optional[str] = Field(None, description="""Other microscope optical setup information, in addition to energy filter, phase plate and image corrector""", json_schema_extra = { "linkml_meta": {'alias': 'microscope_additional_info',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_microscope_additional_info']} })
+    microscope_optical_setup: Optional[MicroscopeOpticalSetup] = Field(None, description="""The optical setup of the microscope used to collect the tilt series.""", json_schema_extra = { "linkml_meta": {'alias': 'microscope_optical_setup', 'domain_of': ['TiltSeries']} })
+    related_empiar_entry: Optional[str] = Field(None, description="""If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier""", json_schema_extra = { "linkml_meta": {'alias': 'related_empiar_entry',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_related_empiar_entry']} })
+    spherical_aberration_constant: Optional[float] = Field(None, description="""Spherical Aberration Constant of the objective lens in millimeters""", json_schema_extra = { "linkml_meta": {'alias': 'spherical_aberration_constant',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_spherical_aberration_constant']} })
+    tilt_alignment_software: Optional[str] = Field(None, description="""Software used for tilt alignment""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_alignment_software',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_tilt_alignment_software']} })
+    tilt_axis: Optional[float] = Field(None, description="""Rotation angle in degrees""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_axis',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_tilt_axis']} })
+    tilt_range: Optional[TiltRange] = Field(None, description="""The range of tilt angles in the tilt series.""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_range', 'domain_of': ['TiltSeries']} })
+    tilt_series_quality: Optional[int] = Field(None, description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_series_quality',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_tilt_series_quality']} })
+    tilt_step: Optional[float] = Field(None, description="""Tilt step in degrees""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_step',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_tilt_step']} })
+    tilting_scheme: Optional[str] = Field(None, description="""The order of stage tilting during acquisition of the data""", json_schema_extra = { "linkml_meta": {'alias': 'tilting_scheme',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_tilting_scheme']} })
+    total_flux: Optional[float] = Field(None, description="""Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series""", json_schema_extra = { "linkml_meta": {'alias': 'total_flux',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_total_flux']} })
+    pixel_spacing: Optional[float] = Field(None, description="""Pixel spacing for the tilt series""", json_schema_extra = { "linkml_meta": {'alias': 'pixel_spacing',
+         'domain_of': ['TiltSeries'],
+         'exact_mappings': ['cdp-common:tiltseries_pixel_spacing']} })
 
 
 class TomogramSize(ConfiguredBaseModel):
     """
     The size of a tomogram in voxels in each dimension.
     """
-    x: Optional[int] = Field(None, description="""Number of pixels in the 3D data fast axis""")
-    y: Optional[int] = Field(None, description="""Number of pixels in the 3D data medium axis""")
-    z: Optional[int] = Field(None, description="""Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    x: Optional[int] = Field(None, description="""Number of pixels in the 3D data fast axis""", json_schema_extra = { "linkml_meta": {'alias': 'x',
+         'domain_of': ['TomogramSize', 'TomogramOffset'],
+         'exact_mappings': ['cdp-common:tomogram_size_x']} })
+    y: Optional[int] = Field(None, description="""Number of pixels in the 3D data medium axis""", json_schema_extra = { "linkml_meta": {'alias': 'y',
+         'domain_of': ['TomogramSize', 'TomogramOffset'],
+         'exact_mappings': ['cdp-common:tomogram_size_y']} })
+    z: Optional[int] = Field(None, description="""Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt""", json_schema_extra = { "linkml_meta": {'alias': 'z',
+         'domain_of': ['TomogramSize', 'TomogramOffset'],
+         'exact_mappings': ['cdp-common:tomogram_size_z']} })
 
 
 class TomogramOffset(ConfiguredBaseModel):
     """
     The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.
     """
-    x: Optional[int] = Field(None)
-    y: Optional[int] = Field(None)
-    z: Optional[int] = Field(None)
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    x: Optional[int] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'x',
+         'domain_of': ['TomogramSize', 'TomogramOffset'],
+         'exact_mappings': ['cdp-common:tomogram_offset_x']} })
+    y: Optional[int] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'y',
+         'domain_of': ['TomogramSize', 'TomogramOffset'],
+         'exact_mappings': ['cdp-common:tomogram_offset_y']} })
+    z: Optional[int] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'z',
+         'domain_of': ['TomogramSize', 'TomogramOffset'],
+         'exact_mappings': ['cdp-common:tomogram_offset_z']} })
 
 
 class Tomogram(AuthoredEntity):
     """
     Metadata describing a tomogram.
     """
-    voxel_spacing: Optional[float] = Field(None, description="""Voxel spacing equal in all three axes in angstroms""")
-    fiducial_alignment_status: Optional[FiducialAlignmentStatusEnum] = Field(None, description="""Whether the tomographic alignment was computed based on fiducial markers.""")
-    ctf_corrected: Optional[bool] = Field(None, description="""Whether this tomogram is CTF corrected""")
-    reconstruction_method: Optional[str] = Field(None, description="""Describe reconstruction method (Weighted back-projection, SART, SIRT)""")
-    reconstruction_software: Optional[str] = Field(None, description="""Name of software used for reconstruction""")
-    processing: Optional[str] = Field(None, description="""Describe additional processing used to derive the tomogram""")
-    processing_software: Optional[str] = Field(None, description="""Processing software used to derive the tomogram""")
-    tomogram_version: Optional[string] = Field(None, description="""Version of tomogram using the same software and post-processing. Version of tomogram using the same software and post-processing. This will be presented as the latest version""")
-    affine_transformation_matrix: Optional[Any] = Field(None)
-    size: Optional[TomogramSize] = Field(None, description="""The size of a tomogram in voxels in each dimension.""")
-    offset: Optional[TomogramOffset] = Field(None, description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""")
-    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata', 'mixins': ['AuthoredEntity']})
+
+    voxel_spacing: Optional[float] = Field(None, description="""Voxel spacing equal in all three axes in angstroms""", json_schema_extra = { "linkml_meta": {'alias': 'voxel_spacing',
+         'domain_of': ['Tomogram'],
+         'exact_mappings': ['cdp-common:tomogram_voxel_spacing']} })
+    fiducial_alignment_status: Optional[FiducialAlignmentStatusEnum] = Field(None, description="""Whether the tomographic alignment was computed based on fiducial markers.""", json_schema_extra = { "linkml_meta": {'alias': 'fiducial_alignment_status',
+         'domain_of': ['Tomogram'],
+         'exact_mappings': ['cdp-common:tomogram_fiducial_alignment_status']} })
+    ctf_corrected: Optional[bool] = Field(None, description="""Whether this tomogram is CTF corrected""", json_schema_extra = { "linkml_meta": {'alias': 'ctf_corrected',
+         'domain_of': ['Tomogram'],
+         'exact_mappings': ['cdp-common:tomogram_ctf_corrected']} })
+    align_software: Optional[str] = Field(None, description="""Software used for alignment""", json_schema_extra = { "linkml_meta": {'alias': 'align_software',
+         'domain_of': ['Tomogram'],
+         'exact_mappings': ['cdp-common:tomogram_align_software']} })
+    reconstruction_method: Optional[str] = Field(None, description="""Describe reconstruction method (Weighted back-projection, SART, SIRT)""", json_schema_extra = { "linkml_meta": {'alias': 'reconstruction_method',
+         'domain_of': ['Tomogram'],
+         'exact_mappings': ['cdp-common:tomogram_reconstruction_method']} })
+    reconstruction_software: Optional[str] = Field(None, description="""Name of software used for reconstruction""", json_schema_extra = { "linkml_meta": {'alias': 'reconstruction_software',
+         'domain_of': ['Tomogram'],
+         'exact_mappings': ['cdp-common:tomogram_reconstruction_software']} })
+    processing: Optional[str] = Field(None, description="""Describe additional processing used to derive the tomogram""", json_schema_extra = { "linkml_meta": {'alias': 'processing',
+         'domain_of': ['Tomogram'],
+         'exact_mappings': ['cdp-common:tomogram_processing']} })
+    processing_software: Optional[str] = Field(None, description="""Processing software used to derive the tomogram""", json_schema_extra = { "linkml_meta": {'alias': 'processing_software',
+         'domain_of': ['Tomogram'],
+         'exact_mappings': ['cdp-common:tomogram_processing_software']} })
+    tomogram_version: Optional[float] = Field(None, description="""Version of tomogram""", json_schema_extra = { "linkml_meta": {'alias': 'tomogram_version',
+         'domain_of': ['Tomogram'],
+         'exact_mappings': ['cdp-common:tomogram_version']} })
+    affine_transformation_matrix: Optional[Any] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'affine_transformation_matrix', 'domain_of': ['Tomogram']} })
+    size: Optional[TomogramSize] = Field(None, description="""The size of a tomogram in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'size', 'domain_of': ['Tomogram']} })
+    offset: Optional[TomogramOffset] = Field(None, description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram']} })
+    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
+         'domain_of': ['AuthoredEntity', 'Dataset', 'Tomogram', 'Annotation'],
+         'list_elements_ordered': True} })
 
 
 class AnnotationConfidence(ConfiguredBaseModel):
     """
     Metadata describing the confidence of an annotation.
     """
-    precision: Optional[float] = Field(None, description="""Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive""")
-    recall: Optional[float] = Field(None, description="""Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly""")
-    ground_truth_used: Optional[str] = Field(None, description="""Annotation filename used as ground truth for precision and recall""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    precision: Optional[float] = Field(None, description="""Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive""", json_schema_extra = { "linkml_meta": {'alias': 'precision',
+         'domain_of': ['AnnotationConfidence'],
+         'exact_mappings': ['cdp-common:annotation_confidence_precision']} })
+    recall: Optional[float] = Field(None, description="""Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly""", json_schema_extra = { "linkml_meta": {'alias': 'recall',
+         'domain_of': ['AnnotationConfidence'],
+         'exact_mappings': ['cdp-common:annotation_confidence_recall']} })
+    ground_truth_used: Optional[str] = Field(None, description="""Annotation filename used as ground truth for precision and recall""", json_schema_extra = { "linkml_meta": {'alias': 'ground_truth_used',
+         'domain_of': ['AnnotationConfidence'],
+         'exact_mappings': ['cdp-common:annotation_ground_truth_used']} })
 
 
 class AnnotationObject(ConfiguredBaseModel):
     """
     Metadata describing the object being annotated.
     """
-    id: Optional[str] = Field(None)
-    name: Optional[str] = Field(None)
-    description: Optional[str] = Field(None, description="""A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.""")
-    state: Optional[str] = Field(None, description="""Molecule state annotated (e.g. open, closed)""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    id: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'id',
+         'domain_of': ['Tissue',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:annotation_object_id']} })
+    name: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'name',
+         'domain_of': ['Author',
+                       'Organism',
+                       'Tissue',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:annotation_object_name']} })
+    description: Optional[str] = Field(None, description="""A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.""", json_schema_extra = { "linkml_meta": {'alias': 'description',
+         'domain_of': ['AnnotationObject'],
+         'exact_mappings': ['cdp-common:annotation_object_description']} })
+    state: Optional[str] = Field(None, description="""Molecule state annotated (e.g. open, closed)""", json_schema_extra = { "linkml_meta": {'alias': 'state',
+         'domain_of': ['AnnotationObject'],
+         'exact_mappings': ['cdp-common:annotation_object_state']} })
 
 
 class AnnotationSourceFile(ConfiguredBaseModel):
     """
     File and sourcing data for an annotation. Represents an entry in annotation.sources.
     """
-    file_format: str = Field(..., description="""File format for this file""")
-    glob_string: str = Field(..., description="""Glob string to match annotation files in the dataset.""")
-    is_visualization_default: Optional[bool] = Field(None, description="""This annotation will be rendered in neuroglancer by default.""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    file_format: str = Field(..., description="""File format for this file""", json_schema_extra = { "linkml_meta": {'alias': 'file_format',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_format']} })
+    glob_string: str = Field(..., description="""Glob string to match annotation files in the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'glob_string',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
+    is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
+         'ifabsent': 'False'} })
 
 
 class AnnotationOrientedPointFile(AnnotationSourceFile):
     """
     File and sourcing data for an oriented point annotation.
     """
-    binning: Optional[int] = Field(None, description="""The binning factor for a oriented point annotation file.""")
-    filter_value: Optional[str] = Field(None, description="""The filter value for a oriented point annotation file.""")
-    order: Optional[str] = Field(None, description="""The order of axes for a oriented point annotation file.""")
-    file_format: str = Field(...)
-    glob_string: str = Field(...)
-    is_visualization_default: Optional[bool] = Field(None)
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'aliases': ['OrientedPoint'], 'from_schema': 'metadata'})
+
+    binning: Optional[int] = Field(1, description="""The binning factor for a point / oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'binning',
+         'domain_of': ['AnnotationOrientedPointFile',
+                       'AnnotationPointFile',
+                       'AnnotationInstanceSegmentationFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_binning'],
+         'ifabsent': 'int(1)'} })
+    filter_value: Optional[str] = Field(None, description="""The filter value for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'filter_value',
+         'domain_of': ['AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_filter_value']} })
+    order: Optional[str] = Field(None, description="""The order of axes for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'order',
+         'domain_of': ['AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_order']} })
+    file_format: str = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'file_format',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_format']} })
+    glob_string: str = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'glob_string',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
+    is_visualization_default: Optional[bool] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default']} })
 
 
 class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
     """
     File and sourcing data for an instance segmentation annotation.
     """
-    binning: Optional[int] = Field(None)
-    filter_value: Optional[str] = Field(None)
-    order: Optional[str] = Field(None)
-    file_format: str = Field(...)
-    glob_string: str = Field(...)
-    is_visualization_default: Optional[bool] = Field(None)
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'aliases': ['InstanceSegmentation'], 'from_schema': 'metadata'})
+
+    binning: Optional[int] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'binning',
+         'domain_of': ['AnnotationOrientedPointFile',
+                       'AnnotationPointFile',
+                       'AnnotationInstanceSegmentationFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_binning']} })
+    filter_value: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'filter_value',
+         'domain_of': ['AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_filter_value']} })
+    order: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'order',
+         'domain_of': ['AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_order']} })
+    file_format: str = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'file_format',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_format']} })
+    glob_string: str = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'glob_string',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
+    is_visualization_default: Optional[bool] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default']} })
 
 
 class AnnotationPointFile(AnnotationSourceFile):
     """
     File and sourcing data for a point annotation.
     """
-    binning: Optional[int] = Field(None)
-    columns: Optional[str] = Field(None, description="""The columns used in a point annotation file.""")
-    delimiter: Optional[str] = Field(None, description="""The delimiter used in a oriented point annotation file.""")
-    file_format: str = Field(...)
-    glob_string: str = Field(...)
-    is_visualization_default: Optional[bool] = Field(None)
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'aliases': ['Point'], 'from_schema': 'metadata'})
+
+    binning: Optional[int] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'binning',
+         'domain_of': ['AnnotationOrientedPointFile',
+                       'AnnotationPointFile',
+                       'AnnotationInstanceSegmentationFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_binning']} })
+    columns: Optional[str] = Field("xyz", description="""The columns used in a point annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'columns',
+         'domain_of': ['AnnotationPointFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_columns'],
+         'ifabsent': 'string(xyz)'} })
+    delimiter: Optional[str] = Field(",", description="""The delimiter used in a point annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'delimiter',
+         'domain_of': ['AnnotationPointFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_delimiter'],
+         'ifabsent': 'string(,)'} })
+    file_format: str = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'file_format',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_format']} })
+    glob_string: str = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'glob_string',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
+    is_visualization_default: Optional[bool] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default']} })
 
 
 class AnnotationSegmentationMaskFile(AnnotationSourceFile):
     """
     File and sourcing data for a segmentation mask annotation.
     """
-    file_format: str = Field(...)
-    glob_string: str = Field(...)
-    is_visualization_default: Optional[bool] = Field(None)
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'aliases': ['SegmentationMask'], 'from_schema': 'metadata'})
+
+    file_format: str = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'file_format',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_format']} })
+    glob_string: str = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'glob_string',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
+    is_visualization_default: Optional[bool] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default']} })
 
 
 class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
     """
     File and sourcing data for a semantic segmentation mask annotation.
     """
-    mask_label: Optional[int] = Field(None, description="""The mask label for a semantic segmentation mask annotation file.""")
-    file_format: str = Field(...)
-    glob_string: str = Field(...)
-    is_visualization_default: Optional[bool] = Field(None)
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'aliases': ['SemanticSegmentationMask'], 'from_schema': 'metadata'})
+
+    mask_label: Optional[int] = Field(1, description="""The mask label for a semantic segmentation mask annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'mask_label',
+         'domain_of': ['AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_mask_label'],
+         'ifabsent': 'int(1)'} })
+    file_format: str = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'file_format',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_format']} })
+    glob_string: str = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'glob_string',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
+    is_visualization_default: Optional[bool] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default']} })
 
 
 class Annotation(AuthoredEntity, DatestampedEntity):
     """
     Metadata describing an annotation.
     """
-    annotation_method: Optional[str] = Field(None, description="""Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)""")
-    annotation_object: Optional[AnnotationObject] = Field(None, description="""Metadata describing the object being annotated.""")
-    annotation_publications: Optional[str] = Field(None, description="""DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.""")
-    annotation_software: Optional[str] = Field(None, description="""Software used for generating this annotation""")
-    confidence: Optional[AnnotationConfidence] = Field(None, description="""Metadata describing the confidence of an annotation.""")
-    files: Optional[List[AnnotationSourceFile]] = Field(default_factory=list, description="""File and sourcing data for an annotation. Represents an entry in annotation.sources.""")
-    ground_truth_status: Optional[bool] = Field(None, description="""Whether an annotation is considered ground truth, as determined by the annotator.""")
-    is_curator_recommended: Optional[bool] = Field(None, description="""This annotation is recommended by the curator to be preferred for this object type.""")
-    method_type: Optional[AnnotationMethodTypeEnum] = Field(None, description="""Classification of the annotation method based on supervision.""")
-    object_count: Optional[int] = Field(None, description="""Number of objects identified""")
-    version: Optional[string] = Field(None, description="""Version of annotation.""")
-    dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""")
-    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata', 'mixins': ['DatestampedEntity', 'AuthoredEntity']})
+
+    annotation_method: Optional[str] = Field(None, description="""Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)""", json_schema_extra = { "linkml_meta": {'alias': 'annotation_method',
+         'domain_of': ['Annotation'],
+         'exact_mappings': ['cdp-common:annotation_method']} })
+    annotation_object: Optional[AnnotationObject] = Field(None, description="""Metadata describing the object being annotated.""", json_schema_extra = { "linkml_meta": {'alias': 'annotation_object', 'domain_of': ['Annotation']} })
+    annotation_publications: Optional[str] = Field(None, description="""DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.""", json_schema_extra = { "linkml_meta": {'alias': 'annotation_publications',
+         'domain_of': ['Annotation'],
+         'exact_mappings': ['cdp-common:annotation_publication']} })
+    annotation_software: Optional[str] = Field(None, description="""Software used for generating this annotation""", json_schema_extra = { "linkml_meta": {'alias': 'annotation_software',
+         'domain_of': ['Annotation'],
+         'exact_mappings': ['cdp-common:annotation_software']} })
+    confidence: Optional[AnnotationConfidence] = Field(None, description="""Metadata describing the confidence of an annotation.""", json_schema_extra = { "linkml_meta": {'alias': 'confidence', 'domain_of': ['Annotation']} })
+    files: Optional[List[AnnotationSourceFile]] = Field(default_factory=list, description="""File and sourcing data for an annotation. Represents an entry in annotation.sources.""", json_schema_extra = { "linkml_meta": {'alias': 'files', 'domain_of': ['Annotation'], 'list_elements_ordered': True} })
+    ground_truth_status: Optional[bool] = Field(False, description="""Whether an annotation is considered ground truth, as determined by the annotator.""", json_schema_extra = { "linkml_meta": {'alias': 'ground_truth_status',
+         'domain_of': ['Annotation'],
+         'exact_mappings': ['cdp-common:annotation_ground_truth_status'],
+         'ifabsent': 'False'} })
+    is_curator_recommended: Optional[bool] = Field(False, description="""This annotation is recommended by the curator to be preferred for this object type.""", json_schema_extra = { "linkml_meta": {'alias': 'is_curator_recommended',
+         'domain_of': ['Annotation'],
+         'exact_mappings': ['cdp-common:annotation_is_curator_recommended'],
+         'ifabsent': 'False'} })
+    method_type: Optional[AnnotationMethodTypeEnum] = Field(None, description="""Classification of the annotation method based on supervision.""", json_schema_extra = { "linkml_meta": {'alias': 'method_type',
+         'domain_of': ['Annotation'],
+         'exact_mappings': ['cdp-common:annotation_method_type']} })
+    object_count: Optional[int] = Field(None, description="""Number of objects identified""", json_schema_extra = { "linkml_meta": {'alias': 'object_count',
+         'domain_of': ['Annotation'],
+         'exact_mappings': ['cdp-common:annotation_object_count']} })
+    version: Optional[float] = Field(None, description="""Version of annotation.""", json_schema_extra = { "linkml_meta": {'alias': 'version',
+         'domain_of': ['Annotation'],
+         'exact_mappings': ['cdp-common:annotation_version']} })
+    dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates', 'domain_of': ['DatestampedEntity', 'Dataset', 'Annotation']} })
+    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
+         'domain_of': ['AuthoredEntity', 'Dataset', 'Tomogram', 'Annotation'],
+         'list_elements_ordered': True} })
 
 
 class CrossReferences(ConfiguredBaseModel):
     """
     A set of cross-references to other databases and publications.
     """
-    dataset_publications: Optional[str] = Field(None, description="""Comma-separated list of DOIs for publications associated with the dataset.""")
-    related_database_entries: Optional[str] = Field(None, description="""Comma-separated list of related database entries for the dataset.""")
-    related_database_links: Optional[str] = Field(None, description="""Comma-separated list of related database links for the dataset.""")
-    dataset_citations: Optional[str] = Field(None, description="""Comma-separated list of DOIs for publications citing the dataset.""")
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    dataset_publications: Optional[str] = Field(None, description="""Comma-separated list of DOIs for publications associated with the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset_publications',
+         'domain_of': ['CrossReferences'],
+         'recommended': True} })
+    related_database_entries: Optional[str] = Field(None, description="""Comma-separated list of related database entries for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'related_database_entries',
+         'domain_of': ['CrossReferences'],
+         'recommended': True} })
+    related_database_links: Optional[str] = Field(None, description="""Comma-separated list of related database links for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'related_database_links', 'domain_of': ['CrossReferences']} })
+    dataset_citations: Optional[str] = Field(None, description="""Comma-separated list of DOIs for publications citing the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset_citations', 'domain_of': ['CrossReferences']} })
 
 
 # Model rebuild

@@ -53,6 +53,17 @@ URI: [cdp-meta:reconstruction_method](metadatareconstruction_method)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:reconstruction_method |
+| native | cdp-meta:reconstruction_method |
+| exact | cdp-common:tomogram_reconstruction_method |
+
+
+
+
 ## LinkML Source
 
 <details>

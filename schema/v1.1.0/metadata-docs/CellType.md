@@ -72,13 +72,14 @@ URI: [cdp-meta:CellType](metadataCellType)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CellType |
 | native | cdp-meta:CellType |
+
+
 
 
 

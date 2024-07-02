@@ -55,6 +55,16 @@ URI: [cdp-meta:key_photos](metadatakey_photos)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:key_photos |
+| native | cdp-meta:key_photos |
+
+
+
+
 ## LinkML Source
 
 <details>

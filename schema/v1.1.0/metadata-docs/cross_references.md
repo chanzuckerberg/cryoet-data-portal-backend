@@ -42,6 +42,16 @@ URI: [cdp-meta:cross_references](metadatacross_references)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:cross_references |
+| native | cdp-meta:cross_references |
+
+
+
+
 ## LinkML Source
 
 <details>
