@@ -37,9 +37,9 @@ annotations: OPTIONAL
     file_format: REQUIRED, STRING
     filter_value: OPTIONAL, STRING (OrientedPoint, InstanceSegmentation)
     glob_string: REQUIRED, STRING (REGEX)
-    is_visualization_default: OPTIONAL, BOOLEAN (DEFUALT false)
+    is_visualization_default: OPTIONAL, BOOLEAN (DEFAULT FALSE)
     mask_label: OPTIONAL, INTEGER (DEFAULT 1) (SemanticSegmentationMask)
-    order: OPTIONAL, STRING (OrientedPoint, InstanceSegmentation)
+    order: OPTIONAL, STRING (DEFAULT xyz) (OrientedPoint, InstanceSegmentation) # TODO: should this have a default too?
     shape: OPTIONAL, ENUM (InstanceSegmentation, OrientedPoint, Point, SegmentationMask, SemanticSegmentationMask)
 dataset_keyphotos: OPTIONAL
 - sources: REQUIRED
@@ -91,21 +91,21 @@ datasets: REQUIRED
     parent_filters: SEE runs.sources.parent_filters
   - destination_glob: OPTIONAL
       list_glob: REQUIRED, STRING (REGEX)
-      match_regex: OPTIONAL, STRING (REGEX)
-      name_regex: OPTIONAL, STRING (REGEX)
+      match_regex: OPTIONAL, STRING (REGEX) (DEFAULT '.*')
+      name_regex: OPTIONAL, STRING (REGEX) (DEFAULT '(.*)')
     parent_filters: SEE runs.sources.parent_filters
   - literal: OPTIONAL
       value:
       - REQUIRED, STRING
     parent_filters: SEE runs.sources.parent_filters
 frames: OPTIONAL
-- sources: SEE datasets.sources and runs.sources.parent_filters (source_glob, source_multi_glob)
+- sources: SEE datasets.sources and runs.sources.parent_filters
 gains: OPTIONAL
-- sources: SEE datasets.sources and runs.sources.parent_filters (source_glob)
+- sources: SEE datasets.sources and runs.sources.parent_filters
 key_images: OPTIONAL
-- sources: SEE dataset.sources (souce_glob, literal)
+- sources: SEE dataset.sources and runs.sources.parent_filters
 rawtilts: OPTIONAL
-- sources: SEE datasets.sources and runs.sources.parent_filters (source_multi_glob)
+- sources: SEE datasets.sources and runs.sources.parent_filters
 runs:
 - sources: SEE datasets.sources (source_glob) and below
     # parent filters must be paired with a finder type (source_glob, source_multi_glob, ...)
@@ -187,9 +187,10 @@ tomograms: OPTIONAL
     voxel_spacing: REQUIRED, FLOAT
   sources: SEE tiltseries.sources
 voxel_spacings: REQUIRED
-- sources: REQUIRED (source_glob, destination_glob, literal, tomogram_header)
+- sources: REQUIRED
   - destination_glob: see datasets.sources.destination_glob and runs.sources.parent_filters
   - source_glob: SEE datasets.sources.source_glob and runs.sources.parent_filters
+  - source_multi_glob: SEE datasets.sources.source_multi_glob and runs.sources.parent_filters
   - literal: SEE datasets.sources.literal and runs.sources.parent_filters
   - tomogram_header: SEE runs.sources.parent_filters
       list_glob: REQUIRED, STRING (REGEX)
