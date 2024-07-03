@@ -1,7 +1,7 @@
 run_name,tomo-voxel_spacing,ts-data_acquisition_software,ts-microscope-model,ts-microscope_optical_setup-phase_plate,ts-spherical_aberration_constant,ts-tilt_range-max,ts-total_flux
-wnj2018-06-28-7,17.276,Undefined,Krios,False,2.7,60.0,182.0
+wnj2018-06-28-7,17.276,Undefined,Krios,None,2.7,60.0,182.0
 wnj2018-06-28-8,17.276,Undefined,Krios,True,2.7,60.0,162.7
-wnj2018-06-28-12,17.276,Undefined,Krios,False,2.7,60.0,165.5
-wnj2018-06-28-13,17.276,Undefined,Krios,False,2.7,60.0,165.5
-wnj2018-06-28-14,17.276,Undefined,Krios,False,2.7,0.0,165.5
-wnj2018-06-28-19,8.638,Serial EM,0,False,2.2,60.0,182.0
+wnj2018-06-28-12,17.276,Undefined,Krios,None,2.7,60.0,165.5
+wnj2018-06-28-13,17.276,Undefined,Krios,None,2.7,60.0,165.5
+wnj2018-06-28-14,17.276,Undefined,Krios,None,2.7,0.0,165.5
+wnj2018-06-28-19,8.638,Serial EM,0,None,2.2,60.0,182.0

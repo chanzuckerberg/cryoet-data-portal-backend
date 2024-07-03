@@ -76,7 +76,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 12.656
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR

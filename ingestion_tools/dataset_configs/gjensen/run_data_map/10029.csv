@@ -5,9 +5,9 @@ wnj2018-05-16-8,Weighted back projection,8.638,True,60.0,181.0
 wnj2018-05-16-10,SIRT,17.276,True,60.0,181.0
 wnj2018-05-16-11,Weighted back projection,8.638,True,60.0,181.0
 wnj2018-05-17-1,Weighted back projection,8.638,True,48.0,164.0
-wnj2018-05-17-2,Weighted back projection,8.638,False,50.0,164.0
+wnj2018-05-17-2,Weighted back projection,8.638,None,50.0,164.0
 wnj2018-05-17-3,Weighted back projection,8.638,True,52.0,181.0
 wnj2018-05-17-4,Weighted back projection,8.638,True,54.0,178.0
-wnj2018-05-16-12,SIRT,17.276,False,50.0,166.0
-wnj2018-05-16-13,Weighted back projection,8.638,False,60.0,181.0
-wnj2018-05-16-14,Weighted back projection,8.638,False,60.0,181.0
+wnj2018-05-16-12,SIRT,17.276,None,50.0,166.0
+wnj2018-05-16-13,Weighted back projection,8.638,None,60.0,181.0
+wnj2018-05-16-14,Weighted back projection,8.638,None,60.0,181.0
