@@ -1,46 +1,46 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,ts-tilt_alignment_software
-aba2013-12-24-1,['RAPTOR'],FIDUCIAL,SIRT,RAPTOR
-aba2013-12-24-2,['RAPTOR'],FIDUCIAL,SIRT,RAPTOR
-aba2013-12-24-4,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-24-5,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-24-6,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-24-7,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-24-8,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-24-10,['RAPTOR'],FIDUCIAL,SIRT,RAPTOR
-aba2013-12-24-11,['RAPTOR'],FIDUCIAL,SIRT,RAPTOR
-aba2013-12-24-12,['RAPTOR'],FIDUCIAL,SIRT,RAPTOR
-aba2013-12-24-13,['RAPTOR'],FIDUCIAL,SIRT,RAPTOR
-aba2013-12-24-14,['RAPTOR'],FIDUCIAL,SIRT,RAPTOR
-aba2013-12-24-15,['RAPTOR'],FIDUCIAL,SIRT,RAPTOR
-aba2013-12-24-16,['RAPTOR'],FIDUCIAL,SIRT,RAPTOR
-aba2013-12-24-17,['RAPTOR'],FIDUCIAL,SIRT,RAPTOR
-aba2013-12-24-18,['RAPTOR'],FIDUCIAL,SIRT,RAPTOR
-aba2013-12-24-19,['RAPTOR'],FIDUCIAL,SIRT,RAPTOR
-aba2013-12-24-20,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-24-21,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-1,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-2,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-4,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-6,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-7,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-8,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-9,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-10,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-14,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-15,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-16,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-17,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-18,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-19,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-20,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-23,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-24,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-25,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-26,['RAPTOR'],FIDUCIAL,Weighted back projection,RAPTOR
-aba2013-12-25-3,['autoPatch'],NON_FIDUCIAL,Weighted back projection,autoPatch
-aba2013-12-25-5,['autoPatch'],NON_FIDUCIAL,Weighted back projection,autoPatch
-aba2013-12-25-11,['autoPatch'],NON_FIDUCIAL,Weighted back projection,autoPatch
-aba2013-12-25-12,['autoPatch'],NON_FIDUCIAL,Weighted back projection,autoPatch
-aba2013-12-25-13,['autoPatch'],NON_FIDUCIAL,Weighted back projection,autoPatch
-aba2013-12-25-21,['autoPatch'],NON_FIDUCIAL,Weighted back projection,autoPatch
-aba2013-12-25-22,['autoPatch'],NON_FIDUCIAL,Weighted back projection,autoPatch
+run_name,tomo-align_software,tomo-fiducial_alignment_status,tomo-reconstruction_method,ts-tilt_alignment_software
+aba2013-12-24-1,RAPTOR,FIDUCIAL,SIRT,RAPTOR
+aba2013-12-24-2,RAPTOR,FIDUCIAL,SIRT,RAPTOR
+aba2013-12-24-4,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-24-5,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-24-6,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-24-7,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-24-8,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-24-10,RAPTOR,FIDUCIAL,SIRT,RAPTOR
+aba2013-12-24-11,RAPTOR,FIDUCIAL,SIRT,RAPTOR
+aba2013-12-24-12,RAPTOR,FIDUCIAL,SIRT,RAPTOR
+aba2013-12-24-13,RAPTOR,FIDUCIAL,SIRT,RAPTOR
+aba2013-12-24-14,RAPTOR,FIDUCIAL,SIRT,RAPTOR
+aba2013-12-24-15,RAPTOR,FIDUCIAL,SIRT,RAPTOR
+aba2013-12-24-16,RAPTOR,FIDUCIAL,SIRT,RAPTOR
+aba2013-12-24-17,RAPTOR,FIDUCIAL,SIRT,RAPTOR
+aba2013-12-24-18,RAPTOR,FIDUCIAL,SIRT,RAPTOR
+aba2013-12-24-19,RAPTOR,FIDUCIAL,SIRT,RAPTOR
+aba2013-12-24-20,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-24-21,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-1,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-2,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-4,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-6,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-7,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-8,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-9,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-10,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-14,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-15,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-16,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-17,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-18,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-19,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-20,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-23,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-24,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-25,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-26,RAPTOR,FIDUCIAL,Weighted back projection,RAPTOR
+aba2013-12-25-3,autoPatch,NON_FIDUCIAL,Weighted back projection,autoPatch
+aba2013-12-25-5,autoPatch,NON_FIDUCIAL,Weighted back projection,autoPatch
+aba2013-12-25-11,autoPatch,NON_FIDUCIAL,Weighted back projection,autoPatch
+aba2013-12-25-12,autoPatch,NON_FIDUCIAL,Weighted back projection,autoPatch
+aba2013-12-25-13,autoPatch,NON_FIDUCIAL,Weighted back projection,autoPatch
+aba2013-12-25-21,autoPatch,NON_FIDUCIAL,Weighted back projection,autoPatch
+aba2013-12-25-22,autoPatch,NON_FIDUCIAL,Weighted back projection,autoPatch

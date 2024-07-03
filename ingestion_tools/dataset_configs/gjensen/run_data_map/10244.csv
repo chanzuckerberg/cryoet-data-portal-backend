@@ -1,10 +1,10 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_quality
-etl2013-09-16-5,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
-etl2013-09-16-6,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
-etl2013-09-16-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
-etl2013-09-16-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
-etl2013-09-16-10,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
-etl2013-09-16-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
-etl2013-09-16-12,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
-etl2013-09-16-13,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+run_name,tomo-align_software,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_quality
+etl2013-09-16-5,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+etl2013-09-16-6,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+etl2013-09-16-7,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+etl2013-09-16-9,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+etl2013-09-16-10,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+etl2013-09-16-11,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+etl2013-09-16-12,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+etl2013-09-16-13,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
 etl2013-09-16-8,,NON_FIDUCIAL,None,None,,,1

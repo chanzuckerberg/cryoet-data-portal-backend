@@ -1,9 +1,9 @@
-run_name,tomo-align_softwares,tomo-voxel_spacing,ts-data_acquisition_software,ts-tilt_alignment_software
-wnj2018-04-19-7,['RAPTOR'],18.276,Serial EM,RAPTOR
-wnj2018-04-19-8,['RAPTOR'],9.138,Serial EM,RAPTOR
-wnj2018-04-19-10,['RAPTOR'],9.138,Serial EM,RAPTOR
-wnj2018-04-19-11,['RAPTOR'],9.138,Serial EM,RAPTOR
-wnj2018-04-19-12,['RAPTOR'],9.138,Serial EM,RAPTOR
-wnj2018-04-19-14,['RAPTOR'],9.138,Serial EM,RAPTOR
-wnj2018-04-19-9,['RAPTOR'],9.138,Undefined,RAPTOR
-wnj2018-04-19-13,['IMOD'],9.138,Serial EM,IMOD
+run_name,tomo-align_software,tomo-voxel_spacing,ts-data_acquisition_software,ts-tilt_alignment_software
+wnj2018-04-19-7,RAPTOR,18.276,Serial EM,RAPTOR
+wnj2018-04-19-8,RAPTOR,9.138,Serial EM,RAPTOR
+wnj2018-04-19-10,RAPTOR,9.138,Serial EM,RAPTOR
+wnj2018-04-19-11,RAPTOR,9.138,Serial EM,RAPTOR
+wnj2018-04-19-12,RAPTOR,9.138,Serial EM,RAPTOR
+wnj2018-04-19-14,RAPTOR,9.138,Serial EM,RAPTOR
+wnj2018-04-19-9,RAPTOR,9.138,Undefined,RAPTOR
+wnj2018-04-19-13,IMOD,9.138,Serial EM,IMOD

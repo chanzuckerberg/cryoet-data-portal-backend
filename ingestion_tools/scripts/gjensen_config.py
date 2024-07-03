@@ -247,8 +247,9 @@ def to_template_by_run(templates, run_data_map, prefix: str, path) -> dict[str, 
 def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
     tilt_series = deepcopy(data["tilt_series"])
     microscope = tilt_series.get("microscope", {})
+    phase_plate = microscope.pop("phase_plate")
     tilt_series["microscope_optical_setup"] = {
-        "phase_plate": microscope.pop("phase_plate"),
+        "phase_plate": phase_plate,
         "image_corrector": microscope.pop("image_corrector"),
         "energy_filter": microscope.pop("engergy_filter"),
     }
@@ -305,7 +306,7 @@ def to_tomogram(
     tomogram["tomogram_version"] = 1
     tomogram["reconstruction_method"] = normalize_invalid_to_none(tomogram.get("reconstruction_method"))
     tomogram["reconstruction_software"] = normalize_invalid_to_none(tomogram.get("reconstruction_software"))
-
+    tomogram["align_software"] = "+".join(tomogram.pop("align_softwares", []))
     tomogram["processing"] = normalize_processing(tomogram.get("processing"))
 
     tomogram["voxel_spacing"] = round(tomogram["voxel_spacing"], 3) if "voxel_spacing" in tomogram else None
@@ -371,7 +372,7 @@ def get_cross_reference_mapping(input_dir: str) -> dict[int, dict[str, str]]:
 
 @cli.command()
 @click.argument("input_dir", required=True, type=str)
-@click.argument("output_dir", required=True, type=str)
+@click.argument("output_dir", type=str, default="../dataset_configs/gjensen")
 @click.pass_context
 def create(ctx, input_dir: str, output_dir: str) -> None:
     fs = LocalFilesystem(force_overwrite=True)
