@@ -370,6 +370,18 @@ def get_cross_reference_mapping(input_dir: str) -> dict[int, dict[str, str]]:
     return {int(key): val for key, val in data.items()}
 
 
+def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> None:
+    for entity in entities:
+        for source in entity["sources"]:
+            if "parent_filters" not in source:
+                source["parent_filters"] = {}
+            if "exclude" not in source["parent_filters"]:
+                source["parent_filters"]["exclude"] = {}
+            if "run" not in source["parent_filters"]["exclude"]:
+                source["parent_filters"]["exclude"]["run"] = []
+            source["parent_filters"]["exclude"]["run"].extend(runs_to_exclude)
+
+
 @cli.command()
 @click.argument("input_dir", required=True, type=str)
 @click.argument("output_dir", type=str, default="../dataset_configs/gjensen")
@@ -430,7 +442,12 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
         print(f"Writing file for {dataset_id}")
         dataset_config_file_path = os.path.join(output_dir, f"{dataset_id}.yaml")
         with open(dataset_config_file_path, "w") as outfile:
-            yaml.dump(update_config(dataset_config), outfile, sort_keys=True)
+            updated_dataset_config = update_config(dataset_config)
+            if runs_without_tilt := [f"^{run['run_name']}$" for run in val.get("runs") if not run.get("tilt_series")]:
+                exclude_runs_parent_filter(updated_dataset_config.get("tilt_series", []), runs_without_tilt)
+            if runs_without_tomogram := [f"^{run['run_name']}$" for run in val.get("runs") if not run.get("tomograms")]:
+                exclude_runs_parent_filter(updated_dataset_config.get("voxel_spacings", []), runs_without_tomogram)
+            yaml.dump(updated_dataset_config, outfile, sort_keys=True)
 
 
 if __name__ == "__main__":

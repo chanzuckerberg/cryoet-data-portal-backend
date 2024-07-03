@@ -133,3 +133,13 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^mst2010-09-17-3$
+        - ^mst2010-09-17-5$
+        - ^mst2010-09-17-8$
+        - ^mst2010-10-09-10$
+        - ^mst2010-10-10-4$
+        - ^mst2010-10-10-5$
+        - ^mst2010-10-10-6$

@@ -140,3 +140,8 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^mka2019-05-25-29$
+        - ^mka2019-05-25-42$

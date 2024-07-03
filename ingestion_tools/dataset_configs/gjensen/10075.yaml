@@ -144,3 +144,13 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^dga2016-08-13-17$
+        - ^dga2016-08-13-20$
+        - ^dga2016-08-13-23$
+        - ^dga2016-08-13-29$
+        - ^dga2016-08-13-37$
+        - ^dga2016-08-13-63$
+        - ^dga2016-08-13-69$

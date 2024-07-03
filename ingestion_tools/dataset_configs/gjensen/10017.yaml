@@ -138,3 +138,12 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^pda2020-11-04-1$
+        - ^pda2020-11-04-5$
+        - ^pda2020-11-04-6$
+        - ^pda2020-11-04-7$
+        - ^pda2020-11-04-12$
+        - ^pda2020-11-04-14$
