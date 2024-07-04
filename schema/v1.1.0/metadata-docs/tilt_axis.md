@@ -33,6 +33,8 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 * Range: [Float](Float.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tilt_axis |
+| native | cdp-meta:tilt_axis |
+| exact | cdp-common:tiltseries_tilt_axis |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +81,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: float
+required: true
 inlined: true
 inlined_as_list: true
 

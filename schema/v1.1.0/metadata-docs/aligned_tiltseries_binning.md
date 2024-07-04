@@ -53,6 +53,17 @@ URI: [cdp-meta:aligned_tiltseries_binning](metadataaligned_tiltseries_binning)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:aligned_tiltseries_binning |
+| native | cdp-meta:aligned_tiltseries_binning |
+| exact | cdp-common:tiltseries_aligned_tiltseries_binning |
+
+
+
+
 ## LinkML Source
 
 <details>

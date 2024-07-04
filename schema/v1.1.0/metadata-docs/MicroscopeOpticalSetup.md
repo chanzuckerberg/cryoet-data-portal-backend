@@ -39,7 +39,7 @@ URI: [cdp-meta:MicroscopeOpticalSetup](metadataMicroscopeOpticalSetup)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [energy_filter](energy_filter.md) | 0..1 <br/> [String](String.md) | Energy filter setup used | direct |
+| [energy_filter](energy_filter.md) | 1 <br/> [String](String.md) | Energy filter setup used | direct |
 | [phase_plate](phase_plate.md) | 0..1 <br/> [String](String.md) | Phase plate configuration | direct |
 | [image_corrector](image_corrector.md) | 0..1 <br/> [String](String.md) | Image corrector setup | direct |
 
@@ -74,13 +74,14 @@ URI: [cdp-meta:MicroscopeOpticalSetup](metadataMicroscopeOpticalSetup)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:MicroscopeOpticalSetup |
 | native | cdp-meta:MicroscopeOpticalSetup |
+
+
 
 
 
@@ -110,6 +111,7 @@ attributes:
     domain_of:
     - MicroscopeOpticalSetup
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   phase_plate:
@@ -164,6 +166,7 @@ attributes:
     domain_of:
     - MicroscopeOpticalSetup
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   phase_plate:

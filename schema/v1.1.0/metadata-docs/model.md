@@ -42,6 +42,16 @@ URI: [cdp-meta:model](metadatamodel)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:model |
+| native | cdp-meta:model |
+
+
+
+
 ## LinkML Source
 
 <details>

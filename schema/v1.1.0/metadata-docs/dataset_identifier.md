@@ -33,6 +33,8 @@ URI: [cdp-meta:dataset_identifier](metadatadataset_identifier)
 
 * Range: [Integer](Integer.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:dataset_identifier](metadatadataset_identifier)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:dataset_identifier |
+| native | cdp-meta:dataset_identifier |
+| exact | cdp-common:dataset_identifier |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -69,6 +82,7 @@ owner: Dataset
 domain_of:
 - Dataset
 range: integer
+required: true
 inlined: true
 inlined_as_list: true
 

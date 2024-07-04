@@ -33,6 +33,8 @@ URI: [cdp-meta:tilt_step](metadatatilt_step)
 
 * Range: [Float](Float.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:tilt_step](metadatatilt_step)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tilt_step |
+| native | cdp-meta:tilt_step |
+| exact | cdp-common:tiltseries_tilt_step |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +81,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: float
+required: true
 inlined: true
 inlined_as_list: true
 

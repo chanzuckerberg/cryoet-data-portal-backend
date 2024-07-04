@@ -45,6 +45,9 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
             slot["description"] = common_slot["description"]
             slot["pattern"] = common_slot["pattern"]
             slot["ifabsent"] = common_slot["ifabsent"]
+            slot["required"] = common_slot["required"]
+            slot["recommended"] = common_slot["recommended"]
+            slot["multivalued"] = common_slot["multivalued"]
 
     # Make sure the descriptions from mixin classes are carried over
     for c in schema.all_classes():

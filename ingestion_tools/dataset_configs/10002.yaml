@@ -5,7 +5,6 @@ annotations:
       description: Actin ground truth
       id: GO:0005884
       name: actin filament
-      state: null
     annotation_publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
     annotation_software: DeePiCt
     authors: &id001
@@ -40,8 +39,6 @@ annotations:
       name: Judith B. Zaugg
     confidence:
       ground_truth_used: Ground truth from related paper
-      precision: null
-      recall: null
     dates: &id002
       deposition_date: '2023-05-01'
       last_modified_date: '2023-11-08'
@@ -61,14 +58,9 @@ annotations:
       description: Actin DeePiCt training prediction
       id: GO:0005884
       name: actin filament
-      state: null
     annotation_publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
     annotation_software: Amira
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: false
     is_curator_recommended: false
@@ -117,9 +109,6 @@ datasets:
     - ORCID: 0000-0001-8324-4040
       corresponding_author_status: true
       name: Judith B. Zaugg
-    cell_component:
-      id: null
-      name: null
     cell_type:
       id: CL:0002586
       name: Retinal pigment epithelial-1
@@ -191,10 +180,8 @@ tiltseries:
       model: KRIOS
     microscope_optical_setup:
       energy_filter: GIF Quantum LS
-      image_corrector: null
       phase_plate: VOLTA PHASE PLATE
     pixel_spacing: '{run_pixel_spacing}'
-    related_empiar_entry: null
     spherical_aberration_constant: 2.7
     tilt_axis: 79
     tilt_range:

@@ -38,7 +38,7 @@ URI: [cdp-meta:Tissue](metadataTissue)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [name](name.md) | 0..1 <br/> [String](String.md) |  | direct |
-| [id](id.md) | 0..1 <br/> [String](String.md) | The UBERON identifier for the tissue | direct |
+| [id](id.md) | 0..1 _recommended_ <br/> [String](String.md) | The UBERON identifier for the tissue | direct |
 
 
 
@@ -72,13 +72,14 @@ URI: [cdp-meta:Tissue](metadataTissue)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Tissue |
 | native | cdp-meta:Tissue |
+
+
 
 
 
@@ -130,6 +131,7 @@ attributes:
     - CellComponent
     - AnnotationObject
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
 
@@ -178,6 +180,7 @@ attributes:
     - CellComponent
     - AnnotationObject
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
 

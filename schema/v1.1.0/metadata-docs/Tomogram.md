@@ -50,7 +50,7 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
           
     
     
-    Tomogram --> "0..1" FiducialAlignmentStatusEnum : fiducial_alignment_status
+    Tomogram --> "1" FiducialAlignmentStatusEnum : fiducial_alignment_status
     click FiducialAlignmentStatusEnum href "../FiducialAlignmentStatusEnum"
 
         
@@ -59,7 +59,7 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
           
     
     
-    Tomogram --> "0..1" TomogramOffset : offset
+    Tomogram --> "1" TomogramOffset : offset
     click TomogramOffset href "../TomogramOffset"
 
         
@@ -100,18 +100,18 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [voxel_spacing](voxel_spacing.md) | 0..1 <br/> [Float](Float.md) | Voxel spacing equal in all three axes in angstroms | direct |
-| [fiducial_alignment_status](fiducial_alignment_status.md) | 0..1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
-| [ctf_corrected](ctf_corrected.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether this tomogram is CTF corrected | direct |
+| [voxel_spacing](voxel_spacing.md) | 1 <br/> [Float](Float.md) | Voxel spacing equal in all three axes in angstroms | direct |
+| [fiducial_alignment_status](fiducial_alignment_status.md) | 1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
+| [ctf_corrected](ctf_corrected.md) | 0..1 _recommended_ <br/> [Boolean](Boolean.md) | Whether this tomogram is CTF corrected | direct |
 | [align_software](align_software.md) | 0..1 <br/> [String](String.md) | Software used for alignment | direct |
-| [reconstruction_method](reconstruction_method.md) | 0..1 <br/> [String](String.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) | direct |
-| [reconstruction_software](reconstruction_software.md) | 0..1 <br/> [String](String.md) | Name of software used for reconstruction | direct |
-| [processing](processing.md) | 0..1 <br/> [String](String.md) | Describe additional processing used to derive the tomogram | direct |
-| [processing_software](processing_software.md) | 0..1 <br/> [String](String.md) | Processing software used to derive the tomogram | direct |
-| [tomogram_version](tomogram_version.md) | 0..1 <br/> [VersionString](VersionString.md) | Version of tomogram | direct |
-| [affine_transformation_matrix](affine_transformation_matrix.md) | 0..1 <br/> [Any](Any.md) |  | direct |
+| [reconstruction_method](reconstruction_method.md) | 1 <br/> [String](String.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) | direct |
+| [reconstruction_software](reconstruction_software.md) | 1 <br/> [String](String.md) | Name of software used for reconstruction | direct |
+| [processing](processing.md) | 1 <br/> [String](String.md) | Describe additional processing used to derive the tomogram | direct |
+| [processing_software](processing_software.md) | 0..1 _recommended_ <br/> [String](String.md) | Processing software used to derive the tomogram | direct |
+| [tomogram_version](tomogram_version.md) | 1 <br/> [VersionString](VersionString.md) | Version of tomogram | direct |
+| [affine_transformation_matrix](affine_transformation_matrix.md) | 0..1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
 | [size](size.md) | 0..1 <br/> [TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension | direct |
-| [offset](offset.md) | 0..1 <br/> [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... | direct |
+| [offset](offset.md) | 1 <br/> [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
 
 
@@ -138,13 +138,14 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Tomogram |
 | native | cdp-meta:Tomogram |
+
+
 
 
 
@@ -176,6 +177,7 @@ attributes:
     domain_of:
     - Tomogram
     range: float
+    required: true
     inlined: true
     inlined_as_list: true
   fiducial_alignment_status:
@@ -191,6 +193,7 @@ attributes:
     domain_of:
     - Tomogram
     range: fiducial_alignment_status_enum
+    required: true
     inlined: true
     inlined_as_list: true
   ctf_corrected:
@@ -205,6 +208,7 @@ attributes:
     domain_of:
     - Tomogram
     range: boolean
+    recommended: true
     inlined: true
     inlined_as_list: true
   align_software:
@@ -233,6 +237,7 @@ attributes:
     domain_of:
     - Tomogram
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   reconstruction_software:
@@ -247,6 +252,7 @@ attributes:
     domain_of:
     - Tomogram
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   processing:
@@ -261,6 +267,7 @@ attributes:
     domain_of:
     - Tomogram
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   processing_software:
@@ -275,6 +282,7 @@ attributes:
     domain_of:
     - Tomogram
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
   tomogram_version:
@@ -289,10 +297,12 @@ attributes:
     domain_of:
     - Tomogram
     range: VersionString
+    required: true
     inlined: true
     inlined_as_list: true
   affine_transformation_matrix:
     name: affine_transformation_matrix
+    description: A placeholder for any type of data.
     from_schema: metadata
     rank: 1000
     alias: affine_transformation_matrix
@@ -325,6 +335,7 @@ attributes:
     domain_of:
     - Tomogram
     range: TomogramOffset
+    required: true
     inlined: true
     inlined_as_list: true
   authors:
@@ -370,6 +381,7 @@ attributes:
     domain_of:
     - Tomogram
     range: float
+    required: true
     inlined: true
     inlined_as_list: true
   fiducial_alignment_status:
@@ -385,6 +397,7 @@ attributes:
     domain_of:
     - Tomogram
     range: fiducial_alignment_status_enum
+    required: true
     inlined: true
     inlined_as_list: true
   ctf_corrected:
@@ -399,6 +412,7 @@ attributes:
     domain_of:
     - Tomogram
     range: boolean
+    recommended: true
     inlined: true
     inlined_as_list: true
   align_software:
@@ -427,6 +441,7 @@ attributes:
     domain_of:
     - Tomogram
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   reconstruction_software:
@@ -441,6 +456,7 @@ attributes:
     domain_of:
     - Tomogram
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   processing:
@@ -455,6 +471,7 @@ attributes:
     domain_of:
     - Tomogram
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   processing_software:
@@ -469,6 +486,7 @@ attributes:
     domain_of:
     - Tomogram
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
   tomogram_version:
@@ -483,10 +501,12 @@ attributes:
     domain_of:
     - Tomogram
     range: VersionString
+    required: true
     inlined: true
     inlined_as_list: true
   affine_transformation_matrix:
     name: affine_transformation_matrix
+    description: A placeholder for any type of data.
     from_schema: metadata
     rank: 1000
     alias: affine_transformation_matrix
@@ -519,6 +539,7 @@ attributes:
     domain_of:
     - Tomogram
     range: TomogramOffset
+    required: true
     inlined: true
     inlined_as_list: true
   authors:

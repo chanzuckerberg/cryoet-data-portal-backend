@@ -53,12 +53,12 @@ URI: [cdp-meta:AnnotationInstanceSegmentationFile](metadataAnnotationInstanceSeg
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [binning](binning.md) | 0..1 <br/> [Integer](Integer.md) |  | direct |
+| [binning](binning.md) | 0..1 <br/> [String](String.md) |  | direct |
 | [filter_value](filter_value.md) | 0..1 <br/> [String](String.md) |  | direct |
 | [order](order.md) | 0..1 <br/> [String](String.md) |  | direct |
-| [file_format](file_format.md) | 1 <br/> [String](String.md) |  | direct |
-| [glob_string](glob_string.md) | 1 <br/> [String](String.md) |  | direct |
-| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) |  | direct |
+| [file_format](file_format.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [glob_string](glob_string.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [String](String.md) |  | direct |
 
 
 
@@ -89,13 +89,14 @@ URI: [cdp-meta:AnnotationInstanceSegmentationFile](metadataAnnotationInstanceSeg
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationInstanceSegmentationFile |
 | native | cdp-meta:AnnotationInstanceSegmentationFile |
+
+
 
 
 
@@ -128,7 +129,7 @@ attributes:
     - AnnotationOrientedPointFile
     - AnnotationPointFile
     - AnnotationInstanceSegmentationFile
-    range: integer
+    range: string
     inlined: true
     inlined_as_list: true
   filter_value:
@@ -172,7 +173,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   glob_string:
@@ -190,7 +190,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   is_visualization_default:
@@ -207,7 +206,7 @@ attributes:
     - AnnotationPointFile
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
-    range: boolean
+    range: string
     inlined: true
     inlined_as_list: true
 
@@ -237,7 +236,7 @@ attributes:
     - AnnotationOrientedPointFile
     - AnnotationPointFile
     - AnnotationInstanceSegmentationFile
-    range: integer
+    range: string
     inlined: true
     inlined_as_list: true
   filter_value:
@@ -281,7 +280,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   glob_string:
@@ -299,7 +297,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   is_visualization_default:
@@ -316,7 +313,7 @@ attributes:
     - AnnotationPointFile
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
-    range: boolean
+    range: string
     inlined: true
     inlined_as_list: true
 

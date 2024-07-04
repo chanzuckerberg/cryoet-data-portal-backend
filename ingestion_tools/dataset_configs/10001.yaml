@@ -76,18 +76,12 @@ annotations:
 - metadata:
     annotation_method: manual segmentation
     annotation_object:
-      description: null
       id: GO:0005737
       name: cytoplasm
-      state: null
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: AMIRA
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
@@ -102,18 +96,12 @@ annotations:
 - metadata:
     annotation_method: manual segmentation
     annotation_object:
-      description: null
       id: GO:0005739
       name: mitochondrion
-      state: null
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: AMIRA
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
@@ -128,18 +116,12 @@ annotations:
 - metadata:
     annotation_method: manual segmentation
     annotation_object:
-      description: null
       id: GO:0031982
       name: vesicle
-      state: null
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: AMIRA
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
@@ -154,18 +136,12 @@ annotations:
 - metadata:
     annotation_method: manual segmentation
     annotation_object:
-      description: null
       id: GO:0005874
       name: microtubule
-      state: null
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: AMIRA
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
@@ -180,18 +156,12 @@ annotations:
 - metadata:
     annotation_method: manual segmentation
     annotation_object:
-      description: null
       id: GO:0005783
       name: endoplasmic reticulum
-      state: null
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: AMIRA
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
@@ -206,18 +176,12 @@ annotations:
 - metadata:
     annotation_method: manual segmentation
     annotation_object:
-      description: null
       id: GO:0005635
       name: nuclear envelope
-      state: null
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: AMIRA
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
@@ -232,18 +196,12 @@ annotations:
 - metadata:
     annotation_method: manual segmentation
     annotation_object:
-      description: null
       id: GO:0005634
       name: nucleus
-      state: null
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: AMIRA
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
@@ -258,18 +216,12 @@ annotations:
 - metadata:
     annotation_method: manual segmentation
     annotation_object:
-      description: null
       id: GO:0005773
       name: vacuole
-      state: null
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: AMIRA
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
@@ -284,18 +236,12 @@ annotations:
 - metadata:
     annotation_method: manual segmentation
     annotation_object:
-      description: null
       id: GO:0005811
       name: lipid droplet
-      state: null
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: AMIRA
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
@@ -310,18 +256,12 @@ annotations:
 - metadata:
     annotation_method: manual segmentation
     annotation_object:
-      description: null
       id: GO:0005794
       name: Golgi apparatus
-      state: null
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: AMIRA
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
@@ -336,18 +276,12 @@ annotations:
 - metadata:
     annotation_method: manual segmentation
     annotation_object:
-      description: null
       id: GO:0005771
       name: multivesicular body
-      state: null
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: AMIRA
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
@@ -362,18 +296,12 @@ annotations:
 - metadata:
     annotation_method: manual segmentation
     annotation_object:
-      description: null
       id: GO:0031974
       name: membrane-enclosed lumen
-      state: null
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: AMIRA
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: false
@@ -388,18 +316,12 @@ annotations:
 - metadata:
     annotation_method: 3D CNN prediction + manual correction
     annotation_object:
-      description: null
       id: GO:0016020
       name: membrane
-      state: null
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
@@ -449,9 +371,6 @@ datasets:
     - ORCID: 0000-0001-8324-4040
       corresponding_author_status: true
       name: Judith B. Zaugg
-    cell_component:
-      id: null
-      name: null
     cell_strain:
       id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=284812
       name: K972 Sp h-wild type
@@ -508,7 +427,6 @@ runs:
       name_regex: (.*).rec
 standardization_config:
   deposition_id: 10001
-  run_to_tomo_map_csv: null
   source_prefix: julia/VPP
 tiltseries:
 - metadata:
@@ -524,7 +442,6 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF Quantum LS
-      image_corrector: None
       phase_plate: Volta Phase Plate
     pixel_spacing: 3.3702
     related_empiar_entry: EMPIAR-10988

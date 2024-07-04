@@ -53,6 +53,17 @@ URI: [cdp-meta:phase_plate](metadataphase_plate)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:phase_plate |
+| native | cdp-meta:phase_plate |
+| exact | cdp-common:tiltseries_microscope_phase_plate |
+
+
+
+
 ## LinkML Source
 
 <details>

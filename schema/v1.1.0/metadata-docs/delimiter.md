@@ -53,6 +53,17 @@ URI: [cdp-meta:delimiter](metadatadelimiter)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:delimiter |
+| native | cdp-meta:delimiter |
+| exact | cdp-common:annotation_source_file_delimiter |
+
+
+
+
 ## LinkML Source
 
 <details>

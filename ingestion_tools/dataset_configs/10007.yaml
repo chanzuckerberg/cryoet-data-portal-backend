@@ -5,9 +5,7 @@ annotations:
       description: Cytosolic ribosome
       id: GO:0009326
       name: cytosolic ribosome
-      state: null
     annotation_publications: doi:10.1101/2023.08.18.553799
-    annotation_software: null
     authors:
     - ORCID: 0000-0002-0960-0825
       name: Ramya Rangan
@@ -26,10 +24,6 @@ annotations:
     - ORCID: 0000-0001-6345-1907
       corresponding_author_status: true
       name: Ellen D. Zhong
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: &id001
       deposition_date: '2023-09-01'
       last_modified_date: '2023-11-15'
@@ -41,7 +35,6 @@ annotations:
   sources:
   - binning: 4
     file_format: tomoman_relion_star
-    filter_value: null
     glob_string: '{run_name}/metadata/particles/*.star'
     is_visualization_default: true
     order: xyz
@@ -72,12 +65,6 @@ datasets:
     - ORCID: 0000-0001-6345-1907
       corresponding_author_status: true
       name: Ellen D. Zhong
-    cell_component:
-      id: null
-      name: null
-    cell_strain:
-      id: null
-      name: null
     cross_references:
       dataset_publications: EMPIAR-11658, doi:10.1101/2023.08.18.553799
     dataset_description: Cryo-electron tomograms of S.cerevisiae of plasma FIB-SEM
@@ -87,9 +74,7 @@ datasets:
     dates: *id001
     funding:
     - funding_agency_name: Max Planck Society
-      grant_id: null
     - funding_agency_name: Other private
-      grant_id: null
     grid_preparation: "Grid\nModel: Quantifoil R1.2/3\nMaterial: COPPER\n\nPretreatment:\
       \ Type: GLOW DISCHARGE\nAtmosphere: Air\n\nSupport Film:\nMaterial: Carbon \n\
       Topology: Holey\nThickness: \u2013\n\nVitrification:\nCryogen Name: ETHANE \n\
@@ -147,7 +132,6 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: Selectris X
-      image_corrector: None
       phase_plate: None
     pixel_spacing: 1.96
     related_empiar_entry: EMPIAR-11658

@@ -32,7 +32,7 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
           
     
     
-    Annotation --> "0..1" AnnotationObject : annotation_object
+    Annotation --> "1" AnnotationObject : annotation_object
     click AnnotationObject href "../AnnotationObject"
 
         
@@ -85,7 +85,7 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
           
     
     
-    Annotation --> "0..1" AnnotationMethodTypeEnum : method_type
+    Annotation --> "1" AnnotationMethodTypeEnum : method_type
     click AnnotationMethodTypeEnum href "../AnnotationMethodTypeEnum"
 
         
@@ -109,15 +109,15 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [annotation_method](annotation_method.md) | 0..1 <br/> [String](String.md) | Describe how the annotation is made (e | direct |
-| [annotation_object](annotation_object.md) | 0..1 <br/> [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated | direct |
+| [annotation_method](annotation_method.md) | 1 <br/> [String](String.md) | Describe how the annotation is made (e | direct |
+| [annotation_object](annotation_object.md) | 1 <br/> [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated | direct |
 | [annotation_publications](annotation_publications.md) | 0..1 <br/> [String](String.md) | DOIs for publications that describe the dataset | direct |
-| [annotation_software](annotation_software.md) | 0..1 <br/> [String](String.md) | Software used for generating this annotation | direct |
+| [annotation_software](annotation_software.md) | 0..1 _recommended_ <br/> [String](String.md) | Software used for generating this annotation | direct |
 | [confidence](confidence.md) | 0..1 <br/> [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation | direct |
 | [files](files.md) | * <br/> [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation | direct |
 | [ground_truth_status](ground_truth_status.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether an annotation is considered ground truth, as determined by the annota... | direct |
 | [is_curator_recommended](is_curator_recommended.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation is recommended by the curator to be preferred for this object... | direct |
-| [method_type](method_type.md) | 0..1 <br/> [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Classification of the annotation method based on supervision | direct |
+| [method_type](method_type.md) | 1 <br/> [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Classification of the annotation method based on supervision | direct |
 | [object_count](object_count.md) | 0..1 <br/> [Integer](Integer.md) | Number of objects identified | direct |
 | [version](version.md) | 0..1 <br/> [VersionString](VersionString.md) | Version of annotation | direct |
 | [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
@@ -147,13 +147,14 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Annotation |
 | native | cdp-meta:Annotation |
+
+
 
 
 
@@ -187,6 +188,7 @@ attributes:
     domain_of:
     - Annotation
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   annotation_object:
@@ -199,6 +201,7 @@ attributes:
     domain_of:
     - Annotation
     range: AnnotationObject
+    required: true
     inlined: true
     inlined_as_list: true
   annotation_publications:
@@ -228,6 +231,7 @@ attributes:
     domain_of:
     - Annotation
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
   confidence:
@@ -301,6 +305,7 @@ attributes:
     domain_of:
     - Annotation
     range: annotation_method_type_enum
+    required: true
     inlined: true
     inlined_as_list: true
   object_count:
@@ -391,6 +396,7 @@ attributes:
     domain_of:
     - Annotation
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   annotation_object:
@@ -403,6 +409,7 @@ attributes:
     domain_of:
     - Annotation
     range: AnnotationObject
+    required: true
     inlined: true
     inlined_as_list: true
   annotation_publications:
@@ -432,6 +439,7 @@ attributes:
     domain_of:
     - Annotation
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
   confidence:
@@ -505,6 +513,7 @@ attributes:
     domain_of:
     - Annotation
     range: annotation_method_type_enum
+    required: true
     inlined: true
     inlined_as_list: true
   object_count:

@@ -33,6 +33,8 @@ URI: [cdp-meta:tilt_range](metadatatilt_range)
 
 * Range: [TiltRange](TiltRange.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,16 @@ URI: [cdp-meta:tilt_range](metadatatilt_range)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tilt_range |
+| native | cdp-meta:tilt_range |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -66,6 +78,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: TiltRange
+required: true
 inlined: true
 inlined_as_list: true
 

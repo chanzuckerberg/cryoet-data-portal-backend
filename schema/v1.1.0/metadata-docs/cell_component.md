@@ -42,6 +42,16 @@ URI: [cdp-meta:cell_component](metadatacell_component)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:cell_component |
+| native | cdp-meta:cell_component |
+
+
+
+
 ## LinkML Source
 
 <details>

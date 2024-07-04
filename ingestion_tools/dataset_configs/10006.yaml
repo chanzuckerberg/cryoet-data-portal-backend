@@ -42,8 +42,6 @@ annotations:
     - ORCID: 0000-0003-3990-6910
       corresponding_author_status: true
       name: John Briggs
-    confidence:
-      ground_truth_used: author estimation
     dates: &id001
       deposition_date: '2023-10-11'
       last_modified_date: '2023-11-20'
@@ -103,9 +101,6 @@ datasets:
     - ORCID: 0000-0003-3990-6910
       corresponding_author_status: true
       name: John Briggs
-    cell_component:
-      id: null
-      name: null
     cell_strain:
       name: Germany/BavPat1/2020
     cross_references:
@@ -124,7 +119,6 @@ datasets:
     - funding_agency_name: Medical Research Council (MRC, United Kingdom)
       grant_id: MC_UP_1201/16
     - funding_agency_name: Japan Society for the Promotion of Science (JSPS)
-      grant_id: null
     - funding_agency_name: German Research Foundation (DFG)
       grant_id: 240245660-SFB 1129
     grid_preparation: 'model: C-flat-2/2, support_film_film_type_id: 1, support_film_film_material:
@@ -176,7 +170,6 @@ tiltseries:
       model: TITAN
     microscope_optical_setup:
       energy_filter: GIF Bioquantum
-      image_corrector: null
       phase_plate: null
     pixel_spacing: 1.532
     spherical_aberration_constant: 2.7

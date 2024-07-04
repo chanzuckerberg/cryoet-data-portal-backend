@@ -33,6 +33,8 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 * Range: [Integer](Integer.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tilt_series_quality |
+| native | cdp-meta:tilt_series_quality |
+| exact | cdp-common:tiltseries_tilt_series_quality |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -69,6 +82,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: integer
+required: true
 inlined: true
 inlined_as_list: true
 

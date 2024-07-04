@@ -15,7 +15,6 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_strain:
-      id: null
       name: ATCC 23769
     dataset_description: This is 15th of 16 sets of data studying Gluconacetobacter
       hansenii collected by William Nicolas and is a part of Caltech Jensen  lab etdb.
@@ -63,7 +62,6 @@ standardization_config:
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    binning_from_frames: null
     camera:
       acquire_mode: counting
       manufacturer: Gatan
@@ -76,7 +74,6 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      image_corrector: null
       phase_plate: false
     pixel_spacing: 4.569
     spherical_aberration_constant: 2.0
@@ -115,14 +112,12 @@ tomograms:
       - 1
     align_software: '{tomo-align_softwares}'
     authors: *id001
-    ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL
     offset:
       x: 0
       y: 0
       z: 0
     processing: raw
-    processing_software: null
     reconstruction_method: Weighted back projection
     reconstruction_software: IMOD
     tomogram_version: 1

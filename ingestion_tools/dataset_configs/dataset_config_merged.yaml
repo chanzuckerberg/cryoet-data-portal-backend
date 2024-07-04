@@ -1,48 +1,35 @@
 annotations:
 - metadata:
-    annotation_confidence:
-      ground_truth_used: Author estimation
-      precision: 95
-      recall: 60
     annotation_method: manual labeling.
     annotation_object:
-      description: OPTIONAL
+      description: Cytosolic ribosome
       id: GO:0009431
       name: flagellar basal body, MS ring
-      state: OPTIONAL
-    annotation_publications: OPTIONAL
+      state: 96 nm repeat
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: IMOD
     authors:
-    - ORCID: 0000-XXXXXX
-      corresponding_author_status:
-      - OPTIONAL
-      - true
+    - ORCID: 0000-0001-8324-4040
+      corresponding_author_status: true
       name: Mohammed Kaplan
-      primary_author_status:
-      - OPTIONAL
-      - true
+      primary_author_status: true
     confidence:
-      ground_truth_used: OPTIONAL
-      precision:
-      - REQUIRED IF ground_truth_used is specified
-      - 95
-      recall:
-      - REQUIRED IF ground_truth_used is specified
-      - 90
+      ground_truth_used: author estimation
+      precision: 95
+      recall: 90
     dates:
       deposition_date: '2024-05-20'
       last_modified_date: '2024-05-20'
       release_date: '2024-05-20'
-    ground_truth_status:
-    - REQUIRED
-    - true
+    ground_truth_status: false
     is_curator_recommended: true
     method_type: manual
     version: 1.0
   sources:
   - binning: 1
-    columns: zyx
-    delimiter: OPTIONAL
+    columns: xyz
+    delimiter: ' '
     file_format: mod
     filter_value: '{mapped_tomo_name}.tomostar'
     glob_string: '{dataset_name}/{run_name}_MS.mod'
@@ -59,21 +46,21 @@ dataset_keyphotos:
 datasets:
 - metadata:
     authors:
-    - ORCID: 0000-0002-8147-208X
+    - ORCID: 0000-0001-8324-4040
       corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
     cell_component:
       id: GO:0051301
-      name: OPTIONAL
+      name: Outer Mitochondrial Membrane
     cell_strain:
-      id: https://OPTIONAL
+      id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=284812
       name: Philadelphia-1_Lp02
     cell_type:
       id: CL:0002618
       name: umbilical vein endothelial cell
     cross_references:
-      dataset_publications: doi:10.1038/s41467-022-30116-x
+      dataset_publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
       related_database_entries: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420
     dataset_description: 'This is 27th of 41 sets of data studying Legionella pneumophila
@@ -86,7 +73,7 @@ datasets:
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
     funding:
-    - funding_agency_name: Not funded
+    - funding_agency_name: European Research Council (ERC)
       grant_id: '760067'
     grid_preparation: "6 grids were frozen for the JV9114 strain (2x concentrated\
       \ culture); Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot force\
@@ -164,14 +151,13 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF
-      image_corrector: None
       phase_plate:
       - false
       - None
     pixel_spacing:
     - '{run_pixel_spacing}'
     - 1.96
-    related_empiar_entry: OPTIONAL
+    related_empiar_entry: EMPIAR-10988
     spherical_aberration_constant:
     - '{ts-spherical_aberration_constant}'
     - 2.0
@@ -196,7 +182,7 @@ tiltseries:
     tilt_step:
     - 3
     - 2.0
-    - OPTIONAL (float)
+    - float {ts-tilt_step}
     tilting_scheme: starting tilt to max then min
     total_flux:
     - float {tilt_series_total_flux}
@@ -227,9 +213,7 @@ tomograms:
       corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
-    ctf_corrected:
-    - REQUIRED
-    - false
+    ctf_corrected: true
     fiducial_alignment_status: FIDUCIAL
     offset:
       x: 0

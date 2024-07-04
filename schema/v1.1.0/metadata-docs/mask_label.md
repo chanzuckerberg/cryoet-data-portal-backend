@@ -53,6 +53,17 @@ URI: [cdp-meta:mask_label](metadatamask_label)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:mask_label |
+| native | cdp-meta:mask_label |
+| exact | cdp-common:annotation_source_file_mask_label |
+
+
+
+
 ## LinkML Source
 
 <details>

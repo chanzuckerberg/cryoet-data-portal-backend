@@ -33,6 +33,8 @@ URI: [cdp-meta:annotation_software](metadataannotation_software)
 
 * Range: [String](String.md)
 
+* Recommended: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:annotation_software](metadataannotation_software)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:annotation_software |
+| native | cdp-meta:annotation_software |
+| exact | cdp-common:annotation_software |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +81,7 @@ owner: Annotation
 domain_of:
 - Annotation
 range: string
+recommended: true
 inlined: true
 inlined_as_list: true
 

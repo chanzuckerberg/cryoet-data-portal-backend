@@ -40,8 +40,8 @@ URI: [cdp-meta:Camera](metadataCamera)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [acquire_mode](acquire_mode.md) | 0..1 <br/> [String](String.md) | Camera acquisition mode | direct |
-| [manufacturer](manufacturer.md) | 0..1 <br/> [String](String.md) | Name of the camera manufacturer | direct |
-| [model](model.md) | 0..1 <br/> [String](String.md) | Camera model name | direct |
+| [manufacturer](manufacturer.md) | 1 <br/> [String](String.md) | Name of the camera manufacturer | direct |
+| [model](model.md) | 1 <br/> [String](String.md) | Camera model name | direct |
 
 
 
@@ -74,13 +74,14 @@ URI: [cdp-meta:Camera](metadataCamera)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Camera |
 | native | cdp-meta:Camera |
+
+
 
 
 
@@ -125,6 +126,7 @@ attributes:
     - Camera
     - Microscope
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   model:
@@ -140,6 +142,7 @@ attributes:
     - Camera
     - Microscope
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
 
@@ -181,6 +184,7 @@ attributes:
     - Camera
     - Microscope
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   model:
@@ -196,6 +200,7 @@ attributes:
     - Camera
     - Microscope
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
 

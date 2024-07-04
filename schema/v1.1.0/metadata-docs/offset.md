@@ -33,6 +33,8 @@ URI: [cdp-meta:offset](metadataoffset)
 
 * Range: [TomogramOffset](TomogramOffset.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,16 @@ URI: [cdp-meta:offset](metadataoffset)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:offset |
+| native | cdp-meta:offset |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -67,6 +79,7 @@ owner: Tomogram
 domain_of:
 - Tomogram
 range: TomogramOffset
+required: true
 inlined: true
 inlined_as_list: true
 

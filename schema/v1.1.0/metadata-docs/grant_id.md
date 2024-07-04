@@ -33,6 +33,8 @@ URI: [cdp-meta:grant_id](metadatagrant_id)
 
 * Range: [String](String.md)
 
+* Recommended: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:grant_id](metadatagrant_id)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:grant_id |
+| native | cdp-meta:grant_id |
+| exact | cdp-common:funding_grant_id |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +81,7 @@ owner: Funding
 domain_of:
 - Funding
 range: string
+recommended: true
 inlined: true
 inlined_as_list: true
 

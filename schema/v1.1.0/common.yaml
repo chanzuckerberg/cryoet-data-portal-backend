@@ -25,6 +25,7 @@ slots:
       A unique, persistent identifier for researchers, provided by ORCID.
     range: string
     pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
+    recommended: true
     exact_mappings:
       - IAO:0000708
 
@@ -33,6 +34,7 @@ slots:
       A Research Organization Registry (ROR) identifier.
     range: string
     pattern: '^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$'
+    recommended: true
   # ============================================================================
 
   # ============================================================================
@@ -268,6 +270,7 @@ slots:
     description: Reference to the run this tiltseries is a part of
   tiltseries_acceleration_voltage:
     range: integer
+    required: true
     description: Electron Microscope Accelerator voltage in volts
     unit:
       descriptive_name: volts
@@ -284,13 +287,16 @@ slots:
     description: Camera acquisition mode
   tiltseries_camera_manufacturer:
     range: string
+    required: true
     description: Name of the camera manufacturer
   tiltseries_camera_model:
     range: string
+    required: true
     description: Camera model name
   tiltseries_data_acquisition_software:
     range: string
     description: Software used to collect data
+    required: true
   tiltseries_frames_count:
     range: integer
     description: Number of frames associated with this tiltseries
@@ -318,21 +324,25 @@ slots:
     description: Other microscope optical setup information, in addition to energy filter, phase plate and image corrector
   tiltseries_microscope_energy_filter:
     range: string
+    required: true
     description: Energy filter setup used
   tiltseries_microscope_image_corrector:
     range: string
     description: Image corrector setup
   tiltseries_microscope_manufacturer:
     range: string
+    required: true
     description: Name of the microscope manufacturer
   tiltseries_microscope_model:
     range: string
+    required: true
     description: Microscope model name
   tiltseries_microscope_phase_plate:
     range: string
     description: Phase plate configuration
   tiltseries_pixel_spacing:
     range: float
+    required: true
     description: Pixel spacing for the tilt series
     unit:
       descriptive_name: Angstroms per pixel
@@ -357,6 +367,7 @@ slots:
     description: S3 path to this tiltseries in multiscale OME-Zarr format
   tiltseries_spherical_aberration_constant:
     range: float
+    required: true
     description: Spherical Aberration Constant of the objective lens in millimeters
     unit:
       descriptive_name: millimeters
@@ -366,44 +377,45 @@ slots:
     description: Software used for tilt alignment
   tiltseries_tilt_axis:
     range: float
+    required: true
     description: Rotation angle in degrees
     unit:
       descriptive_name: degrees
       symbol: °
   tiltseries_tilt_max:
     range: float
+    required: true
     description: Maximal tilt angle in degrees
     unit:
       descriptive_name: degrees
       symbol: °
   tiltseries_tilt_min:
     range: float
+    required: true
     description: Minimal tilt angle in degrees
-    unit:
-      descriptive_name: degrees
-      symbol: °
-  tiltseries_tilt_range:
-    range: float
-    description: Total tilt range in degrees
     unit:
       descriptive_name: degrees
       symbol: °
   tiltseries_tilt_series_quality:
     range: integer
+    required: true
     description: Author assessment of tilt series quality within the dataset (1-5, 5 is best)
     minimum_value: 1
     maximum_value: 5
   tiltseries_tilt_step:
     range: float
+    required: true
     description: Tilt step in degrees
     unit:
       descriptive_name: degrees
       symbol: °
   tiltseries_tilting_scheme:
     range: string
+    required: true
     description: The order of stage tilting during acquisition of the data
   tiltseries_total_flux:
     range: float
+    required: true
     description: Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series
     unit:
       descriptive_name: electrons per square Angstrom
@@ -425,6 +437,7 @@ slots:
     description: Reference to the dataset this tomogram is a part of
   tomogram_fiducial_alignment_status:
     range: fiducial_alignment_status_enum
+    required: true
     description: Whether the tomographic alignment was computed based on fiducial markers.
   tomogram_https_mrc_scale0:
     range: string
@@ -432,9 +445,6 @@ slots:
   tomogram_https_omezarr_dir:
     range: string
     description: HTTPS path to this tomogram in multiscale OME-Zarr format
-  tomogram_is_canonical:
-    range: boolean
-    description: Is this tomogram considered the canonical tomogram for the run experiment?
   tomogram_key_photo_thumbnail_url:
     range: string
     description: URL for the thumbnail of key photo
@@ -449,18 +459,21 @@ slots:
     description: the compact json of neuroglancer config
   tomogram_offset_x:
     range: integer
+    required: true
     description: x offset data relative to the canonical tomogram in pixels
     unit:
       descriptive_name: pixels
       symbol: px
   tomogram_offset_y:
     range: integer
+    required: true
     description: y offset data relative to the canonical tomogram in pixels
     unit:
       descriptive_name: pixels
       symbol: px
   tomogram_offset_z:
     range: integer
+    required: true
     description: z offset data relative to the canonical tomogram in pixels
     unit:
       descriptive_name: pixels
@@ -470,6 +483,7 @@ slots:
     description: Software used for alignment
   tomogram_processing:
     range: string
+    required: true
     description: Describe additional processing used to derive the tomogram
   tomogram_processing_software:
     range: string
@@ -477,9 +491,11 @@ slots:
     recommended: true
   tomogram_reconstruction_method:
     range: string
+    required: true
     description: Describe reconstruction method (Weighted back-projection, SART, SIRT)
   tomogram_reconstruction_software:
     range: string
+    required: true
     description: Name of software used for reconstruction
   tomogram_s3_mrc_scale0:
     range: string
@@ -498,24 +514,28 @@ slots:
     description: comma separated x,y,z dimensions of the scale2 tomogram
   tomogram_size_x:
     range: integer
+    required: true
     description: Number of pixels in the 3D data fast axis
     unit: 
       descriptive_name: pixels
       symbol: px
   tomogram_size_y:
     range: integer
+    required: true
     description: Number of pixels in the 3D data medium axis
     unit:
       descriptive_name: pixels
       symbol: px
   tomogram_size_z:
     range: integer
+    required: true
     description: Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
     unit:
       descriptive_name: pixels
       symbol: px
   tomogram_version:
     range: VersionString
+    required: true
     description: Version of tomogram
   #tomogram_voxel_spacing (TomogramVoxelSpacing): An object relationship with a specific voxel spacing for this experiment run
   tomogram_type:
@@ -523,6 +543,7 @@ slots:
     description: "Tomogram purpose (ex: CANONICAL)"
   tomogram_voxel_spacing:
     range: float
+    required: true
     description: Voxel spacing equal in all three axes in angstroms
     unit:
       descriptive_name: Angstroms per voxel
@@ -535,9 +556,11 @@ slots:
   #id (int): Numeric identifier (May change!)
   annotation_method:
     range: string
+    required: true
     description: Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)
   annotation_method_type:
     range: annotation_method_type_enum
+    required: true
     description: Classification of the annotation method based on supervision.
   annotation_publication:
     range: string
@@ -579,9 +602,11 @@ slots:
     description: A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.
   annotation_object_id:
     range: string
+    required: true
     description: Gene Ontology Cellular Component identifier for the annotation object
   annotation_object_name:
     range: string
+    required: true
     description: Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)
   annotation_object_state:
     range: string
@@ -608,6 +633,7 @@ slots:
   #id (int): Numeric identifier (May change!)
   annotation_source_file_format:
     range: string
+    required: true
     description: File format for this file
   annotation_source_file_https_path:
     range: string
@@ -623,6 +649,7 @@ slots:
     description: Path to the annotation file relative to the dataset root.
   annotation_source_file_glob_string:
     range: string
+    required: true
     description: Glob string to match annotation files in the dataset.
   annotation_source_file_is_visualization_default:
     range: boolean
@@ -651,6 +678,7 @@ slots:
   annotation_source_file_order:
     range: string
     description: The order of axes for an oriented point / instance segmentation annotation file.
+    ifabsent: string(xyz)
   annotation_source_file_mask_label:
     range: integer
     description: The mask label for a semantic segmentation mask annotation file.
@@ -734,6 +762,7 @@ types:
 classes:
   Any:
     class_uri: linkml:Any
+    description: A placeholder for any type of data.
 
   # ============================================================================
   # Deposition, release and last modified dates

@@ -53,6 +53,17 @@ URI: [cdp-meta:binning_from_frames](metadatabinning_from_frames)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:binning_from_frames |
+| native | cdp-meta:binning_from_frames |
+| exact | cdp-common:tiltseries_binning_from_frames |
+
+
+
+
 ## LinkML Source
 
 <details>

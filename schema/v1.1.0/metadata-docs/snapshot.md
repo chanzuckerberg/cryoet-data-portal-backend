@@ -55,6 +55,16 @@ URI: [cdp-meta:snapshot](metadatasnapshot)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:snapshot |
+| native | cdp-meta:snapshot |
+
+
+
+
 ## LinkML Source
 
 <details>

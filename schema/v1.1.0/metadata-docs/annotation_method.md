@@ -33,6 +33,8 @@ URI: [cdp-meta:annotation_method](metadataannotation_method)
 
 * Range: [String](String.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:annotation_method](metadataannotation_method)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:annotation_method |
+| native | cdp-meta:annotation_method |
+| exact | cdp-common:annotation_method |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -69,6 +82,7 @@ owner: Annotation
 domain_of:
 - Annotation
 range: string
+required: true
 inlined: true
 inlined_as_list: true
 

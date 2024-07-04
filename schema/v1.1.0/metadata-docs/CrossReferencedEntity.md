@@ -73,13 +73,14 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CrossReferencedEntity |
 | native | cdp-meta:CrossReferencedEntity |
+
+
 
 
 

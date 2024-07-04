@@ -57,6 +57,17 @@ URI: [cdp-meta:affiliation_identifier](metadataaffiliation_identifier)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:affiliation_identifier |
+| native | cdp-meta:affiliation_identifier |
+| exact | cdp-common:affiliation_identifier |
+
+
+
+
 ## LinkML Source
 
 <details>

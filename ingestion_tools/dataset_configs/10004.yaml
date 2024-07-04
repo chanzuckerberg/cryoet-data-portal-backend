@@ -1,6 +1,6 @@
 annotations:
 - metadata:
-    annotation_confidence:
+    confidence:
       ground_truth_used: Author estimation
       precision: 95
       recall: 60
@@ -62,12 +62,6 @@ annotations:
     glob_string: '{run_name}/annoRibosome_bin4.txt'
     is_visualization_default: true
     shape: Point
-dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: null
-        thumbnail: null
 datasets:
 - metadata:
     authors: &id002
@@ -107,9 +101,6 @@ datasets:
       corresponding_author_status: true
       name: "M. J\xFCrgen Plitzko"
       primary_author_status: false
-    cell_component:
-      id: null
-      name: null
     cell_strain:
       id: https://cgc.umn.edu/strain/NK2476
       name: NK2476
@@ -158,7 +149,6 @@ runs:
       name_regex: (.*)
 standardization_config:
   deposition_id: 10004
-  run_to_tomo_map_csv: null
   source_prefix: cElegans
 tiltseries:
 - metadata:
@@ -174,7 +164,6 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: TFS Selectris X
-      image_corrector: None
       phase_plate: None
     pixel_spacing: 1.89
     spherical_aberration_constant: 2.7

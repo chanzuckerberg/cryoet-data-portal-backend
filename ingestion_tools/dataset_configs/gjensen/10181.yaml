@@ -15,7 +15,6 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_strain:
-      id: null
       name: ''
     cell_type:
       name: umbilical vein endothelial cell
@@ -64,9 +63,7 @@ standardization_config:
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    binning_from_frames: null
     camera:
-      acquire_mode: null
       manufacturer: Gatan
       model: UltraCam
     data_acquisition_software: UCSF tomo
@@ -77,7 +74,6 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      image_corrector: null
       phase_plate: false
     pixel_spacing: 9.46
     spherical_aberration_constant: 2.0
@@ -116,14 +112,12 @@ tomograms:
       - 1
     align_software: IMOD
     authors: *id001
-    ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL
     offset:
       x: 0
       y: 0
       z: 0
     processing: raw
-    processing_software: null
     reconstruction_method: Weighted back projection
     reconstruction_software: IMOD
     tomogram_version: 1

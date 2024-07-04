@@ -42,6 +42,16 @@ URI: [cdp-meta:z](metadataz)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:z |
+| native | cdp-meta:z |
+
+
+
+
 ## LinkML Source
 
 <details>

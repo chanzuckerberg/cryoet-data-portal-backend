@@ -37,8 +37,8 @@ URI: [cdp-meta:Funding](metadataFunding)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [funding_agency_name](funding_agency_name.md) | 0..1 <br/> [String](String.md) | The name of the funding source | direct |
-| [grant_id](grant_id.md) | 0..1 <br/> [String](String.md) | Grant identifier provided by the funding agency | direct |
+| [funding_agency_name](funding_agency_name.md) | 0..1 _recommended_ <br/> [String](String.md) | The name of the funding source | direct |
+| [grant_id](grant_id.md) | 0..1 _recommended_ <br/> [String](String.md) | Grant identifier provided by the funding agency | direct |
 
 
 
@@ -72,13 +72,14 @@ URI: [cdp-meta:Funding](metadataFunding)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Funding |
 | native | cdp-meta:Funding |
+
+
 
 
 
@@ -108,6 +109,7 @@ attributes:
     domain_of:
     - Funding
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
   grant_id:
@@ -122,6 +124,7 @@ attributes:
     domain_of:
     - Funding
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
 
@@ -148,6 +151,7 @@ attributes:
     domain_of:
     - Funding
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
   grant_id:
@@ -162,6 +166,7 @@ attributes:
     domain_of:
     - Funding
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
 

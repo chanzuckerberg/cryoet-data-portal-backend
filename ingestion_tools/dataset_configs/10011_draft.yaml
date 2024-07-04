@@ -33,8 +33,6 @@ dataset_keyphotos:
 - sources:
   - literal:
       value:
-        snapshot: null
-        thumbnail: null
 datasets:
 - metadata:
     authors:
@@ -58,7 +56,6 @@ datasets:
     dates: *id001
     funding:
     - funding_agency_name: Not funded
-      grant_id: null
     grid_preparation: 'model: Quantifoil R2/2, material: GOLD, mesh: 200, support_film_film_type_id:
       1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type:
       support_film, pretreatment_type_: GLOW DISCHARGE'
@@ -121,7 +118,6 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: GIF Bioquantum
-      image_corrector: null
       phase_plate: null
     pixel_spacing: REQUIRED
     related_empiar_entry: OPTIONAL
@@ -158,7 +154,7 @@ tomograms:
       - 0
       - 1
     ctf_corrected: REQUIRED
-    fiducial_alignment_status: null
+    fiducial_alignment_status: 
     offset:
       x: 0
       y: 0

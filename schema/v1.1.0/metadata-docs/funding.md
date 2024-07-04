@@ -42,6 +42,16 @@ URI: [cdp-meta:funding](metadatafunding)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:funding |
+| native | cdp-meta:funding |
+
+
+
+
 ## LinkML Source
 
 <details>

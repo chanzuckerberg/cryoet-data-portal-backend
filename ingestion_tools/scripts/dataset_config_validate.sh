@@ -1,12 +1,12 @@
 #!/bin/bash
 # Validate all YAML files in the current directory and subdirectories
-# TODO: pull from dataset_config_merge.py?
 
 readonly SCHEMA_VERSION="v1.1.0"
 readonly DATASET_CONFIGS_DIR=../dataset_configs/
 readonly DATASET_CONFIG_VALIDATION_FILE="../../schema/$SCHEMA_VERSION/dataset_config_validate.yaml"
 readonly ERRORS_OUTPUT_DIR=./dataset_config_validate_errors
-readonly EXCLUDE_LIST=("template.yaml" "template_draft.yaml" "dataset_config_merged.yaml" "10011.yaml")
+readonly EXCLUDE_LIST=("template.yaml" "dataset_config_merged.yaml")
+readonly EXCLUDE_KEYWORDS=("draft")
 
 if [ ! -f $DATASET_CONFIG_VALIDATION_FILE ]; then
     echo "No validate.yaml file found. Skipping validation."
@@ -16,13 +16,20 @@ fi
 
 all_files=$(find $DATASET_CONFIGS_DIR -type f \( -name "*.yaml" -o -name "*.yml" \))
 
-# Filter out files in the exclude list
+# Filter out files in the exclude list and files with exclude keywords
 files_to_validate=()
 for file in $all_files; {
     filename=$(basename "$file")
-    if [[ ! " ${EXCLUDE_LIST[@]} " =~ " ${filename} " ]]; then
-        files_to_validate+=("$file")
+    if [[ " ${EXCLUDE_LIST[@]} " =~ " ${filename} " ]]; then
+        continue
     fi
+    for keyword in "${EXCLUDE_KEYWORDS[@]}"; {
+        if [[ $filename == *"$keyword"* ]]; then
+            echo "Excluding $file because it contains the keyword $keyword"
+            break
+        fi
+    }
+    files_to_validate+=("$file")
 }
 
 # Run linkml-validate if there are files to validate

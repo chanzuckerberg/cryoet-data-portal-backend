@@ -15,7 +15,6 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_strain:
-      id: null
       name: CCAP 1403/13F
     dataset_description: This is 3rd of 7 sets of data studying Dolichospermum flos-aquae
       collected by Przemek Dutka and is a part of Caltech Jensen  lab etdb. Gas vesicles,
@@ -66,7 +65,6 @@ standardization_config:
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    binning_from_frames: null
     camera:
       acquire_mode: counting
       manufacturer: Gatan
@@ -79,7 +77,6 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF
-      image_corrector: null
       phase_plate: false
     pixel_spacing: '{ts-pixel_spacing}'
     spherical_aberration_constant: 2.7
@@ -118,7 +115,6 @@ tomograms:
       - 1
     align_software: '{tomo-align_softwares}'
     authors: *id001
-    ctf_corrected: null
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
     offset:
       x: 0

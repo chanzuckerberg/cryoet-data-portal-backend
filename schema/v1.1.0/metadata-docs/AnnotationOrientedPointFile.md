@@ -61,9 +61,9 @@ URI: [cdp-meta:AnnotationOrientedPointFile](metadataAnnotationOrientedPointFile)
 | [binning](binning.md) | 0..1 <br/> [Integer](Integer.md) | The binning factor for a point / oriented point / instance segmentation annot... | direct |
 | [filter_value](filter_value.md) | 0..1 <br/> [String](String.md) | The filter value for an oriented point / instance segmentation annotation fil... | direct |
 | [order](order.md) | 0..1 <br/> [String](String.md) | The order of axes for an oriented point / instance segmentation annotation fi... | direct |
-| [file_format](file_format.md) | 1 <br/> [String](String.md) |  | direct |
-| [glob_string](glob_string.md) | 1 <br/> [String](String.md) |  | direct |
-| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) |  | direct |
+| [file_format](file_format.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [glob_string](glob_string.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [String](String.md) |  | direct |
 
 
 
@@ -94,13 +94,14 @@ URI: [cdp-meta:AnnotationOrientedPointFile](metadataAnnotationOrientedPointFile)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationOrientedPointFile |
 | native | cdp-meta:AnnotationOrientedPointFile |
+
+
 
 
 
@@ -164,6 +165,7 @@ attributes:
     exact_mappings:
     - cdp-common:annotation_source_file_order
     rank: 1000
+    ifabsent: string(xyz)
     alias: order
     owner: AnnotationOrientedPointFile
     domain_of:
@@ -187,7 +189,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   glob_string:
@@ -205,7 +206,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   is_visualization_default:
@@ -222,7 +222,7 @@ attributes:
     - AnnotationPointFile
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
-    range: boolean
+    range: string
     inlined: true
     inlined_as_list: true
 
@@ -283,6 +283,7 @@ attributes:
     exact_mappings:
     - cdp-common:annotation_source_file_order
     rank: 1000
+    ifabsent: string(xyz)
     alias: order
     owner: AnnotationOrientedPointFile
     domain_of:
@@ -306,7 +307,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   glob_string:
@@ -324,7 +324,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   is_visualization_default:
@@ -341,7 +340,7 @@ attributes:
     - AnnotationPointFile
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
-    range: boolean
+    range: string
     inlined: true
     inlined_as_list: true
 

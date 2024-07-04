@@ -6,7 +6,6 @@ annotations:
       name: microtubule doublet 48 nm repeat
       state: 48 nm repeat
     annotation_publications: doi:10.1101/2022.09.28.510016
-    annotation_software: null
     authors: &id001
     - ORCID: null
       corresponding_author_status: false
@@ -40,12 +39,7 @@ annotations:
       name: microtubule doublet 96 nm repeat
       state: 96 nm repeat
     annotation_publications: doi:10.1101/2022.09.28.510016
-    annotation_software: null
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
@@ -100,7 +94,6 @@ datasets:
     dates: *id002
     funding:
     - funding_agency_name: Howard Hughes Medical Institute (HHMI)
-      grant_id: null
     - funding_agency_name: National Institutes of Health/National Institute of General
         Medical Sciences (NIH/NIGMS)
       grant_id: GM118106
@@ -137,7 +130,6 @@ tiltseries:
 - metadata:
     acceleration_voltage: 300000
     aligned_tiltseries_binning: 1
-    binning_from_frames: null
     camera:
       manufacturer: Gatan
       model: K3 BIOQUANTUM
@@ -148,7 +140,6 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: GIF Bioquantum
-      image_corrector: null
       phase_plate: null
     pixel_spacing: 2.612
     spherical_aberration_constant: 2.7

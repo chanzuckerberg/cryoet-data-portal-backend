@@ -33,6 +33,8 @@ URI: [cdp-meta:total_flux](metadatatotal_flux)
 
 * Range: [Float](Float.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:total_flux](metadatatotal_flux)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:total_flux |
+| native | cdp-meta:total_flux |
+| exact | cdp-common:tiltseries_total_flux |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -69,6 +82,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: float
+required: true
 inlined: true
 inlined_as_list: true
 

@@ -33,6 +33,8 @@ URI: [cdp-meta:dataset_title](metadatadataset_title)
 
 * Range: [String](String.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:dataset_title](metadatadataset_title)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:dataset_title |
+| native | cdp-meta:dataset_title |
+| exact | cdp-common:dataset_title |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +81,7 @@ owner: Dataset
 domain_of:
 - Dataset
 range: string
+required: true
 inlined: true
 inlined_as_list: true
 

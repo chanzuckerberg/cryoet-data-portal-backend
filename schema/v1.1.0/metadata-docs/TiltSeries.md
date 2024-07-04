@@ -31,7 +31,7 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
           
     
     
-    TiltSeries --> "0..1" Camera : camera
+    TiltSeries --> "1" Camera : camera
     click Camera href "../Camera"
 
         
@@ -46,7 +46,7 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
           
     
     
-    TiltSeries --> "0..1" Microscope : microscope
+    TiltSeries --> "1" Microscope : microscope
     click Microscope href "../Microscope"
 
         
@@ -57,7 +57,7 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
           
     
     
-    TiltSeries --> "0..1" MicroscopeOpticalSetup : microscope_optical_setup
+    TiltSeries --> "1" MicroscopeOpticalSetup : microscope_optical_setup
     click MicroscopeOpticalSetup href "../MicroscopeOpticalSetup"
 
         
@@ -76,7 +76,7 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
           
     
     
-    TiltSeries --> "0..1" TiltRange : tilt_range
+    TiltSeries --> "1" TiltRange : tilt_range
     click TiltRange href "../TiltRange"
 
         
@@ -101,26 +101,26 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [acceleration_voltage](acceleration_voltage.md) | 0..1 <br/> [Integer](Integer.md) | Electron Microscope Accelerator voltage in volts | direct |
+| [acceleration_voltage](acceleration_voltage.md) | 1 <br/> [Integer](Integer.md) | Electron Microscope Accelerator voltage in volts | direct |
 | [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | 0..1 <br/> [Integer](Integer.md) | Binning factor of the aligned tilt series | direct |
 | [binning_from_frames](binning_from_frames.md) | 0..1 <br/> [Float](Float.md) | Describes the binning factor from frames to tilt series file | direct |
-| [camera](camera.md) | 0..1 <br/> [Camera](Camera.md) | The camera used to collect the tilt series | direct |
-| [data_acquisition_software](data_acquisition_software.md) | 0..1 <br/> [String](String.md) | Software used to collect data | direct |
+| [camera](camera.md) | 1 <br/> [Camera](Camera.md) | The camera used to collect the tilt series | direct |
+| [data_acquisition_software](data_acquisition_software.md) | 1 <br/> [String](String.md) | Software used to collect data | direct |
 | [frames_count](frames_count.md) | 0..1 <br/> [Integer](Integer.md) | Number of frames associated with this tiltseries | direct |
 | [is_aligned](is_aligned.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether this tilt series is aligned | direct |
-| [microscope](microscope.md) | 0..1 <br/> [Microscope](Microscope.md) | The microscope used to collect the tilt series | direct |
+| [microscope](microscope.md) | 1 <br/> [Microscope](Microscope.md) | The microscope used to collect the tilt series | direct |
 | [microscope_additional_info](microscope_additional_info.md) | 0..1 <br/> [String](String.md) | Other microscope optical setup information, in addition to energy filter, pha... | direct |
-| [microscope_optical_setup](microscope_optical_setup.md) | 0..1 <br/> [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series | direct |
+| [microscope_optical_setup](microscope_optical_setup.md) | 1 <br/> [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series | direct |
 | [related_empiar_entry](related_empiar_entry.md) | 0..1 <br/> [String](String.md) | If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifie... | direct |
-| [spherical_aberration_constant](spherical_aberration_constant.md) | 0..1 <br/> [Float](Float.md) | Spherical Aberration Constant of the objective lens in millimeters | direct |
+| [spherical_aberration_constant](spherical_aberration_constant.md) | 1 <br/> [Float](Float.md) | Spherical Aberration Constant of the objective lens in millimeters | direct |
 | [tilt_alignment_software](tilt_alignment_software.md) | 0..1 <br/> [String](String.md) | Software used for tilt alignment | direct |
-| [tilt_axis](tilt_axis.md) | 0..1 <br/> [Float](Float.md) | Rotation angle in degrees | direct |
-| [tilt_range](tilt_range.md) | 0..1 <br/> [TiltRange](TiltRange.md) | The range of tilt angles in the tilt series | direct |
-| [tilt_series_quality](tilt_series_quality.md) | 0..1 <br/> [Integer](Integer.md) | Author assessment of tilt series quality within the dataset (1-5, 5 is best) | direct |
-| [tilt_step](tilt_step.md) | 0..1 <br/> [Float](Float.md) | Tilt step in degrees | direct |
-| [tilting_scheme](tilting_scheme.md) | 0..1 <br/> [String](String.md) | The order of stage tilting during acquisition of the data | direct |
-| [total_flux](total_flux.md) | 0..1 <br/> [Float](Float.md) | Number of Electrons reaching the specimen in a square Angstrom area for the e... | direct |
-| [pixel_spacing](pixel_spacing.md) | 0..1 <br/> [Float](Float.md) | Pixel spacing for the tilt series | direct |
+| [tilt_axis](tilt_axis.md) | 1 <br/> [Float](Float.md) | Rotation angle in degrees | direct |
+| [tilt_range](tilt_range.md) | 1 <br/> [TiltRange](TiltRange.md) | The range of tilt angles in the tilt series | direct |
+| [tilt_series_quality](tilt_series_quality.md) | 1 <br/> [Integer](Integer.md) | Author assessment of tilt series quality within the dataset (1-5, 5 is best) | direct |
+| [tilt_step](tilt_step.md) | 1 <br/> [Float](Float.md) | Tilt step in degrees | direct |
+| [tilting_scheme](tilting_scheme.md) | 1 <br/> [String](String.md) | The order of stage tilting during acquisition of the data | direct |
+| [total_flux](total_flux.md) | 1 <br/> [Float](Float.md) | Number of Electrons reaching the specimen in a square Angstrom area for the e... | direct |
+| [pixel_spacing](pixel_spacing.md) | 1 <br/> [Float](Float.md) | Pixel spacing for the tilt series | direct |
 
 
 
@@ -146,13 +146,14 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:TiltSeries |
 | native | cdp-meta:TiltSeries |
+
+
 
 
 
@@ -182,6 +183,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
   aligned_tiltseries_binning:
@@ -223,6 +225,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: Camera
+    required: true
     inlined: true
     inlined_as_list: true
   data_acquisition_software:
@@ -237,6 +240,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   frames_count:
@@ -278,6 +282,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: Microscope
+    required: true
     inlined: true
     inlined_as_list: true
   microscope_additional_info:
@@ -305,6 +310,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: MicroscopeOpticalSetup
+    required: true
     inlined: true
     inlined_as_list: true
   related_empiar_entry:
@@ -334,6 +340,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: float
+    required: true
     inlined: true
     inlined_as_list: true
   tilt_alignment_software:
@@ -362,6 +369,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: float
+    required: true
     inlined: true
     inlined_as_list: true
   tilt_range:
@@ -374,6 +382,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: TiltRange
+    required: true
     inlined: true
     inlined_as_list: true
   tilt_series_quality:
@@ -389,6 +398,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
   tilt_step:
@@ -403,6 +413,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: float
+    required: true
     inlined: true
     inlined_as_list: true
   tilting_scheme:
@@ -417,6 +428,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   total_flux:
@@ -432,6 +444,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: float
+    required: true
     inlined: true
     inlined_as_list: true
   pixel_spacing:
@@ -446,6 +459,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: float
+    required: true
     inlined: true
     inlined_as_list: true
 
@@ -472,6 +486,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
   aligned_tiltseries_binning:
@@ -513,6 +528,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: Camera
+    required: true
     inlined: true
     inlined_as_list: true
   data_acquisition_software:
@@ -527,6 +543,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   frames_count:
@@ -568,6 +585,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: Microscope
+    required: true
     inlined: true
     inlined_as_list: true
   microscope_additional_info:
@@ -595,6 +613,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: MicroscopeOpticalSetup
+    required: true
     inlined: true
     inlined_as_list: true
   related_empiar_entry:
@@ -624,6 +643,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: float
+    required: true
     inlined: true
     inlined_as_list: true
   tilt_alignment_software:
@@ -652,6 +672,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: float
+    required: true
     inlined: true
     inlined_as_list: true
   tilt_range:
@@ -664,6 +685,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: TiltRange
+    required: true
     inlined: true
     inlined_as_list: true
   tilt_series_quality:
@@ -679,6 +701,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
   tilt_step:
@@ -693,6 +716,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: float
+    required: true
     inlined: true
     inlined_as_list: true
   tilting_scheme:
@@ -707,6 +731,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   total_flux:
@@ -722,6 +747,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: float
+    required: true
     inlined: true
     inlined_as_list: true
   pixel_spacing:
@@ -736,6 +762,7 @@ attributes:
     domain_of:
     - TiltSeries
     range: float
+    required: true
     inlined: true
     inlined_as_list: true
 

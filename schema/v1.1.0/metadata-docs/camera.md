@@ -33,6 +33,8 @@ URI: [cdp-meta:camera](metadatacamera)
 
 * Range: [Camera](Camera.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,16 @@ URI: [cdp-meta:camera](metadatacamera)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:camera |
+| native | cdp-meta:camera |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -66,6 +78,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: Camera
+required: true
 inlined: true
 inlined_as_list: true
 

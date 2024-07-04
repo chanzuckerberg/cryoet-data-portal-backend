@@ -33,6 +33,8 @@ URI: [cdp-meta:energy_filter](metadataenergy_filter)
 
 * Range: [String](String.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:energy_filter](metadataenergy_filter)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:energy_filter |
+| native | cdp-meta:energy_filter |
+| exact | cdp-common:tiltseries_microscope_energy_filter |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +81,7 @@ owner: MicroscopeOpticalSetup
 domain_of:
 - MicroscopeOpticalSetup
 range: string
+required: true
 inlined: true
 inlined_as_list: true
 

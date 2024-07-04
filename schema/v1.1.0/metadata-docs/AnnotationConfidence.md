@@ -74,13 +74,14 @@ URI: [cdp-meta:AnnotationConfidence](metadataAnnotationConfidence)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationConfidence |
 | native | cdp-meta:AnnotationConfidence |
+
+
 
 
 

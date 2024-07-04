@@ -53,6 +53,17 @@ URI: [cdp-meta:corresponding_author_status](metadatacorresponding_author_status)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:corresponding_author_status |
+| native | cdp-meta:corresponding_author_status |
+| exact | cdp-common:author_corresponding_author_status |
+
+
+
+
 ## LinkML Source
 
 <details>

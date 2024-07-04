@@ -33,6 +33,8 @@ URI: [cdp-meta:microscope_optical_setup](metadatamicroscope_optical_setup)
 
 * Range: [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,16 @@ URI: [cdp-meta:microscope_optical_setup](metadatamicroscope_optical_setup)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:microscope_optical_setup |
+| native | cdp-meta:microscope_optical_setup |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -66,6 +78,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: MicroscopeOpticalSetup
+required: true
 inlined: true
 inlined_as_list: true
 

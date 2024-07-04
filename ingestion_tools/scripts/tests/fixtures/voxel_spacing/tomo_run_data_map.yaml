@@ -10,9 +10,6 @@ datasets:
     - ORCID: 0000-0003-0003-0003
       corresponding_author_status: true
       name: Author 3
-    cell_component:
-      id: null
-      name: null
     cell_strain:
       id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=88888
       name: Strain 1
@@ -76,7 +73,6 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF Quantum LS
-      image_corrector: None
       phase_plate: Volta Phase Plate
     pixel_spacing: 3.3702
     related_empiar_entry: EMPIAR-10988

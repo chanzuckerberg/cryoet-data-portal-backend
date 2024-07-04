@@ -33,6 +33,8 @@ URI: [cdp-meta:taxonomy_id](metadatataxonomy_id)
 
 * Range: [Integer](Integer.md)
 
+* Recommended: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:taxonomy_id](metadatataxonomy_id)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:taxonomy_id |
+| native | cdp-meta:taxonomy_id |
+| exact | cdp-common:organism_taxid |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +81,7 @@ owner: Organism
 domain_of:
 - Organism
 range: integer
+recommended: true
 inlined: true
 inlined_as_list: true
 

@@ -53,6 +53,17 @@ URI: [cdp-meta:frames_count](metadataframes_count)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:frames_count |
+| native | cdp-meta:frames_count |
+| exact | cdp-common:tiltseries_frames_count |
+
+
+
+
 ## LinkML Source
 
 <details>

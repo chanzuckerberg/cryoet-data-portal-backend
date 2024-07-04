@@ -405,6 +405,7 @@ classes:
         - CellComponent
         - AnnotationObject
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       email:
@@ -522,6 +523,7 @@ classes:
         domain_of:
         - Funding
         range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
       grant_id:
@@ -535,6 +537,7 @@ classes:
         domain_of:
         - Funding
         range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
   DateStamp:
@@ -732,6 +735,7 @@ classes:
         domain_of:
         - Organism
         range: integer
+        recommended: true
         inlined: true
         inlined_as_list: true
   Tissue:
@@ -772,6 +776,7 @@ classes:
         - CellComponent
         - AnnotationObject
         range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
   CellType:
@@ -909,6 +914,7 @@ classes:
         domain_of:
         - ExperimentalMetadata
         range: sample_type_enum
+        required: true
         inlined: true
         inlined_as_list: true
       sample_preparation:
@@ -922,6 +928,7 @@ classes:
         domain_of:
         - ExperimentalMetadata
         range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
       grid_preparation:
@@ -935,6 +942,7 @@ classes:
         domain_of:
         - ExperimentalMetadata
         range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
       other_setup:
@@ -949,6 +957,7 @@ classes:
         domain_of:
         - ExperimentalMetadata
         range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
       organism:
@@ -1029,6 +1038,7 @@ classes:
         domain_of:
         - Dataset
         range: integer
+        required: true
         inlined: true
         inlined_as_list: true
       dataset_title:
@@ -1042,6 +1052,7 @@ classes:
         domain_of:
         - Dataset
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       dataset_description:
@@ -1056,6 +1067,7 @@ classes:
         domain_of:
         - Dataset
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       dates:
@@ -1249,6 +1261,7 @@ classes:
         - Camera
         - Microscope
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       model:
@@ -1263,6 +1276,7 @@ classes:
         - Camera
         - Microscope
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
   Microscope:
@@ -1312,6 +1326,7 @@ classes:
         domain_of:
         - MicroscopeOpticalSetup
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       phase_plate:
@@ -1356,6 +1371,7 @@ classes:
         domain_of:
         - TiltRange
         range: float
+        required: true
         inlined: true
         inlined_as_list: true
       max:
@@ -1369,6 +1385,7 @@ classes:
         domain_of:
         - TiltRange
         range: float
+        required: true
         inlined: true
         inlined_as_list: true
   TiltSeries:
@@ -1387,6 +1404,7 @@ classes:
         domain_of:
         - TiltSeries
         range: integer
+        required: true
         inlined: true
         inlined_as_list: true
       aligned_tiltseries_binning:
@@ -1425,6 +1443,7 @@ classes:
         domain_of:
         - TiltSeries
         range: Camera
+        required: true
         inlined: true
         inlined_as_list: true
       data_acquisition_software:
@@ -1438,6 +1457,7 @@ classes:
         domain_of:
         - TiltSeries
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       frames_count:
@@ -1476,6 +1496,7 @@ classes:
         domain_of:
         - TiltSeries
         range: Microscope
+        required: true
         inlined: true
         inlined_as_list: true
       microscope_additional_info:
@@ -1502,6 +1523,7 @@ classes:
         domain_of:
         - TiltSeries
         range: MicroscopeOpticalSetup
+        required: true
         inlined: true
         inlined_as_list: true
       related_empiar_entry:
@@ -1529,6 +1551,7 @@ classes:
         domain_of:
         - TiltSeries
         range: float
+        required: true
         inlined: true
         inlined_as_list: true
       tilt_alignment_software:
@@ -1555,6 +1578,7 @@ classes:
         domain_of:
         - TiltSeries
         range: float
+        required: true
         inlined: true
         inlined_as_list: true
       tilt_range:
@@ -1566,6 +1590,7 @@ classes:
         domain_of:
         - TiltSeries
         range: TiltRange
+        required: true
         inlined: true
         inlined_as_list: true
       tilt_series_quality:
@@ -1580,6 +1605,7 @@ classes:
         domain_of:
         - TiltSeries
         range: integer
+        required: true
         inlined: true
         inlined_as_list: true
       tilt_step:
@@ -1593,6 +1619,7 @@ classes:
         domain_of:
         - TiltSeries
         range: float
+        required: true
         inlined: true
         inlined_as_list: true
       tilting_scheme:
@@ -1606,6 +1633,7 @@ classes:
         domain_of:
         - TiltSeries
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       total_flux:
@@ -1620,6 +1648,7 @@ classes:
         domain_of:
         - TiltSeries
         range: float
+        required: true
         inlined: true
         inlined_as_list: true
       pixel_spacing:
@@ -1633,6 +1662,7 @@ classes:
         domain_of:
         - TiltSeries
         range: float
+        required: true
         inlined: true
         inlined_as_list: true
   TomogramSize:
@@ -1652,6 +1682,7 @@ classes:
         - TomogramSize
         - TomogramOffset
         range: integer
+        required: true
         inlined: true
         inlined_as_list: true
       y:
@@ -1666,6 +1697,7 @@ classes:
         - TomogramSize
         - TomogramOffset
         range: integer
+        required: true
         inlined: true
         inlined_as_list: true
       z:
@@ -1681,6 +1713,7 @@ classes:
         - TomogramSize
         - TomogramOffset
         range: integer
+        required: true
         inlined: true
         inlined_as_list: true
   TomogramOffset:
@@ -1746,6 +1779,7 @@ classes:
         domain_of:
         - Tomogram
         range: float
+        required: true
         inlined: true
         inlined_as_list: true
       fiducial_alignment_status:
@@ -1760,6 +1794,7 @@ classes:
         domain_of:
         - Tomogram
         range: fiducial_alignment_status_enum
+        required: true
         inlined: true
         inlined_as_list: true
       ctf_corrected:
@@ -1773,6 +1808,7 @@ classes:
         domain_of:
         - Tomogram
         range: boolean
+        recommended: true
         inlined: true
         inlined_as_list: true
       align_software:
@@ -1800,6 +1836,7 @@ classes:
         domain_of:
         - Tomogram
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       reconstruction_software:
@@ -1813,6 +1850,7 @@ classes:
         domain_of:
         - Tomogram
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       processing:
@@ -1826,6 +1864,7 @@ classes:
         domain_of:
         - Tomogram
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       processing_software:
@@ -1839,6 +1878,7 @@ classes:
         domain_of:
         - Tomogram
         range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
       tomogram_version:
@@ -1852,10 +1892,12 @@ classes:
         domain_of:
         - Tomogram
         range: VersionString
+        required: true
         inlined: true
         inlined_as_list: true
       affine_transformation_matrix:
         name: affine_transformation_matrix
+        description: A placeholder for any type of data.
         from_schema: metadata
         alias: affine_transformation_matrix
         owner: Tomogram
@@ -1885,6 +1927,7 @@ classes:
         domain_of:
         - Tomogram
         range: TomogramOffset
+        required: true
         inlined: true
         inlined_as_list: true
       authors:
@@ -2108,6 +2151,7 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_order
+        ifabsent: string(xyz)
         alias: order
         owner: AnnotationOrientedPointFile
         domain_of:
@@ -2125,7 +2169,6 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
@@ -2138,7 +2181,6 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2150,7 +2192,7 @@ classes:
         owner: AnnotationOrientedPointFile
         domain_of:
         - AnnotationSourceFile
-        range: boolean
+        range: string
         inlined: true
         inlined_as_list: true
   AnnotationInstanceSegmentationFile:
@@ -2172,7 +2214,7 @@ classes:
         domain_of:
         - AnnotationOrientedPointFile
         - AnnotationPointFile
-        range: integer
+        range: string
         inlined: true
         inlined_as_list: true
       filter_value:
@@ -2209,7 +2251,6 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
@@ -2222,7 +2263,6 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2234,7 +2274,7 @@ classes:
         owner: AnnotationInstanceSegmentationFile
         domain_of:
         - AnnotationSourceFile
-        range: boolean
+        range: string
         inlined: true
         inlined_as_list: true
   AnnotationPointFile:
@@ -2256,7 +2296,7 @@ classes:
         domain_of:
         - AnnotationOrientedPointFile
         - AnnotationPointFile
-        range: integer
+        range: string
         inlined: true
         inlined_as_list: true
       columns:
@@ -2297,7 +2337,6 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
@@ -2310,7 +2349,6 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2322,7 +2360,7 @@ classes:
         owner: AnnotationPointFile
         domain_of:
         - AnnotationSourceFile
-        range: boolean
+        range: string
         inlined: true
         inlined_as_list: true
   AnnotationSegmentationMaskFile:
@@ -2344,7 +2382,6 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
@@ -2357,7 +2394,6 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2369,7 +2405,7 @@ classes:
         owner: AnnotationSegmentationMaskFile
         domain_of:
         - AnnotationSourceFile
-        range: boolean
+        range: string
         inlined: true
         inlined_as_list: true
   AnnotationSemanticSegmentationMaskFile:
@@ -2405,7 +2441,6 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
@@ -2418,7 +2453,6 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2430,7 +2464,7 @@ classes:
         owner: AnnotationSemanticSegmentationMaskFile
         domain_of:
         - AnnotationSourceFile
-        range: boolean
+        range: string
         inlined: true
         inlined_as_list: true
   Annotation:
@@ -2453,6 +2487,7 @@ classes:
         domain_of:
         - Annotation
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       annotation_object:
@@ -2464,6 +2499,7 @@ classes:
         domain_of:
         - Annotation
         range: AnnotationObject
+        required: true
         inlined: true
         inlined_as_list: true
       annotation_publications:
@@ -2491,6 +2527,7 @@ classes:
         domain_of:
         - Annotation
         range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
       confidence:
@@ -2559,6 +2596,7 @@ classes:
         domain_of:
         - Annotation
         range: annotation_method_type_enum
+        required: true
         inlined: true
         inlined_as_list: true
       object_count:
@@ -2616,6 +2654,7 @@ classes:
         inlined_as_list: true
   Any:
     name: Any
+    description: A placeholder for any type of data.
     from_schema: metadata
     class_uri: linkml:Any
   CrossReferences:

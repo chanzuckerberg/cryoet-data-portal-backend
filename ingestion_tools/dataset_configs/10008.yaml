@@ -2,10 +2,8 @@ annotations:
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
-      description: null
       id: GO:0009326
       name: hydrogen-dependent CO2 reductase filament
-      state: null
     annotation_publications: doi:10.1038/s41586-022-04971-z
     annotation_software: STOPGAP
     authors: &id001
@@ -34,10 +32,6 @@ annotations:
     - ORCID: 0000-0002-9121-1764
       corresponding_author_status: true
       name: Jan Michael Schuller
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: &id002
       deposition_date: '2022-05-29'
       last_modified_date: '2023-11-21'
@@ -57,17 +51,11 @@ annotations:
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
-      description: null
       id: GO:0022626
       name: cytosolic ribosome
-      state: null
     annotation_publications: doi:10.1038/s41586-022-04971-z
     annotation_software: STOPGAP
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
@@ -115,9 +103,6 @@ datasets:
     - ORCID: 0000-0002-9121-1764
       corresponding_author_status: true
       name: Jan Michael Schuller
-    cell_component:
-      id: null
-      name: null
     cell_strain:
       id: NCBI:txid2325
       name: LKT-1
@@ -136,7 +121,6 @@ datasets:
     - funding_agency_name: German Research Foundation (DFG)
       grant_id: FOR 2092
     - funding_agency_name: Alexander von Humboldt Foundation
-      grant_id: null
     - funding_agency_name: German Research Foundation (DFG)
       grant_id: 20016/446
     grid_preparation: 'model: Quantifoil R2/1, material: COPPER, support_film_film_type_id:
@@ -193,7 +177,6 @@ tiltseries:
       model: KRIOS
     microscope_optical_setup:
       energy_filter: GIF Quantum LS
-      image_corrector: null
       phase_plate: null
     pixel_spacing: 3.52
     related_empiar_entry: EMD-15053

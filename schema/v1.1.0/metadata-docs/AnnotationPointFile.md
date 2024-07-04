@@ -52,12 +52,12 @@ URI: [cdp-meta:AnnotationPointFile](metadataAnnotationPointFile)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [binning](binning.md) | 0..1 <br/> [Integer](Integer.md) |  | direct |
+| [binning](binning.md) | 0..1 <br/> [String](String.md) |  | direct |
 | [columns](columns.md) | 0..1 <br/> [String](String.md) | The columns used in a point annotation file | direct |
 | [delimiter](delimiter.md) | 0..1 <br/> [String](String.md) | The delimiter used in a point annotation file | direct |
-| [file_format](file_format.md) | 1 <br/> [String](String.md) |  | direct |
-| [glob_string](glob_string.md) | 1 <br/> [String](String.md) |  | direct |
-| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) |  | direct |
+| [file_format](file_format.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [glob_string](glob_string.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [String](String.md) |  | direct |
 
 
 
@@ -88,13 +88,14 @@ URI: [cdp-meta:AnnotationPointFile](metadataAnnotationPointFile)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationPointFile |
 | native | cdp-meta:AnnotationPointFile |
+
+
 
 
 
@@ -127,7 +128,7 @@ attributes:
     - AnnotationOrientedPointFile
     - AnnotationPointFile
     - AnnotationInstanceSegmentationFile
-    range: integer
+    range: string
     inlined: true
     inlined_as_list: true
   columns:
@@ -175,7 +176,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   glob_string:
@@ -193,7 +193,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   is_visualization_default:
@@ -210,7 +209,7 @@ attributes:
     - AnnotationPointFile
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
-    range: boolean
+    range: string
     inlined: true
     inlined_as_list: true
 
@@ -240,7 +239,7 @@ attributes:
     - AnnotationOrientedPointFile
     - AnnotationPointFile
     - AnnotationInstanceSegmentationFile
-    range: integer
+    range: string
     inlined: true
     inlined_as_list: true
   columns:
@@ -288,7 +287,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   glob_string:
@@ -306,7 +304,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   is_visualization_default:
@@ -323,7 +320,7 @@ attributes:
     - AnnotationPointFile
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
-    range: boolean
+    range: string
     inlined: true
     inlined_as_list: true
 

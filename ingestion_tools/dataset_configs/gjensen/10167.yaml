@@ -15,7 +15,6 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_strain:
-      id: null
       name: NA1000
     dataset_description: This is 1st of 2 sets of data studying Caulobacter crescentus
       collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb. delta-tipN
@@ -26,11 +25,9 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
-    grid_preparation: null
     organism:
       name: Caulobacter crescentus
       taxonomy_id: 565050
-    sample_preparation: null
     sample_type: organism
   sources:
   - literal:
@@ -60,7 +57,6 @@ standardization_config:
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    binning_from_frames: null
     camera:
       acquire_mode: counting
       manufacturer: Gatan
@@ -73,7 +69,6 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      image_corrector: null
       phase_plate: false
     pixel_spacing: 4.036
     spherical_aberration_constant: 2.0
@@ -112,14 +107,12 @@ tomograms:
       - 1
     align_software: '{tomo-align_softwares}'
     authors: *id001
-    ctf_corrected: null
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
     offset:
       x: 0
       y: 0
       z: 0
     processing: raw
-    processing_software: null
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: '{tomo-reconstruction_software}'
     tomogram_version: 1

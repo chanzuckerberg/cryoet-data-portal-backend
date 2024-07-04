@@ -2,10 +2,8 @@ annotations:
 - metadata:
     annotation_method: TomoSegMemTV segmentation + manual correction in TFS Amira
     annotation_object:
-      description: null
       id: GO:0005741
       name: mitochondrial outer membrane
-      state: null
     annotation_publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
     annotation_software: TomoSegMemTV+AMIRA
     authors: &id001
@@ -15,10 +13,6 @@ annotations:
     - ORCID: 0000-0001-5908-7882
       corresponding_author_status: true
       name: Danielle A. Grotjahn
-    confidence: &id002
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: &id003
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
@@ -36,14 +30,11 @@ annotations:
 - metadata:
     annotation_method: TomoSegMemTV segmentation + manual correction in TFS Amira
     annotation_object:
-      description: null
       id: GO:0005743
       name: mitochondrial inner membrane
-      state: null
     annotation_publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
     annotation_software: TomoSegMemTV+AMIRA
     authors: *id001
-    confidence: *id002
     dates: *id003
     ground_truth_status: true
     is_curator_recommended: true
@@ -58,14 +49,11 @@ annotations:
 - metadata:
     annotation_method: TomoSegMemTV segmentation + manual correction in TFS Amira
     annotation_object:
-      description: null
       id: GO:0005789
       name: endoplasmic reticulum membrane
-      state: null
     annotation_publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
     annotation_software: TomoSegMemTV+AMIRA
     authors: *id001
-    confidence: *id002
     dates: *id003
     ground_truth_status: true
     is_curator_recommended: true
@@ -77,12 +65,6 @@ annotations:
     is_visualization_default: true
     mask_label: 3
     shape: SemanticSegmentationMask
-dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: null
-        thumbnail: null
 datasets:
 - metadata:
     authors: &id004
@@ -109,9 +91,6 @@ datasets:
     cell_component:
       id: GO:0005741
       name: Outer Mitochondrial Membrane
-    cell_strain:
-      id: null
-      name: null
     cell_type:
       id: CL:2000042
       name: Embryonic fibroblast
@@ -124,11 +103,9 @@ datasets:
     dataset_title: Organellar membranes
     dates: *id003
     funding: []
-    grid_preparation: null
     organism:
       taxonomy_id: 10090
       name: Mus musculus
-    sample_preparation: null
     sample_type: cell
   sources:
   - literal:
@@ -172,12 +149,9 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: '{energy_filter}'
-      image_corrector: None
       phase_plate: None
     pixel_spacing: float {tilt_series_pixel_spacing}
-    related_empiar_entry: null
     spherical_aberration_constant: 2.7
-    tilt_axis: null
     tilt_range:
       max: 60
       min: -60

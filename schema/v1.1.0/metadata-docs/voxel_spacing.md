@@ -33,6 +33,8 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 * Range: [Float](Float.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:voxel_spacing |
+| native | cdp-meta:voxel_spacing |
+| exact | cdp-common:tomogram_voxel_spacing |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +81,7 @@ owner: Tomogram
 domain_of:
 - Tomogram
 range: float
+required: true
 inlined: true
 inlined_as_list: true
 

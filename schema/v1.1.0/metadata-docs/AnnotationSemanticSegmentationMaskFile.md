@@ -49,9 +49,9 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [mask_label](mask_label.md) | 0..1 <br/> [Integer](Integer.md) | The mask label for a semantic segmentation mask annotation file | direct |
-| [file_format](file_format.md) | 1 <br/> [String](String.md) |  | direct |
-| [glob_string](glob_string.md) | 1 <br/> [String](String.md) |  | direct |
-| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) |  | direct |
+| [file_format](file_format.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [glob_string](glob_string.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [String](String.md) |  | direct |
 
 
 
@@ -82,13 +82,14 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationSemanticSegmentationMaskFile |
 | native | cdp-meta:AnnotationSemanticSegmentationMaskFile |
+
+
 
 
 
@@ -140,7 +141,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   glob_string:
@@ -158,7 +158,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   is_visualization_default:
@@ -175,7 +174,7 @@ attributes:
     - AnnotationPointFile
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
-    range: boolean
+    range: string
     inlined: true
     inlined_as_list: true
 
@@ -224,7 +223,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   glob_string:
@@ -242,7 +240,6 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
   is_visualization_default:
@@ -259,7 +256,7 @@ attributes:
     - AnnotationPointFile
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
-    range: boolean
+    range: string
     inlined: true
     inlined_as_list: true
 

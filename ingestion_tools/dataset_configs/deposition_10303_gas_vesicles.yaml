@@ -3,8 +3,6 @@ annotations:
       annotation_object: &annotated_object
         id: GO:0033172
         name: gas vesicle shell
-        description: ~
-        state: ~
       dates: &repo-dates
         deposition_date: '2024-06-04'
         last_modified_date: '2024-06-04'
@@ -24,9 +22,6 @@ annotations:
           corresponding_author_status: false
       annotation_software: "membrain-seg 0.0.1"
       version: 1.0
-      confidence:
-        precision: ~
-        recall: ~
       is_curator_recommended: False
     sources:
       # 10011 - 10046

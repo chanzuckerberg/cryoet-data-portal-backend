@@ -5,8 +5,6 @@ annotations:
       description: chloramphenicol bound 70S ribosome
       id: GO:0022626
       name: cytosolic ribosome
-      state: null
-    annotation_publications: null
     annotation_software: pyTOM + RELION
     authors:
     - ORCID: 0000-0003-4368-2526
@@ -63,9 +61,6 @@ datasets:
     - ORCID: 0000-0001-6968-041X
       corresponding_author_status: true
       name: Julia Mahamid
-    cell_component:
-      id: null
-      name: null
     cell_strain:
       id: M129
       name: Mycoplasmoides pneumoniae
@@ -86,7 +81,6 @@ datasets:
       grant_id: '693023'
     - funding_agency_name: European Research Council (ERC)
       grant_id: '760067'
-    grid_preparation: null
     organism:
       name: Mycoplasma pneumoniae
       taxonomy_id: 2104
@@ -128,14 +122,11 @@ tiltseries:
       manufacturer: Gatan
       model: K2 SUMMIT
     data_acquisition_software: SerialEM
-    is_aligned: null
     microscope:
       manufacturer: FEI
       model: TITAN KRIOS
     microscope_optical_setup:
-      energy_filter: null
-      image_corrector: null
-      phase_plate: null
+      energy_filter: "unknown"
     pixel_spacing: 1.7005
     related_empiar_entry: EMPIAR-10499
     spherical_aberration_constant: 2.7

@@ -38,7 +38,7 @@ URI: [cdp-meta:Organism](metadataOrganism)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [name](name.md) | 0..1 <br/> [String](String.md) |  | direct |
-| [taxonomy_id](taxonomy_id.md) | 0..1 <br/> [Integer](Integer.md) | NCBI taxonomy identifier for the organism, e | direct |
+| [taxonomy_id](taxonomy_id.md) | 0..1 _recommended_ <br/> [Integer](Integer.md) | NCBI taxonomy identifier for the organism, e | direct |
 
 
 
@@ -72,13 +72,14 @@ URI: [cdp-meta:Organism](metadataOrganism)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Organism |
 | native | cdp-meta:Organism |
+
+
 
 
 
@@ -126,6 +127,7 @@ attributes:
     domain_of:
     - Organism
     range: integer
+    recommended: true
     inlined: true
     inlined_as_list: true
 
@@ -170,6 +172,7 @@ attributes:
     domain_of:
     - Organism
     range: integer
+    recommended: true
     inlined: true
     inlined_as_list: true
 

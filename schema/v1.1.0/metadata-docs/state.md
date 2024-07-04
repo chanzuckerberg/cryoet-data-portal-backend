@@ -53,6 +53,17 @@ URI: [cdp-meta:state](metadatastate)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:state |
+| native | cdp-meta:state |
+| exact | cdp-common:annotation_object_state |
+
+
+
+
 ## LinkML Source
 
 <details>

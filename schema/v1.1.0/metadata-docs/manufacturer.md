@@ -42,6 +42,16 @@ URI: [cdp-meta:manufacturer](metadatamanufacturer)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:manufacturer |
+| native | cdp-meta:manufacturer |
+
+
+
+
 ## LinkML Source
 
 <details>

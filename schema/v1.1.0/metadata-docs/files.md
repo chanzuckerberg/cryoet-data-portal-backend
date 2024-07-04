@@ -55,6 +55,16 @@ URI: [cdp-meta:files](metadatafiles)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:files |
+| native | cdp-meta:files |
+
+
+
+
 ## LinkML Source
 
 <details>

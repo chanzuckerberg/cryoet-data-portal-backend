@@ -33,6 +33,8 @@ URI: [cdp-meta:ctf_corrected](metadatactf_corrected)
 
 * Range: [Boolean](Boolean.md)
 
+* Recommended: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:ctf_corrected](metadatactf_corrected)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:ctf_corrected |
+| native | cdp-meta:ctf_corrected |
+| exact | cdp-common:tomogram_ctf_corrected |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +81,7 @@ owner: Tomogram
 domain_of:
 - Tomogram
 range: boolean
+recommended: true
 inlined: true
 inlined_as_list: true
 

@@ -56,7 +56,6 @@ classes:
       affiliation_identifier:
         exact_mappings:
           - cdp-common:affiliation_identifier
-        recommended: true
       corresponding_author_status:
         exact_mappings:
           - cdp-common:author_corresponding_author_status
@@ -66,7 +65,6 @@ classes:
       ORCID:
         exact_mappings:
           - cdp-common:orcid
-        recommended: true
   # ============================================================================
 
 
@@ -93,15 +91,12 @@ classes:
     description: A set of dates at which a data item was deposited, published and last modified.
     attributes:
       deposition_date:
-        required: true
         exact_mappings:
           - cdp-common:deposition_date
       release_date:
-        recommended: true
         exact_mappings:
           - cdp-common:release_date
       last_modified_date:
-        recommended: true
         exact_mappings:
           - cdp-common:last_modified_date
 
@@ -274,7 +269,7 @@ classes:
   Camera:
     description: &desc_camera The camera used to collect the tilt series.
     attributes:
-      acquire_mode: 
+      acquire_mode:
         exact_mappings:
           - cdp-common:tiltseries_camera_acquire_mode
       manufacturer:
@@ -337,6 +332,7 @@ classes:
       camera:
         description: *desc_camera
         range: Camera
+        required: true
       data_acquisition_software:
         exact_mappings:
           - cdp-common:tiltseries_data_acquisition_software
@@ -349,12 +345,14 @@ classes:
       microscope:
         description: *desc_microscope
         range: Microscope
+        required: true
       microscope_additional_info:
         exact_mappings:
           - cdp-common:tiltseries_microscope_additional_info
       microscope_optical_setup:
         description: *desc_microscope_optical_setup
         range: MicroscopeOpticalSetup
+        required: true
       related_empiar_entry:
         exact_mappings:
           - cdp-common:tiltseries_related_empiar_entry
@@ -370,6 +368,7 @@ classes:
       tilt_range:
         description: *desc_tilt_range
         range: TiltRange
+        required: true
       tilt_series_quality:
         exact_mappings:
           - cdp-common:tiltseries_tilt_series_quality
@@ -466,6 +465,7 @@ classes:
       offset:
         description: *desc_tomogram_offset
         range: TomogramOffset
+        required: true
   # ============================================================================
 
   # ============================================================================
@@ -504,17 +504,12 @@ classes:
     description: &desc_annotation_source_file File and sourcing data for an annotation. Represents an entry in annotation.sources. 
     attributes:
       file_format:
-        range: string
-        required: true
         exact_mappings:
           - cdp-common:annotation_source_file_format
       glob_string:
-        range: string
-        required: true
         exact_mappings:
           - cdp-common:annotation_source_file_glob_string
       is_visualization_default:
-        range: boolean
         exact_mappings:
           - cdp-common:annotation_source_file_is_visualization_default
 
@@ -525,15 +520,12 @@ classes:
     description: File and sourcing data for an oriented point annotation. Annotation that identifies points along with orientation in the volume.
     attributes:
       binning: 
-        range: integer
         exact_mappings:
           - cdp-common:annotation_source_file_binning
       filter_value:
-        range: string
         exact_mappings:
           - cdp-common:annotation_source_file_filter_value
       order:
-        range: string
         exact_mappings:
           - cdp-common:annotation_source_file_order
   
@@ -551,15 +543,12 @@ classes:
     description: File and sourcing data for a point annotation. Annotation that identifies points in the volume.
     attributes:
       binning: 
-        range: integer
         exact_mappings:
           - cdp-common:annotation_source_file_binning
       columns:
-        range: string
         exact_mappings:
           - cdp-common:annotation_source_file_columns
       delimiter:
-        range: string
         exact_mappings:
           - cdp-common:annotation_source_file_delimiter
 
@@ -577,7 +566,6 @@ classes:
     description: File and sourcing data for a semantic segmentation mask annotation. Annotation that identifies classes of objects.
     attributes:
       mask_label:
-        range: integer
         exact_mappings:
           - cdp-common:annotation_source_file_mask_label
 
@@ -599,6 +587,7 @@ classes:
       annotation_object:
         description: *desc_annotation_object
         range: AnnotationObject
+        required: true
       annotation_publications:
         exact_mappings:
           - cdp-common:annotation_publication

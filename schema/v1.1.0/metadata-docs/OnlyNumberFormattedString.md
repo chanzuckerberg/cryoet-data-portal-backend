@@ -36,3 +36,13 @@ URI: [cdp-meta:OnlyNumberFormattedString](metadataOnlyNumberFormattedString)
 
 
 
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:OnlyNumberFormattedString |
+| native | cdp-meta:OnlyNumberFormattedString |
+
+
+

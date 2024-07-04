@@ -71,13 +71,14 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:PicturePath |
 | native | cdp-meta:PicturePath |
+
+
 
 
 

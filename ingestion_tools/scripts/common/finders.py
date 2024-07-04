@@ -139,9 +139,6 @@ class DepositionObjectImporterFactory(ABC):
                         return False
             if self.include_parents.get(parent_key):
                 for regex in self.include_parents[parent_key]:
-                    # TODO:
-                    # how does this work? if you have multiple includes and on any include, if it fails, you exclude?
-                    # i was understanding it as you check all the includes, and if all of them don't include, you fail?
                     if not regex.search(parent_obj.name):
                         return False
         return True

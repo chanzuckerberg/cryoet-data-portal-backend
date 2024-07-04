@@ -39,9 +39,9 @@ URI: [cdp-meta:TomogramSize](metadataTomogramSize)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [x](x.md) | 0..1 <br/> [Integer](Integer.md) | Number of pixels in the 3D data fast axis | direct |
-| [y](y.md) | 0..1 <br/> [Integer](Integer.md) | Number of pixels in the 3D data medium axis | direct |
-| [z](z.md) | 0..1 <br/> [Integer](Integer.md) | Number of pixels in the 3D data slow axis | direct |
+| [x](x.md) | 1 <br/> [Integer](Integer.md) | Number of pixels in the 3D data fast axis | direct |
+| [y](y.md) | 1 <br/> [Integer](Integer.md) | Number of pixels in the 3D data medium axis | direct |
+| [z](z.md) | 1 <br/> [Integer](Integer.md) | Number of pixels in the 3D data slow axis | direct |
 
 
 
@@ -74,13 +74,14 @@ URI: [cdp-meta:TomogramSize](metadataTomogramSize)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:TomogramSize |
 | native | cdp-meta:TomogramSize |
+
+
 
 
 
@@ -111,6 +112,7 @@ attributes:
     - TomogramSize
     - TomogramOffset
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
   y:
@@ -126,6 +128,7 @@ attributes:
     - TomogramSize
     - TomogramOffset
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
   z:
@@ -142,6 +145,7 @@ attributes:
     - TomogramSize
     - TomogramOffset
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
 
@@ -169,6 +173,7 @@ attributes:
     - TomogramSize
     - TomogramOffset
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
   y:
@@ -184,6 +189,7 @@ attributes:
     - TomogramSize
     - TomogramOffset
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
   z:
@@ -200,6 +206,7 @@ attributes:
     - TomogramSize
     - TomogramOffset
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
 

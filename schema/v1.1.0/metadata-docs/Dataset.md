@@ -142,9 +142,9 @@ URI: [cdp-meta:Dataset](metadataDataset)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [dataset_identifier](dataset_identifier.md) | 0..1 <br/> [Integer](Integer.md) | An identifier for a CryoET dataset, assigned by the Data Portal | direct |
-| [dataset_title](dataset_title.md) | 0..1 <br/> [String](String.md) | Title of a CryoET dataset | direct |
-| [dataset_description](dataset_description.md) | 0..1 <br/> [String](String.md) | A short description of a CryoET dataset, similar to an abstract for a journal... | direct |
+| [dataset_identifier](dataset_identifier.md) | 1 <br/> [Integer](Integer.md) | An identifier for a CryoET dataset, assigned by the Data Portal | direct |
+| [dataset_title](dataset_title.md) | 1 <br/> [String](String.md) | Title of a CryoET dataset | direct |
+| [dataset_description](dataset_description.md) | 1 <br/> [String](String.md) | A short description of a CryoET dataset, similar to an abstract for a journal... | direct |
 | [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
 | [funding](funding.md) | * _recommended_ <br/> [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
@@ -183,13 +183,14 @@ URI: [cdp-meta:Dataset](metadataDataset)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Dataset |
 | native | cdp-meta:Dataset |
+
+
 
 
 
@@ -226,6 +227,7 @@ attributes:
     domain_of:
     - Dataset
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
   dataset_title:
@@ -240,6 +242,7 @@ attributes:
     domain_of:
     - Dataset
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   dataset_description:
@@ -255,6 +258,7 @@ attributes:
     domain_of:
     - Dataset
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   dates:
@@ -465,6 +469,7 @@ attributes:
     domain_of:
     - Dataset
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
   dataset_title:
@@ -479,6 +484,7 @@ attributes:
     domain_of:
     - Dataset
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   dataset_description:
@@ -494,6 +500,7 @@ attributes:
     domain_of:
     - Dataset
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   dates:

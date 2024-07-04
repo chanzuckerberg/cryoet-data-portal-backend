@@ -33,6 +33,8 @@ URI: [cdp-meta:microscope](metadatamicroscope)
 
 * Range: [Microscope](Microscope.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,16 @@ URI: [cdp-meta:microscope](metadatamicroscope)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:microscope |
+| native | cdp-meta:microscope |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -66,6 +78,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: Microscope
+required: true
 inlined: true
 inlined_as_list: true
 

@@ -33,6 +33,8 @@ URI: [cdp-meta:processing_software](metadataprocessing_software)
 
 * Range: [String](String.md)
 
+* Recommended: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:processing_software](metadataprocessing_software)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:processing_software |
+| native | cdp-meta:processing_software |
+| exact | cdp-common:tomogram_processing_software |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +81,7 @@ owner: Tomogram
 domain_of:
 - Tomogram
 range: string
+recommended: true
 inlined: true
 inlined_as_list: true
 

@@ -53,6 +53,17 @@ URI: [cdp-meta:align_software](metadataalign_software)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:align_software |
+| native | cdp-meta:align_software |
+| exact | cdp-common:tomogram_align_software |
+
+
+
+
 ## LinkML Source
 
 <details>

@@ -33,6 +33,8 @@ URI: [cdp-meta:acceleration_voltage](metadataacceleration_voltage)
 
 * Range: [Integer](Integer.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:acceleration_voltage](metadataacceleration_voltage)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:acceleration_voltage |
+| native | cdp-meta:acceleration_voltage |
+| exact | cdp-common:tiltseries_acceleration_voltage |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +81,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: integer
+required: true
 inlined: true
 inlined_as_list: true
 

@@ -3,6 +3,11 @@
 # Class: Any
 
 
+_A placeholder for any type of data._
+
+
+
+
 
 URI: [linkml:Any](https://w3id.org/linkml/Any)
 
@@ -60,13 +65,14 @@ URI: [linkml:Any](https://w3id.org/linkml/Any)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | linkml:Any |
 | native | cdp-meta:Any |
+
+
 
 
 
@@ -81,6 +87,7 @@ URI: [linkml:Any](https://w3id.org/linkml/Any)
 <details>
 ```yaml
 name: Any
+description: A placeholder for any type of data.
 from_schema: metadata
 class_uri: linkml:Any
 
@@ -92,6 +99,7 @@ class_uri: linkml:Any
 <details>
 ```yaml
 name: Any
+description: A placeholder for any type of data.
 from_schema: metadata
 class_uri: linkml:Any
 

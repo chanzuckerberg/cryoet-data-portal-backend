@@ -33,6 +33,8 @@ URI: [cdp-meta:data_acquisition_software](metadatadata_acquisition_software)
 
 * Range: [String](String.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:data_acquisition_software](metadatadata_acquisition_software)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:data_acquisition_software |
+| native | cdp-meta:data_acquisition_software |
+| exact | cdp-common:tiltseries_data_acquisition_software |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +81,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: string
+required: true
 inlined: true
 inlined_as_list: true
 

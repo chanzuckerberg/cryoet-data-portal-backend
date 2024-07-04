@@ -78,13 +78,14 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CrossReferences |
 | native | cdp-meta:CrossReferences |
+
+
 
 
 

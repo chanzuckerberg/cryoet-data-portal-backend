@@ -234,11 +234,9 @@ datasets:
     dataset_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
       cryo-plasmaFIB milling
     dates: *id002
-    grid_preparation: null
     organism:
       name: Chlamydomonas reinhardtii
       taxonomy_id: 3055
-    sample_preparation: null
     sample_type: Organism
   sources:
   - literal:
@@ -289,7 +287,6 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: Selectris X
-      image_corrector: None
       phase_plate: None
     pixel_spacing: 1.96
     related_empiar_entry: EMPIAR-11756

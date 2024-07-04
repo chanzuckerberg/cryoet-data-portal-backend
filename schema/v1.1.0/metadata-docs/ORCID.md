@@ -57,6 +57,17 @@ URI: [cdp-meta:ORCID](metadataORCID)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:ORCID |
+| native | cdp-meta:ORCID |
+| exact | cdp-common:orcid |
+
+
+
+
 ## LinkML Source
 
 <details>

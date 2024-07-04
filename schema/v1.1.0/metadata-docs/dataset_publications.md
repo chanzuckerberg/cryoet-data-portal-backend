@@ -55,6 +55,16 @@ URI: [cdp-meta:dataset_publications](metadatadataset_publications)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:dataset_publications |
+| native | cdp-meta:dataset_publications |
+
+
+
+
 ## LinkML Source
 
 <details>

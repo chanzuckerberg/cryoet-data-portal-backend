@@ -33,6 +33,8 @@ URI: [cdp-meta:min](metadatamin)
 
 * Range: [Float](Float.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:min](metadatamin)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:min |
+| native | cdp-meta:min |
+| exact | cdp-common:tiltseries_tilt_min |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +81,7 @@ owner: TiltRange
 domain_of:
 - TiltRange
 range: float
+required: true
 inlined: true
 inlined_as_list: true
 

@@ -42,6 +42,16 @@ URI: [cdp-meta:other_setup](metadataother_setup)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:other_setup |
+| native | cdp-meta:other_setup |
+
+
+
+
 ## LinkML Source
 
 <details>

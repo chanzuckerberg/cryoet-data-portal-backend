@@ -33,6 +33,8 @@ URI: [cdp-meta:processing](metadataprocessing)
 
 * Range: [String](String.md)
 
+* Required: True
+
 
 
 
@@ -53,6 +55,17 @@ URI: [cdp-meta:processing](metadataprocessing)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:processing |
+| native | cdp-meta:processing |
+| exact | cdp-common:tomogram_processing |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +81,7 @@ owner: Tomogram
 domain_of:
 - Tomogram
 range: string
+required: true
 inlined: true
 inlined_as_list: true
 

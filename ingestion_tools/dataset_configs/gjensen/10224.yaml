@@ -15,7 +15,6 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_strain:
-      id: null
       name: subsp. jejuni 81116
     dataset_description: This is 24th of 24 sets of data studying Campylobacter jejuni
       collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
@@ -25,7 +24,6 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
-    grid_preparation: null
     organism:
       name: Campylobacter jejuni
       taxonomy_id: 407148
@@ -59,9 +57,7 @@ standardization_config:
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    binning_from_frames: null
     camera:
-      acquire_mode: null
       manufacturer: Gatan
       model: UltraCam
     data_acquisition_software: Leginon
@@ -72,7 +68,6 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      image_corrector: null
       phase_plate: false
     pixel_spacing: 5.12
     spherical_aberration_constant: 2.0
@@ -111,14 +106,12 @@ tomograms:
       - 1
     align_software: RAPTOR
     authors: *id001
-    ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL
     offset:
       x: 0
       y: 0
       z: 0
     processing: raw
-    processing_software: null
     reconstruction_method: SIRT
     reconstruction_software: IMOD
     tomogram_version: 1
