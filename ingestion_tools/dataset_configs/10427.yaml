@@ -1,0 +1,156 @@
+annotations: {}
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
+datasets:
+- metadata:
+    authors: &id001
+    - name: Willy W. Sun
+      primary_author_status: true
+    - name: Dennis J Michalak
+      primary_author_status: true
+    - name: Kem A. Sochacki
+      primary_author_status: true
+      corresponding_author_status: true
+      ORCID: 0000-0003-1160-4558
+    - name: Jenny E. Hinshaw
+      primary_author_status: false
+      corresponding_author_status: true
+      ORCID: 0000-0002-5130-5061
+    - name: Justin W. Taraska
+      primary_author_status: false
+      corresponding_author_status: true
+      ORCID: 0000-0001-5355-9535
+    funding:
+      - funding_agency_name: Chan Zuckerberg Initiative
+        grant_id: 2021-234544
+      - funding_agency_name: NIH
+        grant_id: 1ZIAHL006098
+      - funding_agency_name: NIH
+        grant_id: 1ZIADK060100
+    cell_type:
+      name: RCB1975 cell
+      id: CLO:0051569
+    cross_references:
+      dataset_publications: 10.1101/2024.06.27.600657
+    dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript contains 10 grids. This is grid 2 of 
+      10 and contains basal membranes of HSC3 cells.  The cell line expresses EGFR-GFP as described in Panilla-Macua et 
+      al. Elife 2017 and has been serum starved.  The cells were grown on Quantifoil Au 300 R2/2, 2 nm carbon grids 
+      prior to removing the apical membrane and cytoplasm with 0.7 bar of paraformaldehyde prior to vitrification.
+    dataset_identifier: 10427
+    dataset_title: Unroofing Grid02
+    dates:
+      deposition_date: 2024-07-01
+      last_modified_date: 2024-07-01
+      release_date: 2024-07-05
+    grid_preparation: plasma discharge 30 sec + UV treatment 20 min + 125 ng/ul fibronectin, 20 minutes + water rinse + 
+      seeded with 15000 cells
+    organism:
+      name: Homo sapiens
+      taxonomy_id: 9606
+    sample_preparation: serum starved and grown on Quantifoil Au 300 R2/2, 2 nm carbon grids
+    sample_type: cell
+  sources:
+  - literal:
+      value:
+      - '10427'
+key_images:
+- sources:
+  - source_glob:
+      list_glob: .*\.jpg
+rawtilts:
+- sources:
+    - source_multi_glob:
+        list_globs:
+          - mdocs/{mdoc_name}
+runs:
+- sources:
+  - source_glob:
+      list_glob: tomograms_bin8/*
+      match_regex: '\.rec$'
+      name_regex: (.*)_binalign8.rec
+standardization_config:
+  deposition_id: 10306
+  run_data_map_file: run_to_data_map.tsv
+  source_prefix: kem_sochacki_06_2024/grid02/
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    alignment_binning_factor: null
+    binning_from_frames: 1
+    camera:
+      manufacturer: GATAN
+      model: K3
+    data_acquisition_software: SerialEM
+    is_aligned: false
+    microscope:
+      manufacturer: FEI
+      model: TITAN KRIOS
+    microscope_optical_setup:
+      energy_filter: Gatan Quantum LS
+      image_corrector: null
+      phase_plate: null
+    pixel_spacing: 2.15681
+    related_empiar_entry: null
+    scales: []
+    spherical_aberration_constant: 2.7
+    tilt_axis: 0.0 #TODO: correct when tilt series obtained
+    tilt_range:
+      max: float {tilt_series_max_tilt}
+      min: float {tilt_series_min_tilt}
+    tilt_series_quality: 5
+    tilt_step: 2.0
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+#TODO: Add when tilt series obtained
+#  sources:
+#  - source_glob:
+#      list_glob: chlamy_visual_proteomics/{run_name}/{run_name}.st
+#      match_regex: (.*)
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id001
+    ctf_corrected: false
+    fiducial_alignment_status: FIDUCIAL
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: SIRT
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: 8.627
+  sources:
+  - source_glob:
+      list_glob: tomograms_bin8/{run_name}_binalign8.rec
+      match_regex: (.*)\.rec
+frames:
+- sources:
+  - source_glob:
+      list_glob: frames/{frame_prefix}*.tif
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 8.627
