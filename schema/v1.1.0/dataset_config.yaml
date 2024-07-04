@@ -355,13 +355,18 @@ classes:
         range: VoxelSpacingSource
         required: true
 
-  # TODO: can't have source_multi_glob, and need to add tomogram_header)
+  # Can't use DefaultSource since it doesn't permit source_multi_glob
   VoxelSpacingSource:
     description: A voxel spacing source.
     mixins:
-      - DefaultSource
       - SourceParentFiltersEntity
     attributes:
+      destination_glob:
+        description: The glob object for the destination file.
+        range: DestinationGlob
+      source_glob:
+        description: The glob object for the source file.
+        range: SourceGlob
       literal: 
         range: VoxelSpacingLiteral
       tomogram_header:
