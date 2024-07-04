@@ -1,7 +1,7 @@
 # Future TODO: Create example_config.yaml file to show how to use this template.
 annotations: OPTIONAL
 - metadata: REQUIRED
-    annotation_confidence: OPTIONAL
+    confidence: OPTIONAL
       ground_truth_used: OPTIONAL, STRING
       precision: OPTIONAL IF ground_truth_used ELSE null, FLOAT ([0, 100])
       recall: OPTIONAL IF ground_truth_used ELSE null, FLOAT ([0, 100])
@@ -12,7 +12,7 @@ annotations: OPTIONAL
       name: REQUIRED, STRING
       state: OPTIONAL, STRING
     annotation_publications: OPTIONAL, STRING
-    annotation_software: OPTIONAL BUT RECOMMENDED, STRING
+    annotation_software: RECOMMENDED, STRING
     authors: REQUIRED
     - name: REQUIRED, STRING
       email: OPTIONAL, STRING
@@ -21,12 +21,12 @@ annotations: OPTIONAL
       affiliation_identifier: OPTIONAL, STRING
       corresponding_author_status: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       primary_author_status: OPTIONAL, BOOLEAN (DEFAULT FALSE)
-      ORCID: OPTIONAL, STRING (ORCID)
+      ORCID: RECOMMENDED, STRING (ORCID)
     dates: REQUIRED
       deposition_date: REQUIRED, STRING, DATE FORMAT YYYY-MM-DD
       last_modified_date: REQUIRED, STRING, DATE FORMAT YYYY-MM-DD
       release_date: REQUIRED, STRING, DATE FORMAT YYYY-MM-DD
-    ground_truth_status: REQUIRED, BOOLEAN (DEFAULT FALSE)
+    ground_truth_status: RECOMMENDED, BOOLEAN (DEFAULT FALSE)
     is_curator_recommended: OPTIONAL, BOOLEAN (DEFAULT FALSE)
     method_type: REQUIRED, ENUM (manual, hybrid, automated)
     version: OPTIONAL, STRING
@@ -39,7 +39,7 @@ annotations: OPTIONAL
     glob_string: REQUIRED, STRING (REGEX)
     is_visualization_default: OPTIONAL, BOOLEAN (DEFAULT FALSE)
     mask_label: OPTIONAL, INTEGER (DEFAULT 1) (SemanticSegmentationMask)
-    order: OPTIONAL, STRING (DEFAULT xyz) (OrientedPoint, InstanceSegmentation) # TODO: should this have a default too?
+    order: OPTIONAL, STRING (DEFAULT xyz) (OrientedPoint, InstanceSegmentation)
     shape: OPTIONAL, ENUM (InstanceSegmentation, OrientedPoint, Point, SegmentationMask, SemanticSegmentationMask)
 dataset_keyphotos: OPTIONAL
 - sources: REQUIRED
@@ -53,28 +53,28 @@ datasets: REQUIRED
     cell_component: OPTIONAL
       id: OPTIONAL, STRING (GOID)
       name: REQUIRED, STRING
-    cell_strain:
+    cell_strain: OPTIONAL
       id: OPTIONAL, STRING
       name: REQUIRED, STRING
-    cell_type:
+    cell_type: OPTIONAL
       id: OPTIONAL, STRING
       name: REQUIRED, STRING
     cross_references: OPTIONAL
-      dataset_publications: OPTIONAL, STRING (DOIs)
-      related_database_entries: OPTIONAL, STRING (EMPIAR / EMDB IDs)
+      dataset_publications: RECOMMENDED, STRING (DOIs)
+      related_database_entries: RECOMMENDED, STRING (EMPIAR / EMDB IDs)
     dataset_description: REQUIRED, STRING
     dataset_identifier: REQUIRED, INTEGER
     dataset_title: REQUIRED, STRING
     dates: SEE annotations.dates
-    funding: OPTIONAL BUT RECOMMENDED
-    - funding_agency_name: OPTIONAL BUT RECOMMENDED, STRING
-      grant_id: OPTIONAL BUT RECOMMENDED, STRING
-    grid_preparation: OPTIONAL BUT RECOMMENDED, STRING
+    funding: RECOMMENDED
+    - funding_agency_name: RECOMMENDED, STRING
+      grant_id: RECOMMENDED, STRING
+    grid_preparation: RECOMMENDED, STRING
     other_setup: OPTIONAL, STRING
     organism: OPTIONAL
       name: REQUIRED, STRING
       taxonomy_id: OPTIONAL, INTEGER
-    sample_preparation: OPTIONAL BUT RECOMMENDED, STRING
+    sample_preparation: RECOMMENDED, STRING
     sample_type: REQUIRED, STRING
     tissue:
       id: OPTIONAL, STRING
@@ -137,9 +137,9 @@ tiltseries: OPTIONAL
       manufacturer: REQUIRED, STRING
       model: REQUIRED, STRING
     data_acquisition_software: REQUIRED, STRING
-    is_aligned: REQUIRED, BOOLEAN (DEFAULT FALSE)
+    is_aligned: REQUIRED
     microscope: REQUIRED
-      additional_info: OPTIONAL, STRING
+      additional_info: OPTIONAL, STRING # on hold by manasa
       manufacturer: REQUIRED, STRING
       model: REQUIRED, STRING
     microscope_optical_setup: REQUIRED
@@ -169,7 +169,7 @@ tomograms: OPTIONAL
       - ... (4 ELEMENTS)
     align_softwares: OPTIONAL, STRING # CURRENTLY NOT USED
     authors: SEE annotations.authors
-    ctf_corrected: OPTIONAL BUT RECOMMENDED, BOOLEAN
+    ctf_corrected: RECOMMENDED, BOOLEAN
     fiducial_alignment_status: REQUIRED, STRING (ENUM [FIDUCIAL, NON_FIDUCIAL])
     offset: REQUIRED
       x: REQUIRED, INTEGER
@@ -180,9 +180,10 @@ tomograms: OPTIONAL
       y: REQUIRED, INTEGER
       z: REQUIRED, INTEGER
     processing: REQUIRED, STRING (ENUM [denoised, filtered, raw])
-    processing_software: OPTIONAL BUT RECOMMENDED, STRING
+    processing_software: RECOMMENDED, STRING
     reconstruction_method: REQUIRED, STRING
     reconstruction_software: REQUIRED, STRING
+    tomogram_type: OPTIONAL, STRING (ENUM [CANONICAL])
     tomogram_version: REQUIRED, FLOAT
     voxel_spacing: REQUIRED, FLOAT
   sources: SEE tiltseries.sources
