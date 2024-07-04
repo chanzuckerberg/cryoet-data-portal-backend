@@ -41,13 +41,14 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
                     f"Slot {mappings[0]} does not exist in common schema. Check the exact_mappings for {slot['name']}.",
                 )
 
-            slot["range"] = common_slot["range"]
             slot["description"] = common_slot["description"]
-            slot["pattern"] = common_slot["pattern"]
-            slot["ifabsent"] = common_slot["ifabsent"]
+            slot["range"] = common_slot["range"]
+            slot["multivalued"] = common_slot["multivalued"]
+            slot["unit"] = common_slot["unit"]
             slot["required"] = common_slot["required"]
             slot["recommended"] = common_slot["recommended"]
-            slot["multivalued"] = common_slot["multivalued"]
+            slot["pattern"] = common_slot["pattern"]
+            slot["ifabsent"] = common_slot["ifabsent"]
 
     # Make sure the descriptions from mixin classes are carried over
     for c in schema.all_classes():

@@ -33,6 +33,8 @@ URI: [cdp-meta:is_aligned](metadatais_aligned)
 
 * Range: [Boolean](Boolean.md)
 
+* Required: True
+
 
 
 
@@ -74,12 +76,12 @@ from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_is_aligned
 rank: 1000
-ifabsent: 'False'
 alias: is_aligned
 owner: TiltSeries
 domain_of:
 - TiltSeries
 range: boolean
+required: true
 inlined: true
 inlined_as_list: true
 

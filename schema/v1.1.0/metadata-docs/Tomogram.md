@@ -180,6 +180,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: Å/voxel
+      descriptive_name: Angstroms per voxel
   fiducial_alignment_status:
     name: fiducial_alignment_status
     description: Whether the tomographic alignment was computed based on fiducial
@@ -384,6 +387,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: Å/voxel
+      descriptive_name: Angstroms per voxel
   fiducial_alignment_status:
     name: fiducial_alignment_status
     description: Whether the tomographic alignment was computed based on fiducial

@@ -115,6 +115,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
   y:
     name: y
     description: Number of pixels in the 3D data medium axis
@@ -131,6 +134,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
   z:
     name: z
     description: Number of pixels in the 3D data slow axis.  This is the image projection
@@ -148,6 +154,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
 
 ```
 </details>
@@ -176,6 +185,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
   y:
     name: y
     description: Number of pixels in the 3D data medium axis
@@ -192,6 +204,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
   z:
     name: z
     description: Number of pixels in the 3D data slow axis.  This is the image projection
@@ -209,6 +224,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
 
 ```
 </details>

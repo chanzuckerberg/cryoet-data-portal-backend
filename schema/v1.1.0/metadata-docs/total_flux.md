@@ -85,6 +85,9 @@ range: float
 required: true
 inlined: true
 inlined_as_list: true
+unit:
+  symbol: e^-/Å^2
+  descriptive_name: electrons per square Angstrom
 
 ```
 </details>

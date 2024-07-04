@@ -84,6 +84,9 @@ range: integer
 required: true
 inlined: true
 inlined_as_list: true
+unit:
+  symbol: V
+  descriptive_name: volts
 
 ```
 </details>

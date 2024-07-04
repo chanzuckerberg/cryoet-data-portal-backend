@@ -215,20 +215,11 @@ class DateStamp(ConfiguredBaseModel):
     """
     A set of dates at which a data item was deposited, published and last modified.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata',
-         'slot_usage': {'deposition_date': {'domain_of': ['DateStamp'],
-                                            'name': 'deposition_date',
-                                            'required': True},
-                        'last_modified_date': {'domain_of': ['DateStamp'],
-                                               'name': 'last_modified_date',
-                                               'recommended': True},
-                        'release_date': {'domain_of': ['DateStamp'],
-                                         'name': 'release_date',
-                                         'recommended': True}}})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
     deposition_date: date = Field(..., description="""The date a data item was received by the cryoET data portal.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition_date', 'domain_of': ['DateStamp']} })
-    release_date: date = Field(..., description="""The date a data item was received by the cryoET data portal.""", json_schema_extra = { "linkml_meta": {'alias': 'release_date', 'domain_of': ['DateStamp'], 'recommended': True} })
-    last_modified_date: date = Field(..., description="""The date a piece of data was last modified on the cryoET data portal.""", json_schema_extra = { "linkml_meta": {'alias': 'last_modified_date', 'domain_of': ['DateStamp'], 'recommended': True} })
+    release_date: date = Field(..., description="""The date a data item was received by the cryoET data portal.""", json_schema_extra = { "linkml_meta": {'alias': 'release_date', 'domain_of': ['DateStamp']} })
+    last_modified_date: date = Field(..., description="""The date a piece of data was last modified on the cryoET data portal.""", json_schema_extra = { "linkml_meta": {'alias': 'last_modified_date', 'domain_of': ['DateStamp']} })
 
 
 class DatestampedEntity(ConfiguredBaseModel):
@@ -531,10 +522,12 @@ class TiltRange(ConfiguredBaseModel):
 
     min: float = Field(..., description="""Minimal tilt angle in degrees""", json_schema_extra = { "linkml_meta": {'alias': 'min',
          'domain_of': ['TiltRange'],
-         'exact_mappings': ['cdp-common:tiltseries_tilt_min']} })
+         'exact_mappings': ['cdp-common:tiltseries_tilt_min'],
+         'unit': {'descriptive_name': 'degrees', 'symbol': '°'}} })
     max: float = Field(..., description="""Maximal tilt angle in degrees""", json_schema_extra = { "linkml_meta": {'alias': 'max',
          'domain_of': ['TiltRange'],
-         'exact_mappings': ['cdp-common:tiltseries_tilt_max']} })
+         'exact_mappings': ['cdp-common:tiltseries_tilt_max'],
+         'unit': {'descriptive_name': 'degrees', 'symbol': '°'}} })
 
 
 class TiltSeries(ConfiguredBaseModel):
@@ -545,7 +538,8 @@ class TiltSeries(ConfiguredBaseModel):
 
     acceleration_voltage: int = Field(..., description="""Electron Microscope Accelerator voltage in volts""", json_schema_extra = { "linkml_meta": {'alias': 'acceleration_voltage',
          'domain_of': ['TiltSeries'],
-         'exact_mappings': ['cdp-common:tiltseries_acceleration_voltage']} })
+         'exact_mappings': ['cdp-common:tiltseries_acceleration_voltage'],
+         'unit': {'descriptive_name': 'volts', 'symbol': 'V'}} })
     aligned_tiltseries_binning: Optional[int] = Field(1, description="""Binning factor of the aligned tilt series""", json_schema_extra = { "linkml_meta": {'alias': 'aligned_tiltseries_binning',
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_aligned_tiltseries_binning'],
@@ -560,10 +554,9 @@ class TiltSeries(ConfiguredBaseModel):
     frames_count: Optional[int] = Field(None, description="""Number of frames associated with this tiltseries""", json_schema_extra = { "linkml_meta": {'alias': 'frames_count',
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_frames_count']} })
-    is_aligned: Optional[bool] = Field(False, description="""Whether this tilt series is aligned""", json_schema_extra = { "linkml_meta": {'alias': 'is_aligned',
+    is_aligned: bool = Field(..., description="""Whether this tilt series is aligned""", json_schema_extra = { "linkml_meta": {'alias': 'is_aligned',
          'domain_of': ['TiltSeries'],
-         'exact_mappings': ['cdp-common:tiltseries_is_aligned'],
-         'ifabsent': 'False'} })
+         'exact_mappings': ['cdp-common:tiltseries_is_aligned']} })
     microscope: Microscope = Field(..., description="""The microscope used to collect the tilt series.""", json_schema_extra = { "linkml_meta": {'alias': 'microscope', 'domain_of': ['TiltSeries']} })
     microscope_additional_info: Optional[str] = Field(None, description="""Other microscope optical setup information, in addition to energy filter, phase plate and image corrector""", json_schema_extra = { "linkml_meta": {'alias': 'microscope_additional_info',
          'domain_of': ['TiltSeries'],
@@ -574,29 +567,35 @@ class TiltSeries(ConfiguredBaseModel):
          'exact_mappings': ['cdp-common:tiltseries_related_empiar_entry']} })
     spherical_aberration_constant: float = Field(..., description="""Spherical Aberration Constant of the objective lens in millimeters""", json_schema_extra = { "linkml_meta": {'alias': 'spherical_aberration_constant',
          'domain_of': ['TiltSeries'],
-         'exact_mappings': ['cdp-common:tiltseries_spherical_aberration_constant']} })
+         'exact_mappings': ['cdp-common:tiltseries_spherical_aberration_constant'],
+         'unit': {'descriptive_name': 'millimeters', 'symbol': 'mm'}} })
     tilt_alignment_software: Optional[str] = Field(None, description="""Software used for tilt alignment""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_alignment_software',
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_tilt_alignment_software']} })
     tilt_axis: float = Field(..., description="""Rotation angle in degrees""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_axis',
          'domain_of': ['TiltSeries'],
-         'exact_mappings': ['cdp-common:tiltseries_tilt_axis']} })
+         'exact_mappings': ['cdp-common:tiltseries_tilt_axis'],
+         'unit': {'descriptive_name': 'degrees', 'symbol': '°'}} })
     tilt_range: TiltRange = Field(..., description="""The range of tilt angles in the tilt series.""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_range', 'domain_of': ['TiltSeries']} })
     tilt_series_quality: int = Field(..., description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_series_quality',
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_tilt_series_quality']} })
     tilt_step: float = Field(..., description="""Tilt step in degrees""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_step',
          'domain_of': ['TiltSeries'],
-         'exact_mappings': ['cdp-common:tiltseries_tilt_step']} })
+         'exact_mappings': ['cdp-common:tiltseries_tilt_step'],
+         'unit': {'descriptive_name': 'degrees', 'symbol': '°'}} })
     tilting_scheme: str = Field(..., description="""The order of stage tilting during acquisition of the data""", json_schema_extra = { "linkml_meta": {'alias': 'tilting_scheme',
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_tilting_scheme']} })
     total_flux: float = Field(..., description="""Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series""", json_schema_extra = { "linkml_meta": {'alias': 'total_flux',
          'domain_of': ['TiltSeries'],
-         'exact_mappings': ['cdp-common:tiltseries_total_flux']} })
+         'exact_mappings': ['cdp-common:tiltseries_total_flux'],
+         'unit': {'descriptive_name': 'electrons per square Angstrom',
+                  'symbol': 'e^-/Å^2'}} })
     pixel_spacing: float = Field(..., description="""Pixel spacing for the tilt series""", json_schema_extra = { "linkml_meta": {'alias': 'pixel_spacing',
          'domain_of': ['TiltSeries'],
-         'exact_mappings': ['cdp-common:tiltseries_pixel_spacing']} })
+         'exact_mappings': ['cdp-common:tiltseries_pixel_spacing'],
+         'unit': {'descriptive_name': 'Angstroms per pixel', 'symbol': 'Å/px'}} })
 
 
 class TomogramSize(ConfiguredBaseModel):
@@ -607,13 +606,16 @@ class TomogramSize(ConfiguredBaseModel):
 
     x: int = Field(..., description="""Number of pixels in the 3D data fast axis""", json_schema_extra = { "linkml_meta": {'alias': 'x',
          'domain_of': ['TomogramSize', 'TomogramOffset'],
-         'exact_mappings': ['cdp-common:tomogram_size_x']} })
+         'exact_mappings': ['cdp-common:tomogram_size_x'],
+         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
     y: int = Field(..., description="""Number of pixels in the 3D data medium axis""", json_schema_extra = { "linkml_meta": {'alias': 'y',
          'domain_of': ['TomogramSize', 'TomogramOffset'],
-         'exact_mappings': ['cdp-common:tomogram_size_y']} })
+         'exact_mappings': ['cdp-common:tomogram_size_y'],
+         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
     z: int = Field(..., description="""Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt""", json_schema_extra = { "linkml_meta": {'alias': 'z',
          'domain_of': ['TomogramSize', 'TomogramOffset'],
-         'exact_mappings': ['cdp-common:tomogram_size_z']} })
+         'exact_mappings': ['cdp-common:tomogram_size_z'],
+         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
 
 
 class TomogramOffset(ConfiguredBaseModel):
@@ -641,7 +643,8 @@ class Tomogram(AuthoredEntity):
 
     voxel_spacing: float = Field(..., description="""Voxel spacing equal in all three axes in angstroms""", json_schema_extra = { "linkml_meta": {'alias': 'voxel_spacing',
          'domain_of': ['Tomogram'],
-         'exact_mappings': ['cdp-common:tomogram_voxel_spacing']} })
+         'exact_mappings': ['cdp-common:tomogram_voxel_spacing'],
+         'unit': {'descriptive_name': 'Angstroms per voxel', 'symbol': 'Å/voxel'}} })
     fiducial_alignment_status: FiducialAlignmentStatusEnum = Field(..., description="""Whether the tomographic alignment was computed based on fiducial markers.""", json_schema_extra = { "linkml_meta": {'alias': 'fiducial_alignment_status',
          'domain_of': ['Tomogram'],
          'exact_mappings': ['cdp-common:tomogram_fiducial_alignment_status']} })
@@ -684,10 +687,12 @@ class AnnotationConfidence(ConfiguredBaseModel):
 
     precision: Optional[float] = Field(None, description="""Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive""", json_schema_extra = { "linkml_meta": {'alias': 'precision',
          'domain_of': ['AnnotationConfidence'],
-         'exact_mappings': ['cdp-common:annotation_confidence_precision']} })
+         'exact_mappings': ['cdp-common:annotation_confidence_precision'],
+         'unit': {'descriptive_name': 'percentage', 'symbol': '%'}} })
     recall: Optional[float] = Field(None, description="""Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly""", json_schema_extra = { "linkml_meta": {'alias': 'recall',
          'domain_of': ['AnnotationConfidence'],
-         'exact_mappings': ['cdp-common:annotation_confidence_recall']} })
+         'exact_mappings': ['cdp-common:annotation_confidence_recall'],
+         'unit': {'descriptive_name': 'percentage', 'symbol': '%'}} })
     ground_truth_used: Optional[str] = Field(None, description="""Annotation filename used as ground truth for precision and recall""", json_schema_extra = { "linkml_meta": {'alias': 'ground_truth_used',
          'domain_of': ['AnnotationConfidence'],
          'exact_mappings': ['cdp-common:annotation_ground_truth_used']} })
@@ -983,7 +988,8 @@ class Annotation(AuthoredEntity, DatestampedEntity):
     ground_truth_status: Optional[bool] = Field(False, description="""Whether an annotation is considered ground truth, as determined by the annotator.""", json_schema_extra = { "linkml_meta": {'alias': 'ground_truth_status',
          'domain_of': ['Annotation'],
          'exact_mappings': ['cdp-common:annotation_ground_truth_status'],
-         'ifabsent': 'False'} })
+         'ifabsent': 'False',
+         'recommended': True} })
     is_curator_recommended: Optional[bool] = Field(False, description="""This annotation is recommended by the curator to be preferred for this object type.""", json_schema_extra = { "linkml_meta": {'alias': 'is_curator_recommended',
          'domain_of': ['Annotation'],
          'exact_mappings': ['cdp-common:annotation_is_curator_recommended'],

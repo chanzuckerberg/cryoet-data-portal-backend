@@ -164,7 +164,7 @@ slots:
   # Organism/Species
   organism_name:
     range: string
-    recommended: true
+    required: true
     description: >-
       Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens.
   organism_taxid:
@@ -177,7 +177,7 @@ slots:
   # Tissue
   tissue_name:
     range: string
-    recommended: true
+    required: true
     description: >-
       Name of the tissue from which a biological sample used in a CryoET study is derived from.
   tissue_id:
@@ -189,7 +189,7 @@ slots:
   # Cell Type
   cell_name:
     range: string
-    recommended: true
+    required: true
     description: >-
       Name of the cell type from which a biological sample used in a CryoET study is derived from.
   cell_type_id:
@@ -201,7 +201,7 @@ slots:
   # Cell Strain
   cell_strain_name:
     range: string
-    recommended: true
+    required: true
     description: >-
       Cell line or strain for the sample.
   cell_strain_id:
@@ -213,7 +213,7 @@ slots:
   # Cell Component
   cell_component_name:
     range: string
-    recommended: true
+    required: true
     description: >-
       Name of the cellular component.
   cell_component_id:
@@ -302,8 +302,8 @@ slots:
     description: Number of frames associated with this tiltseries
   tiltseries_is_aligned:
     range: boolean
+    required: true
     description: Whether this tilt series is aligned
-    ifabsent: false
   tiltseries_https_alignment_file:
     range: string
     description: HTTPS path to the alignment file for this tiltseries
@@ -585,6 +585,7 @@ slots:
   #deposition_date (date): Date when an annotation set is initially received by the Data Portal.
   annotation_ground_truth_status:
     range: boolean
+    recommended: true
     description: Whether an annotation is considered ground truth, as determined by the annotator.
     ifabsent: false
   annotation_ground_truth_used:
@@ -773,13 +774,6 @@ classes:
       - deposition_date
       - release_date
       - last_modified_date
-    slot_usage:
-      deposition_date:
-        required: true
-      release_date:
-        recommended: true
-      last_modified_date:
-        recommended: true
 
   # ============================================================================
   # Cross-references to other databases and publications

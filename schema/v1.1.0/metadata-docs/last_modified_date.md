@@ -21,7 +21,7 @@ URI: [cdp-meta:last_modified_date](metadatalast_modified_date)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |  yes  |
+| [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |  no  |
 
 
 
@@ -79,7 +79,6 @@ domain_of:
 - DateStamp
 range: date
 required: true
-recommended: true
 inlined: true
 inlined_as_list: true
 

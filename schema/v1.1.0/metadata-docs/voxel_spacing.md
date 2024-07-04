@@ -84,6 +84,9 @@ range: float
 required: true
 inlined: true
 inlined_as_list: true
+unit:
+  symbol: Å/voxel
+  descriptive_name: Angstroms per voxel
 
 ```
 </details>

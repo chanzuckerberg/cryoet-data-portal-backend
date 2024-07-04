@@ -84,6 +84,9 @@ range: float
 required: true
 inlined: true
 inlined_as_list: true
+unit:
+  symbol: mm
+  descriptive_name: millimeters
 
 ```
 </details>

@@ -107,7 +107,7 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 | [camera](camera.md) | 1 <br/> [Camera](Camera.md) | The camera used to collect the tilt series | direct |
 | [data_acquisition_software](data_acquisition_software.md) | 1 <br/> [String](String.md) | Software used to collect data | direct |
 | [frames_count](frames_count.md) | 0..1 <br/> [Integer](Integer.md) | Number of frames associated with this tiltseries | direct |
-| [is_aligned](is_aligned.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether this tilt series is aligned | direct |
+| [is_aligned](is_aligned.md) | 1 <br/> [Boolean](Boolean.md) | Whether this tilt series is aligned | direct |
 | [microscope](microscope.md) | 1 <br/> [Microscope](Microscope.md) | The microscope used to collect the tilt series | direct |
 | [microscope_additional_info](microscope_additional_info.md) | 0..1 <br/> [String](String.md) | Other microscope optical setup information, in addition to energy filter, pha... | direct |
 | [microscope_optical_setup](microscope_optical_setup.md) | 1 <br/> [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series | direct |
@@ -186,6 +186,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: V
+      descriptive_name: volts
   aligned_tiltseries_binning:
     name: aligned_tiltseries_binning
     description: Binning factor of the aligned tilt series
@@ -264,12 +267,12 @@ attributes:
     exact_mappings:
     - cdp-common:tiltseries_is_aligned
     rank: 1000
-    ifabsent: 'False'
     alias: is_aligned
     owner: TiltSeries
     domain_of:
     - TiltSeries
     range: boolean
+    required: true
     inlined: true
     inlined_as_list: true
   microscope:
@@ -343,6 +346,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: mm
+      descriptive_name: millimeters
   tilt_alignment_software:
     name: tilt_alignment_software
     description: Software used for tilt alignment
@@ -372,6 +378,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: °
+      descriptive_name: degrees
   tilt_range:
     name: tilt_range
     description: The range of tilt angles in the tilt series.
@@ -416,6 +425,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: °
+      descriptive_name: degrees
   tilting_scheme:
     name: tilting_scheme
     description: The order of stage tilting during acquisition of the data
@@ -447,6 +459,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: e^-/Å^2
+      descriptive_name: electrons per square Angstrom
   pixel_spacing:
     name: pixel_spacing
     description: Pixel spacing for the tilt series
@@ -462,6 +477,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: Å/px
+      descriptive_name: Angstroms per pixel
 
 ```
 </details>
@@ -489,6 +507,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: V
+      descriptive_name: volts
   aligned_tiltseries_binning:
     name: aligned_tiltseries_binning
     description: Binning factor of the aligned tilt series
@@ -567,12 +588,12 @@ attributes:
     exact_mappings:
     - cdp-common:tiltseries_is_aligned
     rank: 1000
-    ifabsent: 'False'
     alias: is_aligned
     owner: TiltSeries
     domain_of:
     - TiltSeries
     range: boolean
+    required: true
     inlined: true
     inlined_as_list: true
   microscope:
@@ -646,6 +667,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: mm
+      descriptive_name: millimeters
   tilt_alignment_software:
     name: tilt_alignment_software
     description: Software used for tilt alignment
@@ -675,6 +699,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: °
+      descriptive_name: degrees
   tilt_range:
     name: tilt_range
     description: The range of tilt angles in the tilt series.
@@ -719,6 +746,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: °
+      descriptive_name: degrees
   tilting_scheme:
     name: tilting_scheme
     description: The order of stage tilting during acquisition of the data
@@ -750,6 +780,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: e^-/Å^2
+      descriptive_name: electrons per square Angstrom
   pixel_spacing:
     name: pixel_spacing
     description: Pixel spacing for the tilt series
@@ -765,6 +798,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: Å/px
+      descriptive_name: Angstroms per pixel
 
 ```
 </details>

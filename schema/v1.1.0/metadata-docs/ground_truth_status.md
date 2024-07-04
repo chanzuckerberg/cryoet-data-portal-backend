@@ -33,6 +33,8 @@ URI: [cdp-meta:ground_truth_status](metadataground_truth_status)
 
 * Range: [Boolean](Boolean.md)
 
+* Recommended: True
+
 
 
 
@@ -81,6 +83,7 @@ owner: Annotation
 domain_of:
 - Annotation
 range: boolean
+recommended: true
 inlined: true
 inlined_as_list: true
 

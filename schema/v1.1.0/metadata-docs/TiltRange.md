@@ -111,6 +111,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: °
+      descriptive_name: degrees
   max:
     name: max
     description: Maximal tilt angle in degrees
@@ -126,6 +129,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: °
+      descriptive_name: degrees
 
 ```
 </details>
@@ -153,6 +159,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: °
+      descriptive_name: degrees
   max:
     name: max
     description: Maximal tilt angle in degrees
@@ -168,6 +177,9 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: °
+      descriptive_name: degrees
 
 ```
 </details>

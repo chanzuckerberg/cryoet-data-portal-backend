@@ -114,7 +114,8 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: RAPTOR *id001
+    align_software: RAPTOR
+    authors: *id001
     fiducial_alignment_status: FIDUCIAL
     offset:
       x: 0

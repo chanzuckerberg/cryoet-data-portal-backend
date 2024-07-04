@@ -549,22 +549,6 @@ classes:
     - deposition_date
     - release_date
     - last_modified_date
-    slot_usage:
-      deposition_date:
-        name: deposition_date
-        domain_of:
-        - DateStamp
-        required: true
-      release_date:
-        name: release_date
-        domain_of:
-        - DateStamp
-        recommended: true
-      last_modified_date:
-        name: last_modified_date
-        domain_of:
-        - DateStamp
-        recommended: true
     attributes:
       deposition_date:
         name: deposition_date
@@ -588,7 +572,6 @@ classes:
         - DateStamp
         range: date
         required: true
-        recommended: true
         inlined: true
         inlined_as_list: true
       last_modified_date:
@@ -602,7 +585,6 @@ classes:
         - DateStamp
         range: date
         required: true
-        recommended: true
         inlined: true
         inlined_as_list: true
   DatestampedEntity:
@@ -1374,6 +1356,9 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
       max:
         name: max
         description: Maximal tilt angle in degrees
@@ -1388,6 +1373,9 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
   TiltSeries:
     name: TiltSeries
     description: Metadata describing a tilt series.
@@ -1407,6 +1395,9 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: V
+          descriptive_name: volts
       aligned_tiltseries_binning:
         name: aligned_tiltseries_binning
         description: Binning factor of the aligned tilt series
@@ -1479,12 +1470,12 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_is_aligned
-        ifabsent: 'False'
         alias: is_aligned
         owner: TiltSeries
         domain_of:
         - TiltSeries
         range: boolean
+        required: true
         inlined: true
         inlined_as_list: true
       microscope:
@@ -1554,6 +1545,9 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: mm
+          descriptive_name: millimeters
       tilt_alignment_software:
         name: tilt_alignment_software
         description: Software used for tilt alignment
@@ -1581,6 +1575,9 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
       tilt_range:
         name: tilt_range
         description: The range of tilt angles in the tilt series.
@@ -1622,6 +1619,9 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
       tilting_scheme:
         name: tilting_scheme
         description: The order of stage tilting during acquisition of the data
@@ -1651,6 +1651,9 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: e^-/Å^2
+          descriptive_name: electrons per square Angstrom
       pixel_spacing:
         name: pixel_spacing
         description: Pixel spacing for the tilt series
@@ -1665,6 +1668,9 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: Å/px
+          descriptive_name: Angstroms per pixel
   TomogramSize:
     name: TomogramSize
     description: The size of a tomogram in voxels in each dimension.
@@ -1685,6 +1691,9 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: px
+          descriptive_name: pixels
       y:
         name: y
         description: Number of pixels in the 3D data medium axis
@@ -1700,6 +1709,9 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: px
+          descriptive_name: pixels
       z:
         name: z
         description: Number of pixels in the 3D data slow axis.  This is the image
@@ -1716,6 +1728,9 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: px
+          descriptive_name: pixels
   TomogramOffset:
     name: TomogramOffset
     description: The offset of a tomogram in voxels in each dimension relative to
@@ -1782,6 +1797,9 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: Å/voxel
+          descriptive_name: Angstroms per voxel
       fiducial_alignment_status:
         name: fiducial_alignment_status
         description: Whether the tomographic alignment was computed based on fiducial
@@ -1963,6 +1981,9 @@ classes:
         range: float
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: '%'
+          descriptive_name: percentage
       recall:
         name: recall
         description: Describe the confidence level of the annotation. Recall is defined
@@ -1977,6 +1998,9 @@ classes:
         range: float
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: '%'
+          descriptive_name: percentage
       ground_truth_used:
         name: ground_truth_used
         description: Annotation filename used as ground truth for precision and recall
@@ -2568,6 +2592,7 @@ classes:
         domain_of:
         - Annotation
         range: boolean
+        recommended: true
         inlined: true
         inlined_as_list: true
       is_curator_recommended:

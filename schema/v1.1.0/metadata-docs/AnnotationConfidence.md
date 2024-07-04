@@ -114,6 +114,9 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: '%'
+      descriptive_name: percentage
   recall:
     name: recall
     description: Describe the confidence level of the annotation. Recall is defined
@@ -129,6 +132,9 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: '%'
+      descriptive_name: percentage
   ground_truth_used:
     name: ground_truth_used
     description: Annotation filename used as ground truth for precision and recall
@@ -170,6 +176,9 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: '%'
+      descriptive_name: percentage
   recall:
     name: recall
     description: Describe the confidence level of the annotation. Recall is defined
@@ -185,6 +194,9 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: '%'
+      descriptive_name: percentage
   ground_truth_used:
     name: ground_truth_used
     description: Annotation filename used as ground truth for precision and recall

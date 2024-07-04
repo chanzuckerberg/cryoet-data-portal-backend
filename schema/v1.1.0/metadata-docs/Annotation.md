@@ -115,7 +115,7 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 | [annotation_software](annotation_software.md) | 0..1 _recommended_ <br/> [String](String.md) | Software used for generating this annotation | direct |
 | [confidence](confidence.md) | 0..1 <br/> [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation | direct |
 | [files](files.md) | * <br/> [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation | direct |
-| [ground_truth_status](ground_truth_status.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether an annotation is considered ground truth, as determined by the annota... | direct |
+| [ground_truth_status](ground_truth_status.md) | 0..1 _recommended_ <br/> [Boolean](Boolean.md) | Whether an annotation is considered ground truth, as determined by the annota... | direct |
 | [is_curator_recommended](is_curator_recommended.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation is recommended by the curator to be preferred for this object... | direct |
 | [method_type](method_type.md) | 1 <br/> [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Classification of the annotation method based on supervision | direct |
 | [object_count](object_count.md) | 0..1 <br/> [Integer](Integer.md) | Number of objects identified | direct |
@@ -275,6 +275,7 @@ attributes:
     domain_of:
     - Annotation
     range: boolean
+    recommended: true
     inlined: true
     inlined_as_list: true
   is_curator_recommended:
@@ -483,6 +484,7 @@ attributes:
     domain_of:
     - Annotation
     range: boolean
+    recommended: true
     inlined: true
     inlined_as_list: true
   is_curator_recommended:

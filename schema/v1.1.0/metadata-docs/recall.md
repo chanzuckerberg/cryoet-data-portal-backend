@@ -82,6 +82,9 @@ domain_of:
 range: float
 inlined: true
 inlined_as_list: true
+unit:
+  symbol: '%'
+  descriptive_name: percentage
 
 ```
 </details>
