@@ -37,14 +37,13 @@ class DatasetKeyPhotoImporter(BaseImporter):
             return os.path.relpath(image_path, self.config.output_prefix)
         return None
 
-    def save_image(self, key: str, path: str) -> Optional[str]:
+    def save_image(self, key: str, path: str) -> None:
         image_src = self.path or self.get_first_valid_tomo_key_photo(key)
         if not image_src:
             raise RuntimeError("Image source file not found")
         _, extension = os.path.splitext(image_src)
         dest_path = os.path.join(path, key) + extension
         copy_by_src(image_src, dest_path, self.config.fs)
-        return os.path.relpath(dest_path, self.config.output_prefix)
 
     def get_first_valid_tomo_key_photo(self, key: str) -> Optional[str]:
         for run in RunImporter.finder(self.config, **self.parents):

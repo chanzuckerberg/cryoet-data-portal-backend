@@ -5,6 +5,8 @@ import click
 from importers.annotation import AnnotationImporter
 from importers.dataset import DatasetImporter
 from importers.dataset_key_photo import DatasetKeyPhotoImporter
+from importers.deposition import DepositionImporter
+from importers.deposition_key_photo import DepositionKeyPhotoImporter
 from importers.frame import FrameImporter
 from importers.gain import GainImporter
 from importers.key_image import KeyImageImporter
@@ -23,6 +25,8 @@ IMPORTERS = [
     AnnotationImporter,
     DatasetKeyPhotoImporter,
     DatasetImporter,
+    DepositionImporter,
+    DepositionKeyPhotoImporter,
     FrameImporter,
     VisualizationConfigImporter,
     TomogramImporter,
@@ -38,23 +42,26 @@ IMPORTERS = [
 IMPORTER_DICT = {cls.type_key: cls for cls in IMPORTERS}
 # NOTE - ordering of keys is important here, the importer will respect it!
 IMPORTER_DEP_TREE = {
-    DatasetImporter: {
-        RunImporter: {
-            VoxelSpacingImporter: {
-                AnnotationImporter: {
-                    AnnotationVisualizationImporter: {},
+    DepositionImporter: {
+        DatasetImporter: {
+            RunImporter: {
+                VoxelSpacingImporter: {
+                    AnnotationImporter: {
+                        AnnotationVisualizationImporter: {},
+                    },
+                    TomogramImporter: {
+                        KeyImageImporter: {},
+                        VisualizationConfigImporter: {},
+                    },
                 },
-                TomogramImporter: {
-                    KeyImageImporter: {},
-                    VisualizationConfigImporter: {},
-                },
+                GainImporter: {},
+                FrameImporter: {},
+                TiltSeriesImporter: {},
+                RawTiltImporter: {},
             },
-            GainImporter: {},
-            FrameImporter: {},
-            TiltSeriesImporter: {},
-            RawTiltImporter: {},
+            DatasetKeyPhotoImporter: {},
         },
-        DatasetKeyPhotoImporter: {},
+        DepositionKeyPhotoImporter: {},
     },
 }
 
