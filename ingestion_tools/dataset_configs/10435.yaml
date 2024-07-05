@@ -152,7 +152,7 @@ tomograms:
 frames:
 - sources:
   - source_glob:
-      list_glob: frames/{frame_prefix}*.mrc
+      list_glob: frames/{frame_prefix}*.tif
 voxel_spacings:
 - sources:
   - literal:
