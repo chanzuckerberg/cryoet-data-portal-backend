@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: null
+    cross_references:
+      dataset_publications: 10.1111/mmi.13937
     dataset_description: This is 1st of 7 sets of data studying Mycoplasma pneumoniae
       collected by Songye Chen and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10253
@@ -53,8 +55,7 @@ runs:
       match_regex: (scy2016-01-14-1|scy2016-01-14-2|scy2016-01-14-3|scy2016-01-14-4|scy2016-01-14-5|scy2016-01-15-1|scy2016-01-15-2|scy2016-01-15-3|scy2016-01-15-4|scy2016-01-15-5|scy2016-01-15-6|scy2016-01-15-7|scy2016-01-15-8|scy2016-01-15-9|scy2016-01-15-10|scy2016-01-15-11|scy2016-01-15-12|scy2016-01-15-13)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10253
-  run_data_map_file: run_data_map/10253.csv
+  deposition_id: 10026
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -73,7 +74,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 4.036
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -81,7 +82,6 @@ tiltseries:
     tilt_range:
       max: 65.0
       min: -65.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -109,8 +109,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares:
-    - RAPTOR
+    align_software: RAPTOR
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

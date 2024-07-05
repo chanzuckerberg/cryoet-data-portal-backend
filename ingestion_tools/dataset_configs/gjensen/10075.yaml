@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: Philadelphia-1_Lp02
+    cross_references:
+      dataset_publications: 10.1038/s41564-019-0427-4
     dataset_description: This is 18th of 41 sets of data studying Legionella pneumophila
       collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. JV5460
       Legionella (Superdeletion+CDH)
@@ -62,7 +64,7 @@ runs:
       match_regex: (dga2016-08-13-1|dga2016-08-13-2|dga2016-08-13-3|dga2016-08-13-4|dga2016-08-13-5|dga2016-08-13-6|dga2016-08-13-7|dga2016-08-13-8|dga2016-08-13-9|dga2016-08-13-10|dga2016-08-13-11|dga2016-08-13-12|dga2016-08-13-13|dga2016-08-13-14|dga2016-08-13-15|dga2016-08-13-16|dga2016-08-13-17|dga2016-08-13-18|dga2016-08-13-19|dga2016-08-13-20|dga2016-08-13-21|dga2016-08-13-22|dga2016-08-13-23|dga2016-08-13-24|dga2016-08-13-25|dga2016-08-13-26|dga2016-08-13-27|dga2016-08-13-28|dga2016-08-13-29|dga2016-08-13-30|dga2016-08-13-31|dga2016-08-13-32|dga2016-08-13-33|dga2016-08-13-34|dga2016-08-13-35|dga2016-08-13-36|dga2016-08-13-37|dga2016-08-13-38|dga2016-08-13-39|dga2016-08-13-40|dga2016-08-13-41|dga2016-08-13-42|dga2016-08-13-43|dga2016-08-13-44|dga2016-08-13-45|dga2016-08-13-46|dga2016-08-13-47|dga2016-08-13-48|dga2016-08-13-49|dga2016-08-13-50|dga2016-08-13-51|dga2016-08-13-52|dga2016-08-13-53|dga2016-08-13-54|dga2016-08-13-55|dga2016-08-13-56|dga2016-08-13-57|dga2016-08-13-58|dga2016-08-13-59|dga2016-08-13-60|dga2016-08-13-61|dga2016-08-13-62|dga2016-08-13-63|dga2016-08-13-64|dga2016-08-13-65|dga2016-08-13-66|dga2016-08-13-67|dga2016-08-13-68|dga2016-08-13-69|dga2016-08-13-70|dga2016-08-13-71|dga2016-08-13-72|dga2016-08-13-73|dga2016-08-13-74|dga2016-08-13-75|dga2016-08-13-76|dga2016-08-13-77|dga2016-08-13-78|dga2016-08-13-79|dga2016-08-13-80|dga2016-08-13-81|dga2016-08-13-82|dga2016-08-13-83|dga2016-08-13-84|dga2016-08-13-85|dga2016-08-13-86)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10075
+  deposition_id: 10038
   run_data_map_file: run_data_map/10075.csv
   run_to_frame_map_csv: run_frames_map/10075.csv
   run_to_tomo_map_csv: run_tomo_map/10075.csv
@@ -84,7 +86,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 4.2
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -92,7 +94,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1.5
     tilting_scheme: starting tilt to max then min
@@ -120,7 +121,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
@@ -143,3 +144,13 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^dga2016-08-13-17$
+        - ^dga2016-08-13-20$
+        - ^dga2016-08-13-23$
+        - ^dga2016-08-13-29$
+        - ^dga2016-08-13-37$
+        - ^dga2016-08-13-63$
+        - ^dga2016-08-13-69$

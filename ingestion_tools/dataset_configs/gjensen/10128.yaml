@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: deltaQ 167
+    cross_references:
+      dataset_publications: 10.1128/mBio.01898-15
     dataset_description: This is 11th of 17 sets of data studying Magnetospirillum
       magneticum  collected by Poorna Subramanian and is a part of Caltech Jensen  lab
       etdb.
@@ -54,8 +56,7 @@ runs:
       match_regex: (psa2014-06-19-26|psa2014-06-19-27|psa2014-06-19-28|psa2014-06-19-29|psa2014-06-19-30|psa2014-06-19-31|psa2014-06-19-32|psa2014-06-19-33|psa2014-06-19-34|psa2014-06-19-35|psa2014-06-19-36|psa2014-06-19-37|psa2014-06-19-38|psa2014-06-19-39|psa2014-06-19-40|psa2014-06-19-41|psa2014-06-19-42|psa2014-06-19-43|psa2014-06-19-44|psa2014-06-19-45|psa2014-06-19-46|psa2014-06-19-47|psa2014-06-19-48|psa2014-06-19-49|psa2014-06-19-50|psa2014-06-19-51)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10128
-  run_data_map_file: run_data_map/10128.csv
+  deposition_id: 10039
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -74,7 +75,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 6.167
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -82,7 +83,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -110,8 +110,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares:
-    - RAPTOR
+    align_software: RAPTOR
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

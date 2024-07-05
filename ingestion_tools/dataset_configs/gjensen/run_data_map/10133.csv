@@ -1,8 +1,8 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,ts-tilt_alignment_software,ts-tilt_series_path
-psa2014-06-19-3,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/manual2.mrc
-psa2014-06-19-4,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/manual4.mrc
-psa2014-06-19-52,['autoPatch'],NON_FIDUCIAL,autoPatch,rawdata/atlas110001.mrc
-psa2014-06-19-53,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/atlas120001.mrc
-psa2014-06-19-54,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/atlas120002.mrc
-psa2014-06-19-55,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/atlas120003.mrc
-psa2014-06-19-56,['RAPTOR'],FIDUCIAL,RAPTOR,rawdata/manual5.mrc
+run_name,tomo-align_software,tomo-fiducial_alignment_status,ts-tilt_alignment_software
+psa2014-06-19-3,RAPTOR,FIDUCIAL,RAPTOR
+psa2014-06-19-4,RAPTOR,FIDUCIAL,RAPTOR
+psa2014-06-19-53,RAPTOR,FIDUCIAL,RAPTOR
+psa2014-06-19-54,RAPTOR,FIDUCIAL,RAPTOR
+psa2014-06-19-55,RAPTOR,FIDUCIAL,RAPTOR
+psa2014-06-19-56,RAPTOR,FIDUCIAL,RAPTOR
+psa2014-06-19-52,autoPatch,NON_FIDUCIAL,autoPatch

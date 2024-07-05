@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: subsp. subtilis str. 168
+    cross_references:
+      dataset_publications: https://doi.org/10.1111/mmi.12201
     dataset_description: This is 2nd of 4 sets of data studying Bacillus subtilis
       collected by Elitza Tocheva and is a part of Caltech Jensen  lab etdb. withTA
     dataset_identifier: 10247
@@ -53,7 +55,7 @@ runs:
       match_regex: (etl2012-09-01-8|etl2012-09-01-9|etl2012-09-01-10|etl2012-09-01-11|etl2012-09-01-12|etl2012-09-01-13|etl2012-09-02-30|etl2012-09-02-31|etl2012-09-02-32|etl2012-09-02-33|etl2012-09-02-34|etl2012-09-02-35|etl2012-09-02-36|etl2012-09-02-37|etl2012-09-02-38|etl2012-09-02-39|etl2012-09-02-40)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10247
+  deposition_id: 10019
   run_data_map_file: run_data_map/10247.csv
   run_to_frame_map_csv: run_frames_map/10247.csv
   run_to_tomo_map_csv: run_tomo_map/10247.csv
@@ -75,7 +77,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 4.933
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -83,7 +85,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: min to max tilt
@@ -111,8 +112,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares:
-    - RAPTOR
+    align_software: RAPTOR
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

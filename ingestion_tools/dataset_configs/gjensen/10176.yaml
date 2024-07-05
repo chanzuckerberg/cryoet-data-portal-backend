@@ -20,6 +20,8 @@ datasets:
     cell_type:
       id: CL:0002618
       name: umbilical vein endothelial cell
+    cross_references:
+      dataset_publications: 10.1128/JVI.02997-14
     dataset_description: This is 5th of 17 sets of data studying HUVECs collected
       by Cora Woodward and is a part of Caltech Jensen  lab etdb. caulobacter cytoskeleton
       search, helium, ftsZ
@@ -57,8 +59,7 @@ runs:
       match_regex: (cwl2011-08-14-1|cwl2011-08-14-2|cwl2011-08-14-3|cwl2011-08-14-4|cwl2011-08-14-5|cwl2011-08-14-6|cwl2011-08-14-7|cwl2011-08-14-8|cwl2011-08-14-9|cwl2011-08-14-10|cwl2011-08-14-11|cwl2011-08-14-12|cwl2011-08-14-13|cwl2011-08-14-14|cwl2011-08-14-15|cwl2011-08-14-16|cwl2011-08-14-17|cwl2011-08-14-18|cwl2011-08-14-19|cwl2011-08-14-20|cwl2011-08-14-21)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10176
-  run_data_map_file: run_data_map/10176.csv
+  deposition_id: 10025
   run_to_frame_map_csv: run_frames_map/10176.csv
   run_to_tomo_map_csv: run_tomo_map/10176.csv
   source_prefix: GJensen_full
@@ -79,7 +80,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 9.46
     spherical_aberration_constant: 2.0
     tilt_alignment_software: IMOD
@@ -87,7 +88,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: min to max tilt
@@ -115,8 +115,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares:
-    - IMOD
+    align_software: IMOD
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

@@ -17,6 +17,9 @@ datasets:
     cell_strain:
       id: null
       name: ''
+    cross_references:
+      dataset_publications: 10.15252/embr.201744070
+      related_database_entries: EMD-8603
     dataset_description: ' and is a part of Caltech Jensen  lab etdb.'
     dataset_identifier: 10262
     dataset_title: Thermococcus kodakarensis
@@ -52,7 +55,7 @@ runs:
       match_regex: (aba2014-07-15-21|aba2014-07-15-22|aba2014-07-15-23|aba2014-07-15-24|aba2014-07-15-25|aba2014-07-15-26|aba2014-07-15-27|aba2014-07-15-28|aba2014-07-15-30|aba2014-07-15-31|aba2014-07-15-32|aba2014-07-15-33|aba2014-07-15-35|aba2014-07-15-36|aba2014-07-15-37|aba2014-07-15-39|aba2014-07-15-40|aba2014-07-15-41|aba2014-07-15-60|aba2014-07-15-61|aba2014-07-15-62|aba2014-07-15-63|aba2014-07-17-8|aba2014-07-17-9|aba2014-07-17-10|aba2014-07-17-11|aba2014-07-17-12|aba2014-07-17-13|aba2014-07-17-14|aba2014-07-17-15|aba2014-07-17-16|aba2014-07-17-17|aba2014-07-17-18|aba2014-07-17-19|aba2014-07-17-20|aba2014-07-17-21|aba2014-07-17-22|aba2014-07-17-23|aba2014-07-17-24|aba2014-07-17-25|aba2014-07-17-26|aba2014-07-17-27|aba2014-07-17-28|aba2014-07-17-29|aba2014-07-17-30|aba2014-07-17-31|aba2014-07-17-32|aba2014-07-17-33|aba2015-07-08-14|aba2015-07-08-15|aba2015-07-08-16|aba2015-07-08-17|aba2015-07-08-18|aba2015-07-08-24|aba2015-07-08-25|aba2015-07-08-28|aba2015-07-08-29|aba2015-07-08-30|aba2015-07-08-32|aba2015-07-08-33)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10262
+  deposition_id: 10037
   run_data_map_file: run_data_map/10262.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -72,7 +75,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: '{ts-pixel_spacing}'
     spherical_aberration_constant: '{ts-spherical_aberration_constant}'
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -80,7 +83,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -108,7 +110,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

@@ -17,6 +17,9 @@ datasets:
     cell_strain:
       id: null
       name: CCAP 1403/13F
+    cross_references:
+      dataset_publications: 10.1016/j.str.2023.03.011
+      related_database_entries: EMD-29922, EMD-29923, EMD-29925, EMD-29924
     dataset_description: This is 1st of 7 sets of data studying Dolichospermum flos-aquae
       collected by Przemek Dutka and is a part of Caltech Jensen  lab etdb. Gas vesicles,
       GvpA. GvpC present.
@@ -82,7 +85,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 1.687
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -90,7 +93,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 3.0
     tilting_scheme: min to max tilt; non-constant tilt steps
@@ -118,7 +120,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
@@ -141,3 +143,8 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^pda2021-06-24-160$
+        - ^pda2021-06-24-182$

@@ -55,7 +55,7 @@ runs:
       match_regex: (aba2014-03-04-1|aba2014-03-04-2|aba2014-03-04-3|aba2014-03-04-4|aba2014-03-04-5|aba2014-03-04-6|aba2014-03-04-7|aba2014-03-04-8|aba2014-03-04-9|aba2014-03-04-10|aba2014-03-04-11|aba2014-03-04-12|aba2014-03-04-13|aba2014-03-04-14|aba2014-03-04-15|aba2014-03-04-16|aba2014-03-04-17|aba2014-03-04-18|aba2014-03-04-19|aba2014-03-04-20|aba2014-03-04-21|aba2014-03-04-22|aba2014-03-04-23|aba2014-03-04-24|aba2014-03-04-25|aba2014-03-04-27|aba2014-03-04-29|aba2014-03-04-30)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10274
+  deposition_id: 10021
   run_data_map_file: run_data_map/10274.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -75,7 +75,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 3.805
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -83,7 +83,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -111,7 +110,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'

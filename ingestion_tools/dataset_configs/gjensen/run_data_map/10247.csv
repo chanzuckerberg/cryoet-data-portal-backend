@@ -1,18 +1,18 @@
-run_name,tomo-reconstruction_method,ts-tilt_series_path
-etl2012-09-01-8,Weighted back projection,rawdata/mj_manual4.mrc
-etl2012-09-01-9,Weighted back projection,rawdata/mj_thin0004.mrc
-etl2012-09-01-10,Weighted back projection,rawdata/mj_thin0005.mrc
-etl2012-09-01-11,Weighted back projection,rawdata/mj_thin0006.mrc
-etl2012-09-01-12,Weighted back projection,rawdata/mj_thin0001.mrc
-etl2012-09-01-13,Weighted back projection,rawdata/mj_thin0003.mrc
-etl2012-09-02-30,SIRT,rawdata/wt_new0001.mrc
-etl2012-09-02-31,Weighted back projection,rawdata/wt_new8.mrc
-etl2012-09-02-32,Weighted back projection,rawdata/wt_new9.mrc
-etl2012-09-02-33,Weighted back projection,rawdata/wt_new10.mrc
-etl2012-09-02-34,Weighted back projection,rawdata/wt_new0002.mrc
-etl2012-09-02-35,Weighted back projection,rawdata/wt_new3.mrc
-etl2012-09-02-36,Weighted back projection,rawdata/wt_new4.mrc
-etl2012-09-02-37,Weighted back projection,rawdata/wt_new0004.mrc
-etl2012-09-02-38,Weighted back projection,rawdata/wt_new5.mrc
-etl2012-09-02-39,Weighted back projection,rawdata/wt_new6.mrc
-etl2012-09-02-40,Weighted back projection,rawdata/wt_new7.mrc
+run_name,tomo-reconstruction_method
+etl2012-09-01-8,Weighted back projection
+etl2012-09-01-9,Weighted back projection
+etl2012-09-01-10,Weighted back projection
+etl2012-09-01-11,Weighted back projection
+etl2012-09-01-12,Weighted back projection
+etl2012-09-01-13,Weighted back projection
+etl2012-09-02-31,Weighted back projection
+etl2012-09-02-32,Weighted back projection
+etl2012-09-02-33,Weighted back projection
+etl2012-09-02-34,Weighted back projection
+etl2012-09-02-35,Weighted back projection
+etl2012-09-02-36,Weighted back projection
+etl2012-09-02-37,Weighted back projection
+etl2012-09-02-38,Weighted back projection
+etl2012-09-02-39,Weighted back projection
+etl2012-09-02-40,Weighted back projection
+etl2012-09-02-30,SIRT

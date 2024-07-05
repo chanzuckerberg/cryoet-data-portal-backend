@@ -20,6 +20,8 @@ datasets:
     cell_type:
       id: CL:0002618
       name: umbilical vein endothelial cell
+    cross_references:
+      dataset_publications: 10.1128/JVI.02997-14
     dataset_description: This is 16th of 17 sets of data studying HUVECs collected
       by Cora Woodward and is a part of Caltech Jensen  lab etdb. HUVECs 30 min post
       spinoculation with VSVGpNL4GFP
@@ -57,7 +59,7 @@ runs:
       match_regex: (cwl2011-08-12-1|cwl2011-08-12-3|cwl2011-08-12-4|cwl2011-08-12-5|cwl2011-08-12-6|cwl2011-08-12-8|cwl2011-08-12-9|cwl2011-08-12-10|cwl2011-08-12-11|cwl2011-08-12-12|cwl2011-08-12-13|cwl2011-08-12-14|cwl2011-08-12-15|cwl2011-08-12-16|cwl2011-08-12-17|cwl2011-08-12-18|cwl2011-08-12-19|cwl2011-08-12-20|cwl2011-08-12-21|cwl2011-08-12-23|cwl2011-08-12-24|cwl2011-08-12-25|cwl2011-08-12-26|cwl2011-08-12-27|cwl2011-08-12-28|cwl2011-08-12-29|cwl2011-08-12-30|cwl2011-08-12-31|cwl2011-08-13-1|cwl2011-08-13-2|cwl2011-08-13-3|cwl2011-08-13-4|cwl2011-08-13-5|cwl2011-08-13-6|cwl2011-08-13-7|cwl2011-08-13-8|cwl2011-08-13-9|cwl2011-08-13-10|cwl2011-08-13-11|cwl2011-08-13-12|cwl2011-08-13-13|cwl2011-08-13-14|cwl2011-08-13-15|cwl2011-08-13-16|cwl2011-08-13-17|cwl2011-08-13-18|cwl2011-08-13-19|cwl2011-08-13-20|cwl2011-08-13-21|cwl2011-08-13-22|cwl2011-08-13-23|cwl2011-08-13-24|cwl2011-08-13-25)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10187
+  deposition_id: 10025
   run_data_map_file: run_data_map/10187.csv
   run_to_frame_map_csv: run_frames_map/10187.csv
   run_to_tomo_map_csv: run_tomo_map/10187.csv
@@ -79,7 +81,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: '{ts-pixel_spacing}'
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -87,7 +89,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1.0
     tilting_scheme: min to max tilt
@@ -115,7 +116,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
@@ -138,3 +139,7 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^cwl2011-08-13-12$

@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: Philadelphia-1_Lp02
+    cross_references:
+      dataset_publications: 10.1038/s41564-019-0427-4
     dataset_description: "This is 2nd of 41 sets of data studying Legionella pneumophila\
       \ collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Legionella\
       \ thyA \u2206dotG.This strain is published in Nat Mic (2018). Roy and Liu."
@@ -54,8 +56,7 @@ runs:
       match_regex: (dga2018-08-27-518|dga2018-08-27-519|dga2018-08-27-520|dga2018-08-27-521|dga2018-08-27-527|dga2018-08-27-541|dga2018-08-27-558|dga2018-08-27-564|dga2018-08-27-565|dga2018-08-27-567|dga2018-08-27-572|dga2018-08-27-576|dga2018-08-27-579|dga2018-08-27-581|dga2018-08-27-585|dga2018-08-27-588|dga2018-08-27-589|dga2018-08-27-600|dga2018-08-27-602|dga2018-08-27-606|dga2018-08-27-607|dga2018-08-27-608|dga2018-08-27-609|dga2018-08-27-610|dga2018-08-27-612|dga2018-08-27-613|dga2018-08-27-614|dga2018-08-27-615|dga2018-08-27-617|dga2018-08-27-618|dga2018-08-27-619|dga2018-08-27-620|dga2018-08-27-621|dga2018-08-27-623|dga2018-08-27-624|dga2018-08-27-626|dga2018-08-27-627|dga2018-08-27-629|dga2018-08-27-638|dga2018-08-27-640|dga2018-08-27-641|dga2018-08-27-642|dga2018-08-27-655|dga2018-08-27-657|dga2018-08-27-660|dga2018-08-27-664|dga2018-08-27-668|dga2018-08-27-671|dga2018-08-27-673|dga2018-08-27-676|dga2018-08-27-679|dga2018-08-27-681|dga2018-08-27-687|dga2018-08-27-690|dga2018-08-27-691|dga2018-08-27-697|dga2018-08-27-699|dga2018-08-27-700|dga2018-08-27-701|dga2018-08-27-702|dga2018-08-27-703|dga2018-08-27-705|dga2018-08-27-707|dga2018-08-27-708|dga2018-08-27-709|dga2018-08-27-710|dga2018-08-27-712|dga2018-08-27-713|dga2018-08-27-714|dga2018-08-27-715|dga2018-08-27-717|dga2018-08-27-718|dga2018-08-27-719|dga2018-08-27-720|dga2018-08-27-721)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10059
-  run_data_map_file: run_data_map/10059.csv
+  deposition_id: 10038
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -74,7 +75,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 4.2
     spherical_aberration_constant: 2.7
     tilt_alignment_software: RAPTOR
@@ -82,7 +83,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 2.0
     tilting_scheme: starting tilt to max then min
@@ -110,8 +110,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares:
-    - RAPTOR
+    align_software: RAPTOR
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

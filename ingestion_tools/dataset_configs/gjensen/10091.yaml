@@ -57,8 +57,7 @@ runs:
       match_regex: (dga2019-05-28-181|dga2019-05-28-182|dga2019-05-28-183|dga2019-05-28-184|dga2019-05-28-185|dga2019-05-28-186|dga2019-05-28-187|dga2019-05-28-188|dga2019-05-28-189|dga2019-05-28-190|dga2019-05-28-191|dga2019-05-28-192)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10091
-  run_data_map_file: run_data_map/10091.csv
+  deposition_id: 10038
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -77,7 +76,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 2.6
     spherical_aberration_constant: 2.7
     tilt_alignment_software: RAPTOR
@@ -85,7 +84,6 @@ tiltseries:
     tilt_range:
       max: 51.0
       min: -51.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 3.0
     tilting_scheme: starting tilt to max then min
@@ -113,8 +111,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares:
-    - RAPTOR
+    align_software: RAPTOR
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: Philadelphia-1_Lp02
+    cross_references:
+      dataset_publications: 10.1038/s41564-019-0427-4
     dataset_description: "This is 13th of 41 sets of data studying Legionella pneumophila\
       \ collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. JV3579\
       \ Legionella thyA \u2206dotF"
@@ -62,7 +64,7 @@ runs:
       match_regex: (dga2017-01-15-86|dga2017-01-15-88|dga2017-01-15-89|dga2017-01-15-90|dga2017-01-15-91|dga2017-01-15-92|dga2017-01-15-95|dga2017-01-15-99|dga2017-01-15-100|dga2017-01-15-101|dga2017-01-15-102|dga2017-01-15-103|dga2017-05-10-2|dga2017-05-10-3|dga2017-05-10-4|dga2017-05-10-5|dga2017-05-10-6|dga2017-05-10-7|dga2017-05-10-8|dga2017-05-10-9|dga2017-05-10-10|dga2017-05-10-11|dga2017-05-10-16|dga2017-05-10-17|dga2017-05-10-18|dga2017-05-10-19|dga2017-05-10-20|dga2017-05-10-21|dga2017-05-10-22|dga2017-05-10-23|dga2017-05-10-24|dga2017-05-10-25|dga2017-05-10-27|dga2017-05-10-28|dga2017-05-10-29|dga2017-05-10-30|dga2017-05-10-31|dga2017-05-10-32|dga2017-05-10-33|dga2017-05-10-34|dga2017-05-10-35|dga2017-05-10-36|dga2017-05-10-37|dga2017-05-10-38|dga2017-05-10-40|dga2017-05-10-41|dga2017-05-10-42|dga2017-05-10-43|dga2017-05-10-48|dga2017-05-10-50|dga2017-05-10-51|dga2017-05-10-52|dga2017-05-10-53|dga2017-05-10-54|dga2017-05-10-55|dga2017-05-10-56|dga2017-05-10-57|dga2017-05-10-58|dga2017-05-10-59|dga2017-05-10-60|dga2017-05-10-61|dga2017-05-10-62|dga2017-05-10-63|dga2017-05-10-64|dga2017-05-10-65|dga2017-05-10-66|dga2017-05-10-67|dga2017-05-10-68|dga2017-05-10-69|dga2017-05-10-70|dga2017-05-10-71|dga2017-05-10-72|dga2017-05-10-73|dga2017-05-10-75|dga2017-05-10-76|dga2017-05-10-77|dga2017-05-10-78|dga2017-05-10-79|dga2017-05-10-80|dga2017-05-10-82|dga2017-05-10-83|dga2017-05-10-84|dga2017-05-10-85|dga2017-05-10-87|dga2017-05-10-88|dga2017-05-10-89|dga2017-05-10-90|dga2017-05-10-91|dga2017-05-10-92|dga2017-05-10-93|dga2017-05-10-94|dga2017-05-10-95|dga2017-05-10-96)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10070
+  deposition_id: 10038
   run_data_map_file: run_data_map/10070.csv
   run_to_frame_map_csv: run_frames_map/10070.csv
   run_to_tomo_map_csv: run_tomo_map/10070.csv
@@ -84,7 +86,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 4.036
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -92,7 +94,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: float {ts-tilt_step}
     tilting_scheme: starting tilt to max then min
@@ -120,7 +121,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

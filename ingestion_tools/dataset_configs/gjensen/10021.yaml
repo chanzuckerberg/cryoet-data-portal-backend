@@ -17,6 +17,9 @@ datasets:
     cell_strain:
       id: null
       name: c2
+    cross_references:
+      dataset_publications: 10.1038/s41467-022-32584-7
+      related_database_entries: EMD-27654, EMPIAR-11125
     dataset_description: ' and is a part of Caltech Jensen  lab etdb. Carboxysomes
       purified from H. Neapolitanus, WT, high resolution'
     dataset_identifier: 10021
@@ -54,8 +57,7 @@ runs:
       match_regex: (lma2019-08-21-1|lma2019-08-21-2|lma2019-08-21-3|lma2019-08-21-4|lma2019-08-21-5|lma2019-08-21-6|lma2019-08-21-7|lma2019-08-21-8|lma2019-08-21-9|lma2019-08-21-10|lma2019-08-21-11|lma2019-08-21-12|lma2019-08-21-13|lma2019-08-21-14|lma2019-08-21-15|lma2019-08-21-16|lma2019-08-21-17|lma2019-08-21-18|lma2019-08-21-19|lma2019-08-21-20|lma2019-08-21-21|lma2019-08-21-22|lma2019-08-21-23|lma2019-08-21-24|lma2019-08-21-25|lma2019-08-21-26|lma2019-08-21-27|lma2019-08-21-28|lma2019-08-21-29|lma2019-08-21-30|lma2019-08-21-31|lma2019-08-21-32|lma2019-08-21-33|lma2019-08-21-34|lma2019-08-21-35|lma2019-08-21-36|lma2019-08-21-37|lma2019-08-21-38|lma2019-08-21-39|lma2019-08-21-40|lma2019-08-21-41|lma2019-08-21-42|lma2019-08-21-43|lma2019-08-21-44|lma2019-08-21-45|lma2019-08-21-46|lma2019-08-21-47|lma2019-08-21-48|lma2019-08-21-49|lma2019-08-21-50|lma2019-08-21-51|lma2019-08-21-52|lma2019-08-21-53|lma2019-08-21-54|lma2019-08-21-55|lma2019-08-21-56|lma2019-08-21-57|lma2019-08-21-58|lma2019-08-21-59|lma2019-08-21-60|lma2019-08-21-61|lma2019-08-21-62)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10021
-  run_data_map_file: run_data_map/10021.csv
+  deposition_id: 10049
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -74,7 +76,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 1.104
     spherical_aberration_constant: 2.7
     tilt_alignment_software: IMOD
@@ -82,7 +84,6 @@ tiltseries:
     tilt_range:
       max: 66.0
       min: -66.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 3.0
     tilting_scheme: min to max tilt
@@ -110,8 +111,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares:
-    - IMOD
+    align_software: IMOD
     authors: *id001
     ctf_corrected: true
     fiducial_alignment_status: FIDUCIAL

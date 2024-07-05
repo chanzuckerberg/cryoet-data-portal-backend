@@ -1,109 +1,109 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_path,ts-tilt_series_quality
-mka2018-08-16-1,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt1.mrc,4
-mka2018-08-16-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt11.mrc,4
-mka2018-08-16-3,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt12.mrc,4
-mka2018-08-16-4,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt13.mrc,4
-mka2018-08-16-5,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt15.mrc,4
-mka2018-08-16-6,,NON_FIDUCIAL,None,None,,,rawdata/PseudoJT2944Tilt16.mrc,1
-mka2018-08-16-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt170.mrc,4
-mka2018-08-16-8,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt18.mrc,4
-mka2018-08-16-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt19.mrc,4
-mka2018-08-16-10,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt2.mrc,4
-mka2018-08-16-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt20.mrc,4
-mka2018-08-16-12,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt21.mrc,4
-mka2018-08-16-13,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt22.mrc,4
-mka2018-08-16-14,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt23.mrc,4
-mka2018-08-16-15,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt24.mrc,4
-mka2018-08-16-16,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt25.mrc,4
-mka2018-08-16-17,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt26.mrc,4
-mka2018-08-16-19,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt28.mrc,4
-mka2018-08-16-20,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt29.mrc,4
-mka2018-08-16-21,,NON_FIDUCIAL,None,None,,,rawdata/PseudoJT2944Tilt30.mrc,1
-mka2018-08-16-22,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt31.mrc,4
-mka2018-08-16-23,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt32.mrc,4
-mka2018-08-16-24,,NON_FIDUCIAL,None,None,,,rawdata/PseudoJT2944Tilt33.mrc,1
-mka2018-08-16-25,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt4.mrc,4
-mka2018-08-16-26,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt5.mrc,4
-mka2018-08-16-27,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt6.mrc,4
-mka2018-08-16-28,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt7.mrc,4
-mka2018-08-16-29,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt8.mrc,4
-mka2018-08-16-30,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt9.mrc,4
-mka2018-08-16-31,,NON_FIDUCIAL,None,None,,,rawdata/PseudoJT2944Tilt34.mrc,1
-mka2018-08-16-32,,NON_FIDUCIAL,None,None,,,rawdata/PseudoJT2944Tilt35.mrc,1
-mka2018-08-16-33,,NON_FIDUCIAL,None,None,,,rawdata/PseudoJT2944Tilt36.mrc,1
-mka2018-08-16-34,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt300.mrc,4
-mka2018-08-16-43,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt300.mrc,4
-mka2018-08-16-37,,NON_FIDUCIAL,None,None,,,rawdata/PseudoJT2944Tilt10.mrc,1
-mka2018-08-16-38,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt14.mrc,4
-mka2018-08-16-39,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt309.mrc,4
-mka2018-08-16-40,,NON_FIDUCIAL,None,None,,,rawdata/PseudoJT2944Tilt309.mrc,1
-mka2018-08-16-41,,NON_FIDUCIAL,None,None,,,rawdata/PseudoJT2944Tilt17.mrc,1
-mka2018-08-16-42,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt3.mrc,4
-mka2018-08-16-44,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt301.mrc,4
-mka2018-08-16-45,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt302.mrc,4
-mka2018-08-16-46,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt303.mrc,4
-mka2018-08-16-47,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt304.mrc,4
-mka2018-08-16-48,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt305.mrc,4
-mka2018-08-16-49,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt306.mrc,4
-mka2018-08-16-50,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt307.mrc,4
-mka2018-08-16-51,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/PseudoJT2944Tilt308.mrc,4
-mka2018-08-16-55,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt400.mrc,4
-mka2018-08-16-56,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt401.mrc,4
-mka2018-08-16-57,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt402.mrc,4
-mka2018-08-16-58,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt403.mrc,4
-mka2018-08-16-59,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt404.mrc,4
-mka2018-08-16-60,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt405.mrc,4
-mka2018-08-16-61,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt406.mrc,4
-mka2018-08-16-62,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt407.mrc,4
-mka2018-08-16-63,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt408.mrc,4
-mka2018-08-16-64,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt409.mrc,4
-mka2018-08-16-65,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt410.mrc,4
-mka2018-08-16-66,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt411.mrc,1
-mka2018-08-16-67,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt412.mrc,4
-mka2018-08-16-68,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt413.mrc,4
-mka2018-08-16-69,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt414.mrc,4
-mka2018-08-16-70,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt415.mrc,4
-mka2018-08-16-71,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt416.mrc,4
-mka2018-08-16-72,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt417.mrc,4
-mka2018-08-16-73,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt418.mrc,4
-mka2018-08-16-74,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt419.mrc,4
-mka2018-08-16-75,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt420.mrc,4
-mka2018-08-16-76,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt421.mrc,4
-mka2018-08-16-77,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt500.mrc,4
-mka2018-08-16-78,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt501.mrc,4
-mka2018-08-16-79,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt502.mrc,4
-mka2018-08-16-80,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt503.mrc,4
-mka2018-08-16-81,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt504.mrc,4
-mka2018-08-16-82,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt505.mrc,4
-mka2018-08-16-83,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt506.mrc,4
-mka2018-08-16-84,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt507.mrc,4
-mka2018-08-16-85,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt508.mrc,1
-mka2018-08-16-86,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt509.mrc,1
-mka2018-08-16-87,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt510.mrc,1
-mka2018-08-16-88,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt511.mrc,1
-mka2018-08-16-89,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt512.mrc,1
-mka2018-08-16-90,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt515.mrc,4
-mka2018-08-16-91,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt516.mrc,1
-mka2018-08-16-92,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt517.mrc,1
-mka2018-08-16-93,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt518.mrc,1
-mka2018-08-16-94,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt519.mrc,1
-mka2018-08-16-95,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt520.mrc,1
-mka2018-08-16-96,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt521.mrc,1
-mka2018-08-16-97,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt522.mrc,1
-mka2018-08-16-98,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt523.mrc,1
-mka2018-08-16-99,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt524.mrc,1
-mka2018-08-16-100,,NON_FIDUCIAL,None,None,,,rawdata/Pseudomonas_JT2944Tilt525.mrc,1
-mka2018-08-16-110,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt508.mrc,4
-mka2018-08-16-111,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt509.mrc,4
-mka2018-08-16-112,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt510.mrc,4
-mka2018-08-16-113,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt511.mrc,4
-mka2018-08-16-114,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt512.mrc,4
-mka2018-08-16-115,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt517.mrc,4
-mka2018-08-16-116,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt518.mrc,4
-mka2018-08-16-117,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt519.mrc,4
-mka2018-08-16-118,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt520.mrc,4
-mka2018-08-16-119,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt521.mrc,4
-mka2018-08-16-120,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt522.mrc,4
-mka2018-08-16-121,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt523.mrc,4
-mka2018-08-16-122,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt524.mrc,4
-mka2018-08-16-123,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,rawdata/Pseudomonas_JT2944Tilt525.mrc,4
+run_name,tomo-align_software,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_quality
+mka2018-08-16-1,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-2,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-3,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-4,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-5,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-7,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-8,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-9,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-10,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-11,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-12,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-13,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-14,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-15,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-16,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-17,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-19,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-20,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-22,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-23,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-25,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-26,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-27,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-28,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-29,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-30,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-34,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-38,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-39,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-42,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-43,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-44,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-45,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-46,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-47,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-48,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-49,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-50,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-51,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-55,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-56,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-57,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-58,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-59,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-60,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-61,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-62,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-63,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-64,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-65,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-67,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-68,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-69,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-70,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-71,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-72,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-73,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-74,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-75,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-76,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-77,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-78,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-79,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-80,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-81,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-82,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-83,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-84,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-90,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-110,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-111,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-112,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-113,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-114,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-115,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-116,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-117,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-118,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-119,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-120,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-121,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-122,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-123,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,14.848,RAPTOR,4
+mka2018-08-16-6,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-21,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-24,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-31,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-32,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-33,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-37,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-40,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-41,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-66,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-85,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-86,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-87,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-88,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-89,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-91,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-92,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-93,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-94,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-95,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-96,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-97,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-98,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-99,,NON_FIDUCIAL,None,None,,,1
+mka2018-08-16-100,,NON_FIDUCIAL,None,None,,,1

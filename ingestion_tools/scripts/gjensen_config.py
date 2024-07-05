@@ -10,7 +10,7 @@ from typing import Any, Callable, Optional
 
 import click
 import yaml
-from transform_ingestion_configs import update_file
+from transform_ingestion_configs import update_config
 
 from common.fs import LocalFilesystem
 from common.normalize_fields import normalize_fiducial_alignment
@@ -58,7 +58,12 @@ def clean(val: str) -> str | None:
     )
 
 
-def to_dataset_config(dataset_id: int, data: dict[str, Any], authors: list[dict[str, Any]]) -> dict[str, Any]:
+def to_dataset_config(
+    dataset_id: int,
+    data: dict[str, Any],
+    authors: list[dict[str, Any]],
+    cross_reference: dict[str, str] | None,
+) -> dict[str, Any]:
     dataset = data.get("dataset")
 
     config = {
@@ -98,6 +103,8 @@ def to_dataset_config(dataset_id: int, data: dict[str, Any], authors: list[dict[
         }
     if dataset["tissue"]:
         config["tissue"] = dataset["tissue"]
+    if cross_reference:
+        config["cross_references"] = cross_reference
 
     return config
 
@@ -119,6 +126,7 @@ def to_standardization_config(
     run_data_map_path: str,
     run_tomo_map_path: str,
     run_frames_map_path: str,
+    deposition_id: int | None,
 ) -> dict[str, Any]:
     run_names = []
     mapped_tomo_name = {}
@@ -133,6 +141,7 @@ def to_standardization_config(
     tomo_path = "{mapped_tomo_name}" if run_has_multiple_tomos else "3dimage_*/*"
 
     config = {
+        "deposition_id": deposition_id,
         "destination_prefix": str(dataset_id),
         "source_prefix": "GJensen_full",
         "frames_glob": None,
@@ -238,8 +247,9 @@ def to_template_by_run(templates, run_data_map, prefix: str, path) -> dict[str, 
 def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
     tilt_series = deepcopy(data["tilt_series"])
     microscope = tilt_series.get("microscope", {})
+    phase_plate = microscope.pop("phase_plate")
     tilt_series["microscope_optical_setup"] = {
-        "phase_plate": microscope.pop("phase_plate"),
+        "phase_plate": "volta phase plate" if phase_plate is True else phase_plate if phase_plate else "None",
         "image_corrector": microscope.pop("image_corrector"),
         "energy_filter": microscope.pop("engergy_filter"),
     }
@@ -253,6 +263,8 @@ def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
 
     tilt_series["tilt_series_quality"] = 4 if len(data["tomograms"]) else 1
     tilt_series["pixel_spacing"] = round(tilt_series["pixel_spacing"], 3) if tilt_series.get("pixel_spacing") else None
+
+    tilt_series.pop("tilt_series_path", None)
     return tilt_series
 
 
@@ -294,7 +306,7 @@ def to_tomogram(
     tomogram["tomogram_version"] = 1
     tomogram["reconstruction_method"] = normalize_invalid_to_none(tomogram.get("reconstruction_method"))
     tomogram["reconstruction_software"] = normalize_invalid_to_none(tomogram.get("reconstruction_software"))
-
+    tomogram["align_software"] = "+".join(tomogram.pop("align_softwares", []))
     tomogram["processing"] = normalize_processing(tomogram.get("processing"))
 
     tomogram["voxel_spacing"] = round(tomogram["voxel_spacing"], 3) if "voxel_spacing" in tomogram else None
@@ -332,9 +344,47 @@ def cli(ctx):
     pass
 
 
+def get_deposition_map(input_dir: str) -> dict[int, int]:
+    with open(os.path.join(input_dir, "portal_dataset_grouping.json"), "r") as file:
+        groupings = json.load(file)
+
+    deposition_id = 10014
+    data = next(entry["data"] for entry in groupings if entry["type"] == "table" and entry["name"] == "SubDatasetData")
+
+    dataset_deposition_id_mapping = {}
+    deposition_id_mapping = {}
+    for entry in data:
+        dataset_group = int(entry["dataset_group"])
+        if dataset_group not in deposition_id_mapping:
+            deposition_id_mapping[dataset_group] = deposition_id
+            deposition_id += 1
+        dataset_id = int(entry["czportal_dataset_id"])
+        dataset_deposition_id_mapping[dataset_id] = deposition_id_mapping[dataset_group]
+
+    return dataset_deposition_id_mapping
+
+
+def get_cross_reference_mapping(input_dir: str) -> dict[int, dict[str, str]]:
+    with open(os.path.join(input_dir, "cross_references.json"), "r") as file:
+        data = json.load(file)
+    return {int(key): val for key, val in data.items()}
+
+
+def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> None:
+    for entity in entities:
+        for source in entity["sources"]:
+            if "parent_filters" not in source:
+                source["parent_filters"] = {}
+            if "exclude" not in source["parent_filters"]:
+                source["parent_filters"]["exclude"] = {}
+            if "run" not in source["parent_filters"]["exclude"]:
+                source["parent_filters"]["exclude"]["run"] = []
+            source["parent_filters"]["exclude"]["run"].extend(runs_to_exclude)
+
+
 @cli.command()
 @click.argument("input_dir", required=True, type=str)
-@click.argument("output_dir", required=True, type=str)
+@click.argument("output_dir", type=str, default="../dataset_configs/gjensen")
 @click.pass_context
 def create(ctx, input_dir: str, output_dir: str) -> None:
     fs = LocalFilesystem(force_overwrite=True)
@@ -345,6 +395,8 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     fs.makedirs(run_data_map_path)
     fs.makedirs(run_tomo_map_path)
     fs.makedirs(run_frames_map_path)
+    deposition_mapping = get_deposition_map(input_dir)
+    cross_reference_mapping = get_cross_reference_mapping(input_dir)
     file_paths = fs.glob(os.path.join(input_dir, "portal_[0-9]*.json"))
     file_paths.sort()
     for file_path in file_paths:
@@ -359,7 +411,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
         authors = to_dataset_author(val.get("dataset"))
         run_data_map = defaultdict(dict)
         dataset_config = {
-            "dataset": to_dataset_config(dataset_id, val, authors),
+            "dataset": to_dataset_config(dataset_id, val, authors, cross_reference_mapping.get(dataset_id, {})),
             "runs": {},
             "tiltseries": to_config_by_run(
                 dataset_id,
@@ -383,15 +435,19 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
                 run_data_map_path,
                 run_tomo_map_path,
                 run_frames_map_path,
+                deposition_mapping.get(dataset_id),
             ),
         }
 
         print(f"Writing file for {dataset_id}")
         dataset_config_file_path = os.path.join(output_dir, f"{dataset_id}.yaml")
         with open(dataset_config_file_path, "w") as outfile:
-            yaml.dump(dataset_config, outfile, sort_keys=False)
-
-        update_file(dataset_config_file_path)
+            updated_dataset_config = update_config(dataset_config)
+            if runs_without_tilt := [f"^{run['run_name']}$" for run in val.get("runs") if not run.get("tilt_series")]:
+                exclude_runs_parent_filter(updated_dataset_config.get("tilt_series", []), runs_without_tilt)
+            if runs_without_tomogram := [f"^{run['run_name']}$" for run in val.get("runs") if not run.get("tomograms")]:
+                exclude_runs_parent_filter(updated_dataset_config.get("voxel_spacings", []), runs_without_tomogram)
+            yaml.dump(updated_dataset_config, outfile, sort_keys=True)
 
 
 if __name__ == "__main__":

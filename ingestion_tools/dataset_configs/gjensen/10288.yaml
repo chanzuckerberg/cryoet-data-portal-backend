@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: ''
+    cross_references:
+      dataset_publications: 10.1091/mbc.E12-11-0785
     dataset_description: ' and is a part of Caltech Jensen  lab etdb.'
     dataset_identifier: 10288
     dataset_title: CHMP1B tubes
@@ -52,7 +54,7 @@ runs:
       match_regex: (zyh2009-06-04-1|zyh2009-06-04-2|zyh2009-06-04-3|zyh2009-06-04-4|zyh2009-06-04-5|zyh2009-06-04-6|zyh2009-06-04-7|zyh2009-06-04-8|zyh2009-06-04-9|zyh2009-06-04-10|zyh2009-06-04-11|zyh2009-06-04-12|zyh2009-06-04-13|zyh2009-06-04-14|zyh2009-06-04-15|zyh2009-06-04-16|zyh2009-06-04-17|zyh2009-06-04-18|zyh2009-06-04-19|zyh2009-06-04-20|zyh2009-06-04-21|zyh2009-06-04-23|zyh2009-06-04-24|zyh2009-06-04-25|zyh2009-06-04-26|zyh2009-06-04-27|zyh2009-06-04-28|zyh2009-06-04-29|zyh2009-06-04-30|zyh2009-06-04-31|zyh2009-06-04-32|zyh2009-06-04-33|zyh2009-06-04-34|zyh2009-06-04-35|zyh2009-06-04-36|zyh2009-06-04-37|zyh2009-06-04-38|zyh2009-06-04-39|zyh2009-06-04-40|zyh2009-06-04-41|zyh2009-06-04-42|zyh2009-06-13-1|zyh2009-06-13-2|zyh2009-06-13-3|zyh2009-06-13-4|zyh2009-06-13-5|zyh2009-06-13-6|zyh2009-06-13-7|zyh2009-06-13-8|zyh2009-06-13-9|zyh2009-06-13-10|zyh2009-06-13-11|zyh2009-06-13-12|zyh2009-06-13-13|zyh2009-06-13-14|zyh2009-06-13-15|zyh2009-06-13-16|zyh2009-06-13-17|zyh2009-06-13-18|zyh2009-06-13-19|zyh2009-06-13-20|zyh2009-06-13-21|zyh2009-06-13-22|zyh2009-06-13-23|zyh2009-06-13-24|zyh2009-06-13-25|zyh2009-06-13-26|zyh2009-06-13-27|zyh2009-06-13-28|zyh2009-06-13-29|zyh2009-06-13-30|zyh2009-06-13-31|zyh2009-06-13-32|zyh2009-06-13-33|zyh2009-06-13-34|zyh2009-06-13-35|zyh2009-06-13-36|zyh2009-06-13-37|zyh2009-06-13-38|zyh2009-06-13-39|zyh2009-06-13-40|zyh2009-06-13-41|zyh2009-06-13-42|zyh2009-06-13-43|zyh2009-06-13-44)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10288
+  deposition_id: 10041
   run_data_map_file: run_data_map/10288.csv
   run_to_frame_map_csv: run_frames_map/10288.csv
   run_to_tomo_map_csv: run_tomo_map/10288.csv
@@ -74,7 +76,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: '{ts-pixel_spacing}'
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -82,7 +84,6 @@ tiltseries:
     tilt_range:
       max: 64.0
       min: -64.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: float {ts-tilt_step}
     tilting_scheme: starting tilt to max then min
@@ -110,7 +111,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
@@ -133,3 +134,23 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^zyh2009-06-04-8$
+        - ^zyh2009-06-04-10$
+        - ^zyh2009-06-04-12$
+        - ^zyh2009-06-04-15$
+        - ^zyh2009-06-04-17$
+        - ^zyh2009-06-04-18$
+        - ^zyh2009-06-04-19$
+        - ^zyh2009-06-04-23$
+        - ^zyh2009-06-04-24$
+        - ^zyh2009-06-04-25$
+        - ^zyh2009-06-04-27$
+        - ^zyh2009-06-04-28$
+        - ^zyh2009-06-04-30$
+        - ^zyh2009-06-04-32$
+        - ^zyh2009-06-04-39$
+        - ^zyh2009-06-04-40$
+        - ^zyh2009-06-04-41$

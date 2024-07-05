@@ -53,8 +53,7 @@ runs:
       match_regex: (mba2011-03-25-1|mba2011-03-25-2|mba2011-03-25-3|mba2011-03-25-4|mba2011-03-25-5|mba2011-03-25-6|mba2011-03-25-7|mba2011-03-25-8|mba2011-03-25-9)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10238
-  run_data_map_file: run_data_map/10238.csv
+  deposition_id: 10022
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -73,7 +72,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 6.32
     spherical_aberration_constant: 2.0
     tilt_alignment_software: IMOD
@@ -81,7 +80,6 @@ tiltseries:
     tilt_range:
       max: 70.0
       min: -70.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -109,8 +107,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares:
-    - IMOD
+    align_software: IMOD
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

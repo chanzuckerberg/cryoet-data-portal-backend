@@ -1,11 +1,11 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_series_path,ts-tilt_series_quality,ts-tilting_scheme
-etl2013-09-08-1,,NON_FIDUCIAL,None,None,,Undefined,,rawdata/wt0001.mrc,1,min to max tilt
-etl2013-09-08-2,,NON_FIDUCIAL,None,None,,UCSFTomo,,rawdata/wt0002.mrc,1,starting tilt to max then min
-etl2013-09-08-3,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,rawdata/wt0003.mrc,4,starting tilt to max then min
-etl2013-09-08-4,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,rawdata/wt0004.mrc,4,starting tilt to max then min
-etl2013-09-08-5,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,rawdata/wt0005.mrc,4,starting tilt to max then min
-etl2013-09-08-6,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,rawdata/wt0006.mrc,4,starting tilt to max then min
-etl2013-09-08-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,rawdata/wt0007.mrc,4,starting tilt to max then min
-etl2013-09-08-8,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,rawdata/wt0008.mrc,4,starting tilt to max then min
-etl2013-09-08-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,rawdata/wt0009.mrc,4,starting tilt to max then min
-etl2013-09-08-10,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,rawdata/wt0010.mrc,4,starting tilt to max then min
+run_name,tomo-align_software,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_series_quality,ts-tilting_scheme
+etl2013-09-08-1,,NON_FIDUCIAL,None,None,,Undefined,,1,min to max tilt
+etl2013-09-08-2,,NON_FIDUCIAL,None,None,,UCSFTomo,,1,starting tilt to max then min
+etl2013-09-08-3,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,4,starting tilt to max then min
+etl2013-09-08-4,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,4,starting tilt to max then min
+etl2013-09-08-5,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,4,starting tilt to max then min
+etl2013-09-08-6,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,4,starting tilt to max then min
+etl2013-09-08-7,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,4,starting tilt to max then min
+etl2013-09-08-8,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,4,starting tilt to max then min
+etl2013-09-08-9,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,4,starting tilt to max then min
+etl2013-09-08-10,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,4,starting tilt to max then min

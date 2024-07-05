@@ -20,6 +20,8 @@ datasets:
     cell_type:
       id: CL:0002618
       name: umbilical vein endothelial cell
+    cross_references:
+      dataset_publications: 10.1128/JVI.02997-14
     dataset_description: This is 17th of 17 sets of data studying HUVECs collected
       by Cora Woodward and is a part of Caltech Jensen  lab etdb. Whole cells were
       grown on Au finder grids and infected with pNLGFP-VSVG. Sample frozen 24h post
@@ -58,7 +60,7 @@ runs:
       match_regex: (cwl2013-12-02-1|cwl2013-12-02-2|cwl2013-12-02-3|cwl2013-12-02-4|cwl2013-12-02-6|cwl2013-12-02-7|cwl2013-12-02-8|cwl2013-12-02-9|cwl2013-12-02-10|cwl2013-12-02-11|cwl2013-12-02-12|cwl2013-12-02-13|cwl2013-12-02-14|cwl2013-12-02-15|cwl2013-12-02-16|cwl2013-12-02-17|cwl2013-12-02-18|cwl2013-12-02-19|cwl2013-12-02-20)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10188
+  deposition_id: 10025
   run_data_map_file: run_data_map/10188.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -78,7 +80,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 4.933
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -86,7 +88,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -114,7 +115,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
@@ -137,3 +138,7 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^cwl2013-12-02-12$

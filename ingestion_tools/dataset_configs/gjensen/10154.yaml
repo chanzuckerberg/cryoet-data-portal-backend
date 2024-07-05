@@ -56,7 +56,7 @@ runs:
       match_regex: (ycw2013-10-09-1|ycw2013-10-09-2|ycw2013-10-09-3|ycw2013-10-09-4|ycw2013-10-09-5|ycw2013-10-09-6|ycw2013-10-09-7|ycw2013-10-09-8|ycw2013-10-09-9|ycw2013-10-09-10|ycw2013-10-09-11|ycw2013-10-09-12|ycw2013-10-09-13|ycw2013-10-09-14|ycw2013-10-09-15|ycw2013-10-09-16|ycw2013-10-09-17|ycw2013-10-09-18|ycw2013-10-09-19|ycw2013-10-09-20|ycw2013-10-09-21|ycw2013-10-09-22|ycw2013-10-09-23|ycw2013-10-09-24|ycw2013-10-09-25|ycw2013-10-09-26|ycw2013-10-09-27|ycw2013-10-10-1|ycw2013-10-10-2|ycw2013-10-10-3|ycw2013-10-10-4|ycw2013-10-10-5|ycw2013-10-10-6|ycw2013-10-10-7|ycw2013-10-10-8|ycw2013-10-10-9|ycw2013-10-10-10|ycw2013-10-10-11|ycw2013-10-10-12|ycw2013-10-10-13|ycw2013-10-10-14|ycw2013-10-10-15|ycw2013-10-10-16|ycw2013-10-10-17|ycw2013-10-25-43|ycw2013-10-25-44|ycw2013-10-25-45|ycw2013-10-25-46|ycw2013-10-25-47|ycw2013-10-25-48|ycw2013-10-25-49|ycw2013-10-25-50|ycw2013-10-25-51|ycw2013-10-25-52|ycw2013-10-25-53|ycw2013-10-25-54|ycw2013-10-25-55|ycw2013-10-25-56|ycw2013-10-25-57|ycw2013-10-25-58|ycw2013-10-25-59|ycw2013-10-25-60|ycw2013-10-25-61|ycw2013-10-25-62|ycw2013-10-25-63|ycw2013-10-25-64|ycw2013-10-25-65|ycw2013-10-25-66|ycw2013-10-25-67|ycw2013-10-25-68|ycw2013-10-25-69|ycw2013-10-25-70|ycw2013-10-25-71|ycw2013-10-25-72|ycw2013-10-25-73|ycw2013-10-25-74|ycw2013-10-25-75|ycw2013-10-25-76|ycw2013-10-25-77|ycw2013-10-25-78|ycw2013-10-25-79|ycw2013-10-25-80|ycw2013-10-25-81|ycw2013-10-25-82|ycw2013-10-25-83|ycw2013-10-25-84|ycw2013-10-25-85|ycw2013-10-25-86|ycw2013-10-25-87|ycw2013-10-25-88|ycw2013-10-25-89)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10154
+  deposition_id: 10017
   run_data_map_file: run_data_map/10154.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -76,7 +76,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: '{ts-pixel_spacing}'
     spherical_aberration_constant: '{ts-spherical_aberration_constant}'
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -84,7 +84,6 @@ tiltseries:
     tilt_range:
       max: float {ts-tilt_range-max}
       min: float {ts-tilt_range-min}
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -112,7 +111,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
@@ -135,3 +134,7 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^ycw2013-10-25-46$

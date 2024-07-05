@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: ATCC 23769
+    cross_references:
+      dataset_publications: 10.1128/JB.00371-20
     dataset_description: This is 5th of 16 sets of data studying Gluconacetobacter
       hansenii collected by William Nicolas and is a part of Caltech Jensen  lab etdb.
       1.2s - Phase plate
@@ -57,7 +59,7 @@ runs:
       match_regex: (wnj2018-10-31-2|wnj2018-11-01-9)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10026
+  deposition_id: 10018
   run_data_map_file: run_data_map/10026.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -77,7 +79,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: true
+      phase_plate: volta phase plate
     pixel_spacing: 5.41
     spherical_aberration_constant: 2.7
     tilt_alignment_software: IMOD
@@ -85,7 +87,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: float {ts-tilt_range-min}
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: min to max tilt
@@ -113,8 +114,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares:
-    - IMOD
+    align_software: IMOD
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

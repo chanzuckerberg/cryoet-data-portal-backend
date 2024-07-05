@@ -1,27 +1,27 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_path,ts-tilt_series_quality
-mka2019-11-23-49,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_001_af.mrc,4
-mka2019-11-23-50,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_002_af.mrc,4
-mka2019-11-23-51,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_003_af.mrc,4
-mka2019-11-23-52,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_004_af.mrc,4
-mka2019-11-23-53,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_005_af.mrc,4
-mka2019-11-23-54,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_006_af.mrc,4
-mka2019-11-23-55,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_007_af.mrc,4
-mka2019-11-23-56,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_008_af.mrc,4
-mka2019-11-23-57,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_009_af.mrc,4
-mka2019-11-23-58,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_010_af.mrc,4
-mka2019-11-23-59,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_011_af.mrc,4
-mka2019-11-23-60,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_012_af.mrc,4
-mka2019-11-23-61,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_013_af.mrc,4
-mka2019-11-23-62,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_014_af.mrc,4
-mka2019-11-23-63,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_015_af.mrc,4
-mka2019-11-23-64,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_016_af.mrc,4
-mka2019-11-23-65,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_017_af.mrc,4
-mka2019-11-23-66,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_018_af.mrc,4
-mka2019-11-23-67,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_019_af.mrc,4
-mka2019-11-23-68,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_020_af.mrc,4
-mka2019-11-23-69,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_021_af.mrc,4
-mka2019-11-23-70,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_022_af.mrc,4
-mka2019-11-23-71,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_023_af.mrc,4
-mka2019-11-23-72,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_024_af.mrc,4
-mka2019-11-23-73,,NON_FIDUCIAL,,None,None,,,rawdata/Hpylori_dflgS_025_af.mrc,1
-mka2019-11-23-74,['RAPTOR'],FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,rawdata/Hpylori_dflgS_026_af.mrc,4
+run_name,tomo-align_software,tomo-fiducial_alignment_status,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_quality
+mka2019-11-23-49,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-50,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-51,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-52,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-53,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-54,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-55,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-56,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-57,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-58,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-59,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-60,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-61,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-62,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-63,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-64,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-65,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-66,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-67,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-68,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-69,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-70,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-71,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-72,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-74,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,17.976,RAPTOR,4
+mka2019-11-23-73,,NON_FIDUCIAL,,None,None,,,1

@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: ''
+    cross_references:
+      dataset_publications: 10.1128/JB.00505-12
     dataset_description: This is 3rd of 5 sets of data studying Escherichia coli collected
       by Matt Swulius and is a part of Caltech Jensen  lab etdb. Cells contain WT
       MreB in the chromosome plus an N-terminal YFP fusion to MreB (YFP-MreB) on the
@@ -56,7 +58,7 @@ runs:
       match_regex: (mst2011-11-05-13|mst2011-11-05-14|mst2011-11-05-15|mst2011-11-05-16|mst2011-11-05-17|mst2011-11-05-18|mst2011-11-05-19|mst2011-11-05-20|mst2011-11-05-21|mst2011-11-05-22|mst2011-06-02-1|mst2011-06-02-2|mst2011-06-02-3|mst2011-06-02-4|mst2011-06-02-5|mst2011-06-02-6|mst2011-06-02-7|mst2011-06-02-8|mst2011-06-02-9|mst2011-06-02-10|mst2011-06-02-11|mst2011-06-02-12|mst2011-06-02-14|mst2011-06-02-15|mst2011-06-02-16|mst2011-06-02-17|mst2011-06-02-18|mst2011-06-02-19|mst2011-06-02-20|mst2011-06-02-21|mst2011-06-02-22|mst2011-06-02-23|mst2011-06-02-24|mst2011-06-02-26|mst2011-06-02-27|mst2011-06-02-28|mst2011-06-02-29|mst2011-06-02-30)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10191
+  deposition_id: 10057
   run_data_map_file: run_data_map/10191.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -76,7 +78,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 9.46
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -84,7 +86,6 @@ tiltseries:
     tilt_range:
       max: float {ts-tilt_range-max}
       min: float {ts-tilt_range-min}
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -112,8 +113,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares:
-    - RAPTOR
+    align_software: RAPTOR
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

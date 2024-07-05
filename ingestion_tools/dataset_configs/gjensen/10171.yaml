@@ -58,7 +58,7 @@ runs:
       match_regex: (cwl2012-08-16-1|cwl2012-08-16-2|cwl2012-08-16-3|cwl2012-08-16-4|cwl2012-08-16-5|cwl2012-08-16-6|cwl2012-08-16-7|cwl2012-08-16-8|cwl2012-08-16-9|cwl2012-08-16-10|cwl2012-08-16-11|cwl2012-08-16-12|cwl2012-08-16-13|cwl2012-08-16-14)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10171
+  deposition_id: 10033
   run_data_map_file: run_data_map/10171.csv
   run_to_frame_map_csv: run_frames_map/10171.csv
   run_to_tomo_map_csv: run_tomo_map/10171.csv
@@ -80,7 +80,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: '{ts-pixel_spacing}'
     spherical_aberration_constant: 2.0
     tilt_alignment_software: IMOD
@@ -88,7 +88,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: min to max tilt
@@ -116,8 +115,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares:
-    - IMOD
+    align_software: IMOD
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

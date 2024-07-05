@@ -20,6 +20,8 @@ datasets:
     cell_type:
       id: CL:0002618
       name: umbilical vein endothelial cell
+    cross_references:
+      dataset_publications: 10.1128/JVI.02997-14
     dataset_description: This is 3rd of 17 sets of data studying HUVECs collected
       by Cora Woodward and is a part of Caltech Jensen  lab etdb. Whole cells were
       grown on Au finder grids and infected with pNLGFP. Sample frozen 24h post infection.
@@ -57,7 +59,7 @@ runs:
       match_regex: (cwl2012-11-12-1|cwl2012-11-12-2|cwl2012-11-12-3|cwl2012-11-12-4|cwl2012-11-12-5|cwl2012-11-12-6|cwl2012-11-12-7|cwl2012-11-12-8|cwl2012-11-12-9|cwl2012-11-12-10|cwl2012-11-12-11|cwl2012-11-12-12|cwl2012-11-12-13|cwl2012-11-12-14|cwl2011-11-12-2|cwl2011-11-12-3|cwl2011-11-12-4|cwl2011-11-12-5|cwl2011-11-12-6|cwl2011-11-12-7|cwl2011-11-12-8|cwl2011-11-12-9|cwl2011-11-12-10|cwl2011-11-12-11|cwl2011-11-12-12|cwl2011-11-12-13|cwl2011-11-12-14|cwl2011-11-12-15|cwl2011-11-12-16|cwl2011-11-12-17|cwl2011-11-12-18|cwl2011-11-12-20|cwl2011-11-12-21|cwl2011-11-12-22|cwl2011-11-12-23|cwl2011-11-12-24|cwl2011-11-12-25|cwl2011-11-12-26|cwl2011-11-12-27|cwl2011-11-12-28|cwl2011-11-12-35|cwl2011-11-12-36|cwl2011-11-12-37|cwl2011-11-12-38|cwl2011-11-12-39|cwl2011-11-12-40|cwl2011-11-12-41|cwl2011-11-12-42|cwl2011-11-12-43|cwl2011-11-12-44|cwl2011-11-12-45|cwl2011-11-12-46|cwl2011-11-12-47|cwl2011-11-12-48|cwl2011-11-12-49|cwl2011-11-12-50|cwl2011-11-12-51|cwl2011-11-12-52|cwl2011-11-12-53|cwl2011-11-12-54|cwl2011-11-12-55|cwl2011-11-12-56|cwl2011-11-12-57|cwl2011-11-12-58|cwl2011-11-12-59|cwl2011-11-12-60|cwl2011-11-12-61|cwl2011-11-13-1|cwl2011-11-13-2|cwl2011-11-13-3|cwl2011-11-13-4|cwl2011-11-13-5|cwl2011-11-13-6|cwl2011-11-13-7|cwl2011-11-13-8|cwl2011-11-13-9|cwl2011-11-13-10|cwl2011-11-13-11|cwl2011-11-13-12|cwl2011-11-13-13|cwl2011-11-13-14|cwl2011-11-13-15|cwl2011-11-13-16|cwl2011-11-13-17|cwl2011-11-13-18|cwl2011-11-13-19|cwl2011-11-13-20|cwl2011-11-13-21|cwl2011-11-13-23|cwl2011-11-13-24|cwl2011-11-13-25|cwl2011-11-13-26|cwl2011-11-13-27|cwl2011-11-13-28|cwl2011-11-13-29|cwl2011-11-13-30|cwl2011-11-13-31|cwl2011-11-13-32|cwl2011-11-13-33|cwl2011-11-13-34)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10174
+  deposition_id: 10025
   run_data_map_file: run_data_map/10174.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -77,7 +79,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 4.933
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -85,7 +87,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -113,7 +114,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
@@ -136,3 +137,7 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^cwl2011-11-13-29$

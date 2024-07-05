@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: Philadelphia-1_Lp02
+    cross_references:
+      dataset_publications: 10.1038/s41564-019-0603-6
     dataset_description: This is 35th of 41 sets of data studying Legionella pneumophila
       collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Legionella
       pneumophila Philadelphia-1_Lp02. Lacks all the T2SS major and minor pseudopilins.
@@ -57,8 +59,7 @@ runs:
       match_regex: (dga2019-05-18-1|dga2019-05-18-2|dga2019-05-18-3|dga2019-05-18-4|dga2019-05-18-5|dga2019-05-18-6|dga2019-05-18-7|dga2019-05-18-8|dga2019-05-18-9|dga2019-05-18-10|dga2019-05-18-11|dga2019-05-18-12|dga2019-05-18-13|dga2019-05-18-14|dga2019-05-18-15|dga2019-05-18-16|dga2019-05-18-17|dga2019-05-18-18|dga2019-05-18-19|dga2019-05-18-20|dga2019-05-18-21|dga2019-05-18-22|dga2019-05-18-23|dga2019-05-18-24|dga2019-05-18-25|dga2019-05-18-26|dga2019-05-18-27|dga2019-05-18-28|dga2019-05-18-29|dga2019-05-18-30|dga2019-05-18-31|dga2019-05-18-32|dga2019-05-18-33|dga2019-05-18-34|dga2019-05-18-35|dga2019-05-18-36|dga2019-05-18-37|dga2019-05-18-38|dga2019-05-18-39|dga2019-05-18-40|dga2019-05-18-41|dga2019-05-18-42|dga2019-05-18-43|dga2019-05-18-44|dga2019-05-18-45|dga2019-05-18-46|dga2019-05-18-47|dga2019-05-18-48|dga2019-05-18-49|dga2019-05-18-50|dga2019-05-18-51|dga2019-05-18-52|dga2019-05-18-53|dga2019-05-18-54|dga2019-05-18-55|dga2019-05-18-56|dga2019-05-18-57|dga2019-05-18-58|dga2019-05-18-59|dga2019-05-18-60|dga2019-05-18-61|dga2019-05-18-62|dga2019-05-18-63|dga2019-05-18-64|dga2019-05-18-65|dga2019-05-18-66|dga2019-05-18-67|dga2019-05-18-68|dga2019-05-18-69|dga2019-05-18-70|dga2019-05-18-71|dga2019-05-18-72|dga2019-05-18-73|dga2019-05-18-74|dga2019-05-18-75|dga2019-05-18-76|dga2019-05-18-77|dga2019-05-18-78|dga2019-05-18-79|dga2019-05-18-80|dga2019-05-18-81|dga2019-05-18-82|dga2019-05-18-83|dga2019-05-18-84|dga2019-05-18-85|dga2019-05-18-86|dga2019-05-18-87|dga2019-05-18-88|dga2019-05-18-89|dga2019-05-18-90|dga2019-05-18-91|dga2019-05-18-92|dga2019-05-18-93|dga2019-05-18-94|dga2019-05-18-95|dga2019-05-18-96|dga2019-05-18-97|dga2019-05-18-98|dga2019-05-18-99|dga2019-05-18-100|dga2019-05-18-101|dga2019-05-18-102|dga2019-05-18-103|dga2019-05-18-104|dga2019-05-18-105|dga2019-05-18-106|dga2019-05-18-107|dga2019-05-18-108|dga2019-05-18-109|dga2019-05-18-110|dga2019-05-18-111|dga2019-05-18-112)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10092
-  run_data_map_file: run_data_map/10092.csv
+  deposition_id: 10038
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -77,7 +78,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 2.6
     spherical_aberration_constant: 2.7
     tilt_alignment_software: RAPTOR
@@ -85,7 +86,6 @@ tiltseries:
     tilt_range:
       max: 45.0
       min: -45.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 3.0
     tilting_scheme: starting tilt to max then min
@@ -113,8 +113,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares:
-    - RAPTOR
+    align_software: RAPTOR
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

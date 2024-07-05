@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: Philadelphia-1_Lp02
+    cross_references:
+      dataset_publications: 10.1038/s41564-019-0427-4
     dataset_description: "This is 6th of 41 sets of data studying Legionella pneumophila\
       \ collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. JV1644\
       \ Legionella thyA \u2206dotO. Lacks dotO ATPase."
@@ -62,7 +64,7 @@ runs:
       match_regex: (dga2016-06-14-1|dga2016-06-14-2|dga2016-06-14-3|dga2016-06-14-4|dga2016-06-14-5|dga2016-06-14-6|dga2016-06-14-7|dga2016-06-14-8|dga2016-06-14-9|dga2016-06-14-10|dga2016-06-14-11|dga2016-06-14-12|dga2016-06-14-13|dga2016-06-14-14|dga2016-06-14-15|dga2016-06-14-16|dga2016-06-14-17|dga2016-06-14-18|dga2016-06-14-19|dga2016-06-14-20|dga2016-06-14-21|dga2016-06-14-22|dga2016-06-14-23|dga2016-06-14-24|dga2016-06-14-25|dga2016-06-14-26|dga2016-06-14-27|dga2016-06-14-28|dga2016-06-14-29|dga2016-06-14-30|dga2016-06-14-31|dga2016-06-14-32|dga2016-06-14-33|dga2016-06-14-34|dga2016-06-14-35|dga2016-06-14-36|dga2016-06-14-37|dga2016-06-14-38|dga2016-06-14-39|dga2016-06-14-40|dga2016-06-14-41|dga2016-06-14-42|dga2016-06-14-43|dga2016-06-14-44|dga2016-06-14-45|dga2016-06-14-46|dga2016-06-14-47|dga2016-06-14-48|dga2016-06-14-49|dga2016-06-14-50|dga2016-06-14-51|dga2016-06-14-52|dga2016-06-14-53|dga2016-06-14-54|dga2016-06-14-55|dga2016-06-14-56|dga2016-06-14-57|dga2016-06-14-58|dga2016-06-14-59|dga2016-06-14-60|dga2016-06-14-61|dga2016-06-14-62|dga2016-06-14-63|dga2016-06-14-64|dga2016-06-14-65|dga2016-06-14-66|dga2016-06-14-67|dga2016-06-14-68|dga2016-06-14-69|dga2016-06-14-70|dga2016-06-14-71|dga2016-06-14-72|dga2016-06-14-73|dga2016-06-14-74|dga2016-06-14-75|dga2016-06-14-76|dga2016-06-14-77|dga2016-06-14-78|dga2016-06-14-79|dga2016-06-14-80|dga2016-06-14-81|dga2016-06-14-82|dga2016-06-14-83|dga2016-06-14-84|dga2016-06-14-85|dga2016-06-14-86|dga2016-06-14-87|dga2016-06-14-88|dga2016-06-14-89|dga2016-06-14-90|dga2016-06-14-91|dga2016-06-14-92|dga2016-06-14-93|dga2016-06-14-94|dga2016-06-14-95|dga2016-06-14-96|dga2016-06-14-97|dga2016-06-14-98|dga2016-06-14-99|dga2016-06-14-100|dga2016-06-14-101|dga2016-06-14-102|dga2016-06-14-103|dga2016-06-14-104|dga2016-06-14-105|dga2016-06-14-106|dga2016-06-14-107|dga2016-06-14-108|dga2016-06-14-109|dga2016-06-14-110|dga2016-06-14-111|dga2016-06-14-112|dga2016-06-14-113|dga2016-06-14-114|dga2016-06-14-115|dga2016-06-14-116|dga2016-06-14-117|dga2016-06-14-118|dga2016-06-14-119|dga2016-06-14-120|dga2016-06-14-121)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10063
+  deposition_id: 10038
   run_data_map_file: run_data_map/10063.csv
   run_to_frame_map_csv: run_frames_map/10063.csv
   run_to_tomo_map_csv: run_tomo_map/10063.csv
@@ -84,7 +86,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 4.036
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -92,7 +94,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1.5
     tilting_scheme: starting tilt to max then min
@@ -120,7 +121,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
@@ -143,3 +144,7 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^dga2016-06-14-73$

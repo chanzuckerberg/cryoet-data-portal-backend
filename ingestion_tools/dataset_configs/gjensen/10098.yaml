@@ -65,7 +65,7 @@ runs:
       match_regex: (dga2015-10-29-1|dga2015-10-29-2|dga2015-10-29-3|dga2015-10-29-4|dga2015-10-29-5|dga2015-10-29-6|dga2015-10-29-7|dga2015-10-29-8|dga2015-10-29-9|dga2015-10-29-10|dga2015-10-29-11|dga2015-10-29-12|dga2015-10-29-13|dga2015-10-29-14|dga2015-10-29-15|dga2015-10-29-16|dga2015-10-29-17|dga2015-10-29-18|dga2015-10-29-19|dga2015-10-29-20|dga2015-10-29-21|dga2015-10-29-22|dga2015-10-29-23|dga2015-10-29-24|dga2015-10-29-25|dga2015-10-29-26|dga2015-10-29-27|dga2015-10-29-28|dga2015-10-29-29|dga2015-10-29-30|dga2015-10-29-31|dga2015-10-29-32|dga2015-10-29-33|dga2015-10-29-34|dga2015-10-29-36|dga2015-10-29-37|dga2015-10-29-38|dga2015-10-29-39|dga2015-10-29-40|dga2015-10-29-41|dga2015-10-29-42|dga2015-10-29-43|dga2015-10-29-44|dga2015-10-29-45|dga2015-10-29-46|dga2015-10-29-47|dga2015-10-29-48|dga2015-10-29-49|dga2015-10-29-50|dga2015-10-29-51|dga2015-10-29-52|dga2015-10-29-53|dga2015-10-29-54|dga2015-10-29-55|dga2015-10-29-56|dga2015-10-29-57|dga2015-10-29-58|dga2015-10-29-59|dga2015-10-29-60|dga2015-10-29-61|dga2015-10-29-62|dga2015-10-29-63|dga2015-10-29-64|dga2015-10-29-65|dga2015-10-29-66|dga2015-10-29-67|dga2015-10-29-68|dga2015-10-29-69|dga2015-10-29-70|dga2015-10-29-71|dga2015-10-29-72|dga2015-10-29-73|dga2015-10-29-74|dga2015-10-29-75)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10098
+  deposition_id: 10038
   run_data_map_file: run_data_map/10098.csv
   run_to_frame_map_csv: run_frames_map/10098.csv
   run_to_tomo_map_csv: run_tomo_map/10098.csv
@@ -87,7 +87,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 4.2
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -95,7 +95,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -123,7 +122,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
@@ -146,3 +145,7 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^dga2015-10-29-69$

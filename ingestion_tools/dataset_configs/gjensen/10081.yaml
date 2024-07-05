@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: Philadelphia-1_Lp02
+    cross_references:
+      dataset_publications: 10.1038/s41564-019-0427-4
     dataset_description: This is 24th of 41 sets of data studying Legionella pneumophila
       collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. DotF-sfGFP
       fusion to the wild-type gene on the chromosome (thyA).
@@ -63,7 +65,7 @@ runs:
       match_regex: (dga2017-07-06-168|dga2017-07-06-169|dga2017-07-06-170|dga2017-07-06-171|dga2017-07-06-172|dga2017-07-06-173|dga2017-07-06-174|dga2017-07-06-175|dga2017-07-06-176|dga2017-07-06-177|dga2017-07-06-178|dga2017-07-06-179|dga2017-07-06-180|dga2017-07-06-181|dga2017-07-06-182|dga2017-07-06-183|dga2017-07-06-184|dga2017-07-06-185|dga2017-07-06-186|dga2017-07-06-187|dga2017-07-06-188|dga2017-07-06-189|dga2017-07-06-190|dga2017-07-06-191|dga2017-07-06-192|dga2017-07-06-193|dga2017-07-06-194|dga2017-07-06-195|dga2017-07-06-196|dga2017-07-06-197|dga2017-07-06-198|dga2017-07-06-199|dga2017-07-06-200|dga2017-07-06-201|dga2017-07-06-202|dga2017-07-06-203|dga2017-07-06-204|dga2017-07-06-205|dga2017-07-06-206|dga2017-07-06-207|dga2017-07-06-208|dga2017-07-06-209|dga2017-07-06-210|dga2017-07-06-211|dga2017-07-06-212|dga2017-07-06-213|dga2017-07-06-214|dga2017-07-06-215|dga2017-07-06-216|dga2017-07-06-217|dga2017-07-06-218|dga2017-07-06-219|dga2017-07-06-220|dga2017-07-06-221|dga2017-07-06-222|dga2017-07-06-223|dga2017-07-06-224|dga2017-07-06-225|dga2017-07-06-226|dga2017-07-06-227|dga2017-07-06-228)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10081
+  deposition_id: 10038
   run_data_map_file: run_data_map/10081.csv
   run_to_frame_map_csv: run_frames_map/10081.csv
   run_to_tomo_map_csv: run_tomo_map/10081.csv
@@ -85,7 +87,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 4.2
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -93,7 +95,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 2.0
     tilting_scheme: starting tilt to max then min
@@ -121,7 +122,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

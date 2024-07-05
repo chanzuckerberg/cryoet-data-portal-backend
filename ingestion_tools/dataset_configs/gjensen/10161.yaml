@@ -57,7 +57,7 @@ runs:
       match_regex: (ycw2012-09-23-13|ycw2012-09-23-17|ycw2012-09-23-18|ycw2012-09-23-20|ycw2012-09-23-21|ycw2012-09-23-22|ycw2012-09-23-23|ycw2012-09-23-24|ycw2012-09-23-25|ycw2012-09-23-26|ycw2012-09-23-27|ycw2012-09-23-28|ycw2012-09-23-29|ycw2012-09-23-30|ycw2012-09-23-31|ycw2012-09-23-32|ycw2012-09-23-33|ycw2012-09-23-34|ycw2012-09-23-35|ycw2012-09-23-36|ycw2012-09-23-37|ycw2012-09-23-38|ycw2012-09-23-39|ycw2012-09-23-41|ycw2012-09-23-42|ycw2012-09-23-43|ycw2012-09-23-44|ycw2012-09-23-45|ycw2012-09-23-46|ycw2012-09-23-48|ycw2012-09-23-49|ycw2012-09-23-50|ycw2012-09-23-51|ycw2012-09-23-52|ycw2012-09-23-53|ycw2012-09-23-54|ycw2012-09-23-55|ycw2012-09-23-56|ycw2012-09-23-57|ycw2012-09-23-60|ycw2012-09-23-63|ycw2012-09-23-65|ycw2012-09-23-66|ycw2012-09-23-67|ycw2012-09-23-68|ycw2012-09-23-69|ycw2012-09-23-70|ycw2012-09-23-71|ycw2012-09-23-72|ycw2012-09-23-74)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10161
+  deposition_id: 10048
   run_data_map_file: run_data_map/10161.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -77,7 +77,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 4.933
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -85,7 +85,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -113,8 +112,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares:
-    - RAPTOR
+    align_software: RAPTOR
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

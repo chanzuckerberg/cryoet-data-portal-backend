@@ -17,6 +17,9 @@ datasets:
     cell_strain:
       id: null
       name: CCAP 1403/13F
+    cross_references:
+      dataset_publications: 10.1016/j.str.2023.03.011
+      related_database_entries: EMD-29922, EMD-29923, EMD-29925, EMD-29924
     dataset_description: This is 6th of 7 sets of data studying Dolichospermum flos-aquae
       collected by Przemek Dutka and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10019
@@ -55,8 +58,7 @@ runs:
       match_regex: (pda2021-03-03-1|pda2021-03-03-2|pda2021-03-03-3|pda2021-03-03-4|pda2021-03-03-5|pda2021-03-03-6|pda2021-03-03-7|pda2021-03-03-8|pda2021-03-03-9)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10019
-  run_data_map_file: run_data_map/10019.csv
+  deposition_id: 10014
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -75,7 +77,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 3.332
     spherical_aberration_constant: 2.7
     tilt_alignment_software: IMOD
@@ -83,7 +85,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 3.0
     tilting_scheme: min to max tilt
@@ -111,8 +112,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares:
-    - IMOD
+    align_software: IMOD
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL

@@ -17,6 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: subsp. jejuni 81116
+    cross_references:
+      dataset_publications: 10.1073/pnas.1518952113
     dataset_description: This is 19th of 24 sets of data studying Campylobacter jejuni
       collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10219
@@ -54,7 +56,7 @@ runs:
       match_regex: (mba2011-04-12-1|mba2011-04-12-2|mba2011-04-12-3|mba2011-04-12-4|mba2011-04-12-5|mba2011-04-12-6|mba2011-04-12-7|mba2011-04-12-8|mba2011-04-12-9|mba2011-04-12-10|mba2011-04-12-11|mba2011-04-12-12|mba2011-04-12-13|mba2011-04-12-14|mba2011-04-12-15|mba2011-04-12-16|mba2011-04-12-17|mba2011-04-12-18|mba2011-04-12-19|mba2011-04-12-20|mba2011-04-12-21|mba2011-04-12-22|mba2011-04-12-23|mba2011-04-12-24|mba2011-04-12-25|mba2011-04-12-26|mba2011-04-12-27|mba2011-04-12-28|mba2011-04-12-29|mba2011-04-12-30|mba2011-04-12-31|mba2011-04-12-32|mba2011-04-12-33|mba2011-04-12-34|mba2011-04-12-35)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10219
+  deposition_id: 10029
   run_data_map_file: run_data_map/10219.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -74,7 +76,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: false
+      phase_plate: None
     pixel_spacing: 7.74
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -82,7 +84,6 @@ tiltseries:
     tilt_range:
       max: 65.0
       min: -65.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.5
     tilting_scheme: starting tilt to max then min
@@ -110,7 +111,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_softwares: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null
     fiducial_alignment_status: FIDUCIAL
