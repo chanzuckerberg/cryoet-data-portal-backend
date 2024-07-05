@@ -29,6 +29,10 @@ annotations: OPTIONAL
     ground_truth_status: RECOMMENDED, BOOLEAN (DEFAULT FALSE)
     is_curator_recommended: OPTIONAL, BOOLEAN (DEFAULT FALSE)
     method_type: REQUIRED, ENUM (manual, hybrid, automated)
+    method_links: OPTIONAL
+    - link: REQUIRED, STRING
+      link_type: REQUIRED, STRING (ENUM [documentation, model_weights, other, source_code, website])
+      name: OPTIONAL, STRING
     version: OPTIONAL, STRING
   sources: REQUIRED
   - binning: OPTIONAL, INTEGER (DEFAULT 1) (Point, OrientedPoint, InstanceSegmentation)
@@ -98,6 +102,17 @@ datasets: REQUIRED
       value:
       - REQUIRED, STRING
     parent_filters: SEE runs.sources.parent_filters
+depositions:
+  - metadata: REQUIRED
+      authors: SEE annotations.authors
+      cross_references: SEE datasets.cross_references
+      dates: SEE annotations.dates
+      deposition_description: REQUIRED, STRING
+      deposition_identifier: REQUIRED, INTEGER
+      deposition_title: REQUIRED, STRING
+      type: REQUIRED, STRING (ENUM [TOMOGRAM, ANNOTATION, TOMOGRAM_ANNOTATION])
+    sources: REQUIRED (source_glob, source_multi_glob, destination_glob, literal)
+deposition_keyphotos: SEE dataset_keyphotos
 frames: OPTIONAL
 - sources: SEE datasets.sources and runs.sources.parent_filters
 gains: OPTIONAL
