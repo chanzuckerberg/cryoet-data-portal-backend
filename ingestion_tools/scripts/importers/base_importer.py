@@ -2,6 +2,7 @@ import contextlib
 import os
 from typing import TYPE_CHECKING, Any, Optional
 
+from common.copy import copy_by_src
 from common.finders import DepositionObjectImporterFactory
 from common.image import VolumeInfo, get_tomo_metadata, get_volume_info, get_voxel_size, make_pyramids
 
@@ -165,3 +166,33 @@ class BaseFileImporter(BaseImporter):
         output_dir = self.get_output_path()
         dest_filename = os.path.join(output_dir, os.path.basename(self.path))
         fs.copy(self.path, dest_filename)
+
+
+class BaseKeyPhotoImporter(BaseImporter):
+    image_keys = ["snapshot", "thumbnail"]
+
+    def import_item(self) -> None:
+        dest_path = self.config.get_output_path(self)
+        self.save_image(self.name, dest_path)
+
+    def get_image_src_path(self) -> str | None:
+        raise NotImplementedError("Subclasses must implement this method")
+
+    def save_image(self, key: str, path: str) -> None:
+        image_src = self.get_image_src_path()
+        if not image_src:
+            return None
+        _, extension = os.path.splitext(image_src)
+        dest_path = os.path.join(path, key) + extension
+        copy_by_src(image_src, dest_path, self.config.fs)
+
+    def get_metadata(self) -> dict[str, str]:
+        path = self.config.get_output_path(self)
+        image_files = self.config.fs.glob(f"{path}/*")
+        return {key: self.get_image_file(image_files, f"{path}/{key}") for key in self.image_keys}
+
+    def get_image_file(self, key_photo_files: list[str], prefix: str) -> str | None:
+        image_path = next(filter(lambda file: file.startswith(prefix), key_photo_files), None)
+        if image_path:
+            return os.path.relpath(image_path, self.config.output_prefix)
+        return None
