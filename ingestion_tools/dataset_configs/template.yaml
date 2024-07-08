@@ -18,7 +18,7 @@ annotations: OPTIONAL
       email: OPTIONAL, STRING
       affiliation_name: OPTIONAL, STRING
       affiliation_address: OPTIONAL, STRING
-      affiliation_identifier: OPTIONAL, STRING
+      affiliation_identifier: RECOMMENDED, STRING
       corresponding_author_status: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       primary_author_status: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       ORCID: RECOMMENDED, STRING (ORCID)
