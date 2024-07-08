@@ -37,8 +37,8 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [snapshot](snapshot.md) | 1 <br/> [String](String.md) | Path to the dataset preview image relative to the dataset directory root | direct |
-| [thumbnail](thumbnail.md) | 1 <br/> [String](String.md) | Path to the thumbnail of preview image relative to the dataset directory root | direct |
+| [snapshot](snapshot.md) | 1 <br/> [URLorS3URI](URLorS3URI.md) | Path to the dataset preview image relative to the dataset directory root | direct |
+| [thumbnail](thumbnail.md) | 1 <br/> [URLorS3URI](URLorS3URI.md) | Path to the thumbnail of preview image relative to the dataset directory root | direct |
 
 
 
@@ -101,12 +101,14 @@ attributes:
     description: Path to the dataset preview image relative to the dataset directory
       root.
     from_schema: metadata
+    exact_mappings:
+    - cdp-common:snapshot
     rank: 1000
     alias: snapshot
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: string
+    range: URLorS3URI
     required: true
     inlined: true
     inlined_as_list: true
@@ -115,12 +117,14 @@ attributes:
     description: Path to the thumbnail of preview image relative to the dataset directory
       root.
     from_schema: metadata
+    exact_mappings:
+    - cdp-common:thumbnail
     rank: 1000
     alias: thumbnail
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: string
+    range: URLorS3URI
     required: true
     inlined: true
     inlined_as_list: true
@@ -141,12 +145,14 @@ attributes:
     description: Path to the dataset preview image relative to the dataset directory
       root.
     from_schema: metadata
+    exact_mappings:
+    - cdp-common:snapshot
     rank: 1000
     alias: snapshot
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: string
+    range: URLorS3URI
     required: true
     inlined: true
     inlined_as_list: true
@@ -155,12 +161,14 @@ attributes:
     description: Path to the thumbnail of preview image relative to the dataset directory
       root.
     from_schema: metadata
+    exact_mappings:
+    - cdp-common:thumbnail
     rank: 1000
     alias: thumbnail
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: string
+    range: URLorS3URI
     required: true
     inlined: true
     inlined_as_list: true

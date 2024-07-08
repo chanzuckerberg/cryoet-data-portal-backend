@@ -61,6 +61,7 @@ URI: [cdp-meta:deposition_date](metadatadeposition_date)
 | ---  | ---  |
 | self | cdp-meta:deposition_date |
 | native | cdp-meta:deposition_date |
+| exact | cdp-common:deposition_date |
 
 
 
@@ -72,6 +73,8 @@ URI: [cdp-meta:deposition_date](metadatadeposition_date)
 name: deposition_date
 description: The date a data item was received by the cryoET data portal.
 from_schema: metadata
+exact_mappings:
+- cdp-common:deposition_date
 rank: 1000
 alias: deposition_date
 owner: DateStamp

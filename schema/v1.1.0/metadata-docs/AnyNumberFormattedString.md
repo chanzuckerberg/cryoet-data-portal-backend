@@ -9,7 +9,7 @@ _A formatted string that represents any number._
 
 URI: [cdp-meta:AnyNumberFormattedString](metadataAnyNumberFormattedString)
 
-* [base](https://w3id.org/linkml/base): string
+* [base](https://w3id.org/linkml/base): str
 
 
 

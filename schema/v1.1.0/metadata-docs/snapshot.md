@@ -31,7 +31,7 @@ URI: [cdp-meta:snapshot](metadatasnapshot)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [URLorS3URI](URLorS3URI.md)
 
 * Required: True
 
@@ -61,6 +61,7 @@ URI: [cdp-meta:snapshot](metadatasnapshot)
 | ---  | ---  |
 | self | cdp-meta:snapshot |
 | native | cdp-meta:snapshot |
+| exact | cdp-common:snapshot |
 
 
 
@@ -72,12 +73,14 @@ URI: [cdp-meta:snapshot](metadatasnapshot)
 name: snapshot
 description: Path to the dataset preview image relative to the dataset directory root.
 from_schema: metadata
+exact_mappings:
+- cdp-common:snapshot
 rank: 1000
 alias: snapshot
 owner: PicturePath
 domain_of:
 - PicturePath
-range: string
+range: URLorS3URI
 required: true
 inlined: true
 inlined_as_list: true

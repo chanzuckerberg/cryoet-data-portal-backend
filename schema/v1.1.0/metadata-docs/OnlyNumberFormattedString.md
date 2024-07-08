@@ -9,7 +9,7 @@ _A formatted string that represents a number without a prefix._
 
 URI: [cdp-meta:OnlyNumberFormattedString](metadataOnlyNumberFormattedString)
 
-* [base](https://w3id.org/linkml/base): string
+* [base](https://w3id.org/linkml/base): str
 
 
 

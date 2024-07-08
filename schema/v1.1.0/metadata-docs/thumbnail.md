@@ -31,7 +31,7 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [URLorS3URI](URLorS3URI.md)
 
 * Required: True
 
@@ -61,6 +61,7 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 | ---  | ---  |
 | self | cdp-meta:thumbnail |
 | native | cdp-meta:thumbnail |
+| exact | cdp-common:thumbnail |
 
 
 
@@ -73,12 +74,14 @@ name: thumbnail
 description: Path to the thumbnail of preview image relative to the dataset directory
   root.
 from_schema: metadata
+exact_mappings:
+- cdp-common:thumbnail
 rank: 1000
 alias: thumbnail
 owner: PicturePath
 domain_of:
 - PicturePath
-range: string
+range: URLorS3URI
 required: true
 inlined: true
 inlined_as_list: true

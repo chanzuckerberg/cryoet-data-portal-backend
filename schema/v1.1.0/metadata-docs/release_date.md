@@ -61,6 +61,7 @@ URI: [cdp-meta:release_date](metadatarelease_date)
 | ---  | ---  |
 | self | cdp-meta:release_date |
 | native | cdp-meta:release_date |
+| exact | cdp-common:release_date |
 
 
 
@@ -72,6 +73,8 @@ URI: [cdp-meta:release_date](metadatarelease_date)
 name: release_date
 description: The date a data item was received by the cryoET data portal.
 from_schema: metadata
+exact_mappings:
+- cdp-common:release_date
 rank: 1000
 alias: release_date
 owner: DateStamp

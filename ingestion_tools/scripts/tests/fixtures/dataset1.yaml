@@ -102,6 +102,7 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF Quantum LS
+      image_corrector: None
       phase_plate: Volta Phase Plate
     pixel_spacing: 3.3702
     related_empiar_entry: EMPIAR-10988

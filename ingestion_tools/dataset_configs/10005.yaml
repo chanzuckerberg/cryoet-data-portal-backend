@@ -57,7 +57,7 @@ dataset_keyphotos:
   - literal:
       value:
         snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11221-l.gif
-        thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11221.gif
+        thumbnail: qwerqwerqwreqwerqwreqwerqwerqwer
 datasets:
 - metadata:
     authors: &id003

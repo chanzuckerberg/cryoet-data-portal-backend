@@ -126,12 +126,32 @@ class PicturePath(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    snapshot: str = Field(..., description="""Path to the dataset preview image relative to the dataset directory root.""", json_schema_extra = { "linkml_meta": {'alias': 'snapshot',
-         'domain_of': ['PicturePath'],
-         'exact_mappings': ['cdp-common:snapshot']} })
-    thumbnail: str = Field(..., description="""Path to the thumbnail of preview image relative to the dataset directory root.""", json_schema_extra = { "linkml_meta": {'alias': 'thumbnail',
-         'domain_of': ['PicturePath'],
-         'exact_mappings': ['cdp-common:thumbnail']} })
+    snapshot: string = Field(..., description="""Path to the dataset preview image relative to the dataset directory root.""", json_schema_extra = { "linkml_meta": {'alias': 'snapshot', 'domain_of': ['PicturePath']} })
+    thumbnail: string = Field(..., description="""Path to the thumbnail of preview image relative to the dataset directory root.""", json_schema_extra = { "linkml_meta": {'alias': 'thumbnail', 'domain_of': ['PicturePath']} })
+
+    @field_validator('snapshot')
+    def pattern_snapshot(cls, v):
+        pattern=re.compile(r"^(https?|s3)://.*$")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid snapshot format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid snapshot format: {v}")
+        return v
+
+    @field_validator('thumbnail')
+    def pattern_thumbnail(cls, v):
+        pattern=re.compile(r"^(https?|s3)://.*$")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid thumbnail format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid thumbnail format: {v}")
+        return v
 
 
 class Author(ConfiguredBaseModel):
@@ -635,13 +655,13 @@ class TomogramOffset(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    x: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'x',
+    x: Optional[int] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'x',
          'domain_of': ['TomogramSize', 'TomogramOffset'],
          'exact_mappings': ['cdp-common:tomogram_offset_x']} })
-    y: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'y',
+    y: Optional[int] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'y',
          'domain_of': ['TomogramSize', 'TomogramOffset'],
          'exact_mappings': ['cdp-common:tomogram_offset_y']} })
-    z: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'z',
+    z: Optional[int] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'z',
          'domain_of': ['TomogramSize', 'TomogramOffset'],
          'exact_mappings': ['cdp-common:tomogram_offset_z']} })
 

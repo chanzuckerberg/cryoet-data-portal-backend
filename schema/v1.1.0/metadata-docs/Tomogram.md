@@ -308,6 +308,11 @@ attributes:
     description: A placeholder for any type of data.
     from_schema: metadata
     rank: 1000
+    array:
+      exact_number_dimensions: 2
+      dimensions:
+      - exact_cardinality: 4
+      - exact_cardinality: 4
     alias: affine_transformation_matrix
     owner: Tomogram
     domain_of:
@@ -515,6 +520,11 @@ attributes:
     description: A placeholder for any type of data.
     from_schema: metadata
     rank: 1000
+    array:
+      exact_number_dimensions: 2
+      dimensions:
+      - exact_cardinality: 4
+      - exact_cardinality: 4
     alias: affine_transformation_matrix
     owner: Tomogram
     domain_of:

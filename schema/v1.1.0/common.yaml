@@ -38,6 +38,21 @@ slots:
   # ============================================================================
 
   # ============================================================================
+  # Snapshot / Thumbnail 
+  # ============================================================================
+  snapshot: 
+    description: >-
+      Path to the dataset preview image relative to the dataset directory root.
+    range: URLorS3URI
+    required: true
+
+  thumbnail:
+    description: >-
+      Path to the thumbnail of preview image relative to the dataset directory root.
+    range: URLorS3URI
+    required: true
+
+  # ============================================================================
   # Dates (re-used in Dataset, Tomogram, Tiltseries, Annotation)
   # ============================================================================
   deposition_date:
@@ -738,42 +753,37 @@ enums:
 types: 
   AnyNumberFormattedString:
     description: A formatted string that represents any number.
-    base: string
+    base: str
     pattern: '^(int|float|)[ ]*\{[a-zA-Z0-9_-]+\}$'
 
   OnlyNumberFormattedString:
     description: A formatted string that represents a number without a prefix.
-    base: string
+    base: str
     pattern: '^-?[0-9]+(\.[0-9]+)?$'
 
   FloatFormattedString:
     description: A formatted string that represents a floating point number.
-    base: string
+    base: str
     pattern: '^float[ ]*\{[a-zA-Z0-9_-]+\}$'
 
   IntegerFormattedString:
     description: A formatted string that represents an integer.
-    base: string
+    base: str
     pattern: '^int[ ]*\{[a-zA-Z0-9_-]+\}$'
 
   VersionString:
     description: A version number (only major, minor versions)
     base: float
 
+  URLorS3URI:
+    description: A URL or S3 URI
+    base: str
+    pattern: '^(https?|s3)://.*$'
+
 classes:
   Any:
     class_uri: linkml:Any
     description: A placeholder for any type of data.
-
-  # ============================================================================
-  # Deposition, release and last modified dates
-  # ============================================================================
-  DateStamp:
-    description: A set of dates at which a data item was deposited, published and last modified.
-    slots:
-      - deposition_date
-      - release_date
-      - last_modified_date
 
   # ============================================================================
   # Cross-references to other databases and publications

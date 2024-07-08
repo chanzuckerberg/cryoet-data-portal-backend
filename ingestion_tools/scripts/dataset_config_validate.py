@@ -1,15 +1,23 @@
 import click
+import json
 import os
 import re
-import subprocess
+import sys
+import yaml
 import shutil
 
 SCHEMA_VERSION = "v1.1.0"
+DATASET_CONFIGS_MODELS_DIR = f"../../schema/{SCHEMA_VERSION}/"
+
+sys.path.append(DATASET_CONFIGS_MODELS_DIR) # To import the dataset models
+
+from pydantic import ValidationError
+from dataset_config_models import Container
+
 DATASET_CONFIGS_DIR = "../dataset_configs/"
-DATASET_CONFIG_VALIDATION_FILE = f"../../schema/{SCHEMA_VERSION}/dataset_config_validate.yaml"
 ERRORS_OUTPUT_DIR = "./dataset_config_validate_errors"
 EXCLUDE_LIST = ["template.yaml", "dataset_config_merged.yaml"]
-EXCLUDE_KEYWORDS = ["draft"]
+EXCLUDE_KEYWORDS = "draft"
 YAML_EXTENSIONS = ('.yaml', '.yml')
 
 @click.command()
@@ -19,10 +27,18 @@ YAML_EXTENSIONS = ('.yaml', '.yml')
     default=None,
     help="Include only files that match the given glob pattern",
 )
-def main(include_glob):
-    if not os.path.isfile(DATASET_CONFIG_VALIDATION_FILE):
-        print(f"[ERROR]: Validation not found: {DATASET_CONFIG_VALIDATION_FILE}")
-        exit(1)
+@click.option(
+    "--exclude-keywords",
+    type=str,
+    default=EXCLUDE_KEYWORDS,
+    help="Exclude files that are in the given comma-separated list",
+)
+def main(include_glob, exclude_keywords):
+    exclude_keywords_list = exclude_keywords.split(",")
+    if (exclude_keywords_list[0] != ""):
+        print(f"[INFO]: Excluding files that contain any of the following keywords: {exclude_keywords_list}")
+    else: 
+        exclude_keywords_list = []
 
     # Get all YAML files in the dataset_configs directory
     all_files = []
@@ -37,7 +53,7 @@ def main(include_glob):
         filename = os.path.basename(file)
         if filename in EXCLUDE_LIST:
             continue
-        if any(keyword in filename for keyword in EXCLUDE_KEYWORDS):
+        if any(keyword in filename for keyword in exclude_keywords_list):
             print(f"[INFO]: Excluding {file} because it contains an exclude keyword")
             continue
         files_to_validate.append(file)
@@ -55,33 +71,56 @@ def main(include_glob):
         os.makedirs(ERRORS_OUTPUT_DIR, exist_ok=True)
 
         # Run validation and save output
-        result = subprocess.run(
-            ["linkml-validate", "-s", DATASET_CONFIG_VALIDATION_FILE] + files_to_validate,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
-        )
-        with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors.txt"), "wb") as f:
-            f.write(result.stdout + result.stderr)
+        validation_succeeded = True
+        errors = {} 
+        for file in files_to_validate:
+            try:
+                with open(file, "r") as stream:
+                    config_data = yaml.safe_load(stream)
+                    config = Container(**config_data)
+            except ValidationError as e:
+                validation_succeeded = False
+                curr_errors = e.errors()
+                for curr_error in curr_errors:
+                    if "ctx" in curr_error and "error" in curr_error["ctx"]:
+                        curr_error["ctx"]["error"] = str(curr_error["ctx"]["error"])
+                errors[file] = curr_errors
+                
+            except Exception as exc:
+                validation_succeeded = False
+                errors[file] = str(exc)
         
-        if result.returncode == 0:
+        if validation_succeeded:
             print("[SUCCESS]: All files passed validation.")
         else:
-            with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors.txt"), "r") as f:
-                errors = f.readlines()
+            # Write all errors to a file
+            with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors.json"), "w") as f:
+                json.dump(dict(sorted(errors.items())), f, indent=2)
 
-            # Filter out file paths and sort errors
-            filtered_errors = []
-            for error in errors:
-                error = error.split('] ')[2:]
-                error = '] '.join(error)
-                error = error.rsplit(' in /', 1)[0]  # Remove context after "in /"
-                filtered_errors.append(error)
-            filtered_errors = sorted(set(filtered_errors))
-
-            with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors_filtered.txt"), "w") as f:
-                f.write("\n".join(filtered_errors))
+            def error_to_filtered_text(error_value):
+                loc = "/".join([str(x) for x in error_value["loc"]])
+                return f"{loc}: {error_value['msg']} (Input: {error_value['input']})"
             
-            print("[ERROR]: Validation failed. See dataset_config_validate_errors.txt for details.")
+            def error_to_filtered_2_text(error_value):
+                return f"{error_value["loc"][-1]}: {error_value['msg']}"
+
+            errors_as_one_list = [error for error_list in errors.values() for error in error_list]
+            errros_as_filtered_text = map(error_to_filtered_text, errors_as_one_list)
+            errros_as_filtered_2_text = map(error_to_filtered_2_text, errors_as_one_list)
+        
+            # Write a filtered list of errors to a file
+            with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors_filtered.txt"), "w") as f:
+                errors_list = list(set(errros_as_filtered_text))
+                errors_list.sort()
+                f.write("\n".join(errors_list))
+
+            # Write an even more filtered list of errors to a file
+            with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors_filtered_2.txt"), "w") as f:
+                errors_list = list(set(errros_as_filtered_2_text))
+                errors_list.sort()
+                f.write("\n".join(errors_list))
+            
+            print("[ERROR]: Validation failed. See dataset_config_validate_errors.json for details.")
             exit(1)
     else:
         print("[WARNING]: No files to validate.")

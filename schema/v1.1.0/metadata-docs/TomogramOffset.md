@@ -39,9 +39,9 @@ URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [x](x.md) | 0..1 <br/> [Integer](Integer.md) |  | direct |
-| [y](y.md) | 0..1 <br/> [Integer](Integer.md) |  | direct |
-| [z](z.md) | 0..1 <br/> [Integer](Integer.md) |  | direct |
+| [x](x.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [y](y.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [z](z.md) | 0..1 <br/> [String](String.md) |  | direct |
 
 
 
@@ -110,7 +110,7 @@ attributes:
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: integer
+    range: string
     inlined: true
     inlined_as_list: true
   y:
@@ -123,7 +123,7 @@ attributes:
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: integer
+    range: string
     inlined: true
     inlined_as_list: true
   z:
@@ -136,7 +136,7 @@ attributes:
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: integer
+    range: string
     inlined: true
     inlined_as_list: true
 
@@ -162,7 +162,7 @@ attributes:
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: integer
+    range: string
     inlined: true
     inlined_as_list: true
   y:
@@ -175,7 +175,7 @@ attributes:
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: integer
+    range: string
     inlined: true
     inlined_as_list: true
   z:
@@ -188,7 +188,7 @@ attributes:
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: integer
+    range: string
     inlined: true
     inlined_as_list: true
 

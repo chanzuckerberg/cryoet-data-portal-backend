@@ -287,6 +287,7 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: Selectris X
+      image_corrector: None
       phase_plate: None
     pixel_spacing: 1.96
     related_empiar_entry: EMPIAR-11756

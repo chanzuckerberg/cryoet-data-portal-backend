@@ -199,6 +199,7 @@ Name: cdp-meta
 | [Time](Time.md) | A time object represents a (local) time of day, independent of any particular... |
 | [Uri](Uri.md) | a complete URI |
 | [Uriorcurie](Uriorcurie.md) | a URI or a CURIE |
+| [URLorS3URI](URLorS3URI.md) | A URL or S3 URI |
 | [VersionString](VersionString.md) | A version number (only major, minor versions) |
 
 

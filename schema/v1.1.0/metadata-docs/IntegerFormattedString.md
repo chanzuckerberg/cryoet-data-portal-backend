@@ -9,7 +9,7 @@ _A formatted string that represents an integer._
 
 URI: [cdp-meta:IntegerFormattedString](metadataIntegerFormattedString)
 
-* [base](https://w3id.org/linkml/base): string
+* [base](https://w3id.org/linkml/base): str
 
 
 

@@ -262,31 +262,37 @@ types:
     name: AnyNumberFormattedString
     description: A formatted string that represents any number.
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^(int|float|)[ ]*\{[a-zA-Z0-9_-]+\}$
   OnlyNumberFormattedString:
     name: OnlyNumberFormattedString
     description: A formatted string that represents a number without a prefix.
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^-?[0-9]+(\.[0-9]+)?$
   FloatFormattedString:
     name: FloatFormattedString
     description: A formatted string that represents a floating point number.
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}$
   IntegerFormattedString:
     name: IntegerFormattedString
     description: A formatted string that represents an integer.
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}$
   VersionString:
     name: VersionString
     description: A version number (only major, minor versions)
     from_schema: metadata
     base: float
+  URLorS3URI:
+    name: URLorS3URI
+    description: A URL or S3 URI
+    from_schema: metadata
+    base: str
+    pattern: ^(https?|s3)://.*$
 enums:
   sample_type_enum:
     name: sample_type_enum
@@ -362,11 +368,13 @@ classes:
         description: Path to the dataset preview image relative to the dataset directory
           root.
         from_schema: metadata
+        exact_mappings:
+        - cdp-common:snapshot
         alias: snapshot
         owner: PicturePath
         domain_of:
         - PicturePath
-        range: string
+        range: URLorS3URI
         required: true
         inlined: true
         inlined_as_list: true
@@ -375,11 +383,13 @@ classes:
         description: Path to the thumbnail of preview image relative to the dataset
           directory root.
         from_schema: metadata
+        exact_mappings:
+        - cdp-common:thumbnail
         alias: thumbnail
         owner: PicturePath
         domain_of:
         - PicturePath
-        range: string
+        range: URLorS3URI
         required: true
         inlined: true
         inlined_as_list: true
@@ -545,15 +555,14 @@ classes:
     description: A set of dates at which a data item was deposited, published and
       last modified.
     from_schema: metadata
-    slots:
-    - deposition_date
-    - release_date
-    - last_modified_date
+    abstract: true
     attributes:
       deposition_date:
         name: deposition_date
         description: The date a data item was received by the cryoET data portal.
         from_schema: metadata
+        exact_mappings:
+        - cdp-common:deposition_date
         alias: deposition_date
         owner: DateStamp
         domain_of:
@@ -566,6 +575,8 @@ classes:
         name: release_date
         description: The date a data item was received by the cryoET data portal.
         from_schema: metadata
+        exact_mappings:
+        - cdp-common:release_date
         alias: release_date
         owner: DateStamp
         domain_of:
@@ -579,6 +590,8 @@ classes:
         description: The date a piece of data was last modified on the cryoET data
           portal.
         from_schema: metadata
+        exact_mappings:
+        - cdp-common:last_modified_date
         alias: last_modified_date
         owner: DateStamp
         domain_of:
@@ -1747,7 +1760,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: integer
+        range: string
         inlined: true
         inlined_as_list: true
       y:
@@ -1760,7 +1773,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: integer
+        range: string
         inlined: true
         inlined_as_list: true
       z:
@@ -1773,7 +1786,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: integer
+        range: string
         inlined: true
         inlined_as_list: true
   Tomogram:
@@ -1917,6 +1930,11 @@ classes:
         name: affine_transformation_matrix
         description: A placeholder for any type of data.
         from_schema: metadata
+        array:
+          exact_number_dimensions: 2
+          dimensions:
+          - exact_cardinality: 4
+          - exact_cardinality: 4
         alias: affine_transformation_matrix
         owner: Tomogram
         domain_of:

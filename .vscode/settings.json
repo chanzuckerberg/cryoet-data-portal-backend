@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./schema/v1.1.0"
+    ]
+}

@@ -24,13 +24,11 @@ classes:
     description: A set of paths to representative images of a piece of data.
     attributes:
       snapshot:
-        range: string
-        required: true
-        description: Path to the dataset preview image relative to the dataset directory root.
+        exact_mappings:
+          - cdp-common:snapshot
       thumbnail:
-        range: string
-        required: true
-        description: Path to the thumbnail of preview image relative to the dataset directory root.
+        exact_mappings:
+          - cdp-common:thumbnail
 
   # ============================================================================
 
@@ -408,15 +406,13 @@ classes:
       x:
         exact_mappings:
           - cdp-common:tomogram_offset_x
-        range: integer
       y:
         exact_mappings:
           - cdp-common:tomogram_offset_y
-        range: integer
       z:
         exact_mappings:
           - cdp-common:tomogram_offset_z
-        range: integer
+
   # ============================================================================
 
   # ============================================================================
@@ -455,10 +451,14 @@ classes:
       tomogram_version:
         exact_mappings:
           - cdp-common:tomogram_version
-      # TODO: figure out validation for this
       affine_transformation_matrix:
           description: The flip or rotation transformation of this author submitted tomogram is indicated here
           range: Any
+          array: 
+            exact_number_dimensions: 2
+            dimensions:
+              - exact_cardinality: 4
+              - exact_cardinality: 4
       size:
         description: *desc_tomogram_size
         range: TomogramSize
