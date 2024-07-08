@@ -57,7 +57,7 @@ runs:
       match_regex: (ycw2013-11-04-1|ycw2013-11-04-2|ycw2013-11-04-3|ycw2013-11-04-4|ycw2013-11-04-5|ycw2013-11-04-6|ycw2013-11-04-7|ycw2013-11-04-8|ycw2013-11-04-9|ycw2013-11-04-10|ycw2013-11-04-11|ycw2013-11-04-12|ycw2013-11-04-13|ycw2013-11-04-14|ycw2013-11-04-15|ycw2013-11-04-16|ycw2013-11-04-17|ycw2013-11-04-18|ycw2013-11-04-19|ycw2013-11-05-1|ycw2013-11-05-3|ycw2013-11-05-4|ycw2013-11-05-5|ycw2013-11-05-6|ycw2013-11-05-7|ycw2013-11-05-8|ycw2013-11-05-9|ycw2013-11-05-10|ycw2013-11-05-11|ycw2013-11-05-12|ycw2013-11-05-13|ycw2013-11-05-14|ycw2013-11-05-15|ycw2013-11-05-16|ycw2013-11-05-17|ycw2013-11-05-18|ycw2013-11-05-19|ycw2013-11-05-20|ycw2013-11-05-21|ycw2013-11-05-22|ycw2013-11-05-23|ycw2013-11-05-24|ycw2013-11-05-25|ycw2013-11-05-26|ycw2013-12-16-8|ycw2013-12-16-9|ycw2013-12-16-10|ycw2013-12-16-11|ycw2013-12-16-12|ycw2013-12-16-13|ycw2013-12-16-14|ycw2013-12-16-15|ycw2013-12-16-16|ycw2013-12-16-17|ycw2013-12-16-18|ycw2013-12-16-19|ycw2013-12-16-20|ycw2013-12-16-21|ycw2013-12-16-22|ycw2013-12-16-23|ycw2013-12-16-24|ycw2013-12-16-25|ycw2013-12-16-26|ycw2013-12-16-27|ycw2013-12-16-28|ycw2013-12-16-29|ycw2013-12-16-30|ycw2013-12-16-31|ycw2013-12-16-32|ycw2013-12-16-33|ycw2013-12-16-34|ycw2013-12-16-35|ycw2013-12-16-36|ycw2013-12-16-37|ycw2013-12-16-38|ycw2013-12-16-39|ycw2013-12-16-40|ycw2013-12-16-41|ycw2013-12-16-42|ycw2013-12-16-43|ycw2013-12-16-44|ycw2013-12-16-45|ycw2013-12-16-46)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10142
+  deposition_id: 10017
   run_data_map_file: run_data_map/10142.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -75,7 +75,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.933
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -83,7 +84,6 @@ tiltseries:
     tilt_range:
       max: float {ts-tilt_range-max}
       min: float {ts-tilt_range-min}
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: float {ts-tilt_step}
     tilting_scheme: starting tilt to max then min

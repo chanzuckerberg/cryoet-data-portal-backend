@@ -1,51 +1,51 @@
-run_name,ts-data_acquisition_software,ts-tilt_series_path,ts-total_flux
-ycw2012-09-23-13,UCSF Tomo,rawdata/20120923_Hylemonella_10003.mrc,75.0
-ycw2012-09-23-17,UCSF Tomo,rawdata/20120923_Hylemonella_10001.mrc,75.0
-ycw2012-09-23-18,UCSFTomo,rawdata/20120923_Hylemonella_10002.mrc,75.0
-ycw2012-09-23-20,UCSFTomo,rawdata/20120923_Hylemonella_10004.mrc,75.0
-ycw2012-09-23-21,UCSFTomo,rawdata/20120923_Hylemonella_10005.mrc,75.0
-ycw2012-09-23-22,UCSFTomo,rawdata/20120923_Hylemonella_10006.mrc,75.0
-ycw2012-09-23-23,UCSFTomo,rawdata/20120923_Hylemonella_10007.mrc,75.0
-ycw2012-09-23-24,UCSFTomo,rawdata/20120923_Hylemonella_10008.mrc,75.0
-ycw2012-09-23-25,UCSFTomo,rawdata/20120923_Hylemonella_10009.mrc,75.0
-ycw2012-09-23-26,UCSFTomo,rawdata/20120923_Hylemonella_10010.mrc,75.0
-ycw2012-09-23-27,UCSFTomo,rawdata/20120923_Hylemonella_10011.mrc,75.0
-ycw2012-09-23-28,UCSFTomo,rawdata/20120923_Hylemonella_20001.mrc,75.0
-ycw2012-09-23-29,UCSF Tomo,rawdata/20120923_Hylemonella_20002.mrc,75.0
-ycw2012-09-23-30,UCSF Tomo,rawdata/20120923_Hylemonella_20003.mrc,75.0
-ycw2012-09-23-31,UCSFTomo,rawdata/20120923_Hylemonella_20004.mrc,75.0
-ycw2012-09-23-32,UCSFTomo,rawdata/20120923_Hylemonella_20005.mrc,75.0
-ycw2012-09-23-33,UCSFTomo,rawdata/20120923_Hylemonella_20006.mrc,75.0
-ycw2012-09-23-34,UCSF Tomo,rawdata/20120923_Hylemonella_20007.mrc,75.0
-ycw2012-09-23-35,UCSF Tomo,rawdata/20120923_Hylemonella_20008.mrc,75.0
-ycw2012-09-23-36,UCSF Tomo,rawdata/20120923_Hylemonella_20009.mrc,75.0
-ycw2012-09-23-37,UCSF Tomo,rawdata/20120923_Hylemonella_30001.mrc,112.0
-ycw2012-09-23-38,UCSF Tomo,rawdata/20120923_Hylemonella_30002.mrc,112.0
-ycw2012-09-23-39,UCSFTomo,rawdata/20120923_Hylemonella_30003.mrc,112.0
-ycw2012-09-23-41,UCSF Tomo,rawdata/20120923_Hylemonella_30005.mrc,112.0
-ycw2012-09-23-42,UCSF Tomo,rawdata/20120923_Hylemonella_30006.mrc,112.0
-ycw2012-09-23-43,UCSF Tomo,rawdata/20120923_Hylemonella_30007.mrc,112.0
-ycw2012-09-23-44,UCSF Tomo,rawdata/20120923_Hylemonella_30008.mrc,112.0
-ycw2012-09-23-45,UCSF Tomo,rawdata/20120923_Hylemonella_30009.mrc,112.0
-ycw2012-09-23-46,UCSFTomo,rawdata/20120923_Hylemonella_30010.mrc,112.0
-ycw2012-09-23-48,UCSF Tomo,rawdata/20120923_Hylemonella_30011.mrc,112.0
-ycw2012-09-23-49,UCSFTomo,rawdata/20120923_Hylemonella_30012.mrc,112.0
-ycw2012-09-23-50,UCSFTomo,rawdata/20120923_Hylemonella_30013.mrc,112.0
-ycw2012-09-23-51,UCSFTomo,rawdata/20120923_Hylemonella_30014.mrc,112.0
-ycw2012-09-23-52,UCSFTomo,rawdata/20120923_Hylemonella_30015.mrc,112.0
-ycw2012-09-23-53,UCSF Tomo,rawdata/20120923_Hylemonella_50001.mrc,75.0
-ycw2012-09-23-54,UCSF Tomo,rawdata/20120923_Hylemonella_50002.mrc,75.0
-ycw2012-09-23-55,UCSF Tomo,rawdata/20120923_Hylemonella_50003.mrc,75.0
-ycw2012-09-23-56,UCSF Tomo,rawdata/20120923_Hylemonella_50004.mrc,75.0
-ycw2012-09-23-57,UCSF Tomo,rawdata/20120923_Hylemonella_50005.mrc,75.0
-ycw2012-09-23-60,UCSF Tomo,rawdata/20120923_Hylemonella_50008.mrc,75.0
-ycw2012-09-23-63,UCSF Tomo,rawdata/20120923_Hylemonella_50011.mrc,75.0
-ycw2012-09-23-65,UCSF Tomo,rawdata/20120923_Hylemonella_50013.mrc,75.0
-ycw2012-09-23-66,UCSFTomo,rawdata/20120923_Hylemonella_50014.mrc,75.0
-ycw2012-09-23-67,UCSF Tomo,rawdata/20120923_Hylemonella_50015.mrc,75.0
-ycw2012-09-23-68,UCSFTomo,rawdata/20120923_Hylemonella_50016.mrc,75.0
-ycw2012-09-23-69,UCSFTomo,rawdata/20120923_Hylemonella_50017.mrc,75.0
-ycw2012-09-23-70,UCSF Tomo,rawdata/20120923_Hylemonella_50006.mrc,75.0
-ycw2012-09-23-71,UCSFTomo,rawdata/20120923_Hylemonella_50007.mrc,75.0
-ycw2012-09-23-72,UCSF Tomo,rawdata/20120923_Hylemonella_50010.mrc,75.0
-ycw2012-09-23-74,UCSF Tomo,rawdata/20120923_Hylemonella_30004.mrc,112.5
+run_name,ts-data_acquisition_software,ts-total_flux
+ycw2012-09-23-13,UCSF Tomo,75.0
+ycw2012-09-23-17,UCSF Tomo,75.0
+ycw2012-09-23-29,UCSF Tomo,75.0
+ycw2012-09-23-30,UCSF Tomo,75.0
+ycw2012-09-23-34,UCSF Tomo,75.0
+ycw2012-09-23-35,UCSF Tomo,75.0
+ycw2012-09-23-36,UCSF Tomo,75.0
+ycw2012-09-23-53,UCSF Tomo,75.0
+ycw2012-09-23-54,UCSF Tomo,75.0
+ycw2012-09-23-55,UCSF Tomo,75.0
+ycw2012-09-23-56,UCSF Tomo,75.0
+ycw2012-09-23-57,UCSF Tomo,75.0
+ycw2012-09-23-60,UCSF Tomo,75.0
+ycw2012-09-23-63,UCSF Tomo,75.0
+ycw2012-09-23-65,UCSF Tomo,75.0
+ycw2012-09-23-67,UCSF Tomo,75.0
+ycw2012-09-23-70,UCSF Tomo,75.0
+ycw2012-09-23-72,UCSF Tomo,75.0
+ycw2012-09-23-18,UCSFTomo,75.0
+ycw2012-09-23-20,UCSFTomo,75.0
+ycw2012-09-23-21,UCSFTomo,75.0
+ycw2012-09-23-22,UCSFTomo,75.0
+ycw2012-09-23-23,UCSFTomo,75.0
+ycw2012-09-23-24,UCSFTomo,75.0
+ycw2012-09-23-25,UCSFTomo,75.0
+ycw2012-09-23-26,UCSFTomo,75.0
+ycw2012-09-23-27,UCSFTomo,75.0
+ycw2012-09-23-28,UCSFTomo,75.0
+ycw2012-09-23-31,UCSFTomo,75.0
+ycw2012-09-23-32,UCSFTomo,75.0
+ycw2012-09-23-33,UCSFTomo,75.0
+ycw2012-09-23-66,UCSFTomo,75.0
+ycw2012-09-23-68,UCSFTomo,75.0
+ycw2012-09-23-69,UCSFTomo,75.0
+ycw2012-09-23-71,UCSFTomo,75.0
+ycw2012-09-23-37,UCSF Tomo,112.0
+ycw2012-09-23-38,UCSF Tomo,112.0
+ycw2012-09-23-41,UCSF Tomo,112.0
+ycw2012-09-23-42,UCSF Tomo,112.0
+ycw2012-09-23-43,UCSF Tomo,112.0
+ycw2012-09-23-44,UCSF Tomo,112.0
+ycw2012-09-23-45,UCSF Tomo,112.0
+ycw2012-09-23-48,UCSF Tomo,112.0
+ycw2012-09-23-39,UCSFTomo,112.0
+ycw2012-09-23-46,UCSFTomo,112.0
+ycw2012-09-23-49,UCSFTomo,112.0
+ycw2012-09-23-50,UCSFTomo,112.0
+ycw2012-09-23-51,UCSFTomo,112.0
+ycw2012-09-23-52,UCSFTomo,112.0
+ycw2012-09-23-74,UCSF Tomo,112.5

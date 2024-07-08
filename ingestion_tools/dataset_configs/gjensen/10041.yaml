@@ -54,7 +54,7 @@ runs:
       match_regex: (mka2018-08-16-1|mka2018-08-16-2|mka2018-08-16-3|mka2018-08-16-4|mka2018-08-16-5|mka2018-08-16-6|mka2018-08-16-7|mka2018-08-16-8|mka2018-08-16-9|mka2018-08-16-10|mka2018-08-16-11|mka2018-08-16-12|mka2018-08-16-13|mka2018-08-16-14|mka2018-08-16-15|mka2018-08-16-16|mka2018-08-16-17|mka2018-08-16-19|mka2018-08-16-20|mka2018-08-16-21|mka2018-08-16-22|mka2018-08-16-23|mka2018-08-16-24|mka2018-08-16-25|mka2018-08-16-26|mka2018-08-16-27|mka2018-08-16-28|mka2018-08-16-29|mka2018-08-16-30|mka2018-08-16-31|mka2018-08-16-32|mka2018-08-16-33|mka2018-08-16-34|mka2018-08-16-37|mka2018-08-16-38|mka2018-08-16-39|mka2018-08-16-40|mka2018-08-16-41|mka2018-08-16-42|mka2018-08-16-43|mka2018-08-16-44|mka2018-08-16-45|mka2018-08-16-46|mka2018-08-16-47|mka2018-08-16-48|mka2018-08-16-49|mka2018-08-16-50|mka2018-08-16-51|mka2018-08-16-55|mka2018-08-16-56|mka2018-08-16-57|mka2018-08-16-58|mka2018-08-16-59|mka2018-08-16-60|mka2018-08-16-61|mka2018-08-16-62|mka2018-08-16-63|mka2018-08-16-64|mka2018-08-16-65|mka2018-08-16-66|mka2018-08-16-67|mka2018-08-16-68|mka2018-08-16-69|mka2018-08-16-70|mka2018-08-16-71|mka2018-08-16-72|mka2018-08-16-73|mka2018-08-16-74|mka2018-08-16-75|mka2018-08-16-76|mka2018-08-16-77|mka2018-08-16-78|mka2018-08-16-79|mka2018-08-16-80|mka2018-08-16-81|mka2018-08-16-82|mka2018-08-16-83|mka2018-08-16-84|mka2018-08-16-85|mka2018-08-16-86|mka2018-08-16-87|mka2018-08-16-88|mka2018-08-16-89|mka2018-08-16-90|mka2018-08-16-91|mka2018-08-16-92|mka2018-08-16-93|mka2018-08-16-94|mka2018-08-16-95|mka2018-08-16-96|mka2018-08-16-97|mka2018-08-16-98|mka2018-08-16-99|mka2018-08-16-100|mka2018-08-16-110|mka2018-08-16-111|mka2018-08-16-112|mka2018-08-16-113|mka2018-08-16-114|mka2018-08-16-115|mka2018-08-16-116|mka2018-08-16-117|mka2018-08-16-118|mka2018-08-16-119|mka2018-08-16-120|mka2018-08-16-121|mka2018-08-16-122|mka2018-08-16-123)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10041
+  deposition_id: 10023
   run_data_map_file: run_data_map/10041.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -72,7 +72,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 3.712
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -80,7 +81,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 2.0
     tilting_scheme: min to max tilt
@@ -108,7 +108,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
     offset:
@@ -129,3 +129,31 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^mka2018-08-16-6$
+        - ^mka2018-08-16-21$
+        - ^mka2018-08-16-24$
+        - ^mka2018-08-16-31$
+        - ^mka2018-08-16-32$
+        - ^mka2018-08-16-33$
+        - ^mka2018-08-16-37$
+        - ^mka2018-08-16-40$
+        - ^mka2018-08-16-41$
+        - ^mka2018-08-16-66$
+        - ^mka2018-08-16-85$
+        - ^mka2018-08-16-86$
+        - ^mka2018-08-16-87$
+        - ^mka2018-08-16-88$
+        - ^mka2018-08-16-89$
+        - ^mka2018-08-16-91$
+        - ^mka2018-08-16-92$
+        - ^mka2018-08-16-93$
+        - ^mka2018-08-16-94$
+        - ^mka2018-08-16-95$
+        - ^mka2018-08-16-96$
+        - ^mka2018-08-16-97$
+        - ^mka2018-08-16-98$
+        - ^mka2018-08-16-99$
+        - ^mka2018-08-16-100$

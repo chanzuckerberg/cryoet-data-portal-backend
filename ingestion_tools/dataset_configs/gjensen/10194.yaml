@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: TRH7000
+    cross_references:
+      dataset_publications: 10.1016/j.bbrc.2011.03.062
     dataset_description: This is 1st of 3 sets of data studying Vibrio cholerae collected
       by Matt Swulius and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10194
@@ -50,7 +52,7 @@ runs:
       match_regex: (mst2010-09-17-2|mst2010-09-17-3|mst2010-09-17-4|mst2010-09-17-5|mst2010-09-17-6|mst2010-09-17-7|mst2010-09-17-8|mst2010-09-17-9|mst2010-09-17-10|mst2010-09-17-11|mst2010-09-17-12|mst2010-09-17-13|mst2010-10-09-1|mst2010-10-09-2|mst2010-10-09-3|mst2010-10-09-4|mst2010-10-09-5|mst2010-10-09-6|mst2010-10-09-7|mst2010-10-09-8|mst2010-10-09-9|mst2010-10-09-10|mst2010-10-09-11|mst2010-10-09-12|mst2010-10-09-13|mst2010-10-09-14|mst2010-10-10-1|mst2010-10-10-2|mst2010-10-10-3|mst2010-10-10-4|mst2010-10-10-5|mst2010-10-10-6|mst2010-10-10-7|mst2010-10-10-8|mst2010-10-10-9|mst2010-10-10-10|mst2010-10-10-11|mst2010-10-10-12|mst2010-10-10-13)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10194
+  deposition_id: 10031
   run_data_map_file: run_data_map/10194.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -67,7 +69,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: '{ts-pixel_spacing}'
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -75,7 +78,6 @@ tiltseries:
     tilt_range:
       max: 63
       min: -63
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1
     tilting_scheme: bidirectional
@@ -103,7 +105,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
     offset:
@@ -124,3 +126,13 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^mst2010-09-17-3$
+        - ^mst2010-09-17-5$
+        - ^mst2010-09-17-8$
+        - ^mst2010-10-09-10$
+        - ^mst2010-10-10-4$
+        - ^mst2010-10-10-5$
+        - ^mst2010-10-10-6$

@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: subsp. jejuni 81116
+    cross_references:
+      dataset_publications: 10.1073/pnas.1518952113
     dataset_description: This is 10th of 24 sets of data studying Campylobacter jejuni
       collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10210
@@ -51,8 +53,7 @@ runs:
       match_regex: (mba2011-12-30-1|mba2011-12-30-2|mba2011-12-30-3|mba2011-12-30-4|mba2011-12-30-5|mba2011-12-30-6|mba2011-12-30-7|mba2011-12-30-8|mba2011-12-30-9|mba2011-12-30-10|mba2011-12-30-11|mba2011-12-30-12|mba2011-12-30-13|mba2011-12-30-14|mba2011-12-30-15|mba2011-12-30-16|mba2011-12-30-17|mba2011-12-30-18|mba2011-12-30-19|mba2011-12-30-20|mba2011-12-30-21|mba2011-12-30-22)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10210
-  run_data_map_file: run_data_map/10210.csv
+  deposition_id: 10029
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -68,7 +69,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 7.8
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -76,7 +78,6 @@ tiltseries:
     tilt_range:
       max: 66.0
       min: -66.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.5
     tilting_scheme: starting tilt to max then min

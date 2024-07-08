@@ -14,6 +14,11 @@ datasets:
     - corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
+    cell_strain:
+      id: null
+      name: null
+    cross_references:
+      dataset_publications: 10.1111/mmi.13937
     dataset_description: This is 10th of 11 sets of data studying Mycoplasma pneumoniae
       collected by Jian Shi and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10298
@@ -49,8 +54,7 @@ runs:
       match_regex: (jsa2010-03-31-1|jsa2010-03-31-2|jsa2010-03-31-3|jsa2010-03-31-4|jsa2010-03-31-5|jsa2010-03-31-6|jsa2010-03-31-7|jsa2010-03-31-8|jsa2010-03-31-9|jsa2010-03-31-10|jsa2010-03-31-11|jsa2010-03-31-12|jsa2010-03-31-13|jsa2010-03-31-14|jsa2010-03-31-15|jsa2010-03-31-16|jsa2010-03-31-17|jsa2010-03-31-18|jsa2010-03-31-19|jsa2010-03-31-20|jsa2010-03-31-21|jsa2010-03-31-22|jsa2010-03-31-23|jsa2010-03-31-24|jsa2010-03-31-25|jsa2010-03-31-26|jsa2010-03-31-27|jsa2010-03-31-28|jsa2010-03-31-29|jsa2010-03-31-30|jsa2010-03-31-31|jsa2010-03-31-32|jsa2010-03-31-33)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10298
-  run_data_map_file: run_data_map/10298.csv
+  deposition_id: 10043
   run_to_frame_map_csv: run_frames_map/10298.csv
   run_to_tomo_map_csv: run_tomo_map/10298.csv
   source_prefix: GJensen_full
@@ -68,7 +72,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 7.74
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -76,7 +81,6 @@ tiltseries:
     tilt_range:
       max: 65.0
       min: -65.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min

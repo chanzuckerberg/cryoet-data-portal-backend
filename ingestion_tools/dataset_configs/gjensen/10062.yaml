@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: Philadelphia-1_Lp02
+    cross_references:
+      dataset_publications: 10.1038/s41564-019-0427-4
     dataset_description: "This is 5th of 41 sets of data studying Legionella pneumophila\
       \ collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Legionella\
       \ thyA \u2206dotUF  (JV1181)"
@@ -60,7 +62,7 @@ runs:
       match_regex: (dga2017-02-01-1|dga2017-02-01-2|dga2017-02-01-3|dga2017-02-01-4|dga2017-02-01-5|dga2017-02-01-6|dga2017-02-01-7|dga2017-02-01-8|dga2017-02-01-9|dga2017-02-01-10|dga2017-02-01-11|dga2017-02-01-12|dga2017-02-01-13|dga2017-02-01-14|dga2017-02-01-15|dga2017-02-01-16|dga2017-02-01-17|dga2017-02-01-18|dga2017-02-01-19|dga2017-02-01-20|dga2017-02-01-21|dga2017-02-01-22|dga2017-02-01-23|dga2017-02-01-24|dga2017-02-01-25|dga2017-02-01-26|dga2017-02-01-27|dga2017-02-01-28|dga2017-02-01-29|dga2017-02-01-30|dga2017-02-01-31|dga2017-02-01-32|dga2017-02-01-34|dga2017-02-01-35|dga2017-02-01-36|dga2017-02-01-37|dga2017-02-01-38|dga2017-02-01-39|dga2017-02-01-40|dga2017-02-01-41|dga2017-02-02-7|dga2017-02-02-8|dga2017-02-02-9|dga2017-02-02-10|dga2017-02-02-11|dga2017-02-02-12|dga2017-02-02-13|dga2017-02-02-14|dga2017-02-02-15|dga2017-02-02-16|dga2017-02-02-17|dga2017-02-02-18|dga2017-02-02-19|dga2017-02-02-20|dga2017-02-02-21|dga2017-02-02-22|dga2017-02-02-23|dga2017-02-02-24|dga2017-02-02-25|dga2017-02-02-26|dga2017-02-02-27|dga2017-02-02-28|dga2017-02-02-29|dga2017-02-02-30|dga2017-02-02-31|dga2017-02-02-32|dga2017-02-02-33|dga2017-02-02-34|dga2017-02-02-35|dga2017-02-02-36|dga2017-02-02-37|dga2017-02-02-38|dga2017-02-02-39|dga2017-02-02-40|dga2017-02-02-41|dga2017-02-02-42|dga2017-02-02-43|dga2017-02-02-44|dga2017-02-02-45|dga2017-02-02-46|dga2017-02-02-47|dga2017-02-02-48|dga2017-02-02-49|dga2017-02-02-51|dga2017-02-02-52|dga2017-02-02-53|dga2017-02-02-54|dga2017-02-02-55|dga2017-02-02-56|dga2017-02-02-57|dga2017-02-02-58|dga2017-02-02-59|dga2017-02-02-60|dga2017-02-02-61)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10062
+  deposition_id: 10038
   run_data_map_file: run_data_map/10062.csv
   run_to_frame_map_csv: run_frames_map/10062.csv
   run_to_tomo_map_csv: run_tomo_map/10062.csv
@@ -80,7 +82,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.036
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -88,7 +91,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: float {ts-tilt_step}
     tilting_scheme: starting tilt to max then min
@@ -116,7 +118,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
     offset:
@@ -138,3 +140,9 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^dga2017-02-02-22$
+        - ^dga2017-02-02-30$
+        - ^dga2017-02-02-53$

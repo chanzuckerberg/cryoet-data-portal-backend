@@ -1,29 +1,29 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_path,ts-tilt_series_quality
-rra2014-02-20-1,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/ssofixedatlas10001.mrc,4
-rra2014-02-20-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/ssofixedatlas10002.mrc,4
-rra2014-02-20-3,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/ssofixedatlas10003.mrc,4
-rra2014-02-20-4,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/ssofixedatlas10005.mrc,4
-rra2014-02-20-5,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20001.mrc,4
-rra2014-02-20-6,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20002.mrc,4
-rra2014-02-20-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20003.mrc,4
-rra2014-02-20-8,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20004.mrc,4
-rra2014-02-20-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20005.mrc,4
-rra2014-02-20-10,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20006.mrc,4
-rra2014-02-20-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20007.mrc,4
-rra2014-02-20-12,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20008.mrc,4
-rra2014-02-20-13,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20009.mrc,4
-rra2014-02-20-14,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20010.mrc,4
-rra2014-02-20-15,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20011.mrc,4
-rra2014-02-20-16,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20012.mrc,4
-rra2014-02-20-17,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20013.mrc,4
-rra2014-02-20-18,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20014.mrc,4
-rra2014-02-20-19,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20015.mrc,4
-rra2014-02-20-20,,NON_FIDUCIAL,None,None,,,rawdata/atlas20016.mrc,1
-rra2014-02-20-21,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20017.mrc,4
-rra2014-02-20-22,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20018.mrc,4
-rra2014-02-20-23,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20019.mrc,4
-rra2014-02-20-24,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20020.mrc,4
-rra2014-02-20-25,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20021.mrc,4
-rra2014-02-20-26,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20022.mrc,4
-rra2014-02-20-27,,NON_FIDUCIAL,None,None,,,rawdata/atlas20023.mrc,1
-rra2014-02-20-28,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,rawdata/atlas20024.mrc,4
+run_name,tomo-align_software,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_quality
+rra2014-02-20-1,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-2,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-3,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-4,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-5,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-6,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-7,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-8,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-9,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-10,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-11,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-12,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-13,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-14,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-15,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-16,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-17,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-18,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-19,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-21,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-22,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-23,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-24,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-25,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-26,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-28,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,RAPTOR,4
+rra2014-02-20-20,,NON_FIDUCIAL,None,None,,,1
+rra2014-02-20-27,,NON_FIDUCIAL,None,None,,,1

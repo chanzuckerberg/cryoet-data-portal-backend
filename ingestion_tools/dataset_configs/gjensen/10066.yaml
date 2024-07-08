@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: Philadelphia-1_Lp02
+    cross_references:
+      dataset_publications: 10.1038/s41564-019-0427-4
     dataset_description: This is 9th of 41 sets of data studying Legionella pneumophila
       collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. This
       is a single mutant that lacks DotG.
@@ -61,7 +63,7 @@ runs:
       match_regex: (dga2017-01-08-1|dga2017-01-08-2|dga2017-01-08-3|dga2017-01-08-4|dga2017-01-08-5|dga2017-01-08-6|dga2017-01-08-7|dga2017-01-08-8|dga2017-01-08-9|dga2017-01-08-10|dga2017-01-08-11|dga2017-01-08-12|dga2017-01-08-13|dga2017-01-08-14|dga2017-01-08-15|dga2017-01-08-16|dga2017-01-08-17|dga2017-01-08-18|dga2017-01-08-20|dga2017-01-08-21|dga2017-01-08-22|dga2017-01-08-25|dga2017-01-08-26|dga2017-01-08-27|dga2017-01-08-28|dga2017-01-08-29|dga2017-01-08-30|dga2017-01-08-31|dga2017-01-08-32|dga2017-01-08-33|dga2017-01-08-34|dga2017-01-08-35|dga2017-01-08-36|dga2017-01-08-37|dga2017-01-08-38|dga2017-01-08-39|dga2017-01-08-40|dga2017-01-08-41|dga2017-01-08-42|dga2017-01-08-43|dga2017-01-08-44|dga2017-01-08-45|dga2017-01-08-46|dga2017-01-08-47|dga2017-01-08-48|dga2017-01-08-49|dga2017-01-08-50|dga2017-01-08-51|dga2017-01-08-52|dga2017-01-08-53|dga2017-01-08-54|dga2017-01-08-56|dga2017-01-08-57|dga2017-01-08-58|dga2017-01-08-59|dga2017-01-08-61|dga2017-01-08-62|dga2017-01-08-63|dga2017-01-08-64|dga2017-01-08-65|dga2017-01-08-66|dga2017-01-08-67|dga2017-01-08-68|dga2017-01-08-69|dga2017-01-08-70|dga2017-01-08-71|dga2017-01-08-72|dga2017-01-08-73|dga2017-01-08-74|dga2017-01-08-75|dga2017-01-08-76|dga2017-01-08-77|dga2017-01-08-78|dga2017-01-08-79|dga2017-01-08-80|dga2017-01-08-81|dga2017-01-08-83|dga2017-01-08-84|dga2017-01-08-85|dga2017-01-08-86|dga2017-01-08-87|dga2017-01-08-88|dga2017-01-08-89|dga2017-01-08-90|dga2017-01-08-91|dga2017-01-08-92|dga2017-01-08-94|dga2017-01-08-95|dga2017-01-08-96|dga2017-01-08-97|dga2017-01-08-98|dga2017-01-08-99|dga2017-01-08-100|dga2017-01-08-101|dga2017-01-08-102|dga2017-01-08-103|dga2017-01-08-104|dga2017-01-08-105|dga2017-01-08-106|dga2017-01-08-107)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10066
+  deposition_id: 10038
   run_data_map_file: run_data_map/10066.csv
   run_to_frame_map_csv: run_frames_map/10066.csv
   run_to_tomo_map_csv: run_tomo_map/10066.csv
@@ -81,7 +83,8 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.2
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -89,7 +92,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.5
     tilting_scheme: starting tilt to max then min
@@ -117,7 +119,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: FIDUCIAL
     offset:

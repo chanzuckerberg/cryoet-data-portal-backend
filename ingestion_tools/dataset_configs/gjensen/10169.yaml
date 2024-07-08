@@ -17,8 +17,8 @@ datasets:
     cell_strain:
       name: Jurkat Clone E6-1
     cell_type:
-      name: T cell
       id: CL:0000084
+      name: T cell
     dataset_description: This is 1st of 3 sets of data studying Jurkat Human T-cell
       collected by Cora Woodward and is a part of Caltech Jensen  lab etdb. Jurkats
       were infected with pNLGFP virus then HP frozen and cryo-sectioned by Mark Ladinsky
@@ -56,7 +56,7 @@ runs:
       match_regex: (cwl2011-10-23-1|cwl2011-10-23-2|cwl2011-10-23-3|cwl2011-10-23-4|cwl2011-10-23-5|cwl2011-10-24-1|cwl2011-10-24-2|cwl2011-10-24-3|cwl2011-10-31-1|cwl2011-10-31-2|cwl2011-10-31-3|cwl2011-10-31-4|cwl2011-10-31-5|cwl2011-10-31-6|cwl2012-03-29-1|cwl2012-03-29-2|cwl2012-03-29-3|cwl2012-03-29-4|cwl2012-03-29-5|cwl2012-03-29-6|cwl2012-03-29-7|cwl2012-03-29-8|cwl2012-03-29-9|cwl2012-03-29-10|cwl2012-03-29-11|cwl2012-03-29-12)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10169
+  deposition_id: 10033
   run_data_map_file: run_data_map/10169.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -73,7 +73,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: '{ts-pixel_spacing}'
     spherical_aberration_constant: 2.0
     tilt_alignment_software: IMOD
@@ -81,7 +82,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: min to max tilt

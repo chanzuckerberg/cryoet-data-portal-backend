@@ -17,8 +17,10 @@ datasets:
     cell_strain:
       name: ''
     cell_type:
-      name: umbilical vein endothelial cell
       id: CL:0002618
+      name: umbilical vein endothelial cell
+    cross_references:
+      dataset_publications: 10.1128/JVI.02997-14
     dataset_description: This is 14th of 17 sets of data studying HUVECs collected
       by Cora Woodward and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10185
@@ -56,7 +58,7 @@ runs:
       match_regex: (cwl2013-06-14-1|cwl2013-06-14-2|cwl2013-06-14-4|cwl2013-06-14-5|cwl2013-06-14-6|cwl2013-06-14-7|cwl2013-06-14-8|cwl2013-06-14-9|cwl2013-06-14-10|cwl2013-06-14-11|cwl2013-06-14-12|cwl2013-06-14-13|cwl2013-06-14-14|cwl2013-06-14-15|cwl2013-06-14-16|cwl2013-06-14-17|cwl2013-06-14-18|cwl2013-06-14-19|cwl2013-06-15-1|cwl2013-06-15-3|cwl2013-06-15-4|cwl2013-06-15-5|cwl2013-06-15-6|cwl2013-06-15-7|cwl2013-06-15-9|cwl2013-06-15-10|cwl2013-06-15-11|cwl2013-06-15-12|cwl2013-06-15-13|cwl2013-06-15-14|cwl2013-06-15-15|cwl2013-06-15-16|cwl2013-06-15-17|cwl2013-06-15-19|cwl2013-06-15-20|cwl2013-06-16-1|cwl2013-06-16-2|cwl2013-06-16-3|cwl2013-06-16-5|cwl2013-06-16-7|cwl2013-08-17-2|cwl2013-08-17-3|cwl2013-08-17-4|cwl2013-08-17-5|cwl2013-08-17-6|cwl2013-08-17-7|cwl2013-08-17-8|cwl2013-08-17-9|cwl2013-08-17-10|cwl2013-08-17-11|cwl2013-08-17-12|cwl2013-10-20-1|cwl2013-10-20-2|cwl2013-10-20-3|cwl2013-10-20-5|cwl2013-10-20-6|cwl2013-10-20-7|cwl2013-10-20-8|cwl2013-10-20-9)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10185
+  deposition_id: 10025
   run_data_map_file: run_data_map/10185.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -74,7 +76,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.933
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -82,7 +85,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: float {ts-tilt_step}
     tilting_scheme: starting tilt to max then min

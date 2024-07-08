@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: ''
+    cross_references:
+      dataset_publications: 10.1128/JB.00505-12
     dataset_description: This is 2nd of 5 sets of data studying Escherichia coli collected
       by Matt Swulius and is a part of Caltech Jensen  lab etdb. e. coli from Larry
       Rothfield containing plasmid carrying WT MreB.
@@ -52,8 +54,7 @@ runs:
       match_regex: (mst2011-07-29-1|mst2011-07-29-2|mst2011-07-29-3|mst2011-07-29-4|mst2011-07-29-5|mst2011-07-29-6|mst2011-07-29-7|mst2011-07-29-8|mst2011-07-29-9|mst2011-07-29-10|mst2011-07-29-11|mst2011-07-29-12|mst2011-07-29-13|mst2011-07-29-14|mst2011-07-29-15|mst2011-07-29-16|mst2011-07-29-17|mst2011-07-29-18|mst2011-07-29-19|mst2011-07-29-20|mst2011-07-29-21|mst2011-07-29-22|mst2011-07-29-23|mst2011-07-29-24)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10190
-  run_data_map_file: run_data_map/10190.csv
+  deposition_id: 10057
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -69,7 +70,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 9.46
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -77,7 +79,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min

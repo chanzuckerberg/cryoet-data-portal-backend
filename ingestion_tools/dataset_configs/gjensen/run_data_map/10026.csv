@@ -1,3 +1,3 @@
-run_name,ts-tilt_range-min,ts-tilt_series_path
-wnj2018-10-31-2,-50.0,rawdata/bio4-2_lamXX_cell2.st
-wnj2018-11-01-9,50.0,rawdata/bio4-2_lamXX_cell3.st
+run_name,ts-tilt_range-min
+wnj2018-10-31-2,-50.0
+wnj2018-11-01-9,50.0

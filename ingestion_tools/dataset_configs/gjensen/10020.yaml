@@ -16,6 +16,9 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: CCAP 1403/13F
+    cross_references:
+      dataset_publications: 10.1016/j.str.2023.03.011
+      related_database_entries: EMD-29922, EMD-29923, EMD-29925, EMD-29924
     dataset_description: This is 7th of 7 sets of data studying Dolichospermum flos-aquae
       collected by Przemek Dutka and is a part of Caltech Jensen  lab etdb. Gas vesicles,
       GVs, Anabeana
@@ -59,7 +62,7 @@ runs:
       match_regex: (pda2021-02-02-20|pda2022-02-02-1|pda2021-02-02-21)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10020
+  deposition_id: 10014
   run_data_map_file: run_data_map/10020.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -77,7 +80,8 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: true
+      image_corrector: null
+      phase_plate: volta phase plate
     pixel_spacing: 1.687
     spherical_aberration_constant: 2.7
     tilt_alignment_software: IMOD
@@ -85,7 +89,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 3.0
     tilting_scheme: min to max tilt

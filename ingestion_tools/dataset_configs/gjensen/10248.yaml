@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: subsp. subtilis str. 168
+    cross_references:
+      dataset_publications: https://doi.org/10.1111/mmi.12201
     dataset_description: This is 3rd of 4 sets of data studying Bacillus subtilis
       collected by Elitza Tocheva and is a part of Caltech Jensen  lab etdb. sacculi
       of sporulating wtBsubtilis
@@ -53,7 +55,7 @@ runs:
       match_regex: (etl2011-07-05-1|etl2011-07-05-2|etl2011-07-05-3|etl2011-07-05-4|etl2011-07-05-5|etl2011-07-05-6|etl2011-07-05-7|etl2011-07-05-8|etl2011-07-05-9|etl2011-07-05-10|etl2011-07-05-11|etl2011-07-05-12|etl2011-07-05-13|etl2011-07-05-14|etl2011-07-05-15|etl2011-07-05-16|etl2011-07-05-17|etl2011-07-05-18|etl2011-07-05-19|etl2011-07-05-20|etl2011-07-05-21|etl2011-07-05-22|etl2011-07-05-23|etl2011-07-05-24|etl2011-07-05-25|etl2011-07-05-26|etl2011-07-05-27|etl2011-07-05-28|etl2011-07-05-29|etl2011-07-05-30|etl2011-07-05-31|etl2011-07-05-32)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10248
+  deposition_id: 10019
   run_data_map_file: run_data_map/10248.csv
   run_to_frame_map_csv: run_frames_map/10248.csv
   run_to_tomo_map_csv: run_tomo_map/10248.csv
@@ -72,7 +74,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 9.46
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -80,7 +83,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min

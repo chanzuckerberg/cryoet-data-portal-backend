@@ -83,7 +83,7 @@ annotations:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
       description: Cytosolic ribosome
-      id: GO:0009326
+      id: GO:0022626
       name: cytosolic ribosome
     annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
     annotation_software: STOPGAP

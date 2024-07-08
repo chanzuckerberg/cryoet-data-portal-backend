@@ -14,6 +14,11 @@ datasets:
     - corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
+    cell_strain:
+      id: null
+      name: null
+    cross_references:
+      dataset_publications: 10.1111/mmi.13937
     dataset_description: This is 5th of 7 sets of data studying Mycoplasma pneumoniae
       collected by Songye Chen and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10257
@@ -48,7 +53,7 @@ runs:
       match_regex: (scy2015-04-18-2|scy2015-04-18-3|scy2015-04-18-4|scy2015-04-18-5|scy2015-04-18-6|scy2015-04-18-7|scy2015-04-18-8|scy2015-04-18-9|scy2015-04-18-10|scy2015-04-18-11|scy2015-04-18-12|scy2015-04-18-13|scy2015-04-18-14|scy2015-04-18-15|scy2015-04-18-16|scy2015-04-18-17|scy2015-04-18-18|scy2015-04-18-19|scy2015-04-18-20|scy2015-04-18-21|scy2015-04-18-22|scy2015-04-18-23|scy2015-04-18-24|scy2015-04-18-25|scy2015-04-18-26|scy2015-04-18-28|scy2015-04-18-29|scy2015-04-18-30|scy2015-04-18-31|scy2015-04-18-33|scy2016-03-15-2|scy2016-03-15-3|scy2016-03-15-5|scy2016-03-15-6|scy2016-03-15-7|scy2016-03-15-8|scy2016-03-15-9|scy2016-03-15-10|scy2016-03-15-11|scy2016-03-15-12|scy2016-03-15-13|scy2016-03-15-14|scy2016-03-15-15|scy2016-03-15-16|scy2016-03-15-17|scy2016-03-15-18|scy2016-03-15-19|scy2016-03-15-20|scy2016-03-15-21|scy2016-03-15-22|scy2016-03-15-23|scy2016-03-15-24|scy2016-03-15-25|scy2016-03-15-26|scy2016-03-15-27|scy2016-03-15-28|scy2016-03-15-29|scy2016-03-15-30|scy2016-03-15-31|scy2016-03-15-32|scy2016-03-15-33|scy2016-03-15-34|scy2016-03-15-35|scy2016-03-15-36|scy2016-03-15-37|scy2016-03-15-38)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10257
+  deposition_id: 10026
   run_data_map_file: run_data_map/10257.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -66,7 +71,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.036
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -74,7 +80,6 @@ tiltseries:
     tilt_range:
       max: 65.0
       min: -65.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -102,7 +107,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: FIDUCIAL
     offset:

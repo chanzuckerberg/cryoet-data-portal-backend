@@ -61,7 +61,7 @@ runs:
       match_regex: (mka2019-05-25-3|mka2019-05-25-4|mka2019-05-25-5|mka2019-05-25-6|mka2019-05-25-7|mka2019-05-25-9|mka2019-05-25-10|mka2019-05-25-11|mka2019-05-25-13|mka2019-05-25-14|mka2019-05-25-15|mka2019-05-25-17|mka2019-05-25-18|mka2019-05-25-19|mka2019-05-25-21|mka2019-05-25-22|mka2019-05-25-23|mka2019-05-25-24|mka2019-05-25-26|mka2019-05-25-27|mka2019-05-25-28|mka2019-05-25-29|mka2019-05-25-30|mka2019-05-25-31|mka2019-05-25-32|mka2019-05-25-33|mka2019-05-25-34|mka2019-05-25-35|mka2019-05-25-36|mka2019-05-25-37|mka2019-05-25-38|mka2019-05-25-39|mka2019-05-25-40|mka2019-05-25-41|mka2019-05-25-42|mka2019-05-25-43|mka2019-05-25-44|mka2019-05-25-45|mka2019-05-25-46)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10042
+  deposition_id: 10023
   run_data_map_file: run_data_map/10042.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -79,7 +79,8 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.494
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -87,7 +88,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 2.0
     tilting_scheme: min to max tilt
@@ -115,7 +115,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
     offset:
@@ -137,3 +137,8 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^mka2019-05-25-29$
+        - ^mka2019-05-25-42$

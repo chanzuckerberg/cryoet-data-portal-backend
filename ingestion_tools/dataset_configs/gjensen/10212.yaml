@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: subsp. jejuni 81116
+    cross_references:
+      dataset_publications: 10.1073/pnas.1518952113
     dataset_description: This is 12th of 24 sets of data studying Campylobacter jejuni
       collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10212
@@ -51,7 +53,7 @@ runs:
       match_regex: (mba2012-01-13-1|mba2012-01-13-2|mba2012-01-13-3|mba2012-01-13-4|mba2012-01-13-5|mba2012-01-13-6|mba2012-01-13-7|mba2012-01-13-8|mba2012-01-13-9|mba2012-01-13-10|mba2012-01-13-11|mba2012-01-13-12|mba2012-01-13-13|mba2012-01-13-14|mba2012-01-13-15|mba2012-01-13-16|mba2012-01-13-17|mba2012-01-13-18|mba2012-01-13-19|mba2012-01-13-20|mba2012-01-13-21|mba2012-01-13-22|mba2012-01-13-23|mba2012-01-13-24|mba2012-01-13-25|mba2012-01-13-26|mba2012-01-13-27|mba2012-01-13-28|mba2012-01-13-29|mba2012-01-13-30|mba2012-01-13-31|mba2012-01-13-32|mba2012-01-13-33)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10212
+  deposition_id: 10029
   run_data_map_file: run_data_map/10212.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -68,7 +70,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 7.8
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -76,7 +79,6 @@ tiltseries:
     tilt_range:
       max: 66.0
       min: -66.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.5
     tilting_scheme: starting tilt to max then min

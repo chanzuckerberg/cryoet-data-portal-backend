@@ -58,7 +58,7 @@ runs:
       match_regex: (mka2019-11-24-1|mka2019-11-24-2|mka2019-11-24-3|mka2019-11-24-4|mka2019-11-24-5|mka2019-11-24-6|mka2019-11-24-7|mka2019-11-24-8|mka2019-11-24-9|mka2019-11-24-10|mka2019-11-24-11|mka2019-11-24-12|mka2019-11-24-13|mka2019-11-24-14|mka2019-11-24-15|mka2019-11-24-16|mka2019-11-24-17|mka2019-11-24-18|mka2019-11-24-19|mka2019-11-24-20|mka2019-11-24-21|mka2019-11-24-22|mka2019-11-24-23|mka2019-11-24-24|mka2019-11-24-25|mka2019-11-24-26|mka2019-11-24-27|mka2019-11-24-28|mka2019-11-24-29|mka2019-11-24-30|mka2019-11-24-31|mka2019-11-24-32|mka2019-11-24-33|mka2019-11-24-34|mka2019-11-24-35|mka2019-11-24-36|mka2019-11-24-37|mka2019-11-24-38|mka2019-11-24-39|mka2019-11-24-40|mka2019-11-24-41|mka2019-11-24-42|mka2019-11-24-43|mka2019-11-24-44|mka2019-11-24-45|mka2019-11-24-46|mka2019-11-24-47|mka2019-11-24-48|mka2019-11-24-49|mka2019-11-24-50|mka2019-11-24-51|mka2019-11-24-52|mka2019-11-24-53|mka2019-11-24-54|mka2019-11-24-55|mka2019-11-24-56|mka2019-11-24-57|mka2019-11-24-58|mka2019-11-24-59|mka2019-11-24-60|mka2019-11-24-61|mka2019-11-24-62|mka2019-11-24-63|mka2019-11-24-64|mka2019-11-24-65|mka2019-11-24-66|mka2019-11-24-67|mka2019-11-24-68|mka2019-11-24-69|mka2019-11-24-70|mka2019-11-24-71|mka2019-11-24-72|mka2019-11-24-73|mka2019-11-24-74|mka2019-11-24-75|mka2019-11-24-76|mka2019-11-24-77|mka2019-11-24-78|mka2019-11-24-79|mka2019-11-24-80|mka2019-11-24-81|mka2019-11-24-82|mka2019-11-24-83|mka2019-11-24-84|mka2019-11-24-85|mka2019-11-24-86|mka2019-11-24-87|mka2019-11-24-88|mka2019-11-24-89|mka2019-11-24-90|mka2019-11-24-91|mka2019-11-24-92|mka2019-11-24-93|mka2019-11-24-94|mka2019-11-24-95|mka2019-11-24-96|mka2019-11-24-97|mka2019-11-24-98|mka2019-11-24-99|mka2019-11-24-100)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10049
+  deposition_id: 10030
   run_data_map_file: run_data_map/10049.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -76,7 +76,8 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.494
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -84,7 +85,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 3.0
     tilting_scheme: min to max tilt
@@ -112,7 +112,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
     offset:
@@ -134,3 +134,24 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^mka2019-11-24-6$
+        - ^mka2019-11-24-21$
+        - ^mka2019-11-24-28$
+        - ^mka2019-11-24-30$
+        - ^mka2019-11-24-31$
+        - ^mka2019-11-24-32$
+        - ^mka2019-11-24-33$
+        - ^mka2019-11-24-34$
+        - ^mka2019-11-24-35$
+        - ^mka2019-11-24-36$
+        - ^mka2019-11-24-37$
+        - ^mka2019-11-24-38$
+        - ^mka2019-11-24-42$
+        - ^mka2019-11-24-50$
+        - ^mka2019-11-24-52$
+        - ^mka2019-11-24-58$
+        - ^mka2019-11-24-82$
+        - ^mka2019-11-24-92$

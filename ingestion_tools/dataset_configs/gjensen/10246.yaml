@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: subsp. subtilis str. 168
+    cross_references:
+      dataset_publications: https://doi.org/10.1111/mmi.12201
     dataset_description: This is 1st of 4 sets of data studying Bacillus subtilis
       collected by Elitza Tocheva and is a part of Caltech Jensen  lab etdb. withTA
     dataset_identifier: 10246
@@ -52,8 +54,7 @@ runs:
       match_regex: (etl2012-09-02-21|etl2012-09-02-22|etl2012-09-02-23|etl2012-09-02-24|etl2012-09-02-25|etl2012-09-02-26|etl2012-09-02-27|etl2012-09-02-28|etl2012-09-02-29)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10246
-  run_data_map_file: run_data_map/10246.csv
+  deposition_id: 10019
   run_to_frame_map_csv: run_frames_map/10246.csv
   run_to_tomo_map_csv: run_tomo_map/10246.csv
   source_prefix: GJensen_full
@@ -72,7 +73,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.933
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -80,7 +82,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: min to max tilt

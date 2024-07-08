@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: Philadelphia-1_Lp02
+    cross_references:
+      dataset_publications: 10.1038/s41564-019-0427-4
     dataset_description: 'This is 21th of 41 sets of data studying Legionella pneumophila
       collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. JV7091
       is a double mutant that lacks dotE and dotP (Lp02). '
@@ -61,7 +63,7 @@ runs:
       match_regex: (dga2016-01-12-41|dga2016-01-12-42|dga2016-01-12-43|dga2016-01-12-45|dga2016-01-12-46|dga2016-01-12-48|dga2016-01-12-49|dga2016-01-12-52|dga2016-01-12-56|dga2016-01-12-57|dga2016-01-12-59|dga2016-01-12-60|dga2016-01-12-61|dga2016-01-12-63|dga2016-01-12-64|dga2016-01-12-65|dga2016-01-12-66|dga2016-01-12-67|dga2016-01-12-68|dga2016-01-12-70|dga2016-01-12-73|dga2016-01-12-74|dga2016-01-12-75|dga2016-01-12-76|dga2016-01-12-79|dga2016-01-12-82)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10078
+  deposition_id: 10038
   run_data_map_file: run_data_map/10078.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -79,7 +81,8 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.2
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -87,7 +90,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1.5
     tilting_scheme: starting tilt to max then min
@@ -115,7 +117,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
     offset:
@@ -136,3 +138,7 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^dga2016-01-12-41$

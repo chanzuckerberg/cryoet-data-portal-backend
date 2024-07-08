@@ -51,7 +51,7 @@ runs:
       match_regex: (lmm2013-11-19-2|lmm2013-11-19-3|lmm2013-11-19-4|lmm2014-01-16-10|lmm2014-01-16-11|lmm2014-01-16-12|lmm2014-01-16-13|lmm2014-01-16-14|lmm2014-01-16-15|lmm2014-01-16-16|lmm2014-01-16-17|lmm2014-01-16-18|lmm2014-01-16-19|lmm2014-01-16-20|lmm2014-01-16-21|lmm2014-01-16-22|lmm2014-01-16-23|lmm2014-01-16-24|lmm2014-01-16-25|lmm2014-04-08-2|lmm2014-04-08-3|lmm2014-04-08-5|lmm2014-04-08-6|lmm2014-04-08-7|lmm2014-04-08-8|lmm2014-04-08-9|lmm2014-04-08-10|lmm2014-04-08-11|lmm2014-04-08-13|lmm2014-04-08-14|lmm2014-04-08-15|lmm2014-04-08-16|lmm2014-04-08-17|lmm2014-04-08-18|lmm2014-04-08-19|lmm2014-04-08-20|lmm2014-04-08-21|lmm2014-04-08-30|lmm2014-04-08-31|lmm2014-04-08-32)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10103
+  deposition_id: 10051
   run_data_map_file: run_data_map/10103.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -69,7 +69,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: '{ts-pixel_spacing}'
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -77,7 +78,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: float {ts-tilt_step}
     tilting_scheme: starting tilt to max then min

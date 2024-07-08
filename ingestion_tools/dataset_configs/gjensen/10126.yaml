@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: deltaQ 167
+    cross_references:
+      dataset_publications: 10.1128/mBio.01898-15
     dataset_description: 'This is 9th of 17 sets of data studying Magnetospirillum
       magneticum  collected by Poorna Subramanian and is a part of Caltech Jensen  lab
       etdb. plasmid is present for dQdQ167 is the strain in which dQ has been mutated
@@ -52,7 +54,7 @@ runs:
       match_regex: (psa2014-12-30-5|psa2014-12-30-6|psa2014-12-30-7|psa2014-12-30-8|psa2014-12-30-9|psa2014-12-30-10|psa2014-12-30-11|psa2014-12-30-12|psa2014-12-30-13|psa2014-12-30-14|psa2014-12-30-35|psa2014-12-30-36|psa2014-12-30-37|psa2014-12-30-38|psa2014-12-30-39)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10126
+  deposition_id: 10039
   run_data_map_file: run_data_map/10126.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -70,7 +72,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 6.167
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -78,7 +81,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -106,7 +108,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: FIDUCIAL
     offset:

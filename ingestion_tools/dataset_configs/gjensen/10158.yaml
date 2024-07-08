@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: HD100
+    cross_references:
+      dataset_publications: 10.1038/s41564-023-01401-2
     dataset_description: This is 4th of 4 sets of data studying Bdellovibrio bacteriovorus
       collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb. Bdellovibrio
       HI Strain 2492 in mixture with E. coli WM3433 minicells
@@ -55,8 +57,7 @@ runs:
       match_regex: (ycw2014-07-18-5|ycw2014-07-18-6|ycw2014-07-18-7|ycw2014-07-18-8|ycw2014-07-18-9|ycw2014-07-18-10|ycw2014-07-18-11|ycw2014-07-18-12|ycw2014-07-18-13|ycw2014-07-18-14|ycw2014-07-18-15|ycw2014-07-18-16|ycw2014-07-18-17|ycw2014-07-18-18|ycw2014-07-18-19|ycw2014-07-18-20|ycw2014-07-18-21|ycw2014-07-18-22|ycw2014-07-18-23|ycw2014-07-18-24|ycw2014-07-18-25|ycw2014-07-18-26|ycw2014-07-18-27|ycw2014-07-18-28|ycw2014-07-18-29|ycw2014-07-18-30|ycw2014-07-18-31|ycw2014-07-18-32|ycw2014-07-18-33)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10158
-  run_data_map_file: run_data_map/10158.csv
+  deposition_id: 10032
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -73,7 +74,8 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.829
     spherical_aberration_constant: 2.7
     tilt_alignment_software: RAPTOR
@@ -81,7 +83,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min

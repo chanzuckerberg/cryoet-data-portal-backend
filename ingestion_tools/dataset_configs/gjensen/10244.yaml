@@ -51,7 +51,7 @@ runs:
       match_regex: (etl2013-09-16-5|etl2013-09-16-6|etl2013-09-16-7|etl2013-09-16-8|etl2013-09-16-9|etl2013-09-16-10|etl2013-09-16-11|etl2013-09-16-12|etl2013-09-16-13)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10244
+  deposition_id: 10047
   run_data_map_file: run_data_map/10244.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -69,7 +69,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.933
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -77,7 +78,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -105,7 +105,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
     offset:
@@ -126,3 +126,7 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^etl2013-09-16-8$

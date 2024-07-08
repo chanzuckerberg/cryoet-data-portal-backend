@@ -17,8 +17,8 @@ datasets:
     cell_strain:
       name: ''
     cell_type:
-      name: umbilical vein endothelial cell
       id: CL:0002618
+      name: umbilical vein endothelial cell
     dataset_description: This is 1st of 17 sets of data studying HUVECs collected
       by Cora Woodward and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10172
@@ -53,7 +53,7 @@ runs:
       match_regex: (cwl2012-12-08-1|cwl2012-12-08-2|cwl2012-12-08-3|cwl2012-12-08-4)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10172
+  deposition_id: 10025
   run_data_map_file: run_data_map/10172.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -71,7 +71,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.933
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -79,7 +80,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: float {ts-tilt_step}
     tilting_scheme: starting tilt to max then min

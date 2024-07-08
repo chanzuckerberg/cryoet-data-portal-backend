@@ -60,7 +60,7 @@ runs:
       match_regex: (mka2019-11-23-1|mka2019-11-23-2|mka2019-11-23-3|mka2019-11-23-4|mka2019-11-23-5|mka2019-11-23-6|mka2019-11-23-7|mka2019-11-23-8|mka2019-11-23-9|mka2019-11-23-10|mka2019-11-23-11|mka2019-11-23-12|mka2019-11-23-13|mka2019-11-23-14|mka2019-11-23-15|mka2019-11-23-16|mka2019-11-23-17|mka2019-11-23-18|mka2019-11-23-19|mka2019-11-23-20|mka2019-11-23-21|mka2019-11-23-22|mka2019-11-23-23|mka2019-11-23-24|mka2019-11-23-25|mka2019-11-23-26|mka2019-11-23-27|mka2019-11-23-28|mka2019-11-23-29|mka2019-11-23-30|mka2019-11-23-31|mka2019-11-23-32|mka2019-11-23-33|mka2019-11-23-34|mka2019-11-23-35|mka2019-11-23-36|mka2019-11-23-37|mka2019-11-23-38|mka2019-11-23-39|mka2019-11-23-40|mka2019-11-23-41|mka2019-11-23-42|mka2019-11-23-43|mka2019-11-23-44|mka2019-11-23-45|mka2019-11-23-46|mka2019-11-23-47|mka2019-11-23-48)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10051
+  deposition_id: 10030
   run_data_map_file: run_data_map/10051.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -78,7 +78,8 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.494
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -86,7 +87,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 3.0
     tilting_scheme: min to max tilt
@@ -114,7 +114,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
     offset:
@@ -136,3 +136,17 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^mka2019-11-23-2$
+        - ^mka2019-11-23-4$
+        - ^mka2019-11-23-15$
+        - ^mka2019-11-23-22$
+        - ^mka2019-11-23-30$
+        - ^mka2019-11-23-31$
+        - ^mka2019-11-23-32$
+        - ^mka2019-11-23-33$
+        - ^mka2019-11-23-34$
+        - ^mka2019-11-23-35$
+        - ^mka2019-11-23-36$

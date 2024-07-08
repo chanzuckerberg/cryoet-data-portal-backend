@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: ATCC 15444
+    cross_references:
+      dataset_publications: https://doi.org/10.1111/mmi.13593
     dataset_description: This is 5th of 5 sets of data studying Hyphomonas neptunium
       collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb. ParA-like
       protein, HNE0708 knockout,DNA stream
@@ -55,7 +57,7 @@ runs:
       match_regex: (ycw2012-09-07-1|ycw2012-09-07-2|ycw2012-09-07-3|ycw2012-09-07-4|ycw2012-09-07-5|ycw2012-09-07-6|ycw2012-09-07-7|ycw2012-09-07-8|ycw2012-09-07-9|ycw2012-09-07-10|ycw2012-09-07-11|ycw2012-09-07-12|ycw2012-09-07-13|ycw2012-09-07-14|ycw2012-09-07-17|ycw2012-09-07-18|ycw2012-09-07-19|ycw2012-09-07-20|ycw2012-09-07-21|ycw2012-09-07-22|ycw2012-09-07-23|ycw2012-09-07-24|ycw2012-09-07-25|ycw2012-09-07-26|ycw2012-09-07-27|ycw2012-09-07-30|ycw2012-10-08-1|ycw2012-10-08-2|ycw2012-10-08-3|ycw2012-10-08-4|ycw2012-10-08-5|ycw2012-10-08-6|ycw2012-10-08-7)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10166
+  deposition_id: 10046
   run_data_map_file: run_data_map/10166.csv
   run_to_frame_map_csv: run_frames_map/10166.csv
   run_to_tomo_map_csv: run_tomo_map/10166.csv
@@ -75,7 +77,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: '{ts-pixel_spacing}'
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -83,7 +86,6 @@ tiltseries:
     tilt_range:
       max: float {ts-tilt_range-max}
       min: float {ts-tilt_range-min}
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min

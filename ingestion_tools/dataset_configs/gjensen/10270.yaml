@@ -50,7 +50,7 @@ runs:
       match_regex: (aba2015-07-15-36|aba2015-07-15-37|aba2015-07-15-39|aba2015-07-15-40|aba2015-07-15-41|aba2015-07-15-42|aba2015-07-15-43|aba2015-07-15-44|aba2015-07-15-45|aba2015-07-15-47|aba2015-07-15-48|aba2015-07-15-49|aba2015-07-15-50|aba2015-07-15-51|aba2015-07-15-52|aba2015-07-15-53|aba2015-07-15-54|aba2015-07-15-55|aba2015-07-15-56|aba2015-07-15-57|aba2015-07-15-58|aba2015-07-15-59|aba2015-07-15-60|aba2015-07-15-61|aba2015-07-15-62|aba2015-07-15-63|aba2015-07-15-65|aba2015-07-15-66|aba2015-07-15-67|aba2015-07-15-68|aba2015-07-15-69|aba2015-07-15-70|aba2015-07-15-71|aba2015-07-28-1|aba2015-07-28-2)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10270
+  deposition_id: 10021
   run_data_map_file: run_data_map/10270.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -68,7 +68,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 3.265
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -76,7 +77,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -104,7 +104,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: FIDUCIAL
     offset:

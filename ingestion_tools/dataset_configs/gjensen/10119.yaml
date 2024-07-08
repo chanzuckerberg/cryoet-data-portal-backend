@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: deltaQ 167
+    cross_references:
+      dataset_publications: 10.1128/mBio.01898-15
     dataset_description: This is 2nd of 17 sets of data studying Magnetospirillum
       magneticum  collected by Poorna Subramanian and is a part of Caltech Jensen  lab
       etdb. dK203 is the dQ167 strain in which dK has also been additionally deactivated.
@@ -52,7 +54,7 @@ runs:
       match_regex: (psa2014-12-20-1|psa2014-12-20-2|psa2014-12-20-3|psa2014-12-20-4|psa2014-12-20-5|psa2014-12-20-6|psa2014-12-20-7|psa2014-12-20-8|psa2014-12-20-9)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10119
+  deposition_id: 10039
   run_data_map_file: run_data_map/10119.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -70,7 +72,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 6.167
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -78,7 +81,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -106,7 +108,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: FIDUCIAL
     offset:

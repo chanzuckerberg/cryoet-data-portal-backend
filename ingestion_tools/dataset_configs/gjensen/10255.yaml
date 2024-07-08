@@ -14,6 +14,11 @@ datasets:
     - corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
+    cell_strain:
+      id: null
+      name: null
+    cross_references:
+      dataset_publications: 10.1111/mmi.13937
     dataset_description: This is 3rd of 7 sets of data studying Mycoplasma pneumoniae
       collected by Songye Chen and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10255
@@ -48,7 +53,7 @@ runs:
       match_regex: (scy2014-01-09-1|scy2014-01-09-2|scy2014-01-09-3|scy2014-01-09-4|scy2014-01-09-5|scy2014-01-09-6|scy2014-01-09-7|scy2014-01-09-8|scy2014-01-09-9|scy2014-01-09-10|scy2014-01-09-11|scy2014-01-09-12|scy2014-01-09-13|scy2014-01-09-14|scy2014-01-09-15|scy2014-01-09-16|scy2014-01-09-17|scy2014-01-09-18|scy2014-01-09-19)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10255
+  deposition_id: 10026
   run_data_map_file: run_data_map/10255.csv
   run_to_frame_map_csv: run_frames_map/10255.csv
   run_to_tomo_map_csv: run_tomo_map/10255.csv
@@ -68,7 +73,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.036
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -76,7 +82,6 @@ tiltseries:
     tilt_range:
       max: 65.0
       min: -65.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -104,7 +109,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
     offset:
@@ -125,3 +130,7 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^scy2014-01-09-16$

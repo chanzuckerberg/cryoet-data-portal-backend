@@ -1,14 +1,14 @@
-run_name,tomo-align_softwares,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_path,ts-tilt_series_quality
-psa2015-04-13-1,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,rawdata/dfwt_magnetosomes_atlas0001.mrc,4
-psa2015-04-13-2,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,rawdata/dfwt_magnetosomes_atlas0002.mrc,4
-psa2015-04-13-3,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,rawdata/dfwt_magnetosomes_atlas0003.mrc,4
-psa2015-04-13-4,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,rawdata/dfwt_magnetosomes_atlas0004.mrc,4
-psa2015-04-13-5,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,rawdata/dfwt_magnetosomes_atlas0005.mrc,4
-psa2015-04-13-6,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,rawdata/dfwt_magnetosomes_atlas0006.mrc,4
-psa2015-04-13-7,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,rawdata/dfwt_magnetosomes_atlas0007.mrc,4
-psa2015-04-13-8,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,rawdata/dfwt_magnetosomes_atlas0008.mrc,4
-psa2015-04-13-9,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,rawdata/dfwt_magnetosomes_atlas0009.mrc,4
-psa2015-04-13-10,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,rawdata/dfwt_magnetosomes_atlas0010.mrc,4
-psa2015-04-13-11,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,rawdata/dfwt_magnetosomes_atlas0011.mrc,4
-psa2015-04-13-12,,NON_FIDUCIAL,None,None,,,rawdata/dfwt_magnetosomes_atlas0012.mrc,1
-psa2015-04-13-13,['RAPTOR'],FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,rawdata/dfwt_magnetosomes_atlas0013.mrc,4
+run_name,tomo-align_software,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_quality
+psa2015-04-13-1,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,4
+psa2015-04-13-2,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,4
+psa2015-04-13-3,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,4
+psa2015-04-13-4,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,4
+psa2015-04-13-5,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,4
+psa2015-04-13-6,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,4
+psa2015-04-13-7,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,4
+psa2015-04-13-8,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,4
+psa2015-04-13-9,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,4
+psa2015-04-13-10,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,4
+psa2015-04-13-11,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,4
+psa2015-04-13-13,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,24.667,RAPTOR,4
+psa2015-04-13-12,,NON_FIDUCIAL,None,None,,,1

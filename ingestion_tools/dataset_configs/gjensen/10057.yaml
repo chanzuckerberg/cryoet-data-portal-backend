@@ -16,6 +16,9 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: Nine Mile phase II clone 4
+    cross_references:
+      dataset_publications: 10.1016/j.isci.2023.107210
+      related_database_entries: EMD-28281, EMD-28282, EMD-28283
     dataset_description: This is 5th of 5 sets of data studying Coxiella burnetii
       collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Coxiella
       burnetii Nine Mile phase II clone 4 (NMIIC4) strain. Wild-type cells day-5 culture.
@@ -58,8 +61,7 @@ runs:
       match_regex: (dga2017-08-15-2|dga2017-08-15-3|dga2017-08-15-4|dga2017-08-15-6|dga2017-08-15-7|dga2017-08-15-8|dga2017-08-15-9|dga2017-08-15-10|dga2017-08-15-11|dga2017-08-15-12|dga2017-08-15-13|dga2017-08-15-14|dga2017-08-15-15|dga2017-08-15-16|dga2017-08-15-17|dga2017-08-15-18|dga2017-08-15-19|dga2017-08-15-20|dga2017-08-15-21|dga2017-08-15-25|dga2017-08-15-26|dga2017-08-15-27|dga2017-08-15-28|dga2017-08-15-29|dga2017-08-15-30|dga2017-08-15-31|dga2017-08-15-33|dga2017-08-15-34|dga2017-08-15-37|dga2017-08-15-39|dga2017-08-15-40|dga2017-08-15-41|dga2017-08-15-42|dga2017-08-15-43|dga2017-08-15-44|dga2017-08-15-45|dga2017-08-15-46|dga2017-08-15-47|dga2017-08-15-48|dga2017-08-15-49|dga2017-08-15-50|dga2017-08-15-51|dga2017-08-15-52|dga2017-08-15-53|dga2017-08-15-54|dga2017-08-15-55|dga2017-08-15-56|dga2017-08-15-57|dga2017-08-15-58|dga2017-08-15-59|dga2017-08-15-60|dga2017-08-15-61|dga2017-08-15-62|dga2017-08-15-63|dga2017-08-15-64|dga2017-08-15-66|dga2017-08-15-67|dga2017-08-15-72|dga2017-08-15-74|dga2017-08-15-75|dga2017-08-15-76|dga2017-08-15-77|dga2017-08-15-78|dga2017-08-15-79|dga2017-08-15-80|dga2017-08-15-81|dga2017-08-15-82|dga2017-08-15-83|dga2017-08-15-84|dga2017-08-15-86|dga2017-08-15-87|dga2017-08-15-88|dga2017-08-15-89|dga2017-08-15-90|dga2017-08-15-91|dga2017-08-15-92|dga2017-08-15-93|dga2017-08-15-94|dga2017-08-15-95|dga2017-08-15-96|dga2017-08-15-97|dga2017-08-15-98|dga2017-08-15-99|dga2017-08-15-100|dga2017-08-15-101|dga2017-08-15-102|dga2017-08-15-103|dga2017-08-15-104|dga2017-08-15-105|dga2017-08-15-106|dga2017-08-15-107|dga2017-08-15-108|dga2017-08-15-109|dga2017-09-29-2|dga2017-09-29-3|dga2017-09-29-5|dga2017-09-29-6|dga2017-09-30-10|dga2017-09-29-10|dga2017-09-30-11|dga2017-09-29-11|dga2017-09-30-12|dga2017-09-30-13|dga2017-09-29-14|dga2017-09-29-16|dga2017-09-30-17|dga2017-09-29-17|dga2017-09-29-19|dga2017-09-29-20|dga2017-09-30-21|dga2017-09-30-23|dga2017-09-29-22|dga2017-10-17-7|dga2017-10-17-8|dga2017-10-17-9|dga2017-10-17-10|dga2017-10-17-11|dga2017-10-17-13|dga2017-10-17-14|dga2017-10-17-15|dga2017-10-17-16|dga2017-10-17-17|dga2017-10-17-18|dga2017-10-17-19|dga2017-10-17-20|dga2017-10-17-21|dga2017-10-17-22|dga2017-10-17-25|dga2017-10-17-28|dga2017-10-17-29|dga2017-10-17-30|dga2017-10-17-31|dga2017-10-17-32|dga2017-10-17-34|dga2017-10-17-35|dga2017-10-17-36|dga2017-10-17-37|dga2017-10-17-38|dga2017-10-17-40|dga2017-10-17-41|dga2017-10-17-42|dga2017-10-17-43|dga2017-10-17-44|dga2017-10-17-45|dga2017-10-17-46|dga2017-10-17-47|dga2017-10-17-48|dga2017-10-17-49|dga2017-10-17-51|dga2017-10-17-52|dga2017-10-17-57|dga2017-10-17-58|dga2017-10-17-59|dga2017-10-17-60|dga2017-10-17-62|dga2017-10-17-63|dga2017-10-17-64|dga2017-10-17-65|dga2017-10-17-66|dga2017-10-17-67|dga2017-10-17-68|dga2017-10-17-69|dga2017-10-17-70|dga2017-10-17-71|dga2017-10-17-72|dga2017-10-17-73|dga2017-10-17-74|dga2017-10-17-75|dga2017-10-17-76|dga2017-10-17-85|dga2017-10-17-87|dga2017-10-17-92|dga2017-10-17-95|dga2017-10-17-96|dga2017-10-17-97|dga2017-10-17-98|dga2017-10-17-99|dga2017-10-17-120|dga2017-10-17-121|dga2017-10-17-122|dga2017-10-17-123|dga2017-10-17-124|dga2017-10-17-125|dga2017-10-17-126|dga2017-10-17-127|dga2017-10-17-128|dga2017-10-17-129|dga2017-10-17-130|dga2017-10-17-131|dga2017-10-17-132|dga2017-10-17-133|dga2017-10-17-134|dga2017-10-17-135|dga2017-10-17-136|dga2017-10-17-137)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10057
-  run_data_map_file: run_data_map/10057.csv
+  deposition_id: 10045
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -76,7 +78,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.036
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -84,7 +87,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 2.0
     tilting_scheme: starting tilt to max then min

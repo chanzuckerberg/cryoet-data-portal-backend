@@ -14,6 +14,11 @@ datasets:
     - corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
+    cell_strain:
+      id: null
+      name: null
+    cross_references:
+      dataset_publications: 10.1111/mmi.13937
     dataset_description: This is 6th of 7 sets of data studying Mycoplasma pneumoniae
       collected by Songye Chen and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10258
@@ -48,8 +53,7 @@ runs:
       match_regex: (scy2013-08-15-6|scy2013-08-15-9|scy2013-08-15-10|scy2013-08-15-13|scy2013-08-15-14|scy2013-08-15-15|scy2013-08-15-16|scy2013-08-15-17|scy2013-08-15-19|scy2013-08-15-20|scy2013-08-15-21)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10258
-  run_data_map_file: run_data_map/10258.csv
+  deposition_id: 10026
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -66,7 +70,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.933
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -74,7 +79,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min

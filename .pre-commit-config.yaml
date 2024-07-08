@@ -37,6 +37,7 @@ repos:
   hooks:
   - id: check-toml
   - id: check-yaml
+    exclude: ingestion_tools/dataset_configs/template.yaml
   - id: check-json
   - id: check-merge-conflict
   - id: end-of-file-fixer

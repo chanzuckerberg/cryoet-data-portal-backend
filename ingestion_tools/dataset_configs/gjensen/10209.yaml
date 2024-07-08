@@ -51,8 +51,7 @@ runs:
       match_regex: (mba2012-02-01-1|mba2012-02-01-2|mba2012-02-01-3|mba2012-02-01-4|mba2012-02-01-5|mba2012-02-01-6|mba2012-02-01-7|mba2012-02-01-8|mba2012-02-01-9|mba2012-02-01-10|mba2012-02-01-11|mba2012-02-01-12|mba2012-02-01-13|mba2012-02-01-14|mba2012-02-01-15|mba2012-02-01-16|mba2012-02-01-17|mba2012-02-01-18|mba2012-02-01-19)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10209
-  run_data_map_file: run_data_map/10209.csv
+  deposition_id: 10029
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -68,7 +67,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 7.8
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -76,7 +76,6 @@ tiltseries:
     tilt_range:
       max: 66.0
       min: -66.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.5
     tilting_scheme: starting tilt to max then min

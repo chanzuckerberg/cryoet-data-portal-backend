@@ -1,10 +1,10 @@
 # TODO: add which files each attribute appears in? and what % of files it appears in?
 """
-This file is intended to be run from the ingestion/dataset_configs directory. Intended for ensuring that all existing 
+This file is intended to be run from the ingestion/dataset_configs directory. Intended for ensuring that all existing
 dataset config files' schema are covered by the linkml/Pydantic models.
 It will read all .yaml files in the directory and its subdirectories, except for the files in the whitelist.
 It will then merge all of the yaml files (by their fields, retaining the nested structure) into a single yaml file.
-During the merge, it attempts to retain as many fields as possible, and will print out any conflicts it encounters 
+During the merge, it attempts to retain as many fields as possible, and will print out any conflicts it encounters
 (while still retaining the different types that exist in the files).
 The merge is done by recursively updating the dictionary, so that nested fields are merged correctly.
 
@@ -145,7 +145,7 @@ def recursive_dict_update_list_helper(current_entries: dict, key: str, new_entry
 This function is the main function that will be called. It will take in the current dictionary and the new dictionary, and will merge them together. A recursive
 approach is used to handle nested dictionaries and lists.
 
-The function will return the merged dictionary, which is the current_entries dictionary. 
+The function will return the merged dictionary, which is the current_entries dictionary.
 In-place modifications are made to the current_entries dictionary, but if it is a new object, assignment of the return value is necessary.
 """
 
@@ -209,8 +209,6 @@ def main():
             and os.path.basename(file) not in EXCLUDE_LIST 
             and not any(keyword in file for keyword in EXCLUDE_KEYWORDS)
     ]
-    
-    print(all_files)
 
     unified_config: dict = {}
 

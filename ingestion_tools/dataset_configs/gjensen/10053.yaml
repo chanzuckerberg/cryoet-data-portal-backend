@@ -16,6 +16,9 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: Nine Mile phase II clone 4
+    cross_references:
+      dataset_publications: 10.1016/j.isci.2023.107210
+      related_database_entries: EMD-28281, EMD-28282, EMD-28283
     dataset_description: This is 1st of 5 sets of data studying Coxiella burnetii
       collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Nine
       Mile phase II clone 4 (NMIIC4). Dot/Icm deletion strain, day-5 culture.
@@ -52,8 +55,7 @@ runs:
       match_regex: (dga2017-01-14-2|dga2017-01-14-3|dga2017-01-14-4|dga2017-01-14-14|dga2017-01-14-15|dga2017-01-14-16|dga2017-01-14-17|dga2017-01-14-18|dga2017-01-14-19|dga2017-01-14-20|dga2017-01-14-21|dga2017-01-14-22|dga2017-01-14-23|dga2017-01-14-24|dga2017-01-14-25|dga2017-01-14-26|dga2017-01-14-27)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10053
-  run_data_map_file: run_data_map/10053.csv
+  deposition_id: 10045
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -70,7 +72,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.036
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -78,7 +81,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.5
     tilting_scheme: starting tilt to max then min

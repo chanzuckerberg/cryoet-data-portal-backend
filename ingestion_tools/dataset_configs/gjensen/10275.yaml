@@ -53,7 +53,7 @@ runs:
       match_regex: (aba2014-03-05-5|aba2014-03-05-6|aba2014-03-05-7|aba2014-03-05-8|aba2014-03-05-9|aba2014-03-05-10|aba2014-03-05-11|aba2014-03-05-12|aba2014-03-05-13|aba2014-03-05-14|aba2014-03-05-15|aba2014-03-05-16|aba2014-03-05-17|aba2014-03-05-18|aba2014-03-05-19|aba2014-03-05-20|aba2014-03-05-21|aba2014-03-05-22)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10275
+  deposition_id: 10021
   run_data_map_file: run_data_map/10275.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -71,7 +71,8 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 3.805
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -79,7 +80,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
@@ -107,7 +107,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
     offset:
@@ -128,3 +128,7 @@ voxel_spacings:
   - literal:
       value:
       - float {tomo-voxel_spacing}
+    parent_filters:
+      exclude:
+        run:
+        - ^aba2014-03-05-15$

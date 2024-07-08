@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: subsp. jejuni 81116
+    cross_references:
+      dataset_publications: 10.1073/pnas.1518952113
     dataset_description: "This is 21th of 24 sets of data studying Campylobacter jejuni\
       \ collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb. Whole\
       \ cell in a grid hole\tTomogram notes: Two polar flagella Flagella:156,729,140\
@@ -55,7 +57,7 @@ runs:
       match_regex: (mba2010-08-29-1|mba2010-08-29-2|mba2010-08-29-3|mba2010-08-29-4|mba2010-08-29-5)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10221
+  deposition_id: 10029
   run_data_map_file: run_data_map/10221.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -72,7 +74,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 9.62
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -80,7 +83,6 @@ tiltseries:
     tilt_range:
       max: 64.0
       min: -59.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.5
     tilting_scheme: starting tilt to max then min
@@ -108,7 +110,7 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_softwares}'
+    align_software: '{tomo-align_software}'
     authors: *id001
     fiducial_alignment_status: FIDUCIAL
     offset:

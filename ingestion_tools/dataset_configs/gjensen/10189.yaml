@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: ''
+    cross_references:
+      dataset_publications: 10.1128/JB.00505-12
     dataset_description: This is 1st of 5 sets of data studying Escherichia coli collected
       by Matt Swulius and is a part of Caltech Jensen  lab etdb. Contains MreB-mCherry
       sandwich fusion as sole source of MreB from WT promoter.
@@ -52,8 +54,7 @@ runs:
       match_regex: (mst2012-05-07-2|mst2012-05-07-3|mst2012-05-07-4|mst2012-05-07-5|mst2012-05-07-6|mst2012-05-07-7|mst2012-05-07-8|mst2012-05-07-9|mst2012-05-07-10|mst2012-05-07-11|mst2012-05-07-12|mst2012-05-07-13|mst2012-05-07-14|mst2012-05-07-15|mst2012-05-07-16|mst2012-05-07-17|mst2012-05-08-1|mst2012-05-08-2|mst2012-05-08-3|mst2012-05-08-4)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10189
-  run_data_map_file: run_data_map/10189.csv
+  deposition_id: 10057
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -69,7 +70,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 9.46
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -77,7 +79,6 @@ tiltseries:
     tilt_range:
       max: 64.0
       min: -64.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min

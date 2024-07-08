@@ -53,7 +53,7 @@ runs:
       match_regex: (mba2009-08-27-1|mba2009-08-27-2|mba2009-08-27-3|mba2009-08-27-4|mba2009-08-27-5|mba2009-08-27-6|mba2009-08-27-7|mba2009-08-27-8|mba2009-08-27-9|mba2009-08-27-10)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10242
+  deposition_id: 10042
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -69,7 +69,9 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
+    pixel_spacing: null
     spherical_aberration_constant: 2.0
     tilt_alignment_software: IMOD
     tilt_axis: 0.0

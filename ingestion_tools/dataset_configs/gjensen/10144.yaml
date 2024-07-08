@@ -53,7 +53,7 @@ runs:
       match_regex: (ycw2016-11-02-1|ycw2016-11-02-2|ycw2016-11-02-3|ycw2016-11-02-4|ycw2016-11-02-5|ycw2016-11-02-6|ycw2016-11-02-8|ycw2016-11-02-9|ycw2016-11-02-10|ycw2016-11-02-11|ycw2016-11-02-12|ycw2016-11-02-13|ycw2016-11-02-14|ycw2016-11-02-15|ycw2016-11-02-18|ycw2016-11-02-19|ycw2016-11-02-20|ycw2016-11-02-21|ycw2016-11-02-22|ycw2017-02-27-2|ycw2017-02-27-16|ycw2017-02-27-17|ycw2017-02-27-18|ycw2017-02-27-19|ycw2017-02-27-20|ycw2017-02-27-21|ycw2017-02-27-22|ycw2017-02-27-23|ycw2017-02-27-24|ycw2017-02-27-25|ycw2017-02-27-26|ycw2017-02-27-27|ycw2017-02-27-28|ycw2017-02-27-30|ycw2017-02-27-32|ycw2017-02-27-33|ycw2017-02-27-34|ycw2017-02-27-36|ycw2017-02-27-37|ycw2017-02-27-38|ycw2017-02-27-39|ycw2017-02-27-40|ycw2017-02-27-41|ycw2017-02-27-42|ycw2017-02-27-43|ycw2017-02-27-45|ycw2017-02-27-46|ycw2017-02-27-47|ycw2017-02-27-48|ycw2017-02-27-50|ycw2017-02-27-52|ycw2017-02-27-53|ycw2017-02-27-54|ycw2017-02-27-55|ycw2017-02-27-57|ycw2017-02-27-58|ycw2017-02-27-59|ycw2017-02-27-60|ycw2017-02-27-61|ycw2017-02-27-62|ycw2017-02-27-63|ycw2017-02-27-64|ycw2017-02-27-65|ycw2017-02-27-66|ycw2017-02-27-67|ycw2017-02-27-69|ycw2017-02-27-70|ycw2017-02-27-71|ycw2017-02-27-72|ycw2017-02-27-73|ycw2017-02-27-74|ycw2017-02-27-75)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10144
+  deposition_id: 10017
   run_data_map_file: run_data_map/10144.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -71,7 +71,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: '{ts-pixel_spacing}'
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -79,7 +80,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: float {ts-tilt_step}
     tilting_scheme: starting tilt to max then min

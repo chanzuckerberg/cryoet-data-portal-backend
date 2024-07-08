@@ -16,6 +16,8 @@ datasets:
       primary_author_status: false
     cell_strain:
       name: Philadelphia-1_Lp02
+    cross_references:
+      dataset_publications: 10.1038/s41564-019-0427-4
     dataset_description: "This is 15th of 41 sets of data studying Legionella pneumophila\
       \ collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Legionella\
       \ thyA JV3588_\u2206dotK"
@@ -61,7 +63,7 @@ runs:
       match_regex: (dga2017-05-13-1|dga2017-05-13-2|dga2017-05-13-3|dga2017-05-13-4|dga2017-05-13-5|dga2017-05-13-6|dga2017-05-13-7|dga2017-05-13-8|dga2017-05-13-11|dga2017-05-13-12|dga2017-05-13-13|dga2017-05-13-14|dga2017-05-13-15|dga2017-05-13-16|dga2017-05-13-18|dga2017-05-13-19|dga2017-05-13-20|dga2017-05-13-21|dga2017-05-13-22|dga2017-05-13-23|dga2017-05-13-24|dga2017-05-13-25|dga2017-05-13-27|dga2017-05-25-2|dga2017-05-25-3|dga2017-05-25-4|dga2017-05-25-5|dga2017-05-25-6|dga2017-05-25-7|dga2017-05-25-8|dga2017-05-25-9|dga2017-05-25-10|dga2017-05-25-11|dga2017-05-25-12|dga2017-05-25-13|dga2017-05-25-14|dga2017-05-25-15|dga2017-05-25-16|dga2017-05-25-17|dga2017-05-25-18|dga2017-05-25-19|dga2017-05-25-20|dga2017-05-25-21|dga2017-05-25-22|dga2017-05-25-23|dga2017-05-25-24|dga2017-05-25-25|dga2017-05-25-26|dga2017-05-25-28|dga2017-05-25-29|dga2017-05-25-30|dga2017-05-25-31|dga2017-05-25-32|dga2017-05-25-33|dga2017-05-25-34|dga2017-05-25-35|dga2017-05-25-36|dga2017-05-25-37|dga2017-07-19-2|dga2017-07-19-3|dga2017-07-19-4|dga2017-07-19-5|dga2017-07-19-6|dga2017-07-19-7|dga2017-07-19-8|dga2017-07-19-9|dga2017-07-19-10|dga2017-07-19-11|dga2017-07-19-12|dga2017-07-19-13|dga2017-07-19-14|dga2017-07-19-15|dga2017-07-19-16|dga2017-07-19-17|dga2017-07-19-19|dga2017-07-19-20|dga2017-07-19-21|dga2017-07-19-22|dga2017-07-19-23|dga2017-07-19-24|dga2017-07-19-26|dga2017-07-19-27|dga2017-07-19-28|dga2017-07-19-29|dga2017-07-19-30|dga2017-07-19-32|dga2017-07-19-33|dga2017-07-19-34|dga2017-07-19-37|dga2017-07-19-38|dga2017-07-19-39)$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10072
+  deposition_id: 10038
   run_data_map_file: run_data_map/10072.csv
   source_prefix: GJensen_full
 tiltseries:
@@ -79,7 +81,8 @@ tiltseries:
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
-      phase_plate: false
+      image_corrector: null
+      phase_plate: None
     pixel_spacing: 4.036
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -87,7 +90,6 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_path: '{ts-tilt_series_path}'
     tilt_series_quality: 4
     tilt_step: 2.0
     tilting_scheme: starting tilt to max then min
