@@ -94,7 +94,11 @@ tiltseries:
     tilting_scheme: min to max tilt
     total_flux: 150.0
   sources:
-  - source_glob:
+  - parent_filters:
+      exclude:
+        run:
+        - ^cwl2011-08-13-8$
+    source_glob:
       list_glob: '{run_name}/rawdata/*'
       match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
