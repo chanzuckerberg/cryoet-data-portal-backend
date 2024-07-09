@@ -138,7 +138,6 @@ standardization_config:
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    binning_from_frames: REQUIRED
     camera:
       manufacturer: Gatan
       model: K2 SUMMIT

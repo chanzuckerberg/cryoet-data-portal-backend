@@ -122,6 +122,7 @@ tiltseries:
       manufacturer: Gatan
       model: K2 SUMMIT
     data_acquisition_software: SerialEM
+    is_aligned: false
     microscope:
       manufacturer: FEI
       model: TITAN KRIOS

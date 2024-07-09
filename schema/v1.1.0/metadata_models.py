@@ -248,7 +248,7 @@ class AuthoredEntity(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True, 'from_schema': 'metadata'})
 
-    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
+    authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity', 'Dataset', 'Tomogram', 'Annotation'],
          'list_elements_ordered': True} })
 
@@ -450,7 +450,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
          'domain_of': ['Dataset'],
          'exact_mappings': ['cdp-common:dataset_description']} })
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates', 'domain_of': ['DatestampedEntity', 'Dataset', 'Annotation']} })
-    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
+    authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity', 'Dataset', 'Tomogram', 'Annotation'],
          'list_elements_ordered': True} })
     funding: Optional[List[Funding]] = Field(default_factory=list, description="""A funding source for a scientific data entity (base for JSON and DB representation).""", json_schema_extra = { "linkml_meta": {'alias': 'funding',
@@ -685,7 +685,7 @@ class Tomogram(AuthoredEntity):
          'domain_of': ['Tomogram']} })
     size: Optional[TomogramSize] = Field(None, description="""The size of a tomogram in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'size', 'domain_of': ['Tomogram']} })
     offset: TomogramOffset = Field(..., description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram']} })
-    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
+    authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity', 'Dataset', 'Tomogram', 'Annotation'],
          'list_elements_ordered': True} })
 
@@ -1015,7 +1015,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
          'domain_of': ['Annotation'],
          'exact_mappings': ['cdp-common:annotation_version']} })
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates', 'domain_of': ['DatestampedEntity', 'Dataset', 'Annotation']} })
-    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
+    authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity', 'Dataset', 'Tomogram', 'Annotation'],
          'list_elements_ordered': True} })
 

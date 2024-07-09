@@ -251,7 +251,7 @@ class AuthoredEntity(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True, 'from_schema': 'metadata'})
 
-    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
+    authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity', 'Dataset', 'Tomogram', 'Annotation'],
          'list_elements_ordered': True} })
 
@@ -453,7 +453,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
          'domain_of': ['Dataset'],
          'exact_mappings': ['cdp-common:dataset_description']} })
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates', 'domain_of': ['DatestampedEntity', 'Dataset', 'Annotation']} })
-    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
+    authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity', 'Dataset', 'Tomogram', 'Annotation'],
          'list_elements_ordered': True} })
     funding: Optional[List[Funding]] = Field(default_factory=list, description="""A funding source for a scientific data entity (base for JSON and DB representation).""", json_schema_extra = { "linkml_meta": {'alias': 'funding',
@@ -688,7 +688,7 @@ class Tomogram(AuthoredEntity):
          'domain_of': ['Tomogram']} })
     size: Optional[TomogramSize] = Field(None, description="""The size of a tomogram in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'size', 'domain_of': ['Tomogram']} })
     offset: TomogramOffset = Field(..., description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram']} })
-    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
+    authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity', 'Dataset', 'Tomogram', 'Annotation'],
          'list_elements_ordered': True} })
 
@@ -1018,7 +1018,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
          'domain_of': ['Annotation'],
          'exact_mappings': ['cdp-common:annotation_version']} })
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates', 'domain_of': ['DatestampedEntity', 'Dataset', 'Annotation']} })
-    authors: List[Author] = Field(default_factory=list, description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
+    authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity', 'Dataset', 'Tomogram', 'Annotation'],
          'list_elements_ordered': True} })
 
@@ -1090,7 +1090,7 @@ class SourceMultiGlob(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-dataset-config'})
 
-    list_globs: List[str] = Field(default_factory=list, description="""The globs for the file.""", json_schema_extra = { "linkml_meta": {'alias': 'list_globs', 'domain_of': ['SourceMultiGlob']} })
+    list_globs: List[str] = Field(..., description="""The globs for the file.""", json_schema_extra = { "linkml_meta": {'alias': 'list_globs', 'domain_of': ['SourceMultiGlob']} })
 
 
 class DefaultSource(ConfiguredBaseModel):
@@ -1156,7 +1156,7 @@ class DefaultLiteral(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-dataset-config'})
 
-    value: List[Any] = Field(default_factory=list, description="""The value for the literal.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
+    value: List[Any] = Field(..., description="""The value for the literal.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
          'domain_of': ['DefaultLiteral',
                        'DatasetKeyPhotoLiteral',
                        'VoxelSpacingLiteral']} })
@@ -1173,7 +1173,7 @@ class AnnotationEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
-    sources: List[AnnotationSource] = Field(default_factory=list, description="""The sources for the annotation.""", json_schema_extra = { "linkml_meta": {'alias': 'sources',
+    sources: List[AnnotationSource] = Field(..., description="""The sources for the annotation.""", json_schema_extra = { "linkml_meta": {'alias': 'sources',
          'domain_of': ['AnnotationEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -1213,7 +1213,7 @@ class DatasetEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
-    sources: List[DatasetSource] = Field(default_factory=list, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+    sources: List[DatasetSource] = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'sources',
          'domain_of': ['AnnotationEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -1250,7 +1250,7 @@ class DatasetKeyPhotoEntity(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-dataset-config'})
 
-    sources: List[DatasetKeyPhotoSource] = Field(default_factory=list, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+    sources: List[DatasetKeyPhotoSource] = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'sources',
          'domain_of': ['AnnotationEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -1296,7 +1296,7 @@ class FrameEntity(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-dataset-config'})
 
-    sources: List[FrameSource] = Field(default_factory=list, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+    sources: List[FrameSource] = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'sources',
          'domain_of': ['AnnotationEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -1337,7 +1337,7 @@ class GainEntity(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-dataset-config'})
 
-    sources: List[GainSource] = Field(default_factory=list, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+    sources: List[GainSource] = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'sources',
          'domain_of': ['AnnotationEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -1378,7 +1378,7 @@ class KeyImageEntity(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-dataset-config'})
 
-    sources: List[KeyImageSource] = Field(default_factory=list, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+    sources: List[KeyImageSource] = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'sources',
          'domain_of': ['AnnotationEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -1419,7 +1419,7 @@ class RawTiltEntity(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-dataset-config'})
 
-    sources: List[RawTiltSource] = Field(default_factory=list, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+    sources: List[RawTiltSource] = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'sources',
          'domain_of': ['AnnotationEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -1460,7 +1460,7 @@ class RunEntity(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-dataset-config'})
 
-    sources: List[RunSource] = Field(default_factory=list, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+    sources: List[RunSource] = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'sources',
          'domain_of': ['AnnotationEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -1520,7 +1520,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
-    sources: List[TiltSeriesSource] = Field(default_factory=list, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+    sources: List[TiltSeriesSource] = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'sources',
          'domain_of': ['AnnotationEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -1566,7 +1566,7 @@ class TomogramEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
-    sources: List[TomogramSource] = Field(default_factory=list, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+    sources: List[TomogramSource] = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'sources',
          'domain_of': ['AnnotationEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -1607,7 +1607,7 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-dataset-config'})
 
-    sources: List[VoxelSpacingSource] = Field(default_factory=list, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+    sources: List[VoxelSpacingSource] = Field(..., json_schema_extra = { "linkml_meta": {'alias': 'sources',
          'domain_of': ['AnnotationEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -1645,7 +1645,7 @@ class VoxelSpacingLiteral(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-dataset-config'})
 
-    value: List[float] = Field(default_factory=list, description="""The value for the voxel spacing literal.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
+    value: List[float] = Field(..., description="""The value for the voxel spacing literal.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
          'domain_of': ['DefaultLiteral',
                        'DatasetKeyPhotoLiteral',
                        'VoxelSpacingLiteral']} })
@@ -1674,7 +1674,7 @@ class Container(ConfiguredBaseModel):
 
     annotations: Optional[List[AnnotationEntity]] = Field(default_factory=list, description="""Annotations for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'annotations', 'domain_of': ['Container']} })
     dataset_keyphotos: Optional[List[DatasetKeyPhotoEntity]] = Field(default_factory=list, description="""Key photos for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset_keyphotos', 'domain_of': ['Container']} })
-    datasets: List[DatasetEntity] = Field(default_factory=list, description="""Datasets for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'datasets', 'domain_of': ['Container']} })
+    datasets: List[DatasetEntity] = Field(..., description="""Datasets for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'datasets', 'domain_of': ['Container']} })
     frames: Optional[List[FrameEntity]] = Field(default_factory=list, description="""Frames for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'frames', 'domain_of': ['Container']} })
     gains: Optional[List[GainEntity]] = Field(default_factory=list, description="""Gains for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'gains', 'domain_of': ['Container']} })
     key_images: Optional[List[KeyImageEntity]] = Field(default_factory=list, description="""Key images for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'key_images', 'domain_of': ['Container']} })
@@ -1683,7 +1683,7 @@ class Container(ConfiguredBaseModel):
     standardization_config: StandardizationConfig = Field(..., description="""Standardization config for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'standardization_config', 'domain_of': ['Container']} })
     tiltseries: Optional[List[TiltSeriesEntity]] = Field(default_factory=list, description="""Tilt series for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'tiltseries', 'domain_of': ['Container']} })
     tomograms: Optional[List[TomogramEntity]] = Field(default_factory=list, description="""Tomograms for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'tomograms', 'domain_of': ['Container']} })
-    voxel_spacings: List[VoxelSpacingEntity] = Field(default_factory=list, description="""Voxel spacings for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'voxel_spacings', 'domain_of': ['Container']} })
+    voxel_spacings: List[VoxelSpacingEntity] = Field(..., description="""Voxel spacings for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'voxel_spacings', 'domain_of': ['Container']} })
 
 
 # Model rebuild
