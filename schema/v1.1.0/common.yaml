@@ -107,6 +107,29 @@ slots:
       The position of the author in the author list.
   # ============================================================================
 
+
+  # ============================================================================
+  # Deposition slots
+  # ============================================================================
+  deposition_identifier:
+    identifier: true
+    range: integer
+    required: true
+    description: >-
+      An identifier for a CryoET deposition, assigned by the Data Portal. Used to identify the deposition the entity is
+      a part of.
+  deposition_title:
+    range: string
+    required: true
+    description: >-
+      Title of a CryoET deposition.
+  deposition_description:
+    range: string
+    required: true
+    description: >-
+      A short description of the deposition, similar to an abstract for a journal article or dataset.
+  # ============================================================================
+
   # ============================================================================
   # Dataset slots
   # ============================================================================
@@ -566,6 +589,9 @@ slots:
   annotation_is_curator_recommended:
     range: boolean
     description: This annotation is recommended by the curator to be preferred for this object type.
+  annotation_method_links:
+    range: AnnotationMethodLinks
+    description: A set of links to models, sourcecode, documentation, etc referenced by annotation the method
 
   # ============================================================================
   # Annotation File slots
@@ -642,6 +668,20 @@ enums:
       hybrid:
         description: Annotations were generated automatically.
 
+  annotation_method_link_type_enum:
+    description: Describes the type of link associated to the annotation method.
+    permissible_values:
+      documentation:
+        description: Links to the documentation related to the method.
+      models_weights:
+        description: Links to the weights that the models used for generating annotations were trained with.
+      other:
+        description: Link to resources that doesn't fit in the other categories.
+      source_code:
+        description: Links to the source code of the method.
+      website:
+        description: Links to a website of the method or tool used to generate the annotation.
+
   annotation_shape_enum:
     description: Annotation shape types available on the data portal.
     permissible_values:
@@ -692,3 +732,22 @@ classes:
       dataset_citations:
         range: string
         description: Comma-separated list of DOIs for publications citing the dataset.
+
+  # ============================================================================
+  # Annotation Method Links
+  # ============================================================================
+  AnnotationMethodLinks:
+    description: A set of links to models, sourcecode, documentation, etc referenced by annotation the method
+    attributes:
+      link:
+        range: string
+        description: URL to the resource
+        required: true
+      link_type:
+        range: annotation_method_link_type_enum
+        description: Type of link (e.g. model, sourcecode, documentation)
+        required: true
+      name:
+        range: string
+        description: user readable name of the resource
+        recommended: true
