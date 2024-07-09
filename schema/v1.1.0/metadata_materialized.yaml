@@ -258,30 +258,24 @@ types:
     base: str
     uri: xsd:string
     repr: str
-  AnyNumberFormattedString:
-    name: AnyNumberFormattedString
-    description: A formatted string that represents any number.
+  BooleanFormattedString:
+    name: BooleanFormattedString
+    description: A formatted string that represents a boolean.
     from_schema: metadata
     base: str
-    pattern: ^(int|float|)[ ]*\{[a-zA-Z0-9_-]+\}$
-  OnlyNumberFormattedString:
-    name: OnlyNumberFormattedString
-    description: A formatted string that represents a number without a prefix.
-    from_schema: metadata
-    base: str
-    pattern: ^-?[0-9]+(\.[0-9]+)?$
+    pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
   FloatFormattedString:
     name: FloatFormattedString
     description: A formatted string that represents a floating point number.
     from_schema: metadata
     base: str
-    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}$
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
   IntegerFormattedString:
     name: IntegerFormattedString
     description: A formatted string that represents an integer.
     from_schema: metadata
     base: str
-    pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}$
+    pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
   VersionString:
     name: VersionString
     description: A version number (only major, minor versions)
@@ -365,8 +359,7 @@ classes:
     attributes:
       snapshot:
         name: snapshot
-        description: Path to the dataset preview image relative to the dataset directory
-          root.
+        description: A placeholder for any type of data.
         from_schema: metadata
         exact_mappings:
         - cdp-common:snapshot
@@ -374,14 +367,13 @@ classes:
         owner: PicturePath
         domain_of:
         - PicturePath
-        range: URLorS3URI
+        range: Any
         required: true
         inlined: true
         inlined_as_list: true
       thumbnail:
         name: thumbnail
-        description: Path to the thumbnail of preview image relative to the dataset
-          directory root.
+        description: A placeholder for any type of data.
         from_schema: metadata
         exact_mappings:
         - cdp-common:thumbnail
@@ -389,7 +381,7 @@ classes:
         owner: PicturePath
         domain_of:
         - PicturePath
-        range: URLorS3URI
+        range: Any
         required: true
         inlined: true
         inlined_as_list: true
@@ -555,7 +547,6 @@ classes:
     description: A set of dates at which a data item was deposited, published and
       last modified.
     from_schema: metadata
-    abstract: true
     attributes:
       deposition_date:
         name: deposition_date
@@ -733,6 +724,7 @@ classes:
         recommended: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 1
   Tissue:
     name: Tissue
     description: The type of tissue from which the sample was derived.
@@ -1408,6 +1400,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
         unit:
           symbol: V
           descriptive_name: volts
@@ -1618,6 +1611,8 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 1
+        maximum_value: 5
       tilt_step:
         name: tilt_step
         description: Tilt step in degrees
@@ -1681,6 +1676,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
         unit:
           symbol: Å/px
           descriptive_name: Angstroms per pixel
@@ -1693,8 +1689,6 @@ classes:
         name: x
         description: Number of pixels in the 3D data fast axis
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tomogram_size_x
         alias: x
         owner: TomogramSize
         domain_of:
@@ -1711,8 +1705,6 @@ classes:
         name: y
         description: Number of pixels in the 3D data medium axis
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tomogram_size_y
         alias: y
         owner: TomogramSize
         domain_of:
@@ -1730,8 +1722,6 @@ classes:
         description: Number of pixels in the 3D data slow axis.  This is the image
           projection direction at zero stage tilt
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tomogram_size_z
         alias: z
         owner: TomogramSize
         domain_of:
@@ -1752,43 +1742,52 @@ classes:
     attributes:
       x:
         name: x
+        description: x offset data relative to the canonical tomogram in pixels
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tomogram_offset_x
         alias: x
         owner: TomogramOffset
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: string
+        range: integer
+        required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: px
+          descriptive_name: pixels
       y:
         name: y
+        description: y offset data relative to the canonical tomogram in pixels
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tomogram_offset_y
         alias: y
         owner: TomogramOffset
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: string
+        range: integer
+        required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: px
+          descriptive_name: pixels
       z:
         name: z
+        description: z offset data relative to the canonical tomogram in pixels
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tomogram_offset_z
         alias: z
         owner: TomogramOffset
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: string
+        range: integer
+        required: true
         inlined: true
         inlined_as_list: true
+        unit:
+          symbol: px
+          descriptive_name: pixels
   Tomogram:
     name: Tomogram
     description: Metadata describing a tomogram.

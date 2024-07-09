@@ -129,10 +129,10 @@ class PicturePath(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    snapshot: str = Field(..., description="""Path to the dataset preview image relative to the dataset directory root.""", json_schema_extra = { "linkml_meta": {'alias': 'snapshot',
+    snapshot: Any = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'snapshot',
          'domain_of': ['PicturePath'],
          'exact_mappings': ['cdp-common:snapshot']} })
-    thumbnail: str = Field(..., description="""Path to the thumbnail of preview image relative to the dataset directory root.""", json_schema_extra = { "linkml_meta": {'alias': 'thumbnail',
+    thumbnail: Any = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'thumbnail',
          'domain_of': ['PicturePath'],
          'exact_mappings': ['cdp-common:thumbnail']} })
 
@@ -223,7 +223,7 @@ class DateStamp(ConfiguredBaseModel):
     """
     A set of dates at which a data item was deposited, published and last modified.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True, 'from_schema': 'metadata'})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
     deposition_date: date = Field(..., description="""The date a data item was received by the cryoET data portal.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition_date',
          'domain_of': ['DateStamp'],
@@ -301,7 +301,7 @@ class Organism(ConfiguredBaseModel):
                        'CellComponent',
                        'AnnotationObject'],
          'exact_mappings': ['cdp-common:organism_name']} })
-    taxonomy_id: Optional[int] = Field(None, description="""NCBI taxonomy identifier for the organism, e.g. 9606""", json_schema_extra = { "linkml_meta": {'alias': 'taxonomy_id',
+    taxonomy_id: Optional[int] = Field(None, description="""NCBI taxonomy identifier for the organism, e.g. 9606""", ge=1, json_schema_extra = { "linkml_meta": {'alias': 'taxonomy_id',
          'domain_of': ['Organism'],
          'exact_mappings': ['cdp-common:organism_taxid'],
          'recommended': True} })
@@ -550,7 +550,7 @@ class TiltSeries(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    acceleration_voltage: int = Field(..., description="""Electron Microscope Accelerator voltage in volts""", json_schema_extra = { "linkml_meta": {'alias': 'acceleration_voltage',
+    acceleration_voltage: int = Field(..., description="""Electron Microscope Accelerator voltage in volts""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'acceleration_voltage',
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_acceleration_voltage'],
          'unit': {'descriptive_name': 'volts', 'symbol': 'V'}} })
@@ -591,7 +591,7 @@ class TiltSeries(ConfiguredBaseModel):
          'exact_mappings': ['cdp-common:tiltseries_tilt_axis'],
          'unit': {'descriptive_name': 'degrees', 'symbol': '°'}} })
     tilt_range: TiltRange = Field(..., description="""The range of tilt angles in the tilt series.""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_range', 'domain_of': ['TiltSeries']} })
-    tilt_series_quality: int = Field(..., description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_series_quality',
+    tilt_series_quality: int = Field(..., description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""", ge=1, le=5, json_schema_extra = { "linkml_meta": {'alias': 'tilt_series_quality',
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_tilt_series_quality']} })
     tilt_step: float = Field(..., description="""Tilt step in degrees""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_step',
@@ -606,7 +606,7 @@ class TiltSeries(ConfiguredBaseModel):
          'exact_mappings': ['cdp-common:tiltseries_total_flux'],
          'unit': {'descriptive_name': 'electrons per square Angstrom',
                   'symbol': 'e^-/Å^2'}} })
-    pixel_spacing: float = Field(..., description="""Pixel spacing for the tilt series""", json_schema_extra = { "linkml_meta": {'alias': 'pixel_spacing',
+    pixel_spacing: float = Field(..., description="""Pixel spacing for the tilt series""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'pixel_spacing',
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_pixel_spacing'],
          'unit': {'descriptive_name': 'Angstroms per pixel', 'symbol': 'Å/px'}} })
@@ -620,15 +620,12 @@ class TomogramSize(ConfiguredBaseModel):
 
     x: int = Field(..., description="""Number of pixels in the 3D data fast axis""", json_schema_extra = { "linkml_meta": {'alias': 'x',
          'domain_of': ['TomogramSize', 'TomogramOffset'],
-         'exact_mappings': ['cdp-common:tomogram_size_x'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
     y: int = Field(..., description="""Number of pixels in the 3D data medium axis""", json_schema_extra = { "linkml_meta": {'alias': 'y',
          'domain_of': ['TomogramSize', 'TomogramOffset'],
-         'exact_mappings': ['cdp-common:tomogram_size_y'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
     z: int = Field(..., description="""Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt""", json_schema_extra = { "linkml_meta": {'alias': 'z',
          'domain_of': ['TomogramSize', 'TomogramOffset'],
-         'exact_mappings': ['cdp-common:tomogram_size_z'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
 
 
@@ -638,15 +635,15 @@ class TomogramOffset(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    x: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'x',
+    x: int = Field(..., description="""x offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'x',
          'domain_of': ['TomogramSize', 'TomogramOffset'],
-         'exact_mappings': ['cdp-common:tomogram_offset_x']} })
-    y: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'y',
+         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
+    y: int = Field(..., description="""y offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'y',
          'domain_of': ['TomogramSize', 'TomogramOffset'],
-         'exact_mappings': ['cdp-common:tomogram_offset_y']} })
-    z: Optional[str] = Field(None, json_schema_extra = { "linkml_meta": {'alias': 'z',
+         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
+    z: int = Field(..., description="""z offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'z',
          'domain_of': ['TomogramSize', 'TomogramOffset'],
-         'exact_mappings': ['cdp-common:tomogram_offset_z']} })
+         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
 
 
 class Tomogram(AuthoredEntity):
@@ -1159,7 +1156,7 @@ class DefaultLiteral(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-dataset-config'})
 
-    value: List[str] = Field(default_factory=list, description="""The value for the literal.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
+    value: List[Any] = Field(default_factory=list, description="""The value for the literal.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
          'domain_of': ['DefaultLiteral',
                        'DatasetKeyPhotoLiteral',
                        'VoxelSpacingLiteral']} })
@@ -1649,7 +1646,6 @@ class VoxelSpacingLiteral(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-dataset-config'})
 
     value: List[float] = Field(default_factory=list, description="""The value for the voxel spacing literal.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
-         'any_of': [{'range': 'float'}],
          'domain_of': ['DefaultLiteral',
                        'DatasetKeyPhotoLiteral',
                        'VoxelSpacingLiteral']} })

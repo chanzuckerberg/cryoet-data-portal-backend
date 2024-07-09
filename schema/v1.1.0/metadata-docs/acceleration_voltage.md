@@ -35,6 +35,8 @@ URI: [cdp-meta:acceleration_voltage](metadataacceleration_voltage)
 
 * Required: True
 
+* Minimum Value: 0
+
 
 
 
@@ -84,6 +86,7 @@ range: integer
 required: true
 inlined: true
 inlined_as_list: true
+minimum_value: 0
 unit:
   symbol: V
   descriptive_name: volts

@@ -85,7 +85,7 @@ tiltseries:
     tilt_series_quality: 4
     tilt_step: 1.5
     tilting_scheme: min to max tilt
-    total_flux: '{ts-total_flux}'
+    total_flux: 'float {ts-total_flux}'
   sources:
   - source_glob:
       list_glob: '{run_name}/rawdata/*'

@@ -35,6 +35,8 @@ URI: [cdp-meta:taxonomy_id](metadatataxonomy_id)
 
 * Recommended: True
 
+* Minimum Value: 1
+
 
 
 
@@ -84,6 +86,7 @@ range: integer
 recommended: true
 inlined: true
 inlined_as_list: true
+minimum_value: 1
 
 ```
 </details>

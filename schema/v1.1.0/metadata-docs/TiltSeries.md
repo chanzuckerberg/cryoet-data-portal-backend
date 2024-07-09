@@ -186,6 +186,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
     unit:
       symbol: V
       descriptive_name: volts
@@ -410,6 +411,8 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 1
+    maximum_value: 5
   tilt_step:
     name: tilt_step
     description: Tilt step in degrees
@@ -477,6 +480,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
     unit:
       symbol: Å/px
       descriptive_name: Angstroms per pixel
@@ -507,6 +511,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
     unit:
       symbol: V
       descriptive_name: volts
@@ -731,6 +736,8 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 1
+    maximum_value: 5
   tilt_step:
     name: tilt_step
     description: Tilt step in degrees
@@ -798,6 +805,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
     unit:
       symbol: Å/px
       descriptive_name: Angstroms per pixel

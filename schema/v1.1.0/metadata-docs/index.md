@@ -141,11 +141,11 @@ Name: cdp-meta
 | [sample_preparation](sample_preparation.md) | Describes how the sample was prepared |
 | [sample_type](sample_type.md) | Type of sample imaged in a CryoET study |
 | [size](size.md) | The size of a tomogram in voxels in each dimension |
-| [snapshot](snapshot.md) | Path to the dataset preview image relative to the dataset directory root |
+| [snapshot](snapshot.md) | A placeholder for any type of data |
 | [spherical_aberration_constant](spherical_aberration_constant.md) | Spherical Aberration Constant of the objective lens in millimeters |
 | [state](state.md) | Molecule state annotated (e |
 | [taxonomy_id](taxonomy_id.md) | NCBI taxonomy identifier for the organism, e |
-| [thumbnail](thumbnail.md) | Path to the thumbnail of preview image relative to the dataset directory root |
+| [thumbnail](thumbnail.md) | A placeholder for any type of data |
 | [tilt_alignment_software](tilt_alignment_software.md) | Software used for tilt alignment |
 | [tilt_axis](tilt_axis.md) | Rotation angle in degrees |
 | [tilt_range](tilt_range.md) | The range of tilt angles in the tilt series |
@@ -176,8 +176,8 @@ Name: cdp-meta
 
 | Type | Description |
 | --- | --- |
-| [AnyNumberFormattedString](AnyNumberFormattedString.md) | A formatted string that represents any number |
 | [Boolean](Boolean.md) | A binary (true or false) value |
+| [BooleanFormattedString](BooleanFormattedString.md) | A formatted string that represents a boolean |
 | [Curie](Curie.md) | a compact URI |
 | [Date](Date.md) | a date (year, month and day) in an idealized calendar |
 | [DateOrDatetime](DateOrDatetime.md) | Either a date or a datetime |
@@ -193,7 +193,6 @@ Name: cdp-meta
 | [Ncname](Ncname.md) | Prefix part of CURIE |
 | [Nodeidentifier](Nodeidentifier.md) | A URI, CURIE or BNODE that represents a node in a model |
 | [Objectidentifier](Objectidentifier.md) | A URI or CURIE that represents an object in the model |
-| [OnlyNumberFormattedString](OnlyNumberFormattedString.md) | A formatted string that represents a number without a prefix |
 | [Sparqlpath](Sparqlpath.md) | A string encoding a SPARQL Property Path |
 | [String](String.md) | A character string |
 | [Time](Time.md) | A time object represents a (local) time of day, independent of any particular... |

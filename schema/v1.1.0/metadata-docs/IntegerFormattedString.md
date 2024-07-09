@@ -14,7 +14,7 @@ URI: [cdp-meta:IntegerFormattedString](metadataIntegerFormattedString)
 
 
 
-* [pattern](https://w3id.org/linkml/pattern): `^int[ ]*\{[a-zA-Z0-9_-]+\}$`
+* [pattern](https://w3id.org/linkml/pattern): `^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
 
 
 

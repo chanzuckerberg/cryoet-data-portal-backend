@@ -130,6 +130,7 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 1
 
 ```
 </details>
@@ -175,6 +176,7 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 1
 
 ```
 </details>

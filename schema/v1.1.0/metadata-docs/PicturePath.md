@@ -22,7 +22,21 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
     click PicturePath href "../PicturePath"
       PicturePath : snapshot
         
+          
+    
+    
+    PicturePath --> "1" Any : snapshot
+    click Any href "../Any"
+
+        
       PicturePath : thumbnail
+        
+          
+    
+    
+    PicturePath --> "1" Any : thumbnail
+    click Any href "../Any"
+
         
       
 ```
@@ -37,8 +51,8 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [snapshot](snapshot.md) | 1 <br/> [URLorS3URI](URLorS3URI.md) | Path to the dataset preview image relative to the dataset directory root | direct |
-| [thumbnail](thumbnail.md) | 1 <br/> [URLorS3URI](URLorS3URI.md) | Path to the thumbnail of preview image relative to the dataset directory root | direct |
+| [snapshot](snapshot.md) | 1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
+| [thumbnail](thumbnail.md) | 1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
 
 
 
@@ -98,8 +112,7 @@ from_schema: metadata
 attributes:
   snapshot:
     name: snapshot
-    description: Path to the dataset preview image relative to the dataset directory
-      root.
+    description: A placeholder for any type of data.
     from_schema: metadata
     exact_mappings:
     - cdp-common:snapshot
@@ -108,14 +121,13 @@ attributes:
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: URLorS3URI
+    range: Any
     required: true
     inlined: true
     inlined_as_list: true
   thumbnail:
     name: thumbnail
-    description: Path to the thumbnail of preview image relative to the dataset directory
-      root.
+    description: A placeholder for any type of data.
     from_schema: metadata
     exact_mappings:
     - cdp-common:thumbnail
@@ -124,7 +136,7 @@ attributes:
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: URLorS3URI
+    range: Any
     required: true
     inlined: true
     inlined_as_list: true
@@ -142,8 +154,7 @@ from_schema: metadata
 attributes:
   snapshot:
     name: snapshot
-    description: Path to the dataset preview image relative to the dataset directory
-      root.
+    description: A placeholder for any type of data.
     from_schema: metadata
     exact_mappings:
     - cdp-common:snapshot
@@ -152,14 +163,13 @@ attributes:
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: URLorS3URI
+    range: Any
     required: true
     inlined: true
     inlined_as_list: true
   thumbnail:
     name: thumbnail
-    description: Path to the thumbnail of preview image relative to the dataset directory
-      root.
+    description: A placeholder for any type of data.
     from_schema: metadata
     exact_mappings:
     - cdp-common:thumbnail
@@ -168,7 +178,7 @@ attributes:
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: URLorS3URI
+    range: Any
     required: true
     inlined: true
     inlined_as_list: true

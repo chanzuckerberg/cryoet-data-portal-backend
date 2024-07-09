@@ -16,8 +16,8 @@ URI: [cdp-meta:authors](metadataauthors)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [AuthoredEntity](AuthoredEntity.md) | An entity with associated authors |  no  |
 | [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [AuthoredEntity](AuthoredEntity.md) | An entity with associated authors |  no  |
 | [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 | [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 

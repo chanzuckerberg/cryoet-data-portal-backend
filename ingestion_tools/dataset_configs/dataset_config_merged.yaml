@@ -159,7 +159,7 @@ tiltseries:
     - 1.96
     related_empiar_entry: EMPIAR-10988
     spherical_aberration_constant:
-    - '{ts-spherical_aberration_constant}'
+    - 'float {ts-spherical_aberration_constant}'
     - 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
     tilt_axis:

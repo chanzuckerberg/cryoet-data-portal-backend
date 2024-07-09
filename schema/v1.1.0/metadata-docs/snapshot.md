@@ -3,7 +3,7 @@
 # Slot: snapshot
 
 
-_Path to the dataset preview image relative to the dataset directory root._
+_A placeholder for any type of data._
 
 
 
@@ -31,7 +31,7 @@ URI: [cdp-meta:snapshot](metadatasnapshot)
 
 ## Properties
 
-* Range: [URLorS3URI](URLorS3URI.md)
+* Range: [Any](Any.md)
 
 * Required: True
 
@@ -71,7 +71,7 @@ URI: [cdp-meta:snapshot](metadatasnapshot)
 <details>
 ```yaml
 name: snapshot
-description: Path to the dataset preview image relative to the dataset directory root.
+description: A placeholder for any type of data.
 from_schema: metadata
 exact_mappings:
 - cdp-common:snapshot
@@ -80,7 +80,7 @@ alias: snapshot
 owner: PicturePath
 domain_of:
 - PicturePath
-range: URLorS3URI
+range: Any
 required: true
 inlined: true
 inlined_as_list: true

@@ -43,13 +43,13 @@ slots:
   snapshot: 
     description: >-
       Path to the dataset preview image relative to the dataset directory root.
-    range: URLorS3URI
+    range: Any
     required: true
 
   thumbnail:
     description: >-
       Path to the thumbnail of preview image relative to the dataset directory root.
-    range: URLorS3URI
+    range: Any
     required: true
 
   # ============================================================================
@@ -285,6 +285,7 @@ slots:
     description: Reference to the run this tiltseries is a part of
   tiltseries_acceleration_voltage:
     range: integer
+    minimum_value: 0
     required: true
     description: Electron Microscope Accelerator voltage in volts
     unit:
@@ -292,10 +293,18 @@ slots:
       symbol: V
   tiltseries_aligned_tiltseries_binning:
     range: integer
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: integer
+    #   - range: IntegerFormattedString
     description: Binning factor of the aligned tilt series
     ifabsent: 'int(1)'
   tiltseries_binning_from_frames:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
     description: Describes the binning factor from frames to tilt series file
   tiltseries_camera_acquire_mode:
     range: string
@@ -357,6 +366,12 @@ slots:
     description: Phase plate configuration
   tiltseries_pixel_spacing:
     range: float
+    minimum_value: 0
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #     minimum_value: 0
+    #   - range: FloatFormattedString
     required: true
     description: Pixel spacing for the tilt series
     unit:
@@ -382,6 +397,10 @@ slots:
     description: S3 path to this tiltseries in multiscale OME-Zarr format
   tiltseries_spherical_aberration_constant:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
     required: true
     description: Spherical Aberration Constant of the objective lens in millimeters
     unit:
@@ -392,6 +411,10 @@ slots:
     description: Software used for tilt alignment
   tiltseries_tilt_axis:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
     required: true
     description: Rotation angle in degrees
     unit:
@@ -399,6 +422,10 @@ slots:
       symbol: °
   tiltseries_tilt_max:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
     required: true
     description: Maximal tilt angle in degrees
     unit:
@@ -406,6 +433,10 @@ slots:
       symbol: °
   tiltseries_tilt_min:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
     required: true
     description: Minimal tilt angle in degrees
     unit:
@@ -413,12 +444,22 @@ slots:
       symbol: °
   tiltseries_tilt_series_quality:
     range: integer
-    required: true
-    description: Author assessment of tilt series quality within the dataset (1-5, 5 is best)
     minimum_value: 1
     maximum_value: 5
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: integer
+    #     minimum_value: 1
+    #     maximum_value: 5
+    #   - range: IntegerFormattedString
+    required: true
+    description: Author assessment of tilt series quality within the dataset (1-5, 5 is best)
   tiltseries_tilt_step:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
     required: true
     description: Tilt step in degrees
     unit:
@@ -430,6 +471,10 @@ slots:
     description: The order of stage tilting during acquisition of the data
   tiltseries_total_flux:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
     required: true
     description: Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series
     unit:
@@ -452,6 +497,11 @@ slots:
     description: Reference to the dataset this tomogram is a part of
   tomogram_fiducial_alignment_status:
     range: fiducial_alignment_status_enum
+    # TODO: remove after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of: 
+    #   - range: fiducial_alignment_status_enum
+    #   - range: BooleanFormattedString
+    #     pattern: '^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$'
     required: true
     description: Whether the tomographic alignment was computed based on fiducial markers.
   tomogram_https_mrc_scale0:
@@ -472,27 +522,6 @@ slots:
   tomogram_neuroglancer_config:
     range: string
     description: the compact json of neuroglancer config
-  tomogram_offset_x:
-    range: integer
-    required: true
-    description: x offset data relative to the canonical tomogram in pixels
-    unit:
-      descriptive_name: pixels
-      symbol: px
-  tomogram_offset_y:
-    range: integer
-    required: true
-    description: y offset data relative to the canonical tomogram in pixels
-    unit:
-      descriptive_name: pixels
-      symbol: px
-  tomogram_offset_z:
-    range: integer
-    required: true
-    description: z offset data relative to the canonical tomogram in pixels
-    unit:
-      descriptive_name: pixels
-      symbol: px
   tomogram_align_software: 
     range: string
     description: Software used for alignment
@@ -527,27 +556,6 @@ slots:
   tomogram_scale2_dimensions:
     range: string
     description: comma separated x,y,z dimensions of the scale2 tomogram
-  tomogram_size_x:
-    range: integer
-    required: true
-    description: Number of pixels in the 3D data fast axis
-    unit: 
-      descriptive_name: pixels
-      symbol: px
-  tomogram_size_y:
-    range: integer
-    required: true
-    description: Number of pixels in the 3D data medium axis
-    unit:
-      descriptive_name: pixels
-      symbol: px
-  tomogram_size_z:
-    range: integer
-    required: true
-    description: Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
-    unit:
-      descriptive_name: pixels
-      symbol: px
   tomogram_version:
     range: VersionString
     required: true
@@ -558,6 +566,10 @@ slots:
     description: "Tomogram purpose (ex: CANONICAL)"
   tomogram_voxel_spacing:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
     required: true
     description: Voxel spacing equal in all three axes in angstroms
     unit:
@@ -751,25 +763,20 @@ enums:
         description: Annotations were generated automatically.
 
 types: 
-  AnyNumberFormattedString:
-    description: A formatted string that represents any number.
+  BooleanFormattedString:
+    description: A formatted string that represents a boolean.
     base: str
-    pattern: '^(int|float|)[ ]*\{[a-zA-Z0-9_-]+\}$'
-
-  OnlyNumberFormattedString:
-    description: A formatted string that represents a number without a prefix.
-    base: str
-    pattern: '^-?[0-9]+(\.[0-9]+)?$'
+    pattern: '^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$'
 
   FloatFormattedString:
     description: A formatted string that represents a floating point number.
     base: str
-    pattern: '^float[ ]*\{[a-zA-Z0-9_-]+\}$'
+    pattern: '^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$'
 
   IntegerFormattedString:
     description: A formatted string that represents an integer.
     base: str
-    pattern: '^int[ ]*\{[a-zA-Z0-9_-]+\}$'
+    pattern: '^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$'
 
   VersionString:
     description: A version number (only major, minor versions)

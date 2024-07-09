@@ -78,7 +78,7 @@ tiltseries:
       energy_filter: GIF
       image_corrector: null
       phase_plate: None
-    pixel_spacing: '{ts-pixel_spacing}'
+    pixel_spacing: 'float {ts-pixel_spacing}'
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
     tilt_axis: 84.3
@@ -88,7 +88,7 @@ tiltseries:
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: min to max tilt
-    total_flux: '{ts-total_flux}'
+    total_flux: 'float {ts-total_flux}'
   sources:
   - source_glob:
       list_glob: '{run_name}/rawdata/*'
@@ -123,7 +123,7 @@ tomograms:
     reconstruction_method: Weighted back projection
     reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: '{tomo-voxel_spacing}'
+    voxel_spacing: 'float {tomo-voxel_spacing}'
   sources:
   - source_glob:
       list_glob: '{run_name}/{mapped_tomo_name}'

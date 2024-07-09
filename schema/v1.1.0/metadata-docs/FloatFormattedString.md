@@ -14,7 +14,7 @@ URI: [cdp-meta:FloatFormattedString](metadataFloatFormattedString)
 
 
 
-* [pattern](https://w3id.org/linkml/pattern): `^float[ ]*\{[a-zA-Z0-9_-]+\}$`
+* [pattern](https://w3id.org/linkml/pattern): `^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
 
 
 

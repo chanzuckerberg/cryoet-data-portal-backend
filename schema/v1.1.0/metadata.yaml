@@ -85,7 +85,6 @@ classes:
   # Deposition, release and last modified dates
   # ============================================================================
   DateStamp:
-    abstract: true
     description: A set of dates at which a data item was deposited, published and last modified.
     attributes:
       deposition_date:
@@ -386,32 +385,85 @@ classes:
 
   # ============================================================================
   # Tomogram metadata
+  #
+  # NOTE: Because TomogramSize and TomogramOffset have the same slot names, we 
+  # must define them here because they will not be properly mapped from cdp-common.
+  # If desired, we can modify schema.py to permit the use of the same slot name.
+  # For now, this is the simplest solution.
   # ============================================================================
   TomogramSize:
     description: &desc_tomogram_size The size of a tomogram in voxels in each dimension.
     attributes:
       x:
-        exact_mappings:
-          - cdp-common:tomogram_size_x
+        range: integer
+        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+        # any_of:
+        #   - range: integer
+        #   - range: IntegerFormattedString
+        required: true
+        description: Number of pixels in the 3D data fast axis
+        unit: 
+          descriptive_name: pixels
+          symbol: px
       y:
-        exact_mappings:
-          - cdp-common:tomogram_size_y
+        range: integer
+        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+        # any_of:
+        #   - range: integer
+        #   - range: IntegerFormattedString
+        required: true
+        description: Number of pixels in the 3D data medium axis
+        unit:
+          descriptive_name: pixels
+          symbol: px
       z:
-        exact_mappings:
-          - cdp-common:tomogram_size_z
+        range: integer
+        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+        # any_of:
+        #   - range: integer
+        #   - range: IntegerFormattedString
+        required: true
+        description: Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
+        unit:
+          descriptive_name: pixels
+          symbol: px
 
   TomogramOffset:
     description: &desc_tomogram_offset The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.
     attributes:
       x:
-        exact_mappings:
-          - cdp-common:tomogram_offset_x
+        range: integer
+        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+        # any_of:
+        #   - range: integer
+        #   - range: IntegerFormattedString
+        required: true
+        description: x offset data relative to the canonical tomogram in pixels
+        unit:
+          descriptive_name: pixels
+          symbol: px
       y:
-        exact_mappings:
-          - cdp-common:tomogram_offset_y
+        range: integer
+        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+        # any_of:
+        #   - range: integer
+        #   - range: IntegerFormattedString
+        required: true
+        description: y offset data relative to the canonical tomogram in pixels
+        unit:
+          descriptive_name: pixels
+          symbol: px
       z:
-        exact_mappings:
-          - cdp-common:tomogram_offset_z
+        range: integer
+        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+        # any_of:
+        #   - range: integer
+        #   - range: IntegerFormattedString
+        required: true
+        description: z offset data relative to the canonical tomogram in pixels
+        unit:
+          descriptive_name: pixels
+          symbol: px
 
   # ============================================================================
 

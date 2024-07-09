@@ -35,6 +35,10 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 * Required: True
 
+* Minimum Value: 1
+
+* Maximum Value: 5
+
 
 
 
@@ -85,6 +89,8 @@ range: integer
 required: true
 inlined: true
 inlined_as_list: true
+minimum_value: 1
+maximum_value: 5
 
 ```
 </details>

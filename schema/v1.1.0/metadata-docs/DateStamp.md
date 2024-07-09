@@ -8,8 +8,6 @@ _A set of dates at which a data item was deposited, published and last modified.
 
 
 
-* __NOTE__: this is an abstract class and should not be instantiated directly
-
 
 URI: [cdp-meta:DateStamp](metadataDateStamp)
 
@@ -103,7 +101,6 @@ name: DateStamp
 description: A set of dates at which a data item was deposited, published and last
   modified.
 from_schema: metadata
-abstract: true
 attributes:
   deposition_date:
     name: deposition_date
@@ -162,7 +159,6 @@ name: DateStamp
 description: A set of dates at which a data item was deposited, published and last
   modified.
 from_schema: metadata
-abstract: true
 attributes:
   deposition_date:
     name: deposition_date

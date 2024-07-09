@@ -128,7 +128,7 @@ classes:
       value:
         description: The value for the literal.
         multivalued: true
-        range: string
+        range: Any
         required: true
 
   # ============================================================================
@@ -379,11 +379,12 @@ classes:
       value:
         description: The value for the voxel spacing literal.
         multivalued: true
-        range: Any
+        range: float
         required: true
-        any_of: 
-          - range: float
-          # - range: AnyNumberFormattedString
+        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+        # any_of: 
+        #   - range: float
+        #   - range: FloatFormattedString
 
   TomogramHeader:
     description: A tomogram header, a unique source attribute for voxel spacing.

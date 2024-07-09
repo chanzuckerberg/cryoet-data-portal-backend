@@ -103,8 +103,6 @@ attributes:
     name: x
     description: Number of pixels in the 3D data fast axis
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_size_x
     rank: 1000
     alias: x
     owner: TomogramSize
@@ -122,8 +120,6 @@ attributes:
     name: y
     description: Number of pixels in the 3D data medium axis
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_size_y
     rank: 1000
     alias: y
     owner: TomogramSize
@@ -142,8 +138,6 @@ attributes:
     description: Number of pixels in the 3D data slow axis.  This is the image projection
       direction at zero stage tilt
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_size_z
     rank: 1000
     alias: z
     owner: TomogramSize
@@ -173,8 +167,6 @@ attributes:
     name: x
     description: Number of pixels in the 3D data fast axis
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_size_x
     rank: 1000
     alias: x
     owner: TomogramSize
@@ -192,8 +184,6 @@ attributes:
     name: y
     description: Number of pixels in the 3D data medium axis
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_size_y
     rank: 1000
     alias: y
     owner: TomogramSize
@@ -212,8 +202,6 @@ attributes:
     description: Number of pixels in the 3D data slow axis.  This is the image projection
       direction at zero stage tilt
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_size_z
     rank: 1000
     alias: z
     owner: TomogramSize

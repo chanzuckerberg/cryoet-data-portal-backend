@@ -41,10 +41,13 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
                     f"Slot {mappings[0]} does not exist in common schema. Check the exact_mappings for {slot['name']}.",
                 )
 
-            slot["description"] = common_slot["description"]
             slot["range"] = common_slot["range"]
+            slot["any_of"] = common_slot["any_of"]
+            slot["description"] = common_slot["description"]
             slot["multivalued"] = common_slot["multivalued"]
             slot["unit"] = common_slot["unit"]
+            slot["minimum_value"] = common_slot["minimum_value"]
+            slot["maximum_value"] = common_slot["maximum_value"]
             slot["required"] = common_slot["required"]
             slot["recommended"] = common_slot["recommended"]
             slot["pattern"] = common_slot["pattern"]

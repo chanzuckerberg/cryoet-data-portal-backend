@@ -35,6 +35,8 @@ URI: [cdp-meta:pixel_spacing](metadatapixel_spacing)
 
 * Required: True
 
+* Minimum Value: 0
+
 
 
 
@@ -84,6 +86,7 @@ range: float
 required: true
 inlined: true
 inlined_as_list: true
+minimum_value: 0
 unit:
   symbol: Å/px
   descriptive_name: Angstroms per pixel
