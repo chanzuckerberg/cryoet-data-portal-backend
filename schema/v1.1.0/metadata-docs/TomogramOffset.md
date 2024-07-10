@@ -1,3 +1,5 @@
+
+
 # Class: TomogramOffset
 
 
@@ -12,20 +14,17 @@ URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
 
 
 
+
+
 ```mermaid
  classDiagram
     class TomogramOffset
+    click TomogramOffset href "../TomogramOffset"
       TomogramOffset : x
-
-          TomogramOffset --> string : x
 
       TomogramOffset : y
 
-          TomogramOffset --> string : y
-
       TomogramOffset : z
-
-          TomogramOffset --> string : z
 
 
 ```
@@ -40,9 +39,9 @@ URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [x](x.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [y](y.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [z](z.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
+| [x](x.md) | 1 <br/> [Integer](Integer.md) | x offset data relative to the canonical tomogram in pixels | direct |
+| [y](y.md) | 1 <br/> [Integer](Integer.md) | y offset data relative to the canonical tomogram in pixels | direct |
+| [z](z.md) | 1 <br/> [Integer](Integer.md) | z offset data relative to the canonical tomogram in pixels | direct |
 
 
 
@@ -75,13 +74,14 @@ URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:TomogramOffset |
 | native | cdp-meta:TomogramOffset |
+
+
 
 
 
@@ -102,43 +102,52 @@ from_schema: metadata
 attributes:
   x:
     name: x
+    description: x offset data relative to the canonical tomogram in pixels
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_offset_x
     alias: x
     owner: TomogramOffset
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: string
+    range: integer
+    required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
   y:
     name: y
+    description: y offset data relative to the canonical tomogram in pixels
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_offset_y
     alias: y
     owner: TomogramOffset
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: string
+    range: integer
+    required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
   z:
     name: z
+    description: z offset data relative to the canonical tomogram in pixels
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_offset_z
     alias: z
     owner: TomogramOffset
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: string
+    range: integer
+    required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
 
 ```
 </details>
@@ -154,43 +163,52 @@ from_schema: metadata
 attributes:
   x:
     name: x
+    description: x offset data relative to the canonical tomogram in pixels
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_offset_x
     alias: x
     owner: TomogramOffset
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: string
+    range: integer
+    required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
   y:
     name: y
+    description: y offset data relative to the canonical tomogram in pixels
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_offset_y
     alias: y
     owner: TomogramOffset
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: string
+    range: integer
+    required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
   z:
     name: z
+    description: z offset data relative to the canonical tomogram in pixels
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_offset_z
     alias: z
     owner: TomogramOffset
     domain_of:
     - TomogramSize
     - TomogramOffset
-    range: string
+    range: integer
+    required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
 
 ```
 </details>

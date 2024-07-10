@@ -1,3 +1,5 @@
+
+
 # Slot: precision
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:precision](metadataprecision)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation |  no  |
+| [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:precision](metadataprecision)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
 
 
 
@@ -46,6 +49,17 @@ URI: [cdp-meta:precision](metadataprecision)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:precision |
+| native | cdp-meta:precision |
+| exact | cdp-common:annotation_confidence_precision |
 
 
 
@@ -68,6 +82,9 @@ domain_of:
 range: float
 inlined: true
 inlined_as_list: true
+unit:
+  symbol: '%'
+  descriptive_name: percentage
 
 ```
 </details>

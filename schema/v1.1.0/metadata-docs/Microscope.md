@@ -1,34 +1,55 @@
-# Slot: microscope
+
+
+# Class: Microscope
 
 
 _The microscope used to collect the tilt series._
 
 
 
-URI: [cdp-meta:microscope](metadatamicroscope)
+
+
+URI: [cdp-meta:Microscope](metadataMicroscope)
+
+
+
+
+
+
+```mermaid
+ classDiagram
+    class Microscope
+    click Microscope href "../Microscope"
+      Microscope : manufacturer
+
+      Microscope : model
+
+
+```
+
 
 
 
 <!-- no inheritance hierarchy -->
 
 
+## Slots
 
-
-## Applicable Classes
-
-| Name | Description | Modifies Slot |
-| --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
-
-
+| Name | Cardinality and Range | Description | Inheritance |
+| ---  | --- | --- | --- |
+| [manufacturer](manufacturer.md) | 1 <br/> [String](String.md) | Name of the microscope manufacturer | direct |
+| [model](model.md) | 1 <br/> [String](String.md) | Microscope model name | direct |
 
 
 
 
 
-## Properties
+## Usages
 
-* Range: [Microscope](Microscope.md)
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [TiltSeries](TiltSeries.md) | [microscope](microscope.md) | range | [Microscope](Microscope.md) |
+
 
 
 
@@ -50,21 +71,103 @@ URI: [cdp-meta:microscope](metadatamicroscope)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:Microscope |
+| native | cdp-meta:Microscope |
+
+
+
+
+
+
+
 ## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
 
 <details>
 ```yaml
-name: microscope
+name: Microscope
 description: The microscope used to collect the tilt series.
 from_schema: metadata
-rank: 1000
-alias: microscope
-owner: TiltSeries
-domain_of:
-- TiltSeries
-range: Microscope
-inlined: true
-inlined_as_list: true
+attributes:
+  manufacturer:
+    name: manufacturer
+    description: Name of the microscope manufacturer
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:tiltseries_microscope_manufacturer
+    alias: manufacturer
+    owner: Microscope
+    domain_of:
+    - Camera
+    - Microscope
+    range: string
+    required: true
+    inlined: true
+    inlined_as_list: true
+  model:
+    name: model
+    description: Microscope model name
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:tiltseries_microscope_model
+    alias: model
+    owner: Microscope
+    domain_of:
+    - Camera
+    - Microscope
+    range: string
+    required: true
+    inlined: true
+    inlined_as_list: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Microscope
+description: The microscope used to collect the tilt series.
+from_schema: metadata
+attributes:
+  manufacturer:
+    name: manufacturer
+    description: Name of the microscope manufacturer
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:tiltseries_microscope_manufacturer
+    alias: manufacturer
+    owner: Microscope
+    domain_of:
+    - Camera
+    - Microscope
+    range: string
+    required: true
+    inlined: true
+    inlined_as_list: true
+  model:
+    name: model
+    description: Microscope model name
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:tiltseries_microscope_model
+    alias: model
+    owner: Microscope
+    domain_of:
+    - Camera
+    - Microscope
+    range: string
+    required: true
+    inlined: true
+    inlined_as_list: true
 
 ```
 </details>

@@ -1,3 +1,5 @@
+
+
 # Slot: acceleration_voltage
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:acceleration_voltage](metadataacceleration_voltage)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -28,7 +31,11 @@ URI: [cdp-meta:acceleration_voltage](metadataacceleration_voltage)
 
 ## Properties
 
-* Range: [xsd:integer](http://www.w3.org/2001/XMLSchema#integer)
+* Range: [Integer](Integer.md)
+
+* Required: True
+
+* Minimum Value: 0
 
 
 
@@ -50,6 +57,17 @@ URI: [cdp-meta:acceleration_voltage](metadataacceleration_voltage)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:acceleration_voltage |
+| native | cdp-meta:acceleration_voltage |
+| exact | cdp-common:tiltseries_acceleration_voltage |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -65,8 +83,13 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: integer
+required: true
 inlined: true
 inlined_as_list: true
+minimum_value: 0
+unit:
+  symbol: V
+  descriptive_name: volts
 
 ```
 </details>

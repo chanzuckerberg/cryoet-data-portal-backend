@@ -1,3 +1,5 @@
+
+
 # Class: ExperimentalMetadata
 
 
@@ -14,46 +16,74 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 
 
+
+
 ```mermaid
  classDiagram
     class ExperimentalMetadata
+    click ExperimentalMetadata href "../ExperimentalMetadata"
       ExperimentalMetadata <|-- Dataset
+        click Dataset href "../Dataset"
 
       ExperimentalMetadata : cell_component
 
-          ExperimentalMetadata --> CellComponent : cell_component
+
+
+
+    ExperimentalMetadata --> "0..1" CellComponent : cell_component
+    click CellComponent href "../CellComponent"
+
 
       ExperimentalMetadata : cell_strain
 
-          ExperimentalMetadata --> CellStrain : cell_strain
+
+
+
+    ExperimentalMetadata --> "0..1" CellStrain : cell_strain
+    click CellStrain href "../CellStrain"
+
 
       ExperimentalMetadata : cell_type
 
-          ExperimentalMetadata --> CellType : cell_type
+
+
+
+    ExperimentalMetadata --> "0..1" CellType : cell_type
+    click CellType href "../CellType"
+
 
       ExperimentalMetadata : grid_preparation
 
-          ExperimentalMetadata --> string : grid_preparation
-
       ExperimentalMetadata : organism
 
-          ExperimentalMetadata --> Organism : organism
+
+
+
+    ExperimentalMetadata --> "0..1" Organism : organism
+    click Organism href "../Organism"
+
 
       ExperimentalMetadata : other_setup
 
-          ExperimentalMetadata --> string : other_setup
-
       ExperimentalMetadata : sample_preparation
-
-          ExperimentalMetadata --> string : sample_preparation
 
       ExperimentalMetadata : sample_type
 
-          ExperimentalMetadata --> sample_type_enum : sample_type
+
+
+
+    ExperimentalMetadata --> "1" SampleTypeEnum : sample_type
+    click SampleTypeEnum href "../SampleTypeEnum"
+
 
       ExperimentalMetadata : tissue
 
-          ExperimentalMetadata --> Tissue : tissue
+
+
+
+    ExperimentalMetadata --> "0..1" Tissue : tissue
+    click Tissue href "../Tissue"
+
 
 
 ```
@@ -68,10 +98,10 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [sample_type](sample_type.md) | 0..1 <br/> [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study | direct |
-| [sample_preparation](sample_preparation.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Describes how the sample was prepared | direct |
-| [grid_preparation](grid_preparation.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Describes Cryo-ET grid preparation | direct |
-| [other_setup](other_setup.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Describes other setup not covered by sample preparation or grid preparation t... | direct |
+| [sample_type](sample_type.md) | 1 <br/> [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study | direct |
+| [sample_preparation](sample_preparation.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes how the sample was prepared | direct |
+| [grid_preparation](grid_preparation.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes Cryo-ET grid preparation | direct |
+| [other_setup](other_setup.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes other setup not covered by sample preparation or grid preparation t... | direct |
 | [organism](organism.md) | 0..1 <br/> [Organism](Organism.md) | The species from which the sample was derived | direct |
 | [tissue](tissue.md) | 0..1 <br/> [Tissue](Tissue.md) | The type of tissue from which the sample was derived | direct |
 | [cell_type](cell_type.md) | 0..1 <br/> [CellType](CellType.md) | The cell type from which the sample was derived | direct |
@@ -102,13 +132,14 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:ExperimentalMetadata |
 | native | cdp-meta:ExperimentalMetadata |
+
+
 
 
 
@@ -141,6 +172,7 @@ attributes:
     - ExperimentalMetadata
     - Dataset
     range: sample_type_enum
+    required: true
     inlined: true
     inlined_as_list: true
   sample_preparation:
@@ -156,6 +188,7 @@ attributes:
     - ExperimentalMetadata
     - Dataset
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
   grid_preparation:
@@ -171,12 +204,13 @@ attributes:
     - ExperimentalMetadata
     - Dataset
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
   other_setup:
     name: other_setup
     description: Describes other setup not covered by sample preparation or grid preparation
-      that may make this dataset unique in   the same publication.
+      that may make this dataset unique in the same publication.
     from_schema: metadata
     exact_mappings:
     - cdp-common:preparation_other_setup
@@ -187,6 +221,7 @@ attributes:
     - ExperimentalMetadata
     - Dataset
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
   organism:
@@ -281,6 +316,7 @@ attributes:
     - ExperimentalMetadata
     - Dataset
     range: sample_type_enum
+    required: true
     inlined: true
     inlined_as_list: true
   sample_preparation:
@@ -296,6 +332,7 @@ attributes:
     - ExperimentalMetadata
     - Dataset
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
   grid_preparation:
@@ -311,12 +348,13 @@ attributes:
     - ExperimentalMetadata
     - Dataset
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
   other_setup:
     name: other_setup
     description: Describes other setup not covered by sample preparation or grid preparation
-      that may make this dataset unique in   the same publication.
+      that may make this dataset unique in the same publication.
     from_schema: metadata
     exact_mappings:
     - cdp-common:preparation_other_setup
@@ -327,6 +365,7 @@ attributes:
     - ExperimentalMetadata
     - Dataset
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
   organism:

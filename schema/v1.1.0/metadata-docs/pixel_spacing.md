@@ -1,3 +1,5 @@
+
+
 # Slot: pixel_spacing
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:pixel_spacing](metadatapixel_spacing)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -28,7 +31,11 @@ URI: [cdp-meta:pixel_spacing](metadatapixel_spacing)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
+
+* Required: True
+
+* Minimum Value: 0
 
 
 
@@ -50,6 +57,17 @@ URI: [cdp-meta:pixel_spacing](metadatapixel_spacing)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:pixel_spacing |
+| native | cdp-meta:pixel_spacing |
+| exact | cdp-common:tiltseries_pixel_spacing |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -65,8 +83,13 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: float
+required: true
 inlined: true
 inlined_as_list: true
+minimum_value: 0
+unit:
+  symbol: Å/px
+  descriptive_name: Angstroms per pixel
 
 ```
 </details>

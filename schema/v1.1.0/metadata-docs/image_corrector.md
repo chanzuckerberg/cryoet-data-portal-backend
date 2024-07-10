@@ -1,3 +1,5 @@
+
+
 # Slot: image_corrector
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:image_corrector](metadataimage_corrector)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series |  no  |
+| [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:image_corrector](metadataimage_corrector)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 
@@ -46,6 +49,17 @@ URI: [cdp-meta:image_corrector](metadataimage_corrector)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:image_corrector |
+| native | cdp-meta:image_corrector |
+| exact | cdp-common:tiltseries_microscope_image_corrector |
 
 
 

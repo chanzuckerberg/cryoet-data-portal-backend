@@ -1,3 +1,5 @@
+
+
 # Slot: binning_from_frames
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:binning_from_frames](metadatabinning_from_frames)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:binning_from_frames](metadatabinning_from_frames)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
 
 
 
@@ -46,6 +49,17 @@ URI: [cdp-meta:binning_from_frames](metadatabinning_from_frames)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:binning_from_frames |
+| native | cdp-meta:binning_from_frames |
+| exact | cdp-common:tiltseries_binning_from_frames |
 
 
 

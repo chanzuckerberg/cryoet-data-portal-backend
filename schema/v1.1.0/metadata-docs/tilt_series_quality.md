@@ -1,3 +1,5 @@
+
+
 # Slot: tilt_series_quality
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -28,7 +31,13 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 ## Properties
 
-* Range: [xsd:integer](http://www.w3.org/2001/XMLSchema#integer)
+* Range: [Integer](Integer.md)
+
+* Required: True
+
+* Minimum Value: 1
+
+* Maximum Value: 5
 
 
 
@@ -50,6 +59,17 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tilt_series_quality |
+| native | cdp-meta:tilt_series_quality |
+| exact | cdp-common:tiltseries_tilt_series_quality |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -66,8 +86,11 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: integer
+required: true
 inlined: true
 inlined_as_list: true
+minimum_value: 1
+maximum_value: 5
 
 ```
 </details>

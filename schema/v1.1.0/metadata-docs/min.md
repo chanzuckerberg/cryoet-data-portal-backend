@@ -1,3 +1,5 @@
+
+
 # Slot: min
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:min](metadatamin)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltRange](TiltRange.md) | The range of tilt angles in the tilt series |  no  |
+| [TiltRange](TiltRange.md) | The range of tilt angles in the tilt series |  no  |
 
 
 
@@ -28,7 +31,9 @@ URI: [cdp-meta:min](metadatamin)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
+
+* Required: True
 
 
 
@@ -50,6 +55,17 @@ URI: [cdp-meta:min](metadatamin)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:min |
+| native | cdp-meta:min |
+| exact | cdp-common:tiltseries_tilt_min |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -65,8 +81,12 @@ owner: TiltRange
 domain_of:
 - TiltRange
 range: float
+required: true
 inlined: true
 inlined_as_list: true
+unit:
+  symbol: °
+  descriptive_name: degrees
 
 ```
 </details>

@@ -1,3 +1,5 @@
+
+
 # Slot: ground_truth_status
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:ground_truth_status](metadataground_truth_status)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -28,7 +31,9 @@ URI: [cdp-meta:ground_truth_status](metadataground_truth_status)
 
 ## Properties
 
-* Range: [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean)
+* Range: [Boolean](Boolean.md)
+
+* Recommended: True
 
 
 
@@ -50,6 +55,17 @@ URI: [cdp-meta:ground_truth_status](metadataground_truth_status)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:ground_truth_status |
+| native | cdp-meta:ground_truth_status |
+| exact | cdp-common:annotation_ground_truth_status |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -61,11 +77,13 @@ from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_ground_truth_status
 rank: 1000
+ifabsent: 'False'
 alias: ground_truth_status
 owner: Annotation
 domain_of:
 - Annotation
 range: boolean
+recommended: true
 inlined: true
 inlined_as_list: true
 

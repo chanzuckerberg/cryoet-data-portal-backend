@@ -1,3 +1,5 @@
+
+
 # Slot: aligned_tiltseries_binning
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:aligned_tiltseries_binning](metadataaligned_tiltseries_binning)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:aligned_tiltseries_binning](metadataaligned_tiltseries_binning)
 
 ## Properties
 
-* Range: [xsd:integer](http://www.w3.org/2001/XMLSchema#integer)
+* Range: [Integer](Integer.md)
 
 
 
@@ -50,6 +53,17 @@ URI: [cdp-meta:aligned_tiltseries_binning](metadataaligned_tiltseries_binning)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:aligned_tiltseries_binning |
+| native | cdp-meta:aligned_tiltseries_binning |
+| exact | cdp-common:tiltseries_aligned_tiltseries_binning |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -60,6 +74,7 @@ from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_aligned_tiltseries_binning
 rank: 1000
+ifabsent: int(1)
 alias: aligned_tiltseries_binning
 owner: TiltSeries
 domain_of:

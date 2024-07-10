@@ -1,3 +1,5 @@
+
+
 # Slot: dataset_citations
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:dataset_citations](metadatadataset_citations)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
+| [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:dataset_citations](metadatadataset_citations)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 
@@ -46,6 +49,16 @@ URI: [cdp-meta:dataset_citations](metadatadataset_citations)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:dataset_citations |
+| native | cdp-meta:dataset_citations |
 
 
 

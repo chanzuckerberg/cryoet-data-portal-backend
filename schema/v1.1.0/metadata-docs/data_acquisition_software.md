@@ -1,3 +1,5 @@
+
+
 # Slot: data_acquisition_software
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:data_acquisition_software](metadatadata_acquisition_software)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -28,7 +31,9 @@ URI: [cdp-meta:data_acquisition_software](metadatadata_acquisition_software)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
+
+* Required: True
 
 
 
@@ -50,6 +55,17 @@ URI: [cdp-meta:data_acquisition_software](metadatadata_acquisition_software)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:data_acquisition_software |
+| native | cdp-meta:data_acquisition_software |
+| exact | cdp-common:tiltseries_data_acquisition_software |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -65,6 +81,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: string
+required: true
 inlined: true
 inlined_as_list: true
 
