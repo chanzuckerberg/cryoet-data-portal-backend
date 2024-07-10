@@ -5,13 +5,11 @@ annotations:
       description: Cytosolic ribosome
       id: GO:0009326
       name: cytosolic ribosome
-      state: null
     annotation_publications: doi:10.1101/2023.08.18.553799
-    annotation_software: null
     authors:
     - ORCID: 0000-0002-0960-0825
       name: Ramya Rangan
-      primary_annotator_status: true
+      primary_author_status: true
     - ORCID: 0000-0003-2020-3561
       name: Sagar Khavnekar
     - ORCID: 0000-0002-5216-6542
@@ -26,26 +24,21 @@ annotations:
     - ORCID: 0000-0001-6345-1907
       corresponding_author_status: true
       name: Ellen D. Zhong
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: &id001
-      deposition_date: 2023-09-01
-      last_modified_date: 2023-11-15
-      release_date: 2023-11-30
+      deposition_date: '2023-09-01'
+      last_modified_date: '2023-11-15'
+      release_date: '2023-11-30'
     ground_truth_status: false
     is_curator_recommended: true
     method_type: automated
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 4
-    file_format: tomoman_relion_star
-    filter_value: null
-    glob_string: '{run_name}/metadata/particles/*.star'
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: tomoman_relion_star
+      glob_string: '{run_name}/metadata/particles/*.star'
+      is_visualization_default: true
+      order: xyz
 dataset_keyphotos:
 - sources:
   - literal:
@@ -72,12 +65,6 @@ datasets:
     - ORCID: 0000-0001-6345-1907
       corresponding_author_status: true
       name: Ellen D. Zhong
-    cell_component:
-      id: null
-      name: null
-    cell_strain:
-      id: null
-      name: null
     cross_references:
       dataset_publications: EMPIAR-11658, doi:10.1101/2023.08.18.553799
     dataset_description: Cryo-electron tomograms of S.cerevisiae of plasma FIB-SEM
@@ -87,9 +74,7 @@ datasets:
     dates: *id001
     funding:
     - funding_agency_name: Max Planck Society
-      grant_id: null
     - funding_agency_name: Other private
-      grant_id: null
     grid_preparation: "Grid\nModel: Quantifoil R1.2/3\nMaterial: COPPER\n\nPretreatment:\
       \ Type: GLOW DISCHARGE\nAtmosphere: Air\n\nSupport Film:\nMaterial: Carbon \n\
       Topology: Holey\nThickness: \u2013\n\nVitrification:\nCryogen Name: ETHANE \n\
@@ -136,7 +121,6 @@ standardization_config:
 tiltseries:
 - metadata: &ts_metadata
     acceleration_voltage: 300000
-    alignment_binning_factor: null
     binning_from_frames: 4
     camera:
       manufacturer: FEI
@@ -152,7 +136,6 @@ tiltseries:
       phase_plate: None
     pixel_spacing: 1.96
     related_empiar_entry: EMPIAR-11658
-    scales: []
     spherical_aberration_constant: 2.7
     tilt_axis: -87
     tilt_range:
