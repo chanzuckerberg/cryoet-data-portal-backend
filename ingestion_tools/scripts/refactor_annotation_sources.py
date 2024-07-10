@@ -26,6 +26,10 @@ def main():
             for entry in config_data["annotations"]:
                 new_sources = []
                 for source in entry["sources"]:
+                    # If source is already in the new format, skip
+                    if "shape" not in source:
+                        new_sources.append(source)
+                        continue
                     # For every source, create a new dictionary with the shape as the key
                     new_source = {}
                     new_source[source["shape"]] = source
