@@ -110,7 +110,7 @@ depositions:
       deposition_description: REQUIRED, STRING
       deposition_identifier: REQUIRED, INTEGER
       deposition_title: REQUIRED, STRING
-      type: REQUIRED
+      deposition_types: REQUIRED
       - STRING (ENUM [ANNOTATION, DATASET, TOMOGRAM])
     sources: REQUIRED (source_glob, source_multi_glob, destination_glob, literal)
 deposition_keyphotos: SEE dataset_keyphotos

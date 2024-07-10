@@ -128,7 +128,7 @@ slots:
     required: true
     description: >-
       A short description of the deposition, similar to an abstract for a journal article or dataset.
-  deposition_type:
+  deposition_types:
     range: deposition_types_enum
     required: true
     multivalued: true
