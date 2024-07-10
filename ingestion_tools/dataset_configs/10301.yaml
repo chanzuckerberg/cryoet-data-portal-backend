@@ -10,13 +10,13 @@ annotations:
     authors: &id001
     - corresponding_author_status: false
       name: Ron Kelley
-      primary_annotator_status: true
+      primary_author_status: true
     - name: Xianjun Zhang
     - name: Martin Obr
     - ORCID: 0000-0003-2020-3561
       corresponding_author_status: true
       name: Sagar Khavnekar
-      primary_annotator_status: true
+      primary_author_status: true
     - corresponding_author_status: false
       name: Ricardo D. Righetto
     - corresponding_author_status: false
@@ -48,15 +48,15 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 4
-    file_format: stopgap_star
-    filter_value: '{annotation_micrograph_name}'
-    glob_string: '{run_name}/metadata/particles/f1atpase_bin*.star'
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/f1atpase_bin*.star'
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
@@ -70,15 +70,15 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 4
-    file_format: stopgap_star
-    filter_value: '{annotation_micrograph_name}'
-    glob_string: '{run_name}/metadata/particles/f1atpase_mito_*.star'
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/f1atpase_mito_*.star'
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
@@ -92,15 +92,15 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 4
-    file_format: stopgap_star
-    filter_value: '{annotation_micrograph_name}'
-    glob_string: '{run_name}/metadata/particles/ribosome_*.star'
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/ribosome_*.star'
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
@@ -113,15 +113,15 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 4
-    file_format: stopgap_star
-    filter_value: '{annotation_micrograph_name}'
-    glob_string: '{run_name}/metadata/particles/nucleosome_*.star'
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/nucleosome_*.star'
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
@@ -135,15 +135,15 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 4
-    file_format: stopgap_star
-    filter_value: '{annotation_micrograph_name}'
-    glob_string: '{run_name}/metadata/particles/rubisco_*.star'
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/rubisco_*.star'
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
@@ -156,15 +156,15 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 4
-    file_format: stopgap_star
-    filter_value: '{annotation_micrograph_name}'
-    glob_string: '{run_name}/metadata/particles/microtubule_*.star'
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/microtubule_*.star'
+      is_visualization_default: true
+      order: xyz
 dataset_keyphotos:
 - sources:
   - literal:
@@ -234,11 +234,9 @@ datasets:
     dataset_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
       cryo-plasmaFIB milling
     dates: *id002
-    grid_preparation: null
     organism:
       name: Chlamydomonas reinhardtii
       taxonomy_id: 3055
-    sample_preparation: null
     sample_type: organism
   sources:
   - literal:
@@ -278,7 +276,6 @@ standardization_config:
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    alignment_binning_factor: null
     binning_from_frames: 1
     camera:
       manufacturer: FEI
@@ -294,7 +291,6 @@ tiltseries:
       phase_plate: None
     pixel_spacing: 1.96
     related_empiar_entry: EMPIAR-11756
-    scales: []
     spherical_aberration_constant: 2.7
     tilt_axis: float {tilt_series_tilt_axis_angle}
     tilt_range:
@@ -329,7 +325,7 @@ tomograms:
       - 1
     authors: *id003
     ctf_corrected: true
-    fiducial_alignment_status: false
+    fiducial_alignment_status: NON_FIDUCIAL
     offset:
       x: 0
       y: 0

@@ -3,37 +3,31 @@ annotations:
       annotation_object:
         id: GO:0016020
         name: membrane
-        description: ~
-        state: ~
       dates: &repo-dates
         deposition_date: '2024-02-20'
         last_modified_date: '2024-02-20'
         release_date: '2024-02-20'
       annotation_method: intensity normalization + rescaling + FNET segmentation + skeletonization + DIST segmentation
       method_type: automated
-      annotation_publications: ~
       ground_truth_status: False
       authors: &annotation_authors
         - name: Robert Kiewisz
-          primary_annotator_status: true
+          primary_author_status: true
         - name: Tristan Bepler
           corresponding_author_status: true
       annotation_software: TARDIS
-      version: '1.0'
-      confidence:
-        precision: ~
-        recall: ~
+      version: 1.0
       is_curator_recommended: False
     sources:
-      - file_format: tardis
+    - InstanceSegmentation:
         binning: 1
-        order: xyz
-        shape: InstanceSegmentation
-        glob_string: "{dataset_name}/{run_name}/{run_name}_instance.csv"
+        file_format: tardis
+        glob_string: '{dataset_name}/{run_name}/{run_name}_instance.csv'
         is_visualization_default: false
-      - file_format: mrc
-        shape: SemanticSegmentationMask
-        glob_string: "{dataset_name}/{run_name}/{run_name}_semantic.mrc"
+        order: xyz
+    - SemanticSegmentationMask:
+        file_format: mrc
+        glob_string: '{dataset_name}/{run_name}/{run_name}_semantic.mrc'
         is_visualization_default: false
 datasets:
 - sources:

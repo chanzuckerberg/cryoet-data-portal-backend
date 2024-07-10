@@ -3,33 +3,27 @@ annotations:
       annotation_object:
         id: GO:0044096
         name: type IV pilus
-        description: ~
-        state: ~
       dates: &repo-dates
         deposition_date: '2024-06-03'
         last_modified_date: '2024-06-03'
         release_date: '2024-06-03'
       annotation_method: "manual labeling."
       method_type: manual
-      annotation_publications: ~
       ground_truth_status: True
       authors: &annotation_authors
         - name: Mohammed Kaplan
-          primary_annotator_status: true
+          primary_author_status: true
           corresponding_author_status: true
       annotation_software: "IMOD"
-      version: '1.0'
-      confidence:
-        precision: ~
-        recall: ~
+      version: 1.0
       is_curator_recommended: True
     sources:
-      - file_format: mod
-        binning: 1
-        shape: OrientedPoint
-        glob_string: "{dataset_name}/{run_name}_T4P.mod"
-        is_visualization_default: true
-        order: xyz
+      - OrientedPoint:
+          file_format: mod
+          binning: 1
+          glob_string: "{dataset_name}/{run_name}_T4P.mod"
+          is_visualization_default: true
+          order: xyz
 datasets:
 - sources:
   - source_glob:

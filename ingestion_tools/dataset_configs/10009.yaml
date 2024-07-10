@@ -2,19 +2,17 @@ annotations:
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
-      description: null
       id: GO:0035869
       name: stellate
-      state: null
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: &id001
     - ORCID: 0000-0003-4978-8516
       name: Hugo G. van den Hoek
-      primary_annotator_status: true
+      primary_author_status: true
     - ORCID: 0000-0002-2631-2294
       name: Nikolai Klena
-      primary_annotator_status: true
+      primary_author_status: true
     - ORCID: 0000-0001-6248-8863
       name: Mareike Jordan
     - name: Alvarez Viar G
@@ -44,10 +42,6 @@ annotations:
     - ORCID: 0000-0002-0941-4387
       corresponding_author_status: true
       name: Benjamin D. Engel
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: &id002
       deposition_date: '2023-11-01'
       last_modified_date: '2023-11-30'
@@ -55,177 +49,141 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_type: manual
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: motivelists/allmotl_S_newbin2_3.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: motivelists/allmotl_S_newbin2_3.star
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
-      description: null
       id: GO:0097537
       name: Y-shaped link
-      state: null
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
     method_type: manual
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: motivelists/allmotl_Y_newbin2_3.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: motivelists/allmotl_Y_newbin2_3.star
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
-      description: null
       id: GO:0035869
       name: MTD sleeve
-      state: null
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
     method_type: manual
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: motivelists/allmotl_H_cleanbin2.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: motivelists/allmotl_H_cleanbin2.star
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
-      description: null
       id: GO:0035869
       name: MTD stellate / Y-shaped link
-      state: null
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
     method_type: manual
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: motivelists/MTD_MIP_bin2_recentered_shiftedorg_9.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: motivelists/MTD_MIP_bin2_recentered_shiftedorg_9.star
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
-      description: null
       id: GO:0030992
       name: IFT-B
-      state: null
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
     method_type: manual
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: motivelists/allmotl_B2_newbin2_3.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: motivelists/allmotl_B2_newbin2_3.star
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
-      description: null
       id: GO:0030991
       name: IFT-A
-      state: null
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
     method_type: manual
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: motivelists/allmotl_A2_newbin2_3.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: motivelists/allmotl_A2_newbin2_3.star
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
-      description: null
       id: GO:0005858
       name: Dynein-1b
-      state: null
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
-    confidence:
-      ground_truth_used: null
-      precision: null
-      recall: null
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
     method_type: manual
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: motivelists/allmotl_D_newbin2_3.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: motivelists/allmotl_D_newbin2_3.star
+      is_visualization_default: true
+      order: xyz
 dataset_keyphotos:
 - sources:
   - literal:
@@ -274,7 +232,6 @@ datasets:
       id: GO:0005929
       name: Cilium
     cell_strain:
-      id: null
       name: CC-3994
     cross_references:
       dataset_publications: doi:10.1126/science.abm6704, EMPIAR-11078
@@ -286,7 +243,6 @@ datasets:
     - funding_agency_name: European Molecular Biology Organization (EMBO)
       grant_id: ALTF 537-2021
     - funding_agency_name: Alexander von Humboldt Foundation
-      grant_id: null
     - funding_agency_name: European Research Council (ERC)
       grant_id: '819826'
     - funding_agency_name: European Research Council (ERC)
@@ -294,9 +250,7 @@ datasets:
     - funding_agency_name: Swiss National Science Foundation
       grant_id: PP00P3_187198
     - funding_agency_name: Max Planck Society
-      grant_id: null
     - funding_agency_name: Helmholtz Association
-      grant_id: null
     grid_preparation: 'model: Quantifoil R2/1, material: COPPER, support_film_film_type_id:
       1, support_film_film_material: CARBON, support_film_film_topology: CONTINUOUS,
       support_film_instance_type: support_film, pretreatment_type_: GLOW DISCHARGE'
@@ -338,8 +292,6 @@ standardization_config:
 tiltseries:
 - metadata: &ts_metadata
     acceleration_voltage: 300000
-    alignment_binning_factor: null
-    binning_from_frames: REQUIRED
     camera:
       manufacturer: Gatan
       model: K2 SUMMIT
@@ -350,12 +302,10 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: GIF Quantum LS
-      image_corrector: null
       phase_plate: null
     pixel_spacing: 3.42
     related_empiar_entry: EMPIAR-11078
     spherical_aberration_constant: 2.7
-    tilt_axis: null
     tilt_range:
       max: 60
       min: -60
