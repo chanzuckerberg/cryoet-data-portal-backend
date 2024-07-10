@@ -70,26 +70,49 @@ tiltseries:
     data_acquisition_software: Leginon
     is_aligned: false
     microscope:
-      additional_scope_info: ''
+      additional_info: ''
       manufacturer: FEI
       model: Polara
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
       phase_plate: None
-    pixel_spacing: 'float {ts-pixel_spacing}'
+    pixel_spacing: 19.24
     spherical_aberration_constant: 2.0
-    tilt_alignment_software: '{ts-tilt_alignment_software}'
+    tilt_alignment_software: null
     tilt_axis: 0.0
     tilt_range:
       max: 63
       min: -63
-    tilt_series_quality: int {ts-tilt_series_quality}
+    tilt_series_quality: 1
     tilt_step: 1
     tilting_scheme: bidirectional
     total_flux: 180.0
   sources:
-  - source_glob:
+  - parent_filters:
+      exclude:
+        run:
+        - ^mst2010-12-10-1$
+        - ^mst2010-12-10-2$
+        - ^mst2010-12-10-3$
+        - ^mst2010-12-10-4$
+        - ^mst2010-12-10-5$
+        - ^mst2010-12-10-7$
+        - ^mst2010-12-10-8$
+        - ^mst2010-12-10-9$
+        - ^mst2010-12-11-1$
+        - ^mst2010-12-11-2$
+        - ^mst2010-12-11-3$
+        - ^mst2010-12-11-4$
+        - ^mst2010-12-11-5$
+        - ^mst2010-12-11-6$
+        - ^mst2010-12-11-7$
+        - ^mst2010-12-11-8$
+        - ^mst2010-12-11-9$
+        - ^mst2010-12-11-10$
+        - ^mst2010-12-11-11$
+        - ^mst2010-12-11-12$
+    source_glob:
       list_glob: '{run_name}/rawdata/*'
       match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:

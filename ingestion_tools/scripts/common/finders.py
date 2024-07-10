@@ -19,7 +19,7 @@ class BaseFinder(ABC):
 
 
 class SourceMultiGlobFinder(BaseFinder):
-    list_glob: list[str]
+    list_globs: list[str]
 
     def __init__(self, list_globs: list[str]):
         self.list_globs = list_globs
