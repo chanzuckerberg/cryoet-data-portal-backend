@@ -76,7 +76,7 @@ tiltseries:
     data_acquisition_software: Serial EM
     is_aligned: false
     microscope:
-      additional_scope_info: ''
+      additional_info: ''
       manufacturer: TFS
       model: Krios
     microscope_optical_setup:

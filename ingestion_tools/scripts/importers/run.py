@@ -1,14 +1,9 @@
 import os
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 from common.finders import DefaultImporterFactory
 from common.metadata import RunMetadata
 from importers.base_importer import BaseImporter
-
-if TYPE_CHECKING:
-    from importers.dataset import DatasetImporter
-else:
-    DatasetImporter = "DatasetImporter"
 
 
 class RunImporter(BaseImporter):
