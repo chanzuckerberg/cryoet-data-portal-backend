@@ -41,13 +41,13 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: subtomo/hdcr/hdcr_tm_bin2_motl_12.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: subtomo/hdcr/hdcr_tm_bin2_motl_12.star
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
@@ -62,13 +62,13 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - binning: 4
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: subtomo/ribo/ribo_tm_bin1_motl_12.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: subtomo/ribo/ribo_tm_bin1_motl_12.star
+      is_visualization_default: true
+      order: xyz
 dataset_keyphotos:
 - sources:
   - literal:
@@ -127,11 +127,11 @@ datasets:
       1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type:
       support_film, pretreatment_type_: GLOW DISCHARGE, pretreatment_atmosphere: AIR'
     organism:
-      taxonomy_id: 2325
       name: Thermoanaerobacter kivui
+      taxonomy_id: 2325
     sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE-PROPANE,
       vitrification_instrument: FEI VITROBOT MARK IV, instance_type: subtomogram_averaging_preparation'
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

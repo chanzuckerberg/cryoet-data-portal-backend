@@ -19,15 +19,15 @@ annotations:
       version: 1.0
       is_curator_recommended: False
     sources:
-      - file_format: tardis
+    - InstanceSegmentation:
         binning: 1
-        order: xyz
-        shape: InstanceSegmentation
-        glob_string: "{dataset_name}/{run_name}/{run_name}_instance.csv"
+        file_format: tardis
+        glob_string: '{dataset_name}/{run_name}/{run_name}_instance.csv'
         is_visualization_default: false
-      - file_format: mrc
-        shape: SemanticSegmentationMask
-        glob_string: "{dataset_name}/{run_name}/{run_name}_semantic.mrc"
+        order: xyz
+    - SemanticSegmentationMask:
+        file_format: mrc
+        glob_string: '{dataset_name}/{run_name}/{run_name}_semantic.mrc'
         is_visualization_default: false
 datasets:
 - sources:

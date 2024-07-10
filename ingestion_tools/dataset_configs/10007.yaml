@@ -33,12 +33,12 @@ annotations:
     method_type: automated
     version: 1.0
   sources:
-  - binning: 4
-    file_format: tomoman_relion_star
-    glob_string: '{run_name}/metadata/particles/*.star'
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: tomoman_relion_star
+      glob_string: '{run_name}/metadata/particles/*.star'
+      is_visualization_default: true
+      order: xyz
 dataset_keyphotos:
 - sources:
   - literal:
@@ -83,7 +83,7 @@ datasets:
       name: Saccharomyces cerevisiae
     sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type:
       subtomogram_averaging_preparation'
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

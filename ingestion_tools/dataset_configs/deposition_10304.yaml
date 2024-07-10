@@ -27,10 +27,10 @@ annotations:
       version: 1.0
       is_curator_recommended: False
     sources:
-      - file_format: mrc
-        shape: SegmentationMask
-        glob_string: "{dataset_name}/{run_name}_membrane_segmentation_mask.mrc"
-        is_visualization_default: false
+      - SegmentationMask:
+          file_format: mrc 
+          glob_string: "{dataset_name}/{run_name}_membrane_segmentation_mask.mrc"
+          is_visualization_default: false
 datasets:
 - sources:
   - source_glob:

@@ -48,10 +48,10 @@ annotations:
     method_type: manual
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: labels/{run_name}_actin_ground_truth.mrc
-    is_visualization_default: true
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: labels/{run_name}_actin_ground_truth.mrc
+      is_visualization_default: true
 - metadata:
     annotation_method: 2D CNN + 3D CNN hyperparameter tuning
     annotation_object:
@@ -67,10 +67,10 @@ annotations:
     method_type: automated
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: prediction/{run_name}_*.mrc
-    is_visualization_default: false
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: prediction/{run_name}_*.mrc
+      is_visualization_default: false
 dataset_keyphotos:
 - sources:
   - literal:
@@ -181,7 +181,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF Quantum LS
       phase_plate: VOLTA PHASE PLATE
-    pixel_spacing: 'float {run_pixel_spacing}'
+    pixel_spacing: float {run_pixel_spacing}
     spherical_aberration_constant: 2.7
     tilt_axis: 79
     tilt_range:
@@ -225,7 +225,7 @@ tomograms:
     reconstruction_method: Weighted back projection
     reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: 'float {run_voxel_spacing}'
+    voxel_spacing: float {run_voxel_spacing}
   sources:
   - source_glob:
       list_glob: tomograms/{run_name}_*.rec

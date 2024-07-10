@@ -13,7 +13,7 @@ annotations:
     - ORCID: 0000-0001-5908-7882
       corresponding_author_status: true
       name: Danielle A. Grotjahn
-    dates: &id003
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -22,11 +22,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
-    is_visualization_default: true
-    mask_label: 1
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+      is_visualization_default: true
+      mask_label: 1
 - metadata:
     annotation_method: TomoSegMemTV segmentation + manual correction in TFS Amira
     annotation_object:
@@ -35,17 +35,17 @@ annotations:
     annotation_publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
     annotation_software: TomoSegMemTV+AMIRA
     authors: *id001
-    dates: *id003
+    dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
-    is_visualization_default: true
-    mask_label: 2
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+      is_visualization_default: true
+      mask_label: 2
 - metadata:
     annotation_method: TomoSegMemTV segmentation + manual correction in TFS Amira
     annotation_object:
@@ -54,20 +54,20 @@ annotations:
     annotation_publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
     annotation_software: TomoSegMemTV+AMIRA
     authors: *id001
-    dates: *id003
+    dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
-    is_visualization_default: true
-    mask_label: 3
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+      is_visualization_default: true
+      mask_label: 3
 datasets:
 - metadata:
-    authors: &id004
+    authors: &id003
     - ORCID: 0000-0002-1016-862X
       corresponding_author_status: false
       name: Benjamin A. Barad
@@ -101,11 +101,11 @@ datasets:
       membrane ultrastructure.
     dataset_identifier: 10010
     dataset_title: Organellar membranes
-    dates: *id003
+    dates: *id002
     funding: []
     organism:
-      taxonomy_id: 10090
       name: Mus musculus
+      taxonomy_id: 10090
     sample_type: cell
   sources:
   - literal:
@@ -182,7 +182,7 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id004
+    authors: *id003
     ctf_corrected: false
     fiducial_alignment_status: NON_FIDUCIAL
     offset:

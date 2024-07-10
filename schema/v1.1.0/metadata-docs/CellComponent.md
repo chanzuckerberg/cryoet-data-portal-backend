@@ -37,8 +37,8 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 0..1 <br/> [String](String.md) |  | direct |
-| [id](id.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [name](name.md) | 1 <br/> [String](String.md) | Name of the cellular component | direct |
+| [id](id.md) | 0..1 _recommended_ <br/> [String](String.md) | The GO identifier for the cellular component | direct |
 
 
 
@@ -99,6 +99,7 @@ from_schema: metadata
 attributes:
   name:
     name: name
+    description: Name of the cellular component.
     from_schema: metadata
     exact_mappings:
     - cdp-common:cell_component_name
@@ -113,10 +114,12 @@ attributes:
     - CellComponent
     - AnnotationObject
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   id:
     name: id
+    description: The GO identifier for the cellular component.
     from_schema: metadata
     exact_mappings:
     - cdp-common:cell_component_id
@@ -129,6 +132,7 @@ attributes:
     - CellComponent
     - AnnotationObject
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
 
@@ -145,6 +149,7 @@ from_schema: metadata
 attributes:
   name:
     name: name
+    description: Name of the cellular component.
     from_schema: metadata
     exact_mappings:
     - cdp-common:cell_component_name
@@ -159,10 +164,12 @@ attributes:
     - CellComponent
     - AnnotationObject
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   id:
     name: id
+    description: The GO identifier for the cellular component.
     from_schema: metadata
     exact_mappings:
     - cdp-common:cell_component_id
@@ -175,6 +182,7 @@ attributes:
     - CellComponent
     - AnnotationObject
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
 

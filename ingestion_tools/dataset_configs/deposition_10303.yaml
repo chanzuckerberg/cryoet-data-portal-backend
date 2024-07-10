@@ -26,55 +26,55 @@ annotations:
       is_curator_recommended: False
     sources:
       # 10000 - 10010
-      - file_format: zarr
-        shape: SegmentationMask
-        glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*LM52Ga.zarr"
-        is_visualization_default: true
+      - SegmentationMask:
+          file_format: zarr 
+          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*LM52Ga.zarr"
+          is_visualization_default: true
       # 10011 - 10046
-      - file_format: zarr
-        shape: SegmentationMask
-        glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*55ar5k.zarr"
-        is_visualization_default: true
+      - SegmentationMask:
+          file_format: zarr
+          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*55ar5k.zarr"
+          is_visualization_default: true
       # 10047 - 10075
-      - file_format: zarr
-        shape: SegmentationMask
-        glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*wO13zA.zarr"
-        is_visualization_default: true
+      - SegmentationMask:
+          file_format: zarr 
+          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*wO13zA.zarr"
+          is_visualization_default: true
       # 10076 - 10150
-      - file_format: zarr
-        shape: SegmentationMask
-        glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*z59Mxz.zarr"
-        is_visualization_default: true
+      - SegmentationMask:
+          file_format: zarr
+          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*z59Mxz.zarr"
+          is_visualization_default: true
       # 10151 - 10225
-      - file_format: zarr
-        shape: SegmentationMask
-        glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*F5XUXp.zarr"
-        is_visualization_default: true
+      - SegmentationMask:
+          file_format: zarr
+          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*F5XUXp.zarr"
+          is_visualization_default: true
       # 10226 - 10300
-      - file_format: zarr
-        shape: SegmentationMask
-        glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*kpDyZk.zarr"
-        is_visualization_default: true
+      - SegmentationMask:
+          file_format: zarr 
+          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*kpDyZk.zarr"
+          is_visualization_default: true
       # Chlamy batch 1
-      - file_format: zarr
-        shape: SegmentationMask
-        glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*AM1K9r.zarr"
-        is_visualization_default: true
+      - SegmentationMask:
+          file_format: zarr
+          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*AM1K9r.zarr"
+          is_visualization_default: true
       # Chlamy batch 2
-      - file_format: zarr
-        shape: SegmentationMask
-        glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*PgU0Bz.zarr"
-        is_visualization_default: true
+      - SegmentationMask:
+          file_format: zarr
+          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*PgU0Bz.zarr"
+          is_visualization_default: true
       # Chlamy batch 3
-      - file_format: zarr
-        shape: SegmentationMask
-        glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*4h1eIH.zarr"
-        is_visualization_default: true
+      - SegmentationMask:
+          file_format: zarr
+          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*4h1eIH.zarr"
+          is_visualization_default: true
       # Chlamy batch 4
-      - file_format: zarr
-        shape: SegmentationMask
-        glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*gBcgAd.zarr"
-        is_visualization_default: true
+      - SegmentationMask:
+          file_format: zarr
+          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*gBcgAd.zarr"
+          is_visualization_default: true
 datasets:
 - sources:
   - source_glob:

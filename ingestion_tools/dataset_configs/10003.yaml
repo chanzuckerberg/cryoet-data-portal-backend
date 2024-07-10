@@ -30,13 +30,13 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - binning: 4
-    file_format: relion3_star
-    filter_value: '{mapped_tomo_name}.tomostar'
-    glob_string: run_ct17_it034_data.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: relion3_star
+      filter_value: '{mapped_tomo_name}.tomostar'
+      glob_string: run_ct17_it034_data.star
+      is_visualization_default: true
+      order: xyz
 dataset_keyphotos:
 - sources:
   - literal:
@@ -127,7 +127,7 @@ tiltseries:
       manufacturer: FEI
       model: TITAN KRIOS
     microscope_optical_setup:
-      energy_filter: "unknown"
+      energy_filter: unknown
     pixel_spacing: 1.7005
     related_empiar_entry: EMPIAR-10499
     spherical_aberration_constant: 2.7

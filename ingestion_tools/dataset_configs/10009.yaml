@@ -51,13 +51,13 @@ annotations:
     method_type: manual
     version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: motivelists/allmotl_S_newbin2_3.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: motivelists/allmotl_S_newbin2_3.star
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
@@ -72,13 +72,13 @@ annotations:
     method_type: manual
     version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: motivelists/allmotl_Y_newbin2_3.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: motivelists/allmotl_Y_newbin2_3.star
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
@@ -93,13 +93,13 @@ annotations:
     method_type: manual
     version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: motivelists/allmotl_H_cleanbin2.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: motivelists/allmotl_H_cleanbin2.star
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
@@ -114,13 +114,13 @@ annotations:
     method_type: manual
     version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: motivelists/MTD_MIP_bin2_recentered_shiftedorg_9.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: motivelists/MTD_MIP_bin2_recentered_shiftedorg_9.star
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
@@ -135,13 +135,13 @@ annotations:
     method_type: manual
     version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: motivelists/allmotl_B2_newbin2_3.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: motivelists/allmotl_B2_newbin2_3.star
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
@@ -156,13 +156,13 @@ annotations:
     method_type: manual
     version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: motivelists/allmotl_A2_newbin2_3.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: motivelists/allmotl_A2_newbin2_3.star
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
@@ -177,13 +177,13 @@ annotations:
     method_type: manual
     version: 1.0
   sources:
-  - binning: 2
-    file_format: stopgap_star
-    filter_value: '{run_name}'
-    glob_string: motivelists/allmotl_D_newbin2_3.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: stopgap_star
+      filter_value: '{run_name}'
+      glob_string: motivelists/allmotl_D_newbin2_3.star
+      is_visualization_default: true
+      order: xyz
 dataset_keyphotos:
 - sources:
   - literal:

@@ -50,13 +50,13 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - binning: 4
-    file_format: stopgap_star
-    filter_value: '{annotation_micrograph_name}'
-    glob_string: '{run_name}/metadata/particles/f1atpase_bin*.star'
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/f1atpase_bin*.star'
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
@@ -72,13 +72,13 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - binning: 4
-    file_format: stopgap_star
-    filter_value: '{annotation_micrograph_name}'
-    glob_string: '{run_name}/metadata/particles/f1atpase_mito_*.star'
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/f1atpase_mito_*.star'
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
@@ -94,13 +94,13 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - binning: 4
-    file_format: stopgap_star
-    filter_value: '{annotation_micrograph_name}'
-    glob_string: '{run_name}/metadata/particles/ribosome_*.star'
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/ribosome_*.star'
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
@@ -115,13 +115,13 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - binning: 4
-    file_format: stopgap_star
-    filter_value: '{annotation_micrograph_name}'
-    glob_string: '{run_name}/metadata/particles/nucleosome_*.star'
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/nucleosome_*.star'
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
@@ -137,13 +137,13 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - binning: 4
-    file_format: stopgap_star
-    filter_value: '{annotation_micrograph_name}'
-    glob_string: '{run_name}/metadata/particles/rubisco_*.star'
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/rubisco_*.star'
+      is_visualization_default: true
+      order: xyz
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
@@ -158,13 +158,13 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - binning: 4
-    file_format: stopgap_star
-    filter_value: '{annotation_micrograph_name}'
-    glob_string: '{run_name}/metadata/particles/microtubule_*.star'
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/microtubule_*.star'
+      is_visualization_default: true
+      order: xyz
 dataset_keyphotos:
 - sources:
   - literal:
@@ -237,7 +237,7 @@ datasets:
     organism:
       name: Chlamydomonas reinhardtii
       taxonomy_id: 3055
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

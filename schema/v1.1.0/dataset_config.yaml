@@ -150,19 +150,19 @@ classes:
   AnnotationSource:
     description: An annotation source.
     attributes:
-      instance_segmentation:
+      InstanceSegmentation:
         description: The instance segmentation annotation source.
         range: AnnotationInstanceSegmentationFile
-      oriented_point:
+      OrientedPoint:
         description: The oriented point annotation source.
         range: AnnotationOrientedPointFile
-      point:
+      Point:
         description: The point annotation source.
         range: AnnotationPointFile
-      segmentation_mask:
+      SegmentationMask:
         description: The segmentation mask annotation source.
         range: AnnotationSegmentationMaskFile
-      semantic_segmentation_mask: 
+      SemanticSegmentationMask: 
         description: The semantic segmentation mask annotation source.
         range: AnnotationSemanticSegmentationMaskFile
       parent_filters:

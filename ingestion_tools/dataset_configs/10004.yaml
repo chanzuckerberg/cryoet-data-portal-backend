@@ -1,9 +1,5 @@
 annotations:
 - metadata:
-    confidence:
-      ground_truth_used: Author estimation
-      precision: 95
-      recall: 60
     annotation_method: Template matching + 2D classification filtering
     annotation_object:
       id: GO:0022626
@@ -48,6 +44,10 @@ annotations:
       corresponding_author_status: true
       name: "M. J\xFCrgen Plitzko"
       primary_author_status: false
+    confidence:
+      ground_truth_used: Author estimation
+      precision: 95
+      recall: 60
     dates: &id001
       deposition_date: '2023-05-01'
       last_modified_date: '2023-06-01'
@@ -57,11 +57,11 @@ annotations:
     method_type: automated
     version: 1.0
   sources:
-  - columns: xyz
-    file_format: csv_with_header
-    glob_string: '{run_name}/annoRibosome_bin4.txt'
-    is_visualization_default: true
-    shape: Point
+  - Point:
+      columns: xyz
+      file_format: csv_with_header
+      glob_string: '{run_name}/annoRibosome_bin4.txt'
+      is_visualization_default: true
 datasets:
 - metadata:
     authors: &id002

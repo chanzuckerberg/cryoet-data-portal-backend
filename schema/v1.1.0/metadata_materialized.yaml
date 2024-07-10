@@ -694,6 +694,8 @@ classes:
     attributes:
       name:
         name: name
+        description: Name of the organism from which a biological sample used in a
+          CryoET study is derived from, e.g. homo sapiens.
         from_schema: metadata
         exact_mappings:
         - cdp-common:organism_name
@@ -708,6 +710,7 @@ classes:
         - CellComponent
         - AnnotationObject
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       taxonomy_id:
@@ -732,6 +735,8 @@ classes:
     attributes:
       name:
         name: name
+        description: Name of the tissue from which a biological sample used in a CryoET
+          study is derived from.
         from_schema: metadata
         exact_mappings:
         - cdp-common:tissue_name
@@ -746,6 +751,7 @@ classes:
         - CellComponent
         - AnnotationObject
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       id:
@@ -773,6 +779,8 @@ classes:
     attributes:
       name:
         name: name
+        description: Name of the cell type from which a biological sample used in
+          a CryoET study is derived from.
         from_schema: metadata
         exact_mappings:
         - cdp-common:cell_name
@@ -787,10 +795,12 @@ classes:
         - CellComponent
         - AnnotationObject
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       id:
         name: id
+        description: Cell Ontology identifier for the cell type
         from_schema: metadata
         exact_mappings:
         - cdp-common:cell_type_id
@@ -803,6 +813,7 @@ classes:
         - CellComponent
         - AnnotationObject
         range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
   CellStrain:
@@ -812,6 +823,7 @@ classes:
     attributes:
       name:
         name: name
+        description: Cell line or strain for the sample.
         from_schema: metadata
         exact_mappings:
         - cdp-common:cell_strain_name
@@ -826,10 +838,12 @@ classes:
         - CellComponent
         - AnnotationObject
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       id:
         name: id
+        description: Link to more information about the cell strain.
         from_schema: metadata
         exact_mappings:
         - cdp-common:cell_strain_id
@@ -842,6 +856,7 @@ classes:
         - CellComponent
         - AnnotationObject
         range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
   CellComponent:
@@ -851,6 +866,7 @@ classes:
     attributes:
       name:
         name: name
+        description: Name of the cellular component.
         from_schema: metadata
         exact_mappings:
         - cdp-common:cell_component_name
@@ -865,10 +881,12 @@ classes:
         - CellComponent
         - AnnotationObject
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       id:
         name: id
+        description: The GO identifier for the cellular component.
         from_schema: metadata
         exact_mappings:
         - cdp-common:cell_component_id
@@ -881,6 +899,7 @@ classes:
         - CellComponent
         - AnnotationObject
         range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
   ExperimentalMetadata:
@@ -1120,7 +1139,8 @@ classes:
         owner: Dataset
         domain_of:
         - ExperimentalMetadata
-        range: string
+        range: sample_type_enum
+        required: true
         inlined: true
         inlined_as_list: true
       sample_preparation:
@@ -1134,6 +1154,7 @@ classes:
         domain_of:
         - ExperimentalMetadata
         range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
       grid_preparation:
@@ -1147,6 +1168,7 @@ classes:
         domain_of:
         - ExperimentalMetadata
         range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
       other_setup:
@@ -1161,6 +1183,7 @@ classes:
         domain_of:
         - ExperimentalMetadata
         range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
       organism:
@@ -1273,6 +1296,7 @@ classes:
     attributes:
       manufacturer:
         name: manufacturer
+        description: Name of the microscope manufacturer
         from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_microscope_manufacturer
@@ -1282,10 +1306,12 @@ classes:
         - Camera
         - Microscope
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       model:
         name: model
+        description: Microscope model name
         from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_microscope_model
@@ -1295,6 +1321,7 @@ classes:
         - Camera
         - Microscope
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
   MicroscopeOpticalSetup:
@@ -2038,6 +2065,8 @@ classes:
     attributes:
       id:
         name: id
+        description: Gene Ontology Cellular Component identifier for the annotation
+          object
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_object_id
@@ -2050,10 +2079,13 @@ classes:
         - CellComponent
         - AnnotationObject
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       name:
         name: name
+        description: Name of the object being annotated (e.g. ribosome, nuclear pore
+          complex, actin filament, membrane)
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_object_name
@@ -2068,6 +2100,7 @@ classes:
         - CellComponent
         - AnnotationObject
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       description:
@@ -2202,6 +2235,7 @@ classes:
         inlined_as_list: true
       file_format:
         name: file_format
+        description: File format for this file
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_format
@@ -2210,10 +2244,12 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
         name: glob_string
+        description: Glob string to match annotation files in the dataset.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2222,18 +2258,21 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
         name: is_visualization_default
+        description: This annotation will be rendered in neuroglancer by default.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_is_visualization_default
+        ifabsent: 'False'
         alias: is_visualization_default
         owner: AnnotationOrientedPointFile
         domain_of:
         - AnnotationSourceFile
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
   AnnotationInstanceSegmentationFile:
@@ -2247,19 +2286,24 @@ classes:
     attributes:
       binning:
         name: binning
+        description: The binning factor for a point / oriented point / instance segmentation
+          annotation file.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_binning
+        ifabsent: int(1)
         alias: binning
         owner: AnnotationInstanceSegmentationFile
         domain_of:
         - AnnotationOrientedPointFile
         - AnnotationPointFile
-        range: string
+        range: integer
         inlined: true
         inlined_as_list: true
       filter_value:
         name: filter_value
+        description: The filter value for an oriented point / instance segmentation
+          annotation file.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_filter_value
@@ -2272,9 +2316,12 @@ classes:
         inlined_as_list: true
       order:
         name: order
+        description: The order of axes for an oriented point / instance segmentation
+          annotation file.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_order
+        ifabsent: string(xyz)
         alias: order
         owner: AnnotationInstanceSegmentationFile
         domain_of:
@@ -2284,6 +2331,7 @@ classes:
         inlined_as_list: true
       file_format:
         name: file_format
+        description: File format for this file
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_format
@@ -2292,10 +2340,12 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
         name: glob_string
+        description: Glob string to match annotation files in the dataset.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2304,18 +2354,21 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
         name: is_visualization_default
+        description: This annotation will be rendered in neuroglancer by default.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_is_visualization_default
+        ifabsent: 'False'
         alias: is_visualization_default
         owner: AnnotationInstanceSegmentationFile
         domain_of:
         - AnnotationSourceFile
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
   AnnotationPointFile:
@@ -2329,15 +2382,18 @@ classes:
     attributes:
       binning:
         name: binning
+        description: The binning factor for a point / oriented point / instance segmentation
+          annotation file.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_binning
+        ifabsent: int(1)
         alias: binning
         owner: AnnotationPointFile
         domain_of:
         - AnnotationOrientedPointFile
         - AnnotationPointFile
-        range: string
+        range: integer
         inlined: true
         inlined_as_list: true
       columns:
@@ -2370,6 +2426,7 @@ classes:
         inlined_as_list: true
       file_format:
         name: file_format
+        description: File format for this file
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_format
@@ -2378,10 +2435,12 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
         name: glob_string
+        description: Glob string to match annotation files in the dataset.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2390,18 +2449,21 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
         name: is_visualization_default
+        description: This annotation will be rendered in neuroglancer by default.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_is_visualization_default
+        ifabsent: 'False'
         alias: is_visualization_default
         owner: AnnotationPointFile
         domain_of:
         - AnnotationSourceFile
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
   AnnotationSegmentationMaskFile:
@@ -2415,6 +2477,7 @@ classes:
     attributes:
       file_format:
         name: file_format
+        description: File format for this file
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_format
@@ -2423,10 +2486,12 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
         name: glob_string
+        description: Glob string to match annotation files in the dataset.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2435,18 +2500,21 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
         name: is_visualization_default
+        description: This annotation will be rendered in neuroglancer by default.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_is_visualization_default
+        ifabsent: 'False'
         alias: is_visualization_default
         owner: AnnotationSegmentationMaskFile
         domain_of:
         - AnnotationSourceFile
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
   AnnotationSemanticSegmentationMaskFile:
@@ -2474,6 +2542,7 @@ classes:
         inlined_as_list: true
       file_format:
         name: file_format
+        description: File format for this file
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_format
@@ -2482,10 +2551,12 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
         name: glob_string
+        description: Glob string to match annotation files in the dataset.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2494,18 +2565,21 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
+        required: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
         name: is_visualization_default
+        description: This annotation will be rendered in neuroglancer by default.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_is_visualization_default
+        ifabsent: 'False'
         alias: is_visualization_default
         owner: AnnotationSemanticSegmentationMaskFile
         domain_of:
         - AnnotationSourceFile
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
   Annotation:

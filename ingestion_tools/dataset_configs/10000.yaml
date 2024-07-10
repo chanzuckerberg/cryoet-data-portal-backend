@@ -47,11 +47,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - columns: xyz
-    file_format: csv
-    glob_string: particle_lists/{run_name}_fas.csv
-    is_visualization_default: false
-    shape: Point
+  - Point:
+      columns: xyz
+      file_format: csv
+      glob_string: particle_lists/{run_name}_fas.csv
+      is_visualization_default: false
 - metadata:
     annotation_method: Cumulative template-matching trained 2D CNN predictions + visual
       filtering + distance constraints + manual addition
@@ -68,11 +68,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - columns: xyz
-    file_format: csv
-    glob_string: particle_lists/{run_name}_cyto_ribosomes.csv
-    is_visualization_default: true
-    shape: Point
+  - Point:
+      columns: xyz
+      file_format: csv
+      glob_string: particle_lists/{run_name}_cyto_ribosomes.csv
+      is_visualization_default: true
 - metadata:
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
@@ -88,11 +88,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-    is_visualization_default: false
-    mask_label: 1
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+      is_visualization_default: false
+      mask_label: 1
 - metadata:
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
@@ -108,11 +108,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-    is_visualization_default: true
-    mask_label: 2
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+      is_visualization_default: true
+      mask_label: 2
 - metadata:
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
@@ -128,11 +128,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-    is_visualization_default: false
-    mask_label: 3
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+      is_visualization_default: false
+      mask_label: 3
 - metadata:
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
@@ -148,11 +148,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-    is_visualization_default: true
-    mask_label: 4
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+      is_visualization_default: true
+      mask_label: 4
 - metadata:
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
@@ -168,11 +168,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-    is_visualization_default: true
-    mask_label: 5
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+      is_visualization_default: true
+      mask_label: 5
 - metadata:
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
@@ -188,11 +188,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-    is_visualization_default: true
-    mask_label: 6
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+      is_visualization_default: true
+      mask_label: 6
 - metadata:
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
@@ -208,11 +208,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-    is_visualization_default: false
-    mask_label: 7
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+      is_visualization_default: false
+      mask_label: 7
 - metadata:
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
@@ -228,11 +228,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-    is_visualization_default: false
-    mask_label: 8
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+      is_visualization_default: false
+      mask_label: 8
 - metadata:
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
@@ -248,11 +248,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-    is_visualization_default: false
-    mask_label: 9
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+      is_visualization_default: false
+      mask_label: 9
 - metadata:
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
@@ -268,11 +268,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-    is_visualization_default: true
-    mask_label: 10
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+      is_visualization_default: true
+      mask_label: 10
 - metadata:
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
@@ -288,11 +288,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-    is_visualization_default: false
-    mask_label: 11
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+      is_visualization_default: false
+      mask_label: 11
 - metadata:
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
@@ -308,11 +308,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-    is_visualization_default: false
-    mask_label: 13
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+      is_visualization_default: false
+      mask_label: 13
 - metadata:
     annotation_method: 3D CNN prediction + manual correction
     annotation_object:
@@ -328,11 +328,11 @@ annotations:
     method_type: hybrid
     version: 1.0
   sources:
-  - file_format: mrc
-    glob_string: labels/{run_name}_membranes.mrc
-    is_visualization_default: false
-    mask_label: 1
-    shape: SemanticSegmentationMask
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: labels/{run_name}_membranes.mrc
+      is_visualization_default: false
+      mask_label: 1
 dataset_keyphotos:
 - sources:
   - literal:

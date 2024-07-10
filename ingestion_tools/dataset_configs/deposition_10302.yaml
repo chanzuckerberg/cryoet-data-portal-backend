@@ -18,10 +18,10 @@ annotations:
       version: 1.0
       is_curator_recommended: True
     sources:
-      - file_format: mod
+    - OrientedPoint:
         binning: 1
-        shape: OrientedPoint
-        glob_string: "{dataset_name}/{run_name}_MS.mod"
+        file_format: mod
+        glob_string: '{dataset_name}/{run_name}_MS.mod'
         is_visualization_default: true
         order: xyz
 datasets:

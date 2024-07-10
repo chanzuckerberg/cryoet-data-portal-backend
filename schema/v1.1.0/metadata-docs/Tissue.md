@@ -37,7 +37,7 @@ URI: [cdp-meta:Tissue](metadataTissue)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [name](name.md) | 1 <br/> [String](String.md) | Name of the tissue from which a biological sample used in a CryoET study is d... | direct |
 | [id](id.md) | 0..1 _recommended_ <br/> [String](String.md) | The UBERON identifier for the tissue | direct |
 
 
@@ -99,6 +99,8 @@ from_schema: metadata
 attributes:
   name:
     name: name
+    description: Name of the tissue from which a biological sample used in a CryoET
+      study is derived from.
     from_schema: metadata
     exact_mappings:
     - cdp-common:tissue_name
@@ -113,6 +115,7 @@ attributes:
     - CellComponent
     - AnnotationObject
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   id:
@@ -148,6 +151,8 @@ from_schema: metadata
 attributes:
   name:
     name: name
+    description: Name of the tissue from which a biological sample used in a CryoET
+      study is derived from.
     from_schema: metadata
     exact_mappings:
     - cdp-common:tissue_name
@@ -162,6 +167,7 @@ attributes:
     - CellComponent
     - AnnotationObject
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   id:

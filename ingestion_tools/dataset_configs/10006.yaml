@@ -51,13 +51,13 @@ annotations:
     method_type: automated
     version: 1.0
   sources:
-  - binning: 2
-    file_format: relion4_star
-    filter_value: '{run_name}'
-    glob_string: motl_star/czii-remapped-points.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 2
+      file_format: relion4_star
+      filter_value: '{run_name}'
+      glob_string: motl_star/czii-remapped-points.star
+      is_visualization_default: true
+      order: xyz
 dataset_keyphotos:
 - sources:
   - literal:
@@ -125,11 +125,11 @@ datasets:
       CARBON, support_film_film_topology: HOLEY ARRAY, support_film_instance_type:
       support_film, pretreatment_type_: GLOW DISCHARGE'
     organism:
-      taxonomy_id: 2697049
       name: Severe acute respiratory syndrome coronavirus 2
+      taxonomy_id: 2697049
     sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, vitrification_instrument:
       LEICA EM GP, instance_type: subtomogram_averaging_preparation'
-    sample_type: Virus
+    sample_type: virus
   sources:
   - literal:
       value:

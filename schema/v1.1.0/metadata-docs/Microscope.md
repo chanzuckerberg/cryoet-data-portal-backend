@@ -37,8 +37,8 @@ URI: [cdp-meta:Microscope](metadataMicroscope)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [manufacturer](manufacturer.md) | 0..1 <br/> [String](String.md) |  | direct |
-| [model](model.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [manufacturer](manufacturer.md) | 1 <br/> [String](String.md) | Name of the microscope manufacturer | direct |
+| [model](model.md) | 1 <br/> [String](String.md) | Microscope model name | direct |
 
 
 
@@ -98,6 +98,7 @@ from_schema: metadata
 attributes:
   manufacturer:
     name: manufacturer
+    description: Name of the microscope manufacturer
     from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_microscope_manufacturer
@@ -107,10 +108,12 @@ attributes:
     - Camera
     - Microscope
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   model:
     name: model
+    description: Microscope model name
     from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_microscope_model
@@ -120,6 +123,7 @@ attributes:
     - Camera
     - Microscope
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
 
@@ -136,6 +140,7 @@ from_schema: metadata
 attributes:
   manufacturer:
     name: manufacturer
+    description: Name of the microscope manufacturer
     from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_microscope_manufacturer
@@ -145,10 +150,12 @@ attributes:
     - Camera
     - Microscope
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   model:
     name: model
+    description: Microscope model name
     from_schema: metadata
     exact_mappings:
     - cdp-common:tiltseries_microscope_model
@@ -158,6 +165,7 @@ attributes:
     - Camera
     - Microscope
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
 

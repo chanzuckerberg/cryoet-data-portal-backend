@@ -37,7 +37,7 @@ URI: [cdp-meta:Organism](metadataOrganism)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 0..1 <br/> [String](String.md) |  | direct |
+| [name](name.md) | 1 <br/> [String](String.md) | Name of the organism from which a biological sample used in a CryoET study is... | direct |
 | [taxonomy_id](taxonomy_id.md) | 0..1 _recommended_ <br/> [Integer](Integer.md) | NCBI taxonomy identifier for the organism, e | direct |
 
 
@@ -99,6 +99,8 @@ from_schema: metadata
 attributes:
   name:
     name: name
+    description: Name of the organism from which a biological sample used in a CryoET
+      study is derived from, e.g. homo sapiens.
     from_schema: metadata
     exact_mappings:
     - cdp-common:organism_name
@@ -113,6 +115,7 @@ attributes:
     - CellComponent
     - AnnotationObject
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   taxonomy_id:
@@ -145,6 +148,8 @@ from_schema: metadata
 attributes:
   name:
     name: name
+    description: Name of the organism from which a biological sample used in a CryoET
+      study is derived from, e.g. homo sapiens.
     from_schema: metadata
     exact_mappings:
     - cdp-common:organism_name
@@ -159,6 +164,7 @@ attributes:
     - CellComponent
     - AnnotationObject
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   taxonomy_id:
