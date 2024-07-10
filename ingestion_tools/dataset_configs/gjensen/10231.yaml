@@ -75,9 +75,9 @@ tiltseries:
       energy_filter: GIF
       image_corrector: null
       phase_plate: None
-    pixel_spacing: '{ts-pixel_spacing}'
+    pixel_spacing: 7.74
     spherical_aberration_constant: 2.0
-    tilt_alignment_software: '{ts-tilt_alignment_software}'
+    tilt_alignment_software: IMOD
     tilt_axis: 0.0
     tilt_range:
       max: 65.0
@@ -87,7 +87,15 @@ tiltseries:
     tilting_scheme: starting tilt to max then min
     total_flux: 200.0
   sources:
-  - source_glob:
+  - parent_filters:
+      exclude:
+        run:
+        - ^mba2011-02-03-3$
+        - ^mba2011-02-03-4$
+        - ^mba2011-02-03-5$
+        - ^mba2011-02-03-6$
+        - ^mba2011-02-03-7$
+    source_glob:
       list_glob: '{run_name}/rawdata/*'
       match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:

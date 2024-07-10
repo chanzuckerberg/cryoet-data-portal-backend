@@ -247,6 +247,10 @@ def to_template_by_run(templates, run_data_map, prefix: str, path) -> dict[str, 
 
 
 def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
+    tilt_series_path = data["tilt_series"].get("tilt_series_path")
+    if not tilt_series_path:
+        return {}
+
     tilt_series = deepcopy(data["tilt_series"])
     microscope = tilt_series.get("microscope", {})
     microscope["additional_info"] = microscope.pop("additional_scope_info", "")
@@ -327,6 +331,8 @@ def to_config_by_run(
     templates = {}
     for entry in data:
         template = mapper(entry)
+        if not template:
+            continue
         metadata_key = json.dumps(template, separators=(",", ":"))
 
         if metadata_key not in templates:
@@ -334,7 +340,9 @@ def to_config_by_run(
         else:
             templates[metadata_key]["sources"].append(entry["run_name"])
 
-    if len(templates) <= 1:
+    if len(templates) == 0:
+        return {}
+    elif len(templates) <= 1:
         return next(iter(templates.values()), {}).get("metadata")
 
     print(f"{dataset_id} has {len(templates)} configs for {prefix}")
@@ -446,8 +454,16 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
         dataset_config_file_path = os.path.join(output_dir, f"{dataset_id}.yaml")
         with open(dataset_config_file_path, "w") as outfile:
             updated_dataset_config = update_config(dataset_config)
-            if runs_without_tilt := [f"^{run['run_name']}$" for run in val.get("runs") if not run.get("tilt_series")]:
-                exclude_runs_parent_filter(updated_dataset_config.get("tilt_series", []), runs_without_tilt)
+            # Remove empty tiltseries when all tiltseries have no metadata
+            if all(not ts.get("metadata") for ts in updated_dataset_config.get("tiltseries", [])):
+                updated_dataset_config.pop("tiltseries")
+            # Add filter to exclude tiltseries that have no file path specified
+            elif runs_without_tilt := [
+                f"^{run['run_name']}$"
+                for run in val.get("runs")
+                if not run.get("tilt_series", {}).get("tilt_series_path")
+            ]:
+                exclude_runs_parent_filter(updated_dataset_config.get("tiltseries", []), runs_without_tilt)
             if runs_without_tomogram := [f"^{run['run_name']}$" for run in val.get("runs") if not run.get("tomograms")]:
                 exclude_runs_parent_filter(updated_dataset_config.get("voxel_spacings", []), runs_without_tomogram)
             yaml.dump(updated_dataset_config, outfile, sort_keys=True)
