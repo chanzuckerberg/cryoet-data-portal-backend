@@ -1,3 +1,5 @@
+
+
 # Slot: annotation_object
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:annotation_object](metadataannotation_object)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -29,6 +32,8 @@ URI: [cdp-meta:annotation_object](metadataannotation_object)
 ## Properties
 
 * Range: [AnnotationObject](AnnotationObject.md)
+
+* Required: True
 
 
 
@@ -50,6 +55,16 @@ URI: [cdp-meta:annotation_object](metadataannotation_object)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:annotation_object |
+| native | cdp-meta:annotation_object |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -63,6 +78,7 @@ owner: Annotation
 domain_of:
 - Annotation
 range: AnnotationObject
+required: true
 inlined: true
 inlined_as_list: true
 

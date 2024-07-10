@@ -1,3 +1,5 @@
+
+
 # Class: AnnotationConfidence
 
 
@@ -12,20 +14,17 @@ URI: [cdp-meta:AnnotationConfidence](metadataAnnotationConfidence)
 
 
 
+
+
 ```mermaid
  classDiagram
     class AnnotationConfidence
+    click AnnotationConfidence href "../AnnotationConfidence"
       AnnotationConfidence : ground_truth_used
-
-          AnnotationConfidence --> string : ground_truth_used
 
       AnnotationConfidence : precision
 
-          AnnotationConfidence --> float : precision
-
       AnnotationConfidence : recall
-
-          AnnotationConfidence --> float : recall
 
 
 ```
@@ -40,9 +39,9 @@ URI: [cdp-meta:AnnotationConfidence](metadataAnnotationConfidence)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [precision](precision.md) | 0..1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Describe the confidence level of the annotation | direct |
-| [recall](recall.md) | 0..1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Describe the confidence level of the annotation | direct |
-| [ground_truth_used](ground_truth_used.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Annotation filename used as ground truth for precision and recall | direct |
+| [precision](precision.md) | 0..1 <br/> [Float](Float.md) | Describe the confidence level of the annotation | direct |
+| [recall](recall.md) | 0..1 <br/> [Float](Float.md) | Describe the confidence level of the annotation | direct |
+| [ground_truth_used](ground_truth_used.md) | 0..1 <br/> [String](String.md) | Annotation filename used as ground truth for precision and recall | direct |
 
 
 
@@ -75,13 +74,14 @@ URI: [cdp-meta:AnnotationConfidence](metadataAnnotationConfidence)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationConfidence |
 | native | cdp-meta:AnnotationConfidence |
+
+
 
 
 
@@ -114,6 +114,9 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: '%'
+      descriptive_name: percentage
   recall:
     name: recall
     description: Describe the confidence level of the annotation. Recall is defined
@@ -129,6 +132,9 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: '%'
+      descriptive_name: percentage
   ground_truth_used:
     name: ground_truth_used
     description: Annotation filename used as ground truth for precision and recall
@@ -170,6 +176,9 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: '%'
+      descriptive_name: percentage
   recall:
     name: recall
     description: Describe the confidence level of the annotation. Recall is defined
@@ -185,6 +194,9 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: '%'
+      descriptive_name: percentage
   ground_truth_used:
     name: ground_truth_used
     description: Annotation filename used as ground truth for precision and recall

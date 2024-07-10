@@ -1,11 +1,13 @@
-# Slot: is_primary_annotator
+
+
+# Slot: primary_author_status
 
 
 _Whether the author is a primary author._
 
 
 
-URI: [cdp-meta:is_primary_annotator](metadatais_primary_annotator)
+URI: [cdp-meta:primary_author_status](metadataprimary_author_status)
 
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:is_primary_annotator](metadatais_primary_annotator)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
+| [Author](Author.md) | Author of a scientific data entity |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:is_primary_annotator](metadatais_primary_annotator)
 
 ## Properties
 
-* Range: [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean)
+* Range: [Boolean](Boolean.md)
 
 
 
@@ -50,20 +53,32 @@ URI: [cdp-meta:is_primary_annotator](metadatais_primary_annotator)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:primary_author_status |
+| native | cdp-meta:primary_author_status |
+| exact | cdp-common:author_primary_author_status |
+
+
+
+
 ## LinkML Source
 
 <details>
 ```yaml
-name: is_primary_annotator
+name: primary_author_status
 description: Whether the author is a primary author.
 from_schema: metadata
 exact_mappings:
 - cdp-common:author_primary_author_status
 rank: 1000
-alias: is_primary_annotator
-owner: Annotator
+ifabsent: 'False'
+alias: primary_author_status
+owner: Author
 domain_of:
-- Annotator
+- Author
 range: boolean
 inlined: true
 inlined_as_list: true

@@ -1,3 +1,5 @@
+
+
 # Slot: total_flux
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:total_flux](metadatatotal_flux)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -28,7 +31,9 @@ URI: [cdp-meta:total_flux](metadatatotal_flux)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
+
+* Required: True
 
 
 
@@ -50,6 +55,17 @@ URI: [cdp-meta:total_flux](metadatatotal_flux)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:total_flux |
+| native | cdp-meta:total_flux |
+| exact | cdp-common:tiltseries_total_flux |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -66,8 +82,12 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: float
+required: true
 inlined: true
 inlined_as_list: true
+unit:
+  symbol: e^-/Å^2
+  descriptive_name: electrons per square Angstrom
 
 ```
 </details>

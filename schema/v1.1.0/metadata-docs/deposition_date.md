@@ -1,3 +1,5 @@
+
+
 # Slot: deposition_date
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:deposition_date](metadatadeposition_date)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |  yes  |
+| [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:deposition_date](metadatadeposition_date)
 
 ## Properties
 
-* Range: [xsd:date](http://www.w3.org/2001/XMLSchema#date)
+* Range: [Date](Date.md)
 
 * Required: True
 
@@ -52,6 +55,17 @@ URI: [cdp-meta:deposition_date](metadatadeposition_date)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:deposition_date |
+| native | cdp-meta:deposition_date |
+| exact | cdp-common:deposition_date |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -59,6 +73,8 @@ URI: [cdp-meta:deposition_date](metadatadeposition_date)
 name: deposition_date
 description: The date a data item was received by the cryoET data portal.
 from_schema: metadata
+exact_mappings:
+- cdp-common:deposition_date
 rank: 1000
 alias: deposition_date
 owner: DateStamp

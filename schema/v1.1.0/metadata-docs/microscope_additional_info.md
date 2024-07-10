@@ -1,3 +1,5 @@
+
+
 # Slot: microscope_additional_info
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:microscope_additional_info](metadatamicroscope_additional_info)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:microscope_additional_info](metadatamicroscope_additional_info)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 
@@ -46,6 +49,17 @@ URI: [cdp-meta:microscope_additional_info](metadatamicroscope_additional_info)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:microscope_additional_info |
+| native | cdp-meta:microscope_additional_info |
+| exact | cdp-common:tiltseries_microscope_additional_info |
 
 
 

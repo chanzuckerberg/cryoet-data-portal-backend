@@ -1,3 +1,5 @@
+
+
 # Slot: tilt_axis
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -28,7 +31,9 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
+
+* Required: True
 
 
 
@@ -50,6 +55,17 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tilt_axis |
+| native | cdp-meta:tilt_axis |
+| exact | cdp-common:tiltseries_tilt_axis |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -65,8 +81,12 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: float
+required: true
 inlined: true
 inlined_as_list: true
+unit:
+  symbol: °
+  descriptive_name: degrees
 
 ```
 </details>

@@ -1,3 +1,5 @@
+
+
 # Slot: microscope_optical_setup
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:microscope_optical_setup](metadatamicroscope_optical_setup)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -29,6 +32,8 @@ URI: [cdp-meta:microscope_optical_setup](metadatamicroscope_optical_setup)
 ## Properties
 
 * Range: [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md)
+
+* Required: True
 
 
 
@@ -50,6 +55,16 @@ URI: [cdp-meta:microscope_optical_setup](metadatamicroscope_optical_setup)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:microscope_optical_setup |
+| native | cdp-meta:microscope_optical_setup |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -63,6 +78,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: MicroscopeOpticalSetup
+required: true
 inlined: true
 inlined_as_list: true
 

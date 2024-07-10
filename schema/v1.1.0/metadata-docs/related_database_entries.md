@@ -1,3 +1,5 @@
+
+
 # Slot: related_database_entries
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:related_database_entries](metadatarelated_database_entries)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
+| [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:related_database_entries](metadatarelated_database_entries)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 * Recommended: True
 
@@ -48,6 +51,16 @@ URI: [cdp-meta:related_database_entries](metadatarelated_database_entries)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:related_database_entries |
+| native | cdp-meta:related_database_entries |
 
 
 

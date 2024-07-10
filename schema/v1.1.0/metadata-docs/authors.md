@@ -1,3 +1,5 @@
+
+
 # Slot: authors
 
 URI: [cdp-meta:authors](metadataauthors)
@@ -9,15 +11,15 @@ URI: [cdp-meta:authors](metadataauthors)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[AuthoredEntity](AuthoredEntity.md) | An entity with associated authors |  no  |
-[AnnotatoredEntity](AnnotatoredEntity.md) | An entity with associated annotation authors |  no  |
-[Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
-[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [AuthoredEntity](AuthoredEntity.md) | An entity with associated authors |  no  |
 
 
 
@@ -27,7 +29,7 @@ URI: [cdp-meta:authors](metadataauthors)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 
@@ -42,6 +44,16 @@ URI: [cdp-meta:authors](metadataauthors)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:authors |
+| native | cdp-meta:authors |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -50,7 +62,6 @@ name: authors
 alias: authors
 domain_of:
 - AuthoredEntity
-- AnnotatoredEntity
 - Dataset
 - Tomogram
 - Annotation

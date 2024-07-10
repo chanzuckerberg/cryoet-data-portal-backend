@@ -1,3 +1,5 @@
+
+
 # Slot: funding_agency_name
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:funding_agency_name](metadatafunding_agency_name)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... |  no  |
+| [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... |  no  |
 
 
 
@@ -28,7 +31,9 @@ URI: [cdp-meta:funding_agency_name](metadatafunding_agency_name)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
+
+* Recommended: True
 
 
 
@@ -50,6 +55,17 @@ URI: [cdp-meta:funding_agency_name](metadatafunding_agency_name)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:funding_agency_name |
+| native | cdp-meta:funding_agency_name |
+| exact | cdp-common:funding_agency_name |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -65,6 +81,7 @@ owner: Funding
 domain_of:
 - Funding
 range: string
+recommended: true
 inlined: true
 inlined_as_list: true
 

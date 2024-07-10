@@ -1,3 +1,5 @@
+
+
 # Slot: tilt_range
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:tilt_range](metadatatilt_range)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -29,6 +32,8 @@ URI: [cdp-meta:tilt_range](metadatatilt_range)
 ## Properties
 
 * Range: [TiltRange](TiltRange.md)
+
+* Required: True
 
 
 
@@ -50,6 +55,16 @@ URI: [cdp-meta:tilt_range](metadatatilt_range)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tilt_range |
+| native | cdp-meta:tilt_range |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -63,6 +78,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: TiltRange
+required: true
 inlined: true
 inlined_as_list: true
 

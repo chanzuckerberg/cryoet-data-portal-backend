@@ -1,3 +1,5 @@
+
+
 # Slot: offset
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:offset](metadataoffset)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -29,6 +32,8 @@ URI: [cdp-meta:offset](metadataoffset)
 ## Properties
 
 * Range: [TomogramOffset](TomogramOffset.md)
+
+* Required: True
 
 
 
@@ -50,6 +55,16 @@ URI: [cdp-meta:offset](metadataoffset)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:offset |
+| native | cdp-meta:offset |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -64,6 +79,7 @@ owner: Tomogram
 domain_of:
 - Tomogram
 range: TomogramOffset
+required: true
 inlined: true
 inlined_as_list: true
 

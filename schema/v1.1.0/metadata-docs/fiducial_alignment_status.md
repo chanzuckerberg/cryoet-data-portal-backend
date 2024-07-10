@@ -1,3 +1,5 @@
+
+
 # Slot: fiducial_alignment_status
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:fiducial_alignment_status](metadatafiducial_alignment_status)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -29,6 +32,8 @@ URI: [cdp-meta:fiducial_alignment_status](metadatafiducial_alignment_status)
 ## Properties
 
 * Range: [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)
+
+* Required: True
 
 
 
@@ -50,6 +55,17 @@ URI: [cdp-meta:fiducial_alignment_status](metadatafiducial_alignment_status)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:fiducial_alignment_status |
+| native | cdp-meta:fiducial_alignment_status |
+| exact | cdp-common:tomogram_fiducial_alignment_status |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -65,6 +81,7 @@ owner: Tomogram
 domain_of:
 - Tomogram
 range: fiducial_alignment_status_enum
+required: true
 inlined: true
 inlined_as_list: true
 

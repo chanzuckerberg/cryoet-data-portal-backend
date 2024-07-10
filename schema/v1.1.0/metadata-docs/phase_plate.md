@@ -1,3 +1,5 @@
+
+
 # Slot: phase_plate
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:phase_plate](metadataphase_plate)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series |  no  |
+| [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:phase_plate](metadataphase_plate)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 
@@ -46,6 +49,17 @@ URI: [cdp-meta:phase_plate](metadataphase_plate)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:phase_plate |
+| native | cdp-meta:phase_plate |
+| exact | cdp-common:tiltseries_microscope_phase_plate |
 
 
 
