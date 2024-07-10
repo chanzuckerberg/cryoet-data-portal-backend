@@ -202,12 +202,12 @@ int_fields = {"ts-tilt_series_quality"}
 float_fields = {
     "tomo-voxel_spacing",
     "ts-pixel_spacing",
-    "ts-spherical_aberration_constant"
+    "ts-spherical_aberration_constant",
     "ts-tilt_axis",
     "ts-tilt_step",
     "ts-tilt_range-min",
     "ts-tilt_range-max",
-    "ts-total_flux"
+    "ts-total_flux",
 }
 
 
