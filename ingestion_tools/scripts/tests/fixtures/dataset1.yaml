@@ -69,7 +69,9 @@ datasets:
 gains:
 - sources:
   - source_glob:
-      list_glob: VPP/frames/CountRef_{run_name}.dm4
+      list_glob:
+      - VPP/frames/CountRef_{run_name}.dm4
+      - VPP/frames/CountRef_{run_name}.gain
 key_images:
 - sources:
   - literal:
