@@ -54,7 +54,6 @@ runs:
       name_regex: (.*)
 standardization_config:
   deposition_id: 10022
-  run_data_map_file: run_data_map/10230.csv
   source_prefix: GJensen_full
 tiltseries:
 - metadata:
@@ -74,7 +73,7 @@ tiltseries:
       energy_filter: GIF
       image_corrector: null
       phase_plate: None
-    pixel_spacing: '{ts-pixel_spacing}'
+    pixel_spacing: 6.26
     spherical_aberration_constant: 2.0
     tilt_alignment_software: IMOD
     tilt_axis: 0.0
@@ -86,7 +85,11 @@ tiltseries:
     tilting_scheme: starting tilt to max then min
     total_flux: 200.0
   sources:
-  - source_glob:
+  - parent_filters:
+      exclude:
+        run:
+        - ^mba2011-07-18-1$
+    source_glob:
       list_glob: '{run_name}/rawdata/*'
       match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
