@@ -83,7 +83,7 @@ datasets:
       name: Saccharomyces cerevisiae
     sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type:
       subtomogram_averaging_preparation'
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

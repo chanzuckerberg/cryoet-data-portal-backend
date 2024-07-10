@@ -75,7 +75,7 @@ datasets: REQUIRED
       name: REQUIRED, STRING
       taxonomy_id: OPTIONAL, INTEGER
     sample_preparation: RECOMMENDED, STRING
-    sample_type: REQUIRED, STRING
+    sample_type: REQUIRED, STRING (ENUM [cell, tissue, organism, organelle, virus, in_vitro, in_silico, other])
     tissue:
       id: OPTIONAL, STRING
       name: REQUIRED, STRING

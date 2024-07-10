@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 datasets:
 - metadata:
     authors: &id001
@@ -23,9 +23,9 @@ datasets:
     dataset_identifier: 20002
     dataset_title: Dataset 1
     dates:
-      deposition_date: 2023-04-01
-      last_modified_date: 2023-06-01
-      release_date: 2023-06-01
+      deposition_date: '2023-04-01'
+      last_modified_date: '2023-06-01'
+      release_date: '2023-06-01'
     funding:
     - funding_agency_name: Super Funding Agency
       grant_id: '100001'

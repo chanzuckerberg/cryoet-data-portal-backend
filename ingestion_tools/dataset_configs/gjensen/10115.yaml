@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -22,9 +22,9 @@ datasets:
     dataset_identifier: 10115
     dataset_title: S. acidocaldarius Sulfolobus cells synchronized fo
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: frozen at Kay Grunewald's lab. Harrick plasma cleaner. Blotted
       on both sides, 5 sec, sponge for humidity
     organism:

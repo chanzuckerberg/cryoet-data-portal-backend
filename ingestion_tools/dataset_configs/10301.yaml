@@ -237,7 +237,7 @@ datasets:
     organism:
       name: Chlamydomonas reinhardtii
       taxonomy_id: 3055
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

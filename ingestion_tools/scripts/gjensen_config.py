@@ -200,8 +200,10 @@ def to_standardization_config(
 
 int_fields = {"ts-tilt_series_quality"}
 float_fields = {
+    "tomo-voxel_spacing",
     "ts-pixel_spacing",
-    "ts-spherical_aberration_constantts-tilt_axis",
+    "ts-spherical_aberration_constant",
+    "ts-tilt_axis",
     "ts-tilt_step",
     "ts-tilt_range-min",
     "ts-tilt_range-max",

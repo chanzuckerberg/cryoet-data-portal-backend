@@ -129,7 +129,7 @@ datasets:
       taxonomy_id: 2697049
     sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, vitrification_instrument:
       LEICA EM GP, instance_type: subtomogram_averaging_preparation'
-    sample_type: Virus
+    sample_type: virus
   sources:
   - literal:
       value:

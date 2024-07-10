@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -44,9 +44,9 @@ datasets:
     dataset_identifier: 10429
     dataset_title: Unroofing Grid04
     dates:
-      deposition_date: 2024-07-01
-      last_modified_date: 2024-07-01
-      release_date: 2024-07-05
+      deposition_date: '2024-07-01'
+      last_modified_date: '2024-07-01'
+      release_date: '2024-07-05'
     grid_preparation: "plasma discharge 30 sec + coated with 0.01% Poly-Lysine + pressed to top of cells +
       unroofed with 0.7 bar paraformaldehyde."
     organism:
