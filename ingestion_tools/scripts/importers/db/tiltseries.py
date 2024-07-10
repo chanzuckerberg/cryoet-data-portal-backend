@@ -40,7 +40,7 @@ class TiltSeriesDBImporter(BaseDBImporter):
             "microscope_energy_filter": ["microscope_optical_setup", "energy_filter"],
             "microscope_phase_plate": ["microscope_optical_setup", "phase_plate"],
             "microscope_image_corrector": ["microscope_optical_setup", "image_corrector"],
-            "microscope_additional_info": ["microscope_additional_info"],
+            "microscope_additional_info": ["microscope", "additional_info"],
             "camera_manufacturer": ["camera", "manufacturer"],
             "camera_model": ["camera", "model"],
             "tilt_step": ["tilt_step"],

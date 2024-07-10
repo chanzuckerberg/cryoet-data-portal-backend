@@ -1,4 +1,3 @@
-# TODO: add which files each attribute appears in? and what % of files it appears in?
 """
 This file is intended to be run from the ingestion/dataset_configs directory. Intended for ensuring that all existing
 dataset config files' schema are covered by the linkml/Pydantic models.
