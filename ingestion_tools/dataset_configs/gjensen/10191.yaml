@@ -72,7 +72,7 @@ tiltseries:
     data_acquisition_software: UCSFTomo
     is_aligned: false
     microscope:
-      additional_scope_info: ''
+      additional_info: ''
       manufacturer: FEI
       model: Polara
     microscope_optical_setup:

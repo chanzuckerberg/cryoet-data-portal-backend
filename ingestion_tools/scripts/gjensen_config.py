@@ -76,9 +76,9 @@ def to_dataset_config(
         "sample_preparation": clean(dataset.get("sample_prep")),
         "grid_preparation": clean(dataset.get("grid_prep")),
         "dates": {
-            "deposition_date": datetime.date(2023, 10, 1),
-            "last_modified_date": datetime.date(2023, 12, 1),
-            "release_date": datetime.date(2023, 12, 1),
+            "deposition_date": datetime.date(2023, 10, 1).strftime("%Y-%m-%d"),
+            "last_modified_date": datetime.date(2023, 10, 1).strftime("%Y-%m-%d"),
+            "release_date": datetime.date(2023, 10, 1).strftime("%Y-%m-%d"),
         },
     }
 
@@ -200,10 +200,12 @@ def to_standardization_config(
 
 int_fields = {"ts-tilt_series_quality"}
 float_fields = {
-    "ts-tilt_axis",
+    "ts-pixel_spacing",
+    "ts-spherical_aberration_constantts-tilt_axis",
     "ts-tilt_step",
     "ts-tilt_range-min",
     "ts-tilt_range-max",
+    "ts-total_flux",
 }
 
 
@@ -251,6 +253,7 @@ def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
 
     tilt_series = deepcopy(data["tilt_series"])
     microscope = tilt_series.get("microscope", {})
+    microscope["additional_info"] = microscope.pop("additional_scope_info", "")
     phase_plate = microscope.pop("phase_plate")
     tilt_series["microscope_optical_setup"] = {
         "phase_plate": "volta phase plate" if phase_plate is True else phase_plate if phase_plate else "None",

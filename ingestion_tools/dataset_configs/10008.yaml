@@ -183,7 +183,7 @@ tiltseries:
 - metadata:
     acceleration_voltage: 300000
     alignment_binning_factor: null
-    binning_from_frames: 14.08
+    binning_from_frames: 1
     camera:
       manufacturer: Gatan
       model: K2 SUMMIT
