@@ -22,4 +22,4 @@ class GainImporter(BaseImporter):
             fs.push(local_output)
         else:
             _, extension = os.path.splitext(item)
-            fs.copy(item, f"{output_filename}.{extension}")
+            fs.copy(item, f"{output_filename}{extension}")

@@ -21,8 +21,6 @@ def test_non_dm4_gains_import(
     import_config = "tests/fixtures/dataset1.yaml"
 
     config = DepositionImportConfig(s3_fs, import_config, output_path, input_bucket, IMPORTERS)
-    config.load_map_files()
-
     datasets = list(DatasetImporter.finder(config))
     runs = list(RunImporter.finder(config, dataset=datasets[0]))
     gains = list(GainImporter.finder(config, dataset=datasets[0], run=runs[0]))
@@ -31,7 +29,6 @@ def test_non_dm4_gains_import(
 
     dataset_name = datasets[0].name
     run_name = runs[0].name
-    prefix = f"{dataset_name}/{run_name}/Frames"
+    prefix = f"output/{dataset_name}/{run_name}/Frames"
     gain_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
-
-    assert f"{prefix}/{run_name}_gain.gain" in gain_files
+    assert f"{run_name}_gain.gain" in gain_files

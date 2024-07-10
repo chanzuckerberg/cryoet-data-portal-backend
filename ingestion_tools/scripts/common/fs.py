@@ -68,6 +68,7 @@ class FileSystemApi(ABC):
 
 class S3Filesystem(FileSystemApi):
     def __init__(self, force_overwrite: bool, client_kwargs: None | dict[str, str] = None):
+        self.client_kwargs = client_kwargs or {}
         self.s3fs = S3FileSystem(anon=False, client_kwargs=client_kwargs)
         self.tmpdir = "/tmp"
         self.force_overwrite = force_overwrite
@@ -138,7 +139,7 @@ class S3Filesystem(FileSystemApi):
 
         src = src_path.split("/", 1)
         dest = dest_path.split("/", 1)
-        s3 = boto3.resource("s3")
+        s3 = boto3.resource("s3", **self.client_kwargs)
         s3.meta.client.copy({"Bucket": src[0], "Key": src[1]}, dest[0], dest[1])
 
         # fsspec automatically expands path strings, but we have filenames with

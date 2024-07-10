@@ -68,8 +68,8 @@ datasets:
       - '10001'
 gains:
 - sources:
-  - source_glob:
-      list_glob:
+  - source_multi_glob:
+      list_globs:
       - VPP/frames/CountRef_{run_name}.dm4
       - VPP/frames/CountRef_{run_name}.gain
 key_images:
@@ -93,7 +93,7 @@ runs:
 standardization_config:
   deposition_id: 10001
   run_to_tomo_map_csv: null
-  source_prefix: 10001_input
+  source_prefix: input_bucket/10001_input
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
