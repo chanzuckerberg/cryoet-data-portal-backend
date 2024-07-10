@@ -128,6 +128,12 @@ slots:
     required: true
     description: >-
       A short description of the deposition, similar to an abstract for a journal article or dataset.
+  deposition_type:
+    range: deposition_types_enum
+    required: true
+    multivalued: true
+    description: >-
+      Type of data in the deposition (e.g. dataset, annotation, tomogram)
   # ============================================================================
 
   # ============================================================================
@@ -691,6 +697,16 @@ enums:
         description: Annotations were generated semi-automatically.
       SegmentationMask:
         description: Annotations were generated automatically.
+
+  deposition_types_enum:
+    description: Types of data a deposition has
+    permissible_values:
+      annotation:
+        description: The deposition only comprises of annotations for existing datasets
+      datasets:
+        description: The deposition comprises of new dataset(s).
+      tomograms:
+        description: The deposition only comprises of tomograms for existing datasets
 
 
 classes:
