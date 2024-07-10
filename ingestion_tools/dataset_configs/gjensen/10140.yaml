@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -22,9 +22,9 @@ datasets:
     dataset_identifier: 10140
     dataset_title: H. pylori 26695 / 20 nm gold-DNA
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: 'Combined 20ul cells with 10ul 10 nm gold fiducials (100ul gold
       and 25ul BSA) and 10ul 20 nm streptavidin gold-biotin DNA.  Grids frozen 7-20
       minutes after combining DNA labeled gold with concentrated cells.  Vitrobot

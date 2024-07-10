@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -23,9 +23,9 @@ datasets:
     dataset_identifier: 10113
     dataset_title: Sulfolobus solfac.P2+STIV 2-4 hour Post infection
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: "S. solfataricus strain P2 cultures were infected with STIV\
       \ as previously described (Ortmann et al., 2006). Sulfolobus were grown up from\
       \ glycerol stock in media 182 (pH 3.5), 80\xB0C and passage once. The cultures\

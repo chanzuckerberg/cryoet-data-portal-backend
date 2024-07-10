@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -43,9 +43,9 @@ datasets:
     dataset_identifier: 10427
     dataset_title: Unroofing Grid02
     dates:
-      deposition_date: 2024-07-01
-      last_modified_date: 2024-07-01
-      release_date: 2024-07-05
+      deposition_date: '2024-07-01'
+      last_modified_date: '2024-07-01'
+      release_date: '2024-07-05'
     grid_preparation: "plasma discharge 30 sec + UV treatment 20 min + 125 ng/ul fibronectin, 20 minutes + water rinse +
       seeded with 15000 cells"
     organism:

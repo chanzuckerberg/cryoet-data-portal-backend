@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -24,9 +24,9 @@ datasets:
     dataset_identifier: 10256
     dataset_title: M. pneumoniae P41+P24
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: null
     organism:
       name: Mycoplasma pneumoniae

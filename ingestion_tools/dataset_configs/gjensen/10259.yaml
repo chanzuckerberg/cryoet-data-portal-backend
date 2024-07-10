@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -24,9 +24,9 @@ datasets:
     dataset_identifier: 10259
     dataset_title: M. pneumoniae TopJ+MPN119
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: null
     organism:
       name: Mycoplasma pneumoniae
@@ -86,7 +86,7 @@ tiltseries:
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
-    total_flux: '{ts-total_flux}'
+    total_flux: 'float {ts-total_flux}'
   sources:
   - source_glob:
       list_glob: '{run_name}/rawdata/*'
@@ -123,7 +123,7 @@ tomograms:
     reconstruction_method: Weighted back projection
     reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: '{tomo-voxel_spacing}'
+    voxel_spacing: 'float {tomo-voxel_spacing}'
   sources:
   - source_glob:
       list_glob: '{run_name}/3dimage_*/*'

@@ -42,9 +42,9 @@ annotations:
     - corresponding_author_status: true
       name: Abhay Kotecha
     dates: &id002
-      deposition_date: 2024-04-09
-      last_modified_date: 2024-04-09
-      release_date: 2024-04-09
+      deposition_date: '2024-04-09'
+      last_modified_date: '2024-04-09'
+      release_date: '2024-04-09'
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
@@ -239,7 +239,7 @@ datasets:
       name: Chlamydomonas reinhardtii
       taxonomy_id: 3055
     sample_preparation: null
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

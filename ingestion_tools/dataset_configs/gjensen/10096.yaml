@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -23,9 +23,9 @@ datasets:
     dataset_identifier: 10096
     dataset_title: L. pneumophila Lp02-fixed
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: "6 grids were frozen, cell density was increased to 2x by centrifugation.\
       \ Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot force 6, blot\
       \ time 4.5 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane mix. Grid:\

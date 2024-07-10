@@ -19,9 +19,9 @@ annotations:
       corresponding_author_status: true
       name: David A. Agard
     dates: &id002
-      deposition_date: 2023-09-01
-      last_modified_date: 2023-11-20
-      release_date: 2023-12-10
+      deposition_date: '2023-09-01'
+      last_modified_date: '2023-11-20'
+      release_date: '2023-12-10'
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid

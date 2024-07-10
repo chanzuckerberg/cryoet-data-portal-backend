@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -65,15 +65,15 @@ datasets:
     dataset_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
       cryo-plasmaFIB milling - Full Dataset
     dates:
-      deposition_date: 2024-04-10
-      last_modified_date: 2024-04-10
-      release_date: 2024-04-10
+      deposition_date: '2024-04-10'
+      last_modified_date: '2024-04-10'
+      release_date: '2024-04-10'
     grid_preparation: null
     organism:
       name: Chlamydomonas reinhardtii
       taxonomy_id: 3055
     sample_preparation: null
-    sample_type: Organism
+    sample_type: organism
   sources:
   - literal:
       value:

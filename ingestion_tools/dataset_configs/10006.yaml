@@ -45,9 +45,9 @@ annotations:
     confidence:
       ground_truth_used: author estimation
     dates: &id001
-      deposition_date: 2023-10-11
-      last_modified_date: 2023-11-20
-      release_date: 2023-12-10
+      deposition_date: '2023-10-11'
+      last_modified_date: '2023-11-20'
+      release_date: '2023-12-10'
     ground_truth_status: true
     is_curator_recommended: true
     method_type: automated
@@ -135,7 +135,7 @@ datasets:
       name: Severe acute respiratory syndrome coronavirus 2
     sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, vitrification_instrument:
       LEICA EM GP, instance_type: subtomogram_averaging_preparation'
-    sample_type: Virus
+    sample_type: virus
   sources:
   - literal:
       value:
@@ -181,7 +181,7 @@ tiltseries:
   pixel_spacing: 1.532
   scales: []
   spherical_aberration_constant: 2.7
-  tilt_axis: "85.6\xB0"
+  tilt_axis: 85.6
   tilt_range:
     max: 60
     min: -60

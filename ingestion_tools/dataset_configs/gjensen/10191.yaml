@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -26,9 +26,9 @@ datasets:
     dataset_identifier: 10191
     dataset_title: E. coli (pLE7, 20 uM IPTG)
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: Vitrobot plunge freezing
     organism:
       name: Escherichia coli
