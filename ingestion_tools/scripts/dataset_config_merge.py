@@ -27,8 +27,9 @@ import yaml
 EXCLUDE_LIST = [
     "dataset_config_merged.yaml",
     "template.yaml",
-    "template_draft.yaml",
 ]
+EXCLUDE_KEYWORDS = ["draft"]
+
 ALLOWED_PRIMITIVE_TYPES = [int, float, str, bool, list, datetime.date]
 DATASET_CONFIGS_FOLDER = "../dataset_configs/"
 OUTPUT_FILE = DATASET_CONFIGS_FOLDER + "dataset_config_merged.yaml"
@@ -203,7 +204,9 @@ def main():
         os.path.join(directory_path, file)
         for directory_path, _, filename in os.walk(os.path.expanduser(DATASET_CONFIGS_FOLDER))
         for file in filename
-        if (file.endswith(".yaml") or file.endswith(".yml")) and os.path.basename(file) not in EXCLUDE_LIST
+        if (file.endswith(".yaml") or file.endswith(".yml"))
+        and os.path.basename(file) not in EXCLUDE_LIST
+        and not any(keyword in file for keyword in EXCLUDE_KEYWORDS)
     ]
 
     unified_config: dict = {}

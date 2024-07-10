@@ -10,8 +10,12 @@ repos:
   rev: v0.4.1
   hooks:
   - id: ruff
-    # This file is codegen'd and non-compliant :'(
-    exclude: ^schema/v1.1.0/metadata_models.py
+    # These files are codegen'd and non-compliant :'(
+    exclude: |
+      (?x)(
+          ^schema/v1.1.0/metadata_models.py|
+          ^schema/v1.1.0/dataset_config_models.py
+      )
     args:
     - --fix
     - --config

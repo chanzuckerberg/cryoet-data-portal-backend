@@ -44,7 +44,14 @@ class LinkMLMeta(RootModel):
         self.root[key] = value
 
 
-linkml_meta = LinkMLMeta({"default_prefix": "metadata/", "id": "metadata", "name": "cdp-meta"})
+linkml_meta = LinkMLMeta(
+    {
+        "default_prefix": "cdp-dataset-config-validate/",
+        "description": "Validate dataset configs",
+        "id": "cdp-dataset-config-validate",
+        "name": "cdp-dataset-config-validate",
+    }
+)
 
 
 class SampleTypeEnum(str, Enum):
@@ -1334,7 +1341,7 @@ class Tomogram(AuthoredEntity):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "voxel_spacing",
-                "domain_of": ["Tomogram"],
+                "domain_of": ["Tomogram", "SourceParent"],
                 "exact_mappings": ["cdp-common:tomogram_voxel_spacing"],
                 "unit": {"descriptive_name": "Angstroms per voxel", "symbol": "Å/voxel"},
             }
@@ -2235,7 +2242,7 @@ class CrossReferences(ConfiguredBaseModel):
     A set of cross-references to other databases and publications.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "common"})
 
     dataset_publications: Optional[str] = Field(
         None,
@@ -2260,6 +2267,1302 @@ class CrossReferences(ConfiguredBaseModel):
         None,
         description="""Comma-separated list of DOIs for publications citing the dataset.""",
         json_schema_extra={"linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferences"]}},
+    )
+
+
+class GeneralGlob(ConfiguredBaseModel):
+    """
+    An abstracted glob class for destination and source globs.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "cdp-dataset-config"})
+
+    list_glob: str = Field(
+        ...,
+        description="""The glob for the file.""",
+        json_schema_extra={"linkml_meta": {"alias": "list_glob", "domain_of": ["GeneralGlob", "TomogramHeader"]}},
+    )
+    match_regex: Optional[str] = Field(
+        ".*",
+        description="""The regex for the file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "match_regex",
+                "domain_of": ["GeneralGlob", "TomogramHeader"],
+                "ifabsent": "string(.*)",
+            }
+        },
+    )
+    name_regex: Optional[str] = Field(
+        "(.*)",
+        description="""The regex for the name of the file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "name_regex", "domain_of": ["GeneralGlob"], "ifabsent": "string((.*))"}
+        },
+    )
+
+
+class DestinationGlob(GeneralGlob):
+    """
+    A glob class for finding files in the output / destination directory.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    list_glob: str = Field(
+        ...,
+        description="""The glob for the file.""",
+        json_schema_extra={"linkml_meta": {"alias": "list_glob", "domain_of": ["GeneralGlob", "TomogramHeader"]}},
+    )
+    match_regex: Optional[str] = Field(
+        ".*",
+        description="""The regex for the file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "match_regex",
+                "domain_of": ["GeneralGlob", "TomogramHeader"],
+                "ifabsent": "string(.*)",
+            }
+        },
+    )
+    name_regex: Optional[str] = Field(
+        "(.*)",
+        description="""The regex for the name of the file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "name_regex", "domain_of": ["GeneralGlob"], "ifabsent": "string((.*))"}
+        },
+    )
+
+
+class SourceGlob(GeneralGlob):
+    """
+    A glob class for finding files in the source directory.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    list_glob: str = Field(
+        ...,
+        description="""The glob for the file.""",
+        json_schema_extra={"linkml_meta": {"alias": "list_glob", "domain_of": ["GeneralGlob", "TomogramHeader"]}},
+    )
+    match_regex: Optional[str] = Field(
+        ".*",
+        description="""The regex for the file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "match_regex",
+                "domain_of": ["GeneralGlob", "TomogramHeader"],
+                "ifabsent": "string(.*)",
+            }
+        },
+    )
+    name_regex: Optional[str] = Field(
+        "(.*)",
+        description="""The regex for the name of the file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "name_regex", "domain_of": ["GeneralGlob"], "ifabsent": "string((.*))"}
+        },
+    )
+
+
+class SourceMultiGlob(ConfiguredBaseModel):
+    """
+    A glob class for finding files in the source directory (with multiple globs).
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    list_globs: List[str] = Field(
+        ...,
+        description="""The globs for the file.""",
+        json_schema_extra={"linkml_meta": {"alias": "list_globs", "domain_of": ["SourceMultiGlob"]}},
+    )
+
+
+class DefaultSource(ConfiguredBaseModel):
+    """
+    A generalized source class with glob finders.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    destination_glob: Optional[DestinationGlob] = Field(
+        None,
+        description="""The glob object for the destination file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "destination_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_glob: Optional[SourceGlob] = Field(
+        None,
+        description="""The glob object for the source file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "source_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_multi_glob: Optional[SourceMultiGlob] = Field(
+        None,
+        description="""The glob object for the source file (with multiple globs).""",
+        json_schema_extra={"linkml_meta": {"alias": "source_multi_glob", "domain_of": ["DefaultSource"]}},
+    )
+
+
+class SourceParentFiltersEntity(ConfiguredBaseModel):
+    """
+    Used as a mixin with root-level classes that contain sources that can have parent filters.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    parent_filters: Optional[SourceParentFilters] = Field(
+        None,
+        description="""Filters for the parent of a source.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "parent_filters", "domain_of": ["SourceParentFiltersEntity", "AnnotationSource"]}
+        },
+    )
+
+
+class SourceParentFilters(ConfiguredBaseModel):
+    """
+    Filters for the parent of a source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    include: Optional[SourceParent] = Field(
+        None,
+        description="""Include files for the parent of a source (regexes).""",
+        json_schema_extra={"linkml_meta": {"alias": "include", "domain_of": ["SourceParentFilters"]}},
+    )
+    exclude: Optional[SourceParent] = Field(
+        None,
+        description="""Exclude files for the parent of a source (regexes).""",
+        json_schema_extra={"linkml_meta": {"alias": "exclude", "domain_of": ["SourceParentFilters"]}},
+    )
+
+
+class SourceParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of a source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    annotation: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude annotations.""",
+        json_schema_extra={"linkml_meta": {"alias": "annotation", "domain_of": ["SourceParent"]}},
+    )
+    dataset: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude datasets.""",
+        json_schema_extra={"linkml_meta": {"alias": "dataset", "domain_of": ["SourceParent"]}},
+    )
+    run: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude runs.""",
+        json_schema_extra={"linkml_meta": {"alias": "run", "domain_of": ["SourceParent"]}},
+    )
+    tomogram: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude tomograms.""",
+        json_schema_extra={"linkml_meta": {"alias": "tomogram", "domain_of": ["SourceParent"]}},
+    )
+    voxel_spacing: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude voxel spacings.""",
+        json_schema_extra={"linkml_meta": {"alias": "voxel_spacing", "domain_of": ["Tomogram", "SourceParent"]}},
+    )
+
+
+class DefaultLiteralEntity(ConfiguredBaseModel):
+    """
+    Used as a mixin with root-level classes that contain sources that have literals.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    literal: Optional[DefaultLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": ["DefaultLiteralEntity", "DatasetKeyPhotoSource", "VoxelSpacingSource"],
+            }
+        },
+    )
+
+
+class DefaultLiteral(ConfiguredBaseModel):
+    """
+    A literal class with a value attribute.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    value: List[Any] = Field(
+        ...,
+        description="""The value for the literal.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "value",
+                "domain_of": ["DefaultLiteral", "DatasetKeyPhotoLiteral", "VoxelSpacingLiteral"],
+            }
+        },
+    )
+
+
+class AnnotationEntity(ConfiguredBaseModel):
+    """
+    An annotation entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    metadata: Annotation = Field(
+        ...,
+        description="""The metadata for the annotation.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "metadata",
+                "domain_of": ["AnnotationEntity", "DatasetEntity", "TiltSeriesEntity", "TomogramEntity"],
+            }
+        },
+    )
+    sources: List[AnnotationSource] = Field(
+        ...,
+        description="""The sources for the annotation.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "sources",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
+                    "FrameEntity",
+                    "GainEntity",
+                    "KeyImageEntity",
+                    "RawTiltEntity",
+                    "RunEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                    "VoxelSpacingEntity",
+                ],
+            }
+        },
+    )
+
+
+class AnnotationSource(ConfiguredBaseModel):
+    """
+    An annotation source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    InstanceSegmentation: Optional[AnnotationInstanceSegmentationFile] = Field(
+        None,
+        description="""The instance segmentation annotation source.""",
+        json_schema_extra={"linkml_meta": {"alias": "InstanceSegmentation", "domain_of": ["AnnotationSource"]}},
+    )
+    OrientedPoint: Optional[AnnotationOrientedPointFile] = Field(
+        None,
+        description="""The oriented point annotation source.""",
+        json_schema_extra={"linkml_meta": {"alias": "OrientedPoint", "domain_of": ["AnnotationSource"]}},
+    )
+    Point: Optional[AnnotationPointFile] = Field(
+        None,
+        description="""The point annotation source.""",
+        json_schema_extra={"linkml_meta": {"alias": "Point", "domain_of": ["AnnotationSource"]}},
+    )
+    SegmentationMask: Optional[AnnotationSegmentationMaskFile] = Field(
+        None,
+        description="""The segmentation mask annotation source.""",
+        json_schema_extra={"linkml_meta": {"alias": "SegmentationMask", "domain_of": ["AnnotationSource"]}},
+    )
+    SemanticSegmentationMask: Optional[AnnotationSemanticSegmentationMaskFile] = Field(
+        None,
+        description="""The semantic segmentation mask annotation source.""",
+        json_schema_extra={"linkml_meta": {"alias": "SemanticSegmentationMask", "domain_of": ["AnnotationSource"]}},
+    )
+    parent_filters: Optional[SourceParentFilters] = Field(
+        None,
+        description="""Filters for the parent of a source.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "parent_filters", "domain_of": ["SourceParentFiltersEntity", "AnnotationSource"]}
+        },
+    )
+
+
+class DatasetEntity(ConfiguredBaseModel):
+    """
+    A dataset entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    metadata: Dataset = Field(
+        ...,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "metadata",
+                "domain_of": ["AnnotationEntity", "DatasetEntity", "TiltSeriesEntity", "TomogramEntity"],
+            }
+        },
+    )
+    sources: List[DatasetSource] = Field(
+        ...,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "sources",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
+                    "FrameEntity",
+                    "GainEntity",
+                    "KeyImageEntity",
+                    "RawTiltEntity",
+                    "RunEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                    "VoxelSpacingEntity",
+                ],
+            }
+        },
+    )
+
+
+class DatasetSource(DefaultLiteralEntity, DefaultSource):
+    """
+    A dataset source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
+    )
+
+    destination_glob: Optional[DestinationGlob] = Field(
+        None,
+        description="""The glob object for the destination file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "destination_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_glob: Optional[SourceGlob] = Field(
+        None,
+        description="""The glob object for the source file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "source_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_multi_glob: Optional[SourceMultiGlob] = Field(
+        None,
+        description="""The glob object for the source file (with multiple globs).""",
+        json_schema_extra={"linkml_meta": {"alias": "source_multi_glob", "domain_of": ["DefaultSource"]}},
+    )
+    literal: Optional[DefaultLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": ["DefaultLiteralEntity", "DatasetKeyPhotoSource", "VoxelSpacingSource"],
+            }
+        },
+    )
+
+
+class DatasetKeyPhotoEntity(ConfiguredBaseModel):
+    """
+    A dataset key photo entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    sources: List[DatasetKeyPhotoSource] = Field(
+        ...,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "sources",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
+                    "FrameEntity",
+                    "GainEntity",
+                    "KeyImageEntity",
+                    "RawTiltEntity",
+                    "RunEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                    "VoxelSpacingEntity",
+                ],
+            }
+        },
+    )
+
+
+class DatasetKeyPhotoSource(SourceParentFiltersEntity):
+    """
+    A dataset key photo source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {"from_schema": "cdp-dataset-config", "mixins": ["SourceParentFiltersEntity"]}
+    )
+
+    literal: Optional[DatasetKeyPhotoLiteral] = Field(
+        None,
+        description="""A literal for a dataset key photo.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": ["DefaultLiteralEntity", "DatasetKeyPhotoSource", "VoxelSpacingSource"],
+            }
+        },
+    )
+    parent_filters: Optional[SourceParentFilters] = Field(
+        None,
+        description="""Filters for the parent of a source.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "parent_filters", "domain_of": ["SourceParentFiltersEntity", "AnnotationSource"]}
+        },
+    )
+
+
+class DatasetKeyPhotoLiteral(ConfiguredBaseModel):
+    """
+    A literal for a dataset key photo.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    value: PicturePath = Field(
+        ...,
+        description="""The value for the dataset key photo literal.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "value",
+                "domain_of": ["DefaultLiteral", "DatasetKeyPhotoLiteral", "VoxelSpacingLiteral"],
+            }
+        },
+    )
+
+
+class FrameEntity(ConfiguredBaseModel):
+    """
+    A frame entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    sources: List[FrameSource] = Field(
+        ...,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "sources",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
+                    "FrameEntity",
+                    "GainEntity",
+                    "KeyImageEntity",
+                    "RawTiltEntity",
+                    "RunEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                    "VoxelSpacingEntity",
+                ],
+            }
+        },
+    )
+
+
+class FrameSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
+    """
+    A frame source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "cdp-dataset-config",
+            "mixins": ["DefaultSource", "DefaultLiteralEntity", "SourceParentFiltersEntity"],
+        }
+    )
+
+    destination_glob: Optional[DestinationGlob] = Field(
+        None,
+        description="""The glob object for the destination file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "destination_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_glob: Optional[SourceGlob] = Field(
+        None,
+        description="""The glob object for the source file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "source_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_multi_glob: Optional[SourceMultiGlob] = Field(
+        None,
+        description="""The glob object for the source file (with multiple globs).""",
+        json_schema_extra={"linkml_meta": {"alias": "source_multi_glob", "domain_of": ["DefaultSource"]}},
+    )
+    literal: Optional[DefaultLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": ["DefaultLiteralEntity", "DatasetKeyPhotoSource", "VoxelSpacingSource"],
+            }
+        },
+    )
+    parent_filters: Optional[SourceParentFilters] = Field(
+        None,
+        description="""Filters for the parent of a source.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "parent_filters", "domain_of": ["SourceParentFiltersEntity", "AnnotationSource"]}
+        },
+    )
+
+
+class GainEntity(ConfiguredBaseModel):
+    """
+    A gain entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    sources: List[GainSource] = Field(
+        ...,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "sources",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
+                    "FrameEntity",
+                    "GainEntity",
+                    "KeyImageEntity",
+                    "RawTiltEntity",
+                    "RunEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                    "VoxelSpacingEntity",
+                ],
+            }
+        },
+    )
+
+
+class GainSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
+    """
+    A gain source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "cdp-dataset-config",
+            "mixins": ["DefaultSource", "DefaultLiteralEntity", "SourceParentFiltersEntity"],
+        }
+    )
+
+    destination_glob: Optional[DestinationGlob] = Field(
+        None,
+        description="""The glob object for the destination file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "destination_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_glob: Optional[SourceGlob] = Field(
+        None,
+        description="""The glob object for the source file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "source_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_multi_glob: Optional[SourceMultiGlob] = Field(
+        None,
+        description="""The glob object for the source file (with multiple globs).""",
+        json_schema_extra={"linkml_meta": {"alias": "source_multi_glob", "domain_of": ["DefaultSource"]}},
+    )
+    literal: Optional[DefaultLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": ["DefaultLiteralEntity", "DatasetKeyPhotoSource", "VoxelSpacingSource"],
+            }
+        },
+    )
+    parent_filters: Optional[SourceParentFilters] = Field(
+        None,
+        description="""Filters for the parent of a source.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "parent_filters", "domain_of": ["SourceParentFiltersEntity", "AnnotationSource"]}
+        },
+    )
+
+
+class KeyImageEntity(ConfiguredBaseModel):
+    """
+    A key image entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    sources: List[KeyImageSource] = Field(
+        ...,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "sources",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
+                    "FrameEntity",
+                    "GainEntity",
+                    "KeyImageEntity",
+                    "RawTiltEntity",
+                    "RunEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                    "VoxelSpacingEntity",
+                ],
+            }
+        },
+    )
+
+
+class KeyImageSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
+    """
+    A key image source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "cdp-dataset-config",
+            "mixins": ["DefaultSource", "DefaultLiteralEntity", "SourceParentFiltersEntity"],
+        }
+    )
+
+    destination_glob: Optional[DestinationGlob] = Field(
+        None,
+        description="""The glob object for the destination file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "destination_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_glob: Optional[SourceGlob] = Field(
+        None,
+        description="""The glob object for the source file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "source_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_multi_glob: Optional[SourceMultiGlob] = Field(
+        None,
+        description="""The glob object for the source file (with multiple globs).""",
+        json_schema_extra={"linkml_meta": {"alias": "source_multi_glob", "domain_of": ["DefaultSource"]}},
+    )
+    literal: Optional[DefaultLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": ["DefaultLiteralEntity", "DatasetKeyPhotoSource", "VoxelSpacingSource"],
+            }
+        },
+    )
+    parent_filters: Optional[SourceParentFilters] = Field(
+        None,
+        description="""Filters for the parent of a source.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "parent_filters", "domain_of": ["SourceParentFiltersEntity", "AnnotationSource"]}
+        },
+    )
+
+
+class RawTiltEntity(ConfiguredBaseModel):
+    """
+    A raw tilt entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    sources: List[RawTiltSource] = Field(
+        ...,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "sources",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
+                    "FrameEntity",
+                    "GainEntity",
+                    "KeyImageEntity",
+                    "RawTiltEntity",
+                    "RunEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                    "VoxelSpacingEntity",
+                ],
+            }
+        },
+    )
+
+
+class RawTiltSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
+    """
+    A raw tilt source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "cdp-dataset-config",
+            "mixins": ["DefaultSource", "DefaultLiteralEntity", "SourceParentFiltersEntity"],
+        }
+    )
+
+    destination_glob: Optional[DestinationGlob] = Field(
+        None,
+        description="""The glob object for the destination file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "destination_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_glob: Optional[SourceGlob] = Field(
+        None,
+        description="""The glob object for the source file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "source_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_multi_glob: Optional[SourceMultiGlob] = Field(
+        None,
+        description="""The glob object for the source file (with multiple globs).""",
+        json_schema_extra={"linkml_meta": {"alias": "source_multi_glob", "domain_of": ["DefaultSource"]}},
+    )
+    literal: Optional[DefaultLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": ["DefaultLiteralEntity", "DatasetKeyPhotoSource", "VoxelSpacingSource"],
+            }
+        },
+    )
+    parent_filters: Optional[SourceParentFilters] = Field(
+        None,
+        description="""Filters for the parent of a source.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "parent_filters", "domain_of": ["SourceParentFiltersEntity", "AnnotationSource"]}
+        },
+    )
+
+
+class RunEntity(ConfiguredBaseModel):
+    """
+    A run entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    sources: List[RunSource] = Field(
+        ...,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "sources",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
+                    "FrameEntity",
+                    "GainEntity",
+                    "KeyImageEntity",
+                    "RawTiltEntity",
+                    "RunEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                    "VoxelSpacingEntity",
+                ],
+            }
+        },
+    )
+
+
+class RunSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
+    """
+    A run source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "cdp-dataset-config",
+            "mixins": ["DefaultSource", "DefaultLiteralEntity", "SourceParentFiltersEntity"],
+        }
+    )
+
+    destination_glob: Optional[DestinationGlob] = Field(
+        None,
+        description="""The glob object for the destination file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "destination_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_glob: Optional[SourceGlob] = Field(
+        None,
+        description="""The glob object for the source file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "source_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_multi_glob: Optional[SourceMultiGlob] = Field(
+        None,
+        description="""The glob object for the source file (with multiple globs).""",
+        json_schema_extra={"linkml_meta": {"alias": "source_multi_glob", "domain_of": ["DefaultSource"]}},
+    )
+    literal: Optional[DefaultLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": ["DefaultLiteralEntity", "DatasetKeyPhotoSource", "VoxelSpacingSource"],
+            }
+        },
+    )
+    parent_filters: Optional[SourceParentFilters] = Field(
+        None,
+        description="""Filters for the parent of a source.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "parent_filters", "domain_of": ["SourceParentFiltersEntity", "AnnotationSource"]}
+        },
+    )
+
+
+class StandardizationConfig(ConfiguredBaseModel):
+    """
+    A standardization configuration.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    deposition_id: int = Field(
+        ...,
+        description="""The deposition ID.""",
+        json_schema_extra={"linkml_meta": {"alias": "deposition_id", "domain_of": ["StandardizationConfig"]}},
+    )
+    run_data_map_file: Optional[str] = Field(
+        None,
+        description="""The run data map file.""",
+        json_schema_extra={"linkml_meta": {"alias": "run_data_map_file", "domain_of": ["StandardizationConfig"]}},
+    )
+    run_to_frame_map_csv: Optional[str] = Field(
+        None,
+        description="""The run to frame map CSV.""",
+        json_schema_extra={"linkml_meta": {"alias": "run_to_frame_map_csv", "domain_of": ["StandardizationConfig"]}},
+    )
+    run_to_tomo_map_csv: Optional[str] = Field(
+        None,
+        description="""The run to tomogram map CSV.""",
+        json_schema_extra={"linkml_meta": {"alias": "run_to_tomo_map_csv", "domain_of": ["StandardizationConfig"]}},
+    )
+    run_to_ts_map_csv: Optional[str] = Field(
+        None,
+        description="""The run to tilt series map CSV.""",
+        json_schema_extra={"linkml_meta": {"alias": "run_to_ts_map_csv", "domain_of": ["StandardizationConfig"]}},
+    )
+    source_prefix: str = Field(
+        ...,
+        description="""The source prefix of the input files.""",
+        json_schema_extra={"linkml_meta": {"alias": "source_prefix", "domain_of": ["StandardizationConfig"]}},
+    )
+
+
+class TiltSeriesEntity(ConfiguredBaseModel):
+    """
+    A tilt series entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    metadata: TiltSeries = Field(
+        ...,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "metadata",
+                "domain_of": ["AnnotationEntity", "DatasetEntity", "TiltSeriesEntity", "TomogramEntity"],
+            }
+        },
+    )
+    sources: List[TiltSeriesSource] = Field(
+        ...,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "sources",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
+                    "FrameEntity",
+                    "GainEntity",
+                    "KeyImageEntity",
+                    "RawTiltEntity",
+                    "RunEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                    "VoxelSpacingEntity",
+                ],
+            }
+        },
+    )
+
+
+class TiltSeriesSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
+    """
+    A tilt series source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "cdp-dataset-config",
+            "mixins": ["DefaultSource", "DefaultLiteralEntity", "SourceParentFiltersEntity"],
+        }
+    )
+
+    destination_glob: Optional[DestinationGlob] = Field(
+        None,
+        description="""The glob object for the destination file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "destination_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_glob: Optional[SourceGlob] = Field(
+        None,
+        description="""The glob object for the source file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "source_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_multi_glob: Optional[SourceMultiGlob] = Field(
+        None,
+        description="""The glob object for the source file (with multiple globs).""",
+        json_schema_extra={"linkml_meta": {"alias": "source_multi_glob", "domain_of": ["DefaultSource"]}},
+    )
+    literal: Optional[DefaultLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": ["DefaultLiteralEntity", "DatasetKeyPhotoSource", "VoxelSpacingSource"],
+            }
+        },
+    )
+    parent_filters: Optional[SourceParentFilters] = Field(
+        None,
+        description="""Filters for the parent of a source.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "parent_filters", "domain_of": ["SourceParentFiltersEntity", "AnnotationSource"]}
+        },
+    )
+
+
+class TomogramEntity(ConfiguredBaseModel):
+    """
+    A tomogram entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    metadata: Tomogram = Field(
+        ...,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "metadata",
+                "domain_of": ["AnnotationEntity", "DatasetEntity", "TiltSeriesEntity", "TomogramEntity"],
+            }
+        },
+    )
+    sources: List[TomogramSource] = Field(
+        ...,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "sources",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
+                    "FrameEntity",
+                    "GainEntity",
+                    "KeyImageEntity",
+                    "RawTiltEntity",
+                    "RunEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                    "VoxelSpacingEntity",
+                ],
+            }
+        },
+    )
+
+
+class TomogramSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
+    """
+    A tomogram source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "cdp-dataset-config",
+            "mixins": ["DefaultSource", "DefaultLiteralEntity", "SourceParentFiltersEntity"],
+        }
+    )
+
+    destination_glob: Optional[DestinationGlob] = Field(
+        None,
+        description="""The glob object for the destination file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "destination_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_glob: Optional[SourceGlob] = Field(
+        None,
+        description="""The glob object for the source file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "source_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_multi_glob: Optional[SourceMultiGlob] = Field(
+        None,
+        description="""The glob object for the source file (with multiple globs).""",
+        json_schema_extra={"linkml_meta": {"alias": "source_multi_glob", "domain_of": ["DefaultSource"]}},
+    )
+    literal: Optional[DefaultLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": ["DefaultLiteralEntity", "DatasetKeyPhotoSource", "VoxelSpacingSource"],
+            }
+        },
+    )
+    parent_filters: Optional[SourceParentFilters] = Field(
+        None,
+        description="""Filters for the parent of a source.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "parent_filters", "domain_of": ["SourceParentFiltersEntity", "AnnotationSource"]}
+        },
+    )
+
+
+class VoxelSpacingEntity(ConfiguredBaseModel):
+    """
+    A voxel spacing entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    sources: List[VoxelSpacingSource] = Field(
+        ...,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "sources",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
+                    "FrameEntity",
+                    "GainEntity",
+                    "KeyImageEntity",
+                    "RawTiltEntity",
+                    "RunEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                    "VoxelSpacingEntity",
+                ],
+            }
+        },
+    )
+
+
+class VoxelSpacingSource(SourceParentFiltersEntity):
+    """
+    A voxel spacing source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {"from_schema": "cdp-dataset-config", "mixins": ["SourceParentFiltersEntity"]}
+    )
+
+    destination_glob: Optional[DestinationGlob] = Field(
+        None,
+        description="""The glob object for the destination file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "destination_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    source_glob: Optional[SourceGlob] = Field(
+        None,
+        description="""The glob object for the source file.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "source_glob", "domain_of": ["DefaultSource", "VoxelSpacingSource"]}
+        },
+    )
+    literal: Optional[VoxelSpacingLiteral] = Field(
+        None,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": ["DefaultLiteralEntity", "DatasetKeyPhotoSource", "VoxelSpacingSource"],
+            }
+        },
+    )
+    tomogram_header: Optional[TomogramHeader] = Field(
+        None,
+        description="""The header for the voxel spacing.""",
+        json_schema_extra={"linkml_meta": {"alias": "tomogram_header", "domain_of": ["VoxelSpacingSource"]}},
+    )
+    parent_filters: Optional[SourceParentFilters] = Field(
+        None,
+        description="""Filters for the parent of a source.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "parent_filters", "domain_of": ["SourceParentFiltersEntity", "AnnotationSource"]}
+        },
+    )
+
+
+class VoxelSpacingLiteral(ConfiguredBaseModel):
+    """
+    A literal for a voxel spacing.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    value: List[float] = Field(
+        ...,
+        description="""The value for the voxel spacing literal.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "value",
+                "domain_of": ["DefaultLiteral", "DatasetKeyPhotoLiteral", "VoxelSpacingLiteral"],
+            }
+        },
+    )
+
+
+class TomogramHeader(ConfiguredBaseModel):
+    """
+    A tomogram header, a unique source attribute for voxel spacing.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    list_glob: str = Field(
+        ...,
+        description="""The glob for the tomogram header file.""",
+        json_schema_extra={"linkml_meta": {"alias": "list_glob", "domain_of": ["GeneralGlob", "TomogramHeader"]}},
+    )
+    match_regex: Optional[str] = Field(
+        ".*",
+        description="""The regex for the tomogram header file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "match_regex",
+                "domain_of": ["GeneralGlob", "TomogramHeader"],
+                "ifabsent": "string(.*)",
+            }
+        },
+    )
+    header_key: Optional[str] = Field(
+        "voxel_size",
+        description="""The key in the header file for the voxel spacing.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "header_key", "domain_of": ["TomogramHeader"], "ifabsent": "string(voxel_size)"}
+        },
+    )
+
+
+class Container(ConfiguredBaseModel):
+    """
+    Class that models the dataset config.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config-validate", "tree_root": True})
+
+    annotations: Optional[List[AnnotationEntity]] = Field(
+        default_factory=list,
+        description="""Annotations for the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "annotations", "domain_of": ["Container"]}},
+    )
+    dataset_keyphotos: Optional[List[DatasetKeyPhotoEntity]] = Field(
+        default_factory=list,
+        description="""Key photos for the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "dataset_keyphotos", "domain_of": ["Container"]}},
+    )
+    datasets: List[DatasetEntity] = Field(
+        ...,
+        description="""Datasets for the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "datasets", "domain_of": ["Container"]}},
+    )
+    frames: Optional[List[FrameEntity]] = Field(
+        default_factory=list,
+        description="""Frames for the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "frames", "domain_of": ["Container"]}},
+    )
+    gains: Optional[List[GainEntity]] = Field(
+        default_factory=list,
+        description="""Gains for the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "gains", "domain_of": ["Container"]}},
+    )
+    key_images: Optional[List[KeyImageEntity]] = Field(
+        default_factory=list,
+        description="""Key images for the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "key_images", "domain_of": ["Container"]}},
+    )
+    rawtilts: Optional[List[RawTiltEntity]] = Field(
+        default_factory=list,
+        description="""Raw tilts for the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "rawtilts", "domain_of": ["Container"]}},
+    )
+    runs: Optional[List[RunEntity]] = Field(
+        default_factory=list,
+        description="""Runs for the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "runs", "domain_of": ["Container"]}},
+    )
+    standardization_config: StandardizationConfig = Field(
+        ...,
+        description="""Standardization config for the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "standardization_config", "domain_of": ["Container"]}},
+    )
+    tiltseries: Optional[List[TiltSeriesEntity]] = Field(
+        default_factory=list,
+        description="""Tilt series for the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "tiltseries", "domain_of": ["Container"]}},
+    )
+    tomograms: Optional[List[TomogramEntity]] = Field(
+        default_factory=list,
+        description="""Tomograms for the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "tomograms", "domain_of": ["Container"]}},
+    )
+    voxel_spacings: List[VoxelSpacingEntity] = Field(
+        ...,
+        description="""Voxel spacings for the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "voxel_spacings", "domain_of": ["Container"]}},
     )
 
 
@@ -2299,3 +3602,40 @@ AnnotationSegmentationMaskFile.model_rebuild()
 AnnotationSemanticSegmentationMaskFile.model_rebuild()
 Annotation.model_rebuild()
 CrossReferences.model_rebuild()
+GeneralGlob.model_rebuild()
+DestinationGlob.model_rebuild()
+SourceGlob.model_rebuild()
+SourceMultiGlob.model_rebuild()
+DefaultSource.model_rebuild()
+SourceParentFiltersEntity.model_rebuild()
+SourceParentFilters.model_rebuild()
+SourceParent.model_rebuild()
+DefaultLiteralEntity.model_rebuild()
+DefaultLiteral.model_rebuild()
+AnnotationEntity.model_rebuild()
+AnnotationSource.model_rebuild()
+DatasetEntity.model_rebuild()
+DatasetSource.model_rebuild()
+DatasetKeyPhotoEntity.model_rebuild()
+DatasetKeyPhotoSource.model_rebuild()
+DatasetKeyPhotoLiteral.model_rebuild()
+FrameEntity.model_rebuild()
+FrameSource.model_rebuild()
+GainEntity.model_rebuild()
+GainSource.model_rebuild()
+KeyImageEntity.model_rebuild()
+KeyImageSource.model_rebuild()
+RawTiltEntity.model_rebuild()
+RawTiltSource.model_rebuild()
+RunEntity.model_rebuild()
+RunSource.model_rebuild()
+StandardizationConfig.model_rebuild()
+TiltSeriesEntity.model_rebuild()
+TiltSeriesSource.model_rebuild()
+TomogramEntity.model_rebuild()
+TomogramSource.model_rebuild()
+VoxelSpacingEntity.model_rebuild()
+VoxelSpacingSource.model_rebuild()
+VoxelSpacingLiteral.model_rebuild()
+TomogramHeader.model_rebuild()
+Container.model_rebuild()

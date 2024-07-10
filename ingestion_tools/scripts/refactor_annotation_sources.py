@@ -1,6 +1,6 @@
 import yaml
 
-from common.yaml_refactor import get_files_to_refactor
+from common.yaml_files import get_yaml_config_files
 
 
 def main():
@@ -11,7 +11,7 @@ def main():
         return
 
     # Get all files to validate
-    files_to_validate = get_files_to_refactor()
+    files_to_validate = get_yaml_config_files()
 
     if not files_to_validate:
         print("[WARNING]: No files to validate.")
