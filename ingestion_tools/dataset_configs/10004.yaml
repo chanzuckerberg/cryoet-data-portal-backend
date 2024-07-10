@@ -1,6 +1,6 @@
 annotations:
 - metadata:
-    annotation_confidence:
+    confidence:
       ground_truth_used: Author estimation
       precision: 95
       recall: 60
