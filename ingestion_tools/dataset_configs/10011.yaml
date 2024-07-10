@@ -125,7 +125,6 @@ tiltseries:
       phase_plate: null
     pixel_spacing: REQUIRED
     related_empiar_entry: OPTIONAL
-    scales: []
     spherical_aberration_constant: 2.7
     tilt_axis: OPTIONAL (float)
     tilt_range:
