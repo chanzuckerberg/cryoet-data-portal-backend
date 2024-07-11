@@ -47,6 +47,19 @@ class LinkMLMeta(RootModel):
 linkml_meta = LinkMLMeta({"default_prefix": "metadata/", "id": "metadata", "name": "cdp-meta"})
 
 
+class AnnotationMethodTypeEnum(str, Enum):
+    """
+    Describes how the annotations were generated.
+    """
+
+    # Annotations were generated manually.
+    manual = "manual"
+    # Annotations were generated semi-automatically.
+    automated = "automated"
+    # Annotations were generated automatically.
+    hybrid = "hybrid"
+
+
 class SampleTypeEnum(str, Enum):
     """
     Type of sample imaged in a CryoET study.
@@ -70,6 +83,34 @@ class SampleTypeEnum(str, Enum):
     other = "other"
 
 
+class TiltseriesCameraAcquireModeEnum(str, Enum):
+    """
+    Camera acquisition mode
+    """
+
+    # Counting mode
+    counting = "counting"
+    # Super-resolution mode
+    superresolution = "superresolution"
+    # Linear mode
+    linear = "linear"
+    # Correlated double sampling mode
+    cds = "cds"
+
+
+class MicroscopeManufacturerEnum(str, Enum):
+    """
+    Microscope manufacturer
+    """
+
+    # FEI Company
+    FEI = "FEI"
+    # Thermo Fisher Scientific
+    TFS = "TFS"
+    # JEOL Ltd.
+    JEOL = "JEOL"
+
+
 class FiducialAlignmentStatusEnum(str, Enum):
     """
     Fiducial Alignment method
@@ -81,6 +122,36 @@ class FiducialAlignmentStatusEnum(str, Enum):
     NON_FIDUCIAL = "NON_FIDUCIAL"
 
 
+class TomogramProcessingEnum(str, Enum):
+    """
+    Tomogram processing method
+    """
+
+    # Tomogram was denoised
+    denoised = "denoised"
+    # Tomogram was filtered
+    filtered = "filtered"
+    # Tomogram was not processed
+    raw = "raw"
+
+
+class TomogromReconstructionMethodEnum(str, Enum):
+    """
+    Tomogram reconstruction method
+    """
+
+    # Simultaneous Algebraic Reconstruction Technique
+    SART = "SART"
+    # Fourier space reconstruction
+    FOURIER_SPACE = "FOURIER SPACE"
+    # Simultaneous Iterative Reconstruction Technique
+    SIRT = "SIRT"
+    # Weighted Back-Projection
+    WBP = "WBP"
+    # Unknown reconstruction method
+    UNKNOWN = "UNKNOWN"
+
+
 class TomogramTypeEnum(str, Enum):
     """
     Tomogram type
@@ -88,19 +159,6 @@ class TomogramTypeEnum(str, Enum):
 
     # Canonical tomogram (basis geometry for all annotations)
     CANONICAL = "CANONICAL"
-
-
-class AnnotationMethodTypeEnum(str, Enum):
-    """
-    Describes how the annotations were generated.
-    """
-
-    # Annotations were generated manually.
-    manual = "manual"
-    # Annotations were generated semi-automatically.
-    automated = "automated"
-    # Annotations were generated automatically.
-    hybrid = "hybrid"
 
 
 class PicturePath(ConfiguredBaseModel):
@@ -880,7 +938,7 @@ class Camera(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    acquire_mode: Optional[str] = Field(
+    acquire_mode: Optional[TiltseriesCameraAcquireModeEnum] = Field(
         None,
         description="""Camera acquisition mode""",
         json_schema_extra={
@@ -922,7 +980,7 @@ class Microscope(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    manufacturer: str = Field(
+    manufacturer: MicroscopeManufacturerEnum = Field(
         ...,
         description="""Name of the microscope manufacturer""",
         json_schema_extra={
@@ -998,6 +1056,7 @@ class TiltRange(ConfiguredBaseModel):
     min: float = Field(
         ...,
         description="""Minimal tilt angle in degrees""",
+        ge=-90,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "min",
@@ -1010,6 +1069,8 @@ class TiltRange(ConfiguredBaseModel):
     max: float = Field(
         ...,
         description="""Maximal tilt angle in degrees""",
+        ge=-90,
+        le=90,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "max",
@@ -1028,10 +1089,10 @@ class TiltSeries(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    acceleration_voltage: int = Field(
+    acceleration_voltage: float = Field(
         ...,
         description="""Electron Microscope Accelerator voltage in volts""",
-        ge=0,
+        ge=20000,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "acceleration_voltage",
@@ -1041,26 +1102,29 @@ class TiltSeries(ConfiguredBaseModel):
             }
         },
     )
-    aligned_tiltseries_binning: Optional[int] = Field(
-        1,
+    aligned_tiltseries_binning: Optional[float] = Field(
+        1.0,
         description="""Binning factor of the aligned tilt series""",
+        ge=1e-09,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "aligned_tiltseries_binning",
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_aligned_tiltseries_binning"],
-                "ifabsent": "int(1)",
+                "ifabsent": "float(1)",
             }
         },
     )
     binning_from_frames: Optional[float] = Field(
-        None,
+        1.0,
         description="""Describes the binning factor from frames to tilt series file""",
+        ge=1e-09,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "binning_from_frames",
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_binning_from_frames"],
+                "ifabsent": "float(1)",
             }
         },
     )
@@ -1137,6 +1201,7 @@ class TiltSeries(ConfiguredBaseModel):
     spherical_aberration_constant: float = Field(
         ...,
         description="""Spherical Aberration Constant of the objective lens in millimeters""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "spherical_aberration_constant",
@@ -1160,6 +1225,8 @@ class TiltSeries(ConfiguredBaseModel):
     tilt_axis: float = Field(
         ...,
         description="""Rotation angle in degrees""",
+        ge=-360,
+        le=360,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "tilt_axis",
@@ -1190,6 +1257,8 @@ class TiltSeries(ConfiguredBaseModel):
     tilt_step: float = Field(
         ...,
         description="""Tilt step in degrees""",
+        ge=0,
+        le=90,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "tilt_step",
@@ -1213,6 +1282,7 @@ class TiltSeries(ConfiguredBaseModel):
     total_flux: float = Field(
         ...,
         description="""Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "total_flux",
@@ -1225,7 +1295,7 @@ class TiltSeries(ConfiguredBaseModel):
     pixel_spacing: float = Field(
         ...,
         description="""Pixel spacing for the tilt series""",
-        ge=0,
+        ge=1e-09,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "pixel_spacing",
@@ -1247,6 +1317,7 @@ class TomogramSize(ConfiguredBaseModel):
     x: int = Field(
         ...,
         description="""Number of pixels in the 3D data fast axis""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "x",
@@ -1258,6 +1329,7 @@ class TomogramSize(ConfiguredBaseModel):
     y: int = Field(
         ...,
         description="""Number of pixels in the 3D data medium axis""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "y",
@@ -1269,6 +1341,7 @@ class TomogramSize(ConfiguredBaseModel):
     z: int = Field(
         ...,
         description="""Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "z",
@@ -1331,6 +1404,7 @@ class Tomogram(AuthoredEntity):
     voxel_spacing: float = Field(
         ...,
         description="""Voxel spacing equal in all three axes in angstroms""",
+        ge=1e-09,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "voxel_spacing",
@@ -1374,7 +1448,7 @@ class Tomogram(AuthoredEntity):
             }
         },
     )
-    reconstruction_method: str = Field(
+    reconstruction_method: TomogromReconstructionMethodEnum = Field(
         ...,
         description="""Describe reconstruction method (Weighted back-projection, SART, SIRT)""",
         json_schema_extra={
@@ -1396,7 +1470,7 @@ class Tomogram(AuthoredEntity):
             }
         },
     )
-    processing: str = Field(
+    processing: TomogramProcessingEnum = Field(
         ...,
         description="""Describe additional processing used to derive the tomogram""",
         json_schema_extra={
@@ -1479,6 +1553,8 @@ class AnnotationConfidence(ConfiguredBaseModel):
     precision: Optional[float] = Field(
         None,
         description="""Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive""",
+        ge=0,
+        le=100,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "precision",
@@ -1491,6 +1567,8 @@ class AnnotationConfidence(ConfiguredBaseModel):
     recall: Optional[float] = Field(
         None,
         description="""Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly""",
+        ge=0,
+        le=100,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "recall",
@@ -1645,9 +1723,10 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["OrientedPoint"], "from_schema": "metadata"})
 
-    binning: Optional[int] = Field(
-        1,
+    binning: Optional[float] = Field(
+        1.0,
         description="""The binning factor for a point / oriented point / instance segmentation annotation file.""",
+        ge=1e-09,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "binning",
@@ -1657,7 +1736,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationInstanceSegmentationFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_binning"],
-                "ifabsent": "int(1)",
+                "ifabsent": "float(1)",
             }
         },
     )
@@ -1748,9 +1827,10 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["InstanceSegmentation"], "from_schema": "metadata"})
 
-    binning: Optional[int] = Field(
-        1,
+    binning: Optional[float] = Field(
+        1.0,
         description="""The binning factor for a point / oriented point / instance segmentation annotation file.""",
+        ge=1e-09,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "binning",
@@ -1760,7 +1840,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationInstanceSegmentationFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_binning"],
-                "ifabsent": "int(1)",
+                "ifabsent": "float(1)",
             }
         },
     )
@@ -1851,9 +1931,10 @@ class AnnotationPointFile(AnnotationSourceFile):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["Point"], "from_schema": "metadata"})
 
-    binning: Optional[int] = Field(
-        1,
+    binning: Optional[float] = Field(
+        1.0,
         description="""The binning factor for a point / oriented point / instance segmentation annotation file.""",
+        ge=1e-09,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "binning",
@@ -1863,7 +1944,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationInstanceSegmentationFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_binning"],
-                "ifabsent": "int(1)",
+                "ifabsent": "float(1)",
             }
         },
     )

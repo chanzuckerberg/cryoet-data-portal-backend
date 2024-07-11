@@ -101,8 +101,8 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [acceleration_voltage](acceleration_voltage.md) | 1 <br/> [Integer](Integer.md) | Electron Microscope Accelerator voltage in volts | direct |
-| [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | 0..1 <br/> [Integer](Integer.md) | Binning factor of the aligned tilt series | direct |
+| [acceleration_voltage](acceleration_voltage.md) | 1 <br/> [Float](Float.md) | Electron Microscope Accelerator voltage in volts | direct |
+| [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | 0..1 <br/> [Float](Float.md) | Binning factor of the aligned tilt series | direct |
 | [binning_from_frames](binning_from_frames.md) | 0..1 <br/> [Float](Float.md) | Describes the binning factor from frames to tilt series file | direct |
 | [camera](camera.md) | 1 <br/> [Camera](Camera.md) | The camera used to collect the tilt series | direct |
 | [data_acquisition_software](data_acquisition_software.md) | 1 <br/> [String](String.md) | Software used to collect data | direct |
@@ -182,11 +182,11 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: integer
+    range: float
     required: true
     inlined: true
     inlined_as_list: true
-    minimum_value: 0
+    minimum_value: 20000
     unit:
       symbol: V
       descriptive_name: volts
@@ -197,14 +197,15 @@ attributes:
     exact_mappings:
     - cdp-common:tiltseries_aligned_tiltseries_binning
     rank: 1000
-    ifabsent: int(1)
+    ifabsent: float(1)
     alias: aligned_tiltseries_binning
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: integer
+    range: float
     inlined: true
     inlined_as_list: true
+    minimum_value: 1.0e-09
   binning_from_frames:
     name: binning_from_frames
     description: Describes the binning factor from frames to tilt series file
@@ -212,6 +213,7 @@ attributes:
     exact_mappings:
     - cdp-common:tiltseries_binning_from_frames
     rank: 1000
+    ifabsent: float(1)
     alias: binning_from_frames
     owner: TiltSeries
     domain_of:
@@ -219,6 +221,7 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
+    minimum_value: 1.0e-09
   camera:
     name: camera
     description: The camera used to collect the tilt series.
@@ -347,6 +350,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
     unit:
       symbol: mm
       descriptive_name: millimeters
@@ -379,6 +383,8 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: -360
+    maximum_value: 360
     unit:
       symbol: °
       descriptive_name: degrees
@@ -428,6 +434,8 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
+    maximum_value: 90
     unit:
       symbol: °
       descriptive_name: degrees
@@ -462,6 +470,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
     unit:
       symbol: e^-/Å^2
       descriptive_name: electrons per square Angstrom
@@ -480,7 +489,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
-    minimum_value: 0
+    minimum_value: 1.0e-09
     unit:
       symbol: Å/px
       descriptive_name: Angstroms per pixel
@@ -507,11 +516,11 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: integer
+    range: float
     required: true
     inlined: true
     inlined_as_list: true
-    minimum_value: 0
+    minimum_value: 20000
     unit:
       symbol: V
       descriptive_name: volts
@@ -522,14 +531,15 @@ attributes:
     exact_mappings:
     - cdp-common:tiltseries_aligned_tiltseries_binning
     rank: 1000
-    ifabsent: int(1)
+    ifabsent: float(1)
     alias: aligned_tiltseries_binning
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: integer
+    range: float
     inlined: true
     inlined_as_list: true
+    minimum_value: 1.0e-09
   binning_from_frames:
     name: binning_from_frames
     description: Describes the binning factor from frames to tilt series file
@@ -537,6 +547,7 @@ attributes:
     exact_mappings:
     - cdp-common:tiltseries_binning_from_frames
     rank: 1000
+    ifabsent: float(1)
     alias: binning_from_frames
     owner: TiltSeries
     domain_of:
@@ -544,6 +555,7 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
+    minimum_value: 1.0e-09
   camera:
     name: camera
     description: The camera used to collect the tilt series.
@@ -672,6 +684,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
     unit:
       symbol: mm
       descriptive_name: millimeters
@@ -704,6 +717,8 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: -360
+    maximum_value: 360
     unit:
       symbol: °
       descriptive_name: degrees
@@ -753,6 +768,8 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
+    maximum_value: 90
     unit:
       symbol: °
       descriptive_name: degrees
@@ -787,6 +804,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
     unit:
       symbol: e^-/Å^2
       descriptive_name: electrons per square Angstrom
@@ -805,7 +823,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
-    minimum_value: 0
+    minimum_value: 1.0e-09
     unit:
       symbol: Å/px
       descriptive_name: Angstroms per pixel

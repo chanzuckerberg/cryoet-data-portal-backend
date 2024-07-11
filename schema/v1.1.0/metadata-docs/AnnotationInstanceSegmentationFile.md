@@ -53,7 +53,7 @@ URI: [cdp-meta:AnnotationInstanceSegmentationFile](metadataAnnotationInstanceSeg
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [binning](binning.md) | 0..1 <br/> [Integer](Integer.md) | The binning factor for a point / oriented point / instance segmentation annot... | direct |
+| [binning](binning.md) | 0..1 <br/> [Float](Float.md) | The binning factor for a point / oriented point / instance segmentation annot... | direct |
 | [filter_value](filter_value.md) | 0..1 <br/> [String](String.md) | The filter value for an oriented point / instance segmentation annotation fil... | direct |
 | [order](order.md) | 0..1 <br/> [String](String.md) | The order of axes for an oriented point / instance segmentation annotation fi... | direct |
 | [file_format](file_format.md) | 1 <br/> [String](String.md) | File format for this file | direct |
@@ -125,16 +125,17 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_source_file_binning
-    ifabsent: int(1)
+    ifabsent: float(1)
     alias: binning
     owner: AnnotationInstanceSegmentationFile
     domain_of:
     - AnnotationOrientedPointFile
     - AnnotationPointFile
     - AnnotationInstanceSegmentationFile
-    range: integer
+    range: float
     inlined: true
     inlined_as_list: true
+    minimum_value: 1.0e-09
   filter_value:
     name: filter_value
     description: The filter value for an oriented point / instance segmentation annotation
@@ -246,16 +247,17 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_source_file_binning
-    ifabsent: int(1)
+    ifabsent: float(1)
     alias: binning
     owner: AnnotationInstanceSegmentationFile
     domain_of:
     - AnnotationOrientedPointFile
     - AnnotationPointFile
     - AnnotationInstanceSegmentationFile
-    range: integer
+    range: float
     inlined: true
     inlined_as_list: true
+    minimum_value: 1.0e-09
   filter_value:
     name: filter_value
     description: The filter value for an oriented point / instance segmentation annotation

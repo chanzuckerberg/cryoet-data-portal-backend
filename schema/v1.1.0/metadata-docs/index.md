@@ -168,8 +168,12 @@ Name: cdp-meta
 | --- | --- |
 | [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Describes how the annotations were generated |
 | [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Fiducial Alignment method |
+| [MicroscopeManufacturerEnum](MicroscopeManufacturerEnum.md) | Microscope manufacturer |
 | [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study |
+| [TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md) | Camera acquisition mode |
+| [TomogramProcessingEnum](TomogramProcessingEnum.md) | Tomogram processing method |
 | [TomogramTypeEnum](TomogramTypeEnum.md) | Tomogram type |
+| [TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md) | Tomogram reconstruction method |
 
 
 ## Types
@@ -178,14 +182,19 @@ Name: cdp-meta
 | --- | --- |
 | [Boolean](Boolean.md) | A binary (true or false) value |
 | [BooleanFormattedString](BooleanFormattedString.md) | A formatted string that represents a boolean |
+| [BTOID](BTOID.md) | A BRENDA Tissue Ontology identifier |
+| [CLID](CLID.md) | A Cell Ontology identifier |
 | [Curie](Curie.md) | a compact URI |
 | [Date](Date.md) | a date (year, month and day) in an idealized calendar |
 | [DateOrDatetime](DateOrDatetime.md) | Either a date or a datetime |
 | [Datetime](Datetime.md) | The combination of a date and time |
 | [Decimal](Decimal.md) | A real number with arbitrary precision that conforms to the xsd:decimal speci... |
 | [Double](Double.md) | A real number that conforms to the xsd:double specification |
+| [EMDB](EMDB.md) | An Electron Microscopy Data Bank identifier |
+| [EMPIAR](EMPIAR.md) | An Electron Microscopy Public Image Archive identifier |
 | [Float](Float.md) | A real number that conforms to the xsd:float specification |
 | [FloatFormattedString](FloatFormattedString.md) | A formatted string that represents a floating point number |
+| [GOID](GOID.md) | A Gene Ontology identifier |
 | [Integer](Integer.md) | An integer |
 | [IntegerFormattedString](IntegerFormattedString.md) | A formatted string that represents an integer |
 | [Jsonpath](Jsonpath.md) | A string encoding a JSON Path |
@@ -193,6 +202,7 @@ Name: cdp-meta
 | [Ncname](Ncname.md) | Prefix part of CURIE |
 | [Nodeidentifier](Nodeidentifier.md) | A URI, CURIE or BNODE that represents a node in a model |
 | [Objectidentifier](Objectidentifier.md) | A URI or CURIE that represents an object in the model |
+| [ONTOLOGYID](ONTOLOGYID.md) | An ontology identifier |
 | [Sparqlpath](Sparqlpath.md) | A string encoding a SPARQL Property Path |
 | [String](String.md) | A character string |
 | [Time](Time.md) | A time object represents a (local) time of day, independent of any particular... |

@@ -22,6 +22,13 @@ URI: [cdp-meta:Microscope](metadataMicroscope)
     click Microscope href "../Microscope"
       Microscope : manufacturer
 
+
+
+
+    Microscope --> "1" MicroscopeManufacturerEnum : manufacturer
+    click MicroscopeManufacturerEnum href "../MicroscopeManufacturerEnum"
+
+
       Microscope : model
 
 
@@ -37,7 +44,7 @@ URI: [cdp-meta:Microscope](metadataMicroscope)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [manufacturer](manufacturer.md) | 1 <br/> [String](String.md) | Name of the microscope manufacturer | direct |
+| [manufacturer](manufacturer.md) | 1 <br/> [MicroscopeManufacturerEnum](MicroscopeManufacturerEnum.md) | Name of the microscope manufacturer | direct |
 | [model](model.md) | 1 <br/> [String](String.md) | Microscope model name | direct |
 
 
@@ -107,7 +114,7 @@ attributes:
     domain_of:
     - Camera
     - Microscope
-    range: string
+    range: microscope_manufacturer_enum
     required: true
     inlined: true
     inlined_as_list: true
@@ -149,7 +156,7 @@ attributes:
     domain_of:
     - Camera
     - Microscope
-    range: string
+    range: microscope_manufacturer_enum
     required: true
     inlined: true
     inlined_as_list: true

@@ -8,7 +8,7 @@ annotations: OPTIONAL
     annotation_method: REQUIRED, STRING
     annotation_object: REQUIRED
       description: OPTIONAL, STRING
-      id: REQUIRED, STRING (GOID)
+      id: REQUIRED, STRING (GO_ID)
       name: REQUIRED, STRING
       state: OPTIONAL, STRING
     annotation_publications: OPTIONAL, STRING
@@ -72,21 +72,21 @@ dataset_keyphotos: OPTIONAL
 datasets: REQUIRED
 - metadata: REQUIRED
     authors: SEE annotations.authors
+    cell_component: OPTIONAL
+      id: OPTIONAL, STRING (GO_ID)
+      name: REQUIRED, STRING
+    cell_strain: OPTIONAL
+      id: OPTIONAL, STRING (ONTOLOGY ID)
+      name: REQUIRED, STRING
+    cell_type: OPTIONAL
+      id: OPTIONAL, STRING (CL_ID)
+      name: REQUIRED, STRING
+    tissue: OPTIONAL
+      id: OPTIONAL, STRING (BTO_ID)
+      name: REQUIRED, STRING
     organism: OPTIONAL
       name: REQUIRED, STRING
       taxonomy_id: OPTIONAL, INTEGER
-    tissue: OPTIONAL
-      id: OPTIONAL, STRING
-      name: REQUIRED, STRING
-    cell_component: OPTIONAL
-      id: OPTIONAL, STRING (GOID)
-      name: REQUIRED, STRING
-    cell_strain: OPTIONAL
-      id: OPTIONAL, STRING
-      name: REQUIRED, STRING
-    cell_type: OPTIONAL
-      id: OPTIONAL, STRING
-      name: REQUIRED, STRING
     cross_references: OPTIONAL
       dataset_publications: RECOMMENDED, STRING (DOIs)
       related_database_entries: RECOMMENDED, STRING (EMPIAR / EMDB IDs)
@@ -153,7 +153,7 @@ tiltseries: OPTIONAL
     acceleration_voltage: REQUIRED, FLOAT (> 20000) (V)
     aligned_tiltseries_binning: OPTIONAL, FLOAT (Default 1) (POSITIVE)
     alignment_binning_factor: # DEPRECATED
-    binning_from_frames: OPTIONAL, FLOAT (POSITIVE)
+    binning_from_frames: OPTIONAL, FLOAT (Default 1) (POSITIVE)
     camera: REQUIRED
       acquire_mode: OPTIONAL, STRING (ENUM [counting, superresolution, linear, cds])
       manufacturer: REQUIRED, STRING
@@ -202,7 +202,7 @@ tomograms: OPTIONAL
       z: REQUIRED, INTEGER
     processing: REQUIRED, STRING (ENUM [denoised, filtered, raw])
     processing_software: RECOMMENDED, STRING
-    reconstruction_method: REQUIRED, STRING (ENUM [SART, FOURIER SPACE, SIRT, WBP])
+    reconstruction_method: REQUIRED, STRING (ENUM [SART, FOURIER SPACE, SIRT, WBP, UNKNOWN])
     reconstruction_software: REQUIRED, STRING
     tomogram_type: OPTIONAL, STRING (ENUM [CANONICAL])
     tomogram_version: REQUIRED, FLOAT

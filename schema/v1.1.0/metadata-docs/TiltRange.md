@@ -111,6 +111,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: -90
     unit:
       symbol: °
       descriptive_name: degrees
@@ -129,6 +130,8 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: -90
+    maximum_value: 90
     unit:
       symbol: °
       descriptive_name: degrees
@@ -159,6 +162,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: -90
     unit:
       symbol: °
       descriptive_name: degrees
@@ -177,6 +181,8 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: -90
+    maximum_value: 90
     unit:
       symbol: °
       descriptive_name: degrees

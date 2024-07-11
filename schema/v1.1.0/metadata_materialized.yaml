@@ -281,13 +281,64 @@ types:
     description: A version number (only major, minor versions)
     from_schema: metadata
     base: float
+    minimum_value: 0
   URLorS3URI:
     name: URLorS3URI
     description: A URL or S3 URI
     from_schema: metadata
     base: str
     pattern: ^(https?|s3)://.*$
+  BTO_ID:
+    name: BTO_ID
+    description: A BRENDA Tissue Ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: (?i)^BTO:[0-9]{7}$
+  CL_ID:
+    name: CL_ID
+    description: A Cell Ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: (?i)^CL:[0-9]{7}$
+  GO_ID:
+    name: GO_ID
+    description: A Gene Ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: (?i)^GO:[0-9]{7}$
+  ONTOLOGY_ID:
+    name: ONTOLOGY_ID
+    description: An ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: (?i)^[A-Z]+:[0-9]+$
+  EMPIAR:
+    name: EMPIAR
+    description: An Electron Microscopy Public Image Archive identifier
+    from_schema: metadata
+    base: str
+    pattern: (?i)^EMPIAR-[0-9]{6}$
+  EMDB:
+    name: EMDB
+    description: An Electron Microscopy Data Bank identifier
+    from_schema: metadata
+    base: str
+    pattern: (?i)^EMD-[0-9]{3,6}$
 enums:
+  annotation_method_type_enum:
+    name: annotation_method_type_enum
+    description: Describes how the annotations were generated.
+    from_schema: metadata
+    permissible_values:
+      manual:
+        text: manual
+        description: Annotations were generated manually.
+      automated:
+        text: automated
+        description: Annotations were generated semi-automatically.
+      hybrid:
+        text: hybrid
+        description: Annotations were generated automatically.
   sample_type_enum:
     name: sample_type_enum
     description: Type of sample imaged in a CryoET study.
@@ -318,6 +369,37 @@ enums:
       other:
         text: other
         description: Other type of sample.
+  tiltseries_camera_acquire_mode_enum:
+    name: tiltseries_camera_acquire_mode_enum
+    description: Camera acquisition mode
+    from_schema: metadata
+    permissible_values:
+      counting:
+        text: counting
+        description: Counting mode
+      superresolution:
+        text: superresolution
+        description: Super-resolution mode
+      linear:
+        text: linear
+        description: Linear mode
+      cds:
+        text: cds
+        description: Correlated double sampling mode
+  microscope_manufacturer_enum:
+    name: microscope_manufacturer_enum
+    description: Microscope manufacturer
+    from_schema: metadata
+    permissible_values:
+      FEI:
+        text: FEI
+        description: FEI Company
+      TFS:
+        text: TFS
+        description: Thermo Fisher Scientific
+      JEOL:
+        text: JEOL
+        description: JEOL Ltd.
   fiducial_alignment_status_enum:
     name: fiducial_alignment_status_enum
     description: Fiducial Alignment method
@@ -329,6 +411,40 @@ enums:
       NON_FIDUCIAL:
         text: NON_FIDUCIAL
         description: Alignment computed without fiducial markers
+  tomogram_processing_enum:
+    name: tomogram_processing_enum
+    description: Tomogram processing method
+    from_schema: metadata
+    permissible_values:
+      denoised:
+        text: denoised
+        description: Tomogram was denoised
+      filtered:
+        text: filtered
+        description: Tomogram was filtered
+      raw:
+        text: raw
+        description: Tomogram was not processed
+  tomogrom_reconstruction_method_enum:
+    name: tomogrom_reconstruction_method_enum
+    description: Tomogram reconstruction method
+    from_schema: metadata
+    permissible_values:
+      SART:
+        text: SART
+        description: Simultaneous Algebraic Reconstruction Technique
+      FOURIER SPACE:
+        text: FOURIER SPACE
+        description: Fourier space reconstruction
+      SIRT:
+        text: SIRT
+        description: Simultaneous Iterative Reconstruction Technique
+      WBP:
+        text: WBP
+        description: Weighted Back-Projection
+      UNKNOWN:
+        text: UNKNOWN
+        description: Unknown reconstruction method
   tomogram_type_enum:
     name: tomogram_type_enum
     description: Tomogram type
@@ -337,20 +453,6 @@ enums:
       CANONICAL:
         text: CANONICAL
         description: Canonical tomogram (basis geometry for all annotations)
-  annotation_method_type_enum:
-    name: annotation_method_type_enum
-    description: Describes how the annotations were generated.
-    from_schema: metadata
-    permissible_values:
-      manual:
-        text: manual
-        description: Annotations were generated manually.
-      automated:
-        text: automated
-        description: Annotations were generated semi-automatically.
-      hybrid:
-        text: hybrid
-        description: Annotations were generated automatically.
 classes:
   PicturePath:
     name: PicturePath
@@ -768,7 +870,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
-        range: string
+        range: BTO_ID
         recommended: true
         inlined: true
         inlined_as_list: true
@@ -812,7 +914,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
-        range: string
+        range: CL_ID
         recommended: true
         inlined: true
         inlined_as_list: true
@@ -855,7 +957,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
-        range: string
+        range: ONTOLOGY_ID
         recommended: true
         inlined: true
         inlined_as_list: true
@@ -898,7 +1000,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
-        range: string
+        range: GO_ID
         recommended: true
         inlined: true
         inlined_as_list: true
@@ -1256,7 +1358,7 @@ classes:
         owner: Camera
         domain_of:
         - Camera
-        range: string
+        range: tiltseries_camera_acquire_mode_enum
         inlined: true
         inlined_as_list: true
       manufacturer:
@@ -1305,7 +1407,7 @@ classes:
         domain_of:
         - Camera
         - Microscope
-        range: string
+        range: microscope_manufacturer_enum
         required: true
         inlined: true
         inlined_as_list: true
@@ -1388,6 +1490,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: -90
         unit:
           symbol: °
           descriptive_name: degrees
@@ -1405,6 +1508,8 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: -90
+        maximum_value: 90
         unit:
           symbol: °
           descriptive_name: degrees
@@ -1423,11 +1528,11 @@ classes:
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        range: integer
+        range: float
         required: true
         inlined: true
         inlined_as_list: true
-        minimum_value: 0
+        minimum_value: 20000
         unit:
           symbol: V
           descriptive_name: volts
@@ -1437,20 +1542,22 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_aligned_tiltseries_binning
-        ifabsent: int(1)
+        ifabsent: float(1)
         alias: aligned_tiltseries_binning
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        range: integer
+        range: float
         inlined: true
         inlined_as_list: true
+        minimum_value: 1.0e-09
       binning_from_frames:
         name: binning_from_frames
         description: Describes the binning factor from frames to tilt series file
         from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_binning_from_frames
+        ifabsent: float(1)
         alias: binning_from_frames
         owner: TiltSeries
         domain_of:
@@ -1458,6 +1565,7 @@ classes:
         range: float
         inlined: true
         inlined_as_list: true
+        minimum_value: 1.0e-09
       camera:
         name: camera
         description: The camera used to collect the tilt series.
@@ -1578,6 +1686,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
         unit:
           symbol: mm
           descriptive_name: millimeters
@@ -1608,6 +1717,8 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: -360
+        maximum_value: 360
         unit:
           symbol: °
           descriptive_name: degrees
@@ -1654,6 +1765,8 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
+        maximum_value: 90
         unit:
           symbol: °
           descriptive_name: degrees
@@ -1686,6 +1799,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
         unit:
           symbol: e^-/Å^2
           descriptive_name: electrons per square Angstrom
@@ -1703,7 +1817,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        minimum_value: 0
+        minimum_value: 1.0e-09
         unit:
           symbol: Å/px
           descriptive_name: Angstroms per pixel
@@ -1725,6 +1839,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
         unit:
           symbol: px
           descriptive_name: pixels
@@ -1741,6 +1856,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
         unit:
           symbol: px
           descriptive_name: pixels
@@ -1758,6 +1874,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
         unit:
           symbol: px
           descriptive_name: pixels
@@ -1836,6 +1953,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 1.0e-09
         unit:
           symbol: Å/voxel
           descriptive_name: Angstroms per voxel
@@ -1892,7 +2010,7 @@ classes:
         owner: Tomogram
         domain_of:
         - Tomogram
-        range: string
+        range: tomogrom_reconstruction_method_enum
         required: true
         inlined: true
         inlined_as_list: true
@@ -1920,7 +2038,7 @@ classes:
         owner: Tomogram
         domain_of:
         - Tomogram
-        range: string
+        range: tomogram_processing_enum
         required: true
         inlined: true
         inlined_as_list: true
@@ -2025,6 +2143,8 @@ classes:
         range: float
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
+        maximum_value: 100
         unit:
           symbol: '%'
           descriptive_name: percentage
@@ -2042,6 +2162,8 @@ classes:
         range: float
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
+        maximum_value: 100
         unit:
           symbol: '%'
           descriptive_name: percentage
@@ -2078,7 +2200,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
-        range: string
+        range: GO_ID
         required: true
         inlined: true
         inlined_as_list: true
@@ -2195,15 +2317,16 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_binning
-        ifabsent: int(1)
+        ifabsent: float(1)
         alias: binning
         owner: AnnotationOrientedPointFile
         domain_of:
         - AnnotationOrientedPointFile
         - AnnotationPointFile
-        range: integer
+        range: float
         inlined: true
         inlined_as_list: true
+        minimum_value: 1.0e-09
       filter_value:
         name: filter_value
         description: The filter value for an oriented point / instance segmentation
@@ -2291,15 +2414,16 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_binning
-        ifabsent: int(1)
+        ifabsent: float(1)
         alias: binning
         owner: AnnotationInstanceSegmentationFile
         domain_of:
         - AnnotationOrientedPointFile
         - AnnotationPointFile
-        range: integer
+        range: float
         inlined: true
         inlined_as_list: true
+        minimum_value: 1.0e-09
       filter_value:
         name: filter_value
         description: The filter value for an oriented point / instance segmentation
@@ -2387,15 +2511,16 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_binning
-        ifabsent: int(1)
+        ifabsent: float(1)
         alias: binning
         owner: AnnotationPointFile
         domain_of:
         - AnnotationOrientedPointFile
         - AnnotationPointFile
-        range: integer
+        range: float
         inlined: true
         inlined_as_list: true
+        minimum_value: 1.0e-09
       columns:
         name: columns
         description: The columns used in a point annotation file.

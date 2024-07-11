@@ -31,7 +31,7 @@ URI: [cdp-meta:acquire_mode](metadataacquire_mode)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md)
 
 
 
@@ -78,7 +78,7 @@ alias: acquire_mode
 owner: Camera
 domain_of:
 - Camera
-range: string
+range: tiltseries_camera_acquire_mode_enum
 inlined: true
 inlined_as_list: true
 

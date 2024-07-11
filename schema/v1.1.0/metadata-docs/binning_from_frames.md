@@ -33,6 +33,8 @@ URI: [cdp-meta:binning_from_frames](metadatabinning_from_frames)
 
 * Range: [Float](Float.md)
 
+* Minimum Value: 0
+
 
 
 
@@ -74,6 +76,7 @@ from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_binning_from_frames
 rank: 1000
+ifabsent: float(1)
 alias: binning_from_frames
 owner: TiltSeries
 domain_of:
@@ -81,6 +84,7 @@ domain_of:
 range: float
 inlined: true
 inlined_as_list: true
+minimum_value: 1.0e-09
 
 ```
 </details>

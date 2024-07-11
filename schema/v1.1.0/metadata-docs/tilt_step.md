@@ -35,6 +35,10 @@ URI: [cdp-meta:tilt_step](metadatatilt_step)
 
 * Required: True
 
+* Minimum Value: 0
+
+* Maximum Value: 90
+
 
 
 
@@ -84,6 +88,8 @@ range: float
 required: true
 inlined: true
 inlined_as_list: true
+minimum_value: 0
+maximum_value: 90
 unit:
   symbol: °
   descriptive_name: degrees

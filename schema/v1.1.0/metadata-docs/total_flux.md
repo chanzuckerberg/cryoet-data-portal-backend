@@ -35,6 +35,8 @@ URI: [cdp-meta:total_flux](metadatatotal_flux)
 
 * Required: True
 
+* Minimum Value: 0
+
 
 
 
@@ -85,6 +87,7 @@ range: float
 required: true
 inlined: true
 inlined_as_list: true
+minimum_value: 0
 unit:
   symbol: e^-/Å^2
   descriptive_name: electrons per square Angstrom

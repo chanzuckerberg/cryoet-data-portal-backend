@@ -65,9 +65,23 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
       Tomogram : processing
 
+
+
+
+    Tomogram --> "1" TomogramProcessingEnum : processing
+    click TomogramProcessingEnum href "../TomogramProcessingEnum"
+
+
       Tomogram : processing_software
 
       Tomogram : reconstruction_method
+
+
+
+
+    Tomogram --> "1" TomogromReconstructionMethodEnum : reconstruction_method
+    click TomogromReconstructionMethodEnum href "../TomogromReconstructionMethodEnum"
+
 
       Tomogram : reconstruction_software
 
@@ -104,9 +118,9 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 | [fiducial_alignment_status](fiducial_alignment_status.md) | 1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
 | [ctf_corrected](ctf_corrected.md) | 0..1 _recommended_ <br/> [Boolean](Boolean.md) | Whether this tomogram is CTF corrected | direct |
 | [align_software](align_software.md) | 0..1 <br/> [String](String.md) | Software used for alignment | direct |
-| [reconstruction_method](reconstruction_method.md) | 1 <br/> [String](String.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) | direct |
+| [reconstruction_method](reconstruction_method.md) | 1 <br/> [TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) | direct |
 | [reconstruction_software](reconstruction_software.md) | 1 <br/> [String](String.md) | Name of software used for reconstruction | direct |
-| [processing](processing.md) | 1 <br/> [String](String.md) | Describe additional processing used to derive the tomogram | direct |
+| [processing](processing.md) | 1 <br/> [TomogramProcessingEnum](TomogramProcessingEnum.md) | Describe additional processing used to derive the tomogram | direct |
 | [processing_software](processing_software.md) | 0..1 _recommended_ <br/> [String](String.md) | Processing software used to derive the tomogram | direct |
 | [tomogram_version](tomogram_version.md) | 1 <br/> [VersionString](VersionString.md) | Version of tomogram | direct |
 | [affine_transformation_matrix](affine_transformation_matrix.md) | 0..1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
@@ -180,6 +194,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 1.0e-09
     unit:
       symbol: Å/voxel
       descriptive_name: Angstroms per voxel
@@ -239,7 +254,7 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: string
+    range: tomogrom_reconstruction_method_enum
     required: true
     inlined: true
     inlined_as_list: true
@@ -269,7 +284,7 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: string
+    range: tomogram_processing_enum
     required: true
     inlined: true
     inlined_as_list: true
@@ -392,6 +407,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 1.0e-09
     unit:
       symbol: Å/voxel
       descriptive_name: Angstroms per voxel
@@ -451,7 +467,7 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: string
+    range: tomogrom_reconstruction_method_enum
     required: true
     inlined: true
     inlined_as_list: true
@@ -481,7 +497,7 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: string
+    range: tomogram_processing_enum
     required: true
     inlined: true
     inlined_as_list: true

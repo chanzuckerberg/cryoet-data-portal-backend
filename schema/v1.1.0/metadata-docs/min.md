@@ -35,6 +35,8 @@ URI: [cdp-meta:min](metadatamin)
 
 * Required: True
 
+* Minimum Value: -90
+
 
 
 
@@ -84,6 +86,7 @@ range: float
 required: true
 inlined: true
 inlined_as_list: true
+minimum_value: -90
 unit:
   symbol: °
   descriptive_name: degrees

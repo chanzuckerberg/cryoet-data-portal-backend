@@ -114,6 +114,8 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
+    maximum_value: 100
     unit:
       symbol: '%'
       descriptive_name: percentage
@@ -132,6 +134,8 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
+    maximum_value: 100
     unit:
       symbol: '%'
       descriptive_name: percentage
@@ -176,6 +180,8 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
+    maximum_value: 100
     unit:
       symbol: '%'
       descriptive_name: percentage
@@ -194,6 +200,8 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
+    maximum_value: 100
     unit:
       symbol: '%'
       descriptive_name: percentage

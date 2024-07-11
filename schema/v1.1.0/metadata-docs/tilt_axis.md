@@ -35,6 +35,10 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 * Required: True
 
+* Minimum Value: -360
+
+* Maximum Value: 360
+
 
 
 
@@ -84,6 +88,8 @@ range: float
 required: true
 inlined: true
 inlined_as_list: true
+minimum_value: -360
+maximum_value: 360
 unit:
   symbol: °
   descriptive_name: degrees

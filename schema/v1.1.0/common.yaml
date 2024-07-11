@@ -196,7 +196,7 @@ slots:
     description: >-
       Name of the tissue from which a biological sample used in a CryoET study is derived from.
   tissue_id:
-    range: string
+    range: BTO_ID
     recommended: true
     description: >-
       The UBERON identifier for the tissue.
@@ -208,7 +208,7 @@ slots:
     description: >-
       Name of the cell type from which a biological sample used in a CryoET study is derived from.
   cell_type_id:
-    range: string
+    range: CL_ID
     recommended: true
     description: >-
       Cell Ontology identifier for the cell type
@@ -220,7 +220,7 @@ slots:
     description: >-
       Cell line or strain for the sample.
   cell_strain_id:
-    range: string
+    range: ONTOLOGY_ID
     recommended: true
     description: >-
       Link to more information about the cell strain.
@@ -232,7 +232,7 @@ slots:
     description: >-
       Name of the cellular component.
   cell_component_id:
-    range: string
+    range: GO_ID
     recommended: true
     description: >-
       The GO identifier for the cellular component.
@@ -310,6 +310,7 @@ slots:
     #     minimum_value: 0.000000001
     #   - range: FloatFormattedString
     description: Describes the binning factor from frames to tilt series file
+    ifabsent: 'float(1)'
   tiltseries_camera_acquire_mode:
     range: tiltseries_camera_acquire_mode_enum
     description: Camera acquisition mode
@@ -657,7 +658,7 @@ slots:
     range: string
     description: A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.
   annotation_object_id:
-    range: string
+    range: GO_ID
     required: true
     description: Gene Ontology Cellular Component identifier for the annotation object
   annotation_object_name:
@@ -788,7 +789,7 @@ enums:
         description: Linear mode
       cds:
         description: Correlated double sampling mode
-  
+
   microscope_manufacturer_enum:
     description: Microscope manufacturer
     permissible_values:
@@ -828,6 +829,8 @@ enums:
         description: Simultaneous Iterative Reconstruction Technique
       WBP:
         description: Weighted Back-Projection
+      UNKNOWN:
+        description: Unknown reconstruction method
 
   tomogram_type_enum:
     description: Tomogram type
@@ -860,6 +863,36 @@ types:
     description: A URL or S3 URI
     base: str
     pattern: '^(https?|s3)://.*$'
+
+  BTO_ID:
+    description: A BRENDA Tissue Ontology identifier
+    base: str
+    pattern: '(?i)^BTO:[0-9]{7}$'
+
+  CL_ID:
+    description: A Cell Ontology identifier
+    base: str
+    pattern: '(?i)^CL:[0-9]{7}$'
+
+  GO_ID:
+    description: A Gene Ontology identifier
+    base: str
+    pattern: '(?i)^GO:[0-9]{7}$'
+
+  ONTOLOGY_ID:
+    description: An ontology identifier
+    base: str
+    pattern: '(?i)^[A-Z]+:[0-9]+$'
+
+  EMPIAR:
+    description: An Electron Microscopy Public Image Archive identifier
+    base: str
+    pattern: '(?i)^EMPIAR-[0-9]{6}$'
+
+  EMDB:
+    description: An Electron Microscopy Data Bank identifier
+    base: str
+    pattern: '(?i)^EMD-[0-9]{3,6}$'
 
 classes:
   Any:

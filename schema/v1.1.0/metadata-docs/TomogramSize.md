@@ -113,6 +113,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
     unit:
       symbol: px
       descriptive_name: pixels
@@ -130,6 +131,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
     unit:
       symbol: px
       descriptive_name: pixels
@@ -148,6 +150,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
     unit:
       symbol: px
       descriptive_name: pixels
@@ -177,6 +180,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
     unit:
       symbol: px
       descriptive_name: pixels
@@ -194,6 +198,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
     unit:
       symbol: px
       descriptive_name: pixels
@@ -212,6 +217,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0
     unit:
       symbol: px
       descriptive_name: pixels
