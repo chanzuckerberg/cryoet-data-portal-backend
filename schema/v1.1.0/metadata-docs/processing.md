@@ -35,6 +35,8 @@ URI: [cdp-meta:processing](metadataprocessing)
 
 * Required: True
 
+* Regex pattern: `(^denoised$)|(^filtered$)|(^raw$)`
+
 
 
 
@@ -84,6 +86,7 @@ range: tomogram_processing_enum
 required: true
 inlined: true
 inlined_as_list: true
+pattern: (^denoised$)|(^filtered$)|(^raw$)
 
 ```
 </details>

@@ -135,7 +135,7 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
-    minimum_value: 1.0e-09
+    minimum_value: 0
   filter_value:
     name: filter_value
     description: The filter value for an oriented point / instance segmentation annotation
@@ -257,7 +257,7 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
-    minimum_value: 1.0e-09
+    minimum_value: 0
   filter_value:
     name: filter_value
     description: The filter value for an oriented point / instance segmentation annotation

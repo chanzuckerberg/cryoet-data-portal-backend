@@ -24,7 +24,36 @@ def _add_to_slot_pattern(slot: dict, pattern: Union[str, None]) -> str:
     elif "pattern" not in slot or slot["pattern"] is None:
         return pattern
     else:
-        return f"({pattern})|({slot['pattern']})"
+        if slot["pattern"][0] == "(" and slot["pattern"][-1] == ")":
+            return f"{slot['pattern']}|({pattern})"
+        else:
+            return f"({slot['pattern']})|({pattern})"
+
+
+def _add_to_slot_minimum_value(slot: dict, minimum_value: Union[int, float]) -> Union[int, float]:
+    """
+    Add the minimum_value from the common schema to the slot minimum_value.
+    """
+    if "minimum_value" in slot and slot["minimum_value"] is not None:
+        print(
+            f"[WARNING]: Minimum value already set for slot {slot['name']} ({slot['minimum_value']}). NOT overwriting with {minimum_value}",
+        )
+        return slot["minimum_value"]
+    else:
+        return minimum_value
+
+
+def _add_to_slot_maximum_value(slot: dict, maximum_value: Union[int, float]) -> Union[int, float]:
+    """
+    Add the maximum_value from the common schema to the slot maximum_value.
+    """
+    if "maximum_value" in slot and slot["maximum_value"] is not None:
+        print(
+            f"[WARNING]: Maximum value already set for slot {slot['name']} ({slot['maximum_value']}). NOT overwriting with {maximum_value}",
+        )
+        return slot["maximum_value"]
+    else:
+        return maximum_value
 
 
 def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> SchemaView:
@@ -37,8 +66,11 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
     # Copy descriptions and ranges from common_schema
     common_slots = common_schema.all_slots()
 
-    # Ensure types are properly copied over
+    # Ensure types are properly implemented in the generated Pydantic
     schema_types = schema.all_types()
+
+    # Ensure enums are properly implemented in the generated Pydantic
+    schema_enums = schema.all_enums()
 
     for c in schema.all_classes():
         clz = schema.get_class(c)
@@ -73,25 +105,21 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
                 slot["ifabsent"] = common_slot["ifabsent"]
             if slot["range"] in schema_types:
                 slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(slot["range"]).pattern)
+            if slot["range"] in schema_enums:
+                for _, e in enumerate(schema.get_enum(slot["range"]).permissible_values):
+                    slot["pattern"] = _add_to_slot_pattern(slot, f"^{e}$")
             # add the patterns from the any_of range, combining them regex-wise
             if "any_of" in slot:
                 for _, a in enumerate(slot["any_of"]):
                     if "range" in a and a["range"] in schema_types and "pattern" in schema.get_type(a["range"]):
                         slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(a["range"]).pattern)
+                    if "range" in a and a["range"] in schema_enums:
+                        for _, e in enumerate(schema.get_enum(a["range"]).permissible_values):
+                            slot["pattern"] = _add_to_slot_pattern(slot, f"^{e}$")
                     if "minimum_value" in a and a["minimum_value"] is not None:
-                        if "minimum_value" in slot and slot["minimum_value"] is not None:
-                            print(
-                                f"[WARNING]: Minimum value already set for slot {slot['name']} ({slot['minimum_value']}). NOT overwriting with {a['minimum_value']}",
-                            )
-                        else:
-                            slot["minimum_value"] = a["minimum_value"]
+                        slot["minimum_value"] = _add_to_slot_minimum_value(slot, a["minimum_value"])
                     if "maximum_value" in a and a["maximum_value"] is not None:
-                        if "maximum_value" in slot and slot["maximum_value"] is not None:
-                            print(
-                                f"[WARNING]: Maximum value already set for slot {slot['name']} ({slot['maximum_value']}). NOT overwriting with {a['maximum_value']}",
-                            )
-                        else:
-                            slot["maximum_value"] = a["maximum_value"]
+                        slot["maximum_value"] = _add_to_slot_maximum_value(slot, a["maximum_value"])
 
     # Make sure the descriptions from mixin classes are carried over
     for c in schema.all_classes():

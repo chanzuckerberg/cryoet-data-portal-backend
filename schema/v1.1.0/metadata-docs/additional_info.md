@@ -1,13 +1,13 @@
 
 
-# Slot: microscope_additional_info
+# Slot: additional_info
 
 
 _Other microscope optical setup information, in addition to energy filter, phase plate and image corrector_
 
 
 
-URI: [cdp-meta:microscope_additional_info](metadatamicroscope_additional_info)
+URI: [cdp-meta:additional_info](metadataadditional_info)
 
 
 
@@ -21,7 +21,7 @@ URI: [cdp-meta:microscope_additional_info](metadatamicroscope_additional_info)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [Microscope](Microscope.md) | The microscope used to collect the tilt series |  no  |
 
 
 
@@ -57,8 +57,8 @@ URI: [cdp-meta:microscope_additional_info](metadatamicroscope_additional_info)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:microscope_additional_info |
-| native | cdp-meta:microscope_additional_info |
+| self | cdp-meta:additional_info |
+| native | cdp-meta:additional_info |
 | exact | cdp-common:tiltseries_microscope_additional_info |
 
 
@@ -68,17 +68,17 @@ URI: [cdp-meta:microscope_additional_info](metadatamicroscope_additional_info)
 
 <details>
 ```yaml
-name: microscope_additional_info
+name: additional_info
 description: Other microscope optical setup information, in addition to energy filter,
   phase plate and image corrector
 from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_microscope_additional_info
 rank: 1000
-alias: microscope_additional_info
-owner: TiltSeries
+alias: additional_info
+owner: Microscope
 domain_of:
-- TiltSeries
+- Microscope
 range: string
 inlined: true
 inlined_as_list: true

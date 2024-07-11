@@ -37,8 +37,8 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [snapshot](snapshot.md) | 1 <br/> [URLorS3URI](URLorS3URI.md) | Path to the dataset preview image relative to the dataset directory root | direct |
-| [thumbnail](thumbnail.md) | 1 <br/> [URLorS3URI](URLorS3URI.md) | Path to the thumbnail of preview image relative to the dataset directory root | direct |
+| [snapshot](snapshot.md) | 0..1 _recommended_ <br/> [URLorS3URI](URLorS3URI.md) | Path to the dataset preview image relative to the dataset directory root | direct |
+| [thumbnail](thumbnail.md) | 0..1 _recommended_ <br/> [URLorS3URI](URLorS3URI.md) | Path to the thumbnail of preview image relative to the dataset directory root | direct |
 
 
 
@@ -109,7 +109,7 @@ attributes:
     domain_of:
     - PicturePath
     range: URLorS3URI
-    required: true
+    recommended: true
     inlined: true
     inlined_as_list: true
     pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$
@@ -126,7 +126,7 @@ attributes:
     domain_of:
     - PicturePath
     range: URLorS3URI
-    required: true
+    recommended: true
     inlined: true
     inlined_as_list: true
     pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$
@@ -155,7 +155,7 @@ attributes:
     domain_of:
     - PicturePath
     range: URLorS3URI
-    required: true
+    recommended: true
     inlined: true
     inlined_as_list: true
     pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$
@@ -172,7 +172,7 @@ attributes:
     domain_of:
     - PicturePath
     range: URLorS3URI
-    required: true
+    recommended: true
     inlined: true
     inlined_as_list: true
     pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$

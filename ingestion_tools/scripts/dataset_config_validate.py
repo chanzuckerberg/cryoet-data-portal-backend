@@ -140,9 +140,7 @@ def main(include_glob: str, exclude_keywords: str):
                 # Being done because "any_of" doesn't work on LinkML right now (so we can't support both
                 # formatted strings and the base type in the same field)
                 # https://github.com/linkml/linkml/issues/1521
-                # Note: currently not using right now, since we have a semi-fix that gives us 
-                # better validation (although not perfect) for now
-                # config_data = replace_formatted_strings(config_data, 0, False)
+                config_data = replace_formatted_strings(config_data, 0, False)
                 Container(**config_data)
         except ValidationError as e:
             validation_succeeded = False
@@ -151,6 +149,7 @@ def main(include_glob: str, exclude_keywords: str):
 
         except Exception as exc:
             errors[file] = [exc]
+            raise exc
 
     if validation_succeeded:
         print("[SUCCESS]: All files passed validation.")

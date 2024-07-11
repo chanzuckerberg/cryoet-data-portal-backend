@@ -86,11 +86,11 @@ domain_of:
 range: string
 inlined: true
 inlined_as_list: true
-minimum_value: 1.0e-09
+minimum_value: 0
 pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
 any_of:
 - range: float
-  minimum_value: 1.0e-09
+  minimum_value: 0
 - range: FloatFormattedString
 
 ```

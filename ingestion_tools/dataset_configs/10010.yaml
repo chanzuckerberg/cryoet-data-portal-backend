@@ -95,7 +95,8 @@ datasets:
       id: CL:2000042
       name: Embryonic fibroblast
     cross_references:
-      dataset_publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440, EMPIAR-11370
+      dataset_publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
+      related_database_entries: EMPIAR-11370
     dataset_description: Cryo-electron tomograms of mouse embryonic fibroblasts from
       FIB-SEM lamella. Used to develop surface morphometrics toolkit to quantify organellar
       membrane ultrastructure.
@@ -190,7 +191,7 @@ tomograms:
       y: 0
       z: 0
     processing: raw
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1
     voxel_spacing: float {tomograms_voxel_spacing}

@@ -56,6 +56,7 @@ Name: cdp-meta
 | --- | --- |
 | [acceleration_voltage](acceleration_voltage.md) | Electron Microscope Accelerator voltage in volts |
 | [acquire_mode](acquire_mode.md) | Camera acquisition mode |
+| [additional_info](additional_info.md) | Other microscope optical setup information, in addition to energy filter, pha... |
 | [affiliation_address](affiliation_address.md) | The address of the author's affiliation |
 | [affiliation_identifier](affiliation_identifier.md) | A Research Organization Registry (ROR) identifier |
 | [affiliation_name](affiliation_name.md) | The name of the author's affiliation |
@@ -114,7 +115,6 @@ Name: cdp-meta
 | [max](max.md) | Maximal tilt angle in degrees |
 | [method_type](method_type.md) | Classification of the annotation method based on supervision |
 | [microscope](microscope.md) | The microscope used to collect the tilt series |
-| [microscope_additional_info](microscope_additional_info.md) | Other microscope optical setup information, in addition to energy filter, pha... |
 | [microscope_optical_setup](microscope_optical_setup.md) | The optical setup of the microscope used to collect the tilt series |
 | [min](min.md) | Minimal tilt angle in degrees |
 | [model](model.md) | Camera model name |
@@ -189,9 +189,12 @@ Name: cdp-meta
 | [DateOrDatetime](DateOrDatetime.md) | Either a date or a datetime |
 | [Datetime](Datetime.md) | The combination of a date and time |
 | [Decimal](Decimal.md) | A real number with arbitrary precision that conforms to the xsd:decimal speci... |
+| [DOI](DOI.md) | A Digital Object Identifier |
+| [DOILIST](DOILIST.md) | A list of Digital Object Identifiers |
 | [Double](Double.md) | A real number that conforms to the xsd:double specification |
-| [EMDB](EMDB.md) | An Electron Microscopy Data Bank identifier |
-| [EMPIAR](EMPIAR.md) | An Electron Microscopy Public Image Archive identifier |
+| [EMDBID](EMDBID.md) | An Electron Microscopy Data Bank identifier |
+| [EMPIAREMDBLIST](EMPIAREMDBLIST.md) | A list of EMPIAR and EMDB identifiers |
+| [EMPIARID](EMPIARID.md) | An Electron Microscopy Public Image Archive identifier |
 | [Float](Float.md) | A real number that conforms to the xsd:float specification |
 | [FloatFormattedString](FloatFormattedString.md) | A formatted string that represents a floating point number |
 | [GOID](GOID.md) | A Gene Ontology identifier |
@@ -206,6 +209,7 @@ Name: cdp-meta
 | [ORCID](ORCID.md) | A unique, persistent identifier for researchers, provided by ORCID |
 | [Sparqlpath](Sparqlpath.md) | A string encoding a SPARQL Property Path |
 | [String](String.md) | A character string |
+| [StringFormattedString](StringFormattedString.md) | A formatted string (variable) that represents a string |
 | [Time](Time.md) | A time object represents a (local) time of day, independent of any particular... |
 | [Uri](Uri.md) | a complete URI |
 | [Uriorcurie](Uriorcurie.md) | a URI or a CURIE |

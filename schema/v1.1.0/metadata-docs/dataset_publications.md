@@ -31,9 +31,11 @@ URI: [cdp-meta:dataset_publications](metadatadataset_publications)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [DOILIST](DOILIST.md)
 
 * Recommended: True
+
+* Regex pattern: `(^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)`
 
 
 
@@ -77,10 +79,11 @@ alias: dataset_publications
 owner: CrossReferences
 domain_of:
 - CrossReferences
-range: string
+range: DOI_LIST
 recommended: true
 inlined: true
 inlined_as_list: true
+pattern: (^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
 
 ```
 </details>

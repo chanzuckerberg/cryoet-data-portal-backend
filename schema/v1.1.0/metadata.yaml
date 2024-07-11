@@ -279,6 +279,9 @@ classes:
   Microscope:
     description: &desc_microscope The microscope used to collect the tilt series.
     attributes:
+      additional_info:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_additional_info
       manufacturer:
         exact_mappings:
           - cdp-common:tiltseries_microscope_manufacturer
@@ -343,9 +346,6 @@ classes:
         description: *desc_microscope
         range: Microscope
         required: true
-      microscope_additional_info:
-        exact_mappings:
-          - cdp-common:tiltseries_microscope_additional_info
       microscope_optical_setup:
         description: *desc_microscope_optical_setup
         range: MicroscopeOpticalSetup

@@ -33,7 +33,7 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 * Range: [URLorS3URI](URLorS3URI.md)
 
-* Required: True
+* Recommended: True
 
 * Regex pattern: `^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$`
 
@@ -84,7 +84,7 @@ owner: PicturePath
 domain_of:
 - PicturePath
 range: URLorS3URI
-required: true
+recommended: true
 inlined: true
 inlined_as_list: true
 pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$

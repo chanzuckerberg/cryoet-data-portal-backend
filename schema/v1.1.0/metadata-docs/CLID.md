@@ -14,7 +14,7 @@ URI: [cdp-meta:CL_ID](metadataCL_ID)
 
 
 
-* [pattern](https://w3id.org/linkml/pattern): `(?i)^CL:[0-9]{7}$`
+* [pattern](https://w3id.org/linkml/pattern): `^CL:[0-9]{7}$`
 
 
 

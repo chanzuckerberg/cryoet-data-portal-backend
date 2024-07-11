@@ -136,7 +136,7 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
-    pattern: (?i)^CL:[0-9]{7}$
+    pattern: ^CL:[0-9]{7}$
 
 ```
 </details>
@@ -188,7 +188,7 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
-    pattern: (?i)^CL:[0-9]{7}$
+    pattern: ^CL:[0-9]{7}$
 
 ```
 </details>

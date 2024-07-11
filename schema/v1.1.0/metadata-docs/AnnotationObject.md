@@ -120,7 +120,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
-    pattern: (?i)^GO:[0-9]{7}$
+    pattern: ^GO:[0-9]{7}$
   name:
     name: name
     description: Name of the object being annotated (e.g. ribosome, nuclear pore complex,
@@ -202,7 +202,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
-    pattern: (?i)^GO:[0-9]{7}$
+    pattern: ^GO:[0-9]{7}$
   name:
     name: name
     description: Name of the object being annotated (e.g. ribosome, nuclear pore complex,

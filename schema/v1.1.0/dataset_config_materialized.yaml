@@ -1,0 +1,2292 @@
+name: cdp-dataset-config
+description: Schema for dataset configs
+id: cdp-dataset-config
+version: 1.1.0
+imports:
+- linkml:types
+- ./metadata_materialized
+- ./common
+prefixes:
+  linkml:
+    prefix_prefix: linkml
+    prefix_reference: https://w3id.org/linkml/
+default_prefix: cdp-dataset-config/
+types:
+  string:
+    name: string
+    description: A character string
+    notes:
+    - In RDF serializations, a slot with range of string is treated as a literal or
+      type xsd:string.   If you are authoring schemas in LinkML YAML, the type is
+      referenced with the lower case "string".
+    from_schema: cdp-dataset-config
+    exact_mappings:
+    - schema:Text
+    base: str
+    uri: xsd:string
+  integer:
+    name: integer
+    description: An integer
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "integer".
+    from_schema: cdp-dataset-config
+    exact_mappings:
+    - schema:Integer
+    base: int
+    uri: xsd:integer
+  boolean:
+    name: boolean
+    description: A binary (true or false) value
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "boolean".
+    from_schema: cdp-dataset-config
+    exact_mappings:
+    - schema:Boolean
+    base: Bool
+    uri: xsd:boolean
+    repr: bool
+  float:
+    name: float
+    description: A real number that conforms to the xsd:float specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "float".
+    from_schema: cdp-dataset-config
+    exact_mappings:
+    - schema:Float
+    base: float
+    uri: xsd:float
+  double:
+    name: double
+    description: A real number that conforms to the xsd:double specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "double".
+    from_schema: cdp-dataset-config
+    close_mappings:
+    - schema:Float
+    base: float
+    uri: xsd:double
+  decimal:
+    name: decimal
+    description: A real number with arbitrary precision that conforms to the xsd:decimal
+      specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "decimal".
+    from_schema: cdp-dataset-config
+    broad_mappings:
+    - schema:Number
+    base: Decimal
+    uri: xsd:decimal
+  time:
+    name: time
+    description: A time object represents a (local) time of day, independent of any
+      particular day
+    notes:
+    - URI is dateTime because OWL reasoners do not work with straight date or time
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "time".
+    from_schema: cdp-dataset-config
+    exact_mappings:
+    - schema:Time
+    base: XSDTime
+    uri: xsd:time
+    repr: str
+  date:
+    name: date
+    description: a date (year, month and day) in an idealized calendar
+    notes:
+    - URI is dateTime because OWL reasoners don't work with straight date or time
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "date".
+    from_schema: cdp-dataset-config
+    exact_mappings:
+    - schema:Date
+    base: XSDDate
+    uri: xsd:date
+    repr: str
+  datetime:
+    name: datetime
+    description: The combination of a date and time
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "datetime".
+    from_schema: cdp-dataset-config
+    exact_mappings:
+    - schema:DateTime
+    base: XSDDateTime
+    uri: xsd:dateTime
+    repr: str
+  date_or_datetime:
+    name: date_or_datetime
+    description: Either a date or a datetime
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "date_or_datetime".
+    from_schema: cdp-dataset-config
+    base: str
+    uri: linkml:DateOrDatetime
+    repr: str
+  uriorcurie:
+    name: uriorcurie
+    description: a URI or a CURIE
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "uriorcurie".
+    from_schema: cdp-dataset-config
+    base: URIorCURIE
+    uri: xsd:anyURI
+    repr: str
+  curie:
+    name: curie
+    conforms_to: https://www.w3.org/TR/curie/
+    description: a compact URI
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "curie".
+    comments:
+    - in RDF serializations this MUST be expanded to a URI
+    - in non-RDF serializations MAY be serialized as the compact representation
+    from_schema: cdp-dataset-config
+    base: Curie
+    uri: xsd:string
+    repr: str
+  uri:
+    name: uri
+    conforms_to: https://www.ietf.org/rfc/rfc3987.txt
+    description: a complete URI
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "uri".
+    comments:
+    - in RDF serializations a slot with range of uri is treated as a literal or type
+      xsd:anyURI unless it is an identifier or a reference to an identifier, in which
+      case it is translated directly to a node
+    from_schema: cdp-dataset-config
+    close_mappings:
+    - schema:URL
+    base: URI
+    uri: xsd:anyURI
+    repr: str
+  ncname:
+    name: ncname
+    description: Prefix part of CURIE
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "ncname".
+    from_schema: cdp-dataset-config
+    base: NCName
+    uri: xsd:string
+    repr: str
+  objectidentifier:
+    name: objectidentifier
+    description: A URI or CURIE that represents an object in the model.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "objectidentifier".
+    comments:
+    - Used for inheritance and type checking
+    from_schema: cdp-dataset-config
+    base: ElementIdentifier
+    uri: shex:iri
+    repr: str
+  nodeidentifier:
+    name: nodeidentifier
+    description: A URI, CURIE or BNODE that represents a node in a model.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "nodeidentifier".
+    from_schema: cdp-dataset-config
+    base: NodeIdentifier
+    uri: shex:nonLiteral
+    repr: str
+  jsonpointer:
+    name: jsonpointer
+    conforms_to: https://datatracker.ietf.org/doc/html/rfc6901
+    description: A string encoding a JSON Pointer. The value of the string MUST conform
+      to JSON Point syntax and SHOULD dereference to a valid object within the current
+      instance document when encoded in tree form.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "jsonpointer".
+    from_schema: cdp-dataset-config
+    base: str
+    uri: xsd:string
+    repr: str
+  jsonpath:
+    name: jsonpath
+    conforms_to: https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html
+    description: A string encoding a JSON Path. The value of the string MUST conform
+      to JSON Point syntax and SHOULD dereference to zero or more valid objects within
+      the current instance document when encoded in tree form.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "jsonpath".
+    from_schema: cdp-dataset-config
+    base: str
+    uri: xsd:string
+    repr: str
+  sparqlpath:
+    name: sparqlpath
+    conforms_to: https://www.w3.org/TR/sparql11-query/#propertypaths
+    description: A string encoding a SPARQL Property Path. The value of the string
+      MUST conform to SPARQL syntax and SHOULD dereference to zero or more valid objects
+      within the current instance document when encoded as RDF.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "sparqlpath".
+    from_schema: cdp-dataset-config
+    base: str
+    uri: xsd:string
+    repr: str
+  StringFormattedString:
+    name: StringFormattedString
+    description: A formatted string (variable) that represents a string.
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+  BooleanFormattedString:
+    name: BooleanFormattedString
+    description: A formatted string that represents a boolean.
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+  FloatFormattedString:
+    name: FloatFormattedString
+    description: A formatted string that represents a floating point number.
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+  IntegerFormattedString:
+    name: IntegerFormattedString
+    description: A formatted string that represents an integer.
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+  VersionString:
+    name: VersionString
+    description: A version number (only major, minor versions)
+    from_schema: cdp-dataset-config
+    base: float
+    minimum_value: 0
+  URLorS3URI:
+    name: URLorS3URI
+    description: A URL or S3 URI
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$
+  ORCID:
+    name: ORCID
+    description: A unique, persistent identifier for researchers, provided by ORCID.
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
+  BTO_ID:
+    name: BTO_ID
+    description: A BRENDA Tissue Ontology identifier
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^BTO:[0-9]{7}$
+  CL_ID:
+    name: CL_ID
+    description: A Cell Ontology identifier
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^CL:[0-9]{7}$
+  GO_ID:
+    name: GO_ID
+    description: A Gene Ontology identifier
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^GO:[0-9]{7}$
+  ONTOLOGY_ID:
+    name: ONTOLOGY_ID
+    description: An ontology identifier
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^[A-Z]+:[0-9]+$
+  DOI:
+    name: DOI
+    description: A Digital Object Identifier
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$
+  DOI_LIST:
+    name: DOI_LIST
+    description: A list of Digital Object Identifiers
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$
+  EMPIAR_ID:
+    name: EMPIAR_ID
+    description: An Electron Microscopy Public Image Archive identifier
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^EMPIAR-[0-9]{5}$
+  EMDB_ID:
+    name: EMDB_ID
+    description: An Electron Microscopy Data Bank identifier
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^EMD-[0-9]{4,5}$
+  EMPIAR_EMDB_LIST:
+    name: EMPIAR_EMDB_LIST
+    description: A list of EMPIAR and EMDB identifiers
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$
+enums:
+  annotation_method_type_enum:
+    name: annotation_method_type_enum
+    description: Describes how the annotations were generated.
+    from_schema: cdp-dataset-config
+    permissible_values:
+      manual:
+        text: manual
+        description: Annotations were generated manually.
+      automated:
+        text: automated
+        description: Annotations were generated semi-automatically.
+      hybrid:
+        text: hybrid
+        description: Annotations were generated automatically.
+  sample_type_enum:
+    name: sample_type_enum
+    description: Type of sample imaged in a CryoET study.
+    from_schema: cdp-dataset-config
+    permissible_values:
+      cell:
+        text: cell
+        description: Tomographic data of whole cells or cell sections.
+      tissue:
+        text: tissue
+        description: Tomographic data of tissue sections.
+      organism:
+        text: organism
+        description: Tomographic data of sections through multicellular organisms.
+      organelle:
+        text: organelle
+        description: Tomographic data of purified organelles.
+      virus:
+        text: virus
+        description: Tomographic data of purified viruses or VLPs.
+      in_vitro:
+        text: in_vitro
+        description: Tomographic data of in vitro reconstituted systems or mixtures
+          of proteins.
+      in_silico:
+        text: in_silico
+        description: Simulated tomographic data.
+      other:
+        text: other
+        description: Other type of sample.
+  tiltseries_camera_acquire_mode_enum:
+    name: tiltseries_camera_acquire_mode_enum
+    description: Camera acquisition mode
+    from_schema: cdp-dataset-config
+    permissible_values:
+      counting:
+        text: counting
+        description: Counting mode
+      superresolution:
+        text: superresolution
+        description: Super-resolution mode
+      linear:
+        text: linear
+        description: Linear mode
+      cds:
+        text: cds
+        description: Correlated double sampling mode
+  microscope_manufacturer_enum:
+    name: microscope_manufacturer_enum
+    description: Microscope manufacturer
+    from_schema: cdp-dataset-config
+    permissible_values:
+      FEI:
+        text: FEI
+        description: FEI Company
+      TFS:
+        text: TFS
+        description: Thermo Fisher Scientific
+      JEOL:
+        text: JEOL
+        description: JEOL Ltd.
+  fiducial_alignment_status_enum:
+    name: fiducial_alignment_status_enum
+    description: Fiducial Alignment method
+    from_schema: cdp-dataset-config
+    permissible_values:
+      FIDUCIAL:
+        text: FIDUCIAL
+        description: Alignment computed based on fiducial markers
+      NON_FIDUCIAL:
+        text: NON_FIDUCIAL
+        description: Alignment computed without fiducial markers
+  tomogram_processing_enum:
+    name: tomogram_processing_enum
+    description: Tomogram processing method
+    from_schema: cdp-dataset-config
+    permissible_values:
+      denoised:
+        text: denoised
+        description: Tomogram was denoised
+      filtered:
+        text: filtered
+        description: Tomogram was filtered
+      raw:
+        text: raw
+        description: Tomogram was not processed
+  tomogrom_reconstruction_method_enum:
+    name: tomogrom_reconstruction_method_enum
+    description: Tomogram reconstruction method
+    from_schema: cdp-dataset-config
+    permissible_values:
+      SART:
+        text: SART
+        description: Simultaneous Algebraic Reconstruction Technique
+      FOURIER SPACE:
+        text: FOURIER SPACE
+        description: Fourier space reconstruction
+      SIRT:
+        text: SIRT
+        description: Simultaneous Iterative Reconstruction Technique
+      WBP:
+        text: WBP
+        description: Weighted Back-Projection
+      UNKNOWN:
+        text: UNKNOWN
+        description: Unknown reconstruction method
+  tomogram_type_enum:
+    name: tomogram_type_enum
+    description: Tomogram type
+    from_schema: cdp-dataset-config
+    permissible_values:
+      CANONICAL:
+        text: CANONICAL
+        description: Canonical tomogram (basis geometry for all annotations)
+classes:
+  Container:
+    name: Container
+    description: Class that models the dataset config.
+    from_schema: cdp-dataset-config
+    attributes:
+      annotations:
+        name: annotations
+        description: An annotation entity.
+        from_schema: cdp-dataset-config
+        alias: annotations
+        owner: Container
+        domain_of:
+        - Container
+        range: AnnotationEntity
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      dataset_keyphotos:
+        name: dataset_keyphotos
+        description: A dataset key photo entity.
+        from_schema: cdp-dataset-config
+        alias: dataset_keyphotos
+        owner: Container
+        domain_of:
+        - Container
+        range: DatasetKeyPhotoEntity
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      datasets:
+        name: datasets
+        description: A dataset entity.
+        from_schema: cdp-dataset-config
+        alias: datasets
+        owner: Container
+        domain_of:
+        - Container
+        range: DatasetEntity
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      frames:
+        name: frames
+        description: A frame entity.
+        from_schema: cdp-dataset-config
+        alias: frames
+        owner: Container
+        domain_of:
+        - Container
+        range: FrameEntity
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      gains:
+        name: gains
+        description: A gain entity.
+        from_schema: cdp-dataset-config
+        alias: gains
+        owner: Container
+        domain_of:
+        - Container
+        range: GainEntity
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      key_images:
+        name: key_images
+        description: A key image entity.
+        from_schema: cdp-dataset-config
+        alias: key_images
+        owner: Container
+        domain_of:
+        - Container
+        range: KeyImageEntity
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      rawtilts:
+        name: rawtilts
+        description: A raw tilt entity.
+        from_schema: cdp-dataset-config
+        alias: rawtilts
+        owner: Container
+        domain_of:
+        - Container
+        range: RawTiltEntity
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      runs:
+        name: runs
+        description: A run entity.
+        from_schema: cdp-dataset-config
+        alias: runs
+        owner: Container
+        domain_of:
+        - Container
+        range: RunEntity
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      standardization_config:
+        name: standardization_config
+        description: A standardization configuration.
+        from_schema: cdp-dataset-config
+        alias: standardization_config
+        owner: Container
+        domain_of:
+        - Container
+        range: StandardizationConfig
+        required: true
+        inlined: true
+        inlined_as_list: true
+      tiltseries:
+        name: tiltseries
+        description: A tilt series entity.
+        from_schema: cdp-dataset-config
+        alias: tiltseries
+        owner: Container
+        domain_of:
+        - Container
+        range: TiltSeriesEntity
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      tomograms:
+        name: tomograms
+        description: A tomogram entity.
+        from_schema: cdp-dataset-config
+        alias: tomograms
+        owner: Container
+        domain_of:
+        - Container
+        range: TomogramEntity
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      voxel_spacings:
+        name: voxel_spacings
+        description: A voxel spacing entity.
+        from_schema: cdp-dataset-config
+        alias: voxel_spacings
+        owner: Container
+        domain_of:
+        - Container
+        range: VoxelSpacingEntity
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+    tree_root: true
+  GeneralGlob:
+    name: GeneralGlob
+    description: An abstracted glob class for destination and source globs.
+    from_schema: cdp-dataset-config
+    abstract: true
+    attributes:
+      list_glob:
+        name: list_glob
+        description: The glob for the file.
+        from_schema: cdp-dataset-config
+        alias: list_glob
+        owner: GeneralGlob
+        domain_of:
+        - GeneralGlob
+        - TomogramHeader
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      match_regex:
+        name: match_regex
+        description: The regex for the file.
+        from_schema: cdp-dataset-config
+        ifabsent: string(.*)
+        alias: match_regex
+        owner: GeneralGlob
+        domain_of:
+        - GeneralGlob
+        - TomogramHeader
+        range: string
+        inlined: true
+        inlined_as_list: true
+      name_regex:
+        name: name_regex
+        description: The regex for the name of the file.
+        from_schema: cdp-dataset-config
+        ifabsent: string((.*))
+        alias: name_regex
+        owner: GeneralGlob
+        domain_of:
+        - GeneralGlob
+        range: string
+        inlined: true
+        inlined_as_list: true
+  DestinationGlob:
+    name: DestinationGlob
+    description: A glob class for finding files in the output / destination directory.
+    from_schema: cdp-dataset-config
+    is_a: GeneralGlob
+    attributes:
+      list_glob:
+        name: list_glob
+        description: The glob for the file.
+        from_schema: cdp-dataset-config
+        alias: list_glob
+        owner: DestinationGlob
+        domain_of:
+        - GeneralGlob
+        - TomogramHeader
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      match_regex:
+        name: match_regex
+        description: The regex for the file.
+        from_schema: cdp-dataset-config
+        ifabsent: string(.*)
+        alias: match_regex
+        owner: DestinationGlob
+        domain_of:
+        - GeneralGlob
+        - TomogramHeader
+        range: string
+        inlined: true
+        inlined_as_list: true
+      name_regex:
+        name: name_regex
+        description: The regex for the name of the file.
+        from_schema: cdp-dataset-config
+        ifabsent: string((.*))
+        alias: name_regex
+        owner: DestinationGlob
+        domain_of:
+        - GeneralGlob
+        range: string
+        inlined: true
+        inlined_as_list: true
+  SourceGlob:
+    name: SourceGlob
+    description: A glob class for finding files in the source directory.
+    from_schema: cdp-dataset-config
+    is_a: GeneralGlob
+    attributes:
+      list_glob:
+        name: list_glob
+        description: The glob for the file.
+        from_schema: cdp-dataset-config
+        alias: list_glob
+        owner: SourceGlob
+        domain_of:
+        - GeneralGlob
+        - TomogramHeader
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      match_regex:
+        name: match_regex
+        description: The regex for the file.
+        from_schema: cdp-dataset-config
+        ifabsent: string(.*)
+        alias: match_regex
+        owner: SourceGlob
+        domain_of:
+        - GeneralGlob
+        - TomogramHeader
+        range: string
+        inlined: true
+        inlined_as_list: true
+      name_regex:
+        name: name_regex
+        description: The regex for the name of the file.
+        from_schema: cdp-dataset-config
+        ifabsent: string((.*))
+        alias: name_regex
+        owner: SourceGlob
+        domain_of:
+        - GeneralGlob
+        range: string
+        inlined: true
+        inlined_as_list: true
+  SourceMultiGlob:
+    name: SourceMultiGlob
+    description: A glob class for finding files in the source directory (with multiple
+      globs).
+    from_schema: cdp-dataset-config
+    attributes:
+      list_globs:
+        name: list_globs
+        description: The globs for the file.
+        from_schema: cdp-dataset-config
+        alias: list_globs
+        owner: SourceMultiGlob
+        domain_of:
+        - SourceMultiGlob
+        range: string
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  DefaultSource:
+    name: DefaultSource
+    description: A generalized source class with glob finders.
+    from_schema: cdp-dataset-config
+    attributes:
+      destination_glob:
+        name: destination_glob
+        description: A glob class for finding files in the output / destination directory.
+        from_schema: cdp-dataset-config
+        alias: destination_glob
+        owner: DefaultSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: DestinationGlob
+        inlined: true
+        inlined_as_list: true
+      source_glob:
+        name: source_glob
+        description: A glob class for finding files in the source directory.
+        from_schema: cdp-dataset-config
+        alias: source_glob
+        owner: DefaultSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: SourceGlob
+        inlined: true
+        inlined_as_list: true
+      source_multi_glob:
+        name: source_multi_glob
+        description: A glob class for finding files in the source directory (with
+          multiple globs).
+        from_schema: cdp-dataset-config
+        alias: source_multi_glob
+        owner: DefaultSource
+        domain_of:
+        - DefaultSource
+        range: SourceMultiGlob
+        inlined: true
+        inlined_as_list: true
+  SourceParentFiltersEntity:
+    name: SourceParentFiltersEntity
+    description: Used as a mixin with root-level classes that contain sources that
+      can have parent filters.
+    from_schema: cdp-dataset-config
+    attributes:
+      parent_filters:
+        name: parent_filters
+        description: Filters for the parent of a source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: SourceParentFiltersEntity
+        domain_of:
+        - SourceParentFiltersEntity
+        - AnnotationSource
+        range: SourceParentFilters
+        inlined: true
+        inlined_as_list: true
+  SourceParentFilters:
+    name: SourceParentFilters
+    description: Filters for the parent of a source.
+    from_schema: cdp-dataset-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of a source. For a given attribute,
+          it can only be used if the current class is a subclass of the attribute.
+        from_schema: cdp-dataset-config
+        alias: include
+        owner: SourceParentFilters
+        domain_of:
+        - SourceParentFilters
+        range: SourceParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of a source. For a given attribute,
+          it can only be used if the current class is a subclass of the attribute.
+        from_schema: cdp-dataset-config
+        alias: exclude
+        owner: SourceParentFilters
+        domain_of:
+        - SourceParentFilters
+        range: SourceParent
+        inlined: true
+        inlined_as_list: true
+  SourceParent:
+    name: SourceParent
+    description: A filter for a parent class of a source. For a given attribute, it
+      can only be used if the current class is a subclass of the attribute.
+    from_schema: cdp-dataset-config
+    attributes:
+      annotation:
+        name: annotation
+        description: Include or exclude annotations.
+        from_schema: cdp-dataset-config
+        alias: annotation
+        owner: SourceParent
+        domain_of:
+        - SourceParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      dataset:
+        name: dataset
+        description: Include or exclude datasets.
+        from_schema: cdp-dataset-config
+        alias: dataset
+        owner: SourceParent
+        domain_of:
+        - SourceParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      run:
+        name: run
+        description: Include or exclude runs.
+        from_schema: cdp-dataset-config
+        alias: run
+        owner: SourceParent
+        domain_of:
+        - SourceParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      tomogram:
+        name: tomogram
+        description: Include or exclude tomograms.
+        from_schema: cdp-dataset-config
+        alias: tomogram
+        owner: SourceParent
+        domain_of:
+        - SourceParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      voxel_spacing:
+        name: voxel_spacing
+        description: Include or exclude voxel spacings.
+        from_schema: cdp-dataset-config
+        alias: voxel_spacing
+        owner: SourceParent
+        domain_of:
+        - Tomogram
+        - SourceParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  DefaultLiteralEntity:
+    name: DefaultLiteralEntity
+    description: Used as a mixin with root-level classes that contain sources that
+      have literals.
+    from_schema: cdp-dataset-config
+    attributes:
+      literal:
+        name: literal
+        description: A literal class with a value attribute.
+        from_schema: cdp-dataset-config
+        alias: literal
+        owner: DefaultLiteralEntity
+        domain_of:
+        - DefaultLiteralEntity
+        - DatasetKeyPhotoSource
+        - VoxelSpacingSource
+        range: DefaultLiteral
+        inlined: true
+        inlined_as_list: true
+  DefaultLiteral:
+    name: DefaultLiteral
+    description: A literal class with a value attribute.
+    from_schema: cdp-dataset-config
+    attributes:
+      value:
+        name: value
+        description: A placeholder for any type of data.
+        from_schema: cdp-dataset-config
+        alias: value
+        owner: DefaultLiteral
+        domain_of:
+        - DefaultLiteral
+        - DatasetKeyPhotoLiteral
+        - VoxelSpacingLiteral
+        range: Any
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  AnnotationEntity:
+    name: AnnotationEntity
+    description: An annotation entity.
+    from_schema: cdp-dataset-config
+    attributes:
+      metadata:
+        name: metadata
+        description: Metadata describing an annotation.
+        from_schema: cdp-dataset-config
+        alias: metadata
+        owner: AnnotationEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        range: Annotation
+        required: true
+        inlined: true
+        inlined_as_list: true
+      sources:
+        name: sources
+        description: An annotation source.
+        from_schema: cdp-dataset-config
+        alias: sources
+        owner: AnnotationEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: AnnotationSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  AnnotationSource:
+    name: AnnotationSource
+    description: An annotation source.
+    from_schema: cdp-dataset-config
+    attributes:
+      InstanceSegmentation:
+        name: InstanceSegmentation
+        description: File and sourcing data for an instance segmentation annotation.
+          Annotation that identifies individual instances of object shapes.
+        from_schema: cdp-dataset-config
+        alias: InstanceSegmentation
+        owner: AnnotationSource
+        domain_of:
+        - AnnotationSource
+        range: AnnotationInstanceSegmentationFile
+        inlined: true
+        inlined_as_list: true
+      OrientedPoint:
+        name: OrientedPoint
+        description: File and sourcing data for an oriented point annotation. Annotation
+          that identifies points along with orientation in the volume.
+        from_schema: cdp-dataset-config
+        alias: OrientedPoint
+        owner: AnnotationSource
+        domain_of:
+        - AnnotationSource
+        range: AnnotationOrientedPointFile
+        inlined: true
+        inlined_as_list: true
+      Point:
+        name: Point
+        description: File and sourcing data for a point annotation. Annotation that
+          identifies points in the volume.
+        from_schema: cdp-dataset-config
+        alias: Point
+        owner: AnnotationSource
+        domain_of:
+        - AnnotationSource
+        range: AnnotationPointFile
+        inlined: true
+        inlined_as_list: true
+      SegmentationMask:
+        name: SegmentationMask
+        description: File and sourcing data for a segmentation mask annotation. Annotation
+          that identifies an object.
+        from_schema: cdp-dataset-config
+        alias: SegmentationMask
+        owner: AnnotationSource
+        domain_of:
+        - AnnotationSource
+        range: AnnotationSegmentationMaskFile
+        inlined: true
+        inlined_as_list: true
+      SemanticSegmentationMask:
+        name: SemanticSegmentationMask
+        description: File and sourcing data for a semantic segmentation mask annotation.
+          Annotation that identifies classes of objects.
+        from_schema: cdp-dataset-config
+        alias: SemanticSegmentationMask
+        owner: AnnotationSource
+        domain_of:
+        - AnnotationSource
+        range: AnnotationSemanticSegmentationMaskFile
+        inlined: true
+        inlined_as_list: true
+      parent_filters:
+        name: parent_filters
+        description: Filters for the parent of a source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: AnnotationSource
+        domain_of:
+        - SourceParentFiltersEntity
+        - AnnotationSource
+        range: SourceParentFilters
+        inlined: true
+        inlined_as_list: true
+  DatasetEntity:
+    name: DatasetEntity
+    description: A dataset entity.
+    from_schema: cdp-dataset-config
+    attributes:
+      metadata:
+        name: metadata
+        description: High-level description of a cryoET dataset.
+        from_schema: cdp-dataset-config
+        alias: metadata
+        owner: DatasetEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        range: Dataset
+        required: true
+        inlined: true
+        inlined_as_list: true
+      sources:
+        name: sources
+        description: A dataset source.
+        from_schema: cdp-dataset-config
+        alias: sources
+        owner: DatasetEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: DatasetSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  DatasetSource:
+    name: DatasetSource
+    description: A dataset source.
+    from_schema: cdp-dataset-config
+    mixins:
+    - DefaultSource
+    - DefaultLiteralEntity
+    attributes:
+      destination_glob:
+        name: destination_glob
+        description: A glob class for finding files in the output / destination directory.
+        from_schema: cdp-dataset-config
+        alias: destination_glob
+        owner: DatasetSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: DestinationGlob
+        inlined: true
+        inlined_as_list: true
+      source_glob:
+        name: source_glob
+        description: A glob class for finding files in the source directory.
+        from_schema: cdp-dataset-config
+        alias: source_glob
+        owner: DatasetSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: SourceGlob
+        inlined: true
+        inlined_as_list: true
+      source_multi_glob:
+        name: source_multi_glob
+        description: A glob class for finding files in the source directory (with
+          multiple globs).
+        from_schema: cdp-dataset-config
+        alias: source_multi_glob
+        owner: DatasetSource
+        domain_of:
+        - DefaultSource
+        range: SourceMultiGlob
+        inlined: true
+        inlined_as_list: true
+      literal:
+        name: literal
+        description: A literal class with a value attribute.
+        from_schema: cdp-dataset-config
+        alias: literal
+        owner: DatasetSource
+        domain_of:
+        - DefaultLiteralEntity
+        - DatasetKeyPhotoSource
+        - VoxelSpacingSource
+        range: DefaultLiteral
+        inlined: true
+        inlined_as_list: true
+  DatasetKeyPhotoEntity:
+    name: DatasetKeyPhotoEntity
+    description: A dataset key photo entity.
+    from_schema: cdp-dataset-config
+    attributes:
+      sources:
+        name: sources
+        description: A dataset key photo source.
+        from_schema: cdp-dataset-config
+        alias: sources
+        owner: DatasetKeyPhotoEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: DatasetKeyPhotoSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  DatasetKeyPhotoSource:
+    name: DatasetKeyPhotoSource
+    description: A dataset key photo source.
+    from_schema: cdp-dataset-config
+    mixins:
+    - SourceParentFiltersEntity
+    attributes:
+      literal:
+        name: literal
+        description: A literal for a dataset key photo.
+        from_schema: cdp-dataset-config
+        alias: literal
+        owner: DatasetKeyPhotoSource
+        domain_of:
+        - DefaultLiteralEntity
+        - DatasetKeyPhotoSource
+        - VoxelSpacingSource
+        range: DatasetKeyPhotoLiteral
+        inlined: true
+        inlined_as_list: true
+      parent_filters:
+        name: parent_filters
+        description: Filters for the parent of a source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: DatasetKeyPhotoSource
+        domain_of:
+        - SourceParentFiltersEntity
+        - AnnotationSource
+        range: SourceParentFilters
+        inlined: true
+        inlined_as_list: true
+  DatasetKeyPhotoLiteral:
+    name: DatasetKeyPhotoLiteral
+    description: A literal for a dataset key photo.
+    from_schema: cdp-dataset-config
+    attributes:
+      value:
+        name: value
+        description: A set of paths to representative images of a piece of data.
+        from_schema: cdp-dataset-config
+        alias: value
+        owner: DatasetKeyPhotoLiteral
+        domain_of:
+        - DefaultLiteral
+        - DatasetKeyPhotoLiteral
+        - VoxelSpacingLiteral
+        range: PicturePath
+        required: true
+        inlined: true
+        inlined_as_list: true
+  FrameEntity:
+    name: FrameEntity
+    description: A frame entity.
+    from_schema: cdp-dataset-config
+    attributes:
+      sources:
+        name: sources
+        description: A frame source.
+        from_schema: cdp-dataset-config
+        alias: sources
+        owner: FrameEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: FrameSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  FrameSource:
+    name: FrameSource
+    description: A frame source.
+    from_schema: cdp-dataset-config
+    mixins:
+    - DefaultSource
+    - DefaultLiteralEntity
+    - SourceParentFiltersEntity
+    attributes:
+      destination_glob:
+        name: destination_glob
+        description: A glob class for finding files in the output / destination directory.
+        from_schema: cdp-dataset-config
+        alias: destination_glob
+        owner: FrameSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: DestinationGlob
+        inlined: true
+        inlined_as_list: true
+      source_glob:
+        name: source_glob
+        description: A glob class for finding files in the source directory.
+        from_schema: cdp-dataset-config
+        alias: source_glob
+        owner: FrameSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: SourceGlob
+        inlined: true
+        inlined_as_list: true
+      source_multi_glob:
+        name: source_multi_glob
+        description: A glob class for finding files in the source directory (with
+          multiple globs).
+        from_schema: cdp-dataset-config
+        alias: source_multi_glob
+        owner: FrameSource
+        domain_of:
+        - DefaultSource
+        range: SourceMultiGlob
+        inlined: true
+        inlined_as_list: true
+      literal:
+        name: literal
+        description: A literal class with a value attribute.
+        from_schema: cdp-dataset-config
+        alias: literal
+        owner: FrameSource
+        domain_of:
+        - DefaultLiteralEntity
+        - DatasetKeyPhotoSource
+        - VoxelSpacingSource
+        range: DefaultLiteral
+        inlined: true
+        inlined_as_list: true
+      parent_filters:
+        name: parent_filters
+        description: Filters for the parent of a source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: FrameSource
+        domain_of:
+        - SourceParentFiltersEntity
+        - AnnotationSource
+        range: SourceParentFilters
+        inlined: true
+        inlined_as_list: true
+  GainEntity:
+    name: GainEntity
+    description: A gain entity.
+    from_schema: cdp-dataset-config
+    attributes:
+      sources:
+        name: sources
+        description: A gain source.
+        from_schema: cdp-dataset-config
+        alias: sources
+        owner: GainEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: GainSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  GainSource:
+    name: GainSource
+    description: A gain source.
+    from_schema: cdp-dataset-config
+    mixins:
+    - DefaultSource
+    - DefaultLiteralEntity
+    - SourceParentFiltersEntity
+    attributes:
+      destination_glob:
+        name: destination_glob
+        description: A glob class for finding files in the output / destination directory.
+        from_schema: cdp-dataset-config
+        alias: destination_glob
+        owner: GainSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: DestinationGlob
+        inlined: true
+        inlined_as_list: true
+      source_glob:
+        name: source_glob
+        description: A glob class for finding files in the source directory.
+        from_schema: cdp-dataset-config
+        alias: source_glob
+        owner: GainSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: SourceGlob
+        inlined: true
+        inlined_as_list: true
+      source_multi_glob:
+        name: source_multi_glob
+        description: A glob class for finding files in the source directory (with
+          multiple globs).
+        from_schema: cdp-dataset-config
+        alias: source_multi_glob
+        owner: GainSource
+        domain_of:
+        - DefaultSource
+        range: SourceMultiGlob
+        inlined: true
+        inlined_as_list: true
+      literal:
+        name: literal
+        description: A literal class with a value attribute.
+        from_schema: cdp-dataset-config
+        alias: literal
+        owner: GainSource
+        domain_of:
+        - DefaultLiteralEntity
+        - DatasetKeyPhotoSource
+        - VoxelSpacingSource
+        range: DefaultLiteral
+        inlined: true
+        inlined_as_list: true
+      parent_filters:
+        name: parent_filters
+        description: Filters for the parent of a source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: GainSource
+        domain_of:
+        - SourceParentFiltersEntity
+        - AnnotationSource
+        range: SourceParentFilters
+        inlined: true
+        inlined_as_list: true
+  KeyImageEntity:
+    name: KeyImageEntity
+    description: A key image entity.
+    from_schema: cdp-dataset-config
+    attributes:
+      sources:
+        name: sources
+        description: A key image source.
+        from_schema: cdp-dataset-config
+        alias: sources
+        owner: KeyImageEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: KeyImageSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  KeyImageSource:
+    name: KeyImageSource
+    description: A key image source.
+    from_schema: cdp-dataset-config
+    mixins:
+    - DefaultSource
+    - DefaultLiteralEntity
+    - SourceParentFiltersEntity
+    attributes:
+      destination_glob:
+        name: destination_glob
+        description: A glob class for finding files in the output / destination directory.
+        from_schema: cdp-dataset-config
+        alias: destination_glob
+        owner: KeyImageSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: DestinationGlob
+        inlined: true
+        inlined_as_list: true
+      source_glob:
+        name: source_glob
+        description: A glob class for finding files in the source directory.
+        from_schema: cdp-dataset-config
+        alias: source_glob
+        owner: KeyImageSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: SourceGlob
+        inlined: true
+        inlined_as_list: true
+      source_multi_glob:
+        name: source_multi_glob
+        description: A glob class for finding files in the source directory (with
+          multiple globs).
+        from_schema: cdp-dataset-config
+        alias: source_multi_glob
+        owner: KeyImageSource
+        domain_of:
+        - DefaultSource
+        range: SourceMultiGlob
+        inlined: true
+        inlined_as_list: true
+      literal:
+        name: literal
+        description: A literal class with a value attribute.
+        from_schema: cdp-dataset-config
+        alias: literal
+        owner: KeyImageSource
+        domain_of:
+        - DefaultLiteralEntity
+        - DatasetKeyPhotoSource
+        - VoxelSpacingSource
+        range: DefaultLiteral
+        inlined: true
+        inlined_as_list: true
+      parent_filters:
+        name: parent_filters
+        description: Filters for the parent of a source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: KeyImageSource
+        domain_of:
+        - SourceParentFiltersEntity
+        - AnnotationSource
+        range: SourceParentFilters
+        inlined: true
+        inlined_as_list: true
+  RawTiltEntity:
+    name: RawTiltEntity
+    description: A raw tilt entity.
+    from_schema: cdp-dataset-config
+    attributes:
+      sources:
+        name: sources
+        description: A raw tilt source.
+        from_schema: cdp-dataset-config
+        alias: sources
+        owner: RawTiltEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: RawTiltSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  RawTiltSource:
+    name: RawTiltSource
+    description: A raw tilt source.
+    from_schema: cdp-dataset-config
+    mixins:
+    - DefaultSource
+    - DefaultLiteralEntity
+    - SourceParentFiltersEntity
+    attributes:
+      destination_glob:
+        name: destination_glob
+        description: A glob class for finding files in the output / destination directory.
+        from_schema: cdp-dataset-config
+        alias: destination_glob
+        owner: RawTiltSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: DestinationGlob
+        inlined: true
+        inlined_as_list: true
+      source_glob:
+        name: source_glob
+        description: A glob class for finding files in the source directory.
+        from_schema: cdp-dataset-config
+        alias: source_glob
+        owner: RawTiltSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: SourceGlob
+        inlined: true
+        inlined_as_list: true
+      source_multi_glob:
+        name: source_multi_glob
+        description: A glob class for finding files in the source directory (with
+          multiple globs).
+        from_schema: cdp-dataset-config
+        alias: source_multi_glob
+        owner: RawTiltSource
+        domain_of:
+        - DefaultSource
+        range: SourceMultiGlob
+        inlined: true
+        inlined_as_list: true
+      literal:
+        name: literal
+        description: A literal class with a value attribute.
+        from_schema: cdp-dataset-config
+        alias: literal
+        owner: RawTiltSource
+        domain_of:
+        - DefaultLiteralEntity
+        - DatasetKeyPhotoSource
+        - VoxelSpacingSource
+        range: DefaultLiteral
+        inlined: true
+        inlined_as_list: true
+      parent_filters:
+        name: parent_filters
+        description: Filters for the parent of a source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: RawTiltSource
+        domain_of:
+        - SourceParentFiltersEntity
+        - AnnotationSource
+        range: SourceParentFilters
+        inlined: true
+        inlined_as_list: true
+  RunEntity:
+    name: RunEntity
+    description: A run entity.
+    from_schema: cdp-dataset-config
+    attributes:
+      sources:
+        name: sources
+        description: A run source.
+        from_schema: cdp-dataset-config
+        alias: sources
+        owner: RunEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: RunSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  RunSource:
+    name: RunSource
+    description: A run source.
+    from_schema: cdp-dataset-config
+    mixins:
+    - DefaultSource
+    - DefaultLiteralEntity
+    - SourceParentFiltersEntity
+    attributes:
+      destination_glob:
+        name: destination_glob
+        description: A glob class for finding files in the output / destination directory.
+        from_schema: cdp-dataset-config
+        alias: destination_glob
+        owner: RunSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: DestinationGlob
+        inlined: true
+        inlined_as_list: true
+      source_glob:
+        name: source_glob
+        description: A glob class for finding files in the source directory.
+        from_schema: cdp-dataset-config
+        alias: source_glob
+        owner: RunSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: SourceGlob
+        inlined: true
+        inlined_as_list: true
+      source_multi_glob:
+        name: source_multi_glob
+        description: A glob class for finding files in the source directory (with
+          multiple globs).
+        from_schema: cdp-dataset-config
+        alias: source_multi_glob
+        owner: RunSource
+        domain_of:
+        - DefaultSource
+        range: SourceMultiGlob
+        inlined: true
+        inlined_as_list: true
+      literal:
+        name: literal
+        description: A literal class with a value attribute.
+        from_schema: cdp-dataset-config
+        alias: literal
+        owner: RunSource
+        domain_of:
+        - DefaultLiteralEntity
+        - DatasetKeyPhotoSource
+        - VoxelSpacingSource
+        range: DefaultLiteral
+        inlined: true
+        inlined_as_list: true
+      parent_filters:
+        name: parent_filters
+        description: Filters for the parent of a source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: RunSource
+        domain_of:
+        - SourceParentFiltersEntity
+        - AnnotationSource
+        range: SourceParentFilters
+        inlined: true
+        inlined_as_list: true
+  StandardizationConfig:
+    name: StandardizationConfig
+    description: A standardization configuration.
+    from_schema: cdp-dataset-config
+    attributes:
+      deposition_id:
+        name: deposition_id
+        description: The deposition ID.
+        from_schema: cdp-dataset-config
+        alias: deposition_id
+        owner: StandardizationConfig
+        domain_of:
+        - StandardizationConfig
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+      run_data_map_file:
+        name: run_data_map_file
+        description: The run data map file.
+        from_schema: cdp-dataset-config
+        alias: run_data_map_file
+        owner: StandardizationConfig
+        domain_of:
+        - StandardizationConfig
+        range: string
+        inlined: true
+        inlined_as_list: true
+      run_to_frame_map_csv:
+        name: run_to_frame_map_csv
+        description: The run to frame map CSV.
+        from_schema: cdp-dataset-config
+        alias: run_to_frame_map_csv
+        owner: StandardizationConfig
+        domain_of:
+        - StandardizationConfig
+        range: string
+        inlined: true
+        inlined_as_list: true
+      run_to_tomo_map_csv:
+        name: run_to_tomo_map_csv
+        description: The run to tomogram map CSV.
+        from_schema: cdp-dataset-config
+        alias: run_to_tomo_map_csv
+        owner: StandardizationConfig
+        domain_of:
+        - StandardizationConfig
+        range: string
+        inlined: true
+        inlined_as_list: true
+      run_to_ts_map_csv:
+        name: run_to_ts_map_csv
+        description: The run to tilt series map CSV.
+        from_schema: cdp-dataset-config
+        alias: run_to_ts_map_csv
+        owner: StandardizationConfig
+        domain_of:
+        - StandardizationConfig
+        range: string
+        inlined: true
+        inlined_as_list: true
+      source_prefix:
+        name: source_prefix
+        description: The source prefix of the input files.
+        from_schema: cdp-dataset-config
+        alias: source_prefix
+        owner: StandardizationConfig
+        domain_of:
+        - StandardizationConfig
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+  TiltSeriesEntity:
+    name: TiltSeriesEntity
+    description: A tilt series entity.
+    from_schema: cdp-dataset-config
+    attributes:
+      metadata:
+        name: metadata
+        description: Metadata describing a tilt series.
+        from_schema: cdp-dataset-config
+        alias: metadata
+        owner: TiltSeriesEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        range: TiltSeries
+        required: true
+        inlined: true
+        inlined_as_list: true
+      sources:
+        name: sources
+        description: A tilt series source.
+        from_schema: cdp-dataset-config
+        alias: sources
+        owner: TiltSeriesEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: TiltSeriesSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  TiltSeriesSource:
+    name: TiltSeriesSource
+    description: A tilt series source.
+    from_schema: cdp-dataset-config
+    mixins:
+    - DefaultSource
+    - DefaultLiteralEntity
+    - SourceParentFiltersEntity
+    attributes:
+      destination_glob:
+        name: destination_glob
+        description: A glob class for finding files in the output / destination directory.
+        from_schema: cdp-dataset-config
+        alias: destination_glob
+        owner: TiltSeriesSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: DestinationGlob
+        inlined: true
+        inlined_as_list: true
+      source_glob:
+        name: source_glob
+        description: A glob class for finding files in the source directory.
+        from_schema: cdp-dataset-config
+        alias: source_glob
+        owner: TiltSeriesSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: SourceGlob
+        inlined: true
+        inlined_as_list: true
+      source_multi_glob:
+        name: source_multi_glob
+        description: A glob class for finding files in the source directory (with
+          multiple globs).
+        from_schema: cdp-dataset-config
+        alias: source_multi_glob
+        owner: TiltSeriesSource
+        domain_of:
+        - DefaultSource
+        range: SourceMultiGlob
+        inlined: true
+        inlined_as_list: true
+      literal:
+        name: literal
+        description: A literal class with a value attribute.
+        from_schema: cdp-dataset-config
+        alias: literal
+        owner: TiltSeriesSource
+        domain_of:
+        - DefaultLiteralEntity
+        - DatasetKeyPhotoSource
+        - VoxelSpacingSource
+        range: DefaultLiteral
+        inlined: true
+        inlined_as_list: true
+      parent_filters:
+        name: parent_filters
+        description: Filters for the parent of a source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: TiltSeriesSource
+        domain_of:
+        - SourceParentFiltersEntity
+        - AnnotationSource
+        range: SourceParentFilters
+        inlined: true
+        inlined_as_list: true
+  TomogramEntity:
+    name: TomogramEntity
+    description: A tomogram entity.
+    from_schema: cdp-dataset-config
+    attributes:
+      metadata:
+        name: metadata
+        description: Metadata describing a tomogram.
+        from_schema: cdp-dataset-config
+        alias: metadata
+        owner: TomogramEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        range: Tomogram
+        required: true
+        inlined: true
+        inlined_as_list: true
+      sources:
+        name: sources
+        description: A tomogram source.
+        from_schema: cdp-dataset-config
+        alias: sources
+        owner: TomogramEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: TomogramSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  TomogramSource:
+    name: TomogramSource
+    description: A tomogram source.
+    from_schema: cdp-dataset-config
+    mixins:
+    - DefaultSource
+    - DefaultLiteralEntity
+    - SourceParentFiltersEntity
+    attributes:
+      destination_glob:
+        name: destination_glob
+        description: A glob class for finding files in the output / destination directory.
+        from_schema: cdp-dataset-config
+        alias: destination_glob
+        owner: TomogramSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: DestinationGlob
+        inlined: true
+        inlined_as_list: true
+      source_glob:
+        name: source_glob
+        description: A glob class for finding files in the source directory.
+        from_schema: cdp-dataset-config
+        alias: source_glob
+        owner: TomogramSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: SourceGlob
+        inlined: true
+        inlined_as_list: true
+      source_multi_glob:
+        name: source_multi_glob
+        description: A glob class for finding files in the source directory (with
+          multiple globs).
+        from_schema: cdp-dataset-config
+        alias: source_multi_glob
+        owner: TomogramSource
+        domain_of:
+        - DefaultSource
+        range: SourceMultiGlob
+        inlined: true
+        inlined_as_list: true
+      literal:
+        name: literal
+        description: A literal class with a value attribute.
+        from_schema: cdp-dataset-config
+        alias: literal
+        owner: TomogramSource
+        domain_of:
+        - DefaultLiteralEntity
+        - DatasetKeyPhotoSource
+        - VoxelSpacingSource
+        range: DefaultLiteral
+        inlined: true
+        inlined_as_list: true
+      parent_filters:
+        name: parent_filters
+        description: Filters for the parent of a source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: TomogramSource
+        domain_of:
+        - SourceParentFiltersEntity
+        - AnnotationSource
+        range: SourceParentFilters
+        inlined: true
+        inlined_as_list: true
+  VoxelSpacingEntity:
+    name: VoxelSpacingEntity
+    description: A voxel spacing entity.
+    from_schema: cdp-dataset-config
+    attributes:
+      sources:
+        name: sources
+        description: A voxel spacing source.
+        from_schema: cdp-dataset-config
+        alias: sources
+        owner: VoxelSpacingEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: VoxelSpacingSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  VoxelSpacingSource:
+    name: VoxelSpacingSource
+    description: A voxel spacing source.
+    from_schema: cdp-dataset-config
+    mixins:
+    - SourceParentFiltersEntity
+    attributes:
+      destination_glob:
+        name: destination_glob
+        description: A glob class for finding files in the output / destination directory.
+        from_schema: cdp-dataset-config
+        alias: destination_glob
+        owner: VoxelSpacingSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: DestinationGlob
+        inlined: true
+        inlined_as_list: true
+      source_glob:
+        name: source_glob
+        description: A glob class for finding files in the source directory.
+        from_schema: cdp-dataset-config
+        alias: source_glob
+        owner: VoxelSpacingSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: SourceGlob
+        inlined: true
+        inlined_as_list: true
+      literal:
+        name: literal
+        description: A literal for a voxel spacing.
+        from_schema: cdp-dataset-config
+        alias: literal
+        owner: VoxelSpacingSource
+        domain_of:
+        - DefaultLiteralEntity
+        - DatasetKeyPhotoSource
+        - VoxelSpacingSource
+        range: VoxelSpacingLiteral
+        inlined: true
+        inlined_as_list: true
+      tomogram_header:
+        name: tomogram_header
+        description: A tomogram header, a unique source attribute for voxel spacing.
+        from_schema: cdp-dataset-config
+        alias: tomogram_header
+        owner: VoxelSpacingSource
+        domain_of:
+        - VoxelSpacingSource
+        range: TomogramHeader
+        inlined: true
+        inlined_as_list: true
+      parent_filters:
+        name: parent_filters
+        description: Filters for the parent of a source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: VoxelSpacingSource
+        domain_of:
+        - SourceParentFiltersEntity
+        - AnnotationSource
+        range: SourceParentFilters
+        inlined: true
+        inlined_as_list: true
+  VoxelSpacingLiteral:
+    name: VoxelSpacingLiteral
+    description: A literal for a voxel spacing.
+    from_schema: cdp-dataset-config
+    attributes:
+      value:
+        name: value
+        description: The value for the voxel spacing literal.
+        from_schema: cdp-dataset-config
+        alias: value
+        owner: VoxelSpacingLiteral
+        domain_of:
+        - DefaultLiteral
+        - DatasetKeyPhotoLiteral
+        - VoxelSpacingLiteral
+        range: float
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  TomogramHeader:
+    name: TomogramHeader
+    description: A tomogram header, a unique source attribute for voxel spacing.
+    from_schema: cdp-dataset-config
+    attributes:
+      list_glob:
+        name: list_glob
+        description: The glob for the tomogram header file.
+        from_schema: cdp-dataset-config
+        alias: list_glob
+        owner: TomogramHeader
+        domain_of:
+        - GeneralGlob
+        - TomogramHeader
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      match_regex:
+        name: match_regex
+        description: The regex for the tomogram header file.
+        from_schema: cdp-dataset-config
+        ifabsent: string(.*)
+        alias: match_regex
+        owner: TomogramHeader
+        domain_of:
+        - GeneralGlob
+        - TomogramHeader
+        range: string
+        inlined: true
+        inlined_as_list: true
+      header_key:
+        name: header_key
+        description: The key in the header file for the voxel spacing.
+        from_schema: cdp-dataset-config
+        ifabsent: string(voxel_size)
+        alias: header_key
+        owner: TomogramHeader
+        domain_of:
+        - TomogramHeader
+        range: string
+        inlined: true
+        inlined_as_list: true
+  Test:
+    name: Test
+    description: A test entity.
+    from_schema: cdp-dataset-config
+    mixins:
+    - CrossReferencedEntity
+    attributes:
+      cross_references:
+        name: cross_references
+        description: A set of cross-references to other databases and publications.
+        from_schema: metadata
+        alias: cross_references
+        owner: Test
+        domain_of:
+        - CrossReferencedEntity
+        - Dataset
+        range: CrossReferences
+        inlined: true
+        inlined_as_list: true
+  Any:
+    name: Any
+    description: A placeholder for any type of data.
+    from_schema: cdp-dataset-config
+    class_uri: linkml:Any
+  CrossReferences:
+    name: CrossReferences
+    description: A set of cross-references to other databases and publications.
+    from_schema: cdp-dataset-config
+    attributes:
+      dataset_publications:
+        name: dataset_publications
+        description: Comma-separated list of DOIs for publications associated with
+          the dataset.
+        from_schema: cdp-dataset-config
+        alias: dataset_publications
+        owner: CrossReferences
+        domain_of:
+        - CrossReferences
+        range: DOI_LIST
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
+      related_database_entries:
+        name: related_database_entries
+        description: Comma-separated list of related database entries for the dataset.
+        from_schema: cdp-dataset-config
+        alias: related_database_entries
+        owner: CrossReferences
+        domain_of:
+        - CrossReferences
+        range: EMPIAR_EMDB_LIST
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)
+      related_database_links:
+        name: related_database_links
+        description: Comma-separated list of related database links for the dataset.
+        from_schema: cdp-dataset-config
+        alias: related_database_links
+        owner: CrossReferences
+        domain_of:
+        - CrossReferences
+        range: string
+        inlined: true
+        inlined_as_list: true
+      dataset_citations:
+        name: dataset_citations
+        description: Comma-separated list of DOIs for publications citing the dataset.
+        from_schema: cdp-dataset-config
+        alias: dataset_citations
+        owner: CrossReferences
+        domain_of:
+        - CrossReferences
+        range: string
+        inlined: true
+        inlined_as_list: true
+source_file: dataset_config.yaml

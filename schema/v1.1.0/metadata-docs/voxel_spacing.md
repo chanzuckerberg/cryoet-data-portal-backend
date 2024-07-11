@@ -88,14 +88,14 @@ range: string
 required: true
 inlined: true
 inlined_as_list: true
-minimum_value: 1.0e-09
+minimum_value: 0.001
 pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
 unit:
   symbol: Å/voxel
   descriptive_name: Angstroms per voxel
 any_of:
 - range: float
-  minimum_value: 1.0e-09
+  minimum_value: 0.001
 - range: FloatFormattedString
 
 ```

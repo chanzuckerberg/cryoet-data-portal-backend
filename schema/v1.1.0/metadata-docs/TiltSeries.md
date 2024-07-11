@@ -50,8 +50,6 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
     click Microscope href "../Microscope"
 
 
-      TiltSeries : microscope_additional_info
-
       TiltSeries : microscope_optical_setup
 
 
@@ -109,9 +107,8 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 | [frames_count](frames_count.md) | 0..1 <br/> [Integer](Integer.md) | Number of frames associated with this tiltseries | direct |
 | [is_aligned](is_aligned.md) | 1 <br/> [Boolean](Boolean.md) | Whether this tilt series is aligned | direct |
 | [microscope](microscope.md) | 1 <br/> [Microscope](Microscope.md) | The microscope used to collect the tilt series | direct |
-| [microscope_additional_info](microscope_additional_info.md) | 0..1 <br/> [String](String.md) | Other microscope optical setup information, in addition to energy filter, pha... | direct |
 | [microscope_optical_setup](microscope_optical_setup.md) | 1 <br/> [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series | direct |
-| [related_empiar_entry](related_empiar_entry.md) | 0..1 <br/> [String](String.md) | If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifie... | direct |
+| [related_empiar_entry](related_empiar_entry.md) | 0..1 <br/> [EMPIARID](EMPIARID.md) | If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifie... | direct |
 | [spherical_aberration_constant](spherical_aberration_constant.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Spherical Aberration Constant of the objective lens in millimeters | direct |
 | [tilt_alignment_software](tilt_alignment_software.md) | 0..1 <br/> [String](String.md) | Software used for tilt alignment | direct |
 | [tilt_axis](tilt_axis.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Rotation angle in degrees | direct |
@@ -204,11 +201,11 @@ attributes:
     - TiltSeries
     inlined: true
     inlined_as_list: true
-    minimum_value: 1.0e-09
+    minimum_value: 0
     pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     any_of:
     - range: float
-      minimum_value: 1.0e-09
+      minimum_value: 0
     - range: FloatFormattedString
   binning_from_frames:
     name: binning_from_frames
@@ -224,11 +221,11 @@ attributes:
     - TiltSeries
     inlined: true
     inlined_as_list: true
-    minimum_value: 1.0e-09
+    minimum_value: 0
     pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     any_of:
     - range: float
-      minimum_value: 1.0e-09
+      minimum_value: 0
     - range: FloatFormattedString
   camera:
     name: camera
@@ -300,21 +297,6 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
-  microscope_additional_info:
-    name: microscope_additional_info
-    description: Other microscope optical setup information, in addition to energy
-      filter, phase plate and image corrector
-    from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_microscope_additional_info
-    rank: 1000
-    alias: microscope_additional_info
-    owner: TiltSeries
-    domain_of:
-    - TiltSeries
-    range: string
-    inlined: true
-    inlined_as_list: true
   microscope_optical_setup:
     name: microscope_optical_setup
     description: The optical setup of the microscope used to collect the tilt series.
@@ -340,9 +322,10 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: string
+    range: EMPIAR_ID
     inlined: true
     inlined_as_list: true
+    pattern: ^EMPIAR-[0-9]{5}$
   spherical_aberration_constant:
     name: spherical_aberration_constant
     description: Spherical Aberration Constant of the objective lens in millimeters
@@ -519,14 +502,14 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
-    minimum_value: 1.0e-09
+    minimum_value: 0.001
     pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: Å/px
       descriptive_name: Angstroms per pixel
     any_of:
     - range: float
-      minimum_value: 1.0e-09
+      minimum_value: 0.001
     - range: FloatFormattedString
 
 ```
@@ -574,11 +557,11 @@ attributes:
     range: string
     inlined: true
     inlined_as_list: true
-    minimum_value: 1.0e-09
+    minimum_value: 0
     pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     any_of:
     - range: float
-      minimum_value: 1.0e-09
+      minimum_value: 0
     - range: FloatFormattedString
   binning_from_frames:
     name: binning_from_frames
@@ -595,11 +578,11 @@ attributes:
     range: string
     inlined: true
     inlined_as_list: true
-    minimum_value: 1.0e-09
+    minimum_value: 0
     pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     any_of:
     - range: float
-      minimum_value: 1.0e-09
+      minimum_value: 0
     - range: FloatFormattedString
   camera:
     name: camera
@@ -671,21 +654,6 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
-  microscope_additional_info:
-    name: microscope_additional_info
-    description: Other microscope optical setup information, in addition to energy
-      filter, phase plate and image corrector
-    from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_microscope_additional_info
-    rank: 1000
-    alias: microscope_additional_info
-    owner: TiltSeries
-    domain_of:
-    - TiltSeries
-    range: string
-    inlined: true
-    inlined_as_list: true
   microscope_optical_setup:
     name: microscope_optical_setup
     description: The optical setup of the microscope used to collect the tilt series.
@@ -711,9 +679,10 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: string
+    range: EMPIAR_ID
     inlined: true
     inlined_as_list: true
+    pattern: ^EMPIAR-[0-9]{5}$
   spherical_aberration_constant:
     name: spherical_aberration_constant
     description: Spherical Aberration Constant of the objective lens in millimeters
@@ -896,14 +865,14 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
-    minimum_value: 1.0e-09
+    minimum_value: 0.001
     pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: Å/px
       descriptive_name: Angstroms per pixel
     any_of:
     - range: float
-      minimum_value: 1.0e-09
+      minimum_value: 0.001
     - range: FloatFormattedString
 
 ```

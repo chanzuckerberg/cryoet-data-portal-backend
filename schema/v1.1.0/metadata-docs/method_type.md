@@ -35,6 +35,8 @@ URI: [cdp-meta:method_type](metadatamethod_type)
 
 * Required: True
 
+* Regex pattern: `(^manual$)|(^automated$)|(^hybrid$)`
+
 
 
 
@@ -84,6 +86,7 @@ range: annotation_method_type_enum
 required: true
 inlined: true
 inlined_as_list: true
+pattern: (^manual$)|(^automated$)|(^hybrid$)
 
 ```
 </details>

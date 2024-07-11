@@ -175,6 +175,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)
   sample_preparation:
     name: sample_preparation
     description: Describes how the sample was prepared.
@@ -319,6 +320,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)
   sample_preparation:
     name: sample_preparation
     description: Describes how the sample was prepared.

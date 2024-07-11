@@ -168,25 +168,27 @@ class PicturePath(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    snapshot: str = Field(
-        ...,
+    snapshot: Optional[str] = Field(
+        None,
         description="""Path to the dataset preview image relative to the dataset directory root.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "snapshot",
                 "domain_of": ["PicturePath"],
                 "exact_mappings": ["cdp-common:snapshot"],
+                "recommended": True,
             }
         },
     )
-    thumbnail: str = Field(
-        ...,
+    thumbnail: Optional[str] = Field(
+        None,
         description="""Path to the thumbnail of preview image relative to the dataset directory root.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "thumbnail",
                 "domain_of": ["PicturePath"],
                 "exact_mappings": ["cdp-common:thumbnail"],
+                "recommended": True,
             }
         },
     )
@@ -577,7 +579,7 @@ class Tissue(ConfiguredBaseModel):
 
     @field_validator("id")
     def pattern_id(cls, v):
-        pattern = re.compile(r"(?i)^BTO:[0-9]{7}$")
+        pattern = re.compile(r"^BTO:[0-9]{7}$")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
@@ -629,7 +631,7 @@ class CellType(ConfiguredBaseModel):
 
     @field_validator("id")
     def pattern_id(cls, v):
-        pattern = re.compile(r"(?i)^CL:[0-9]{7}$")
+        pattern = re.compile(r"^CL:[0-9]{7}$")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
@@ -681,7 +683,7 @@ class CellStrain(ConfiguredBaseModel):
 
     @field_validator("id")
     def pattern_id(cls, v):
-        pattern = re.compile(r"(?i)^[A-Z]+:[0-9]+$")
+        pattern = re.compile(r"^[A-Z]+:[0-9]+$")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
@@ -733,7 +735,7 @@ class CellComponent(ConfiguredBaseModel):
 
     @field_validator("id")
     def pattern_id(cls, v):
-        pattern = re.compile(r"(?i)^GO:[0-9]{7}$")
+        pattern = re.compile(r"^GO:[0-9]{7}$")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
@@ -825,6 +827,20 @@ class ExperimentalMetadata(ConfiguredBaseModel):
             "linkml_meta": {"alias": "cell_component", "domain_of": ["ExperimentalMetadata", "Dataset"]}
         },
     )
+
+    @field_validator("sample_type")
+    def pattern_sample_type(cls, v):
+        pattern = re.compile(
+            r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid sample_type format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid sample_type format: {v}")
+        return v
 
 
 class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, AuthoredEntity, DatestampedEntity):
@@ -990,6 +1006,20 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         },
     )
 
+    @field_validator("sample_type")
+    def pattern_sample_type(cls, v):
+        pattern = re.compile(
+            r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid sample_type format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid sample_type format: {v}")
+        return v
+
 
 class Camera(ConfiguredBaseModel):
     """
@@ -998,12 +1028,13 @@ class Camera(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    acquire_mode: Optional[TiltseriesCameraAcquireModeEnum] = Field(
+    acquire_mode: Optional[Union[TiltseriesCameraAcquireModeEnum, str]] = Field(
         None,
         description="""Camera acquisition mode""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "acquire_mode",
+                "any_of": [{"range": "StringFormattedString"}, {"range": "tiltseries_camera_acquire_mode_enum"}],
                 "domain_of": ["Camera"],
                 "exact_mappings": ["cdp-common:tiltseries_camera_acquire_mode"],
             }
@@ -1032,6 +1063,18 @@ class Camera(ConfiguredBaseModel):
         },
     )
 
+    @field_validator("acquire_mode")
+    def pattern_acquire_mode(cls, v):
+        pattern = re.compile(r"(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^counting$)|(^superresolution$)|(^linear$)|(^cds$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid acquire_mode format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid acquire_mode format: {v}")
+        return v
+
 
 class Microscope(ConfiguredBaseModel):
     """
@@ -1040,12 +1083,24 @@ class Microscope(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    manufacturer: MicroscopeManufacturerEnum = Field(
+    additional_info: Optional[str] = Field(
+        None,
+        description="""Other microscope optical setup information, in addition to energy filter, phase plate and image corrector""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "additional_info",
+                "domain_of": ["Microscope"],
+                "exact_mappings": ["cdp-common:tiltseries_microscope_additional_info"],
+            }
+        },
+    )
+    manufacturer: Union[MicroscopeManufacturerEnum, str] = Field(
         ...,
         description="""Name of the microscope manufacturer""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "manufacturer",
+                "any_of": [{"range": "StringFormattedString"}, {"range": "microscope_manufacturer_enum"}],
                 "domain_of": ["Camera", "Microscope"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_manufacturer"],
             }
@@ -1062,6 +1117,18 @@ class Microscope(ConfiguredBaseModel):
             }
         },
     )
+
+    @field_validator("manufacturer")
+    def pattern_manufacturer(cls, v):
+        pattern = re.compile(r"(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^FEI$)|(^TFS$)|(^JEOL$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid manufacturer format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid manufacturer format: {v}")
+        return v
 
 
 class MicroscopeOpticalSetup(ConfiguredBaseModel):
@@ -1198,11 +1265,11 @@ class TiltSeries(ConfiguredBaseModel):
     aligned_tiltseries_binning: Optional[Union[float, str]] = Field(
         1.0,
         description="""Binning factor of the aligned tilt series""",
-        ge=1e-09,
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "aligned_tiltseries_binning",
-                "any_of": [{"minimum_value": 1e-09, "range": "float"}, {"range": "FloatFormattedString"}],
+                "any_of": [{"minimum_value": 0, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_aligned_tiltseries_binning"],
                 "ifabsent": "float(1)",
@@ -1212,11 +1279,11 @@ class TiltSeries(ConfiguredBaseModel):
     binning_from_frames: Optional[Union[float, str]] = Field(
         1.0,
         description="""Describes the binning factor from frames to tilt series file""",
-        ge=1e-09,
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "binning_from_frames",
-                "any_of": [{"minimum_value": 1e-09, "range": "float"}, {"range": "FloatFormattedString"}],
+                "any_of": [{"minimum_value": 0, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_binning_from_frames"],
                 "ifabsent": "float(1)",
@@ -1265,17 +1332,6 @@ class TiltSeries(ConfiguredBaseModel):
         ...,
         description="""The microscope used to collect the tilt series.""",
         json_schema_extra={"linkml_meta": {"alias": "microscope", "domain_of": ["TiltSeries"]}},
-    )
-    microscope_additional_info: Optional[str] = Field(
-        None,
-        description="""Other microscope optical setup information, in addition to energy filter, phase plate and image corrector""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "microscope_additional_info",
-                "domain_of": ["TiltSeries"],
-                "exact_mappings": ["cdp-common:tiltseries_microscope_additional_info"],
-            }
-        },
     )
     microscope_optical_setup: MicroscopeOpticalSetup = Field(
         ...,
@@ -1404,11 +1460,11 @@ class TiltSeries(ConfiguredBaseModel):
     pixel_spacing: Union[float, str] = Field(
         ...,
         description="""Pixel spacing for the tilt series""",
-        ge=1e-09,
+        ge=0.001,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "pixel_spacing",
-                "any_of": [{"minimum_value": 1e-09, "range": "float"}, {"range": "FloatFormattedString"}],
+                "any_of": [{"minimum_value": 0.001, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_pixel_spacing"],
                 "unit": {"descriptive_name": "Angstroms per pixel", "symbol": "Å/px"},
@@ -1438,6 +1494,18 @@ class TiltSeries(ConfiguredBaseModel):
         elif isinstance(v, str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid binning_from_frames format: {v}")
+        return v
+
+    @field_validator("related_empiar_entry")
+    def pattern_related_empiar_entry(cls, v):
+        pattern = re.compile(r"^EMPIAR-[0-9]{5}$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid related_empiar_entry format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid related_empiar_entry format: {v}")
         return v
 
     @field_validator("spherical_aberration_constant")
@@ -1610,11 +1678,11 @@ class Tomogram(AuthoredEntity):
     voxel_spacing: Union[float, str] = Field(
         ...,
         description="""Voxel spacing equal in all three axes in angstroms""",
-        ge=1e-09,
+        ge=0.001,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "voxel_spacing",
-                "any_of": [{"minimum_value": 1e-09, "range": "float"}, {"range": "FloatFormattedString"}],
+                "any_of": [{"minimum_value": 0.001, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_voxel_spacing"],
                 "unit": {"descriptive_name": "Angstroms per voxel", "symbol": "Å/voxel"},
@@ -1659,12 +1727,13 @@ class Tomogram(AuthoredEntity):
             }
         },
     )
-    reconstruction_method: TomogromReconstructionMethodEnum = Field(
+    reconstruction_method: Union[TomogromReconstructionMethodEnum, str] = Field(
         ...,
         description="""Describe reconstruction method (Weighted back-projection, SART, SIRT)""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "reconstruction_method",
+                "any_of": [{"range": "StringFormattedString"}, {"range": "tomogrom_reconstruction_method_enum"}],
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_reconstruction_method"],
             }
@@ -1767,7 +1836,9 @@ class Tomogram(AuthoredEntity):
 
     @field_validator("fiducial_alignment_status")
     def pattern_fiducial_alignment_status(cls, v):
-        pattern = re.compile(r"^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        pattern = re.compile(
+            r"(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)"
+        )
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
@@ -1775,6 +1846,30 @@ class Tomogram(AuthoredEntity):
         elif isinstance(v, str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid fiducial_alignment_status format: {v}")
+        return v
+
+    @field_validator("reconstruction_method")
+    def pattern_reconstruction_method(cls, v):
+        pattern = re.compile(r"(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^FOURIER SPACE$)|(^SIRT$)|(^WBP$)|(^UNKNOWN$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid reconstruction_method format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid reconstruction_method format: {v}")
+        return v
+
+    @field_validator("processing")
+    def pattern_processing(cls, v):
+        pattern = re.compile(r"(^denoised$)|(^filtered$)|(^raw$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid processing format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid processing format: {v}")
         return v
 
 
@@ -1888,7 +1983,7 @@ class AnnotationObject(ConfiguredBaseModel):
 
     @field_validator("id")
     def pattern_id(cls, v):
-        pattern = re.compile(r"(?i)^GO:[0-9]{7}$")
+        pattern = re.compile(r"^GO:[0-9]{7}$")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
@@ -1973,7 +2068,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
     binning: Optional[float] = Field(
         1.0,
         description="""The binning factor for a point / oriented point / instance segmentation annotation file.""",
-        ge=1e-09,
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "binning",
@@ -2077,7 +2172,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
     binning: Optional[float] = Field(
         1.0,
         description="""The binning factor for a point / oriented point / instance segmentation annotation file.""",
-        ge=1e-09,
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "binning",
@@ -2181,7 +2276,7 @@ class AnnotationPointFile(AnnotationSourceFile):
     binning: Optional[float] = Field(
         1.0,
         description="""The binning factor for a point / oriented point / instance segmentation annotation file.""",
-        ge=1e-09,
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "binning",
@@ -2553,6 +2648,18 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         },
     )
 
+    @field_validator("method_type")
+    def pattern_method_type(cls, v):
+        pattern = re.compile(r"(^manual$)|(^automated$)|(^hybrid$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid method_type format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid method_type format: {v}")
+        return v
+
 
 class CrossReferences(ConfiguredBaseModel):
     """
@@ -2585,6 +2692,34 @@ class CrossReferences(ConfiguredBaseModel):
         description="""Comma-separated list of DOIs for publications citing the dataset.""",
         json_schema_extra={"linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferences"]}},
     )
+
+    @field_validator("dataset_publications")
+    def pattern_dataset_publications(cls, v):
+        pattern = re.compile(
+            r"(^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid dataset_publications format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid dataset_publications format: {v}")
+        return v
+
+    @field_validator("related_database_entries")
+    def pattern_related_database_entries(cls, v):
+        pattern = re.compile(
+            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid related_database_entries format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid related_database_entries format: {v}")
+        return v
 
 
 # Model rebuild

@@ -134,7 +134,7 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
-    minimum_value: 1.0e-09
+    minimum_value: 0
   columns:
     name: columns
     description: The columns used in a point annotation file.
@@ -255,7 +255,7 @@ attributes:
     range: float
     inlined: true
     inlined_as_list: true
-    minimum_value: 1.0e-09
+    minimum_value: 0
   columns:
     name: columns
     description: The columns used in a point annotation file.

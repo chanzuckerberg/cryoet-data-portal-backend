@@ -16,8 +16,8 @@ URI: [cdp-meta:manufacturer](metadatamanufacturer)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Microscope](Microscope.md) | The microscope used to collect the tilt series |  no  |
 | [Camera](Camera.md) | The camera used to collect the tilt series |  no  |
+| [Microscope](Microscope.md) | The microscope used to collect the tilt series |  no  |
 
 
 
