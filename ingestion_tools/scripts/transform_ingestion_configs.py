@@ -31,8 +31,8 @@ def create_deposition_metadata(deposition_id: str, config_data: dict[str, Any]) 
     }
 
 
-def has_no_sources(data: list[dict[str, Any]]) -> bool:
-    return not any(ts.get("sources") for ts in data)
+def has_no_sources(data: list[dict[str, Any]] | dict[str, Any]) -> bool:
+    return isinstance(data, dict) or not any(row.get("sources") for row in data)
 
 
 def update_config(data: dict[str, Any]) -> dict[str, Any]:
