@@ -16,7 +16,7 @@ DATASET_CONFIGS_MODELS_DIR = f"../../schema/{SCHEMA_VERSION}/"
 
 sys.path.append(DATASET_CONFIGS_MODELS_DIR)  # To import the Pydantic-generated dataset models
 
-from dataset_config_models import Container  # noqa: E402
+from dataset_config_models_extended import ExtendedContainer  # noqa: E402
 
 DATASET_CONFIGS_DIR = "../dataset_configs/"
 ERRORS_OUTPUT_DIR = "./dataset_config_validate_errors"
@@ -141,7 +141,7 @@ def main(include_glob: str, exclude_keywords: str):
                 # formatted strings and the base type in the same field)
                 # https://github.com/linkml/linkml/issues/1521
                 config_data = replace_formatted_strings(config_data, 0, False)
-                Container(**config_data)
+                ExtendedContainer(**config_data)
         except ValidationError as e:
             validation_succeeded = False
             # Get all errors and convert them to strings
