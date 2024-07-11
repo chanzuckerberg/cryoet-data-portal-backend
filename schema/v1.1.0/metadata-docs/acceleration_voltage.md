@@ -31,11 +31,11 @@ URI: [cdp-meta:acceleration_voltage](metadataacceleration_voltage)
 
 ## Properties
 
-* Range: [Integer](Integer.md)
+* Range: [Float](Float.md)
 
 * Required: True
 
-* Minimum Value: 0
+* Minimum Value: 20000
 
 
 
@@ -82,11 +82,11 @@ alias: acceleration_voltage
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: integer
+range: float
 required: true
 inlined: true
 inlined_as_list: true
-minimum_value: 0
+minimum_value: 20000
 unit:
   symbol: V
   descriptive_name: volts

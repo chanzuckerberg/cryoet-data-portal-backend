@@ -22,6 +22,13 @@ URI: [cdp-meta:Camera](metadataCamera)
     click Camera href "../Camera"
       Camera : acquire_mode
 
+
+
+
+    Camera --> "0..1" TiltseriesCameraAcquireModeEnum : acquire_mode
+    click TiltseriesCameraAcquireModeEnum href "../TiltseriesCameraAcquireModeEnum"
+
+
       Camera : manufacturer
 
       Camera : model
@@ -39,7 +46,7 @@ URI: [cdp-meta:Camera](metadataCamera)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [acquire_mode](acquire_mode.md) | 0..1 <br/> [String](String.md) | Camera acquisition mode | direct |
+| [acquire_mode](acquire_mode.md) | 0..1 <br/> [TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md) | Camera acquisition mode | direct |
 | [manufacturer](manufacturer.md) | 1 <br/> [String](String.md) | Name of the camera manufacturer | direct |
 | [model](model.md) | 1 <br/> [String](String.md) | Camera model name | direct |
 
@@ -110,7 +117,7 @@ attributes:
     owner: Camera
     domain_of:
     - Camera
-    range: string
+    range: tiltseries_camera_acquire_mode_enum
     inlined: true
     inlined_as_list: true
   manufacturer:
@@ -168,7 +175,7 @@ attributes:
     owner: Camera
     domain_of:
     - Camera
-    range: string
+    range: tiltseries_camera_acquire_mode_enum
     inlined: true
     inlined_as_list: true
   manufacturer:

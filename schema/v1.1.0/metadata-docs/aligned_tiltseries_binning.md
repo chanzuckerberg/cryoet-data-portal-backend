@@ -31,7 +31,9 @@ URI: [cdp-meta:aligned_tiltseries_binning](metadataaligned_tiltseries_binning)
 
 ## Properties
 
-* Range: [Integer](Integer.md)
+* Range: [Float](Float.md)
+
+* Minimum Value: 0
 
 
 
@@ -74,14 +76,15 @@ from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_aligned_tiltseries_binning
 rank: 1000
-ifabsent: int(1)
+ifabsent: float(1)
 alias: aligned_tiltseries_binning
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: integer
+range: float
 inlined: true
 inlined_as_list: true
+minimum_value: 1.0e-09
 
 ```
 </details>

@@ -41,7 +41,7 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [id](id.md) | 1 <br/> [String](String.md) | Gene Ontology Cellular Component identifier for the annotation object | direct |
+| [id](id.md) | 1 <br/> [GOID](GOID.md) | Gene Ontology Cellular Component identifier for the annotation object | direct |
 | [name](name.md) | 1 <br/> [String](String.md) | Name of the object being annotated (e | direct |
 | [description](description.md) | 0..1 <br/> [String](String.md) | A textual description of the annotation object, can be a longer description t... | direct |
 | [state](state.md) | 0..1 <br/> [String](String.md) | Molecule state annotated (e | direct |
@@ -116,7 +116,7 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: GO_ID
     required: true
     inlined: true
     inlined_as_list: true
@@ -197,7 +197,7 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: GO_ID
     required: true
     inlined: true
     inlined_as_list: true

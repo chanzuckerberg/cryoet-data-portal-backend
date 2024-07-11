@@ -35,6 +35,8 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 * Required: True
 
+* Minimum Value: 0
+
 
 
 
@@ -84,6 +86,7 @@ range: float
 required: true
 inlined: true
 inlined_as_list: true
+minimum_value: 1.0e-09
 unit:
   symbol: Å/voxel
   descriptive_name: Angstroms per voxel

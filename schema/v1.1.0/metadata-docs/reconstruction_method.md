@@ -31,7 +31,7 @@ URI: [cdp-meta:reconstruction_method](metadatareconstruction_method)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md)
 
 * Required: True
 
@@ -80,7 +80,7 @@ alias: reconstruction_method
 owner: Tomogram
 domain_of:
 - Tomogram
-range: string
+range: tomogrom_reconstruction_method_enum
 required: true
 inlined: true
 inlined_as_list: true

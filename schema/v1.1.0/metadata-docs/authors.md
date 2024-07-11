@@ -16,10 +16,10 @@ URI: [cdp-meta:authors](metadataauthors)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 | [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 | [AuthoredEntity](AuthoredEntity.md) | An entity with associated authors |  no  |
-| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 

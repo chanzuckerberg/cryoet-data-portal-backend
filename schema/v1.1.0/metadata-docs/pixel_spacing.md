@@ -86,7 +86,7 @@ range: float
 required: true
 inlined: true
 inlined_as_list: true
-minimum_value: 0
+minimum_value: 1.0e-09
 unit:
   symbol: Å/px
   descriptive_name: Angstroms per pixel

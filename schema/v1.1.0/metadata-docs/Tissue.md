@@ -38,7 +38,7 @@ URI: [cdp-meta:Tissue](metadataTissue)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [name](name.md) | 1 <br/> [String](String.md) | Name of the tissue from which a biological sample used in a CryoET study is d... | direct |
-| [id](id.md) | 0..1 _recommended_ <br/> [String](String.md) | The UBERON identifier for the tissue | direct |
+| [id](id.md) | 0..1 _recommended_ <br/> [BTOID](BTOID.md) | The UBERON identifier for the tissue | direct |
 
 
 
@@ -133,7 +133,7 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: BTO_ID
     recommended: true
     inlined: true
     inlined_as_list: true
@@ -185,7 +185,7 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: BTO_ID
     recommended: true
     inlined: true
     inlined_as_list: true
