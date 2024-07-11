@@ -37,8 +37,8 @@ URI: [cdp-meta:TiltRange](metadataTiltRange)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [min](min.md) | 1 <br/> [Float](Float.md) | Minimal tilt angle in degrees | direct |
-| [max](max.md) | 1 <br/> [Float](Float.md) | Maximal tilt angle in degrees | direct |
+| [min](min.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Minimal tilt angle in degrees | direct |
+| [max](max.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Maximal tilt angle in degrees | direct |
 
 
 
@@ -107,14 +107,20 @@ attributes:
     owner: TiltRange
     domain_of:
     - TiltRange
-    range: float
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: -90
+    maximum_value: 90
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: °
       descriptive_name: degrees
+    any_of:
+    - range: float
+      minimum_value: -90
+      maximum_value: 90
+    - range: FloatFormattedString
   max:
     name: max
     description: Maximal tilt angle in degrees
@@ -126,15 +132,20 @@ attributes:
     owner: TiltRange
     domain_of:
     - TiltRange
-    range: float
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: -90
     maximum_value: 90
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: °
       descriptive_name: degrees
+    any_of:
+    - range: float
+      minimum_value: -90
+      maximum_value: 90
+    - range: FloatFormattedString
 
 ```
 </details>
@@ -158,14 +169,21 @@ attributes:
     owner: TiltRange
     domain_of:
     - TiltRange
-    range: float
+    range: string
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: -90
+    maximum_value: 90
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: °
       descriptive_name: degrees
+    any_of:
+    - range: float
+      minimum_value: -90
+      maximum_value: 90
+    - range: FloatFormattedString
   max:
     name: max
     description: Maximal tilt angle in degrees
@@ -177,15 +195,21 @@ attributes:
     owner: TiltRange
     domain_of:
     - TiltRange
-    range: float
+    range: string
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: -90
     maximum_value: 90
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: °
       descriptive_name: degrees
+    any_of:
+    - range: float
+      minimum_value: -90
+      maximum_value: 90
+    - range: FloatFormattedString
 
 ```
 </details>

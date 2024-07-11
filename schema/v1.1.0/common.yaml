@@ -20,15 +20,6 @@ slots:
   # ============================================================================
   # Common Identifiers
   # ============================================================================
-  orcid:
-    description: >-
-      A unique, persistent identifier for researchers, provided by ORCID.
-    range: string
-    pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
-    recommended: true
-    exact_mappings:
-      - IAO:0000708
-
   affiliation_identifier:
     description: >-
       A Research Organization Registry (ROR) identifier.
@@ -43,13 +34,13 @@ slots:
   snapshot:
     description: >-
       Path to the dataset preview image relative to the dataset directory root.
-    range: Any
+    range: URLorS3URI
     required: true
 
   thumbnail:
     description: >-
       Path to the thumbnail of preview image relative to the dataset directory root.
-    range: Any
+    range: URLorS3URI
     required: true
 
   # ============================================================================
@@ -77,6 +68,12 @@ slots:
   # ============================================================================
   # Author slots
   # ============================================================================
+  author_orcid:
+    range: ORCID
+    description: >-
+      The ORCID identifier for the author.
+    recommended: true
+
   author_name:
     range: string
     required: true
@@ -292,23 +289,17 @@ slots:
       descriptive_name: volts
       symbol: V
   tiltseries_aligned_tiltseries_binning:
-    range: float
-    minimum_value: 0.000000001
-    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-    # any_of:
-    #   - range: float
-    #     minimum_value: 0.000000001
-    #   - range: FloatFormattedString
+    any_of:
+      - range: float
+        minimum_value: 0.000000001
+      - range: FloatFormattedString
     description: Binning factor of the aligned tilt series
     ifabsent: 'float(1)'
   tiltseries_binning_from_frames:
-    range: float
-    minimum_value: 0.000000001
-    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-    # any_of:
-    #   - range: float
-    #     minimum_value: 0.000000001
-    #   - range: FloatFormattedString
+    any_of:
+      - range: float
+        minimum_value: 0.000000001
+      - range: FloatFormattedString
     description: Describes the binning factor from frames to tilt series file
     ifabsent: 'float(1)'
   tiltseries_camera_acquire_mode:
@@ -370,13 +361,10 @@ slots:
     range: string
     description: Phase plate configuration
   tiltseries_pixel_spacing:
-    range: float
-    minimum_value: 0.000000001
-    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-    # any_of:
-    #   - range: float
-    #     minimum_value: 0.000000001
-    #   - range: FloatFormattedString
+    any_of:
+      - range: float
+        minimum_value: 0.000000001
+      - range: FloatFormattedString
     required: true
     description: Pixel spacing for the tilt series
     unit:
@@ -401,13 +389,10 @@ slots:
     range: string
     description: S3 path to this tiltseries in multiscale OME-Zarr format
   tiltseries_spherical_aberration_constant:
-    range: float
-    minimum_value: 0
-    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-    # any_of:
-    #   - range: float
-    #     minimum_value: 0
-    #   - range: FloatFormattedString
+    any_of:
+      - range: float
+        minimum_value: 0
+      - range: FloatFormattedString
     required: true
     description: Spherical Aberration Constant of the objective lens in millimeters
     unit:
@@ -417,71 +402,52 @@ slots:
     range: string
     description: Software used for tilt alignment
   tiltseries_tilt_axis:
-    range: float
-    minimum_value: -360
-    maximum_value: 360
-    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-    # any_of:
-    #   - range: float
-    #     minimum_value: -360
-    #     maximum_value: 360
-    #   - range: FloatFormattedString
+    any_of:
+      - range: float
+        minimum_value: -360
+        maximum_value: 360
+      - range: FloatFormattedString
     required: true
     description: Rotation angle in degrees
     unit:
       descriptive_name: degrees
       symbol: °
   tiltseries_tilt_max:
-    range: float
-    minimum_value: -90
-    maximum_value: 90
-    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-    # any_of:
-    #   - range: float
-    #     minimum_value: -90
-    #     maximum_value: 90
-    #   - range: FloatFormattedString
+    any_of:
+      - range: float
+        minimum_value: -90
+        maximum_value: 90
+      - range: FloatFormattedString
     required: true
     description: Maximal tilt angle in degrees
     unit:
       descriptive_name: degrees
       symbol: °
   tiltseries_tilt_min:
-    range: float
-    minimum_value: -90
-    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-    # any_of:
-    #   - range: float
-    #     minimum_value: -90
-    #     maximum_value: 90
-    #   - range: FloatFormattedString
+    any_of:
+      - range: float
+        minimum_value: -90
+        maximum_value: 90
+      - range: FloatFormattedString
     required: true
     description: Minimal tilt angle in degrees
     unit:
       descriptive_name: degrees
       symbol: °
   tiltseries_tilt_series_quality:
-    range: integer
-    minimum_value: 1
-    maximum_value: 5
-    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-    # any_of:
-    #   - range: integer
-    #     minimum_value: 1
-    #     maximum_value: 5
-    #   - range: IntegerFormattedString
+    any_of:
+      - range: integer
+        minimum_value: 1
+        maximum_value: 5
+      - range: IntegerFormattedString
     required: true
     description: Author assessment of tilt series quality within the dataset (1-5, 5 is best)
   tiltseries_tilt_step:
-    range: float
-    minimum_value: 0
-    maximum_value: 90
-    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-    # any_of:
-    #   - range: float
-    #     minimum_value: 0
-    #     maximum_value: 90
-    #   - range: FloatFormattedString
+    any_of:
+      - range: float
+        minimum_value: 0
+        maximum_value: 90
+      - range: FloatFormattedString
     required: true
     description: Tilt step in degrees
     unit:
@@ -492,13 +458,10 @@ slots:
     required: true
     description: The order of stage tilting during acquisition of the data
   tiltseries_total_flux:
-    range: float
-    minimum_value: 0
-    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-    # any_of:
-    #   - range: float
-    #     minimum_value: 0
-    #   - range: FloatFormattedString
+    any_of:
+      - range: float
+        minimum_value: 0
+      - range: FloatFormattedString
     required: true
     description: Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series
     unit:
@@ -521,11 +484,10 @@ slots:
     description: Reference to the dataset this tomogram is a part of
   tomogram_fiducial_alignment_status:
     range: fiducial_alignment_status_enum
-    # TODO: remove after any_of is fixed https://github.com/linkml/linkml/issues/1521
-    # any_of:
-    #   - range: fiducial_alignment_status_enum
-    #   - range: BooleanFormattedString
-    #     pattern: '^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$'
+    any_of:
+      - range: fiducial_alignment_status_enum
+      - range: BooleanFormattedString
+        pattern: '^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$'
     required: true
     description: Whether the tomographic alignment was computed based on fiducial markers.
   tomogram_https_mrc_scale0:
@@ -589,12 +551,10 @@ slots:
     range: string
     description: "Tomogram purpose (ex: CANONICAL)"
   tomogram_voxel_spacing:
-    range: float
-    minimum_value: 0.000000001
-    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-    # any_of:
-    #   - range: float
-    #   - range: FloatFormattedString
+    any_of:
+      - range: float
+        minimum_value: 0.000000001
+      - range: FloatFormattedString
     required: true
     description: Voxel spacing equal in all three axes in angstroms
     unit:
@@ -862,7 +822,13 @@ types:
   URLorS3URI:
     description: A URL or S3 URI
     base: str
-    pattern: '^(https?|s3)://.*$'
+    # TODO: Temporary pattern allowing cryoetportal-rawdatasets-dev, but will be removed in the future
+    pattern: '^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$'
+
+  ORCID:
+    description: A unique, persistent identifier for researchers, provided by ORCID.
+    base: str
+    pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
 
   BTO_ID:
     description: A BRENDA Tissue Ontology identifier

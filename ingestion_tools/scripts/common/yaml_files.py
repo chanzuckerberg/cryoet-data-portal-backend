@@ -7,7 +7,7 @@ EXCLUDE_KEYWORDS = "draft"
 YAML_EXTENSIONS = (".yaml", ".yml")
 
 
-def get_files_to_refactor(
+def get_yaml_config_files(
     include_glob: str = None,
     exclude_keywords: str = EXCLUDE_KEYWORDS,
     dataset_configs_dir: str = DATASET_CONFIGS_DIR,

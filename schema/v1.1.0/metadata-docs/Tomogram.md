@@ -114,8 +114,8 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [voxel_spacing](voxel_spacing.md) | 1 <br/> [Float](Float.md) | Voxel spacing equal in all three axes in angstroms | direct |
-| [fiducial_alignment_status](fiducial_alignment_status.md) | 1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
+| [voxel_spacing](voxel_spacing.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Voxel spacing equal in all three axes in angstroms | direct |
+| [fiducial_alignment_status](fiducial_alignment_status.md) | 1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[BooleanFormattedString](BooleanFormattedString.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
 | [ctf_corrected](ctf_corrected.md) | 0..1 _recommended_ <br/> [Boolean](Boolean.md) | Whether this tomogram is CTF corrected | direct |
 | [align_software](align_software.md) | 0..1 <br/> [String](String.md) | Software used for alignment | direct |
 | [reconstruction_method](reconstruction_method.md) | 1 <br/> [TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) | direct |
@@ -190,14 +190,18 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: float
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 1.0e-09
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: Å/voxel
       descriptive_name: Angstroms per voxel
+    any_of:
+    - range: float
+      minimum_value: 1.0e-09
+    - range: FloatFormattedString
   fiducial_alignment_status:
     name: fiducial_alignment_status
     description: Whether the tomographic alignment was computed based on fiducial
@@ -214,6 +218,11 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    any_of:
+    - range: fiducial_alignment_status_enum
+    - range: BooleanFormattedString
+      pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
   ctf_corrected:
     name: ctf_corrected
     description: Whether this tomogram is CTF corrected
@@ -403,14 +412,19 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: float
+    range: string
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 1.0e-09
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: Å/voxel
       descriptive_name: Angstroms per voxel
+    any_of:
+    - range: float
+      minimum_value: 1.0e-09
+    - range: FloatFormattedString
   fiducial_alignment_status:
     name: fiducial_alignment_status
     description: Whether the tomographic alignment was computed based on fiducial
@@ -427,6 +441,11 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    any_of:
+    - range: fiducial_alignment_status_enum
+    - range: BooleanFormattedString
+      pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
   ctf_corrected:
     name: ctf_corrected
     description: Whether this tomogram is CTF corrected

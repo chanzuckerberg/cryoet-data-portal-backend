@@ -102,8 +102,8 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [acceleration_voltage](acceleration_voltage.md) | 1 <br/> [Float](Float.md) | Electron Microscope Accelerator voltage in volts | direct |
-| [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | 0..1 <br/> [Float](Float.md) | Binning factor of the aligned tilt series | direct |
-| [binning_from_frames](binning_from_frames.md) | 0..1 <br/> [Float](Float.md) | Describes the binning factor from frames to tilt series file | direct |
+| [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Binning factor of the aligned tilt series | direct |
+| [binning_from_frames](binning_from_frames.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Describes the binning factor from frames to tilt series file | direct |
 | [camera](camera.md) | 1 <br/> [Camera](Camera.md) | The camera used to collect the tilt series | direct |
 | [data_acquisition_software](data_acquisition_software.md) | 1 <br/> [String](String.md) | Software used to collect data | direct |
 | [frames_count](frames_count.md) | 0..1 <br/> [Integer](Integer.md) | Number of frames associated with this tiltseries | direct |
@@ -112,15 +112,15 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 | [microscope_additional_info](microscope_additional_info.md) | 0..1 <br/> [String](String.md) | Other microscope optical setup information, in addition to energy filter, pha... | direct |
 | [microscope_optical_setup](microscope_optical_setup.md) | 1 <br/> [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series | direct |
 | [related_empiar_entry](related_empiar_entry.md) | 0..1 <br/> [String](String.md) | If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifie... | direct |
-| [spherical_aberration_constant](spherical_aberration_constant.md) | 1 <br/> [Float](Float.md) | Spherical Aberration Constant of the objective lens in millimeters | direct |
+| [spherical_aberration_constant](spherical_aberration_constant.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Spherical Aberration Constant of the objective lens in millimeters | direct |
 | [tilt_alignment_software](tilt_alignment_software.md) | 0..1 <br/> [String](String.md) | Software used for tilt alignment | direct |
-| [tilt_axis](tilt_axis.md) | 1 <br/> [Float](Float.md) | Rotation angle in degrees | direct |
+| [tilt_axis](tilt_axis.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Rotation angle in degrees | direct |
 | [tilt_range](tilt_range.md) | 1 <br/> [TiltRange](TiltRange.md) | The range of tilt angles in the tilt series | direct |
-| [tilt_series_quality](tilt_series_quality.md) | 1 <br/> [Integer](Integer.md) | Author assessment of tilt series quality within the dataset (1-5, 5 is best) | direct |
-| [tilt_step](tilt_step.md) | 1 <br/> [Float](Float.md) | Tilt step in degrees | direct |
+| [tilt_series_quality](tilt_series_quality.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Integer](Integer.md)&nbsp;or&nbsp;<br />[IntegerFormattedString](IntegerFormattedString.md) | Author assessment of tilt series quality within the dataset (1-5, 5 is best) | direct |
+| [tilt_step](tilt_step.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Tilt step in degrees | direct |
 | [tilting_scheme](tilting_scheme.md) | 1 <br/> [String](String.md) | The order of stage tilting during acquisition of the data | direct |
-| [total_flux](total_flux.md) | 1 <br/> [Float](Float.md) | Number of Electrons reaching the specimen in a square Angstrom area for the e... | direct |
-| [pixel_spacing](pixel_spacing.md) | 1 <br/> [Float](Float.md) | Pixel spacing for the tilt series | direct |
+| [total_flux](total_flux.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Number of Electrons reaching the specimen in a square Angstrom area for the e... | direct |
+| [pixel_spacing](pixel_spacing.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Pixel spacing for the tilt series | direct |
 
 
 
@@ -202,10 +202,14 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: float
     inlined: true
     inlined_as_list: true
     minimum_value: 1.0e-09
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    any_of:
+    - range: float
+      minimum_value: 1.0e-09
+    - range: FloatFormattedString
   binning_from_frames:
     name: binning_from_frames
     description: Describes the binning factor from frames to tilt series file
@@ -218,10 +222,14 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: float
     inlined: true
     inlined_as_list: true
     minimum_value: 1.0e-09
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    any_of:
+    - range: float
+      minimum_value: 1.0e-09
+    - range: FloatFormattedString
   camera:
     name: camera
     description: The camera used to collect the tilt series.
@@ -346,14 +354,18 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: float
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 0
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: mm
       descriptive_name: millimeters
+    any_of:
+    - range: float
+      minimum_value: 0
+    - range: FloatFormattedString
   tilt_alignment_software:
     name: tilt_alignment_software
     description: Software used for tilt alignment
@@ -379,15 +391,20 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: float
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: -360
     maximum_value: 360
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: °
       descriptive_name: degrees
+    any_of:
+    - range: float
+      minimum_value: -360
+      maximum_value: 360
+    - range: FloatFormattedString
   tilt_range:
     name: tilt_range
     description: The range of tilt angles in the tilt series.
@@ -413,12 +430,17 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: integer
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 1
     maximum_value: 5
+    pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    any_of:
+    - range: integer
+      minimum_value: 1
+      maximum_value: 5
+    - range: IntegerFormattedString
   tilt_step:
     name: tilt_step
     description: Tilt step in degrees
@@ -430,15 +452,20 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: float
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 0
     maximum_value: 90
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: °
       descriptive_name: degrees
+    any_of:
+    - range: float
+      minimum_value: 0
+      maximum_value: 90
+    - range: FloatFormattedString
   tilting_scheme:
     name: tilting_scheme
     description: The order of stage tilting during acquisition of the data
@@ -466,14 +493,18 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: float
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 0
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: e^-/Å^2
       descriptive_name: electrons per square Angstrom
+    any_of:
+    - range: float
+      minimum_value: 0
+    - range: FloatFormattedString
   pixel_spacing:
     name: pixel_spacing
     description: Pixel spacing for the tilt series
@@ -485,14 +516,18 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: float
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 1.0e-09
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: Å/px
       descriptive_name: Angstroms per pixel
+    any_of:
+    - range: float
+      minimum_value: 1.0e-09
+    - range: FloatFormattedString
 
 ```
 </details>
@@ -536,10 +571,15 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: float
+    range: string
     inlined: true
     inlined_as_list: true
     minimum_value: 1.0e-09
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    any_of:
+    - range: float
+      minimum_value: 1.0e-09
+    - range: FloatFormattedString
   binning_from_frames:
     name: binning_from_frames
     description: Describes the binning factor from frames to tilt series file
@@ -552,10 +592,15 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: float
+    range: string
     inlined: true
     inlined_as_list: true
     minimum_value: 1.0e-09
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    any_of:
+    - range: float
+      minimum_value: 1.0e-09
+    - range: FloatFormattedString
   camera:
     name: camera
     description: The camera used to collect the tilt series.
@@ -680,14 +725,19 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: float
+    range: string
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 0
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: mm
       descriptive_name: millimeters
+    any_of:
+    - range: float
+      minimum_value: 0
+    - range: FloatFormattedString
   tilt_alignment_software:
     name: tilt_alignment_software
     description: Software used for tilt alignment
@@ -713,15 +763,21 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: float
+    range: string
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: -360
     maximum_value: 360
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: °
       descriptive_name: degrees
+    any_of:
+    - range: float
+      minimum_value: -360
+      maximum_value: 360
+    - range: FloatFormattedString
   tilt_range:
     name: tilt_range
     description: The range of tilt angles in the tilt series.
@@ -747,12 +803,18 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: integer
+    range: string
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 1
     maximum_value: 5
+    pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    any_of:
+    - range: integer
+      minimum_value: 1
+      maximum_value: 5
+    - range: IntegerFormattedString
   tilt_step:
     name: tilt_step
     description: Tilt step in degrees
@@ -764,15 +826,21 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: float
+    range: string
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 0
     maximum_value: 90
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: °
       descriptive_name: degrees
+    any_of:
+    - range: float
+      minimum_value: 0
+      maximum_value: 90
+    - range: FloatFormattedString
   tilting_scheme:
     name: tilting_scheme
     description: The order of stage tilting during acquisition of the data
@@ -800,14 +868,19 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: float
+    range: string
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 0
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: e^-/Å^2
       descriptive_name: electrons per square Angstrom
+    any_of:
+    - range: float
+      minimum_value: 0
+    - range: FloatFormattedString
   pixel_spacing:
     name: pixel_spacing
     description: Pixel spacing for the tilt series
@@ -819,14 +892,19 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: float
+    range: string
     required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 1.0e-09
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: Å/px
       descriptive_name: Angstroms per pixel
+    any_of:
+    - range: float
+      minimum_value: 1.0e-09
+    - range: FloatFormattedString
 
 ```
 </details>

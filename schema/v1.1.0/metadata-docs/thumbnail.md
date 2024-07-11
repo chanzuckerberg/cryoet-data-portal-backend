@@ -3,7 +3,7 @@
 # Slot: thumbnail
 
 
-_A placeholder for any type of data._
+_Path to the thumbnail of preview image relative to the dataset directory root._
 
 
 
@@ -31,9 +31,11 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 ## Properties
 
-* Range: [Any](Any.md)
+* Range: [URLorS3URI](URLorS3URI.md)
 
 * Required: True
+
+* Regex pattern: `^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$`
 
 
 
@@ -71,7 +73,8 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 <details>
 ```yaml
 name: thumbnail
-description: A placeholder for any type of data.
+description: Path to the thumbnail of preview image relative to the dataset directory
+  root.
 from_schema: metadata
 exact_mappings:
 - cdp-common:thumbnail
@@ -80,10 +83,11 @@ alias: thumbnail
 owner: PicturePath
 domain_of:
 - PicturePath
-range: Any
+range: URLorS3URI
 required: true
 inlined: true
 inlined_as_list: true
+pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$
 
 ```
 </details>

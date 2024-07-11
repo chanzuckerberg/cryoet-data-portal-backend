@@ -31,11 +31,13 @@ URI: [cdp-meta:pixel_spacing](metadatapixel_spacing)
 
 ## Properties
 
-* Range: [Float](Float.md)
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Required: True
 
 * Minimum Value: 0
+
+* Regex pattern: `^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
 
 
 
@@ -82,14 +84,19 @@ alias: pixel_spacing
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: float
+range: string
 required: true
 inlined: true
 inlined_as_list: true
 minimum_value: 1.0e-09
+pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
 unit:
   symbol: Å/px
   descriptive_name: Angstroms per pixel
+any_of:
+- range: float
+  minimum_value: 1.0e-09
+- range: FloatFormattedString
 
 ```
 </details>

@@ -121,7 +121,7 @@ Name: cdp-meta
 | [name](name.md) | The full name of the author |
 | [object_count](object_count.md) | Number of objects identified |
 | [offset](offset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... |
-| [ORCID](ORCID.md) | A unique, persistent identifier for researchers, provided by ORCID |
+| [ORCID](ORCID.md) | The ORCID identifier for the author |
 | [order](order.md) | The order of axes for an oriented point / instance segmentation annotation fi... |
 | [organism](organism.md) | The species from which the sample was derived |
 | [other_setup](other_setup.md) | Describes other setup not covered by sample preparation or grid preparation t... |
@@ -141,11 +141,11 @@ Name: cdp-meta
 | [sample_preparation](sample_preparation.md) | Describes how the sample was prepared |
 | [sample_type](sample_type.md) | Type of sample imaged in a CryoET study |
 | [size](size.md) | The size of a tomogram in voxels in each dimension |
-| [snapshot](snapshot.md) | A placeholder for any type of data |
+| [snapshot](snapshot.md) | Path to the dataset preview image relative to the dataset directory root |
 | [spherical_aberration_constant](spherical_aberration_constant.md) | Spherical Aberration Constant of the objective lens in millimeters |
 | [state](state.md) | Molecule state annotated (e |
 | [taxonomy_id](taxonomy_id.md) | NCBI taxonomy identifier for the organism, e |
-| [thumbnail](thumbnail.md) | A placeholder for any type of data |
+| [thumbnail](thumbnail.md) | Path to the thumbnail of preview image relative to the dataset directory root |
 | [tilt_alignment_software](tilt_alignment_software.md) | Software used for tilt alignment |
 | [tilt_axis](tilt_axis.md) | Rotation angle in degrees |
 | [tilt_range](tilt_range.md) | The range of tilt angles in the tilt series |
@@ -203,6 +203,7 @@ Name: cdp-meta
 | [Nodeidentifier](Nodeidentifier.md) | A URI, CURIE or BNODE that represents a node in a model |
 | [Objectidentifier](Objectidentifier.md) | A URI or CURIE that represents an object in the model |
 | [ONTOLOGYID](ONTOLOGYID.md) | An ontology identifier |
+| [ORCID](ORCID.md) | A unique, persistent identifier for researchers, provided by ORCID |
 | [Sparqlpath](Sparqlpath.md) | A string encoding a SPARQL Property Path |
 | [String](String.md) | A character string |
 | [Time](Time.md) | A time object represents a (local) time of day, independent of any particular... |

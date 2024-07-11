@@ -62,7 +62,7 @@ classes:
           - cdp-common:author_primary_author_status
       ORCID:
         exact_mappings:
-          - cdp-common:orcid
+          - cdp-common:author_orcid
   # ============================================================================
 
 

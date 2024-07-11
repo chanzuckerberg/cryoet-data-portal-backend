@@ -137,6 +137,7 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: (?i)^BTO:[0-9]{7}$
 
 ```
 </details>
@@ -189,6 +190,7 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: (?i)^BTO:[0-9]{7}$
 
 ```
 </details>

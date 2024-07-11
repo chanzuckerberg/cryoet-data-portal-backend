@@ -135,6 +135,7 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: (?i)^[A-Z]+:[0-9]+$
 
 ```
 </details>
@@ -185,6 +186,7 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: (?i)^[A-Z]+:[0-9]+$
 
 ```
 </details>

@@ -1,3 +1,5 @@
+from typing import Union
+
 import click
 from linkml.utils.helpers import write_to_file
 from linkml_runtime.dumpers import yaml_dumper
@@ -13,6 +15,18 @@ def _materialize_classes(schema: SchemaView) -> dict:
             c_def.attributes[attr.name] = attr
 
 
+def _add_to_slot_pattern(slot: dict, pattern: Union[str, None]) -> str:
+    """
+    Add the pattern from the common schema to the slot pattern.
+    """
+    if pattern is None:
+        return None
+    elif "pattern" not in slot or slot["pattern"] is None:
+        return pattern
+    else:
+        return f"({pattern})|({slot['pattern']})"
+
+
 def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> SchemaView:
     """
     Copy range, descriptions and patterns from exact_mappings to common_schema.
@@ -22,6 +36,9 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
 
     # Copy descriptions and ranges from common_schema
     common_slots = common_schema.all_slots()
+
+    # Ensure types are properly copied over
+    schema_types = schema.all_types()
 
     for c in schema.all_classes():
         clz = schema.get_class(c)
@@ -52,8 +69,29 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
                 slot["maximum_value"] = common_slot["maximum_value"]
                 slot["required"] = common_slot["required"]
                 slot["recommended"] = common_slot["recommended"]
-                slot["pattern"] = common_slot["pattern"]
+                slot["pattern"] = _add_to_slot_pattern(slot, common_slot["pattern"])
                 slot["ifabsent"] = common_slot["ifabsent"]
+            if slot["range"] in schema_types:
+                slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(slot["range"]).pattern)
+            # add the patterns from the any_of range, combining them regex-wise
+            if "any_of" in slot:
+                for _, a in enumerate(slot["any_of"]):
+                    if "range" in a and a["range"] in schema_types and "pattern" in schema.get_type(a["range"]):
+                        slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(a["range"]).pattern)
+                    if "minimum_value" in a and a["minimum_value"] is not None:
+                        if "minimum_value" in slot and slot["minimum_value"] is not None:
+                            print(
+                                f"[WARNING]: Minimum value already set for slot {slot['name']} ({slot['minimum_value']}). NOT overwriting with {a['minimum_value']}",
+                            )
+                        else:
+                            slot["minimum_value"] = a["minimum_value"]
+                    if "maximum_value" in a and a["maximum_value"] is not None:
+                        if "maximum_value" in slot and slot["maximum_value"] is not None:
+                            print(
+                                f"[WARNING]: Maximum value already set for slot {slot['name']} ({slot['maximum_value']}). NOT overwriting with {a['maximum_value']}",
+                            )
+                        else:
+                            slot["maximum_value"] = a["maximum_value"]
 
     # Make sure the descriptions from mixin classes are carried over
     for c in schema.all_classes():

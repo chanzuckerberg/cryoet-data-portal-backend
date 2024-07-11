@@ -1,6 +1,6 @@
+# Type: ORCID
 
 
-# Slot: ORCID
 
 
 _A unique, persistent identifier for researchers, provided by ORCID._
@@ -9,33 +9,13 @@ _A unique, persistent identifier for researchers, provided by ORCID._
 
 URI: [cdp-meta:ORCID](metadataORCID)
 
-
-
-<!-- no inheritance hierarchy -->
-
+* [base](https://w3id.org/linkml/base): str
 
 
 
 
-## Applicable Classes
+* [pattern](https://w3id.org/linkml/pattern): `[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$`
 
-| Name | Description | Modifies Slot |
-| --- | --- | --- |
-| [Author](Author.md) | Author of a scientific data entity |  no  |
-
-
-
-
-
-
-
-## Properties
-
-* Range: [String](String.md)
-
-* Recommended: True
-
-* Regex pattern: `[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$`
 
 
 
@@ -63,30 +43,4 @@ URI: [cdp-meta:ORCID](metadataORCID)
 | ---  | ---  |
 | self | cdp-meta:ORCID |
 | native | cdp-meta:ORCID |
-| exact | cdp-common:orcid |
-
-
-
-
-## LinkML Source
-
-<details>
-```yaml
-name: ORCID
-description: A unique, persistent identifier for researchers, provided by ORCID.
-from_schema: metadata
-exact_mappings:
-- cdp-common:orcid
-rank: 1000
-alias: ORCID
-owner: Author
-domain_of:
-- Author
-range: string
-recommended: true
-inlined: true
-inlined_as_list: true
-pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
-
-```
-</details>
+| exact | cdp-common:author_orcid |
