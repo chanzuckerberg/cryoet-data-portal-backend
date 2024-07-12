@@ -24,6 +24,8 @@ python dataset_config_validate.py
 ## Command Line Options
 This script supports several command line options that allow for selective validation:
 
+`--help`: Shows the help message with all available options.
+
 `--dataset-configs-dir`: Specifies the directory where all dataset configuration files are stored. The default is `../dataset_configs/`.
 
 `--include-glob`: Specifies a glob pattern to include only specific files for validation. This option is helpful when you want to validate a subset of all available YAML configuration files. Note that only YAML files are considered for validation, regardless of this option.
@@ -41,3 +43,5 @@ python dataset_config_validate.py --exclude-keywords "draft,old"
 ```
 
 `--output-dir`: Sets the directory where all validation errors will be saved. The default is `./dataset_config_validate_errors`, and the directory will be recreated at each script run, removing previous contents.
+
+`--verbose`: Enables verbose output, showing all validation errors for each dataset configuration file.
