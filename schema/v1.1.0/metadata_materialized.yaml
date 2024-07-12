@@ -329,13 +329,13 @@ types:
     description: A Digital Object Identifier
     from_schema: metadata
     base: str
-    pattern: ^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$
+    pattern: ^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$
   DOI_LIST:
     name: DOI_LIST
     description: A list of Digital Object Identifiers
     from_schema: metadata
     base: str
-    pattern: ^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$
+    pattern: ^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$
   EMPIAR_ID:
     name: EMPIAR_ID
     description: An Electron Microscopy Public Image Archive identifier
@@ -3022,7 +3022,7 @@ classes:
         recommended: true
         inlined: true
         inlined_as_list: true
-        pattern: (^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
+        pattern: (^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
       related_database_entries:
         name: related_database_entries
         description: Comma-separated list of related database entries for the dataset.

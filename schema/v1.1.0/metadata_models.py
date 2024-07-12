@@ -91,14 +91,14 @@ linkml_meta = LinkMLMeta(
                 "description": "A Digital Object Identifier",
                 "from_schema": "metadata",
                 "name": "DOI",
-                "pattern": "^(doi:|https://doi\\.org/)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$",
+                "pattern": "^(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$",
             },
             "DOI_LIST": {
                 "base": "str",
                 "description": "A list of Digital Object Identifiers",
                 "from_schema": "metadata",
                 "name": "DOI_LIST",
-                "pattern": "^(doi:|https://doi\\.org/)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\\s*,\\s*(doi:|https://doi\\.org/)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$",
+                "pattern": "^(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\\s*,\\s*(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$",
             },
             "EMDB_ID": {
                 "base": "str",
@@ -3122,7 +3122,7 @@ class CrossReferences(ConfiguredBaseModel):
     @field_validator("dataset_publications")
     def pattern_dataset_publications(cls, v):
         pattern = re.compile(
-            r"(^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
+            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
         )
         if isinstance(v, list):
             for element in v:

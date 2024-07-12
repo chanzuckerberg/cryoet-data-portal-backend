@@ -864,12 +864,12 @@ types:
   DOI:
     description: A Digital Object Identifier
     base: str
-    pattern: '^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$'
+    pattern: '^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$'
 
   DOI_LIST:
     description: A list of Digital Object Identifiers
     base: str
-    pattern: '^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$'
+    pattern: '^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$'
 
   EMPIAR_ID:
     description: An Electron Microscopy Public Image Archive identifier

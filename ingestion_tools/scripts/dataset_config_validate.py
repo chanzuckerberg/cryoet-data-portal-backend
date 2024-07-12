@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import re
 import shutil
@@ -17,6 +18,9 @@ DATASET_CONFIGS_MODELS_DIR = f"../../schema/{SCHEMA_VERSION}/"
 sys.path.append(DATASET_CONFIGS_MODELS_DIR)  # To import the Pydantic-generated dataset models
 
 from dataset_config_models import Container  # noqa: E402
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 DATASET_CONFIGS_DIR = "../dataset_configs/"
 ERRORS_OUTPUT_DIR = "./dataset_config_validate_errors"
@@ -133,15 +137,18 @@ def main(dataset_configs_dir: str, include_glob: str, exclude_keywords: str, out
     """
     See ../docs/dataset_config_validation.md for more information.
     """
+    if verbose:
+        logger.setLevel(logging.DEBUG)
+
     files_to_validate = get_yaml_config_files(include_glob, exclude_keywords, dataset_configs_dir, verbose)
 
     if not files_to_validate:
-        print("[WARNING]: No files to validate.")
+        logger.warning("No files to validate.")
         return
 
     # Remove existing dir
     if os.path.exists(output_dir):
-        print(f"[WARNING]: Removing existing {output_dir} directory.")
+        logging.warning("Removing existing %s directory.", output_dir)
         shutil.rmtree(output_dir)
     os.makedirs(output_dir, exist_ok=True)
 
@@ -167,7 +174,7 @@ def main(dataset_configs_dir: str, include_glob: str, exclude_keywords: str, out
             errors[file] = [exc]
 
     if validation_succeeded:
-        print("[SUCCESS]: All files passed validation.")
+        logger.info("All files passed validation.")
         return
 
     # Write all errors to a file
@@ -190,7 +197,7 @@ def main(dataset_configs_dir: str, include_glob: str, exclude_keywords: str, out
         errors_list.sort()
         f.write("\n".join(errors_list))
 
-    print("[ERROR]: Validation failed. See dataset_config_validate_errors.json for details.")
+    logger.error("Validation failed. See dataset_config_validate_errors.json for details.")
     exit(1)
 
 

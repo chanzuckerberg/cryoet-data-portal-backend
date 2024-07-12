@@ -14,7 +14,7 @@ URI: [cdp-meta:DOI_LIST](metadataDOI_LIST)
 
 
 
-* [pattern](https://w3id.org/linkml/pattern): `^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$`
+* [pattern](https://w3id.org/linkml/pattern): `^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$`
 
 
 
