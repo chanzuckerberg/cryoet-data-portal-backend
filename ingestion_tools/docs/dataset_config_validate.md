@@ -1,6 +1,6 @@
 
 # dataset_config_validate.py
-This script enables us to run dataset config validation checks on all (or a glob-specified) set of dataset config files. It will output a summary of the validation errors to `ingestion_tools/scripts/dataset_config_validate_errors`, with the original errors, and two summarized versions of the errors.
+This script enables us to run dataset config validation checks on all (or a glob-specified) set of dataset config files. It will output the full set of validation errors to `ingestion_tools/scripts/dataset_config_validate_errors`, while outputting a summary of the errors to stdout.
 
 ## One-time Setup
 Make sure you have at least python 3.11 installed. If you need to work with multiple versions of python, [pyenv](https://github.com/pyenv/pyenv) can help with that.
@@ -41,10 +41,3 @@ python dataset_config_validate.py --exclude-keywords "draft,old"
 ```
 
 `--output-dir`: Sets the directory where all validation errors will be saved. The default is `./dataset_config_validate_errors`, and the directory will be recreated at each script run, removing previous contents.
-
-## Error Handling and Output
-The script processes all specified YAML files, attempting to validate each one according to the predefined Pydantic models. If validation errors occur, they are collected and output in various forms:
-
-- Complete Errors List: A JSON file named `dataset_config_validate_errors.json` containing detailed information about each error for every invalid file.
-- Filtered Errors List: A text file named `dataset_config_validate_errors_filtered.txt` provides a simplified version of the errors, making it easier to identify common issues without repeated details.
-- Further Filtered Errors List: Another text file, `dataset_config_validate_errors_filtered_2.txt`, strips down the errors to their most fundamental components, helping to quickly pinpoint the most frequent types of mistakes.
