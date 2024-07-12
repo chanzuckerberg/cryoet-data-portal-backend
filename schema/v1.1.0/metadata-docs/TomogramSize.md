@@ -17,15 +17,9 @@ URI: [cdp-meta:TomogramSize](metadataTomogramSize)
     class TomogramSize
       TomogramSize : x
 
-          TomogramSize --> integer : x
-
       TomogramSize : y
 
-          TomogramSize --> integer : y
-
       TomogramSize : z
-
-          TomogramSize --> integer : z
 
 
 ```
@@ -40,9 +34,9 @@ URI: [cdp-meta:TomogramSize](metadataTomogramSize)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [x](x.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | Number of pixels in the 3D data fast axis | direct |
-| [y](y.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | Number of pixels in the 3D data medium axis | direct |
-| [z](z.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | Number of pixels in the 3D data slow axis | direct |
+| [x](x.md) | 1..1 <br/> [Integer](Integer.md) | Number of pixels in the 3D data fast axis | direct |
+| [y](y.md) | 1..1 <br/> [Integer](Integer.md) | Number of pixels in the 3D data medium axis | direct |
+| [z](z.md) | 1..1 <br/> [Integer](Integer.md) | Number of pixels in the 3D data slow axis | direct |
 
 
 
@@ -103,8 +97,6 @@ attributes:
     name: x
     description: Number of pixels in the 3D data fast axis
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_size_x
     rank: 1000
     alias: x
     owner: TomogramSize
@@ -112,14 +104,16 @@ attributes:
     - TomogramSize
     - TomogramOffset
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
   y:
     name: y
     description: Number of pixels in the 3D data medium axis
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_size_y
     rank: 1000
     alias: y
     owner: TomogramSize
@@ -127,15 +121,17 @@ attributes:
     - TomogramSize
     - TomogramOffset
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
   z:
     name: z
     description: Number of pixels in the 3D data slow axis.  This is the image projection
       direction at zero stage tilt
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_size_z
     rank: 1000
     alias: z
     owner: TomogramSize
@@ -143,8 +139,12 @@ attributes:
     - TomogramSize
     - TomogramOffset
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
 
 ```
 </details>
@@ -161,8 +161,6 @@ attributes:
     name: x
     description: Number of pixels in the 3D data fast axis
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_size_x
     rank: 1000
     alias: x
     owner: TomogramSize
@@ -170,14 +168,16 @@ attributes:
     - TomogramSize
     - TomogramOffset
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
   y:
     name: y
     description: Number of pixels in the 3D data medium axis
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_size_y
     rank: 1000
     alias: y
     owner: TomogramSize
@@ -185,15 +185,17 @@ attributes:
     - TomogramSize
     - TomogramOffset
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
   z:
     name: z
     description: Number of pixels in the 3D data slow axis.  This is the image projection
       direction at zero stage tilt
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_size_z
     rank: 1000
     alias: z
     owner: TomogramSize
@@ -201,8 +203,12 @@ attributes:
     - TomogramSize
     - TomogramOffset
     range: integer
+    required: true
     inlined: true
     inlined_as_list: true
+    unit:
+      symbol: px
+      descriptive_name: pixels
 
 ```
 </details>

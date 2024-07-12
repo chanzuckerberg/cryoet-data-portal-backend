@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -25,9 +25,9 @@ datasets:
     dataset_identifier: 10046
     dataset_title: Helicobacter_pylori_dFliG
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: 'The samples were prepared with Vitrobot IV. Blotting conditions
       were either: blot force 6, blot . time 3, drain time 1 OR blot force -3, blot
       time 4, drain time 1. 100% humidity. Cu grids. 10 nm . gold.'
@@ -74,7 +74,7 @@ tiltseries:
     data_acquisition_software: Serial EM
     is_aligned: false
     microscope:
-      additional_scope_info: ''
+      additional_info: ''
       manufacturer: TFS
       model: Krios
     microscope_optical_setup:

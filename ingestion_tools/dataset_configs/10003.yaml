@@ -5,14 +5,12 @@ annotations:
       description: chloramphenicol bound 70S ribosome
       id: GO:0022626
       name: cytosolic ribosome
-      state: null
-    annotation_publications: null
     annotation_software: pyTOM + RELION
     authors:
     - ORCID: 0000-0003-4368-2526
       corresponding_author_status: false
       name: Liang Xue
-      primary_annotator_status: true
+      primary_author_status: true
     - ORCID: 0000-0001-5454-7755
       corresponding_author_status: true
       name: Cramer Patrick
@@ -24,21 +22,21 @@ annotations:
       precision: 95
       recall: 90
     dates: &id001
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-10-23
-      release_date: 2023-11-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-10-23'
+      release_date: '2023-11-01'
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
-    version: '1.0'
+    version: 1.0
   sources:
-  - binning: 4
-    file_format: relion3_star
-    filter_value: '{mapped_tomo_name}.tomostar'
-    glob_string: run_ct17_it034_data.star
-    is_visualization_default: true
-    order: xyz
-    shape: OrientedPoint
+  - OrientedPoint:
+      binning: 4
+      file_format: relion3_star
+      filter_value: '{mapped_tomo_name}.tomostar'
+      glob_string: run_ct17_it034_data.star
+      is_visualization_default: true
+      order: xyz
 dataset_keyphotos:
 - sources:
   - literal:
@@ -63,9 +61,6 @@ datasets:
     - ORCID: 0000-0001-6968-041X
       corresponding_author_status: true
       name: Julia Mahamid
-    cell_component:
-      id: null
-      name: null
     cell_strain:
       id: M129
       name: Mycoplasmoides pneumoniae
@@ -86,7 +81,6 @@ datasets:
       grant_id: '693023'
     - funding_agency_name: European Research Council (ERC)
       grant_id: '760067'
-    grid_preparation: null
     organism:
       name: Mycoplasma pneumoniae
       taxonomy_id: 2104
@@ -121,33 +115,30 @@ standardization_config:
   run_to_tomo_map_csv: fixed raw data TS name and tomo name tracking sheet.csv
   source_prefix: mPneumoniae
 tiltseries:
-  acceleration_voltage: 300000
-  alignment_binning_factor: null
-  binning_from_frames: 1
-  camera:
-    manufacturer: Gatan
-    model: K2 SUMMIT
-  data_acquisition_software: SerialEM
-  is_aligned: null
-  microscope:
-    manufacturer: FEI
-    model: TITAN KRIOS
-  microscope_optical_setup:
-    energy_filter: null
-    image_corrector: null
-    phase_plate: null
-  pixel_spacing: 1.7005
-  related_empiar_entry: EMPIAR-10499
-  scales: []
-  spherical_aberration_constant: 2.7
-  tilt_axis: 175
-  tilt_range:
-    max: 60
-    min: -60
-  tilt_series_quality: 5
-  tilt_step: 3.0
-  tilting_scheme: Dose symmetric from 0.0 degrees
-  total_flux: 120
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: 1
+    camera:
+      manufacturer: Gatan
+      model: K2 SUMMIT
+    data_acquisition_software: SerialEM
+    is_aligned: false
+    microscope:
+      manufacturer: FEI
+      model: TITAN KRIOS
+    microscope_optical_setup:
+      energy_filter: unknown
+    pixel_spacing: 1.7005
+    related_empiar_entry: EMPIAR-10499
+    spherical_aberration_constant: 2.7
+    tilt_axis: 175
+    tilt_range:
+      max: 60
+      min: -60
+    tilt_series_quality: 5
+    tilt_step: 3.0
+    tilting_scheme: Dose symmetric from 0.0 degrees
+    total_flux: 120
 tomograms:
 - metadata:
     affine_transformation_matrix:

@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -23,9 +23,9 @@ datasets:
     dataset_identifier: 10227
     dataset_title: ' Salmonella fliHIJ knockout minicells'
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: null
     organism:
       name: Salmonella typhimurium
@@ -68,7 +68,7 @@ tiltseries:
     data_acquisition_software: Leginon
     is_aligned: false
     microscope:
-      additional_scope_info: ''
+      additional_info: ''
       manufacturer: FEI
       model: Polara
     microscope_optical_setup:

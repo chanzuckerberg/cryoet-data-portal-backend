@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -30,9 +30,9 @@ datasets:
     dataset_identifier: 10186
     dataset_title: HUVECs-pNLGFP-VPS4DN
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: manual blotting
     organism:
       name: Homo sapiens
@@ -75,7 +75,7 @@ tiltseries:
     data_acquisition_software: leginon
     is_aligned: false
     microscope:
-      additional_scope_info: ''
+      additional_info: ''
       manufacturer: FEI
       model: Polara
     microscope_optical_setup:
@@ -129,7 +129,7 @@ tomograms:
     reconstruction_method: Weighted back projection
     reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: '{tomo-voxel_spacing}'
+    voxel_spacing: 'float {tomo-voxel_spacing}'
   sources:
   - source_glob:
       list_glob: '{run_name}/3dimage_*/*'

@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -21,9 +21,9 @@ datasets:
     dataset_identifier: 10100
     dataset_title: caulobacter rs_deletion
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: null
     organism:
       name: Caulobacter crescentus
@@ -66,14 +66,14 @@ tiltseries:
     data_acquisition_software: '{ts-data_acquisition_software}'
     is_aligned: false
     microscope:
-      additional_scope_info: ''
+      additional_info: ''
       manufacturer: TFS
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
       phase_plate: None
-    pixel_spacing: '{ts-pixel_spacing}'
+    pixel_spacing: 'float {ts-pixel_spacing}'
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
     tilt_axis: 84.3
@@ -83,7 +83,7 @@ tiltseries:
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 3.0
     tilting_scheme: min to max tilt
-    total_flux: '{ts-total_flux}'
+    total_flux: 'float {ts-total_flux}'
   sources:
   - source_glob:
       list_glob: '{run_name}/rawdata/*'
@@ -120,7 +120,7 @@ tomograms:
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: '{tomo-reconstruction_software}'
     tomogram_version: 1
-    voxel_spacing: '{tomo-voxel_spacing}'
+    voxel_spacing: 'float {tomo-voxel_spacing}'
   sources:
   - source_glob:
       list_glob: '{run_name}/3dimage_*/*'

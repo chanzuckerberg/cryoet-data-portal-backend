@@ -17,9 +17,6 @@ URI: [cdp-meta:PicturedEntity](metadataPicturedEntity)
 ```mermaid
  classDiagram
     class PicturedEntity
-      PicturedEntity <|-- Dataset
-      PicturedEntity <|-- Tomogram
-
       PicturedEntity : key_photos
 
           PicturedEntity --> PicturePath : key_photos
@@ -97,8 +94,6 @@ attributes:
     owner: PicturedEntity
     domain_of:
     - PicturedEntity
-    - Dataset
-    - Tomogram
     range: PicturePath
     required: true
     inlined: true
@@ -125,8 +120,6 @@ attributes:
     owner: PicturedEntity
     domain_of:
     - PicturedEntity
-    - Dataset
-    - Tomogram
     range: PicturePath
     required: true
     inlined: true

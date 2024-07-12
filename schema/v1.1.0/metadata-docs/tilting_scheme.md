@@ -28,7 +28,9 @@ URI: [cdp-meta:tilting_scheme](metadatatilting_scheme)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
+
+* Required: True
 
 
 
@@ -65,6 +67,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: string
+required: true
 inlined: true
 inlined_as_list: true
 

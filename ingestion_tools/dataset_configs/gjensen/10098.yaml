@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -24,9 +24,9 @@ datasets:
     dataset_identifier: 10098
     dataset_title: Lp02_Legionella pneumophila
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: "4 grids were frozen for Lp02 at OD= 2.8 and another 4 grids\
       \ for Lp02 at OD= 3.3Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample,\
       \ Blot force 6, blot time 3 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane\
@@ -81,7 +81,7 @@ tiltseries:
     data_acquisition_software: UCSFTomo
     is_aligned: false
     microscope:
-      additional_scope_info: ''
+      additional_info: ''
       manufacturer: TFS
       model: Krios
     microscope_optical_setup:
@@ -135,7 +135,7 @@ tomograms:
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: '{tomo-reconstruction_software}'
     tomogram_version: 1
-    voxel_spacing: '{tomo-voxel_spacing}'
+    voxel_spacing: 'float {tomo-voxel_spacing}'
   sources:
   - source_glob:
       list_glob: '{run_name}/{mapped_tomo_name}'

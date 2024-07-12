@@ -19,6 +19,7 @@ URI: [cdp-meta:AuthoredEntity](metadataAuthoredEntity)
     class AuthoredEntity
       AuthoredEntity <|-- Dataset
       AuthoredEntity <|-- Tomogram
+      AuthoredEntity <|-- Annotation
 
       AuthoredEntity : authors
 
@@ -99,7 +100,6 @@ attributes:
     owner: AuthoredEntity
     domain_of:
     - AuthoredEntity
-    - AnnotatoredEntity
     - Dataset
     - Tomogram
     - Annotation
@@ -131,7 +131,6 @@ attributes:
     owner: AuthoredEntity
     domain_of:
     - AuthoredEntity
-    - AnnotatoredEntity
     - Dataset
     - Tomogram
     - Annotation

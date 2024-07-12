@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -24,9 +24,9 @@ datasets:
     dataset_identifier: 10042
     dataset_title: Pseudomonas_aeruginosa_DfliP
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: 'Different plunge-freezing parameters: 1) blot force 6, blot
       time 3s, drain time 1s. 2) blot force 3, . blot time 2s, drain time 1s. 3) blot
       force -5, blot time 4s, drain time 1s. 4) blot force -3, blot time . 2s, drain
@@ -76,7 +76,7 @@ tiltseries:
     data_acquisition_software: Serial EM
     is_aligned: false
     microscope:
-      additional_scope_info: ''
+      additional_info: ''
       manufacturer: TFS
       model: Krios
     microscope_optical_setup:
@@ -130,7 +130,7 @@ tomograms:
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: '{tomo-reconstruction_software}'
     tomogram_version: 1
-    voxel_spacing: '{tomo-voxel_spacing}'
+    voxel_spacing: 'float {tomo-voxel_spacing}'
   sources:
   - source_glob:
       list_glob: '{run_name}/3dimage_*/*'

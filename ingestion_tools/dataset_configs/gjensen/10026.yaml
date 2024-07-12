@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -25,9 +25,9 @@ datasets:
     dataset_identifier: 10026
     dataset_title: G. hansenii bio4-2
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: Freezing started at 2:20pm (3h incubation).BT6s BF0 DT1s (only
       backblotted happened) hum 70% 30C
     organism:
@@ -73,7 +73,7 @@ tiltseries:
     data_acquisition_software: Serial EM
     is_aligned: false
     microscope:
-      additional_scope_info: ''
+      additional_info: ''
       manufacturer: TFS
       model: Krios
     microscope_optical_setup:

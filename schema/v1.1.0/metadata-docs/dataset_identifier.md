@@ -1,7 +1,7 @@
 # Slot: dataset_identifier
 
 
-_An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory  name in data tree._
+_An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree._
 
 
 
@@ -28,7 +28,9 @@ URI: [cdp-meta:dataset_identifier](metadatadataset_identifier)
 
 ## Properties
 
-* Range: [xsd:integer](http://www.w3.org/2001/XMLSchema#integer)
+* Range: [Integer](Integer.md)
+
+* Required: True
 
 
 
@@ -56,7 +58,7 @@ URI: [cdp-meta:dataset_identifier](metadatadataset_identifier)
 ```yaml
 name: dataset_identifier
 description: An identifier for a CryoET dataset, assigned by the Data Portal. Used
-  to identify the dataset as the directory  name in data tree.
+  to identify the dataset as the directory name in data tree.
 from_schema: metadata
 exact_mappings:
 - cdp-common:dataset_identifier
@@ -66,6 +68,7 @@ owner: Dataset
 domain_of:
 - Dataset
 range: integer
+required: true
 inlined: true
 inlined_as_list: true
 

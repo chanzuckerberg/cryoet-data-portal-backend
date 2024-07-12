@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -25,9 +25,9 @@ datasets:
     dataset_identifier: 10072
     dataset_title: "L. pneumophila JV3588_\u2206dotK"
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: "6 grids were frozen for the JV3588 strain at OD~ 2.8, cell\
       \ density was increased to 2x by centrifugation. Vitrobot (MK iv) settings:\
       \ 100% humidity, 4\xB5l sample, Blot force 6, blot time 4 sec. Wait time 0 sec.\
@@ -78,7 +78,7 @@ tiltseries:
     data_acquisition_software: UCSFTomo
     is_aligned: false
     microscope:
-      additional_scope_info: ''
+      additional_info: ''
       manufacturer: FEI
       model: Polara
     microscope_optical_setup:
@@ -95,7 +95,7 @@ tiltseries:
     tilt_series_quality: 4
     tilt_step: 2.0
     tilting_scheme: starting tilt to max then min
-    total_flux: '{ts-total_flux}'
+    total_flux: 'float {ts-total_flux}'
   sources:
   - source_glob:
       list_glob: '{run_name}/rawdata/*'

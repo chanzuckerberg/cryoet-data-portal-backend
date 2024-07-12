@@ -24,7 +24,7 @@ URI: [cdp-meta:cross_references](metadatacross_references)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

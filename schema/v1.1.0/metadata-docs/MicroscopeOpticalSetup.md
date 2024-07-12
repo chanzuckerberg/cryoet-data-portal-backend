@@ -17,15 +17,9 @@ URI: [cdp-meta:MicroscopeOpticalSetup](metadataMicroscopeOpticalSetup)
     class MicroscopeOpticalSetup
       MicroscopeOpticalSetup : energy_filter
 
-          MicroscopeOpticalSetup --> string : energy_filter
-
       MicroscopeOpticalSetup : image_corrector
 
-          MicroscopeOpticalSetup --> string : image_corrector
-
       MicroscopeOpticalSetup : phase_plate
-
-          MicroscopeOpticalSetup --> string : phase_plate
 
 
 ```
@@ -40,9 +34,9 @@ URI: [cdp-meta:MicroscopeOpticalSetup](metadataMicroscopeOpticalSetup)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [energy_filter](energy_filter.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Energy filter setup used | direct |
-| [phase_plate](phase_plate.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Phase plate configuration | direct |
-| [image_corrector](image_corrector.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Image corrector setup | direct |
+| [energy_filter](energy_filter.md) | 1..1 <br/> [String](String.md) | Energy filter setup used | direct |
+| [phase_plate](phase_plate.md) | 0..1 <br/> [String](String.md) | Phase plate configuration | direct |
+| [image_corrector](image_corrector.md) | 0..1 <br/> [String](String.md) | Image corrector setup | direct |
 
 
 
@@ -111,6 +105,7 @@ attributes:
     domain_of:
     - MicroscopeOpticalSetup
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   phase_plate:
@@ -165,6 +160,7 @@ attributes:
     domain_of:
     - MicroscopeOpticalSetup
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   phase_plate:

@@ -17,19 +17,11 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
     class CrossReferences
       CrossReferences : dataset_citations
 
-          CrossReferences --> string : dataset_citations
-
       CrossReferences : dataset_publications
-
-          CrossReferences --> string : dataset_publications
 
       CrossReferences : related_database_entries
 
-          CrossReferences --> string : related_database_entries
-
       CrossReferences : related_database_links
-
-          CrossReferences --> string : related_database_links
 
 
 ```
@@ -44,10 +36,10 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [dataset_publications](dataset_publications.md) | 0..1 _recommended_ <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Comma-separated list of DOIs for publications associated with the dataset | direct |
-| [related_database_entries](related_database_entries.md) | 0..1 _recommended_ <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Comma-separated list of related database entries for the dataset | direct |
-| [related_database_links](related_database_links.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Comma-separated list of related database links for the dataset | direct |
-| [dataset_citations](dataset_citations.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Comma-separated list of DOIs for publications citing the dataset | direct |
+| [dataset_publications](dataset_publications.md) | 0..1 _recommended_ <br/> [String](String.md) | Comma-separated list of DOIs for publications associated with the dataset | direct |
+| [related_database_entries](related_database_entries.md) | 0..1 _recommended_ <br/> [String](String.md) | Comma-separated list of related database entries for the dataset | direct |
+| [related_database_links](related_database_links.md) | 0..1 <br/> [String](String.md) | Comma-separated list of related database links for the dataset | direct |
+| [dataset_citations](dataset_citations.md) | 0..1 <br/> [String](String.md) | Comma-separated list of DOIs for publications citing the dataset | direct |
 
 
 

@@ -30,6 +30,8 @@ URI: [cdp-meta:microscope_optical_setup](metadatamicroscope_optical_setup)
 
 * Range: [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md)
 
+* Required: True
+
 
 
 
@@ -63,6 +65,7 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: MicroscopeOpticalSetup
+required: true
 inlined: true
 inlined_as_list: true
 

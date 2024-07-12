@@ -28,7 +28,7 @@ URI: [cdp-meta:is_curator_recommended](metadatais_curator_recommended)
 
 ## Properties
 
-* Range: [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean)
+* Range: [Boolean](Boolean.md)
 
 
 
@@ -61,6 +61,7 @@ from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_is_curator_recommended
 rank: 1000
+ifabsent: 'False'
 alias: is_curator_recommended
 owner: Annotation
 domain_of:

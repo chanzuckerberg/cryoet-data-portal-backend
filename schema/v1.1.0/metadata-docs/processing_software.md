@@ -28,7 +28,9 @@ URI: [cdp-meta:processing_software](metadataprocessing_software)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
+
+* Recommended: True
 
 
 
@@ -65,6 +67,7 @@ owner: Tomogram
 domain_of:
 - Tomogram
 range: string
+recommended: true
 inlined: true
 inlined_as_list: true
 

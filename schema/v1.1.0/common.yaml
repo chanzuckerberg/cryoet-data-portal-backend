@@ -25,6 +25,7 @@ slots:
       A unique, persistent identifier for researchers, provided by ORCID.
     range: string
     pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
+    recommended: true
     exact_mappings:
       - IAO:0000708
 
@@ -33,7 +34,23 @@ slots:
       A Research Organization Registry (ROR) identifier.
     range: string
     pattern: '^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$'
+    recommended: true
   # ============================================================================
+
+  # ============================================================================
+  # Snapshot / Thumbnail
+  # ============================================================================
+  snapshot:
+    description: >-
+      Path to the dataset preview image relative to the dataset directory root.
+    range: Any
+    required: true
+
+  thumbnail:
+    description: >-
+      Path to the thumbnail of preview image relative to the dataset directory root.
+    range: Any
+    required: true
 
   # ============================================================================
   # Dates (re-used in Dataset, Tomogram, Tiltseries, Annotation)
@@ -89,16 +106,13 @@ slots:
     range: boolean
     description: >-
       Whether the author is a corresponding author.
+    ifabsent: false
 
   author_primary_author_status:
     range: boolean
     description: >-
       Whether the author is a primary author.
-
-  author_primary_annotator_status:
-    range: boolean
-    description: >-
-      Whether the author is a primary annotator.
+    ifabsent: false
 
   author_list_order:
     range: integer
@@ -194,11 +208,12 @@ slots:
   # Organism/Species
   organism_name:
     range: string
-    recommended: true
+    required: true
     description: >-
       Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens.
   organism_taxid:
-    range: string
+    range: integer
+    minimum_value: 1
     recommended: true
     description: >-
       NCBI taxonomy identifier for the organism, e.g. 9606
@@ -206,7 +221,7 @@ slots:
   # Tissue
   tissue_name:
     range: string
-    recommended: true
+    required: true
     description: >-
       Name of the tissue from which a biological sample used in a CryoET study is derived from.
   tissue_id:
@@ -218,7 +233,7 @@ slots:
   # Cell Type
   cell_name:
     range: string
-    recommended: true
+    required: true
     description: >-
       Name of the cell type from which a biological sample used in a CryoET study is derived from.
   cell_type_id:
@@ -230,7 +245,7 @@ slots:
   # Cell Strain
   cell_strain_name:
     range: string
-    recommended: true
+    required: true
     description: >-
       Cell line or strain for the sample.
   cell_strain_id:
@@ -242,7 +257,7 @@ slots:
   # Cell Component
   cell_component_name:
     range: string
-    recommended: true
+    required: true
     description: >-
       Name of the cellular component.
   cell_component_id:
@@ -299,28 +314,49 @@ slots:
     description: Reference to the run this tiltseries is a part of
   tiltseries_acceleration_voltage:
     range: integer
+    minimum_value: 0
+    required: true
     description: Electron Microscope Accelerator voltage in volts
     unit:
       descriptive_name: volts
       symbol: V
   tiltseries_aligned_tiltseries_binning:
     range: integer
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: integer
+    #   - range: IntegerFormattedString
     description: Binning factor of the aligned tilt series
+    ifabsent: 'int(1)'
   tiltseries_binning_from_frames:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
     description: Describes the binning factor from frames to tilt series file
+  tiltseries_camera_acquire_mode:
+    range: string
+    description: Camera acquisition mode
   tiltseries_camera_manufacturer:
     range: string
+    required: true
     description: Name of the camera manufacturer
   tiltseries_camera_model:
     range: string
+    required: true
     description: Camera model name
   tiltseries_data_acquisition_software:
     range: string
     description: Software used to collect data
+    required: true
   tiltseries_frames_count:
     range: integer
     description: Number of frames associated with this tiltseries
+  tiltseries_is_aligned:
+    range: boolean
+    required: true
+    description: Whether this tilt series is aligned
   tiltseries_https_alignment_file:
     range: string
     description: HTTPS path to the alignment file for this tiltseries
@@ -341,21 +377,31 @@ slots:
     description: Other microscope optical setup information, in addition to energy filter, phase plate and image corrector
   tiltseries_microscope_energy_filter:
     range: string
+    required: true
     description: Energy filter setup used
   tiltseries_microscope_image_corrector:
     range: string
     description: Image corrector setup
   tiltseries_microscope_manufacturer:
     range: string
+    required: true
     description: Name of the microscope manufacturer
   tiltseries_microscope_model:
     range: string
+    required: true
     description: Microscope model name
   tiltseries_microscope_phase_plate:
     range: string
     description: Phase plate configuration
   tiltseries_pixel_spacing:
     range: float
+    minimum_value: 0
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #     minimum_value: 0
+    #   - range: FloatFormattedString
+    required: true
     description: Pixel spacing for the tilt series
     unit:
       descriptive_name: Angstroms per pixel
@@ -380,48 +426,85 @@ slots:
     description: S3 path to this tiltseries in multiscale OME-Zarr format
   tiltseries_spherical_aberration_constant:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
+    required: true
     description: Spherical Aberration Constant of the objective lens in millimeters
     unit:
       descriptive_name: millimeters
       symbol: mm
+  tiltseries_tilt_alignment_software:
+    range: string
+    description: Software used for tilt alignment
   tiltseries_tilt_axis:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
+    required: true
     description: Rotation angle in degrees
     unit:
       descriptive_name: degrees
       symbol: °
   tiltseries_tilt_max:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
+    required: true
     description: Maximal tilt angle in degrees
     unit:
       descriptive_name: degrees
       symbol: °
   tiltseries_tilt_min:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
+    required: true
     description: Minimal tilt angle in degrees
-    unit:
-      descriptive_name: degrees
-      symbol: °
-  tiltseries_tilt_range:
-    range: float
-    description: Total tilt range in degrees
     unit:
       descriptive_name: degrees
       symbol: °
   tiltseries_tilt_series_quality:
     range: integer
+    minimum_value: 1
+    maximum_value: 5
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: integer
+    #     minimum_value: 1
+    #     maximum_value: 5
+    #   - range: IntegerFormattedString
+    required: true
     description: Author assessment of tilt series quality within the dataset (1-5, 5 is best)
   tiltseries_tilt_step:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
+    required: true
     description: Tilt step in degrees
     unit:
       descriptive_name: degrees
       symbol: °
   tiltseries_tilting_scheme:
     range: string
+    required: true
     description: The order of stage tilting during acquisition of the data
   tiltseries_total_flux:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
+    required: true
     description: Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series
     unit:
       descriptive_name: electrons per square Angstrom
@@ -432,18 +515,23 @@ slots:
   # ============================================================================
   # Tomogram slots
   # ============================================================================
-  tomogram_affine_transformation_matrix:
-    range: string
-    description: The flip or rotation transformation of this author submitted tomogram is indicated here
+  # tomogram affine_transformation_matrix is included in metadata.yaml for validation compatability purposes
   tomogram_ctf_corrected:
     range: boolean
     description: Whether this tomogram is CTF corrected
+    recommended: true
   #dataset (Dataset): An object relationship with the dataset this tomogram is a part of
   tomogram_dataset_id:
     range: integer
     description: Reference to the dataset this tomogram is a part of
   tomogram_fiducial_alignment_status:
     range: fiducial_alignment_status_enum
+    # TODO: remove after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: fiducial_alignment_status_enum
+    #   - range: BooleanFormattedString
+    #     pattern: '^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$'
+    required: true
     description: Whether the tomographic alignment was computed based on fiducial markers.
   tomogram_https_mrc_scale0:
     range: string
@@ -451,9 +539,6 @@ slots:
   tomogram_https_omezarr_dir:
     range: string
     description: HTTPS path to this tomogram in multiscale OME-Zarr format
-  tomogram_is_canonical:
-    range: boolean
-    description: Is this tomogram considered the canonical tomogram for the run experiment?
   tomogram_key_photo_thumbnail_url:
     range: string
     description: URL for the thumbnail of key photo
@@ -466,35 +551,24 @@ slots:
   tomogram_neuroglancer_config:
     range: string
     description: the compact json of neuroglancer config
-  tomogram_offset_x:
-    range: integer
-    description: x offset data relative to the canonical tomogram in pixels
-    unit:
-      descriptive_name: pixels
-      symbol: px
-  tomogram_offset_y:
-    range: integer
-    description: y offset data relative to the canonical tomogram in pixels
-    unit:
-      descriptive_name: pixels
-      symbol: px
-  tomogram_offset_z:
-    range: integer
-    description: z offset data relative to the canonical tomogram in pixels
-    unit:
-      descriptive_name: pixels
-      symbol: px
+  tomogram_align_software:
+    range: string
+    description: Software used for alignment
   tomogram_processing:
     range: string
+    required: true
     description: Describe additional processing used to derive the tomogram
   tomogram_processing_software:
     range: string
     description: Processing software used to derive the tomogram
+    recommended: true
   tomogram_reconstruction_method:
     range: string
+    required: true
     description: Describe reconstruction method (Weighted back-projection, SART, SIRT)
   tomogram_reconstruction_software:
     range: string
+    required: true
     description: Name of software used for reconstruction
   tomogram_s3_mrc_scale0:
     range: string
@@ -511,24 +585,21 @@ slots:
   tomogram_scale2_dimensions:
     range: string
     description: comma separated x,y,z dimensions of the scale2 tomogram
-  tomogram_size_x:
-    range: integer
-    description: Number of pixels in the 3D data fast axis
-  tomogram_size_y:
-    range: integer
-    description: Number of pixels in the 3D data medium axis
-  tomogram_size_z:
-    range: integer
-    description: Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
   tomogram_version:
-    range: string
-    description: Version of tomogram using the same software and post-processing. Version of tomogram using the same software and post-processing. This will be presented as the latest version
+    range: VersionString
+    required: true
+    description: Version of tomogram
   #tomogram_voxel_spacing (TomogramVoxelSpacing): An object relationship with a specific voxel spacing for this experiment run
   tomogram_type:
     range: string
     description: "Tomogram purpose (ex: CANONICAL)"
   tomogram_voxel_spacing:
     range: float
+    # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+    # any_of:
+    #   - range: float
+    #   - range: FloatFormattedString
+    required: true
     description: Voxel spacing equal in all three axes in angstroms
     unit:
       descriptive_name: Angstroms per voxel
@@ -541,9 +612,11 @@ slots:
   #id (int): Numeric identifier (May change!)
   annotation_method:
     range: string
+    required: true
     description: Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)
   annotation_method_type:
     range: annotation_method_type_enum
+    required: true
     description: Classification of the annotation method based on supervision.
   annotation_publication:
     range: string
@@ -551,17 +624,30 @@ slots:
   annotation_software:
     range: string
     description: Software used for generating this annotation
+    recommended: true
   #authors (list[Author]): An array relationship with the authors of this annotation
   annotation_confidence_precision:
     range: float
+    minimum_value: 0
+    maximum_value: 100
     description: Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive
+    unit:
+      descriptive_name: percentage
+      symbol: '%'
   annotation_confidence_recall:
     range: float
+    minimum_value: 0
+    maximum_value: 100
     description: Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly
+    unit:
+      descriptive_name: percentage
+      symbol: '%'
   #deposition_date (date): Date when an annotation set is initially received by the Data Portal.
   annotation_ground_truth_status:
     range: boolean
+    recommended: true
     description: Whether an annotation is considered ground truth, as determined by the annotator.
+    ifabsent: false
   annotation_ground_truth_used:
     range: string
     description: Annotation filename used as ground truth for precision and recall
@@ -577,9 +663,11 @@ slots:
     description: A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.
   annotation_object_id:
     range: string
+    required: true
     description: Gene Ontology Cellular Component identifier for the annotation object
   annotation_object_name:
     range: string
+    required: true
     description: Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)
   annotation_object_state:
     range: string
@@ -595,36 +683,72 @@ slots:
   annotation_is_curator_recommended:
     range: boolean
     description: This annotation is recommended by the curator to be preferred for this object type.
+    ifabsent: false
   annotation_method_links:
     range: AnnotationMethodLinks
     description: A set of links to models, sourcecode, documentation, etc referenced by annotation the method
+  annotation_version:
+    range: VersionString
+    description: Version of annotation.
 
   # ============================================================================
-  # Annotation File slots
+  # Annotation Source File slots
   # ============================================================================
   #id (int): Numeric identifier (May change!)
-  annotation_file_format:
+  annotation_source_file_format:
     range: string
+    required: true
     description: File format for this file
-  annotation_file_https_path:
+  annotation_source_file_https_path:
     range: string
     description: HTTPS url for the annotation file
-  annotation_file_s3_path:
+  annotation_source_file_s3_path:
     range: string
     description: S3 path for the annotation file
-  annotation_file_shape_type:
-    range: string
-    description: Describe whether this is a Point, OrientedPoint, or SegmentationMask file
-  annotation_file_annotation_id:
+  annotation_source_file_annotation_id:
     range: integer
     description: Reference to the annotation this file applies to
-  annotation_file_path:
+  annotation_source_file_path:
     range: string
     description: Path to the annotation file relative to the dataset root.
-  annotation_file_is_visualization_default:
+  annotation_source_file_glob_string:
+    range: string
+    required: true
+    description: Glob string to match annotation files in the dataset.
+  annotation_source_file_is_visualization_default:
     range: boolean
     description: This annotation will be rendered in neuroglancer by default.
+    ifabsent: false
   #Annotation (Annotation): The annotation this file is a part of
+
+  # ============================================================================
+  # Annotation Source File shape-specific slots
+  # ============================================================================
+  annotation_source_file_binning:
+    range: integer
+    description: The binning factor for a point / oriented point / instance segmentation annotation file.
+    ifabsent: 'int(1)'
+  annotation_source_file_columns:
+    range: string
+    description: The columns used in a point annotation file.
+    ifabsent: string(xyz)
+  annotation_source_file_delimiter:
+    range: string
+    description: The delimiter used in a point annotation file.
+    ifabsent: string(,)
+  annotation_source_file_filter_value:
+    range: string
+    description: The filter value for an oriented point / instance segmentation annotation file.
+  annotation_source_file_order:
+    range: string
+    description: The order of axes for an oriented point / instance segmentation annotation file.
+    ifabsent: string(xyz)
+  annotation_source_file_mask_label:
+    range: integer
+    description: The mask label for a semantic segmentation mask annotation file.
+    ifabsent: 'int(1)'
+
+  # ============================================================================
 
 enums:
   # ============================================================================
@@ -688,16 +812,6 @@ enums:
       website:
         description: Links to a website of the method or tool used to generate the annotation.
 
-  annotation_shape_enum:
-    description: Annotation shape types available on the data portal.
-    permissible_values:
-      Point:
-        description: Annotations were generated manually.
-      OrientedPoint:
-        description: Annotations were generated semi-automatically.
-      SegmentationMask:
-        description: Annotations were generated automatically.
-
   deposition_types_enum:
     description: Types of data a deposition has
     permissible_values:
@@ -708,25 +822,35 @@ enums:
       tomograms:
         description: The deposition only comprises of tomograms for existing datasets
 
+types:
+  BooleanFormattedString:
+    description: A formatted string that represents a boolean.
+    base: str
+    pattern: '^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$'
+
+  FloatFormattedString:
+    description: A formatted string that represents a floating point number.
+    base: str
+    pattern: '^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$'
+
+  IntegerFormattedString:
+    description: A formatted string that represents an integer.
+    base: str
+    pattern: '^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$'
+
+  VersionString:
+    description: A version number (only major, minor versions)
+    base: float
+
+  URLorS3URI:
+    description: A URL or S3 URI
+    base: str
+    pattern: '^(https?|s3)://.*$'
 
 classes:
-  # ============================================================================
-  # Deposition, release and last modified dates
-  # ============================================================================
-  DateStamp:
-    abstract: true
-    description: A set of dates at which a data item was deposited, published and last modified.
-    slots:
-      - deposition_date
-      - release_date
-      - last_modified_date
-    slot_usage:
-      deposition_date:
-        required: true
-      release_date:
-        recommended: true
-      last_modified_date:
-        recommended: true
+  Any:
+    class_uri: linkml:Any
+    description: A placeholder for any type of data.
 
   # ============================================================================
   # Cross-references to other databases and publications
@@ -742,10 +866,10 @@ classes:
         range: string
         recommended: true
         description: Comma-separated list of related database entries for the dataset.
-      related_database_links:
+      related_database_links: # DEPRECATED
         range: string
         description: Comma-separated list of related database links for the dataset.
-      dataset_citations:
+      dataset_citations: # DEPRECATED
         range: string
         description: Comma-separated list of DOIs for publications citing the dataset.
 

@@ -17,19 +17,11 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
     class AnnotationObject
       AnnotationObject : description
 
-          AnnotationObject --> string : description
-
       AnnotationObject : id
-
-          AnnotationObject --> string : id
 
       AnnotationObject : name
 
-          AnnotationObject --> string : name
-
       AnnotationObject : state
-
-          AnnotationObject --> string : state
 
 
 ```
@@ -44,10 +36,10 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [id](id.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [description](description.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | A textual description of the annotation object, can be a longer description t... | direct |
-| [state](state.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Molecule state annotated (e | direct |
+| [id](id.md) | 1..1 <br/> [String](String.md) | Gene Ontology Cellular Component identifier for the annotation object | direct |
+| [name](name.md) | 1..1 <br/> [String](String.md) | Name of the object being annotated (e | direct |
+| [description](description.md) | 0..1 <br/> [String](String.md) | A textual description of the annotation object, can be a longer description t... | direct |
+| [state](state.md) | 0..1 <br/> [String](String.md) | Molecule state annotated (e | direct |
 
 
 
@@ -106,22 +98,26 @@ from_schema: metadata
 attributes:
   id:
     name: id
+    description: Gene Ontology Cellular Component identifier for the annotation object
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_object_id
     alias: id
     owner: AnnotationObject
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   name:
     name: name
+    description: Name of the object being annotated (e.g. ribosome, nuclear pore complex,
+      actin filament, membrane)
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_object_name
@@ -129,14 +125,14 @@ attributes:
     owner: AnnotationObject
     domain_of:
     - Author
-    - Annotator
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   description:
@@ -183,22 +179,26 @@ from_schema: metadata
 attributes:
   id:
     name: id
+    description: Gene Ontology Cellular Component identifier for the annotation object
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_object_id
     alias: id
     owner: AnnotationObject
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   name:
     name: name
+    description: Name of the object being annotated (e.g. ribosome, nuclear pore complex,
+      actin filament, membrane)
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_object_name
@@ -206,14 +206,14 @@ attributes:
     owner: AnnotationObject
     domain_of:
     - Author
-    - Annotator
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   description:

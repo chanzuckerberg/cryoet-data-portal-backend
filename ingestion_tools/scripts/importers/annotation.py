@@ -41,7 +41,7 @@ class AnnotationSource(TypedDict):
     order: str | None
     filter_value: str | None
     is_visualization_default: bool | None
-    mask_label: str | None
+    mask_label: int | None
 
 
 class AnnotationMap(TypedDict):
@@ -103,13 +103,21 @@ class AnnotationIdentifierHelper:
 
 
 class AnnotationImporterFactory(DepositionObjectImporterFactory):
+    def __init__(self, source: dict[str, Any]):
+        super().__init__(source)
+        # flatten self.source additional layer that specifies the type of annotation file it is
+        if not (len(self.source.keys()) == 1):
+            raise ValueError("Incorrect annotation source format")
+        source_file = list(self.source.values())[0]
+        source_file["shape"] = list(self.source.keys())[0]
+        self.source = source_file
+
     def load(
         self,
         config: DepositionImportConfig,
         **parent_objects: dict[str, Any] | None,
     ) -> BaseFinder:
-        source = self.source
-        return SourceGlobFinder(source["glob_string"])
+        return SourceGlobFinder(self.source["glob_string"])
 
     def _instantiate(
         self,

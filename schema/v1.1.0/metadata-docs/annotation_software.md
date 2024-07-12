@@ -28,7 +28,9 @@ URI: [cdp-meta:annotation_software](metadataannotation_software)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
+
+* Recommended: True
 
 
 
@@ -65,6 +67,7 @@ owner: Annotation
 domain_of:
 - Annotation
 range: string
+recommended: true
 inlined: true
 inlined_as_list: true
 

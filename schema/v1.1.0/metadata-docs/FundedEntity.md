@@ -21,7 +21,7 @@ URI: [cdp-meta:FundedEntity](metadataFundedEntity)
 
       FundedEntity : funding
 
-          FundedEntity --> Funding : funding
+          FundedEntity --> FundingDetails : funding
 
 
 ```
@@ -36,7 +36,7 @@ URI: [cdp-meta:FundedEntity](metadataFundedEntity)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [funding](funding.md) | 0..* _recommended_ <br/> [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
+| [funding](funding.md) | 0..* _recommended_ <br/> [FundingDetails](FundingDetails.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
 
 
 
@@ -100,7 +100,7 @@ attributes:
     domain_of:
     - FundedEntity
     - Dataset
-    range: Funding
+    range: FundingDetails
     recommended: true
     inlined: true
     inlined_as_list: true
@@ -130,7 +130,7 @@ attributes:
     domain_of:
     - FundedEntity
     - Dataset
-    range: Funding
+    range: FundingDetails
     recommended: true
     inlined: true
     inlined_as_list: true

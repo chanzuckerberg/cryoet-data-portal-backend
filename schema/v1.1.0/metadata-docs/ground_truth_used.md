@@ -28,7 +28,7 @@ URI: [cdp-meta:ground_truth_used](metadataground_truth_used)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

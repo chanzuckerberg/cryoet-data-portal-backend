@@ -28,7 +28,7 @@ URI: [cdp-meta:microscope_additional_info](metadatamicroscope_additional_info)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

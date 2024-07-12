@@ -28,7 +28,9 @@ URI: [cdp-meta:min](metadatamin)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
+
+* Required: True
 
 
 
@@ -65,8 +67,12 @@ owner: TiltRange
 domain_of:
 - TiltRange
 range: float
+required: true
 inlined: true
 inlined_as_list: true
+unit:
+  symbol: °
+  descriptive_name: degrees
 
 ```
 </details>

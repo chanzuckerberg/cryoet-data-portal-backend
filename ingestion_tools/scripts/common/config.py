@@ -247,7 +247,7 @@ class DepositionImportConfig:
             "tomogram": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram",
             "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos",
             "tiltseries": "{dataset_name}/{run_name}/TiltSeries",
-            "gain": "{dataset_name}/{run_name}/Frames/{run_name}_gain.mrc",
+            "gain": "{dataset_name}/{run_name}/Frames/{run_name}_gain",
             "frame": "{dataset_name}/{run_name}/Frames",
             "rawtilt": "{dataset_name}/{run_name}/TiltSeries",
             "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",

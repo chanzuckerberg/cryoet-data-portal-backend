@@ -28,7 +28,13 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 ## Properties
 
-* Range: [xsd:integer](http://www.w3.org/2001/XMLSchema#integer)
+* Range: [Integer](Integer.md)
+
+* Required: True
+
+* Minimum Value: 1
+
+* Maximum Value: 5
 
 
 
@@ -66,8 +72,11 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: integer
+required: true
 inlined: true
 inlined_as_list: true
+minimum_value: 1
+maximum_value: 5
 
 ```
 </details>

@@ -4,7 +4,7 @@ from linkml_runtime.dumpers import yaml_dumper
 from linkml_runtime.utils.schemaview import SchemaView
 
 
-def _materialize_classes(schema: SchemaView) -> None:
+def _materialize_classes(schema: SchemaView) -> dict:
     all_classes = schema.all_classes()
 
     for c_name, c_def in all_classes.items():
@@ -21,30 +21,39 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
     _materialize_classes(schema)
 
     # Copy descriptions and ranges from common_schema
-    input_slots = schema.all_slots()
     common_slots = common_schema.all_slots()
 
-    for s in input_slots:
-        slot = input_slots.get(s)
-        mappings = slot["exact_mappings"]
-        if mappings:
-            mappings = [m.replace("cdp-common:", "") for m in mappings if "cdp-common:" in m]
+    for c in schema.all_classes():
+        clz = schema.get_class(c)
+        for s in clz.attributes:
+            slot = clz.attributes[s]
+            mappings = slot["exact_mappings"]
+            if mappings:
+                mappings = [m.replace("cdp-common:", "") for m in mappings if "cdp-common:" in m]
 
-            if len(mappings) > 1:
-                raise ValueError(
-                    f"Slot {slot['name']} has multiple mappings to common schema",
-                )
+                if len(mappings) > 1:
+                    raise ValueError(
+                        f"Slot {slot['name']} has multiple mappings to common schema",
+                    )
 
-            common_slot = common_slots.get(mappings[0])
+                common_slot = common_slots.get(mappings[0])
 
-            if not common_slot:
-                raise ValueError(
-                    f"Slot {mappings[0]} does not exist in common schema. Check the exact_mappings for {slot['name']}.",
-                )
+                if not common_slot:
+                    raise ValueError(
+                        f"Slot {mappings[0]} does not exist in common schema. Check the exact_mappings for {slot['name']}.",
+                    )
 
-            slot["range"] = common_slot["range"]
-            slot["description"] = common_slot["description"]
-            slot["pattern"] = common_slot["pattern"]
+                slot["range"] = common_slot["range"]
+                slot["any_of"] = common_slot["any_of"]
+                slot["description"] = common_slot["description"]
+                slot["multivalued"] = common_slot["multivalued"]
+                slot["unit"] = common_slot["unit"]
+                slot["minimum_value"] = common_slot["minimum_value"]
+                slot["maximum_value"] = common_slot["maximum_value"]
+                slot["required"] = common_slot["required"]
+                slot["recommended"] = common_slot["recommended"]
+                slot["pattern"] = common_slot["pattern"]
+                slot["ifabsent"] = common_slot["ifabsent"]
 
     # Make sure the descriptions from mixin classes are carried over
     for c in schema.all_classes():
@@ -81,6 +90,9 @@ def materialize(ctx, schema_file: str, common_schema_file: str, output_path: str
     common_schema = SchemaView(common_schema_file)
 
     # Copy common elements from common definitions to schema
+    for t in common_schema.all_types():
+        schema.add_type(common_schema.get_type(t))
+
     _materialize_classes(common_schema)
     for c in common_schema.all_classes():
         schema.add_class(common_schema.get_class(c))

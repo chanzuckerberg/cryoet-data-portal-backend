@@ -17,35 +17,19 @@ URI: [cdp-meta:Author](metadataAuthor)
     class Author
       Author : affiliation_address
 
-          Author --> string : affiliation_address
-
       Author : affiliation_identifier
-
-          Author --> string : affiliation_identifier
 
       Author : affiliation_name
 
-          Author --> string : affiliation_name
+      Author : corresponding_author_status
 
       Author : email
 
-          Author --> string : email
-
-      Author : is_corresponding
-
-          Author --> boolean : is_corresponding
-
-      Author : is_primary_author
-
-          Author --> boolean : is_primary_author
-
       Author : name
-
-          Author --> string : name
 
       Author : ORCID
 
-          Author --> string : ORCID
+      Author : primary_author_status
 
 
 ```
@@ -60,14 +44,14 @@ URI: [cdp-meta:Author](metadataAuthor)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The full name of the author | direct |
-| [email](email.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The email address of the author | direct |
-| [affiliation_name](affiliation_name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The name of the author's affiliation | direct |
-| [affiliation_address](affiliation_address.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The address of the author's affiliation | direct |
-| [affiliation_identifier](affiliation_identifier.md) | 0..1 _recommended_ <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | A Research Organization Registry (ROR) identifier | direct |
-| [is_corresponding](is_corresponding.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | Whether the author is a corresponding author | direct |
-| [is_primary_author](is_primary_author.md) | 0..1 <br/> [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean) | Whether the author is a primary author | direct |
-| [ORCID](ORCID.md) | 0..1 _recommended_ <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | A unique, persistent identifier for researchers, provided by ORCID | direct |
+| [name](name.md) | 1..1 <br/> [String](String.md) | The full name of the author | direct |
+| [email](email.md) | 0..1 <br/> [String](String.md) | The email address of the author | direct |
+| [affiliation_name](affiliation_name.md) | 0..1 <br/> [String](String.md) | The name of the author's affiliation | direct |
+| [affiliation_address](affiliation_address.md) | 0..1 <br/> [String](String.md) | The address of the author's affiliation | direct |
+| [affiliation_identifier](affiliation_identifier.md) | 0..1 _recommended_ <br/> [String](String.md) | A Research Organization Registry (ROR) identifier | direct |
+| [corresponding_author_status](corresponding_author_status.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether the author is a corresponding author | direct |
+| [primary_author_status](primary_author_status.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether the author is a primary author | direct |
+| [ORCID](ORCID.md) | 0..1 _recommended_ <br/> [String](String.md) | A unique, persistent identifier for researchers, provided by ORCID | direct |
 
 
 
@@ -80,6 +64,7 @@ URI: [cdp-meta:Author](metadataAuthor)
 | [AuthoredEntity](AuthoredEntity.md) | [authors](authors.md) | range | [Author](Author.md) |
 | [Dataset](Dataset.md) | [authors](authors.md) | range | [Author](Author.md) |
 | [Tomogram](Tomogram.md) | [authors](authors.md) | range | [Author](Author.md) |
+| [Annotation](Annotation.md) | [authors](authors.md) | range | [Author](Author.md) |
 
 
 
@@ -137,14 +122,14 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   email:
@@ -158,7 +143,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     inlined: true
     inlined_as_list: true
@@ -173,7 +157,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     inlined: true
     inlined_as_list: true
@@ -188,7 +171,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     inlined: true
     inlined_as_list: true
@@ -203,35 +185,35 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     recommended: true
     inlined: true
     inlined_as_list: true
     pattern: ^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$
-  is_corresponding:
-    name: is_corresponding
+  corresponding_author_status:
+    name: corresponding_author_status
     description: Whether the author is a corresponding author.
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_corresponding_author_status
     rank: 1000
-    alias: is_corresponding
+    ifabsent: 'False'
+    alias: corresponding_author_status
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: boolean
     inlined: true
     inlined_as_list: true
-  is_primary_author:
-    name: is_primary_author
+  primary_author_status:
+    name: primary_author_status
     description: Whether the author is a primary author.
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_primary_author_status
     rank: 1000
-    alias: is_primary_author
+    ifabsent: 'False'
+    alias: primary_author_status
     owner: Author
     domain_of:
     - Author
@@ -249,7 +231,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     recommended: true
     inlined: true
@@ -278,14 +259,14 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   email:
@@ -299,7 +280,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     inlined: true
     inlined_as_list: true
@@ -314,7 +294,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     inlined: true
     inlined_as_list: true
@@ -329,7 +308,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     inlined: true
     inlined_as_list: true
@@ -344,35 +322,35 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     recommended: true
     inlined: true
     inlined_as_list: true
     pattern: ^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$
-  is_corresponding:
-    name: is_corresponding
+  corresponding_author_status:
+    name: corresponding_author_status
     description: Whether the author is a corresponding author.
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_corresponding_author_status
     rank: 1000
-    alias: is_corresponding
+    ifabsent: 'False'
+    alias: corresponding_author_status
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: boolean
     inlined: true
     inlined_as_list: true
-  is_primary_author:
-    name: is_primary_author
+  primary_author_status:
+    name: primary_author_status
     description: Whether the author is a primary author.
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_primary_author_status
     rank: 1000
-    alias: is_primary_author
+    ifabsent: 'False'
+    alias: primary_author_status
     owner: Author
     domain_of:
     - Author
@@ -390,7 +368,6 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Annotator
     range: string
     recommended: true
     inlined: true

@@ -30,6 +30,8 @@ URI: [cdp-meta:fiducial_alignment_status](metadatafiducial_alignment_status)
 
 * Range: [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)
 
+* Required: True
+
 
 
 
@@ -65,6 +67,7 @@ owner: Tomogram
 domain_of:
 - Tomogram
 range: fiducial_alignment_status_enum
+required: true
 inlined: true
 inlined_as_list: true
 

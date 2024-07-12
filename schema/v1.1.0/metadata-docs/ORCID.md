@@ -1,5 +1,10 @@
 # Slot: ORCID
 
+
+_A unique, persistent identifier for researchers, provided by ORCID._
+
+
+
 URI: [cdp-meta:ORCID](metadataORCID)
 
 
@@ -14,7 +19,6 @@ URI: [cdp-meta:ORCID](metadataORCID)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 [Author](Author.md) | Author of a scientific data entity |  no  |
-[Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
 
 
 
@@ -24,7 +28,11 @@ URI: [cdp-meta:ORCID](metadataORCID)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
+
+* Recommended: True
+
+* Regex pattern: `[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$`
 
 
 
@@ -38,17 +46,33 @@ URI: [cdp-meta:ORCID](metadataORCID)
 
 
 
+### Schema Source
+
+
+* from schema: metadata
+
+
+
 
 ## LinkML Source
 
 <details>
 ```yaml
 name: ORCID
+description: A unique, persistent identifier for researchers, provided by ORCID.
+from_schema: metadata
+exact_mappings:
+- cdp-common:orcid
+rank: 1000
 alias: ORCID
+owner: Author
 domain_of:
 - Author
-- Annotator
 range: string
+recommended: true
+inlined: true
+inlined_as_list: true
+pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
 
 ```
 </details>

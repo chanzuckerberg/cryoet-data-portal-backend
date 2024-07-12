@@ -28,7 +28,9 @@ URI: [cdp-meta:ctf_corrected](metadatactf_corrected)
 
 ## Properties
 
-* Range: [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean)
+* Range: [Boolean](Boolean.md)
+
+* Recommended: True
 
 
 
@@ -65,6 +67,7 @@ owner: Tomogram
 domain_of:
 - Tomogram
 range: boolean
+recommended: true
 inlined: true
 inlined_as_list: true
 

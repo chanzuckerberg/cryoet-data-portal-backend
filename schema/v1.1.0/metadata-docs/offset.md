@@ -30,6 +30,8 @@ URI: [cdp-meta:offset](metadataoffset)
 
 * Range: [TomogramOffset](TomogramOffset.md)
 
+* Required: True
+
 
 
 
@@ -64,6 +66,7 @@ owner: Tomogram
 domain_of:
 - Tomogram
 range: TomogramOffset
+required: true
 inlined: true
 inlined_as_list: true
 

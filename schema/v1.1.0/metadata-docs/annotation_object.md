@@ -30,6 +30,8 @@ URI: [cdp-meta:annotation_object](metadataannotation_object)
 
 * Range: [AnnotationObject](AnnotationObject.md)
 
+* Required: True
+
 
 
 
@@ -63,6 +65,7 @@ owner: Annotation
 domain_of:
 - Annotation
 range: AnnotationObject
+required: true
 inlined: true
 inlined_as_list: true
 

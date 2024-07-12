@@ -19,7 +19,7 @@ class BaseFinder(ABC):
 
 
 class SourceMultiGlobFinder(BaseFinder):
-    list_glob: list[str]
+    list_globs: list[str]
 
     def __init__(self, list_globs: list[str]):
         self.list_globs = list_globs
@@ -133,14 +133,14 @@ class DepositionObjectImporterFactory(ABC):
     def _should_search(self, **parent_objects: dict[str, Any] | None) -> bool:
         for parent_key, parent_obj in parent_objects.items():
             # Apply include/exclude filters
-            if self.exclude_parents.get(parent_key):
-                for regex in self.exclude_parents[parent_key]:
-                    if regex.search(parent_obj.name):
-                        return False
-            if self.include_parents.get(parent_key):
-                for regex in self.include_parents[parent_key]:
-                    if not regex.search(parent_obj.name):
-                        return False
+            if self.exclude_parents.get(parent_key) and any(
+                regex.search(parent_obj.name) for regex in self.exclude_parents[parent_key]
+            ):
+                return False
+            if self.include_parents.get(parent_key) and not any(
+                regex.search(parent_obj.name) for regex in self.include_parents[parent_key]
+            ):
+                return False
         return True
 
     def _get_glob_vars(self, **parent_objects: dict[str, Any] | None):

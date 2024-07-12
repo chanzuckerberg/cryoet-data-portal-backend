@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -25,9 +25,9 @@ datasets:
     dataset_identifier: 10071
     dataset_title: L. pneumophila JV3579_inPolara
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: "8 grids were frozen for the JV3579 strain at OD~ 3.1, 4 grids\
       \ at density x and another 4 at density 2x. Vitrobot (MK iv) settings: 100%\
       \ humidity, 4\xB5l sample, Blot force 6, blot time 3 sec. Wait time 0 sec. Drain\
@@ -77,7 +77,7 @@ tiltseries:
     data_acquisition_software: UCSFTomo
     is_aligned: false
     microscope:
-      additional_scope_info: ''
+      additional_info: ''
       manufacturer: FEI
       model: Polara
     microscope_optical_setup:

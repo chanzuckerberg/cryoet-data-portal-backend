@@ -1,5 +1,10 @@
 # Slot: email
 
+
+_The email address of the author._
+
+
+
 URI: [cdp-meta:email](metadataemail)
 
 
@@ -14,7 +19,6 @@ URI: [cdp-meta:email](metadataemail)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 [Author](Author.md) | Author of a scientific data entity |  no  |
-[Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
 
 
 
@@ -24,7 +28,7 @@ URI: [cdp-meta:email](metadataemail)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 
@@ -38,17 +42,31 @@ URI: [cdp-meta:email](metadataemail)
 
 
 
+### Schema Source
+
+
+* from schema: metadata
+
+
+
 
 ## LinkML Source
 
 <details>
 ```yaml
 name: email
+description: The email address of the author.
+from_schema: metadata
+exact_mappings:
+- cdp-common:author_email
+rank: 1000
 alias: email
+owner: Author
 domain_of:
 - Author
-- Annotator
 range: string
+inlined: true
+inlined_as_list: true
 
 ```
 </details>

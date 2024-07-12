@@ -79,7 +79,7 @@ datasets: REQUIRED
       name: REQUIRED, STRING
       taxonomy_id: OPTIONAL, INTEGER
     sample_preparation: RECOMMENDED, STRING
-    sample_type: REQUIRED, STRING
+    sample_type: REQUIRED, STRING (ENUM [cell, tissue, organism, organelle, virus, in_vitro, in_silico, other])
     tissue:
       id: OPTIONAL, STRING
       name: REQUIRED, STRING
@@ -153,9 +153,9 @@ tiltseries: OPTIONAL
       manufacturer: REQUIRED, STRING
       model: REQUIRED, STRING
     data_acquisition_software: REQUIRED, STRING
-    is_aligned: REQUIRED
+    is_aligned: REQUIRED, BOOLEAN
     microscope: REQUIRED
-      additional_info: OPTIONAL, STRING # on hold by manasa
+      additional_info: OPTIONAL, STRING
       manufacturer: REQUIRED, STRING
       model: REQUIRED, STRING
     microscope_optical_setup: REQUIRED
@@ -170,7 +170,6 @@ tiltseries: OPTIONAL
     tilt_range: REQUIRED
       max: REQUIRED, FLOAT
       min: REQUIRED, FLOAT
-    tilt_series_path: OPTIONAL, STRING # CURRENTLY NOT USED
     tilt_series_quality: REQUIRED, INTEGER (1-5)
     tilt_step: REQUIRED, FLOAT
     tilting_scheme: REQUIRED, STRING
@@ -183,7 +182,7 @@ tomograms: OPTIONAL
       - - REQUIRED, FLOAT
         - ... (4 ELEMENTS)
       - ... (4 ELEMENTS)
-    align_softwares: OPTIONAL, STRING # CURRENTLY NOT USED
+    align_software: OPTIONAL, STRING # CURRENTLY NOT USED
     authors: SEE annotations.authors
     ctf_corrected: RECOMMENDED, BOOLEAN
     fiducial_alignment_status: REQUIRED, STRING (ENUM [FIDUCIAL, NON_FIDUCIAL])

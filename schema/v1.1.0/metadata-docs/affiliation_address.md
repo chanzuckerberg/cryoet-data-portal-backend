@@ -1,5 +1,10 @@
 # Slot: affiliation_address
 
+
+_The address of the author's affiliation._
+
+
+
 URI: [cdp-meta:affiliation_address](metadataaffiliation_address)
 
 
@@ -14,7 +19,6 @@ URI: [cdp-meta:affiliation_address](metadataaffiliation_address)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 [Author](Author.md) | Author of a scientific data entity |  no  |
-[Annotator](Annotator.md) | Annotator of a scientific data entity |  no  |
 
 
 
@@ -24,7 +28,7 @@ URI: [cdp-meta:affiliation_address](metadataaffiliation_address)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 
@@ -38,17 +42,31 @@ URI: [cdp-meta:affiliation_address](metadataaffiliation_address)
 
 
 
+### Schema Source
+
+
+* from schema: metadata
+
+
+
 
 ## LinkML Source
 
 <details>
 ```yaml
 name: affiliation_address
+description: The address of the author's affiliation.
+from_schema: metadata
+exact_mappings:
+- cdp-common:author_affiliation_address
+rank: 1000
 alias: affiliation_address
+owner: Author
 domain_of:
 - Author
-- Annotator
 range: string
+inlined: true
+inlined_as_list: true
 
 ```
 </details>

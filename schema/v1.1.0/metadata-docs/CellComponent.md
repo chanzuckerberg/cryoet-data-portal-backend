@@ -17,11 +17,7 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
     class CellComponent
       CellComponent : id
 
-          CellComponent --> string : id
-
       CellComponent : name
-
-          CellComponent --> string : name
 
 
 ```
@@ -36,8 +32,8 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
-| [id](id.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) |  | direct |
+| [name](name.md) | 1..1 <br/> [String](String.md) | Name of the cellular component | direct |
+| [id](id.md) | 0..1 _recommended_ <br/> [String](String.md) | The GO identifier for the cellular component | direct |
 
 
 
@@ -97,6 +93,7 @@ from_schema: metadata
 attributes:
   name:
     name: name
+    description: Name of the cellular component.
     from_schema: metadata
     exact_mappings:
     - cdp-common:cell_component_name
@@ -104,30 +101,32 @@ attributes:
     owner: CellComponent
     domain_of:
     - Author
-    - Annotator
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   id:
     name: id
+    description: The GO identifier for the cellular component.
     from_schema: metadata
     exact_mappings:
     - cdp-common:cell_component_id
     alias: id
     owner: CellComponent
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
 
@@ -144,6 +143,7 @@ from_schema: metadata
 attributes:
   name:
     name: name
+    description: Name of the cellular component.
     from_schema: metadata
     exact_mappings:
     - cdp-common:cell_component_name
@@ -151,30 +151,32 @@ attributes:
     owner: CellComponent
     domain_of:
     - Author
-    - Annotator
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
     range: string
+    required: true
     inlined: true
     inlined_as_list: true
   id:
     name: id
+    description: The GO identifier for the cellular component.
     from_schema: metadata
     exact_mappings:
     - cdp-common:cell_component_id
     alias: id
     owner: CellComponent
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
     range: string
+    recommended: true
     inlined: true
     inlined_as_list: true
 

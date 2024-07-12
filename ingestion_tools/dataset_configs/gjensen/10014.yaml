@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -26,9 +26,9 @@ datasets:
     dataset_identifier: 10014
     dataset_title: D. flos-aquae Ana GVs (WT)
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: "A freshly purified GV sample was diluted to  OD500 = ~20 and\
       \ mixed  with  10  nm  BSA-coated  gold  beads.  A  3  \xB5L volume of sample\
       \ was applied to C-Flat 2/2 - 3C grids (Protochips)  that  were  freshly  glow-discharged\
@@ -79,7 +79,7 @@ tiltseries:
     data_acquisition_software: Serial EM
     is_aligned: false
     microscope:
-      additional_scope_info: ''
+      additional_info: ''
       manufacturer: TFS
       model: Krios
     microscope_optical_setup:
@@ -133,7 +133,7 @@ tomograms:
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: '{tomo-reconstruction_software}'
     tomogram_version: 1
-    voxel_spacing: '{tomo-voxel_spacing}'
+    voxel_spacing: 'float {tomo-voxel_spacing}'
   sources:
   - source_glob:
       list_glob: '{run_name}/{mapped_tomo_name}'

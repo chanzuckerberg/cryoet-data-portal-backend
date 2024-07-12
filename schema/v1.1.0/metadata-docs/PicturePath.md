@@ -17,11 +17,11 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
     class PicturePath
       PicturePath : snapshot
 
-          PicturePath --> string : snapshot
+          PicturePath --> Any : snapshot
 
       PicturePath : thumbnail
 
-          PicturePath --> string : thumbnail
+          PicturePath --> Any : thumbnail
 
 
 ```
@@ -36,8 +36,8 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [snapshot](snapshot.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Path to the dataset preview image relative to the dataset directory root | direct |
-| [thumbnail](thumbnail.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Path to the thumbnail of preview image relative to the dataset directory root | direct |
+| [snapshot](snapshot.md) | 1..1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
+| [thumbnail](thumbnail.md) | 1..1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
 
 
 
@@ -48,8 +48,6 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
 | [PicturedEntity](PicturedEntity.md) | [key_photos](key_photos.md) | range | [PicturePath](PicturePath.md) |
-| [Dataset](Dataset.md) | [key_photos](key_photos.md) | range | [PicturePath](PicturePath.md) |
-| [Tomogram](Tomogram.md) | [key_photos](key_photos.md) | range | [PicturePath](PicturePath.md) |
 
 
 
@@ -98,28 +96,32 @@ from_schema: metadata
 attributes:
   snapshot:
     name: snapshot
-    description: Path to the dataset preview image relative to the dataset directory
-      root.
+    description: A placeholder for any type of data.
     from_schema: metadata
+    exact_mappings:
+    - cdp-common:snapshot
     rank: 1000
     alias: snapshot
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: string
+    range: Any
+    required: true
     inlined: true
     inlined_as_list: true
   thumbnail:
     name: thumbnail
-    description: Path to the thumbnail of preview image relative to the dataset directory
-      root.
+    description: A placeholder for any type of data.
     from_schema: metadata
+    exact_mappings:
+    - cdp-common:thumbnail
     rank: 1000
     alias: thumbnail
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: string
+    range: Any
+    required: true
     inlined: true
     inlined_as_list: true
 
@@ -136,28 +138,32 @@ from_schema: metadata
 attributes:
   snapshot:
     name: snapshot
-    description: Path to the dataset preview image relative to the dataset directory
-      root.
+    description: A placeholder for any type of data.
     from_schema: metadata
+    exact_mappings:
+    - cdp-common:snapshot
     rank: 1000
     alias: snapshot
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: string
+    range: Any
+    required: true
     inlined: true
     inlined_as_list: true
   thumbnail:
     name: thumbnail
-    description: Path to the thumbnail of preview image relative to the dataset directory
-      root.
+    description: A placeholder for any type of data.
     from_schema: metadata
+    exact_mappings:
+    - cdp-common:thumbnail
     rank: 1000
     alias: thumbnail
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: string
+    range: Any
+    required: true
     inlined: true
     inlined_as_list: true
 

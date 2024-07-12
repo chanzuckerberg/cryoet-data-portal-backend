@@ -28,7 +28,7 @@ URI: [cdp-meta:related_database_links](metadatarelated_database_links)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 
 

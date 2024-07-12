@@ -1,4 +1,4 @@
-annotations: {}
+annotations: []
 dataset_keyphotos:
 - sources:
   - literal:
@@ -25,9 +25,9 @@ datasets:
     dataset_identifier: 10019
     dataset_title: D. flos-aquae GV calcium clusters
     dates:
-      deposition_date: 2023-10-01
-      last_modified_date: 2023-12-01
-      release_date: 2023-12-01
+      deposition_date: '2023-10-01'
+      last_modified_date: '2023-12-01'
+      release_date: '2023-12-01'
     grid_preparation: Quantifoil C2/2 200mesh extra thick carbon, 10nm BSA-gold, 100%
       humidity, temp 4C, manual blot
     organism:
@@ -71,7 +71,7 @@ tiltseries:
     data_acquisition_software: Serial EM
     is_aligned: false
     microscope:
-      additional_scope_info: ''
+      additional_info: ''
       manufacturer: TFS
       model: Krios
     microscope_optical_setup:

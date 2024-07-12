@@ -28,7 +28,7 @@ URI: [cdp-meta:binning_from_frames](metadatabinning_from_frames)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
 
 
 

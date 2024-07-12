@@ -28,7 +28,9 @@ URI: [cdp-meta:ground_truth_status](metadataground_truth_status)
 
 ## Properties
 
-* Range: [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean)
+* Range: [Boolean](Boolean.md)
+
+* Recommended: True
 
 
 
@@ -61,11 +63,13 @@ from_schema: metadata
 exact_mappings:
 - cdp-common:annotation_ground_truth_status
 rank: 1000
+ifabsent: 'False'
 alias: ground_truth_status
 owner: Annotation
 domain_of:
 - Annotation
 range: boolean
+recommended: true
 inlined: true
 inlined_as_list: true
 

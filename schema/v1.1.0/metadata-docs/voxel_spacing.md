@@ -28,7 +28,9 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
+
+* Required: True
 
 
 
@@ -65,8 +67,12 @@ owner: Tomogram
 domain_of:
 - Tomogram
 range: float
+required: true
 inlined: true
 inlined_as_list: true
+unit:
+  symbol: Å/voxel
+  descriptive_name: Angstroms per voxel
 
 ```
 </details>

@@ -1,7 +1,7 @@
 # Slot: files
 
 
-_Metadata describing a file containing an annotation._
+_File and sourcing data for an annotation. Represents an entry in annotation.sources._
 
 
 
@@ -28,7 +28,7 @@ URI: [cdp-meta:files](metadatafiles)
 
 ## Properties
 
-* Range: [AnnotationFile](AnnotationFile.md)
+* Range: [AnnotationSourceFile](AnnotationSourceFile.md)
 
 * Multivalued: True
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:files](metadatafiles)
 <details>
 ```yaml
 name: files
-description: Metadata describing a file containing an annotation.
+description: File and sourcing data for an annotation. Represents an entry in annotation.sources.
 from_schema: metadata
 rank: 1000
 multivalued: true
@@ -66,7 +66,7 @@ alias: files
 owner: Annotation
 domain_of:
 - Annotation
-range: AnnotationFile
+range: AnnotationSourceFile
 inlined: true
 inlined_as_list: true
 

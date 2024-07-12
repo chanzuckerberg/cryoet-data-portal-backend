@@ -28,7 +28,11 @@ URI: [cdp-meta:precision](metadataprecision)
 
 ## Properties
 
-* Range: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
+* Range: [Float](Float.md)
+
+* Minimum Value: 0
+
+* Maximum Value: 100
 
 
 
@@ -68,6 +72,11 @@ domain_of:
 range: float
 inlined: true
 inlined_as_list: true
+minimum_value: 0
+maximum_value: 100
+unit:
+  symbol: '%'
+  descriptive_name: percentage
 
 ```
 </details>

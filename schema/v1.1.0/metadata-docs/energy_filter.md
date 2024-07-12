@@ -28,7 +28,9 @@ URI: [cdp-meta:energy_filter](metadataenergy_filter)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
+
+* Required: True
 
 
 
@@ -65,6 +67,7 @@ owner: MicroscopeOpticalSetup
 domain_of:
 - MicroscopeOpticalSetup
 range: string
+required: true
 inlined: true
 inlined_as_list: true
 

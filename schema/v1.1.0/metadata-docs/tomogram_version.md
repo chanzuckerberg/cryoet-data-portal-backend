@@ -1,7 +1,7 @@
 # Slot: tomogram_version
 
 
-_Version of tomogram using the same software and post-processing. Version of tomogram using the same software and post-processing. This will be presented as the latest version_
+_Version of tomogram_
 
 
 
@@ -28,7 +28,9 @@ URI: [cdp-meta:tomogram_version](metadatatomogram_version)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [VersionString](VersionString.md)
+
+* Required: True
 
 
 
@@ -55,9 +57,7 @@ URI: [cdp-meta:tomogram_version](metadatatomogram_version)
 <details>
 ```yaml
 name: tomogram_version
-description: Version of tomogram using the same software and post-processing. Version
-  of tomogram using the same software and post-processing. This will be presented
-  as the latest version
+description: Version of tomogram
 from_schema: metadata
 exact_mappings:
 - cdp-common:tomogram_version
@@ -66,7 +66,8 @@ alias: tomogram_version
 owner: Tomogram
 domain_of:
 - Tomogram
-range: string
+range: VersionString
+required: true
 inlined: true
 inlined_as_list: true
 

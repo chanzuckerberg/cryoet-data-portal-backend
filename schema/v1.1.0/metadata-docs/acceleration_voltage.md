@@ -28,7 +28,11 @@ URI: [cdp-meta:acceleration_voltage](metadataacceleration_voltage)
 
 ## Properties
 
-* Range: [xsd:integer](http://www.w3.org/2001/XMLSchema#integer)
+* Range: [Integer](Integer.md)
+
+* Required: True
+
+* Minimum Value: 0
 
 
 
@@ -65,8 +69,13 @@ owner: TiltSeries
 domain_of:
 - TiltSeries
 range: integer
+required: true
 inlined: true
 inlined_as_list: true
+minimum_value: 0
+unit:
+  symbol: V
+  descriptive_name: volts
 
 ```
 </details>

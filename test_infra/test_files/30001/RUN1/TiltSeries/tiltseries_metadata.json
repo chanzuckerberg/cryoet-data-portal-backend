@@ -1,5 +1,6 @@
 {
     "microscope": {
+        "additional_info": "info about the scope",
         "manufacturer": "TFS",
         "model": "Krios"
     },
@@ -9,7 +10,6 @@
         "phase_plate": "Volta Phase Plate",
         "image_corrector": "Foo"
     },
-    "microscope_additional_info": "info about the scope",
     "camera": {
         "manufacturer": "Gatan",
         "model": "K2 Summit"

@@ -1,7 +1,7 @@
 # Slot: thumbnail
 
 
-_Path to the thumbnail of preview image relative to the dataset directory root._
+_A placeholder for any type of data._
 
 
 
@@ -28,7 +28,9 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [Any](Any.md)
+
+* Required: True
 
 
 
@@ -55,15 +57,17 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 <details>
 ```yaml
 name: thumbnail
-description: Path to the thumbnail of preview image relative to the dataset directory
-  root.
+description: A placeholder for any type of data.
 from_schema: metadata
+exact_mappings:
+- cdp-common:thumbnail
 rank: 1000
 alias: thumbnail
 owner: PicturePath
 domain_of:
 - PicturePath
-range: string
+range: Any
+required: true
 inlined: true
 inlined_as_list: true
 
