@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import re
 import shutil
@@ -17,6 +18,9 @@ DATASET_CONFIGS_MODELS_DIR = f"../../schema/{SCHEMA_VERSION}/"
 sys.path.append(DATASET_CONFIGS_MODELS_DIR)  # To import the Pydantic-generated dataset models
 
 from dataset_config_models import Container  # noqa: E402
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 DATASET_CONFIGS_DIR = "../dataset_configs/"
 ERRORS_OUTPUT_DIR = "./dataset_config_validate_errors"
@@ -41,13 +45,13 @@ def print_errors(errors: Dict[str, List[Union[ValidationError, Exception]]]) -> 
     Convert an error value to a more concise text string.
     """
     for file, error in sorted(errors.items()):
-        print(f'FAIL: "{file}":')
+        logger.error('FAIL: "%s":', file)
         for e in error:
             if not isinstance(e, dict) or any(key not in e for key in ["loc", "msg"]):
-                print("\t- error: " + str(e))
+                logger.error("\t- error: %s", str(e))
             else:
                 loc = "/".join([str(x) for x in e["loc"]])
-                print(f"\t- {e['msg']}: {loc}")
+                logger.error("\t- %s: %s", e["msg"], loc)
 
 
 def replace_formatted_string(value: str) -> Union[str, bool, float, int]:
@@ -114,12 +118,12 @@ def main(include_glob: str, exclude_keywords: str):
     files_to_validate = get_yaml_config_files(include_glob, exclude_keywords)
 
     if not files_to_validate:
-        print("[WARNING]: No files to validate.")
+        logger.warning("No files to validate.")
         return
 
     # Remove existing dir
     if os.path.exists(ERRORS_OUTPUT_DIR):
-        print(f"[WARNING]: Removing existing {ERRORS_OUTPUT_DIR} directory.")
+        logger.warning("Removing existing %s directory.", ERRORS_OUTPUT_DIR)
         shutil.rmtree(ERRORS_OUTPUT_DIR)
     os.makedirs(ERRORS_OUTPUT_DIR, exist_ok=True)
 
@@ -145,7 +149,7 @@ def main(include_glob: str, exclude_keywords: str):
             errors[file] = [exc]
 
     if validation_succeeded:
-        print("[SUCCESS]: All files passed validation.")
+        logger.info("All files passed validation.")
         return
 
     # Write all errors to a file
@@ -155,7 +159,7 @@ def main(include_glob: str, exclude_keywords: str):
     # Print errors to stdout
     print_errors(errors)
 
-    print("[ERROR]: Validation failed. See dataset_config_validate_errors.json for details.")
+    logger.error("Validation failed. See dataset_config_validate_errors.json for details.")
     exit(1)
 
 
