@@ -31,9 +31,11 @@ URI: [cdp-meta:binning_from_frames](metadatabinning_from_frames)
 
 ## Properties
 
-* Range: [Float](Float.md)
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Minimum Value: 0
+
+* Regex pattern: `^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
 
 
 
@@ -81,10 +83,15 @@ alias: binning_from_frames
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: float
+range: string
 inlined: true
 inlined_as_list: true
-minimum_value: 1.0e-09
+minimum_value: 0
+pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+any_of:
+- range: float
+  minimum_value: 0
+- range: FloatFormattedString
 
 ```
 </details>

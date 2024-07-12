@@ -31,7 +31,9 @@ URI: [cdp-meta:acquire_mode](metadataacquire_mode)
 
 ## Properties
 
-* Range: [TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md)
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md)
+
+* Regex pattern: `(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^counting$)|(^superresolution$)|(^linear$)|(^cds$)`
 
 
 
@@ -78,9 +80,13 @@ alias: acquire_mode
 owner: Camera
 domain_of:
 - Camera
-range: tiltseries_camera_acquire_mode_enum
+range: string
 inlined: true
 inlined_as_list: true
+pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^counting$)|(^superresolution$)|(^linear$)|(^cds$)
+any_of:
+- range: StringFormattedString
+- range: tiltseries_camera_acquire_mode_enum
 
 ```
 </details>

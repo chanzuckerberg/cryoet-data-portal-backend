@@ -22,12 +22,6 @@ URI: [TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md)
 
 
 
-## Slots
-
-| Name | Description |
-| ---  | --- |
-| [reconstruction_method](reconstruction_method.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) |
-
 
 
 

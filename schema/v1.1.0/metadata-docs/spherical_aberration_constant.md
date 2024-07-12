@@ -31,11 +31,13 @@ URI: [cdp-meta:spherical_aberration_constant](metadataspherical_aberration_const
 
 ## Properties
 
-* Range: [Float](Float.md)
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Required: True
 
 * Minimum Value: 0
+
+* Regex pattern: `^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
 
 
 
@@ -82,14 +84,19 @@ alias: spherical_aberration_constant
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: float
+range: string
 required: true
 inlined: true
 inlined_as_list: true
 minimum_value: 0
+pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
 unit:
   symbol: mm
   descriptive_name: millimeters
+any_of:
+- range: float
+  minimum_value: 0
+- range: FloatFormattedString
 
 ```
 </details>

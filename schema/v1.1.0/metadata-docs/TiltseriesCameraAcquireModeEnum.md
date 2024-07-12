@@ -21,12 +21,6 @@ URI: [TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md)
 
 
 
-## Slots
-
-| Name | Description |
-| ---  | --- |
-| [acquire_mode](acquire_mode.md) | Camera acquisition mode |
-
 
 
 

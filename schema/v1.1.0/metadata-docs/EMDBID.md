@@ -1,4 +1,4 @@
-# Type: EMDB
+# Type: EMDBID
 
 
 
@@ -7,14 +7,14 @@ _An Electron Microscopy Data Bank identifier_
 
 
 
-URI: [cdp-meta:EMDB](metadataEMDB)
+URI: [cdp-meta:EMDB_ID](metadataEMDB_ID)
 
 * [base](https://w3id.org/linkml/base): str
 
 
 
 
-* [pattern](https://w3id.org/linkml/pattern): `(?i)^EMD-[0-9]{3,6}$`
+* [pattern](https://w3id.org/linkml/pattern): `^EMD-[0-9]{4,5}$`
 
 
 
@@ -41,5 +41,5 @@ URI: [cdp-meta:EMDB](metadataEMDB)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:EMDB |
-| native | cdp-meta:EMDB |
+| self | cdp-meta:EMDB_ID |
+| native | cdp-meta:EMDB_ID |

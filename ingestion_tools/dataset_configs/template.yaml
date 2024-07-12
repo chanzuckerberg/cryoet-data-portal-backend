@@ -67,8 +67,8 @@ dataset_keyphotos: OPTIONAL
 - sources: REQUIRED
   - literal: REQUIRED
       value: REQUIRED
-        snapshot: REQUIRED, STRING
-        thumbnail: REQUIRED, STRING
+        snapshot: RECOMMENDED, STRING
+        thumbnail: RECOMMENDED, STRING
 datasets: REQUIRED
 - metadata: REQUIRED
     authors: SEE annotations.authors

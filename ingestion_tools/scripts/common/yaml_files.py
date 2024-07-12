@@ -11,6 +11,7 @@ def get_yaml_config_files(
     include_glob: str = None,
     exclude_keywords: str = EXCLUDE_KEYWORDS,
     dataset_configs_dir: str = DATASET_CONFIGS_DIR,
+    verbose: bool = False,
 ) -> list:
     """
     Returns a list of files to validate based on the include glob and exclude keywords.
@@ -35,7 +36,8 @@ def get_yaml_config_files(
         if filename in EXCLUDE_LIST:
             continue
         if any(keyword in filename for keyword in exclude_keywords_list):
-            print(f"[INFO]: Excluding {file} because it contains an exclude keyword")
+            if verbose:
+                print(f"[INFO]: Excluding {file} because it contains an exclude keyword")
             continue
         files_to_validate.append(file)
 
@@ -43,5 +45,9 @@ def get_yaml_config_files(
     if include_glob:
         print(f"[INFO]: Filtering files based on include glob: {include_glob}")
         files_to_validate = [file for file in files_to_validate if re.search(include_glob, file)]
+        if verbose:
+            print("[INFO]: Files to validate:")
+            for file in files_to_validate:
+                print(file)
 
     return files_to_validate

@@ -14,7 +14,7 @@ URI: [cdp-meta:URLorS3URI](metadataURLorS3URI)
 
 
 
-* [pattern](https://w3id.org/linkml/pattern): `^(https?|s3)://.*$`
+* [pattern](https://w3id.org/linkml/pattern): `^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$`
 
 
 

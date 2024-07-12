@@ -14,7 +14,7 @@ URI: [cdp-meta:BTO_ID](metadataBTO_ID)
 
 
 
-* [pattern](https://w3id.org/linkml/pattern): `(?i)^BTO:[0-9]{7}$`
+* [pattern](https://w3id.org/linkml/pattern): `^BTO:[0-9]{7}$`
 
 
 

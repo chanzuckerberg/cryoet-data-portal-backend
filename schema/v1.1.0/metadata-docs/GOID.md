@@ -14,7 +14,7 @@ URI: [cdp-meta:GO_ID](metadataGO_ID)
 
 
 
-* [pattern](https://w3id.org/linkml/pattern): `(?i)^GO:[0-9]{7}$`
+* [pattern](https://w3id.org/linkml/pattern): `^GO:[0-9]{7}$`
 
 
 

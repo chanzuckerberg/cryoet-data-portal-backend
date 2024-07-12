@@ -20,14 +20,9 @@ URI: [cdp-meta:Microscope](metadataMicroscope)
  classDiagram
     class Microscope
     click Microscope href "../Microscope"
+      Microscope : additional_info
+
       Microscope : manufacturer
-
-
-
-
-    Microscope --> "1" MicroscopeManufacturerEnum : manufacturer
-    click MicroscopeManufacturerEnum href "../MicroscopeManufacturerEnum"
-
 
       Microscope : model
 
@@ -44,7 +39,8 @@ URI: [cdp-meta:Microscope](metadataMicroscope)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [manufacturer](manufacturer.md) | 1 <br/> [MicroscopeManufacturerEnum](MicroscopeManufacturerEnum.md) | Name of the microscope manufacturer | direct |
+| [additional_info](additional_info.md) | 0..1 <br/> [String](String.md) | Other microscope optical setup information, in addition to energy filter, pha... | direct |
+| [manufacturer](manufacturer.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[MicroscopeManufacturerEnum](MicroscopeManufacturerEnum.md) | Name of the microscope manufacturer | direct |
 | [model](model.md) | 1 <br/> [String](String.md) | Microscope model name | direct |
 
 
@@ -103,6 +99,21 @@ name: Microscope
 description: The microscope used to collect the tilt series.
 from_schema: metadata
 attributes:
+  additional_info:
+    name: additional_info
+    description: Other microscope optical setup information, in addition to energy
+      filter, phase plate and image corrector
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:tiltseries_microscope_additional_info
+    rank: 1000
+    alias: additional_info
+    owner: Microscope
+    domain_of:
+    - Microscope
+    range: string
+    inlined: true
+    inlined_as_list: true
   manufacturer:
     name: manufacturer
     description: Name of the microscope manufacturer
@@ -114,10 +125,13 @@ attributes:
     domain_of:
     - Camera
     - Microscope
-    range: microscope_manufacturer_enum
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^FEI$)|(^TFS$)|(^JEOL$)
+    any_of:
+    - range: StringFormattedString
+    - range: microscope_manufacturer_enum
   model:
     name: model
     description: Microscope model name
@@ -145,6 +159,21 @@ name: Microscope
 description: The microscope used to collect the tilt series.
 from_schema: metadata
 attributes:
+  additional_info:
+    name: additional_info
+    description: Other microscope optical setup information, in addition to energy
+      filter, phase plate and image corrector
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:tiltseries_microscope_additional_info
+    rank: 1000
+    alias: additional_info
+    owner: Microscope
+    domain_of:
+    - Microscope
+    range: string
+    inlined: true
+    inlined_as_list: true
   manufacturer:
     name: manufacturer
     description: Name of the microscope manufacturer
@@ -156,10 +185,14 @@ attributes:
     domain_of:
     - Camera
     - Microscope
-    range: microscope_manufacturer_enum
+    range: string
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^FEI$)|(^TFS$)|(^JEOL$)
+    any_of:
+    - range: StringFormattedString
+    - range: microscope_manufacturer_enum
   model:
     name: model
     description: Microscope model name
