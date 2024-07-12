@@ -136,6 +136,19 @@ datasets:
   - literal:
       value:
       - '10002'
+depositions:
+- metadata:
+    authors: *id003
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10000
+    deposition_title: TBA
+    deposition_type:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10000
 frames:
 - sources:
   - source_glob:
@@ -162,7 +175,7 @@ runs:
       match_regex: .*
       name_regex: (.*)_sq_df_sorted.rec
 standardization_config:
-  deposition_id: 10002
+  deposition_id: 10000
   run_data_map_file: run_data_map.csv
   run_to_frame_map_csv: run_to_frame_name_map.csv
   source_prefix: julia/RPE1

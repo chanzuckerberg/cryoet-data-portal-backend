@@ -136,6 +136,19 @@ datasets:
   - literal:
       value:
       - '10008'
+depositions:
+- metadata:
+    authors: *id003
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10008
+    deposition_title: TBA
+    deposition_type:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10008
 frames:
 - sources:
   - source_glob:

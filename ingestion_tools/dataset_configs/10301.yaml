@@ -242,6 +242,19 @@ datasets:
   - literal:
       value:
       - '10301'
+depositions:
+- metadata:
+    authors: *id003
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10300
+    deposition_title: TBA
+    deposition_type:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10300
 frames:
 - sources:
   - source_glob:
@@ -270,7 +283,7 @@ runs:
       match_regex: /.*_BrnoKrios_.*$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10301
+  deposition_id: 10300
   run_data_map_file: run_to_data_map.tsv
   source_prefix: EMPIAR/11756/data/tomoman_minimal_project/
 tiltseries:
