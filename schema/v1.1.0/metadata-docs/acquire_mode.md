@@ -21,7 +21,7 @@ URI: [cdp-meta:acquire_mode](metadataacquire_mode)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Camera](Camera.md) | The camera used to collect the tilt series |  no  |
+| [CameraDetails](CameraDetails.md) | The camera used to collect the tilt series |  no  |
 
 
 
@@ -77,9 +77,9 @@ exact_mappings:
 - cdp-common:tiltseries_camera_acquire_mode
 rank: 1000
 alias: acquire_mode
-owner: Camera
+owner: CameraDetails
 domain_of:
-- Camera
+- CameraDetails
 range: string
 inlined: true
 inlined_as_list: true

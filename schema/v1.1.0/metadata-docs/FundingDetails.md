@@ -1,6 +1,6 @@
 
 
-# Class: Funding
+# Class: FundingDetails
 
 
 _A funding source for a scientific data entity (base for JSON and DB representation)._
@@ -9,7 +9,7 @@ _A funding source for a scientific data entity (base for JSON and DB representat
 
 
 
-URI: [cdp-meta:Funding](metadataFunding)
+URI: [cdp-meta:FundingDetails](metadataFundingDetails)
 
 
 
@@ -18,11 +18,11 @@ URI: [cdp-meta:Funding](metadataFunding)
 
 ```mermaid
  classDiagram
-    class Funding
-    click Funding href "../Funding"
-      Funding : funding_agency_name
+    class FundingDetails
+    click FundingDetails href "../FundingDetails"
+      FundingDetails : funding_agency_name
 
-      Funding : grant_id
+      FundingDetails : grant_id
 
 
 ```
@@ -48,8 +48,8 @@ URI: [cdp-meta:Funding](metadataFunding)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [FundedEntity](FundedEntity.md) | [funding](funding.md) | range | [Funding](Funding.md) |
-| [Dataset](Dataset.md) | [funding](funding.md) | range | [Funding](Funding.md) |
+| [FundedEntity](FundedEntity.md) | [funding](funding.md) | range | [FundingDetails](FundingDetails.md) |
+| [Dataset](Dataset.md) | [funding](funding.md) | range | [FundingDetails](FundingDetails.md) |
 
 
 
@@ -76,8 +76,8 @@ URI: [cdp-meta:Funding](metadataFunding)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:Funding |
-| native | cdp-meta:Funding |
+| self | cdp-meta:FundingDetails |
+| native | cdp-meta:FundingDetails |
 
 
 
@@ -93,7 +93,7 @@ URI: [cdp-meta:Funding](metadataFunding)
 
 <details>
 ```yaml
-name: Funding
+name: FundingDetails
 description: A funding source for a scientific data entity (base for JSON and DB representation).
 from_schema: metadata
 attributes:
@@ -105,9 +105,9 @@ attributes:
     - cdp-common:funding_agency_name
     rank: 1000
     alias: funding_agency_name
-    owner: Funding
+    owner: FundingDetails
     domain_of:
-    - Funding
+    - FundingDetails
     range: string
     recommended: true
     inlined: true
@@ -120,9 +120,9 @@ attributes:
     - cdp-common:funding_grant_id
     rank: 1000
     alias: grant_id
-    owner: Funding
+    owner: FundingDetails
     domain_of:
-    - Funding
+    - FundingDetails
     range: string
     recommended: true
     inlined: true
@@ -135,7 +135,7 @@ attributes:
 
 <details>
 ```yaml
-name: Funding
+name: FundingDetails
 description: A funding source for a scientific data entity (base for JSON and DB representation).
 from_schema: metadata
 attributes:
@@ -147,9 +147,9 @@ attributes:
     - cdp-common:funding_agency_name
     rank: 1000
     alias: funding_agency_name
-    owner: Funding
+    owner: FundingDetails
     domain_of:
-    - Funding
+    - FundingDetails
     range: string
     recommended: true
     inlined: true
@@ -162,9 +162,9 @@ attributes:
     - cdp-common:funding_grant_id
     rank: 1000
     alias: grant_id
-    owner: Funding
+    owner: FundingDetails
     domain_of:
-    - Funding
+    - FundingDetails
     range: string
     recommended: true
     inlined: true

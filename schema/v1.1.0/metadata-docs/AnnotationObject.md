@@ -111,7 +111,7 @@ attributes:
     alias: id
     owner: AnnotationObject
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -132,8 +132,8 @@ attributes:
     owner: AnnotationObject
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -193,7 +193,7 @@ attributes:
     alias: id
     owner: AnnotationObject
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -214,8 +214,8 @@ attributes:
     owner: AnnotationObject
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent

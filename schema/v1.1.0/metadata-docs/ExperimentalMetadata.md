@@ -59,8 +59,8 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 
 
-    ExperimentalMetadata --> "0..1" Organism : organism
-    click Organism href "../Organism"
+    ExperimentalMetadata --> "0..1" OrganismDetails : organism
+    click OrganismDetails href "../OrganismDetails"
 
 
       ExperimentalMetadata : other_setup
@@ -81,8 +81,8 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 
 
-    ExperimentalMetadata --> "0..1" Tissue : tissue
-    click Tissue href "../Tissue"
+    ExperimentalMetadata --> "0..1" TissueDetails : tissue
+    click TissueDetails href "../TissueDetails"
 
 
 
@@ -102,8 +102,8 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 | [sample_preparation](sample_preparation.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes how the sample was prepared | direct |
 | [grid_preparation](grid_preparation.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes Cryo-ET grid preparation | direct |
 | [other_setup](other_setup.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes other setup not covered by sample preparation or grid preparation t... | direct |
-| [organism](organism.md) | 0..1 <br/> [Organism](Organism.md) | The species from which the sample was derived | direct |
-| [tissue](tissue.md) | 0..1 <br/> [Tissue](Tissue.md) | The type of tissue from which the sample was derived | direct |
+| [organism](organism.md) | 0..1 <br/> [OrganismDetails](OrganismDetails.md) | The species from which the sample was derived | direct |
+| [tissue](tissue.md) | 0..1 <br/> [TissueDetails](TissueDetails.md) | The type of tissue from which the sample was derived | direct |
 | [cell_type](cell_type.md) | 0..1 <br/> [CellType](CellType.md) | The cell type from which the sample was derived | direct |
 | [cell_strain](cell_strain.md) | 0..1 <br/> [CellStrain](CellStrain.md) | The strain or cell line from which the sample was derived | direct |
 | [cell_component](cell_component.md) | 0..1 <br/> [CellComponent](CellComponent.md) | The cellular component from which the sample was derived | direct |
@@ -235,7 +235,7 @@ attributes:
     domain_of:
     - ExperimentalMetadata
     - Dataset
-    range: Organism
+    range: OrganismDetails
     inlined: true
     inlined_as_list: true
   tissue:
@@ -248,7 +248,7 @@ attributes:
     domain_of:
     - ExperimentalMetadata
     - Dataset
-    range: Tissue
+    range: TissueDetails
     inlined: true
     inlined_as_list: true
   cell_type:
@@ -380,7 +380,7 @@ attributes:
     domain_of:
     - ExperimentalMetadata
     - Dataset
-    range: Organism
+    range: OrganismDetails
     inlined: true
     inlined_as_list: true
   tissue:
@@ -393,7 +393,7 @@ attributes:
     domain_of:
     - ExperimentalMetadata
     - Dataset
-    range: Tissue
+    range: TissueDetails
     inlined: true
     inlined_as_list: true
   cell_type:

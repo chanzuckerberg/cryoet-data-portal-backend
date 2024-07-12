@@ -31,8 +31,8 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 
 
 
-    TiltSeries --> "1" Camera : camera
-    click Camera href "../Camera"
+    TiltSeries --> "1" CameraDetails : camera
+    click CameraDetails href "../CameraDetails"
 
 
       TiltSeries : data_acquisition_software
@@ -46,8 +46,8 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 
 
 
-    TiltSeries --> "1" Microscope : microscope
-    click Microscope href "../Microscope"
+    TiltSeries --> "1" MicroscopeDetails : microscope
+    click MicroscopeDetails href "../MicroscopeDetails"
 
 
       TiltSeries : microscope_optical_setup
@@ -102,11 +102,11 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 | [acceleration_voltage](acceleration_voltage.md) | 1 <br/> [Float](Float.md) | Electron Microscope Accelerator voltage in volts | direct |
 | [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Binning factor of the aligned tilt series | direct |
 | [binning_from_frames](binning_from_frames.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Describes the binning factor from frames to tilt series file | direct |
-| [camera](camera.md) | 1 <br/> [Camera](Camera.md) | The camera used to collect the tilt series | direct |
+| [camera](camera.md) | 1 <br/> [CameraDetails](CameraDetails.md) | The camera used to collect the tilt series | direct |
 | [data_acquisition_software](data_acquisition_software.md) | 1 <br/> [String](String.md) | Software used to collect data | direct |
 | [frames_count](frames_count.md) | 0..1 <br/> [Integer](Integer.md) | Number of frames associated with this tiltseries | direct |
 | [is_aligned](is_aligned.md) | 1 <br/> [Boolean](Boolean.md) | Whether this tilt series is aligned | direct |
-| [microscope](microscope.md) | 1 <br/> [Microscope](Microscope.md) | The microscope used to collect the tilt series | direct |
+| [microscope](microscope.md) | 1 <br/> [MicroscopeDetails](MicroscopeDetails.md) | The microscope used to collect the tilt series | direct |
 | [microscope_optical_setup](microscope_optical_setup.md) | 1 <br/> [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series | direct |
 | [related_empiar_entry](related_empiar_entry.md) | 0..1 <br/> [EMPIARID](EMPIARID.md) | If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifie... | direct |
 | [spherical_aberration_constant](spherical_aberration_constant.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Spherical Aberration Constant of the objective lens in millimeters | direct |
@@ -236,7 +236,7 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: Camera
+    range: CameraDetails
     required: true
     inlined: true
     inlined_as_list: true
@@ -293,7 +293,7 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: Microscope
+    range: MicroscopeDetails
     required: true
     inlined: true
     inlined_as_list: true
@@ -593,7 +593,7 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: Camera
+    range: CameraDetails
     required: true
     inlined: true
     inlined_as_list: true
@@ -650,7 +650,7 @@ attributes:
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    range: Microscope
+    range: MicroscopeDetails
     required: true
     inlined: true
     inlined_as_list: true

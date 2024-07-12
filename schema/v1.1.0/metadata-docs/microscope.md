@@ -31,7 +31,7 @@ URI: [cdp-meta:microscope](metadatamicroscope)
 
 ## Properties
 
-* Range: [Microscope](Microscope.md)
+* Range: [MicroscopeDetails](MicroscopeDetails.md)
 
 * Required: True
 
@@ -77,7 +77,7 @@ alias: microscope
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: Microscope
+range: MicroscopeDetails
 required: true
 inlined: true
 inlined_as_list: true

@@ -30,8 +30,8 @@ URI: [cdp-meta:FundedEntity](metadataFundedEntity)
 
 
 
-    FundedEntity --> "* _recommended_" Funding : funding
-    click Funding href "../Funding"
+    FundedEntity --> "* _recommended_" FundingDetails : funding
+    click FundingDetails href "../FundingDetails"
 
 
 
@@ -47,7 +47,7 @@ URI: [cdp-meta:FundedEntity](metadataFundedEntity)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [funding](funding.md) | * _recommended_ <br/> [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
+| [funding](funding.md) | * _recommended_ <br/> [FundingDetails](FundingDetails.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
 
 
 
@@ -111,7 +111,7 @@ attributes:
     domain_of:
     - FundedEntity
     - Dataset
-    range: Funding
+    range: FundingDetails
     recommended: true
     multivalued: true
     inlined: true
@@ -141,7 +141,7 @@ attributes:
     domain_of:
     - FundedEntity
     - Dataset
-    range: Funding
+    range: FundingDetails
     recommended: true
     multivalued: true
     inlined: true
