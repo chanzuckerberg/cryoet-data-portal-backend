@@ -3,7 +3,7 @@ import os
 import re
 import shutil
 import sys
-from typing import Union
+from typing import Dict, List, Union
 
 import click
 import yaml
@@ -36,24 +36,18 @@ FLOAT_FORMATTED_STRING_REGEX = r"^float\s*{[a-zA-Z0-9_-]+}\s*$"
 INTEGER_FORMATTED_STRING_REGEX = r"^int\s*{[a-zA-Z0-9_-]+}\s*$"
 
 
-def _error_to_filtered_text(error_value: Union[dict, str]) -> str:
+def print_errors(errors: Dict[str, List[Union[ValidationError, Exception]]]) -> List[str]:
     """
-    Convert an error value to a filtered text string (for easier comparison and filtering of errors)
+    Convert an error value to a more concise text string.
     """
-    if not isinstance(error_value, dict) or any(key not in error_value for key in ["loc", "msg", "input"]):
-        return str(error_value)
-    loc = "/".join([str(x) for x in error_value["loc"]])
-    return f"{loc}: {error_value['msg']} (Input: {error_value['input']})"
-
-
-def _error_to_filtered_2_text(error_value: Union[dict, str]) -> str:
-    """
-    Convert an error value to a filtered text string (for easier comparison and filtering of errors)
-    This one removes more attributes from the error value, so that the errors list can be filtered down even more.
-    """
-    if not isinstance(error_value, dict) or any(key not in error_value for key in ["loc", "msg"]):
-        return str(error_value)
-    return str(error_value["loc"][-1]) + ": " + str(error_value["msg"])
+    for file, error in sorted(errors.items()):
+        print(f'FAIL: "{file}":')
+        for e in error:
+            if not isinstance(e, dict) or any(key not in e for key in ["loc", "msg"]):
+                print("\t- error: " + str(e))
+            else:
+                loc = "/".join([str(x) for x in e["loc"]])
+                print(f"\t- {e['msg']}: {loc}")
 
 
 def replace_formatted_string(value: str) -> Union[str, bool, float, int]:
@@ -158,21 +152,8 @@ def main(include_glob: str, exclude_keywords: str):
     with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors.json"), "w") as f:
         json.dump(dict(sorted(errors.items())), f, indent=2, default=str)
 
-    errors_as_one_list = [error for error_list in errors.values() for error in error_list]
-
-    # Write a filtered list of errors to a file
-    with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors_filtered.txt"), "w") as f:
-        errors_as_filtered_text = map(_error_to_filtered_text, errors_as_one_list)
-        errors_list = list(set(errors_as_filtered_text))
-        errors_list.sort()
-        f.write("\n".join(errors_list))
-
-    # Write an even more filtered list of errors to a file
-    with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors_filtered_2.txt"), "w") as f:
-        errors_as_filtered_2_text = map(_error_to_filtered_2_text, errors_as_one_list)
-        errors_list = list(set(errors_as_filtered_2_text))
-        errors_list.sort()
-        f.write("\n".join(errors_list))
+    # Print errors to stdout
+    print_errors(errors)
 
     print("[ERROR]: Validation failed. See dataset_config_validate_errors.json for details.")
     exit(1)
