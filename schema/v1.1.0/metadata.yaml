@@ -70,6 +70,7 @@ classes:
   # ============================================================================
   # Funding source information
   # ============================================================================
+  # Updating name from Funding to FundingDetails to avoid conflict in case insensitive file names
   FundingDetails:
     description: A funding source for a scientific data entity (base for JSON and DB representation).
     attributes:
@@ -152,6 +153,7 @@ classes:
   # ============================================================================
   # Experimental metadata
   # ============================================================================
+  # Updating name from Organism to OrganismDetails to avoid conflict in case insensitive file names
   OrganismDetails:
     description: &desc_Organism The species from which the sample was derived.
     attributes:
@@ -162,6 +164,7 @@ classes:
         exact_mappings:
           - cdp-common:organism_taxid
 
+  # Updating name from Tissue to TissueDetails to avoid conflict in case insensitive file names
   TissueDetails:
     description: &desc_Tissue The type of tissue from which the sample was derived.
     attributes:
@@ -263,6 +266,7 @@ classes:
   # ============================================================================
   # TiltSeries metadata
   # ============================================================================
+  # Updating name from Camera to CameraDetails to avoid conflict in case insensitive file names
   CameraDetails:
     description: &desc_camera The camera used to collect the tilt series.
     attributes:
@@ -276,6 +280,7 @@ classes:
         exact_mappings:
           - cdp-common:tiltseries_camera_model
 
+  # Updating name from Microscope to MicroscopeDetails to avoid conflict in case insensitive file names
   MicroscopeDetails:
     description: &desc_microscope The microscope used to collect the tilt series.
     attributes:
