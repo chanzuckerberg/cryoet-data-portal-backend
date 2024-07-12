@@ -43,13 +43,424 @@ class LinkMLMeta(RootModel):
     def __setitem__(self, key: str, value):
         self.root[key] = value
 
+    def __contains__(self, key: str) -> bool:
+        return key in self.root
+
 
 linkml_meta = LinkMLMeta(
     {
         "default_prefix": "cdp-dataset-config/",
         "description": "Schema for dataset configs",
         "id": "cdp-dataset-config",
+        "imports": ["linkml:types", "./metadata_materialized", "./common"],
         "name": "cdp-dataset-config",
+        "prefixes": {"linkml": {"prefix_prefix": "linkml", "prefix_reference": "https://w3id.org/linkml/"}},
+        "source_file": "dataset_config_materialized.yaml",
+        "types": {
+            "BTO_ID": {
+                "base": "str",
+                "description": "A BRENDA Tissue Ontology identifier",
+                "from_schema": "cdp-dataset-config",
+                "name": "BTO_ID",
+                "pattern": "^BTO:[0-9]{7}$",
+            },
+            "BooleanFormattedString": {
+                "base": "str",
+                "description": "A formatted string that " "represents a boolean.",
+                "from_schema": "cdp-dataset-config",
+                "name": "BooleanFormattedString",
+                "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ " "]*$",
+            },
+            "CL_ID": {
+                "base": "str",
+                "description": "A Cell Ontology identifier",
+                "from_schema": "cdp-dataset-config",
+                "name": "CL_ID",
+                "pattern": "^CL:[0-9]{7}$",
+            },
+            "DOI": {
+                "base": "str",
+                "description": "A Digital Object Identifier",
+                "from_schema": "cdp-dataset-config",
+                "name": "DOI",
+                "pattern": "^(doi:|https://doi\\.org/)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$",
+            },
+            "DOI_LIST": {
+                "base": "str",
+                "description": "A list of Digital Object Identifiers",
+                "from_schema": "cdp-dataset-config",
+                "name": "DOI_LIST",
+                "pattern": "^(doi:|https://doi\\.org/)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\\s*,\\s*(doi:|https://doi\\.org/)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$",
+            },
+            "EMDB_ID": {
+                "base": "str",
+                "description": "An Electron Microscopy Data Bank " "identifier",
+                "from_schema": "cdp-dataset-config",
+                "name": "EMDB_ID",
+                "pattern": "^EMD-[0-9]{4,5}$",
+            },
+            "EMPIAR_EMDB_LIST": {
+                "base": "str",
+                "description": "A list of EMPIAR and EMDB " "identifiers",
+                "from_schema": "cdp-dataset-config",
+                "name": "EMPIAR_EMDB_LIST",
+                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$",
+            },
+            "EMPIAR_ID": {
+                "base": "str",
+                "description": "An Electron Microscopy Public Image " "Archive identifier",
+                "from_schema": "cdp-dataset-config",
+                "name": "EMPIAR_ID",
+                "pattern": "^EMPIAR-[0-9]{5}$",
+            },
+            "FloatFormattedString": {
+                "base": "str",
+                "description": "A formatted string that " "represents a floating " "point number.",
+                "from_schema": "cdp-dataset-config",
+                "name": "FloatFormattedString",
+                "pattern": "^float[ " "]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+            },
+            "GO_ID": {
+                "base": "str",
+                "description": "A Gene Ontology identifier",
+                "from_schema": "cdp-dataset-config",
+                "name": "GO_ID",
+                "pattern": "^GO:[0-9]{7}$",
+            },
+            "IntegerFormattedString": {
+                "base": "str",
+                "description": "A formatted string that " "represents an integer.",
+                "from_schema": "cdp-dataset-config",
+                "name": "IntegerFormattedString",
+                "pattern": "^int[ " "]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+            },
+            "ONTOLOGY_ID": {
+                "base": "str",
+                "description": "An ontology identifier",
+                "from_schema": "cdp-dataset-config",
+                "name": "ONTOLOGY_ID",
+                "pattern": "^[A-Z]+:[0-9]+$",
+            },
+            "ORCID": {
+                "base": "str",
+                "description": "A unique, persistent identifier for " "researchers, provided by ORCID.",
+                "from_schema": "cdp-dataset-config",
+                "name": "ORCID",
+                "pattern": "[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
+            },
+            "StringFormattedString": {
+                "base": "str",
+                "description": "A formatted string " "(variable) that " "represents a string.",
+                "from_schema": "cdp-dataset-config",
+                "name": "StringFormattedString",
+                "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ " "]*$",
+            },
+            "URLorS3URI": {
+                "base": "str",
+                "description": "A URL or S3 URI",
+                "from_schema": "cdp-dataset-config",
+                "name": "URLorS3URI",
+                "pattern": "^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$",
+            },
+            "VersionString": {
+                "base": "float",
+                "description": "A version number (only major, " "minor versions)",
+                "from_schema": "cdp-dataset-config",
+                "minimum_value": 0,
+                "name": "VersionString",
+            },
+            "boolean": {
+                "base": "Bool",
+                "description": "A binary (true or false) value",
+                "exact_mappings": ["schema:Boolean"],
+                "from_schema": "cdp-dataset-config",
+                "name": "boolean",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"boolean".'
+                ],
+                "repr": "bool",
+                "uri": "xsd:boolean",
+            },
+            "curie": {
+                "base": "Curie",
+                "comments": [
+                    "in RDF serializations this MUST be expanded " "to a URI",
+                    "in non-RDF serializations MAY be serialized " "as the compact representation",
+                ],
+                "conforms_to": "https://www.w3.org/TR/curie/",
+                "description": "a compact URI",
+                "from_schema": "cdp-dataset-config",
+                "name": "curie",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"curie".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "date": {
+                "base": "XSDDate",
+                "description": "a date (year, month and day) in an " "idealized calendar",
+                "exact_mappings": ["schema:Date"],
+                "from_schema": "cdp-dataset-config",
+                "name": "date",
+                "notes": [
+                    "URI is dateTime because OWL reasoners don't " "work with straight date or time",
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"date".',
+                ],
+                "repr": "str",
+                "uri": "xsd:date",
+            },
+            "date_or_datetime": {
+                "base": "str",
+                "description": "Either a date or a datetime",
+                "from_schema": "cdp-dataset-config",
+                "name": "date_or_datetime",
+                "notes": [
+                    "If you are authoring schemas in "
+                    "LinkML YAML, the type is referenced "
+                    "with the lower case "
+                    '"date_or_datetime".'
+                ],
+                "repr": "str",
+                "uri": "linkml:DateOrDatetime",
+            },
+            "datetime": {
+                "base": "XSDDateTime",
+                "description": "The combination of a date and time",
+                "exact_mappings": ["schema:DateTime"],
+                "from_schema": "cdp-dataset-config",
+                "name": "datetime",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the lower "
+                    'case "datetime".'
+                ],
+                "repr": "str",
+                "uri": "xsd:dateTime",
+            },
+            "decimal": {
+                "base": "Decimal",
+                "broad_mappings": ["schema:Number"],
+                "description": "A real number with arbitrary precision "
+                "that conforms to the xsd:decimal "
+                "specification",
+                "from_schema": "cdp-dataset-config",
+                "name": "decimal",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"decimal".'
+                ],
+                "uri": "xsd:decimal",
+            },
+            "double": {
+                "base": "float",
+                "close_mappings": ["schema:Float"],
+                "description": "A real number that conforms to the " "xsd:double specification",
+                "from_schema": "cdp-dataset-config",
+                "name": "double",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"double".'
+                ],
+                "uri": "xsd:double",
+            },
+            "float": {
+                "base": "float",
+                "description": "A real number that conforms to the " "xsd:float specification",
+                "exact_mappings": ["schema:Float"],
+                "from_schema": "cdp-dataset-config",
+                "name": "float",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"float".'
+                ],
+                "uri": "xsd:float",
+            },
+            "integer": {
+                "base": "int",
+                "description": "An integer",
+                "exact_mappings": ["schema:Integer"],
+                "from_schema": "cdp-dataset-config",
+                "name": "integer",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"integer".'
+                ],
+                "uri": "xsd:integer",
+            },
+            "jsonpath": {
+                "base": "str",
+                "conforms_to": "https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html",
+                "description": "A string encoding a JSON Path. The "
+                "value of the string MUST conform to "
+                "JSON Point syntax and SHOULD "
+                "dereference to zero or more valid "
+                "objects within the current instance "
+                "document when encoded in tree form.",
+                "from_schema": "cdp-dataset-config",
+                "name": "jsonpath",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the lower "
+                    'case "jsonpath".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "jsonpointer": {
+                "base": "str",
+                "conforms_to": "https://datatracker.ietf.org/doc/html/rfc6901",
+                "description": "A string encoding a JSON Pointer. "
+                "The value of the string MUST "
+                "conform to JSON Point syntax and "
+                "SHOULD dereference to a valid "
+                "object within the current instance "
+                "document when encoded in tree form.",
+                "from_schema": "cdp-dataset-config",
+                "name": "jsonpointer",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the "
+                    'lower case "jsonpointer".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "ncname": {
+                "base": "NCName",
+                "description": "Prefix part of CURIE",
+                "from_schema": "cdp-dataset-config",
+                "name": "ncname",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"ncname".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "nodeidentifier": {
+                "base": "NodeIdentifier",
+                "description": "A URI, CURIE or BNODE that " "represents a node in a model.",
+                "from_schema": "cdp-dataset-config",
+                "name": "nodeidentifier",
+                "notes": [
+                    "If you are authoring schemas in "
+                    "LinkML YAML, the type is referenced "
+                    "with the lower case "
+                    '"nodeidentifier".'
+                ],
+                "repr": "str",
+                "uri": "shex:nonLiteral",
+            },
+            "objectidentifier": {
+                "base": "ElementIdentifier",
+                "comments": ["Used for inheritance and type " "checking"],
+                "description": "A URI or CURIE that represents " "an object in the model.",
+                "from_schema": "cdp-dataset-config",
+                "name": "objectidentifier",
+                "notes": [
+                    "If you are authoring schemas in "
+                    "LinkML YAML, the type is referenced "
+                    "with the lower case "
+                    '"objectidentifier".'
+                ],
+                "repr": "str",
+                "uri": "shex:iri",
+            },
+            "sparqlpath": {
+                "base": "str",
+                "conforms_to": "https://www.w3.org/TR/sparql11-query/#propertypaths",
+                "description": "A string encoding a SPARQL Property "
+                "Path. The value of the string MUST "
+                "conform to SPARQL syntax and SHOULD "
+                "dereference to zero or more valid "
+                "objects within the current instance "
+                "document when encoded as RDF.",
+                "from_schema": "cdp-dataset-config",
+                "name": "sparqlpath",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the "
+                    'lower case "sparqlpath".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "string": {
+                "base": "str",
+                "description": "A character string",
+                "exact_mappings": ["schema:Text"],
+                "from_schema": "cdp-dataset-config",
+                "name": "string",
+                "notes": [
+                    "In RDF serializations, a slot with range of "
+                    "string is treated as a literal or type "
+                    "xsd:string.   If you are authoring schemas in "
+                    "LinkML YAML, the type is referenced with the "
+                    'lower case "string".'
+                ],
+                "uri": "xsd:string",
+            },
+            "time": {
+                "base": "XSDTime",
+                "description": "A time object represents a (local) time of " "day, independent of any particular day",
+                "exact_mappings": ["schema:Time"],
+                "from_schema": "cdp-dataset-config",
+                "name": "time",
+                "notes": [
+                    "URI is dateTime because OWL reasoners do not " "work with straight date or time",
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"time".',
+                ],
+                "repr": "str",
+                "uri": "xsd:time",
+            },
+            "uri": {
+                "base": "URI",
+                "close_mappings": ["schema:URL"],
+                "comments": [
+                    "in RDF serializations a slot with range of "
+                    "uri is treated as a literal or type "
+                    "xsd:anyURI unless it is an identifier or a "
+                    "reference to an identifier, in which case it "
+                    "is translated directly to a node"
+                ],
+                "conforms_to": "https://www.ietf.org/rfc/rfc3987.txt",
+                "description": "a complete URI",
+                "from_schema": "cdp-dataset-config",
+                "name": "uri",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, the " 'type is referenced with the lower case "uri".'
+                ],
+                "repr": "str",
+                "uri": "xsd:anyURI",
+            },
+            "uriorcurie": {
+                "base": "URIorCURIE",
+                "description": "a URI or a CURIE",
+                "from_schema": "cdp-dataset-config",
+                "name": "uriorcurie",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the "
+                    'lower case "uriorcurie".'
+                ],
+                "repr": "str",
+                "uri": "xsd:anyURI",
+            },
+        },
     }
 )
 
@@ -61,9 +472,9 @@ class AnnotationMethodTypeEnum(str, Enum):
 
     # Annotations were generated manually.
     manual = "manual"
-    # Annotations were generated semi-automatically.
-    automated = "automated"
     # Annotations were generated automatically.
+    automated = "automated"
+    # Annotations were generated semi-automatically.
     hybrid = "hybrid"
 
 
@@ -441,7 +852,7 @@ class AuthoredEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
 
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -909,7 +1320,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         },
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -1736,7 +2147,7 @@ class Tomogram(AuthoredEntity):
     )
     reconstruction_method: Union[TomogromReconstructionMethodEnum, str] = Field(
         ...,
-        description="""Describe reconstruction method (Weighted back-projection, SART, SIRT)""",
+        description="""Describe reconstruction method (WBP, SART, SIRT)""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "reconstruction_method",
@@ -1818,7 +2229,7 @@ class Tomogram(AuthoredEntity):
         json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram"]}},
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2644,7 +3055,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         },
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2747,7 +3158,7 @@ class Container(ConfiguredBaseModel):
         json_schema_extra={"linkml_meta": {"alias": "dataset_keyphotos", "domain_of": ["Container"]}},
     )
     datasets: List[DatasetEntity] = Field(
-        ...,
+        default_factory=list,
         description="""A dataset entity.""",
         json_schema_extra={"linkml_meta": {"alias": "datasets", "domain_of": ["Container"]}},
     )
@@ -2792,7 +3203,7 @@ class Container(ConfiguredBaseModel):
         json_schema_extra={"linkml_meta": {"alias": "tomograms", "domain_of": ["Container"]}},
     )
     voxel_spacings: List[VoxelSpacingEntity] = Field(
-        ...,
+        default_factory=list,
         description="""A voxel spacing entity.""",
         json_schema_extra={"linkml_meta": {"alias": "voxel_spacings", "domain_of": ["Container"]}},
     )
@@ -2929,7 +3340,7 @@ class SourceMultiGlob(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     list_globs: List[str] = Field(
-        ...,
+        default_factory=list,
         description="""The globs for the file.""",
         json_schema_extra={"linkml_meta": {"alias": "list_globs", "domain_of": ["SourceMultiGlob"]}},
     )
@@ -3129,7 +3540,7 @@ class DefaultLiteral(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     value: List[Any] = Field(
-        ...,
+        default_factory=list,
         description="""A placeholder for any type of data.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3158,7 +3569,7 @@ class AnnotationEntity(ConfiguredBaseModel):
         },
     )
     sources: List[AnnotationSource] = Field(
-        ...,
+        default_factory=list,
         description="""An annotation source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3255,7 +3666,7 @@ class DatasetEntity(ConfiguredBaseModel):
         },
     )
     sources: List[DatasetSource] = Field(
-        ...,
+        default_factory=list,
         description="""A dataset source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3381,7 +3792,7 @@ class DatasetKeyPhotoEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     sources: List[DatasetKeyPhotoSource] = Field(
-        ...,
+        default_factory=list,
         description="""A dataset key photo source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3486,7 +3897,7 @@ class FrameEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     sources: List[FrameSource] = Field(
-        ...,
+        default_factory=list,
         description="""A frame source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3637,7 +4048,7 @@ class GainEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     sources: List[GainSource] = Field(
-        ...,
+        default_factory=list,
         description="""A gain source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3788,7 +4199,7 @@ class KeyImageEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     sources: List[KeyImageSource] = Field(
-        ...,
+        default_factory=list,
         description="""A key image source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3939,7 +4350,7 @@ class RawTiltEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     sources: List[RawTiltSource] = Field(
-        ...,
+        default_factory=list,
         description="""A raw tilt source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4090,7 +4501,7 @@ class RunEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     sources: List[RunSource] = Field(
-        ...,
+        default_factory=list,
         description="""A run source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4290,7 +4701,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
         },
     )
     sources: List[TiltSeriesSource] = Field(
-        ...,
+        default_factory=list,
         description="""A tilt series source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4451,7 +4862,7 @@ class TomogramEntity(ConfiguredBaseModel):
         },
     )
     sources: List[TomogramSource] = Field(
-        ...,
+        default_factory=list,
         description="""A tomogram source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4602,7 +5013,7 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     sources: List[VoxelSpacingSource] = Field(
-        ...,
+        default_factory=list,
         description="""A voxel spacing source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4735,7 +5146,7 @@ class VoxelSpacingLiteral(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     value: List[float] = Field(
-        ...,
+        default_factory=list,
         description="""The value for the voxel spacing literal.""",
         json_schema_extra={
             "linkml_meta": {

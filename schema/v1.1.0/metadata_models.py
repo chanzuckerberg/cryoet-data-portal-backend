@@ -43,8 +43,434 @@ class LinkMLMeta(RootModel):
     def __setitem__(self, key: str, value):
         self.root[key] = value
 
+    def __contains__(self, key: str) -> bool:
+        return key in self.root
 
-linkml_meta = LinkMLMeta({"default_prefix": "metadata/", "id": "metadata", "name": "cdp-meta"})
+
+linkml_meta = LinkMLMeta(
+    {
+        "default_prefix": "cdp-meta",
+        "default_range": "string",
+        "id": "metadata",
+        "imports": ["linkml:types"],
+        "name": "cdp-meta",
+        "prefixes": {
+            "CL": {"prefix_prefix": "CL", "prefix_reference": "http://purl.obolibrary.org/obo/CL_"},
+            "GO": {"prefix_prefix": "GO", "prefix_reference": "http://purl.obolibrary.org/obo/GO_"},
+            "ORCID": {"prefix_prefix": "ORCID", "prefix_reference": "https://orcid.org/"},
+            "ROR": {"prefix_prefix": "ROR", "prefix_reference": "https://ror.org/"},
+            "UBERON": {"prefix_prefix": "UBERON", "prefix_reference": "http://purl.obolibrary.org/obo/UBERON_"},
+            "cdp-meta": {"prefix_prefix": "cdp-meta", "prefix_reference": "metadata"},
+            "linkml": {"prefix_prefix": "linkml", "prefix_reference": "https://w3id.org/linkml/"},
+        },
+        "source_file": "metadata_materialized.yaml",
+        "types": {
+            "BTO_ID": {
+                "base": "str",
+                "description": "A BRENDA Tissue Ontology identifier",
+                "from_schema": "metadata",
+                "name": "BTO_ID",
+                "pattern": "^BTO:[0-9]{7}$",
+            },
+            "BooleanFormattedString": {
+                "base": "str",
+                "description": "A formatted string that " "represents a boolean.",
+                "from_schema": "metadata",
+                "name": "BooleanFormattedString",
+                "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ " "]*$",
+            },
+            "CL_ID": {
+                "base": "str",
+                "description": "A Cell Ontology identifier",
+                "from_schema": "metadata",
+                "name": "CL_ID",
+                "pattern": "^CL:[0-9]{7}$",
+            },
+            "DOI": {
+                "base": "str",
+                "description": "A Digital Object Identifier",
+                "from_schema": "metadata",
+                "name": "DOI",
+                "pattern": "^(doi:|https://doi\\.org/)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$",
+            },
+            "DOI_LIST": {
+                "base": "str",
+                "description": "A list of Digital Object Identifiers",
+                "from_schema": "metadata",
+                "name": "DOI_LIST",
+                "pattern": "^(doi:|https://doi\\.org/)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\\s*,\\s*(doi:|https://doi\\.org/)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$",
+            },
+            "EMDB_ID": {
+                "base": "str",
+                "description": "An Electron Microscopy Data Bank " "identifier",
+                "from_schema": "metadata",
+                "name": "EMDB_ID",
+                "pattern": "^EMD-[0-9]{4,5}$",
+            },
+            "EMPIAR_EMDB_LIST": {
+                "base": "str",
+                "description": "A list of EMPIAR and EMDB " "identifiers",
+                "from_schema": "metadata",
+                "name": "EMPIAR_EMDB_LIST",
+                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$",
+            },
+            "EMPIAR_ID": {
+                "base": "str",
+                "description": "An Electron Microscopy Public Image " "Archive identifier",
+                "from_schema": "metadata",
+                "name": "EMPIAR_ID",
+                "pattern": "^EMPIAR-[0-9]{5}$",
+            },
+            "FloatFormattedString": {
+                "base": "str",
+                "description": "A formatted string that " "represents a floating " "point number.",
+                "from_schema": "metadata",
+                "name": "FloatFormattedString",
+                "pattern": "^float[ " "]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+            },
+            "GO_ID": {
+                "base": "str",
+                "description": "A Gene Ontology identifier",
+                "from_schema": "metadata",
+                "name": "GO_ID",
+                "pattern": "^GO:[0-9]{7}$",
+            },
+            "IntegerFormattedString": {
+                "base": "str",
+                "description": "A formatted string that " "represents an integer.",
+                "from_schema": "metadata",
+                "name": "IntegerFormattedString",
+                "pattern": "^int[ " "]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+            },
+            "ONTOLOGY_ID": {
+                "base": "str",
+                "description": "An ontology identifier",
+                "from_schema": "metadata",
+                "name": "ONTOLOGY_ID",
+                "pattern": "^[A-Z]+:[0-9]+$",
+            },
+            "ORCID": {
+                "base": "str",
+                "description": "A unique, persistent identifier for " "researchers, provided by ORCID.",
+                "from_schema": "metadata",
+                "name": "ORCID",
+                "pattern": "[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
+            },
+            "StringFormattedString": {
+                "base": "str",
+                "description": "A formatted string " "(variable) that " "represents a string.",
+                "from_schema": "metadata",
+                "name": "StringFormattedString",
+                "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ " "]*$",
+            },
+            "URLorS3URI": {
+                "base": "str",
+                "description": "A URL or S3 URI",
+                "from_schema": "metadata",
+                "name": "URLorS3URI",
+                "pattern": "^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$",
+            },
+            "VersionString": {
+                "base": "float",
+                "description": "A version number (only major, " "minor versions)",
+                "from_schema": "metadata",
+                "minimum_value": 0,
+                "name": "VersionString",
+            },
+            "boolean": {
+                "base": "Bool",
+                "description": "A binary (true or false) value",
+                "exact_mappings": ["schema:Boolean"],
+                "from_schema": "metadata",
+                "name": "boolean",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"boolean".'
+                ],
+                "repr": "bool",
+                "uri": "xsd:boolean",
+            },
+            "curie": {
+                "base": "Curie",
+                "comments": [
+                    "in RDF serializations this MUST be expanded " "to a URI",
+                    "in non-RDF serializations MAY be serialized " "as the compact representation",
+                ],
+                "conforms_to": "https://www.w3.org/TR/curie/",
+                "description": "a compact URI",
+                "from_schema": "metadata",
+                "name": "curie",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"curie".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "date": {
+                "base": "XSDDate",
+                "description": "a date (year, month and day) in an " "idealized calendar",
+                "exact_mappings": ["schema:Date"],
+                "from_schema": "metadata",
+                "name": "date",
+                "notes": [
+                    "URI is dateTime because OWL reasoners don't " "work with straight date or time",
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"date".',
+                ],
+                "repr": "str",
+                "uri": "xsd:date",
+            },
+            "date_or_datetime": {
+                "base": "str",
+                "description": "Either a date or a datetime",
+                "from_schema": "metadata",
+                "name": "date_or_datetime",
+                "notes": [
+                    "If you are authoring schemas in "
+                    "LinkML YAML, the type is referenced "
+                    "with the lower case "
+                    '"date_or_datetime".'
+                ],
+                "repr": "str",
+                "uri": "linkml:DateOrDatetime",
+            },
+            "datetime": {
+                "base": "XSDDateTime",
+                "description": "The combination of a date and time",
+                "exact_mappings": ["schema:DateTime"],
+                "from_schema": "metadata",
+                "name": "datetime",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the lower "
+                    'case "datetime".'
+                ],
+                "repr": "str",
+                "uri": "xsd:dateTime",
+            },
+            "decimal": {
+                "base": "Decimal",
+                "broad_mappings": ["schema:Number"],
+                "description": "A real number with arbitrary precision "
+                "that conforms to the xsd:decimal "
+                "specification",
+                "from_schema": "metadata",
+                "name": "decimal",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"decimal".'
+                ],
+                "uri": "xsd:decimal",
+            },
+            "double": {
+                "base": "float",
+                "close_mappings": ["schema:Float"],
+                "description": "A real number that conforms to the " "xsd:double specification",
+                "from_schema": "metadata",
+                "name": "double",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"double".'
+                ],
+                "uri": "xsd:double",
+            },
+            "float": {
+                "base": "float",
+                "description": "A real number that conforms to the " "xsd:float specification",
+                "exact_mappings": ["schema:Float"],
+                "from_schema": "metadata",
+                "name": "float",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"float".'
+                ],
+                "uri": "xsd:float",
+            },
+            "integer": {
+                "base": "int",
+                "description": "An integer",
+                "exact_mappings": ["schema:Integer"],
+                "from_schema": "metadata",
+                "name": "integer",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"integer".'
+                ],
+                "uri": "xsd:integer",
+            },
+            "jsonpath": {
+                "base": "str",
+                "conforms_to": "https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html",
+                "description": "A string encoding a JSON Path. The "
+                "value of the string MUST conform to "
+                "JSON Point syntax and SHOULD "
+                "dereference to zero or more valid "
+                "objects within the current instance "
+                "document when encoded in tree form.",
+                "from_schema": "metadata",
+                "name": "jsonpath",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the lower "
+                    'case "jsonpath".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "jsonpointer": {
+                "base": "str",
+                "conforms_to": "https://datatracker.ietf.org/doc/html/rfc6901",
+                "description": "A string encoding a JSON Pointer. "
+                "The value of the string MUST "
+                "conform to JSON Point syntax and "
+                "SHOULD dereference to a valid "
+                "object within the current instance "
+                "document when encoded in tree form.",
+                "from_schema": "metadata",
+                "name": "jsonpointer",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the "
+                    'lower case "jsonpointer".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "ncname": {
+                "base": "NCName",
+                "description": "Prefix part of CURIE",
+                "from_schema": "metadata",
+                "name": "ncname",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"ncname".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "nodeidentifier": {
+                "base": "NodeIdentifier",
+                "description": "A URI, CURIE or BNODE that " "represents a node in a model.",
+                "from_schema": "metadata",
+                "name": "nodeidentifier",
+                "notes": [
+                    "If you are authoring schemas in "
+                    "LinkML YAML, the type is referenced "
+                    "with the lower case "
+                    '"nodeidentifier".'
+                ],
+                "repr": "str",
+                "uri": "shex:nonLiteral",
+            },
+            "objectidentifier": {
+                "base": "ElementIdentifier",
+                "comments": ["Used for inheritance and type " "checking"],
+                "description": "A URI or CURIE that represents " "an object in the model.",
+                "from_schema": "metadata",
+                "name": "objectidentifier",
+                "notes": [
+                    "If you are authoring schemas in "
+                    "LinkML YAML, the type is referenced "
+                    "with the lower case "
+                    '"objectidentifier".'
+                ],
+                "repr": "str",
+                "uri": "shex:iri",
+            },
+            "sparqlpath": {
+                "base": "str",
+                "conforms_to": "https://www.w3.org/TR/sparql11-query/#propertypaths",
+                "description": "A string encoding a SPARQL Property "
+                "Path. The value of the string MUST "
+                "conform to SPARQL syntax and SHOULD "
+                "dereference to zero or more valid "
+                "objects within the current instance "
+                "document when encoded as RDF.",
+                "from_schema": "metadata",
+                "name": "sparqlpath",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the "
+                    'lower case "sparqlpath".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "string": {
+                "base": "str",
+                "description": "A character string",
+                "exact_mappings": ["schema:Text"],
+                "from_schema": "metadata",
+                "name": "string",
+                "notes": [
+                    "In RDF serializations, a slot with range of "
+                    "string is treated as a literal or type "
+                    "xsd:string.   If you are authoring schemas in "
+                    "LinkML YAML, the type is referenced with the "
+                    'lower case "string".'
+                ],
+                "uri": "xsd:string",
+            },
+            "time": {
+                "base": "XSDTime",
+                "description": "A time object represents a (local) time of " "day, independent of any particular day",
+                "exact_mappings": ["schema:Time"],
+                "from_schema": "metadata",
+                "name": "time",
+                "notes": [
+                    "URI is dateTime because OWL reasoners do not " "work with straight date or time",
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"time".',
+                ],
+                "repr": "str",
+                "uri": "xsd:time",
+            },
+            "uri": {
+                "base": "URI",
+                "close_mappings": ["schema:URL"],
+                "comments": [
+                    "in RDF serializations a slot with range of "
+                    "uri is treated as a literal or type "
+                    "xsd:anyURI unless it is an identifier or a "
+                    "reference to an identifier, in which case it "
+                    "is translated directly to a node"
+                ],
+                "conforms_to": "https://www.ietf.org/rfc/rfc3987.txt",
+                "description": "a complete URI",
+                "from_schema": "metadata",
+                "name": "uri",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, the " 'type is referenced with the lower case "uri".'
+                ],
+                "repr": "str",
+                "uri": "xsd:anyURI",
+            },
+            "uriorcurie": {
+                "base": "URIorCURIE",
+                "description": "a URI or a CURIE",
+                "from_schema": "metadata",
+                "name": "uriorcurie",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the "
+                    'lower case "uriorcurie".'
+                ],
+                "repr": "str",
+                "uri": "xsd:anyURI",
+            },
+        },
+    }
+)
 
 
 class AnnotationMethodTypeEnum(str, Enum):
@@ -54,9 +480,9 @@ class AnnotationMethodTypeEnum(str, Enum):
 
     # Annotations were generated manually.
     manual = "manual"
-    # Annotations were generated semi-automatically.
-    automated = "automated"
     # Annotations were generated automatically.
+    automated = "automated"
+    # Annotations were generated semi-automatically.
     hybrid = "hybrid"
 
 
@@ -434,7 +860,7 @@ class AuthoredEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
 
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -902,7 +1328,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         },
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -1729,7 +2155,7 @@ class Tomogram(AuthoredEntity):
     )
     reconstruction_method: Union[TomogromReconstructionMethodEnum, str] = Field(
         ...,
-        description="""Describe reconstruction method (Weighted back-projection, SART, SIRT)""",
+        description="""Describe reconstruction method (WBP, SART, SIRT)""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "reconstruction_method",
@@ -1811,7 +2237,7 @@ class Tomogram(AuthoredEntity):
         json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram"]}},
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2637,7 +3063,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         },
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {

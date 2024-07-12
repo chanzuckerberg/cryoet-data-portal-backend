@@ -349,10 +349,10 @@ enums:
         description: Annotations were generated manually.
       automated:
         text: automated
-        description: Annotations were generated semi-automatically.
+        description: Annotations were generated automatically.
       hybrid:
         text: hybrid
-        description: Annotations were generated automatically.
+        description: Annotations were generated semi-automatically.
   sample_type_enum:
     name: sample_type_enum
     description: Type of sample imaged in a CryoET study.

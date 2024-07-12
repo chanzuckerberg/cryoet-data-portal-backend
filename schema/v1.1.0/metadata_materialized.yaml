@@ -365,10 +365,10 @@ enums:
         description: Annotations were generated manually.
       automated:
         text: automated
-        description: Annotations were generated semi-automatically.
+        description: Annotations were generated automatically.
       hybrid:
         text: hybrid
-        description: Annotations were generated automatically.
+        description: Annotations were generated semi-automatically.
   sample_type_enum:
     name: sample_type_enum
     description: Type of sample imaged in a CryoET study.
@@ -2102,8 +2102,7 @@ classes:
         inlined_as_list: true
       reconstruction_method:
         name: reconstruction_method
-        description: Describe reconstruction method (Weighted back-projection, SART,
-          SIRT)
+        description: Describe reconstruction method (WBP, SART, SIRT)
         from_schema: metadata
         exact_mappings:
         - cdp-common:tomogram_reconstruction_method
