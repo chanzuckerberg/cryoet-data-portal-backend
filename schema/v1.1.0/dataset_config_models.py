@@ -485,7 +485,7 @@ class CrossReferencedEntity(ConfiguredBaseModel):
         None,
         description="""A set of cross-references to other databases and publications.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "cross_references", "domain_of": ["CrossReferencedEntity", "Dataset", "Test"]}
+            "linkml_meta": {"alias": "cross_references", "domain_of": ["CrossReferencedEntity", "Dataset"]}
         },
     )
 
@@ -935,7 +935,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         None,
         description="""A set of cross-references to other databases and publications.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "cross_references", "domain_of": ["CrossReferencedEntity", "Dataset", "Test"]}
+            "linkml_meta": {"alias": "cross_references", "domain_of": ["CrossReferencedEntity", "Dataset"]}
         },
     )
     sample_type: SampleTypeEnum = Field(
@@ -4783,24 +4783,6 @@ class TomogramHeader(ConfiguredBaseModel):
     )
 
 
-class Test(CrossReferencedEntity):
-    """
-    A test entity.
-    """
-
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-dataset-config", "mixins": ["CrossReferencedEntity"]}
-    )
-
-    cross_references: Optional[CrossReferences] = Field(
-        None,
-        description="""A set of cross-references to other databases and publications.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "cross_references", "domain_of": ["CrossReferencedEntity", "Dataset", "Test"]}
-        },
-    )
-
-
 # Model rebuild
 # see https://pydantic-docs.helpmanual.io/usage/models/#rebuilding-a-model
 PicturePath.model_rebuild()
@@ -4874,4 +4856,3 @@ VoxelSpacingEntity.model_rebuild()
 VoxelSpacingSource.model_rebuild()
 VoxelSpacingLiteral.model_rebuild()
 TomogramHeader.model_rebuild()
-Test.model_rebuild()

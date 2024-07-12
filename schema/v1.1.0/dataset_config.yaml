@@ -461,9 +461,4 @@ classes:
         range: string
         ifabsent: string(voxel_size)
 
-  Test:
-    description: A test entity.
-    mixins:
-      - CrossReferencedEntity
-
-source_file: ../../schema/v1.1.0/metadata_materialized
+source_file: ../../schema/v1.1.0/metadata

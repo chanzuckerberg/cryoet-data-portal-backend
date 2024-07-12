@@ -372,7 +372,7 @@ datasets:
       corresponding_author_status: true
       name: Judith B. Zaugg
     cell_strain:
-      id: 284812
+      id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=284812
       name: K972 Sp h-wild type
     cross_references:
       dataset_publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2

@@ -102,7 +102,7 @@ datasets:
       name: "M. J\xFCrgen Plitzko"
       primary_author_status: false
     cell_strain:
-      id: null
+      id: https://cgc.umn.edu/strain/NK2476
       name: NK2476
     cross_references:
       dataset_publications: doi:10.1101/2023.04.28.538734

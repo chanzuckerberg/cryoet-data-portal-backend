@@ -2211,25 +2211,6 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
-  Test:
-    name: Test
-    description: A test entity.
-    from_schema: cdp-dataset-config
-    mixins:
-    - CrossReferencedEntity
-    attributes:
-      cross_references:
-        name: cross_references
-        description: A set of cross-references to other databases and publications.
-        from_schema: metadata
-        alias: cross_references
-        owner: Test
-        domain_of:
-        - CrossReferencedEntity
-        - Dataset
-        range: CrossReferences
-        inlined: true
-        inlined_as_list: true
   Any:
     name: Any
     description: A placeholder for any type of data.

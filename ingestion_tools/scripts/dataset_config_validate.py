@@ -149,7 +149,6 @@ def main(include_glob: str, exclude_keywords: str):
 
         except Exception as exc:
             errors[file] = [exc]
-            raise exc
 
     if validation_succeeded:
         print("[SUCCESS]: All files passed validation.")
