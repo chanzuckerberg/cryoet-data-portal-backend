@@ -14,7 +14,7 @@ URI: [cdp-meta:URLorS3URI](metadataURLorS3URI)
 
 
 
-* [pattern](https://w3id.org/linkml/pattern): `^(https?|s3)://.*$`
+* [pattern](https://w3id.org/linkml/pattern): `^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$`
 
 
 
@@ -33,3 +33,13 @@ URI: [cdp-meta:URLorS3URI](metadataURLorS3URI)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:URLorS3URI |
+| native | cdp-meta:URLorS3URI |

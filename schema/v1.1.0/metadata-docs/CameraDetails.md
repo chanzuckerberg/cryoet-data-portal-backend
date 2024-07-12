@@ -1,3 +1,5 @@
+
+
 # Class: CameraDetails
 
 
@@ -12,9 +14,12 @@ URI: [cdp-meta:CameraDetails](metadataCameraDetails)
 
 
 
+
+
 ```mermaid
  classDiagram
     class CameraDetails
+    click CameraDetails href "../CameraDetails"
       CameraDetails : acquire_mode
 
       CameraDetails : manufacturer
@@ -34,9 +39,9 @@ URI: [cdp-meta:CameraDetails](metadataCameraDetails)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [acquire_mode](acquire_mode.md) | 0..1 <br/> [String](String.md) | Camera acquisition mode | direct |
-| [manufacturer](manufacturer.md) | 1..1 <br/> [String](String.md) | Name of the camera manufacturer | direct |
-| [model](model.md) | 1..1 <br/> [String](String.md) | Camera model name | direct |
+| [acquire_mode](acquire_mode.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md) | Camera acquisition mode | direct |
+| [manufacturer](manufacturer.md) | 1 <br/> [String](String.md) | Name of the camera manufacturer | direct |
+| [model](model.md) | 1 <br/> [String](String.md) | Camera model name | direct |
 
 
 
@@ -69,13 +74,14 @@ URI: [cdp-meta:CameraDetails](metadataCameraDetails)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CameraDetails |
 | native | cdp-meta:CameraDetails |
+
+
 
 
 
@@ -104,9 +110,12 @@ attributes:
     owner: CameraDetails
     domain_of:
     - CameraDetails
-    range: string
     inlined: true
     inlined_as_list: true
+    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^counting$)|(^superresolution$)|(^linear$)|(^cds$)
+    any_of:
+    - range: StringFormattedString
+    - range: tiltseries_camera_acquire_mode_enum
   manufacturer:
     name: manufacturer
     description: Name of the camera manufacturer
@@ -165,6 +174,10 @@ attributes:
     range: string
     inlined: true
     inlined_as_list: true
+    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^counting$)|(^superresolution$)|(^linear$)|(^cds$)
+    any_of:
+    - range: StringFormattedString
+    - range: tiltseries_camera_acquire_mode_enum
   manufacturer:
     name: manufacturer
     description: Name of the camera manufacturer

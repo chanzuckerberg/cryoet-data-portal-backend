@@ -1,3 +1,5 @@
+
+
 # Slot: related_database_entries
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:related_database_entries](metadatarelated_database_entries)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
+| [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
 
 
 
@@ -28,9 +31,11 @@ URI: [cdp-meta:related_database_entries](metadatarelated_database_entries)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [EMPIAREMDBLIST](EMPIAREMDBLIST.md)
 
 * Recommended: True
+
+* Regex pattern: `(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)`
 
 
 
@@ -52,6 +57,16 @@ URI: [cdp-meta:related_database_entries](metadatarelated_database_entries)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:related_database_entries |
+| native | cdp-meta:related_database_entries |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -64,10 +79,11 @@ alias: related_database_entries
 owner: CrossReferences
 domain_of:
 - CrossReferences
-range: string
+range: EMPIAR_EMDB_LIST
 recommended: true
 inlined: true
 inlined_as_list: true
+pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)
 
 ```
 </details>

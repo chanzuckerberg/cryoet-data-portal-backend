@@ -1,3 +1,5 @@
+
+
 # Class: Any
 
 
@@ -12,9 +14,12 @@ URI: [linkml:Any](https://w3id.org/linkml/Any)
 
 
 
+
+
 ```mermaid
  classDiagram
     class Any
+    click Any href "../Any"
 
 ```
 
@@ -37,8 +42,6 @@ URI: [linkml:Any](https://w3id.org/linkml/Any)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [PicturePath](PicturePath.md) | [snapshot](snapshot.md) | range | [Any](Any.md) |
-| [PicturePath](PicturePath.md) | [thumbnail](thumbnail.md) | range | [Any](Any.md) |
 | [Tomogram](Tomogram.md) | [affine_transformation_matrix](affine_transformation_matrix.md) | range | [Any](Any.md) |
 
 
@@ -62,13 +65,14 @@ URI: [linkml:Any](https://w3id.org/linkml/Any)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | linkml:Any |
 | native | cdp-meta:Any |
+
+
 
 
 

@@ -1,3 +1,5 @@
+
+
 # Class: CellComponent
 
 
@@ -12,9 +14,12 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
 
 
 
+
+
 ```mermaid
  classDiagram
     class CellComponent
+    click CellComponent href "../CellComponent"
       CellComponent : id
 
       CellComponent : name
@@ -32,8 +37,8 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 1..1 <br/> [String](String.md) | Name of the cellular component | direct |
-| [id](id.md) | 0..1 _recommended_ <br/> [String](String.md) | The GO identifier for the cellular component | direct |
+| [name](name.md) | 1 <br/> [String](String.md) | Name of the cellular component | direct |
+| [id](id.md) | 0..1 _recommended_ <br/> [GOID](GOID.md) | The GO identifier for the cellular component | direct |
 
 
 
@@ -67,13 +72,14 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CellComponent |
 | native | cdp-meta:CellComponent |
+
+
 
 
 
@@ -125,10 +131,11 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: GO_ID
     recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: ^GO:[0-9]{7}$
 
 ```
 </details>
@@ -175,10 +182,11 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: GO_ID
     recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: ^GO:[0-9]{7}$
 
 ```
 </details>

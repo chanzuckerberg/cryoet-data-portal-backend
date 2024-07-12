@@ -56,6 +56,7 @@ Name: cdp-meta
 | --- | --- |
 | [acceleration_voltage](acceleration_voltage.md) | Electron Microscope Accelerator voltage in volts |
 | [acquire_mode](acquire_mode.md) | Camera acquisition mode |
+| [additional_info](additional_info.md) | Other microscope optical setup information, in addition to energy filter, pha... |
 | [affiliation_address](affiliation_address.md) | The address of the author's affiliation |
 | [affiliation_identifier](affiliation_identifier.md) | A Research Organization Registry (ROR) identifier |
 | [affiliation_name](affiliation_name.md) | The name of the author's affiliation |
@@ -114,14 +115,13 @@ Name: cdp-meta
 | [max](max.md) | Maximal tilt angle in degrees |
 | [method_type](method_type.md) | Classification of the annotation method based on supervision |
 | [microscope](microscope.md) | The microscope used to collect the tilt series |
-| [microscope_additional_info](microscope_additional_info.md) | Other microscope optical setup information, in addition to energy filter, pha... |
 | [microscope_optical_setup](microscope_optical_setup.md) | The optical setup of the microscope used to collect the tilt series |
 | [min](min.md) | Minimal tilt angle in degrees |
 | [model](model.md) | Camera model name |
 | [name](name.md) | The full name of the author |
 | [object_count](object_count.md) | Number of objects identified |
 | [offset](offset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... |
-| [ORCID](ORCID.md) | A unique, persistent identifier for researchers, provided by ORCID |
+| [ORCID](ORCID.md) | The ORCID identifier for the author |
 | [order](order.md) | The order of axes for an oriented point / instance segmentation annotation fi... |
 | [organism](organism.md) | The species from which the sample was derived |
 | [other_setup](other_setup.md) | Describes other setup not covered by sample preparation or grid preparation t... |
@@ -132,7 +132,7 @@ Name: cdp-meta
 | [processing](processing.md) | Describe additional processing used to derive the tomogram |
 | [processing_software](processing_software.md) | Processing software used to derive the tomogram |
 | [recall](recall.md) | Describe the confidence level of the annotation |
-| [reconstruction_method](reconstruction_method.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) |
+| [reconstruction_method](reconstruction_method.md) | Describe reconstruction method (WBP, SART, SIRT) |
 | [reconstruction_software](reconstruction_software.md) | Name of software used for reconstruction |
 | [related_database_entries](related_database_entries.md) | Comma-separated list of related database entries for the dataset |
 | [related_database_links](related_database_links.md) | Comma-separated list of related database links for the dataset |
@@ -141,11 +141,11 @@ Name: cdp-meta
 | [sample_preparation](sample_preparation.md) | Describes how the sample was prepared |
 | [sample_type](sample_type.md) | Type of sample imaged in a CryoET study |
 | [size](size.md) | The size of a tomogram in voxels in each dimension |
-| [snapshot](snapshot.md) | A placeholder for any type of data |
+| [snapshot](snapshot.md) | Path to the dataset preview image relative to the dataset directory root |
 | [spherical_aberration_constant](spherical_aberration_constant.md) | Spherical Aberration Constant of the objective lens in millimeters |
 | [state](state.md) | Molecule state annotated (e |
 | [taxonomy_id](taxonomy_id.md) | NCBI taxonomy identifier for the organism, e |
-| [thumbnail](thumbnail.md) | A placeholder for any type of data |
+| [thumbnail](thumbnail.md) | Path to the thumbnail of preview image relative to the dataset directory root |
 | [tilt_alignment_software](tilt_alignment_software.md) | Software used for tilt alignment |
 | [tilt_axis](tilt_axis.md) | Rotation angle in degrees |
 | [tilt_range](tilt_range.md) | The range of tilt angles in the tilt series |
@@ -168,8 +168,12 @@ Name: cdp-meta
 | --- | --- |
 | [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Describes how the annotations were generated |
 | [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Fiducial Alignment method |
+| [MicroscopeManufacturerEnum](MicroscopeManufacturerEnum.md) | Microscope manufacturer |
 | [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study |
+| [TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md) | Camera acquisition mode |
+| [TomogramProcessingEnum](TomogramProcessingEnum.md) | Tomogram processing method |
 | [TomogramTypeEnum](TomogramTypeEnum.md) | Tomogram type |
+| [TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md) | Tomogram reconstruction method |
 
 
 ## Types
@@ -178,14 +182,22 @@ Name: cdp-meta
 | --- | --- |
 | [Boolean](Boolean.md) | A binary (true or false) value |
 | [BooleanFormattedString](BooleanFormattedString.md) | A formatted string that represents a boolean |
+| [BTOID](BTOID.md) | A BRENDA Tissue Ontology identifier |
+| [CLID](CLID.md) | A Cell Ontology identifier |
 | [Curie](Curie.md) | a compact URI |
 | [Date](Date.md) | a date (year, month and day) in an idealized calendar |
 | [DateOrDatetime](DateOrDatetime.md) | Either a date or a datetime |
 | [Datetime](Datetime.md) | The combination of a date and time |
 | [Decimal](Decimal.md) | A real number with arbitrary precision that conforms to the xsd:decimal speci... |
+| [DOI](DOI.md) | A Digital Object Identifier |
+| [DOILIST](DOILIST.md) | A list of Digital Object Identifiers |
 | [Double](Double.md) | A real number that conforms to the xsd:double specification |
+| [EMDBID](EMDBID.md) | An Electron Microscopy Data Bank identifier |
+| [EMPIAREMDBLIST](EMPIAREMDBLIST.md) | A list of EMPIAR and EMDB identifiers |
+| [EMPIARID](EMPIARID.md) | An Electron Microscopy Public Image Archive identifier |
 | [Float](Float.md) | A real number that conforms to the xsd:float specification |
 | [FloatFormattedString](FloatFormattedString.md) | A formatted string that represents a floating point number |
+| [GOID](GOID.md) | A Gene Ontology identifier |
 | [Integer](Integer.md) | An integer |
 | [IntegerFormattedString](IntegerFormattedString.md) | A formatted string that represents an integer |
 | [Jsonpath](Jsonpath.md) | A string encoding a JSON Path |
@@ -193,8 +205,11 @@ Name: cdp-meta
 | [Ncname](Ncname.md) | Prefix part of CURIE |
 | [Nodeidentifier](Nodeidentifier.md) | A URI, CURIE or BNODE that represents a node in a model |
 | [Objectidentifier](Objectidentifier.md) | A URI or CURIE that represents an object in the model |
+| [ONTOLOGYID](ONTOLOGYID.md) | An ontology identifier |
+| [ORCID](ORCID.md) | A unique, persistent identifier for researchers, provided by ORCID |
 | [Sparqlpath](Sparqlpath.md) | A string encoding a SPARQL Property Path |
 | [String](String.md) | A character string |
+| [StringFormattedString](StringFormattedString.md) | A formatted string (variable) that represents a string |
 | [Time](Time.md) | A time object represents a (local) time of day, independent of any particular... |
 | [Uri](Uri.md) | a complete URI |
 | [Uriorcurie](Uriorcurie.md) | a URI or a CURIE |

@@ -1,3 +1,5 @@
+
+
 # Class: AnnotationSegmentationMaskFile
 
 
@@ -12,10 +14,14 @@ URI: [cdp-meta:AnnotationSegmentationMaskFile](metadataAnnotationSegmentationMas
 
 
 
+
+
 ```mermaid
  classDiagram
     class AnnotationSegmentationMaskFile
+    click AnnotationSegmentationMaskFile href "../AnnotationSegmentationMaskFile"
       AnnotationSourceFile <|-- AnnotationSegmentationMaskFile
+        click AnnotationSourceFile href "../AnnotationSourceFile"
 
       AnnotationSegmentationMaskFile : file_format
 
@@ -40,8 +46,8 @@ URI: [cdp-meta:AnnotationSegmentationMaskFile](metadataAnnotationSegmentationMas
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [file_format](file_format.md) | 1..1 <br/> [String](String.md) | File format for this file | direct |
-| [glob_string](glob_string.md) | 1..1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
+| [file_format](file_format.md) | 1 <br/> [String](String.md) | File format for this file | direct |
+| [glob_string](glob_string.md) | 1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
 | [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation will be rendered in neuroglancer by default | direct |
 
 
@@ -73,13 +79,14 @@ URI: [cdp-meta:AnnotationSegmentationMaskFile](metadataAnnotationSegmentationMas
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationSegmentationMaskFile |
 | native | cdp-meta:AnnotationSegmentationMaskFile |
+
+
 
 
 

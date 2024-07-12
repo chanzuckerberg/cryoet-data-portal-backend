@@ -103,6 +103,12 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
 
 @click.command()
 @click.option(
+    "--dataset-configs-dir",
+    type=str,
+    default=DATASET_CONFIGS_DIR,
+    help="Directory containing dataset config files",
+)
+@click.option(
     "--include-glob",
     type=str,
     default=None,
@@ -114,18 +120,31 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
     default=EXCLUDE_KEYWORDS,
     help="Exclude files that are in the given comma-separated list",
 )
-def main(include_glob: str, exclude_keywords: str):
-    files_to_validate = get_yaml_config_files(include_glob, exclude_keywords)
+@click.option(
+    "--output-dir",
+    type=str,
+    default=ERRORS_OUTPUT_DIR,
+    help="Output directory for validation errors",
+)
+@click.option("--verbose", is_flag=True, help="Print verbose output")
+def main(dataset_configs_dir: str, include_glob: str, exclude_keywords: str, output_dir: str, verbose: bool):
+    """
+    See ../docs/dataset_config_validation.md for more information.
+    """
+    if verbose:
+        logger.setLevel(logging.DEBUG)
+
+    files_to_validate = get_yaml_config_files(include_glob, exclude_keywords, dataset_configs_dir, verbose)
 
     if not files_to_validate:
         logger.warning("No files to validate.")
         return
 
     # Remove existing dir
-    if os.path.exists(ERRORS_OUTPUT_DIR):
-        logger.warning("Removing existing %s directory.", ERRORS_OUTPUT_DIR)
-        shutil.rmtree(ERRORS_OUTPUT_DIR)
-    os.makedirs(ERRORS_OUTPUT_DIR, exist_ok=True)
+    if os.path.exists(output_dir):
+        logging.warning("Removing existing %s directory.", output_dir)
+        shutil.rmtree(output_dir)
+    os.makedirs(output_dir, exist_ok=True)
 
     # Run validation and save output
     validation_succeeded = True
@@ -153,7 +172,7 @@ def main(include_glob: str, exclude_keywords: str):
         return
 
     # Write all errors to a file
-    with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors.json"), "w") as f:
+    with open(os.path.join(output_dir, "dataset_config_validate_errors.json"), "w") as f:
         json.dump(dict(sorted(errors.items())), f, indent=2, default=str)
 
     # Print errors to stdout

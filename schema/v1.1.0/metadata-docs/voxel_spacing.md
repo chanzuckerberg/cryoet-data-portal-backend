@@ -1,3 +1,5 @@
+
+
 # Slot: voxel_spacing
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -28,9 +31,13 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 ## Properties
 
-* Range: [Float](Float.md)
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Required: True
+
+* Minimum Value: 0
+
+* Regex pattern: `^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
 
 
 
@@ -52,6 +59,17 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:voxel_spacing |
+| native | cdp-meta:voxel_spacing |
+| exact | cdp-common:tomogram_voxel_spacing |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -66,13 +84,19 @@ alias: voxel_spacing
 owner: Tomogram
 domain_of:
 - Tomogram
-range: float
+range: string
 required: true
 inlined: true
 inlined_as_list: true
+minimum_value: 0.001
+pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
 unit:
   symbol: Å/voxel
   descriptive_name: Angstroms per voxel
+any_of:
+- range: float
+  minimum_value: 0.001
+- range: FloatFormattedString
 
 ```
 </details>

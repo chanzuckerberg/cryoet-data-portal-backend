@@ -1,3 +1,5 @@
+
+
 # Class: AnnotationSemanticSegmentationMaskFile
 
 
@@ -12,10 +14,14 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
 
 
 
+
+
 ```mermaid
  classDiagram
     class AnnotationSemanticSegmentationMaskFile
+    click AnnotationSemanticSegmentationMaskFile href "../AnnotationSemanticSegmentationMaskFile"
       AnnotationSourceFile <|-- AnnotationSemanticSegmentationMaskFile
+        click AnnotationSourceFile href "../AnnotationSourceFile"
 
       AnnotationSemanticSegmentationMaskFile : file_format
 
@@ -43,8 +49,8 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [mask_label](mask_label.md) | 0..1 <br/> [Integer](Integer.md) | The mask label for a semantic segmentation mask annotation file | direct |
-| [file_format](file_format.md) | 1..1 <br/> [String](String.md) | File format for this file | direct |
-| [glob_string](glob_string.md) | 1..1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
+| [file_format](file_format.md) | 1 <br/> [String](String.md) | File format for this file | direct |
+| [glob_string](glob_string.md) | 1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
 | [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation will be rendered in neuroglancer by default | direct |
 
 
@@ -76,13 +82,14 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationSemanticSegmentationMaskFile |
 | native | cdp-meta:AnnotationSemanticSegmentationMaskFile |
+
+
 
 
 

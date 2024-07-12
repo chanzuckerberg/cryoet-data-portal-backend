@@ -1,3 +1,5 @@
+
+
 # Slot: funding_agency_name
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:funding_agency_name](metadatafunding_agency_name)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[FundingDetails](FundingDetails.md) | A funding source for a scientific data entity (base for JSON and DB represent... |  no  |
+| [FundingDetails](FundingDetails.md) | A funding source for a scientific data entity (base for JSON and DB represent... |  no  |
 
 
 
@@ -48,6 +51,17 @@ URI: [cdp-meta:funding_agency_name](metadatafunding_agency_name)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:funding_agency_name |
+| native | cdp-meta:funding_agency_name |
+| exact | cdp-common:funding_agency_name |
 
 
 

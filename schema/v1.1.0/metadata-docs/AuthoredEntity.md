@@ -1,3 +1,5 @@
+
+
 # Class: AuthoredEntity
 
 
@@ -14,16 +16,27 @@ URI: [cdp-meta:AuthoredEntity](metadataAuthoredEntity)
 
 
 
+
+
 ```mermaid
  classDiagram
     class AuthoredEntity
+    click AuthoredEntity href "../AuthoredEntity"
       AuthoredEntity <|-- Dataset
+        click Dataset href "../Dataset"
       AuthoredEntity <|-- Tomogram
+        click Tomogram href "../Tomogram"
       AuthoredEntity <|-- Annotation
+        click Annotation href "../Annotation"
 
       AuthoredEntity : authors
 
-          AuthoredEntity --> Author : authors
+
+
+
+    AuthoredEntity --> "1..*" Author : authors
+    click Author href "../Author"
+
 
 
 ```
@@ -64,13 +77,14 @@ URI: [cdp-meta:AuthoredEntity](metadataAuthoredEntity)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AuthoredEntity |
 | native | cdp-meta:AuthoredEntity |
+
+
 
 
 
@@ -94,7 +108,6 @@ attributes:
     description: Author of a scientific data entity.
     from_schema: metadata
     rank: 1000
-    multivalued: true
     list_elements_ordered: true
     alias: authors
     owner: AuthoredEntity
@@ -105,6 +118,7 @@ attributes:
     - Annotation
     range: Author
     required: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
 
@@ -125,7 +139,6 @@ attributes:
     description: Author of a scientific data entity.
     from_schema: metadata
     rank: 1000
-    multivalued: true
     list_elements_ordered: true
     alias: authors
     owner: AuthoredEntity
@@ -136,6 +149,7 @@ attributes:
     - Annotation
     range: Author
     required: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
 

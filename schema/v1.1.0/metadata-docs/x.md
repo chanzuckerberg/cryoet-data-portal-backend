@@ -1,3 +1,5 @@
+
+
 # Slot: x
 
 URI: [cdp-meta:x](metadatax)
@@ -9,12 +11,13 @@ URI: [cdp-meta:x](metadatax)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension |  no  |
-[TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... |  no  |
+| [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... |  no  |
+| [TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension |  no  |
 
 
 
@@ -35,6 +38,16 @@ URI: [cdp-meta:x](metadatax)
 
 
 
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:x |
+| native | cdp-meta:x |
 
 
 
