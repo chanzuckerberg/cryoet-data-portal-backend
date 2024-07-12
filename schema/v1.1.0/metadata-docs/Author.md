@@ -56,7 +56,7 @@ URI: [cdp-meta:Author](metadataAuthor)
 | [affiliation_identifier](affiliation_identifier.md) | 0..1 _recommended_ <br/> [String](String.md) | A Research Organization Registry (ROR) identifier | direct |
 | [corresponding_author_status](corresponding_author_status.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether the author is a corresponding author | direct |
 | [primary_author_status](primary_author_status.md) | 0..1 <br/> [Boolean](Boolean.md) | Whether the author is a primary author | direct |
-| [ORCID](ORCID.md) | 0..1 _recommended_ <br/> [String](String.md) | A unique, persistent identifier for researchers, provided by ORCID | direct |
+| [ORCID](ORCID.md) | 0..1 _recommended_ <br/> [ORCID](ORCID.md) | The ORCID identifier for the author | direct |
 
 
 
@@ -128,8 +128,8 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -195,7 +195,6 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
-    pattern: ^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$
   corresponding_author_status:
     name: corresponding_author_status
     description: Whether the author is a corresponding author.
@@ -228,16 +227,16 @@ attributes:
     inlined_as_list: true
   ORCID:
     name: ORCID
-    description: A unique, persistent identifier for researchers, provided by ORCID.
+    description: The ORCID identifier for the author.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:orcid
+    - cdp-common:author_orcid
     rank: 1000
     alias: ORCID
     owner: Author
     domain_of:
     - Author
-    range: string
+    range: ORCID
     recommended: true
     inlined: true
     inlined_as_list: true
@@ -265,8 +264,8 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -332,7 +331,6 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
-    pattern: ^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$
   corresponding_author_status:
     name: corresponding_author_status
     description: Whether the author is a corresponding author.
@@ -365,16 +363,16 @@ attributes:
     inlined_as_list: true
   ORCID:
     name: ORCID
-    description: A unique, persistent identifier for researchers, provided by ORCID.
+    description: The ORCID identifier for the author.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:orcid
+    - cdp-common:author_orcid
     rank: 1000
     alias: ORCID
     owner: Author
     domain_of:
     - Author
-    range: string
+    range: ORCID
     recommended: true
     inlined: true
     inlined_as_list: true

@@ -31,7 +31,9 @@ URI: [cdp-meta:related_empiar_entry](metadatarelated_empiar_entry)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [EMPIARID](EMPIARID.md)
+
+* Regex pattern: `^EMPIAR-[0-9]{5}$`
 
 
 
@@ -78,9 +80,10 @@ alias: related_empiar_entry
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: string
+range: EMPIAR_ID
 inlined: true
 inlined_as_list: true
+pattern: ^EMPIAR-[0-9]{5}$
 
 ```
 </details>

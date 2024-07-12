@@ -41,7 +41,7 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [id](id.md) | 1 <br/> [String](String.md) | Gene Ontology Cellular Component identifier for the annotation object | direct |
+| [id](id.md) | 1 <br/> [GOID](GOID.md) | Gene Ontology Cellular Component identifier for the annotation object | direct |
 | [name](name.md) | 1 <br/> [String](String.md) | Name of the object being annotated (e | direct |
 | [description](description.md) | 0..1 <br/> [String](String.md) | A textual description of the annotation object, can be a longer description t... | direct |
 | [state](state.md) | 0..1 <br/> [String](String.md) | Molecule state annotated (e | direct |
@@ -111,15 +111,16 @@ attributes:
     alias: id
     owner: AnnotationObject
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: GO_ID
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: ^GO:[0-9]{7}$
   name:
     name: name
     description: Name of the object being annotated (e.g. ribosome, nuclear pore complex,
@@ -131,8 +132,8 @@ attributes:
     owner: AnnotationObject
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -192,15 +193,16 @@ attributes:
     alias: id
     owner: AnnotationObject
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: GO_ID
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: ^GO:[0-9]{7}$
   name:
     name: name
     description: Name of the object being annotated (e.g. ribosome, nuclear pore complex,
@@ -212,8 +214,8 @@ attributes:
     owner: AnnotationObject
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent

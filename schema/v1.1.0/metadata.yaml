@@ -62,7 +62,7 @@ classes:
           - cdp-common:author_primary_author_status
       ORCID:
         exact_mappings:
-          - cdp-common:orcid
+          - cdp-common:author_orcid
   # ============================================================================
 
 
@@ -70,7 +70,8 @@ classes:
   # ============================================================================
   # Funding source information
   # ============================================================================
-  Funding:
+  # Updating name from Funding to FundingDetails to avoid conflict in case insensitive file names
+  FundingDetails:
     description: A funding source for a scientific data entity (base for JSON and DB representation).
     attributes:
       funding_agency_name:
@@ -125,7 +126,7 @@ classes:
     description: An entity with associated funding sources.
     attributes:
       funding:
-        range: Funding
+        range: FundingDetails
         recommended: true
         description: An ordered list of funding sources for the entity.
         multivalued: true
@@ -152,7 +153,8 @@ classes:
   # ============================================================================
   # Experimental metadata
   # ============================================================================
-  Organism:
+  # Updating name from Organism to OrganismDetails to avoid conflict in case insensitive file names
+  OrganismDetails:
     description: &desc_Organism The species from which the sample was derived.
     attributes:
       name:
@@ -162,7 +164,8 @@ classes:
         exact_mappings:
           - cdp-common:organism_taxid
 
-  Tissue:
+  # Updating name from Tissue to TissueDetails to avoid conflict in case insensitive file names
+  TissueDetails:
     description: &desc_Tissue The type of tissue from which the sample was derived.
     attributes:
       name:
@@ -220,10 +223,10 @@ classes:
           - cdp-common:preparation_other_setup
       organism:
         description: *desc_Organism
-        range: Organism
+        range: OrganismDetails
       tissue:
         description: *desc_Tissue
-        range: Tissue
+        range: TissueDetails
       cell_type:
         description: *desc_CellType
         range: CellType
@@ -263,7 +266,8 @@ classes:
   # ============================================================================
   # TiltSeries metadata
   # ============================================================================
-  Camera:
+  # Updating name from Camera to CameraDetails to avoid conflict in case insensitive file names
+  CameraDetails:
     description: &desc_camera The camera used to collect the tilt series.
     attributes:
       acquire_mode:
@@ -276,9 +280,13 @@ classes:
         exact_mappings:
           - cdp-common:tiltseries_camera_model
 
-  Microscope:
+  # Updating name from Microscope to MicroscopeDetails to avoid conflict in case insensitive file names
+  MicroscopeDetails:
     description: &desc_microscope The microscope used to collect the tilt series.
     attributes:
+      additional_info:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_additional_info
       manufacturer:
         exact_mappings:
           - cdp-common:tiltseries_microscope_manufacturer
@@ -328,7 +336,7 @@ classes:
           - cdp-common:tiltseries_binning_from_frames
       camera:
         description: *desc_camera
-        range: Camera
+        range: CameraDetails
         required: true
       data_acquisition_software:
         exact_mappings:
@@ -341,11 +349,8 @@ classes:
           - cdp-common:tiltseries_is_aligned
       microscope:
         description: *desc_microscope
-        range: Microscope
+        range: MicroscopeDetails
         required: true
-      microscope_additional_info:
-        exact_mappings:
-          - cdp-common:tiltseries_microscope_additional_info
       microscope_optical_setup:
         description: *desc_microscope_optical_setup
         range: MicroscopeOpticalSetup
@@ -383,22 +388,16 @@ classes:
           - cdp-common:tiltseries_pixel_spacing
   # ============================================================================
 
-  # ============================================================================
-  # Tomogram metadata
-  #
-  # NOTE: Because TomogramSize and TomogramOffset have the same slot names, we
-  # must define them here because they will not be properly mapped from cdp-common.
-  # If desired, we can modify schema.py to permit the use of the same slot name.
-  # For now, this is the simplest solution.
-  # ============================================================================
   TomogramSize:
     description: &desc_tomogram_size The size of a tomogram in voxels in each dimension.
     attributes:
       x:
         range: integer
+        minimum_value: 0
         # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
         # any_of:
         #   - range: integer
+        #     minimum_value: 0
         #   - range: IntegerFormattedString
         required: true
         description: Number of pixels in the 3D data fast axis
@@ -407,9 +406,11 @@ classes:
           symbol: px
       y:
         range: integer
+        minimum_value: 0
         # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
         # any_of:
         #   - range: integer
+        #     minimum_value: 0
         #   - range: IntegerFormattedString
         required: true
         description: Number of pixels in the 3D data medium axis
@@ -418,9 +419,11 @@ classes:
           symbol: px
       z:
         range: integer
+        minimum_value: 0
         # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
         # any_of:
         #   - range: integer
+        #     minimum_value: 0
         #   - range: IntegerFormattedString
         required: true
         description: Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt

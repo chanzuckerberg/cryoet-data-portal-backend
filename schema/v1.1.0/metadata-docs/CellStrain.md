@@ -38,7 +38,7 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [name](name.md) | 1 <br/> [String](String.md) | Cell line or strain for the sample | direct |
-| [id](id.md) | 0..1 _recommended_ <br/> [String](String.md) | Link to more information about the cell strain | direct |
+| [id](id.md) | 0..1 _recommended_ <br/> [ONTOLOGYID](ONTOLOGYID.md) | Link to more information about the cell strain | direct |
 
 
 
@@ -107,8 +107,8 @@ attributes:
     owner: CellStrain
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -126,15 +126,16 @@ attributes:
     alias: id
     owner: CellStrain
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: ONTOLOGY_ID
     recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: ^[A-Z]+:[0-9]+$
 
 ```
 </details>
@@ -157,8 +158,8 @@ attributes:
     owner: CellStrain
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -176,15 +177,16 @@ attributes:
     alias: id
     owner: CellStrain
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: ONTOLOGY_ID
     recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: ^[A-Z]+:[0-9]+$
 
 ```
 </details>

@@ -96,8 +96,8 @@ URI: [cdp-meta:Dataset](metadataDataset)
 
 
 
-    Dataset --> "* _recommended_" Funding : funding
-    click Funding href "../Funding"
+    Dataset --> "* _recommended_" FundingDetails : funding
+    click FundingDetails href "../FundingDetails"
 
 
       Dataset : grid_preparation
@@ -107,8 +107,8 @@ URI: [cdp-meta:Dataset](metadataDataset)
 
 
 
-    Dataset --> "0..1" Organism : organism
-    click Organism href "../Organism"
+    Dataset --> "0..1" OrganismDetails : organism
+    click OrganismDetails href "../OrganismDetails"
 
 
       Dataset : other_setup
@@ -129,8 +129,8 @@ URI: [cdp-meta:Dataset](metadataDataset)
 
 
 
-    Dataset --> "0..1" Tissue : tissue
-    click Tissue href "../Tissue"
+    Dataset --> "0..1" TissueDetails : tissue
+    click TissueDetails href "../TissueDetails"
 
 
 
@@ -154,14 +154,14 @@ URI: [cdp-meta:Dataset](metadataDataset)
 | [dataset_description](dataset_description.md) | 1 <br/> [String](String.md) | A short description of a CryoET dataset, similar to an abstract for a journal... | direct |
 | [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
-| [funding](funding.md) | * _recommended_ <br/> [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
+| [funding](funding.md) | * _recommended_ <br/> [FundingDetails](FundingDetails.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
 | [cross_references](cross_references.md) | 0..1 <br/> [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications | direct |
 | [sample_type](sample_type.md) | 1 <br/> [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study | direct |
 | [sample_preparation](sample_preparation.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes how the sample was prepared | direct |
 | [grid_preparation](grid_preparation.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes Cryo-ET grid preparation | direct |
 | [other_setup](other_setup.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes other setup not covered by sample preparation or grid preparation t... | direct |
-| [organism](organism.md) | 0..1 <br/> [Organism](Organism.md) | The species from which the sample was derived | direct |
-| [tissue](tissue.md) | 0..1 <br/> [Tissue](Tissue.md) | The type of tissue from which the sample was derived | direct |
+| [organism](organism.md) | 0..1 <br/> [OrganismDetails](OrganismDetails.md) | The species from which the sample was derived | direct |
+| [tissue](tissue.md) | 0..1 <br/> [TissueDetails](TissueDetails.md) | The type of tissue from which the sample was derived | direct |
 | [cell_type](cell_type.md) | 0..1 <br/> [CellType](CellType.md) | The cell type from which the sample was derived | direct |
 | [cell_strain](cell_strain.md) | 0..1 <br/> [CellStrain](CellStrain.md) | The strain or cell line from which the sample was derived | direct |
 | [cell_component](cell_component.md) | 0..1 <br/> [CellComponent](CellComponent.md) | The cellular component from which the sample was derived | direct |
@@ -311,7 +311,7 @@ attributes:
     domain_of:
     - FundedEntity
     - Dataset
-    range: Funding
+    range: FundingDetails
     recommended: true
     multivalued: true
     inlined: true
@@ -343,6 +343,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)
   sample_preparation:
     name: sample_preparation
     description: Describes how the sample was prepared.
@@ -398,7 +399,7 @@ attributes:
     domain_of:
     - ExperimentalMetadata
     - Dataset
-    range: Organism
+    range: OrganismDetails
     inlined: true
     inlined_as_list: true
   tissue:
@@ -410,7 +411,7 @@ attributes:
     domain_of:
     - ExperimentalMetadata
     - Dataset
-    range: Tissue
+    range: TissueDetails
     inlined: true
     inlined_as_list: true
   cell_type:
@@ -557,7 +558,7 @@ attributes:
     domain_of:
     - FundedEntity
     - Dataset
-    range: Funding
+    range: FundingDetails
     recommended: true
     multivalued: true
     inlined: true
@@ -589,6 +590,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)
   sample_preparation:
     name: sample_preparation
     description: Describes how the sample was prepared.
@@ -644,7 +646,7 @@ attributes:
     domain_of:
     - ExperimentalMetadata
     - Dataset
-    range: Organism
+    range: OrganismDetails
     inlined: true
     inlined_as_list: true
   tissue:
@@ -656,7 +658,7 @@ attributes:
     domain_of:
     - ExperimentalMetadata
     - Dataset
-    range: Tissue
+    range: TissueDetails
     inlined: true
     inlined_as_list: true
   cell_type:

@@ -21,7 +21,7 @@ URI: [cdp-meta:acquire_mode](metadataacquire_mode)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Camera](Camera.md) | The camera used to collect the tilt series |  no  |
+| [CameraDetails](CameraDetails.md) | The camera used to collect the tilt series |  no  |
 
 
 
@@ -31,7 +31,9 @@ URI: [cdp-meta:acquire_mode](metadataacquire_mode)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md)
+
+* Regex pattern: `(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^counting$)|(^superresolution$)|(^linear$)|(^cds$)`
 
 
 
@@ -75,12 +77,16 @@ exact_mappings:
 - cdp-common:tiltseries_camera_acquire_mode
 rank: 1000
 alias: acquire_mode
-owner: Camera
+owner: CameraDetails
 domain_of:
-- Camera
+- CameraDetails
 range: string
 inlined: true
 inlined_as_list: true
+pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^counting$)|(^superresolution$)|(^linear$)|(^cds$)
+any_of:
+- range: StringFormattedString
+- range: tiltseries_camera_acquire_mode_enum
 
 ```
 </details>

@@ -309,6 +309,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^manual$)|(^automated$)|(^hybrid$)
   object_count:
     name: object_count
     description: Number of objects identified
@@ -518,6 +519,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^manual$)|(^automated$)|(^hybrid$)
   object_count:
     name: object_count
     description: Number of objects identified

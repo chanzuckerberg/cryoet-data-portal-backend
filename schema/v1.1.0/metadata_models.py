@@ -43,8 +43,447 @@ class LinkMLMeta(RootModel):
     def __setitem__(self, key: str, value):
         self.root[key] = value
 
+    def __contains__(self, key: str) -> bool:
+        return key in self.root
 
-linkml_meta = LinkMLMeta({"default_prefix": "metadata/", "id": "metadata", "name": "cdp-meta"})
+
+linkml_meta = LinkMLMeta(
+    {
+        "default_prefix": "cdp-meta",
+        "default_range": "string",
+        "id": "metadata",
+        "imports": ["linkml:types"],
+        "name": "cdp-meta",
+        "prefixes": {
+            "CL": {"prefix_prefix": "CL", "prefix_reference": "http://purl.obolibrary.org/obo/CL_"},
+            "GO": {"prefix_prefix": "GO", "prefix_reference": "http://purl.obolibrary.org/obo/GO_"},
+            "ORCID": {"prefix_prefix": "ORCID", "prefix_reference": "https://orcid.org/"},
+            "ROR": {"prefix_prefix": "ROR", "prefix_reference": "https://ror.org/"},
+            "UBERON": {"prefix_prefix": "UBERON", "prefix_reference": "http://purl.obolibrary.org/obo/UBERON_"},
+            "cdp-meta": {"prefix_prefix": "cdp-meta", "prefix_reference": "metadata"},
+            "linkml": {"prefix_prefix": "linkml", "prefix_reference": "https://w3id.org/linkml/"},
+        },
+        "source_file": "metadata_materialized.yaml",
+        "types": {
+            "BTO_ID": {
+                "base": "str",
+                "description": "A BRENDA Tissue Ontology identifier",
+                "from_schema": "metadata",
+                "name": "BTO_ID",
+                "pattern": "^BTO:[0-9]{7}$",
+            },
+            "BooleanFormattedString": {
+                "base": "str",
+                "description": "A formatted string that " "represents a boolean.",
+                "from_schema": "metadata",
+                "name": "BooleanFormattedString",
+                "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ " "]*$",
+            },
+            "CL_ID": {
+                "base": "str",
+                "description": "A Cell Ontology identifier",
+                "from_schema": "metadata",
+                "name": "CL_ID",
+                "pattern": "^CL:[0-9]{7}$",
+            },
+            "DOI": {
+                "base": "str",
+                "description": "A Digital Object Identifier",
+                "from_schema": "metadata",
+                "name": "DOI",
+                "pattern": "^(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$",
+            },
+            "DOI_LIST": {
+                "base": "str",
+                "description": "A list of Digital Object Identifiers",
+                "from_schema": "metadata",
+                "name": "DOI_LIST",
+                "pattern": "^(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\\s*,\\s*(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$",
+            },
+            "EMDB_ID": {
+                "base": "str",
+                "description": "An Electron Microscopy Data Bank " "identifier",
+                "from_schema": "metadata",
+                "name": "EMDB_ID",
+                "pattern": "^EMD-[0-9]{4,5}$",
+            },
+            "EMPIAR_EMDB_LIST": {
+                "base": "str",
+                "description": "A list of EMPIAR and EMDB " "identifiers",
+                "from_schema": "metadata",
+                "name": "EMPIAR_EMDB_LIST",
+                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$",
+            },
+            "EMPIAR_ID": {
+                "base": "str",
+                "description": "An Electron Microscopy Public Image " "Archive identifier",
+                "from_schema": "metadata",
+                "name": "EMPIAR_ID",
+                "pattern": "^EMPIAR-[0-9]{5}$",
+            },
+            "FloatFormattedString": {
+                "base": "str",
+                "description": "A formatted string that " "represents a floating " "point number.",
+                "from_schema": "metadata",
+                "name": "FloatFormattedString",
+                "pattern": "^float[ " "]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+            },
+            "GO_ID": {
+                "base": "str",
+                "description": "A Gene Ontology identifier",
+                "from_schema": "metadata",
+                "name": "GO_ID",
+                "pattern": "^GO:[0-9]{7}$",
+            },
+            "IntegerFormattedString": {
+                "base": "str",
+                "description": "A formatted string that " "represents an integer.",
+                "from_schema": "metadata",
+                "name": "IntegerFormattedString",
+                "pattern": "^int[ " "]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+            },
+            "ONTOLOGY_ID": {
+                "base": "str",
+                "description": "An ontology identifier",
+                "from_schema": "metadata",
+                "name": "ONTOLOGY_ID",
+                "pattern": "^[A-Z]+:[0-9]+$",
+            },
+            "ORCID": {
+                "base": "str",
+                "description": "A unique, persistent identifier for " "researchers, provided by ORCID.",
+                "from_schema": "metadata",
+                "name": "ORCID",
+                "pattern": "[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
+            },
+            "StringFormattedString": {
+                "base": "str",
+                "description": "A formatted string " "(variable) that " "represents a string.",
+                "from_schema": "metadata",
+                "name": "StringFormattedString",
+                "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ " "]*$",
+            },
+            "URLorS3URI": {
+                "base": "str",
+                "description": "A URL or S3 URI",
+                "from_schema": "metadata",
+                "name": "URLorS3URI",
+                "pattern": "^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$",
+            },
+            "VersionString": {
+                "base": "float",
+                "description": "A version number (only major, " "minor versions)",
+                "from_schema": "metadata",
+                "minimum_value": 0,
+                "name": "VersionString",
+            },
+            "boolean": {
+                "base": "Bool",
+                "description": "A binary (true or false) value",
+                "exact_mappings": ["schema:Boolean"],
+                "from_schema": "metadata",
+                "name": "boolean",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"boolean".'
+                ],
+                "repr": "bool",
+                "uri": "xsd:boolean",
+            },
+            "curie": {
+                "base": "Curie",
+                "comments": [
+                    "in RDF serializations this MUST be expanded " "to a URI",
+                    "in non-RDF serializations MAY be serialized " "as the compact representation",
+                ],
+                "conforms_to": "https://www.w3.org/TR/curie/",
+                "description": "a compact URI",
+                "from_schema": "metadata",
+                "name": "curie",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"curie".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "date": {
+                "base": "XSDDate",
+                "description": "a date (year, month and day) in an " "idealized calendar",
+                "exact_mappings": ["schema:Date"],
+                "from_schema": "metadata",
+                "name": "date",
+                "notes": [
+                    "URI is dateTime because OWL reasoners don't " "work with straight date or time",
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"date".',
+                ],
+                "repr": "str",
+                "uri": "xsd:date",
+            },
+            "date_or_datetime": {
+                "base": "str",
+                "description": "Either a date or a datetime",
+                "from_schema": "metadata",
+                "name": "date_or_datetime",
+                "notes": [
+                    "If you are authoring schemas in "
+                    "LinkML YAML, the type is referenced "
+                    "with the lower case "
+                    '"date_or_datetime".'
+                ],
+                "repr": "str",
+                "uri": "linkml:DateOrDatetime",
+            },
+            "datetime": {
+                "base": "XSDDateTime",
+                "description": "The combination of a date and time",
+                "exact_mappings": ["schema:DateTime"],
+                "from_schema": "metadata",
+                "name": "datetime",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the lower "
+                    'case "datetime".'
+                ],
+                "repr": "str",
+                "uri": "xsd:dateTime",
+            },
+            "decimal": {
+                "base": "Decimal",
+                "broad_mappings": ["schema:Number"],
+                "description": "A real number with arbitrary precision "
+                "that conforms to the xsd:decimal "
+                "specification",
+                "from_schema": "metadata",
+                "name": "decimal",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"decimal".'
+                ],
+                "uri": "xsd:decimal",
+            },
+            "double": {
+                "base": "float",
+                "close_mappings": ["schema:Float"],
+                "description": "A real number that conforms to the " "xsd:double specification",
+                "from_schema": "metadata",
+                "name": "double",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"double".'
+                ],
+                "uri": "xsd:double",
+            },
+            "float": {
+                "base": "float",
+                "description": "A real number that conforms to the " "xsd:float specification",
+                "exact_mappings": ["schema:Float"],
+                "from_schema": "metadata",
+                "name": "float",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"float".'
+                ],
+                "uri": "xsd:float",
+            },
+            "integer": {
+                "base": "int",
+                "description": "An integer",
+                "exact_mappings": ["schema:Integer"],
+                "from_schema": "metadata",
+                "name": "integer",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"integer".'
+                ],
+                "uri": "xsd:integer",
+            },
+            "jsonpath": {
+                "base": "str",
+                "conforms_to": "https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html",
+                "description": "A string encoding a JSON Path. The "
+                "value of the string MUST conform to "
+                "JSON Point syntax and SHOULD "
+                "dereference to zero or more valid "
+                "objects within the current instance "
+                "document when encoded in tree form.",
+                "from_schema": "metadata",
+                "name": "jsonpath",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the lower "
+                    'case "jsonpath".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "jsonpointer": {
+                "base": "str",
+                "conforms_to": "https://datatracker.ietf.org/doc/html/rfc6901",
+                "description": "A string encoding a JSON Pointer. "
+                "The value of the string MUST "
+                "conform to JSON Point syntax and "
+                "SHOULD dereference to a valid "
+                "object within the current instance "
+                "document when encoded in tree form.",
+                "from_schema": "metadata",
+                "name": "jsonpointer",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the "
+                    'lower case "jsonpointer".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "ncname": {
+                "base": "NCName",
+                "description": "Prefix part of CURIE",
+                "from_schema": "metadata",
+                "name": "ncname",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"ncname".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "nodeidentifier": {
+                "base": "NodeIdentifier",
+                "description": "A URI, CURIE or BNODE that " "represents a node in a model.",
+                "from_schema": "metadata",
+                "name": "nodeidentifier",
+                "notes": [
+                    "If you are authoring schemas in "
+                    "LinkML YAML, the type is referenced "
+                    "with the lower case "
+                    '"nodeidentifier".'
+                ],
+                "repr": "str",
+                "uri": "shex:nonLiteral",
+            },
+            "objectidentifier": {
+                "base": "ElementIdentifier",
+                "comments": ["Used for inheritance and type " "checking"],
+                "description": "A URI or CURIE that represents " "an object in the model.",
+                "from_schema": "metadata",
+                "name": "objectidentifier",
+                "notes": [
+                    "If you are authoring schemas in "
+                    "LinkML YAML, the type is referenced "
+                    "with the lower case "
+                    '"objectidentifier".'
+                ],
+                "repr": "str",
+                "uri": "shex:iri",
+            },
+            "sparqlpath": {
+                "base": "str",
+                "conforms_to": "https://www.w3.org/TR/sparql11-query/#propertypaths",
+                "description": "A string encoding a SPARQL Property "
+                "Path. The value of the string MUST "
+                "conform to SPARQL syntax and SHOULD "
+                "dereference to zero or more valid "
+                "objects within the current instance "
+                "document when encoded as RDF.",
+                "from_schema": "metadata",
+                "name": "sparqlpath",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the "
+                    'lower case "sparqlpath".'
+                ],
+                "repr": "str",
+                "uri": "xsd:string",
+            },
+            "string": {
+                "base": "str",
+                "description": "A character string",
+                "exact_mappings": ["schema:Text"],
+                "from_schema": "metadata",
+                "name": "string",
+                "notes": [
+                    "In RDF serializations, a slot with range of "
+                    "string is treated as a literal or type "
+                    "xsd:string.   If you are authoring schemas in "
+                    "LinkML YAML, the type is referenced with the "
+                    'lower case "string".'
+                ],
+                "uri": "xsd:string",
+            },
+            "time": {
+                "base": "XSDTime",
+                "description": "A time object represents a (local) time of " "day, independent of any particular day",
+                "exact_mappings": ["schema:Time"],
+                "from_schema": "metadata",
+                "name": "time",
+                "notes": [
+                    "URI is dateTime because OWL reasoners do not " "work with straight date or time",
+                    "If you are authoring schemas in LinkML YAML, "
+                    "the type is referenced with the lower case "
+                    '"time".',
+                ],
+                "repr": "str",
+                "uri": "xsd:time",
+            },
+            "uri": {
+                "base": "URI",
+                "close_mappings": ["schema:URL"],
+                "comments": [
+                    "in RDF serializations a slot with range of "
+                    "uri is treated as a literal or type "
+                    "xsd:anyURI unless it is an identifier or a "
+                    "reference to an identifier, in which case it "
+                    "is translated directly to a node"
+                ],
+                "conforms_to": "https://www.ietf.org/rfc/rfc3987.txt",
+                "description": "a complete URI",
+                "from_schema": "metadata",
+                "name": "uri",
+                "notes": [
+                    "If you are authoring schemas in LinkML YAML, the " 'type is referenced with the lower case "uri".'
+                ],
+                "repr": "str",
+                "uri": "xsd:anyURI",
+            },
+            "uriorcurie": {
+                "base": "URIorCURIE",
+                "description": "a URI or a CURIE",
+                "from_schema": "metadata",
+                "name": "uriorcurie",
+                "notes": [
+                    "If you are authoring schemas in LinkML "
+                    "YAML, the type is referenced with the "
+                    'lower case "uriorcurie".'
+                ],
+                "repr": "str",
+                "uri": "xsd:anyURI",
+            },
+        },
+    }
+)
+
+
+class AnnotationMethodTypeEnum(str, Enum):
+    """
+    Describes how the annotations were generated.
+    """
+
+    # Annotations were generated manually.
+    manual = "manual"
+    # Annotations were generated automatically.
+    automated = "automated"
+    # Annotations were generated semi-automatically.
+    hybrid = "hybrid"
 
 
 class SampleTypeEnum(str, Enum):
@@ -70,6 +509,34 @@ class SampleTypeEnum(str, Enum):
     other = "other"
 
 
+class TiltseriesCameraAcquireModeEnum(str, Enum):
+    """
+    Camera acquisition mode
+    """
+
+    # Counting mode
+    counting = "counting"
+    # Super-resolution mode
+    superresolution = "superresolution"
+    # Linear mode
+    linear = "linear"
+    # Correlated double sampling mode
+    cds = "cds"
+
+
+class MicroscopeManufacturerEnum(str, Enum):
+    """
+    Microscope manufacturer
+    """
+
+    # FEI Company
+    FEI = "FEI"
+    # Thermo Fisher Scientific
+    TFS = "TFS"
+    # JEOL Ltd.
+    JEOL = "JEOL"
+
+
 class FiducialAlignmentStatusEnum(str, Enum):
     """
     Fiducial Alignment method
@@ -81,6 +548,36 @@ class FiducialAlignmentStatusEnum(str, Enum):
     NON_FIDUCIAL = "NON_FIDUCIAL"
 
 
+class TomogramProcessingEnum(str, Enum):
+    """
+    Tomogram processing method
+    """
+
+    # Tomogram was denoised
+    denoised = "denoised"
+    # Tomogram was filtered
+    filtered = "filtered"
+    # Tomogram was not processed
+    raw = "raw"
+
+
+class TomogromReconstructionMethodEnum(str, Enum):
+    """
+    Tomogram reconstruction method
+    """
+
+    # Simultaneous Algebraic Reconstruction Technique
+    SART = "SART"
+    # Fourier space reconstruction
+    FOURIER_SPACE = "FOURIER SPACE"
+    # Simultaneous Iterative Reconstruction Technique
+    SIRT = "SIRT"
+    # Weighted Back-Projection
+    WBP = "WBP"
+    # Unknown reconstruction method
+    UNKNOWN = "UNKNOWN"
+
+
 class TomogramTypeEnum(str, Enum):
     """
     Tomogram type
@@ -90,19 +587,6 @@ class TomogramTypeEnum(str, Enum):
     CANONICAL = "CANONICAL"
 
 
-class AnnotationMethodTypeEnum(str, Enum):
-    """
-    Describes how the annotations were generated.
-    """
-
-    # Annotations were generated manually.
-    manual = "manual"
-    # Annotations were generated semi-automatically.
-    automated = "automated"
-    # Annotations were generated automatically.
-    hybrid = "hybrid"
-
-
 class PicturePath(ConfiguredBaseModel):
     """
     A set of paths to representative images of a piece of data.
@@ -110,28 +594,54 @@ class PicturePath(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    snapshot: Any = Field(
-        ...,
-        description="""A placeholder for any type of data.""",
+    snapshot: Optional[str] = Field(
+        None,
+        description="""Path to the dataset preview image relative to the dataset directory root.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "snapshot",
                 "domain_of": ["PicturePath"],
                 "exact_mappings": ["cdp-common:snapshot"],
+                "recommended": True,
             }
         },
     )
-    thumbnail: Any = Field(
-        ...,
-        description="""A placeholder for any type of data.""",
+    thumbnail: Optional[str] = Field(
+        None,
+        description="""Path to the thumbnail of preview image relative to the dataset directory root.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "thumbnail",
                 "domain_of": ["PicturePath"],
                 "exact_mappings": ["cdp-common:thumbnail"],
+                "recommended": True,
             }
         },
     )
+
+    @field_validator("snapshot")
+    def pattern_snapshot(cls, v):
+        pattern = re.compile(r"^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid snapshot format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid snapshot format: {v}")
+        return v
+
+    @field_validator("thumbnail")
+    def pattern_thumbnail(cls, v):
+        pattern = re.compile(r"^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid thumbnail format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid thumbnail format: {v}")
+        return v
 
 
 class Author(ConfiguredBaseModel):
@@ -149,8 +659,8 @@ class Author(ConfiguredBaseModel):
                 "alias": "name",
                 "domain_of": [
                     "Author",
-                    "Organism",
-                    "Tissue",
+                    "OrganismDetails",
+                    "TissueDetails",
                     "CellType",
                     "CellStrain",
                     "CellComponent",
@@ -227,28 +737,16 @@ class Author(ConfiguredBaseModel):
     )
     ORCID: Optional[str] = Field(
         None,
-        description="""A unique, persistent identifier for researchers, provided by ORCID.""",
+        description="""The ORCID identifier for the author.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "ORCID",
                 "domain_of": ["Author"],
-                "exact_mappings": ["cdp-common:orcid"],
+                "exact_mappings": ["cdp-common:author_orcid"],
                 "recommended": True,
             }
         },
     )
-
-    @field_validator("affiliation_identifier")
-    def pattern_affiliation_identifier(cls, v):
-        pattern = re.compile(r"^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$")
-        if isinstance(v, list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid affiliation_identifier format: {element}")
-        elif isinstance(v, str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid affiliation_identifier format: {v}")
-        return v
 
     @field_validator("ORCID")
     def pattern_ORCID(cls, v):
@@ -263,7 +761,7 @@ class Author(ConfiguredBaseModel):
         return v
 
 
-class Funding(ConfiguredBaseModel):
+class FundingDetails(ConfiguredBaseModel):
     """
     A funding source for a scientific data entity (base for JSON and DB representation).
     """
@@ -276,7 +774,7 @@ class Funding(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "funding_agency_name",
-                "domain_of": ["Funding"],
+                "domain_of": ["FundingDetails"],
                 "exact_mappings": ["cdp-common:funding_agency_name"],
                 "recommended": True,
             }
@@ -288,7 +786,7 @@ class Funding(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "grant_id",
-                "domain_of": ["Funding"],
+                "domain_of": ["FundingDetails"],
                 "exact_mappings": ["cdp-common:funding_grant_id"],
                 "recommended": True,
             }
@@ -362,7 +860,7 @@ class AuthoredEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
 
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -381,7 +879,7 @@ class FundedEntity(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
 
-    funding: Optional[List[Funding]] = Field(
+    funding: Optional[List[FundingDetails]] = Field(
         default_factory=list,
         description="""A funding source for a scientific data entity (base for JSON and DB representation).""",
         json_schema_extra={
@@ -425,7 +923,7 @@ class PicturedEntity(ConfiguredBaseModel):
     )
 
 
-class Organism(ConfiguredBaseModel):
+class OrganismDetails(ConfiguredBaseModel):
     """
     The species from which the sample was derived.
     """
@@ -440,8 +938,8 @@ class Organism(ConfiguredBaseModel):
                 "alias": "name",
                 "domain_of": [
                     "Author",
-                    "Organism",
-                    "Tissue",
+                    "OrganismDetails",
+                    "TissueDetails",
                     "CellType",
                     "CellStrain",
                     "CellComponent",
@@ -458,7 +956,7 @@ class Organism(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "taxonomy_id",
-                "domain_of": ["Organism"],
+                "domain_of": ["OrganismDetails"],
                 "exact_mappings": ["cdp-common:organism_taxid"],
                 "recommended": True,
             }
@@ -466,7 +964,7 @@ class Organism(ConfiguredBaseModel):
     )
 
 
-class Tissue(ConfiguredBaseModel):
+class TissueDetails(ConfiguredBaseModel):
     """
     The type of tissue from which the sample was derived.
     """
@@ -481,8 +979,8 @@ class Tissue(ConfiguredBaseModel):
                 "alias": "name",
                 "domain_of": [
                     "Author",
-                    "Organism",
-                    "Tissue",
+                    "OrganismDetails",
+                    "TissueDetails",
                     "CellType",
                     "CellStrain",
                     "CellComponent",
@@ -498,12 +996,24 @@ class Tissue(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "id",
-                "domain_of": ["Tissue", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
+                "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:tissue_id"],
                 "recommended": True,
             }
         },
     )
+
+    @field_validator("id")
+    def pattern_id(cls, v):
+        pattern = re.compile(r"^BTO:[0-9]{7}$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid id format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid id format: {v}")
+        return v
 
 
 class CellType(ConfiguredBaseModel):
@@ -521,8 +1031,8 @@ class CellType(ConfiguredBaseModel):
                 "alias": "name",
                 "domain_of": [
                     "Author",
-                    "Organism",
-                    "Tissue",
+                    "OrganismDetails",
+                    "TissueDetails",
                     "CellType",
                     "CellStrain",
                     "CellComponent",
@@ -538,12 +1048,24 @@ class CellType(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "id",
-                "domain_of": ["Tissue", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
+                "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:cell_type_id"],
                 "recommended": True,
             }
         },
     )
+
+    @field_validator("id")
+    def pattern_id(cls, v):
+        pattern = re.compile(r"^CL:[0-9]{7}$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid id format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid id format: {v}")
+        return v
 
 
 class CellStrain(ConfiguredBaseModel):
@@ -561,8 +1083,8 @@ class CellStrain(ConfiguredBaseModel):
                 "alias": "name",
                 "domain_of": [
                     "Author",
-                    "Organism",
-                    "Tissue",
+                    "OrganismDetails",
+                    "TissueDetails",
                     "CellType",
                     "CellStrain",
                     "CellComponent",
@@ -578,12 +1100,24 @@ class CellStrain(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "id",
-                "domain_of": ["Tissue", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
+                "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:cell_strain_id"],
                 "recommended": True,
             }
         },
     )
+
+    @field_validator("id")
+    def pattern_id(cls, v):
+        pattern = re.compile(r"^[A-Z]+:[0-9]+$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid id format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid id format: {v}")
+        return v
 
 
 class CellComponent(ConfiguredBaseModel):
@@ -601,8 +1135,8 @@ class CellComponent(ConfiguredBaseModel):
                 "alias": "name",
                 "domain_of": [
                     "Author",
-                    "Organism",
-                    "Tissue",
+                    "OrganismDetails",
+                    "TissueDetails",
                     "CellType",
                     "CellStrain",
                     "CellComponent",
@@ -618,12 +1152,24 @@ class CellComponent(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "id",
-                "domain_of": ["Tissue", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
+                "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:cell_component_id"],
                 "recommended": True,
             }
         },
     )
+
+    @field_validator("id")
+    def pattern_id(cls, v):
+        pattern = re.compile(r"^GO:[0-9]{7}$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid id format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid id format: {v}")
+        return v
 
 
 class ExperimentalMetadata(ConfiguredBaseModel):
@@ -680,12 +1226,12 @@ class ExperimentalMetadata(ConfiguredBaseModel):
             }
         },
     )
-    organism: Optional[Organism] = Field(
+    organism: Optional[OrganismDetails] = Field(
         None,
         description="""The species from which the sample was derived.""",
         json_schema_extra={"linkml_meta": {"alias": "organism", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
     )
-    tissue: Optional[Tissue] = Field(
+    tissue: Optional[TissueDetails] = Field(
         None,
         description="""The type of tissue from which the sample was derived.""",
         json_schema_extra={"linkml_meta": {"alias": "tissue", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
@@ -707,6 +1253,20 @@ class ExperimentalMetadata(ConfiguredBaseModel):
             "linkml_meta": {"alias": "cell_component", "domain_of": ["ExperimentalMetadata", "Dataset"]}
         },
     )
+
+    @field_validator("sample_type")
+    def pattern_sample_type(cls, v):
+        pattern = re.compile(
+            r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid sample_type format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid sample_type format: {v}")
+        return v
 
 
 class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, AuthoredEntity, DatestampedEntity):
@@ -768,7 +1328,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         },
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -778,7 +1338,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
             }
         },
     )
-    funding: Optional[List[Funding]] = Field(
+    funding: Optional[List[FundingDetails]] = Field(
         default_factory=list,
         description="""A funding source for a scientific data entity (base for JSON and DB representation).""",
         json_schema_extra={
@@ -844,12 +1404,12 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
             }
         },
     )
-    organism: Optional[Organism] = Field(
+    organism: Optional[OrganismDetails] = Field(
         None,
         description="""The species from which the sample was derived.""",
         json_schema_extra={"linkml_meta": {"alias": "organism", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
     )
-    tissue: Optional[Tissue] = Field(
+    tissue: Optional[TissueDetails] = Field(
         None,
         description="""The type of tissue from which the sample was derived.""",
         json_schema_extra={"linkml_meta": {"alias": "tissue", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
@@ -872,21 +1432,36 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         },
     )
 
+    @field_validator("sample_type")
+    def pattern_sample_type(cls, v):
+        pattern = re.compile(
+            r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid sample_type format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid sample_type format: {v}")
+        return v
 
-class Camera(ConfiguredBaseModel):
+
+class CameraDetails(ConfiguredBaseModel):
     """
     The camera used to collect the tilt series.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    acquire_mode: Optional[str] = Field(
+    acquire_mode: Optional[Union[TiltseriesCameraAcquireModeEnum, str]] = Field(
         None,
         description="""Camera acquisition mode""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "acquire_mode",
-                "domain_of": ["Camera"],
+                "any_of": [{"range": "StringFormattedString"}, {"range": "tiltseries_camera_acquire_mode_enum"}],
+                "domain_of": ["CameraDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_camera_acquire_mode"],
             }
         },
@@ -897,7 +1472,7 @@ class Camera(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "manufacturer",
-                "domain_of": ["Camera", "Microscope"],
+                "domain_of": ["CameraDetails", "MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_camera_manufacturer"],
             }
         },
@@ -908,27 +1483,51 @@ class Camera(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "model",
-                "domain_of": ["Camera", "Microscope"],
+                "domain_of": ["CameraDetails", "MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_camera_model"],
             }
         },
     )
 
+    @field_validator("acquire_mode")
+    def pattern_acquire_mode(cls, v):
+        pattern = re.compile(r"(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^counting$)|(^superresolution$)|(^linear$)|(^cds$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid acquire_mode format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid acquire_mode format: {v}")
+        return v
 
-class Microscope(ConfiguredBaseModel):
+
+class MicroscopeDetails(ConfiguredBaseModel):
     """
     The microscope used to collect the tilt series.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    manufacturer: str = Field(
+    additional_info: Optional[str] = Field(
+        None,
+        description="""Other microscope optical setup information, in addition to energy filter, phase plate and image corrector""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "additional_info",
+                "domain_of": ["MicroscopeDetails"],
+                "exact_mappings": ["cdp-common:tiltseries_microscope_additional_info"],
+            }
+        },
+    )
+    manufacturer: Union[MicroscopeManufacturerEnum, str] = Field(
         ...,
         description="""Name of the microscope manufacturer""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "manufacturer",
-                "domain_of": ["Camera", "Microscope"],
+                "any_of": [{"range": "StringFormattedString"}, {"range": "microscope_manufacturer_enum"}],
+                "domain_of": ["CameraDetails", "MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_manufacturer"],
             }
         },
@@ -939,11 +1538,23 @@ class Microscope(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "model",
-                "domain_of": ["Camera", "Microscope"],
+                "domain_of": ["CameraDetails", "MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_model"],
             }
         },
     )
+
+    @field_validator("manufacturer")
+    def pattern_manufacturer(cls, v):
+        pattern = re.compile(r"(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^FEI$)|(^TFS$)|(^JEOL$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid manufacturer format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid manufacturer format: {v}")
+        return v
 
 
 class MicroscopeOpticalSetup(ConfiguredBaseModel):
@@ -995,30 +1606,66 @@ class TiltRange(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    min: float = Field(
+    min: Union[float, str] = Field(
         ...,
         description="""Minimal tilt angle in degrees""",
+        ge=-90,
+        le=90,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "min",
+                "any_of": [
+                    {"maximum_value": 90, "minimum_value": -90, "range": "float"},
+                    {"range": "FloatFormattedString"},
+                ],
                 "domain_of": ["TiltRange"],
                 "exact_mappings": ["cdp-common:tiltseries_tilt_min"],
                 "unit": {"descriptive_name": "degrees", "symbol": "°"},
             }
         },
     )
-    max: float = Field(
+    max: Union[float, str] = Field(
         ...,
         description="""Maximal tilt angle in degrees""",
+        ge=-90,
+        le=90,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "max",
+                "any_of": [
+                    {"maximum_value": 90, "minimum_value": -90, "range": "float"},
+                    {"range": "FloatFormattedString"},
+                ],
                 "domain_of": ["TiltRange"],
                 "exact_mappings": ["cdp-common:tiltseries_tilt_max"],
                 "unit": {"descriptive_name": "degrees", "symbol": "°"},
             }
         },
     )
+
+    @field_validator("min")
+    def pattern_min(cls, v):
+        pattern = re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid min format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid min format: {v}")
+        return v
+
+    @field_validator("max")
+    def pattern_max(cls, v):
+        pattern = re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid max format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid max format: {v}")
+        return v
 
 
 class TiltSeries(ConfiguredBaseModel):
@@ -1028,10 +1675,10 @@ class TiltSeries(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    acceleration_voltage: int = Field(
+    acceleration_voltage: float = Field(
         ...,
         description="""Electron Microscope Accelerator voltage in volts""",
-        ge=0,
+        ge=20000,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "acceleration_voltage",
@@ -1041,30 +1688,35 @@ class TiltSeries(ConfiguredBaseModel):
             }
         },
     )
-    aligned_tiltseries_binning: Optional[int] = Field(
-        1,
+    aligned_tiltseries_binning: Optional[Union[float, str]] = Field(
+        1.0,
         description="""Binning factor of the aligned tilt series""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "aligned_tiltseries_binning",
+                "any_of": [{"minimum_value": 0, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_aligned_tiltseries_binning"],
-                "ifabsent": "int(1)",
+                "ifabsent": "float(1)",
             }
         },
     )
-    binning_from_frames: Optional[float] = Field(
-        None,
+    binning_from_frames: Optional[Union[float, str]] = Field(
+        1.0,
         description="""Describes the binning factor from frames to tilt series file""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "binning_from_frames",
+                "any_of": [{"minimum_value": 0, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_binning_from_frames"],
+                "ifabsent": "float(1)",
             }
         },
     )
-    camera: Camera = Field(
+    camera: CameraDetails = Field(
         ...,
         description="""The camera used to collect the tilt series.""",
         json_schema_extra={"linkml_meta": {"alias": "camera", "domain_of": ["TiltSeries"]}},
@@ -1102,21 +1754,10 @@ class TiltSeries(ConfiguredBaseModel):
             }
         },
     )
-    microscope: Microscope = Field(
+    microscope: MicroscopeDetails = Field(
         ...,
         description="""The microscope used to collect the tilt series.""",
         json_schema_extra={"linkml_meta": {"alias": "microscope", "domain_of": ["TiltSeries"]}},
-    )
-    microscope_additional_info: Optional[str] = Field(
-        None,
-        description="""Other microscope optical setup information, in addition to energy filter, phase plate and image corrector""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "microscope_additional_info",
-                "domain_of": ["TiltSeries"],
-                "exact_mappings": ["cdp-common:tiltseries_microscope_additional_info"],
-            }
-        },
     )
     microscope_optical_setup: MicroscopeOpticalSetup = Field(
         ...,
@@ -1134,12 +1775,14 @@ class TiltSeries(ConfiguredBaseModel):
             }
         },
     )
-    spherical_aberration_constant: float = Field(
+    spherical_aberration_constant: Union[float, str] = Field(
         ...,
         description="""Spherical Aberration Constant of the objective lens in millimeters""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "spherical_aberration_constant",
+                "any_of": [{"minimum_value": 0, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_spherical_aberration_constant"],
                 "unit": {"descriptive_name": "millimeters", "symbol": "mm"},
@@ -1157,12 +1800,18 @@ class TiltSeries(ConfiguredBaseModel):
             }
         },
     )
-    tilt_axis: float = Field(
+    tilt_axis: Union[float, str] = Field(
         ...,
         description="""Rotation angle in degrees""",
+        ge=-360,
+        le=360,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "tilt_axis",
+                "any_of": [
+                    {"maximum_value": 360, "minimum_value": -360, "range": "float"},
+                    {"range": "FloatFormattedString"},
+                ],
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_tilt_axis"],
                 "unit": {"descriptive_name": "degrees", "symbol": "°"},
@@ -1174,7 +1823,7 @@ class TiltSeries(ConfiguredBaseModel):
         description="""The range of tilt angles in the tilt series.""",
         json_schema_extra={"linkml_meta": {"alias": "tilt_range", "domain_of": ["TiltSeries"]}},
     )
-    tilt_series_quality: int = Field(
+    tilt_series_quality: Union[int, str] = Field(
         ...,
         description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""",
         ge=1,
@@ -1182,17 +1831,27 @@ class TiltSeries(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "tilt_series_quality",
+                "any_of": [
+                    {"maximum_value": 5, "minimum_value": 1, "range": "integer"},
+                    {"range": "IntegerFormattedString"},
+                ],
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_tilt_series_quality"],
             }
         },
     )
-    tilt_step: float = Field(
+    tilt_step: Union[float, str] = Field(
         ...,
         description="""Tilt step in degrees""",
+        ge=0,
+        le=90,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "tilt_step",
+                "any_of": [
+                    {"maximum_value": 90, "minimum_value": 0, "range": "float"},
+                    {"range": "FloatFormattedString"},
+                ],
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_tilt_step"],
                 "unit": {"descriptive_name": "degrees", "symbol": "°"},
@@ -1210,31 +1869,142 @@ class TiltSeries(ConfiguredBaseModel):
             }
         },
     )
-    total_flux: float = Field(
+    total_flux: Union[float, str] = Field(
         ...,
         description="""Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "total_flux",
+                "any_of": [{"minimum_value": 0, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_total_flux"],
                 "unit": {"descriptive_name": "electrons per square Angstrom", "symbol": "e^-/Å^2"},
             }
         },
     )
-    pixel_spacing: float = Field(
+    pixel_spacing: Union[float, str] = Field(
         ...,
         description="""Pixel spacing for the tilt series""",
-        ge=0,
+        ge=0.001,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "pixel_spacing",
+                "any_of": [{"minimum_value": 0.001, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_pixel_spacing"],
                 "unit": {"descriptive_name": "Angstroms per pixel", "symbol": "Å/px"},
             }
         },
     )
+
+    @field_validator("aligned_tiltseries_binning")
+    def pattern_aligned_tiltseries_binning(cls, v):
+        pattern = re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid aligned_tiltseries_binning format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid aligned_tiltseries_binning format: {v}")
+        return v
+
+    @field_validator("binning_from_frames")
+    def pattern_binning_from_frames(cls, v):
+        pattern = re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid binning_from_frames format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid binning_from_frames format: {v}")
+        return v
+
+    @field_validator("related_empiar_entry")
+    def pattern_related_empiar_entry(cls, v):
+        pattern = re.compile(r"^EMPIAR-[0-9]{5}$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid related_empiar_entry format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid related_empiar_entry format: {v}")
+        return v
+
+    @field_validator("spherical_aberration_constant")
+    def pattern_spherical_aberration_constant(cls, v):
+        pattern = re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid spherical_aberration_constant format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid spherical_aberration_constant format: {v}")
+        return v
+
+    @field_validator("tilt_axis")
+    def pattern_tilt_axis(cls, v):
+        pattern = re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid tilt_axis format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid tilt_axis format: {v}")
+        return v
+
+    @field_validator("tilt_series_quality")
+    def pattern_tilt_series_quality(cls, v):
+        pattern = re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid tilt_series_quality format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid tilt_series_quality format: {v}")
+        return v
+
+    @field_validator("tilt_step")
+    def pattern_tilt_step(cls, v):
+        pattern = re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid tilt_step format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid tilt_step format: {v}")
+        return v
+
+    @field_validator("total_flux")
+    def pattern_total_flux(cls, v):
+        pattern = re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid total_flux format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid total_flux format: {v}")
+        return v
+
+    @field_validator("pixel_spacing")
+    def pattern_pixel_spacing(cls, v):
+        pattern = re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid pixel_spacing format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid pixel_spacing format: {v}")
+        return v
 
 
 class TomogramSize(ConfiguredBaseModel):
@@ -1247,6 +2017,7 @@ class TomogramSize(ConfiguredBaseModel):
     x: int = Field(
         ...,
         description="""Number of pixels in the 3D data fast axis""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "x",
@@ -1258,6 +2029,7 @@ class TomogramSize(ConfiguredBaseModel):
     y: int = Field(
         ...,
         description="""Number of pixels in the 3D data medium axis""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "y",
@@ -1269,6 +2041,7 @@ class TomogramSize(ConfiguredBaseModel):
     z: int = Field(
         ...,
         description="""Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "z",
@@ -1328,24 +2101,30 @@ class Tomogram(AuthoredEntity):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata", "mixins": ["AuthoredEntity"]})
 
-    voxel_spacing: float = Field(
+    voxel_spacing: Union[float, str] = Field(
         ...,
         description="""Voxel spacing equal in all three axes in angstroms""",
+        ge=0.001,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "voxel_spacing",
+                "any_of": [{"minimum_value": 0.001, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_voxel_spacing"],
                 "unit": {"descriptive_name": "Angstroms per voxel", "symbol": "Å/voxel"},
             }
         },
     )
-    fiducial_alignment_status: FiducialAlignmentStatusEnum = Field(
+    fiducial_alignment_status: Union[FiducialAlignmentStatusEnum, str] = Field(
         ...,
         description="""Whether the tomographic alignment was computed based on fiducial markers.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "fiducial_alignment_status",
+                "any_of": [
+                    {"range": "fiducial_alignment_status_enum"},
+                    {"pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$", "range": "BooleanFormattedString"},
+                ],
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_fiducial_alignment_status"],
             }
@@ -1374,12 +2153,13 @@ class Tomogram(AuthoredEntity):
             }
         },
     )
-    reconstruction_method: str = Field(
+    reconstruction_method: Union[TomogromReconstructionMethodEnum, str] = Field(
         ...,
-        description="""Describe reconstruction method (Weighted back-projection, SART, SIRT)""",
+        description="""Describe reconstruction method (WBP, SART, SIRT)""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "reconstruction_method",
+                "any_of": [{"range": "StringFormattedString"}, {"range": "tomogrom_reconstruction_method_enum"}],
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_reconstruction_method"],
             }
@@ -1396,7 +2176,7 @@ class Tomogram(AuthoredEntity):
             }
         },
     )
-    processing: str = Field(
+    processing: TomogramProcessingEnum = Field(
         ...,
         description="""Describe additional processing used to derive the tomogram""",
         json_schema_extra={
@@ -1457,7 +2237,7 @@ class Tomogram(AuthoredEntity):
         json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram"]}},
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -1467,6 +2247,56 @@ class Tomogram(AuthoredEntity):
             }
         },
     )
+
+    @field_validator("voxel_spacing")
+    def pattern_voxel_spacing(cls, v):
+        pattern = re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid voxel_spacing format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid voxel_spacing format: {v}")
+        return v
+
+    @field_validator("fiducial_alignment_status")
+    def pattern_fiducial_alignment_status(cls, v):
+        pattern = re.compile(
+            r"(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid fiducial_alignment_status format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid fiducial_alignment_status format: {v}")
+        return v
+
+    @field_validator("reconstruction_method")
+    def pattern_reconstruction_method(cls, v):
+        pattern = re.compile(r"(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^FOURIER SPACE$)|(^SIRT$)|(^WBP$)|(^UNKNOWN$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid reconstruction_method format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid reconstruction_method format: {v}")
+        return v
+
+    @field_validator("processing")
+    def pattern_processing(cls, v):
+        pattern = re.compile(r"(^denoised$)|(^filtered$)|(^raw$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid processing format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid processing format: {v}")
+        return v
 
 
 class AnnotationConfidence(ConfiguredBaseModel):
@@ -1530,7 +2360,7 @@ class AnnotationObject(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "id",
-                "domain_of": ["Tissue", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
+                "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:annotation_object_id"],
             }
         },
@@ -1543,8 +2373,8 @@ class AnnotationObject(ConfiguredBaseModel):
                 "alias": "name",
                 "domain_of": [
                     "Author",
-                    "Organism",
-                    "Tissue",
+                    "OrganismDetails",
+                    "TissueDetails",
                     "CellType",
                     "CellStrain",
                     "CellComponent",
@@ -1576,6 +2406,18 @@ class AnnotationObject(ConfiguredBaseModel):
             }
         },
     )
+
+    @field_validator("id")
+    def pattern_id(cls, v):
+        pattern = re.compile(r"^GO:[0-9]{7}$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid id format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid id format: {v}")
+        return v
 
 
 class AnnotationSourceFile(ConfiguredBaseModel):
@@ -1649,9 +2491,10 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["OrientedPoint"], "from_schema": "metadata"})
 
-    binning: Optional[int] = Field(
-        1,
+    binning: Optional[float] = Field(
+        1.0,
         description="""The binning factor for a point / oriented point / instance segmentation annotation file.""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "binning",
@@ -1661,7 +2504,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationInstanceSegmentationFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_binning"],
-                "ifabsent": "int(1)",
+                "ifabsent": "float(1)",
             }
         },
     )
@@ -1752,9 +2595,10 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["InstanceSegmentation"], "from_schema": "metadata"})
 
-    binning: Optional[int] = Field(
-        1,
+    binning: Optional[float] = Field(
+        1.0,
         description="""The binning factor for a point / oriented point / instance segmentation annotation file.""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "binning",
@@ -1764,7 +2608,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationInstanceSegmentationFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_binning"],
-                "ifabsent": "int(1)",
+                "ifabsent": "float(1)",
             }
         },
     )
@@ -1855,9 +2699,10 @@ class AnnotationPointFile(AnnotationSourceFile):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["Point"], "from_schema": "metadata"})
 
-    binning: Optional[int] = Field(
-        1,
+    binning: Optional[float] = Field(
+        1.0,
         description="""The binning factor for a point / oriented point / instance segmentation annotation file.""",
+        ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "binning",
@@ -1867,7 +2712,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationInstanceSegmentationFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_binning"],
-                "ifabsent": "int(1)",
+                "ifabsent": "float(1)",
             }
         },
     )
@@ -2218,7 +3063,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         },
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2228,6 +3073,18 @@ class Annotation(AuthoredEntity, DatestampedEntity):
             }
         },
     )
+
+    @field_validator("method_type")
+    def pattern_method_type(cls, v):
+        pattern = re.compile(r"(^manual$)|(^automated$)|(^hybrid$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid method_type format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid method_type format: {v}")
+        return v
 
 
 class CrossReferences(ConfiguredBaseModel):
@@ -2262,27 +3119,55 @@ class CrossReferences(ConfiguredBaseModel):
         json_schema_extra={"linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferences"]}},
     )
 
+    @field_validator("dataset_publications")
+    def pattern_dataset_publications(cls, v):
+        pattern = re.compile(
+            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid dataset_publications format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid dataset_publications format: {v}")
+        return v
+
+    @field_validator("related_database_entries")
+    def pattern_related_database_entries(cls, v):
+        pattern = re.compile(
+            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid related_database_entries format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid related_database_entries format: {v}")
+        return v
+
 
 # Model rebuild
 # see https://pydantic-docs.helpmanual.io/usage/models/#rebuilding-a-model
 PicturePath.model_rebuild()
 Author.model_rebuild()
-Funding.model_rebuild()
+FundingDetails.model_rebuild()
 DateStamp.model_rebuild()
 DatestampedEntity.model_rebuild()
 AuthoredEntity.model_rebuild()
 FundedEntity.model_rebuild()
 CrossReferencedEntity.model_rebuild()
 PicturedEntity.model_rebuild()
-Organism.model_rebuild()
-Tissue.model_rebuild()
+OrganismDetails.model_rebuild()
+TissueDetails.model_rebuild()
 CellType.model_rebuild()
 CellStrain.model_rebuild()
 CellComponent.model_rebuild()
 ExperimentalMetadata.model_rebuild()
 Dataset.model_rebuild()
-Camera.model_rebuild()
-Microscope.model_rebuild()
+CameraDetails.model_rebuild()
+MicroscopeDetails.model_rebuild()
 MicroscopeOpticalSetup.model_rebuild()
 TiltRange.model_rebuild()
 TiltSeries.model_rebuild()

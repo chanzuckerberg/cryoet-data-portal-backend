@@ -65,6 +65,13 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
       Tomogram : processing
 
+
+
+
+    Tomogram --> "1" TomogramProcessingEnum : processing
+    click TomogramProcessingEnum href "../TomogramProcessingEnum"
+
+
       Tomogram : processing_software
 
       Tomogram : reconstruction_method
@@ -100,13 +107,13 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [voxel_spacing](voxel_spacing.md) | 1 <br/> [Float](Float.md) | Voxel spacing equal in all three axes in angstroms | direct |
-| [fiducial_alignment_status](fiducial_alignment_status.md) | 1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
+| [voxel_spacing](voxel_spacing.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Voxel spacing equal in all three axes in angstroms | direct |
+| [fiducial_alignment_status](fiducial_alignment_status.md) | 1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[BooleanFormattedString](BooleanFormattedString.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
 | [ctf_corrected](ctf_corrected.md) | 0..1 _recommended_ <br/> [Boolean](Boolean.md) | Whether this tomogram is CTF corrected | direct |
 | [align_software](align_software.md) | 0..1 <br/> [String](String.md) | Software used for alignment | direct |
-| [reconstruction_method](reconstruction_method.md) | 1 <br/> [String](String.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) | direct |
+| [reconstruction_method](reconstruction_method.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md) | Describe reconstruction method (WBP, SART, SIRT) | direct |
 | [reconstruction_software](reconstruction_software.md) | 1 <br/> [String](String.md) | Name of software used for reconstruction | direct |
-| [processing](processing.md) | 1 <br/> [String](String.md) | Describe additional processing used to derive the tomogram | direct |
+| [processing](processing.md) | 1 <br/> [TomogramProcessingEnum](TomogramProcessingEnum.md) | Describe additional processing used to derive the tomogram | direct |
 | [processing_software](processing_software.md) | 0..1 _recommended_ <br/> [String](String.md) | Processing software used to derive the tomogram | direct |
 | [tomogram_version](tomogram_version.md) | 1 <br/> [VersionString](VersionString.md) | Version of tomogram | direct |
 | [affine_transformation_matrix](affine_transformation_matrix.md) | 0..1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
@@ -176,13 +183,18 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: float
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0.001
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: Å/voxel
       descriptive_name: Angstroms per voxel
+    any_of:
+    - range: float
+      minimum_value: 0.001
+    - range: FloatFormattedString
   fiducial_alignment_status:
     name: fiducial_alignment_status
     description: Whether the tomographic alignment was computed based on fiducial
@@ -199,6 +211,12 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
+      ]*$)
+    any_of:
+    - range: fiducial_alignment_status_enum
+    - range: BooleanFormattedString
+      pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
   ctf_corrected:
     name: ctf_corrected
     description: Whether this tomogram is CTF corrected
@@ -230,7 +248,7 @@ attributes:
     inlined_as_list: true
   reconstruction_method:
     name: reconstruction_method
-    description: Describe reconstruction method (Weighted back-projection, SART, SIRT)
+    description: Describe reconstruction method (WBP, SART, SIRT)
     from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_reconstruction_method
@@ -239,10 +257,13 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: string
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^FOURIER SPACE$)|(^SIRT$)|(^WBP$)|(^UNKNOWN$)
+    any_of:
+    - range: StringFormattedString
+    - range: tomogrom_reconstruction_method_enum
   reconstruction_software:
     name: reconstruction_software
     description: Name of software used for reconstruction
@@ -269,10 +290,11 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: string
+    range: tomogram_processing_enum
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^denoised$)|(^filtered$)|(^raw$)
   processing_software:
     name: processing_software
     description: Processing software used to derive the tomogram
@@ -388,13 +410,19 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: float
+    range: string
     required: true
     inlined: true
     inlined_as_list: true
+    minimum_value: 0.001
+    pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
     unit:
       symbol: Å/voxel
       descriptive_name: Angstroms per voxel
+    any_of:
+    - range: float
+      minimum_value: 0.001
+    - range: FloatFormattedString
   fiducial_alignment_status:
     name: fiducial_alignment_status
     description: Whether the tomographic alignment was computed based on fiducial
@@ -411,6 +439,12 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
+      ]*$)
+    any_of:
+    - range: fiducial_alignment_status_enum
+    - range: BooleanFormattedString
+      pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
   ctf_corrected:
     name: ctf_corrected
     description: Whether this tomogram is CTF corrected
@@ -442,7 +476,7 @@ attributes:
     inlined_as_list: true
   reconstruction_method:
     name: reconstruction_method
-    description: Describe reconstruction method (Weighted back-projection, SART, SIRT)
+    description: Describe reconstruction method (WBP, SART, SIRT)
     from_schema: metadata
     exact_mappings:
     - cdp-common:tomogram_reconstruction_method
@@ -455,6 +489,10 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^FOURIER SPACE$)|(^SIRT$)|(^WBP$)|(^UNKNOWN$)
+    any_of:
+    - range: StringFormattedString
+    - range: tomogrom_reconstruction_method_enum
   reconstruction_software:
     name: reconstruction_software
     description: Name of software used for reconstruction
@@ -481,10 +519,11 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: string
+    range: tomogram_processing_enum
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^denoised$)|(^filtered$)|(^raw$)
   processing_software:
     name: processing_software
     description: Processing software used to derive the tomogram

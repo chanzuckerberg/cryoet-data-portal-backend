@@ -38,7 +38,7 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [name](name.md) | 1 <br/> [String](String.md) | Name of the cellular component | direct |
-| [id](id.md) | 0..1 _recommended_ <br/> [String](String.md) | The GO identifier for the cellular component | direct |
+| [id](id.md) | 0..1 _recommended_ <br/> [GOID](GOID.md) | The GO identifier for the cellular component | direct |
 
 
 
@@ -107,8 +107,8 @@ attributes:
     owner: CellComponent
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -126,15 +126,16 @@ attributes:
     alias: id
     owner: CellComponent
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: GO_ID
     recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: ^GO:[0-9]{7}$
 
 ```
 </details>
@@ -157,8 +158,8 @@ attributes:
     owner: CellComponent
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -176,15 +177,16 @@ attributes:
     alias: id
     owner: CellComponent
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: GO_ID
     recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: ^GO:[0-9]{7}$
 
 ```
 </details>

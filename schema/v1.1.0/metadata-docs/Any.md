@@ -42,8 +42,6 @@ URI: [linkml:Any](https://w3id.org/linkml/Any)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [PicturePath](PicturePath.md) | [snapshot](snapshot.md) | range | [Any](Any.md) |
-| [PicturePath](PicturePath.md) | [thumbnail](thumbnail.md) | range | [Any](Any.md) |
 | [Tomogram](Tomogram.md) | [affine_transformation_matrix](affine_transformation_matrix.md) | range | [Any](Any.md) |
 
 

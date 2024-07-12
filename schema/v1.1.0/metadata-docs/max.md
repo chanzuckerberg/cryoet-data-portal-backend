@@ -31,9 +31,15 @@ URI: [cdp-meta:max](metadatamax)
 
 ## Properties
 
-* Range: [Float](Float.md)
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Required: True
+
+* Minimum Value: -90
+
+* Maximum Value: 90
+
+* Regex pattern: `^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
 
 
 
@@ -80,13 +86,21 @@ alias: max
 owner: TiltRange
 domain_of:
 - TiltRange
-range: float
+range: string
 required: true
 inlined: true
 inlined_as_list: true
+minimum_value: -90
+maximum_value: 90
+pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
 unit:
   symbol: °
   descriptive_name: degrees
+any_of:
+- range: float
+  minimum_value: -90
+  maximum_value: 90
+- range: FloatFormattedString
 
 ```
 </details>

@@ -31,7 +31,11 @@ URI: [cdp-meta:aligned_tiltseries_binning](metadataaligned_tiltseries_binning)
 
 ## Properties
 
-* Range: [Integer](Integer.md)
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
+
+* Minimum Value: 0
+
+* Regex pattern: `^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
 
 
 
@@ -74,14 +78,20 @@ from_schema: metadata
 exact_mappings:
 - cdp-common:tiltseries_aligned_tiltseries_binning
 rank: 1000
-ifabsent: int(1)
+ifabsent: float(1)
 alias: aligned_tiltseries_binning
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: integer
+range: string
 inlined: true
 inlined_as_list: true
+minimum_value: 0
+pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+any_of:
+- range: float
+  minimum_value: 0
+- range: FloatFormattedString
 
 ```
 </details>

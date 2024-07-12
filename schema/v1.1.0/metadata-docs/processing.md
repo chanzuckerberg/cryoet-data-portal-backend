@@ -31,9 +31,11 @@ URI: [cdp-meta:processing](metadataprocessing)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [TomogramProcessingEnum](TomogramProcessingEnum.md)
 
 * Required: True
+
+* Regex pattern: `(^denoised$)|(^filtered$)|(^raw$)`
 
 
 
@@ -80,10 +82,11 @@ alias: processing
 owner: Tomogram
 domain_of:
 - Tomogram
-range: string
+range: tomogram_processing_enum
 required: true
 inlined: true
 inlined_as_list: true
+pattern: (^denoised$)|(^filtered$)|(^raw$)
 
 ```
 </details>

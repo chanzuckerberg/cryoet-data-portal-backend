@@ -31,9 +31,13 @@ URI: [cdp-meta:total_flux](metadatatotal_flux)
 
 ## Properties
 
-* Range: [Float](Float.md)
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Required: True
+
+* Minimum Value: 0
+
+* Regex pattern: `^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
 
 
 
@@ -81,13 +85,19 @@ alias: total_flux
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: float
+range: string
 required: true
 inlined: true
 inlined_as_list: true
+minimum_value: 0
+pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
 unit:
   symbol: e^-/Å^2
   descriptive_name: electrons per square Angstrom
+any_of:
+- range: float
+  minimum_value: 0
+- range: FloatFormattedString
 
 ```
 </details>

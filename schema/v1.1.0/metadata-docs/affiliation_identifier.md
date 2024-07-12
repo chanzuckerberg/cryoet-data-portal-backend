@@ -35,8 +35,6 @@ URI: [cdp-meta:affiliation_identifier](metadataaffiliation_identifier)
 
 * Recommended: True
 
-* Regex pattern: `^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$`
-
 
 
 
@@ -86,7 +84,6 @@ range: string
 recommended: true
 inlined: true
 inlined_as_list: true
-pattern: ^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$
 
 ```
 </details>

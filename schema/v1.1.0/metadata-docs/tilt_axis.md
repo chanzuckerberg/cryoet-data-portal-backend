@@ -31,9 +31,15 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 ## Properties
 
-* Range: [Float](Float.md)
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Required: True
+
+* Minimum Value: -360
+
+* Maximum Value: 360
+
+* Regex pattern: `^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
 
 
 
@@ -80,13 +86,21 @@ alias: tilt_axis
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: float
+range: string
 required: true
 inlined: true
 inlined_as_list: true
+minimum_value: -360
+maximum_value: 360
+pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
 unit:
   symbol: °
   descriptive_name: degrees
+any_of:
+- range: float
+  minimum_value: -360
+  maximum_value: 360
+- range: FloatFormattedString
 
 ```
 </details>

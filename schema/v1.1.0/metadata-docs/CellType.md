@@ -38,7 +38,7 @@ URI: [cdp-meta:CellType](metadataCellType)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [name](name.md) | 1 <br/> [String](String.md) | Name of the cell type from which a biological sample used in a CryoET study i... | direct |
-| [id](id.md) | 0..1 _recommended_ <br/> [String](String.md) | Cell Ontology identifier for the cell type | direct |
+| [id](id.md) | 0..1 _recommended_ <br/> [CLID](CLID.md) | Cell Ontology identifier for the cell type | direct |
 
 
 
@@ -108,8 +108,8 @@ attributes:
     owner: CellType
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -127,15 +127,16 @@ attributes:
     alias: id
     owner: CellType
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: CL_ID
     recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: ^CL:[0-9]{7}$
 
 ```
 </details>
@@ -159,8 +160,8 @@ attributes:
     owner: CellType
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -178,15 +179,16 @@ attributes:
     alias: id
     owner: CellType
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: CL_ID
     recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: ^CL:[0-9]{7}$
 
 ```
 </details>
