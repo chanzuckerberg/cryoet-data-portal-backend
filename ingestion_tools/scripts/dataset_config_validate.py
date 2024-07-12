@@ -50,7 +50,7 @@ def print_errors(errors: Dict[str, List[Union[ValidationError, Exception]]]) -> 
             if not isinstance(e, dict) or any(key not in e for key in ["loc", "msg"]):
                 logger.error("\t- error: %s", str(e))
             else:
-                loc = "/".join([str(x) for x in e["loc"]])
+                loc = ".".join([str(x) for x in e["loc"]])
                 logger.error("\t- %s: %s", e["msg"], loc)
 
 
