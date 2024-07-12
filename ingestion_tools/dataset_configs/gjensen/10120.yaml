@@ -25,7 +25,7 @@ datasets:
       The strain is only inducible for dQ
     dataset_identifier: 10120
     dataset_title: M. magneticum dK203 5h induced
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -39,6 +39,19 @@ datasets:
   - literal:
       value:
       - '10120'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10039
+    deposition_title: TBA
+    deposition_type:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10039
 key_images:
 - sources:
   - source_glob:

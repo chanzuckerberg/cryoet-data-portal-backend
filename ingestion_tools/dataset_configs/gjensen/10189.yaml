@@ -24,7 +24,7 @@ datasets:
       sandwich fusion as sole source of MreB from WT promoter.
     dataset_identifier: 10189
     dataset_title: E. coli (FB76)
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -38,6 +38,19 @@ datasets:
   - literal:
       value:
       - '10189'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10057
+    deposition_title: TBA
+    deposition_type:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10057
 key_images:
 - sources:
   - source_glob:

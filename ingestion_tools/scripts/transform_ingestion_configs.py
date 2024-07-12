@@ -186,7 +186,7 @@ def update_config(data: dict[str, Any]) -> dict[str, Any]:
     if not data.get("voxel_spacings"):
         vs = data["tomograms"][0]["metadata"]["voxel_spacing"]
         # Make sure voxel spacing is a float.
-        if isinstance(vs, str) and "{" in vs:
+        if isinstance(vs, str) and "{" in vs and not vs.strip().startswith("float"):
             vs = f"float {vs}"
         data["voxel_spacings"] = [
             {
