@@ -1,5 +1,3 @@
-
-
 # Class: CellComponent
 
 
@@ -14,12 +12,9 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
 
 
 
-
-
 ```mermaid
  classDiagram
     class CellComponent
-    click CellComponent href "../CellComponent"
       CellComponent : id
 
       CellComponent : name
@@ -37,7 +32,7 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 1 <br/> [String](String.md) | Name of the cellular component | direct |
+| [name](name.md) | 1..1 <br/> [String](String.md) | Name of the cellular component | direct |
 | [id](id.md) | 0..1 _recommended_ <br/> [String](String.md) | The GO identifier for the cellular component | direct |
 
 
@@ -72,14 +67,13 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CellComponent |
 | native | cdp-meta:CellComponent |
-
-
 
 
 
@@ -107,8 +101,8 @@ attributes:
     owner: CellComponent
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -126,7 +120,7 @@ attributes:
     alias: id
     owner: CellComponent
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -157,8 +151,8 @@ attributes:
     owner: CellComponent
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -176,7 +170,7 @@ attributes:
     alias: id
     owner: CellComponent
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent

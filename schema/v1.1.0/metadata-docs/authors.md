@@ -1,5 +1,3 @@
-
-
 # Slot: authors
 
 URI: [cdp-meta:authors](metadataauthors)
@@ -11,15 +9,14 @@ URI: [cdp-meta:authors](metadataauthors)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
-| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
-| [AuthoredEntity](AuthoredEntity.md) | An entity with associated authors |  no  |
-| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+[AuthoredEntity](AuthoredEntity.md) | An entity with associated authors |  no  |
+[Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -40,16 +37,6 @@ URI: [cdp-meta:authors](metadataauthors)
 
 
 
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:authors |
-| native | cdp-meta:authors |
 
 
 

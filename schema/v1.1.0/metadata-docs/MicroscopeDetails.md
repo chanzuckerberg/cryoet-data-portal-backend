@@ -1,6 +1,4 @@
-
-
-# Class: Microscope
+# Class: MicroscopeDetails
 
 
 _The microscope used to collect the tilt series._
@@ -9,20 +7,17 @@ _The microscope used to collect the tilt series._
 
 
 
-URI: [cdp-meta:Microscope](metadataMicroscope)
-
-
+URI: [cdp-meta:MicroscopeDetails](metadataMicroscopeDetails)
 
 
 
 
 ```mermaid
  classDiagram
-    class Microscope
-    click Microscope href "../Microscope"
-      Microscope : manufacturer
+    class MicroscopeDetails
+      MicroscopeDetails : manufacturer
 
-      Microscope : model
+      MicroscopeDetails : model
 
 
 ```
@@ -37,8 +32,8 @@ URI: [cdp-meta:Microscope](metadataMicroscope)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [manufacturer](manufacturer.md) | 1 <br/> [String](String.md) | Name of the microscope manufacturer | direct |
-| [model](model.md) | 1 <br/> [String](String.md) | Microscope model name | direct |
+| [manufacturer](manufacturer.md) | 1..1 <br/> [String](String.md) | Name of the microscope manufacturer | direct |
+| [model](model.md) | 1..1 <br/> [String](String.md) | Microscope model name | direct |
 
 
 
@@ -48,7 +43,7 @@ URI: [cdp-meta:Microscope](metadataMicroscope)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [TiltSeries](TiltSeries.md) | [microscope](microscope.md) | range | [Microscope](Microscope.md) |
+| [TiltSeries](TiltSeries.md) | [microscope](microscope.md) | range | [MicroscopeDetails](MicroscopeDetails.md) |
 
 
 
@@ -71,14 +66,13 @@ URI: [cdp-meta:Microscope](metadataMicroscope)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:Microscope |
-| native | cdp-meta:Microscope |
-
-
+| self | cdp-meta:MicroscopeDetails |
+| native | cdp-meta:MicroscopeDetails |
 
 
 
@@ -92,7 +86,7 @@ URI: [cdp-meta:Microscope](metadataMicroscope)
 
 <details>
 ```yaml
-name: Microscope
+name: MicroscopeDetails
 description: The microscope used to collect the tilt series.
 from_schema: metadata
 attributes:
@@ -103,10 +97,10 @@ attributes:
     exact_mappings:
     - cdp-common:tiltseries_microscope_manufacturer
     alias: manufacturer
-    owner: Microscope
+    owner: MicroscopeDetails
     domain_of:
-    - Camera
-    - Microscope
+    - CameraDetails
+    - MicroscopeDetails
     range: string
     required: true
     inlined: true
@@ -118,10 +112,10 @@ attributes:
     exact_mappings:
     - cdp-common:tiltseries_microscope_model
     alias: model
-    owner: Microscope
+    owner: MicroscopeDetails
     domain_of:
-    - Camera
-    - Microscope
+    - CameraDetails
+    - MicroscopeDetails
     range: string
     required: true
     inlined: true
@@ -134,7 +128,7 @@ attributes:
 
 <details>
 ```yaml
-name: Microscope
+name: MicroscopeDetails
 description: The microscope used to collect the tilt series.
 from_schema: metadata
 attributes:
@@ -145,10 +139,10 @@ attributes:
     exact_mappings:
     - cdp-common:tiltseries_microscope_manufacturer
     alias: manufacturer
-    owner: Microscope
+    owner: MicroscopeDetails
     domain_of:
-    - Camera
-    - Microscope
+    - CameraDetails
+    - MicroscopeDetails
     range: string
     required: true
     inlined: true
@@ -160,10 +154,10 @@ attributes:
     exact_mappings:
     - cdp-common:tiltseries_microscope_model
     alias: model
-    owner: Microscope
+    owner: MicroscopeDetails
     domain_of:
-    - Camera
-    - Microscope
+    - CameraDetails
+    - MicroscopeDetails
     range: string
     required: true
     inlined: true

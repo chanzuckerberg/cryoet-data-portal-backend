@@ -1,5 +1,3 @@
-
-
 # Class: AnnotationPointFile
 
 
@@ -14,14 +12,10 @@ URI: [cdp-meta:AnnotationPointFile](metadataAnnotationPointFile)
 
 
 
-
-
 ```mermaid
  classDiagram
     class AnnotationPointFile
-    click AnnotationPointFile href "../AnnotationPointFile"
       AnnotationSourceFile <|-- AnnotationPointFile
-        click AnnotationSourceFile href "../AnnotationSourceFile"
 
       AnnotationPointFile : binning
 
@@ -55,8 +49,8 @@ URI: [cdp-meta:AnnotationPointFile](metadataAnnotationPointFile)
 | [binning](binning.md) | 0..1 <br/> [Integer](Integer.md) | The binning factor for a point / oriented point / instance segmentation annot... | direct |
 | [columns](columns.md) | 0..1 <br/> [String](String.md) | The columns used in a point annotation file | direct |
 | [delimiter](delimiter.md) | 0..1 <br/> [String](String.md) | The delimiter used in a point annotation file | direct |
-| [file_format](file_format.md) | 1 <br/> [String](String.md) | File format for this file | direct |
-| [glob_string](glob_string.md) | 1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
+| [file_format](file_format.md) | 1..1 <br/> [String](String.md) | File format for this file | direct |
+| [glob_string](glob_string.md) | 1..1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
 | [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation will be rendered in neuroglancer by default | direct |
 
 
@@ -88,14 +82,13 @@ URI: [cdp-meta:AnnotationPointFile](metadataAnnotationPointFile)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationPointFile |
 | native | cdp-meta:AnnotationPointFile |
-
-
 
 
 

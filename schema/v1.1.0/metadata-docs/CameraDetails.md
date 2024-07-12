@@ -1,6 +1,4 @@
-
-
-# Class: Camera
+# Class: CameraDetails
 
 
 _The camera used to collect the tilt series._
@@ -9,22 +7,19 @@ _The camera used to collect the tilt series._
 
 
 
-URI: [cdp-meta:Camera](metadataCamera)
-
-
+URI: [cdp-meta:CameraDetails](metadataCameraDetails)
 
 
 
 
 ```mermaid
  classDiagram
-    class Camera
-    click Camera href "../Camera"
-      Camera : acquire_mode
+    class CameraDetails
+      CameraDetails : acquire_mode
 
-      Camera : manufacturer
+      CameraDetails : manufacturer
 
-      Camera : model
+      CameraDetails : model
 
 
 ```
@@ -40,8 +35,8 @@ URI: [cdp-meta:Camera](metadataCamera)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [acquire_mode](acquire_mode.md) | 0..1 <br/> [String](String.md) | Camera acquisition mode | direct |
-| [manufacturer](manufacturer.md) | 1 <br/> [String](String.md) | Name of the camera manufacturer | direct |
-| [model](model.md) | 1 <br/> [String](String.md) | Camera model name | direct |
+| [manufacturer](manufacturer.md) | 1..1 <br/> [String](String.md) | Name of the camera manufacturer | direct |
+| [model](model.md) | 1..1 <br/> [String](String.md) | Camera model name | direct |
 
 
 
@@ -51,7 +46,7 @@ URI: [cdp-meta:Camera](metadataCamera)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [TiltSeries](TiltSeries.md) | [camera](camera.md) | range | [Camera](Camera.md) |
+| [TiltSeries](TiltSeries.md) | [camera](camera.md) | range | [CameraDetails](CameraDetails.md) |
 
 
 
@@ -74,14 +69,13 @@ URI: [cdp-meta:Camera](metadataCamera)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:Camera |
-| native | cdp-meta:Camera |
-
-
+| self | cdp-meta:CameraDetails |
+| native | cdp-meta:CameraDetails |
 
 
 
@@ -95,7 +89,7 @@ URI: [cdp-meta:Camera](metadataCamera)
 
 <details>
 ```yaml
-name: Camera
+name: CameraDetails
 description: The camera used to collect the tilt series.
 from_schema: metadata
 attributes:
@@ -107,9 +101,9 @@ attributes:
     - cdp-common:tiltseries_camera_acquire_mode
     rank: 1000
     alias: acquire_mode
-    owner: Camera
+    owner: CameraDetails
     domain_of:
-    - Camera
+    - CameraDetails
     range: string
     inlined: true
     inlined_as_list: true
@@ -121,10 +115,10 @@ attributes:
     - cdp-common:tiltseries_camera_manufacturer
     rank: 1000
     alias: manufacturer
-    owner: Camera
+    owner: CameraDetails
     domain_of:
-    - Camera
-    - Microscope
+    - CameraDetails
+    - MicroscopeDetails
     range: string
     required: true
     inlined: true
@@ -137,10 +131,10 @@ attributes:
     - cdp-common:tiltseries_camera_model
     rank: 1000
     alias: model
-    owner: Camera
+    owner: CameraDetails
     domain_of:
-    - Camera
-    - Microscope
+    - CameraDetails
+    - MicroscopeDetails
     range: string
     required: true
     inlined: true
@@ -153,7 +147,7 @@ attributes:
 
 <details>
 ```yaml
-name: Camera
+name: CameraDetails
 description: The camera used to collect the tilt series.
 from_schema: metadata
 attributes:
@@ -165,9 +159,9 @@ attributes:
     - cdp-common:tiltseries_camera_acquire_mode
     rank: 1000
     alias: acquire_mode
-    owner: Camera
+    owner: CameraDetails
     domain_of:
-    - Camera
+    - CameraDetails
     range: string
     inlined: true
     inlined_as_list: true
@@ -179,10 +173,10 @@ attributes:
     - cdp-common:tiltseries_camera_manufacturer
     rank: 1000
     alias: manufacturer
-    owner: Camera
+    owner: CameraDetails
     domain_of:
-    - Camera
-    - Microscope
+    - CameraDetails
+    - MicroscopeDetails
     range: string
     required: true
     inlined: true
@@ -195,10 +189,10 @@ attributes:
     - cdp-common:tiltseries_camera_model
     rank: 1000
     alias: model
-    owner: Camera
+    owner: CameraDetails
     domain_of:
-    - Camera
-    - Microscope
+    - CameraDetails
+    - MicroscopeDetails
     range: string
     required: true
     inlined: true

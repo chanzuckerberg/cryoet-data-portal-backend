@@ -1,5 +1,3 @@
-
-
 # Class: Author
 
 
@@ -14,12 +12,9 @@ URI: [cdp-meta:Author](metadataAuthor)
 
 
 
-
-
 ```mermaid
  classDiagram
     class Author
-    click Author href "../Author"
       Author : affiliation_address
 
       Author : affiliation_identifier
@@ -49,7 +44,7 @@ URI: [cdp-meta:Author](metadataAuthor)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 1 <br/> [String](String.md) | The full name of the author | direct |
+| [name](name.md) | 1..1 <br/> [String](String.md) | The full name of the author | direct |
 | [email](email.md) | 0..1 <br/> [String](String.md) | The email address of the author | direct |
 | [affiliation_name](affiliation_name.md) | 0..1 <br/> [String](String.md) | The name of the author's affiliation | direct |
 | [affiliation_address](affiliation_address.md) | 0..1 <br/> [String](String.md) | The address of the author's affiliation | direct |
@@ -92,14 +87,13 @@ URI: [cdp-meta:Author](metadataAuthor)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Author |
 | native | cdp-meta:Author |
-
-
 
 
 
@@ -128,8 +122,8 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -265,8 +259,8 @@ attributes:
     owner: Author
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent

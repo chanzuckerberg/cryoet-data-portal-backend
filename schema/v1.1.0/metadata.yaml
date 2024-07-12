@@ -70,7 +70,7 @@ classes:
   # ============================================================================
   # Funding source information
   # ============================================================================
-  Funding:
+  FundingDetails:
     description: A funding source for a scientific data entity (base for JSON and DB representation).
     attributes:
       funding_agency_name:
@@ -125,7 +125,7 @@ classes:
     description: An entity with associated funding sources.
     attributes:
       funding:
-        range: Funding
+        range: FundingDetails
         recommended: true
         description: An ordered list of funding sources for the entity.
         multivalued: true
@@ -152,7 +152,7 @@ classes:
   # ============================================================================
   # Experimental metadata
   # ============================================================================
-  Organism:
+  OrganismDetails:
     description: &desc_Organism The species from which the sample was derived.
     attributes:
       name:
@@ -162,7 +162,7 @@ classes:
         exact_mappings:
           - cdp-common:organism_taxid
 
-  Tissue:
+  TissueDetails:
     description: &desc_Tissue The type of tissue from which the sample was derived.
     attributes:
       name:
@@ -220,10 +220,10 @@ classes:
           - cdp-common:preparation_other_setup
       organism:
         description: *desc_Organism
-        range: Organism
+        range: OrganismDetails
       tissue:
         description: *desc_Tissue
-        range: Tissue
+        range: TissueDetails
       cell_type:
         description: *desc_CellType
         range: CellType
@@ -263,7 +263,7 @@ classes:
   # ============================================================================
   # TiltSeries metadata
   # ============================================================================
-  Camera:
+  CameraDetails:
     description: &desc_camera The camera used to collect the tilt series.
     attributes:
       acquire_mode:
@@ -276,7 +276,7 @@ classes:
         exact_mappings:
           - cdp-common:tiltseries_camera_model
 
-  Microscope:
+  MicroscopeDetails:
     description: &desc_microscope The microscope used to collect the tilt series.
     attributes:
       manufacturer:
@@ -328,7 +328,7 @@ classes:
           - cdp-common:tiltseries_binning_from_frames
       camera:
         description: *desc_camera
-        range: Camera
+        range: CameraDetails
         required: true
       data_acquisition_software:
         exact_mappings:
@@ -341,7 +341,7 @@ classes:
           - cdp-common:tiltseries_is_aligned
       microscope:
         description: *desc_microscope
-        range: Microscope
+        range: MicroscopeDetails
         required: true
       microscope_additional_info:
         exact_mappings:

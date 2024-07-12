@@ -33,13 +33,3 @@ URI: [cdp-meta:BooleanFormattedString](metadataBooleanFormattedString)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:BooleanFormattedString |
-| native | cdp-meta:BooleanFormattedString |

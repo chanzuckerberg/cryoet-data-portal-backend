@@ -34,14 +34,3 @@ URI: [xsd:boolean](http://www.w3.org/2001/XMLSchema#boolean)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | xsd:boolean |
-| native | cdp-meta:boolean |
-| exact | schema:Boolean |

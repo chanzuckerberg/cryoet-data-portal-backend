@@ -33,14 +33,3 @@ URI: [xsd:double](http://www.w3.org/2001/XMLSchema#double)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | xsd:double |
-| native | cdp-meta:double |
-| close | schema:Float |

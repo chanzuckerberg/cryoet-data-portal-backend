@@ -1,5 +1,3 @@
-
-
 # Slot: affiliation_address
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:affiliation_address](metadataaffiliation_address)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Author](Author.md) | Author of a scientific data entity |  no  |
+[Author](Author.md) | Author of a scientific data entity |  no  |
 
 
 
@@ -49,17 +46,6 @@ URI: [cdp-meta:affiliation_address](metadataaffiliation_address)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:affiliation_address |
-| native | cdp-meta:affiliation_address |
-| exact | cdp-common:author_affiliation_address |
 
 
 

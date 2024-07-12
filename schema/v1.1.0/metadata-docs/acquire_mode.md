@@ -1,5 +1,3 @@
-
-
 # Slot: acquire_mode
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:acquire_mode](metadataacquire_mode)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Camera](Camera.md) | The camera used to collect the tilt series |  no  |
+[CameraDetails](CameraDetails.md) | The camera used to collect the tilt series |  no  |
 
 
 
@@ -53,17 +50,6 @@ URI: [cdp-meta:acquire_mode](metadataacquire_mode)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:acquire_mode |
-| native | cdp-meta:acquire_mode |
-| exact | cdp-common:tiltseries_camera_acquire_mode |
-
-
-
-
 ## LinkML Source
 
 <details>
@@ -75,9 +61,9 @@ exact_mappings:
 - cdp-common:tiltseries_camera_acquire_mode
 rank: 1000
 alias: acquire_mode
-owner: Camera
+owner: CameraDetails
 domain_of:
-- Camera
+- CameraDetails
 range: string
 inlined: true
 inlined_as_list: true

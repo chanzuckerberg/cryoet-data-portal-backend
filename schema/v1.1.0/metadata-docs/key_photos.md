@@ -1,5 +1,3 @@
-
-
 # Slot: key_photos
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:key_photos](metadatakey_photos)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [PicturedEntity](PicturedEntity.md) | An entity with associated preview images |  no  |
+[PicturedEntity](PicturedEntity.md) | An entity with associated preview images |  no  |
 
 
 
@@ -51,16 +48,6 @@ URI: [cdp-meta:key_photos](metadatakey_photos)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:key_photos |
-| native | cdp-meta:key_photos |
 
 
 
