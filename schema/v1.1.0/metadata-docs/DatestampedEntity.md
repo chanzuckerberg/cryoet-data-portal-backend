@@ -1,5 +1,3 @@
-
-
 # Class: DatestampedEntity
 
 
@@ -16,25 +14,15 @@ URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
 
 
 
-
-
 ```mermaid
  classDiagram
     class DatestampedEntity
-    click DatestampedEntity href "../DatestampedEntity"
       DatestampedEntity <|-- Dataset
-        click Dataset href "../Dataset"
       DatestampedEntity <|-- Annotation
-        click Annotation href "../Annotation"
 
       DatestampedEntity : dates
 
-
-
-
-    DatestampedEntity --> "1" DateStamp : dates
-    click DateStamp href "../DateStamp"
-
+          DatestampedEntity --> DateStamp : dates
 
 
 ```
@@ -49,7 +37,7 @@ URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
+| [dates](dates.md) | 1..1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
 
 
 
@@ -75,14 +63,13 @@ URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:DatestampedEntity |
 | native | cdp-meta:DatestampedEntity |
-
-
 
 
 

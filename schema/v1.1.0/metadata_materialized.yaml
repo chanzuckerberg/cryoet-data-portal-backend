@@ -400,8 +400,8 @@ classes:
         owner: Author
         domain_of:
         - Author
-        - Organism
-        - Tissue
+        - OrganismDetails
+        - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
@@ -508,8 +508,8 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
-  Funding:
-    name: Funding
+  FundingDetails:
+    name: FundingDetails
     description: A funding source for a scientific data entity (base for JSON and
       DB representation).
     from_schema: metadata
@@ -521,9 +521,9 @@ classes:
         exact_mappings:
         - cdp-common:funding_agency_name
         alias: funding_agency_name
-        owner: Funding
+        owner: FundingDetails
         domain_of:
-        - Funding
+        - FundingDetails
         range: string
         recommended: true
         inlined: true
@@ -535,9 +535,9 @@ classes:
         exact_mappings:
         - cdp-common:funding_grant_id
         alias: grant_id
-        owner: Funding
+        owner: FundingDetails
         domain_of:
-        - Funding
+        - FundingDetails
         range: string
         recommended: true
         inlined: true
@@ -620,6 +620,7 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: AuthoredEntity
@@ -627,7 +628,6 @@ classes:
         - AuthoredEntity
         range: Author
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
   FundedEntity:
@@ -641,14 +641,14 @@ classes:
         description: A funding source for a scientific data entity (base for JSON
           and DB representation).
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: funding
         owner: FundedEntity
         domain_of:
         - FundedEntity
-        range: Funding
+        range: FundingDetails
         recommended: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
   CrossReferencedEntity:
@@ -687,8 +687,8 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-  Organism:
-    name: Organism
+  OrganismDetails:
+    name: OrganismDetails
     description: The species from which the sample was derived.
     from_schema: metadata
     attributes:
@@ -700,11 +700,11 @@ classes:
         exact_mappings:
         - cdp-common:organism_name
         alias: name
-        owner: Organism
+        owner: OrganismDetails
         domain_of:
         - Author
-        - Organism
-        - Tissue
+        - OrganismDetails
+        - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
@@ -720,16 +720,16 @@ classes:
         exact_mappings:
         - cdp-common:organism_taxid
         alias: taxonomy_id
-        owner: Organism
+        owner: OrganismDetails
         domain_of:
-        - Organism
+        - OrganismDetails
         range: integer
         recommended: true
         inlined: true
         inlined_as_list: true
         minimum_value: 1
-  Tissue:
-    name: Tissue
+  TissueDetails:
+    name: TissueDetails
     description: The type of tissue from which the sample was derived.
     from_schema: metadata
     attributes:
@@ -741,11 +741,11 @@ classes:
         exact_mappings:
         - cdp-common:tissue_name
         alias: name
-        owner: Tissue
+        owner: TissueDetails
         domain_of:
         - Author
-        - Organism
-        - Tissue
+        - OrganismDetails
+        - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
@@ -761,9 +761,9 @@ classes:
         exact_mappings:
         - cdp-common:tissue_id
         alias: id
-        owner: Tissue
+        owner: TissueDetails
         domain_of:
-        - Tissue
+        - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
@@ -788,8 +788,8 @@ classes:
         owner: CellType
         domain_of:
         - Author
-        - Organism
-        - Tissue
+        - OrganismDetails
+        - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
@@ -807,7 +807,7 @@ classes:
         alias: id
         owner: CellType
         domain_of:
-        - Tissue
+        - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
@@ -831,8 +831,8 @@ classes:
         owner: CellStrain
         domain_of:
         - Author
-        - Organism
-        - Tissue
+        - OrganismDetails
+        - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
@@ -850,7 +850,7 @@ classes:
         alias: id
         owner: CellStrain
         domain_of:
-        - Tissue
+        - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
@@ -874,8 +874,8 @@ classes:
         owner: CellComponent
         domain_of:
         - Author
-        - Organism
-        - Tissue
+        - OrganismDetails
+        - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
@@ -893,7 +893,7 @@ classes:
         alias: id
         owner: CellComponent
         domain_of:
-        - Tissue
+        - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
@@ -974,7 +974,7 @@ classes:
         owner: ExperimentalMetadata
         domain_of:
         - ExperimentalMetadata
-        range: Organism
+        range: OrganismDetails
         inlined: true
         inlined_as_list: true
       tissue:
@@ -985,7 +985,7 @@ classes:
         owner: ExperimentalMetadata
         domain_of:
         - ExperimentalMetadata
-        range: Tissue
+        range: TissueDetails
         inlined: true
         inlined_as_list: true
       cell_type:
@@ -1093,6 +1093,7 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: Dataset
@@ -1100,7 +1101,6 @@ classes:
         - AuthoredEntity
         range: Author
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
       funding:
@@ -1108,14 +1108,14 @@ classes:
         description: A funding source for a scientific data entity (base for JSON
           and DB representation).
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: funding
         owner: Dataset
         domain_of:
         - FundedEntity
-        range: Funding
+        range: FundingDetails
         recommended: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
       cross_references:
@@ -1194,7 +1194,7 @@ classes:
         owner: Dataset
         domain_of:
         - ExperimentalMetadata
-        range: Organism
+        range: OrganismDetails
         inlined: true
         inlined_as_list: true
       tissue:
@@ -1205,7 +1205,7 @@ classes:
         owner: Dataset
         domain_of:
         - ExperimentalMetadata
-        range: Tissue
+        range: TissueDetails
         inlined: true
         inlined_as_list: true
       cell_type:
@@ -1241,8 +1241,8 @@ classes:
         range: CellComponent
         inlined: true
         inlined_as_list: true
-  Camera:
-    name: Camera
+  CameraDetails:
+    name: CameraDetails
     description: The camera used to collect the tilt series.
     from_schema: metadata
     attributes:
@@ -1253,9 +1253,9 @@ classes:
         exact_mappings:
         - cdp-common:tiltseries_camera_acquire_mode
         alias: acquire_mode
-        owner: Camera
+        owner: CameraDetails
         domain_of:
-        - Camera
+        - CameraDetails
         range: string
         inlined: true
         inlined_as_list: true
@@ -1266,10 +1266,10 @@ classes:
         exact_mappings:
         - cdp-common:tiltseries_camera_manufacturer
         alias: manufacturer
-        owner: Camera
+        owner: CameraDetails
         domain_of:
-        - Camera
-        - Microscope
+        - CameraDetails
+        - MicroscopeDetails
         range: string
         required: true
         inlined: true
@@ -1281,16 +1281,16 @@ classes:
         exact_mappings:
         - cdp-common:tiltseries_camera_model
         alias: model
-        owner: Camera
+        owner: CameraDetails
         domain_of:
-        - Camera
-        - Microscope
+        - CameraDetails
+        - MicroscopeDetails
         range: string
         required: true
         inlined: true
         inlined_as_list: true
-  Microscope:
-    name: Microscope
+  MicroscopeDetails:
+    name: MicroscopeDetails
     description: The microscope used to collect the tilt series.
     from_schema: metadata
     attributes:
@@ -1301,10 +1301,10 @@ classes:
         exact_mappings:
         - cdp-common:tiltseries_microscope_manufacturer
         alias: manufacturer
-        owner: Microscope
+        owner: MicroscopeDetails
         domain_of:
-        - Camera
-        - Microscope
+        - CameraDetails
+        - MicroscopeDetails
         range: string
         required: true
         inlined: true
@@ -1316,10 +1316,10 @@ classes:
         exact_mappings:
         - cdp-common:tiltseries_microscope_model
         alias: model
-        owner: Microscope
+        owner: MicroscopeDetails
         domain_of:
-        - Camera
-        - Microscope
+        - CameraDetails
+        - MicroscopeDetails
         range: string
         required: true
         inlined: true
@@ -1466,7 +1466,7 @@ classes:
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        range: Camera
+        range: CameraDetails
         required: true
         inlined: true
         inlined_as_list: true
@@ -1519,7 +1519,7 @@ classes:
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        range: Microscope
+        range: MicroscopeDetails
         required: true
         inlined: true
         inlined_as_list: true
@@ -1996,6 +1996,7 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: Tomogram
@@ -2003,7 +2004,6 @@ classes:
         - AuthoredEntity
         range: Author
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
   AnnotationConfidence:
@@ -2077,7 +2077,7 @@ classes:
         alias: id
         owner: AnnotationObject
         domain_of:
-        - Tissue
+        - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
@@ -2097,8 +2097,8 @@ classes:
         owner: AnnotationObject
         domain_of:
         - Author
-        - Organism
-        - Tissue
+        - OrganismDetails
+        - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
@@ -2665,13 +2665,13 @@ classes:
         description: File and sourcing data for an annotation. Represents an entry
           in annotation.sources.
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: files
         owner: Annotation
         domain_of:
         - Annotation
         range: AnnotationSourceFile
-        multivalued: true
         inlined: true
         inlined_as_list: true
       ground_truth_status:
@@ -2762,6 +2762,7 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: Annotation
@@ -2769,7 +2770,6 @@ classes:
         - AuthoredEntity
         range: Author
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
   Any:

@@ -39,13 +39,3 @@ URI: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | xsd:string |
-| native | cdp-meta:curie |

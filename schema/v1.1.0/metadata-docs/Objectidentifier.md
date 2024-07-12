@@ -38,13 +38,3 @@ URI: [shex:iri](http://www.w3.org/ns/shex#iri)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | shex:iri |
-| native | cdp-meta:objectidentifier |

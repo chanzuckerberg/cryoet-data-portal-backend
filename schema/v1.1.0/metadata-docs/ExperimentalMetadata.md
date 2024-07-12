@@ -1,5 +1,3 @@
-
-
 # Class: ExperimentalMetadata
 
 
@@ -16,52 +14,28 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 
 
-
-
 ```mermaid
  classDiagram
     class ExperimentalMetadata
-    click ExperimentalMetadata href "../ExperimentalMetadata"
       ExperimentalMetadata <|-- Dataset
-        click Dataset href "../Dataset"
 
       ExperimentalMetadata : cell_component
 
-
-
-
-    ExperimentalMetadata --> "0..1" CellComponent : cell_component
-    click CellComponent href "../CellComponent"
-
+          ExperimentalMetadata --> CellComponent : cell_component
 
       ExperimentalMetadata : cell_strain
 
-
-
-
-    ExperimentalMetadata --> "0..1" CellStrain : cell_strain
-    click CellStrain href "../CellStrain"
-
+          ExperimentalMetadata --> CellStrain : cell_strain
 
       ExperimentalMetadata : cell_type
 
-
-
-
-    ExperimentalMetadata --> "0..1" CellType : cell_type
-    click CellType href "../CellType"
-
+          ExperimentalMetadata --> CellType : cell_type
 
       ExperimentalMetadata : grid_preparation
 
       ExperimentalMetadata : organism
 
-
-
-
-    ExperimentalMetadata --> "0..1" Organism : organism
-    click Organism href "../Organism"
-
+          ExperimentalMetadata --> OrganismDetails : organism
 
       ExperimentalMetadata : other_setup
 
@@ -69,21 +43,11 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
       ExperimentalMetadata : sample_type
 
-
-
-
-    ExperimentalMetadata --> "1" SampleTypeEnum : sample_type
-    click SampleTypeEnum href "../SampleTypeEnum"
-
+          ExperimentalMetadata --> sample_type_enum : sample_type
 
       ExperimentalMetadata : tissue
 
-
-
-
-    ExperimentalMetadata --> "0..1" Tissue : tissue
-    click Tissue href "../Tissue"
-
+          ExperimentalMetadata --> TissueDetails : tissue
 
 
 ```
@@ -98,12 +62,12 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [sample_type](sample_type.md) | 1 <br/> [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study | direct |
+| [sample_type](sample_type.md) | 1..1 <br/> [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study | direct |
 | [sample_preparation](sample_preparation.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes how the sample was prepared | direct |
 | [grid_preparation](grid_preparation.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes Cryo-ET grid preparation | direct |
 | [other_setup](other_setup.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes other setup not covered by sample preparation or grid preparation t... | direct |
-| [organism](organism.md) | 0..1 <br/> [Organism](Organism.md) | The species from which the sample was derived | direct |
-| [tissue](tissue.md) | 0..1 <br/> [Tissue](Tissue.md) | The type of tissue from which the sample was derived | direct |
+| [organism](organism.md) | 0..1 <br/> [OrganismDetails](OrganismDetails.md) | The species from which the sample was derived | direct |
+| [tissue](tissue.md) | 0..1 <br/> [TissueDetails](TissueDetails.md) | The type of tissue from which the sample was derived | direct |
 | [cell_type](cell_type.md) | 0..1 <br/> [CellType](CellType.md) | The cell type from which the sample was derived | direct |
 | [cell_strain](cell_strain.md) | 0..1 <br/> [CellStrain](CellStrain.md) | The strain or cell line from which the sample was derived | direct |
 | [cell_component](cell_component.md) | 0..1 <br/> [CellComponent](CellComponent.md) | The cellular component from which the sample was derived | direct |
@@ -132,14 +96,13 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:ExperimentalMetadata |
 | native | cdp-meta:ExperimentalMetadata |
-
-
 
 
 
@@ -234,7 +197,7 @@ attributes:
     domain_of:
     - ExperimentalMetadata
     - Dataset
-    range: Organism
+    range: OrganismDetails
     inlined: true
     inlined_as_list: true
   tissue:
@@ -247,7 +210,7 @@ attributes:
     domain_of:
     - ExperimentalMetadata
     - Dataset
-    range: Tissue
+    range: TissueDetails
     inlined: true
     inlined_as_list: true
   cell_type:
@@ -378,7 +341,7 @@ attributes:
     domain_of:
     - ExperimentalMetadata
     - Dataset
-    range: Organism
+    range: OrganismDetails
     inlined: true
     inlined_as_list: true
   tissue:
@@ -391,7 +354,7 @@ attributes:
     domain_of:
     - ExperimentalMetadata
     - Dataset
-    range: Tissue
+    range: TissueDetails
     inlined: true
     inlined_as_list: true
   cell_type:

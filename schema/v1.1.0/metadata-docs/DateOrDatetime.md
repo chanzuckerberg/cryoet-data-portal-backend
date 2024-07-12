@@ -34,13 +34,3 @@ URI: [linkml:DateOrDatetime](https://w3id.org/linkml/DateOrDatetime)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | linkml:DateOrDatetime |
-| native | cdp-meta:date_or_datetime |

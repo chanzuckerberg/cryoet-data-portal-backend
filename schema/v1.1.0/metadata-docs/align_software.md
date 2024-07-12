@@ -1,5 +1,3 @@
-
-
 # Slot: align_software
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:align_software](metadataalign_software)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -49,17 +46,6 @@ URI: [cdp-meta:align_software](metadataalign_software)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:align_software |
-| native | cdp-meta:align_software |
-| exact | cdp-common:tomogram_align_software |
 
 
 

@@ -1,5 +1,3 @@
-
-
 # Class: PicturePath
 
 
@@ -14,29 +12,16 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 
 
-
-
 ```mermaid
  classDiagram
     class PicturePath
-    click PicturePath href "../PicturePath"
       PicturePath : snapshot
 
-
-
-
-    PicturePath --> "1" Any : snapshot
-    click Any href "../Any"
-
+          PicturePath --> Any : snapshot
 
       PicturePath : thumbnail
 
-
-
-
-    PicturePath --> "1" Any : thumbnail
-    click Any href "../Any"
-
+          PicturePath --> Any : thumbnail
 
 
 ```
@@ -51,8 +36,8 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [snapshot](snapshot.md) | 1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
-| [thumbnail](thumbnail.md) | 1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
+| [snapshot](snapshot.md) | 1..1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
+| [thumbnail](thumbnail.md) | 1..1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
 
 
 
@@ -85,14 +70,13 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:PicturePath |
 | native | cdp-meta:PicturePath |
-
-
 
 
 

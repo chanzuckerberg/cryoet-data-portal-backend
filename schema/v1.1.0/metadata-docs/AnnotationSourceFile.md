@@ -1,5 +1,3 @@
-
-
 # Class: AnnotationSourceFile
 
 
@@ -14,20 +12,13 @@ URI: [cdp-meta:AnnotationSourceFile](metadataAnnotationSourceFile)
 
 
 
-
-
 ```mermaid
  classDiagram
     class AnnotationSourceFile
-    click AnnotationSourceFile href "../AnnotationSourceFile"
       AnnotationSourceFile <|-- AnnotationOrientedPointFile
-        click AnnotationOrientedPointFile href "../AnnotationOrientedPointFile"
       AnnotationSourceFile <|-- AnnotationPointFile
-        click AnnotationPointFile href "../AnnotationPointFile"
       AnnotationSourceFile <|-- AnnotationSegmentationMaskFile
-        click AnnotationSegmentationMaskFile href "../AnnotationSegmentationMaskFile"
       AnnotationSourceFile <|-- AnnotationSemanticSegmentationMaskFile
-        click AnnotationSemanticSegmentationMaskFile href "../AnnotationSemanticSegmentationMaskFile"
 
       AnnotationSourceFile : file_format
 
@@ -55,8 +46,8 @@ URI: [cdp-meta:AnnotationSourceFile](metadataAnnotationSourceFile)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [file_format](file_format.md) | 1 <br/> [String](String.md) | File format for this file | direct |
-| [glob_string](glob_string.md) | 1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
+| [file_format](file_format.md) | 1..1 <br/> [String](String.md) | File format for this file | direct |
+| [glob_string](glob_string.md) | 1..1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
 | [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation will be rendered in neuroglancer by default | direct |
 
 
@@ -90,14 +81,13 @@ URI: [cdp-meta:AnnotationSourceFile](metadataAnnotationSourceFile)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationSourceFile |
 | native | cdp-meta:AnnotationSourceFile |
-
-
 
 
 

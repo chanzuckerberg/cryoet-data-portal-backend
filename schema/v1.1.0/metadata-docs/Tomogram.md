@@ -1,5 +1,3 @@
-
-
 # Class: Tomogram
 
 
@@ -14,54 +12,30 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 
 
-
-
 ```mermaid
  classDiagram
     class Tomogram
-    click Tomogram href "../Tomogram"
       AuthoredEntity <|-- Tomogram
-        click AuthoredEntity href "../AuthoredEntity"
 
       Tomogram : affine_transformation_matrix
 
-
-
-
-    Tomogram --> "0..1" Any : affine_transformation_matrix
-    click Any href "../Any"
-
+          Tomogram --> Any : affine_transformation_matrix
 
       Tomogram : align_software
 
       Tomogram : authors
 
-
-
-
-    Tomogram --> "1..*" Author : authors
-    click Author href "../Author"
-
+          Tomogram --> Author : authors
 
       Tomogram : ctf_corrected
 
       Tomogram : fiducial_alignment_status
 
-
-
-
-    Tomogram --> "1" FiducialAlignmentStatusEnum : fiducial_alignment_status
-    click FiducialAlignmentStatusEnum href "../FiducialAlignmentStatusEnum"
-
+          Tomogram --> fiducial_alignment_status_enum : fiducial_alignment_status
 
       Tomogram : offset
 
-
-
-
-    Tomogram --> "1" TomogramOffset : offset
-    click TomogramOffset href "../TomogramOffset"
-
+          Tomogram --> TomogramOffset : offset
 
       Tomogram : processing
 
@@ -73,12 +47,7 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
       Tomogram : size
 
-
-
-
-    Tomogram --> "0..1" TomogramSize : size
-    click TomogramSize href "../TomogramSize"
-
+          Tomogram --> TomogramSize : size
 
       Tomogram : tomogram_version
 
@@ -100,18 +69,18 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [voxel_spacing](voxel_spacing.md) | 1 <br/> [Float](Float.md) | Voxel spacing equal in all three axes in angstroms | direct |
-| [fiducial_alignment_status](fiducial_alignment_status.md) | 1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
+| [voxel_spacing](voxel_spacing.md) | 1..1 <br/> [Float](Float.md) | Voxel spacing equal in all three axes in angstroms | direct |
+| [fiducial_alignment_status](fiducial_alignment_status.md) | 1..1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
 | [ctf_corrected](ctf_corrected.md) | 0..1 _recommended_ <br/> [Boolean](Boolean.md) | Whether this tomogram is CTF corrected | direct |
 | [align_software](align_software.md) | 0..1 <br/> [String](String.md) | Software used for alignment | direct |
-| [reconstruction_method](reconstruction_method.md) | 1 <br/> [String](String.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) | direct |
-| [reconstruction_software](reconstruction_software.md) | 1 <br/> [String](String.md) | Name of software used for reconstruction | direct |
-| [processing](processing.md) | 1 <br/> [String](String.md) | Describe additional processing used to derive the tomogram | direct |
+| [reconstruction_method](reconstruction_method.md) | 1..1 <br/> [String](String.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) | direct |
+| [reconstruction_software](reconstruction_software.md) | 1..1 <br/> [String](String.md) | Name of software used for reconstruction | direct |
+| [processing](processing.md) | 1..1 <br/> [String](String.md) | Describe additional processing used to derive the tomogram | direct |
 | [processing_software](processing_software.md) | 0..1 _recommended_ <br/> [String](String.md) | Processing software used to derive the tomogram | direct |
-| [tomogram_version](tomogram_version.md) | 1 <br/> [VersionString](VersionString.md) | Version of tomogram | direct |
+| [tomogram_version](tomogram_version.md) | 1..1 <br/> [VersionString](VersionString.md) | Version of tomogram | direct |
 | [affine_transformation_matrix](affine_transformation_matrix.md) | 0..1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
 | [size](size.md) | 0..1 <br/> [TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension | direct |
-| [offset](offset.md) | 1 <br/> [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... | direct |
+| [offset](offset.md) | 1..1 <br/> [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
 
 
@@ -138,14 +107,13 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Tomogram |
 | native | cdp-meta:Tomogram |
-
-
 
 
 
@@ -350,6 +318,7 @@ attributes:
     name: authors
     description: Author of a scientific data entity.
     from_schema: metadata
+    multivalued: true
     list_elements_ordered: true
     alias: authors
     owner: Tomogram
@@ -360,7 +329,6 @@ attributes:
     - Annotation
     range: Author
     required: true
-    multivalued: true
     inlined: true
     inlined_as_list: true
 
@@ -562,6 +530,7 @@ attributes:
     name: authors
     description: Author of a scientific data entity.
     from_schema: metadata
+    multivalued: true
     list_elements_ordered: true
     alias: authors
     owner: Tomogram
@@ -572,7 +541,6 @@ attributes:
     - Annotation
     range: Author
     required: true
-    multivalued: true
     inlined: true
     inlined_as_list: true
 

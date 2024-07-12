@@ -1,5 +1,3 @@
-
-
 # Slot: max
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:max](metadatamax)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [TiltRange](TiltRange.md) | The range of tilt angles in the tilt series |  no  |
+[TiltRange](TiltRange.md) | The range of tilt angles in the tilt series |  no  |
 
 
 
@@ -51,17 +48,6 @@ URI: [cdp-meta:max](metadatamax)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:max |
-| native | cdp-meta:max |
-| exact | cdp-common:tiltseries_tilt_max |
 
 
 

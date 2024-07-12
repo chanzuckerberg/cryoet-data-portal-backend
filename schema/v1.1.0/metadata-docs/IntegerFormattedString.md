@@ -33,13 +33,3 @@ URI: [cdp-meta:IntegerFormattedString](metadataIntegerFormattedString)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:IntegerFormattedString |
-| native | cdp-meta:IntegerFormattedString |

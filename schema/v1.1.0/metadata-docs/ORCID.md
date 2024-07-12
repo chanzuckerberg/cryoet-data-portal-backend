@@ -1,5 +1,3 @@
-
-
 # Slot: ORCID
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:ORCID](metadataORCID)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Author](Author.md) | Author of a scientific data entity |  no  |
+[Author](Author.md) | Author of a scientific data entity |  no  |
 
 
 
@@ -53,17 +50,6 @@ URI: [cdp-meta:ORCID](metadataORCID)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:ORCID |
-| native | cdp-meta:ORCID |
-| exact | cdp-common:orcid |
 
 
 

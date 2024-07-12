@@ -1,5 +1,3 @@
-
-
 # Slot: is_curator_recommended
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:is_curator_recommended](metadatais_curator_recommended)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -49,17 +46,6 @@ URI: [cdp-meta:is_curator_recommended](metadatais_curator_recommended)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:is_curator_recommended |
-| native | cdp-meta:is_curator_recommended |
-| exact | cdp-common:annotation_is_curator_recommended |
 
 
 

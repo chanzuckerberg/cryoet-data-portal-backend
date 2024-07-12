@@ -1,5 +1,3 @@
-
-
 # Slot: pixel_spacing
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:pixel_spacing](metadatapixel_spacing)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -53,17 +50,6 @@ URI: [cdp-meta:pixel_spacing](metadatapixel_spacing)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:pixel_spacing |
-| native | cdp-meta:pixel_spacing |
-| exact | cdp-common:tiltseries_pixel_spacing |
 
 
 

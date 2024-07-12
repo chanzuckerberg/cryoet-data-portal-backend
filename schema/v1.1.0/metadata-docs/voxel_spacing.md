@@ -1,5 +1,3 @@
-
-
 # Slot: voxel_spacing
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -51,17 +48,6 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:voxel_spacing |
-| native | cdp-meta:voxel_spacing |
-| exact | cdp-common:tomogram_voxel_spacing |
 
 
 

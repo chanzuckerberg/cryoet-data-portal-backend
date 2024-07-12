@@ -1,5 +1,3 @@
-
-
 # Slot: camera
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:camera](metadatacamera)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -31,7 +28,7 @@ URI: [cdp-meta:camera](metadatacamera)
 
 ## Properties
 
-* Range: [Camera](Camera.md)
+* Range: [CameraDetails](CameraDetails.md)
 
 * Required: True
 
@@ -55,16 +52,6 @@ URI: [cdp-meta:camera](metadatacamera)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:camera |
-| native | cdp-meta:camera |
-
-
-
-
 ## LinkML Source
 
 <details>
@@ -77,7 +64,7 @@ alias: camera
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: Camera
+range: CameraDetails
 required: true
 inlined: true
 inlined_as_list: true

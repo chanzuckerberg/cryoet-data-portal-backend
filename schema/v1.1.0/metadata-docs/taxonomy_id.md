@@ -1,5 +1,3 @@
-
-
 # Slot: taxonomy_id
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:taxonomy_id](metadatataxonomy_id)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Organism](Organism.md) | The species from which the sample was derived |  no  |
+[OrganismDetails](OrganismDetails.md) | The species from which the sample was derived |  no  |
 
 
 
@@ -57,17 +54,6 @@ URI: [cdp-meta:taxonomy_id](metadatataxonomy_id)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:taxonomy_id |
-| native | cdp-meta:taxonomy_id |
-| exact | cdp-common:organism_taxid |
-
-
-
-
 ## LinkML Source
 
 <details>
@@ -79,9 +65,9 @@ exact_mappings:
 - cdp-common:organism_taxid
 rank: 1000
 alias: taxonomy_id
-owner: Organism
+owner: OrganismDetails
 domain_of:
-- Organism
+- OrganismDetails
 range: integer
 recommended: true
 inlined: true

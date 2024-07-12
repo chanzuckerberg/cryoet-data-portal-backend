@@ -1,5 +1,3 @@
-
-
 # Slot: tomogram_version
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:tomogram_version](metadatatomogram_version)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -51,17 +48,6 @@ URI: [cdp-meta:tomogram_version](metadatatomogram_version)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:tomogram_version |
-| native | cdp-meta:tomogram_version |
-| exact | cdp-common:tomogram_version |
 
 
 

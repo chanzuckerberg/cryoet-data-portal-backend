@@ -1,5 +1,3 @@
-
-
 # Slot: size
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:size](metadatasize)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -49,16 +46,6 @@ URI: [cdp-meta:size](metadatasize)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:size |
-| native | cdp-meta:size |
 
 
 

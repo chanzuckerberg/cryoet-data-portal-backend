@@ -1,5 +1,3 @@
-
-
 # Class: CellType
 
 
@@ -14,12 +12,9 @@ URI: [cdp-meta:CellType](metadataCellType)
 
 
 
-
-
 ```mermaid
  classDiagram
     class CellType
-    click CellType href "../CellType"
       CellType : id
 
       CellType : name
@@ -37,7 +32,7 @@ URI: [cdp-meta:CellType](metadataCellType)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 1 <br/> [String](String.md) | Name of the cell type from which a biological sample used in a CryoET study i... | direct |
+| [name](name.md) | 1..1 <br/> [String](String.md) | Name of the cell type from which a biological sample used in a CryoET study i... | direct |
 | [id](id.md) | 0..1 _recommended_ <br/> [String](String.md) | Cell Ontology identifier for the cell type | direct |
 
 
@@ -72,14 +67,13 @@ URI: [cdp-meta:CellType](metadataCellType)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CellType |
 | native | cdp-meta:CellType |
-
-
 
 
 
@@ -108,8 +102,8 @@ attributes:
     owner: CellType
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -127,7 +121,7 @@ attributes:
     alias: id
     owner: CellType
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -159,8 +153,8 @@ attributes:
     owner: CellType
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -178,7 +172,7 @@ attributes:
     alias: id
     owner: CellType
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent

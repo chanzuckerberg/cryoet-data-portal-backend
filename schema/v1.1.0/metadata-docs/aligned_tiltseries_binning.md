@@ -1,5 +1,3 @@
-
-
 # Slot: aligned_tiltseries_binning
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:aligned_tiltseries_binning](metadataaligned_tiltseries_binning)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -49,17 +46,6 @@ URI: [cdp-meta:aligned_tiltseries_binning](metadataaligned_tiltseries_binning)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:aligned_tiltseries_binning |
-| native | cdp-meta:aligned_tiltseries_binning |
-| exact | cdp-common:tiltseries_aligned_tiltseries_binning |
 
 
 

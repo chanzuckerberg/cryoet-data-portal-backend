@@ -1,5 +1,3 @@
-
-
 # Slot: ground_truth_used
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:ground_truth_used](metadataground_truth_used)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation |  no  |
+[AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation |  no  |
 
 
 
@@ -49,17 +46,6 @@ URI: [cdp-meta:ground_truth_used](metadataground_truth_used)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:ground_truth_used |
-| native | cdp-meta:ground_truth_used |
-| exact | cdp-common:annotation_ground_truth_used |
 
 
 

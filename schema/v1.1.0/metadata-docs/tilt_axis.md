@@ -1,5 +1,3 @@
-
-
 # Slot: tilt_axis
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -51,17 +48,6 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:tilt_axis |
-| native | cdp-meta:tilt_axis |
-| exact | cdp-common:tiltseries_tilt_axis |
 
 
 

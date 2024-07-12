@@ -1,5 +1,3 @@
-
-
 # Slot: related_empiar_entry
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:related_empiar_entry](metadatarelated_empiar_entry)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -49,17 +46,6 @@ URI: [cdp-meta:related_empiar_entry](metadatarelated_empiar_entry)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:related_empiar_entry |
-| native | cdp-meta:related_empiar_entry |
-| exact | cdp-common:tiltseries_related_empiar_entry |
 
 
 

@@ -1,5 +1,3 @@
-
-
 # Slot: fiducial_alignment_status
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:fiducial_alignment_status](metadatafiducial_alignment_status)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -51,17 +48,6 @@ URI: [cdp-meta:fiducial_alignment_status](metadatafiducial_alignment_status)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:fiducial_alignment_status |
-| native | cdp-meta:fiducial_alignment_status |
-| exact | cdp-common:tomogram_fiducial_alignment_status |
 
 
 

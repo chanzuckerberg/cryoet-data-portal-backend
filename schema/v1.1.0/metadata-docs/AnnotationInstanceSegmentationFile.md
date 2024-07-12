@@ -1,5 +1,3 @@
-
-
 # Class: AnnotationInstanceSegmentationFile
 
 
@@ -14,14 +12,10 @@ URI: [cdp-meta:AnnotationInstanceSegmentationFile](metadataAnnotationInstanceSeg
 
 
 
-
-
 ```mermaid
  classDiagram
     class AnnotationInstanceSegmentationFile
-    click AnnotationInstanceSegmentationFile href "../AnnotationInstanceSegmentationFile"
       AnnotationOrientedPointFile <|-- AnnotationInstanceSegmentationFile
-        click AnnotationOrientedPointFile href "../AnnotationOrientedPointFile"
 
       AnnotationInstanceSegmentationFile : binning
 
@@ -56,8 +50,8 @@ URI: [cdp-meta:AnnotationInstanceSegmentationFile](metadataAnnotationInstanceSeg
 | [binning](binning.md) | 0..1 <br/> [Integer](Integer.md) | The binning factor for a point / oriented point / instance segmentation annot... | direct |
 | [filter_value](filter_value.md) | 0..1 <br/> [String](String.md) | The filter value for an oriented point / instance segmentation annotation fil... | direct |
 | [order](order.md) | 0..1 <br/> [String](String.md) | The order of axes for an oriented point / instance segmentation annotation fi... | direct |
-| [file_format](file_format.md) | 1 <br/> [String](String.md) | File format for this file | direct |
-| [glob_string](glob_string.md) | 1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
+| [file_format](file_format.md) | 1..1 <br/> [String](String.md) | File format for this file | direct |
+| [glob_string](glob_string.md) | 1..1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
 | [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation will be rendered in neuroglancer by default | direct |
 
 
@@ -89,14 +83,13 @@ URI: [cdp-meta:AnnotationInstanceSegmentationFile](metadataAnnotationInstanceSeg
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationInstanceSegmentationFile |
 | native | cdp-meta:AnnotationInstanceSegmentationFile |
-
-
 
 
 

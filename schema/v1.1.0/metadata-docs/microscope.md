@@ -1,5 +1,3 @@
-
-
 # Slot: microscope
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:microscope](metadatamicroscope)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -31,7 +28,7 @@ URI: [cdp-meta:microscope](metadatamicroscope)
 
 ## Properties
 
-* Range: [Microscope](Microscope.md)
+* Range: [MicroscopeDetails](MicroscopeDetails.md)
 
 * Required: True
 
@@ -55,16 +52,6 @@ URI: [cdp-meta:microscope](metadatamicroscope)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:microscope |
-| native | cdp-meta:microscope |
-
-
-
-
 ## LinkML Source
 
 <details>
@@ -77,7 +64,7 @@ alias: microscope
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: Microscope
+range: MicroscopeDetails
 required: true
 inlined: true
 inlined_as_list: true

@@ -1,5 +1,3 @@
-
-
 # Slot: model
 
 URI: [cdp-meta:model](metadatamodel)
@@ -11,13 +9,12 @@ URI: [cdp-meta:model](metadatamodel)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Microscope](Microscope.md) | The microscope used to collect the tilt series |  no  |
-| [Camera](Camera.md) | The camera used to collect the tilt series |  no  |
+[CameraDetails](CameraDetails.md) | The camera used to collect the tilt series |  no  |
+[MicroscopeDetails](MicroscopeDetails.md) | The microscope used to collect the tilt series |  no  |
 
 
 
@@ -42,16 +39,6 @@ URI: [cdp-meta:model](metadatamodel)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:model |
-| native | cdp-meta:model |
-
-
-
-
 ## LinkML Source
 
 <details>
@@ -59,8 +46,8 @@ URI: [cdp-meta:model](metadatamodel)
 name: model
 alias: model
 domain_of:
-- Camera
-- Microscope
+- CameraDetails
+- MicroscopeDetails
 range: string
 
 ```

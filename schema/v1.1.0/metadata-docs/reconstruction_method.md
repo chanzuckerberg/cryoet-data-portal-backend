@@ -1,5 +1,3 @@
-
-
 # Slot: reconstruction_method
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:reconstruction_method](metadatareconstruction_method)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -51,17 +48,6 @@ URI: [cdp-meta:reconstruction_method](metadatareconstruction_method)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:reconstruction_method |
-| native | cdp-meta:reconstruction_method |
-| exact | cdp-common:tomogram_reconstruction_method |
 
 
 

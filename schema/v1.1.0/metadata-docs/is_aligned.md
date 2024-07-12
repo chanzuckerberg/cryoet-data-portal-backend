@@ -1,5 +1,3 @@
-
-
 # Slot: is_aligned
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:is_aligned](metadatais_aligned)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -51,17 +48,6 @@ URI: [cdp-meta:is_aligned](metadatais_aligned)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:is_aligned |
-| native | cdp-meta:is_aligned |
-| exact | cdp-common:tiltseries_is_aligned |
 
 
 

@@ -1,5 +1,3 @@
-
-
 # Slot: manufacturer
 
 URI: [cdp-meta:manufacturer](metadatamanufacturer)
@@ -11,13 +9,12 @@ URI: [cdp-meta:manufacturer](metadatamanufacturer)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Microscope](Microscope.md) | The microscope used to collect the tilt series |  no  |
-| [Camera](Camera.md) | The camera used to collect the tilt series |  no  |
+[CameraDetails](CameraDetails.md) | The camera used to collect the tilt series |  no  |
+[MicroscopeDetails](MicroscopeDetails.md) | The microscope used to collect the tilt series |  no  |
 
 
 
@@ -42,16 +39,6 @@ URI: [cdp-meta:manufacturer](metadatamanufacturer)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:manufacturer |
-| native | cdp-meta:manufacturer |
-
-
-
-
 ## LinkML Source
 
 <details>
@@ -59,8 +46,8 @@ URI: [cdp-meta:manufacturer](metadatamanufacturer)
 name: manufacturer
 alias: manufacturer
 domain_of:
-- Camera
-- Microscope
+- CameraDetails
+- MicroscopeDetails
 range: string
 
 ```
