@@ -4,7 +4,7 @@ import re
 
 DATASET_CONFIGS_DIR = "../dataset_configs/"
 EXCLUDE_LIST = ["template.yaml", "dataset_config_merged.yaml"]
-EXCLUDE_KEYWORDS = "draft"
+EXCLUDE_KEYWORDS_LIST = ["draft"]
 YAML_EXTENSIONS = (".yaml", ".yml")
 
 # Set up logging
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 def get_yaml_config_files(
     include_glob: str = None,
-    exclude_keywords: str = EXCLUDE_KEYWORDS,
+    exclude_keywords_list: list[str] = EXCLUDE_KEYWORDS_LIST,
     dataset_configs_dir: str = DATASET_CONFIGS_DIR,
     verbose: bool = False,
 ) -> list:
@@ -24,7 +24,6 @@ def get_yaml_config_files(
     if verbose:
         logger.setLevel(logging.DEBUG)
 
-    exclude_keywords_list = exclude_keywords.split(",")
     if exclude_keywords_list[0] != "":
         logger.info("Excluding files that contain any of the following keywords: %s", exclude_keywords_list)
     else:

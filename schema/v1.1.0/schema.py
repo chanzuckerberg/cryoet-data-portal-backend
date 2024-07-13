@@ -24,6 +24,11 @@ def _add_to_slot_pattern(slot: dict, pattern: Union[str, None]) -> str:
     elif "pattern" not in slot or slot["pattern"] is None:
         return pattern
     else:
+        # For when the pattern is already in the pattern, no need to add it again
+        if f"({pattern})" in slot["pattern"]:
+            return slot["pattern"]
+
+        # For when the pattern is a list of patterns already, no need to add the parenthesis again
         if slot["pattern"][0] == "(" and slot["pattern"][-1] == ")":
             return f"{slot['pattern']}|({pattern})"
         else:

@@ -248,12 +248,6 @@ types:
     from_schema: cdp-dataset-config
     base: str
     pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
-  BooleanFormattedString:
-    name: BooleanFormattedString
-    description: A formatted string that represents a boolean.
-    from_schema: cdp-dataset-config
-    base: str
-    pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
   FloatFormattedString:
     name: FloatFormattedString
     description: A formatted string that represents a floating point number.

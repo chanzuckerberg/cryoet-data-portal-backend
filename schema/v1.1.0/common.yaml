@@ -490,8 +490,7 @@ slots:
     range: fiducial_alignment_status_enum
     any_of:
       - range: fiducial_alignment_status_enum
-      - range: BooleanFormattedString
-        pattern: '^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$'
+      - range: StringFormattedString
     required: true
     description: Whether the tomographic alignment was computed based on fiducial markers.
   tomogram_https_mrc_scale0:
@@ -807,11 +806,6 @@ enums:
 types:
   StringFormattedString:
     description: A formatted string (variable) that represents a string.
-    base: str
-    pattern: '^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$'
-
-  BooleanFormattedString:
-    description: A formatted string that represents a boolean.
     base: str
     pattern: '^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$'
 
