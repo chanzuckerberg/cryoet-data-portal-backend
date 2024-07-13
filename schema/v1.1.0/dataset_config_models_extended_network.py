@@ -4,13 +4,19 @@ import asyncio
 from typing import List, Optional
 
 import aiohttp
-from dataset_config_models import AnnotationEntity, Container
+from dataset_config_models import Annotation, AnnotationEntity, Author, Container
 from pydantic import field_validator
 
 running_orcid_list = {}
 
 
 class ExtendedNetworkValidationContainer(Container):
+    annotations: Optional[List[ExtendedValidationAnnotationEntity]]
+
+class ExtendedValidationAnnotationEntity(AnnotationEntity):
+    metadata: Optional[ExtendedValidationAnnotation]
+
+class ExtendedValidationAnnotation(Annotation):
     async def check_orcid(self, session, orcid_id):
         url = f"https://pub.orcid.org/v3.0/{orcid_id}"
         headers = {"Accept": "application/json"}
@@ -40,14 +46,13 @@ class ExtendedNetworkValidationContainer(Container):
                 running_orcid_list[orcid] = valid
             return invalid_orcids
 
-    @field_validator("annotations")
+    @field_validator("authors")
     @classmethod
-    def valid_annotation_authors(cls, value: Optional[List[AnnotationEntity]]) -> Optional[List[AnnotationEntity]]:
+    def valid_authors(cls, value: List[Author]) -> List[Author]:
         if value is None:
             return None
-        for annotation in value:
-            orcids = list({author.ORCID for author in annotation.metadata.authors if author.ORCID is not None})
-            invalid_orcids = asyncio.run(cls.verify_orcids(cls, orcids))
-            if len(invalid_orcids) > 0:
-                raise ValueError(f"Invalid ORCIDs found in annotation authors: {invalid_orcids}")
+        orcids = list({author.ORCID for author in value if author.ORCID is not None})
+        invalid_orcids = asyncio.run(cls.verify_orcids(cls, orcids))
+        if len(invalid_orcids) > 0:
+            raise ValueError(f"Invalid ORCIDs found in annotation authors: {invalid_orcids}")
         return value
