@@ -17,7 +17,8 @@ DATASET_CONFIGS_MODELS_DIR = f"../../schema/{SCHEMA_VERSION}/"
 
 sys.path.append(DATASET_CONFIGS_MODELS_DIR)  # To import the Pydantic-generated dataset models
 
-from dataset_config_models_extended import ExtendedContainer  # noqa: E402
+from dataset_config_models_extended import ExtendedValidationContainer  # noqa: E402
+from dataset_config_models_extended_network import ExtendedNetworkValidationContainer  # noqa: E402
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -126,8 +127,20 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
     default=ERRORS_OUTPUT_DIR,
     help="Output directory for validation errors",
 )
+@click.option(
+    "--extended-network-validation",
+    is_flag=True,
+    help="Run extended network validation with HTTP requests to verify data",
+)
 @click.option("--verbose", is_flag=True, help="Print verbose output")
-def main(dataset_configs_dir: str, include_glob: str, exclude_keywords: str, output_dir: str, verbose: bool):
+def main(
+    dataset_configs_dir: str,
+    include_glob: str,
+    exclude_keywords: str,
+    output_dir: str,
+    extended_network_validation: bool,
+    verbose: bool,
+):
     """
     See ../docs/dataset_config_validation.md for more information.
     """
@@ -158,7 +171,10 @@ def main(dataset_configs_dir: str, include_glob: str, exclude_keywords: str, out
                 # formatted strings and the base type in the same field)
                 # https://github.com/linkml/linkml/issues/1521
                 config_data = replace_formatted_strings(config_data, 0, False)
-                ExtendedContainer(**config_data)
+                if extended_network_validation:
+                    ExtendedNetworkValidationContainer(**config_data)
+                else:
+                    ExtendedValidationContainer(**config_data)
         except ValidationError as e:
             validation_succeeded = False
             # Get all errors and convert them to strings
