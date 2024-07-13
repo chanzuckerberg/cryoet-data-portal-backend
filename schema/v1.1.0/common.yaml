@@ -528,7 +528,7 @@ slots:
       - range: StringFormattedString
       - range: tomogrom_reconstruction_method_enum
     required: true
-    description: Describe reconstruction method (Weighted back-projection, SART, SIRT)
+    description: Describe reconstruction method (WBP, SART, SIRT)
   tomogram_reconstruction_software:
     range: string
     required: true
@@ -720,9 +720,9 @@ enums:
       manual:
         description: Annotations were generated manually.
       automated:
-        description: Annotations were generated semi-automatically.
-      hybrid:
         description: Annotations were generated automatically.
+      hybrid:
+        description: Annotations were generated semi-automatically.
 
   sample_type_enum:
     description: Type of sample imaged in a CryoET study.
@@ -864,12 +864,12 @@ types:
   DOI:
     description: A Digital Object Identifier
     base: str
-    pattern: '^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$'
+    pattern: '^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$'
 
   DOI_LIST:
     description: A list of Digital Object Identifiers
     base: str
-    pattern: '^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$'
+    pattern: '^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$'
 
   EMPIAR_ID:
     description: An Electron Microscopy Public Image Archive identifier

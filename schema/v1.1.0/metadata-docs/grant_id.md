@@ -21,7 +21,7 @@ URI: [cdp-meta:grant_id](metadatagrant_id)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... |  no  |
+| [FundingDetails](FundingDetails.md) | A funding source for a scientific data entity (base for JSON and DB represent... |  no  |
 
 
 
@@ -77,9 +77,9 @@ exact_mappings:
 - cdp-common:funding_grant_id
 rank: 1000
 alias: grant_id
-owner: Funding
+owner: FundingDetails
 domain_of:
-- Funding
+- FundingDetails
 range: string
 recommended: true
 inlined: true

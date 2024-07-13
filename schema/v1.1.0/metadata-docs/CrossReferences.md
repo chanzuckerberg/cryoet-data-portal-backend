@@ -117,7 +117,7 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
-    pattern: (^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
+    pattern: (^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
   related_database_entries:
     name: related_database_entries
     description: Comma-separated list of related database entries for the dataset.
@@ -182,7 +182,7 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
-    pattern: (^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:|https://doi\.org/)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
+    pattern: (^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
   related_database_entries:
     name: related_database_entries
     description: Comma-separated list of related database entries for the dataset.

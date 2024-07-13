@@ -21,7 +21,7 @@ URI: [cdp-meta:additional_info](metadataadditional_info)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Microscope](Microscope.md) | The microscope used to collect the tilt series |  no  |
+| [MicroscopeDetails](MicroscopeDetails.md) | The microscope used to collect the tilt series |  no  |
 
 
 
@@ -76,9 +76,9 @@ exact_mappings:
 - cdp-common:tiltseries_microscope_additional_info
 rank: 1000
 alias: additional_info
-owner: Microscope
+owner: MicroscopeDetails
 domain_of:
-- Microscope
+- MicroscopeDetails
 range: string
 inlined: true
 inlined_as_list: true

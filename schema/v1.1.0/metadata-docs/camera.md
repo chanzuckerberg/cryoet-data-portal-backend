@@ -31,7 +31,7 @@ URI: [cdp-meta:camera](metadatacamera)
 
 ## Properties
 
-* Range: [Camera](Camera.md)
+* Range: [CameraDetails](CameraDetails.md)
 
 * Required: True
 
@@ -77,7 +77,7 @@ alias: camera
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: Camera
+range: CameraDetails
 required: true
 inlined: true
 inlined_as_list: true

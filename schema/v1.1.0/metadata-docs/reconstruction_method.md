@@ -3,7 +3,7 @@
 # Slot: reconstruction_method
 
 
-_Describe reconstruction method (Weighted back-projection, SART, SIRT)_
+_Describe reconstruction method (WBP, SART, SIRT)_
 
 
 
@@ -73,7 +73,7 @@ URI: [cdp-meta:reconstruction_method](metadatareconstruction_method)
 <details>
 ```yaml
 name: reconstruction_method
-description: Describe reconstruction method (Weighted back-projection, SART, SIRT)
+description: Describe reconstruction method (WBP, SART, SIRT)
 from_schema: metadata
 exact_mappings:
 - cdp-common:tomogram_reconstruction_method

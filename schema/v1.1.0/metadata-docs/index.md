@@ -24,7 +24,7 @@ Name: cdp-meta
 | [Any](Any.md) | A placeholder for any type of data. |
 | [Author](Author.md) | Author of a scientific data entity. |
 | [AuthoredEntity](AuthoredEntity.md) | An entity with associated authors. |
-| [Camera](Camera.md) | The camera used to collect the tilt series. |
+| [CameraDetails](CameraDetails.md) | The camera used to collect the tilt series. |
 | [CellComponent](CellComponent.md) | The cellular component from which the sample was derived. |
 | [CellStrain](CellStrain.md) | The strain or cell line from which the sample was derived. |
 | [CellType](CellType.md) | The cell type from which the sample was derived. |
@@ -35,15 +35,15 @@ Name: cdp-meta
 | [DatestampedEntity](DatestampedEntity.md) | An entity with associated deposition, release and last modified dates. |
 | [ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET dataset. |
 | [FundedEntity](FundedEntity.md) | An entity with associated funding sources. |
-| [Funding](Funding.md) | A funding source for a scientific data entity (base for JSON and DB representation). |
-| [Microscope](Microscope.md) | The microscope used to collect the tilt series. |
+| [FundingDetails](FundingDetails.md) | A funding source for a scientific data entity (base for JSON and DB representation). |
+| [MicroscopeDetails](MicroscopeDetails.md) | The microscope used to collect the tilt series. |
 | [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series. |
-| [Organism](Organism.md) | The species from which the sample was derived. |
+| [OrganismDetails](OrganismDetails.md) | The species from which the sample was derived. |
 | [PicturedEntity](PicturedEntity.md) | An entity with associated preview images. |
 | [PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data. |
 | [TiltRange](TiltRange.md) | The range of tilt angles in the tilt series. |
 | [TiltSeries](TiltSeries.md) | Metadata describing a tilt series. |
-| [Tissue](Tissue.md) | The type of tissue from which the sample was derived. |
+| [TissueDetails](TissueDetails.md) | The type of tissue from which the sample was derived. |
 | [Tomogram](Tomogram.md) | Metadata describing a tomogram. |
 | [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonical tomogram. |
 | [TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension. |
@@ -132,7 +132,7 @@ Name: cdp-meta
 | [processing](processing.md) | Describe additional processing used to derive the tomogram |
 | [processing_software](processing_software.md) | Processing software used to derive the tomogram |
 | [recall](recall.md) | Describe the confidence level of the annotation |
-| [reconstruction_method](reconstruction_method.md) | Describe reconstruction method (Weighted back-projection, SART, SIRT) |
+| [reconstruction_method](reconstruction_method.md) | Describe reconstruction method (WBP, SART, SIRT) |
 | [reconstruction_software](reconstruction_software.md) | Name of software used for reconstruction |
 | [related_database_entries](related_database_entries.md) | Comma-separated list of related database entries for the dataset |
 | [related_database_links](related_database_links.md) | Comma-separated list of related database links for the dataset |

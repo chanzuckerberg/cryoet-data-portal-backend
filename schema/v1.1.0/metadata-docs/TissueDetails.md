@@ -1,6 +1,6 @@
 
 
-# Class: Tissue
+# Class: TissueDetails
 
 
 _The type of tissue from which the sample was derived._
@@ -9,7 +9,7 @@ _The type of tissue from which the sample was derived._
 
 
 
-URI: [cdp-meta:Tissue](metadataTissue)
+URI: [cdp-meta:TissueDetails](metadataTissueDetails)
 
 
 
@@ -18,11 +18,11 @@ URI: [cdp-meta:Tissue](metadataTissue)
 
 ```mermaid
  classDiagram
-    class Tissue
-    click Tissue href "../Tissue"
-      Tissue : id
+    class TissueDetails
+    click TissueDetails href "../TissueDetails"
+      TissueDetails : id
 
-      Tissue : name
+      TissueDetails : name
 
 
 ```
@@ -48,8 +48,8 @@ URI: [cdp-meta:Tissue](metadataTissue)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [ExperimentalMetadata](ExperimentalMetadata.md) | [tissue](tissue.md) | range | [Tissue](Tissue.md) |
-| [Dataset](Dataset.md) | [tissue](tissue.md) | range | [Tissue](Tissue.md) |
+| [ExperimentalMetadata](ExperimentalMetadata.md) | [tissue](tissue.md) | range | [TissueDetails](TissueDetails.md) |
+| [Dataset](Dataset.md) | [tissue](tissue.md) | range | [TissueDetails](TissueDetails.md) |
 
 
 
@@ -76,8 +76,8 @@ URI: [cdp-meta:Tissue](metadataTissue)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:Tissue |
-| native | cdp-meta:Tissue |
+| self | cdp-meta:TissueDetails |
+| native | cdp-meta:TissueDetails |
 
 
 
@@ -93,7 +93,7 @@ URI: [cdp-meta:Tissue](metadataTissue)
 
 <details>
 ```yaml
-name: Tissue
+name: TissueDetails
 description: The type of tissue from which the sample was derived.
 from_schema: metadata
 attributes:
@@ -105,11 +105,11 @@ attributes:
     exact_mappings:
     - cdp-common:tissue_name
     alias: name
-    owner: Tissue
+    owner: TissueDetails
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -126,9 +126,9 @@ attributes:
     - cdp-common:tissue_id
     rank: 1000
     alias: id
-    owner: Tissue
+    owner: TissueDetails
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -146,7 +146,7 @@ attributes:
 
 <details>
 ```yaml
-name: Tissue
+name: TissueDetails
 description: The type of tissue from which the sample was derived.
 from_schema: metadata
 attributes:
@@ -158,11 +158,11 @@ attributes:
     exact_mappings:
     - cdp-common:tissue_name
     alias: name
-    owner: Tissue
+    owner: TissueDetails
     domain_of:
     - Author
-    - Organism
-    - Tissue
+    - OrganismDetails
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
@@ -179,9 +179,9 @@ attributes:
     - cdp-common:tissue_id
     rank: 1000
     alias: id
-    owner: Tissue
+    owner: TissueDetails
     domain_of:
-    - Tissue
+    - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
