@@ -691,7 +691,7 @@ class Author(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "affiliation_identifier",
                 "domain_of": ["Author"],
-                "exact_mappings": ["cdp-common:affiliation_identifier"],
+                "exact_mappings": ["cdp-common:author_affiliation_identifier"],
                 "recommended": True,
             }
         },

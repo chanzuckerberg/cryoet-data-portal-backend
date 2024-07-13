@@ -120,7 +120,7 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
 @click.option("--verbose", is_flag=True, help="Print verbose output")
 def main(input_files: str, input_dir: str, include_glob: str, exclude_keywords: str, output_dir: str, verbose: bool):
     """
-    See ../docs/dataset_config_validation.md for more information.
+    See ingestion_tools/docs/dataset_config_validation.md for more information.
     """
     if verbose:
         logger.setLevel(logging.DEBUG)
@@ -139,7 +139,7 @@ def main(input_files: str, input_dir: str, include_glob: str, exclude_keywords: 
     elif input_dir:
         files_to_validate = get_yaml_config_files(include_glob, exclude_keywords_list, input_dir, verbose)
     else:
-        logger.info("No input files or directory provided. Using default input directory.")
+        logger.info("No input files or directory provided. Using default input directory: %s", DATASET_CONFIGS_DIR)
         files_to_validate = get_yaml_config_files(include_glob, exclude_keywords_list, DATASET_CONFIGS_DIR, verbose)
 
     if not files_to_validate:

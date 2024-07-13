@@ -584,7 +584,7 @@ classes:
         description: A Research Organization Registry (ROR) identifier.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:affiliation_identifier
+        - cdp-common:author_affiliation_identifier
         alias: affiliation_identifier
         owner: Author
         domain_of:
