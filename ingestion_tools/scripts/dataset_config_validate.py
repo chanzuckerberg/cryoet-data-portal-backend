@@ -4,7 +4,7 @@ import os
 import re
 import shutil
 import sys
-from typing import Dict, List, Union
+from typing import List, Union
 
 import click
 import yaml
@@ -18,7 +18,7 @@ DATASET_CONFIGS_MODELS_DIR = f"../../schema/{SCHEMA_VERSION}/"
 sys.path.append(DATASET_CONFIGS_MODELS_DIR)  # To import the Pydantic-generated dataset models
 
 from dataset_config_models_extended import ExtendedValidationContainer  # noqa: E402
-from dataset_config_models_extended_network import ExtendedNetworkValidationContainer  # noqa: E402
+from dataset_config_models_extended_network import NetworkValidationContainer  # noqa: E402
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -41,18 +41,17 @@ FLOAT_FORMATTED_STRING_REGEX = r"^float\s*{[a-zA-Z0-9_-]+}\s*$"
 INTEGER_FORMATTED_STRING_REGEX = r"^int\s*{[a-zA-Z0-9_-]+}\s*$"
 
 
-def print_errors(errors: Dict[str, List[Union[ValidationError, Exception]]]) -> List[str]:
+def print_file_errors(filename: str, error: List[Union[ValidationError, Exception]]) -> None:
     """
-    Convert an error value to a more concise text string.
+    Print an error message to stdout.
     """
-    for file, error in sorted(errors.items()):
-        logger.error('FAIL: "%s":', file)
-        for e in error:
-            if not isinstance(e, dict) or any(key not in e for key in ["loc", "msg"]):
-                logger.error("\t- error: %s", str(e))
-            else:
-                loc = ".".join([str(x) for x in e["loc"]])
-                logger.error("\t- %s: %s", e["msg"], loc)
+    logger.error('FAIL: "%s":', filename)
+    for e in error:
+        if not isinstance(e, dict) or any(key not in e for key in ["loc", "msg"]):
+            logger.error("\t- error: %s", str(e))
+        else:
+            loc = ".".join([str(x) for x in e["loc"]])
+            logger.error("\t- %s: %s", e["msg"], loc)
 
 
 def replace_formatted_string(value: str) -> Union[str, bool, float, int]:
@@ -162,6 +161,7 @@ def main(
     # Run validation and save output
     validation_succeeded = True
     errors = {}
+    files_to_validate = sorted(files_to_validate)
     for file in files_to_validate:
         try:
             with open(file, "r") as stream:
@@ -172,16 +172,19 @@ def main(
                 # https://github.com/linkml/linkml/issues/1521
                 config_data = replace_formatted_strings(config_data, 0, False)
                 if extended_network_validation:
-                    ExtendedNetworkValidationContainer(**config_data)
+                    NetworkValidationContainer(**config_data)
                 else:
                     ExtendedValidationContainer(**config_data)
         except ValidationError as e:
             validation_succeeded = False
             # Get all errors and convert them to strings
             errors[file] = e.errors()
+            print_file_errors(file, errors[file])
 
         except Exception as exc:
+            validation_succeeded = False
             errors[file] = [exc]
+            print_file_errors(file, errors[file])
 
     if validation_succeeded:
         logger.info("All files passed validation.")
@@ -190,9 +193,6 @@ def main(
     # Write all errors to a file
     with open(os.path.join(output_dir, "dataset_config_validate_errors.json"), "w") as f:
         json.dump(dict(sorted(errors.items())), f, indent=2, default=str)
-
-    # Print errors to stdout
-    print_errors(errors)
 
     logger.error("Validation failed. See dataset_config_validate_errors.json for details.")
     exit(1)
