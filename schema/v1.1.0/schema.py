@@ -77,6 +77,7 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
     # Ensure enums are properly implemented in the generated Pydantic
     schema_enums = schema.all_enums()
 
+    # Loop through all classes and their attributes, adding relevant attributes from common schema
     for c in schema.all_classes():
         clz = schema.get_class(c)
         for s in clz.attributes:
@@ -108,12 +109,16 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
                 slot["recommended"] = common_slot["recommended"]
                 slot["pattern"] = _add_to_slot_pattern(slot, common_slot["pattern"])
                 slot["ifabsent"] = common_slot["ifabsent"]
+            # if the slot's range is a type, add the pattern from the type
             if slot["range"] in schema_types:
                 slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(slot["range"]).pattern)
+            # if the slot's range is an enum, add the pattern from the enum
             if slot["range"] in schema_enums:
                 for _, e in enumerate(schema.get_enum(slot["range"]).permissible_values):
                     slot["pattern"] = _add_to_slot_pattern(slot, f"^{e}$")
-            # add the patterns from the any_of range, combining them regex-wise
+            # if the slot has an any_of attribute (with possibly multiple ranges and each of those ranges
+            # possibly being a enum / type, add all those patterns
+            # also add any corresponding minimum_value and maximum_value attributes
             if "any_of" in slot:
                 for _, a in enumerate(slot["any_of"]):
                     if "range" in a and a["range"] in schema_types and "pattern" in schema.get_type(a["range"]):
