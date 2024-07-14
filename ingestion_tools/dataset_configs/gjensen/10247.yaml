@@ -18,7 +18,7 @@ datasets:
       id: null
       name: subsp. subtilis str. 168
     cross_references:
-      dataset_publications: https://doi.org/10.1111/mmi.12201
+      dataset_publications: 10.1111/mmi.12201
     dataset_description: This is 2nd of 4 sets of data studying Bacillus subtilis
       collected by Elitza Tocheva and is a part of Caltech Jensen  lab etdb. withTA
     dataset_identifier: 10247

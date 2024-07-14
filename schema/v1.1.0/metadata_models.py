@@ -107,6 +107,13 @@ linkml_meta = LinkMLMeta(
                 "name": "EMDB_ID",
                 "pattern": "^EMD-[0-9]{4,5}$",
             },
+            "EMPIAR_EMDB_DOI_LIST": {
+                "base": "str",
+                "description": "A list of EMPIAR, EMDB, " "and DOI identifiers",
+                "from_schema": "metadata",
+                "name": "EMPIAR_EMDB_DOI_LIST",
+                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+))*$",
+            },
             "EMPIAR_EMDB_LIST": {
                 "base": "str",
                 "description": "A list of EMPIAR and EMDB " "identifiers",
@@ -2964,12 +2971,12 @@ class Annotation(AuthoredEntity, DatestampedEntity):
     )
     annotation_publications: Optional[str] = Field(
         None,
-        description="""DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.""",
+        description="""List of publication IDs (EMPIAR, EMDB, DOI) that describe this annotation method. Comma separated.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "annotation_publications",
                 "domain_of": ["Annotation"],
-                "exact_mappings": ["cdp-common:annotation_publication"],
+                "exact_mappings": ["cdp-common:annotation_publications"],
             }
         },
     )
@@ -3073,6 +3080,20 @@ class Annotation(AuthoredEntity, DatestampedEntity):
             }
         },
     )
+
+    @field_validator("annotation_publications")
+    def pattern_annotation_publications(cls, v):
+        pattern = re.compile(
+            r"^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+))*$"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid annotation_publications format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid annotation_publications format: {v}")
+        return v
 
     @field_validator("method_type")
     def pattern_method_type(cls, v):

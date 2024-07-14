@@ -580,9 +580,9 @@ slots:
     range: annotation_method_type_enum
     required: true
     description: Classification of the annotation method based on supervision.
-  annotation_publication:
-    range: string
-    description: DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.
+  annotation_publications:
+    range: EMPIAR_EMDB_DOI_LIST
+    description: List of publication IDs (EMPIAR, EMDB, DOI) that describe this annotation method. Comma separated.
   annotation_software:
     range: string
     description: Software used for generating this annotation
@@ -885,6 +885,11 @@ types:
     description: A list of EMPIAR and EMDB identifiers
     base: str
     pattern: '^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$'
+
+  EMPIAR_EMDB_DOI_LIST:
+    description: A list of EMPIAR, EMDB, and DOI identifiers
+    base: str
+    pattern: '^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+))*$'
 
 classes:
   Any:

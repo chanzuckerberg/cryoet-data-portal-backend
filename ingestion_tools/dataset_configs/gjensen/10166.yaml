@@ -18,7 +18,7 @@ datasets:
       id: null
       name: ATCC 15444
     cross_references:
-      dataset_publications: https://doi.org/10.1111/mmi.13593
+      dataset_publications: 10.1111/mmi.13593
     dataset_description: This is 5th of 5 sets of data studying Hyphomonas neptunium
       collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb. ParA-like
       protein, HNE0708 knockout,DNA stream

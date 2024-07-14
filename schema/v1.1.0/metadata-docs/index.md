@@ -65,7 +65,7 @@ Name: cdp-meta
 | [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | Binning factor of the aligned tilt series |
 | [annotation_method](annotation_method.md) | Describe how the annotation is made (e |
 | [annotation_object](annotation_object.md) | Metadata describing the object being annotated |
-| [annotation_publications](annotation_publications.md) | DOIs for publications that describe the dataset |
+| [annotation_publications](annotation_publications.md) | List of publication IDs (EMPIAR, EMDB, DOI) that describe this annotation met... |
 | [annotation_software](annotation_software.md) | Software used for generating this annotation |
 | [authors](authors.md) | Author of a scientific data entity |
 | [binning](binning.md) | The binning factor for a point / oriented point / instance segmentation annot... |
@@ -193,6 +193,7 @@ Name: cdp-meta
 | [DOILIST](DOILIST.md) | A list of Digital Object Identifiers |
 | [Double](Double.md) | A real number that conforms to the xsd:double specification |
 | [EMDBID](EMDBID.md) | An Electron Microscopy Data Bank identifier |
+| [EMPIAREMDBDOILIST](EMPIAREMDBDOILIST.md) | A list of EMPIAR, EMDB, and DOI identifiers |
 | [EMPIAREMDBLIST](EMPIAREMDBLIST.md) | A list of EMPIAR and EMDB identifiers |
 | [EMPIARID](EMPIARID.md) | An Electron Microscopy Public Image Archive identifier |
 | [Float](Float.md) | A real number that conforms to the xsd:float specification |

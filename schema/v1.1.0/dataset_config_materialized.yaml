@@ -338,6 +338,12 @@ types:
     from_schema: cdp-dataset-config
     base: str
     pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$
+  EMPIAR_EMDB_DOI_LIST:
+    name: EMPIAR_EMDB_DOI_LIST
+    description: A list of EMPIAR, EMDB, and DOI identifiers
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+))*$
 enums:
   annotation_method_type_enum:
     name: annotation_method_type_enum
