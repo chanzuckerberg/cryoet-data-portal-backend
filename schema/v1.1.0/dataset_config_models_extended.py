@@ -14,7 +14,7 @@ from pydantic import field_validator, model_validator
 from typing_extensions import Self
 
 
-def valid_authors(authors: List[Author]) -> List[Author]:
+def validate_authors(authors: List[Author]) -> List[ValueError]:
     errors = []
     primary_author_status_count = 0
     corresponding_author_status_count = 0
@@ -29,10 +29,7 @@ def valid_authors(authors: List[Author]) -> List[Author]:
     if corresponding_author_status_count == 0:
         errors.append(ValueError("Annotation must have at least one corresponding author"))
 
-    if len(errors) > 0:
-        raise ValueError(errors)
-
-    return authors
+    return errors
 
 
 class ExtendedValidationAnnotationConfidence(AnnotationConfidence):
@@ -65,8 +62,12 @@ class ExtendedValidationAnnotation(Annotation):
 
     @field_validator("authors")
     @classmethod
-    def valid_annotation_authors(cls: Self, value: List[Author]) -> List[Author]:
-        return valid_authors(value)
+    def valid_annotation_authors(cls: Self, authors: List[Author]) -> List[Author]:
+        author_errors = validate_authors(authors)
+        if len(author_errors) > 0:
+            raise ValueError(author_errors)
+
+        return authors
 
 
 class ExtendedValidationAnnotationEntity(AnnotationEntity):
@@ -74,14 +75,14 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
 
     @field_validator("sources")
     @classmethod
-    def valid_sources(cls: Self, value: List[AnnotationSource]) -> List[AnnotationSource]:
+    def valid_sources(cls: Self, source_list: List[AnnotationSource]) -> List[AnnotationSource]:
         total_errors = []
 
         # For verifying that all source entries don't have one shape used multiple times in different source entries
         used_shapes = set()
         shapes_used_multiple_times_errors = set()
 
-        for source_element in value:
+        for source_element in source_list:
             for shape in source_element.model_fields:
                 if getattr(source_element, shape) is not None:
                     # If the shape is already used in another source entry, add the shape to the error set
@@ -93,7 +94,7 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
         # For verifying that all source entries each only have one shape entry
         multiple_shapes_in_all_source_entries_errors = []
 
-        for i, source_element in enumerate(value):
+        for i, source_element in enumerate(source_list):
             shapes_in_source_entry = []
             for shape in source_element.model_fields:
                 # If the shape is not None, add it to the list of shapes in the source entry
@@ -112,6 +113,8 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
 
         if len(total_errors) > 0:
             raise ValueError(total_errors)
+
+        return source_list
 
 
 class ExtendedValidationContainer(Container):
