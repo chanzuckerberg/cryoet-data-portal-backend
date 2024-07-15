@@ -18,7 +18,7 @@ DATASET_CONFIGS_MODELS_DIR = f"../../schema/{SCHEMA_VERSION}/"
 sys.path.append(DATASET_CONFIGS_MODELS_DIR)  # To import the Pydantic-generated dataset models
 
 from dataset_config_models_extended import ExtendedValidationContainer  # noqa: E402
-from dataset_config_models_extended_network import NetworkValidationContainer  # noqa: E402
+from dataset_config_models_network import NetworkValidationContainer  # noqa: E402
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -127,9 +127,9 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
     help="Output directory for validation errors",
 )
 @click.option(
-    "--extended-network-validation",
+    "--network-validation",
     is_flag=True,
-    help="Run extended network validation with HTTP requests to verify data",
+    help="Run extended network validation with HTTPS requests to verify data",
 )
 @click.option("--verbose", is_flag=True, help="Print verbose output")
 def main(
