@@ -149,6 +149,7 @@ def test_import_annotation_metadata(
 
     import_annotation_metadata(s3_fs, test_output_bucket, tomo_importer, dataset_config, s3_client, anno_config)
 
+
 def test_import_annotation_metadata_glob_strings(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
@@ -171,6 +172,7 @@ def test_import_annotation_metadata_glob_strings(
     }
 
     import_annotation_metadata(s3_fs, test_output_bucket, tomo_importer, dataset_config, s3_client, anno_config)
+
 
 ingest_points_test_cases = [
     # csv

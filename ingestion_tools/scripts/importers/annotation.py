@@ -9,12 +9,7 @@ import ndjson
 
 from common import point_converter as pc
 from common.config import DepositionImportConfig
-from common.finders import (
-    BaseFinder,
-    DepositionObjectImporterFactory,
-    SourceGlobFinder,
-    SourceMultiGlobFinder
-)
+from common.finders import BaseFinder, DepositionObjectImporterFactory, SourceGlobFinder, SourceMultiGlobFinder
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, make_pyramids
 from common.metadata import AnnotationMetadata
