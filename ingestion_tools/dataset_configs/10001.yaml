@@ -399,6 +399,19 @@ datasets:
   - literal:
       value:
       - '10001'
+depositions:
+- metadata:
+    authors: *id003
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10000
+    deposition_title: TBA
+    deposition_type:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10000
 frames:
 - sources:
   - source_glob:
@@ -426,7 +439,7 @@ runs:
       match_regex: .*
       name_regex: (.*).rec
 standardization_config:
-  deposition_id: 10001
+  deposition_id: 10000
   source_prefix: julia/VPP
 tiltseries:
 - metadata:

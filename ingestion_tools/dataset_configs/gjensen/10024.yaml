@@ -24,7 +24,7 @@ datasets:
       IT 1s
     dataset_identifier: 10024
     dataset_title: G. hansenii bio13-4
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -40,6 +40,19 @@ datasets:
   - literal:
       value:
       - '10024'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10018
+    deposition_title: TBA
+    deposition_type:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10018
 key_images:
 - sources:
   - source_glob:
@@ -79,8 +92,8 @@ tiltseries:
       energy_filter: GIF
       image_corrector: null
       phase_plate: None
-    pixel_spacing: 'float {ts-pixel_spacing}'
-    spherical_aberration_constant: 'float {ts-spherical_aberration_constant}'
+    pixel_spacing: float {ts-pixel_spacing}
+    spherical_aberration_constant: float {ts-spherical_aberration_constant}
     tilt_alignment_software: IMOD
     tilt_axis: 84.3
     tilt_range:
@@ -89,7 +102,7 @@ tiltseries:
     tilt_series_quality: 4
     tilt_step: float {ts-tilt_step}
     tilting_scheme: min to max tilt
-    total_flux: 'float {ts-total_flux}'
+    total_flux: float {ts-total_flux}
   sources:
   - source_glob:
       list_glob: '{run_name}/rawdata/*'
@@ -126,7 +139,7 @@ tomograms:
     reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: 'float {tomo-voxel_spacing}'
+    voxel_spacing: float {tomo-voxel_spacing}
   sources:
   - source_glob:
       list_glob: '{run_name}/3dimage_*/*'

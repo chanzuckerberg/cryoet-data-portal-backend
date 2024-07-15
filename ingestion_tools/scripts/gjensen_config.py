@@ -77,8 +77,8 @@ def to_dataset_config(
         "grid_preparation": clean(dataset.get("grid_prep")),
         "dates": {
             "deposition_date": datetime.date(2023, 10, 1).strftime("%Y-%m-%d"),
-            "last_modified_date": datetime.date(2023, 10, 1).strftime("%Y-%m-%d"),
-            "release_date": datetime.date(2023, 10, 1).strftime("%Y-%m-%d"),
+            "last_modified_date": datetime.date(2023, 12, 1).strftime("%Y-%m-%d"),
+            "release_date": datetime.date(2023, 12, 1).strftime("%Y-%m-%d"),
         },
     }
 
@@ -440,7 +440,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
                 partial(to_tomogram, authors),
                 "tomo",
             ),
-            "annotations": {},
+            "annotations": [],
             "standardization_config": to_standardization_config(
                 dataset_id,
                 val,

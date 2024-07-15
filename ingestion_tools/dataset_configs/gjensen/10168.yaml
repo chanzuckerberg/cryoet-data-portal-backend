@@ -22,7 +22,7 @@ datasets:
       (strain 5993) + 20 mg/ml Nalidixic acid for 5hr
     dataset_identifier: 10168
     dataset_title: Caulobacter del-tipN + Nal
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -36,6 +36,19 @@ datasets:
   - literal:
       value:
       - '10168'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10056
+    deposition_title: TBA
+    deposition_type:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10056
 key_images:
 - sources:
   - source_glob:
