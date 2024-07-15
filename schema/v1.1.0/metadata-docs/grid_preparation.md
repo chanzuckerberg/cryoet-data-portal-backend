@@ -1,3 +1,5 @@
+
+
 # Slot: grid_preparation
 
 URI: [cdp-meta:grid_preparation](metadatagrid_preparation)
@@ -9,12 +11,13 @@ URI: [cdp-meta:grid_preparation](metadatagrid_preparation)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET da... |  no  |
-[Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+| [ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET da... |  no  |
 
 
 
@@ -35,6 +38,16 @@ URI: [cdp-meta:grid_preparation](metadatagrid_preparation)
 
 
 
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:grid_preparation |
+| native | cdp-meta:grid_preparation |
 
 
 

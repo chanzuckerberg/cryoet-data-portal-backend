@@ -1,3 +1,5 @@
+
+
 # Slot: primary_author_status
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:primary_author_status](metadataprimary_author_status)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Author](Author.md) | Author of a scientific data entity |  no  |
+| [Author](Author.md) | Author of a scientific data entity |  no  |
 
 
 
@@ -46,6 +49,17 @@ URI: [cdp-meta:primary_author_status](metadataprimary_author_status)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:primary_author_status |
+| native | cdp-meta:primary_author_status |
+| exact | cdp-common:author_primary_author_status |
 
 
 

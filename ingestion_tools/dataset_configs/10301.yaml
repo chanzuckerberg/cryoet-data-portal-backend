@@ -226,7 +226,7 @@ datasets:
     cell_type:
       name: Chlamydomonas reinhardtii
     cross_references:
-      dataset_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
+      dataset_publications: 10.1093/micmic/ozad067.480
       related_database_entries: EMPIAR-11756
     dataset_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
       lamella.

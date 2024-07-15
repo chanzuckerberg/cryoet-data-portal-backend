@@ -195,7 +195,7 @@ tomograms:
       y: 0
       z: 0
     processing: raw
-    reconstruction_method: ''
+    reconstruction_method: UNKNOWN
     reconstruction_software: Tomo3D
     tomogram_version: 1
     voxel_spacing: 5.224

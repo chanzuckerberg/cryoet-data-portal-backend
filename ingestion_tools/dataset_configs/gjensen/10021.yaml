@@ -134,7 +134,7 @@ tomograms:
       z: 0
     processing: raw
     processing_software: novaCTF
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: novaCTF
     tomogram_version: 1
     voxel_spacing: 8.832

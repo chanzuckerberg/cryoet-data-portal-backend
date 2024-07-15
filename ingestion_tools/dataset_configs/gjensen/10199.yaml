@@ -130,7 +130,7 @@ tomograms:
       z: 0
     processing: filtered
     processing_software: IMOD
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1
     voxel_spacing: 6.44

@@ -33,3 +33,13 @@ URI: [cdp-meta:FloatFormattedString](metadataFloatFormattedString)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:FloatFormattedString |
+| native | cdp-meta:FloatFormattedString |

@@ -234,7 +234,8 @@ datasets:
     cell_strain:
       name: CC-3994
     cross_references:
-      dataset_publications: doi:10.1126/science.abm6704, EMPIAR-11078
+      dataset_publications: doi:10.1126/science.abm6704
+      related_database_entries: EMPIAR-11078
     dataset_description: Cryo-electron tomograms of Chlamydomonasfrom FIB-SEM lamella.
     dataset_identifier: 10009
     dataset_title: C. reinhardtii ciliary transition zone
@@ -405,7 +406,7 @@ tomograms:
       y: 0
       z: 0
     processing: denoised
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: STOPGAP
     tomogram_version: 1
     voxel_spacing: 13.68

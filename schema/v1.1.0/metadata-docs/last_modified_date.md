@@ -1,3 +1,5 @@
+
+
 # Slot: last_modified_date
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:last_modified_date](metadatalast_modified_date)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |  no  |
+| [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |  no  |
 
 
 
@@ -48,6 +51,17 @@ URI: [cdp-meta:last_modified_date](metadatalast_modified_date)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:last_modified_date |
+| native | cdp-meta:last_modified_date |
+| exact | cdp-common:last_modified_date |
 
 
 

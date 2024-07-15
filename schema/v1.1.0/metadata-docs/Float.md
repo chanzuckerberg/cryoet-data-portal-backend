@@ -33,3 +33,14 @@ URI: [xsd:float](http://www.w3.org/2001/XMLSchema#float)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | xsd:float |
+| native | cdp-meta:float |
+| exact | schema:Float |

@@ -1,3 +1,5 @@
+
+
 # Slot: microscope
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:microscope](metadatamicroscope)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -48,6 +51,16 @@ URI: [cdp-meta:microscope](metadatamicroscope)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:microscope |
+| native | cdp-meta:microscope |
 
 
 

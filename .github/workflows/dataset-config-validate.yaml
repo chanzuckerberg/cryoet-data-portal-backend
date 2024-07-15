@@ -1,0 +1,47 @@
+name: Validate dataset configs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+        - ingestion_tools/dataset_configs/
+        - ingestion_tools/scripts/dataset_config_validate.py
+        - schema/v1.1.0/Makefile
+        - schema/v1.1.0/*.yaml
+        - schema/v1.1.0/*.py
+  pull_request:
+    paths:
+        - ingestion_tools/dataset_configs/
+        - ingestion_tools/scripts/dataset_config_validate.py
+        - schema/v1.1.0/Makefile
+        - schema/v1.1.0/*.yaml
+        - schema/v1.1.0/*.py
+  workflow_dispatch:
+
+jobs:
+  run-validation:
+    name: Validate dataset configs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install linkml
+        run: pip install linkml
+      - name: Build Pydantic models
+        run: make build
+        working-directory: schema/v1.1.0
+      - name: Validate dataset configs
+        run: |
+          python dataset_config_validate.py
+        working-directory: ingestion_tools/scripts
+      - name: Archive validation results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dataset-configs-validation-logs
+          path: ingestion_tools/scripts/dataset_config_validate_errors/

@@ -14,8 +14,8 @@ URI: [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md)
 | Value | Meaning | Description |
 | --- | --- | --- |
 | manual | None | Annotations were generated manually |
-| automated | None | Annotations were generated semi-automatically |
-| hybrid | None | Annotations were generated automatically |
+| automated | None | Annotations were generated automatically |
+| hybrid | None | Annotations were generated semi-automatically |
 
 
 
@@ -47,6 +47,8 @@ URI: [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md)
 
 
 
+
+
 ## LinkML Source
 
 <details>
@@ -61,10 +63,10 @@ permissible_values:
     description: Annotations were generated manually.
   automated:
     text: automated
-    description: Annotations were generated semi-automatically.
+    description: Annotations were generated automatically.
   hybrid:
     text: hybrid
-    description: Annotations were generated automatically.
+    description: Annotations were generated semi-automatically.
 
 ```
 </details>

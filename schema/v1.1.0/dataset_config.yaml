@@ -13,6 +13,65 @@ prefixes:
 
 classes:
   # ============================================================================
+  # Configuration file class (and its subclasses)
+  # ============================================================================
+
+  Container:
+    description: Class that models the dataset config.
+    tree_root: true
+    attributes:
+      annotations:
+        description: Annotations for the dataset.
+        multivalued: true
+        range: AnnotationEntity
+      dataset_keyphotos:
+        description: Key photos for the dataset.
+        multivalued: true
+        range: DatasetKeyPhotoEntity
+      datasets:
+        description: Datasets for the dataset.
+        multivalued: true
+        range: DatasetEntity
+        required: true
+      frames:
+        description: Frames for the dataset.
+        multivalued: true
+        range: FrameEntity
+      gains:
+        description: Gains for the dataset.
+        multivalued: true
+        range: GainEntity
+      key_images:
+        description: Key images for the dataset.
+        multivalued: true
+        range: KeyImageEntity
+      rawtilts:
+        description: Raw tilts for the dataset.
+        multivalued: true
+        range: RawTiltEntity
+      runs:
+        description: Runs for the dataset.
+        multivalued: true
+        range: RunEntity
+      standardization_config:
+        description: Standardization config for the dataset.
+        range: StandardizationConfig
+        required: true
+      tiltseries:
+        description: Tilt series for the dataset.
+        multivalued: true
+        range: TiltSeriesEntity
+      tomograms:
+        description: Tomograms for the dataset.
+        multivalued: true
+        range: TomogramEntity
+      voxel_spacings:
+        description: Voxel spacings for the dataset.
+        multivalued: true
+        range: VoxelSpacingEntity
+        required: true
+
+  # ============================================================================
   # Reused / general classes
   # ============================================================================
 
