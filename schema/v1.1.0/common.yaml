@@ -118,6 +118,35 @@ slots:
       The position of the author in the author list.
   # ============================================================================
 
+
+  # ============================================================================
+  # Deposition slots
+  # ============================================================================
+  deposition_identifier:
+    identifier: true
+    range: integer
+    required: true
+    description: >-
+      An identifier for a CryoET deposition, assigned by the Data Portal. Used to identify the deposition the entity is
+      a part of.
+  deposition_title:
+    range: string
+    required: true
+    description: >-
+      Title of a CryoET deposition.
+  deposition_description:
+    range: string
+    required: true
+    description: >-
+      A short description of the deposition, similar to an abstract for a journal article or dataset.
+  deposition_types:
+    range: deposition_types_enum
+    required: true
+    multivalued: true
+    description: >-
+      Type of data in the deposition (e.g. dataset, annotation, tomogram)
+  # ============================================================================
+
   # ============================================================================
   # Dataset slots
   # ============================================================================
@@ -646,6 +675,9 @@ slots:
     range: boolean
     description: This annotation is recommended by the curator to be preferred for this object type.
     ifabsent: false
+  annotation_method_links:
+    range: AnnotationMethodLinks
+    description: A set of links to models, sourcecode, documentation, etc referenced by annotation the method
   annotation_version:
     range: VersionString
     description: Version of annotation.
@@ -723,6 +755,30 @@ enums:
         description: Annotations were generated automatically.
       hybrid:
         description: Annotations were generated semi-automatically.
+
+  annotation_method_link_type_enum:
+    description: Describes the type of link associated to the annotation method.
+    permissible_values:
+      documentation:
+        description: Links to the documentation related to the method.
+      models_weights:
+        description: Links to the weights that the models used for generating annotations were trained with.
+      other:
+        description: Link to resources that does not fit in the other categories.
+      source_code:
+        description: Links to the source code of the method.
+      website:
+        description: Links to a website of the method or tool used to generate the annotation.
+
+  deposition_types_enum:
+    description: Types of data a deposition has
+    permissible_values:
+      annotation:
+        description: The deposition comprises of new annotations for existing datasets
+      datasets:
+        description: The deposition comprises of new dataset(s).
+      tomograms:
+        description: The deposition comprises of new tomograms for existing datasets
 
   sample_type_enum:
     description: Type of sample imaged in a CryoET study.
@@ -911,3 +967,22 @@ classes:
       dataset_citations: # DEPRECATED
         range: string
         description: Comma-separated list of DOIs for publications citing the dataset.
+
+  # ============================================================================
+  # Annotation Method Links
+  # ============================================================================
+  AnnotationMethodLinks:
+    description: A set of links to models, sourcecode, documentation, etc referenced by annotation the method
+    attributes:
+      link:
+        range: string
+        description: URL to the resource
+        required: true
+      link_type:
+        range: annotation_method_link_type_enum
+        description: Type of link (e.g. model, sourcecode, documentation)
+        required: true
+      name:
+        range: string
+        description: user readable name of the resource
+        recommended: true
