@@ -1,17 +1,17 @@
 run_name,tomo-align_software,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_quality
-dga2019-12-02-1,,NON_FIDUCIAL,None,None,,,1
-dga2019-12-02-4,,NON_FIDUCIAL,None,None,,,1
-dga2019-12-02-8,,NON_FIDUCIAL,None,None,,,1
-dga2019-12-02-22,,NON_FIDUCIAL,None,None,,,1
-dga2019-12-02-24,,NON_FIDUCIAL,None,None,,,1
-dga2019-12-02-30,,NON_FIDUCIAL,None,None,,,1
-dga2019-12-02-45,,NON_FIDUCIAL,None,None,,,1
-dga2019-12-02-51,,NON_FIDUCIAL,None,None,,,1
-dga2019-12-02-104,,NON_FIDUCIAL,None,None,,,1
-dga2019-12-02-105,,NON_FIDUCIAL,None,None,,,1
-dga2019-12-05-2,,NON_FIDUCIAL,None,None,,,1
-dga2019-12-05-29,,NON_FIDUCIAL,None,None,,,1
-dga2019-12-04-18,,NON_FIDUCIAL,None,None,,,1
+dga2019-12-02-1,,NON_FIDUCIAL,,,,,1
+dga2019-12-02-4,,NON_FIDUCIAL,,,,,1
+dga2019-12-02-8,,NON_FIDUCIAL,,,,,1
+dga2019-12-02-22,,NON_FIDUCIAL,,,,,1
+dga2019-12-02-24,,NON_FIDUCIAL,,,,,1
+dga2019-12-02-30,,NON_FIDUCIAL,,,,,1
+dga2019-12-02-45,,NON_FIDUCIAL,,,,,1
+dga2019-12-02-51,,NON_FIDUCIAL,,,,,1
+dga2019-12-02-104,,NON_FIDUCIAL,,,,,1
+dga2019-12-02-105,,NON_FIDUCIAL,,,,,1
+dga2019-12-05-2,,NON_FIDUCIAL,,,,,1
+dga2019-12-05-29,,NON_FIDUCIAL,,,,,1
+dga2019-12-04-18,,NON_FIDUCIAL,,,,,1
 dga2019-12-02-2,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,10.448,RAPTOR,4
 dga2019-12-02-3,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,10.448,RAPTOR,4
 dga2019-12-02-5,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,10.448,RAPTOR,4
