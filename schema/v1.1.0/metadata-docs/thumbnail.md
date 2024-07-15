@@ -1,7 +1,9 @@
+
+
 # Slot: thumbnail
 
 
-_A placeholder for any type of data._
+_Path to the thumbnail of preview image relative to the dataset directory root._
 
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data |  no  |
+| [PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data |  no  |
 
 
 
@@ -28,9 +31,11 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 ## Properties
 
-* Range: [Any](Any.md)
+* Range: [URLorS3URI](URLorS3URI.md)
 
-* Required: True
+* Recommended: True
+
+* Regex pattern: `^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$`
 
 
 
@@ -52,12 +57,24 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:thumbnail |
+| native | cdp-meta:thumbnail |
+| exact | cdp-common:thumbnail |
+
+
+
+
 ## LinkML Source
 
 <details>
 ```yaml
 name: thumbnail
-description: A placeholder for any type of data.
+description: Path to the thumbnail of preview image relative to the dataset directory
+  root.
 from_schema: metadata
 exact_mappings:
 - cdp-common:thumbnail
@@ -66,10 +83,11 @@ alias: thumbnail
 owner: PicturePath
 domain_of:
 - PicturePath
-range: Any
-required: true
+range: URLorS3URI
+recommended: true
 inlined: true
 inlined_as_list: true
+pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$
 
 ```
 </details>

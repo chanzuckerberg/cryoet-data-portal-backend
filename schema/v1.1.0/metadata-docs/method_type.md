@@ -1,3 +1,5 @@
+
+
 # Slot: method_type
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:method_type](metadatamethod_type)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -31,6 +34,8 @@ URI: [cdp-meta:method_type](metadatamethod_type)
 * Range: [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md)
 
 * Required: True
+
+* Regex pattern: `(^manual$)|(^automated$)|(^hybrid$)`
 
 
 
@@ -48,6 +53,17 @@ URI: [cdp-meta:method_type](metadatamethod_type)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:method_type |
+| native | cdp-meta:method_type |
+| exact | cdp-common:annotation_method_type |
 
 
 
@@ -70,6 +86,7 @@ range: annotation_method_type_enum
 required: true
 inlined: true
 inlined_as_list: true
+pattern: (^manual$)|(^automated$)|(^hybrid$)
 
 ```
 </details>

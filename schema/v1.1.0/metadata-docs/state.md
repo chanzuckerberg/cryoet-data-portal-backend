@@ -1,3 +1,5 @@
+
+
 # Slot: state
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:state](metadatastate)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated |  no  |
+| [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated |  no  |
 
 
 
@@ -46,6 +49,17 @@ URI: [cdp-meta:state](metadatastate)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:state |
+| native | cdp-meta:state |
+| exact | cdp-common:annotation_object_state |
 
 
 

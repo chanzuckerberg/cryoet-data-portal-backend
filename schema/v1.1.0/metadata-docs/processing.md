@@ -1,3 +1,5 @@
+
+
 # Slot: processing
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:processing](metadataprocessing)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -28,9 +31,11 @@ URI: [cdp-meta:processing](metadataprocessing)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [TomogramProcessingEnum](TomogramProcessingEnum.md)
 
 * Required: True
+
+* Regex pattern: `(^denoised$)|(^filtered$)|(^raw$)`
 
 
 
@@ -52,6 +57,17 @@ URI: [cdp-meta:processing](metadataprocessing)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:processing |
+| native | cdp-meta:processing |
+| exact | cdp-common:tomogram_processing |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -66,10 +82,11 @@ alias: processing
 owner: Tomogram
 domain_of:
 - Tomogram
-range: string
+range: tomogram_processing_enum
 required: true
 inlined: true
 inlined_as_list: true
+pattern: (^denoised$)|(^filtered$)|(^raw$)
 
 ```
 </details>

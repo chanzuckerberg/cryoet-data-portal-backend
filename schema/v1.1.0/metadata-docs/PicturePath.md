@@ -1,3 +1,5 @@
+
+
 # Class: PicturePath
 
 
@@ -12,16 +14,15 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 
 
+
+
 ```mermaid
  classDiagram
     class PicturePath
+    click PicturePath href "../PicturePath"
       PicturePath : snapshot
 
-          PicturePath --> Any : snapshot
-
       PicturePath : thumbnail
-
-          PicturePath --> Any : thumbnail
 
 
 ```
@@ -36,8 +37,8 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [snapshot](snapshot.md) | 1..1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
-| [thumbnail](thumbnail.md) | 1..1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
+| [snapshot](snapshot.md) | 0..1 _recommended_ <br/> [URLorS3URI](URLorS3URI.md) | Path to the dataset preview image relative to the dataset directory root | direct |
+| [thumbnail](thumbnail.md) | 0..1 _recommended_ <br/> [URLorS3URI](URLorS3URI.md) | Path to the thumbnail of preview image relative to the dataset directory root | direct |
 
 
 
@@ -70,13 +71,14 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:PicturePath |
 | native | cdp-meta:PicturePath |
+
+
 
 
 
@@ -96,7 +98,8 @@ from_schema: metadata
 attributes:
   snapshot:
     name: snapshot
-    description: A placeholder for any type of data.
+    description: Path to the dataset preview image relative to the dataset directory
+      root.
     from_schema: metadata
     exact_mappings:
     - cdp-common:snapshot
@@ -105,13 +108,15 @@ attributes:
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: Any
-    required: true
+    range: URLorS3URI
+    recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$
   thumbnail:
     name: thumbnail
-    description: A placeholder for any type of data.
+    description: Path to the thumbnail of preview image relative to the dataset directory
+      root.
     from_schema: metadata
     exact_mappings:
     - cdp-common:thumbnail
@@ -120,10 +125,11 @@ attributes:
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: Any
-    required: true
+    range: URLorS3URI
+    recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$
 
 ```
 </details>
@@ -138,7 +144,8 @@ from_schema: metadata
 attributes:
   snapshot:
     name: snapshot
-    description: A placeholder for any type of data.
+    description: Path to the dataset preview image relative to the dataset directory
+      root.
     from_schema: metadata
     exact_mappings:
     - cdp-common:snapshot
@@ -147,13 +154,15 @@ attributes:
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: Any
-    required: true
+    range: URLorS3URI
+    recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$
   thumbnail:
     name: thumbnail
-    description: A placeholder for any type of data.
+    description: Path to the thumbnail of preview image relative to the dataset directory
+      root.
     from_schema: metadata
     exact_mappings:
     - cdp-common:thumbnail
@@ -162,10 +171,11 @@ attributes:
     owner: PicturePath
     domain_of:
     - PicturePath
-    range: Any
-    required: true
+    range: URLorS3URI
+    recommended: true
     inlined: true
     inlined_as_list: true
+    pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$
 
 ```
 </details>

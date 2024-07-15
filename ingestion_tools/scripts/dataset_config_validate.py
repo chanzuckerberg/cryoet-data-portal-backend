@@ -1,9 +1,10 @@
 import json
+import logging
 import os
 import re
 import shutil
 import sys
-from typing import Union
+from typing import Dict, List, Union
 
 import click
 import yaml
@@ -17,6 +18,9 @@ DATASET_CONFIGS_MODELS_DIR = f"../../schema/{SCHEMA_VERSION}/"
 sys.path.append(DATASET_CONFIGS_MODELS_DIR)  # To import the Pydantic-generated dataset models
 
 from dataset_config_models import Container  # noqa: E402
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 DATASET_CONFIGS_DIR = "../dataset_configs/"
 ERRORS_OUTPUT_DIR = "./dataset_config_validate_errors"
@@ -36,24 +40,18 @@ FLOAT_FORMATTED_STRING_REGEX = r"^float\s*{[a-zA-Z0-9_-]+}\s*$"
 INTEGER_FORMATTED_STRING_REGEX = r"^int\s*{[a-zA-Z0-9_-]+}\s*$"
 
 
-def _error_to_filtered_text(error_value: Union[dict, str]) -> str:
+def print_errors(errors: Dict[str, List[Union[ValidationError, Exception]]]) -> List[str]:
     """
-    Convert an error value to a filtered text string (for easier comparison and filtering of errors)
+    Convert an error value to a more concise text string.
     """
-    if not isinstance(error_value, dict) or any(key not in error_value for key in ["loc", "msg", "input"]):
-        return str(error_value)
-    loc = "/".join([str(x) for x in error_value["loc"]])
-    return f"{loc}: {error_value['msg']} (Input: {error_value['input']})"
-
-
-def _error_to_filtered_2_text(error_value: Union[dict, str]) -> str:
-    """
-    Convert an error value to a filtered text string (for easier comparison and filtering of errors)
-    This one removes more attributes from the error value, so that the errors list can be filtered down even more.
-    """
-    if not isinstance(error_value, dict) or any(key not in error_value for key in ["loc", "msg"]):
-        return str(error_value)
-    return str(error_value["loc"][-1]) + ": " + str(error_value["msg"])
+    for file, error in sorted(errors.items()):
+        logger.error('FAIL: "%s":', file)
+        for e in error:
+            if not isinstance(e, dict) or any(key not in e for key in ["loc", "msg"]):
+                logger.error("\t- error: %s", str(e))
+            else:
+                loc = ".".join([str(x) for x in e["loc"]])
+                logger.error("\t- %s: %s", e["msg"], loc)
 
 
 def replace_formatted_string(value: str) -> Union[str, bool, float, int]:
@@ -105,6 +103,12 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
 
 @click.command()
 @click.option(
+    "--dataset-configs-dir",
+    type=str,
+    default=DATASET_CONFIGS_DIR,
+    help="Directory containing dataset config files",
+)
+@click.option(
     "--include-glob",
     type=str,
     default=None,
@@ -116,18 +120,31 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
     default=EXCLUDE_KEYWORDS,
     help="Exclude files that are in the given comma-separated list",
 )
-def main(include_glob: str, exclude_keywords: str):
-    files_to_validate = get_yaml_config_files(include_glob, exclude_keywords)
+@click.option(
+    "--output-dir",
+    type=str,
+    default=ERRORS_OUTPUT_DIR,
+    help="Output directory for validation errors",
+)
+@click.option("--verbose", is_flag=True, help="Print verbose output")
+def main(dataset_configs_dir: str, include_glob: str, exclude_keywords: str, output_dir: str, verbose: bool):
+    """
+    See ../docs/dataset_config_validation.md for more information.
+    """
+    if verbose:
+        logger.setLevel(logging.DEBUG)
+
+    files_to_validate = get_yaml_config_files(include_glob, exclude_keywords, dataset_configs_dir, verbose)
 
     if not files_to_validate:
-        print("[WARNING]: No files to validate.")
+        logger.warning("No files to validate.")
         return
 
     # Remove existing dir
-    if os.path.exists(ERRORS_OUTPUT_DIR):
-        print(f"[WARNING]: Removing existing {ERRORS_OUTPUT_DIR} directory.")
-        shutil.rmtree(ERRORS_OUTPUT_DIR)
-    os.makedirs(ERRORS_OUTPUT_DIR, exist_ok=True)
+    if os.path.exists(output_dir):
+        logging.warning("Removing existing %s directory.", output_dir)
+        shutil.rmtree(output_dir)
+    os.makedirs(output_dir, exist_ok=True)
 
     # Run validation and save output
     validation_succeeded = True
@@ -151,30 +168,17 @@ def main(include_glob: str, exclude_keywords: str):
             errors[file] = [exc]
 
     if validation_succeeded:
-        print("[SUCCESS]: All files passed validation.")
+        logger.info("All files passed validation.")
         return
 
     # Write all errors to a file
-    with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors.json"), "w") as f:
+    with open(os.path.join(output_dir, "dataset_config_validate_errors.json"), "w") as f:
         json.dump(dict(sorted(errors.items())), f, indent=2, default=str)
 
-    errors_as_one_list = [error for error_list in errors.values() for error in error_list]
+    # Print errors to stdout
+    print_errors(errors)
 
-    # Write a filtered list of errors to a file
-    with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors_filtered.txt"), "w") as f:
-        errors_as_filtered_text = map(_error_to_filtered_text, errors_as_one_list)
-        errors_list = list(set(errors_as_filtered_text))
-        errors_list.sort()
-        f.write("\n".join(errors_list))
-
-    # Write an even more filtered list of errors to a file
-    with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors_filtered_2.txt"), "w") as f:
-        errors_as_filtered_2_text = map(_error_to_filtered_2_text, errors_as_one_list)
-        errors_list = list(set(errors_as_filtered_2_text))
-        errors_list.sort()
-        f.write("\n".join(errors_list))
-
-    print("[ERROR]: Validation failed. See dataset_config_validate_errors.json for details.")
+    logger.error("Validation failed. See dataset_config_validate_errors.json for details.")
     exit(1)
 
 

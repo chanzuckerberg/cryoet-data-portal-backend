@@ -1,3 +1,5 @@
+
+
 # Class: FundedEntity
 
 
@@ -14,14 +16,23 @@ URI: [cdp-meta:FundedEntity](metadataFundedEntity)
 
 
 
+
+
 ```mermaid
  classDiagram
     class FundedEntity
+    click FundedEntity href "../FundedEntity"
       FundedEntity <|-- Dataset
+        click Dataset href "../Dataset"
 
       FundedEntity : funding
 
-          FundedEntity --> FundingDetails : funding
+
+
+
+    FundedEntity --> "* _recommended_" FundingDetails : funding
+    click FundingDetails href "../FundingDetails"
+
 
 
 ```
@@ -36,7 +47,7 @@ URI: [cdp-meta:FundedEntity](metadataFundedEntity)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [funding](funding.md) | 0..* _recommended_ <br/> [FundingDetails](FundingDetails.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
+| [funding](funding.md) | * _recommended_ <br/> [FundingDetails](FundingDetails.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
 
 
 
@@ -62,13 +73,14 @@ URI: [cdp-meta:FundedEntity](metadataFundedEntity)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:FundedEntity |
 | native | cdp-meta:FundedEntity |
+
+
 
 
 
@@ -93,7 +105,6 @@ attributes:
       DB representation).
     from_schema: metadata
     rank: 1000
-    multivalued: true
     list_elements_ordered: true
     alias: funding
     owner: FundedEntity
@@ -102,6 +113,7 @@ attributes:
     - Dataset
     range: FundingDetails
     recommended: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
 
@@ -123,7 +135,6 @@ attributes:
       DB representation).
     from_schema: metadata
     rank: 1000
-    multivalued: true
     list_elements_ordered: true
     alias: funding
     owner: FundedEntity
@@ -132,6 +143,7 @@ attributes:
     - Dataset
     range: FundingDetails
     recommended: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
 
