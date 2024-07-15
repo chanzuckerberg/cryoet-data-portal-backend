@@ -22,7 +22,7 @@ datasets:
       infected by H. pylori grown under 1X cholesterol/dipyridyl (iron-starved) conditions.
     dataset_identifier: 10145
     dataset_title: H. pylori 26695 WT / AGS under iron-starved conditions
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -36,6 +36,19 @@ datasets:
   - literal:
       value:
       - '10145'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10017
+    deposition_title: TBA
+    deposition_type:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10017
 key_images:
 - sources:
   - source_glob:
