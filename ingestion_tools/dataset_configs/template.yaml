@@ -35,7 +35,10 @@ annotations: OPTIONAL
   # but only one of a given type can exist per annotation):
   - InstanceSegmentation:
       file_format: REQUIRED, STRING
-      glob_string: REQUIRED, STRING (REGEX)
+      # NOTE: glob_string and glob_strings are mutually exclusive, exactly one is REQUIRED
+      glob_string: OPTIONAL, STRING (REGEX)
+      glob_strings:
+        - OPTIONAL, STRING (REGEX)
       is_visualization_default: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       binning: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
       filter_value: OPTIONAL, STRING

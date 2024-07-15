@@ -852,7 +852,7 @@ class AuthoredEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
 
     authors: List[Author] = Field(
-        default_factory=list,
+        ...,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -1320,7 +1320,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         },
     )
     authors: List[Author] = Field(
-        default_factory=list,
+        ...,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2229,7 +2229,7 @@ class Tomogram(AuthoredEntity):
         json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram"]}},
     )
     authors: List[Author] = Field(
-        default_factory=list,
+        ...,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2437,9 +2437,9 @@ class AnnotationSourceFile(ConfiguredBaseModel):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2452,6 +2452,24 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2541,9 +2559,9 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2556,6 +2574,24 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2645,9 +2681,9 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2660,6 +2696,24 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2750,9 +2804,9 @@ class AnnotationPointFile(AnnotationSourceFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2765,6 +2819,24 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2814,9 +2886,9 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2829,6 +2901,24 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2890,9 +2980,9 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2905,6 +2995,24 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -3055,7 +3163,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         },
     )
     authors: List[Author] = Field(
-        default_factory=list,
+        ...,
         description="""Author of a scientific data entity.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3158,7 +3266,7 @@ class Container(ConfiguredBaseModel):
         json_schema_extra={"linkml_meta": {"alias": "dataset_keyphotos", "domain_of": ["Container"]}},
     )
     datasets: List[DatasetEntity] = Field(
-        default_factory=list,
+        ...,
         description="""A dataset entity.""",
         json_schema_extra={"linkml_meta": {"alias": "datasets", "domain_of": ["Container"]}},
     )
@@ -3203,7 +3311,7 @@ class Container(ConfiguredBaseModel):
         json_schema_extra={"linkml_meta": {"alias": "tomograms", "domain_of": ["Container"]}},
     )
     voxel_spacings: List[VoxelSpacingEntity] = Field(
-        default_factory=list,
+        ...,
         description="""A voxel spacing entity.""",
         json_schema_extra={"linkml_meta": {"alias": "voxel_spacings", "domain_of": ["Container"]}},
     )
@@ -3340,7 +3448,7 @@ class SourceMultiGlob(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     list_globs: List[str] = Field(
-        default_factory=list,
+        ...,
         description="""The globs for the file.""",
         json_schema_extra={"linkml_meta": {"alias": "list_globs", "domain_of": ["SourceMultiGlob"]}},
     )
@@ -3540,7 +3648,7 @@ class DefaultLiteral(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     value: List[Any] = Field(
-        default_factory=list,
+        ...,
         description="""A placeholder for any type of data.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3569,7 +3677,7 @@ class AnnotationEntity(ConfiguredBaseModel):
         },
     )
     sources: List[AnnotationSource] = Field(
-        default_factory=list,
+        ...,
         description="""An annotation source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3666,7 +3774,7 @@ class DatasetEntity(ConfiguredBaseModel):
         },
     )
     sources: List[DatasetSource] = Field(
-        default_factory=list,
+        ...,
         description="""A dataset source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3792,7 +3900,7 @@ class DatasetKeyPhotoEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     sources: List[DatasetKeyPhotoSource] = Field(
-        default_factory=list,
+        ...,
         description="""A dataset key photo source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3897,7 +4005,7 @@ class FrameEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     sources: List[FrameSource] = Field(
-        default_factory=list,
+        ...,
         description="""A frame source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4048,7 +4156,7 @@ class GainEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     sources: List[GainSource] = Field(
-        default_factory=list,
+        ...,
         description="""A gain source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4199,7 +4307,7 @@ class KeyImageEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     sources: List[KeyImageSource] = Field(
-        default_factory=list,
+        ...,
         description="""A key image source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4350,7 +4458,7 @@ class RawTiltEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     sources: List[RawTiltSource] = Field(
-        default_factory=list,
+        ...,
         description="""A raw tilt source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4501,7 +4609,7 @@ class RunEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     sources: List[RunSource] = Field(
-        default_factory=list,
+        ...,
         description="""A run source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4701,7 +4809,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
         },
     )
     sources: List[TiltSeriesSource] = Field(
-        default_factory=list,
+        ...,
         description="""A tilt series source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4862,7 +4970,7 @@ class TomogramEntity(ConfiguredBaseModel):
         },
     )
     sources: List[TomogramSource] = Field(
-        default_factory=list,
+        ...,
         description="""A tomogram source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5013,7 +5121,7 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     sources: List[VoxelSpacingSource] = Field(
-        default_factory=list,
+        ...,
         description="""A voxel spacing source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5146,7 +5254,7 @@ class VoxelSpacingLiteral(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     value: List[float] = Field(
-        default_factory=list,
+        ...,
         description="""The value for the voxel spacing literal.""",
         json_schema_extra={
             "linkml_meta": {
