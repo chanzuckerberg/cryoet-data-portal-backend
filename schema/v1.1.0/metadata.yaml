@@ -53,7 +53,7 @@ classes:
           - cdp-common:author_affiliation_address
       affiliation_identifier:
         exact_mappings:
-          - cdp-common:affiliation_identifier
+          - cdp-common:author_affiliation_identifier
       corresponding_author_status:
         exact_mappings:
           - cdp-common:author_corresponding_author_status

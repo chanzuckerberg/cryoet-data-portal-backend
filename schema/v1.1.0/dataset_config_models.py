@@ -64,13 +64,6 @@ linkml_meta = LinkMLMeta(
                 "name": "BTO_ID",
                 "pattern": "^BTO:[0-9]{7}$",
             },
-            "BooleanFormattedString": {
-                "base": "str",
-                "description": "A formatted string that " "represents a boolean.",
-                "from_schema": "cdp-dataset-config",
-                "name": "BooleanFormattedString",
-                "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ " "]*$",
-            },
             "CL_ID": {
                 "base": "str",
                 "description": "A Cell Ontology identifier",
@@ -705,7 +698,7 @@ class Author(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "affiliation_identifier",
                 "domain_of": ["Author"],
-                "exact_mappings": ["cdp-common:affiliation_identifier"],
+                "exact_mappings": ["cdp-common:author_affiliation_identifier"],
                 "recommended": True,
             }
         },
@@ -2120,10 +2113,7 @@ class Tomogram(AuthoredEntity):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "fiducial_alignment_status",
-                "any_of": [
-                    {"range": "fiducial_alignment_status_enum"},
-                    {"pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$", "range": "BooleanFormattedString"},
-                ],
+                "any_of": [{"range": "fiducial_alignment_status_enum"}, {"range": "StringFormattedString"}],
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_fiducial_alignment_status"],
             }
@@ -2261,9 +2251,7 @@ class Tomogram(AuthoredEntity):
 
     @field_validator("fiducial_alignment_status")
     def pattern_fiducial_alignment_status(cls, v):
-        pattern = re.compile(
-            r"(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)"
-        )
+        pattern = re.compile(r"(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):

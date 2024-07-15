@@ -181,7 +181,6 @@ Name: cdp-meta
 | Type | Description |
 | --- | --- |
 | [Boolean](Boolean.md) | A binary (true or false) value |
-| [BooleanFormattedString](BooleanFormattedString.md) | A formatted string that represents a boolean |
 | [BTOID](BTOID.md) | A BRENDA Tissue Ontology identifier |
 | [CLID](CLID.md) | A Cell Ontology identifier |
 | [Curie](Curie.md) | a compact URI |

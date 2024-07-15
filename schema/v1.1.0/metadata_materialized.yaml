@@ -264,12 +264,6 @@ types:
     from_schema: metadata
     base: str
     pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
-  BooleanFormattedString:
-    name: BooleanFormattedString
-    description: A formatted string that represents a boolean.
-    from_schema: metadata
-    base: str
-    pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
   FloatFormattedString:
     name: FloatFormattedString
     description: A formatted string that represents a floating point number.
@@ -596,7 +590,7 @@ classes:
         description: A Research Organization Registry (ROR) identifier.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:affiliation_identifier
+        - cdp-common:author_affiliation_identifier
         alias: affiliation_identifier
         owner: Author
         domain_of:
@@ -2073,12 +2067,10 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
-          ]*$)
+        pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
         any_of:
         - range: fiducial_alignment_status_enum
-        - range: BooleanFormattedString
-          pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        - range: StringFormattedString
       ctf_corrected:
         name: ctf_corrected
         description: Whether this tomogram is CTF corrected
