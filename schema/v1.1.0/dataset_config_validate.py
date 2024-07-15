@@ -8,16 +8,15 @@ from typing import Dict, List, Union
 
 import click
 import yaml
+from dataset_config_models import Container
 from pydantic import ValidationError
 
-from common.yaml_files import DATASET_CONFIGS_DIR, EXCLUDE_KEYWORDS_LIST, get_yaml_config_files
+COMMON_DIR = "../../ingestion_tools/scripts/"
+sys.path.append(COMMON_DIR)  # To import the helper function from common.py
 
-SCHEMA_VERSION = "v1.1.0"
-DATASET_CONFIGS_MODELS_DIR = f"../../schema/{SCHEMA_VERSION}/"
+from common.yaml_files import EXCLUDE_KEYWORDS_LIST, get_yaml_config_files  # noqa: E402
 
-sys.path.append(DATASET_CONFIGS_MODELS_DIR)  # To import the Pydantic-generated dataset models
-
-from dataset_config_models import Container  # noqa: E402
+DATASET_CONFIGS_DIR = "../../ingestion_tools/dataset_configs/"
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -109,7 +108,8 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
     "--exclude-keywords",
     type=str,
     default=EXCLUDE_KEYWORDS_LIST,
-    help="Exclude files that are in the given colon-separated list of keywords, used in conjunction with --input-dir.",
+    multiple=True,
+    help="Exclude files that contain the following keywords in the filename, used in conjunction with --input-dir. Repeat the flag for multiple keywords.",
 )
 @click.option(
     "--output-dir",
@@ -118,14 +118,20 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
     help="Output directory for validation errors",
 )
 @click.option("--verbose", is_flag=True, help="Print verbose output")
-def main(input_files: str, input_dir: str, include_glob: str, exclude_keywords: str, output_dir: str, verbose: bool):
+def main(
+    input_files: str,
+    input_dir: str,
+    include_glob: str,
+    exclude_keywords: List[str],
+    output_dir: str,
+    verbose: bool,
+):
     """
     See ingestion_tools/docs/dataset_config_validation.md for more information.
     """
     if verbose:
         logger.setLevel(logging.DEBUG)
 
-    exclude_keywords_list = exclude_keywords.split(":") if exclude_keywords else []
     files_to_validate = []
     if input_files and input_dir:
         logger.error("Provide input files or --input-dir, not both.")
@@ -134,13 +140,13 @@ def main(input_files: str, input_dir: str, include_glob: str, exclude_keywords: 
         files_to_validate = input_files
         if include_glob:
             logger.warning("Ignoring --include-glob option because input files were provided.")
-        if exclude_keywords_list:
+        if exclude_keywords:
             logger.warning("Ignoring --exclude-keywords option because input files were provided.")
     elif input_dir:
-        files_to_validate = get_yaml_config_files(include_glob, exclude_keywords_list, input_dir, verbose)
+        files_to_validate = get_yaml_config_files(include_glob, exclude_keywords, input_dir, verbose)
     else:
         logger.info("No input files or directory provided. Using default input directory: %s", DATASET_CONFIGS_DIR)
-        files_to_validate = get_yaml_config_files(include_glob, exclude_keywords_list, DATASET_CONFIGS_DIR, verbose)
+        files_to_validate = get_yaml_config_files(include_glob, exclude_keywords, DATASET_CONFIGS_DIR, verbose)
 
     if not files_to_validate:
         logger.warning("No files to validate.")
