@@ -24,7 +24,7 @@ datasets:
       IT 1.6s
     dataset_identifier: 10030
     dataset_title: G. hansenii gh5-4
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -39,6 +39,19 @@ datasets:
   - literal:
       value:
       - '10030'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10018
+    deposition_title: TBA
+    deposition_type:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10018
 key_images:
 - sources:
   - source_glob:
@@ -79,7 +92,7 @@ tiltseries:
       image_corrector: null
       phase_plate: None
     pixel_spacing: 4.319
-    spherical_aberration_constant: 'float {ts-spherical_aberration_constant}'
+    spherical_aberration_constant: float {ts-spherical_aberration_constant}
     tilt_alignment_software: '{ts-tilt_alignment_software}'
     tilt_axis: 84.3
     tilt_range:
@@ -88,7 +101,7 @@ tiltseries:
     tilt_series_quality: 4
     tilt_step: 2.0
     tilting_scheme: min to max tilt
-    total_flux: 'float {ts-total_flux}'
+    total_flux: float {ts-total_flux}
   sources:
   - source_glob:
       list_glob: '{run_name}/rawdata/*'
@@ -125,7 +138,7 @@ tomograms:
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: 'float {tomo-voxel_spacing}'
+    voxel_spacing: float {tomo-voxel_spacing}
   sources:
   - source_glob:
       list_glob: '{run_name}/3dimage_*/*'
