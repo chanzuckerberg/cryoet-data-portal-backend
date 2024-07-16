@@ -864,7 +864,7 @@ types:
   EMPIAR_ID:
     description: An Electron Microscopy Public Image Archive identifier
     base: str
-    pattern: '^EMPIAR-[0-9]{5}$'
+    pattern: '^EMPIAR-[0-9]+$'
 
   EMDB_ID:
     description: An Electron Microscopy Data Bank identifier

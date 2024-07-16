@@ -16,7 +16,7 @@ sys.path.append(COMMON_DIR)  # To import the helper function from common.py
 from common.yaml_files import EXCLUDE_KEYWORDS_LIST, get_yaml_config_files  # noqa: E402
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("dataset-validate")
 
 DATASET_CONFIGS_DIR = "../../ingestion_tools/dataset_configs/"
 ERRORS_OUTPUT_DIR = "./dataset_config_validate_errors"

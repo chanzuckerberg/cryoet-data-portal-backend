@@ -325,7 +325,7 @@ attributes:
     range: EMPIAR_ID
     inlined: true
     inlined_as_list: true
-    pattern: ^EMPIAR-[0-9]{5}$
+    pattern: ^EMPIAR-[0-9]+$
   spherical_aberration_constant:
     name: spherical_aberration_constant
     description: Spherical Aberration Constant of the objective lens in millimeters
@@ -682,7 +682,7 @@ attributes:
     range: EMPIAR_ID
     inlined: true
     inlined_as_list: true
-    pattern: ^EMPIAR-[0-9]{5}$
+    pattern: ^EMPIAR-[0-9]+$
   spherical_aberration_constant:
     name: spherical_aberration_constant
     description: Spherical Aberration Constant of the objective lens in millimeters

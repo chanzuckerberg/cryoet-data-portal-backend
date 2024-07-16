@@ -119,7 +119,7 @@ linkml_meta = LinkMLMeta(
                 "description": "An Electron Microscopy Public Image " "Archive identifier",
                 "from_schema": "metadata",
                 "name": "EMPIAR_ID",
-                "pattern": "^EMPIAR-[0-9]{5}$",
+                "pattern": "^EMPIAR-[0-9]+$",
             },
             "FloatFormattedString": {
                 "base": "str",
@@ -1924,7 +1924,7 @@ class TiltSeries(ConfiguredBaseModel):
 
     @field_validator("related_empiar_entry")
     def pattern_related_empiar_entry(cls, v):
-        pattern = re.compile(r"^EMPIAR-[0-9]{5}$")
+        pattern = re.compile(r"^EMPIAR-[0-9]+$")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
