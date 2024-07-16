@@ -13,9 +13,9 @@ URI: [DepositionTypesEnum](DepositionTypesEnum.md)
 
 | Value | Meaning | Description |
 | --- | --- | --- |
-| annotation | None | The deposition only comprises of annotations for existing datasets |
+| annotation | None | The deposition comprises of new annotations for existing datasets |
 | datasets | None | The deposition comprises of new dataset(s) |
-| tomograms | None | The deposition only comprises of tomograms for existing datasets |
+| tomograms | None | The deposition comprises of new tomograms for existing datasets |
 
 
 
@@ -41,6 +41,8 @@ URI: [DepositionTypesEnum](DepositionTypesEnum.md)
 
 
 
+
+
 ## LinkML Source
 
 <details>
@@ -52,13 +54,13 @@ rank: 1000
 permissible_values:
   annotation:
     text: annotation
-    description: The deposition only comprises of annotations for existing datasets
+    description: The deposition comprises of new annotations for existing datasets
   datasets:
     text: datasets
     description: The deposition comprises of new dataset(s).
   tomograms:
     text: tomograms
-    description: The deposition only comprises of tomograms for existing datasets
+    description: The deposition comprises of new tomograms for existing datasets
 
 ```
 </details>
