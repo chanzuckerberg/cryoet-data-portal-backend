@@ -25,13 +25,6 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
       Tomogram : affine_transformation_matrix
 
-
-
-
-    Tomogram --> "0..1" Any : affine_transformation_matrix
-    click Any href "../Any"
-
-
       Tomogram : align_software
 
       Tomogram : authors
@@ -116,7 +109,7 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 | [processing](processing.md) | 1 <br/> [TomogramProcessingEnum](TomogramProcessingEnum.md) | Describe additional processing used to derive the tomogram | direct |
 | [processing_software](processing_software.md) | 0..1 _recommended_ <br/> [String](String.md) | Processing software used to derive the tomogram | direct |
 | [tomogram_version](tomogram_version.md) | 1 <br/> [VersionString](VersionString.md) | Version of tomogram | direct |
-| [affine_transformation_matrix](affine_transformation_matrix.md) | 0..1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
+| [affine_transformation_matrix](affine_transformation_matrix.md) | 0..1 <br/> [Float](Float.md) | The flip or rotation transformation of this author submitted tomogram is indi... | direct |
 | [size](size.md) | 0..1 <br/> [TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension | direct |
 | [offset](offset.md) | 1 <br/> [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
@@ -325,7 +318,8 @@ attributes:
     inlined_as_list: true
   affine_transformation_matrix:
     name: affine_transformation_matrix
-    description: A placeholder for any type of data.
+    description: The flip or rotation transformation of this author submitted tomogram
+      is indicated here
     from_schema: metadata
     rank: 1000
     array:
@@ -337,7 +331,7 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: Any
+    range: float
     inlined: true
     inlined_as_list: true
   size:
@@ -552,7 +546,8 @@ attributes:
     inlined_as_list: true
   affine_transformation_matrix:
     name: affine_transformation_matrix
-    description: A placeholder for any type of data.
+    description: The flip or rotation transformation of this author submitted tomogram
+      is indicated here
     from_schema: metadata
     rank: 1000
     array:
@@ -564,7 +559,7 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: Any
+    range: float
     inlined: true
     inlined_as_list: true
   size:

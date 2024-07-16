@@ -2208,10 +2208,10 @@ class Tomogram(AuthoredEntity):
         },
     )
     affine_transformation_matrix: Optional[
-        conlist(min_length=4, max_length=4, item_type=conlist(min_length=4, max_length=4, item_type=Any))
+        conlist(min_length=4, max_length=4, item_type=conlist(min_length=4, max_length=4, item_type=float))
     ] = Field(
         None,
-        description="""A placeholder for any type of data.""",
+        description="""The flip or rotation transformation of this author submitted tomogram is indicated here""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "affine_transformation_matrix",

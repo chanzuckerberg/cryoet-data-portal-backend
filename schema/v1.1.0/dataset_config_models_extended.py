@@ -8,6 +8,7 @@ import urllib
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 import aiohttp
+import numpy
 import requests
 from dataset_config_models import (
     Annotation,
@@ -30,7 +31,12 @@ from dataset_config_models import (
     OrganismDetails,
     PicturePath,
     SampleTypeEnum,
+    TiltRange,
+    TiltSeries,
+    TiltSeriesEntity,
     TissueDetails,
+    Tomogram,
+    TomogramEntity,
 )
 from pydantic import field_validator, model_validator
 from typing_extensions import Self
@@ -635,6 +641,60 @@ class ExtendedValidationDatasetEntity(DatasetEntity):
     metadata: ExtendedValidationDataset = DatasetEntity.model_fields["metadata"]
 
 
+# ==============================================================================
+# Tilt Series Validation
+# ==============================================================================
+class ExtendedValidationTiltRange(TiltRange):
+    @model_validator(mode="after")
+    def valid_tilt_range(self) -> Self:
+        if self.min > self.max:
+            raise ValueError(
+                f"Minimum tilt ({self.min}) cannot be greater than maximum tilt ({self.max})",
+            )
+        return self
+
+
+class ExtendedValidationTiltSeries(TiltSeries):
+    tilt_range: ExtendedValidationTiltRange = TiltSeries.model_fields["tilt_range"]
+
+
+class ExtendedValidationTiltSeriesEntity(TiltSeriesEntity):
+    metadata: ExtendedValidationTiltSeries = TiltSeriesEntity.model_fields["metadata"]
+
+
+# ==============================================================================
+# Tomogram Validation
+# ==============================================================================
+class ExtendedValidationTomogram(Tomogram):
+    @field_validator("affine_transformation_matrix")
+    @classmethod
+    def valid_affine_transformation_matrix(
+        cls: Self,
+        affine_transformation_matrix: List[List[float]],
+    ) -> List[List[float]]:
+        errors = []
+        # Bottom row of the matrix should be [0, 0, 0, 1]
+        if affine_transformation_matrix[3] != [0, 0, 0, 1]:
+            errors.append(ValueError("Bottom row of the affine transformation matrix must be [0, 0, 0, 1]"))
+
+        # Check that top left 3x3 matrix is an invertible matrix
+        top_left_matrix = numpy.array(
+            [
+                affine_transformation_matrix[0][0:3],
+                affine_transformation_matrix[1][0:3],
+                affine_transformation_matrix[2][0:3],
+            ],
+        )
+        if numpy.linalg.det(top_left_matrix) == 0:
+            errors.append(ValueError("Top left 3x3 matrix of the affine transformation matrix must be invertible"))
+
+        return affine_transformation_matrix
+
+
+class ExtendedValidationTomogramEntity(TomogramEntity):
+    metadata: ExtendedValidationTomogram = TomogramEntity.model_fields["metadata"]
+
+
 class ExtendedValidationContainer(Container):
     # Set global network_validation flag
     def __init__(self, **data):
@@ -647,6 +707,8 @@ class ExtendedValidationContainer(Container):
         "dataset_keyphotos"
     ]
     datasets: List[ExtendedValidationDatasetEntity] = Container.model_fields["datasets"]
+    tiltseries: Optional[List[ExtendedValidationTiltSeriesEntity]] = Container.model_fields["tiltseries"]
+    tomograms: Optional[List[ExtendedValidationTomogramEntity]] = Container.model_fields["tomograms"]
 
 
 ExtendedValidationAnnotationConfidence.model_rebuild()

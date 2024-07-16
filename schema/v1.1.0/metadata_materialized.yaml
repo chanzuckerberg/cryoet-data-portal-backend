@@ -2174,7 +2174,8 @@ classes:
         inlined_as_list: true
       affine_transformation_matrix:
         name: affine_transformation_matrix
-        description: A placeholder for any type of data.
+        description: The flip or rotation transformation of this author submitted
+          tomogram is indicated here
         from_schema: metadata
         array:
           exact_number_dimensions: 2
@@ -2185,7 +2186,7 @@ classes:
         owner: Tomogram
         domain_of:
         - Tomogram
-        range: Any
+        range: float
         inlined: true
         inlined_as_list: true
       size:
