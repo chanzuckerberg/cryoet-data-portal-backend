@@ -8,34 +8,26 @@ from typing import Dict, List, Union
 
 import click
 import yaml
+from dataset_config_models import Container
 from pydantic import ValidationError
 
-from common.yaml_files import get_yaml_config_files
+COMMON_DIR = "../../ingestion_tools/scripts/"
+sys.path.append(COMMON_DIR)  # To import the helper function from common.py
 
-SCHEMA_VERSION = "v1.1.0"
-DATASET_CONFIGS_MODELS_DIR = f"../../schema/{SCHEMA_VERSION}/"
+from common.yaml_files import EXCLUDE_KEYWORDS_LIST, get_yaml_config_files  # noqa: E402
 
-sys.path.append(DATASET_CONFIGS_MODELS_DIR)  # To import the Pydantic-generated dataset models
-
-from dataset_config_models import Container  # noqa: E402
+DATASET_CONFIGS_DIR = "../../ingestion_tools/dataset_configs/"
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-DATASET_CONFIGS_DIR = "../dataset_configs/"
 ERRORS_OUTPUT_DIR = "./dataset_config_validate_errors"
-# files to exclude from validation
-EXCLUDE_LIST = ["template.yaml", "dataset_config_merged.yaml"]
-# exclude files that contain any of the following keywords
-EXCLUDE_KEYWORDS = "draft"
-YAML_EXTENSIONS = (".yaml", ".yml")
 
 # The permitted parent attribute for formatted strings and its corresponding depth
 # If the attribute has a parent attribute in this list, it is allowed to be a formatted string
 # The key is the parent attribute and the value is the depth of the parent attribute (0 is at the root of the YAML file)
 # E.g., any attribute that has a parent attribute of "sources" (where "sources" is one-level nested) is allowed to be a formatted string
 PERMITTED_FORMATTED_STRINGS = {"tiltseries": 0, "tomograms": 0, "sources": 1}
-BOOLEAN_FORMATTED_STRING_REGEX = r"^bool\s*{[a-zA-Z0-9_-]+}\s*$"
 FLOAT_FORMATTED_STRING_REGEX = r"^float\s*{[a-zA-Z0-9_-]+}\s*$"
 INTEGER_FORMATTED_STRING_REGEX = r"^int\s*{[a-zA-Z0-9_-]+}\s*$"
 
@@ -62,8 +54,6 @@ def replace_formatted_string(value: str) -> Union[str, bool, float, int]:
         return value
 
     # TODO: replace with actual formatted string values?
-    if re.match(BOOLEAN_FORMATTED_STRING_REGEX, value):
-        return False
     elif re.match(FLOAT_FORMATTED_STRING_REGEX, value):
         return 1.0
     elif re.match(INTEGER_FORMATTED_STRING_REGEX, value):
@@ -102,23 +92,24 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
 
 
 @click.command()
+@click.argument("input-files", type=str, nargs=-1)
 @click.option(
-    "--dataset-configs-dir",
+    "--input-dir",
     type=str,
-    default=DATASET_CONFIGS_DIR,
-    help="Directory containing dataset config files",
+    help="Directory containing dataset config files to validate. Use this OR provide input files, not both.",
 )
 @click.option(
     "--include-glob",
     type=str,
     default=None,
-    help="Include only files that match the given glob pattern",
+    help="Include only files that match the given glob pattern, used in conjunction with --input-dir.",
 )
 @click.option(
     "--exclude-keywords",
     type=str,
-    default=EXCLUDE_KEYWORDS,
-    help="Exclude files that are in the given comma-separated list",
+    default=EXCLUDE_KEYWORDS_LIST,
+    multiple=True,
+    help="Exclude files that contain the following keywords in the filename, used in conjunction with --input-dir. Repeat the flag for multiple keywords.",
 )
 @click.option(
     "--output-dir",
@@ -127,14 +118,35 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
     help="Output directory for validation errors",
 )
 @click.option("--verbose", is_flag=True, help="Print verbose output")
-def main(dataset_configs_dir: str, include_glob: str, exclude_keywords: str, output_dir: str, verbose: bool):
+def main(
+    input_files: str,
+    input_dir: str,
+    include_glob: str,
+    exclude_keywords: List[str],
+    output_dir: str,
+    verbose: bool,
+):
     """
-    See ../docs/dataset_config_validation.md for more information.
+    See ingestion_tools/docs/dataset_config_validation.md for more information.
     """
     if verbose:
         logger.setLevel(logging.DEBUG)
 
-    files_to_validate = get_yaml_config_files(include_glob, exclude_keywords, dataset_configs_dir, verbose)
+    files_to_validate = []
+    if input_files and input_dir:
+        logger.error("Provide input files or --input-dir, not both.")
+        exit(1)
+    elif input_files:
+        files_to_validate = input_files
+        if include_glob:
+            logger.warning("Ignoring --include-glob option because input files were provided.")
+        if exclude_keywords:
+            logger.warning("Ignoring --exclude-keywords option because input files were provided.")
+    elif input_dir:
+        files_to_validate = get_yaml_config_files(include_glob, exclude_keywords, input_dir, verbose)
+    else:
+        logger.info("No input files or directory provided. Using default input directory: %s", DATASET_CONFIGS_DIR)
+        files_to_validate = get_yaml_config_files(include_glob, exclude_keywords, DATASET_CONFIGS_DIR, verbose)
 
     if not files_to_validate:
         logger.warning("No files to validate.")
@@ -168,7 +180,7 @@ def main(dataset_configs_dir: str, include_glob: str, exclude_keywords: str, out
             errors[file] = [exc]
 
     if validation_succeeded:
-        logger.info("All files passed validation.")
+        logger.info("Success: All files passed validation.")
         return
 
     # Write all errors to a file

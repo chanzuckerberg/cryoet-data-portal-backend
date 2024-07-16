@@ -38,7 +38,7 @@ jobs:
       - name: Validate dataset configs
         run: |
           python dataset_config_validate.py
-        working-directory: ingestion_tools/scripts
+        working-directory: schema/v1.1.0
       - name: Archive validation results
         if: failure()
         uses: actions/upload-artifact@v4

@@ -108,7 +108,7 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [voxel_spacing](voxel_spacing.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Voxel spacing equal in all three axes in angstroms | direct |
-| [fiducial_alignment_status](fiducial_alignment_status.md) | 1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[BooleanFormattedString](BooleanFormattedString.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
+| [fiducial_alignment_status](fiducial_alignment_status.md) | 1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
 | [ctf_corrected](ctf_corrected.md) | 0..1 _recommended_ <br/> [Boolean](Boolean.md) | Whether this tomogram is CTF corrected | direct |
 | [align_software](align_software.md) | 0..1 <br/> [String](String.md) | Software used for alignment | direct |
 | [reconstruction_method](reconstruction_method.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md) | Describe reconstruction method (WBP, SART, SIRT) | direct |
@@ -211,12 +211,10 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
-    pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
-      ]*$)
+    pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
     any_of:
     - range: fiducial_alignment_status_enum
-    - range: BooleanFormattedString
-      pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    - range: StringFormattedString
   ctf_corrected:
     name: ctf_corrected
     description: Whether this tomogram is CTF corrected
@@ -439,12 +437,10 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
-    pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
-      ]*$)
+    pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
     any_of:
     - range: fiducial_alignment_status_enum
-    - range: BooleanFormattedString
-      pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    - range: StringFormattedString
   ctf_corrected:
     name: ctf_corrected
     description: Whether this tomogram is CTF corrected

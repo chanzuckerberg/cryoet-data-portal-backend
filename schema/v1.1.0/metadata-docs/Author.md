@@ -186,7 +186,7 @@ attributes:
     description: A Research Organization Registry (ROR) identifier.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:affiliation_identifier
+    - cdp-common:author_affiliation_identifier
     rank: 1000
     alias: affiliation_identifier
     owner: Author
@@ -323,7 +323,7 @@ attributes:
     description: A Research Organization Registry (ROR) identifier.
     from_schema: metadata
     exact_mappings:
-    - cdp-common:affiliation_identifier
+    - cdp-common:author_affiliation_identifier
     rank: 1000
     alias: affiliation_identifier
     owner: Author

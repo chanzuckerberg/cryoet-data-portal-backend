@@ -61,7 +61,7 @@ URI: [cdp-meta:affiliation_identifier](metadataaffiliation_identifier)
 | ---  | ---  |
 | self | cdp-meta:affiliation_identifier |
 | native | cdp-meta:affiliation_identifier |
-| exact | cdp-common:affiliation_identifier |
+| exact | cdp-common:author_affiliation_identifier |
 
 
 
@@ -74,7 +74,7 @@ name: affiliation_identifier
 description: A Research Organization Registry (ROR) identifier.
 from_schema: metadata
 exact_mappings:
-- cdp-common:affiliation_identifier
+- cdp-common:author_affiliation_identifier
 rank: 1000
 alias: affiliation_identifier
 owner: Author

@@ -15,3 +15,11 @@ build:
 	gen-doc -d metadata-docs --no-mergeimports --hierarchical-class-view --stacktrace metadata_materialized.yaml
 	gen-pydantic --pydantic-version 2 metadata_materialized.yaml > metadata_models.py
 	gen-pydantic --pydantic-version 2 dataset_config_materialized.yaml > dataset_config_models.py
+
+.PHONY: validate-configs
+validate-configs:
+	python dataset_config_validate.py
+
+.PHONY: validate-configs-with-network
+validate-configs-with-network:
+	python dataset_config_validate.py --network-validation
