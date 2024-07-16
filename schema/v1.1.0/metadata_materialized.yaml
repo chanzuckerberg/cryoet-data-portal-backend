@@ -2423,7 +2423,8 @@ classes:
         inlined_as_list: true
       glob_string:
         name: glob_string
-        description: Glob string to match annotation files in the dataset.
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2432,7 +2433,23 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationSourceFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2520,7 +2537,8 @@ classes:
         inlined_as_list: true
       glob_string:
         name: glob_string
-        description: Glob string to match annotation files in the dataset.
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2529,7 +2547,23 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2617,7 +2651,8 @@ classes:
         inlined_as_list: true
       glob_string:
         name: glob_string
-        description: Glob string to match annotation files in the dataset.
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2626,7 +2661,23 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2713,7 +2764,8 @@ classes:
         inlined_as_list: true
       glob_string:
         name: glob_string
-        description: Glob string to match annotation files in the dataset.
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2722,7 +2774,23 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2764,7 +2832,8 @@ classes:
         inlined_as_list: true
       glob_string:
         name: glob_string
-        description: Glob string to match annotation files in the dataset.
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2773,7 +2842,23 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2829,7 +2914,8 @@ classes:
         inlined_as_list: true
       glob_string:
         name: glob_string
-        description: Glob string to match annotation files in the dataset.
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2838,7 +2924,23 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:

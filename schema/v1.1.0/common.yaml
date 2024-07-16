@@ -704,8 +704,13 @@ slots:
     description: Path to the annotation file relative to the dataset root.
   annotation_source_file_glob_string:
     range: string
-    required: true
-    description: Glob string to match annotation files in the dataset.
+    required: false
+    description: Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.
+  annotation_source_file_glob_strings:
+    range: string
+    description: Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.
+    multivalued: true
+    required: false
   annotation_source_file_is_visualization_default:
     range: boolean
     description: This annotation will be rendered in neuroglancer by default.

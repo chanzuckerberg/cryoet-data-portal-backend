@@ -100,6 +100,7 @@ Name: cdp-meta
 | [funding](funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... |
 | [funding_agency_name](funding_agency_name.md) | The name of the funding source |
 | [glob_string](glob_string.md) | Glob string to match annotation files in the dataset |
+| [glob_strings](glob_strings.md) | Glob strings to match annotation files in the dataset |
 | [grant_id](grant_id.md) | Grant identifier provided by the funding agency |
 | [grid_preparation](grid_preparation.md) | Describes Cryo-ET grid preparation |
 | [ground_truth_status](ground_truth_status.md) | Whether an annotation is considered ground truth, as determined by the annota... |

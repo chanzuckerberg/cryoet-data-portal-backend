@@ -1,8 +1,8 @@
 
 
-# Slot: file_format
+# Slot: glob_strings
 
-URI: [cdp-meta:file_format](metadatafile_format)
+URI: [cdp-meta:glob_strings](metadataglob_strings)
 
 
 
@@ -50,8 +50,8 @@ URI: [cdp-meta:file_format](metadatafile_format)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:file_format |
-| native | cdp-meta:file_format |
+| self | cdp-meta:glob_strings |
+| native | cdp-meta:glob_strings |
 
 
 
@@ -60,8 +60,8 @@ URI: [cdp-meta:file_format](metadatafile_format)
 
 <details>
 ```yaml
-name: file_format
-alias: file_format
+name: glob_strings
+alias: glob_strings
 domain_of:
 - AnnotationSourceFile
 - AnnotationOrientedPointFile

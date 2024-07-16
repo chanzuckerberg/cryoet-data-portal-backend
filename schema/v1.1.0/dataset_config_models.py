@@ -2474,9 +2474,9 @@ class AnnotationSourceFile(ConfiguredBaseModel):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2489,6 +2489,24 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2578,9 +2596,9 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2593,6 +2611,24 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2682,9 +2718,9 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2697,6 +2733,24 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2787,9 +2841,9 @@ class AnnotationPointFile(AnnotationSourceFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2802,6 +2856,24 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2851,9 +2923,9 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2866,6 +2938,24 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2927,9 +3017,9 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2942,6 +3032,24 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )

@@ -1,0 +1,2178 @@
+{
+  "../../ingestion_tools/dataset_configs/10000.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=284812",
+      "input": "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=284812",
+      "ctx": {
+        "error": "Invalid id format: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=284812"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10001.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=284812",
+      "input": "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=284812",
+      "ctx": {
+        "error": "Invalid id format: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=284812"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10002.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'retinal pigment epithelial-1' does not match id: CL:0002586",
+      "input": {
+        "id": "CL:0002586",
+        "name": "Retinal pigment epithelial-1"
+      },
+      "ctx": {
+        "error": "cell type name 'retinal pigment epithelial-1' does not match id: CL:0002586"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10003.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        0,
+        "metadata",
+        "confidence"
+      ],
+      "msg": "Value error, Annotation confidence cannot have 'precision' or 'recall' without 'ground_truth_used'",
+      "input": {
+        "ground_truth_used": "author estimation",
+        "precision": 95,
+        "recall": 90
+      },
+      "ctx": {
+        "error": "Annotation confidence cannot have 'precision' or 'recall' without 'ground_truth_used'"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: M129",
+      "input": "M129",
+      "ctx": {
+        "error": "Invalid id format: M129"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        0,
+        "sources"
+      ],
+      "msg": "Field required",
+      "input": {
+        "metadata": {
+          "acceleration_voltage": 300000,
+          "binning_from_frames": 1,
+          "camera": {
+            "manufacturer": "Gatan",
+            "model": "K2 SUMMIT"
+          },
+          "data_acquisition_software": "SerialEM",
+          "is_aligned": false,
+          "microscope": {
+            "manufacturer": "FEI",
+            "model": "TITAN KRIOS"
+          },
+          "microscope_optical_setup": {
+            "energy_filter": "unknown"
+          },
+          "pixel_spacing": 1.7005,
+          "related_empiar_entry": "EMPIAR-10499",
+          "spherical_aberration_constant": 2.7,
+          "tilt_axis": 175,
+          "tilt_range": {
+            "max": 60,
+            "min": -60
+          },
+          "tilt_series_quality": 5,
+          "tilt_step": 3.0,
+          "tilting_scheme": "Dose symmetric from 0.0 degrees",
+          "total_flux": 120
+        }
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10004.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        0,
+        "metadata",
+        "confidence"
+      ],
+      "msg": "Value error, Annotation confidence cannot have 'precision' or 'recall' without 'ground_truth_used'",
+      "input": {
+        "ground_truth_used": "Author estimation",
+        "precision": 95,
+        "recall": 60
+      },
+      "ctx": {
+        "error": "Annotation confidence cannot have 'precision' or 'recall' without 'ground_truth_used'"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: https://cgc.umn.edu/strain/NK2476",
+      "input": "https://cgc.umn.edu/strain/NK2476",
+      "ctx": {
+        "error": "Invalid id format: https://cgc.umn.edu/strain/NK2476"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10005.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        0,
+        "metadata",
+        "annotation_object"
+      ],
+      "msg": "Value error, annotation object name 'microtubule doublet 48 nm repeat' does not match id: GO:0097545",
+      "input": {
+        "id": "GO:0097545",
+        "name": "microtubule doublet 48 nm repeat",
+        "state": "48 nm repeat"
+      },
+      "ctx": {
+        "error": "annotation object name 'microtubule doublet 48 nm repeat' does not match id: GO:0097545"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        1,
+        "metadata",
+        "annotation_object"
+      ],
+      "msg": "Value error, annotation object name 'microtubule doublet 96 nm repeat' does not match id: GO:0097545",
+      "input": {
+        "id": "GO:0097545",
+        "name": "microtubule doublet 96 nm repeat",
+        "state": "96 nm repeat"
+      },
+      "ctx": {
+        "error": "annotation object name 'microtubule doublet 96 nm repeat' does not match id: GO:0097545"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10006.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        0,
+        "metadata",
+        "annotation_object"
+      ],
+      "msg": "Value error, annotation object name 'sars-cov2 spike protein' does not match id: GO:0019062",
+      "input": {
+        "description": "SARS-CoV2 Spike protein",
+        "id": "GO:0019062",
+        "name": "SARS-CoV2 spike protein"
+      },
+      "ctx": {
+        "error": "annotation object name 'sars-cov2 spike protein' does not match id: GO:0019062"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        0,
+        "sources"
+      ],
+      "msg": "Field required",
+      "input": {
+        "metadata": {
+          "acceleration_voltage": 300000,
+          "binning_from_frames": 1,
+          "camera": {
+            "manufacturer": "Gatan",
+            "model": "K2 SUMMIT"
+          },
+          "data_acquisition_software": "SerialEM",
+          "is_aligned": false,
+          "microscope": {
+            "manufacturer": "FEI",
+            "model": "TITAN"
+          },
+          "microscope_optical_setup": {
+            "energy_filter": "GIF Bioquantum",
+            "phase_plate": null
+          },
+          "pixel_spacing": 1.532,
+          "spherical_aberration_constant": 2.7,
+          "tilt_axis": 85.6,
+          "tilt_range": {
+            "max": 60,
+            "min": -60
+          },
+          "tilt_series_quality": 5,
+          "tilt_step": 3,
+          "tilting_scheme": "Dose symmetric from 0.0 degrees",
+          "total_flux": 120
+        }
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10007.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        0,
+        "metadata",
+        "annotation_object"
+      ],
+      "msg": "Value error, annotation object name 'cytosolic ribosome' does not match id: GO:0009326",
+      "input": {
+        "description": "Cytosolic ribosome",
+        "id": "GO:0009326",
+        "name": "cytosolic ribosome"
+      },
+      "ctx": {
+        "error": "annotation object name 'cytosolic ribosome' does not match id: GO:0009326"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10008.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        0,
+        "metadata",
+        "annotation_object"
+      ],
+      "msg": "Value error, annotation object name 'hydrogen-dependent co2 reductase filament' does not match id: GO:0009326",
+      "input": {
+        "id": "GO:0009326",
+        "name": "hydrogen-dependent CO2 reductase filament"
+      },
+      "ctx": {
+        "error": "annotation object name 'hydrogen-dependent co2 reductase filament' does not match id: GO:0009326"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: NCBI:txid2325",
+      "input": "NCBI:txid2325",
+      "ctx": {
+        "error": "Invalid id format: NCBI:txid2325"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "value_error",
+      "loc": [
+        "tiltseries",
+        0,
+        "metadata",
+        "related_empiar_entry"
+      ],
+      "msg": "Value error, Invalid related_empiar_entry format: EMD-15053",
+      "input": "EMD-15053",
+      "ctx": {
+        "error": "Invalid related_empiar_entry format: EMD-15053"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10009.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        0,
+        "metadata",
+        "annotation_object"
+      ],
+      "msg": "Value error, annotation object name 'stellate' does not match id: GO:0035869",
+      "input": {
+        "id": "GO:0035869",
+        "name": "stellate"
+      },
+      "ctx": {
+        "error": "annotation object name 'stellate' does not match id: GO:0035869"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        2,
+        "metadata",
+        "annotation_object"
+      ],
+      "msg": "Value error, annotation object name 'mtd sleeve' does not match id: GO:0035869",
+      "input": {
+        "id": "GO:0035869",
+        "name": "MTD sleeve"
+      },
+      "ctx": {
+        "error": "annotation object name 'mtd sleeve' does not match id: GO:0035869"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        3,
+        "metadata",
+        "annotation_object"
+      ],
+      "msg": "Value error, annotation object name 'mtd stellate / y-shaped link' does not match id: GO:0035869",
+      "input": {
+        "id": "GO:0035869",
+        "name": "MTD stellate / Y-shaped link"
+      },
+      "ctx": {
+        "error": "annotation object name 'mtd stellate / y-shaped link' does not match id: GO:0035869"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        4,
+        "metadata",
+        "annotation_object"
+      ],
+      "msg": "Value error, annotation object name 'ift-b' does not match id: GO:0030992",
+      "input": {
+        "id": "GO:0030992",
+        "name": "IFT-B"
+      },
+      "ctx": {
+        "error": "annotation object name 'ift-b' does not match id: GO:0030992"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        5,
+        "metadata",
+        "annotation_object"
+      ],
+      "msg": "Value error, annotation object name 'ift-a' does not match id: GO:0030991",
+      "input": {
+        "id": "GO:0030991",
+        "name": "IFT-A"
+      },
+      "ctx": {
+        "error": "annotation object name 'ift-a' does not match id: GO:0030991"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        6,
+        "metadata",
+        "annotation_object"
+      ],
+      "msg": "Value error, annotation object name 'dynein-1b' does not match id: GO:0005858",
+      "input": {
+        "id": "GO:0005858",
+        "name": "Dynein-1b"
+      },
+      "ctx": {
+        "error": "annotation object name 'dynein-1b' does not match id: GO:0005858"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        0,
+        "metadata",
+        "tilt_axis"
+      ],
+      "msg": "Field required",
+      "input": {
+        "acceleration_voltage": 300000,
+        "camera": {
+          "manufacturer": "Gatan",
+          "model": "K2 SUMMIT"
+        },
+        "data_acquisition_software": "SerialEM",
+        "is_aligned": true,
+        "microscope": {
+          "manufacturer": "FEI",
+          "model": "TITAN KRIOS"
+        },
+        "microscope_optical_setup": {
+          "energy_filter": "GIF Quantum LS",
+          "phase_plate": null
+        },
+        "pixel_spacing": 3.42,
+        "related_empiar_entry": "EMPIAR-11078",
+        "spherical_aberration_constant": 2.7,
+        "tilt_range": {
+          "max": 60,
+          "min": -60
+        },
+        "tilt_series_quality": 5,
+        "tilt_step": 2.0,
+        "tilting_scheme": "Dose-symmetric",
+        "total_flux": 100
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        1,
+        "metadata",
+        "tilt_axis"
+      ],
+      "msg": "Field required",
+      "input": {
+        "acceleration_voltage": 300000,
+        "camera": {
+          "manufacturer": "Gatan",
+          "model": "K2 SUMMIT"
+        },
+        "data_acquisition_software": "SerialEM",
+        "is_aligned": true,
+        "microscope": {
+          "manufacturer": "FEI",
+          "model": "TITAN KRIOS"
+        },
+        "microscope_optical_setup": {
+          "energy_filter": "GIF Quantum LS",
+          "phase_plate": null
+        },
+        "pixel_spacing": 3.42,
+        "related_empiar_entry": "EMPIAR-11078",
+        "spherical_aberration_constant": 2.7,
+        "tilt_range": {
+          "max": 60,
+          "min": -60
+        },
+        "tilt_series_quality": 5,
+        "tilt_step": 2.0,
+        "tilting_scheme": "bi-directional",
+        "total_flux": 100
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        2,
+        "metadata",
+        "tilt_axis"
+      ],
+      "msg": "Field required",
+      "input": {
+        "acceleration_voltage": 300000,
+        "camera": {
+          "manufacturer": "Gatan",
+          "model": "K2 SUMMIT"
+        },
+        "data_acquisition_software": "SerialEM",
+        "is_aligned": true,
+        "microscope": {
+          "manufacturer": "FEI",
+          "model": "TITAN KRIOS"
+        },
+        "microscope_optical_setup": {
+          "energy_filter": "GIF Quantum LS",
+          "phase_plate": null
+        },
+        "pixel_spacing": 13.68,
+        "related_empiar_entry": "EMPIAR-11078",
+        "spherical_aberration_constant": 2.7,
+        "tilt_range": {
+          "max": 60,
+          "min": -60
+        },
+        "tilt_series_quality": 5,
+        "tilt_step": 2.0,
+        "tilting_scheme": "Dose-symmetric",
+        "total_flux": 100
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10010.yaml": [
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        0,
+        "metadata",
+        "tilt_axis"
+      ],
+      "msg": "Field required",
+      "input": {
+        "acceleration_voltage": 300000,
+        "camera": {
+          "manufacturer": "Gatan",
+          "model": "K2 SUMMIT"
+        },
+        "data_acquisition_software": "REQUIRED",
+        "is_aligned": false,
+        "microscope": {
+          "manufacturer": "TFS",
+          "model": "Krios"
+        },
+        "microscope_optical_setup": {
+          "energy_filter": "{energy_filter}",
+          "image_corrector": "None",
+          "phase_plate": "None"
+        },
+        "pixel_spacing": 1.0,
+        "spherical_aberration_constant": 2.7,
+        "tilt_range": {
+          "max": 60,
+          "min": -60
+        },
+        "tilt_series_quality": 1,
+        "tilt_step": 2,
+        "tilting_scheme": "min to max tilt",
+        "total_flux": 1.0
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10301.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        0,
+        "metadata",
+        "annotation_object"
+      ],
+      "msg": "Value error, annotation object name 'f1-f0-atpase complex' does not match id: GO:0045259",
+      "input": {
+        "description": "proton-transporting ATP synthase complex",
+        "id": "GO:0045259",
+        "name": "F1-F0-ATPase complex"
+      },
+      "ctx": {
+        "error": "annotation object name 'f1-f0-atpase complex' does not match id: GO:0045259"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        1,
+        "metadata",
+        "annotation_object"
+      ],
+      "msg": "Value error, annotation object name 'mitochondrial f1-f0-atpase complex' does not match id: GO:0005753",
+      "input": {
+        "description": "mitochondrial proton-transporting ATP synthase complex",
+        "id": "GO:0005753",
+        "name": "mitochondrial F1-F0-ATPase complex"
+      },
+      "ctx": {
+        "error": "annotation object name 'mitochondrial f1-f0-atpase complex' does not match id: GO:0005753"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10426.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: CLO:0051569",
+      "input": "CLO:0051569",
+      "ctx": {
+        "error": "Invalid id format: CLO:0051569"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        0,
+        "sources"
+      ],
+      "msg": "Field required",
+      "input": {
+        "metadata": {
+          "acceleration_voltage": 300000,
+          "binning_from_frames": 1,
+          "camera": {
+            "manufacturer": "GATAN",
+            "model": "K3"
+          },
+          "data_acquisition_software": "SerialEM",
+          "is_aligned": false,
+          "microscope": {
+            "manufacturer": "FEI",
+            "model": "TITAN KRIOS"
+          },
+          "microscope_optical_setup": {
+            "energy_filter": "Gatan Bioquantum",
+            "image_corrector": null,
+            "phase_plate": null
+          },
+          "pixel_spacing": 1.0825,
+          "related_empiar_entry": null,
+          "spherical_aberration_constant": 2.7,
+          "tilt_axis": 0.0,
+          "tilt_range": {
+            "max": 1.0,
+            "min": 1.0
+          },
+          "tilt_series_quality": 5,
+          "tilt_step": 2.0,
+          "tilting_scheme": "dose-symmetric",
+          "total_flux": 1.0
+        }
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10427.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: CLO:0051569",
+      "input": "CLO:0051569",
+      "ctx": {
+        "error": "Invalid id format: CLO:0051569"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        0,
+        "sources"
+      ],
+      "msg": "Field required",
+      "input": {
+        "metadata": {
+          "acceleration_voltage": 300000,
+          "binning_from_frames": 1,
+          "camera": {
+            "manufacturer": "GATAN",
+            "model": "K3"
+          },
+          "data_acquisition_software": "SerialEM",
+          "is_aligned": false,
+          "microscope": {
+            "manufacturer": "FEI",
+            "model": "TITAN KRIOS"
+          },
+          "microscope_optical_setup": {
+            "energy_filter": "Gatan Quantum LS",
+            "image_corrector": null,
+            "phase_plate": null
+          },
+          "pixel_spacing": 2.15681,
+          "related_empiar_entry": null,
+          "spherical_aberration_constant": 2.7,
+          "tilt_axis": 0.0,
+          "tilt_range": {
+            "max": 1.0,
+            "min": 1.0
+          },
+          "tilt_series_quality": 5,
+          "tilt_step": 2.0,
+          "tilting_scheme": "dose-symmetric",
+          "total_flux": 1.0
+        }
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10428.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: CLO:0051569",
+      "input": "CLO:0051569",
+      "ctx": {
+        "error": "Invalid id format: CLO:0051569"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        0,
+        "sources"
+      ],
+      "msg": "Field required",
+      "input": {
+        "metadata": {
+          "acceleration_voltage": 300000,
+          "binning_from_frames": 1,
+          "camera": {
+            "manufacturer": "GATAN",
+            "model": "K3"
+          },
+          "data_acquisition_software": "SerialEM",
+          "is_aligned": false,
+          "microscope": {
+            "manufacturer": "FEI",
+            "model": "TITAN KRIOS"
+          },
+          "microscope_optical_setup": {
+            "energy_filter": "Gatan Quantum LS",
+            "image_corrector": null,
+            "phase_plate": null
+          },
+          "pixel_spacing": 1.07837,
+          "related_empiar_entry": null,
+          "spherical_aberration_constant": 2.7,
+          "tilt_axis": 0.0,
+          "tilt_range": {
+            "max": 1.0,
+            "min": 1.0
+          },
+          "tilt_series_quality": 5,
+          "tilt_step": 2.0,
+          "tilting_scheme": "dose-symmetric",
+          "total_flux": 1.0
+        }
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10429.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: CLO:0051569",
+      "input": "CLO:0051569",
+      "ctx": {
+        "error": "Invalid id format: CLO:0051569"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        0,
+        "sources"
+      ],
+      "msg": "Field required",
+      "input": {
+        "metadata": {
+          "acceleration_voltage": 300000,
+          "binning_from_frames": 1,
+          "camera": {
+            "manufacturer": "GATAN",
+            "model": "K3"
+          },
+          "data_acquisition_software": "SerialEM",
+          "is_aligned": false,
+          "microscope": {
+            "manufacturer": "FEI",
+            "model": "TITAN KRIOS"
+          },
+          "microscope_optical_setup": {
+            "energy_filter": "Gatan BioContinuum",
+            "image_corrector": null,
+            "phase_plate": null
+          },
+          "pixel_spacing": 1.058,
+          "related_empiar_entry": null,
+          "spherical_aberration_constant": 2.7,
+          "tilt_axis": 0.0,
+          "tilt_range": {
+            "max": 1.0,
+            "min": 1.0
+          },
+          "tilt_series_quality": 5,
+          "tilt_step": 2.0,
+          "tilting_scheme": "dose-symmetric",
+          "total_flux": 1.0
+        }
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10430.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: CLO:0001230",
+      "input": "CLO:0001230",
+      "ctx": {
+        "error": "Invalid id format: CLO:0001230"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        0,
+        "sources"
+      ],
+      "msg": "Field required",
+      "input": {
+        "metadata": {
+          "acceleration_voltage": 300000,
+          "binning_from_frames": 1,
+          "camera": {
+            "manufacturer": "GATAN",
+            "model": "K3"
+          },
+          "data_acquisition_software": "SerialEM",
+          "is_aligned": false,
+          "microscope": {
+            "manufacturer": "FEI",
+            "model": "TITAN KRIOS"
+          },
+          "microscope_optical_setup": {
+            "energy_filter": "Gatan Bioquantum",
+            "image_corrector": null,
+            "phase_plate": null
+          },
+          "pixel_spacing": 1.0825,
+          "related_empiar_entry": null,
+          "spherical_aberration_constant": 2.7,
+          "tilt_axis": 0.0,
+          "tilt_range": {
+            "max": 1.0,
+            "min": 1.0
+          },
+          "tilt_series_quality": 5,
+          "tilt_step": 2.0,
+          "tilting_scheme": "dose-symmetric",
+          "total_flux": 1.0
+        }
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10431.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: CLO:0001230",
+      "input": "CLO:0001230",
+      "ctx": {
+        "error": "Invalid id format: CLO:0001230"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        0,
+        "sources"
+      ],
+      "msg": "Field required",
+      "input": {
+        "metadata": {
+          "acceleration_voltage": 300000,
+          "binning_from_frames": 1,
+          "camera": {
+            "manufacturer": "GATAN",
+            "model": "K3"
+          },
+          "data_acquisition_software": "SerialEM",
+          "is_aligned": false,
+          "microscope": {
+            "manufacturer": "FEI",
+            "model": "TITAN KRIOS"
+          },
+          "microscope_optical_setup": {
+            "energy_filter": "Gatan BioContinuum",
+            "image_corrector": null,
+            "phase_plate": null
+          },
+          "pixel_spacing": 1.058,
+          "related_empiar_entry": null,
+          "spherical_aberration_constant": 2.7,
+          "tilt_axis": 0.0,
+          "tilt_range": {
+            "max": 1.0,
+            "min": 1.0
+          },
+          "tilt_series_quality": 5,
+          "tilt_step": 2.0,
+          "tilting_scheme": "dose-symmetric",
+          "total_flux": 1.0
+        }
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10432.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: CLO:0001230",
+      "input": "CLO:0001230",
+      "ctx": {
+        "error": "Invalid id format: CLO:0001230"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        0,
+        "sources"
+      ],
+      "msg": "Field required",
+      "input": {
+        "metadata": {
+          "acceleration_voltage": 300000,
+          "binning_from_frames": 1,
+          "camera": {
+            "manufacturer": "GATAN",
+            "model": "K3"
+          },
+          "data_acquisition_software": "SerialEM",
+          "is_aligned": false,
+          "microscope": {
+            "manufacturer": "FEI",
+            "model": "TITAN KRIOS"
+          },
+          "microscope_optical_setup": {
+            "energy_filter": "Gatan Quantum LS",
+            "image_corrector": null,
+            "phase_plate": null
+          },
+          "pixel_spacing": 1.07837,
+          "related_empiar_entry": null,
+          "spherical_aberration_constant": 2.7,
+          "tilt_axis": 0.0,
+          "tilt_range": {
+            "max": 1.0,
+            "min": 1.0
+          },
+          "tilt_series_quality": 5,
+          "tilt_step": 2.0,
+          "tilting_scheme": "dose-symmetric",
+          "total_flux": 1.0
+        }
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10433.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: CLO:0001230",
+      "input": "CLO:0001230",
+      "ctx": {
+        "error": "Invalid id format: CLO:0001230"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        0,
+        "sources"
+      ],
+      "msg": "Field required",
+      "input": {
+        "metadata": {
+          "acceleration_voltage": 300000,
+          "binning_from_frames": 1,
+          "camera": {
+            "manufacturer": "GATAN",
+            "model": "K3"
+          },
+          "data_acquisition_software": "SerialEM",
+          "is_aligned": false,
+          "microscope": {
+            "manufacturer": "FEI",
+            "model": "TITAN KRIOS"
+          },
+          "microscope_optical_setup": {
+            "energy_filter": "Gatan Quantum LS",
+            "image_corrector": null,
+            "phase_plate": null
+          },
+          "pixel_spacing": 1.07837,
+          "related_empiar_entry": null,
+          "spherical_aberration_constant": 2.7,
+          "tilt_axis": 0.0,
+          "tilt_range": {
+            "max": 1.0,
+            "min": 1.0
+          },
+          "tilt_series_quality": 5,
+          "tilt_step": 2.0,
+          "tilting_scheme": "dose-symmetric",
+          "total_flux": 1.0
+        }
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10434.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: CLO:0001230",
+      "input": "CLO:0001230",
+      "ctx": {
+        "error": "Invalid id format: CLO:0001230"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        0,
+        "sources"
+      ],
+      "msg": "Field required",
+      "input": {
+        "metadata": {
+          "acceleration_voltage": 300000,
+          "binning_from_frames": 1,
+          "camera": {
+            "manufacturer": "GATAN",
+            "model": "K3"
+          },
+          "data_acquisition_software": "SerialEM",
+          "is_aligned": false,
+          "microscope": {
+            "manufacturer": "FEI",
+            "model": "TITAN KRIOS"
+          },
+          "microscope_optical_setup": {
+            "energy_filter": "Gatan Quantum LS",
+            "image_corrector": null,
+            "phase_plate": null
+          },
+          "pixel_spacing": 1.07837,
+          "related_empiar_entry": null,
+          "spherical_aberration_constant": 2.7,
+          "tilt_axis": 0.0,
+          "tilt_range": {
+            "max": 1.0,
+            "min": 1.0
+          },
+          "tilt_series_quality": 5,
+          "tilt_step": 2.0,
+          "tilting_scheme": "dose-symmetric",
+          "total_flux": 1.0
+        }
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/10435.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type",
+        "id"
+      ],
+      "msg": "Value error, Invalid id format: CLO:0001230",
+      "input": "CLO:0001230",
+      "ctx": {
+        "error": "Invalid id format: CLO:0001230"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "tiltseries",
+        0,
+        "sources"
+      ],
+      "msg": "Field required",
+      "input": {
+        "metadata": {
+          "acceleration_voltage": 300000,
+          "binning_from_frames": 1,
+          "camera": {
+            "manufacturer": "GATAN",
+            "model": "K3"
+          },
+          "data_acquisition_software": "SerialEM",
+          "is_aligned": false,
+          "microscope": {
+            "manufacturer": "FEI",
+            "model": "TITAN KRIOS"
+          },
+          "microscope_optical_setup": {
+            "energy_filter": "Gatan Quantum LS",
+            "image_corrector": null,
+            "phase_plate": null
+          },
+          "pixel_spacing": 1.07837,
+          "related_empiar_entry": null,
+          "spherical_aberration_constant": 2.7,
+          "tilt_axis": 0.0,
+          "tilt_range": {
+            "max": 1.0,
+            "min": 1.0
+          },
+          "tilt_series_quality": 5,
+          "tilt_step": 2.0,
+          "tilting_scheme": "dose-symmetric",
+          "total_flux": 1.0
+        }
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/deposition_10301.yaml": [
+    {
+      "type": "missing",
+      "loc": [
+        "datasets",
+        0,
+        "metadata"
+      ],
+      "msg": "Field required",
+      "input": {
+        "sources": [
+          {
+            "source_glob": {
+              "list_glob": "*",
+              "match_regex": ".*",
+              "name_regex": "(.*)"
+            }
+          }
+        ]
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/deposition_10302.yaml": [
+    {
+      "type": "missing",
+      "loc": [
+        "datasets",
+        0,
+        "metadata"
+      ],
+      "msg": "Field required",
+      "input": {
+        "sources": [
+          {
+            "source_glob": {
+              "list_glob": "100??",
+              "match_regex": ".*",
+              "name_regex": "(.*)"
+            }
+          }
+        ]
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/deposition_10303.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "annotations",
+        0,
+        "sources"
+      ],
+      "msg": "Value error, [ValueError(\"Annotation cannot have multiple same-shape sources: {'SegmentationMask'}\")]",
+      "input": [
+        {
+          "SegmentationMask": {
+            "file_format": "zarr",
+            "glob_string": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*LM52Ga.zarr",
+            "is_visualization_default": true
+          }
+        },
+        {
+          "SegmentationMask": {
+            "file_format": "zarr",
+            "glob_string": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*55ar5k.zarr",
+            "is_visualization_default": true
+          }
+        },
+        {
+          "SegmentationMask": {
+            "file_format": "zarr",
+            "glob_string": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*wO13zA.zarr",
+            "is_visualization_default": true
+          }
+        },
+        {
+          "SegmentationMask": {
+            "file_format": "zarr",
+            "glob_string": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*z59Mxz.zarr",
+            "is_visualization_default": true
+          }
+        },
+        {
+          "SegmentationMask": {
+            "file_format": "zarr",
+            "glob_string": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*F5XUXp.zarr",
+            "is_visualization_default": true
+          }
+        },
+        {
+          "SegmentationMask": {
+            "file_format": "zarr",
+            "glob_string": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*kpDyZk.zarr",
+            "is_visualization_default": true
+          }
+        },
+        {
+          "SegmentationMask": {
+            "file_format": "zarr",
+            "glob_string": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*AM1K9r.zarr",
+            "is_visualization_default": true
+          }
+        },
+        {
+          "SegmentationMask": {
+            "file_format": "zarr",
+            "glob_string": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*PgU0Bz.zarr",
+            "is_visualization_default": true
+          }
+        },
+        {
+          "SegmentationMask": {
+            "file_format": "zarr",
+            "glob_string": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*4h1eIH.zarr",
+            "is_visualization_default": true
+          }
+        },
+        {
+          "SegmentationMask": {
+            "file_format": "zarr",
+            "glob_string": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*gBcgAd.zarr",
+            "is_visualization_default": true
+          }
+        }
+      ],
+      "ctx": {
+        "error": "[ValueError(\"Annotation cannot have multiple same-shape sources: {'SegmentationMask'}\")]"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "datasets",
+        0,
+        "metadata"
+      ],
+      "msg": "Field required",
+      "input": {
+        "sources": [
+          {
+            "source_glob": {
+              "list_glob": "10???",
+              "match_regex": ".*$(?<!(10014|10015|10016|10017|10018|10019|10020))",
+              "name_regex": "(.*)"
+            }
+          }
+        ]
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/deposition_10303_gas_vesicles.yaml": [
+    {
+      "type": "missing",
+      "loc": [
+        "datasets",
+        0,
+        "metadata"
+      ],
+      "msg": "Field required",
+      "input": {
+        "sources": [
+          {
+            "source_glob": {
+              "list_glob": "10???",
+              "match_regex": "(10014|10015|10016|10017|10018|10019|10020)$",
+              "name_regex": "(.*)"
+            }
+          }
+        ]
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/deposition_10304.yaml": [
+    {
+      "type": "missing",
+      "loc": [
+        "datasets",
+        0,
+        "metadata"
+      ],
+      "msg": "Field required",
+      "input": {
+        "sources": [
+          {
+            "source_glob": {
+              "list_glob": "10004",
+              "match_regex": ".*",
+              "name_regex": "(.*)"
+            }
+          }
+        ]
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/deposition_10305.yaml": [
+    {
+      "type": "missing",
+      "loc": [
+        "datasets",
+        0,
+        "metadata"
+      ],
+      "msg": "Field required",
+      "input": {
+        "sources": [
+          {
+            "source_glob": {
+              "list_glob": "101??",
+              "match_regex": ".*",
+              "name_regex": "(.*)"
+            }
+          }
+        ]
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10038.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "tiltseries",
+        0,
+        "metadata",
+        "tilt_range"
+      ],
+      "msg": "Value error, Minimum tilt (50.0) cannot be greater than maximum tilt (-50.0)",
+      "input": {
+        "max": -50.0,
+        "min": 50.0
+      },
+      "ctx": {
+        "error": "Minimum tilt (50.0) cannot be greater than maximum tilt (-50.0)"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10116.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_component",
+        "name"
+      ],
+      "msg": "Field required",
+      "input": {
+        "id": null
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10117.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    },
+    {
+      "type": "missing",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_component",
+        "name"
+      ],
+      "msg": "Field required",
+      "input": {
+        "id": "GO:0051301"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/missing"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10172.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10173.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10174.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10175.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10176.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10177.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10178.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10179.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10180.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10181.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10182.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10183.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10184.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10185.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10186.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10187.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10188.yaml": [
+    {
+      "type": "value_error",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_type"
+      ],
+      "msg": "Value error, cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618",
+      "input": {
+        "id": "CL:0002618",
+        "name": "umbilical vein endothelial cell"
+      },
+      "ctx": {
+        "error": "cell type name 'umbilical vein endothelial cell' does not match id: CL:0002618"
+      },
+      "url": "https://errors.pydantic.dev/2.8/v/value_error"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10253.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10254.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10255.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10256.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10257.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10258.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10259.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10289.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10290.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10291.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10292.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10293.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10294.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10295.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10296.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10297.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10298.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ],
+  "../../ingestion_tools/dataset_configs/gjensen/10299.yaml": [
+    {
+      "type": "string_type",
+      "loc": [
+        "datasets",
+        0,
+        "metadata",
+        "cell_strain",
+        "name"
+      ],
+      "msg": "Input should be a valid string",
+      "input": null,
+      "url": "https://errors.pydantic.dev/2.8/v/string_type"
+    }
+  ]
+}
