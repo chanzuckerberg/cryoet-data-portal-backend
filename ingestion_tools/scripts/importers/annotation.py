@@ -9,11 +9,7 @@ import ndjson
 
 from common import point_converter as pc
 from common.config import DepositionImportConfig
-from common.finders import (
-    BaseFinder,
-    DepositionObjectImporterFactory,
-    SourceGlobFinder,
-)
+from common.finders import BaseFinder, DepositionObjectImporterFactory, SourceGlobFinder, SourceMultiGlobFinder
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, make_pyramids
 from common.metadata import AnnotationMetadata
@@ -117,7 +113,10 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
         config: DepositionImportConfig,
         **parent_objects: dict[str, Any] | None,
     ) -> BaseFinder:
-        return SourceGlobFinder(self.source["glob_string"])
+        if self.source.get("glob_string"):
+            return SourceGlobFinder(self.source["glob_string"])
+        if self.source.get("glob_strings"):
+            return SourceMultiGlobFinder(self.source["glob_strings"])
 
     def _instantiate(
         self,
@@ -128,7 +127,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
         path: str,
         parents: dict[str, Any] | None,
     ):
-        source_args = {k: v for k, v in self.source.items() if k not in ["shape", "glob_string"]}
+        source_args = {k: v for k, v in self.source.items() if k not in ["shape", "glob_string", "glob_strings"]}
         instance_args = {
             "identifier": AnnotationIdentifierHelper.get_identifier(config, metadata, parents),
             "config": config,

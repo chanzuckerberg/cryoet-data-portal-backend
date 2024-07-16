@@ -1,15 +1,15 @@
 run_name,tomo-align_software,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_quality
-etl2012-05-28-1,,NON_FIDUCIAL,None,None,,,1
-etl2012-05-28-2,,NON_FIDUCIAL,None,None,,,1
-etl2012-05-28-3,,NON_FIDUCIAL,None,None,,,1
-etl2012-05-28-5,,NON_FIDUCIAL,None,None,,,1
-etl2012-05-28-6,,NON_FIDUCIAL,None,None,,,1
-etl2012-05-28-7,,NON_FIDUCIAL,None,None,,,1
-etl2012-05-28-12,,NON_FIDUCIAL,None,None,,,1
-etl2012-05-28-13,,NON_FIDUCIAL,None,None,,,1
-etl2012-05-28-15,,NON_FIDUCIAL,None,None,,,1
-etl2012-05-28-16,,NON_FIDUCIAL,None,None,,,1
-etl2012-05-28-24,,NON_FIDUCIAL,None,None,,,1
+etl2012-05-28-1,,NON_FIDUCIAL,,,,,1
+etl2012-05-28-2,,NON_FIDUCIAL,,,,,1
+etl2012-05-28-3,,NON_FIDUCIAL,,,,,1
+etl2012-05-28-5,,NON_FIDUCIAL,,,,,1
+etl2012-05-28-6,,NON_FIDUCIAL,,,,,1
+etl2012-05-28-7,,NON_FIDUCIAL,,,,,1
+etl2012-05-28-12,,NON_FIDUCIAL,,,,,1
+etl2012-05-28-13,,NON_FIDUCIAL,,,,,1
+etl2012-05-28-15,,NON_FIDUCIAL,,,,,1
+etl2012-05-28-16,,NON_FIDUCIAL,,,,,1
+etl2012-05-28-24,,NON_FIDUCIAL,,,,,1
 etl2012-05-28-4,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,18.92,RAPTOR,4
 etl2012-05-28-8,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,18.92,RAPTOR,4
 etl2012-05-28-9,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,18.92,RAPTOR,4

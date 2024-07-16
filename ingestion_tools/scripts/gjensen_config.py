@@ -6,7 +6,7 @@ import re
 from collections import defaultdict
 from copy import deepcopy
 from functools import partial
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Optional, Union
 
 import click
 import yaml
@@ -258,7 +258,7 @@ def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
     microscope["additional_info"] = microscope.pop("additional_scope_info", "")
     phase_plate = microscope.pop("phase_plate")
     tilt_series["microscope_optical_setup"] = {
-        "phase_plate": "volta phase plate" if phase_plate is True else phase_plate if phase_plate else "None",
+        "phase_plate": "volta phase plate" if phase_plate is True else phase_plate if phase_plate else None,
         "image_corrector": microscope.pop("image_corrector"),
         "energy_filter": microscope.pop("engergy_filter"),
     }
@@ -277,8 +277,8 @@ def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
     return tilt_series
 
 
-def normalize_invalid_to_none(value: str) -> str:
-    return value if value else "None"
+def normalize_invalid_to_none(value: str) -> Union[str, None]:
+    return value if value else None
 
 
 def normalize_processing(input_processing: str) -> str:

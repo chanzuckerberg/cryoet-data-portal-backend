@@ -39,7 +39,10 @@ annotations: OPTIONAL
   # but only one of a given type can exist per annotation):
   - InstanceSegmentation:
       file_format: REQUIRED, STRING
-      glob_string: REQUIRED, STRING (REGEX)
+      # NOTE: glob_string and glob_strings are mutually exclusive, exactly one is REQUIRED
+      glob_string: OPTIONAL, STRING (REGEX)
+      glob_strings:
+        - OPTIONAL, STRING (REGEX)
       is_visualization_default: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       binning: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
       filter_value: OPTIONAL, STRING
@@ -47,6 +50,7 @@ annotations: OPTIONAL
   - OrientedPoint:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
+      glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
       binning: see InstanceSegmentation.binning
       filter_value: see InstanceSegmentation.filter_value
@@ -54,6 +58,7 @@ annotations: OPTIONAL
   - Point:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
+      glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
       binning: see InstanceSegmentation.binning
       columns: OPTIONAL, STRING (DEFAULT xyz)
@@ -61,10 +66,12 @@ annotations: OPTIONAL
   - SegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
+      glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
   - SemanticSegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
+      glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
       mask_label: OPTIONAL, INTEGER (DEFAULT 1)
 dataset_keyphotos: OPTIONAL

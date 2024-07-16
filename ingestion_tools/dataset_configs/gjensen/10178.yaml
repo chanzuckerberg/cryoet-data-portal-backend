@@ -92,7 +92,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: float {ts-pixel_spacing}
     spherical_aberration_constant: float {ts-spherical_aberration_constant}
     tilt_alignment_software: '{ts-tilt_alignment_software}'
