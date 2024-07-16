@@ -1,0 +1,2298 @@
+{
+    "$defs": {
+        "Annotation": {
+            "additionalProperties": false,
+            "description": "Metadata describing an annotation.",
+            "properties": {
+                "annotation_method": {
+                    "description": "Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
+                    "type": "string"
+                },
+                "annotation_object": {
+                    "$ref": "#/$defs/AnnotationObject",
+                    "description": "Metadata describing the object being annotated."
+                },
+                "annotation_publications": {
+                    "description": "DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.",
+                    "type": "string"
+                },
+                "annotation_software": {
+                    "description": "Software used for generating this annotation",
+                    "type": "string"
+                },
+                "authors": {
+                    "description": "Author of a scientific data entity.",
+                    "items": {
+                        "$ref": "#/$defs/Author"
+                    },
+                    "type": "array"
+                },
+                "confidence": {
+                    "$ref": "#/$defs/AnnotationConfidence",
+                    "description": "Metadata describing the confidence of an annotation."
+                },
+                "dates": {
+                    "$ref": "#/$defs/DateStamp",
+                    "description": "A set of dates at which a data item was deposited, published and last modified."
+                },
+                "files": {
+                    "description": "File and sourcing data for an annotation. Represents an entry in annotation.sources.",
+                    "items": {
+                        "$ref": "#/$defs/AnnotationSourceFile"
+                    },
+                    "type": "array"
+                },
+                "ground_truth_status": {
+                    "description": "Whether an annotation is considered ground truth, as determined by the annotator.",
+                    "type": "boolean"
+                },
+                "is_curator_recommended": {
+                    "description": "This annotation is recommended by the curator to be preferred for this object type.",
+                    "type": "boolean"
+                },
+                "method_type": {
+                    "$ref": "#/$defs/AnnotationMethodTypeEnum",
+                    "description": "Classification of the annotation method based on supervision.",
+                    "pattern": "(^manual$)|(^automated$)|(^hybrid$)"
+                },
+                "object_count": {
+                    "description": "Number of objects identified",
+                    "type": "integer"
+                },
+                "version": {
+                    "description": "Version of annotation.",
+                    "minimum": 0,
+                    "type": "number"
+                }
+            },
+            "required": [
+                "annotation_method",
+                "annotation_object",
+                "method_type",
+                "dates",
+                "authors"
+            ],
+            "title": "Annotation",
+            "type": "object"
+        },
+        "AnnotationConfidence": {
+            "additionalProperties": false,
+            "description": "Metadata describing the confidence of an annotation.",
+            "properties": {
+                "ground_truth_used": {
+                    "description": "Annotation filename used as ground truth for precision and recall",
+                    "type": "string"
+                },
+                "precision": {
+                    "description": "Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive",
+                    "maximum": 100,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "recall": {
+                    "description": "Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly",
+                    "maximum": 100,
+                    "minimum": 0,
+                    "type": "number"
+                }
+            },
+            "title": "AnnotationConfidence",
+            "type": "object"
+        },
+        "AnnotationEntity": {
+            "additionalProperties": false,
+            "description": "An annotation entity.",
+            "properties": {
+                "metadata": {
+                    "$ref": "#/$defs/Annotation",
+                    "description": "Metadata describing an annotation."
+                },
+                "sources": {
+                    "description": "An annotation source.",
+                    "items": {
+                        "$ref": "#/$defs/AnnotationSource"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "metadata",
+                "sources"
+            ],
+            "title": "AnnotationEntity",
+            "type": "object"
+        },
+        "AnnotationInstanceSegmentationFile": {
+            "additionalProperties": false,
+            "description": "File and sourcing data for an instance segmentation annotation. Annotation that identifies individual instances of object shapes.",
+            "properties": {
+                "binning": {
+                    "description": "The binning factor for a point / oriented point / instance segmentation annotation file.",
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "file_format": {
+                    "description": "File format for this file",
+                    "type": "string"
+                },
+                "filter_value": {
+                    "description": "The filter value for an oriented point / instance segmentation annotation file.",
+                    "type": "string"
+                },
+                "glob_string": {
+                    "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
+                    "type": "string"
+                },
+                "glob_strings": {
+                    "description": "Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "is_visualization_default": {
+                    "description": "This annotation will be rendered in neuroglancer by default.",
+                    "type": "boolean"
+                },
+                "order": {
+                    "description": "The order of axes for an oriented point / instance segmentation annotation file.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "file_format"
+            ],
+            "title": "AnnotationInstanceSegmentationFile",
+            "type": "object"
+        },
+        "AnnotationMethodLinkTypeEnum": {
+            "description": "Describes the type of link associated to the annotation method.",
+            "enum": [
+                "documentation",
+                "models_weights",
+                "other",
+                "source_code",
+                "website"
+            ],
+            "title": "AnnotationMethodLinkTypeEnum",
+            "type": "string"
+        },
+        "AnnotationMethodLinks": {
+            "additionalProperties": false,
+            "description": "A set of links to models, sourcecode, documentation, etc referenced by annotation the method",
+            "properties": {
+                "link": {
+                    "description": "URL to the resource",
+                    "type": "string"
+                },
+                "link_type": {
+                    "$ref": "#/$defs/AnnotationMethodLinkTypeEnum",
+                    "description": "Type of link (e.g. model, sourcecode, documentation)",
+                    "pattern": "(^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)"
+                },
+                "name": {
+                    "description": "user readable name of the resource",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "link",
+                "link_type"
+            ],
+            "title": "AnnotationMethodLinks",
+            "type": "object"
+        },
+        "AnnotationMethodTypeEnum": {
+            "description": "Describes how the annotations were generated.",
+            "enum": [
+                "manual",
+                "automated",
+                "hybrid"
+            ],
+            "title": "AnnotationMethodTypeEnum",
+            "type": "string"
+        },
+        "AnnotationObject": {
+            "additionalProperties": false,
+            "description": "Metadata describing the object being annotated.",
+            "properties": {
+                "description": {
+                    "description": "A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "Gene Ontology Cellular Component identifier for the annotation object",
+                    "pattern": "^GO:[0-9]{7}$",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
+                    "type": "string"
+                },
+                "state": {
+                    "description": "Molecule state annotated (e.g. open, closed)",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "name"
+            ],
+            "title": "AnnotationObject",
+            "type": "object"
+        },
+        "AnnotationOrientedPointFile": {
+            "additionalProperties": false,
+            "description": "File and sourcing data for an oriented point annotation. Annotation that identifies points along with orientation in the volume.",
+            "properties": {
+                "binning": {
+                    "description": "The binning factor for a point / oriented point / instance segmentation annotation file.",
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "file_format": {
+                    "description": "File format for this file",
+                    "type": "string"
+                },
+                "filter_value": {
+                    "description": "The filter value for an oriented point / instance segmentation annotation file.",
+                    "type": "string"
+                },
+                "glob_string": {
+                    "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
+                    "type": "string"
+                },
+                "glob_strings": {
+                    "description": "Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "is_visualization_default": {
+                    "description": "This annotation will be rendered in neuroglancer by default.",
+                    "type": "boolean"
+                },
+                "order": {
+                    "description": "The order of axes for an oriented point / instance segmentation annotation file.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "file_format"
+            ],
+            "title": "AnnotationOrientedPointFile",
+            "type": "object"
+        },
+        "AnnotationPointFile": {
+            "additionalProperties": false,
+            "description": "File and sourcing data for a point annotation. Annotation that identifies points in the volume.",
+            "properties": {
+                "binning": {
+                    "description": "The binning factor for a point / oriented point / instance segmentation annotation file.",
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "columns": {
+                    "description": "The columns used in a point annotation file.",
+                    "type": "string"
+                },
+                "delimiter": {
+                    "description": "The delimiter used in a point annotation file.",
+                    "type": "string"
+                },
+                "file_format": {
+                    "description": "File format for this file",
+                    "type": "string"
+                },
+                "glob_string": {
+                    "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
+                    "type": "string"
+                },
+                "glob_strings": {
+                    "description": "Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "is_visualization_default": {
+                    "description": "This annotation will be rendered in neuroglancer by default.",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "file_format"
+            ],
+            "title": "AnnotationPointFile",
+            "type": "object"
+        },
+        "AnnotationSegmentationMaskFile": {
+            "additionalProperties": false,
+            "description": "File and sourcing data for a segmentation mask annotation. Annotation that identifies an object.",
+            "properties": {
+                "file_format": {
+                    "description": "File format for this file",
+                    "type": "string"
+                },
+                "glob_string": {
+                    "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
+                    "type": "string"
+                },
+                "glob_strings": {
+                    "description": "Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "is_visualization_default": {
+                    "description": "This annotation will be rendered in neuroglancer by default.",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "file_format"
+            ],
+            "title": "AnnotationSegmentationMaskFile",
+            "type": "object"
+        },
+        "AnnotationSemanticSegmentationMaskFile": {
+            "additionalProperties": false,
+            "description": "File and sourcing data for a semantic segmentation mask annotation. Annotation that identifies classes of objects.",
+            "properties": {
+                "file_format": {
+                    "description": "File format for this file",
+                    "type": "string"
+                },
+                "glob_string": {
+                    "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
+                    "type": "string"
+                },
+                "glob_strings": {
+                    "description": "Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "is_visualization_default": {
+                    "description": "This annotation will be rendered in neuroglancer by default.",
+                    "type": "boolean"
+                },
+                "mask_label": {
+                    "description": "The mask label for a semantic segmentation mask annotation file.",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "file_format"
+            ],
+            "title": "AnnotationSemanticSegmentationMaskFile",
+            "type": "object"
+        },
+        "AnnotationSource": {
+            "additionalProperties": false,
+            "description": "An annotation source.",
+            "properties": {
+                "InstanceSegmentation": {
+                    "$ref": "#/$defs/AnnotationInstanceSegmentationFile",
+                    "description": "File and sourcing data for an instance segmentation annotation. Annotation that identifies individual instances of object shapes."
+                },
+                "OrientedPoint": {
+                    "$ref": "#/$defs/AnnotationOrientedPointFile",
+                    "description": "File and sourcing data for an oriented point annotation. Annotation that identifies points along with orientation in the volume."
+                },
+                "Point": {
+                    "$ref": "#/$defs/AnnotationPointFile",
+                    "description": "File and sourcing data for a point annotation. Annotation that identifies points in the volume."
+                },
+                "SegmentationMask": {
+                    "$ref": "#/$defs/AnnotationSegmentationMaskFile",
+                    "description": "File and sourcing data for a segmentation mask annotation. Annotation that identifies an object."
+                },
+                "SemanticSegmentationMask": {
+                    "$ref": "#/$defs/AnnotationSemanticSegmentationMaskFile",
+                    "description": "File and sourcing data for a semantic segmentation mask annotation. Annotation that identifies classes of objects."
+                },
+                "parent_filters": {
+                    "$ref": "#/$defs/SourceParentFilters",
+                    "description": "Filters for the parent of a source."
+                }
+            },
+            "title": "AnnotationSource",
+            "type": "object"
+        },
+        "AnnotationSourceFile": {
+            "additionalProperties": false,
+            "description": "File and sourcing data for an annotation. Represents an entry in annotation.sources.",
+            "properties": {
+                "file_format": {
+                    "description": "File format for this file",
+                    "type": "string"
+                },
+                "glob_string": {
+                    "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
+                    "type": "string"
+                },
+                "glob_strings": {
+                    "description": "Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "is_visualization_default": {
+                    "description": "This annotation will be rendered in neuroglancer by default.",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "file_format"
+            ],
+            "title": "AnnotationSourceFile",
+            "type": "object"
+        },
+        "Any": {
+            "additionalProperties": true,
+            "description": "A placeholder for any type of data.",
+            "title": "Any",
+            "type": [
+                "null",
+                "boolean",
+                "object",
+                "number",
+                "string"
+            ]
+        },
+        "Author": {
+            "additionalProperties": false,
+            "description": "Author of a scientific data entity.",
+            "properties": {
+                "ORCID": {
+                    "description": "The ORCID identifier for the author.",
+                    "pattern": "[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
+                    "type": "string"
+                },
+                "affiliation_address": {
+                    "description": "The address of the author's affiliation.",
+                    "type": "string"
+                },
+                "affiliation_identifier": {
+                    "description": "A Research Organization Registry (ROR) identifier.",
+                    "type": "string"
+                },
+                "affiliation_name": {
+                    "description": "The name of the author's affiliation.",
+                    "type": "string"
+                },
+                "corresponding_author_status": {
+                    "description": "Whether the author is a corresponding author.",
+                    "type": "boolean"
+                },
+                "email": {
+                    "description": "The email address of the author.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The full name of the author.",
+                    "type": "string"
+                },
+                "primary_author_status": {
+                    "description": "Whether the author is a primary author.",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "Author",
+            "type": "object"
+        },
+        "CameraDetails": {
+            "additionalProperties": false,
+            "description": "The camera used to collect the tilt series.",
+            "properties": {
+                "acquire_mode": {
+                    "anyOf": [
+                        {
+                            "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        },
+                        {
+                            "$ref": "#/$defs/TiltseriesCameraAcquireModeEnum"
+                        }
+                    ],
+                    "description": "Camera acquisition mode",
+                    "pattern": "(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|(^counting$)|(^superresolution$)|(^linear$)|(^cds$)"
+                },
+                "manufacturer": {
+                    "description": "Name of the camera manufacturer",
+                    "type": "string"
+                },
+                "model": {
+                    "description": "Camera model name",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "manufacturer",
+                "model"
+            ],
+            "title": "CameraDetails",
+            "type": "object"
+        },
+        "CellComponent": {
+            "additionalProperties": false,
+            "description": "The cellular component from which the sample was derived.",
+            "properties": {
+                "id": {
+                    "description": "The GO identifier for the cellular component.",
+                    "pattern": "^GO:[0-9]{7}$",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name of the cellular component.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "CellComponent",
+            "type": "object"
+        },
+        "CellStrain": {
+            "additionalProperties": false,
+            "description": "The strain or cell line from which the sample was derived.",
+            "properties": {
+                "id": {
+                    "description": "Link to more information about the cell strain.",
+                    "pattern": "^[A-Z]+:[0-9]+$",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Cell line or strain for the sample.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "CellStrain",
+            "type": "object"
+        },
+        "CellType": {
+            "additionalProperties": false,
+            "description": "The cell type from which the sample was derived.",
+            "properties": {
+                "id": {
+                    "description": "Cell Ontology identifier for the cell type",
+                    "pattern": "^CL:[0-9]{7}$",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name of the cell type from which a biological sample used in a CryoET study is derived from.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "CellType",
+            "type": "object"
+        },
+        "Container": {
+            "additionalProperties": false,
+            "description": "Class that models the dataset config.",
+            "properties": {
+                "annotations": {
+                    "description": "An annotation entity.",
+                    "items": {
+                        "$ref": "#/$defs/AnnotationEntity"
+                    },
+                    "type": "array"
+                },
+                "dataset_keyphotos": {
+                    "description": "A dataset key photo entity.",
+                    "items": {
+                        "$ref": "#/$defs/DatasetKeyPhotoEntity"
+                    },
+                    "type": "array"
+                },
+                "datasets": {
+                    "description": "A dataset entity.",
+                    "items": {
+                        "$ref": "#/$defs/DatasetEntity"
+                    },
+                    "type": "array"
+                },
+                "frames": {
+                    "description": "A frame entity.",
+                    "items": {
+                        "$ref": "#/$defs/FrameEntity"
+                    },
+                    "type": "array"
+                },
+                "gains": {
+                    "description": "A gain entity.",
+                    "items": {
+                        "$ref": "#/$defs/GainEntity"
+                    },
+                    "type": "array"
+                },
+                "key_images": {
+                    "description": "A key image entity.",
+                    "items": {
+                        "$ref": "#/$defs/KeyImageEntity"
+                    },
+                    "type": "array"
+                },
+                "rawtilts": {
+                    "description": "A raw tilt entity.",
+                    "items": {
+                        "$ref": "#/$defs/RawTiltEntity"
+                    },
+                    "type": "array"
+                },
+                "runs": {
+                    "description": "A run entity.",
+                    "items": {
+                        "$ref": "#/$defs/RunEntity"
+                    },
+                    "type": "array"
+                },
+                "standardization_config": {
+                    "$ref": "#/$defs/StandardizationConfig",
+                    "description": "A standardization configuration."
+                },
+                "tiltseries": {
+                    "description": "A tilt series entity.",
+                    "items": {
+                        "$ref": "#/$defs/TiltSeriesEntity"
+                    },
+                    "type": "array"
+                },
+                "tomograms": {
+                    "description": "A tomogram entity.",
+                    "items": {
+                        "$ref": "#/$defs/TomogramEntity"
+                    },
+                    "type": "array"
+                },
+                "voxel_spacings": {
+                    "description": "A voxel spacing entity.",
+                    "items": {
+                        "$ref": "#/$defs/VoxelSpacingEntity"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "datasets",
+                "standardization_config",
+                "voxel_spacings"
+            ],
+            "title": "Container",
+            "type": "object"
+        },
+        "CrossReferences": {
+            "additionalProperties": false,
+            "description": "A set of cross-references to other databases and publications.",
+            "properties": {
+                "dataset_citations": {
+                    "description": "Comma-separated list of DOIs for publications citing the dataset.",
+                    "type": "string"
+                },
+                "dataset_publications": {
+                    "description": "Comma-separated list of DOIs for publications associated with the dataset.",
+                    "pattern": "(^(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\\s*,\\s*(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\\s*,\\s*(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)",
+                    "type": "string"
+                },
+                "related_database_entries": {
+                    "description": "Comma-separated list of related database entries for the dataset.",
+                    "pattern": "(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)",
+                    "type": "string"
+                },
+                "related_database_links": {
+                    "description": "Comma-separated list of related database links for the dataset.",
+                    "type": "string"
+                }
+            },
+            "title": "CrossReferences",
+            "type": "object"
+        },
+        "Dataset": {
+            "additionalProperties": false,
+            "description": "High-level description of a cryoET dataset.",
+            "properties": {
+                "authors": {
+                    "description": "Author of a scientific data entity.",
+                    "items": {
+                        "$ref": "#/$defs/Author"
+                    },
+                    "type": "array"
+                },
+                "cell_component": {
+                    "$ref": "#/$defs/CellComponent",
+                    "description": "The cellular component from which the sample was derived."
+                },
+                "cell_strain": {
+                    "$ref": "#/$defs/CellStrain",
+                    "description": "The strain or cell line from which the sample was derived."
+                },
+                "cell_type": {
+                    "$ref": "#/$defs/CellType",
+                    "description": "The cell type from which the sample was derived."
+                },
+                "cross_references": {
+                    "$ref": "#/$defs/CrossReferences",
+                    "description": "A set of cross-references to other databases and publications."
+                },
+                "dataset_description": {
+                    "description": "A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.",
+                    "type": "string"
+                },
+                "dataset_identifier": {
+                    "description": "An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree.",
+                    "type": "integer"
+                },
+                "dataset_title": {
+                    "description": "Title of a CryoET dataset.",
+                    "type": "string"
+                },
+                "dates": {
+                    "$ref": "#/$defs/DateStamp",
+                    "description": "A set of dates at which a data item was deposited, published and last modified."
+                },
+                "funding": {
+                    "description": "A funding source for a scientific data entity (base for JSON and DB representation).",
+                    "items": {
+                        "$ref": "#/$defs/FundingDetails"
+                    },
+                    "type": "array"
+                },
+                "grid_preparation": {
+                    "description": "Describes Cryo-ET grid preparation.",
+                    "type": "string"
+                },
+                "organism": {
+                    "$ref": "#/$defs/OrganismDetails",
+                    "description": "The species from which the sample was derived."
+                },
+                "other_setup": {
+                    "description": "Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication.",
+                    "type": "string"
+                },
+                "sample_preparation": {
+                    "description": "Describes how the sample was prepared.",
+                    "type": "string"
+                },
+                "sample_type": {
+                    "$ref": "#/$defs/SampleTypeEnum",
+                    "description": "Type of sample imaged in a CryoET study.",
+                    "pattern": "(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)"
+                },
+                "tissue": {
+                    "$ref": "#/$defs/TissueDetails",
+                    "description": "The type of tissue from which the sample was derived."
+                }
+            },
+            "required": [
+                "dataset_identifier",
+                "dataset_title",
+                "dataset_description",
+                "dates",
+                "authors",
+                "sample_type"
+            ],
+            "title": "Dataset",
+            "type": "object"
+        },
+        "DatasetEntity": {
+            "additionalProperties": false,
+            "description": "A dataset entity.",
+            "properties": {
+                "metadata": {
+                    "$ref": "#/$defs/Dataset",
+                    "description": "High-level description of a cryoET dataset."
+                },
+                "sources": {
+                    "description": "A dataset source.",
+                    "items": {
+                        "$ref": "#/$defs/DatasetSource"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "metadata",
+                "sources"
+            ],
+            "title": "DatasetEntity",
+            "type": "object"
+        },
+        "DatasetKeyPhotoEntity": {
+            "additionalProperties": false,
+            "description": "A dataset key photo entity.",
+            "properties": {
+                "sources": {
+                    "description": "A dataset key photo source.",
+                    "items": {
+                        "$ref": "#/$defs/DatasetKeyPhotoSource"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "sources"
+            ],
+            "title": "DatasetKeyPhotoEntity",
+            "type": "object"
+        },
+        "DatasetKeyPhotoLiteral": {
+            "additionalProperties": false,
+            "description": "A literal for a dataset key photo.",
+            "properties": {
+                "value": {
+                    "$ref": "#/$defs/PicturePath",
+                    "description": "A set of paths to representative images of a piece of data."
+                }
+            },
+            "required": [
+                "value"
+            ],
+            "title": "DatasetKeyPhotoLiteral",
+            "type": "object"
+        },
+        "DatasetKeyPhotoSource": {
+            "additionalProperties": false,
+            "description": "A dataset key photo source.",
+            "properties": {
+                "literal": {
+                    "$ref": "#/$defs/DatasetKeyPhotoLiteral",
+                    "description": "A literal for a dataset key photo."
+                },
+                "parent_filters": {
+                    "$ref": "#/$defs/SourceParentFilters",
+                    "description": "Filters for the parent of a source."
+                }
+            },
+            "title": "DatasetKeyPhotoSource",
+            "type": "object"
+        },
+        "DatasetSource": {
+            "additionalProperties": false,
+            "description": "A dataset source.",
+            "properties": {
+                "destination_glob": {
+                    "$ref": "#/$defs/DestinationGlob",
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "literal": {
+                    "$ref": "#/$defs/DefaultLiteral",
+                    "description": "A literal class with a value attribute."
+                },
+                "source_glob": {
+                    "$ref": "#/$defs/SourceGlob",
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "$ref": "#/$defs/SourceMultiGlob",
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "DatasetSource",
+            "type": "object"
+        },
+        "DateStamp": {
+            "additionalProperties": false,
+            "description": "A set of dates at which a data item was deposited, published and last modified.",
+            "properties": {
+                "deposition_date": {
+                    "description": "The date a data item was received by the cryoET data portal.",
+                    "format": "date",
+                    "type": "string"
+                },
+                "last_modified_date": {
+                    "description": "The date a piece of data was last modified on the cryoET data portal.",
+                    "format": "date",
+                    "type": "string"
+                },
+                "release_date": {
+                    "description": "The date a data item was received by the cryoET data portal.",
+                    "format": "date",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "deposition_date",
+                "release_date",
+                "last_modified_date"
+            ],
+            "title": "DateStamp",
+            "type": "object"
+        },
+        "DefaultLiteral": {
+            "additionalProperties": false,
+            "description": "A literal class with a value attribute.",
+            "properties": {
+                "value": {
+                    "description": "A placeholder for any type of data.",
+                    "items": {
+                        "$ref": "#/$defs/Any"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "value"
+            ],
+            "title": "DefaultLiteral",
+            "type": "object"
+        },
+        "DefaultLiteralEntity": {
+            "additionalProperties": false,
+            "description": "Used as a mixin with root-level classes that contain sources that have literals.",
+            "properties": {
+                "literal": {
+                    "$ref": "#/$defs/DefaultLiteral",
+                    "description": "A literal class with a value attribute."
+                }
+            },
+            "title": "DefaultLiteralEntity",
+            "type": "object"
+        },
+        "DefaultSource": {
+            "additionalProperties": false,
+            "description": "A generalized source class with glob finders.",
+            "properties": {
+                "destination_glob": {
+                    "$ref": "#/$defs/DestinationGlob",
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "source_glob": {
+                    "$ref": "#/$defs/SourceGlob",
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "$ref": "#/$defs/SourceMultiGlob",
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "DefaultSource",
+            "type": "object"
+        },
+        "DepositionTypesEnum": {
+            "description": "Types of data a deposition has",
+            "enum": [
+                "annotation",
+                "datasets",
+                "tomograms"
+            ],
+            "title": "DepositionTypesEnum",
+            "type": "string"
+        },
+        "DestinationGlob": {
+            "additionalProperties": false,
+            "description": "A glob class for finding files in the output / destination directory.",
+            "properties": {
+                "list_glob": {
+                    "description": "The glob for the file.",
+                    "type": "string"
+                },
+                "match_regex": {
+                    "description": "The regex for the file.",
+                    "type": "string"
+                },
+                "name_regex": {
+                    "description": "The regex for the name of the file.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "list_glob"
+            ],
+            "title": "DestinationGlob",
+            "type": "object"
+        },
+        "FiducialAlignmentStatusEnum": {
+            "description": "Fiducial Alignment method",
+            "enum": [
+                "FIDUCIAL",
+                "NON_FIDUCIAL"
+            ],
+            "title": "FiducialAlignmentStatusEnum",
+            "type": "string"
+        },
+        "FrameEntity": {
+            "additionalProperties": false,
+            "description": "A frame entity.",
+            "properties": {
+                "sources": {
+                    "description": "A frame source.",
+                    "items": {
+                        "$ref": "#/$defs/FrameSource"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "sources"
+            ],
+            "title": "FrameEntity",
+            "type": "object"
+        },
+        "FrameSource": {
+            "additionalProperties": false,
+            "description": "A frame source.",
+            "properties": {
+                "destination_glob": {
+                    "$ref": "#/$defs/DestinationGlob",
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "literal": {
+                    "$ref": "#/$defs/DefaultLiteral",
+                    "description": "A literal class with a value attribute."
+                },
+                "parent_filters": {
+                    "$ref": "#/$defs/SourceParentFilters",
+                    "description": "Filters for the parent of a source."
+                },
+                "source_glob": {
+                    "$ref": "#/$defs/SourceGlob",
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "$ref": "#/$defs/SourceMultiGlob",
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "FrameSource",
+            "type": "object"
+        },
+        "FundingDetails": {
+            "additionalProperties": false,
+            "description": "A funding source for a scientific data entity (base for JSON and DB representation).",
+            "properties": {
+                "funding_agency_name": {
+                    "description": "The name of the funding source.",
+                    "type": "string"
+                },
+                "grant_id": {
+                    "description": "Grant identifier provided by the funding agency",
+                    "type": "string"
+                }
+            },
+            "title": "FundingDetails",
+            "type": "object"
+        },
+        "GainEntity": {
+            "additionalProperties": false,
+            "description": "A gain entity.",
+            "properties": {
+                "sources": {
+                    "description": "A gain source.",
+                    "items": {
+                        "$ref": "#/$defs/GainSource"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "sources"
+            ],
+            "title": "GainEntity",
+            "type": "object"
+        },
+        "GainSource": {
+            "additionalProperties": false,
+            "description": "A gain source.",
+            "properties": {
+                "destination_glob": {
+                    "$ref": "#/$defs/DestinationGlob",
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "literal": {
+                    "$ref": "#/$defs/DefaultLiteral",
+                    "description": "A literal class with a value attribute."
+                },
+                "parent_filters": {
+                    "$ref": "#/$defs/SourceParentFilters",
+                    "description": "Filters for the parent of a source."
+                },
+                "source_glob": {
+                    "$ref": "#/$defs/SourceGlob",
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "$ref": "#/$defs/SourceMultiGlob",
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "GainSource",
+            "type": "object"
+        },
+        "KeyImageEntity": {
+            "additionalProperties": false,
+            "description": "A key image entity.",
+            "properties": {
+                "sources": {
+                    "description": "A key image source.",
+                    "items": {
+                        "$ref": "#/$defs/KeyImageSource"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "sources"
+            ],
+            "title": "KeyImageEntity",
+            "type": "object"
+        },
+        "KeyImageSource": {
+            "additionalProperties": false,
+            "description": "A key image source.",
+            "properties": {
+                "destination_glob": {
+                    "$ref": "#/$defs/DestinationGlob",
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "literal": {
+                    "$ref": "#/$defs/DefaultLiteral",
+                    "description": "A literal class with a value attribute."
+                },
+                "parent_filters": {
+                    "$ref": "#/$defs/SourceParentFilters",
+                    "description": "Filters for the parent of a source."
+                },
+                "source_glob": {
+                    "$ref": "#/$defs/SourceGlob",
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "$ref": "#/$defs/SourceMultiGlob",
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "KeyImageSource",
+            "type": "object"
+        },
+        "MicroscopeDetails": {
+            "additionalProperties": false,
+            "description": "The microscope used to collect the tilt series.",
+            "properties": {
+                "additional_info": {
+                    "description": "Other microscope optical setup information, in addition to energy filter, phase plate and image corrector",
+                    "type": "string"
+                },
+                "manufacturer": {
+                    "anyOf": [
+                        {
+                            "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        },
+                        {
+                            "$ref": "#/$defs/MicroscopeManufacturerEnum"
+                        }
+                    ],
+                    "description": "Name of the microscope manufacturer",
+                    "pattern": "(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|(^FEI$)|(^TFS$)|(^JEOL$)"
+                },
+                "model": {
+                    "description": "Microscope model name",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "manufacturer",
+                "model"
+            ],
+            "title": "MicroscopeDetails",
+            "type": "object"
+        },
+        "MicroscopeManufacturerEnum": {
+            "description": "Microscope manufacturer",
+            "enum": [
+                "FEI",
+                "TFS",
+                "JEOL"
+            ],
+            "title": "MicroscopeManufacturerEnum",
+            "type": "string"
+        },
+        "MicroscopeOpticalSetup": {
+            "additionalProperties": false,
+            "description": "The optical setup of the microscope used to collect the tilt series.",
+            "properties": {
+                "energy_filter": {
+                    "description": "Energy filter setup used",
+                    "type": "string"
+                },
+                "image_corrector": {
+                    "description": "Image corrector setup",
+                    "type": "string"
+                },
+                "phase_plate": {
+                    "description": "Phase plate configuration",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "energy_filter"
+            ],
+            "title": "MicroscopeOpticalSetup",
+            "type": "object"
+        },
+        "OrganismDetails": {
+            "additionalProperties": false,
+            "description": "The species from which the sample was derived.",
+            "properties": {
+                "name": {
+                    "description": "Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens.",
+                    "type": "string"
+                },
+                "taxonomy_id": {
+                    "description": "NCBI taxonomy identifier for the organism, e.g. 9606",
+                    "minimum": 1,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "OrganismDetails",
+            "type": "object"
+        },
+        "PicturePath": {
+            "additionalProperties": false,
+            "description": "A set of paths to representative images of a piece of data.",
+            "properties": {
+                "snapshot": {
+                    "description": "Path to the dataset preview image relative to the dataset directory root.",
+                    "pattern": "^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$",
+                    "type": "string"
+                },
+                "thumbnail": {
+                    "description": "Path to the thumbnail of preview image relative to the dataset directory root.",
+                    "pattern": "^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$",
+                    "type": "string"
+                }
+            },
+            "title": "PicturePath",
+            "type": "object"
+        },
+        "RawTiltEntity": {
+            "additionalProperties": false,
+            "description": "A raw tilt entity.",
+            "properties": {
+                "sources": {
+                    "description": "A raw tilt source.",
+                    "items": {
+                        "$ref": "#/$defs/RawTiltSource"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "sources"
+            ],
+            "title": "RawTiltEntity",
+            "type": "object"
+        },
+        "RawTiltSource": {
+            "additionalProperties": false,
+            "description": "A raw tilt source.",
+            "properties": {
+                "destination_glob": {
+                    "$ref": "#/$defs/DestinationGlob",
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "literal": {
+                    "$ref": "#/$defs/DefaultLiteral",
+                    "description": "A literal class with a value attribute."
+                },
+                "parent_filters": {
+                    "$ref": "#/$defs/SourceParentFilters",
+                    "description": "Filters for the parent of a source."
+                },
+                "source_glob": {
+                    "$ref": "#/$defs/SourceGlob",
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "$ref": "#/$defs/SourceMultiGlob",
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "RawTiltSource",
+            "type": "object"
+        },
+        "RunEntity": {
+            "additionalProperties": false,
+            "description": "A run entity.",
+            "properties": {
+                "sources": {
+                    "description": "A run source.",
+                    "items": {
+                        "$ref": "#/$defs/RunSource"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "sources"
+            ],
+            "title": "RunEntity",
+            "type": "object"
+        },
+        "RunSource": {
+            "additionalProperties": false,
+            "description": "A run source.",
+            "properties": {
+                "destination_glob": {
+                    "$ref": "#/$defs/DestinationGlob",
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "literal": {
+                    "$ref": "#/$defs/DefaultLiteral",
+                    "description": "A literal class with a value attribute."
+                },
+                "parent_filters": {
+                    "$ref": "#/$defs/SourceParentFilters",
+                    "description": "Filters for the parent of a source."
+                },
+                "source_glob": {
+                    "$ref": "#/$defs/SourceGlob",
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "$ref": "#/$defs/SourceMultiGlob",
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "RunSource",
+            "type": "object"
+        },
+        "SampleTypeEnum": {
+            "description": "Type of sample imaged in a CryoET study.",
+            "enum": [
+                "cell",
+                "tissue",
+                "organism",
+                "organelle",
+                "virus",
+                "in_vitro",
+                "in_silico",
+                "other"
+            ],
+            "title": "SampleTypeEnum",
+            "type": "string"
+        },
+        "SourceGlob": {
+            "additionalProperties": false,
+            "description": "A glob class for finding files in the source directory.",
+            "properties": {
+                "list_glob": {
+                    "description": "The glob for the file.",
+                    "type": "string"
+                },
+                "match_regex": {
+                    "description": "The regex for the file.",
+                    "type": "string"
+                },
+                "name_regex": {
+                    "description": "The regex for the name of the file.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "list_glob"
+            ],
+            "title": "SourceGlob",
+            "type": "object"
+        },
+        "SourceMultiGlob": {
+            "additionalProperties": false,
+            "description": "A glob class for finding files in the source directory (with multiple globs).",
+            "properties": {
+                "list_globs": {
+                    "description": "The globs for the file.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "list_globs"
+            ],
+            "title": "SourceMultiGlob",
+            "type": "object"
+        },
+        "SourceParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of a source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "annotation": {
+                    "description": "Include or exclude annotations.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "dataset": {
+                    "description": "Include or exclude datasets.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "run": {
+                    "description": "Include or exclude runs.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "tomogram": {
+                    "description": "Include or exclude tomograms.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "voxel_spacing": {
+                    "description": "Include or exclude voxel spacings.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "SourceParent",
+            "type": "object"
+        },
+        "SourceParentFilters": {
+            "additionalProperties": false,
+            "description": "Filters for the parent of a source.",
+            "properties": {
+                "exclude": {
+                    "$ref": "#/$defs/SourceParent",
+                    "description": "A filter for a parent class of a source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "$ref": "#/$defs/SourceParent",
+                    "description": "A filter for a parent class of a source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "SourceParentFilters",
+            "type": "object"
+        },
+        "SourceParentFiltersEntity": {
+            "additionalProperties": false,
+            "description": "Used as a mixin with root-level classes that contain sources that can have parent filters.",
+            "properties": {
+                "parent_filters": {
+                    "$ref": "#/$defs/SourceParentFilters",
+                    "description": "Filters for the parent of a source."
+                }
+            },
+            "title": "SourceParentFiltersEntity",
+            "type": "object"
+        },
+        "StandardizationConfig": {
+            "additionalProperties": false,
+            "description": "A standardization configuration.",
+            "properties": {
+                "deposition_id": {
+                    "description": "The deposition ID.",
+                    "type": "integer"
+                },
+                "run_data_map_file": {
+                    "description": "The run data map file.",
+                    "type": "string"
+                },
+                "run_to_frame_map_csv": {
+                    "description": "The run to frame map CSV.",
+                    "type": "string"
+                },
+                "run_to_tomo_map_csv": {
+                    "description": "The run to tomogram map CSV.",
+                    "type": "string"
+                },
+                "run_to_ts_map_csv": {
+                    "description": "The run to tilt series map CSV.",
+                    "type": "string"
+                },
+                "source_prefix": {
+                    "description": "The source prefix of the input files.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "deposition_id",
+                "source_prefix"
+            ],
+            "title": "StandardizationConfig",
+            "type": "object"
+        },
+        "TiltRange": {
+            "additionalProperties": false,
+            "description": "The range of tilt angles in the tilt series.",
+            "properties": {
+                "max": {
+                    "anyOf": [
+                        {
+                            "maximum": 90,
+                            "minimum": -90,
+                            "type": "number"
+                        },
+                        {
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Maximal tilt angle in degrees",
+                    "maximum": 90,
+                    "minimum": -90,
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "min": {
+                    "anyOf": [
+                        {
+                            "maximum": 90,
+                            "minimum": -90,
+                            "type": "number"
+                        },
+                        {
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Minimal tilt angle in degrees",
+                    "maximum": 90,
+                    "minimum": -90,
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                }
+            },
+            "required": [
+                "min",
+                "max"
+            ],
+            "title": "TiltRange",
+            "type": "object"
+        },
+        "TiltSeries": {
+            "additionalProperties": false,
+            "description": "Metadata describing a tilt series.",
+            "properties": {
+                "acceleration_voltage": {
+                    "description": "Electron Microscope Accelerator voltage in volts",
+                    "minimum": 20000,
+                    "type": "number"
+                },
+                "aligned_tiltseries_binning": {
+                    "anyOf": [
+                        {
+                            "minimum": 0,
+                            "type": "number"
+                        },
+                        {
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Binning factor of the aligned tilt series",
+                    "minimum": 0,
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "binning_from_frames": {
+                    "anyOf": [
+                        {
+                            "minimum": 0,
+                            "type": "number"
+                        },
+                        {
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Describes the binning factor from frames to tilt series file",
+                    "minimum": 0,
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "camera": {
+                    "$ref": "#/$defs/CameraDetails",
+                    "description": "The camera used to collect the tilt series."
+                },
+                "data_acquisition_software": {
+                    "description": "Software used to collect data",
+                    "type": "string"
+                },
+                "frames_count": {
+                    "description": "Number of frames associated with this tiltseries",
+                    "type": "integer"
+                },
+                "is_aligned": {
+                    "description": "Whether this tilt series is aligned",
+                    "type": "boolean"
+                },
+                "microscope": {
+                    "$ref": "#/$defs/MicroscopeDetails",
+                    "description": "The microscope used to collect the tilt series."
+                },
+                "microscope_optical_setup": {
+                    "$ref": "#/$defs/MicroscopeOpticalSetup",
+                    "description": "The optical setup of the microscope used to collect the tilt series."
+                },
+                "pixel_spacing": {
+                    "anyOf": [
+                        {
+                            "minimum": 0.001,
+                            "type": "number"
+                        },
+                        {
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Pixel spacing for the tilt series",
+                    "minimum": 0.001,
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "related_empiar_entry": {
+                    "description": "If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier",
+                    "pattern": "^EMPIAR-[0-9]{5}$",
+                    "type": "string"
+                },
+                "spherical_aberration_constant": {
+                    "anyOf": [
+                        {
+                            "minimum": 0,
+                            "type": "number"
+                        },
+                        {
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Spherical Aberration Constant of the objective lens in millimeters",
+                    "minimum": 0,
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "tilt_alignment_software": {
+                    "description": "Software used for tilt alignment",
+                    "type": "string"
+                },
+                "tilt_axis": {
+                    "anyOf": [
+                        {
+                            "maximum": 360,
+                            "minimum": -360,
+                            "type": "number"
+                        },
+                        {
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Rotation angle in degrees",
+                    "maximum": 360,
+                    "minimum": -360,
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "tilt_range": {
+                    "$ref": "#/$defs/TiltRange",
+                    "description": "The range of tilt angles in the tilt series."
+                },
+                "tilt_series_quality": {
+                    "anyOf": [
+                        {
+                            "maximum": 5,
+                            "minimum": 1,
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Author assessment of tilt series quality within the dataset (1-5, 5 is best)",
+                    "maximum": 5,
+                    "minimum": 1,
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "tilt_step": {
+                    "anyOf": [
+                        {
+                            "maximum": 90,
+                            "minimum": 0,
+                            "type": "number"
+                        },
+                        {
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Tilt step in degrees",
+                    "maximum": 90,
+                    "minimum": 0,
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "tilting_scheme": {
+                    "description": "The order of stage tilting during acquisition of the data",
+                    "type": "string"
+                },
+                "total_flux": {
+                    "anyOf": [
+                        {
+                            "minimum": 0,
+                            "type": "number"
+                        },
+                        {
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series",
+                    "minimum": 0,
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                }
+            },
+            "required": [
+                "acceleration_voltage",
+                "camera",
+                "data_acquisition_software",
+                "is_aligned",
+                "microscope",
+                "microscope_optical_setup",
+                "spherical_aberration_constant",
+                "tilt_axis",
+                "tilt_range",
+                "tilt_series_quality",
+                "tilt_step",
+                "tilting_scheme",
+                "total_flux",
+                "pixel_spacing"
+            ],
+            "title": "TiltSeries",
+            "type": "object"
+        },
+        "TiltSeriesEntity": {
+            "additionalProperties": false,
+            "description": "A tilt series entity.",
+            "properties": {
+                "metadata": {
+                    "$ref": "#/$defs/TiltSeries",
+                    "description": "Metadata describing a tilt series."
+                },
+                "sources": {
+                    "description": "A tilt series source.",
+                    "items": {
+                        "$ref": "#/$defs/TiltSeriesSource"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "metadata",
+                "sources"
+            ],
+            "title": "TiltSeriesEntity",
+            "type": "object"
+        },
+        "TiltSeriesSource": {
+            "additionalProperties": false,
+            "description": "A tilt series source.",
+            "properties": {
+                "destination_glob": {
+                    "$ref": "#/$defs/DestinationGlob",
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "literal": {
+                    "$ref": "#/$defs/DefaultLiteral",
+                    "description": "A literal class with a value attribute."
+                },
+                "parent_filters": {
+                    "$ref": "#/$defs/SourceParentFilters",
+                    "description": "Filters for the parent of a source."
+                },
+                "source_glob": {
+                    "$ref": "#/$defs/SourceGlob",
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "$ref": "#/$defs/SourceMultiGlob",
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "TiltSeriesSource",
+            "type": "object"
+        },
+        "TiltseriesCameraAcquireModeEnum": {
+            "description": "Camera acquisition mode",
+            "enum": [
+                "counting",
+                "superresolution",
+                "linear",
+                "cds"
+            ],
+            "title": "TiltseriesCameraAcquireModeEnum",
+            "type": "string"
+        },
+        "TissueDetails": {
+            "additionalProperties": false,
+            "description": "The type of tissue from which the sample was derived.",
+            "properties": {
+                "id": {
+                    "description": "The UBERON identifier for the tissue.",
+                    "pattern": "^BTO:[0-9]{7}$",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name of the tissue from which a biological sample used in a CryoET study is derived from.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "TissueDetails",
+            "type": "object"
+        },
+        "Tomogram": {
+            "additionalProperties": false,
+            "description": "Metadata describing a tomogram.",
+            "properties": {
+                "affine_transformation_matrix": {
+                    "items": {
+                        "additionalProperties": true,
+                        "type": [
+                            "null",
+                            "boolean",
+                            "object",
+                            "number",
+                            "string",
+                            "array"
+                        ]
+                    },
+                    "type": "array"
+                },
+                "align_software": {
+                    "description": "Software used for alignment",
+                    "type": "string"
+                },
+                "authors": {
+                    "description": "Author of a scientific data entity.",
+                    "items": {
+                        "$ref": "#/$defs/Author"
+                    },
+                    "type": "array"
+                },
+                "ctf_corrected": {
+                    "description": "Whether this tomogram is CTF corrected",
+                    "type": "boolean"
+                },
+                "fiducial_alignment_status": {
+                    "$ref": "#/$defs/FiducialAlignmentStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/FiducialAlignmentStatusEnum"
+                        },
+                        {
+                            "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Whether the tomographic alignment was computed based on fiducial markers.",
+                    "pattern": "(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)"
+                },
+                "offset": {
+                    "$ref": "#/$defs/TomogramOffset",
+                    "description": "The offset of a tomogram in voxels in each dimension relative to the canonical tomogram."
+                },
+                "processing": {
+                    "$ref": "#/$defs/TomogramProcessingEnum",
+                    "description": "Describe additional processing used to derive the tomogram",
+                    "pattern": "(^denoised$)|(^filtered$)|(^raw$)"
+                },
+                "processing_software": {
+                    "description": "Processing software used to derive the tomogram",
+                    "type": "string"
+                },
+                "reconstruction_method": {
+                    "anyOf": [
+                        {
+                            "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        },
+                        {
+                            "$ref": "#/$defs/TomogromReconstructionMethodEnum"
+                        }
+                    ],
+                    "description": "Describe reconstruction method (WBP, SART, SIRT)",
+                    "pattern": "(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|(^SART$)|(^FOURIER SPACE$)|(^SIRT$)|(^WBP$)|(^UNKNOWN$)"
+                },
+                "reconstruction_software": {
+                    "description": "Name of software used for reconstruction",
+                    "type": "string"
+                },
+                "size": {
+                    "$ref": "#/$defs/TomogramSize",
+                    "description": "The size of a tomogram in voxels in each dimension."
+                },
+                "tomogram_version": {
+                    "description": "Version of tomogram",
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "voxel_spacing": {
+                    "anyOf": [
+                        {
+                            "minimum": 0.001,
+                            "type": "number"
+                        },
+                        {
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Voxel spacing equal in all three axes in angstroms",
+                    "minimum": 0.001,
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                }
+            },
+            "required": [
+                "voxel_spacing",
+                "fiducial_alignment_status",
+                "reconstruction_method",
+                "reconstruction_software",
+                "processing",
+                "tomogram_version",
+                "offset",
+                "authors"
+            ],
+            "title": "Tomogram",
+            "type": "object"
+        },
+        "TomogramEntity": {
+            "additionalProperties": false,
+            "description": "A tomogram entity.",
+            "properties": {
+                "metadata": {
+                    "$ref": "#/$defs/Tomogram",
+                    "description": "Metadata describing a tomogram."
+                },
+                "sources": {
+                    "description": "A tomogram source.",
+                    "items": {
+                        "$ref": "#/$defs/TomogramSource"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "metadata",
+                "sources"
+            ],
+            "title": "TomogramEntity",
+            "type": "object"
+        },
+        "TomogramHeader": {
+            "additionalProperties": false,
+            "description": "A tomogram header, a unique source attribute for voxel spacing.",
+            "properties": {
+                "header_key": {
+                    "description": "The key in the header file for the voxel spacing.",
+                    "type": "string"
+                },
+                "list_glob": {
+                    "description": "The glob for the tomogram header file.",
+                    "type": "string"
+                },
+                "match_regex": {
+                    "description": "The regex for the tomogram header file.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "list_glob"
+            ],
+            "title": "TomogramHeader",
+            "type": "object"
+        },
+        "TomogramOffset": {
+            "additionalProperties": false,
+            "description": "The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.",
+            "properties": {
+                "x": {
+                    "description": "x offset data relative to the canonical tomogram in pixels",
+                    "type": "integer"
+                },
+                "y": {
+                    "description": "y offset data relative to the canonical tomogram in pixels",
+                    "type": "integer"
+                },
+                "z": {
+                    "description": "z offset data relative to the canonical tomogram in pixels",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "z"
+            ],
+            "title": "TomogramOffset",
+            "type": "object"
+        },
+        "TomogramProcessingEnum": {
+            "description": "Tomogram processing method",
+            "enum": [
+                "denoised",
+                "filtered",
+                "raw"
+            ],
+            "title": "TomogramProcessingEnum",
+            "type": "string"
+        },
+        "TomogramSize": {
+            "additionalProperties": false,
+            "description": "The size of a tomogram in voxels in each dimension.",
+            "properties": {
+                "x": {
+                    "description": "Number of pixels in the 3D data fast axis",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "y": {
+                    "description": "Number of pixels in the 3D data medium axis",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "z": {
+                    "description": "Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "z"
+            ],
+            "title": "TomogramSize",
+            "type": "object"
+        },
+        "TomogramSource": {
+            "additionalProperties": false,
+            "description": "A tomogram source.",
+            "properties": {
+                "destination_glob": {
+                    "$ref": "#/$defs/DestinationGlob",
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "literal": {
+                    "$ref": "#/$defs/DefaultLiteral",
+                    "description": "A literal class with a value attribute."
+                },
+                "parent_filters": {
+                    "$ref": "#/$defs/SourceParentFilters",
+                    "description": "Filters for the parent of a source."
+                },
+                "source_glob": {
+                    "$ref": "#/$defs/SourceGlob",
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "$ref": "#/$defs/SourceMultiGlob",
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "TomogramSource",
+            "type": "object"
+        },
+        "TomogramTypeEnum": {
+            "description": "Tomogram type",
+            "enum": [
+                "CANONICAL"
+            ],
+            "title": "TomogramTypeEnum",
+            "type": "string"
+        },
+        "TomogromReconstructionMethodEnum": {
+            "description": "Tomogram reconstruction method",
+            "enum": [
+                "SART",
+                "FOURIER SPACE",
+                "SIRT",
+                "WBP",
+                "UNKNOWN"
+            ],
+            "title": "TomogromReconstructionMethodEnum",
+            "type": "string"
+        },
+        "VoxelSpacingEntity": {
+            "additionalProperties": false,
+            "description": "A voxel spacing entity.",
+            "properties": {
+                "sources": {
+                    "description": "A voxel spacing source.",
+                    "items": {
+                        "$ref": "#/$defs/VoxelSpacingSource"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "sources"
+            ],
+            "title": "VoxelSpacingEntity",
+            "type": "object"
+        },
+        "VoxelSpacingLiteral": {
+            "additionalProperties": false,
+            "description": "A literal for a voxel spacing.",
+            "properties": {
+                "value": {
+                    "description": "The value for the voxel spacing literal.",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "value"
+            ],
+            "title": "VoxelSpacingLiteral",
+            "type": "object"
+        },
+        "VoxelSpacingSource": {
+            "additionalProperties": false,
+            "description": "A voxel spacing source.",
+            "properties": {
+                "destination_glob": {
+                    "$ref": "#/$defs/DestinationGlob",
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "literal": {
+                    "$ref": "#/$defs/VoxelSpacingLiteral",
+                    "description": "A literal for a voxel spacing."
+                },
+                "parent_filters": {
+                    "$ref": "#/$defs/SourceParentFilters",
+                    "description": "Filters for the parent of a source."
+                },
+                "source_glob": {
+                    "$ref": "#/$defs/SourceGlob",
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "tomogram_header": {
+                    "$ref": "#/$defs/TomogramHeader",
+                    "description": "A tomogram header, a unique source attribute for voxel spacing."
+                }
+            },
+            "title": "VoxelSpacingSource",
+            "type": "object"
+        }
+    },
+    "$id": "cdp-dataset-config",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": true,
+    "description": "Class that models the dataset config.",
+    "metamodel_version": "1.7.0",
+    "properties": {
+        "annotations": {
+            "description": "An annotation entity.",
+            "items": {
+                "$ref": "#/$defs/AnnotationEntity"
+            },
+            "type": "array"
+        },
+        "dataset_keyphotos": {
+            "description": "A dataset key photo entity.",
+            "items": {
+                "$ref": "#/$defs/DatasetKeyPhotoEntity"
+            },
+            "type": "array"
+        },
+        "datasets": {
+            "description": "A dataset entity.",
+            "items": {
+                "$ref": "#/$defs/DatasetEntity"
+            },
+            "type": "array"
+        },
+        "frames": {
+            "description": "A frame entity.",
+            "items": {
+                "$ref": "#/$defs/FrameEntity"
+            },
+            "type": "array"
+        },
+        "gains": {
+            "description": "A gain entity.",
+            "items": {
+                "$ref": "#/$defs/GainEntity"
+            },
+            "type": "array"
+        },
+        "key_images": {
+            "description": "A key image entity.",
+            "items": {
+                "$ref": "#/$defs/KeyImageEntity"
+            },
+            "type": "array"
+        },
+        "rawtilts": {
+            "description": "A raw tilt entity.",
+            "items": {
+                "$ref": "#/$defs/RawTiltEntity"
+            },
+            "type": "array"
+        },
+        "runs": {
+            "description": "A run entity.",
+            "items": {
+                "$ref": "#/$defs/RunEntity"
+            },
+            "type": "array"
+        },
+        "standardization_config": {
+            "$ref": "#/$defs/StandardizationConfig",
+            "description": "A standardization configuration."
+        },
+        "tiltseries": {
+            "description": "A tilt series entity.",
+            "items": {
+                "$ref": "#/$defs/TiltSeriesEntity"
+            },
+            "type": "array"
+        },
+        "tomograms": {
+            "description": "A tomogram entity.",
+            "items": {
+                "$ref": "#/$defs/TomogramEntity"
+            },
+            "type": "array"
+        },
+        "voxel_spacings": {
+            "description": "A voxel spacing entity.",
+            "items": {
+                "$ref": "#/$defs/VoxelSpacingEntity"
+            },
+            "type": "array"
+        }
+    },
+    "required": [
+        "datasets",
+        "standardization_config",
+        "voxel_spacings"
+    ],
+    "title": "cdp-dataset-config",
+    "type": "object",
+    "version": "1.1.0"
+}
