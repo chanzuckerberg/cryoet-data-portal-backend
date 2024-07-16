@@ -173,15 +173,6 @@ class TomomanData:
         )
 
 
-def normalize(gainref: str, in_s3: dict[str, str]) -> str | None:
-    if gainref in in_s3:
-        return in_s3[gainref]
-    filename = gainref.split("/")[-1]
-    if filename in in_s3:
-        return in_s3[filename]
-    return None
-
-
 @dataclass
 class PortalOutput:
     run_name: str
@@ -224,20 +215,27 @@ def cli(ctx):
     pass
 
 
-def mark_exists_in_s3(row, fs, in_s3, not_in_s3):
-    gain_ref = row["frame_gain_reference"]
-    if gain_ref in in_s3 and gain_ref not in not_in_s3:
+def get_gain_path(row, fs, in_s3, not_in_s3):
+    gain_ref = row["frame_gain_reference"]  # /foo/bar/baz.gain
+    if gain_ref in not_in_s3:  # We're caching misses
+        not_in_s3[gain_ref] += 1
         return
-    gain_filename_ref = gain_ref.split("/")[-1]
-    if gain_filename_ref in in_s3:
-        return
+    if gain_ref in in_s3:  # Cache hit on the full gain ref path
+        return in_s3[gain_ref]
+
+    gain_filename_ref = gain_ref.split("/")[-1]  # baz.gain
+    if gain_filename_ref in in_s3:  # Cache hit on just the gain ref filename
+        return in_s3[gain_filename_ref]
+
     full_path = os.path.join("cryoetportal-rawdatasets-dev/chlamy2/data/chlamy_visual_proteomics", gain_ref)
     if fs.glob(full_path):
         in_s3[gain_ref] = gain_ref
-        in_s3[gain_filename_ref] = gain_ref
-    else:
-        # Adding this so that we don't recheck for files that we already know don't exist in s3
-        not_in_s3[gain_ref] = gain_ref
+        in_s3[gain_filename_ref] = gain_ref  # TODO, are we doing this because some entries don't have a full path?
+        return gain_ref
+
+    # Cache misses, and keep track of how many misses!
+    not_in_s3[gain_ref] = 0
+    return None
 
 
 @cli.command()
@@ -254,6 +252,7 @@ def convert(ctx, tomoman_file: str, output_file: str):
     s3_fs = FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
     exists_in_s3 = {}
     not_exists_in_s3 = {}
+    missing_files = {}
 
     with fs.open(output_file, "w") as f:
         head = asdict(PortalOutput.from_tomoman(data[0])).keys()
@@ -262,22 +261,11 @@ def convert(ctx, tomoman_file: str, output_file: str):
 
         for d in data:
             row = asdict(PortalOutput.from_tomoman(d))
-            mark_exists_in_s3(row, s3_fs, exists_in_s3, not_exists_in_s3)
-
-        # Resetting this as we might have gain entries whose filenames might match gainref that exists in s3 and will
-        # reference those existing gainref files instead of the current path
-        not_exists_in_s3 = {}
-        for d in data:
-            row = asdict(PortalOutput.from_tomoman(d))
-            frame_gain_reference = row["frame_gain_reference"]
-            normalized_frame_gain_ref = normalize(frame_gain_reference, exists_in_s3)
-            if normalized_frame_gain_ref is None:
-                not_exists_in_s3[frame_gain_reference] = not_exists_in_s3.get(frame_gain_reference, 0) + 1
-            else:
+            if normalized_frame_gain_ref := get_gain_path(row, s3_fs, exists_in_s3, not_exists_in_s3):
                 row["frame_gain_reference"] = normalized_frame_gain_ref
             writer.writerow(row)
 
-    if not_exists_in_s3:
+    if missing_files:
         print("Files not found in s3:")
         for k, v in not_exists_in_s3.items():
             print(f"{k} encountered: {v}")
