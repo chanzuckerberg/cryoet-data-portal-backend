@@ -21,7 +21,7 @@ datasets:
       collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10154
     dataset_title: Helicobacter pylori 26695
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -38,6 +38,19 @@ datasets:
   - literal:
       value:
       - '10154'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10017
+    deposition_title: TBA
+    deposition_type:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10017
 key_images:
 - sources:
   - source_glob:
@@ -76,9 +89,9 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
-    pixel_spacing: 'float {ts-pixel_spacing}'
-    spherical_aberration_constant: 'float {ts-spherical_aberration_constant}'
+      phase_plate: null
+    pixel_spacing: float {ts-pixel_spacing}
+    spherical_aberration_constant: float {ts-spherical_aberration_constant}
     tilt_alignment_software: '{ts-tilt_alignment_software}'
     tilt_axis: 84.3
     tilt_range:
@@ -87,7 +100,7 @@ tiltseries:
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
-    total_flux: 'float {ts-total_flux}'
+    total_flux: float {ts-total_flux}
   sources:
   - source_glob:
       list_glob: '{run_name}/rawdata/*'
@@ -124,7 +137,7 @@ tomograms:
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: '{tomo-reconstruction_software}'
     tomogram_version: 1
-    voxel_spacing: 'float {tomo-voxel_spacing}'
+    voxel_spacing: float {tomo-voxel_spacing}
   sources:
   - source_glob:
       list_glob: '{run_name}/3dimage_*/*'

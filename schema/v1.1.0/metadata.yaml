@@ -564,6 +564,9 @@ classes:
       glob_string:
         exact_mappings:
           - cdp-common:annotation_source_file_glob_string
+      glob_strings:
+        exact_mappings:
+          - cdp-common:annotation_source_file_glob_strings
       is_visualization_default:
         exact_mappings:
           - cdp-common:annotation_source_file_is_visualization_default

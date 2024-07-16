@@ -65,6 +65,12 @@ annotations:
       glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
       is_visualization_default: true
       mask_label: 3
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
 datasets:
 - metadata:
     authors: &id003
@@ -112,6 +118,19 @@ datasets:
   - literal:
       value:
       - '10010'
+depositions:
+- metadata:
+    authors: *id003
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10010
+    deposition_title: TBA
+    deposition_type:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10010
 frames:
 - sources:
   - source_glob:
@@ -149,8 +168,8 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: '{energy_filter}'
-      image_corrector: None
-      phase_plate: None
+      image_corrector: null
+      phase_plate: null
     pixel_spacing: float {tilt_series_pixel_spacing}
     spherical_aberration_constant: 2.7
     tilt_range:

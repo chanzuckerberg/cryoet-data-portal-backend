@@ -77,26 +77,14 @@ def list_dir(s3_client: S3Client, bucket: str, prefix: str) -> List[str]:
     return fnames
 
 
-def test_import_annotation_metadata(
+def import_annotation_metadata(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     tomo_importer: TomogramImporter,
     dataset_config: DepositionImportConfig,
     s3_client: S3Client,
+    anno_config: Dict[str, Any],
 ) -> None:
-    anno_config = {
-        "metadata": default_anno_metadata,
-        "sources": [
-            {
-                "Point": {
-                    "file_format": "csv",
-                    "delimiter": ",",
-                    "glob_string": "annotations/*.csv",
-                    "columns": "xyz",
-                },
-            },
-        ],
-    }
     dataset_config._set_object_configs("annotation", [anno_config])
 
     anno = PointAnnotation(
@@ -136,6 +124,54 @@ def test_import_annotation_metadata(
     with s3_fs.open(anno_file, "r") as fh:
         points = ndjson.load(fh)
     assert len(points) == 3
+
+
+def test_import_annotation_metadata(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    tomo_importer: TomogramImporter,
+    dataset_config: DepositionImportConfig,
+    s3_client: S3Client,
+) -> None:
+    anno_config = {
+        "metadata": default_anno_metadata,
+        "sources": [
+            {
+                "Point": {
+                    "file_format": "csv",
+                    "delimiter": ",",
+                    "glob_string": "annotations/*.csv",
+                    "columns": "xyz",
+                },
+            },
+        ],
+    }
+
+    import_annotation_metadata(s3_fs, test_output_bucket, tomo_importer, dataset_config, s3_client, anno_config)
+
+
+def test_import_annotation_metadata_glob_strings(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    tomo_importer: TomogramImporter,
+    dataset_config: DepositionImportConfig,
+    s3_client: S3Client,
+) -> None:
+    anno_config = {
+        "metadata": default_anno_metadata,
+        "sources": [
+            {
+                "Point": {
+                    "file_format": "csv",
+                    "delimiter": ",",
+                    "glob_strings": ["annotations/*.csv", "annotations/points*"],
+                    "columns": "xyz",
+                },
+            },
+        ],
+    }
+
+    import_annotation_metadata(s3_fs, test_output_bucket, tomo_importer, dataset_config, s3_client, anno_config)
 
 
 ingest_points_test_cases = [

@@ -114,6 +114,7 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AnnotationMethodLinks
     range: string
     required: true
     inlined: true
@@ -167,6 +168,7 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AnnotationMethodLinks
     range: string
     required: true
     inlined: true
