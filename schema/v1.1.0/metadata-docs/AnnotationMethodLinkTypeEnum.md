@@ -15,7 +15,7 @@ URI: [AnnotationMethodLinkTypeEnum](AnnotationMethodLinkTypeEnum.md)
 | --- | --- | --- |
 | documentation | None | Links to the documentation related to the method |
 | models_weights | None | Links to the weights that the models used for generating annotations were tra... |
-| other | None | Link to resources that doesn't fit in the other categories |
+| other | None | Link to resources that does not fit in the other categories |
 | source_code | None | Links to the source code of the method |
 | website | None | Links to a website of the method or tool used to generate the annotation |
 
@@ -49,6 +49,8 @@ URI: [AnnotationMethodLinkTypeEnum](AnnotationMethodLinkTypeEnum.md)
 
 
 
+
+
 ## LinkML Source
 
 <details>
@@ -67,7 +69,7 @@ permissible_values:
       were trained with.
   other:
     text: other
-    description: Link to resources that doesn't fit in the other categories.
+    description: Link to resources that does not fit in the other categories.
   source_code:
     text: source_code
     description: Links to the source code of the method.

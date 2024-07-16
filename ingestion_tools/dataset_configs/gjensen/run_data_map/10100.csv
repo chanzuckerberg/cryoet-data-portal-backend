@@ -20,8 +20,8 @@ dga2019-08-06-11,Batchruntomo,FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,
 dga2019-08-06-12,Batchruntomo,FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,Batchruntomo,48.0,-48.0,4,170.0
 dga2019-08-06-18,Batchruntomo,FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,Batchruntomo,48.0,-48.0,4,170.0
 dga2019-08-06-26,Batchruntomo,FIDUCIAL,IMOD,Weighted back projection,IMOD,13.44,Serial EM,3.36,Batchruntomo,48.0,-48.0,4,170.0
-dga2019-08-06-13,,NON_FIDUCIAL,,None,None,,Serial EM,3.36,,48.0,-48.0,1,170.0
-dga2019-08-06-27,,NON_FIDUCIAL,,None,None,,Serial EM,3.36,,48.0,-48.0,1,170.0
+dga2019-08-06-13,,NON_FIDUCIAL,,,,,Serial EM,3.36,,48.0,-48.0,1,170.0
+dga2019-08-06-27,,NON_FIDUCIAL,,,,,Serial EM,3.36,,48.0,-48.0,1,170.0
 dga2019-12-07-84,RAPTOR,FIDUCIAL,,Weighted back projection,IMOD,14.12,SerialEM,3.53,RAPTOR,54.0,-54.0,4,130.0
 dga2019-12-07-85,RAPTOR,FIDUCIAL,,Weighted back projection,IMOD,14.12,SerialEM,3.53,RAPTOR,54.0,-54.0,4,130.0
 dga2019-12-07-86,RAPTOR,FIDUCIAL,,Weighted back projection,IMOD,14.12,SerialEM,3.53,RAPTOR,54.0,-54.0,4,130.0
@@ -96,5 +96,5 @@ dga2019-12-07-162,RAPTOR,FIDUCIAL,,Weighted back projection,IMOD,14.12,SerialEM,
 dga2019-12-07-164,RAPTOR,FIDUCIAL,,Weighted back projection,IMOD,14.12,SerialEM,3.53,RAPTOR,54.0,-54.0,4,130.0
 dga2019-12-07-165,RAPTOR,FIDUCIAL,,Weighted back projection,IMOD,14.12,SerialEM,3.53,RAPTOR,54.0,-54.0,4,130.0
 dga2019-12-07-166,RAPTOR,FIDUCIAL,,Weighted back projection,IMOD,14.12,SerialEM,3.53,RAPTOR,54.0,-54.0,4,130.0
-dga2019-12-07-129,,NON_FIDUCIAL,,None,None,,SerialEM,3.53,,54.0,-54.0,1,130.0
-dga2019-12-07-138,,NON_FIDUCIAL,,None,None,,SerialEM,3.53,,54.0,-54.0,1,130.0
+dga2019-12-07-129,,NON_FIDUCIAL,,,,,SerialEM,3.53,,54.0,-54.0,1,130.0
+dga2019-12-07-138,,NON_FIDUCIAL,,,,,SerialEM,3.53,,54.0,-54.0,1,130.0

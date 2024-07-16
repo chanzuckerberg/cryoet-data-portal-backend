@@ -1,3 +1,5 @@
+
+
 # Slot: link
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:link](metadatalink)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[AnnotationMethodLinks](AnnotationMethodLinks.md) | A set of links to models, sourcecode, documentation, etc referenced by annota... |  no  |
+| [AnnotationMethodLinks](AnnotationMethodLinks.md) | A set of links to models, sourcecode, documentation, etc referenced by annota... |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:link](metadatalink)
 
 ## Properties
 
-* Range: [xsd:string](http://www.w3.org/2001/XMLSchema#string)
+* Range: [String](String.md)
 
 * Required: True
 
@@ -48,6 +51,16 @@ URI: [cdp-meta:link](metadatalink)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:link |
+| native | cdp-meta:link |
 
 
 

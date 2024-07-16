@@ -478,6 +478,36 @@ class AnnotationMethodTypeEnum(str, Enum):
     hybrid = "hybrid"
 
 
+class AnnotationMethodLinkTypeEnum(str, Enum):
+    """
+    Describes the type of link associated to the annotation method.
+    """
+
+    # Links to the documentation related to the method.
+    documentation = "documentation"
+    # Links to the weights that the models used for generating annotations were trained with.
+    models_weights = "models_weights"
+    # Link to resources that does not fit in the other categories.
+    other = "other"
+    # Links to the source code of the method.
+    source_code = "source_code"
+    # Links to a website of the method or tool used to generate the annotation.
+    website = "website"
+
+
+class DepositionTypesEnum(str, Enum):
+    """
+    Types of data a deposition has
+    """
+
+    # The deposition comprises of new annotations for existing datasets
+    annotation = "annotation"
+    # The deposition comprises of new dataset(s).
+    datasets = "datasets"
+    # The deposition comprises of new tomograms for existing datasets
+    tomograms = "tomograms"
+
+
 class SampleTypeEnum(str, Enum):
     """
     Type of sample imaged in a CryoET study.
@@ -657,6 +687,7 @@ class Author(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationMethodLinks",
                 ],
                 "exact_mappings": ["cdp-common:author_name"],
             }
@@ -936,6 +967,7 @@ class OrganismDetails(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationMethodLinks",
                 ],
                 "exact_mappings": ["cdp-common:organism_name"],
             }
@@ -977,6 +1009,7 @@ class TissueDetails(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationMethodLinks",
                 ],
                 "exact_mappings": ["cdp-common:tissue_name"],
             }
@@ -1029,6 +1062,7 @@ class CellType(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationMethodLinks",
                 ],
                 "exact_mappings": ["cdp-common:cell_name"],
             }
@@ -1081,6 +1115,7 @@ class CellStrain(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationMethodLinks",
                 ],
                 "exact_mappings": ["cdp-common:cell_strain_name"],
             }
@@ -1133,6 +1168,7 @@ class CellComponent(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationMethodLinks",
                 ],
                 "exact_mappings": ["cdp-common:cell_component_name"],
             }
@@ -2371,6 +2407,7 @@ class AnnotationObject(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationMethodLinks",
                 ],
                 "exact_mappings": ["cdp-common:annotation_object_name"],
             }
@@ -3245,6 +3282,57 @@ class CrossReferences(ConfiguredBaseModel):
         elif isinstance(v, str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid related_database_entries format: {v}")
+        return v
+
+
+class AnnotationMethodLinks(ConfiguredBaseModel):
+    """
+    A set of links to models, sourcecode, documentation, etc referenced by annotation the method
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    link: str = Field(
+        ...,
+        description="""URL to the resource""",
+        json_schema_extra={"linkml_meta": {"alias": "link", "domain_of": ["AnnotationMethodLinks"]}},
+    )
+    link_type: AnnotationMethodLinkTypeEnum = Field(
+        ...,
+        description="""Type of link (e.g. model, sourcecode, documentation)""",
+        json_schema_extra={"linkml_meta": {"alias": "link_type", "domain_of": ["AnnotationMethodLinks"]}},
+    )
+    name: Optional[str] = Field(
+        None,
+        description="""user readable name of the resource""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "name",
+                "domain_of": [
+                    "AnnotationMethodLinks",
+                    "Author",
+                    "OrganismDetails",
+                    "TissueDetails",
+                    "CellType",
+                    "CellStrain",
+                    "CellComponent",
+                    "AnnotationObject",
+                ],
+                "recommended": True,
+            }
+        },
+    )
+
+    @field_validator("link_type")
+    def pattern_link_type(cls, v):
+        pattern = re.compile(r"(^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid link_type format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid link_type format: {v}")
         return v
 
 
@@ -5338,6 +5426,7 @@ AnnotationSegmentationMaskFile.model_rebuild()
 AnnotationSemanticSegmentationMaskFile.model_rebuild()
 Annotation.model_rebuild()
 CrossReferences.model_rebuild()
+AnnotationMethodLinks.model_rebuild()
 Container.model_rebuild()
 GeneralGlob.model_rebuild()
 DestinationGlob.model_rebuild()

@@ -85,7 +85,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 6.26
     spherical_aberration_constant: 2.0
     tilt_alignment_software: IMOD

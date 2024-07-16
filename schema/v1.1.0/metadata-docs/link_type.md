@@ -1,3 +1,5 @@
+
+
 # Slot: link_type
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:link_type](metadatalink_type)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[AnnotationMethodLinks](AnnotationMethodLinks.md) | A set of links to models, sourcecode, documentation, etc referenced by annota... |  no  |
+| [AnnotationMethodLinks](AnnotationMethodLinks.md) | A set of links to models, sourcecode, documentation, etc referenced by annota... |  no  |
 
 
 
@@ -31,6 +34,8 @@ URI: [cdp-meta:link_type](metadatalink_type)
 * Range: [AnnotationMethodLinkTypeEnum](AnnotationMethodLinkTypeEnum.md)
 
 * Required: True
+
+* Regex pattern: `(^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)`
 
 
 
@@ -52,6 +57,16 @@ URI: [cdp-meta:link_type](metadatalink_type)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:link_type |
+| native | cdp-meta:link_type |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -68,6 +83,7 @@ range: annotation_method_link_type_enum
 required: true
 inlined: true
 inlined_as_list: true
+pattern: (^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)
 
 ```
 </details>

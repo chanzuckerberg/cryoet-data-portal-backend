@@ -14,6 +14,7 @@ Name: cdp-meta
 | --- | --- |
 | [Annotation](Annotation.md) | Metadata describing an annotation. |
 | [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation. |
+| [AnnotationMethodLinks](AnnotationMethodLinks.md) | A set of links to models, sourcecode, documentation, etc referenced by annotation the method |
 | [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated. |
 | [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation. Represents an entry in annotation.sources. |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation. Annotation that identifies points along with orientation in the volume. |
@@ -111,6 +112,8 @@ Name: cdp-meta
 | [is_visualization_default](is_visualization_default.md) | This annotation will be rendered in neuroglancer by default |
 | [key_photos](key_photos.md) | A set of paths to representative images of a piece of data |
 | [last_modified_date](last_modified_date.md) | The date a piece of data was last modified on the cryoET data portal |
+| [link](link.md) | URL to the resource |
+| [link_type](link_type.md) | Type of link (e |
 | [manufacturer](manufacturer.md) | Name of the camera manufacturer |
 | [mask_label](mask_label.md) | The mask label for a semantic segmentation mask annotation file |
 | [max](max.md) | Maximal tilt angle in degrees |
@@ -167,7 +170,9 @@ Name: cdp-meta
 
 | Enumeration | Description |
 | --- | --- |
+| [AnnotationMethodLinkTypeEnum](AnnotationMethodLinkTypeEnum.md) | Describes the type of link associated to the annotation method |
 | [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Describes how the annotations were generated |
+| [DepositionTypesEnum](DepositionTypesEnum.md) | Types of data a deposition has |
 | [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Fiducial Alignment method |
 | [MicroscopeManufacturerEnum](MicroscopeManufacturerEnum.md) | Microscope manufacturer |
 | [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study |
