@@ -400,8 +400,25 @@ enums:
       cds:
         text: cds
         description: Correlated double sampling mode
-  microscope_manufacturer_enum:
-    name: microscope_manufacturer_enum
+  tiltseries_camera_manufacturer_enum:
+    name: tiltseries_camera_manufacturer_enum
+    description: Camera manufacturer
+    from_schema: cdp-dataset-config
+    permissible_values:
+      Gatan:
+        text: Gatan
+        description: Gatan Inc.
+      GATAN:
+        text: GATAN
+        description: Gatan Inc.
+      FEI:
+        text: FEI
+        description: FEI Company
+      TFS:
+        text: TFS
+        description: Thermo Fisher Scientific
+  tiltseries_microscope_manufacturer_enum:
+    name: tiltseries_microscope_manufacturer_enum
     description: Microscope manufacturer
     from_schema: cdp-dataset-config
     permissible_values:

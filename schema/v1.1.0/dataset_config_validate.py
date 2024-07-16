@@ -4,6 +4,7 @@ import os
 import re
 import shutil
 import sys
+import traceback
 from typing import List, Union
 
 import click
@@ -183,7 +184,7 @@ def main(
 
         except Exception as exc:
             validation_succeeded = False
-            errors[file] = [exc]
+            errors[file] = [exc, traceback.format_exc()]
             print_file_errors(file, errors[file])
 
     if validation_succeeded:

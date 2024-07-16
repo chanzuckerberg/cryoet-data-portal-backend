@@ -24,6 +24,13 @@ URI: [cdp-meta:CameraDetails](metadataCameraDetails)
 
       CameraDetails : manufacturer
 
+
+
+
+    CameraDetails --> "1" TiltseriesCameraManufacturerEnum : manufacturer
+    click TiltseriesCameraManufacturerEnum href "../TiltseriesCameraManufacturerEnum"
+
+
       CameraDetails : model
 
 
@@ -40,7 +47,7 @@ URI: [cdp-meta:CameraDetails](metadataCameraDetails)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [acquire_mode](acquire_mode.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md) | Camera acquisition mode | direct |
-| [manufacturer](manufacturer.md) | 1 <br/> [String](String.md) | Name of the camera manufacturer | direct |
+| [manufacturer](manufacturer.md) | 1 <br/> [TiltseriesCameraManufacturerEnum](TiltseriesCameraManufacturerEnum.md) | Name of the camera manufacturer | direct |
 | [model](model.md) | 1 <br/> [String](String.md) | Camera model name | direct |
 
 
@@ -128,10 +135,11 @@ attributes:
     domain_of:
     - CameraDetails
     - MicroscopeDetails
-    range: string
+    range: tiltseries_camera_manufacturer_enum
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^Gatan$)|(^GATAN$)|(^FEI$)|(^TFS$)
   model:
     name: model
     description: Camera model name
@@ -190,10 +198,11 @@ attributes:
     domain_of:
     - CameraDetails
     - MicroscopeDetails
-    range: string
+    range: tiltseries_camera_manufacturer_enum
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: (^Gatan$)|(^GATAN$)|(^FEI$)|(^TFS$)
   model:
     name: model
     description: Camera model name

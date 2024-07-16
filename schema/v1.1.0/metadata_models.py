@@ -524,7 +524,22 @@ class TiltseriesCameraAcquireModeEnum(str, Enum):
     cds = "cds"
 
 
-class MicroscopeManufacturerEnum(str, Enum):
+class TiltseriesCameraManufacturerEnum(str, Enum):
+    """
+    Camera manufacturer
+    """
+
+    # Gatan Inc.
+    Gatan = "Gatan"
+    # Gatan Inc.
+    GATAN = "GATAN"
+    # FEI Company
+    FEI = "FEI"
+    # Thermo Fisher Scientific
+    TFS = "TFS"
+
+
+class TiltseriesMicroscopeManufacturerEnum(str, Enum):
     """
     Microscope manufacturer
     """
@@ -1466,7 +1481,7 @@ class CameraDetails(ConfiguredBaseModel):
             }
         },
     )
-    manufacturer: str = Field(
+    manufacturer: TiltseriesCameraManufacturerEnum = Field(
         ...,
         description="""Name of the camera manufacturer""",
         json_schema_extra={
@@ -1501,6 +1516,18 @@ class CameraDetails(ConfiguredBaseModel):
                 raise ValueError(f"Invalid acquire_mode format: {v}")
         return v
 
+    @field_validator("manufacturer")
+    def pattern_manufacturer(cls, v):
+        pattern = re.compile(r"(^Gatan$)|(^GATAN$)|(^FEI$)|(^TFS$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid manufacturer format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid manufacturer format: {v}")
+        return v
+
 
 class MicroscopeDetails(ConfiguredBaseModel):
     """
@@ -1520,13 +1547,13 @@ class MicroscopeDetails(ConfiguredBaseModel):
             }
         },
     )
-    manufacturer: Union[MicroscopeManufacturerEnum, str] = Field(
+    manufacturer: Union[TiltseriesMicroscopeManufacturerEnum, str] = Field(
         ...,
         description="""Name of the microscope manufacturer""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "manufacturer",
-                "any_of": [{"range": "StringFormattedString"}, {"range": "microscope_manufacturer_enum"}],
+                "any_of": [{"range": "StringFormattedString"}, {"range": "tiltseries_microscope_manufacturer_enum"}],
                 "domain_of": ["CameraDetails", "MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_manufacturer"],
             }

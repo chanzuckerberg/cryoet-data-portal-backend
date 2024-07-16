@@ -17,6 +17,7 @@ from dataset_config_models import (
     AnnotationObject,
     AnnotationSource,
     Author,
+    CameraDetails,
     CellComponent,
     CellStrain,
     CellType,
@@ -45,6 +46,7 @@ logger = logging.getLogger("dataset-validate")
 
 CELLULAR_COMPONENT_GO_ID = "GO:0005575"
 VALID_IMAGE_FORMTS = ("image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp", "image/svg+xml")
+STRING_FORMATTED_STRING_REGEX = r"^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$"
 
 # Network requests: stores whether or not the IDs are valid
 running_orcid_list: Dict[str, bool] = {}
@@ -394,7 +396,7 @@ class ExtendedValidationAnnotationObject(AnnotationObject):
 class ExtendedValidationAnnotationConfidence(AnnotationConfidence):
     @model_validator(mode="after")
     def valid_confidence(self) -> Self:
-        if not isinstance(self.ground_truth_used, str) or len(self.ground_truth_used) == 0:
+        if isinstance(self.ground_truth_used, str) and len(self.ground_truth_used) == 0:
             return self
 
         if self.precision is not None or self.recall is not None:
@@ -644,6 +646,27 @@ class ExtendedValidationDatasetEntity(DatasetEntity):
 # ==============================================================================
 # Tilt Series Validation
 # ==============================================================================
+# Note that model namees should all be uppercase or pascal case
+CAMERA_MANUFACTURER_TO_MODEL = {
+    ("FEI", "TFS"): ["FALCON IV", "Falcon4i"],
+    ("Gatan", "GATAN"): ["K2", "K2 SUMMIT", "K3", "K3 BIOQUANTUM", "UltraCam", "UltraScan"],
+}
+
+
+class ExtendedValidationCameraDetails(CameraDetails):
+    @model_validator(mode="after")
+    def valid_camera_details(self) -> Self:
+        if re.match(STRING_FORMATTED_STRING_REGEX, self.model):
+            return self
+
+        for manufacturer, models in CAMERA_MANUFACTURER_TO_MODEL.items():
+            if self.manufacturer in manufacturer and self.model not in models:
+                raise ValueError(
+                    f"Camera model '{self.model}' is not valid for manufacturer '{self.manufacturer}'",
+                )
+        return self
+
+
 class ExtendedValidationTiltRange(TiltRange):
     @model_validator(mode="after")
     def valid_tilt_range(self) -> Self:
@@ -655,6 +678,7 @@ class ExtendedValidationTiltRange(TiltRange):
 
 
 class ExtendedValidationTiltSeries(TiltSeries):
+    camera: ExtendedValidationCameraDetails = TiltSeries.model_fields["camera"]
     tilt_range: ExtendedValidationTiltRange = TiltSeries.model_fields["tilt_range"]
 
 
@@ -672,6 +696,9 @@ class ExtendedValidationTomogram(Tomogram):
         cls: Self,
         affine_transformation_matrix: List[List[float]],
     ) -> List[List[float]]:
+        if affine_transformation_matrix is None:
+            return None
+
         errors = []
         # Bottom row of the matrix should be [0, 0, 0, 1]
         if affine_transformation_matrix[3] != [0, 0, 0, 1]:

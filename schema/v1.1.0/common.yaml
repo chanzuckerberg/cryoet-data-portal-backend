@@ -304,7 +304,7 @@ slots:
       - range: tiltseries_camera_acquire_mode_enum
     description: Camera acquisition mode
   tiltseries_camera_manufacturer:
-    range: string
+    range: tiltseries_camera_manufacturer_enum
     required: true
     description: Name of the camera manufacturer
   tiltseries_camera_model:
@@ -350,7 +350,7 @@ slots:
   tiltseries_microscope_manufacturer:
     any_of:
       - range: StringFormattedString
-      - range: microscope_manufacturer_enum
+      - range: tiltseries_microscope_manufacturer_enum
     required: true
     description: Name of the microscope manufacturer
   tiltseries_microscope_model:
@@ -751,7 +751,19 @@ enums:
       cds:
         description: Correlated double sampling mode
 
-  microscope_manufacturer_enum:
+  tiltseries_camera_manufacturer_enum:
+    description: Camera manufacturer
+    permissible_values:
+      Gatan:
+        description: Gatan Inc.
+      GATAN:
+        description: Gatan Inc.
+      FEI:
+        description: FEI Company
+      TFS:
+        description: Thermo Fisher Scientific
+
+  tiltseries_microscope_manufacturer_enum:
     description: Microscope manufacturer
     permissible_values:
       FEI:
