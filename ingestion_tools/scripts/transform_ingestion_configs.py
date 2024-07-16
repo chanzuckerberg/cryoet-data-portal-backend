@@ -19,7 +19,7 @@ def create_deposition_metadata(deposition_id: str, config_data: dict[str, Any]) 
         deposition_type = ["tomogram"]
     elif config_data.get("annotations"):
         metadata = config_data["annotations"][0].get("metadata", {})
-        deposition_type = ["annotations"]
+        deposition_type = ["annotation"]
 
     return {
         "deposition_identifier": deposition_id,

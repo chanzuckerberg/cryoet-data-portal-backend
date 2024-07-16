@@ -33,6 +33,11 @@ classes:
         multivalued: true
         range: DatasetEntity
         required: true
+      depositions:
+        description: Depositions for the dataset.
+        multivalued: true
+        range: DepositionEntity
+        required: true
       frames:
         description: Frames for the dataset.
         multivalued: true
@@ -270,6 +275,24 @@ classes:
         description: The value for the dataset key photo literal.
         range: PicturePath
         required: true
+
+  DepositionEntity:
+    description: A deposition entity.
+    attributes:
+      metadata:
+        range: Deposition
+        required: true
+      sources:
+        multivalued: true
+        range: DepositionSource
+        required: true
+
+  DepositionSource:
+    description: A deposition source.
+    mixins:
+      - DefaultSource
+      - DefaultLiteralEntity
+      # No SourceParentFiltersEntity because parent_filters doesn't apply to Deposition
 
   FrameEntity:
     description: A frame entity.

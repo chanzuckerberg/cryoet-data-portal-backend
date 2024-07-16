@@ -44,7 +44,7 @@ depositions:
     deposition_identifier: 10301
     deposition_title: TBA
     deposition_type:
-    - annotations
+    - annotation
   sources:
   - literal:
       value:
