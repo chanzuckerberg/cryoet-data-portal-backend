@@ -24,6 +24,8 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
     click CrossReferencedEntity href "../CrossReferencedEntity"
       CrossReferencedEntity <|-- Dataset
         click Dataset href "../Dataset"
+      CrossReferencedEntity <|-- Deposition
+        click Deposition href "../Deposition"
 
       CrossReferencedEntity : cross_references
 
@@ -109,6 +111,7 @@ attributes:
     domain_of:
     - CrossReferencedEntity
     - Dataset
+    - Deposition
     range: CrossReferences
     inlined: true
     inlined_as_list: true
@@ -135,6 +138,7 @@ attributes:
     domain_of:
     - CrossReferencedEntity
     - Dataset
+    - Deposition
     range: CrossReferences
     inlined: true
     inlined_as_list: true

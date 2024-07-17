@@ -775,9 +775,9 @@ enums:
     permissible_values:
       annotation:
         description: The deposition comprises of new annotations for existing datasets
-      datasets:
+      dataset:
         description: The deposition comprises of new dataset(s).
-      tomograms:
+      tomogram:
         description: The deposition comprises of new tomograms for existing datasets
 
   sample_type_enum:

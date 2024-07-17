@@ -53,6 +53,7 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 | ---  | --- | --- | --- |
 | [DatestampedEntity](DatestampedEntity.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
 | [Dataset](Dataset.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
+| [Deposition](Deposition.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
 | [Annotation](Annotation.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
 
 
