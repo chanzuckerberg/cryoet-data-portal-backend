@@ -168,11 +168,14 @@ def validate_authors_status(authors: List[Author]) -> List[ValueError]:
     return errors
 
 
-@cache
-async def lookup_orcid(session: aiohttp.ClientSession, orcid_id: str) -> Tuple[str, bool]:
-    url = f"https://pub.orcid.org/v3.0/{orcid_id}"
-    async with session.head(url) as response:
-        return orcid_id, response.status == 200
+def lookup_orcid(session: aiohttp.ClientSession, orcid_id: str) -> Tuple[str, bool]:
+    @cache
+    async def helper(orcid_id: str) -> Tuple[str, bool]:
+        url = f"https://pub.orcid.org/v3.0/{orcid_id}"
+        async with session.head(url) as response:
+            return orcid_id, response.status == 200
+
+    return helper(orcid_id)
 
 
 async def validate_orcids(orcid_list: List[str]) -> List[str]:
