@@ -51,7 +51,7 @@ datasets:
       id: https://OPTIONAL
       name: OPTIONAL
     cross_references:
-      dataset_publications: doi:10.1038/s41467-022-30116-x
+      publications: doi:10.1038/s41467-022-30116-x
     dataset_description: REQUIRED
     dataset_identifier: 10011
     dataset_title: Filamentous actin from a neuronal growth cone filopodium

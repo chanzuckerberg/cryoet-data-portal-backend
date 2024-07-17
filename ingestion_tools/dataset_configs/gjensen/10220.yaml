@@ -18,7 +18,7 @@ datasets:
       id: null
       name: subsp. jejuni 81116
     cross_references:
-      dataset_publications: 10.1073/pnas.1518952113
+      publications: 10.1073/pnas.1518952113
     dataset_description: This is 20th of 24 sets of data studying Campylobacter jejuni
       collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb. Doubly
       flagellated campy cell Flagella:733,111,230 D(Side v view</text><rotation><x>-23></x><y>0</y><z>132</z></rotation></feature>),

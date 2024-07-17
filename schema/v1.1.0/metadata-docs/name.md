@@ -16,14 +16,14 @@ URI: [cdp-meta:name](metadataname)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
+| [OrganismDetails](OrganismDetails.md) | The species from which the sample was derived |  no  |
 | [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated |  no  |
-| [Author](Author.md) | Author of a scientific data entity |  no  |
-| [AnnotationMethodLinks](AnnotationMethodLinks.md) | A set of links to models, sourcecode, documentation, etc referenced by annota... |  no  |
 | [CellComponent](CellComponent.md) | The cellular component from which the sample was derived |  no  |
+| [AnnotationMethodLinks](AnnotationMethodLinks.md) | A set of links to models, sourcecode, documentation, etc referenced by annota... |  no  |
 | [CellStrain](CellStrain.md) | The strain or cell line from which the sample was derived |  no  |
+| [Author](Author.md) | Author of a scientific data entity |  no  |
 | [TissueDetails](TissueDetails.md) | The type of tissue from which the sample was derived |  no  |
 | [CellType](CellType.md) | The cell type from which the sample was derived |  no  |
-| [OrganismDetails](OrganismDetails.md) | The species from which the sample was derived |  no  |
 
 
 

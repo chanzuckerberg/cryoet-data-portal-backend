@@ -111,7 +111,7 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 | ---  | --- | --- | --- |
 | [annotation_method](annotation_method.md) | 1 <br/> [String](String.md) | Describe how the annotation is made (e | direct |
 | [annotation_object](annotation_object.md) | 1 <br/> [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated | direct |
-| [annotation_publications](annotation_publications.md) | 0..1 <br/> [EMPIAREMDBDOILIST](EMPIAREMDBDOILIST.md) | List of publication IDs (EMPIAR, EMDB, DOI) that describe this annotation met... | direct |
+| [annotation_publications](annotation_publications.md) | 0..1 <br/> [EMPIAREMDBDOIPDBLIST](EMPIAREMDBDOIPDBLIST.md) | List of publication IDs (EMPIAR, EMDB, DOI) that describe this annotation met... | direct |
 | [annotation_software](annotation_software.md) | 0..1 _recommended_ <br/> [String](String.md) | Software used for generating this annotation | direct |
 | [confidence](confidence.md) | 0..1 <br/> [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation | direct |
 | [files](files.md) | * <br/> [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation | direct |
@@ -216,10 +216,10 @@ attributes:
     owner: Annotation
     domain_of:
     - Annotation
-    range: EMPIAR_EMDB_DOI_LIST
+    range: EMPIAR_EMDB_DOI_PDB_LIST
     inlined: true
     inlined_as_list: true
-    pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+))*$
+    pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$
   annotation_software:
     name: annotation_software
     description: Software used for generating this annotation
@@ -429,10 +429,10 @@ attributes:
     owner: Annotation
     domain_of:
     - Annotation
-    range: EMPIAR_EMDB_DOI_LIST
+    range: EMPIAR_EMDB_DOI_PDB_LIST
     inlined: true
     inlined_as_list: true
-    pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+))*$
+    pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$
   annotation_software:
     name: annotation_software
     description: Software used for generating this annotation
