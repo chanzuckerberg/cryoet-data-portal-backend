@@ -41,7 +41,7 @@ jobs:
         working-directory: schema/v1.1.0
       - name: Validate dataset configs
         run: |
-          python dataset_config_validate.py
+          make validate-configs-with-network
         working-directory: schema/v1.1.0
       - name: Archive validation results
         if: failure()
