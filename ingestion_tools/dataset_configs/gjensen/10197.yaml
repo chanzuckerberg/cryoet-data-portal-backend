@@ -41,7 +41,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10020
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:
