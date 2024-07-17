@@ -11,5 +11,5 @@ def normalize_fiducial_alignment(status: bool | str) -> str:
     raise Exception("Fiducial alignment status must be FIDUCIAL or NON_FIDUCIAL")
 
 
-def normalize_to_none_str(value: str) -> str:
-    return value if value else "None"
+def normalize_to_unknown_str(value: str) -> str:
+    return value if value else "UNKNOWN"

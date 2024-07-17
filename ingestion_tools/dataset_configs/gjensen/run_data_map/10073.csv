@@ -1,6 +1,6 @@
 run_name,tomo-reconstruction_method
-dga2015-12-11-3,Weighted back projection
-dga2015-12-11-14,Weighted back projection
+dga2015-12-11-3,WBP
+dga2015-12-11-14,WBP
 dga2015-12-11-4,SIRT
 dga2015-12-11-6,SIRT
 dga2015-12-11-7,SIRT
