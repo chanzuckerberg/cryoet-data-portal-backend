@@ -247,33 +247,30 @@ def validate_organism_object(self: OrganismDetails) -> OrganismDetails:
 # ==============================================================================
 # Publication Validation
 # ==============================================================================
-async def lookup_doi(session: aiohttp.ClientSession, doi: str) -> Tuple[str, bool]:
+def lookup_doi(session: aiohttp.ClientSession, doi: str) -> Tuple[str, bool]:
     @cache
     async def helper(doi: str) -> Tuple[str, bool]:
         url = f"https://api.crossref.org/works/{doi}/agency"
-        logger.debug("Checking DOI %s at %s", doi, url)
         async with session.head(url) as response:
             return doi, response.status == 200
 
     return helper(doi)
 
 
-async def lookup_empiar(session: aiohttp.ClientSession, empiar_id: str) -> Tuple[str, bool]:
+def lookup_empiar(session: aiohttp.ClientSession, empiar_id: str) -> Tuple[str, bool]:
     @cache
     async def helper(empiar_id: str) -> Tuple[str, bool]:
         url = f"https://www.ebi.ac.uk/empiar/api/entry/{empiar_id}/"
-        logger.debug("Checking EMPIAR %s at %s", empiar_id, url)
         async with session.head(url) as response:
             return empiar_id, response.status == 200
 
     return helper(empiar_id)
 
 
-async def lookup_emdb(session: aiohttp.ClientSession, emdb_id: str) -> Tuple[str, bool]:
+def lookup_emdb(session: aiohttp.ClientSession, emdb_id: str) -> Tuple[str, bool]:
     @cache
     async def helper(emdb_id: str) -> Tuple[str, bool]:
         url = f"https://www.ebi.ac.uk/emdb/api/entry/{emdb_id}"
-        logger.debug("Checking EMDB %s at %s", emdb_id, url)
         async with session.head(url) as response:
             return emdb_id, response.status == 200
 
