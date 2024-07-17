@@ -416,23 +416,6 @@ enums:
       cds:
         text: cds
         description: Correlated double sampling mode
-  tiltseries_camera_manufacturer_enum:
-    name: tiltseries_camera_manufacturer_enum
-    description: Camera manufacturer
-    from_schema: metadata
-    permissible_values:
-      Gatan:
-        text: Gatan
-        description: Gatan Inc.
-      GATAN:
-        text: GATAN
-        description: Gatan Inc.
-      FEI:
-        text: FEI
-        description: FEI Company
-      TFS:
-        text: TFS
-        description: Thermo Fisher Scientific
   tiltseries_microscope_manufacturer_enum:
     name: tiltseries_microscope_manufacturer_enum
     description: Microscope manufacturer
@@ -1430,11 +1413,10 @@ classes:
         domain_of:
         - CameraDetails
         - MicroscopeDetails
-        range: tiltseries_camera_manufacturer_enum
+        range: string
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^Gatan$)|(^GATAN$)|(^FEI$)|(^TFS$)
       model:
         name: model
         description: Camera model name

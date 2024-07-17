@@ -524,21 +524,6 @@ class TiltseriesCameraAcquireModeEnum(str, Enum):
     cds = "cds"
 
 
-class TiltseriesCameraManufacturerEnum(str, Enum):
-    """
-    Camera manufacturer
-    """
-
-    # Gatan Inc.
-    Gatan = "Gatan"
-    # Gatan Inc.
-    GATAN = "GATAN"
-    # FEI Company
-    FEI = "FEI"
-    # Thermo Fisher Scientific
-    TFS = "TFS"
-
-
 class TiltseriesMicroscopeManufacturerEnum(str, Enum):
     """
     Microscope manufacturer
@@ -1481,7 +1466,7 @@ class CameraDetails(ConfiguredBaseModel):
             }
         },
     )
-    manufacturer: TiltseriesCameraManufacturerEnum = Field(
+    manufacturer: str = Field(
         ...,
         description="""Name of the camera manufacturer""",
         json_schema_extra={
@@ -1514,18 +1499,6 @@ class CameraDetails(ConfiguredBaseModel):
         elif isinstance(v, str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid acquire_mode format: {v}")
-        return v
-
-    @field_validator("manufacturer")
-    def pattern_manufacturer(cls, v):
-        pattern = re.compile(r"(^Gatan$)|(^GATAN$)|(^FEI$)|(^TFS$)")
-        if isinstance(v, list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid manufacturer format: {element}")
-        elif isinstance(v, str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid manufacturer format: {v}")
         return v
 
 

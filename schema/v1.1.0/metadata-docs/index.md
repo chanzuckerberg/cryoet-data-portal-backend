@@ -170,7 +170,6 @@ Name: cdp-meta
 | [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Fiducial Alignment method |
 | [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study |
 | [TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md) | Camera acquisition mode |
-| [TiltseriesCameraManufacturerEnum](TiltseriesCameraManufacturerEnum.md) | Camera manufacturer |
 | [TiltseriesMicroscopeManufacturerEnum](TiltseriesMicroscopeManufacturerEnum.md) | Microscope manufacturer |
 | [TomogramProcessingEnum](TomogramProcessingEnum.md) | Tomogram processing method |
 | [TomogramTypeEnum](TomogramTypeEnum.md) | Tomogram type |
