@@ -13,19 +13,19 @@ def create_deposition_metadata(deposition_id: str, config_data: dict[str, Any]) 
     dataset = config_data.get("datasets", [])
     metadata = dataset[0].get("metadata", {}) if dataset else {}
     if metadata:
-        deposition_type = ["dataset"]
+        deposition_types = ["dataset"]
     elif config_data.get("tomograms"):
         metadata = config_data["tomograms"][0].get("metadata", {})
-        deposition_type = ["tomogram"]
+        deposition_types = ["tomogram"]
     elif config_data.get("annotations"):
         metadata = config_data["annotations"][0].get("metadata", {})
-        deposition_type = ["annotation"]
+        deposition_types = ["annotation"]
 
     return {
         "deposition_identifier": deposition_id,
         "deposition_title": "TBA",
         "deposition_description": "TBA",
-        "deposition_type": deposition_type,
+        "deposition_types": deposition_types,
         "dates": metadata.get("dates", {}),
         "authors": metadata.get("authors", []),
     }
