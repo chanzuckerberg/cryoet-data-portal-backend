@@ -22,76 +22,76 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
     click Tomogram href "../Tomogram"
       AuthoredEntity <|-- Tomogram
         click AuthoredEntity href "../AuthoredEntity"
-
+      
       Tomogram : affine_transformation_matrix
-
-
-
-
+        
+          
+    
+    
     Tomogram --> "0..1" Any : affine_transformation_matrix
     click Any href "../Any"
 
-
+        
       Tomogram : align_software
-
+        
       Tomogram : authors
-
-
-
-
+        
+          
+    
+    
     Tomogram --> "1..*" Author : authors
     click Author href "../Author"
 
-
+        
       Tomogram : ctf_corrected
-
+        
       Tomogram : fiducial_alignment_status
-
-
-
-
+        
+          
+    
+    
     Tomogram --> "1" FiducialAlignmentStatusEnum : fiducial_alignment_status
     click FiducialAlignmentStatusEnum href "../FiducialAlignmentStatusEnum"
 
-
+        
       Tomogram : offset
-
-
-
-
+        
+          
+    
+    
     Tomogram --> "1" TomogramOffset : offset
     click TomogramOffset href "../TomogramOffset"
 
-
+        
       Tomogram : processing
-
-
-
-
+        
+          
+    
+    
     Tomogram --> "1" TomogramProcessingEnum : processing
     click TomogramProcessingEnum href "../TomogramProcessingEnum"
 
-
+        
       Tomogram : processing_software
-
+        
       Tomogram : reconstruction_method
-
+        
       Tomogram : reconstruction_software
-
+        
       Tomogram : size
-
-
-
-
+        
+          
+    
+    
     Tomogram --> "0..1" TomogramSize : size
     click TomogramSize href "../TomogramSize"
 
-
+        
       Tomogram : tomogram_version
-
+        
       Tomogram : voxel_spacing
-
-
+        
+      
 ```
 
 

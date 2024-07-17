@@ -24,68 +24,68 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
     click ExperimentalMetadata href "../ExperimentalMetadata"
       ExperimentalMetadata <|-- Dataset
         click Dataset href "../Dataset"
-
+      
       ExperimentalMetadata : cell_component
-
-
-
-
+        
+          
+    
+    
     ExperimentalMetadata --> "0..1" CellComponent : cell_component
     click CellComponent href "../CellComponent"
 
-
+        
       ExperimentalMetadata : cell_strain
-
-
-
-
+        
+          
+    
+    
     ExperimentalMetadata --> "0..1" CellStrain : cell_strain
     click CellStrain href "../CellStrain"
 
-
+        
       ExperimentalMetadata : cell_type
-
-
-
-
+        
+          
+    
+    
     ExperimentalMetadata --> "0..1" CellType : cell_type
     click CellType href "../CellType"
 
-
+        
       ExperimentalMetadata : grid_preparation
-
+        
       ExperimentalMetadata : organism
-
-
-
-
+        
+          
+    
+    
     ExperimentalMetadata --> "0..1" OrganismDetails : organism
     click OrganismDetails href "../OrganismDetails"
 
-
+        
       ExperimentalMetadata : other_setup
-
+        
       ExperimentalMetadata : sample_preparation
-
+        
       ExperimentalMetadata : sample_type
-
-
-
-
+        
+          
+    
+    
     ExperimentalMetadata --> "1" SampleTypeEnum : sample_type
     click SampleTypeEnum href "../SampleTypeEnum"
 
-
+        
       ExperimentalMetadata : tissue
-
-
-
-
+        
+          
+    
+    
     ExperimentalMetadata --> "0..1" TissueDetails : tissue
     click TissueDetails href "../TissueDetails"
 
-
-
+        
+      
 ```
 
 

@@ -21,12 +21,12 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
     class DateStamp
     click DateStamp href "../DateStamp"
       DateStamp : deposition_date
-
+        
       DateStamp : last_modified_date
-
+        
       DateStamp : release_date
-
-
+        
+      
 ```
 
 

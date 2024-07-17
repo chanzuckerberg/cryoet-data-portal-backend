@@ -30,110 +30,110 @@ URI: [cdp-meta:Dataset](metadataDataset)
         click CrossReferencedEntity href "../CrossReferencedEntity"
       ExperimentalMetadata <|-- Dataset
         click ExperimentalMetadata href "../ExperimentalMetadata"
-
+      
       Dataset : authors
-
-
-
-
+        
+          
+    
+    
     Dataset --> "1..*" Author : authors
     click Author href "../Author"
 
-
+        
       Dataset : cell_component
-
-
-
-
+        
+          
+    
+    
     Dataset --> "0..1" CellComponent : cell_component
     click CellComponent href "../CellComponent"
 
-
+        
       Dataset : cell_strain
-
-
-
-
+        
+          
+    
+    
     Dataset --> "0..1" CellStrain : cell_strain
     click CellStrain href "../CellStrain"
 
-
+        
       Dataset : cell_type
-
-
-
-
+        
+          
+    
+    
     Dataset --> "0..1" CellType : cell_type
     click CellType href "../CellType"
 
-
+        
       Dataset : cross_references
-
-
-
-
+        
+          
+    
+    
     Dataset --> "0..1" CrossReferences : cross_references
     click CrossReferences href "../CrossReferences"
 
-
+        
       Dataset : dataset_description
-
+        
       Dataset : dataset_identifier
-
+        
       Dataset : dataset_title
-
+        
       Dataset : dates
-
-
-
-
+        
+          
+    
+    
     Dataset --> "1" DateStamp : dates
     click DateStamp href "../DateStamp"
 
-
+        
       Dataset : funding
-
-
-
-
+        
+          
+    
+    
     Dataset --> "* _recommended_" FundingDetails : funding
     click FundingDetails href "../FundingDetails"
 
-
+        
       Dataset : grid_preparation
-
+        
       Dataset : organism
-
-
-
-
+        
+          
+    
+    
     Dataset --> "0..1" OrganismDetails : organism
     click OrganismDetails href "../OrganismDetails"
 
-
+        
       Dataset : other_setup
-
+        
       Dataset : sample_preparation
-
+        
       Dataset : sample_type
-
-
-
-
+        
+          
+    
+    
     Dataset --> "1" SampleTypeEnum : sample_type
     click SampleTypeEnum href "../SampleTypeEnum"
 
-
+        
       Dataset : tissue
-
-
-
-
+        
+          
+    
+    
     Dataset --> "0..1" TissueDetails : tissue
     click TissueDetails href "../TissueDetails"
 
-
-
+        
+      
 ```
 
 

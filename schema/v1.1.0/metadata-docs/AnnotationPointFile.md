@@ -22,22 +22,22 @@ URI: [cdp-meta:AnnotationPointFile](metadataAnnotationPointFile)
     click AnnotationPointFile href "../AnnotationPointFile"
       AnnotationSourceFile <|-- AnnotationPointFile
         click AnnotationSourceFile href "../AnnotationSourceFile"
-
+      
       AnnotationPointFile : binning
-
+        
       AnnotationPointFile : columns
-
+        
       AnnotationPointFile : delimiter
-
+        
       AnnotationPointFile : file_format
-
+        
       AnnotationPointFile : glob_string
-
+        
       AnnotationPointFile : glob_strings
-
+        
       AnnotationPointFile : is_visualization_default
-
-
+        
+      
 ```
 
 

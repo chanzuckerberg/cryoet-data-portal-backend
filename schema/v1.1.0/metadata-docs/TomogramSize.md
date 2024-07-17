@@ -21,12 +21,12 @@ URI: [cdp-meta:TomogramSize](metadataTomogramSize)
     class TomogramSize
     click TomogramSize href "../TomogramSize"
       TomogramSize : x
-
+        
       TomogramSize : y
-
+        
       TomogramSize : z
-
-
+        
+      
 ```
 
 

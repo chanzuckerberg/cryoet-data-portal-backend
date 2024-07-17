@@ -21,14 +21,14 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
     class CrossReferences
     click CrossReferences href "../CrossReferences"
       CrossReferences : dataset_citations
-
+        
       CrossReferences : dataset_publications
-
+        
       CrossReferences : related_database_entries
-
+        
       CrossReferences : related_database_links
-
-
+        
+      
 ```
 
 

@@ -21,10 +21,10 @@ URI: [cdp-meta:FundingDetails](metadataFundingDetails)
     class FundingDetails
     click FundingDetails href "../FundingDetails"
       FundingDetails : funding_agency_name
-
+        
       FundingDetails : grant_id
-
-
+        
+      
 ```
 
 

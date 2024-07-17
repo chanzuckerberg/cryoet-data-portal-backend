@@ -22,22 +22,22 @@ URI: [cdp-meta:AnnotationInstanceSegmentationFile](metadataAnnotationInstanceSeg
     click AnnotationInstanceSegmentationFile href "../AnnotationInstanceSegmentationFile"
       AnnotationOrientedPointFile <|-- AnnotationInstanceSegmentationFile
         click AnnotationOrientedPointFile href "../AnnotationOrientedPointFile"
-
+      
       AnnotationInstanceSegmentationFile : binning
-
+        
       AnnotationInstanceSegmentationFile : file_format
-
+        
       AnnotationInstanceSegmentationFile : filter_value
-
+        
       AnnotationInstanceSegmentationFile : glob_string
-
+        
       AnnotationInstanceSegmentationFile : glob_strings
-
+        
       AnnotationInstanceSegmentationFile : is_visualization_default
-
+        
       AnnotationInstanceSegmentationFile : order
-
-
+        
+      
 ```
 
 

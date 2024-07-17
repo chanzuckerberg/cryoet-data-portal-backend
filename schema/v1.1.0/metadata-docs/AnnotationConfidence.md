@@ -21,12 +21,12 @@ URI: [cdp-meta:AnnotationConfidence](metadataAnnotationConfidence)
     class AnnotationConfidence
     click AnnotationConfidence href "../AnnotationConfidence"
       AnnotationConfidence : ground_truth_used
-
+        
       AnnotationConfidence : precision
-
+        
       AnnotationConfidence : recall
-
-
+        
+      
 ```
 
 

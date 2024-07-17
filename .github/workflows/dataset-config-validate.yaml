@@ -32,7 +32,8 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: |
-          python3 -m pip install poetry
+          python3 -m pip install --no-cache-dir poetry
+          poetry config virtualenvs.create false
           poetry install
         working-directory: schema/
       - name: Build Pydantic models
