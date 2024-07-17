@@ -1,9 +1,4 @@
 """
-Usage (from ingestion_tools/scripts directory):
-python dataset_config_merge.py (--unique_values)
-
-Will write to OUTPUT_FILE (see below)
-
 This file is intended to be run from the ingestion/dataset_configs directory. Intended for ensuring that all existing
 dataset config files' schema are covered by the linkml/Pydantic models.
 It will read all .yaml files in the directory and its subdirectories, except for the files in the whitelist.
@@ -18,13 +13,15 @@ Edge cases:
 - If a field is a list in one file and a non-dict, non-list in another, the list will be kept, with the non-dict, non-list added to the list.
 
 Some basic warnings will be printed out if there are conflicts, but the output will still be generated.
+
+Usage (from ingestion_tools/scripts directory):
+python dataset_config_merge.py
 """
 
 import datetime
 import os
 from typing import Union
 
-import click
 import yaml
 
 EXCLUDE_LIST = [
@@ -37,17 +34,13 @@ ALLOWED_PRIMITIVE_TYPES = [int, float, str, bool, list, datetime.date]
 DATASET_CONFIGS_FOLDER = "../dataset_configs/"
 OUTPUT_FILE = DATASET_CONFIGS_FOLDER + "dataset_config_merged.yaml"
 
-unique_values = False
-
 """
 Merges two lists together, keeping only values that are of unique types (values are arbitrary, as long as they are unique).
-
-If unique_values is true, not only are unique types kept, but unique values are kept as well.
 """
 
 
 def keep_unique_datatypes(original_list: list, new_value: Union[int, float, str, bool, list, datetime.date]) -> list:
-    global unique_values
+    added_new_datatype = False
 
     if new_value is None:
         return original_list
@@ -59,10 +52,11 @@ def keep_unique_datatypes(original_list: list, new_value: Union[int, float, str,
         return [new_value]
 
     new_list = original_list.copy()
-    if unique_values and new_value not in original_list:
+    if type(new_value) not in [type(value) for value in original_list]:
         new_list.append(new_value)
-    elif type(new_value) not in [type(value) for value in original_list]:
-        new_list.append(new_value)
+        added_new_datatype = True
+
+    if added_new_datatype:
         print(f"Warning: Added new datatype to list: {original_list} | {new_value}")
 
     return new_list
@@ -70,8 +64,6 @@ def keep_unique_datatypes(original_list: list, new_value: Union[int, float, str,
 
 """
 Runs a data check on non-dict items and reports any warnings about potential different-type attributes across files.
-
-If unique_values is true, not only are unique types kept, but unique values are kept as well.
 
 Returns False when there are conflicting datatypes, otherwise true.
 """
@@ -81,8 +73,6 @@ def primitive_data_check(
     original_value: Union[int, float, str, bool, list, datetime.date],
     new_value: Union[int, float, str, bool, list, datetime.date],
 ) -> bool:
-    global unique_values
-
     if original_value is None:
         return True
 
@@ -94,9 +84,6 @@ def primitive_data_check(
 
     if type_original_value is not type_new_value:
         print(f"Warning: Data type conflict: {original_value} | {new_value}")
-        return False
-
-    if unique_values and original_value != new_value:
         return False
 
     return True
@@ -212,16 +199,7 @@ def recursive_dict_update(current_entries: dict, new_entries: dict) -> dict:
     return current_entries
 
 
-@click.command()
-@click.option(
-    "--keep_unique_values",
-    is_flag=True,
-    help="If set, not only are unique types kept, but unique values are kept as well. Note that this works only for primitive types, and non-multivalued attributes may display as multivalued (because they are represented as a list of unique values).",
-)
-def main(keep_unique_values: bool):
-    global unique_values
-    unique_values = keep_unique_values
-
+def main():
     all_files: list[str] = [
         os.path.join(directory_path, file)
         for directory_path, _, filename in os.walk(os.path.expanduser(DATASET_CONFIGS_FOLDER))
