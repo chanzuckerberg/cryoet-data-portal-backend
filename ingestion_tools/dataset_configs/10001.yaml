@@ -375,7 +375,7 @@ datasets:
       id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=284812
       name: K972 Sp h-wild type
     cross_references:
-      dataset_publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
+      publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
       related_database_entries: EMPIAR-10988, EMD-14404, EMD-14405, EMD-14406, EMD-14408,
         EMD-14409, EMD-14410, EMD-14411
     dataset_description: Volta potential phase plate cryo-electron tomography of S.

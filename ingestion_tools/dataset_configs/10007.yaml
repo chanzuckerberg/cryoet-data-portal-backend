@@ -66,7 +66,7 @@ datasets:
       corresponding_author_status: true
       name: Ellen D. Zhong
     cross_references:
-      dataset_publications: doi:10.1101/2023.08.18.553799
+      publications: doi:10.1101/2023.08.18.553799
       related_database_entries: EMPIAR-11658
     dataset_description: Cryo-electron tomograms of S.cerevisiae of plasma FIB-SEM
       lamella. with CryoDRGN reconstructed 80S ribosome.

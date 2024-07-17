@@ -107,7 +107,7 @@ datasets:
       id: NCBI:txid2325
       name: LKT-1
     cross_references:
-      dataset_publications: doi:10.1038/s41586-022-04971-z
+      publications: doi:10.1038/s41586-022-04971-z
       related_database_entries: EMPIAR-11058
     dataset_description: Cryo-electron tomograms of T. kivui of FIB-SEM lamella.
     dataset_identifier: 10008

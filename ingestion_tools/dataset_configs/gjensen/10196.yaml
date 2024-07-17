@@ -18,7 +18,7 @@ datasets:
       id: null
       name: TRH7000
     cross_references:
-      dataset_publications: 10.1016/j.bbrc.2011.03.062
+      publications: 10.1016/j.bbrc.2011.03.062
     dataset_description: This is 3rd of 3 sets of data studying Vibrio cholerae collected
       by Matt Swulius and is a part of Caltech Jensen  lab etdb. WT Vibrio carrying
       pMMb67 plasmid without GFP-MreB

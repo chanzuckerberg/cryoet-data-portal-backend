@@ -113,7 +113,7 @@ datasets:
       id: CL:0002586
       name: Retinal pigment epithelial-1
     cross_references:
-      dataset_publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
+      publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
       related_database_entries: EMPIAR-10989
     dataset_description: Cryo-electron tomograms of RPE1 cells. Comprehensive annotation
       of actin filaments and microtubules

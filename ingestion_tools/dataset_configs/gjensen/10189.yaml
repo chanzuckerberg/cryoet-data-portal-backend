@@ -18,7 +18,7 @@ datasets:
       id: null
       name: ''
     cross_references:
-      dataset_publications: 10.1128/JB.00505-12
+      publications: 10.1128/JB.00505-12
     dataset_description: This is 1st of 5 sets of data studying Escherichia coli collected
       by Matt Swulius and is a part of Caltech Jensen  lab etdb. Contains MreB-mCherry
       sandwich fusion as sole source of MreB from WT promoter.

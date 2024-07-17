@@ -294,7 +294,7 @@ def convert_dataset(emdb_id):
         "authors": authors,
         "organism": {"name": organism},
         "cross_references": {
-            "dataset_publications": ", ".join(publications),
+            "publications": ", ".join(publications),
             "related_database_entries": ", ".join(related_databases),
         },
         "funding": [

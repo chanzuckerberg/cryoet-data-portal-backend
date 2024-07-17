@@ -84,7 +84,6 @@ Name: cdp-meta
 | [dataset_citations](dataset_citations.md) | Comma-separated list of DOIs for publications citing the dataset |
 | [dataset_description](dataset_description.md) | A short description of a CryoET dataset, similar to an abstract for a journal... |
 | [dataset_identifier](dataset_identifier.md) | An identifier for a CryoET dataset, assigned by the Data Portal |
-| [dataset_publications](dataset_publications.md) | Comma-separated list of DOIs for publications associated with the dataset |
 | [dataset_title](dataset_title.md) | Title of a CryoET dataset |
 | [dates](dates.md) | A set of dates at which a data item was deposited, published and last modifie... |
 | [delimiter](delimiter.md) | The delimiter used in a point annotation file |
@@ -135,6 +134,7 @@ Name: cdp-meta
 | [primary_author_status](primary_author_status.md) | Whether the author is a primary author |
 | [processing](processing.md) | Describe additional processing used to derive the tomogram |
 | [processing_software](processing_software.md) | Processing software used to derive the tomogram |
+| [publications](publications.md) | Comma-separated list of DOIs for publications associated with the dataset |
 | [recall](recall.md) | Describe the confidence level of the annotation |
 | [reconstruction_method](reconstruction_method.md) | Describe reconstruction method (WBP, SART, SIRT) |
 | [reconstruction_software](reconstruction_software.md) | Name of software used for reconstruction |
@@ -198,7 +198,7 @@ Name: cdp-meta
 | [DOILIST](DOILIST.md) | A list of Digital Object Identifiers |
 | [Double](Double.md) | A real number that conforms to the xsd:double specification |
 | [EMDBID](EMDBID.md) | An Electron Microscopy Data Bank identifier |
-| [EMPIAREMDBLIST](EMPIAREMDBLIST.md) | A list of EMPIAR and EMDB identifiers |
+| [EMPIAREMDBPDBLIST](EMPIAREMDBPDBLIST.md) | A list of EMPIAR, EMDB, and PDB identifiers |
 | [EMPIARID](EMPIARID.md) | An Electron Microscopy Public Image Archive identifier |
 | [Float](Float.md) | A real number that conforms to the xsd:float specification |
 | [FloatFormattedString](FloatFormattedString.md) | A formatted string that represents a floating point number |
@@ -212,6 +212,7 @@ Name: cdp-meta
 | [Objectidentifier](Objectidentifier.md) | A URI or CURIE that represents an object in the model |
 | [ONTOLOGYID](ONTOLOGYID.md) | An ontology identifier |
 | [ORCID](ORCID.md) | A unique, persistent identifier for researchers, provided by ORCID |
+| [PDBID](PDBID.md) | A Protein Data Bank identifier |
 | [Sparqlpath](Sparqlpath.md) | A string encoding a SPARQL Property Path |
 | [String](String.md) | A character string |
 | [StringFormattedString](StringFormattedString.md) | A formatted string (variable) that represents a string |

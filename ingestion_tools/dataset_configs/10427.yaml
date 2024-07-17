@@ -28,7 +28,7 @@ datasets:
       id: CLO:0051569
       name: RCB1975 cell
     cross_references:
-      dataset_publications: 10.1101/2024.06.27.600657
+      publications: 10.1101/2024.06.27.600657
     dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
       contains 10 grids. This is grid 2 of 10 and contains basal membranes of HSC3
       cells.  The cell line expresses EGFR-GFP as described in Panilla-Macua et al.

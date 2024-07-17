@@ -99,8 +99,8 @@ datasets: REQUIRED
       name: REQUIRED, STRING
       taxonomy_id: OPTIONAL, INTEGER
     cross_references: OPTIONAL
-      dataset_publications: RECOMMENDED, STRING (DOIs)
-      related_database_entries: RECOMMENDED, STRING (EMPIAR / EMDB IDs)
+      publications: RECOMMENDED, STRING (DOIs)
+      related_database_entries: RECOMMENDED, STRING (EMPIAR / EMDB / PDB IDs)
     dataset_description: REQUIRED, STRING
     dataset_identifier: REQUIRED, INTEGER
     dataset_title: REQUIRED, STRING
