@@ -34,6 +34,7 @@ Name: cdp-meta
 | [Dataset](Dataset.md) | High-level description of a cryoET dataset. |
 | [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modified. |
 | [DatestampedEntity](DatestampedEntity.md) | An entity with associated deposition, release and last modified dates. |
+| [Deposition](Deposition.md) | Metadata describing a deposition. |
 | [ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET dataset. |
 | [FundedEntity](FundedEntity.md) | An entity with associated funding sources. |
 | [FundingDetails](FundingDetails.md) | A funding source for a scientific data entity (base for JSON and DB representation). |
@@ -66,7 +67,7 @@ Name: cdp-meta
 | [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | Binning factor of the aligned tilt series |
 | [annotation_method](annotation_method.md) | Describe how the annotation is made (e |
 | [annotation_object](annotation_object.md) | Metadata describing the object being annotated |
-| [annotation_publications](annotation_publications.md) | DOIs for publications that describe the dataset |
+| [annotation_publications](annotation_publications.md) | List of publication IDs (EMPIAR, EMDB, DOI) that describe this annotation met... |
 | [annotation_software](annotation_software.md) | Software used for generating this annotation |
 | [authors](authors.md) | Author of a scientific data entity |
 | [binning](binning.md) | The binning factor for a point / oriented point / instance segmentation annot... |
@@ -88,6 +89,10 @@ Name: cdp-meta
 | [dates](dates.md) | A set of dates at which a data item was deposited, published and last modifie... |
 | [delimiter](delimiter.md) | The delimiter used in a point annotation file |
 | [deposition_date](deposition_date.md) | The date a data item was received by the cryoET data portal |
+| [deposition_description](deposition_description.md) | A short description of the deposition, similar to an abstract for a journal a... |
+| [deposition_identifier](deposition_identifier.md) | An identifier for a CryoET deposition, assigned by the Data Portal |
+| [deposition_title](deposition_title.md) | Title of a CryoET deposition |
+| [deposition_types](deposition_types.md) | Type of data in the deposition (e |
 | [description](description.md) | A textual description of the annotation object, can be a longer description t... |
 | [email](email.md) | The email address of the author |
 | [energy_filter](energy_filter.md) | Energy filter setup used |
@@ -198,6 +203,7 @@ Name: cdp-meta
 | [DOILIST](DOILIST.md) | A list of Digital Object Identifiers |
 | [Double](Double.md) | A real number that conforms to the xsd:double specification |
 | [EMDBID](EMDBID.md) | An Electron Microscopy Data Bank identifier |
+| [EMPIAREMDBDOIPDBLIST](EMPIAREMDBDOIPDBLIST.md) | A list of EMPIAR, EMDB, DOI, and PDB identifiers |
 | [EMPIAREMDBPDBLIST](EMPIAREMDBPDBLIST.md) | A list of EMPIAR, EMDB, and PDB identifiers |
 | [EMPIARID](EMPIARID.md) | An Electron Microscopy Public Image Archive identifier |
 | [Float](Float.md) | A real number that conforms to the xsd:float specification |

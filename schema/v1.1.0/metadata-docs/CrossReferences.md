@@ -56,6 +56,7 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 | ---  | --- | --- | --- |
 | [CrossReferencedEntity](CrossReferencedEntity.md) | [cross_references](cross_references.md) | range | [CrossReferences](CrossReferences.md) |
 | [Dataset](Dataset.md) | [cross_references](cross_references.md) | range | [CrossReferences](CrossReferences.md) |
+| [Deposition](Deposition.md) | [cross_references](cross_references.md) | range | [CrossReferences](CrossReferences.md) |
 
 
 

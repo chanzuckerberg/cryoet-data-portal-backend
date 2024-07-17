@@ -131,7 +131,7 @@ datasets: REQUIRED
       value:
       - REQUIRED, STRING
     parent_filters: SEE runs.sources.parent_filters
-depositions:
+depositions: REQUIRED
   - metadata: REQUIRED
       authors: SEE annotations.authors
       cross_references: SEE datasets.cross_references
@@ -140,7 +140,7 @@ depositions:
       deposition_identifier: REQUIRED, INTEGER
       deposition_title: REQUIRED, STRING
       deposition_types: REQUIRED
-      - STRING (ENUM [ANNOTATION, DATASET, TOMOGRAM])
+      - STRING (ENUM [annotation, dataset, tomogram])
     sources: REQUIRED (source_glob, source_multi_glob, destination_glob, literal)
 deposition_keyphotos: SEE dataset_keyphotos
 frames: OPTIONAL

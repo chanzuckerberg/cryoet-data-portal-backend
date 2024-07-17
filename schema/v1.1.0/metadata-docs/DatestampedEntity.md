@@ -24,6 +24,8 @@ URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
     click DatestampedEntity href "../DatestampedEntity"
       DatestampedEntity <|-- Dataset
         click Dataset href "../Dataset"
+      DatestampedEntity <|-- Deposition
+        click Deposition href "../Deposition"
       DatestampedEntity <|-- Annotation
         click Annotation href "../Annotation"
 
@@ -112,6 +114,7 @@ attributes:
     domain_of:
     - DatestampedEntity
     - Dataset
+    - Deposition
     - Annotation
     range: DateStamp
     required: true
@@ -141,6 +144,7 @@ attributes:
     domain_of:
     - DatestampedEntity
     - Dataset
+    - Deposition
     - Annotation
     range: DateStamp
     required: true

@@ -264,6 +264,30 @@ classes:
   # ============================================================================
 
   # ============================================================================
+  # Depositions metadata
+  # ============================================================================
+  Deposition:
+    description: Metadata describing a deposition.
+    mixins:
+      - DatestampedEntity
+      - AuthoredEntity
+      - CrossReferencedEntity
+
+    attributes:
+      deposition_description:
+        exact_mappings:
+          - cdp-common:deposition_description
+      deposition_identifier:
+        exact_mappings:
+          - cdp-common:deposition_identifier
+      deposition_title:
+        exact_mappings:
+          - cdp-common:deposition_title
+      deposition_types:
+        exact_mappings:
+          - cdp-common:deposition_types
+
+  # ============================================================================
   # TiltSeries metadata
   # ============================================================================
   # Updating name from Camera to CameraDetails to avoid conflict in case insensitive file names
@@ -648,7 +672,7 @@ classes:
         required: true
       annotation_publications:
         exact_mappings:
-          - cdp-common:annotation_publication
+          - cdp-common:annotation_publications
       annotation_software:
         exact_mappings:
           - cdp-common:annotation_software
