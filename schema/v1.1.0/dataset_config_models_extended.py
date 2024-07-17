@@ -477,6 +477,9 @@ def validate_image_format(image_url: str) -> bool:
     # don't check non-http(s) URLs
     if not image_url.startswith("http"):
         return True
+    
+    if not image_url.startswith("https"):
+        logger.warning("URL %s is not HTTPS", image_url)
 
     r = requests.head(image_url)
     if r.status_code >= 400:
