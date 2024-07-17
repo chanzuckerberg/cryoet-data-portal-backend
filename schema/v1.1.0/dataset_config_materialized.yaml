@@ -383,11 +383,11 @@ enums:
       annotation:
         text: annotation
         description: The deposition comprises of new annotations for existing datasets
-      datasets:
-        text: datasets
+      dataset:
+        text: dataset
         description: The deposition comprises of new dataset(s).
-      tomograms:
-        text: tomograms
+      tomogram:
+        text: tomogram
         description: The deposition comprises of new tomograms for existing datasets
   sample_type_enum:
     name: sample_type_enum
@@ -542,6 +542,19 @@ classes:
         domain_of:
         - Container
         range: DatasetEntity
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      depositions:
+        name: depositions
+        description: A deposition entity.
+        from_schema: cdp-dataset-config
+        alias: depositions
+        owner: Container
+        domain_of:
+        - Container
+        range: DepositionEntity
         required: true
         multivalued: true
         inlined: true
@@ -1015,6 +1028,7 @@ classes:
         domain_of:
         - AnnotationEntity
         - DatasetEntity
+        - DepositionEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Annotation
@@ -1031,6 +1045,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
+        - DepositionEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1135,6 +1150,7 @@ classes:
         domain_of:
         - AnnotationEntity
         - DatasetEntity
+        - DepositionEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Dataset
@@ -1151,6 +1167,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
+        - DepositionEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1236,6 +1253,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
+        - DepositionEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1300,6 +1318,108 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+  DepositionEntity:
+    name: DepositionEntity
+    description: A deposition entity.
+    from_schema: cdp-dataset-config
+    attributes:
+      metadata:
+        name: metadata
+        description: Metadata describing a deposition.
+        from_schema: cdp-dataset-config
+        alias: metadata
+        owner: DepositionEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - DepositionEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        range: Deposition
+        required: true
+        inlined: true
+        inlined_as_list: true
+      sources:
+        name: sources
+        description: A deposition source.
+        from_schema: cdp-dataset-config
+        alias: sources
+        owner: DepositionEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - DepositionEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: DepositionSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  DepositionSource:
+    name: DepositionSource
+    description: A deposition source.
+    from_schema: cdp-dataset-config
+    mixins:
+    - DefaultSource
+    - DefaultLiteralEntity
+    attributes:
+      destination_glob:
+        name: destination_glob
+        description: A glob class for finding files in the output / destination directory.
+        from_schema: cdp-dataset-config
+        alias: destination_glob
+        owner: DepositionSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: DestinationGlob
+        inlined: true
+        inlined_as_list: true
+      source_glob:
+        name: source_glob
+        description: A glob class for finding files in the source directory.
+        from_schema: cdp-dataset-config
+        alias: source_glob
+        owner: DepositionSource
+        domain_of:
+        - DefaultSource
+        - VoxelSpacingSource
+        range: SourceGlob
+        inlined: true
+        inlined_as_list: true
+      source_multi_glob:
+        name: source_multi_glob
+        description: A glob class for finding files in the source directory (with
+          multiple globs).
+        from_schema: cdp-dataset-config
+        alias: source_multi_glob
+        owner: DepositionSource
+        domain_of:
+        - DefaultSource
+        range: SourceMultiGlob
+        inlined: true
+        inlined_as_list: true
+      literal:
+        name: literal
+        description: A literal class with a value attribute.
+        from_schema: cdp-dataset-config
+        alias: literal
+        owner: DepositionSource
+        domain_of:
+        - DefaultLiteralEntity
+        - DatasetKeyPhotoSource
+        - VoxelSpacingSource
+        range: DefaultLiteral
+        inlined: true
+        inlined_as_list: true
   FrameEntity:
     name: FrameEntity
     description: A frame entity.
@@ -1315,6 +1435,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
+        - DepositionEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1413,6 +1534,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
+        - DepositionEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1511,6 +1633,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
+        - DepositionEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1609,6 +1732,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
+        - DepositionEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1707,6 +1831,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
+        - DepositionEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1877,6 +2002,7 @@ classes:
         domain_of:
         - AnnotationEntity
         - DatasetEntity
+        - DepositionEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: TiltSeries
@@ -1893,6 +2019,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
+        - DepositionEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1990,6 +2117,7 @@ classes:
         domain_of:
         - AnnotationEntity
         - DatasetEntity
+        - DepositionEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Tomogram
@@ -2006,6 +2134,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
+        - DepositionEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -2104,6 +2233,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
+        - DepositionEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity

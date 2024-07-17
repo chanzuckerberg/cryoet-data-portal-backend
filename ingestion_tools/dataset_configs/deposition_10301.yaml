@@ -43,8 +43,8 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10301
     deposition_title: TBA
-    deposition_type:
-    - annotations
+    deposition_types:
+    - annotation
   sources:
   - literal:
       value:

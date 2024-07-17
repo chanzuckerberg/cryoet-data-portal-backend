@@ -441,7 +441,7 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
                     glob_strings_entries = 0
                     if getattr(source_entry, "glob_string", None) is not None:
                         glob_strings_entries += 1
-                    if getattr(source_entry, "glob_strings", None) is not None:
+                    if getattr(source_entry, "glob_strings", None) is not None and source_entry.glob_strings != []:
                         glob_strings_entries += 1
                     if glob_strings_entries != 1:
                         multiple_glob_strings_errors.append((i, shape))

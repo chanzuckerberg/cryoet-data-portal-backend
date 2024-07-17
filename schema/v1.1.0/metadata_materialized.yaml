@@ -399,11 +399,11 @@ enums:
       annotation:
         text: annotation
         description: The deposition comprises of new annotations for existing datasets
-      datasets:
-        text: datasets
+      dataset:
+        text: dataset
         description: The deposition comprises of new dataset(s).
-      tomograms:
-        text: tomograms
+      tomogram:
+        text: tomogram
         description: The deposition comprises of new tomograms for existing datasets
   sample_type_enum:
     name: sample_type_enum
@@ -1421,6 +1421,113 @@ classes:
         domain_of:
         - ExperimentalMetadata
         range: CellComponent
+        inlined: true
+        inlined_as_list: true
+  Deposition:
+    name: Deposition
+    description: Metadata describing a deposition.
+    from_schema: metadata
+    mixins:
+    - DatestampedEntity
+    - AuthoredEntity
+    - CrossReferencedEntity
+    attributes:
+      deposition_description:
+        name: deposition_description
+        description: A short description of the deposition, similar to an abstract
+          for a journal article or dataset.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:deposition_description
+        alias: deposition_description
+        owner: Deposition
+        domain_of:
+        - Deposition
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      deposition_identifier:
+        name: deposition_identifier
+        description: An identifier for a CryoET deposition, assigned by the Data Portal.
+          Used to identify the deposition the entity is a part of.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:deposition_identifier
+        alias: deposition_identifier
+        owner: Deposition
+        domain_of:
+        - Deposition
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+      deposition_title:
+        name: deposition_title
+        description: Title of a CryoET deposition.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:deposition_title
+        alias: deposition_title
+        owner: Deposition
+        domain_of:
+        - Deposition
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      deposition_types:
+        name: deposition_types
+        description: Type of data in the deposition (e.g. dataset, annotation, tomogram)
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:deposition_types
+        alias: deposition_types
+        owner: Deposition
+        domain_of:
+        - Deposition
+        range: deposition_types_enum
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^annotation$)|(^dataset$)|(^tomogram$)
+      dates:
+        name: dates
+        description: A set of dates at which a data item was deposited, published
+          and last modified.
+        from_schema: metadata
+        alias: dates
+        owner: Deposition
+        domain_of:
+        - DatestampedEntity
+        range: DateStamp
+        required: true
+        inlined: true
+        inlined_as_list: true
+      authors:
+        name: authors
+        description: Author of a scientific data entity.
+        from_schema: metadata
+        list_elements_ordered: true
+        alias: authors
+        owner: Deposition
+        domain_of:
+        - AuthoredEntity
+        range: Author
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      cross_references:
+        name: cross_references
+        description: A set of cross-references to other databases and publications.
+        from_schema: metadata
+        alias: cross_references
+        owner: Deposition
+        domain_of:
+        - CrossReferencedEntity
+        range: CrossReferences
         inlined: true
         inlined_as_list: true
   CameraDetails:

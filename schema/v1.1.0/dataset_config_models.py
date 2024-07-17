@@ -503,9 +503,9 @@ class DepositionTypesEnum(str, Enum):
     # The deposition comprises of new annotations for existing datasets
     annotation = "annotation"
     # The deposition comprises of new dataset(s).
-    datasets = "datasets"
+    dataset = "dataset"
     # The deposition comprises of new tomograms for existing datasets
-    tomograms = "tomograms"
+    tomogram = "tomogram"
 
 
 class SampleTypeEnum(str, Enum):
@@ -870,7 +870,7 @@ class DatestampedEntity(ConfiguredBaseModel):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
 
@@ -888,7 +888,7 @@ class AuthoredEntity(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
-                "domain_of": ["AuthoredEntity", "Dataset", "Tomogram", "Annotation"],
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
             }
         },
@@ -927,7 +927,10 @@ class CrossReferencedEntity(ConfiguredBaseModel):
         None,
         description="""A set of cross-references to other databases and publications.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "cross_references", "domain_of": ["CrossReferencedEntity", "Dataset"]}
+            "linkml_meta": {
+                "alias": "cross_references",
+                "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
+            }
         },
     )
 
@@ -1352,7 +1355,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
@@ -1361,7 +1364,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
-                "domain_of": ["AuthoredEntity", "Dataset", "Tomogram", "Annotation"],
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
             }
         },
@@ -1382,7 +1385,10 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         None,
         description="""A set of cross-references to other databases and publications.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "cross_references", "domain_of": ["CrossReferencedEntity", "Dataset"]}
+            "linkml_meta": {
+                "alias": "cross_references",
+                "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
+            }
         },
     )
     sample_type: SampleTypeEnum = Field(
@@ -1472,6 +1478,101 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         elif isinstance(v, str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid sample_type format: {v}")
+        return v
+
+
+class Deposition(CrossReferencedEntity, AuthoredEntity, DatestampedEntity):
+    """
+    Metadata describing a deposition.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {"from_schema": "metadata", "mixins": ["DatestampedEntity", "AuthoredEntity", "CrossReferencedEntity"]}
+    )
+
+    deposition_description: str = Field(
+        ...,
+        description="""A short description of the deposition, similar to an abstract for a journal article or dataset.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition_description",
+                "domain_of": ["Deposition"],
+                "exact_mappings": ["cdp-common:deposition_description"],
+            }
+        },
+    )
+    deposition_identifier: int = Field(
+        ...,
+        description="""An identifier for a CryoET deposition, assigned by the Data Portal. Used to identify the deposition the entity is a part of.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition_identifier",
+                "domain_of": ["Deposition"],
+                "exact_mappings": ["cdp-common:deposition_identifier"],
+            }
+        },
+    )
+    deposition_title: str = Field(
+        ...,
+        description="""Title of a CryoET deposition.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition_title",
+                "domain_of": ["Deposition"],
+                "exact_mappings": ["cdp-common:deposition_title"],
+            }
+        },
+    )
+    deposition_types: List[DepositionTypesEnum] = Field(
+        ...,
+        description="""Type of data in the deposition (e.g. dataset, annotation, tomogram)""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition_types",
+                "domain_of": ["Deposition"],
+                "exact_mappings": ["cdp-common:deposition_types"],
+            }
+        },
+    )
+    dates: DateStamp = Field(
+        ...,
+        description="""A set of dates at which a data item was deposited, published and last modified.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+        },
+    )
+    authors: List[Author] = Field(
+        ...,
+        description="""Author of a scientific data entity.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "authors",
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
+                "list_elements_ordered": True,
+            }
+        },
+    )
+    cross_references: Optional[CrossReferences] = Field(
+        None,
+        description="""A set of cross-references to other databases and publications.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "cross_references",
+                "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
+            }
+        },
+    )
+
+    @field_validator("deposition_types")
+    def pattern_deposition_types(cls, v):
+        pattern = re.compile(r"(^annotation$)|(^dataset$)|(^tomogram$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid deposition_types format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid deposition_types format: {v}")
         return v
 
 
@@ -2267,7 +2368,7 @@ class Tomogram(AuthoredEntity):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
-                "domain_of": ["AuthoredEntity", "Dataset", "Tomogram", "Annotation"],
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
             }
         },
@@ -3191,7 +3292,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
@@ -3200,7 +3301,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
-                "domain_of": ["AuthoredEntity", "Dataset", "Tomogram", "Annotation"],
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
             }
         },
@@ -3366,6 +3467,11 @@ class Container(ConfiguredBaseModel):
         ...,
         description="""A dataset entity.""",
         json_schema_extra={"linkml_meta": {"alias": "datasets", "domain_of": ["Container"]}},
+    )
+    depositions: List[DepositionEntity] = Field(
+        ...,
+        description="""A deposition entity.""",
+        json_schema_extra={"linkml_meta": {"alias": "depositions", "domain_of": ["Container"]}},
     )
     frames: Optional[List[FrameEntity]] = Field(
         default_factory=list,
@@ -3568,6 +3674,7 @@ class DefaultSource(ConfiguredBaseModel):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3589,6 +3696,7 @@ class DefaultSource(ConfiguredBaseModel):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3609,6 +3717,7 @@ class DefaultSource(ConfiguredBaseModel):
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3724,6 +3833,7 @@ class DefaultLiteralEntity(ConfiguredBaseModel):
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3769,7 +3879,13 @@ class AnnotationEntity(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "metadata",
-                "domain_of": ["AnnotationEntity", "DatasetEntity", "TiltSeriesEntity", "TomogramEntity"],
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DepositionEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                ],
             }
         },
     )
@@ -3783,6 +3899,7 @@ class AnnotationEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -3866,7 +3983,13 @@ class DatasetEntity(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "metadata",
-                "domain_of": ["AnnotationEntity", "DatasetEntity", "TiltSeriesEntity", "TomogramEntity"],
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DepositionEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                ],
             }
         },
     )
@@ -3880,6 +4003,7 @@ class DatasetEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -3913,6 +4037,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3934,6 +4059,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3954,6 +4080,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3976,6 +4103,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4006,6 +4134,7 @@ class DatasetKeyPhotoEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4040,6 +4169,7 @@ class DatasetKeyPhotoSource(SourceParentFiltersEntity):
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4094,6 +4224,153 @@ class DatasetKeyPhotoLiteral(ConfiguredBaseModel):
     )
 
 
+class DepositionEntity(ConfiguredBaseModel):
+    """
+    A deposition entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    metadata: Deposition = Field(
+        ...,
+        description="""Metadata describing a deposition.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "metadata",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DepositionEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                ],
+            }
+        },
+    )
+    sources: List[DepositionSource] = Field(
+        ...,
+        description="""A deposition source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "sources",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
+                    "FrameEntity",
+                    "GainEntity",
+                    "KeyImageEntity",
+                    "RawTiltEntity",
+                    "RunEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                    "VoxelSpacingEntity",
+                ],
+            }
+        },
+    )
+
+
+class DepositionSource(DefaultLiteralEntity, DefaultSource):
+    """
+    A deposition source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
+    )
+
+    destination_glob: Optional[DestinationGlob] = Field(
+        None,
+        description="""A glob class for finding files in the output / destination directory.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "destination_glob",
+                "domain_of": [
+                    "DefaultSource",
+                    "VoxelSpacingSource",
+                    "DatasetSource",
+                    "DepositionSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    source_glob: Optional[SourceGlob] = Field(
+        None,
+        description="""A glob class for finding files in the source directory.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "source_glob",
+                "domain_of": [
+                    "DefaultSource",
+                    "VoxelSpacingSource",
+                    "DatasetSource",
+                    "DepositionSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    source_multi_glob: Optional[SourceMultiGlob] = Field(
+        None,
+        description="""A glob class for finding files in the source directory (with multiple globs).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "source_multi_glob",
+                "domain_of": [
+                    "DefaultSource",
+                    "DatasetSource",
+                    "DepositionSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    literal: Optional[DefaultLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": [
+                    "DefaultLiteralEntity",
+                    "DatasetKeyPhotoSource",
+                    "VoxelSpacingSource",
+                    "DatasetSource",
+                    "DepositionSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+
+
 class FrameEntity(ConfiguredBaseModel):
     """
     A frame entity.
@@ -4111,6 +4388,7 @@ class FrameEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4147,6 +4425,7 @@ class FrameSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4168,6 +4447,7 @@ class FrameSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4188,6 +4468,7 @@ class FrameSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4210,6 +4491,7 @@ class FrameSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4262,6 +4544,7 @@ class GainEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4298,6 +4581,7 @@ class GainSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource)
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4319,6 +4603,7 @@ class GainSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource)
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4339,6 +4624,7 @@ class GainSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource)
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4361,6 +4647,7 @@ class GainSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource)
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4413,6 +4700,7 @@ class KeyImageEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4449,6 +4737,7 @@ class KeyImageSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4470,6 +4759,7 @@ class KeyImageSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4490,6 +4780,7 @@ class KeyImageSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4512,6 +4803,7 @@ class KeyImageSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4564,6 +4856,7 @@ class RawTiltEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4600,6 +4893,7 @@ class RawTiltSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSour
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4621,6 +4915,7 @@ class RawTiltSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSour
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4641,6 +4936,7 @@ class RawTiltSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSour
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4663,6 +4959,7 @@ class RawTiltSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSour
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4715,6 +5012,7 @@ class RunEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4751,6 +5049,7 @@ class RunSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4772,6 +5071,7 @@ class RunSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4792,6 +5092,7 @@ class RunSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4814,6 +5115,7 @@ class RunSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4901,7 +5203,13 @@ class TiltSeriesEntity(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "metadata",
-                "domain_of": ["AnnotationEntity", "DatasetEntity", "TiltSeriesEntity", "TomogramEntity"],
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DepositionEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                ],
             }
         },
     )
@@ -4915,6 +5223,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4951,6 +5260,7 @@ class TiltSeriesSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultS
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4972,6 +5282,7 @@ class TiltSeriesSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultS
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4992,6 +5303,7 @@ class TiltSeriesSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultS
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5014,6 +5326,7 @@ class TiltSeriesSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultS
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5062,7 +5375,13 @@ class TomogramEntity(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "metadata",
-                "domain_of": ["AnnotationEntity", "DatasetEntity", "TiltSeriesEntity", "TomogramEntity"],
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DepositionEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                ],
             }
         },
     )
@@ -5076,6 +5395,7 @@ class TomogramEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -5112,6 +5432,7 @@ class TomogramSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5133,6 +5454,7 @@ class TomogramSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5153,6 +5475,7 @@ class TomogramSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5175,6 +5498,7 @@ class TomogramSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5227,6 +5551,7 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -5260,6 +5585,7 @@ class VoxelSpacingSource(SourceParentFiltersEntity):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5281,6 +5607,7 @@ class VoxelSpacingSource(SourceParentFiltersEntity):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5303,6 +5630,7 @@ class VoxelSpacingSource(SourceParentFiltersEntity):
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5417,6 +5745,7 @@ CellStrain.model_rebuild()
 CellComponent.model_rebuild()
 ExperimentalMetadata.model_rebuild()
 Dataset.model_rebuild()
+Deposition.model_rebuild()
 CameraDetails.model_rebuild()
 MicroscopeDetails.model_rebuild()
 MicroscopeOpticalSetup.model_rebuild()
@@ -5454,6 +5783,8 @@ DatasetSource.model_rebuild()
 DatasetKeyPhotoEntity.model_rebuild()
 DatasetKeyPhotoSource.model_rebuild()
 DatasetKeyPhotoLiteral.model_rebuild()
+DepositionEntity.model_rebuild()
+DepositionSource.model_rebuild()
 FrameEntity.model_rebuild()
 FrameSource.model_rebuild()
 GainEntity.model_rebuild()
