@@ -18,7 +18,7 @@ datasets:
       id: null
       name: null
     cross_references:
-      dataset_publications: 10.1111/mmi.13937
+      publications: 10.1111/mmi.13937
     dataset_description: This is 3rd of 7 sets of data studying Mycoplasma pneumoniae
       collected by Songye Chen and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10255

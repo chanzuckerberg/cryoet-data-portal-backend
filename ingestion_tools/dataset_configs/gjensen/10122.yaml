@@ -18,7 +18,7 @@ datasets:
       id: null
       name: deltaQ 167
     cross_references:
-      dataset_publications: 10.1128/mBio.01898-15
+      publications: 10.1128/mBio.01898-15
     dataset_description: 'This is 5th of 17 sets of data studying Magnetospirillum
       magneticum  collected by Poorna Subramanian and is a part of Caltech Jensen  lab
       etdb. This is the strain in which dQ and dK have been deactivated and the '

@@ -31,9 +31,9 @@ URI: [cdp-meta:annotation_publications](metadataannotation_publications)
 
 ## Properties
 
-* Range: [EMPIAREMDBDOILIST](EMPIAREMDBDOILIST.md)
+* Range: [EMPIAREMDBDOIPDBLIST](EMPIAREMDBDOIPDBLIST.md)
 
-* Regex pattern: `^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+))*$`
+* Regex pattern: `^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$`
 
 
 
@@ -81,10 +81,10 @@ alias: annotation_publications
 owner: Annotation
 domain_of:
 - Annotation
-range: EMPIAR_EMDB_DOI_LIST
+range: EMPIAR_EMDB_DOI_PDB_LIST
 inlined: true
 inlined_as_list: true
-pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+))*$
+pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$
 
 ```
 </details>

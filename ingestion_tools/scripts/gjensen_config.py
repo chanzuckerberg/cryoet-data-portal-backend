@@ -105,6 +105,9 @@ def to_dataset_config(
         config["tissue"] = dataset["tissue"]
     if cross_reference:
         config["cross_references"] = cross_reference
+        if "dataset_publications" in config["cross_references"]:
+            config["cross_references"]["publications"] = config["cross_references"]["dataset_publications"]
+            del config["cross_references"]["dataset_publications"]
 
     return config
 

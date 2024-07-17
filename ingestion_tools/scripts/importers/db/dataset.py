@@ -42,7 +42,7 @@ class DatasetDBImporter(BaseDBImporter):
             "last_modified_date": ["dates", "last_modified_date"],
             "related_database_entries": ["cross_references", "related_database_entries"],
             "related_database_links": ["cross_references", "related_database_links"],
-            "dataset_publications": ["cross_references", "dataset_publications"],
+            "dataset_publications": ["cross_references", "publications"],
             "dataset_citations": ["cross_references", "dataset_citations"],
             "sample_type": ["sample_type"],
             "organism_name": ["organism", "name"],

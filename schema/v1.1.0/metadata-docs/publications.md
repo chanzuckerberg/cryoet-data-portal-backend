@@ -1,13 +1,13 @@
 
 
-# Slot: dataset_publications
+# Slot: publications
 
 
 _Comma-separated list of DOIs for publications associated with the dataset._
 
 
 
-URI: [cdp-meta:dataset_publications](metadatadataset_publications)
+URI: [cdp-meta:publications](metadatapublications)
 
 
 
@@ -61,8 +61,8 @@ URI: [cdp-meta:dataset_publications](metadatadataset_publications)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:dataset_publications |
-| native | cdp-meta:dataset_publications |
+| self | cdp-meta:publications |
+| native | cdp-meta:publications |
 
 
 
@@ -71,11 +71,11 @@ URI: [cdp-meta:dataset_publications](metadatadataset_publications)
 
 <details>
 ```yaml
-name: dataset_publications
+name: publications
 description: Comma-separated list of DOIs for publications associated with the dataset.
 from_schema: metadata
 rank: 1000
-alias: dataset_publications
+alias: publications
 owner: CrossReferences
 domain_of:
 - CrossReferences
