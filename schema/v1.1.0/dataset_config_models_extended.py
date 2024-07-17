@@ -80,25 +80,34 @@ class ExtendedValidationAnnotationObject(AnnotationObject):
 # ==============================================================================
 
 
-@cache
-async def lookup_doi(session: aiohttp.ClientSession, doi: str) -> Tuple[str, bool]:
-    url = f"https://api.crossref.org/works/{doi}/agency"
-    async with session.head(url) as response:
-        return doi, response.status == 200
+def lookup_doi(session: aiohttp.ClientSession, doi: str) -> Tuple[str, bool]:
+    @cache
+    async def helper(doi: str) -> Tuple[str, bool]:
+        url = f"https://api.crossref.org/works/{doi}/agency"
+        async with session.head(url) as response:
+            return doi, response.status == 200
+
+    return helper(doi)
 
 
-@cache
-async def lookup_empiar(session: aiohttp.ClientSession, empiar_id: str) -> Tuple[str, bool]:
-    url = f"https://www.ebi.ac.uk/empiar/api/entry/{empiar_id}/"
-    async with session.head(url) as response:
-        return empiar_id, response.status == 200
+def lookup_empiar(session: aiohttp.ClientSession, empiar_id: str) -> Tuple[str, bool]:
+    @cache
+    async def helper(empiar_id: str) -> Tuple[str, bool]:
+        url = f"https://www.ebi.ac.uk/empiar/api/entry/{empiar_id}/"
+        async with session.head(url) as response:
+            return empiar_id, response.status == 200
+
+    return helper(empiar_id)
 
 
-@cache
-async def lookup_emdb(session: aiohttp.ClientSession, emdb_id: str) -> Tuple[str, bool]:
-    url = f"https://www.ebi.ac.uk/emdb/api/entry/{emdb_id}"
-    async with session.head(url) as response:
-        return emdb_id, response.status == 200
+def lookup_emdb(session: aiohttp.ClientSession, emdb_id: str) -> Tuple[str, bool]:
+    @cache
+    async def helper(emdb_id: str) -> Tuple[str, bool]:
+        url = f"https://www.ebi.ac.uk/emdb/api/entry/{emdb_id}"
+        async with session.head(url) as response:
+            return emdb_id, response.status == 200
+
+    return helper(emdb_id)
 
 
 PUBLICATION_REGEXES_AND_FUNCTIONS = {
