@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import re
 import time
 from concurrent.futures import ProcessPoolExecutor, wait
@@ -95,12 +96,17 @@ def run_job(
     ecr_repo: str,
     ecr_tag: str,
     memory: int | None = None,
+    state_machine_log: str | None = None,
     **kwargs,  # Ignore any the extra vars this method doesn't need.
 ):
     if not memory:
         memory = 24000
 
     state_machine_arn = f"arn:aws:states:{aws_region}:{aws_account_id}:stateMachine:{sfn_name}"
+
+    if state_machine_log is not None:
+        with open(state_machine_log, "a") as f:
+            f.write(state_machine_arn + "\n")
 
     execution_name = re.sub(r"[^0-9a-zA-Z-]", r"-", execution_name)
     sfn_input_json = {
@@ -232,6 +238,12 @@ def to_args(**kwargs) -> list[str]:
     default="db_import-v0.0.1.wdl",
     help="Specify wdl key for custom workload",
 )
+@click.option(
+    "--state-machine-log",
+    type=str,
+    default=None,
+    help="Log state machine ARNs to this file",
+)
 @db_import_options
 @enqueue_common_options
 @click.pass_context
@@ -245,6 +257,7 @@ def db_import(
     include_dataset: list[str],
     exclude_dataset: list[str],
     swipe_wdl_key: str,
+    state_machine_log: str,
     **kwargs,
 ):
     handle_common_options(ctx, kwargs)
@@ -302,6 +315,7 @@ def db_import(
                         execution_name,
                         wdl_args,
                         swipe_wdl_key=swipe_wdl_key,
+                        state_machine_log=state_machine_log,
                         **ctx.obj,
                     ),
                 ),
@@ -339,6 +353,12 @@ def db_import(
     multiple=False,
     help="Exclude runs matching this regex. If not specified, all runs are processed",
 )
+@click.option(
+    "--state-machine-log",
+    type=str,
+    default=None,
+    help="Log state machine ARNs to this file",
+)
 @ingest_common_options
 @enqueue_common_options
 @click.pass_context
@@ -353,6 +373,7 @@ def queue(
     force_overwrite: bool,
     swipe_wdl_key: str,
     skip_until_run_name: str,
+    state_machine_log: str,
     **kwargs,
 ):
     handle_common_options(ctx, kwargs)
@@ -374,6 +395,13 @@ def queue(
     exclude_runs = [re.compile(pattern) for pattern in kwargs.get("exclude_run_name", [])]
     filter_datasets = [re.compile(pattern) for pattern in kwargs.get("filter_dataset_name", [])]
     exclude_datasets = [re.compile(pattern) for pattern in kwargs.get("exclude_dataset_name", [])]
+
+    if state_machine_log is not None:
+        if os.path.exists(state_machine_log):
+            os.remove(state_machine_log)
+            logger.warning("Removing existing %s file.", state_machine_log)
+
+        os.makedirs(os.path.dirname(state_machine_log), exist_ok=True)
 
     # Always iterate over datasets and runs.
     datasets = DatasetImporter.finder(config)
@@ -439,6 +467,7 @@ def queue(
                             execution_name,
                             wdl_args,
                             swipe_wdl_key=swipe_wdl_key,
+                            state_machine_log=state_machine_log,
                             **ctx.obj,
                         ),
                     ),
@@ -478,6 +507,12 @@ class OrderedSyncFilters(click.Command):
     default="sync-v0.0.1.wdl",
     help="Specify wdl key for custom workload",
 )
+@click.option(
+    "--state-machine-log",
+    type=str,
+    default=None,
+    help="Log state machine ARNs to this file",
+)
 @enqueue_common_options
 @click.pass_context
 def sync(
@@ -491,6 +526,7 @@ def sync(
     include_dataset: list[str],
     exclude_dataset: list[str],
     swipe_wdl_key: str,
+    state_machine_log: str,
     **kwargs,
 ):
     handle_common_options(ctx, kwargs)
@@ -542,6 +578,7 @@ def sync(
                         execution_name,
                         wdl_args,
                         swipe_wdl_key=swipe_wdl_key,
+                        state_machine_log=state_machine_log,
                         **ctx.obj,
                     ),
                 ),
