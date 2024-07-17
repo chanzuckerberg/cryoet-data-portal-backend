@@ -278,6 +278,7 @@ attributes:
     domain_of:
     - DatestampedEntity
     - Dataset
+    - Deposition
     - Annotation
     range: DateStamp
     required: true
@@ -293,6 +294,7 @@ attributes:
     domain_of:
     - AuthoredEntity
     - Dataset
+    - Deposition
     - Tomogram
     - Annotation
     range: Author
@@ -325,6 +327,7 @@ attributes:
     domain_of:
     - CrossReferencedEntity
     - Dataset
+    - Deposition
     range: CrossReferences
     inlined: true
     inlined_as_list: true
@@ -525,6 +528,7 @@ attributes:
     domain_of:
     - DatestampedEntity
     - Dataset
+    - Deposition
     - Annotation
     range: DateStamp
     required: true
@@ -540,6 +544,7 @@ attributes:
     domain_of:
     - AuthoredEntity
     - Dataset
+    - Deposition
     - Tomogram
     - Annotation
     range: Author
@@ -572,6 +577,7 @@ attributes:
     domain_of:
     - CrossReferencedEntity
     - Dataset
+    - Deposition
     range: CrossReferences
     inlined: true
     inlined_as_list: true
