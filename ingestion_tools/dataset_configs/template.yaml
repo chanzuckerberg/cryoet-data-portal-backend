@@ -225,7 +225,7 @@ tomograms: OPTIONAL
       z: REQUIRED, INTEGER
     processing: REQUIRED, STRING (ENUM [denoised, filtered, raw])
     processing_software: RECOMMENDED, STRING
-    reconstruction_method: REQUIRED, STRING (ENUM [SART, FOURIER SPACE, SIRT, WBP, UNKNOWN])
+    reconstruction_method: REQUIRED, STRING (ENUM [SART, Fourier Space, SIRT, WBP, Unknown])
     reconstruction_software: REQUIRED, STRING
     tomogram_type: OPTIONAL, STRING (ENUM [CANONICAL])
     tomogram_version: REQUIRED, FLOAT

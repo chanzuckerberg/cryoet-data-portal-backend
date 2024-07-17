@@ -14,10 +14,10 @@ URI: [TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md)
 | Value | Meaning | Description |
 | --- | --- | --- |
 | SART | None | Simultaneous Algebraic Reconstruction Technique |
-| FOURIER SPACE | None | Fourier space reconstruction |
+| Fourier Space | None | Fourier space reconstruction |
 | SIRT | None | Simultaneous Iterative Reconstruction Technique |
 | WBP | None | Weighted Back-Projection |
-| UNKNOWN | None | Unknown reconstruction method |
+| Unknown | None | Unknown reconstruction method |
 
 
 
@@ -57,8 +57,8 @@ permissible_values:
   SART:
     text: SART
     description: Simultaneous Algebraic Reconstruction Technique
-  FOURIER SPACE:
-    text: FOURIER SPACE
+  Fourier Space:
+    text: Fourier Space
     description: Fourier space reconstruction
   SIRT:
     text: SIRT
@@ -66,8 +66,8 @@ permissible_values:
   WBP:
     text: WBP
     description: Weighted Back-Projection
-  UNKNOWN:
-    text: UNKNOWN
+  Unknown:
+    text: Unknown
     description: Unknown reconstruction method
 
 ```

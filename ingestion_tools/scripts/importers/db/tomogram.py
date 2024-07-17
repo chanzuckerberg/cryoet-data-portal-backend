@@ -3,7 +3,7 @@ from typing import Any, Iterator
 
 from common import db_models
 from common.db_models import BaseModel
-from common.normalize_fields import normalize_fiducial_alignment, normalize_to_unknown_str
+from common.normalize_fields import normalize_fiducial_alignment
 from importers.db.base_importer import (
     AuthorsStaleDeletionDBImporter,
     BaseDBImporter,
@@ -60,6 +60,9 @@ class TomogramDBImporter(BaseDBImporter):
             "deposition_id": ["deposition_id"],
         }
 
+    def normalize_to_unknown_str(self, value: str) -> str:
+        return value if value else "Unknown"
+
     def get_tomogram_type(self) -> str:
         if "CanonicalTomogram" in self.dir_prefix:
             return "CANONICAL"
@@ -77,8 +80,8 @@ class TomogramDBImporter(BaseDBImporter):
         extra_data = {
             "tomogram_voxel_spacing_id": self.voxel_spacing_id,
             "fiducial_alignment_status": normalize_fiducial_alignment(self.metadata.get("fiducial_alignment_status")),
-            "reconstruction_method": normalize_to_unknown_str(self.metadata.get("reconstruction_method")),
-            "reconstruction_software": normalize_to_unknown_str(self.metadata.get("reconstruction_software")),
+            "reconstruction_method": self.normalize_to_unknown_str(self.metadata.get("reconstruction_method")),
+            "reconstruction_software": self.normalize_to_unknown_str(self.metadata.get("reconstruction_software")),
             "is_canonical": True,  # TODO: mark this for deprecation
             "s3_omezarr_dir": self.join_path(s3_prefix, self.dir_prefix, self.metadata["omezarr_dir"]),
             "https_omezarr_dir": self.join_path(https_prefix, self.dir_prefix, self.metadata["omezarr_dir"]),

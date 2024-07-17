@@ -9,7 +9,3 @@ def normalize_fiducial_alignment(status: bool | str) -> str:
         return status.upper()
     # Any other values are not allowed.
     raise Exception("Fiducial alignment status must be FIDUCIAL or NON_FIDUCIAL")
-
-
-def normalize_to_unknown_str(value: str) -> str:
-    return value if value else "UNKNOWN"

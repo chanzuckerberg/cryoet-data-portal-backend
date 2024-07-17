@@ -845,13 +845,13 @@ enums:
     permissible_values:
       SART:
         description: Simultaneous Algebraic Reconstruction Technique
-      FOURIER SPACE:
+      Fourier Space:
         description: Fourier space reconstruction
       SIRT:
         description: Simultaneous Iterative Reconstruction Technique
       WBP:
         description: Weighted Back-Projection
-      UNKNOWN:
+      Unknown:
         description: Unknown reconstruction method
 
   tomogram_type_enum:
