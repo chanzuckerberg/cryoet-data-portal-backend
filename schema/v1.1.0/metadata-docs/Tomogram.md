@@ -376,6 +376,7 @@ attributes:
     domain_of:
     - AuthoredEntity
     - Dataset
+    - Deposition
     - Tomogram
     - Annotation
     range: Author
@@ -603,6 +604,7 @@ attributes:
     domain_of:
     - AuthoredEntity
     - Dataset
+    - Deposition
     - Tomogram
     - Annotation
     range: Author

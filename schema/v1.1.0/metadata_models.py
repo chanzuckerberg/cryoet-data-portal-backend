@@ -504,9 +504,9 @@ class DepositionTypesEnum(str, Enum):
     # The deposition comprises of new annotations for existing datasets
     annotation = "annotation"
     # The deposition comprises of new dataset(s).
-    datasets = "datasets"
+    dataset = "dataset"
     # The deposition comprises of new tomograms for existing datasets
-    tomograms = "tomograms"
+    tomogram = "tomogram"
 
 
 class SampleTypeEnum(str, Enum):
@@ -871,7 +871,7 @@ class DatestampedEntity(ConfiguredBaseModel):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
 
@@ -889,7 +889,7 @@ class AuthoredEntity(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
-                "domain_of": ["AuthoredEntity", "Dataset", "Tomogram", "Annotation"],
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
             }
         },
@@ -928,7 +928,10 @@ class CrossReferencedEntity(ConfiguredBaseModel):
         None,
         description="""A set of cross-references to other databases and publications.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "cross_references", "domain_of": ["CrossReferencedEntity", "Dataset"]}
+            "linkml_meta": {
+                "alias": "cross_references",
+                "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
+            }
         },
     )
 
@@ -1353,7 +1356,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
@@ -1362,7 +1365,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
-                "domain_of": ["AuthoredEntity", "Dataset", "Tomogram", "Annotation"],
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
             }
         },
@@ -1383,7 +1386,10 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         None,
         description="""A set of cross-references to other databases and publications.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "cross_references", "domain_of": ["CrossReferencedEntity", "Dataset"]}
+            "linkml_meta": {
+                "alias": "cross_references",
+                "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
+            }
         },
     )
     sample_type: SampleTypeEnum = Field(
@@ -1473,6 +1479,101 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         elif isinstance(v, str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid sample_type format: {v}")
+        return v
+
+
+class Deposition(CrossReferencedEntity, AuthoredEntity, DatestampedEntity):
+    """
+    Metadata describing a deposition.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {"from_schema": "metadata", "mixins": ["DatestampedEntity", "AuthoredEntity", "CrossReferencedEntity"]}
+    )
+
+    deposition_description: str = Field(
+        ...,
+        description="""A short description of the deposition, similar to an abstract for a journal article or dataset.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition_description",
+                "domain_of": ["Deposition"],
+                "exact_mappings": ["cdp-common:deposition_description"],
+            }
+        },
+    )
+    deposition_identifier: int = Field(
+        ...,
+        description="""An identifier for a CryoET deposition, assigned by the Data Portal. Used to identify the deposition the entity is a part of.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition_identifier",
+                "domain_of": ["Deposition"],
+                "exact_mappings": ["cdp-common:deposition_identifier"],
+            }
+        },
+    )
+    deposition_title: str = Field(
+        ...,
+        description="""Title of a CryoET deposition.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition_title",
+                "domain_of": ["Deposition"],
+                "exact_mappings": ["cdp-common:deposition_title"],
+            }
+        },
+    )
+    deposition_types: List[DepositionTypesEnum] = Field(
+        ...,
+        description="""Type of data in the deposition (e.g. dataset, annotation, tomogram)""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition_types",
+                "domain_of": ["Deposition"],
+                "exact_mappings": ["cdp-common:deposition_types"],
+            }
+        },
+    )
+    dates: DateStamp = Field(
+        ...,
+        description="""A set of dates at which a data item was deposited, published and last modified.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+        },
+    )
+    authors: List[Author] = Field(
+        ...,
+        description="""Author of a scientific data entity.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "authors",
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
+                "list_elements_ordered": True,
+            }
+        },
+    )
+    cross_references: Optional[CrossReferences] = Field(
+        None,
+        description="""A set of cross-references to other databases and publications.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "cross_references",
+                "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
+            }
+        },
+    )
+
+    @field_validator("deposition_types")
+    def pattern_deposition_types(cls, v):
+        pattern = re.compile(r"(^annotation$)|(^dataset$)|(^tomogram$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid deposition_types format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid deposition_types format: {v}")
         return v
 
 
@@ -2268,7 +2369,7 @@ class Tomogram(AuthoredEntity):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
-                "domain_of": ["AuthoredEntity", "Dataset", "Tomogram", "Annotation"],
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
             }
         },
@@ -3192,7 +3293,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
@@ -3201,7 +3302,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
-                "domain_of": ["AuthoredEntity", "Dataset", "Tomogram", "Annotation"],
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
             }
         },
@@ -3350,6 +3451,7 @@ CellStrain.model_rebuild()
 CellComponent.model_rebuild()
 ExperimentalMetadata.model_rebuild()
 Dataset.model_rebuild()
+Deposition.model_rebuild()
 CameraDetails.model_rebuild()
 MicroscopeDetails.model_rebuild()
 MicroscopeOpticalSetup.model_rebuild()

@@ -68,6 +68,7 @@ URI: [cdp-meta:Author](metadataAuthor)
 | ---  | --- | --- | --- |
 | [AuthoredEntity](AuthoredEntity.md) | [authors](authors.md) | range | [Author](Author.md) |
 | [Dataset](Dataset.md) | [authors](authors.md) | range | [Author](Author.md) |
+| [Deposition](Deposition.md) | [authors](authors.md) | range | [Author](Author.md) |
 | [Tomogram](Tomogram.md) | [authors](authors.md) | range | [Author](Author.md) |
 | [Annotation](Annotation.md) | [authors](authors.md) | range | [Author](Author.md) |
 

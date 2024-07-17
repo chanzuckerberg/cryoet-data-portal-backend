@@ -18,6 +18,7 @@ URI: [cdp-meta:cross_references](metadatacross_references)
 | --- | --- | --- |
 | [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 | [CrossReferencedEntity](CrossReferencedEntity.md) | An entity with associated cross-references to other databases and publication... |  no  |
+| [Deposition](Deposition.md) | Metadata describing a deposition |  no  |
 
 
 
@@ -61,6 +62,7 @@ alias: cross_references
 domain_of:
 - CrossReferencedEntity
 - Dataset
+- Deposition
 range: string
 
 ```
