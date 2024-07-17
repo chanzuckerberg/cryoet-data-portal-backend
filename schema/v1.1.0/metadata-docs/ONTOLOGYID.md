@@ -43,6 +43,3 @@ URI: [cdp-meta:ONTOLOGY_ID](metadataONTOLOGY_ID)
 | ---  | ---  |
 | self | cdp-meta:ONTOLOGY_ID |
 | native | cdp-meta:ONTOLOGY_ID |
-
-
-

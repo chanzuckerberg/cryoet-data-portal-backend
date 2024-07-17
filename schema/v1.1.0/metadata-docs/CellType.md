@@ -21,10 +21,10 @@ URI: [cdp-meta:CellType](metadataCellType)
     class CellType
     click CellType href "../CellType"
       CellType : id
-        
+
       CellType : name
-        
-      
+
+
 ```
 
 

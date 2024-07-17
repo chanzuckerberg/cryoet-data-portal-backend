@@ -43,6 +43,3 @@ URI: [cdp-meta:EMDB_ID](metadataEMDB_ID)
 | ---  | ---  |
 | self | cdp-meta:EMDB_ID |
 | native | cdp-meta:EMDB_ID |
-
-
-

@@ -21,12 +21,12 @@ URI: [cdp-meta:CameraDetails](metadataCameraDetails)
     class CameraDetails
     click CameraDetails href "../CameraDetails"
       CameraDetails : acquire_mode
-        
+
       CameraDetails : manufacturer
-        
+
       CameraDetails : model
-        
-      
+
+
 ```
 
 

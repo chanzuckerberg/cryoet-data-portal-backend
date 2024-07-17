@@ -21,14 +21,14 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
     class AnnotationObject
     click AnnotationObject href "../AnnotationObject"
       AnnotationObject : description
-        
+
       AnnotationObject : id
-        
+
       AnnotationObject : name
-        
+
       AnnotationObject : state
-        
-      
+
+
 ```
 
 

@@ -43,6 +43,3 @@ URI: [cdp-meta:URLorS3URI](metadataURLorS3URI)
 | ---  | ---  |
 | self | cdp-meta:URLorS3URI |
 | native | cdp-meta:URLorS3URI |
-
-
-

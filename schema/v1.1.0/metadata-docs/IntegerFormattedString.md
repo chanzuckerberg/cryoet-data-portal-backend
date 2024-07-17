@@ -43,6 +43,3 @@ URI: [cdp-meta:IntegerFormattedString](metadataIntegerFormattedString)
 | ---  | ---  |
 | self | cdp-meta:IntegerFormattedString |
 | native | cdp-meta:IntegerFormattedString |
-
-
-

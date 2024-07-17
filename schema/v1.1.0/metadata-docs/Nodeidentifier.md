@@ -44,6 +44,3 @@ URI: [shex:nonLiteral](http://www.w3.org/ns/shex#nonLiteral)
 | ---  | ---  |
 | self | shex:nonLiteral |
 | native | cdp-meta:nodeidentifier |
-
-
-

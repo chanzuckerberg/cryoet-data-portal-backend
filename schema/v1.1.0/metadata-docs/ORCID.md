@@ -44,6 +44,3 @@ URI: [cdp-meta:ORCID](metadataORCID)
 | self | cdp-meta:ORCID |
 | native | cdp-meta:ORCID |
 | exact | cdp-common:author_orcid |
-
-
-
