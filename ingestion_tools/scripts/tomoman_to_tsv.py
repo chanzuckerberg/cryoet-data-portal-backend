@@ -173,9 +173,10 @@ class TomomanData:
         )
 
 
-def normalize(gainref: str, in_s3: dict[str, str]) -> str | None:
+def get_gain_ref(gainref: str, in_s3: dict[str, str]) -> str | None:
     if gainref in in_s3:
         return in_s3[gainref]
+    # Check if the filename exists in a different path in s3
     filename = gainref.split("/")[-1]
     if filename in in_s3:
         return in_s3[filename]
@@ -226,8 +227,11 @@ def cli(ctx):
 
 def mark_exists_in_s3(row, fs, in_s3, not_in_s3):
     gain_ref = row["frame_gain_reference"]
-    if gain_ref in in_s3 and gain_ref not in not_in_s3:
+    if gain_ref in in_s3 or gain_ref in not_in_s3:
         return
+    # The gain_ref filenames are named with the date in them and are hence distinct. In some cases the file path
+    # might be incorrect but the filename might match a file existing in s3. So, we are also tracking the filename and
+    # the correct path for it.
     gain_filename_ref = gain_ref.split("/")[-1]
     if gain_filename_ref in in_s3:
         return
@@ -245,16 +249,16 @@ def mark_exists_in_s3(row, fs, in_s3, not_in_s3):
 @click.argument("output_file", required=True, type=str)
 @click.pass_context
 def convert(ctx, tomoman_file: str, output_file: str):
-    fs = FileSystemApi.get_fs_api(mode="s3", force_overwrite=True)
-    local_file = fs.localreadable(tomoman_file)
+    s3_fs = fs = FileSystemApi.get_fs_api(mode="s3", force_overwrite=True)
+    local_file = s3_fs.localreadable(tomoman_file)
 
     records = loadmat(local_file)["tomolist"][0]
     data = [TomomanData.from_record(record) for record in records]
 
-    s3_fs = FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
     exists_in_s3 = {}
     not_exists_in_s3 = {}
 
+    # fs = FileSystemApi.get_fs_api(mode="local", force_overwrite=True)
     with fs.open(output_file, "w") as f:
         head = asdict(PortalOutput.from_tomoman(data[0])).keys()
         writer = csv.DictWriter(f, fieldnames=head, delimiter="\t")
@@ -264,13 +268,14 @@ def convert(ctx, tomoman_file: str, output_file: str):
             row = asdict(PortalOutput.from_tomoman(d))
             mark_exists_in_s3(row, s3_fs, exists_in_s3, not_exists_in_s3)
 
-        # Resetting this as we might have gain entries whose filenames might match gainref that exists in s3 and will
-        # reference those existing gainref files instead of the current path
+        # To handle the case where we might have encountered gain entries earlier in the process whose filenames might
+        # match gain which exists in s3 and were encountered later. We are resetting the not_exists_in_s3 dict to
+        # capture the files that were not found in s3 accurately.
         not_exists_in_s3 = {}
         for d in data:
             row = asdict(PortalOutput.from_tomoman(d))
             frame_gain_reference = row["frame_gain_reference"]
-            normalized_frame_gain_ref = normalize(frame_gain_reference, exists_in_s3)
+            normalized_frame_gain_ref = get_gain_ref(frame_gain_reference, exists_in_s3)
             if normalized_frame_gain_ref is None:
                 not_exists_in_s3[frame_gain_reference] = not_exists_in_s3.get(frame_gain_reference, 0) + 1
             else:
@@ -281,7 +286,7 @@ def convert(ctx, tomoman_file: str, output_file: str):
         print("Files not found in s3:")
         for k, v in not_exists_in_s3.items():
             print(f"{k} encountered: {v}")
-        print(f"Total missing entries: {sum(v for v in not_exists_in_s3.values())}")
+        print(f"Total missing gain entries: {sum(v for v in not_exists_in_s3.values())}")
 
 
 if __name__ == "__main__":
