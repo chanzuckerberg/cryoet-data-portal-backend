@@ -65,7 +65,7 @@ datasets:
       id: M129
       name: Mycoplasmoides pneumoniae
     cross_references:
-      dataset_publications: doi:10.1038/s41586-022-05255-2, doi:10.1038/s41592-020-01054-7
+      publications: doi:10.1038/s41586-022-05255-2, doi:10.1038/s41592-020-01054-7
       related_database_entries: EMPIAR-10731, EMPIAR-10499
     dataset_description: Cryo-electron tomograms of native M. pneumoniae cells. Cells
       treated with chloramphenicol

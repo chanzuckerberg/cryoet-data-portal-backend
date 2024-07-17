@@ -18,7 +18,7 @@ datasets:
       id: null
       name: ''
     cross_references:
-      dataset_publications: 10.1128/JB.00505-12
+      publications: 10.1128/JB.00505-12
     dataset_description: This is 3rd of 5 sets of data studying Escherichia coli collected
       by Matt Swulius and is a part of Caltech Jensen  lab etdb. Cells contain WT
       MreB in the chromosome plus an N-terminal YFP fusion to MreB (YFP-MreB) on the

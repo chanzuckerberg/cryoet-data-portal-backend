@@ -31,7 +31,7 @@ datasets:
       id: CL:0000010
       name: cultured cell
     cross_references:
-      dataset_publications: 10.1101/2024.06.27.600657
+      publications: 10.1101/2024.06.27.600657
       related_database_entries: EMD-44921, EMD-44909, EMD-44922
     dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
       contains 10 grids. This is grid 9 of 10 and contains apical membranes of HEK293

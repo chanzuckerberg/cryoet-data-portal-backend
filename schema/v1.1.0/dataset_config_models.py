@@ -92,19 +92,26 @@ linkml_meta = LinkMLMeta(
                 "name": "EMDB_ID",
                 "pattern": "^EMD-[0-9]{4,5}$",
             },
-            "EMPIAR_EMDB_LIST": {
+            "EMPIAR_EMDB_DOI_PDB_LIST": {
                 "base": "str",
-                "description": "A list of EMPIAR and EMDB " "identifiers",
+                "description": "A list of EMPIAR, " "EMDB, DOI, and PDB " "identifiers",
                 "from_schema": "cdp-dataset-config",
-                "name": "EMPIAR_EMDB_LIST",
-                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$",
+                "name": "EMPIAR_EMDB_DOI_PDB_LIST",
+                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$",
+            },
+            "EMPIAR_EMDB_PDB_LIST": {
+                "base": "str",
+                "description": "A list of EMPIAR, EMDB, " "and PDB identifiers",
+                "from_schema": "cdp-dataset-config",
+                "name": "EMPIAR_EMDB_PDB_LIST",
+                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$",
             },
             "EMPIAR_ID": {
                 "base": "str",
                 "description": "An Electron Microscopy Public Image " "Archive identifier",
                 "from_schema": "cdp-dataset-config",
                 "name": "EMPIAR_ID",
-                "pattern": "^EMPIAR-[0-9]{5}$",
+                "pattern": "^EMPIAR-[0-9]+$",
             },
             "FloatFormattedString": {
                 "base": "str",
@@ -140,6 +147,13 @@ linkml_meta = LinkMLMeta(
                 "from_schema": "cdp-dataset-config",
                 "name": "ORCID",
                 "pattern": "[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
+            },
+            "PDB_ID": {
+                "base": "str",
+                "description": "A Protein Data Bank identifier",
+                "from_schema": "cdp-dataset-config",
+                "name": "PDB_ID",
+                "pattern": "^pdb[0-9a-zA-Z]{4,8}$",
             },
             "StringFormattedString": {
                 "base": "str",
@@ -2046,7 +2060,7 @@ class TiltSeries(ConfiguredBaseModel):
 
     @field_validator("related_empiar_entry")
     def pattern_related_empiar_entry(cls, v):
-        pattern = re.compile(r"^EMPIAR-[0-9]{5}$")
+        pattern = re.compile(r"^EMPIAR-[0-9]+$")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
@@ -3190,12 +3204,12 @@ class Annotation(AuthoredEntity, DatestampedEntity):
     )
     annotation_publications: Optional[str] = Field(
         None,
-        description="""DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.""",
+        description="""List of publication IDs (EMPIAR, EMDB, DOI) that describe this annotation method. Comma separated.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "annotation_publications",
                 "domain_of": ["Annotation"],
-                "exact_mappings": ["cdp-common:annotation_publication"],
+                "exact_mappings": ["cdp-common:annotation_publications"],
             }
         },
     )
@@ -3300,6 +3314,20 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         },
     )
 
+    @field_validator("annotation_publications")
+    def pattern_annotation_publications(cls, v):
+        pattern = re.compile(
+            r"^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid annotation_publications format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid annotation_publications format: {v}")
+        return v
+
     @field_validator("method_type")
     def pattern_method_type(cls, v):
         pattern = re.compile(r"(^manual$)|(^automated$)|(^hybrid$)")
@@ -3320,11 +3348,11 @@ class CrossReferences(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
-    dataset_publications: Optional[str] = Field(
+    publications: Optional[str] = Field(
         None,
         description="""Comma-separated list of DOIs for publications associated with the dataset.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dataset_publications", "domain_of": ["CrossReferences"], "recommended": True}
+            "linkml_meta": {"alias": "publications", "domain_of": ["CrossReferences"], "recommended": True}
         },
     )
     related_database_entries: Optional[str] = Field(
@@ -3345,24 +3373,24 @@ class CrossReferences(ConfiguredBaseModel):
         json_schema_extra={"linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferences"]}},
     )
 
-    @field_validator("dataset_publications")
-    def pattern_dataset_publications(cls, v):
+    @field_validator("publications")
+    def pattern_publications(cls, v):
         pattern = re.compile(
             r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
         )
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
-                    raise ValueError(f"Invalid dataset_publications format: {element}")
+                    raise ValueError(f"Invalid publications format: {element}")
         elif isinstance(v, str):
             if not pattern.match(v):
-                raise ValueError(f"Invalid dataset_publications format: {v}")
+                raise ValueError(f"Invalid publications format: {v}")
         return v
 
     @field_validator("related_database_entries")
     def pattern_related_database_entries(cls, v):
         pattern = re.compile(
-            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)"
+            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)"
         )
         if isinstance(v, list):
             for element in v:

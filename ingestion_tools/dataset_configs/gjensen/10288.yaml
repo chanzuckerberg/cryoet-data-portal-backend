@@ -18,7 +18,7 @@ datasets:
       id: null
       name: ''
     cross_references:
-      dataset_publications: 10.1091/mbc.E12-11-0785
+      publications: 10.1091/mbc.E12-11-0785
     dataset_description: ' and is a part of Caltech Jensen  lab etdb.'
     dataset_identifier: 10288
     dataset_title: CHMP1B tubes

@@ -319,19 +319,31 @@ types:
     description: An Electron Microscopy Public Image Archive identifier
     from_schema: cdp-dataset-config
     base: str
-    pattern: ^EMPIAR-[0-9]{5}$
+    pattern: ^EMPIAR-[0-9]+$
   EMDB_ID:
     name: EMDB_ID
     description: An Electron Microscopy Data Bank identifier
     from_schema: cdp-dataset-config
     base: str
     pattern: ^EMD-[0-9]{4,5}$
-  EMPIAR_EMDB_LIST:
-    name: EMPIAR_EMDB_LIST
-    description: A list of EMPIAR and EMDB identifiers
+  PDB_ID:
+    name: PDB_ID
+    description: A Protein Data Bank identifier
     from_schema: cdp-dataset-config
     base: str
-    pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$
+    pattern: ^pdb[0-9a-zA-Z]{4,8}$
+  EMPIAR_EMDB_PDB_LIST:
+    name: EMPIAR_EMDB_PDB_LIST
+    description: A list of EMPIAR, EMDB, and PDB identifiers
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$
+  EMPIAR_EMDB_DOI_PDB_LIST:
+    name: EMPIAR_EMDB_DOI_PDB_LIST
+    description: A list of EMPIAR, EMDB, DOI, and PDB identifiers
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$
 enums:
   annotation_method_type_enum:
     name: annotation_method_type_enum
@@ -2381,12 +2393,12 @@ classes:
     description: A set of cross-references to other databases and publications.
     from_schema: cdp-dataset-config
     attributes:
-      dataset_publications:
-        name: dataset_publications
+      publications:
+        name: publications
         description: Comma-separated list of DOIs for publications associated with
           the dataset.
         from_schema: cdp-dataset-config
-        alias: dataset_publications
+        alias: publications
         owner: CrossReferences
         domain_of:
         - CrossReferences
@@ -2403,11 +2415,11 @@ classes:
         owner: CrossReferences
         domain_of:
         - CrossReferences
-        range: EMPIAR_EMDB_LIST
+        range: EMPIAR_EMDB_PDB_LIST
         recommended: true
         inlined: true
         inlined_as_list: true
-        pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)
+        pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)
       related_database_links:
         name: related_database_links
         description: Comma-separated list of related database links for the dataset.

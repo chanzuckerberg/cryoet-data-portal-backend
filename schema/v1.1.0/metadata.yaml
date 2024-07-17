@@ -672,7 +672,7 @@ classes:
         required: true
       annotation_publications:
         exact_mappings:
-          - cdp-common:annotation_publication
+          - cdp-common:annotation_publications
       annotation_software:
         exact_mappings:
           - cdp-common:annotation_software

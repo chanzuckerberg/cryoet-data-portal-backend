@@ -379,10 +379,16 @@ def get_deposition_map(input_dir: str) -> dict[int, int]:
     return dataset_deposition_id_mapping
 
 
+def update_cross_reference(config):
+    if config:
+        config["publications"] = config.pop("dataset_publications", None)
+    return config
+
+
 def get_cross_reference_mapping(input_dir: str) -> dict[int, dict[str, str]]:
     with open(os.path.join(input_dir, "cross_references.json"), "r") as file:
         data = json.load(file)
-    return {int(key): val for key, val in data.items()}
+    return {int(key): update_cross_reference(val) for key, val in data.items()}
 
 
 def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> None:

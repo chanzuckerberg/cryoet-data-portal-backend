@@ -18,7 +18,7 @@ datasets:
       id: null
       name: ATCC 23769
     cross_references:
-      dataset_publications: 10.1128/JB.00371-20
+      publications: 10.1128/JB.00371-20
     dataset_description: This is 15th of 16 sets of data studying Gluconacetobacter
       hansenii collected by William Nicolas and is a part of Caltech Jensen  lab etdb.
       IT 1s

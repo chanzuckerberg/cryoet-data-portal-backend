@@ -11,7 +11,7 @@ annotations: OPTIONAL
       id: REQUIRED, STRING (GO_ID)
       name: REQUIRED, STRING
       state: OPTIONAL, STRING
-    annotation_publications: OPTIONAL, STRING
+    annotation_publications: OPTIONAL, STRING (DOI / EMPIAR / EMDB / PDB IDs)
     annotation_software: RECOMMENDED, STRING
     authors: REQUIRED
     - name: REQUIRED, STRING
@@ -99,8 +99,8 @@ datasets: REQUIRED
       name: REQUIRED, STRING
       taxonomy_id: OPTIONAL, INTEGER
     cross_references: OPTIONAL
-      dataset_publications: RECOMMENDED, STRING (DOIs)
-      related_database_entries: RECOMMENDED, STRING (EMPIAR / EMDB IDs)
+      publications: RECOMMENDED, STRING (DOIs)
+      related_database_entries: RECOMMENDED, STRING (EMPIAR / EMDB / PDB IDs)
     dataset_description: REQUIRED, STRING
     dataset_identifier: REQUIRED, INTEGER
     dataset_title: REQUIRED, STRING
