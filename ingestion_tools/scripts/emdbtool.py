@@ -186,7 +186,7 @@ def convert_tomogram(emdb_id):
     ]
     reconstruction_method = reconstruction.get("algorithm")
     if reconstruction_method == "BACK PROJECTION":
-        reconstruction_method = "Weighted back projection"
+        reconstruction_method = "WBP"
     doc = {
         "voxel_spacing": None,
         "fiducial_alignment_status": None,

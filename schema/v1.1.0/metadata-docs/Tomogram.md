@@ -258,7 +258,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
-    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^FOURIER SPACE$)|(^SIRT$)|(^WBP$)|(^UNKNOWN$)
+    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)
     any_of:
     - range: StringFormattedString
     - range: tomogrom_reconstruction_method_enum
@@ -486,7 +486,7 @@ attributes:
     required: true
     inlined: true
     inlined_as_list: true
-    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^FOURIER SPACE$)|(^SIRT$)|(^WBP$)|(^UNKNOWN$)
+    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)
     any_of:
     - range: StringFormattedString
     - range: tomogrom_reconstruction_method_enum
