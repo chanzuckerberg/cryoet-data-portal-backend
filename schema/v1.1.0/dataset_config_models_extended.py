@@ -39,12 +39,7 @@ from typing_extensions import Self
 logger = logging.getLogger("dataset-validate")
 
 CELLULAR_COMPONENT_GO_ID = "GO:0005575"
-VALID_IMAGE_FORMTS = ("image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp", "image/svg+xml")
-
-# stores publication IDs (DOI, EMPIAR, EMDB) and their information
-running_publication_list: Dict[str, bool] = {}
-# stores image URLs and whether or not they are valid
-running_image_list: Dict[str, bool] = {}
+VALID_IMAGE_FORMATS = ("image/png", "image/jpeg", "image/jpg", "image/gif")
 
 # Flag to determine if network validation should be run (set by provided Container arg)
 running_network_validation = False
@@ -253,24 +248,36 @@ def validate_organism_object(self: OrganismDetails) -> OrganismDetails:
 # Publication Validation
 # ==============================================================================
 async def lookup_doi(session: aiohttp.ClientSession, doi: str) -> Tuple[str, bool]:
-    url = f"https://api.crossref.org/works/{doi}/agency"
-    logger.debug("Checking DOI %s at %s", doi, url)
-    async with session.head(url) as response:
-        return doi, response.status == 200
+    @cache
+    async def helper(doi: str) -> Tuple[str, bool]:
+        url = f"https://api.crossref.org/works/{doi}/agency"
+        logger.debug("Checking DOI %s at %s", doi, url)
+        async with session.head(url) as response:
+            return doi, response.status == 200
+
+    return helper(doi)
 
 
 async def lookup_empiar(session: aiohttp.ClientSession, empiar_id: str) -> Tuple[str, bool]:
-    url = f"https://www.ebi.ac.uk/empiar/api/entry/{empiar_id}/"
-    logger.debug("Checking EMPIAR %s at %s", empiar_id, url)
-    async with session.head(url) as response:
-        return empiar_id, response.status == 200
+    @cache
+    async def helper(empiar_id: str) -> Tuple[str, bool]:
+        url = f"https://www.ebi.ac.uk/empiar/api/entry/{empiar_id}/"
+        logger.debug("Checking EMPIAR %s at %s", empiar_id, url)
+        async with session.head(url) as response:
+            return empiar_id, response.status == 200
+
+    return helper(empiar_id)
 
 
 async def lookup_emdb(session: aiohttp.ClientSession, emdb_id: str) -> Tuple[str, bool]:
-    url = f"https://www.ebi.ac.uk/emdb/api/entry/{emdb_id}"
-    logger.debug("Checking EMDB %s at %s", emdb_id, url)
-    async with session.head(url) as response:
-        return emdb_id, response.status == 200
+    @cache
+    async def helper(emdb_id: str) -> Tuple[str, bool]:
+        url = f"https://www.ebi.ac.uk/emdb/api/entry/{emdb_id}"
+        logger.debug("Checking EMDB %s at %s", emdb_id, url)
+        async with session.head(url) as response:
+            return emdb_id, response.status == 200
+
+    return helper(emdb_id)
 
 
 # Maps publication types to regexes and lookup functions
@@ -283,49 +290,32 @@ PUBLICATION_REGEXES_AND_FUNCTIONS = {
 
 async def validate_publication_lists(publication_list: List[str]) -> List[str]:
     """
-    Returns a list of invalid publications from the provided list, updating the running_publication_list.
+    Returns a list of invalid publications from the provided list
     """
     # list of invalid publications
     invalid_publications: List[str] = []
-    # type of publication to list of new publications to lookup
-    new_publications: Dict[str, Set[str]] = {}
+    new_publications: Dict[str, Set[str]] = {
+        publication_type: set() for publication_type in PUBLICATION_REGEXES_AND_FUNCTIONS
+    }
 
-    # check if the publication is already in the running_publication_list,
-    # otherwise find the matching publication type and add it to the new_publications
     for publication in publication_list:
-        if publication in running_publication_list:
-            if not running_publication_list[publication]:
-                invalid_publications.append(publication)
-        else:
-            for publication_type, (regex, _) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
-                # Note that we don't actually need to check if the provided list has types it shouldn't have,
-                # because the provided list is based off of a string that has been regex validated
-                if re.match(regex, publication):
-                    # edge case for DOI, remove the doi: prefix
-                    if publication_type == "doi":
-                        publication = publication.replace("doi:", "")
-                    if publication_type not in new_publications:
-                        new_publications[publication_type] = set()
-                    new_publications[publication_type].add(publication)
-                    break
-
-    if len(new_publications) == 0:
-        return invalid_publications
+        for publication_type, (regex, _) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
+            if re.match(regex, publication):
+                # edge case for DOI, remove the doi: prefix
+                if publication_type == "doi":
+                    publication = publication.replace("doi:", "")
+                new_publications[publication_type].add(publication)
+                break
 
     # Loop through the different publication types, create new requests for each publication, and then check if they are valid
     async with aiohttp.ClientSession() as session:
-        lookup_requests = []
+        tasks = []
         for publication_type, (_, validate_function) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
             if publication_type in new_publications:
-                # validate_fucntion will return a tuple of the publication and whether or not it is valid
-                lookup_requests += [
-                    validate_function(session, entry) for entry in list(new_publications[publication_type])
-                ]
+                tasks += [validate_function(session, entry) for entry in list(new_publications[publication_type])]
 
-        results = await asyncio.gather(*lookup_requests)
+        results = await asyncio.gather(*tasks)
         invalid_publications += [publication for publication, valid in results if not valid]
-        for publication, valid in results:
-            running_publication_list[publication] = valid
 
     return invalid_publications
 
@@ -476,44 +466,41 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
 # ==============================================================================
 # Dataset Key Photo Validation
 # ==============================================================================
+@cache
+def validate_image_format(image_url: str) -> bool:
+    if not running_network_validation:
+        return True
+
+    if image_url is None:
+        return True
+
+    # don't check non-http(s) URLs
+    if not image_url.startswith("http"):
+        return True
+
+    r = requests.head(image_url)
+    if r.status_code >= 400:
+        return False
+
+    return r.headers["content-type"] in VALID_IMAGE_FORMATS
+
+
 class ExtendedPicturePath(PicturePath):
     @field_validator("snapshot")
     @classmethod
     def valid_snapshot(cls: Self, snapshot: str) -> str:
-        if not running_network_validation:
+        if validate_image_format(snapshot):
             return snapshot
 
-        if snapshot is None:
-            return snapshot
-
-        # Check if the snapshot is a valid link
-        if snapshot.startswith("https"):
-            if snapshot not in running_image_list:
-                r = requests.head(snapshot)
-                running_image_list[snapshot] = r.headers["content-type"] in VALID_IMAGE_FORMTS
-            if not running_image_list[snapshot]:
-                raise ValueError(f"Invalid dataset key photo snapshot: {snapshot}")
-
-        return snapshot
+        raise ValueError(f"Invalid dataset key photo snapshot: {snapshot}")
 
     @field_validator("thumbnail")
     @classmethod
     def valid_thumbnail(cls: Self, thumbnail: str) -> str:
-        if not running_network_validation:
+        if validate_image_format(thumbnail):
             return thumbnail
 
-        if thumbnail is None:
-            return thumbnail
-
-        # Check if the thumbnail is a valid link
-        if thumbnail.startswith("https"):
-            if thumbnail not in running_image_list:
-                r = requests.head(thumbnail)
-                running_image_list[thumbnail] = r.headers["content-type"] in VALID_IMAGE_FORMTS
-            if not running_image_list[thumbnail]:
-                raise ValueError(f"Invalid dataset key photo thumbnail: {thumbnail}")
-
-        return thumbnail
+        raise ValueError(f"Invalid dataset key photo thumbnail: {thumbnail}")
 
 
 class ExtendedValidationDatasetKeyPhotoLiteral(DatasetKeyPhotoLiteral):
