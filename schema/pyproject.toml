@@ -1,4 +1,4 @@
-[project]
+[tool.poetry]
 name = "schema_manager"
 version = "1.0"
 description = "Tools for managing schema of the CryoET Data Portal"
@@ -8,6 +8,7 @@ authors = [
 license = "MIT"
 
 [tool.poetry.dependencies]
+python = "^3.11"
 aiohttp = "^3.9.5"
 asyncio = "^3.4.3"
 linkml = "^1.8.1"
