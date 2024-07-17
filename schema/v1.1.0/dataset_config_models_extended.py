@@ -5,6 +5,7 @@ import asyncio
 import logging
 import re
 import urllib
+from functools import cache
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 import aiohttp
@@ -40,10 +41,6 @@ logger = logging.getLogger("dataset-validate")
 CELLULAR_COMPONENT_GO_ID = "GO:0005575"
 VALID_IMAGE_FORMTS = ("image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp", "image/svg+xml")
 
-# Network requests: stores whether or not the IDs are valid
-running_orcid_list: Dict[str, bool] = {}
-# stores ontology IDs (GO, CL, etc.) and their information
-running_id_list: Dict[str, bool] = {}
 # stores publication IDs (DOI, EMPIAR, EMDB) and their information
 running_publication_list: Dict[str, bool] = {}
 # stores image URLs and whether or not they are valid
@@ -56,6 +53,8 @@ running_network_validation = False
 # ==============================================================================
 # Author Validation
 # ==============================================================================
+
+
 def validate_authors_status(authors: List[Author]) -> List[ValueError]:
     errors = []
     primary_author_status_count = 0
@@ -74,6 +73,7 @@ def validate_authors_status(authors: List[Author]) -> List[ValueError]:
     return errors
 
 
+@cache
 async def lookup_orcid(session: aiohttp.ClientSession, orcid_id: str) -> Tuple[str, bool]:
     """
     Returns a tuple of the ORCID ID and whether or not it is valid
@@ -88,27 +88,11 @@ async def validate_orcids(orcid_list: List[str]) -> List[str]:
     Returns a list of invalid ORCIDs, from the provided list
     """
     invalid_orcids: List[str] = []
-    new_orcids: List[str] = []
-    # Check if the ORCID is already in the running_orcid_list
-    for orcid in orcid_list:
-        if orcid in running_orcid_list:
-            if not running_orcid_list[orcid]:
-                invalid_orcids.append(orcid)
-            else:
-                pass
-        else:
-            new_orcids.append(orcid)
-
-    # No new ids to check
-    if len(new_orcids) == 0:
-        return invalid_orcids
 
     async with aiohttp.ClientSession() as session:
-        lookup_requests = [lookup_orcid(session, orcid) for orcid in new_orcids]
-        results = await asyncio.gather(*lookup_requests)
+        tasks = [lookup_orcid(session, orcid) for orcid in orcid_list]
+        results = await asyncio.gather(*tasks)
         invalid_orcids += [orcid for orcid, valid in results if not valid]
-        for orcid, valid in results:
-            running_orcid_list[orcid] = valid
         return invalid_orcids
 
 
@@ -144,59 +128,48 @@ class ExtendedValidationDateStamp(DateStamp):
 # ==============================================================================
 # ID Object Validation
 # ==============================================================================
-def validate_id(id: str) -> bool:
+@cache
+def validate_id(id: str) -> Tuple[dict, bool]:
     """
-    Returns whether or not the ID is valid, updating the running_id_list
+    Returns a tuple of the ID data and whether or not it is valid.
     """
-    if id not in running_id_list:
-        # Encode the IRI
-        iri = f"http://purl.obolibrary.org/obo/{id.replace(':', '_')}"
-        encoded_iri = urllib.parse.quote(iri, safe="")
+    # Encode the IRI
+    iri = f"http://purl.obolibrary.org/obo/{id.replace(':', '_')}"
+    encoded_iri = urllib.parse.quote(iri, safe="")
 
-        # OLS API URL
-        url = f"https://www.ebi.ac.uk/ols/api/terms?iri={encoded_iri}"
+    # OLS API URL
+    url = f"https://www.ebi.ac.uk/ols/api/terms?iri={encoded_iri}"
 
-        logger.debug("Getting ID %s at %s", id, url)
+    logger.debug("Getting ID %s at %s", id, url)
 
-        response = requests.get(url)
+    response = requests.get(url)
+    data = response.json() if response.status_code == 200 else {}
 
-        if response.status_code != 200:
-            running_id_list[id] = {}
-        else:
-            running_id_list[id] = response.json()
-
-    return running_id_list[id].get("page", {}).get("totalElements", 0) > 0
+    return data, data.get("page", {}).get("totalElements", 0) > 0
 
 
+@cache
 def is_id_ancestor(id_ancestor: str, id: str) -> bool:
     """
-    Returns whether or not id_ancestor is an ancestor of id, updating the running_id_list
+    Returns whether or not id_ancestor is an ancestor of id
     """
-    # This is ONLY run after validating the go_id, so we know that the entry exists already in `running_id_list`
-    if "ancestors" not in running_id_list[id]:
-        # Encode the IRI
-        iri = f"http://purl.obolibrary.org/obo/{id.replace(':', '_')}"
-        encoded_iri = urllib.parse.quote(iri, safe="")
+    # Encode the IRI
+    iri = f"http://purl.obolibrary.org/obo/{id.replace(':', '_')}"
+    encoded_iri = urllib.parse.quote(iri, safe="")
 
-        # Encode the IRI again, as per the OLS API
-        encoded_iri = urllib.parse.quote(encoded_iri, safe="")
+    # Encode the IRI again, as per the OLS API
+    encoded_iri = urllib.parse.quote(encoded_iri, safe="")
 
-        # OLS API URL
-        ontology = id_ancestor.split(":")[0]
-        url = f"https://www.ebi.ac.uk/ols4/api/ontologies/{ontology}/terms/{encoded_iri}/ancestors"
+    # OLS API URL
+    ontology = id_ancestor.split(":")[0]
+    url = f"https://www.ebi.ac.uk/ols4/api/ontologies/{ontology}/terms/{encoded_iri}/ancestors"
 
-        logger.debug("Getting ancestors for ID %s at %s", id, url)
+    logger.debug("Getting ancestors for ID %s at %s", id, url)
 
-        response = requests.get(url)
-        if response.status_code != 200:
-            running_id_list[id]["ancestors"] = []
-        else:
-            # Store all ancestors in the running_id_list
-            running_id_list[id]["ancestors"] = [
-                ancestor["obo_id"] for ancestor in response.json()["_embedded"]["terms"]
-            ]
-
-    return id_ancestor in running_id_list[id]["ancestors"]
+    response = requests.get(url)
+    return response.status_code == 200 and id_ancestor in [
+        ancestor["obo_id"] for ancestor in response.json()["_embedded"]["terms"]
+    ]
 
 
 def validate_id_name_object(
@@ -214,7 +187,9 @@ def validate_id_name_object(
     """
     logger.debug("Validating %s %s with ID %s", field_name, name, id)
 
-    if not validate_id(id):
+    id_data, valid_id = validate_id(id)
+
+    if not valid_id:
         raise ValueError(f"Invalid ID found in {field_name}: {id}")
 
     if not validate_name:
@@ -223,7 +198,7 @@ def validate_id_name_object(
     logger.debug("Valid ID, now checking if %s name '%s' matches ID: %s", field_name, name, id)
     # check if the name matches the ID's label or any of its synonyms
     valid_name = False
-    for entry in running_id_list[id]["_embedded"]["terms"]:
+    for entry in id_data["_embedded"]["terms"]:
         if name == entry["label"].lower():
             valid_name = True
             break

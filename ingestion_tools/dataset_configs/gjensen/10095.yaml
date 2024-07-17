@@ -23,7 +23,7 @@ datasets:
       collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10095
     dataset_title: "L. pneumophila Lp02 \u2206pilQ"
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -40,6 +40,19 @@ datasets:
   - literal:
       value:
       - '10095'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10038
+    deposition_title: TBA
+    deposition_type:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10038
 key_images:
 - sources:
   - source_glob:
@@ -77,7 +90,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 4.036
     spherical_aberration_constant: 1.2
     tilt_alignment_software: RAPTOR

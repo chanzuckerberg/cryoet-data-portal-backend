@@ -1,6 +1,6 @@
 run_name,tomo-align_software,tomo-fiducial_alignment_status,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_series_quality,ts-tilting_scheme
-etl2013-09-08-1,,NON_FIDUCIAL,None,None,,Undefined,,1,min to max tilt
-etl2013-09-08-2,,NON_FIDUCIAL,None,None,,UCSFTomo,,1,starting tilt to max then min
+etl2013-09-08-1,,NON_FIDUCIAL,,,,Undefined,,1,min to max tilt
+etl2013-09-08-2,,NON_FIDUCIAL,,,,UCSFTomo,,1,starting tilt to max then min
 etl2013-09-08-3,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,4,starting tilt to max then min
 etl2013-09-08-4,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,4,starting tilt to max then min
 etl2013-09-08-5,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,19.733,UCSFTomo,RAPTOR,4,starting tilt to max then min

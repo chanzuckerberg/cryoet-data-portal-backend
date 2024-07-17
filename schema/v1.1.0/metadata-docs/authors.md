@@ -18,8 +18,8 @@ URI: [cdp-meta:authors](metadataauthors)
 | --- | --- | --- |
 | [AuthoredEntity](AuthoredEntity.md) | An entity with associated authors |  no  |
 | [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
-| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 | [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 
 
 

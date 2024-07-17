@@ -86,11 +86,11 @@ dga2016-03-31-86,RAPTOR,FIDUCIAL,,Weighted back projection,IMOD,16.8,UCSFTomo,RA
 dga2016-01-12-11,RAPTOR,FIDUCIAL,,Weighted back projection,IMOD,16.8,Undefined,RAPTOR,4,min to max tilt
 dga2016-03-31-27,RAPTOR,FIDUCIAL,,Weighted back projection,IMOD,16.8,Undefined,RAPTOR,4,min to max tilt
 dga2016-01-12-38,TOMO3D,FIDUCIAL,tomo3D,SIRT,TOMO3D,16.8,Undefined,TOMO3D,4,min to max tilt
-dga2016-03-31-48,,NON_FIDUCIAL,,None,None,,UCSFTomo,,1,starting tilt to max then min
-dga2016-03-31-52,,NON_FIDUCIAL,,None,None,,UCSFTomo,,1,starting tilt to max then min
-dga2016-03-31-56,,NON_FIDUCIAL,,None,None,,UCSFTomo,,1,starting tilt to max then min
-dga2016-03-31-60,,NON_FIDUCIAL,,None,None,,UCSFTomo,,1,starting tilt to max then min
-dga2016-03-31-78,,NON_FIDUCIAL,,None,None,,UCSFTomo,,1,starting tilt to max then min
-dga2016-03-31-80,,NON_FIDUCIAL,,None,None,,UCSFTomo,,1,starting tilt to max then min
-dga2016-03-31-83,,NON_FIDUCIAL,,None,None,,UCSFTomo,,1,starting tilt to max then min
-dga2016-03-31-85,,NON_FIDUCIAL,,None,None,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-48,,NON_FIDUCIAL,,,,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-52,,NON_FIDUCIAL,,,,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-56,,NON_FIDUCIAL,,,,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-60,,NON_FIDUCIAL,,,,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-78,,NON_FIDUCIAL,,,,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-80,,NON_FIDUCIAL,,,,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-83,,NON_FIDUCIAL,,,,,UCSFTomo,,1,starting tilt to max then min
+dga2016-03-31-85,,NON_FIDUCIAL,,,,,UCSFTomo,,1,starting tilt to max then min

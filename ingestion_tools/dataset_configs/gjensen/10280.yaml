@@ -21,7 +21,7 @@ datasets:
       collected by Ariane Briegel and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10280
     dataset_title: P. aeruginosa PAOI delta aer2 pJN105-aer2
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -35,6 +35,19 @@ datasets:
   - literal:
       value:
       - '10280'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10040
+    deposition_title: TBA
+    deposition_type:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10040
 key_images:
 - sources:
   - source_glob:
@@ -73,7 +86,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 3.265
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'

@@ -31,6 +31,6 @@ aba2014-04-11-32,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,13.059,RAPTOR,4
 aba2014-04-11-33,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,13.059,RAPTOR,4
 aba2014-04-11-34,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,13.059,RAPTOR,4
 aba2014-04-11-35,RAPTOR,FIDUCIAL,Weighted back projection,IMOD,13.059,RAPTOR,4
-aba2014-04-11-12,,NON_FIDUCIAL,None,None,,,1
-aba2014-04-11-28,,NON_FIDUCIAL,None,None,,,1
+aba2014-04-11-12,,NON_FIDUCIAL,,,,,1
+aba2014-04-11-28,,NON_FIDUCIAL,,,,,1
 aba2014-04-11-20,autoPatch,NON_FIDUCIAL,Weighted back projection,IMOD,13.059,autoPatch,4
