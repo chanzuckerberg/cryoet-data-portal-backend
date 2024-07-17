@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import re
+from functools import cache
 from typing import Dict, List, Optional, Set, Tuple
 
 import aiohttp
@@ -20,11 +21,6 @@ from typing_extensions import Self
 
 CELLULAR_COMPONENT_GO_ID = "GO:0005575"
 
-# Network requests: stores whether or not the IDs are valid
-running_orcid_list: Dict[str, bool] = {}
-running_go_id_list: Dict[str, bool] = {}
-running_publication_list: Dict[str, bool] = {}
-
 running_network_validation = False
 
 # ==============================================================================
@@ -32,26 +28,20 @@ running_network_validation = False
 # ==============================================================================
 
 
-def validate_go_id(go_id: str) -> bool:
-    if go_id not in running_go_id_list:
-        url = f"https://api.geneontology.org/api/ontology/term/{go_id}"
-        headers = {"Accept": "application/json"}
-        running_go_id_list[go_id] = requests.get(url, headers=headers).json()
-
-    go_id_data = running_go_id_list[go_id]
-
-    return "label" in go_id_data or "description" in go_id_data
+@cache
+def validate_go_id(go_id: str) -> Tuple[bool, dict]:
+    url = f"https://api.geneontology.org/api/ontology/term/{go_id}"
+    headers = {"Accept": "application/json"}
+    go_id_data = requests.get(url, headers=headers).json()
+    return "label" in go_id_data or "description" in go_id_data, go_id_data
 
 
+@cache
 def is_go_id_ancestor(go_id_ancestor: str, go_id: str) -> bool:
-    # This is ONLY run after validating the go_id, so we know that the entry exists already in `running_go_id_list`
-    if "ancestors" not in running_go_id_list[go_id]:
-        url = f"https://api.geneontology.org/api/ontology/term/{go_id}/subgraph?start=0&rows=100"
-        headers = {"Accept": "application/json"}
-        response_json = requests.get(url, headers=headers).json()
-        running_go_id_list[go_id]["ancestors"] = [ancestor["id"] for ancestor in response_json["ancestors"]]
-
-    return go_id_ancestor in running_go_id_list[go_id]["ancestors"]
+    url = f"https://api.geneontology.org/api/ontology/term/{go_id}/subgraph?start=0&rows=100"
+    headers = {"Accept": "application/json"}
+    response_json = requests.get(url, headers=headers).json()
+    return go_id_ancestor in [ancestor["id"] for ancestor in response_json["ancestors"]]
 
 
 class ExtendedValidationAnnotationObject(AnnotationObject):
@@ -65,12 +55,12 @@ class ExtendedValidationAnnotationObject(AnnotationObject):
             return self
 
         # First ensure that the id is valid
-        if not validate_go_id(self.id):
+        valid_go_id, go_id_data = validate_go_id(self.id)
+        if not valid_go_id:
             raise ValueError(f"Invalid GO ID found in annotation object: {self.id}")
 
         # Then check that the name matches
-        go_id_data = running_go_id_list[self.id]
-        go_id_synonyms = running_go_id_list[self.id]["synonyms"]
+        go_id_synonyms = go_id_data["synonyms"]
 
         go_id_synonyms = [s.replace("@", "") for s in go_id_synonyms]
         if self.name not in go_id_data["label"] and not any(
@@ -90,18 +80,21 @@ class ExtendedValidationAnnotationObject(AnnotationObject):
 # ==============================================================================
 
 
+@cache
 async def lookup_doi(session: aiohttp.ClientSession, doi: str) -> Tuple[str, bool]:
     url = f"https://api.crossref.org/works/{doi}/agency"
     async with session.head(url) as response:
         return doi, response.status == 200
 
 
+@cache
 async def lookup_empiar(session: aiohttp.ClientSession, empiar_id: str) -> Tuple[str, bool]:
     url = f"https://www.ebi.ac.uk/empiar/api/entry/{empiar_id}/"
     async with session.head(url) as response:
         return empiar_id, response.status == 200
 
 
+@cache
 async def lookup_emdb(session: aiohttp.ClientSession, emdb_id: str) -> Tuple[str, bool]:
     url = f"https://www.ebi.ac.uk/emdb/api/entry/{emdb_id}"
     async with session.head(url) as response:
@@ -118,37 +111,27 @@ PUBLICATION_REGEXES_AND_FUNCTIONS = {
 async def validate_publication_lists(publication_list: List[str]) -> List[str]:
     # list of invalid publications
     invalid_publications: List[str] = []
-    # type of publication to list of new publications to lookup
-    new_publications: Dict[str, Set[str]] = {}
+    new_publications: Dict[str, Set[str]] = {
+        publication_type: set() for publication_type in PUBLICATION_REGEXES_AND_FUNCTIONS
+    }
 
     for publication in publication_list:
-        if publication in running_publication_list:
-            if not running_publication_list[publication]:
-                invalid_publications.append(publication)
-        else:
-            for publication_type, (regex, _) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
-                if re.match(regex, publication):
-                    # edge case for DOI, remove the doi: prefix
-                    if publication_type == "doi":
-                        publication = publication.replace("doi:", "")
-                    if publication_type not in new_publications:
-                        new_publications[publication_type] = set()
-                    new_publications[publication_type].add(publication)
-                    break
+        for publication_type, (regex, _) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
+            if re.match(regex, publication):
+                # edge case for DOI, remove the doi: prefix
+                if publication_type == "doi":
+                    publication = publication.replace("doi:", "")
+                new_publications[publication_type].add(publication)
+                break
 
-    if len(new_publications) == 0:
-        return invalid_publications
-
-    tasks = []
     async with aiohttp.ClientSession() as session:
+        tasks = []
         for publication_type, (_, validate_function) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
             if publication_type in new_publications:
                 tasks += [validate_function(session, entry) for entry in list(new_publications[publication_type])]
 
         results = await asyncio.gather(*tasks)
         invalid_publications += [publication for publication, valid in results if not valid]
-        for publication, valid in results:
-            running_publication_list[publication] = valid
 
     return invalid_publications
 
@@ -176,6 +159,7 @@ def validate_authors_status(authors: List[Author]) -> List[ValueError]:
     return errors
 
 
+@cache
 async def lookup_orcid(session: aiohttp.ClientSession, orcid_id: str) -> Tuple[str, bool]:
     url = f"https://pub.orcid.org/v3.0/{orcid_id}"
     async with session.head(url) as response:
@@ -184,26 +168,11 @@ async def lookup_orcid(session: aiohttp.ClientSession, orcid_id: str) -> Tuple[s
 
 async def validate_orcids(orcid_list: List[str]) -> List[str]:
     invalid_orcids: List[str] = []
-    new_orcids: List[str] = []
-    for orcid in orcid_list:
-        if orcid in running_orcid_list:
-            if not running_orcid_list[orcid]:
-                invalid_orcids.append(orcid)
-            else:
-                pass
-        else:
-            new_orcids.append(orcid)
-
-    # No new ids to check
-    if len(new_orcids) == 0:
-        return invalid_orcids
 
     async with aiohttp.ClientSession() as session:
-        tasks = [lookup_orcid(session, orcid) for orcid in new_orcids]
+        tasks = [lookup_orcid(session, orcid) for orcid in orcid_list]
         results = await asyncio.gather(*tasks)
         invalid_orcids += [orcid for orcid, valid in results if not valid]
-        for orcid, valid in results:
-            running_orcid_list[orcid] = valid
         return invalid_orcids
 
 

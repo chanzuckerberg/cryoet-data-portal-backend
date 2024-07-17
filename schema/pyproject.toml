@@ -7,6 +7,11 @@ authors = [
 ]
 license = "MIT"
 
+[tool.poetry.dependencies]
+aiohttp = "^3.9.5"
+asyncio = "^3.4.3"
+linkml = "^1.8.1"
+
 [tool.black]
 line-length = 120
 target_version = ['py311']
