@@ -314,6 +314,8 @@ def to_tomogram(
     tomogram["authors"] = authors
     tomogram["tomogram_version"] = 1
     tomogram["reconstruction_method"] = normalize_invalid_to_none(tomogram.get("reconstruction_method"))
+    if tomogram["reconstruction_method"] == "Weighted back projection":
+        tomogram["reconstruction_method"] = "WBP"
     tomogram["reconstruction_software"] = normalize_invalid_to_none(tomogram.get("reconstruction_software"))
     tomogram["align_software"] = "+".join(tomogram.pop("align_softwares", []))
     tomogram["processing"] = normalize_processing(tomogram.get("processing"))
