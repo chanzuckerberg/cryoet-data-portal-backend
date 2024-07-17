@@ -20,6 +20,8 @@ Before running the script, you need to set up your AWS profile. This can be done
 `export AWS_PROFILE=your-profile-name`
 
 ## Script Usage
+To generate the log file for the jobs run with `enqueue_runs.py`, run `enqueue_runs.py` with an output log file specified using the `--state-machine-log` flag. This will generate a file containing the execution ARNs of the jobs run with `enqueue_runs.py`. This file can be used as input to `fetch_enqueue_runs_logs.py` to fetch the logs for the jobs.
+
 Command-Line Arguments
 
 `execution-arn`: One or more AWS Step Function execution ARNs. If multiple ARNs are provided, they should be separated by space.

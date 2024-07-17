@@ -63,6 +63,14 @@ def enqueue_common_options(func):
     return func
 
 
+def create_state_machine_log_file(filename):
+    if os.path.exists(filename):
+        os.remove(filename)
+        logger.warning("Removing existing %s file.", filename)
+
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+
 def handle_common_options(ctx, kwargs):
     ctx.obj = {
         "environment": kwargs["environment"],
@@ -278,6 +286,9 @@ def db_import(
     if not ctx.obj.get("memory"):
         ctx.obj["memory"] = 4000
 
+    if state_machine_log is not None:
+        create_state_machine_log_file(state_machine_log)
+
     futures = []
     with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
         for dataset_id, _ in get_datasets(
@@ -397,11 +408,7 @@ def queue(
     exclude_datasets = [re.compile(pattern) for pattern in kwargs.get("exclude_dataset_name", [])]
 
     if state_machine_log is not None:
-        if os.path.exists(state_machine_log):
-            os.remove(state_machine_log)
-            logger.warning("Removing existing %s file.", state_machine_log)
-
-        os.makedirs(os.path.dirname(state_machine_log), exist_ok=True)
+        create_state_machine_log_file(state_machine_log)
 
     # Always iterate over datasets and runs.
     datasets = DatasetImporter.finder(config)
@@ -544,6 +551,9 @@ def sync(
 
     for param, value in OrderedSyncFilters._options:
         new_args.append(f"--{param.name} '{value}'")
+
+    if state_machine_log is not None:
+        create_state_machine_log_file(state_machine_log)
 
     futures = []
     with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
