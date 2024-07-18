@@ -256,7 +256,8 @@ def validate_organism_object(self: OrganismDetails) -> OrganismDetails:
     if self.taxonomy_id is None:
         return self
 
-    validate_id_name_object(f"NCBITaxon:{self.taxonomy_id}", self.name.strip().lower(), "organism", False)
+    validate_name = not self.pydantic__no_name_validation
+    validate_id_name_object(f"NCBITaxon:{self.taxonomy_id}", self.name.strip().lower(), "organism", validate_name)
 
     return self
 
@@ -531,7 +532,7 @@ class ExtendedValidationDatasetKeyPhotoEntity(DatasetKeyPhotoEntity):
 # Dataset Validation
 # ==============================================================================
 class ExtendedValidationCellComponent(CellComponent):
-    pydantic__no_name_validation: bool = Field(False, description="Skip the name validation for the annotation object")
+    pydantic__no_name_validation: bool = Field(False, description="Skip the name validation for the cell component")
 
     @model_validator(mode="after")
     def validate_cell_component(self) -> Self:
@@ -539,7 +540,7 @@ class ExtendedValidationCellComponent(CellComponent):
 
 
 class ExtendedValidationCellStrain(CellStrain):
-    pydantic__no_name_validation: bool = Field(False, description="Skip the name validation for the annotation object")
+    pydantic__no_name_validation: bool = Field(False, description="Skip the name validation for the cell strain")
 
     @model_validator(mode="after")
     def validate_cell_strain(self) -> Self:
@@ -547,7 +548,7 @@ class ExtendedValidationCellStrain(CellStrain):
 
 
 class ExtendedValidationCellType(CellType):
-    pydantic__no_name_validation: bool = Field(False, description="Skip the name validation for the annotation object")
+    pydantic__no_name_validation: bool = Field(False, description="Skip the name validation for the cell type")
 
     @model_validator(mode="after")
     def validate_cell_type(self) -> Self:
@@ -555,7 +556,7 @@ class ExtendedValidationCellType(CellType):
 
 
 class ExtendedValidationTissue(TissueDetails):
-    pydantic__no_name_validation: bool = Field(False, description="Skip the name validation for the annotation object")
+    pydantic__no_name_validation: bool = Field(False, description="Skip the name validation for the tissue")
 
     @model_validator(mode="after")
     def validate_tissue(self) -> Self:
@@ -563,6 +564,8 @@ class ExtendedValidationTissue(TissueDetails):
 
 
 class ExtendedValidationOrganism(OrganismDetails):
+    pydantic__no_name_validation: bool = Field(False, description="Skip the name validation for the organism")
+
     @model_validator(mode="after")
     def validate_organism(self) -> Self:
         return validate_organism_object(self)
