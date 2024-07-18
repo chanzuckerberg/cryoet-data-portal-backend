@@ -27,6 +27,8 @@ from dataset_config_models import (
     DatasetKeyPhotoLiteral,
     DatasetKeyPhotoSource,
     DateStamp,
+    Deposition,
+    DepositionEntity,
     OrganismDetails,
     PicturePath,
     SampleTypeEnum,
@@ -105,6 +107,21 @@ def validate_authors(authors: List[Author]) -> List[ValueError]:
             all_errors.append(ValueError(f"Invalid ORCIDs found in annotation authors: {invalid_orcids}"))
 
     return all_errors
+
+
+# ==============================================================================
+# Cross References Validation
+# ==============================================================================
+class ExtendedValidationCrossReferences(CrossReferences):
+    @field_validator("publications")
+    @classmethod
+    def validate_publications(cls: Self, publications: str) -> str:
+        return validate_publications(publications)
+
+    @field_validator("related_database_entries")
+    @classmethod
+    def validate_related_database_entries(cls: Self, related_database_entries: str) -> str:
+        return validate_publications(related_database_entries)
 
 
 # ==============================================================================
@@ -342,7 +359,7 @@ class ExtendedValidationAnnotationObject(AnnotationObject):
 class ExtendedValidationAnnotationConfidence(AnnotationConfidence):
     @model_validator(mode="after")
     def valid_confidence(self) -> Self:
-        if not isinstance(self.ground_truth_used, str) or len(self.ground_truth_used) == 0:
+        if isinstance(self.ground_truth_used, str) and len(self.ground_truth_used) != 0:
             return self
 
         if self.precision is not None or self.recall is not None:
@@ -540,18 +557,6 @@ class ExtendedValidationOrganism(OrganismDetails):
         return validate_organism_object(self)
 
 
-class ExtendedValidationCrossReferences(CrossReferences):
-    @field_validator("publications")
-    @classmethod
-    def validate_publications(cls: Self, publications: str) -> str:
-        return validate_publications(publications)
-
-    @field_validator("related_database_entries")
-    @classmethod
-    def validate_related_database_entries(cls: Self, related_database_entries: str) -> str:
-        return validate_publications(related_database_entries)
-
-
 class ExtendedValidationDataset(Dataset):
     dates: ExtendedValidationDateStamp = Dataset.model_fields["dates"]
     cell_component: Optional[ExtendedValidationCellComponent] = Dataset.model_fields["cell_component"]
@@ -589,6 +594,28 @@ class ExtendedValidationDatasetEntity(DatasetEntity):
     metadata: ExtendedValidationDataset = DatasetEntity.model_fields["metadata"]
 
 
+# ==============================================================================
+# Deposition Validation
+# ==============================================================================
+class ExtendedValidationDeposition(Deposition):
+    dates: ExtendedValidationDateStamp = Deposition.model_fields["dates"]
+    cross_references: Optional[ExtendedValidationCrossReferences] = Deposition.model_fields["cross_references"]
+
+    @field_validator("authors")
+    @classmethod
+    def valid_deposition_authors(cls: Self, authors: List[Author]) -> List[Author]:
+        all_errors = validate_authors(authors)
+
+        if len(all_errors) > 0:
+            raise ValueError(all_errors)
+
+        return authors
+
+
+class ExtendedValidationDepositionEntity(DepositionEntity):
+    metadata: ExtendedValidationDeposition = DepositionEntity.model_fields["metadata"]
+
+
 class ExtendedValidationContainer(Container):
     # Set global network_validation flag
     def __init__(self, **data):
@@ -601,6 +628,7 @@ class ExtendedValidationContainer(Container):
         "dataset_keyphotos"
     ]
     datasets: List[ExtendedValidationDatasetEntity] = Container.model_fields["datasets"]
+    depositions: List[ExtendedValidationDepositionEntity] = Container.model_fields["depositions"]
 
 
 ExtendedValidationAnnotationConfidence.model_rebuild()
