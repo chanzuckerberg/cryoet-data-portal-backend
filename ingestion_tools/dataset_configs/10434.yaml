@@ -24,9 +24,12 @@ datasets:
       corresponding_author_status: true
       name: Justin W. Taraska
       primary_author_status: false
-    cell_type:
+    cell_strain:
       id: CLO:0001230
       name: HEK293
+    cell_type:
+      id: CL:0000010
+      name: cultured cell
     cross_references:
       publications: 10.1101/2024.06.27.600657
       related_database_entries: EMD-44921, EMD-44909, EMD-44922

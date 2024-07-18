@@ -16,11 +16,11 @@ URI: [cdp-meta:id](metadataid)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [CellComponent](CellComponent.md) | The cellular component from which the sample was derived |  no  |
-| [CellType](CellType.md) | The cell type from which the sample was derived |  no  |
 | [TissueDetails](TissueDetails.md) | The type of tissue from which the sample was derived |  no  |
-| [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated |  no  |
+| [CellComponent](CellComponent.md) | The cellular component from which the sample was derived |  no  |
 | [CellStrain](CellStrain.md) | The strain or cell line from which the sample was derived |  no  |
+| [CellType](CellType.md) | The cell type from which the sample was derived |  no  |
+| [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated |  no  |
 
 
 

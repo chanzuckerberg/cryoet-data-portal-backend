@@ -68,6 +68,9 @@ class DatasetDBImporter(BaseDBImporter):
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
         }
+        if database_publications := self.metadata.get("cross_references", {}).get("database_publications"):
+            extra_data["dataset_publications"] = database_publications
+
         key_photos = self.metadata.get("key_photos", {})
         if snapshot_path := key_photos.get("snapshot"):
             extra_data["key_photo_url"] = self.join_path(https_prefix, snapshot_path)

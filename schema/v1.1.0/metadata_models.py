@@ -606,13 +606,13 @@ class TomogromReconstructionMethodEnum(str, Enum):
     # Simultaneous Algebraic Reconstruction Technique
     SART = "SART"
     # Fourier space reconstruction
-    FOURIER_SPACE = "FOURIER SPACE"
+    Fourier_Space = "Fourier Space"
     # Simultaneous Iterative Reconstruction Technique
     SIRT = "SIRT"
     # Weighted Back-Projection
     WBP = "WBP"
     # Unknown reconstruction method
-    UNKNOWN = "UNKNOWN"
+    Unknown = "Unknown"
 
 
 class TomogramTypeEnum(str, Enum):
@@ -2415,7 +2415,7 @@ class Tomogram(AuthoredEntity):
 
     @field_validator("reconstruction_method")
     def pattern_reconstruction_method(cls, v):
-        pattern = re.compile(r"(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^FOURIER SPACE$)|(^SIRT$)|(^WBP$)|(^UNKNOWN$)")
+        pattern = re.compile(r"(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):

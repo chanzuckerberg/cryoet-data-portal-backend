@@ -2040,7 +2040,7 @@
                         }
                     ],
                     "description": "Describe reconstruction method (WBP, SART, SIRT)",
-                    "pattern": "(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|(^SART$)|(^FOURIER SPACE$)|(^SIRT$)|(^WBP$)|(^UNKNOWN$)"
+                    "pattern": "(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)"
                 },
                 "reconstruction_software": {
                     "description": "Name of software used for reconstruction",
@@ -2233,10 +2233,10 @@
             "description": "Tomogram reconstruction method",
             "enum": [
                 "SART",
-                "FOURIER SPACE",
+                "Fourier Space",
                 "SIRT",
                 "WBP",
-                "UNKNOWN"
+                "Unknown"
             ],
             "title": "TomogromReconstructionMethodEnum",
             "type": "string"

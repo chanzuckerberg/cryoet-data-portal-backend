@@ -505,8 +505,8 @@ enums:
       SART:
         text: SART
         description: Simultaneous Algebraic Reconstruction Technique
-      FOURIER SPACE:
-        text: FOURIER SPACE
+      Fourier Space:
+        text: Fourier Space
         description: Fourier space reconstruction
       SIRT:
         text: SIRT
@@ -514,8 +514,8 @@ enums:
       WBP:
         text: WBP
         description: Weighted Back-Projection
-      UNKNOWN:
-        text: UNKNOWN
+      Unknown:
+        text: Unknown
         description: Unknown reconstruction method
   tomogram_type_enum:
     name: tomogram_type_enum
@@ -2266,7 +2266,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^FOURIER SPACE$)|(^SIRT$)|(^WBP$)|(^UNKNOWN$)
+        pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)
         any_of:
         - range: StringFormattedString
         - range: tomogrom_reconstruction_method_enum
