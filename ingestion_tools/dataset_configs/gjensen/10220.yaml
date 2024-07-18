@@ -18,7 +18,7 @@ datasets:
       id: null
       name: subsp. jejuni 81116
     cross_references:
-      dataset_publications: 10.1073/pnas.1518952113
+      publications: 10.1073/pnas.1518952113
     dataset_description: This is 20th of 24 sets of data studying Campylobacter jejuni
       collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb. Doubly
       flagellated campy cell Flagella:733,111,230 D(Side v view</text><rotation><x>-23></x><y>0</y><z>132</z></rotation></feature>),
@@ -27,7 +27,7 @@ datasets:
     dataset_identifier: 10220
     dataset_title: Medium magnification tomograms of whole FlgP mutant Campylobacter
       cells
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -42,6 +42,19 @@ datasets:
   - literal:
       value:
       - '10220'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10029
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10029
 key_images:
 - sources:
   - source_glob:
@@ -79,7 +92,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 19.24
     spherical_aberration_constant: 2.0
     tilt_alignment_software: IMOD

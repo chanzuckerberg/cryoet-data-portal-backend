@@ -1,0 +1,9 @@
+{
+    "yaml.schemas": {
+        "schema/v1.1.0/dataset_config_models.schema.json": [
+            "ingestion_tools/dataset_configs/**/*.yaml",
+            "!ingestion_tools/dataset_configs/**/*template*.yaml",
+            "!ingestion_tools/dataset_configs/**/*merged*.yaml"
+        ]
+    }
+}

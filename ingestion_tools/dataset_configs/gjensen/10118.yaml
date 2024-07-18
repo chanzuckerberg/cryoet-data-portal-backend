@@ -18,14 +18,14 @@ datasets:
       id: null
       name: deltaQ 167
     cross_references:
-      dataset_publications: 10.1128/mBio.01898-15
+      publications: 10.1128/mBio.01898-15
     dataset_description: This is 1st of 17 sets of data studying Magnetospirillum
       magneticum  collected by Poorna Subramanian and is a part of Caltech Jensen  lab
       etdb. dK203 is the dQ167 strain in which dK has also been deactivated. The strain
       is only inducible for dQ
     dataset_identifier: 10118
     dataset_title: M. magneticum dK 203 0.5h induced
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -39,6 +39,19 @@ datasets:
   - literal:
       value:
       - '10118'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10039
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10039
 key_images:
 - sources:
   - source_glob:
@@ -77,7 +90,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 6.167
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'

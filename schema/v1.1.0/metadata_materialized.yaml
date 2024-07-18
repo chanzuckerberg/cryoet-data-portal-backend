@@ -342,18 +342,24 @@ types:
     from_schema: metadata
     base: str
     pattern: ^EMD-[0-9]{4,5}$
-  EMPIAR_EMDB_LIST:
-    name: EMPIAR_EMDB_LIST
-    description: A list of EMPIAR and EMDB identifiers
+  PDB_ID:
+    name: PDB_ID
+    description: A Protein Data Bank identifier
     from_schema: metadata
     base: str
-    pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$
-  EMPIAR_EMDB_DOI_LIST:
-    name: EMPIAR_EMDB_DOI_LIST
-    description: A list of EMPIAR, EMDB, and DOI identifiers
+    pattern: ^pdb[0-9a-zA-Z]{4,8}$
+  EMPIAR_EMDB_PDB_LIST:
+    name: EMPIAR_EMDB_PDB_LIST
+    description: A list of EMPIAR, EMDB, and PDB identifiers
     from_schema: metadata
     base: str
-    pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+))*$
+    pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$
+  EMPIAR_EMDB_DOI_PDB_LIST:
+    name: EMPIAR_EMDB_DOI_PDB_LIST
+    description: A list of EMPIAR, EMDB, DOI, and PDB identifiers
+    from_schema: metadata
+    base: str
+    pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$
 enums:
   annotation_method_type_enum:
     name: annotation_method_type_enum
@@ -369,6 +375,42 @@ enums:
       hybrid:
         text: hybrid
         description: Annotations were generated semi-automatically.
+  annotation_method_link_type_enum:
+    name: annotation_method_link_type_enum
+    description: Describes the type of link associated to the annotation method.
+    from_schema: metadata
+    permissible_values:
+      documentation:
+        text: documentation
+        description: Links to the documentation related to the method.
+      models_weights:
+        text: models_weights
+        description: Links to the weights that the models used for generating annotations
+          were trained with.
+      other:
+        text: other
+        description: Link to resources that does not fit in the other categories.
+      source_code:
+        text: source_code
+        description: Links to the source code of the method.
+      website:
+        text: website
+        description: Links to a website of the method or tool used to generate the
+          annotation.
+  deposition_types_enum:
+    name: deposition_types_enum
+    description: Types of data a deposition has
+    from_schema: metadata
+    permissible_values:
+      annotation:
+        text: annotation
+        description: The deposition comprises of new annotations for existing datasets
+      dataset:
+        text: dataset
+        description: The deposition comprises of new dataset(s).
+      tomogram:
+        text: tomogram
+        description: The deposition comprises of new tomograms for existing datasets
   sample_type_enum:
     name: sample_type_enum
     description: Type of sample imaged in a CryoET study.
@@ -542,6 +584,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -843,6 +886,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -884,6 +928,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -929,6 +974,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -973,6 +1019,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -1017,6 +1064,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -1379,6 +1427,113 @@ classes:
         domain_of:
         - ExperimentalMetadata
         range: CellComponent
+        inlined: true
+        inlined_as_list: true
+  Deposition:
+    name: Deposition
+    description: Metadata describing a deposition.
+    from_schema: metadata
+    mixins:
+    - DatestampedEntity
+    - AuthoredEntity
+    - CrossReferencedEntity
+    attributes:
+      deposition_description:
+        name: deposition_description
+        description: A short description of the deposition, similar to an abstract
+          for a journal article or dataset.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:deposition_description
+        alias: deposition_description
+        owner: Deposition
+        domain_of:
+        - Deposition
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      deposition_identifier:
+        name: deposition_identifier
+        description: An identifier for a CryoET deposition, assigned by the Data Portal.
+          Used to identify the deposition the entity is a part of.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:deposition_identifier
+        alias: deposition_identifier
+        owner: Deposition
+        domain_of:
+        - Deposition
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+      deposition_title:
+        name: deposition_title
+        description: Title of a CryoET deposition.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:deposition_title
+        alias: deposition_title
+        owner: Deposition
+        domain_of:
+        - Deposition
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      deposition_types:
+        name: deposition_types
+        description: Type of data in the deposition (e.g. dataset, annotation, tomogram)
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:deposition_types
+        alias: deposition_types
+        owner: Deposition
+        domain_of:
+        - Deposition
+        range: deposition_types_enum
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^annotation$)|(^dataset$)|(^tomogram$)
+      dates:
+        name: dates
+        description: A set of dates at which a data item was deposited, published
+          and last modified.
+        from_schema: metadata
+        alias: dates
+        owner: Deposition
+        domain_of:
+        - DatestampedEntity
+        range: DateStamp
+        required: true
+        inlined: true
+        inlined_as_list: true
+      authors:
+        name: authors
+        description: Author of a scientific data entity.
+        from_schema: metadata
+        list_elements_ordered: true
+        alias: authors
+        owner: Deposition
+        domain_of:
+        - AuthoredEntity
+        range: Author
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      cross_references:
+        name: cross_references
+        description: A set of cross-references to other databases and publications.
+        from_schema: metadata
+        alias: cross_references
+        owner: Deposition
+        domain_of:
+        - CrossReferencedEntity
+        range: CrossReferences
         inlined: true
         inlined_as_list: true
   CameraDetails:
@@ -2325,6 +2480,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -2379,7 +2535,8 @@ classes:
         inlined_as_list: true
       glob_string:
         name: glob_string
-        description: Glob string to match annotation files in the dataset.
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2388,7 +2545,23 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationSourceFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2476,7 +2649,8 @@ classes:
         inlined_as_list: true
       glob_string:
         name: glob_string
-        description: Glob string to match annotation files in the dataset.
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2485,7 +2659,23 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2573,7 +2763,8 @@ classes:
         inlined_as_list: true
       glob_string:
         name: glob_string
-        description: Glob string to match annotation files in the dataset.
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2582,7 +2773,23 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2669,7 +2876,8 @@ classes:
         inlined_as_list: true
       glob_string:
         name: glob_string
-        description: Glob string to match annotation files in the dataset.
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2678,7 +2886,23 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2720,7 +2944,8 @@ classes:
         inlined_as_list: true
       glob_string:
         name: glob_string
-        description: Glob string to match annotation files in the dataset.
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2729,7 +2954,23 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2785,7 +3026,8 @@ classes:
         inlined_as_list: true
       glob_string:
         name: glob_string
-        description: Glob string to match annotation files in the dataset.
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_string
@@ -2794,7 +3036,23 @@ classes:
         domain_of:
         - AnnotationSourceFile
         range: string
-        required: true
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2857,10 +3115,10 @@ classes:
         owner: Annotation
         domain_of:
         - Annotation
-        range: EMPIAR_EMDB_DOI_LIST
+        range: EMPIAR_EMDB_DOI_PDB_LIST
         inlined: true
         inlined_as_list: true
-        pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+))*$
+        pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$
       annotation_software:
         name: annotation_software
         description: Software used for generating this annotation
@@ -3009,12 +3267,12 @@ classes:
     description: A set of cross-references to other databases and publications.
     from_schema: metadata
     attributes:
-      dataset_publications:
-        name: dataset_publications
+      publications:
+        name: publications
         description: Comma-separated list of DOIs for publications associated with
           the dataset.
         from_schema: metadata
-        alias: dataset_publications
+        alias: publications
         owner: CrossReferences
         domain_of:
         - CrossReferences
@@ -3031,11 +3289,11 @@ classes:
         owner: CrossReferences
         domain_of:
         - CrossReferences
-        range: EMPIAR_EMDB_LIST
+        range: EMPIAR_EMDB_PDB_LIST
         recommended: true
         inlined: true
         inlined_as_list: true
-        pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)
+        pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)
       related_database_links:
         name: related_database_links
         description: Comma-separated list of related database links for the dataset.
@@ -3056,6 +3314,56 @@ classes:
         domain_of:
         - CrossReferences
         range: string
+        inlined: true
+        inlined_as_list: true
+  AnnotationMethodLinks:
+    name: AnnotationMethodLinks
+    description: A set of links to models, sourcecode, documentation, etc referenced
+      by annotation the method
+    from_schema: metadata
+    attributes:
+      link:
+        name: link
+        description: URL to the resource
+        from_schema: metadata
+        alias: link
+        owner: AnnotationMethodLinks
+        domain_of:
+        - AnnotationMethodLinks
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      link_type:
+        name: link_type
+        description: Type of link (e.g. model, sourcecode, documentation)
+        from_schema: metadata
+        alias: link_type
+        owner: AnnotationMethodLinks
+        domain_of:
+        - AnnotationMethodLinks
+        range: annotation_method_link_type_enum
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)
+      name:
+        name: name
+        description: user readable name of the resource
+        from_schema: metadata
+        alias: name
+        owner: AnnotationMethodLinks
+        domain_of:
+        - AnnotationMethodLinks
+        - Author
+        - OrganismDetails
+        - TissueDetails
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
 source_file: metadata.yaml

@@ -15,6 +15,7 @@ build:
 	gen-doc -d metadata-docs --no-mergeimports --hierarchical-class-view --stacktrace metadata_materialized.yaml
 	gen-pydantic --pydantic-version 2 metadata_materialized.yaml > metadata_models.py
 	gen-pydantic --pydantic-version 2 dataset_config_materialized.yaml > dataset_config_models.py
+	gen-json-schema dataset_config_materialized.yaml > dataset_config_models.schema.json
 
 .PHONY: validate-configs
 validate-configs:

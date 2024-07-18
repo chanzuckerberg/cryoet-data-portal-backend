@@ -226,7 +226,7 @@ datasets:
     cell_type:
       name: Chlamydomonas reinhardtii
     cross_references:
-      dataset_publications: 10.1093/micmic/ozad067.480
+      publications: 10.1093/micmic/ozad067.480
       related_database_entries: EMPIAR-11756
     dataset_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
       lamella.
@@ -242,6 +242,19 @@ datasets:
   - literal:
       value:
       - '10301'
+depositions:
+- metadata:
+    authors: *id003
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10300
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10300
 frames:
 - sources:
   - source_glob:
@@ -270,7 +283,7 @@ runs:
       match_regex: /.*_BrnoKrios_.*$
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10301
+  deposition_id: 10300
   run_data_map_file: run_to_data_map.tsv
   source_prefix: EMPIAR/11756/data/tomoman_minimal_project/
 tiltseries:
@@ -287,8 +300,8 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: Selectris X
-      image_corrector: None
-      phase_plate: None
+      image_corrector: null
+      phase_plate: null
     pixel_spacing: 1.96
     related_empiar_entry: EMPIAR-11756
     spherical_aberration_constant: 2.7

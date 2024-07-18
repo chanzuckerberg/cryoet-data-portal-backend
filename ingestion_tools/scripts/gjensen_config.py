@@ -6,7 +6,7 @@ import re
 from collections import defaultdict
 from copy import deepcopy
 from functools import partial
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Optional, Union
 
 import click
 import yaml
@@ -77,8 +77,8 @@ def to_dataset_config(
         "grid_preparation": clean(dataset.get("grid_prep")),
         "dates": {
             "deposition_date": datetime.date(2023, 10, 1).strftime("%Y-%m-%d"),
-            "last_modified_date": datetime.date(2023, 10, 1).strftime("%Y-%m-%d"),
-            "release_date": datetime.date(2023, 10, 1).strftime("%Y-%m-%d"),
+            "last_modified_date": datetime.date(2023, 12, 1).strftime("%Y-%m-%d"),
+            "release_date": datetime.date(2023, 12, 1).strftime("%Y-%m-%d"),
         },
     }
 
@@ -105,6 +105,9 @@ def to_dataset_config(
         config["tissue"] = dataset["tissue"]
     if cross_reference:
         config["cross_references"] = cross_reference
+        if "dataset_publications" in config["cross_references"]:
+            config["cross_references"]["publications"] = config["cross_references"]["dataset_publications"]
+            del config["cross_references"]["dataset_publications"]
 
     return config
 
@@ -258,7 +261,7 @@ def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
     microscope["additional_info"] = microscope.pop("additional_scope_info", "")
     phase_plate = microscope.pop("phase_plate")
     tilt_series["microscope_optical_setup"] = {
-        "phase_plate": "volta phase plate" if phase_plate is True else phase_plate if phase_plate else "None",
+        "phase_plate": "volta phase plate" if phase_plate is True else phase_plate if phase_plate else None,
         "image_corrector": microscope.pop("image_corrector"),
         "energy_filter": microscope.pop("engergy_filter"),
     }
@@ -277,8 +280,8 @@ def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
     return tilt_series
 
 
-def normalize_invalid_to_none(value: str) -> str:
-    return value if value else "None"
+def normalize_invalid_to_none(value: str) -> Union[str, None]:
+    return value if value else None
 
 
 def normalize_processing(input_processing: str) -> str:
@@ -440,7 +443,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
                 partial(to_tomogram, authors),
                 "tomo",
             ),
-            "annotations": {},
+            "annotations": [],
             "standardization_config": to_standardization_config(
                 dataset_id,
                 val,

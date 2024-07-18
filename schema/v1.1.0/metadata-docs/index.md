@@ -14,6 +14,7 @@ Name: cdp-meta
 | --- | --- |
 | [Annotation](Annotation.md) | Metadata describing an annotation. |
 | [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation. |
+| [AnnotationMethodLinks](AnnotationMethodLinks.md) | A set of links to models, sourcecode, documentation, etc referenced by annotation the method |
 | [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated. |
 | [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation. Represents an entry in annotation.sources. |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation. Annotation that identifies points along with orientation in the volume. |
@@ -33,6 +34,7 @@ Name: cdp-meta
 | [Dataset](Dataset.md) | High-level description of a cryoET dataset. |
 | [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modified. |
 | [DatestampedEntity](DatestampedEntity.md) | An entity with associated deposition, release and last modified dates. |
+| [Deposition](Deposition.md) | Metadata describing a deposition. |
 | [ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET dataset. |
 | [FundedEntity](FundedEntity.md) | An entity with associated funding sources. |
 | [FundingDetails](FundingDetails.md) | A funding source for a scientific data entity (base for JSON and DB representation). |
@@ -83,11 +85,14 @@ Name: cdp-meta
 | [dataset_citations](dataset_citations.md) | Comma-separated list of DOIs for publications citing the dataset |
 | [dataset_description](dataset_description.md) | A short description of a CryoET dataset, similar to an abstract for a journal... |
 | [dataset_identifier](dataset_identifier.md) | An identifier for a CryoET dataset, assigned by the Data Portal |
-| [dataset_publications](dataset_publications.md) | Comma-separated list of DOIs for publications associated with the dataset |
 | [dataset_title](dataset_title.md) | Title of a CryoET dataset |
 | [dates](dates.md) | A set of dates at which a data item was deposited, published and last modifie... |
 | [delimiter](delimiter.md) | The delimiter used in a point annotation file |
 | [deposition_date](deposition_date.md) | The date a data item was received by the cryoET data portal |
+| [deposition_description](deposition_description.md) | A short description of the deposition, similar to an abstract for a journal a... |
+| [deposition_identifier](deposition_identifier.md) | An identifier for a CryoET deposition, assigned by the Data Portal |
+| [deposition_title](deposition_title.md) | Title of a CryoET deposition |
+| [deposition_types](deposition_types.md) | Type of data in the deposition (e |
 | [description](description.md) | A textual description of the annotation object, can be a longer description t... |
 | [email](email.md) | The email address of the author |
 | [energy_filter](energy_filter.md) | Energy filter setup used |
@@ -99,6 +104,7 @@ Name: cdp-meta
 | [funding](funding.md) | A funding source for a scientific data entity (base for JSON and DB represent... |
 | [funding_agency_name](funding_agency_name.md) | The name of the funding source |
 | [glob_string](glob_string.md) | Glob string to match annotation files in the dataset |
+| [glob_strings](glob_strings.md) | Glob strings to match annotation files in the dataset |
 | [grant_id](grant_id.md) | Grant identifier provided by the funding agency |
 | [grid_preparation](grid_preparation.md) | Describes Cryo-ET grid preparation |
 | [ground_truth_status](ground_truth_status.md) | Whether an annotation is considered ground truth, as determined by the annota... |
@@ -110,6 +116,8 @@ Name: cdp-meta
 | [is_visualization_default](is_visualization_default.md) | This annotation will be rendered in neuroglancer by default |
 | [key_photos](key_photos.md) | A set of paths to representative images of a piece of data |
 | [last_modified_date](last_modified_date.md) | The date a piece of data was last modified on the cryoET data portal |
+| [link](link.md) | URL to the resource |
+| [link_type](link_type.md) | Type of link (e |
 | [manufacturer](manufacturer.md) | Name of the camera manufacturer |
 | [mask_label](mask_label.md) | The mask label for a semantic segmentation mask annotation file |
 | [max](max.md) | Maximal tilt angle in degrees |
@@ -131,6 +139,7 @@ Name: cdp-meta
 | [primary_author_status](primary_author_status.md) | Whether the author is a primary author |
 | [processing](processing.md) | Describe additional processing used to derive the tomogram |
 | [processing_software](processing_software.md) | Processing software used to derive the tomogram |
+| [publications](publications.md) | Comma-separated list of DOIs for publications associated with the dataset |
 | [recall](recall.md) | Describe the confidence level of the annotation |
 | [reconstruction_method](reconstruction_method.md) | Describe reconstruction method (WBP, SART, SIRT) |
 | [reconstruction_software](reconstruction_software.md) | Name of software used for reconstruction |
@@ -166,7 +175,9 @@ Name: cdp-meta
 
 | Enumeration | Description |
 | --- | --- |
+| [AnnotationMethodLinkTypeEnum](AnnotationMethodLinkTypeEnum.md) | Describes the type of link associated to the annotation method |
 | [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Describes how the annotations were generated |
+| [DepositionTypesEnum](DepositionTypesEnum.md) | Types of data a deposition has |
 | [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Fiducial Alignment method |
 | [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study |
 | [TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md) | Camera acquisition mode |
@@ -192,8 +203,8 @@ Name: cdp-meta
 | [DOILIST](DOILIST.md) | A list of Digital Object Identifiers |
 | [Double](Double.md) | A real number that conforms to the xsd:double specification |
 | [EMDBID](EMDBID.md) | An Electron Microscopy Data Bank identifier |
-| [EMPIAREMDBDOILIST](EMPIAREMDBDOILIST.md) | A list of EMPIAR, EMDB, and DOI identifiers |
-| [EMPIAREMDBLIST](EMPIAREMDBLIST.md) | A list of EMPIAR and EMDB identifiers |
+| [EMPIAREMDBDOIPDBLIST](EMPIAREMDBDOIPDBLIST.md) | A list of EMPIAR, EMDB, DOI, and PDB identifiers |
+| [EMPIAREMDBPDBLIST](EMPIAREMDBPDBLIST.md) | A list of EMPIAR, EMDB, and PDB identifiers |
 | [EMPIARID](EMPIARID.md) | An Electron Microscopy Public Image Archive identifier |
 | [Float](Float.md) | A real number that conforms to the xsd:float specification |
 | [FloatFormattedString](FloatFormattedString.md) | A formatted string that represents a floating point number |
@@ -207,6 +218,7 @@ Name: cdp-meta
 | [Objectidentifier](Objectidentifier.md) | A URI or CURIE that represents an object in the model |
 | [ONTOLOGYID](ONTOLOGYID.md) | An ontology identifier |
 | [ORCID](ORCID.md) | A unique, persistent identifier for researchers, provided by ORCID |
+| [PDBID](PDBID.md) | A Protein Data Bank identifier |
 | [Sparqlpath](Sparqlpath.md) | A string encoding a SPARQL Property Path |
 | [String](String.md) | A character string |
 | [StringFormattedString](StringFormattedString.md) | A formatted string (variable) that represents a string |

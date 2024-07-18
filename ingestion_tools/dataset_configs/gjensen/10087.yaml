@@ -22,7 +22,7 @@ datasets:
       IcmQ50::TevS 30C (TEV off) (HS003 F OFF)
     dataset_identifier: 10087
     dataset_title: L. pneumophila Legionella IcmQ50::TevS 30C Off
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -39,6 +39,19 @@ datasets:
   - literal:
       value:
       - '10087'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10038
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10038
 key_images:
 - sources:
   - source_glob:
@@ -77,7 +90,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 2.6
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'

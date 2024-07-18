@@ -21,13 +21,13 @@ datasets:
       id: CL:0000169
       name: pancreatic beta cell
     cross_references:
-      dataset_publications: 10.1126/sciadv.aay9572
+      publications: 10.1126/sciadv.aay9572
     dataset_description: This is 4th of 4 sets of data studying Rat INS-1E pancreatic
       beta cells collected by Stephen Carter and is a part of Caltech Jensen  lab
       etdb. Overexpressing PIS-GFP
     dataset_identifier: 10108
     dataset_title: cryo-FIB INS-1E
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -41,6 +41,19 @@ datasets:
   - literal:
       value:
       - '10108'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10036
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10036
 key_images:
 - sources:
   - source_glob:
@@ -81,8 +94,8 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
-    pixel_spacing: 'float {ts-pixel_spacing}'
+      phase_plate: null
+    pixel_spacing: float {ts-pixel_spacing}
     spherical_aberration_constant: 2.0
     tilt_alignment_software: IMOD
     tilt_axis: 84.3
@@ -129,7 +142,7 @@ tomograms:
     reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: 'float {tomo-voxel_spacing}'
+    voxel_spacing: float {tomo-voxel_spacing}
   sources:
   - source_glob:
       list_glob: '{run_name}/{mapped_tomo_name}'

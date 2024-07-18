@@ -1,13 +1,13 @@
 
 # dataset_config_validate.py
-This script enables us to run dataset config validation checks on all (or a glob-specified) set of dataset config files. It will output the full set of validation errors to `ingestion_tools/scripts/dataset_config_validate_errors`, while outputting a summary of the errors to stdout.
+This script enables us to run dataset config validation checks on all (or a glob-specified) set of dataset config files. It will output the full set of validation errors to `schema/v1.1.0/dataset_config_validate_errors`, while outputting a summary of the errors to stdout.
 
 ## One-time Setup
 Make sure you have at least python 3.11 installed. If you need to work with multiple versions of python, [pyenv](https://github.com/pyenv/pyenv) can help with that.
 
 Before running the script, ensure all the required packages are installed in a virtualenv:
 ```bash
-cd ingestion_tools
+cd schema/
 python3 -m venv .venv  # create a virtualenv
 source .venv/bin/activate  # activate the virtualenv
 python3 -m pip install poetry  # Install the poetry package manager

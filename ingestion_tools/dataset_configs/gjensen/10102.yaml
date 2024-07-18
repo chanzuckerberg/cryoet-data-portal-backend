@@ -18,12 +18,12 @@ datasets:
       id: null
       name: HI4320
     cross_references:
-      dataset_publications: 10.15252/embj.201696235
+      publications: 10.15252/embj.201696235
     dataset_description: This is 2nd of 2 sets of data studying Proteus mirabilis
       collected by Qing Yao and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10102
     dataset_title: Swarmer cell, long cell of Proteus mirabilis
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -38,6 +38,19 @@ datasets:
   - literal:
       value:
       - '10102'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10034
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10034
 key_images:
 - sources:
   - source_glob:
@@ -78,8 +91,8 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
-    pixel_spacing: 'float {ts-pixel_spacing}'
+      phase_plate: null
+    pixel_spacing: float {ts-pixel_spacing}
     spherical_aberration_constant: 2.0
     tilt_alignment_software: IMOD
     tilt_axis: 84.3
@@ -126,7 +139,7 @@ tomograms:
     reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: 'float {tomo-voxel_spacing}'
+    voxel_spacing: float {tomo-voxel_spacing}
   sources:
   - source_glob:
       list_glob: '{run_name}/{mapped_tomo_name}'

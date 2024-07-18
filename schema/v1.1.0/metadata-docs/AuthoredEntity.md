@@ -24,6 +24,8 @@ URI: [cdp-meta:AuthoredEntity](metadataAuthoredEntity)
     click AuthoredEntity href "../AuthoredEntity"
       AuthoredEntity <|-- Dataset
         click Dataset href "../Dataset"
+      AuthoredEntity <|-- Deposition
+        click Deposition href "../Deposition"
       AuthoredEntity <|-- Tomogram
         click Tomogram href "../Tomogram"
       AuthoredEntity <|-- Annotation
@@ -114,6 +116,7 @@ attributes:
     domain_of:
     - AuthoredEntity
     - Dataset
+    - Deposition
     - Tomogram
     - Annotation
     range: Author
@@ -145,6 +148,7 @@ attributes:
     domain_of:
     - AuthoredEntity
     - Dataset
+    - Deposition
     - Tomogram
     - Annotation
     range: Author

@@ -11,14 +11,14 @@ annotations: OPTIONAL
       id: REQUIRED, STRING (GO_ID)
       name: REQUIRED, STRING
       state: OPTIONAL, STRING
-    annotation_publications: OPTIONAL, STRING
+    annotation_publications: OPTIONAL, STRING (DOI / EMPIAR / EMDB / PDB IDs)
     annotation_software: RECOMMENDED, STRING
     authors: REQUIRED
     - name: REQUIRED, STRING
       email: OPTIONAL, STRING
       affiliation_name: OPTIONAL, STRING
       affiliation_address: OPTIONAL, STRING
-      affiliation_identifier: OPTIONAL, STRING
+      affiliation_identifier: RECOMMENDED, STRING
       corresponding_author_status: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       primary_author_status: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       ORCID: RECOMMENDED, STRING (ORCID)
@@ -29,13 +29,20 @@ annotations: OPTIONAL
     ground_truth_status: RECOMMENDED, BOOLEAN (DEFAULT FALSE)
     is_curator_recommended: OPTIONAL, BOOLEAN (DEFAULT FALSE)
     method_type: REQUIRED, ENUM (manual, hybrid, automated)
+    method_links: OPTIONAL
+    - link: REQUIRED, STRING
+      link_type: REQUIRED, STRING (ENUM [documentation, model_weights, other, source_code, website])
+      name: OPTIONAL, STRING
     version: OPTIONAL, FLOAT (NON-NEGATIVE)
   sources: REQUIRED
   # The following are permissible source types (multiple, but different types can exist per annotation,
   # but only one of a given type can exist per annotation):
   - InstanceSegmentation:
       file_format: REQUIRED, STRING
-      glob_string: REQUIRED, STRING (REGEX)
+      # NOTE: glob_string and glob_strings are mutually exclusive, exactly one is REQUIRED
+      glob_string: OPTIONAL, STRING (REGEX)
+      glob_strings:
+        - OPTIONAL, STRING (REGEX)
       is_visualization_default: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       binning: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
       filter_value: OPTIONAL, STRING
@@ -43,6 +50,7 @@ annotations: OPTIONAL
   - OrientedPoint:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
+      glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
       binning: see InstanceSegmentation.binning
       filter_value: see InstanceSegmentation.filter_value
@@ -50,6 +58,7 @@ annotations: OPTIONAL
   - Point:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
+      glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
       binning: see InstanceSegmentation.binning
       columns: OPTIONAL, STRING (DEFAULT xyz)
@@ -57,10 +66,12 @@ annotations: OPTIONAL
   - SegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
+      glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
   - SemanticSegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
+      glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
       mask_label: OPTIONAL, INTEGER (DEFAULT 1)
 dataset_keyphotos: OPTIONAL
@@ -88,8 +99,8 @@ datasets: REQUIRED
       name: REQUIRED, STRING
       taxonomy_id: OPTIONAL, INTEGER
     cross_references: OPTIONAL
-      dataset_publications: RECOMMENDED, STRING (DOIs)
-      related_database_entries: RECOMMENDED, STRING (EMPIAR / EMDB IDs)
+      publications: RECOMMENDED, STRING (DOIs)
+      related_database_entries: RECOMMENDED, STRING (EMPIAR / EMDB / PDB IDs)
     dataset_description: REQUIRED, STRING
     dataset_identifier: REQUIRED, INTEGER
     dataset_title: REQUIRED, STRING
@@ -120,6 +131,18 @@ datasets: REQUIRED
       value:
       - REQUIRED, STRING
     parent_filters: SEE runs.sources.parent_filters
+depositions: REQUIRED
+  - metadata: REQUIRED
+      authors: SEE annotations.authors
+      cross_references: SEE datasets.cross_references
+      dates: SEE annotations.dates
+      deposition_description: REQUIRED, STRING
+      deposition_identifier: REQUIRED, INTEGER
+      deposition_title: REQUIRED, STRING
+      deposition_types: REQUIRED
+      - STRING (ENUM [annotation, dataset, tomogram])
+    sources: REQUIRED (source_glob, source_multi_glob, destination_glob, literal)
+deposition_keyphotos: SEE dataset_keyphotos
 frames: OPTIONAL
 - sources: SEE datasets.sources and runs.sources.parent_filters
 gains: OPTIONAL

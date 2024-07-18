@@ -18,13 +18,13 @@ datasets:
       id: null
       name: ATCC 15444
     cross_references:
-      dataset_publications: 10.1111/mmi.13593
+      publications: 10.1111/mmi.13593
     dataset_description: This is 4th of 5 sets of data studying Hyphomonas neptunium
       collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb. ParB-YFP,
       stalk, chromosome segregation, chromosome origin
     dataset_identifier: 10165
     dataset_title: Hyphomonas 'SW57'
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -43,6 +43,19 @@ datasets:
   - literal:
       value:
       - '10165'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10046
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10046
 key_images:
 - sources:
   - source_glob:
@@ -80,7 +93,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 6.26
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR

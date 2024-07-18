@@ -21,7 +21,7 @@ datasets:
       membrane, possibly something between ribbon and membrane'
     dataset_identifier: 10242
     dataset_title: Spiroplasma melliferum
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -36,6 +36,19 @@ datasets:
   - literal:
       value:
       - '10242'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10042
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10042
 key_images:
 - sources:
   - source_glob:

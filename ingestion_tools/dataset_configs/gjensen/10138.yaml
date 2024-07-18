@@ -21,7 +21,7 @@ datasets:
       collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10138
     dataset_title: H. pylori
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -35,6 +35,19 @@ datasets:
   - literal:
       value:
       - '10138'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10017
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10017
 key_images:
 - sources:
   - source_glob:
@@ -72,7 +85,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 4.319
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR

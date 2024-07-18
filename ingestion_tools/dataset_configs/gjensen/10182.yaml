@@ -21,12 +21,12 @@ datasets:
       id: CL:0002618
       name: umbilical vein endothelial cell
     cross_references:
-      dataset_publications: 10.1128/JVI.02997-14
+      publications: 10.1128/JVI.02997-14
     dataset_description: This is 11th of 17 sets of data studying HUVECs collected
       by Cora Woodward and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10182
     dataset_title: HUVECs infx pNLBg1I
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -41,6 +41,19 @@ datasets:
   - literal:
       value:
       - '10182'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10025
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10025
 key_images:
 - sources:
   - source_glob:
@@ -79,7 +92,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 4.933
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR

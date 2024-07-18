@@ -92,19 +92,19 @@ linkml_meta = LinkMLMeta(
                 "name": "EMDB_ID",
                 "pattern": "^EMD-[0-9]{4,5}$",
             },
-            "EMPIAR_EMDB_DOI_LIST": {
+            "EMPIAR_EMDB_DOI_PDB_LIST": {
                 "base": "str",
-                "description": "A list of EMPIAR, EMDB, " "and DOI identifiers",
+                "description": "A list of EMPIAR, " "EMDB, DOI, and PDB " "identifiers",
                 "from_schema": "cdp-dataset-config",
-                "name": "EMPIAR_EMDB_DOI_LIST",
-                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+))*$",
+                "name": "EMPIAR_EMDB_DOI_PDB_LIST",
+                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$",
             },
-            "EMPIAR_EMDB_LIST": {
+            "EMPIAR_EMDB_PDB_LIST": {
                 "base": "str",
-                "description": "A list of EMPIAR and EMDB " "identifiers",
+                "description": "A list of EMPIAR, EMDB, " "and PDB identifiers",
                 "from_schema": "cdp-dataset-config",
-                "name": "EMPIAR_EMDB_LIST",
-                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$",
+                "name": "EMPIAR_EMDB_PDB_LIST",
+                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$",
             },
             "EMPIAR_ID": {
                 "base": "str",
@@ -147,6 +147,13 @@ linkml_meta = LinkMLMeta(
                 "from_schema": "cdp-dataset-config",
                 "name": "ORCID",
                 "pattern": "[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
+            },
+            "PDB_ID": {
+                "base": "str",
+                "description": "A Protein Data Bank identifier",
+                "from_schema": "cdp-dataset-config",
+                "name": "PDB_ID",
+                "pattern": "^pdb[0-9a-zA-Z]{4,8}$",
             },
             "StringFormattedString": {
                 "base": "str",
@@ -478,6 +485,36 @@ class AnnotationMethodTypeEnum(str, Enum):
     hybrid = "hybrid"
 
 
+class AnnotationMethodLinkTypeEnum(str, Enum):
+    """
+    Describes the type of link associated to the annotation method.
+    """
+
+    # Links to the documentation related to the method.
+    documentation = "documentation"
+    # Links to the weights that the models used for generating annotations were trained with.
+    models_weights = "models_weights"
+    # Link to resources that does not fit in the other categories.
+    other = "other"
+    # Links to the source code of the method.
+    source_code = "source_code"
+    # Links to a website of the method or tool used to generate the annotation.
+    website = "website"
+
+
+class DepositionTypesEnum(str, Enum):
+    """
+    Types of data a deposition has
+    """
+
+    # The deposition comprises of new annotations for existing datasets
+    annotation = "annotation"
+    # The deposition comprises of new dataset(s).
+    dataset = "dataset"
+    # The deposition comprises of new tomograms for existing datasets
+    tomogram = "tomogram"
+
+
 class SampleTypeEnum(str, Enum):
     """
     Type of sample imaged in a CryoET study.
@@ -657,6 +694,7 @@ class Author(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationMethodLinks",
                 ],
                 "exact_mappings": ["cdp-common:author_name"],
             }
@@ -839,7 +877,7 @@ class DatestampedEntity(ConfiguredBaseModel):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
 
@@ -857,7 +895,7 @@ class AuthoredEntity(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
-                "domain_of": ["AuthoredEntity", "Dataset", "Tomogram", "Annotation"],
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
             }
         },
@@ -896,7 +934,10 @@ class CrossReferencedEntity(ConfiguredBaseModel):
         None,
         description="""A set of cross-references to other databases and publications.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "cross_references", "domain_of": ["CrossReferencedEntity", "Dataset"]}
+            "linkml_meta": {
+                "alias": "cross_references",
+                "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
+            }
         },
     )
 
@@ -936,6 +977,7 @@ class OrganismDetails(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationMethodLinks",
                 ],
                 "exact_mappings": ["cdp-common:organism_name"],
             }
@@ -977,6 +1019,7 @@ class TissueDetails(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationMethodLinks",
                 ],
                 "exact_mappings": ["cdp-common:tissue_name"],
             }
@@ -1029,6 +1072,7 @@ class CellType(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationMethodLinks",
                 ],
                 "exact_mappings": ["cdp-common:cell_name"],
             }
@@ -1081,6 +1125,7 @@ class CellStrain(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationMethodLinks",
                 ],
                 "exact_mappings": ["cdp-common:cell_strain_name"],
             }
@@ -1133,6 +1178,7 @@ class CellComponent(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationMethodLinks",
                 ],
                 "exact_mappings": ["cdp-common:cell_component_name"],
             }
@@ -1316,7 +1362,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
@@ -1325,7 +1371,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
-                "domain_of": ["AuthoredEntity", "Dataset", "Tomogram", "Annotation"],
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
             }
         },
@@ -1346,7 +1392,10 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         None,
         description="""A set of cross-references to other databases and publications.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "cross_references", "domain_of": ["CrossReferencedEntity", "Dataset"]}
+            "linkml_meta": {
+                "alias": "cross_references",
+                "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
+            }
         },
     )
     sample_type: SampleTypeEnum = Field(
@@ -1436,6 +1485,101 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         elif isinstance(v, str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid sample_type format: {v}")
+        return v
+
+
+class Deposition(CrossReferencedEntity, AuthoredEntity, DatestampedEntity):
+    """
+    Metadata describing a deposition.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {"from_schema": "metadata", "mixins": ["DatestampedEntity", "AuthoredEntity", "CrossReferencedEntity"]}
+    )
+
+    deposition_description: str = Field(
+        ...,
+        description="""A short description of the deposition, similar to an abstract for a journal article or dataset.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition_description",
+                "domain_of": ["Deposition"],
+                "exact_mappings": ["cdp-common:deposition_description"],
+            }
+        },
+    )
+    deposition_identifier: int = Field(
+        ...,
+        description="""An identifier for a CryoET deposition, assigned by the Data Portal. Used to identify the deposition the entity is a part of.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition_identifier",
+                "domain_of": ["Deposition"],
+                "exact_mappings": ["cdp-common:deposition_identifier"],
+            }
+        },
+    )
+    deposition_title: str = Field(
+        ...,
+        description="""Title of a CryoET deposition.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition_title",
+                "domain_of": ["Deposition"],
+                "exact_mappings": ["cdp-common:deposition_title"],
+            }
+        },
+    )
+    deposition_types: List[DepositionTypesEnum] = Field(
+        ...,
+        description="""Type of data in the deposition (e.g. dataset, annotation, tomogram)""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition_types",
+                "domain_of": ["Deposition"],
+                "exact_mappings": ["cdp-common:deposition_types"],
+            }
+        },
+    )
+    dates: DateStamp = Field(
+        ...,
+        description="""A set of dates at which a data item was deposited, published and last modified.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+        },
+    )
+    authors: List[Author] = Field(
+        ...,
+        description="""Author of a scientific data entity.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "authors",
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
+                "list_elements_ordered": True,
+            }
+        },
+    )
+    cross_references: Optional[CrossReferences] = Field(
+        None,
+        description="""A set of cross-references to other databases and publications.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "cross_references",
+                "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
+            }
+        },
+    )
+
+    @field_validator("deposition_types")
+    def pattern_deposition_types(cls, v):
+        pattern = re.compile(r"(^annotation$)|(^dataset$)|(^tomogram$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid deposition_types format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid deposition_types format: {v}")
         return v
 
 
@@ -2231,7 +2375,7 @@ class Tomogram(AuthoredEntity):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
-                "domain_of": ["AuthoredEntity", "Dataset", "Tomogram", "Annotation"],
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
             }
         },
@@ -2366,6 +2510,7 @@ class AnnotationObject(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationMethodLinks",
                 ],
                 "exact_mappings": ["cdp-common:annotation_object_name"],
             }
@@ -2432,9 +2577,9 @@ class AnnotationSourceFile(ConfiguredBaseModel):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2447,6 +2592,24 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2536,9 +2699,9 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2551,6 +2714,24 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2640,9 +2821,9 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2655,6 +2836,24 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2745,9 +2944,9 @@ class AnnotationPointFile(AnnotationSourceFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2760,6 +2959,24 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2809,9 +3026,9 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2824,6 +3041,24 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -2885,9 +3120,9 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
             }
         },
     )
-    glob_string: str = Field(
-        ...,
-        description="""Glob string to match annotation files in the dataset.""",
+    glob_string: Optional[str] = Field(
+        None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "glob_string",
@@ -2900,6 +3135,24 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "glob_strings",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
         },
     )
@@ -3046,7 +3299,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
@@ -3055,7 +3308,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
-                "domain_of": ["AuthoredEntity", "Dataset", "Tomogram", "Annotation"],
+                "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
             }
         },
@@ -3064,7 +3317,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
     @field_validator("annotation_publications")
     def pattern_annotation_publications(cls, v):
         pattern = re.compile(
-            r"^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+))*$"
+            r"^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$"
         )
         if isinstance(v, list):
             for element in v:
@@ -3095,11 +3348,11 @@ class CrossReferences(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
-    dataset_publications: Optional[str] = Field(
+    publications: Optional[str] = Field(
         None,
         description="""Comma-separated list of DOIs for publications associated with the dataset.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dataset_publications", "domain_of": ["CrossReferences"], "recommended": True}
+            "linkml_meta": {"alias": "publications", "domain_of": ["CrossReferences"], "recommended": True}
         },
     )
     related_database_entries: Optional[str] = Field(
@@ -3120,24 +3373,24 @@ class CrossReferences(ConfiguredBaseModel):
         json_schema_extra={"linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferences"]}},
     )
 
-    @field_validator("dataset_publications")
-    def pattern_dataset_publications(cls, v):
+    @field_validator("publications")
+    def pattern_publications(cls, v):
         pattern = re.compile(
             r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
         )
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
-                    raise ValueError(f"Invalid dataset_publications format: {element}")
+                    raise ValueError(f"Invalid publications format: {element}")
         elif isinstance(v, str):
             if not pattern.match(v):
-                raise ValueError(f"Invalid dataset_publications format: {v}")
+                raise ValueError(f"Invalid publications format: {v}")
         return v
 
     @field_validator("related_database_entries")
     def pattern_related_database_entries(cls, v):
         pattern = re.compile(
-            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$)"
+            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)"
         )
         if isinstance(v, list):
             for element in v:
@@ -3146,6 +3399,57 @@ class CrossReferences(ConfiguredBaseModel):
         elif isinstance(v, str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid related_database_entries format: {v}")
+        return v
+
+
+class AnnotationMethodLinks(ConfiguredBaseModel):
+    """
+    A set of links to models, sourcecode, documentation, etc referenced by annotation the method
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    link: str = Field(
+        ...,
+        description="""URL to the resource""",
+        json_schema_extra={"linkml_meta": {"alias": "link", "domain_of": ["AnnotationMethodLinks"]}},
+    )
+    link_type: AnnotationMethodLinkTypeEnum = Field(
+        ...,
+        description="""Type of link (e.g. model, sourcecode, documentation)""",
+        json_schema_extra={"linkml_meta": {"alias": "link_type", "domain_of": ["AnnotationMethodLinks"]}},
+    )
+    name: Optional[str] = Field(
+        None,
+        description="""user readable name of the resource""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "name",
+                "domain_of": [
+                    "AnnotationMethodLinks",
+                    "Author",
+                    "OrganismDetails",
+                    "TissueDetails",
+                    "CellType",
+                    "CellStrain",
+                    "CellComponent",
+                    "AnnotationObject",
+                ],
+                "recommended": True,
+            }
+        },
+    )
+
+    @field_validator("link_type")
+    def pattern_link_type(cls, v):
+        pattern = re.compile(r"(^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid link_type format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid link_type format: {v}")
         return v
 
 
@@ -3170,6 +3474,11 @@ class Container(ConfiguredBaseModel):
         ...,
         description="""A dataset entity.""",
         json_schema_extra={"linkml_meta": {"alias": "datasets", "domain_of": ["Container"]}},
+    )
+    depositions: List[DepositionEntity] = Field(
+        ...,
+        description="""A deposition entity.""",
+        json_schema_extra={"linkml_meta": {"alias": "depositions", "domain_of": ["Container"]}},
     )
     frames: Optional[List[FrameEntity]] = Field(
         default_factory=list,
@@ -3372,6 +3681,7 @@ class DefaultSource(ConfiguredBaseModel):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3393,6 +3703,7 @@ class DefaultSource(ConfiguredBaseModel):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3413,6 +3724,7 @@ class DefaultSource(ConfiguredBaseModel):
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3528,6 +3840,7 @@ class DefaultLiteralEntity(ConfiguredBaseModel):
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3573,7 +3886,13 @@ class AnnotationEntity(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "metadata",
-                "domain_of": ["AnnotationEntity", "DatasetEntity", "TiltSeriesEntity", "TomogramEntity"],
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DepositionEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                ],
             }
         },
     )
@@ -3587,6 +3906,7 @@ class AnnotationEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -3670,7 +3990,13 @@ class DatasetEntity(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "metadata",
-                "domain_of": ["AnnotationEntity", "DatasetEntity", "TiltSeriesEntity", "TomogramEntity"],
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DepositionEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                ],
             }
         },
     )
@@ -3684,6 +4010,7 @@ class DatasetEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -3717,6 +4044,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3738,6 +4066,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3758,6 +4087,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3780,6 +4110,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3810,6 +4141,7 @@ class DatasetKeyPhotoEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -3844,6 +4176,7 @@ class DatasetKeyPhotoSource(SourceParentFiltersEntity):
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3898,6 +4231,153 @@ class DatasetKeyPhotoLiteral(ConfiguredBaseModel):
     )
 
 
+class DepositionEntity(ConfiguredBaseModel):
+    """
+    A deposition entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    metadata: Deposition = Field(
+        ...,
+        description="""Metadata describing a deposition.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "metadata",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DepositionEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                ],
+            }
+        },
+    )
+    sources: List[DepositionSource] = Field(
+        ...,
+        description="""A deposition source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "sources",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
+                    "FrameEntity",
+                    "GainEntity",
+                    "KeyImageEntity",
+                    "RawTiltEntity",
+                    "RunEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                    "VoxelSpacingEntity",
+                ],
+            }
+        },
+    )
+
+
+class DepositionSource(DefaultLiteralEntity, DefaultSource):
+    """
+    A deposition source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
+    )
+
+    destination_glob: Optional[DestinationGlob] = Field(
+        None,
+        description="""A glob class for finding files in the output / destination directory.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "destination_glob",
+                "domain_of": [
+                    "DefaultSource",
+                    "VoxelSpacingSource",
+                    "DatasetSource",
+                    "DepositionSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    source_glob: Optional[SourceGlob] = Field(
+        None,
+        description="""A glob class for finding files in the source directory.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "source_glob",
+                "domain_of": [
+                    "DefaultSource",
+                    "VoxelSpacingSource",
+                    "DatasetSource",
+                    "DepositionSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    source_multi_glob: Optional[SourceMultiGlob] = Field(
+        None,
+        description="""A glob class for finding files in the source directory (with multiple globs).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "source_multi_glob",
+                "domain_of": [
+                    "DefaultSource",
+                    "DatasetSource",
+                    "DepositionSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    literal: Optional[DefaultLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": [
+                    "DefaultLiteralEntity",
+                    "DatasetKeyPhotoSource",
+                    "VoxelSpacingSource",
+                    "DatasetSource",
+                    "DepositionSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+
+
 class FrameEntity(ConfiguredBaseModel):
     """
     A frame entity.
@@ -3915,6 +4395,7 @@ class FrameEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -3951,6 +4432,7 @@ class FrameSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3972,6 +4454,7 @@ class FrameSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -3992,6 +4475,7 @@ class FrameSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4014,6 +4498,7 @@ class FrameSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4066,6 +4551,7 @@ class GainEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4102,6 +4588,7 @@ class GainSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource)
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4123,6 +4610,7 @@ class GainSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource)
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4143,6 +4631,7 @@ class GainSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource)
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4165,6 +4654,7 @@ class GainSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource)
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4217,6 +4707,7 @@ class KeyImageEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4253,6 +4744,7 @@ class KeyImageSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4274,6 +4766,7 @@ class KeyImageSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4294,6 +4787,7 @@ class KeyImageSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4316,6 +4810,7 @@ class KeyImageSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4368,6 +4863,7 @@ class RawTiltEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4404,6 +4900,7 @@ class RawTiltSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSour
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4425,6 +4922,7 @@ class RawTiltSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSour
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4445,6 +4943,7 @@ class RawTiltSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSour
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4467,6 +4966,7 @@ class RawTiltSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSour
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4519,6 +5019,7 @@ class RunEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4555,6 +5056,7 @@ class RunSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4576,6 +5078,7 @@ class RunSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4596,6 +5099,7 @@ class RunSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4618,6 +5122,7 @@ class RunSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4705,7 +5210,13 @@ class TiltSeriesEntity(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "metadata",
-                "domain_of": ["AnnotationEntity", "DatasetEntity", "TiltSeriesEntity", "TomogramEntity"],
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DepositionEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                ],
             }
         },
     )
@@ -4719,6 +5230,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4755,6 +5267,7 @@ class TiltSeriesSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultS
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4776,6 +5289,7 @@ class TiltSeriesSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultS
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4796,6 +5310,7 @@ class TiltSeriesSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultS
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4818,6 +5333,7 @@ class TiltSeriesSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultS
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4866,7 +5382,13 @@ class TomogramEntity(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "metadata",
-                "domain_of": ["AnnotationEntity", "DatasetEntity", "TiltSeriesEntity", "TomogramEntity"],
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DepositionEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                ],
             }
         },
     )
@@ -4880,6 +5402,7 @@ class TomogramEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4916,6 +5439,7 @@ class TomogramSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4937,6 +5461,7 @@ class TomogramSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4957,6 +5482,7 @@ class TomogramSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                 "domain_of": [
                     "DefaultSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4979,6 +5505,7 @@ class TomogramSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5031,6 +5558,7 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
                     "AnnotationEntity",
                     "DatasetEntity",
                     "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -5064,6 +5592,7 @@ class VoxelSpacingSource(SourceParentFiltersEntity):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5085,6 +5614,7 @@ class VoxelSpacingSource(SourceParentFiltersEntity):
                     "DefaultSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5107,6 +5637,7 @@ class VoxelSpacingSource(SourceParentFiltersEntity):
                     "DatasetKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DepositionSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5221,6 +5752,7 @@ CellStrain.model_rebuild()
 CellComponent.model_rebuild()
 ExperimentalMetadata.model_rebuild()
 Dataset.model_rebuild()
+Deposition.model_rebuild()
 CameraDetails.model_rebuild()
 MicroscopeDetails.model_rebuild()
 MicroscopeOpticalSetup.model_rebuild()
@@ -5239,6 +5771,7 @@ AnnotationSegmentationMaskFile.model_rebuild()
 AnnotationSemanticSegmentationMaskFile.model_rebuild()
 Annotation.model_rebuild()
 CrossReferences.model_rebuild()
+AnnotationMethodLinks.model_rebuild()
 Container.model_rebuild()
 GeneralGlob.model_rebuild()
 DestinationGlob.model_rebuild()
@@ -5257,6 +5790,8 @@ DatasetSource.model_rebuild()
 DatasetKeyPhotoEntity.model_rebuild()
 DatasetKeyPhotoSource.model_rebuild()
 DatasetKeyPhotoLiteral.model_rebuild()
+DepositionEntity.model_rebuild()
+DepositionSource.model_rebuild()
 FrameEntity.model_rebuild()
 FrameSource.model_rebuild()
 GainEntity.model_rebuild()
