@@ -51,7 +51,9 @@ class RunOverride:
 
 class DepositionImportConfig:
     https_prefix = os.getenv("DOMAIN_NAME", "https://files.cryoetdataportal.cziscience.com")
+    # Core metadata
     source_prefix: str
+
     output_prefix: str
     fs: FileSystemApi
     tomo_format: str
@@ -59,8 +61,6 @@ class DepositionImportConfig:
     tomo_voxel_size: str
     # Override handling
     overrides: list[dict[str, Any]] | None = None
-    # Core metadata
-    deposition_id: str
     # Override configuration
     run_to_tomo_map_file: str | None = None
     run_to_tomo_map: dict[str, str] | None = None
