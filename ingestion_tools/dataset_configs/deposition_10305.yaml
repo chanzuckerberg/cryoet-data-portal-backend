@@ -1,47 +1,60 @@
 annotations:
-  - metadata:
-      annotation_object:
-        id: GO:0044096
-        name: type IV pilus
-      dates: &repo-dates
-        deposition_date: '2024-06-03'
-        last_modified_date: '2024-06-03'
-        release_date: '2024-06-03'
-      annotation_method: "manual labeling."
-      method_type: manual
-      ground_truth_status: True
-      authors: &annotation_authors
-        - name: Mohammed Kaplan
-          primary_author_status: true
-          corresponding_author_status: true
-      annotation_software: "IMOD"
-      version: 1.0
-      is_curator_recommended: True
-    sources:
-      - OrientedPoint:
-          file_format: mod
-          binning: 1
-          glob_string: "{dataset_name}/{run_name}_T4P.mod"
-          is_visualization_default: true
-          order: xyz
+- metadata:
+    annotation_method: manual labeling.
+    annotation_object:
+      id: GO:0044096
+      name: type IV pilus
+    annotation_software: IMOD
+    authors: &id001
+    - corresponding_author_status: true
+      name: Mohammed Kaplan
+      primary_author_status: true
+    dates: &id002
+      deposition_date: '2024-06-03'
+      last_modified_date: '2024-06-03'
+      release_date: '2024-06-03'
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: manual
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 1
+      file_format: mod
+      glob_string: '{dataset_name}/{run_name}_T4P.mod'
+      is_visualization_default: true
+      order: xyz
 datasets:
 - sources:
   - source_glob:
-      list_glob: '101??'
+      list_glob: 101??
       match_regex: .*
       name_regex: (.*)
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10305
+    deposition_title: TBA
+    deposition_types:
+    - annotation
+  sources:
+  - literal:
+      value:
+      - 10305
 runs:
 - sources:
   - source_glob:
       list_glob: '{dataset_name}/*'
       match_regex: .*
       name_regex: (.*)_T4P.mod
+standardization_config:
+  deposition_id: 10305
+  source_prefix: braxton_owens_05_2024/d1_t4p_common
 voxel_spacings:
 - sources:
   - destination_glob:
       list_glob: '{run_output_path}/Tomograms/VoxelSpacing*'
       match_regex: .*
       name_regex: VoxelSpacing(.*)
-standardization_config:
-  deposition_id: 10305
-  source_prefix: 'braxton_owens_05_2024/d1_t4p_common'

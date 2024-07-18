@@ -1,59 +1,49 @@
 import json
+import logging
 import os
 import re
 import shutil
 import sys
-from typing import Union
+from typing import Dict, List, Union
 
 import click
 import yaml
+from dataset_config_models import Container
 from pydantic import ValidationError
 
-from common.yaml_files import get_yaml_config_files
+COMMON_DIR = "../../ingestion_tools/scripts/"
+sys.path.append(COMMON_DIR)  # To import the helper function from common.py
 
-SCHEMA_VERSION = "v1.1.0"
-DATASET_CONFIGS_MODELS_DIR = f"../../schema/{SCHEMA_VERSION}/"
+from common.yaml_files import EXCLUDE_KEYWORDS_LIST, get_yaml_config_files  # noqa: E402
 
-sys.path.append(DATASET_CONFIGS_MODELS_DIR)  # To import the Pydantic-generated dataset models
+DATASET_CONFIGS_DIR = "../../ingestion_tools/dataset_configs/"
 
-from dataset_config_models import Container  # noqa: E402
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-DATASET_CONFIGS_DIR = "../dataset_configs/"
 ERRORS_OUTPUT_DIR = "./dataset_config_validate_errors"
-# files to exclude from validation
-EXCLUDE_LIST = ["template.yaml", "dataset_config_merged.yaml"]
-# exclude files that contain any of the following keywords
-EXCLUDE_KEYWORDS = "draft"
-YAML_EXTENSIONS = (".yaml", ".yml")
 
 # The permitted parent attribute for formatted strings and its corresponding depth
 # If the attribute has a parent attribute in this list, it is allowed to be a formatted string
 # The key is the parent attribute and the value is the depth of the parent attribute (0 is at the root of the YAML file)
 # E.g., any attribute that has a parent attribute of "sources" (where "sources" is one-level nested) is allowed to be a formatted string
 PERMITTED_FORMATTED_STRINGS = {"tiltseries": 0, "tomograms": 0, "sources": 1}
-BOOLEAN_FORMATTED_STRING_REGEX = r"^bool\s*{[a-zA-Z0-9_-]+}\s*$"
 FLOAT_FORMATTED_STRING_REGEX = r"^float\s*{[a-zA-Z0-9_-]+}\s*$"
 INTEGER_FORMATTED_STRING_REGEX = r"^int\s*{[a-zA-Z0-9_-]+}\s*$"
 
 
-def _error_to_filtered_text(error_value: Union[dict, str]) -> str:
+def print_errors(errors: Dict[str, List[Union[ValidationError, Exception]]]) -> List[str]:
     """
-    Convert an error value to a filtered text string (for easier comparison and filtering of errors)
+    Convert an error value to a more concise text string.
     """
-    if not isinstance(error_value, dict) or any(key not in error_value for key in ["loc", "msg", "input"]):
-        return str(error_value)
-    loc = "/".join([str(x) for x in error_value["loc"]])
-    return f"{loc}: {error_value['msg']} (Input: {error_value['input']})"
-
-
-def _error_to_filtered_2_text(error_value: Union[dict, str]) -> str:
-    """
-    Convert an error value to a filtered text string (for easier comparison and filtering of errors)
-    This one removes more attributes from the error value, so that the errors list can be filtered down even more.
-    """
-    if not isinstance(error_value, dict) or any(key not in error_value for key in ["loc", "msg"]):
-        return str(error_value)
-    return str(error_value["loc"][-1]) + ": " + str(error_value["msg"])
+    for file, error in sorted(errors.items()):
+        logger.error('FAIL: "%s":', file)
+        for e in error:
+            if not isinstance(e, dict) or any(key not in e for key in ["loc", "msg"]):
+                logger.error("\t- error: %s", str(e))
+            else:
+                loc = ".".join([str(x) for x in e["loc"]])
+                logger.error("\t- %s: %s", e["msg"], loc)
 
 
 def replace_formatted_string(value: str) -> Union[str, bool, float, int]:
@@ -64,8 +54,6 @@ def replace_formatted_string(value: str) -> Union[str, bool, float, int]:
         return value
 
     # TODO: replace with actual formatted string values?
-    if re.match(BOOLEAN_FORMATTED_STRING_REGEX, value):
-        return False
     elif re.match(FLOAT_FORMATTED_STRING_REGEX, value):
         return 1.0
     elif re.match(INTEGER_FORMATTED_STRING_REGEX, value):
@@ -104,30 +92,71 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
 
 
 @click.command()
+@click.argument("input-files", type=str, nargs=-1)
+@click.option(
+    "--input-dir",
+    type=str,
+    help="Directory containing dataset config files to validate. Use this OR provide input files, not both.",
+)
 @click.option(
     "--include-glob",
     type=str,
     default=None,
-    help="Include only files that match the given glob pattern",
+    help="Include only files that match the given glob pattern, used in conjunction with --input-dir.",
 )
 @click.option(
     "--exclude-keywords",
     type=str,
-    default=EXCLUDE_KEYWORDS,
-    help="Exclude files that are in the given comma-separated list",
+    default=EXCLUDE_KEYWORDS_LIST,
+    multiple=True,
+    help="Exclude files that contain the following keywords in the filename, used in conjunction with --input-dir. Repeat the flag for multiple keywords.",
 )
-def main(include_glob: str, exclude_keywords: str):
-    files_to_validate = get_yaml_config_files(include_glob, exclude_keywords)
+@click.option(
+    "--output-dir",
+    type=str,
+    default=ERRORS_OUTPUT_DIR,
+    help="Output directory for validation errors",
+)
+@click.option("--verbose", is_flag=True, help="Print verbose output")
+def main(
+    input_files: str,
+    input_dir: str,
+    include_glob: str,
+    exclude_keywords: List[str],
+    output_dir: str,
+    verbose: bool,
+):
+    """
+    See ingestion_tools/docs/dataset_config_validation.md for more information.
+    """
+    if verbose:
+        logger.setLevel(logging.DEBUG)
+
+    files_to_validate = []
+    if input_files and input_dir:
+        logger.error("Provide input files or --input-dir, not both.")
+        exit(1)
+    elif input_files:
+        files_to_validate = input_files
+        if include_glob:
+            logger.warning("Ignoring --include-glob option because input files were provided.")
+        if exclude_keywords:
+            logger.warning("Ignoring --exclude-keywords option because input files were provided.")
+    elif input_dir:
+        files_to_validate = get_yaml_config_files(include_glob, exclude_keywords, input_dir, verbose)
+    else:
+        logger.info("No input files or directory provided. Using default input directory: %s", DATASET_CONFIGS_DIR)
+        files_to_validate = get_yaml_config_files(include_glob, exclude_keywords, DATASET_CONFIGS_DIR, verbose)
 
     if not files_to_validate:
-        print("[WARNING]: No files to validate.")
+        logger.warning("No files to validate.")
         return
 
     # Remove existing dir
-    if os.path.exists(ERRORS_OUTPUT_DIR):
-        print(f"[WARNING]: Removing existing {ERRORS_OUTPUT_DIR} directory.")
-        shutil.rmtree(ERRORS_OUTPUT_DIR)
-    os.makedirs(ERRORS_OUTPUT_DIR, exist_ok=True)
+    if os.path.exists(output_dir):
+        logging.warning("Removing existing %s directory.", output_dir)
+        shutil.rmtree(output_dir)
+    os.makedirs(output_dir, exist_ok=True)
 
     # Run validation and save output
     validation_succeeded = True
@@ -151,30 +180,17 @@ def main(include_glob: str, exclude_keywords: str):
             errors[file] = [exc]
 
     if validation_succeeded:
-        print("[SUCCESS]: All files passed validation.")
+        logger.info("Success: All files passed validation.")
         return
 
     # Write all errors to a file
-    with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors.json"), "w") as f:
+    with open(os.path.join(output_dir, "dataset_config_validate_errors.json"), "w") as f:
         json.dump(dict(sorted(errors.items())), f, indent=2, default=str)
 
-    errors_as_one_list = [error for error_list in errors.values() for error in error_list]
+    # Print errors to stdout
+    print_errors(errors)
 
-    # Write a filtered list of errors to a file
-    with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors_filtered.txt"), "w") as f:
-        errors_as_filtered_text = map(_error_to_filtered_text, errors_as_one_list)
-        errors_list = list(set(errors_as_filtered_text))
-        errors_list.sort()
-        f.write("\n".join(errors_list))
-
-    # Write an even more filtered list of errors to a file
-    with open(os.path.join(ERRORS_OUTPUT_DIR, "dataset_config_validate_errors_filtered_2.txt"), "w") as f:
-        errors_as_filtered_2_text = map(_error_to_filtered_2_text, errors_as_one_list)
-        errors_list = list(set(errors_as_filtered_2_text))
-        errors_list.sort()
-        f.write("\n".join(errors_list))
-
-    print("[ERROR]: Validation failed. See dataset_config_validate_errors.json for details.")
+    logger.error("Validation failed. See dataset_config_validate_errors.json for details.")
     exit(1)
 
 

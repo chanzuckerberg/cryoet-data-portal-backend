@@ -42,7 +42,7 @@ class DatasetDBImporter(BaseDBImporter):
             "last_modified_date": ["dates", "last_modified_date"],
             "related_database_entries": ["cross_references", "related_database_entries"],
             "related_database_links": ["cross_references", "related_database_links"],
-            "dataset_publications": ["cross_references", "dataset_publications"],
+            "dataset_publications": ["cross_references", "publications"],
             "dataset_citations": ["cross_references", "dataset_citations"],
             "sample_type": ["sample_type"],
             "organism_name": ["organism", "name"],
@@ -68,6 +68,9 @@ class DatasetDBImporter(BaseDBImporter):
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
         }
+        if database_publications := self.metadata.get("cross_references", {}).get("database_publications"):
+            extra_data["dataset_publications"] = database_publications
+
         key_photos = self.metadata.get("key_photos", {})
         if snapshot_path := key_photos.get("snapshot"):
             extra_data["key_photo_url"] = self.join_path(https_prefix, snapshot_path)

@@ -18,12 +18,12 @@ datasets:
       id: null
       name: null
     cross_references:
-      dataset_publications: 10.1111/mmi.13937
+      publications: 10.1111/mmi.13937
     dataset_description: This is 5th of 7 sets of data studying Mycoplasma pneumoniae
       collected by Songye Chen and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10257
     dataset_title: M. pneumoniae P41+P41
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -37,6 +37,19 @@ datasets:
   - literal:
       value:
       - '10257'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10026
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10026
 key_images:
 - sources:
   - source_glob:
@@ -75,7 +88,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 4.036
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -86,7 +99,7 @@ tiltseries:
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
-    total_flux: 'float {ts-total_flux}'
+    total_flux: float {ts-total_flux}
   sources:
   - source_glob:
       list_glob: '{run_name}/rawdata/*'
@@ -120,7 +133,7 @@ tomograms:
       z: 0
     processing: raw
     processing_software: null
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1
     voxel_spacing: 16.145

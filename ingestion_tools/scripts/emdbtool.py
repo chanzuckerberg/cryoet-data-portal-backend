@@ -186,7 +186,7 @@ def convert_tomogram(emdb_id):
     ]
     reconstruction_method = reconstruction.get("algorithm")
     if reconstruction_method == "BACK PROJECTION":
-        reconstruction_method = "Weighted back projection"
+        reconstruction_method = "WBP"
     doc = {
         "voxel_spacing": None,
         "fiducial_alignment_status": None,
@@ -294,7 +294,7 @@ def convert_dataset(emdb_id):
         "authors": authors,
         "organism": {"name": organism},
         "cross_references": {
-            "dataset_publications": ", ".join(publications),
+            "publications": ", ".join(publications),
             "related_database_entries": ", ".join(related_databases),
         },
         "funding": [

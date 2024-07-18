@@ -53,7 +53,7 @@ classes:
           - cdp-common:author_affiliation_address
       affiliation_identifier:
         exact_mappings:
-          - cdp-common:affiliation_identifier
+          - cdp-common:author_affiliation_identifier
       corresponding_author_status:
         exact_mappings:
           - cdp-common:author_corresponding_author_status
@@ -62,7 +62,7 @@ classes:
           - cdp-common:author_primary_author_status
       ORCID:
         exact_mappings:
-          - cdp-common:orcid
+          - cdp-common:author_orcid
   # ============================================================================
 
 
@@ -264,6 +264,30 @@ classes:
   # ============================================================================
 
   # ============================================================================
+  # Depositions metadata
+  # ============================================================================
+  Deposition:
+    description: Metadata describing a deposition.
+    mixins:
+      - DatestampedEntity
+      - AuthoredEntity
+      - CrossReferencedEntity
+
+    attributes:
+      deposition_description:
+        exact_mappings:
+          - cdp-common:deposition_description
+      deposition_identifier:
+        exact_mappings:
+          - cdp-common:deposition_identifier
+      deposition_title:
+        exact_mappings:
+          - cdp-common:deposition_title
+      deposition_types:
+        exact_mappings:
+          - cdp-common:deposition_types
+
+  # ============================================================================
   # TiltSeries metadata
   # ============================================================================
   # Updating name from Camera to CameraDetails to avoid conflict in case insensitive file names
@@ -284,6 +308,9 @@ classes:
   MicroscopeDetails:
     description: &desc_microscope The microscope used to collect the tilt series.
     attributes:
+      additional_info:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_additional_info
       manufacturer:
         exact_mappings:
           - cdp-common:tiltseries_microscope_manufacturer
@@ -348,9 +375,6 @@ classes:
         description: *desc_microscope
         range: MicroscopeDetails
         required: true
-      microscope_additional_info:
-        exact_mappings:
-          - cdp-common:tiltseries_microscope_additional_info
       microscope_optical_setup:
         description: *desc_microscope_optical_setup
         range: MicroscopeOpticalSetup
@@ -388,22 +412,16 @@ classes:
           - cdp-common:tiltseries_pixel_spacing
   # ============================================================================
 
-  # ============================================================================
-  # Tomogram metadata
-  #
-  # NOTE: Because TomogramSize and TomogramOffset have the same slot names, we
-  # must define them here because they will not be properly mapped from cdp-common.
-  # If desired, we can modify schema.py to permit the use of the same slot name.
-  # For now, this is the simplest solution.
-  # ============================================================================
   TomogramSize:
     description: &desc_tomogram_size The size of a tomogram in voxels in each dimension.
     attributes:
       x:
         range: integer
+        minimum_value: 0
         # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
         # any_of:
         #   - range: integer
+        #     minimum_value: 0
         #   - range: IntegerFormattedString
         required: true
         description: Number of pixels in the 3D data fast axis
@@ -412,9 +430,11 @@ classes:
           symbol: px
       y:
         range: integer
+        minimum_value: 0
         # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
         # any_of:
         #   - range: integer
+        #     minimum_value: 0
         #   - range: IntegerFormattedString
         required: true
         description: Number of pixels in the 3D data medium axis
@@ -423,9 +443,11 @@ classes:
           symbol: px
       z:
         range: integer
+        minimum_value: 0
         # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
         # any_of:
         #   - range: integer
+        #     minimum_value: 0
         #   - range: IntegerFormattedString
         required: true
         description: Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
@@ -566,6 +588,9 @@ classes:
       glob_string:
         exact_mappings:
           - cdp-common:annotation_source_file_glob_string
+      glob_strings:
+        exact_mappings:
+          - cdp-common:annotation_source_file_glob_strings
       is_visualization_default:
         exact_mappings:
           - cdp-common:annotation_source_file_is_visualization_default
@@ -647,7 +672,7 @@ classes:
         required: true
       annotation_publications:
         exact_mappings:
-          - cdp-common:annotation_publication
+          - cdp-common:annotation_publications
       annotation_software:
         exact_mappings:
           - cdp-common:annotation_software

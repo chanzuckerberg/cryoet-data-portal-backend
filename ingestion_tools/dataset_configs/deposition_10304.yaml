@@ -1,54 +1,68 @@
 annotations:
-  - metadata:
-      annotation_object: &annotated_object
-        id: GO:0016020
-        name: membrane
-      dates: &repo-dates
-        deposition_date: '2024-04-12'
-        last_modified_date: '2024-04-12'
-        release_date: '2024-06-03'
-      annotation_method: &annotation_method "Tomogram Denoising + 3D-U-Net Based Membrane Segmentation + Manual Post-Processing"
-      method_type: hybrid
-      ground_truth_status: False
-      authors: &annotation_authors
-        - name: Xueying Zhan
-          ORCID: 0000-0002-8252-0178
-          primary_author_status: true
-          corresponding_author_status: false
-        - name: Yujia Gao
-          ORCID: 0009-0009-6482-1303
-          primary_author_status: true
-          corresponding_author_status: false
-        - name: Min Xu
-          ORCID: 0000-0002-0881-5891
-          primary_author_status: false
-          corresponding_author_status: true
-      annotation_software: "membrain-seg 0.0.1"
-      version: 1.0
-      is_curator_recommended: False
-    sources:
-      - SegmentationMask:
-          file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_membrane_segmentation_mask.mrc"
-          is_visualization_default: false
+- metadata:
+    annotation_method: Tomogram Denoising + 3D-U-Net Based Membrane Segmentation +
+      Manual Post-Processing
+    annotation_object:
+      id: GO:0016020
+      name: membrane
+    annotation_software: membrain-seg 0.0.1
+    authors: &id001
+    - ORCID: 0000-0002-8252-0178
+      corresponding_author_status: false
+      name: Xueying Zhan
+      primary_author_status: true
+    - ORCID: 0009-0009-6482-1303
+      corresponding_author_status: false
+      name: Yujia Gao
+      primary_author_status: true
+    - ORCID: 0000-0002-0881-5891
+      corresponding_author_status: true
+      name: Min Xu
+      primary_author_status: false
+    dates: &id002
+      deposition_date: '2024-04-12'
+      last_modified_date: '2024-04-12'
+      release_date: '2024-06-03'
+    ground_truth_status: false
+    is_curator_recommended: false
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_membrane_segmentation_mask.mrc'
+      is_visualization_default: false
 datasets:
 - sources:
   - source_glob:
       list_glob: '10004'
       match_regex: .*
       name_regex: (.*)
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10304
+    deposition_title: TBA
+    deposition_types:
+    - annotation
+  sources:
+  - literal:
+      value:
+      - 10304
 runs:
 - sources:
   - source_glob:
       list_glob: '{dataset_name}/[!._]*_membrane_segmentation_mask.mrc'
-      match_regex: '.*'
-      name_regex: '(.*)_membrane_segmentation_mask\.mrc'
+      match_regex: .*
+      name_regex: (.*)_membrane_segmentation_mask\.mrc
+standardization_config:
+  deposition_id: 10304
+  source_prefix: xueying_zhan_04_2024/
 voxel_spacings:
 - sources:
   - destination_glob:
       list_glob: '{run_output_path}/Tomograms/VoxelSpacing*'
       match_regex: .*
       name_regex: VoxelSpacing(.*)
-standardization_config:
-  deposition_id: 10304
-  source_prefix: 'xueying_zhan_04_2024/'

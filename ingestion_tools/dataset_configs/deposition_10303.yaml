@@ -1,98 +1,76 @@
 annotations:
-  - metadata:
-      annotation_object: &annotated_object
-        id: GO:0016020
-        name: membrane
-        description: Membrain-seg prediction
-      dates: &repo-dates
-        deposition_date: '2024-05-20'
-        last_modified_date: '2024-05-20'
-        release_date: '2024-05-20'
-      annotation_method: &annotation_method "Prediction using membrain-seg without rescaling and weights MemBrain_seg_v10_alpha.ckpt"
-      method_type: automated
-      annotation_publications: 10.1101/2024.01.05.574336
-      ground_truth_status: False
-      authors: &annotation_authors
-        - name: Utz Heinrich Ermel
-          ORCID: 0000-0003-4685-037X
-          primary_author_status: true
-          corresponding_author_status: true
-        - name: Kyle I. S. Harrington
-          ORCID: 0000-0002-7237-1973
-          primary_author_status: false
-          corresponding_author_status: false
-      annotation_software: "membrain-seg 0.0.1"
-      version: 1.0
-      is_curator_recommended: False
-    sources:
-      # 10000 - 10010
-      - SegmentationMask:
-          file_format: zarr
-          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*LM52Ga.zarr"
-          is_visualization_default: true
-      # 10011 - 10046
-      - SegmentationMask:
-          file_format: zarr
-          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*55ar5k.zarr"
-          is_visualization_default: true
-      # 10047 - 10075
-      - SegmentationMask:
-          file_format: zarr
-          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*wO13zA.zarr"
-          is_visualization_default: true
-      # 10076 - 10150
-      - SegmentationMask:
-          file_format: zarr
-          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*z59Mxz.zarr"
-          is_visualization_default: true
-      # 10151 - 10225
-      - SegmentationMask:
-          file_format: zarr
-          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*F5XUXp.zarr"
-          is_visualization_default: true
-      # 10226 - 10300
-      - SegmentationMask:
-          file_format: zarr
-          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*kpDyZk.zarr"
-          is_visualization_default: true
-      # Chlamy batch 1
-      - SegmentationMask:
-          file_format: zarr
-          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*AM1K9r.zarr"
-          is_visualization_default: true
-      # Chlamy batch 2
-      - SegmentationMask:
-          file_format: zarr
-          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*PgU0Bz.zarr"
-          is_visualization_default: true
-      # Chlamy batch 3
-      - SegmentationMask:
-          file_format: zarr
-          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*4h1eIH.zarr"
-          is_visualization_default: true
-      # Chlamy batch 4
-      - SegmentationMask:
-          file_format: zarr
-          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*gBcgAd.zarr"
-          is_visualization_default: true
+- metadata:
+    annotation_method: Prediction using membrain-seg without rescaling and weights
+      MemBrain_seg_v10_alpha.ckpt
+    annotation_object:
+      description: Membrain-seg prediction
+      id: GO:0016020
+      name: membrane
+    annotation_publications: 10.1101/2024.01.05.574336
+    annotation_software: membrain-seg 0.0.1
+    authors: &id001
+    - ORCID: 0000-0003-4685-037X
+      corresponding_author_status: true
+      name: Utz Heinrich Ermel
+      primary_author_status: true
+    - ORCID: 0000-0002-7237-1973
+      corresponding_author_status: false
+      name: Kyle I. S. Harrington
+      primary_author_status: false
+    dates: &id002
+      deposition_date: '2024-05-20'
+      last_modified_date: '2024-05-20'
+      release_date: '2024-05-20'
+    ground_truth_status: false
+    is_curator_recommended: false
+    method_type: automated
+    version: 1.0
+  sources:
+  - SegmentationMask:
+      file_format: zarr
+      glob_strings:
+        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*LM52Ga.zarr'
+        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*55ar5k.zarr'
+        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*wO13zA.zarr'
+        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*z59Mxz.zarr'
+        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*F5XUXp.zarr'
+        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*kpDyZk.zarr'
+        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*AM1K9r.zarr'
+        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*PgU0Bz.zarr'
+        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*4h1eIH.zarr'
+        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*gBcgAd.zarr'
+      is_visualization_default: true
 datasets:
 - sources:
   - source_glob:
-      list_glob: '10???'
-      match_regex: '.*$(?<!(10014|10015|10016|10017|10018|10019|10020))'
+      list_glob: 10???
+      match_regex: .*$(?<!(10014|10015|10016|10017|10018|10019|10020))
       name_regex: (.*)
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10303
+    deposition_title: TBA
+    deposition_types:
+    - annotation
+  sources:
+  - literal:
+      value:
+      - 10303
 runs:
 - sources:
   - source_glob:
       list_glob: '{dataset_name}/*'
       match_regex: .*
       name_regex: (.*)
+standardization_config:
+  deposition_id: 10303
+  source_prefix: membrain/outputs/
 voxel_spacings:
 - sources:
   - destination_glob:
       list_glob: '{run_output_path}/Tomograms/VoxelSpacing*'
       match_regex: .*
       name_regex: VoxelSpacing(.*)
-standardization_config:
-  deposition_id: 10303
-  source_prefix: 'membrain/outputs/'

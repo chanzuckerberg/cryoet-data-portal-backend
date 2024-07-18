@@ -1,47 +1,60 @@
 annotations:
-  - metadata:
-      annotation_object:
-        id: GO:0009431
-        name: flagellar basal body, MS ring
-      dates: &repo-dates
-        deposition_date: '2024-05-20'
-        last_modified_date: '2024-05-20'
-        release_date: '2024-05-20'
-      annotation_method: "manual labeling."
-      method_type: manual
-      ground_truth_status: False
-      authors: &annotation_authors
-        - name: Mohammed Kaplan
-          primary_author_status: true
-          corresponding_author_status: true
-      annotation_software: "IMOD"
-      version: 1.0
-      is_curator_recommended: True
-    sources:
-    - OrientedPoint:
-        binning: 1
-        file_format: mod
-        glob_string: '{dataset_name}/{run_name}_MS.mod'
-        is_visualization_default: true
-        order: xyz
+- metadata:
+    annotation_method: manual labeling.
+    annotation_object:
+      id: GO:0009431
+      name: flagellar basal body, MS ring
+    annotation_software: IMOD
+    authors: &id001
+    - corresponding_author_status: true
+      name: Mohammed Kaplan
+      primary_author_status: true
+    dates: &id002
+      deposition_date: '2024-05-20'
+      last_modified_date: '2024-05-20'
+      release_date: '2024-05-20'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: manual
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 1
+      file_format: mod
+      glob_string: '{dataset_name}/{run_name}_MS.mod'
+      is_visualization_default: true
+      order: xyz
 datasets:
 - sources:
   - source_glob:
-      list_glob: '100??'
+      list_glob: 100??
       match_regex: .*
       name_regex: (.*)
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10302
+    deposition_title: TBA
+    deposition_types:
+    - annotation
+  sources:
+  - literal:
+      value:
+      - 10302
 runs:
 - sources:
   - source_glob:
       list_glob: '{dataset_name}/*'
       match_regex: .*
       name_regex: (.*)_MS.mod
+standardization_config:
+  deposition_id: 10302
+  source_prefix: braxton_owens_05_2024/d3_ms_rings_common
 voxel_spacings:
 - sources:
   - destination_glob:
       list_glob: '{run_output_path}/Tomograms/VoxelSpacing*'
       match_regex: .*
       name_regex: VoxelSpacing(.*)
-standardization_config:
-  deposition_id: 10302
-  source_prefix: 'braxton_owens_05_2024/d3_ms_rings_common'

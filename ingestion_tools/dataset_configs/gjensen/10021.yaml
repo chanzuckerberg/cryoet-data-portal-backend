@@ -18,13 +18,13 @@ datasets:
       id: null
       name: c2
     cross_references:
-      dataset_publications: 10.1038/s41467-022-32584-7
+      publications: 10.1038/s41467-022-32584-7
       related_database_entries: EMD-27654, EMPIAR-11125
     dataset_description: ' and is a part of Caltech Jensen  lab etdb. Carboxysomes
       purified from H. Neapolitanus, WT, high resolution'
     dataset_identifier: 10021
     dataset_title: H. neapolitanus Carboxysomes
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -39,6 +39,19 @@ datasets:
   - literal:
       value:
       - '10021'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10049
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10049
 key_images:
 - sources:
   - source_glob:
@@ -76,7 +89,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 1.104
     spherical_aberration_constant: 2.7
     tilt_alignment_software: IMOD
@@ -121,7 +134,7 @@ tomograms:
       z: 0
     processing: raw
     processing_software: novaCTF
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: novaCTF
     tomogram_version: 1
     voxel_spacing: 8.832

@@ -1,3 +1,5 @@
+
+
 # Class: AnnotationObject
 
 
@@ -12,9 +14,12 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 
 
+
+
 ```mermaid
  classDiagram
     class AnnotationObject
+    click AnnotationObject href "../AnnotationObject"
       AnnotationObject : description
 
       AnnotationObject : id
@@ -36,8 +41,8 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [id](id.md) | 1..1 <br/> [String](String.md) | Gene Ontology Cellular Component identifier for the annotation object | direct |
-| [name](name.md) | 1..1 <br/> [String](String.md) | Name of the object being annotated (e | direct |
+| [id](id.md) | 1 <br/> [GOID](GOID.md) | Gene Ontology Cellular Component identifier for the annotation object | direct |
+| [name](name.md) | 1 <br/> [String](String.md) | Name of the object being annotated (e | direct |
 | [description](description.md) | 0..1 <br/> [String](String.md) | A textual description of the annotation object, can be a longer description t... | direct |
 | [state](state.md) | 0..1 <br/> [String](String.md) | Molecule state annotated (e | direct |
 
@@ -72,13 +77,14 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationObject |
 | native | cdp-meta:AnnotationObject |
+
+
 
 
 
@@ -110,10 +116,11 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: GO_ID
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: ^GO:[0-9]{7}$
   name:
     name: name
     description: Name of the object being annotated (e.g. ribosome, nuclear pore complex,
@@ -131,6 +138,7 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AnnotationMethodLinks
     range: string
     required: true
     inlined: true
@@ -191,10 +199,11 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: GO_ID
     required: true
     inlined: true
     inlined_as_list: true
+    pattern: ^GO:[0-9]{7}$
   name:
     name: name
     description: Name of the object being annotated (e.g. ribosome, nuclear pore complex,
@@ -212,6 +221,7 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AnnotationMethodLinks
     range: string
     required: true
     inlined: true

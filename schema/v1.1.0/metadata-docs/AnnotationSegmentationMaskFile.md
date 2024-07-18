@@ -1,3 +1,5 @@
+
+
 # Class: AnnotationSegmentationMaskFile
 
 
@@ -12,14 +14,20 @@ URI: [cdp-meta:AnnotationSegmentationMaskFile](metadataAnnotationSegmentationMas
 
 
 
+
+
 ```mermaid
  classDiagram
     class AnnotationSegmentationMaskFile
+    click AnnotationSegmentationMaskFile href "../AnnotationSegmentationMaskFile"
       AnnotationSourceFile <|-- AnnotationSegmentationMaskFile
+        click AnnotationSourceFile href "../AnnotationSourceFile"
 
       AnnotationSegmentationMaskFile : file_format
 
       AnnotationSegmentationMaskFile : glob_string
+
+      AnnotationSegmentationMaskFile : glob_strings
 
       AnnotationSegmentationMaskFile : is_visualization_default
 
@@ -40,8 +48,9 @@ URI: [cdp-meta:AnnotationSegmentationMaskFile](metadataAnnotationSegmentationMas
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [file_format](file_format.md) | 1..1 <br/> [String](String.md) | File format for this file | direct |
-| [glob_string](glob_string.md) | 1..1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
+| [file_format](file_format.md) | 1 <br/> [String](String.md) | File format for this file | direct |
+| [glob_string](glob_string.md) | 0..1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
+| [glob_strings](glob_strings.md) | * <br/> [String](String.md) | Glob strings to match annotation files in the dataset | direct |
 | [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation will be rendered in neuroglancer by default | direct |
 
 
@@ -73,13 +82,14 @@ URI: [cdp-meta:AnnotationSegmentationMaskFile](metadataAnnotationSegmentationMas
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationSegmentationMaskFile |
 | native | cdp-meta:AnnotationSegmentationMaskFile |
+
+
 
 
 
@@ -122,7 +132,8 @@ attributes:
     inlined_as_list: true
   glob_string:
     name: glob_string
-    description: Glob string to match annotation files in the dataset.
+    description: Glob string to match annotation files in the dataset. Required if
+      annotation_source_file_glob_strings is not provided.
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_source_file_glob_string
@@ -136,7 +147,28 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
+    required: false
+    inlined: true
+    inlined_as_list: true
+  glob_strings:
+    name: glob_strings
+    description: Glob strings to match annotation files in the dataset. Required if
+      annotation_source_file_glob_string is not provided.
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:annotation_source_file_glob_strings
+    alias: glob_strings
+    owner: AnnotationSegmentationMaskFile
+    domain_of:
+    - AnnotationSourceFile
+    - AnnotationOrientedPointFile
+    - AnnotationInstanceSegmentationFile
+    - AnnotationPointFile
+    - AnnotationSegmentationMaskFile
+    - AnnotationSemanticSegmentationMaskFile
+    range: string
+    required: false
+    multivalued: true
     inlined: true
     inlined_as_list: true
   is_visualization_default:
@@ -195,7 +227,8 @@ attributes:
     inlined_as_list: true
   glob_string:
     name: glob_string
-    description: Glob string to match annotation files in the dataset.
+    description: Glob string to match annotation files in the dataset. Required if
+      annotation_source_file_glob_strings is not provided.
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_source_file_glob_string
@@ -209,7 +242,28 @@ attributes:
     - AnnotationSegmentationMaskFile
     - AnnotationSemanticSegmentationMaskFile
     range: string
-    required: true
+    required: false
+    inlined: true
+    inlined_as_list: true
+  glob_strings:
+    name: glob_strings
+    description: Glob strings to match annotation files in the dataset. Required if
+      annotation_source_file_glob_string is not provided.
+    from_schema: metadata
+    exact_mappings:
+    - cdp-common:annotation_source_file_glob_strings
+    alias: glob_strings
+    owner: AnnotationSegmentationMaskFile
+    domain_of:
+    - AnnotationSourceFile
+    - AnnotationOrientedPointFile
+    - AnnotationInstanceSegmentationFile
+    - AnnotationPointFile
+    - AnnotationSegmentationMaskFile
+    - AnnotationSemanticSegmentationMaskFile
+    range: string
+    required: false
+    multivalued: true
     inlined: true
     inlined_as_list: true
   is_visualization_default:

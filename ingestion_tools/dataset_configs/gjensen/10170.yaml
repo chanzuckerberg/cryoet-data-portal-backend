@@ -26,7 +26,7 @@ datasets:
       entry, HP frozen and cryo-sectioned by Mark Ladinsky. Used for CLEM.
     dataset_identifier: 10170
     dataset_title: Cryo-sectioned Jurkat VSVG-pNL4GFP
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -40,6 +40,19 @@ datasets:
   - literal:
       value:
       - '10170'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10033
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10033
 key_images:
 - sources:
   - source_glob:
@@ -77,7 +90,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 9.46
     spherical_aberration_constant: 2.0
     tilt_alignment_software: IMOD
@@ -122,7 +135,7 @@ tomograms:
       z: 0
     processing: raw
     processing_software: null
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1
     voxel_spacing: 18.92

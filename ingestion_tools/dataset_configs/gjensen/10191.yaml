@@ -18,14 +18,14 @@ datasets:
       id: null
       name: ''
     cross_references:
-      dataset_publications: 10.1128/JB.00505-12
+      publications: 10.1128/JB.00505-12
     dataset_description: This is 3rd of 5 sets of data studying Escherichia coli collected
       by Matt Swulius and is a part of Caltech Jensen  lab etdb. Cells contain WT
       MreB in the chromosome plus an N-terminal YFP fusion to MreB (YFP-MreB) on the
       plasmid pLe7. pLE7 also confers a resistance to ampicillin.
     dataset_identifier: 10191
     dataset_title: E. coli (pLE7, 20 uM IPTG)
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -40,6 +40,19 @@ datasets:
   - literal:
       value:
       - '10191'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10057
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10057
 key_images:
 - sources:
   - source_glob:
@@ -78,7 +91,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 9.46
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -123,7 +136,7 @@ tomograms:
       z: 0
     processing: raw
     processing_software: null
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1
     voxel_spacing: 18.92

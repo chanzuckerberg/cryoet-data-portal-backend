@@ -18,12 +18,12 @@ datasets:
       id: null
       name: subsp. jejuni 81116
     cross_references:
-      dataset_publications: 10.1073/pnas.1518952113
+      publications: 10.1073/pnas.1518952113
     dataset_description: This is 19th of 24 sets of data studying Campylobacter jejuni
       collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10219
     dataset_title: Medium magnification tomograms of fliI knockout Campylobacter cells
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -38,6 +38,19 @@ datasets:
   - literal:
       value:
       - '10219'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10029
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10029
 key_images:
 - sources:
   - source_glob:
@@ -76,7 +89,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 7.74
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -121,7 +134,7 @@ tomograms:
       z: 0
     processing: raw
     processing_software: null
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1
     voxel_spacing: 15.48

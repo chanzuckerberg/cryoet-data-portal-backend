@@ -1,3 +1,5 @@
+
+
 # Slot: affiliation_identifier
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:affiliation_identifier](metadataaffiliation_identifier)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Author](Author.md) | Author of a scientific data entity |  no  |
+| [Author](Author.md) | Author of a scientific data entity |  no  |
 
 
 
@@ -31,8 +34,6 @@ URI: [cdp-meta:affiliation_identifier](metadataaffiliation_identifier)
 * Range: [String](String.md)
 
 * Recommended: True
-
-* Regex pattern: `^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$`
 
 
 
@@ -54,6 +55,17 @@ URI: [cdp-meta:affiliation_identifier](metadataaffiliation_identifier)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:affiliation_identifier |
+| native | cdp-meta:affiliation_identifier |
+| exact | cdp-common:author_affiliation_identifier |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -62,7 +74,7 @@ name: affiliation_identifier
 description: A Research Organization Registry (ROR) identifier.
 from_schema: metadata
 exact_mappings:
-- cdp-common:affiliation_identifier
+- cdp-common:author_affiliation_identifier
 rank: 1000
 alias: affiliation_identifier
 owner: Author
@@ -72,7 +84,6 @@ range: string
 recommended: true
 inlined: true
 inlined_as_list: true
-pattern: ^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$
 
 ```
 </details>

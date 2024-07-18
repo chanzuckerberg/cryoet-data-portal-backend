@@ -9,6 +9,32 @@ def cli():
     pass
 
 
+def create_deposition_metadata(deposition_id: str, config_data: dict[str, Any]) -> dict[str, Any]:
+    dataset = config_data.get("datasets", [])
+    metadata = dataset[0].get("metadata", {}) if dataset else {}
+    if metadata:
+        deposition_types = ["dataset"]
+    elif config_data.get("tomograms"):
+        metadata = config_data["tomograms"][0].get("metadata", {})
+        deposition_types = ["tomogram"]
+    elif config_data.get("annotations"):
+        metadata = config_data["annotations"][0].get("metadata", {})
+        deposition_types = ["annotation"]
+
+    return {
+        "deposition_identifier": deposition_id,
+        "deposition_title": "TBA",
+        "deposition_description": "TBA",
+        "deposition_types": deposition_types,
+        "dates": metadata.get("dates", {}),
+        "authors": metadata.get("authors", []),
+    }
+
+
+def has_no_sources(data: list[dict[str, Any]] | dict[str, Any]) -> bool:
+    return isinstance(data, dict) or not any(row.get("sources") for row in data)
+
+
 def update_config(data: dict[str, Any]) -> dict[str, Any]:
     standardization_config = data["standardization_config"]
     if data.get("overrides_by_run"):
@@ -63,7 +89,7 @@ def update_config(data: dict[str, Any]) -> dict[str, Any]:
                 ],
             },
         ]
-    if not data.get("tiltseries", {}).get("sources") and standardization_config.get("tiltseries_glob"):
+    if has_no_sources(data.get("tiltseries", [])) and standardization_config.get("tiltseries_glob"):
         data["tiltseries"] = [
             {
                 "metadata": data.get("tiltseries"),
@@ -77,7 +103,7 @@ def update_config(data: dict[str, Any]) -> dict[str, Any]:
                 ],
             },
         ]
-    if not data.get("tomograms", {}).get("sources"):
+    if has_no_sources(data.get("tomograms", [])) and standardization_config.get("tomo_glob"):
         data["tomograms"] = [
             {
                 "metadata": data.get("tomograms"),
@@ -91,7 +117,18 @@ def update_config(data: dict[str, Any]) -> dict[str, Any]:
                 ],
             },
         ]
-    if not data.get("dataset_keyphotos"):
+    if not data.get("depositions"):
+        deposition_id = data["standardization_config"]["deposition_id"]
+        data["depositions"] = [
+            {
+                "metadata": data.get(
+                    "deposition",
+                    create_deposition_metadata(deposition_id, data),
+                ),
+                "sources": [{"literal": {"value": [deposition_id]}}],
+            },
+        ]
+    if not data.get("dataset_keyphotos") and [d for d in data["datasets"] if d.get("metadata")]:
         if data["datasets"][0]["metadata"].get("key_photos"):
             keyphotos = data["datasets"][0]["metadata"]["key_photos"]
             del data["datasets"][0]["metadata"]["key_photos"]
@@ -108,7 +145,7 @@ def update_config(data: dict[str, Any]) -> dict[str, Any]:
                 ],
             },
         ]
-    if not data.get("key_images"):
+    if not data.get("key_images") and [d for d in data["datasets"] if d.get("metadata")]:
         if standardization_config.get("tomo_key_photo_glob"):
             # TODO what if we don't have key images defined?
             data["key_images"] = [
@@ -146,10 +183,10 @@ def update_config(data: dict[str, Any]) -> dict[str, Any]:
                 ],
             },
         ]
-    if not data.get("voxel_spacing"):
+    if not data.get("voxel_spacings"):
         vs = data["tomograms"][0]["metadata"]["voxel_spacing"]
         # Make sure voxel spacing is a float.
-        if isinstance(vs, str) and "{" in vs:
+        if isinstance(vs, str) and "{" in vs and not vs.strip().startswith("float"):
             vs = f"float {vs}"
         data["voxel_spacings"] = [
             {

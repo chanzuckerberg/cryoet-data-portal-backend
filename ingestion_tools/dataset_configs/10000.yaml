@@ -375,7 +375,7 @@ datasets:
       id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=284812
       name: K972 Sp h-wild type
     cross_references:
-      dataset_publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
+      publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
       related_database_entries: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420
     dataset_description: Defocus cryo-electron tomography of S. pombe cryo-FIB lamellae
@@ -399,6 +399,19 @@ datasets:
   - literal:
       value:
       - '10000'
+depositions:
+- metadata:
+    authors: *id003
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10000
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10000
 frames:
 - sources:
   - source_glob:
@@ -443,8 +456,8 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF Quantum LS
-      image_corrector: None
-      phase_plate: None
+      image_corrector: null
+      phase_plate: null
     pixel_spacing: 3.3702
     related_empiar_entry: EMPIAR-10988
     spherical_aberration_constant: 2.7
@@ -487,7 +500,7 @@ tomograms:
       y: 0
       z: 0
     processing: raw
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1
     voxel_spacing: 13.48

@@ -86,7 +86,7 @@ datasets:
       id: CL:0000019
       name: Sperm
     cross_references:
-      dataset_publications: doi:10.1101/2022.09.28.510016
+      publications: doi:10.1101/2022.09.28.510016
     dataset_description: Cryo-electron tomograms of mouse sperm flagella from FIB-SEM
       lamella.
     dataset_identifier: 10005
@@ -112,6 +112,19 @@ datasets:
   - literal:
       value:
       - '10005'
+depositions:
+- metadata:
+    authors: *id003
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10005
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10005
 key_images:
 - sources:
   - literal:
@@ -182,7 +195,7 @@ tomograms:
       y: 0
       z: 0
     processing: raw
-    reconstruction_method: ''
+    reconstruction_method: Unknown
     reconstruction_software: Tomo3D
     tomogram_version: 1
     voxel_spacing: 5.224

@@ -34,3 +34,14 @@ URI: [xsd:time](http://www.w3.org/2001/XMLSchema#time)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | xsd:time |
+| native | cdp-meta:time |
+| exact | schema:Time |

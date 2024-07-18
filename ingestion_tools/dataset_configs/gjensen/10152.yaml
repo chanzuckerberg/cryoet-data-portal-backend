@@ -22,7 +22,7 @@ datasets:
       were scraped from agar plate, grown few more hours in BLBB, not happy.
     dataset_identifier: 10152
     dataset_title: H.pylori 26695 delta-cagH / AGS
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -41,6 +41,19 @@ datasets:
   - literal:
       value:
       - '10152'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10017
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10017
 key_images:
 - sources:
   - source_glob:
@@ -79,7 +92,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 4.933
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
@@ -90,7 +103,7 @@ tiltseries:
     tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
-    total_flux: 'float {ts-total_flux}'
+    total_flux: float {ts-total_flux}
   sources:
   - source_glob:
       list_glob: '{run_name}/rawdata/*'
@@ -124,7 +137,7 @@ tomograms:
       z: 0
     processing: raw
     processing_software: null
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1
     voxel_spacing: 19.733

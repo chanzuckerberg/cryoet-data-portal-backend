@@ -1,15 +1,15 @@
 run_name,tomo-align_software,tomo-fiducial_alignment_status,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_series_quality
-pda2020-11-04-1,,NON_FIDUCIAL,,None,None,,,1
-pda2020-11-04-5,,NON_FIDUCIAL,,None,None,,,1
-pda2020-11-04-6,,NON_FIDUCIAL,,None,None,,,1
-pda2020-11-04-7,,NON_FIDUCIAL,,None,None,,,1
-pda2020-11-04-12,,NON_FIDUCIAL,,None,None,,,1
-pda2020-11-04-14,,NON_FIDUCIAL,,None,None,,,1
-pda2020-11-04-2,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,5.6,RAPTOR,4
-pda2020-11-04-3,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,5.6,RAPTOR,4
-pda2020-11-04-4,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,5.6,RAPTOR,4
-pda2020-11-04-8,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,5.6,RAPTOR,4
-pda2020-11-04-9,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,5.6,RAPTOR,4
-pda2020-11-04-13,RAPTOR,FIDUCIAL,IMOD,Weighted back projection,IMOD,5.6,RAPTOR,4
-pda2020-11-04-10,Batchruntomo,FIDUCIAL,IMOD,Weighted back projection,IMOD,11.2,Batchruntomo,4
-pda2020-11-04-11,Batchruntomo,FIDUCIAL,IMOD,Weighted back projection,IMOD,11.2,Batchruntomo,4
+pda2020-11-04-1,,NON_FIDUCIAL,,,,,,1
+pda2020-11-04-5,,NON_FIDUCIAL,,,,,,1
+pda2020-11-04-6,,NON_FIDUCIAL,,,,,,1
+pda2020-11-04-7,,NON_FIDUCIAL,,,,,,1
+pda2020-11-04-12,,NON_FIDUCIAL,,,,,,1
+pda2020-11-04-14,,NON_FIDUCIAL,,,,,,1
+pda2020-11-04-2,RAPTOR,FIDUCIAL,IMOD,WBP,IMOD,5.6,RAPTOR,4
+pda2020-11-04-3,RAPTOR,FIDUCIAL,IMOD,WBP,IMOD,5.6,RAPTOR,4
+pda2020-11-04-4,RAPTOR,FIDUCIAL,IMOD,WBP,IMOD,5.6,RAPTOR,4
+pda2020-11-04-8,RAPTOR,FIDUCIAL,IMOD,WBP,IMOD,5.6,RAPTOR,4
+pda2020-11-04-9,RAPTOR,FIDUCIAL,IMOD,WBP,IMOD,5.6,RAPTOR,4
+pda2020-11-04-13,RAPTOR,FIDUCIAL,IMOD,WBP,IMOD,5.6,RAPTOR,4
+pda2020-11-04-10,Batchruntomo,FIDUCIAL,IMOD,WBP,IMOD,11.2,Batchruntomo,4
+pda2020-11-04-11,Batchruntomo,FIDUCIAL,IMOD,WBP,IMOD,11.2,Batchruntomo,4

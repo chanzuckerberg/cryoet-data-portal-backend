@@ -65,7 +65,7 @@ datasets:
       id: M129
       name: Mycoplasmoides pneumoniae
     cross_references:
-      dataset_publications: doi:10.1038/s41586-022-05255-2, doi:10.1038/s41592-020-01054-7
+      publications: doi:10.1038/s41586-022-05255-2, doi:10.1038/s41592-020-01054-7
       related_database_entries: EMPIAR-10731, EMPIAR-10499
     dataset_description: Cryo-electron tomograms of native M. pneumoniae cells. Cells
       treated with chloramphenicol
@@ -91,6 +91,19 @@ datasets:
   - literal:
       value:
       - '10003'
+depositions:
+- metadata:
+    authors: *id002
+    dates: *id001
+    deposition_description: TBA
+    deposition_identifier: 10003
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10003
 frames:
 - sources:
   - source_glob:
@@ -166,7 +179,7 @@ tomograms:
       y: 0
       z: 0
     processing: raw
-    reconstruction_method: FOURIER SPACE
+    reconstruction_method: Fourier Space
     reconstruction_software: Warp
     tomogram_version: 1
     voxel_spacing: 6.802

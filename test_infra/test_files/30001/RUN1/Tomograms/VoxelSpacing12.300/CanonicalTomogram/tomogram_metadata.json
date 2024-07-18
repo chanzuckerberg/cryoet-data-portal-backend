@@ -1,6 +1,6 @@
 {
     "voxel_spacing": 12.300,
-    "reconstruction_method": "Weighted back projection",
+    "reconstruction_method": "WBP",
     "reconstruction_software": "IMOD",
     "fiducial_alignment_status": "FIDUCIAL",
     "ctf_corrected": true,

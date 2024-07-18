@@ -1,3 +1,5 @@
+from typing import Union
+
 import click
 from linkml.utils.helpers import write_to_file
 from linkml_runtime.dumpers import yaml_dumper
@@ -13,6 +15,52 @@ def _materialize_classes(schema: SchemaView) -> dict:
             c_def.attributes[attr.name] = attr
 
 
+def _add_to_slot_pattern(slot: dict, pattern: Union[str, None]) -> str:
+    """
+    Add the pattern from the common schema to the slot pattern.
+    """
+    if pattern is None:
+        return None
+    elif "pattern" not in slot or slot["pattern"] is None:
+        return pattern
+    else:
+        # For when the pattern is already in the pattern, no need to add it again
+        if f"({pattern})" in slot["pattern"]:
+            return slot["pattern"]
+
+        # For when the pattern is a list of patterns already, no need to add the parenthesis again
+        if slot["pattern"][0] == "(" and slot["pattern"][-1] == ")":
+            return f"{slot['pattern']}|({pattern})"
+        else:
+            return f"({slot['pattern']})|({pattern})"
+
+
+def _add_to_slot_minimum_value(slot: dict, minimum_value: Union[int, float]) -> Union[int, float]:
+    """
+    Add the minimum_value from the common schema to the slot minimum_value.
+    """
+    if "minimum_value" in slot and slot["minimum_value"] is not None:
+        print(
+            f"[WARNING]: Minimum value already set for slot {slot['name']} ({slot['minimum_value']}). NOT overwriting with {minimum_value}",
+        )
+        return slot["minimum_value"]
+    else:
+        return minimum_value
+
+
+def _add_to_slot_maximum_value(slot: dict, maximum_value: Union[int, float]) -> Union[int, float]:
+    """
+    Add the maximum_value from the common schema to the slot maximum_value.
+    """
+    if "maximum_value" in slot and slot["maximum_value"] is not None:
+        print(
+            f"[WARNING]: Maximum value already set for slot {slot['name']} ({slot['maximum_value']}). NOT overwriting with {maximum_value}",
+        )
+        return slot["maximum_value"]
+    else:
+        return maximum_value
+
+
 def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> SchemaView:
     """
     Copy range, descriptions and patterns from exact_mappings to common_schema.
@@ -23,6 +71,13 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
     # Copy descriptions and ranges from common_schema
     common_slots = common_schema.all_slots()
 
+    # Ensure types are properly implemented in the generated Pydantic
+    schema_types = schema.all_types()
+
+    # Ensure enums are properly implemented in the generated Pydantic
+    schema_enums = schema.all_enums()
+
+    # Loop through all classes and their attributes, adding relevant attributes from common schema
     for c in schema.all_classes():
         clz = schema.get_class(c)
         for s in clz.attributes:
@@ -52,8 +107,29 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
                 slot["maximum_value"] = common_slot["maximum_value"]
                 slot["required"] = common_slot["required"]
                 slot["recommended"] = common_slot["recommended"]
-                slot["pattern"] = common_slot["pattern"]
+                slot["pattern"] = _add_to_slot_pattern(slot, common_slot["pattern"])
                 slot["ifabsent"] = common_slot["ifabsent"]
+            # if the slot's range is a type, add the pattern from the type
+            if slot["range"] in schema_types:
+                slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(slot["range"]).pattern)
+            # if the slot's range is an enum, add the pattern from the enum
+            if slot["range"] in schema_enums:
+                for _, e in enumerate(schema.get_enum(slot["range"]).permissible_values):
+                    slot["pattern"] = _add_to_slot_pattern(slot, f"^{e}$")
+            # if the slot has an any_of attribute (with possibly multiple ranges and each of those ranges
+            # possibly being a enum / type, add all those patterns
+            # also add any corresponding minimum_value and maximum_value attributes
+            if "any_of" in slot:
+                for _, a in enumerate(slot["any_of"]):
+                    if "range" in a and a["range"] in schema_types and "pattern" in schema.get_type(a["range"]):
+                        slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(a["range"]).pattern)
+                    if "range" in a and a["range"] in schema_enums:
+                        for _, e in enumerate(schema.get_enum(a["range"]).permissible_values):
+                            slot["pattern"] = _add_to_slot_pattern(slot, f"^{e}$")
+                    if "minimum_value" in a and a["minimum_value"] is not None:
+                        slot["minimum_value"] = _add_to_slot_minimum_value(slot, a["minimum_value"])
+                    if "maximum_value" in a and a["maximum_value"] is not None:
+                        slot["maximum_value"] = _add_to_slot_maximum_value(slot, a["maximum_value"])
 
     # Make sure the descriptions from mixin classes are carried over
     for c in schema.all_classes():

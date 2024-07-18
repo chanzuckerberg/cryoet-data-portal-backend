@@ -113,7 +113,7 @@ datasets:
       id: CL:0002586
       name: Retinal pigment epithelial-1
     cross_references:
-      dataset_publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
+      publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
       related_database_entries: EMPIAR-10989
     dataset_description: Cryo-electron tomograms of RPE1 cells. Comprehensive annotation
       of actin filaments and microtubules
@@ -136,6 +136,19 @@ datasets:
   - literal:
       value:
       - '10002'
+depositions:
+- metadata:
+    authors: *id003
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10000
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10000
 frames:
 - sources:
   - source_glob:
@@ -162,7 +175,7 @@ runs:
       match_regex: .*
       name_regex: (.*)_sq_df_sorted.rec
 standardization_config:
-  deposition_id: 10002
+  deposition_id: 10000
   run_data_map_file: run_data_map.csv
   run_to_frame_map_csv: run_to_frame_name_map.csv
   source_prefix: julia/RPE1
@@ -222,7 +235,7 @@ tomograms:
       y: 0
       z: 0
     processing: raw
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1
     voxel_spacing: float {run_voxel_spacing}

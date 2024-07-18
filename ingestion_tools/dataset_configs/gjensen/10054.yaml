@@ -18,14 +18,14 @@ datasets:
       id: null
       name: Nine Mile phase II clone 4
     cross_references:
-      dataset_publications: 10.1016/j.isci.2023.107210
+      publications: 10.1016/j.isci.2023.107210
       related_database_entries: EMD-28281, EMD-28282, EMD-28283
     dataset_description: This is 2nd of 5 sets of data studying Coxiella burnetii
       collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Nine
       Mile phase II clone 4 (NMIIC4) strain. Wild-type  cells day-5 culture.
     dataset_identifier: 10054
     dataset_title: Coxiella burnetii_wt
-    dates:
+    dates: &id002
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
@@ -40,6 +40,19 @@ datasets:
   - literal:
       value:
       - '10054'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10045
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10045
 key_images:
 - sources:
   - source_glob:
@@ -80,7 +93,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: GIF
       image_corrector: null
-      phase_plate: None
+      phase_plate: null
     pixel_spacing: 4.036
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
@@ -128,7 +141,7 @@ tomograms:
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: '{tomo-reconstruction_software}'
     tomogram_version: 1
-    voxel_spacing: 'float {tomo-voxel_spacing}'
+    voxel_spacing: float {tomo-voxel_spacing}
   sources:
   - source_glob:
       list_glob: '{run_name}/{mapped_tomo_name}'

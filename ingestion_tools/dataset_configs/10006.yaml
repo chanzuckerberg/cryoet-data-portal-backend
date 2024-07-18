@@ -104,7 +104,7 @@ datasets:
     cell_strain:
       name: Germany/BavPat1/2020
     cross_references:
-      dataset_publications: doi:10.1038/s41586-020-2665-2
+      publications: doi:10.1038/s41586-020-2665-2
       related_database_entries: EMPIAR-10493
     dataset_description: Cryo-electron tomograms of SARS-CoV-2 spike proteins on intact
       virions.
@@ -134,6 +134,19 @@ datasets:
   - literal:
       value:
       - '10006'
+depositions:
+- metadata:
+    authors: *id002
+    dates: *id001
+    deposition_description: TBA
+    deposition_identifier: 10006
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10006
 frames:
 - sources:
   - source_glob:
@@ -191,7 +204,7 @@ tomograms:
       y: 0
       z: 0
     processing: raw
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: novaCTF
     tomogram_version: 1
     voxel_spacing: 6.128

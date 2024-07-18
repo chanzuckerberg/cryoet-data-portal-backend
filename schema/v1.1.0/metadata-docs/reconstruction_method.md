@@ -1,7 +1,9 @@
+
+
 # Slot: reconstruction_method
 
 
-_Describe reconstruction method (Weighted back-projection, SART, SIRT)_
+_Describe reconstruction method (WBP, SART, SIRT)_
 
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:reconstruction_method](metadatareconstruction_method)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -28,9 +31,11 @@ URI: [cdp-meta:reconstruction_method](metadatareconstruction_method)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md)
 
 * Required: True
+
+* Regex pattern: `(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)`
 
 
 
@@ -52,12 +57,23 @@ URI: [cdp-meta:reconstruction_method](metadatareconstruction_method)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:reconstruction_method |
+| native | cdp-meta:reconstruction_method |
+| exact | cdp-common:tomogram_reconstruction_method |
+
+
+
+
 ## LinkML Source
 
 <details>
 ```yaml
 name: reconstruction_method
-description: Describe reconstruction method (Weighted back-projection, SART, SIRT)
+description: Describe reconstruction method (WBP, SART, SIRT)
 from_schema: metadata
 exact_mappings:
 - cdp-common:tomogram_reconstruction_method
@@ -70,6 +86,10 @@ range: string
 required: true
 inlined: true
 inlined_as_list: true
+pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)
+any_of:
+- range: StringFormattedString
+- range: tomogrom_reconstruction_method_enum
 
 ```
 </details>

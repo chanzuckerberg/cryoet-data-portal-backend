@@ -12,69 +12,90 @@ datasets:
       primary_author_status: true
     - name: Dennis J Michalak
       primary_author_status: true
-    - name: Kem A. Sochacki
+    - ORCID: 0000-0003-1160-4558
+      corresponding_author_status: true
+      name: Kem A. Sochacki
       primary_author_status: true
+    - ORCID: 0000-0002-5130-5061
       corresponding_author_status: true
-      ORCID: 0000-0003-1160-4558
-    - name: Jenny E. Hinshaw
+      name: Jenny E. Hinshaw
       primary_author_status: false
+    - ORCID: 0000-0001-5355-9535
       corresponding_author_status: true
-      ORCID: 0000-0002-5130-5061
-    - name: Justin W. Taraska
+      name: Justin W. Taraska
       primary_author_status: false
-      corresponding_author_status: true
-      ORCID: 0000-0001-5355-9535
-    funding:
-      - funding_agency_name: Chan Zuckerberg Initiative
-        grant_id: 2021-234544
-      - funding_agency_name: NIH
-        grant_id: 1ZIAHL006098
-      - funding_agency_name: NIH
-        grant_id: 1ZIADK060100
-    cell_type:
-      name: HEK293
+    cell_strain:
       id: CLO:0001230
+      name: HEK293
+    cell_type:
+      id: CL:0000010
+      name: cultured cell
     cross_references:
-      dataset_publications: 10.1101/2024.06.27.600657
+      publications: 10.1101/2024.06.27.600657
       related_database_entries: EMD-44921, EMD-44909, EMD-44922
-    dataset_description: "Michalak, Sun, Sochacki et al. 2024 unroofing manuscript contains 10 grids. This is grid 5 of
-      10 and contains apical membranes of HEK293 Trex cells.  The cell line is stably expressing Dynamin 1 (K44A)- GFP
-      on a tetracycline inducible promoter.  The cells were grown on coverslips coated with fibronectin, induced with
-      doxycycline overnight then adhered to Quantifoil Cu 200 R2/2 grids coated with poly-lysine prior to removing the
-      basal membrane and cytoplasm."
+    dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
+      contains 10 grids. This is grid 5 of 10 and contains apical membranes of HEK293
+      Trex cells.  The cell line is stably expressing Dynamin 1 (K44A)- GFP on a tetracycline
+      inducible promoter.  The cells were grown on coverslips coated with fibronectin,
+      induced with doxycycline overnight then adhered to Quantifoil Cu 200 R2/2 grids
+      coated with poly-lysine prior to removing the basal membrane and cytoplasm.
     dataset_identifier: 10430
     dataset_title: Unroofing Grid05
-    dates:
+    dates: &id002
       deposition_date: '2024-07-01'
       last_modified_date: '2024-07-01'
       release_date: '2024-07-05'
-    grid_preparation: "plasma discharge 30 sec + coated with 0.01% Poly-Lysine + pressed to top of cells + unroofed +
-      0.5% paraformaldehyde."
+    funding:
+    - funding_agency_name: Chan Zuckerberg Initiative
+      grant_id: 2021-234544
+    - funding_agency_name: NIH
+      grant_id: 1ZIAHL006098
+    - funding_agency_name: NIH
+      grant_id: 1ZIADK060100
+    grid_preparation: plasma discharge 30 sec + coated with 0.01% Poly-Lysine + pressed
+      to top of cells + unroofed + 0.5% paraformaldehyde.
     organism:
       name: Homo sapiens
       taxonomy_id: 9606
-    sample_preparation: "Grown on coverslips coated with fibronectin + induced with tetracycline overnight + adhered to
-      Quantifoil Cu 200 R2/2 grids coated with poly-lysine + remove the basal membrane and cytoplasm +
-      paraformaldehyde + vitrification."
+    sample_preparation: Grown on coverslips coated with fibronectin + induced with
+      tetracycline overnight + adhered to Quantifoil Cu 200 R2/2 grids coated with
+      poly-lysine + remove the basal membrane and cytoplasm + paraformaldehyde + vitrification.
     sample_type: cell
   sources:
   - literal:
       value:
       - '10430'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10306
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10306
+frames:
+- sources:
+  - source_glob:
+      list_glob: frames/{frame_prefix}*.mrc
 key_images:
 - sources:
   - source_glob:
       list_glob: .*\.jpg
 rawtilts:
 - sources:
-    - source_multi_glob:
-        list_globs:
-          - mdocs/{mdoc_name}
+  - source_multi_glob:
+      list_globs:
+      - mdocs/{mdoc_name}
 runs:
 - sources:
   - source_glob:
       list_glob: tomograms_bin10/*
-      match_regex: '\.mrc$'
+      match_regex: \.mrc$
       name_regex: (.*)_b10_rec.mrc
 standardization_config:
   deposition_id: 10306
@@ -99,7 +120,7 @@ tiltseries:
     pixel_spacing: 1.0825
     related_empiar_entry: null
     spherical_aberration_constant: 2.7
-    tilt_axis: 0.0 #TODO: correct when tilt series obtained
+    tilt_axis: 0.0
     tilt_range:
       max: float {tilt_series_max_tilt}
       min: float {tilt_series_min_tilt}
@@ -107,11 +128,6 @@ tiltseries:
     tilt_step: 2.0
     tilting_scheme: dose-symmetric
     total_flux: float {tilt_series_total_flux}
-#TODO: Add when tilt series obtained
-#  sources:
-#  - source_glob:
-#      list_glob: chlamy_visual_proteomics/{run_name}/{run_name}.st
-#      match_regex: (.*)
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -147,10 +163,6 @@ tomograms:
   - source_glob:
       list_glob: tomograms_bin10/{run_name}_b10_rec.mrc
       match_regex: (.*)\.mrc
-frames:
-- sources:
-  - source_glob:
-      list_glob: frames/{frame_prefix}*.mrc
 voxel_spacings:
 - sources:
   - literal:

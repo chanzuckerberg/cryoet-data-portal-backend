@@ -24,7 +24,7 @@
         }
     ],
     "cross_references": {
-        "dataset_publications": "test-publication-data",
+        "publications": "test-publication-data",
         "dataset_citations": "10.1101/2024.01.12.111111",
         "related_database_entries": "TEST-1243435"
     },

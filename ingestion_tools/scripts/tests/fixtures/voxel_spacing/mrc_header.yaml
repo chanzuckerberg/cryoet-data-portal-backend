@@ -17,7 +17,7 @@ datasets:
       id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=88888
       name: Strain 1
     cross_references:
-      dataset_publications: doi:10.1101/2022.01.01.00001
+      publications: doi:10.1101/2022.01.01.00001
       related_database_entries: EMPIAR-00001, EMD-00001, EMD-00002
     dataset_description: Description for Dataset 1
     dataset_identifier: 20002
@@ -75,7 +75,7 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF Quantum LS
-      image_corrector: None
+      image_corrector: null
       phase_plate: Volta Phase Plate
     pixel_spacing: 3.3702
     related_empiar_entry: EMPIAR-10988
@@ -119,7 +119,7 @@ tomograms:
       y: 0
       z: 0
     processing: raw
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1
     voxel_spacing: null

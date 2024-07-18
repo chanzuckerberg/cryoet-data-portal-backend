@@ -1,3 +1,5 @@
+
+
 # Class: CrossReferencedEntity
 
 
@@ -14,14 +16,25 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 
 
 
+
+
 ```mermaid
  classDiagram
     class CrossReferencedEntity
+    click CrossReferencedEntity href "../CrossReferencedEntity"
       CrossReferencedEntity <|-- Dataset
+        click Dataset href "../Dataset"
+      CrossReferencedEntity <|-- Deposition
+        click Deposition href "../Deposition"
 
       CrossReferencedEntity : cross_references
 
-          CrossReferencedEntity --> CrossReferences : cross_references
+
+
+
+    CrossReferencedEntity --> "0..1" CrossReferences : cross_references
+    click CrossReferences href "../CrossReferences"
+
 
 
 ```
@@ -62,13 +75,14 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CrossReferencedEntity |
 | native | cdp-meta:CrossReferencedEntity |
+
+
 
 
 
@@ -97,6 +111,7 @@ attributes:
     domain_of:
     - CrossReferencedEntity
     - Dataset
+    - Deposition
     range: CrossReferences
     inlined: true
     inlined_as_list: true
@@ -123,6 +138,7 @@ attributes:
     domain_of:
     - CrossReferencedEntity
     - Dataset
+    - Deposition
     range: CrossReferences
     inlined: true
     inlined_as_list: true

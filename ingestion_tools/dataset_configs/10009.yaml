@@ -234,7 +234,8 @@ datasets:
     cell_strain:
       name: CC-3994
     cross_references:
-      dataset_publications: doi:10.1126/science.abm6704, EMPIAR-11078
+      publications: doi:10.1126/science.abm6704
+      related_database_entries: EMPIAR-11078
     dataset_description: Cryo-electron tomograms of Chlamydomonasfrom FIB-SEM lamella.
     dataset_identifier: 10009
     dataset_title: C. reinhardtii ciliary transition zone
@@ -264,6 +265,19 @@ datasets:
   - literal:
       value:
       - '10009'
+depositions:
+- metadata:
+    authors: *id003
+    dates: *id002
+    deposition_description: TBA
+    deposition_identifier: 10009
+    deposition_title: TBA
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10009
 frames:
 - sources:
   - source_glob:
@@ -290,23 +304,23 @@ standardization_config:
   deposition_id: 10009
   source_prefix: Ben_C_rein
 tiltseries:
-- metadata: &ts_metadata
+- metadata:
     acceleration_voltage: 300000
-    camera:
+    camera: &id004
       manufacturer: Gatan
       model: K2 SUMMIT
     data_acquisition_software: SerialEM
     is_aligned: true
-    microscope:
+    microscope: &id005
       manufacturer: FEI
       model: TITAN KRIOS
-    microscope_optical_setup:
+    microscope_optical_setup: &id006
       energy_filter: GIF Quantum LS
       phase_plate: null
     pixel_spacing: 3.42
     related_empiar_entry: EMPIAR-11078
     spherical_aberration_constant: 2.7
-    tilt_range:
+    tilt_range: &id007
       max: 60
       min: -60
     tilt_series_quality: 5
@@ -314,33 +328,57 @@ tiltseries:
     tilting_scheme: Dose-symmetric
     total_flux: 100
   sources:
-  - source_glob: &ts_source
-      list_glob: Tomo{run_name}/*.ali
-    parent_filters:
+  - parent_filters:
       exclude:
         run:
-          - "^14$"
-          - "^1$"
-          - "^11$"
+        - ^14$
+        - ^1$
+        - ^11$
+    source_glob: &id008
+      list_glob: Tomo{run_name}/*.ali
 - metadata:
+    acceleration_voltage: 300000
+    camera: *id004
+    data_acquisition_software: SerialEM
+    is_aligned: true
+    microscope: *id005
+    microscope_optical_setup: *id006
+    pixel_spacing: 3.42
+    related_empiar_entry: EMPIAR-11078
+    spherical_aberration_constant: 2.7
+    tilt_range: *id007
+    tilt_series_quality: 5
+    tilt_step: 2.0
     tilting_scheme: bi-directional
-    <<: *ts_metadata
+    total_flux: 100
   sources:
-  - source_glob: *ts_source
-    parent_filters:
+  - parent_filters:
       include:
         run:
-          - "^11$"
+        - ^11$
+    source_glob: *id008
 - metadata:
+    acceleration_voltage: 300000
+    camera: *id004
+    data_acquisition_software: SerialEM
+    is_aligned: true
+    microscope: *id005
+    microscope_optical_setup: *id006
     pixel_spacing: 13.68
-    <<: *ts_metadata
+    related_empiar_entry: EMPIAR-11078
+    spherical_aberration_constant: 2.7
+    tilt_range: *id007
+    tilt_series_quality: 5
+    tilt_step: 2.0
+    tilting_scheme: Dose-symmetric
+    total_flux: 100
   sources:
-  - source_glob: *ts_source
-    parent_filters:
+  - parent_filters:
       include:
         run:
-          - "^14$"
-          - "^1$"
+        - ^14$
+        - ^1$
+    source_glob: *id008
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -368,7 +406,7 @@ tomograms:
       y: 0
       z: 0
     processing: denoised
-    reconstruction_method: Weighted back projection
+    reconstruction_method: WBP
     reconstruction_software: STOPGAP
     tomogram_version: 1
     voxel_spacing: 13.68

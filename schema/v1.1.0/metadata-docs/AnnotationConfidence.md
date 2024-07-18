@@ -1,3 +1,5 @@
+
+
 # Class: AnnotationConfidence
 
 
@@ -12,9 +14,12 @@ URI: [cdp-meta:AnnotationConfidence](metadataAnnotationConfidence)
 
 
 
+
+
 ```mermaid
  classDiagram
     class AnnotationConfidence
+    click AnnotationConfidence href "../AnnotationConfidence"
       AnnotationConfidence : ground_truth_used
 
       AnnotationConfidence : precision
@@ -69,13 +74,14 @@ URI: [cdp-meta:AnnotationConfidence](metadataAnnotationConfidence)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationConfidence |
 | native | cdp-meta:AnnotationConfidence |
+
+
 
 
 
