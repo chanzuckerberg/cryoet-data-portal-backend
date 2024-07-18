@@ -192,7 +192,7 @@ tiltseries: OPTIONAL
       image_corrector: OPTIONAL, STRING
       phase_plate: OPTIONAL, STRING
     pixel_spacing: REQUIRED, FLOAT (POSITIVE)
-    related_empiar_entry: OPTIONAL, STRING
+    related_empiar_entry: OPTIONAL, STRING (EMPIAR_ID)
     spherical_aberration_constant: REQUIRED, FLOAT (POSITIVE) (mm)
     tilt_alignment_software: OPTIONAL, STRING
     tilt_axis: REQUIRED, FLOAT ([-360, 360]) (DEGREES)

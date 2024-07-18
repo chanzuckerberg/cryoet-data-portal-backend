@@ -192,7 +192,7 @@ tiltseries:
       energy_filter: GIF Quantum LS
       phase_plate: null
     pixel_spacing: 3.52
-    related_empiar_entry: EMD-15053
+    related_empiar_entry: EMPIAR-11058
     spherical_aberration_constant: 2.7
     tilt_axis: 1.36
     tilt_range:

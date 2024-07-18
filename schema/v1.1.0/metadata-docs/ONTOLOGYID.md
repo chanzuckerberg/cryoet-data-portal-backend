@@ -14,7 +14,7 @@ URI: [cdp-meta:ONTOLOGY_ID](metadataONTOLOGY_ID)
 
 
 
-* [pattern](https://w3id.org/linkml/pattern): `^[A-Z]+:[0-9]+$`
+* [pattern](https://w3id.org/linkml/pattern): `^[a-zA-Z]+:[0-9]+$`
 
 
 
