@@ -18,6 +18,9 @@ class DepositionImporter(BaseImporter):
     def import_metadata(self) -> None:
         meta = DepositionMetadata(self.config.fs, self.config.deposition_id, self.get_base_metadata())
         extra_data = self.load_extra_metadata()
+        if not self.get_base_metadata():
+            print("Skipping the deposition metadata file write as there is no metadata to write.")
+            return
         meta.write_metadata(self.get_metadata_path(), extra_data)
 
     def load_extra_metadata(self) -> dict[str, Any]:

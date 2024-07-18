@@ -1,4 +1,5 @@
 import json
+from typing import Callable
 
 import pytest as pytest
 from importers.deposition import DepositionImporter
@@ -12,11 +13,10 @@ from common.fs import FileSystemApi
 
 
 @pytest.fixture
-def config(s3_fs: FileSystemApi, test_output_bucket: str) -> DepositionImportConfig:
+def create_config(s3_fs: FileSystemApi, test_output_bucket: str) -> Callable[[str], DepositionImportConfig]:
     output_path = f"{test_output_bucket}/output"
     input_bucket = "test-public-bucket"
-    import_config = "tests/fixtures/dataset1.yaml"
-    return DepositionImportConfig(s3_fs, import_config, output_path, input_bucket, IMPORTERS)
+    return lambda import_config: DepositionImportConfig(s3_fs, import_config, output_path, input_bucket, IMPORTERS)
 
 
 def validate_deposition_metadata(s3_fs: FileSystemApi, output_path: str) -> dict[str, str]:
@@ -32,23 +32,37 @@ def validate_deposition_metadata(s3_fs: FileSystemApi, output_path: str) -> dict
 def test_import_deposition_metadata(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    config: DepositionImportConfig,
+    create_config: Callable[[str], DepositionImportConfig],
 ) -> None:
     output_path = f"{test_output_bucket}/output"
+    config = create_config("tests/fixtures/depositions/deposition1.yaml")
     deposition = list(DepositionImporter.finder(config))[0]
     deposition.import_metadata()
     validate_deposition_metadata(s3_fs, output_path)
+
+
+def test_invalid_deposition_metadata_import(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    create_config: Callable[[str], DepositionImportConfig],
+) -> None:
+    output_path = f"{test_output_bucket}/output"
+    config = create_config("tests/fixtures/depositions/deposition2.yaml")
+    deposition = list(DepositionImporter.finder(config))[0]
+    deposition.import_metadata()
+    assert [] == s3_fs.glob(f"{output_path}/depositions_metadata/10302/deposition_metadata.json")
 
 
 def test_key_photo_import_http(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     s3_client: S3Client,
-    config: DepositionImportConfig,
+    create_config: Callable[[str], DepositionImportConfig],
 ) -> None:
     output_prefix = "output"
     output_path = f"{test_output_bucket}/{output_prefix}"
 
+    config = create_config("tests/fixtures/depositions/deposition1.yaml")
     deposition = list(DepositionImporter.finder(config))[0]
     for item in DepositionKeyPhotoImporter.finder(config, deposition=deposition):
         item.import_item()
