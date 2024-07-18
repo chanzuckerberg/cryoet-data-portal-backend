@@ -30,9 +30,9 @@ FLOAT_FORMATTED_STRING_REGEX = r"^float\s*{[a-zA-Z0-9_-]+}\s*$"
 INTEGER_FORMATTED_STRING_REGEX = r"^int\s*{[a-zA-Z0-9_-]+}\s*$"
 
 
-def print_file_errors(filename: str, error: List[Union[ValidationError, Exception]]) -> None:
+def log_file_errors(filename: str, error: List[Union[ValidationError, Exception]]) -> None:
     """
-    Print an error message to stdout.
+    Log an error message to stdout.
     """
     logger.error('FAIL: "%s":', filename)
     for e in error:
@@ -179,12 +179,12 @@ def main(
             validation_succeeded = False
             # Get all errors and convert them to strings
             errors[file] = e.errors()
-            print_file_errors(file, errors[file])
+            log_file_errors(file, errors[file])
 
         except Exception as exc:
             validation_succeeded = False
             errors[file] = [exc]
-            print_file_errors(file, errors[file])
+            log_file_errors(file, errors[file])
 
     if validation_succeeded:
         logger.info("Success: All files passed validation.")

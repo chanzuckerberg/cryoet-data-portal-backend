@@ -5,11 +5,10 @@ import asyncio
 import logging
 import re
 import urllib
-from functools import cache
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 import aiohttp
-import requests
+from async_lru import alru_cache
 from dataset_config_models import (
     Annotation,
     AnnotationConfidence,
@@ -48,8 +47,6 @@ running_network_validation = False
 # ==============================================================================
 # Author Validation
 # ==============================================================================
-
-
 def validate_authors_status(authors: List[Author]) -> List[ValueError]:
     errors = []
     primary_author_status_count = 0
@@ -68,13 +65,13 @@ def validate_authors_status(authors: List[Author]) -> List[ValueError]:
     return errors
 
 
-@cache
-async def lookup_orcid(session: aiohttp.ClientSession, orcid_id: str) -> Tuple[str, bool]:
+@alru_cache
+async def lookup_orcid(orcid_id: str) -> Tuple[str, bool]:
     """
     Returns a tuple of the ORCID ID and whether or not it is valid
     """
     url = f"https://pub.orcid.org/v3.0/{orcid_id}"
-    async with session.head(url) as response:
+    async with aiohttp.ClientSession() as session, session.head(url) as response:
         return orcid_id, response.status == 200
 
 
@@ -84,11 +81,10 @@ async def validate_orcids(orcid_list: List[str]) -> List[str]:
     """
     invalid_orcids: List[str] = []
 
-    async with aiohttp.ClientSession() as session:
-        tasks = [lookup_orcid(session, orcid) for orcid in orcid_list]
-        results = await asyncio.gather(*tasks)
-        invalid_orcids += [orcid for orcid, valid in results if not valid]
-        return invalid_orcids
+    tasks = [lookup_orcid(orcid) for orcid in orcid_list]
+    results = await asyncio.gather(*tasks)
+    invalid_orcids += [orcid for orcid, valid in results if not valid]
+    return invalid_orcids
 
 
 def validate_authors(authors: List[Author]) -> List[ValueError]:
@@ -99,6 +95,10 @@ def validate_authors(authors: List[Author]) -> List[ValueError]:
 
     if running_network_validation:
         orcids = list({author.ORCID for author in authors if author.ORCID is not None})
+
+        if len(orcids) == 0:
+            return all_errors
+
         logger.debug("Checking ORCIDs: %s", orcids)
         invalid_orcids = asyncio.run(validate_orcids(orcids))
         if len(invalid_orcids) > 0:
@@ -123,8 +123,8 @@ class ExtendedValidationDateStamp(DateStamp):
 # ==============================================================================
 # ID Object Validation
 # ==============================================================================
-@cache
-def validate_id(id: str) -> Tuple[dict, bool]:
+@alru_cache
+async def validate_id(id: str) -> Tuple[dict, bool]:
     """
     Returns a tuple of the ID data and whether or not it is valid.
     """
@@ -137,14 +137,13 @@ def validate_id(id: str) -> Tuple[dict, bool]:
 
     logger.debug("Getting ID %s at %s", id, url)
 
-    response = requests.get(url)
-    data = response.json() if response.status_code == 200 else {}
+    async with aiohttp.ClientSession() as session, session.get(url) as response:
+        data = await response.json() if response.status == 200 else {}
+        return data, data.get("page", {}).get("totalElements", 0) > 0
 
-    return data, data.get("page", {}).get("totalElements", 0) > 0
 
-
-@cache
-def is_id_ancestor(id_ancestor: str, id: str) -> bool:
+@alru_cache
+async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
     """
     Returns whether or not id_ancestor is an ancestor of id
     """
@@ -161,10 +160,10 @@ def is_id_ancestor(id_ancestor: str, id: str) -> bool:
 
     logger.debug("Getting ancestors for ID %s at %s", id, url)
 
-    response = requests.get(url)
-    return response.status_code == 200 and id_ancestor in [
-        ancestor["obo_id"] for ancestor in response.json()["_embedded"]["terms"]
-    ]
+    async with aiohttp.ClientSession() as session, session.get(url) as response:
+        return response.status == 200 and id_ancestor in [
+            ancestor["obo_id"] for ancestor in (await response.json())["_embedded"]["terms"]
+        ]
 
 
 def validate_id_name_object(
@@ -182,7 +181,7 @@ def validate_id_name_object(
     """
     logger.debug("Validating %s %s with ID %s", field_name, name, id)
 
-    id_data, valid_id = validate_id(id)
+    id_data, valid_id = asyncio.run(validate_id(id))
 
     if not valid_id:
         raise ValueError(f"Invalid ID found in {field_name}: {id}")
@@ -206,7 +205,7 @@ def validate_id_name_object(
 
     if ancestor is not None:
         logger.debug("Valid name, now checking if %s is an ancestor of %s", field_name, ancestor)
-        if not is_id_ancestor(ancestor, id):
+        if not asyncio.run(is_id_ancestor(ancestor, id)):
             raise ValueError(f"{field_name} '{name}' is not a descendant of {ancestor}")
 
 
@@ -247,48 +246,43 @@ def validate_organism_object(self: OrganismDetails) -> OrganismDetails:
 # ==============================================================================
 # Publication Validation
 # ==============================================================================
-def lookup_doi(session: aiohttp.ClientSession, doi: str) -> Tuple[str, bool]:
-    @cache
-    async def helper(doi: str) -> Tuple[str, bool]:
-        url = f"https://api.crossref.org/works/{doi}/agency"
-        async with session.head(url) as response:
-            return doi, response.status == 200
-
-    return helper(doi)
+@alru_cache
+async def lookup_doi(doi: str) -> Tuple[str, bool]:
+    url = f"https://api.crossref.org/works/{doi}/agency"
+    async with aiohttp.ClientSession() as session, session.head(url) as response:
+        return doi, response.status == 200
 
 
-def lookup_empiar(session: aiohttp.ClientSession, empiar_id: str) -> Tuple[str, bool]:
-    @cache
-    async def helper(empiar_id: str) -> Tuple[str, bool]:
-        url = f"https://www.ebi.ac.uk/empiar/api/entry/{empiar_id}/"
-        async with session.head(url) as response:
-            return empiar_id, response.status == 200
-
-    return helper(empiar_id)
+@alru_cache
+async def lookup_empiar(empiar_id: str) -> Tuple[str, bool]:
+    url = f"https://www.ebi.ac.uk/empiar/api/entry/{empiar_id}/"
+    async with aiohttp.ClientSession() as session, session.head(url) as response:
+        return empiar_id, response.status == 200
 
 
-def lookup_emdb(session: aiohttp.ClientSession, emdb_id: str) -> Tuple[str, bool]:
-    @cache
-    async def helper(emdb_id: str) -> Tuple[str, bool]:
-        url = f"https://www.ebi.ac.uk/emdb/api/entry/{emdb_id}"
-        async with session.head(url) as response:
-            return emdb_id, response.status == 200
-
-    return helper(emdb_id)
+@alru_cache
+async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
+    url = f"https://www.ebi.ac.uk/emdb/api/entry/{emdb_id}"
+    async with aiohttp.ClientSession() as session, session.head(url) as response:
+        return emdb_id, response.status == 200
 
 
-# Maps publication types to regexes and lookup functions
+@alru_cache
+async def lookup_pdb(pdb_id: str) -> Tuple[str, bool]:
+    url = f"https://data.rcsb.org/rest/v1/core/entry/{pdb_id}"
+    async with aiohttp.ClientSession() as session, session.head(url) as response:
+        return pdb_id, response.status == 200
+
+
 PUBLICATION_REGEXES_AND_FUNCTIONS = {
     "doi": (r"^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$", lookup_doi),
     "empiar": (r"^EMPIAR-[0-9]{5}$", lookup_empiar),
     "emdb": (r"^EMD-[0-9]{4,5}$", lookup_emdb),
+    "pdb": (r"^pdb[0-9a-zA-Z]{4,8}$", lookup_pdb),
 }
 
 
 async def validate_publication_lists(publication_list: List[str]) -> List[str]:
-    """
-    Returns a list of invalid publications from the provided list
-    """
     # list of invalid publications
     invalid_publications: List[str] = []
     new_publications: Dict[str, Set[str]] = {
@@ -304,15 +298,13 @@ async def validate_publication_lists(publication_list: List[str]) -> List[str]:
                 new_publications[publication_type].add(publication)
                 break
 
-    # Loop through the different publication types, create new requests for each publication, and then check if they are valid
-    async with aiohttp.ClientSession() as session:
-        tasks = []
-        for publication_type, (_, validate_function) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
-            if publication_type in new_publications:
-                tasks += [validate_function(session, entry) for entry in list(new_publications[publication_type])]
+    tasks = []
+    for publication_type, (_, validate_function) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
+        if publication_type in new_publications:
+            tasks += [validate_function(entry) for entry in list(new_publications[publication_type])]
 
-        results = await asyncio.gather(*tasks)
-        invalid_publications += [publication for publication, valid in results if not valid]
+    results = await asyncio.gather(*tasks)
+    invalid_publications += [publication for publication, valid in results if not valid]
 
     return invalid_publications
 
@@ -463,8 +455,8 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
 # ==============================================================================
 # Dataset Key Photo Validation
 # ==============================================================================
-@cache
-def validate_image_format(image_url: str) -> bool:
+@alru_cache
+async def validate_image_format(image_url: str) -> bool:
     if not running_network_validation:
         return True
 
@@ -478,18 +470,18 @@ def validate_image_format(image_url: str) -> bool:
     if not image_url.startswith("https"):
         logger.warning("URL %s is not HTTPS", image_url)
 
-    r = requests.head(image_url)
-    if r.status_code >= 400:
-        return False
+    async with aiohttp.ClientSession() as session, session.head(image_url) as response:
+        if response.status >= 400:
+            return False
 
-    return r.headers["content-type"] in VALID_IMAGE_FORMATS
+        return response.headers["content-type"] in VALID_IMAGE_FORMATS
 
 
 class ExtendedPicturePath(PicturePath):
     @field_validator("snapshot")
     @classmethod
     def valid_snapshot(cls: Self, snapshot: str) -> str:
-        if validate_image_format(snapshot):
+        if asyncio.run(validate_image_format(snapshot)):
             return snapshot
 
         raise ValueError(f"Invalid dataset key photo snapshot: {snapshot}")
@@ -497,7 +489,7 @@ class ExtendedPicturePath(PicturePath):
     @field_validator("thumbnail")
     @classmethod
     def valid_thumbnail(cls: Self, thumbnail: str) -> str:
-        if validate_image_format(thumbnail):
+        if asyncio.run(validate_image_format(thumbnail)):
             return thumbnail
 
         raise ValueError(f"Invalid dataset key photo thumbnail: {thumbnail}")
@@ -549,10 +541,10 @@ class ExtendedValidationOrganism(OrganismDetails):
 
 
 class ExtendedValidationCrossReferences(CrossReferences):
-    @field_validator("dataset_publications")
+    @field_validator("publications")
     @classmethod
-    def validate_dataset_publications(cls: Self, dataset_publications: str) -> str:
-        return validate_publications(dataset_publications)
+    def validate_publications(cls: Self, publications: str) -> str:
+        return validate_publications(publications)
 
     @field_validator("related_database_entries")
     @classmethod
