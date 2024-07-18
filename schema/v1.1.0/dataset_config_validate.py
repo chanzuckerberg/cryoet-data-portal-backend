@@ -12,9 +12,9 @@ import yaml
 from dataset_config_models_extended import ExtendedValidationContainer  # noqa: E402
 from pydantic import ValidationError
 
-COMMON_DIR = "../../ingestion_tools/scripts/"
-sys.path.append(COMMON_DIR)  # To import the helper function from common.py
-from common.yaml_files import EXCLUDE_KEYWORDS_LIST, get_yaml_config_files  # noqa: E402
+ROOT_DIR = "../../"
+sys.path.append(ROOT_DIR)  # To import the helper function from common.py
+from ingestion_tools.scripts.common.yaml_files import EXCLUDE_KEYWORDS_LIST, get_yaml_config_files  # noqa: E402
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("dataset-validate")
