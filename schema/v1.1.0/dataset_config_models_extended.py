@@ -677,6 +677,16 @@ class ExtendedValidationTomogram(Tomogram):
 
         return affine_transformation_matrix
 
+    @field_validator("authors")
+    @classmethod
+    def valid_tomogram_authors(cls: Self, authors: List[Author]) -> List[Author]:
+        all_errors = validate_authors(authors)
+
+        if len(all_errors) > 0:
+            raise ValueError(all_errors)
+
+        return authors
+
 
 class ExtendedValidationTomogramEntity(TomogramEntity):
     metadata: ExtendedValidationTomogram = TomogramEntity.model_fields["metadata"]
