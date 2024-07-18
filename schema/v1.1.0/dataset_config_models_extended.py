@@ -240,7 +240,7 @@ def validate_ontology_object(
     if self.id is None:
         return self
 
-    validate_id_name_object(self.id.strip().upper(), self.name.strip().lower(), field_name, True, ancestor)
+    validate_id_name_object(self.id.strip(), self.name.strip().lower(), field_name, True, ancestor)
 
     return self
 
