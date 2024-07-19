@@ -1,6 +1,6 @@
 import json
 from os.path import basename
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 import ndjson
 import pytest
@@ -11,6 +11,7 @@ from importers.tomogram import TomogramImporter
 from importers.voxel_spacing import VoxelSpacingImporter
 from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
+from tests.s3_import.util import list_dir
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
@@ -67,14 +68,6 @@ def tomo_importer(dataset_config: DepositionImportConfig) -> TomogramImporter:
         parents={"dataset": dataset, "run": run, "voxel_spacing": vs},
     )
     return tomo
-
-
-def list_dir(s3_client: S3Client, bucket: str, prefix: str) -> List[str]:
-    files = s3_client.list_objects(Bucket=bucket, Prefix=prefix)
-    fnames = []
-    for item in files["Contents"]:
-        fnames.append(item["Key"])
-    return fnames
 
 
 def import_annotation_metadata(
@@ -279,7 +272,6 @@ def test_ingest_point_data(
     s3_client: S3Client,
     case: Dict[str, Any],
 ) -> None:
-
     # loop through test cases
     anno_config = {
         "metadata": default_anno_metadata,
@@ -783,7 +775,6 @@ def test_ingest_oriented_point_data(
     s3_client: S3Client,
     case: Dict[str, Any],
 ) -> None:
-
     # loop through test cases
     anno_config = {
         "metadata": default_anno_metadata,
@@ -899,7 +890,6 @@ def test_ingest_instance_point_data(
     s3_client: S3Client,
     case: Dict[str, Any],
 ) -> None:
-
     # loop through test cases
     anno_config = {
         "metadata": default_anno_metadata,
