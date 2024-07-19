@@ -10,7 +10,7 @@ from common.fs import FileSystemApi
 
 
 @pytest.fixture
-def dataset_config(s3_fs: FileSystemApi, test_output_bucket: str) -> DepositionImportConfig:
+def deposition_config(s3_fs: FileSystemApi, test_output_bucket: str) -> DepositionImportConfig:
     config_file = "tests/fixtures/annotations/anno_config.yaml"
     output_path = f"{test_output_bucket}/output"
     input_bucket = "test-public-bucket"
