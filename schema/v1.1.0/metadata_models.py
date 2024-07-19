@@ -147,7 +147,7 @@ linkml_meta = LinkMLMeta(
                 "description": "An ontology identifier",
                 "from_schema": "metadata",
                 "name": "ONTOLOGY_ID",
-                "pattern": "^[A-Z]+:[0-9]+$",
+                "pattern": "^[a-zA-Z]+:[0-9]+$",
             },
             "ORCID": {
                 "base": "str",
@@ -1154,7 +1154,7 @@ class CellStrain(ConfiguredBaseModel):
 
     @field_validator("id")
     def pattern_id(cls, v):
-        pattern = re.compile(r"^[A-Z]+:[0-9]+$")
+        pattern = re.compile(r"^[a-zA-Z]+:[0-9]+$")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):

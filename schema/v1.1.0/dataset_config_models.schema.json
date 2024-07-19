@@ -569,7 +569,7 @@
             "properties": {
                 "id": {
                     "description": "Link to more information about the cell strain.",
-                    "pattern": "^[A-Z]+:[0-9]+$",
+                    "pattern": "^[a-zA-Z]+:[0-9]+$",
                     "type": "string"
                 },
                 "name": {
