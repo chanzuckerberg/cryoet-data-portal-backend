@@ -741,6 +741,41 @@ slots:
     ifabsent: 'int(1)'
 
   # ============================================================================
+  # API slots
+  # ============================================================================
+  api_sequential_identifier:
+    range: integer
+    description: An identifier to refer to a specific instance of this type
+    required: true
+  api_author_list_order:
+    range: integer
+    description: The order that the author is listed as in the associated publication
+    required: true
+  api_file_format:
+    range: string
+    description: File format label
+    required: true
+  api_s3_path:
+    range: string
+    description: Path to the file in s3
+    required: true
+  api_https_path:
+    range: string
+    description: Path to the file as an https url
+    required: true
+  api_s3_prefix:
+    range: string
+    description: Path to a directory containing data for this entity as an S3 url
+    required: true
+  api_https_prefix:
+    range: string
+    description: Path to a directory containing data for this entity as an HTTPS url
+    required: true
+  api_run_name:
+    range: string
+    description: Name of a run
+    required: true
+
 
 enums:
   # ============================================================================
@@ -755,6 +790,17 @@ enums:
         description: Annotations were generated automatically.
       hybrid:
         description: Annotations were generated semi-automatically.
+  annotation_file_shape_type_enum:
+    description: Describes the shape of the annotation
+    permissible_values:
+      SegmentationMask:
+        description: A binary mask volume
+      OrientedPoint:
+        description: A series of coordinates and an orientation
+      Point:
+        description: A series of coordinates
+      InstanceSegmentation:
+        description: A volume with labels for multiple instances
 
   annotation_method_link_type_enum:
     description: Describes the type of link associated to the annotation method.

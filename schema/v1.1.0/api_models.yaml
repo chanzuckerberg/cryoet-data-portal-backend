@@ -1,0 +1,412 @@
+name: cdp-dataset-config
+id: cdp-dataset-config
+version: 1.1.0
+description: Schema for dataset configs
+imports:
+- linkml:types
+- ./metadata_materialized
+- ./common
+prefixes:
+  linkml:
+    prefix_prefix: linkml
+    prefix_reference: https://w3id.org/linkml/
+
+  IDMixin:
+    mixin: true
+    attributes:
+      id:
+        exact_mappings:
+          - cdp-comon:api_sequential_identifier
+classes:
+
+  # ============================================================================
+  # Mixins
+  # ============================================================================
+  IDMixin:
+    mixin: true
+    attributes:
+      id:
+        exact_mappings:
+          - cdp-comon:api_sequential_identifier
+  DateStampedEntityMixin:
+    description: A set of dates at which a data item was deposited, published and last modified.
+    mixin: true
+    attributes:
+      deposition_date:
+        exact_mappings:
+          - cdp-common:deposition_date
+      release_date:
+        exact_mappings:
+          - cdp-common:release_date
+      last_modified_date:
+        exact_mappings:
+          - cdp-common:last_modified_date
+  CrossReferencedEntityMixin:
+    description: A set of cross-references to other databases and publications.
+    mixin: true
+    attributes:
+      publications:
+        range: cdp-common:DOI_LIST
+        recommended: true
+        description: Comma-separated list of DOIs for publications associated with the dataset.
+      related_database_entries:
+        range: cdp-common:EMPIAR_EMDB_PDB_LIST
+        recommended: true
+        description: Comma-separated list of related database entries for the dataset.
+      related_database_links: # DEPRECATED
+        range: string
+        description: Comma-separated list of related database links for the dataset.
+      dataset_citations: # DEPRECATED
+        range: string
+        description: Comma-separated list of DOIs for publications citing the dataset.
+  S3PrefixedEntityMixin:
+    description: An entity with s3/https prefixes
+    mixin: true
+    attributes:
+      s3_prefix:
+        exact_mappings:
+          - cdp-common:api_s3_prefix
+      https_prefix:
+        exact_mappings:
+          - cdp-common:api_https_prefix
+  # ============================================================================
+
+  # ============================================================================
+  # Mixins
+  # ============================================================================
+  AnnotationAuthor:
+    mixins:
+      - IDMixin
+    description: Author of an annotation
+    attributes:
+      annotation:
+        range: Annotation
+        inverse: Annotation.authors
+      author_list_order:
+        exact_mappings:
+          - cdp-common:api_author_list_order
+      name:
+        exact_mappings:
+          - cdp-common:author_name
+      email:
+        exact_mappings:
+          - cdp-common:author_email
+      affiliation_name:
+        exact_mappings:
+          - cdp-common:author_affiliation_name
+      affiliation_address:
+        exact_mappings:
+          - cdp-common:author_affiliation_address
+      affiliation_identifier:
+        exact_mappings:
+          - cdp-common:author_affiliation_identifier
+      corresponding_author_status:
+        exact_mappings:
+          - cdp-common:author_corresponding_author_status
+      primary_author_status:
+        exact_mappings:
+          - cdp-common:author_primary_author_status
+      orcid:
+        exact_mappings:
+          - cdp-common:author_orcid
+      annotation_id:
+        exact_mappings:
+          - cdp-common:api_sequential_identifier
+    annotations:
+      plural: AnnotationAuthors
+  AnnotationFile:
+    mixins:
+      - IDMixin
+    description: Files associated with an annotation
+    attributes:
+      annotation:
+        range: Annotation
+        inverse: Annotation.authors
+      shape_type:
+        exact_mappings:
+          - cdp-common:annotation_file_shape_type_enum
+      format:
+        exact_mappings:
+          - cdp-common:api_file_format
+      s3_path:
+        exact_mappings:
+          - cdp-common:api_s3_path
+      https_path:
+        exact_mappings:
+          - cdp-common:api_https_path
+      is_visualization_default:
+        exact_mappings:
+          - cdp-common:annotation_source_file_is_visualization_default
+    annotations:
+      plural: AnnotationFiles
+  Annotation:
+    mixins:
+      - IDMixin
+      - DateStampedEntityMixin
+    description: Metadata about an annotation for a run
+    attributes:
+      deposition:
+        range: Deposition
+        inverse: Deposition.annotations
+      tomogram_voxel_spacing:
+        range: TomogramVoxelSpacing
+        inverse: TomogramVoxelSpacing.annotations
+      s3_metadata_path:
+        exact_mappings:
+          - cdp-common:api_s3_path
+      https_metadata_path:
+        exact_mappings:
+          - cdp-common:api_https_path
+      annotation_publication:
+        exact_mappings:
+          - cdp-common:annotation_publications
+      annotation_method:
+        exact_mappings:
+          - cdp-common:annotation_method
+      ground_truth_status:
+        exact_mappings:
+          - cdp-common:annotation_ground_truth_status
+      object_id:
+        exact_mappings:
+          - cdp-common:annotation_object_id
+      object_name:
+        exact_mappings:
+          - cdp-common:annotation_object_name
+      object_description:
+        exact_mappings:
+          - cdp-common:annotation_object_description
+      object_state:
+        exact_mappings:
+          - cdp-common:annotation_object_state
+      object_count:
+        exact_mappings:
+          - cdp-common:annotation_object_count
+      confidence_precision:
+        exact_mappings:
+          - cdp-common:annotation_confidence_precision
+      confidence_recall:
+        exact_mappings:
+          - cdp-common:annotation_confidence_recall
+      ground_truth_used:
+        exact_mappings:
+          - cdp-common:annotation_ground_truth_used
+      annotation_software:
+        exact_mappings:
+          - cdp-common:annotation_software
+      is_curator_recommended:
+        exact_mappings:
+          - cdp-common:annotation_is_curator_recommended
+      method_type:
+        exact_mappings:
+          - cdp-common:annotation_method_type
+      annotation_object:
+        description: *desc_annotation_object
+        range: AnnotationObject
+        required: true
+      annotation_publications:
+        exact_mappings:
+          - cdp-common:annotation_publications
+      annotation_software:
+        exact_mappings:
+          - cdp-common:annotation_software
+      confidence:
+        description: *desc_annotation_confidence
+        range: AnnotationConfidence
+      files:
+        description: *desc_annotation_source_file
+        range: AnnotationSourceFile
+        multivalued: true
+        inlined_as_list: true
+        list_elements_ordered: true
+      ground_truth_status:
+        exact_mappings:
+          - cdp-common:annotation_ground_truth_status
+      is_curator_recommended:
+        exact_mappings:
+          - cdp-common:annotation_is_curator_recommended
+      method_type:
+        exact_mappings:
+          - cdp-common:annotation_method_type
+      object_count:
+        exact_mappings:
+          - cdp-common:annotation_object_count
+      version:
+        exact_mappings:
+          - cdp-common:annotation_version
+    annotations:
+      plural: Annotations
+  DatasetAuthor:
+    mixins:
+      - IDMixin
+    description: An author of a dataset
+    attributes:
+      dataset:
+        range: Dataset
+        inverse: Dataset.authors
+      author_list_order:
+        exact_mappings:
+          - cdp-common:api_author_list_order
+      name:
+        exact_mappings:
+          - cdp-common:author_name
+      email:
+        exact_mappings:
+          - cdp-common:author_email
+      affiliation_name:
+        exact_mappings:
+          - cdp-common:author_affiliation_name
+      affiliation_address:
+        exact_mappings:
+          - cdp-common:author_affiliation_address
+      affiliation_identifier:
+        exact_mappings:
+          - cdp-common:author_affiliation_identifier
+      corresponding_author_status:
+        exact_mappings:
+          - cdp-common:author_corresponding_author_status
+      primary_author_status:
+        exact_mappings:
+          - cdp-common:author_primary_author_status
+      orcid:
+        exact_mappings:
+          - cdp-common:author_orcid
+      annotation_id:
+        exact_mappings:
+          - cdp-common:api_sequential_identifier
+    annotations:
+      plural: DatasetAuthors
+  DatasetFunding:
+    mixins:
+      - IDMixin
+    description: Information about how a dataset was funded
+    attributes:
+      dataset:
+        range: Dataset
+        inverse: Dataset.authors
+      funding_agency_name:
+        exact_mappings:
+          - cdp-common:funding_agency_name
+      grant_id:
+        exact_mappings:
+          - cdp-common:funding_grant_id
+    annotations:
+      plural: DatasetFundings
+  Datasets:
+    mixins:
+      - IDMixin
+      - DateStampedEntityMixin
+      - CrossReferencedEntityMixin
+      - S3PrefixedEntityMixin
+    description: An author of a dataset
+    attributes:
+      deposition:
+        range: Deposition
+        inverse: Deposition.datasets
+      funding_sources:
+        range: DatasetFunding
+        inverse: DatasetFunding.dataset
+        multivalued: true
+      runs:
+        range: Run
+        inverse: Run.dataset
+        multivalued: true
+      dataset_authors:
+        range: DatasetAuthor
+        multivalued: true
+        inverse: DatasetAuthor.dataset
+      title:
+        exact_mappings:
+        - cdp-common:dataset_title
+      description:
+        exact_mappings:
+        - cdp-common:dataset_description
+      organism_name:
+        exact_mappings:
+          -  cdp-common:organism_name
+      organism_taxid:
+        exact_mappings:
+          - cdp-common:organism_taxid
+      tissue_name:
+        exact_mappings:
+          - cdp-common:tissue_name
+      tissue_id:
+        exact_mappings:
+          - cdp-common:tissue_id
+      cell_name:
+        exact_mappings:
+          - cdp-common:cell_name
+      cell_type_id:
+        exact_mappings:
+          - cdp-common:cell_type_id
+      cell_strain_name:
+        exact_mappings:
+          - cdp-common:cell_strain_name
+      cell_strain_id:
+        exact_mappings:
+          - cdp-common:cell_strain_id
+      sample_preparation:
+        exact_mappings:
+          - cdp-common:sample_preparation
+      grid_preparation:
+        exact_mappings:
+          - cdp-common:grid_preparation
+      other_setup:
+        exact_mappings:
+          - cdp-common:preparation_other_setup
+      key_photo_url:
+        exact_mappings:
+          - cdp-common:dataset_key_photo_url
+      key_photo_thumbnail_url:
+        exact_mappings:
+          - cdp-common:dataset_key_photo_thumbnail_url
+      cell_component_name:
+        exact_mappings:
+          - cdp-common:cell_component_name
+      cell_component_id:
+        exact_mappings:
+          - cdp-common:cell_component_id
+    annotations:
+      plural: Datasets
+  Run:
+    mixins:
+      - IDMixin
+      - S3PrefixedEntityMixin
+    attributes:
+      dataset:
+        range: Dataset
+        required: true
+        inverse: Dataset.runs
+      tiltseries:
+        range: Tiltseries
+        multivalued: true
+        inverse: Tiltseries.run
+      tomogram_voxel_spacings:
+        range: TomogramVoxelSpacing
+        multivalued: true
+        inverse: TomogramVoxelSpacing.run
+      name:
+        exact_mappings:
+          - cdp-common:run_name
+  Tiltseries:
+    mixins:
+      - IDMixin
+    attributes:
+      run:
+        range: Run
+        required: true
+        inverse: Run.tiltseries
+      s3_omezarr_dir:
+        exact_mappings:
+          - cdp-common:tiltseries_s3_omezarr_dir
+      s3_mrc_bin1:
+        exact_mappings:
+          - cdp-common:tiltseries_s3_mrc_bin1
+      https_omezarr_dir:
+        exact_mappings:
+          - cdp-common:tiltseries_https_omezarr_dir
+      https_mrc_bin1:
+        exact_mappings:
+          - cdp-common:tiltseries_https_mrc_bin1
+    annotations:
+      plural: Runs
+  # ============================================================================
