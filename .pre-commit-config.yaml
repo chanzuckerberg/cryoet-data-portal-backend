@@ -46,3 +46,10 @@ repos:
   - id: check-merge-conflict
   - id: end-of-file-fixer
   - id: trailing-whitespace
+- repo: local
+  hooks:
+  - id: dataset-config-validation
+    name: dataset-config-validation
+    entry: bash -c "cd schema/v1.1.0/ && make validate-configs"
+    language: system
+    files: '^(ingestion_tools/dataset_configs/|schema/v1.1.0/.*\.(py|yaml|Makefile))'
