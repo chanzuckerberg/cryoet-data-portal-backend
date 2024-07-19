@@ -628,6 +628,13 @@
                     },
                     "type": "array"
                 },
+                "deposition_keyphotos": {
+                    "description": "A deposition key photo entity.",
+                    "items": {
+                        "$ref": "#/$defs/DepositionKeyPhotoEntity"
+                    },
+                    "type": "array"
+                },
                 "depositions": {
                     "description": "A deposition entity.",
                     "items": {
@@ -846,9 +853,9 @@
             "description": "A dataset key photo entity.",
             "properties": {
                 "sources": {
-                    "description": "A dataset key photo source.",
+                    "description": "A key photo source.",
                     "items": {
-                        "$ref": "#/$defs/DatasetKeyPhotoSource"
+                        "$ref": "#/$defs/KeyPhotoSource"
                     },
                     "type": "array"
                 }
@@ -857,37 +864,6 @@
                 "sources"
             ],
             "title": "DatasetKeyPhotoEntity",
-            "type": "object"
-        },
-        "DatasetKeyPhotoLiteral": {
-            "additionalProperties": false,
-            "description": "A literal for a dataset key photo.",
-            "properties": {
-                "value": {
-                    "$ref": "#/$defs/PicturePath",
-                    "description": "A set of paths to representative images of a piece of data."
-                }
-            },
-            "required": [
-                "value"
-            ],
-            "title": "DatasetKeyPhotoLiteral",
-            "type": "object"
-        },
-        "DatasetKeyPhotoSource": {
-            "additionalProperties": false,
-            "description": "A dataset key photo source.",
-            "properties": {
-                "literal": {
-                    "$ref": "#/$defs/DatasetKeyPhotoLiteral",
-                    "description": "A literal for a dataset key photo."
-                },
-                "parent_filters": {
-                    "$ref": "#/$defs/SourceParentFilters",
-                    "description": "Filters for the parent of a source."
-                }
-            },
-            "title": "DatasetKeyPhotoSource",
             "type": "object"
         },
         "DatasetSource": {
@@ -1064,6 +1040,24 @@
                 "sources"
             ],
             "title": "DepositionEntity",
+            "type": "object"
+        },
+        "DepositionKeyPhotoEntity": {
+            "additionalProperties": false,
+            "description": "A deposition key photo entity.",
+            "properties": {
+                "sources": {
+                    "description": "A key photo source.",
+                    "items": {
+                        "$ref": "#/$defs/KeyPhotoSource"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "sources"
+            ],
+            "title": "DepositionKeyPhotoEntity",
             "type": "object"
         },
         "DepositionSource": {
@@ -1284,6 +1278,55 @@
                 }
             },
             "title": "KeyImageSource",
+            "type": "object"
+        },
+        "KeyPhotoEntity": {
+            "additionalProperties": false,
+            "description": "A key photo entity.",
+            "properties": {
+                "sources": {
+                    "description": "A key photo source.",
+                    "items": {
+                        "$ref": "#/$defs/KeyPhotoSource"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "sources"
+            ],
+            "title": "KeyPhotoEntity",
+            "type": "object"
+        },
+        "KeyPhotoLiteral": {
+            "additionalProperties": false,
+            "description": "A literal for a key photo.",
+            "properties": {
+                "value": {
+                    "$ref": "#/$defs/PicturePath",
+                    "description": "A set of paths to representative images of a piece of data."
+                }
+            },
+            "required": [
+                "value"
+            ],
+            "title": "KeyPhotoLiteral",
+            "type": "object"
+        },
+        "KeyPhotoSource": {
+            "additionalProperties": false,
+            "description": "A key photo source.",
+            "properties": {
+                "literal": {
+                    "$ref": "#/$defs/KeyPhotoLiteral",
+                    "description": "A literal for a key photo."
+                },
+                "parent_filters": {
+                    "$ref": "#/$defs/SourceParentFilters",
+                    "description": "Filters for the parent of a source."
+                }
+            },
+            "title": "KeyPhotoSource",
             "type": "object"
         },
         "MicroscopeDetails": {
@@ -2330,6 +2373,13 @@
             "description": "A dataset entity.",
             "items": {
                 "$ref": "#/$defs/DatasetEntity"
+            },
+            "type": "array"
+        },
+        "deposition_keyphotos": {
+            "description": "A deposition key photo entity.",
+            "items": {
+                "$ref": "#/$defs/DepositionKeyPhotoEntity"
             },
             "type": "array"
         },

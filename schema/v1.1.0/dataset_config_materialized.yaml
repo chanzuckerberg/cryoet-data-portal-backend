@@ -552,6 +552,18 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+      deposition_keyphotos:
+        name: deposition_keyphotos
+        description: A deposition key photo entity.
+        from_schema: cdp-dataset-config
+        alias: deposition_keyphotos
+        owner: Container
+        domain_of:
+        - Container
+        range: DepositionKeyPhotoEntity
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
       depositions:
         name: depositions
         description: A deposition entity.
@@ -995,7 +1007,7 @@ classes:
         owner: DefaultLiteralEntity
         domain_of:
         - DefaultLiteralEntity
-        - DatasetKeyPhotoSource
+        - KeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
@@ -1013,11 +1025,91 @@ classes:
         owner: DefaultLiteral
         domain_of:
         - DefaultLiteral
-        - DatasetKeyPhotoLiteral
+        - KeyPhotoLiteral
         - VoxelSpacingLiteral
         range: Any
         required: true
         multivalued: true
+        inlined: true
+        inlined_as_list: true
+  KeyPhotoEntity:
+    name: KeyPhotoEntity
+    description: A key photo entity.
+    from_schema: cdp-dataset-config
+    attributes:
+      sources:
+        name: sources
+        description: A key photo source.
+        from_schema: cdp-dataset-config
+        alias: sources
+        owner: KeyPhotoEntity
+        domain_of:
+        - KeyPhotoEntity
+        - AnnotationEntity
+        - DatasetEntity
+        - DepositionEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: KeyPhotoSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  KeyPhotoSource:
+    name: KeyPhotoSource
+    description: A key photo source.
+    from_schema: cdp-dataset-config
+    mixins:
+    - SourceParentFiltersEntity
+    attributes:
+      literal:
+        name: literal
+        description: A literal for a key photo.
+        from_schema: cdp-dataset-config
+        alias: literal
+        owner: KeyPhotoSource
+        domain_of:
+        - DefaultLiteralEntity
+        - KeyPhotoSource
+        - VoxelSpacingSource
+        range: KeyPhotoLiteral
+        inlined: true
+        inlined_as_list: true
+      parent_filters:
+        name: parent_filters
+        description: Filters for the parent of a source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: KeyPhotoSource
+        domain_of:
+        - SourceParentFiltersEntity
+        - AnnotationSource
+        range: SourceParentFilters
+        inlined: true
+        inlined_as_list: true
+  KeyPhotoLiteral:
+    name: KeyPhotoLiteral
+    description: A literal for a key photo.
+    from_schema: cdp-dataset-config
+    attributes:
+      value:
+        name: value
+        description: A set of paths to representative images of a piece of data.
+        from_schema: cdp-dataset-config
+        alias: value
+        owner: KeyPhotoLiteral
+        domain_of:
+        - DefaultLiteral
+        - KeyPhotoLiteral
+        - VoxelSpacingLiteral
+        range: PicturePath
+        required: true
         inlined: true
         inlined_as_list: true
   AnnotationEntity:
@@ -1048,9 +1140,9 @@ classes:
         alias: sources
         owner: AnnotationEntity
         domain_of:
+        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
-        - DatasetKeyPhotoEntity
         - DepositionEntity
         - FrameEntity
         - GainEntity
@@ -1170,9 +1262,9 @@ classes:
         alias: sources
         owner: DatasetEntity
         domain_of:
+        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
-        - DatasetKeyPhotoEntity
         - DepositionEntity
         - FrameEntity
         - GainEntity
@@ -1239,7 +1331,7 @@ classes:
         owner: DatasetSource
         domain_of:
         - DefaultLiteralEntity
-        - DatasetKeyPhotoSource
+        - KeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
@@ -1248,17 +1340,18 @@ classes:
     name: DatasetKeyPhotoEntity
     description: A dataset key photo entity.
     from_schema: cdp-dataset-config
+    is_a: KeyPhotoEntity
     attributes:
       sources:
         name: sources
-        description: A dataset key photo source.
+        description: A key photo source.
         from_schema: cdp-dataset-config
         alias: sources
         owner: DatasetKeyPhotoEntity
         domain_of:
+        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
-        - DatasetKeyPhotoEntity
         - DepositionEntity
         - FrameEntity
         - GainEntity
@@ -1268,60 +1361,39 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         - VoxelSpacingEntity
-        range: DatasetKeyPhotoSource
+        range: KeyPhotoSource
         required: true
         multivalued: true
         inlined: true
         inlined_as_list: true
-  DatasetKeyPhotoSource:
-    name: DatasetKeyPhotoSource
-    description: A dataset key photo source.
+  DepositionKeyPhotoEntity:
+    name: DepositionKeyPhotoEntity
+    description: A deposition key photo entity.
     from_schema: cdp-dataset-config
-    mixins:
-    - SourceParentFiltersEntity
+    is_a: KeyPhotoEntity
     attributes:
-      literal:
-        name: literal
-        description: A literal for a dataset key photo.
+      sources:
+        name: sources
+        description: A key photo source.
         from_schema: cdp-dataset-config
-        alias: literal
-        owner: DatasetKeyPhotoSource
+        alias: sources
+        owner: DepositionKeyPhotoEntity
         domain_of:
-        - DefaultLiteralEntity
-        - DatasetKeyPhotoSource
-        - VoxelSpacingSource
-        range: DatasetKeyPhotoLiteral
-        inlined: true
-        inlined_as_list: true
-      parent_filters:
-        name: parent_filters
-        description: Filters for the parent of a source.
-        from_schema: cdp-dataset-config
-        alias: parent_filters
-        owner: DatasetKeyPhotoSource
-        domain_of:
-        - SourceParentFiltersEntity
-        - AnnotationSource
-        range: SourceParentFilters
-        inlined: true
-        inlined_as_list: true
-  DatasetKeyPhotoLiteral:
-    name: DatasetKeyPhotoLiteral
-    description: A literal for a dataset key photo.
-    from_schema: cdp-dataset-config
-    attributes:
-      value:
-        name: value
-        description: A set of paths to representative images of a piece of data.
-        from_schema: cdp-dataset-config
-        alias: value
-        owner: DatasetKeyPhotoLiteral
-        domain_of:
-        - DefaultLiteral
-        - DatasetKeyPhotoLiteral
-        - VoxelSpacingLiteral
-        range: PicturePath
+        - KeyPhotoEntity
+        - AnnotationEntity
+        - DatasetEntity
+        - DepositionEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: KeyPhotoSource
         required: true
+        multivalued: true
         inlined: true
         inlined_as_list: true
   DepositionEntity:
@@ -1352,9 +1424,9 @@ classes:
         alias: sources
         owner: DepositionEntity
         domain_of:
+        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
-        - DatasetKeyPhotoEntity
         - DepositionEntity
         - FrameEntity
         - GainEntity
@@ -1421,7 +1493,7 @@ classes:
         owner: DepositionSource
         domain_of:
         - DefaultLiteralEntity
-        - DatasetKeyPhotoSource
+        - KeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
@@ -1438,9 +1510,9 @@ classes:
         alias: sources
         owner: FrameEntity
         domain_of:
+        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
-        - DatasetKeyPhotoEntity
         - DepositionEntity
         - FrameEntity
         - GainEntity
@@ -1508,7 +1580,7 @@ classes:
         owner: FrameSource
         domain_of:
         - DefaultLiteralEntity
-        - DatasetKeyPhotoSource
+        - KeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
@@ -1537,9 +1609,9 @@ classes:
         alias: sources
         owner: GainEntity
         domain_of:
+        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
-        - DatasetKeyPhotoEntity
         - DepositionEntity
         - FrameEntity
         - GainEntity
@@ -1607,7 +1679,7 @@ classes:
         owner: GainSource
         domain_of:
         - DefaultLiteralEntity
-        - DatasetKeyPhotoSource
+        - KeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
@@ -1636,9 +1708,9 @@ classes:
         alias: sources
         owner: KeyImageEntity
         domain_of:
+        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
-        - DatasetKeyPhotoEntity
         - DepositionEntity
         - FrameEntity
         - GainEntity
@@ -1706,7 +1778,7 @@ classes:
         owner: KeyImageSource
         domain_of:
         - DefaultLiteralEntity
-        - DatasetKeyPhotoSource
+        - KeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
@@ -1735,9 +1807,9 @@ classes:
         alias: sources
         owner: RawTiltEntity
         domain_of:
+        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
-        - DatasetKeyPhotoEntity
         - DepositionEntity
         - FrameEntity
         - GainEntity
@@ -1805,7 +1877,7 @@ classes:
         owner: RawTiltSource
         domain_of:
         - DefaultLiteralEntity
-        - DatasetKeyPhotoSource
+        - KeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
@@ -1834,9 +1906,9 @@ classes:
         alias: sources
         owner: RunEntity
         domain_of:
+        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
-        - DatasetKeyPhotoEntity
         - DepositionEntity
         - FrameEntity
         - GainEntity
@@ -1904,7 +1976,7 @@ classes:
         owner: RunSource
         domain_of:
         - DefaultLiteralEntity
-        - DatasetKeyPhotoSource
+        - KeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
@@ -2022,9 +2094,9 @@ classes:
         alias: sources
         owner: TiltSeriesEntity
         domain_of:
+        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
-        - DatasetKeyPhotoEntity
         - DepositionEntity
         - FrameEntity
         - GainEntity
@@ -2092,7 +2164,7 @@ classes:
         owner: TiltSeriesSource
         domain_of:
         - DefaultLiteralEntity
-        - DatasetKeyPhotoSource
+        - KeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
@@ -2137,9 +2209,9 @@ classes:
         alias: sources
         owner: TomogramEntity
         domain_of:
+        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
-        - DatasetKeyPhotoEntity
         - DepositionEntity
         - FrameEntity
         - GainEntity
@@ -2207,7 +2279,7 @@ classes:
         owner: TomogramSource
         domain_of:
         - DefaultLiteralEntity
-        - DatasetKeyPhotoSource
+        - KeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
@@ -2236,9 +2308,9 @@ classes:
         alias: sources
         owner: VoxelSpacingEntity
         domain_of:
+        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
-        - DatasetKeyPhotoEntity
         - DepositionEntity
         - FrameEntity
         - GainEntity
@@ -2292,7 +2364,7 @@ classes:
         owner: VoxelSpacingSource
         domain_of:
         - DefaultLiteralEntity
-        - DatasetKeyPhotoSource
+        - KeyPhotoSource
         - VoxelSpacingSource
         range: VoxelSpacingLiteral
         inlined: true
@@ -2333,7 +2405,7 @@ classes:
         owner: VoxelSpacingLiteral
         domain_of:
         - DefaultLiteral
-        - DatasetKeyPhotoLiteral
+        - KeyPhotoLiteral
         - VoxelSpacingLiteral
         range: float
         required: true
