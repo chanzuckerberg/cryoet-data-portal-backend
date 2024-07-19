@@ -101,8 +101,7 @@ class DepositionImportConfig:
             self.object_configs = {}
             for item in object_classes:
                 if config.get(item.plural_key):
-                    self.object_configs[item.type_key] = config[item.plural_key]
-                    del config[item.plural_key]
+                    self.object_configs[item.type_key] = config.pop(item.plural_key)
 
             # Copy the remaining standardization config keys over to this object.
             for k, v in config.get("standardization_config", {}).items():
@@ -263,6 +262,9 @@ class DepositionImportConfig:
             "annotation_viz": (
                 "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute"
             ),
+            "deposition": "depositions_metadata/{deposition_name}",
+            "deposition_metadata": "depositions_metadata/{deposition_name}/deposition_metadata.json",
+            "deposition_keyphoto": "depositions_metadata/{deposition_name}/Images",
         }
         output_prefix = self.output_prefix
         glob_vars = obj.get_glob_vars()

@@ -1,0 +1,34 @@
+depositions:
+- metadata:
+    authors:
+    - ORCID: 0000-0001-0001-0001
+      name: Author 1
+      primary_author_status: true
+    - ORCID: 0000-0002-0002-0002
+      name: Author 2
+    - ORCID: 0000-0003-0003-0003
+      corresponding_author_status: true
+      name: Author 3
+    cross_references:
+      dataset_publications: doi:10.1101/2022.01.01.00001
+      related_database_entries: EMPIAR-00001, EMD-00001, EMD-00002
+    deposition_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
+    deposition_identifier: 10301
+    deposition_title: Deposition 1
+    dates:
+      deposition_date: '2023-04-01'
+      last_modified_date: '2023-06-01'
+      release_date: '2023-06-01'
+  sources:
+  - literal:
+      value:
+      - '10301'
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: http://nginx:80/input_bucket/snapshot.gif
+        thumbnail: http://nginx:80/input_bucket/thumbnail.gif
+standardization_config:
+  deposition_id: 10301
+  source_prefix: input_bucket/10001_input

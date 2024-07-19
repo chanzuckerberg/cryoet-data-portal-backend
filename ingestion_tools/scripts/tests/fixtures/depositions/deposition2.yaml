@@ -1,0 +1,8 @@
+depositions:
+- sources:
+  - literal:
+      value:
+      - '10302'
+standardization_config:
+  deposition_id: 10302
+  source_prefix: input_bucket/10001_input
