@@ -18,5 +18,3 @@ jobs:
         run: echo "SKIP_DATASET_CONFIG_VALIDATION=true" >> $GITHUB_ENV
       - name: check backend
         uses: pre-commit/action@v3.0.0
-        with:
-          extra_args: SKIP=dataset-config-validation
