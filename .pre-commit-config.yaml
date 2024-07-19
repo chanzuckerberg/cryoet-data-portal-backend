@@ -50,6 +50,6 @@ repos:
   hooks:
   - id: dataset-config-validation
     name: dataset-config-validation
-    entry: bash -c "if [ \"$SKIP_DATASET_CONFIG_VALIDATION\" == \"true\" ]; then exit 0; fi; cd schema/v1.1.0/ && make validate-configs"
+    entry: bash -c "cd schema/v1.1.0/ && make validate-configs"
     language: system
     files: '^(ingestion_tools/dataset_configs/|schema/v1.1.0/.*\.(py|yaml|Makefile))'

@@ -15,6 +15,6 @@ jobs:
         with:
           python-version: "3.11"
       - name: disable pre-commit validation
-        run: echo "SKIP_DATASET_CONFIG_VALIDATION=true" >> $GITHUB_ENV
+        run: echo "SKIP=dataset-config-validation" >> $GITHUB_ENV
       - name: check backend
         uses: pre-commit/action@v3.0.0
