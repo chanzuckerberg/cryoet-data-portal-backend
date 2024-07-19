@@ -301,7 +301,7 @@ types:
     description: An ontology identifier
     from_schema: cdp-dataset-config
     base: str
-    pattern: ^[A-Z]+:[0-9]+$
+    pattern: ^[a-zA-Z]+:[0-9]+$
   DOI:
     name: DOI
     description: A Digital Object Identifier

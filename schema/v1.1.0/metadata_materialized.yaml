@@ -317,7 +317,7 @@ types:
     description: An ontology identifier
     from_schema: metadata
     base: str
-    pattern: ^[A-Z]+:[0-9]+$
+    pattern: ^[a-zA-Z]+:[0-9]+$
   DOI:
     name: DOI
     description: A Digital Object Identifier
@@ -1042,7 +1042,7 @@ classes:
         recommended: true
         inlined: true
         inlined_as_list: true
-        pattern: ^[A-Z]+:[0-9]+$
+        pattern: ^[a-zA-Z]+:[0-9]+$
   CellComponent:
     name: CellComponent
     description: The cellular component from which the sample was derived.
