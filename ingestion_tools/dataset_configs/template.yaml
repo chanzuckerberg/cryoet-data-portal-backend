@@ -47,6 +47,7 @@ annotations: OPTIONAL
       binning: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
       filter_value: OPTIONAL, STRING
       order: OPTIONAL, STRING (DEFAULT xyz)
+      parent_filters: SEE runs.sources.parent_filters
   - OrientedPoint:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
@@ -55,6 +56,7 @@ annotations: OPTIONAL
       binning: see InstanceSegmentation.binning
       filter_value: see InstanceSegmentation.filter_value
       order: see InstanceSegmentation.order
+      parent_filters: see InstanceSegmentation.parent_filters
   - Point:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
@@ -63,17 +65,20 @@ annotations: OPTIONAL
       binning: see InstanceSegmentation.binning
       columns: OPTIONAL, STRING (DEFAULT xyz)
       delimiter: OPTIONAL, STRING (DEFAULT ',')
+      parent_filters: see InstanceSegmentation.parent_filters
   - SegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
+      parent_filters: see InstanceSegmentation.parent_filters
   - SemanticSegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
       mask_label: OPTIONAL, INTEGER (DEFAULT 1)
+      parent_filters: see InstanceSegmentation.parent_filters
 dataset_keyphotos: OPTIONAL
 - sources: REQUIRED
   - literal: REQUIRED
