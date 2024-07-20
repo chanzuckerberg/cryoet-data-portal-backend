@@ -1,3 +1,21 @@
 table:
   name: depositions
   schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - deposition_types
+        - description
+        - id
+        - deposition_date
+        - last_modified_date
+        - release_date
+        - global_id
+        - deposition_publications
+        - related_database_entries
+        - s3_last_modified_at
+        - title
+        - updated_at
+      filter: {}
+      allow_aggregations: true

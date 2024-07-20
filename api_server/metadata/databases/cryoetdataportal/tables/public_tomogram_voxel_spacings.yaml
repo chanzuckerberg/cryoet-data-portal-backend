@@ -29,6 +29,7 @@ select_permissions:
         - run_id
         - s3_prefix
         - voxel_spacing
+        - updated_at
       filter: {}
       allow_aggregations: true
       query_root_fields:

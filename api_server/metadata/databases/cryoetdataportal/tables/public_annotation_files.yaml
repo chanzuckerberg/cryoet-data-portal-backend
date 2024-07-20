@@ -14,7 +14,9 @@ select_permissions:
         - https_path
         - id
         - is_visualization_default
+        - s3_last_modified_at
         - s3_path
         - shape_type
+        - updated_at
       filter: {}
       allow_aggregations: true

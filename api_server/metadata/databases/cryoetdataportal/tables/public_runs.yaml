@@ -29,6 +29,8 @@ select_permissions:
         - name
         - https_prefix
         - s3_prefix
+        - s3_last_modified_at
+        - updated_at
       filter: {}
       allow_aggregations: true
       query_root_fields:

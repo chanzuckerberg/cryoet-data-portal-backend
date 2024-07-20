@@ -1,3 +1,22 @@
 table:
   name: deposition_authors
   schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - affiliation_address
+        - affiliation_identifier
+        - orcid
+        - email
+        - name
+        - corresponding_author_status
+        - primary_author_status
+        - affiliation_name
+        - id
+        - deposition_id
+        - s3_last_modified_at
+        - author_list_order
+        - updated_at
+      filter: {}
+      allow_aggregations: true

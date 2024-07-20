@@ -15,6 +15,7 @@ select_permissions:
         - camera_manufacturer
         - camera_model
         - data_acquisition_software
+        - deposition_id
         - frames_count
         - https_alignment_file
         - https_angle_list
@@ -35,6 +36,7 @@ select_permissions:
         - s3_alignment_file
         - s3_angle_list
         - s3_collection_metadata
+        - s3_last_modified_at
         - s3_mrc_bin1
         - s3_omezarr_dir
         - spherical_aberration_constant
@@ -46,6 +48,7 @@ select_permissions:
         - tilt_step
         - tilting_scheme
         - total_flux
+        - updated_at
       filter: {}
       allow_aggregations: true
       query_root_fields:

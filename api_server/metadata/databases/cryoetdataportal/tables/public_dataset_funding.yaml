@@ -13,6 +13,8 @@ select_permissions:
         - id
         - grant_id
         - funding_agency_name
+        - s3_last_modified_at
+        - updated_at
       filter: {}
       allow_aggregations: true
       query_root_fields:

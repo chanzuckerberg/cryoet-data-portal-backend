@@ -27,15 +27,16 @@ select_permissions:
   - role: anonymous
     permission:
       columns:
+        - cell_component_id
+        - cell_component_name
         - cell_name
         - cell_strain_id
         - cell_strain_name
         - cell_type_id
-        - cell_component_id
-        - cell_component_name
         - dataset_citations
         - dataset_publications
         - deposition_date
+        - deposition_id
         - description
         - grid_preparation
         - https_prefix
@@ -49,12 +50,14 @@ select_permissions:
         - related_database_entries
         - related_database_links
         - release_date
+        - s3_last_modified_at
         - s3_prefix
         - sample_preparation
         - sample_type
         - tissue_id
         - tissue_name
         - title
+        - updated_at
       filter: {}
       allow_aggregations: true
       query_root_fields:
