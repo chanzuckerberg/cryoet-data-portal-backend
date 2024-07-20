@@ -127,8 +127,7 @@ async def validate_publication_lists(publication_list: List[str]) -> List[str]:
 
     tasks = []
     for publication_type, (_, validate_function) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
-        if publication_type in new_publications:
-            tasks += [validate_function(entry) for entry in list(new_publications[publication_type])]
+        tasks += [validate_function(entry) for entry in list(new_publications[publication_type])]
 
     results = await asyncio.gather(*tasks)
     invalid_publications += [publication for publication, valid in results if not valid]
