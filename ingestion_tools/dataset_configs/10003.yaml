@@ -62,8 +62,8 @@ datasets:
       corresponding_author_status: true
       name: Julia Mahamid
     cell_strain:
-      id: M129
-      name: Mycoplasmoides pneumoniae
+      id: NCBITaxon:272634
+      name: Mycoplasmoides pneumoniae M129
     cross_references:
       publications: doi:10.1038/s41586-022-05255-2, doi:10.1038/s41592-020-01054-7
       related_database_entries: EMPIAR-10731, EMPIAR-10499

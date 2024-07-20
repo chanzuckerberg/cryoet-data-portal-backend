@@ -910,7 +910,7 @@ types:
   ONTOLOGY_ID:
     description: An ontology identifier
     base: str
-    pattern: '^[A-Z]+:[0-9]+$'
+    pattern: '^[a-zA-Z]+:[0-9]+$'
 
   DOI:
     description: A Digital Object Identifier

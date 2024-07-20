@@ -105,9 +105,6 @@ def to_dataset_config(
         config["tissue"] = dataset["tissue"]
     if cross_reference:
         config["cross_references"] = cross_reference
-        if "dataset_publications" in config["cross_references"]:
-            config["cross_references"]["publications"] = config["cross_references"]["dataset_publications"]
-            del config["cross_references"]["dataset_publications"]
 
     return config
 
@@ -383,8 +380,8 @@ def get_deposition_map(input_dir: str) -> dict[int, int]:
 
 
 def update_cross_reference(config):
-    if config:
-        config["publications"] = config.pop("dataset_publications", None)
+    if config and "dataset_publications" in config:
+        config["publications"] = config["dataset_publications"].replace("https://doi.org/", "")
     return config
 
 

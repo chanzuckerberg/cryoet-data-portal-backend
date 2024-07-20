@@ -47,6 +47,7 @@ annotations: OPTIONAL
       binning: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
       filter_value: OPTIONAL, STRING
       order: OPTIONAL, STRING (DEFAULT xyz)
+      parent_filters: SEE runs.sources.parent_filters
   - OrientedPoint:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
@@ -55,6 +56,7 @@ annotations: OPTIONAL
       binning: see InstanceSegmentation.binning
       filter_value: see InstanceSegmentation.filter_value
       order: see InstanceSegmentation.order
+      parent_filters: see InstanceSegmentation.parent_filters
   - Point:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
@@ -63,23 +65,27 @@ annotations: OPTIONAL
       binning: see InstanceSegmentation.binning
       columns: OPTIONAL, STRING (DEFAULT xyz)
       delimiter: OPTIONAL, STRING (DEFAULT ',')
+      parent_filters: see InstanceSegmentation.parent_filters
   - SegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
+      parent_filters: see InstanceSegmentation.parent_filters
   - SemanticSegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
       mask_label: OPTIONAL, INTEGER (DEFAULT 1)
+      parent_filters: see InstanceSegmentation.parent_filters
 dataset_keyphotos: OPTIONAL
 - sources: REQUIRED
   - literal: REQUIRED
       value: REQUIRED
         snapshot: RECOMMENDED, STRING
         thumbnail: RECOMMENDED, STRING
+    parent_filters: SEE runs.sources.parent_filters
 datasets: REQUIRED
 - metadata: REQUIRED
     authors: SEE annotations.authors
@@ -118,6 +124,7 @@ datasets: REQUIRED
       list_glob: REQUIRED, STRING (REGEX)
       match_regex: OPTIONAL, STRING (REGEX) (DEFAULT '.*')
       name_regex: OPTIONAL, STRING (REGEX) (DEFAULT '(.*)')
+    parent_filters: SEE runs.sources.parent_filters
   - source_multi_glob:
       list_globs:
         - REQUIRED, STRING
@@ -129,8 +136,9 @@ datasets: REQUIRED
     parent_filters: SEE runs.sources.parent_filters
   - literal: OPTIONAL
       value:
-      - REQUIRED, STRING
+      - REQUIRED, ANY (STRING, INTEGER, FLOAT, BOOLEAN)
     parent_filters: SEE runs.sources.parent_filters
+deposition_keyphotos: SEE dataset_keyphotos
 depositions: REQUIRED
   - metadata: REQUIRED
       authors: SEE annotations.authors
@@ -142,7 +150,6 @@ depositions: REQUIRED
       deposition_types: REQUIRED
       - STRING (ENUM [annotation, dataset, tomogram])
     sources: REQUIRED (source_glob, source_multi_glob, destination_glob, literal)
-deposition_keyphotos: SEE dataset_keyphotos
 frames: OPTIONAL
 - sources: SEE datasets.sources and runs.sources.parent_filters
 gains: OPTIONAL
@@ -153,7 +160,7 @@ rawtilts: OPTIONAL
 - sources: SEE datasets.sources and runs.sources.parent_filters
 runs:
 - sources: SEE datasets.sources (source_glob) and below
-    # parent filters must be paired with a finder type (source_glob, source_multi_glob, ...)
+    # parent filters must be paired with a finder type (source_glob, source_multi_glob, ...) as one list entry
     # can only exclude / include parent types (see IMPORTER_DEP_TREE)
     # in this case of being in the runs attribute, only dataset can be excluded / included
     # in dataset level, nothing can be excluded / included
@@ -192,7 +199,7 @@ tiltseries: OPTIONAL
       image_corrector: OPTIONAL, STRING
       phase_plate: OPTIONAL, STRING
     pixel_spacing: REQUIRED, FLOAT (POSITIVE)
-    related_empiar_entry: OPTIONAL, STRING
+    related_empiar_entry: OPTIONAL, STRING (EMPIAR_ID)
     spherical_aberration_constant: REQUIRED, FLOAT (POSITIVE) (mm)
     tilt_alignment_software: OPTIONAL, STRING
     tilt_axis: REQUIRED, FLOAT ([-360, 360]) (DEGREES)
@@ -235,7 +242,6 @@ voxel_spacings: REQUIRED
 - sources: REQUIRED
   - destination_glob: see datasets.sources.destination_glob and runs.sources.parent_filters
   - source_glob: SEE datasets.sources.source_glob and runs.sources.parent_filters
-  - source_multi_glob: SEE datasets.sources.source_multi_glob and runs.sources.parent_filters
   - literal: SEE datasets.sources.literal and runs.sources.parent_filters
   - tomogram_header: SEE runs.sources.parent_filters
       list_glob: REQUIRED, STRING (REGEX)
