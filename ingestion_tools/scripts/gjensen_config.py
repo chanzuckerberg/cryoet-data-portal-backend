@@ -381,7 +381,7 @@ def get_deposition_map(input_dir: str) -> dict[int, int]:
 
 def update_cross_reference(config):
     if config and "dataset_publications" in config:
-        config["publications"] = config["dataset_publications"].replace("https://doi.org/", "")
+        config["publications"] = config.pop("dataset_publications").replace("https://doi.org/", "")
     return config
 
 
