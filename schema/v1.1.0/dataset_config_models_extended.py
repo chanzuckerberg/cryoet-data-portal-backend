@@ -280,7 +280,6 @@ def validate_id_name_object(
 
 def validate_ontology_object(
     self: Union[AnnotationObject, CellComponent, CellStrain, CellType, TissueDetails],
-    field_name: str,
     ancestor: str = None,
 ) -> CellType:
     """
@@ -292,7 +291,7 @@ def validate_ontology_object(
     if self.id is None:
         return self
 
-    validate_id_name_object(self.id.strip(), self.name.strip().lower(), field_name, True, ancestor)
+    validate_id_name_object(self.id.strip(), self.name.strip().lower(), True, ancestor)
 
     return self
 
@@ -307,7 +306,7 @@ def validate_organism_object(self: OrganismDetails) -> OrganismDetails:
     if self.taxonomy_id is None:
         return self
 
-    validate_id_name_object(f"NCBITaxon:{self.taxonomy_id}", self.name.strip().lower(), "organism", False)
+    validate_id_name_object(f"NCBITaxon:{self.taxonomy_id}", self.name.strip().lower(), validate_name=False)
 
     return self
 
@@ -525,7 +524,7 @@ def validate_sources(
 class ExtendedValidationAnnotationObject(AnnotationObject):
     @model_validator(mode="after")
     def validate_annotation_object(self) -> Self:
-        return validate_ontology_object(self, "annotation object", CELLULAR_COMPONENT_GO_ID)
+        return validate_ontology_object(self, CELLULAR_COMPONENT_GO_ID)
 
 
 # ==============================================================================
@@ -669,25 +668,25 @@ class ExtendedValidationDatasetKeyPhotoEntity(DatasetKeyPhotoEntity):
 class ExtendedValidationCellComponent(CellComponent):
     @model_validator(mode="after")
     def validate_cell_component(self) -> Self:
-        return validate_ontology_object(self, "cell component", CELLULAR_COMPONENT_GO_ID)
+        return validate_ontology_object(self, CELLULAR_COMPONENT_GO_ID)
 
 
 class ExtendedValidationCellStrain(CellStrain):
     @model_validator(mode="after")
     def validate_cell_strain(self) -> Self:
-        return validate_ontology_object(self, "cell strain")
+        return validate_ontology_object(self)
 
 
 class ExtendedValidationCellType(CellType):
     @model_validator(mode="after")
     def validate_cell_type(self) -> Self:
-        return validate_ontology_object(self, "cell type")
+        return validate_ontology_object(self)
 
 
 class ExtendedValidationTissue(TissueDetails):
     @model_validator(mode="after")
     def validate_tissue(self) -> Self:
-        return validate_ontology_object(self, "tissue")
+        return validate_ontology_object(self)
 
 
 class ExtendedValidationOrganism(OrganismDetails):
