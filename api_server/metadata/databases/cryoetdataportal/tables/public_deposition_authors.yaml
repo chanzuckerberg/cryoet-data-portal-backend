@@ -1,0 +1,3 @@
+table:
+  name: deposition_authors
+  schema: public
