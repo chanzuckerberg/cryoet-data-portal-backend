@@ -24,11 +24,12 @@ from dataset_config_models import (
     Dataset,
     DatasetEntity,
     DatasetKeyPhotoEntity,
-    DatasetKeyPhotoLiteral,
-    DatasetKeyPhotoSource,
     DateStamp,
     Deposition,
     DepositionEntity,
+    DepositionKeyPhotoEntity,
+    KeyPhotoLiteral,
+    KeyPhotoSource,
     OrganismDetails,
     PicturePath,
     SampleTypeEnum,
@@ -261,6 +262,57 @@ def validate_organism_object(self: OrganismDetails) -> OrganismDetails:
 
 
 # ==============================================================================
+# Key Photo Validation
+# ==============================================================================
+@alru_cache
+async def validate_image_format(image_url: str) -> bool:
+    if not running_network_validation:
+        return True
+
+    if image_url is None:
+        return True
+
+    # don't check non-http(s) URLs
+    if not image_url.startswith("http"):
+        return True
+
+    if not image_url.startswith("https"):
+        logger.warning("URL %s is not HTTPS", image_url)
+
+    async with aiohttp.ClientSession() as session, session.head(image_url) as response:
+        if response.status >= 400:
+            return False
+
+        return response.headers["content-type"] in VALID_IMAGE_FORMATS
+
+
+class ExtendedPicturePath(PicturePath):
+    @field_validator("snapshot")
+    @classmethod
+    def valid_snapshot(cls: Self, snapshot: str) -> str:
+        if asyncio.run(validate_image_format(snapshot)):
+            return snapshot
+
+        raise ValueError(f"Invalid key photo snapshot: {snapshot}")
+
+    @field_validator("thumbnail")
+    @classmethod
+    def valid_thumbnail(cls: Self, thumbnail: str) -> str:
+        if asyncio.run(validate_image_format(thumbnail)):
+            return thumbnail
+
+        raise ValueError(f"Invalid key photo thumbnail: {thumbnail}")
+
+
+class ExtendedValidationKeyPhotoLiteral(KeyPhotoLiteral):
+    value: ExtendedPicturePath = KeyPhotoLiteral.model_fields["value"]
+
+
+class ExtendedValidationKeyPhotoSource(KeyPhotoSource):
+    literal: Optional[ExtendedValidationKeyPhotoLiteral] = KeyPhotoSource.model_fields["literal"]
+
+
+# ==============================================================================
 # Publication Validation
 # ==============================================================================
 @alru_cache
@@ -472,56 +524,8 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
 # ==============================================================================
 # Dataset Key Photo Validation
 # ==============================================================================
-@alru_cache
-async def validate_image_format(image_url: str) -> bool:
-    if not running_network_validation:
-        return True
-
-    if image_url is None:
-        return True
-
-    # don't check non-http(s) URLs
-    if not image_url.startswith("http"):
-        return True
-
-    if not image_url.startswith("https"):
-        logger.warning("URL %s is not HTTPS", image_url)
-
-    async with aiohttp.ClientSession() as session, session.head(image_url) as response:
-        if response.status >= 400:
-            return False
-
-        return response.headers["content-type"] in VALID_IMAGE_FORMATS
-
-
-class ExtendedPicturePath(PicturePath):
-    @field_validator("snapshot")
-    @classmethod
-    def valid_snapshot(cls: Self, snapshot: str) -> str:
-        if asyncio.run(validate_image_format(snapshot)):
-            return snapshot
-
-        raise ValueError(f"Invalid dataset key photo snapshot: {snapshot}")
-
-    @field_validator("thumbnail")
-    @classmethod
-    def valid_thumbnail(cls: Self, thumbnail: str) -> str:
-        if asyncio.run(validate_image_format(thumbnail)):
-            return thumbnail
-
-        raise ValueError(f"Invalid dataset key photo thumbnail: {thumbnail}")
-
-
-class ExtendedValidationDatasetKeyPhotoLiteral(DatasetKeyPhotoLiteral):
-    value: ExtendedPicturePath = DatasetKeyPhotoLiteral.model_fields["value"]
-
-
-class ExtendedValidationDatasetKeyPhotoSource(DatasetKeyPhotoSource):
-    literal: Optional[ExtendedValidationDatasetKeyPhotoLiteral] = DatasetKeyPhotoSource.model_fields["literal"]
-
-
 class ExtendedValidationDatasetKeyPhotoEntity(DatasetKeyPhotoEntity):
-    sources: List[ExtendedValidationDatasetKeyPhotoSource] = DatasetKeyPhotoEntity.model_fields["sources"]
+    sources: List[ExtendedValidationKeyPhotoSource] = DatasetKeyPhotoEntity.model_fields["sources"]
 
 
 # ==============================================================================
@@ -595,6 +599,13 @@ class ExtendedValidationDatasetEntity(DatasetEntity):
 
 
 # ==============================================================================
+# Deposition Key Photo Validation
+# ==============================================================================
+class ExtendedValidationDepositionKeyPhotoEntity(DepositionKeyPhotoEntity):
+    sources: List[ExtendedValidationKeyPhotoSource] = DepositionKeyPhotoEntity.model_fields["sources"]
+
+
+# ==============================================================================
 # Deposition Validation
 # ==============================================================================
 class ExtendedValidationDeposition(Deposition):
@@ -628,6 +639,9 @@ class ExtendedValidationContainer(Container):
         "dataset_keyphotos"
     ]
     datasets: List[ExtendedValidationDatasetEntity] = Container.model_fields["datasets"]
+    deposition_keyphotos: Optional[List[ExtendedValidationDepositionKeyPhotoEntity]] = Container.model_fields[
+        "deposition_keyphotos"
+    ]
     depositions: List[ExtendedValidationDepositionEntity] = Container.model_fields["depositions"]
 
 

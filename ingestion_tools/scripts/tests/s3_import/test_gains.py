@@ -8,7 +8,7 @@ from importers.gain import GainImporter
 from importers.run import RunImporter
 from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
-from tests.s3_import.test_annotations_import import list_dir
+from tests.s3_import.util import list_dir
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi

@@ -43,6 +43,10 @@ class DatasetMetadata(MergedMetadata):
     pass
 
 
+class DepositionMetadata(MergedMetadata):
+    pass
+
+
 class RunMetadata(MergedMetadata):
     pass
 
