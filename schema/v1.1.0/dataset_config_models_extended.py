@@ -286,7 +286,7 @@ async def validate_image_format(image_url: str) -> bool:
         return response.headers["content-type"] in VALID_IMAGE_FORMATS
 
 
-class ExtendedPicturePath(PicturePath):
+class ExtendedValidationPicturePath(PicturePath):
     @field_validator("snapshot")
     @classmethod
     def valid_snapshot(cls: Self, snapshot: str) -> str:
@@ -305,7 +305,7 @@ class ExtendedPicturePath(PicturePath):
 
 
 class ExtendedValidationKeyPhotoLiteral(KeyPhotoLiteral):
-    value: ExtendedPicturePath = KeyPhotoLiteral.model_fields["value"]
+    value: ExtendedValidationPicturePath = KeyPhotoLiteral.model_fields["value"]
 
 
 class ExtendedValidationKeyPhotoSource(KeyPhotoSource):
