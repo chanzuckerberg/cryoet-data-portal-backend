@@ -8,7 +8,7 @@ from typing import List, Union
 
 import click
 import yaml
-from dataset_config_models_extended import ExtendedValidationContainer  # noqa: E402
+from dataset_config_models_extended import ExtendedValidationContainer
 from pydantic import ValidationError
 
 COMMON_DIR = "../../ingestion_tools/scripts/"
