@@ -4,19 +4,12 @@ version: 1.1.0
 description: Schema for dataset configs
 imports:
 - linkml:types
-- ./metadata_materialized
 - ./common
 prefixes:
   linkml:
     prefix_prefix: linkml
     prefix_reference: https://w3id.org/linkml/
 
-  IDMixin:
-    mixin: true
-    attributes:
-      id:
-        exact_mappings:
-          - cdp-comon:api_sequential_identifier
 enums:
   # ============================================================================
   # Controlled vocabularies
@@ -114,7 +107,7 @@ classes:
   # ============================================================================
 
   # ============================================================================
-  # Mixins
+  # Entities
   # ============================================================================
   AnnotationAuthor:
     mixins:
@@ -212,40 +205,6 @@ classes:
       method_type:
         exact_mappings:
           - cdp-common:annotation_method_type
-      annotation_object:
-        description: *desc_annotation_object
-        range: AnnotationObject
-        required: true
-      annotation_publications:
-        exact_mappings:
-          - cdp-common:annotation_publications
-      annotation_software:
-        exact_mappings:
-          - cdp-common:annotation_software
-      confidence:
-        description: *desc_annotation_confidence
-        range: AnnotationConfidence
-      files:
-        description: *desc_annotation_source_file
-        range: AnnotationSourceFile
-        multivalued: true
-        inlined_as_list: true
-        list_elements_ordered: true
-      ground_truth_status:
-        exact_mappings:
-          - cdp-common:annotation_ground_truth_status
-      is_curator_recommended:
-        exact_mappings:
-          - cdp-common:annotation_is_curator_recommended
-      method_type:
-        exact_mappings:
-          - cdp-common:annotation_method_type
-      object_count:
-        exact_mappings:
-          - cdp-common:annotation_object_count
-      version:
-        exact_mappings:
-          - cdp-common:annotation_version
     annotations:
       plural: Annotations
   DatasetAuthor:
