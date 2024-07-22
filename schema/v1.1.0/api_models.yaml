@@ -472,7 +472,7 @@ classes:
           - cdp-common:api_tiltseries_aligned_tiltseries_binning
       tiltseries_frames_count:
         exact_mappings:
-          - cdp-common:tiltseries_tiltseries_frames_count
+          - cdp-common:tiltseries_frames_count
     annotations:
       plural: Tiltseries
   TomogramAuthor:
