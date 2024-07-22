@@ -792,6 +792,15 @@ slots:
     unit:
       descriptive_name: degrees
       symbol: °
+  api_tiltseries_tilt_max:
+    range: float
+    minimum_value: -90
+    maximum_value: 90
+    required: true
+    description: Maximal tilt angle in degrees
+    unit:
+      descriptive_name: degrees
+      symbol: °
   api_tiltseries_tilt_series_quality:
     range: integer
     minimum_value: 1

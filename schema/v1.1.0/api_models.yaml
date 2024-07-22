@@ -31,7 +31,7 @@ classes:
     attributes:
       id:
         exact_mappings:
-          - cdp-comon:api_sequential_identifier
+          - cdp-common:api_sequential_identifier
   DateStampedEntityMixin:
     description: A set of dates at which a data item was deposited, published and last modified.
     mixin: true
@@ -129,8 +129,7 @@ classes:
         range: Annotation
         inverse: Annotation.authors
       shape_type:
-        exact_mappings:
-          - cdp-common:annotation_file_shape_type_enum
+        range: annotation_file_shape_type_enum
       format:
         exact_mappings:
           - cdp-common:api_file_format
@@ -358,7 +357,7 @@ classes:
         inverse: TomogramVoxelSpacing.run
       name:
         exact_mappings:
-          - cdp-common:run_name
+          - cdp-common:api_run_name
     annotations:
       plural: Runs
   Tiltseries:
@@ -404,7 +403,7 @@ classes:
           - cdp-common:tiltseries_acceleration_voltage
       spherical_abberation_constant:
         exact_mappings:
-          - cdp-common:api_tiltseries_spherical_abberation_constant
+          - cdp-common:api_tiltseries_spherical_aberration_constant
       microscope_manufacturer:
         exact_mappings:
           - cdp-common:tiltseries_microscope_manufacturer
@@ -467,7 +466,7 @@ classes:
           - cdp-common:tiltseries_is_aligned
       pixel_spacing:
         exact_mappings:
-          - cdp-common:api_tiltseries_is_pixel_spacing
+          - cdp-common:api_tiltseries_pixel_spacing
       aligned_tiltseries_binning:
         exact_mappings:
           - cdp-common:api_tiltseries_aligned_tiltseries_binning
