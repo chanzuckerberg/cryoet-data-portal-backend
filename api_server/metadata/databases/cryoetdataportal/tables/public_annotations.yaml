@@ -44,7 +44,7 @@ select_permissions:
         - object_name
         - object_state
         - release_date
-        - s3_last_modified_at
+        - metadata_last_updated_at
         - s3_metadata_path
         - tomogram_voxel_spacing_id
         - updated_at

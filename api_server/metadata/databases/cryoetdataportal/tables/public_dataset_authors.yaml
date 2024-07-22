@@ -20,7 +20,7 @@ select_permissions:
         - name
         - orcid
         - primary_author_status
-        - s3_last_modified_at
+        - metadata_last_updated_at
         - updated_at
       filter: {}
       allow_aggregations: true

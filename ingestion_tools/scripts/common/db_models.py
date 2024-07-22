@@ -1,12 +1,16 @@
+from datetime import datetime
+
 from peewee import (
     BooleanField,
     CharField,
     DateField,
+    DateTimeField,
     FloatField,
     ForeignKeyField,
     IntegerField,
     Model,
     PostgresqlDatabase,
+    TimestampField,
 )
 from playhouse.postgres_ext import ArrayField
 
@@ -16,6 +20,45 @@ db = PostgresqlDatabase(None)
 class BaseModel(Model):
     class Meta:
         database = db
+
+
+class Deposition(BaseModel):
+    class Meta:
+        table_name = "depositions"
+
+    id = IntegerField(primary_key=True)
+    title = CharField()
+    description = CharField()
+    deposition_date = DateField()
+    global_id = CharField()
+    release_date = DateField()
+    last_modified_date = DateField()
+    related_database_entries = CharField(null=True)
+    deposition_publications = CharField(null=True)
+    deposition_types = CharField()
+    s3_prefix = CharField()
+    https_prefix = CharField()
+    metadata_last_updated_at = DateTimeField(null=True)
+    updated_at = DateTimeField(default=datetime.utcnow)
+
+
+class DepositionAuthor(BaseModel):
+    class Meta:
+        table_name = "deposition_authors"
+
+    id = IntegerField(primary_key=True)
+    deposition_id = ForeignKeyField(Deposition, backref="authors")
+    orcid = CharField(null=True)
+    name = CharField()
+    corresponding_author_status = BooleanField(default=False)
+    primary_author_status = BooleanField(default=False)
+    email = CharField(null=True)
+    affiliation_name = CharField(null=True)
+    affiliation_address = CharField(null=True)
+    affiliation_identifier = CharField(null=True)
+    author_list_order = IntegerField()
+    metadata_last_updated_at = TimestampField(null=True)
+    updated_at = DateTimeField(default=datetime.now)
 
 
 class Dataset(BaseModel):

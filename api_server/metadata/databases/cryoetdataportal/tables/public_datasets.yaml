@@ -50,7 +50,7 @@ select_permissions:
         - related_database_entries
         - related_database_links
         - release_date
-        - s3_last_modified_at
+        - metadata_last_updated_at
         - s3_prefix
         - sample_preparation
         - sample_type

@@ -1,0 +1,30 @@
+{
+    "authors": [
+        {
+            "ORCID": "0000-0000-0000-0001",
+            "name": "Author 1",
+            "primary_author_status": true
+        },
+        {
+            "ORCID": "0000-0000-0000-0002",
+            "corresponding_author_status": true,
+            "name": "Author 2"
+        }
+    ],
+    "dates": {
+        "deposition_date": "2023-04-01",
+        "last_modified_date": "2023-06-01",
+        "release_date": "2023-06-01"
+    },
+    "deposition_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "deposition_identifier": 300,
+    "deposition_title": "ipsum dolor sit amet",
+    "deposition_types": [
+        "dataset", "annotation"
+    ],
+    "key_photos": {
+        "snapshot": "deposition_metadata/300/Images/snapshot.png",
+        "thumbnail": "deposition_metadata/300/Images/thumbnail.png"
+    },
+    "deposition_id": 300
+}

@@ -11,7 +11,7 @@ CREATE TABLE "public"."deposition_authors" (
     "primary_author_status" boolean DEFAULT false,
     "author_list_order" integer NOT NULL,
     "updated_at" timestamptz NOT NULL DEFAULT now(),
-    "s3_last_modified_at" timestamptz,
+    "metadata_last_updated_at" timestamptz,
     PRIMARY KEY ("id") ,
     FOREIGN KEY ("deposition_id") REFERENCES "public"."depositions"("id") ON UPDATE restrict ON DELETE restrict,
     UNIQUE ("id")
@@ -30,4 +30,4 @@ COMMENT ON COLUMN public.deposition_authors.affiliation_name IS 'Name of the ins
 COMMENT ON COLUMN public.deposition_authors.affiliation_address IS 'Address of the institution an annotator is affiliated with.';
 COMMENT ON COLUMN public.deposition_authors.affiliation_identifier IS 'A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).';
 COMMENT ON COLUMN public.deposition_authors.updated_at IS 'The last time this db record was modified';
-COMMENT ON COLUMN public.deposition_authors.s3_last_modified_at IS 'The last time this s3 metadata was modified';
+COMMENT ON COLUMN public.deposition_authors.metadata_last_updated_at IS 'The last time this s3 metadata was modified';

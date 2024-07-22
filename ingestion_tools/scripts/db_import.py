@@ -112,6 +112,7 @@ def load(
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     s3_client = boto3.client("s3", endpoint_url=endpoint_url, config=s3_config)
     config = DBImportConfig(s3_client, s3_bucket, https_prefix)
+
     for dataset in DatasetDBImporter.get_items(config, s3_prefix):
         if filter_dataset and dataset.dir_prefix not in filter_dataset:
             logger.info("Skipping %s...", dataset.dir_prefix)

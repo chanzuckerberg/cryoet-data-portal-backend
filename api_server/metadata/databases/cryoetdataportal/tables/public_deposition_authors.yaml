@@ -15,7 +15,7 @@ select_permissions:
         - affiliation_name
         - id
         - deposition_id
-        - s3_last_modified_at
+        - metadata_last_updated_at
         - author_list_order
         - updated_at
       filter: {}

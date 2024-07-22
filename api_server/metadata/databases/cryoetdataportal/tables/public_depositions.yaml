@@ -5,16 +5,18 @@ select_permissions:
   - role: anonymous
     permission:
       columns:
+        - deposition_date
+        - deposition_publications
         - deposition_types
         - description
-        - id
-        - deposition_date
-        - last_modified_date
-        - release_date
         - global_id
-        - deposition_publications
+        - https_prefix
+        - id
+        - last_modified_date
         - related_database_entries
-        - s3_last_modified_at
+        - release_date
+        - metadata_last_updated_at
+        - s3_prefix
         - title
         - updated_at
       filter: {}

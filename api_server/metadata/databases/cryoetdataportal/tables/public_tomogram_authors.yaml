@@ -19,7 +19,7 @@ select_permissions:
         - name
         - orcid
         - primary_author_status
-        - s3_last_modified_at
+        - metadata_last_updated_at
         - tomogram_id
         - updated_at
       filter: {}
