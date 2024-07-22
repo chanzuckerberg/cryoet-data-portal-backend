@@ -10,10 +10,13 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.11"
 aiohttp = "^3.9.5"
-asyncio = "^3.4.3"
+async-lru = "^2.0.4"
 click = "^8.1.7"
 linkml = "^1.8.1"
-async-lru = "^2.0.4"
+numpy = "^1.26.4"
+pydantic = "^2.8.2"
+typing-extensions = "^4.12.2"
+pyyaml = "^6.0.1"
 
 [tool.black]
 line-length = 120
