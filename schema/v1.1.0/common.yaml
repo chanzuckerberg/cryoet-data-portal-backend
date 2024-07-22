@@ -801,6 +801,10 @@ slots:
     unit:
       descriptive_name: degrees
       symbol: °
+  api_tiltseries_microscope_manufacturer:
+    range: microscope_manufacturer_enum
+    required: true
+    description: Name of the microscope manufacturer
   api_tiltseries_tilt_max:
     range: float
     minimum_value: -90

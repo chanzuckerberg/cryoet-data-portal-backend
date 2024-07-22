@@ -127,7 +127,7 @@ classes:
     attributes:
       annotation:
         range: Annotation
-        inverse: Annotation.authors
+        inverse: Annotation.annotation_files
       shape_type:
         range: annotation_file_shape_type_enum
       format:
@@ -150,12 +150,20 @@ classes:
       - DateStampedEntityMixin
     description: Metadata about an annotation for a run
     attributes:
-      deposition:
-        range: Deposition
-        inverse: Deposition.annotations
       tomogram_voxel_spacing:
         range: TomogramVoxelSpacing
         inverse: TomogramVoxelSpacing.annotations
+      annotation_files:
+        range: AnnotationFile
+        inverse: AnnotationFile.annotation
+        multivalued: true
+      authors:
+        range: AnnotationAuthor
+        inverse: AnnotationAuthor.annotation
+        multivalued: true
+      deposition:
+        range: Deposition
+        inverse: Deposition.annotations
       s3_metadata_path:
         exact_mappings:
           - cdp-common:api_s3_path
@@ -253,7 +261,7 @@ classes:
     attributes:
       dataset:
         range: Dataset
-        inverse: Dataset.authors
+        inverse: Dataset.funding_sources
       funding_agency_name:
         exact_mappings:
           - cdp-common:funding_agency_name
@@ -262,7 +270,7 @@ classes:
           - cdp-common:funding_grant_id
     annotations:
       plural: DatasetFunding
-  Datasets:
+  Dataset:
     mixins:
       - IDMixin
       - DateStampedEntityMixin
@@ -276,6 +284,10 @@ classes:
       funding_sources:
         range: DatasetFunding
         inverse: DatasetFunding.dataset
+        multivalued: true
+      authors:
+        range: DatasetAuthor
+        inverse: DatasetAuthor.dataset
         multivalued: true
       runs:
         range: Run
@@ -338,6 +350,22 @@ classes:
           - cdp-common:cell_component_id
     annotations:
       plural: Datasets
+  Deposition:
+    mixins:
+      - IDMixin
+    attributes:
+      datasets:
+        range: Dataset
+        inverse: Dataset.deposition
+        multivalued: true
+      annotations:
+        range: Annotation
+        inverse: Annotation.deposition
+        multivalued: true
+      tomograms:
+        range: Tomograms
+        inverse: Tomogram.deposition
+        multivalued: true
   Run:
     mixins:
       - IDMixin
@@ -406,7 +434,7 @@ classes:
           - cdp-common:api_tiltseries_spherical_aberration_constant
       microscope_manufacturer:
         exact_mappings:
-          - cdp-common:tiltseries_microscope_manufacturer
+          - cdp-common:api_tiltseries_microscope_manufacturer
       microscope_model:
         exact_mappings:
           - cdp-common:tiltseries_microscope_model
@@ -495,6 +523,14 @@ classes:
       run:
         range: Run
         inverse: run.tomogram_voxel_spacings
+      tomograms:
+        range: Tomogram
+        inverse: Tomogram.tomogram_voxel_spacing
+        multivalued: true
+      annotations:
+        range: Annotation
+        inverse: Annotation.tomogram_voxel_spacing
+        multivalued: true
       voxel_spacing:
         exact_mappings:
           - cdp-common:api_tomogram_voxel_spacing
@@ -506,6 +542,16 @@ classes:
       - S3PrefixedEntityMixin
     description: Metadata describing a tomogram.
     attributes:
+      deposition:
+        range: Deposition
+        inverse: deposition.tomograms
+      tomogram_voxel_spacing:
+        range: TomogramVoxelSpacing
+        inverse: tomogram_voxel_spacing.tomograms
+      authors:
+        range: TomogramAuthor
+        inverse: TomogramAuthor.tomogram
+        multivalued: true
       name:
         exact_mappings:
           - cdp-common:tomogram_name
@@ -597,12 +643,6 @@ classes:
           - cdp-common:tomogram_neuroglancer_config
       type:
         range: TomogramType
-      deposition:
-        range: Deposition
-        inverse: deposition.tomograms
-      tomogram_voxel_spacing:
-        range: TomogramVoxelSpacing
-        inverse: tomogram_voxel_spacing.tomograms
     annotations:
       plural: Tomograms
   # ============================================================================
