@@ -16,8 +16,8 @@ ROOT_DIR = "../../"
 sys.path.append(ROOT_DIR)  # To import the helper function from common.py
 from ingestion_tools.scripts.common.yaml_files import EXCLUDE_KEYWORDS_LIST, get_yaml_config_files  # noqa: E402
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("dataset-validate")
+logger.setLevel(logging.INFO)
 
 DATASET_CONFIGS_DIR = "../../ingestion_tools/dataset_configs/"
 ERRORS_OUTPUT_DIR = "./dataset_config_validate_errors"
