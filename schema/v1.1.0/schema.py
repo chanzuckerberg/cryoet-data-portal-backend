@@ -82,13 +82,18 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
         clz = schema.get_class(c)
         for s in clz.attributes:
             slot = clz.attributes[s]
-            mappings = slot["exact_mappings"]
-            if mappings:
-                mappings = [m.replace("cdp-common:", "") for m in mappings if "cdp-common:" in m]
+            original_mappings = slot["exact_mappings"]
+            if original_mappings:
+                mappings = [m.replace("cdp-common:", "") for m in original_mappings if "cdp-common:" in m]
 
                 if len(mappings) > 1:
                     raise ValueError(
-                        f"Slot {slot['name']} has multiple mappings to common schema",
+                        f"Slot {slot['name']} with mappings {original_mappings} has multiple mappings to common schema",
+                    )
+
+                if len(mappings) == 0:
+                    raise ValueError(
+                        f"Slot {slot['name']} with mappings {original_mappings} does not have a mapping to common schema",
                     )
 
                 common_slot = common_slots.get(mappings[0])
