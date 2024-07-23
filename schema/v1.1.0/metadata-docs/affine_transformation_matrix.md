@@ -3,7 +3,7 @@
 # Slot: affine_transformation_matrix
 
 
-_A placeholder for any type of data._
+_The flip or rotation transformation of this author submitted tomogram is indicated here_
 
 
 
@@ -31,7 +31,7 @@ URI: [cdp-meta:affine_transformation_matrix](metadataaffine_transformation_matri
 
 ## Properties
 
-* Range: [Any](Any.md)
+* Range: [Float](Float.md)
 
 
 
@@ -68,7 +68,8 @@ URI: [cdp-meta:affine_transformation_matrix](metadataaffine_transformation_matri
 <details>
 ```yaml
 name: affine_transformation_matrix
-description: A placeholder for any type of data.
+description: The flip or rotation transformation of this author submitted tomogram
+  is indicated here
 from_schema: metadata
 rank: 1000
 array:
@@ -80,7 +81,7 @@ alias: affine_transformation_matrix
 owner: Tomogram
 domain_of:
 - Tomogram
-range: Any
+range: float
 inlined: true
 inlined_as_list: true
 

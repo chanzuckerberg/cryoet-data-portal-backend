@@ -16,8 +16,8 @@ URI: [cdp-meta:tissue](metadatatissue)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET da... |  no  |
 | [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+| [ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET da... |  no  |
 
 
 

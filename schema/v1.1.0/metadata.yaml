@@ -532,7 +532,7 @@ classes:
           - cdp-common:tomogram_version
       affine_transformation_matrix:
           description: The flip or rotation transformation of this author submitted tomogram is indicated here
-          range: Any
+          range: float
           array:
             exact_number_dimensions: 2
             dimensions:

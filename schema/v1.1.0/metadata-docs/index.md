@@ -62,7 +62,7 @@ Name: cdp-meta
 | [affiliation_address](affiliation_address.md) | The address of the author's affiliation |
 | [affiliation_identifier](affiliation_identifier.md) | A Research Organization Registry (ROR) identifier |
 | [affiliation_name](affiliation_name.md) | The name of the author's affiliation |
-| [affine_transformation_matrix](affine_transformation_matrix.md) | A placeholder for any type of data |
+| [affine_transformation_matrix](affine_transformation_matrix.md) | The flip or rotation transformation of this author submitted tomogram is indi... |
 | [align_software](align_software.md) | Software used for alignment |
 | [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | Binning factor of the aligned tilt series |
 | [annotation_method](annotation_method.md) | Describe how the annotation is made (e |
@@ -179,9 +179,9 @@ Name: cdp-meta
 | [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Describes how the annotations were generated |
 | [DepositionTypesEnum](DepositionTypesEnum.md) | Types of data a deposition has |
 | [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Fiducial Alignment method |
-| [MicroscopeManufacturerEnum](MicroscopeManufacturerEnum.md) | Microscope manufacturer |
 | [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study |
 | [TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md) | Camera acquisition mode |
+| [TiltseriesMicroscopeManufacturerEnum](TiltseriesMicroscopeManufacturerEnum.md) | Microscope manufacturer |
 | [TomogramProcessingEnum](TomogramProcessingEnum.md) | Tomogram processing method |
 | [TomogramTypeEnum](TomogramTypeEnum.md) | Tomogram type |
 | [TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md) | Tomogram reconstruction method |
