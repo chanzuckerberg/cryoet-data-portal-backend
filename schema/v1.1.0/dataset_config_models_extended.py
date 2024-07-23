@@ -1,3 +1,4 @@
+# NOTE: This file is manually generated!
 # TODO: Async-ify / parallelize network requests more
 from __future__ import annotations
 
@@ -6,7 +7,7 @@ import logging
 import re
 import sys
 import urllib
-from typing import Dict, List, Optional, Set, Tuple, Union
+from typing import List, Optional, Set, Tuple, Union
 
 import aiohttp
 import numpy
@@ -17,6 +18,7 @@ from dataset_config_models import (
     AnnotationEntity,
     AnnotationObject,
     AnnotationSource,
+    AnnotationSourceFile,
     Author,
     CameraDetails,
     CellComponent,
@@ -80,7 +82,7 @@ from ingestion_tools.scripts.importers.tomogram import TomogramImporter  # noqa:
 from ingestion_tools.scripts.importers.voxel_spacing import VoxelSpacingImporter  # noqa: E402
 from ingestion_tools.scripts.standardize_dirs import IMPORTER_DEP_TREE, flatten_dependency_tree  # noqa: E402
 
-logger = logging.getLogger("dataset-validate")
+logger = logging.getLogger("dataset_config_validate")
 
 CELLULAR_COMPONENT_GO_ID = "GO:0005575"
 STRING_FORMATTED_STRING_REGEX = r"^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$"
@@ -91,7 +93,7 @@ CAMERA_MANUFACTURER_TO_MODEL = {
     ("Gatan", "GATAN"): ["K2", "K2 SUMMIT", "K3", "K3 BIOQUANTUM", "UltraCam", "UltraScan"],
 }
 FLATTENED_DEP_TREE = {
-    key.type_key: {value.type_key for value in list(value_set)}
+    key.type_key: {value.type_key for value in value_set}
     for key, value_set in flatten_dependency_tree(IMPORTER_DEP_TREE).items()
 }
 
@@ -104,17 +106,15 @@ running_network_validation = False
 # ==============================================================================
 def validate_authors_status(authors: List[Author]) -> List[ValueError]:
     errors = []
-    primary_author_status_count = 0
-    corresponding_author_status_count = 0
+    contains_primary_author = False
+    contains_corresponding_author = False
     for author in authors:
-        if author.primary_author_status:
-            primary_author_status_count += 1
-        if author.corresponding_author_status:
-            corresponding_author_status_count += 1
+        contains_primary_author = contains_primary_author or author.primary_author_status
+        contains_corresponding_author = contains_corresponding_author or author.corresponding_author_status
 
-    if primary_author_status_count == 0:
+    if not contains_primary_author:
         errors.append(ValueError("Annotation must have at least one primary author"))
-    if corresponding_author_status_count == 0:
+    if not contains_corresponding_author:
         errors.append(ValueError("Annotation must have at least one corresponding author"))
 
     return errors
@@ -130,15 +130,15 @@ async def lookup_orcid(orcid_id: str) -> Tuple[str, bool]:
         return orcid_id, response.status == 200
 
 
-async def validate_orcids(orcid_list: List[str]) -> List[str]:
+async def validate_orcids(orcid_list: Set[str]) -> Set[str]:
     """
     Returns a list of invalid ORCIDs, from the provided list
     """
-    invalid_orcids: List[str] = []
+    invalid_orcids: Set[str] = []
 
     tasks = [lookup_orcid(orcid) for orcid in orcid_list]
     results = await asyncio.gather(*tasks)
-    invalid_orcids += [orcid for orcid, valid in results if not valid]
+    invalid_orcids += {orcid for orcid, valid in results if not valid}
     return invalid_orcids
 
 
@@ -148,16 +148,18 @@ def validate_authors(authors: List[Author]) -> List[ValueError]:
     """
     all_errors = validate_authors_status(authors)
 
-    if running_network_validation:
-        orcids = list({author.ORCID for author in authors if author.ORCID is not None})
+    if not running_network_validation:
+        return all_errors
 
-        if len(orcids) == 0:
-            return all_errors
+    orcids = {author.ORCID for author in authors if author.ORCID is not None}
 
-        logger.debug("Checking ORCIDs: %s", orcids)
-        invalid_orcids = asyncio.run(validate_orcids(orcids))
-        if len(invalid_orcids) > 0:
-            all_errors.append(ValueError(f"Invalid ORCIDs found in annotation authors: {invalid_orcids}"))
+    if not orcids:
+        return all_errors
+
+    logger.debug("Checking ORCIDs: %s", orcids)
+    invalid_orcids = asyncio.run(validate_orcids(orcids))
+    if invalid_orcids:
+        all_errors.append(ValueError(f"Invalid ORCIDs found in annotation authors: {invalid_orcids}"))
 
     return all_errors
 
@@ -183,11 +185,12 @@ class ExtendedValidationCrossReferences(CrossReferences):
 class ExtendedValidationDateStamp(DateStamp):
     @model_validator(mode="after")
     def valid_dates(self) -> Self:
-        if self.deposition_date > self.release_date:
-            raise ValueError(
-                f"Deposition date ({self.deposition_date}) cannot be after release date ({self.release_date})",
-            )
-        return self
+        if self.deposition_date <= self.release_date:
+            return self
+
+        raise ValueError(
+            f"Deposition date ({self.deposition_date}) cannot be after release date ({self.release_date})",
+        )
 
 
 # ==============================================================================
@@ -231,16 +234,15 @@ async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
     logger.debug("Getting ancestors for ID %s at %s", id, url)
 
     async with aiohttp.ClientSession() as session, session.get(url) as response:
-        return response.status == 200 and id_ancestor in [
-            ancestor["obo_id"] for ancestor in (await response.json())["_embedded"]["terms"]
-        ]
+        ancestor_ids = [ancestor["obo_id"] for ancestor in (await response.json())["_embedded"]["terms"]]
+        return response.status == 200 and id_ancestor in ancestor_ids
 
 
 def validate_id_name_object(
     id: str,
     name: str,
     validate_name: bool = True,
-    ancestor: str = None,
+    ancestor: str | None = None,
 ) -> None:
     """
     Validates the ID and name, ensuring that:
@@ -255,6 +257,7 @@ def validate_id_name_object(
     if not valid_id:
         raise ValueError(f"Invalid ID {id}")
 
+    # return here since if name validation is not done, we don't need to check ancestors
     if not validate_name:
         return
 
@@ -262,20 +265,19 @@ def validate_id_name_object(
     # check if the name matches the ID's label or any of its synonyms
     valid_name = False
     for entry in id_data["_embedded"]["terms"]:
-        if name == entry["label"].lower():
-            valid_name = True
-            break
-        if name in [synonym.lower() for synonym in entry["synonyms"]]:
+        if name == entry["label"].lower() or name in [synonym.lower() for synonym in entry["synonyms"]]:
             valid_name = True
             break
 
     if not valid_name:
         raise ValueError(f"name '{name}' does not match id: {id}")
 
-    if ancestor is not None:
-        logger.debug("Valid name, now checking if %s is an ancestor of %s", name, ancestor)
-        if not asyncio.run(is_id_ancestor(ancestor, id)):
-            raise ValueError(f"'{name}' is not a descendant of {ancestor}")
+    if ancestor is None:
+        return
+
+    logger.debug("Valid name, now checking if %s is an ancestor of %s", name, ancestor)
+    if not asyncio.run(is_id_ancestor(ancestor, id)):
+        raise ValueError(f"'{name}' is not a descendant of {ancestor}")
 
 
 def validate_ontology_object(
@@ -315,7 +317,7 @@ def validate_organism_object(self: OrganismDetails) -> OrganismDetails:
 # Key Photo Validation
 # ==============================================================================
 @alru_cache
-async def validate_image_format(image_url: str) -> bool:
+async def validate_image_format(image_url: str | None) -> bool:
     if not running_network_validation:
         return True
 
@@ -402,29 +404,19 @@ PUBLICATION_REGEXES_AND_FUNCTIONS = {
 
 
 async def validate_publication_lists(publication_list: List[str]) -> List[str]:
-    # list of invalid publications
-    invalid_publications: List[str] = []
-    new_publications: Dict[str, Set[str]] = {
-        publication_type: set() for publication_type in PUBLICATION_REGEXES_AND_FUNCTIONS
-    }
+    tasks = []
 
     for publication in publication_list:
-        for publication_type, (regex, _) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
-            if re.match(regex, publication):
-                # edge case for DOI, remove the doi: prefix
-                if publication_type == "doi":
-                    publication = publication.replace("doi:", "")
-                new_publications[publication_type].add(publication)
-                break
-
-    tasks = []
-    for publication_type, (_, validate_function) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
-        tasks += [validate_function(entry) for entry in list(new_publications[publication_type])]
+        for publication_type, (regex, validate_function) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
+            if not re.match(regex, publication):
+                continue
+            # edge case for DOI, remove the doi: prefix
+            updated_publication = publication.replace("doi:", "") if publication_type == "doi" else publication
+            tasks.append(validate_function(updated_publication))
+            break
 
     results = await asyncio.gather(*tasks)
-    invalid_publications += [publication for publication, valid in results if not valid]
-
-    return invalid_publications
+    return [publication for publication, valid in results if not valid]
 
 
 def validate_publications(publications: Optional[str]) -> Optional[str]:
@@ -435,13 +427,12 @@ def validate_publications(publications: Optional[str]) -> Optional[str]:
         return publications
 
     # Convert the string to a list of publications
-    publication_list = publications.replace(" ", "").split(",")
-    if publication_list[-1] == "":
-        publication_list.pop()
+    publication_list = publications.replace(" ", "").rstrip(",").split(",")
 
     invalid_publications = asyncio.run(validate_publication_lists(publication_list))
     if len(invalid_publications) > 0:
         raise ValueError(f"Invalid publications found in annotation publications: {invalid_publications}")
+
     return publications
 
 
@@ -466,10 +457,12 @@ def validate_sources_parent_filters(source_list: List[SourceParentFiltersEntity]
             # the list of parents that are being filtered (annotation, dataset, run, etc.)
             filters = [filter for filter in parent_filter.model_fields if len(getattr(parent_filter, filter, [])) != 0]
             for filter in filters:
-                if class_name not in FLATTENED_DEP_TREE[filter]:
-                    errors.append(
-                        ValueError(f"Source entry {i} parent filter '{filter}' cannot be used with '{class_name}'"),
-                    )
+                if class_name in FLATTENED_DEP_TREE[filter]:
+                    continue
+
+                errors.append(
+                    ValueError(f"Source entry {i} parent filter '{filter}' cannot be used with '{class_name}'"),
+                )
 
     return errors
 
@@ -490,11 +483,13 @@ def validate_sources(
         has_parent_filters = False
         for finder in source_element.model_fields:
             # If the finder is not None, add it to the list of finders in the source entry
-            if getattr(source_element, finder) is not None:
-                if finder == "parent_filters":
-                    has_parent_filters = True
-                else:
-                    finders_in_source_entry.append(finder)
+            if getattr(source_element, finder) is None:
+                continue
+
+            if finder == "parent_filters":
+                has_parent_filters = True
+            else:
+                finders_in_source_entry.append(finder)
         # If there are more than one finder in the source entry, add the source entry index and the finders to the error set
         if len(finders_in_source_entry) > 1:
             multiple_finders_in_each_source_entries_errors.append((i, finders_in_source_entry))
@@ -590,12 +585,14 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
 
         for source_element in source_list:
             for shape in source_element.model_fields:
-                if getattr(source_element, shape) is not None:
-                    # If the shape is already used in another source entry, add the shape to the error set
-                    if shape in used_shapes:
-                        shapes_used_multiple_times_errors.add(shape)
-                    else:
-                        used_shapes.add(shape)
+                if getattr(source_element, shape) is None:
+                    continue
+
+                # If the shape is already used in another source entry, add the shape to the error set
+                if shape in used_shapes:
+                    shapes_used_multiple_times_errors.add(shape)
+                else:
+                    used_shapes.add(shape)
 
         # For verifying that all source entries each only have one shape entry
         multiple_shapes_in_each_source_entries_errors = []
@@ -603,9 +600,11 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
         for i, source_element in enumerate(source_list):
             shapes_in_source_entry = []
             for shape in source_element.model_fields:
+                if getattr(source_element, shape) is None:
+                    continue
+
                 # If the shape is not None, add it to the list of shapes in the source entry
-                if getattr(source_element, shape) is not None:
-                    shapes_in_source_entry.append(shape)
+                shapes_in_source_entry.append(shape)
             # If there are more than one shape in the source entry, add the source entry index and the shapes to the error set
             if len(shapes_in_source_entry) > 1:
                 multiple_shapes_in_each_source_entries_errors.append((i, shapes_in_source_entry))
@@ -615,15 +614,14 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
 
         for i, source_element in enumerate(source_list):
             for shape in source_element.model_fields:
-                source_entry = getattr(source_element, shape)
-                if source_entry is not None:
-                    glob_strings_entries = 0
-                    if getattr(source_entry, "glob_string", None) is not None:
-                        glob_strings_entries += 1
-                    if getattr(source_entry, "glob_strings", None) is not None and source_entry.glob_strings != []:
-                        glob_strings_entries += 1
-                    if glob_strings_entries != 1:
-                        multiple_glob_strings_errors.append((i, shape))
+                source_entry: AnnotationSourceFile | None = getattr(source_element, shape)
+                if source_entry is None:
+                    continue
+
+                has_glob_string = getattr(source_entry, "glob_string", None) is not None
+                has_glob_strings = getattr(source_entry, "glob_strings", None) is not None and source_entry.glob_strings
+                if has_glob_string and has_glob_strings:
+                    multiple_glob_strings_errors.append((i, shape))
 
         if len(shapes_used_multiple_times_errors) > 0:
             total_errors.append(
@@ -837,17 +835,18 @@ class ExtendedValidationCameraDetails(CameraDetails):
             return self
 
         for manufacturers, models in CAMERA_MANUFACTURER_TO_MODEL.items():
-            if self.manufacturer in manufacturers:
-                if self.model not in models:
-                    # A warning for now
-                    logger.warning(
-                        "Camera model '%s' is not valid for manufacturer '%s'",
-                        self.model,
-                        self.manufacturer,
-                    )
-                    return self
-                else:
-                    return self
+            if self.manufacturer not in manufacturers:
+                continue
+
+            if self.model not in models:
+                # A warning for now
+                logger.warning(
+                    "Camera model '%s' is not valid for manufacturer '%s'",
+                    self.model,
+                    self.manufacturer,
+                )
+
+            return self
 
         logger.warning("Camera model '%s' of manufacturer '%s' was not recognized", self.model, self.manufacturer)
         return self

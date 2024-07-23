@@ -8,8 +8,7 @@ EXCLUDE_KEYWORDS_LIST = ["draft"]
 YAML_EXTENSIONS = (".yaml", ".yml")
 
 # Set up logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("dataset-validate")
+logger = logging.getLogger(__name__)
 
 
 def get_yaml_config_files(
