@@ -109,6 +109,33 @@ classes:
   # ============================================================================
   # Entities
   # ============================================================================
+  Alignment:
+    mixins:
+      - IDMixin
+    description: Tiltseries Alignment
+    attributes:
+      annotation_files:
+        range: AnnotationFile
+        inverse: AnnotationFile.alignment
+        multivalued: true
+      deposition:
+        range: Deposition
+        inverse: Deposition.alignments
+      tiltseries:
+        range: Tiltseries
+        inverse: Tiltseries.alignments
+      tomograms:
+        range: Tomogram
+        inverse: Tomogram.alignment
+        multivalued: true
+      run:
+        range: Run
+        inverse: Run.alignments
+      alignment:
+        exact_mappings:
+          - cdp-common:api_alignment
+    annotations:
+      plural: Alignments
   AnnotationAuthor:
     mixins:
       - IDMixin
@@ -125,11 +152,15 @@ classes:
       - IDMixin
     description: Files associated with an annotation
     attributes:
-      annotation:
-        range: Annotation
-        inverse: Annotation.annotation_files
-      shape_type:
-        range: annotation_file_shape_type_enum
+      alignment:
+        range: Alignment
+        inverse: Alignment.annotation_files
+      shape:
+        range: AnnotationShape
+        inverse: AnnotationShape.annotation_files
+      tomogram_voxel_spacing:
+        range: TomogramVoxelSpacing
+        inverse: TomogramVoxelSpacing.annotation_files
       format:
         exact_mappings:
           - cdp-common:api_file_format
@@ -144,18 +175,30 @@ classes:
           - cdp-common:annotation_source_file_is_visualization_default
     annotations:
       plural: AnnotationFiles
+  AnnotationShape:
+    mixins:
+      - IDMixin
+    description: Shapes associated with an annotation
+    attributes:
+      annotation:
+        range: Annotation
+        inverse: Annotation.annotation_files
+      shape_type:
+        range: annotation_file_shape_type_enum
+    annotations:
+      plural: AnnotationShapes
   Annotation:
     mixins:
       - IDMixin
       - DateStampedEntityMixin
     description: Metadata about an annotation for a run
     attributes:
-      tomogram_voxel_spacing:
-        range: TomogramVoxelSpacing
-        inverse: TomogramVoxelSpacing.annotations
-      annotation_files:
-        range: AnnotationFile
-        inverse: AnnotationFile.annotation
+      run:
+        range: Run
+        inverse: Run.annotations
+      annotation_shapes:
+        range: AnnotationShape
+        inverse: AnnotationShape.annotation
         multivalued: true
       authors:
         range: AnnotationAuthor
@@ -350,31 +393,121 @@ classes:
           - cdp-common:cell_component_id
     annotations:
       plural: Datasets
+  DepositionAuthor:
+    mixins:
+      - IDMixin
+      - AuthorEntityMixin
+    description: Author of a deposition
+    attributes:
+      tomogram:
+        range: Deposition
+        inverse: Deposition.authors
+    annotations:
+      plural: DepositionAuthors
   Deposition:
     mixins:
       - IDMixin
     attributes:
-      datasets:
-        range: Dataset
-        inverse: Dataset.deposition
+      alignments:
+        range: Alignment
+        inverse: Alignment.deposition
         multivalued: true
       annotations:
         range: Annotation
         inverse: Annotation.deposition
         multivalued: true
+      datasets:
+        range: Dataset
+        inverse: Dataset.deposition
+        multivalued: true
+      frames:
+        range: Frame
+        inverse: Frame.deposition
+        multivalued: true
+      tiltseries:
+        range: Tiltseries
+        inverse: Tiltseries.deposition
+        multivalued: true
       tomograms:
         range: Tomograms
         inverse: Tomogram.deposition
         multivalued: true
+    annotations:
+      plural: Depositions
+  Frame:
+    mixins:
+      - IDMixin
+      - S3PrefixedEntityMixin
+    attributes:
+      deposition:
+        range: Deposition
+        inverse: Deposition.frames
+      per_section_parameters:
+        range: PerSectionParameters
+        inverse: PerSectionParameters.frames
+        multivalued: true
+      run:
+        range: Run
+        inverse: Run.frames
+      raw_angle:
+        exact_mappings:
+          - cdp-common:api_frame_raw_angle
+      acquisition_order:
+        exact_mappings:
+          - cdp-common:api_frame_acquisition_order
+      dose:
+        exact_mappings:
+          - cdp-common:api_frame_dose
+    annotations:
+      plural: Frames
+  PerSectionParameters:
+    mixins:
+      - IDMixin
+    description: Record how frames get mapped to TiltSeries
+    attributes:
+      frame:
+        range: Frame
+        inverse: Frame.per_section_parameters
+        required: True
+      tiltseries:
+        range: Tiltseries
+        inverse: Tiltseries.per_section_parameters
+        required: True
+      z_index:
+        exact_mappings:
+          - cdp-common:per_section_z_index
+      defocus:
+        exact_mappings:
+          - cdp-common:per_section_defocus
+      astigmatism:
+        exact_mappings:
+          - cdp-common:per_section_astigmatism
+      astigmatic_angle:
+        exact_mappings:
+          - cdp-common:per_section_astigmatic_angle
+    annotations:
+      plural: PerSectionParameters
   Run:
     mixins:
       - IDMixin
       - S3PrefixedEntityMixin
     attributes:
+      alignments:
+        range: Alignment
+        inverse: Alignment.run
+        multivalued: true
+      annotations:
+        range: Annotation
+        inverse: Annotation.run
+        multivalued: true
       dataset:
         range: Dataset
         required: true
         inverse: Dataset.runs
+      frames:
+        range: Frame
+        inverse: Frame.run
+        multivalued: true
       tiltseries:
         range: Tiltseries
         multivalued: true
@@ -383,6 +516,10 @@ classes:
         range: TomogramVoxelSpacing
         multivalued: true
         inverse: TomogramVoxelSpacing.run
+      tomograms:
+        range: Tomogram
+        multivalued: true
+        inverse: Tomogram.run
       name:
         exact_mappings:
           - cdp-common:api_run_name
@@ -392,10 +529,22 @@ classes:
     mixins:
       - IDMixin
     attributes:
+      alignment:
+        range: Alignment
+        required: true
+        inverse: Alignment.tiltseries
+      per_section_parameters:
+        range: PerSectionParameters
+        inverse: PerSectionParameters.tiltseries
+        multivalued: true
       run:
         range: Run
         required: true
         inverse: Run.tiltseries
+      deposition:
+        range: Deposition
+        required: true
+        inverse: Deposition.tiltseries
       s3_omezarr_dir:
         exact_mappings:
           - cdp-common:tiltseries_s3_omezarr_dir
@@ -420,12 +569,12 @@ classes:
       https_angle_list:
         exact_mappings:
           - cdp-common:tiltseries_https_angle_list
-      s3_alignment_file:
+      s3_gain_file:
         exact_mappings:
-          - cdp-common:tiltseries_s3_alignment_file
-      https_alignment_file:
+          - cdp-common:tiltseries_s3_gain_file
+      https_gain_file:
         exact_mappings:
-          - cdp-common:tiltseries_https_alignment_file
+          - cdp-common:tiltseries_https_gain_file
       acceleration_voltage:
         exact_mappings:
           - cdp-common:tiltseries_acceleration_voltage
@@ -520,6 +669,10 @@ classes:
       - S3PrefixedEntityMixin
     description: Voxel spacings for a run
     attributes:
+      annotation_files:
+        range: AnnotationFile
+        inverse: AnnotationFile.tomogram_voxel_spacing
+        multivalued: true
       run:
         range: Run
         inverse: run.tomogram_voxel_spacings
@@ -536,22 +689,28 @@ classes:
           - cdp-common:api_tomogram_voxel_spacing
     annotations:
       plural: TomogramVoxelSpacings
-  Tomograms:
+  Tomogram:
     mixins:
       - IDMixin
       - S3PrefixedEntityMixin
     description: Metadata describing a tomogram.
     attributes:
-      deposition:
-        range: Deposition
-        inverse: deposition.tomograms
-      tomogram_voxel_spacing:
-        range: TomogramVoxelSpacing
-        inverse: tomogram_voxel_spacing.tomograms
+      alignment:
+        range: Alignment
+        inverse: Alignment.tomograms
       authors:
         range: TomogramAuthor
         inverse: TomogramAuthor.tomogram
         multivalued: true
+      deposition:
+        range: Deposition
+        inverse: Deposition.tomograms
+      run:
+        range: Run
+        inverse: Run.tomograms
+      tomogram_voxel_spacing:
+        range: TomogramVoxelSpacing
+        inverse: tomogram_voxel_spacing.tomograms
       name:
         exact_mappings:
           - cdp-common:tomogram_name
@@ -643,6 +802,9 @@ classes:
           - cdp-common:tomogram_neuroglancer_config
       type:
         range: TomogramType
+      is_standardized:
+        exact_mappings:
+          - cdp-common:tomogram_is_standandardized
     annotations:
       plural: Tomograms
   # ============================================================================
