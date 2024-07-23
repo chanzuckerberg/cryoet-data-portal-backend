@@ -706,6 +706,7 @@
             "required": [
                 "datasets",
                 "depositions",
+                "runs",
                 "standardization_config",
                 "voxel_spacings"
             ],
@@ -2141,7 +2142,6 @@
                 }
             },
             "required": [
-                "metadata",
                 "sources"
             ],
             "title": "TomogramEntity",
@@ -2451,6 +2451,7 @@
     "required": [
         "datasets",
         "depositions",
+        "runs",
         "standardization_config",
         "voxel_spacings"
     ],

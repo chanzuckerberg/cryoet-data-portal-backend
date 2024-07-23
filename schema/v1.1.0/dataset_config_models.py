@@ -3505,8 +3505,8 @@ class Container(ConfiguredBaseModel):
         description="""A raw tilt entity.""",
         json_schema_extra={"linkml_meta": {"alias": "rawtilts", "domain_of": ["Container"]}},
     )
-    runs: Optional[List[RunEntity]] = Field(
-        default_factory=list,
+    runs: List[RunEntity] = Field(
+        ...,
         description="""A run entity.""",
         json_schema_extra={"linkml_meta": {"alias": "runs", "domain_of": ["Container"]}},
     )
@@ -5463,8 +5463,8 @@ class TomogramEntity(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
-    metadata: Tomogram = Field(
-        ...,
+    metadata: Optional[Tomogram] = Field(
+        None,
         description="""Metadata describing a tomogram.""",
         json_schema_extra={
             "linkml_meta": {
