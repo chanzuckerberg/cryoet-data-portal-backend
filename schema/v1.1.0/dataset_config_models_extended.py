@@ -190,7 +190,7 @@ def validate_authors(authors: List[Author]) -> List[ValueError]:
     logger.debug("Checking ORCIDs: %s", orcids)
     invalid_orcids = asyncio.run(validate_orcids(orcids))
     if invalid_orcids:
-        all_errors.append(ValueError(f"Invalid ORCIDs found in annotation authors: {invalid_orcids}"))
+        all_errors.append(ValueError(f"Invalid ORCIDs found in authors: {invalid_orcids}"))
 
     return all_errors
 
