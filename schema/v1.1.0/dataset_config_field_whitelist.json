@@ -1,0 +1,26 @@
+{
+    "AnnotationObject": {
+        "id": [],
+        "name": []
+    },
+    "CellComponent": {
+        "id": [],
+        "name": []
+    },
+    "CellStrain": {
+        "id": [],
+        "name": []
+    },
+    "CellType": {
+        "id": [],
+        "name": []
+    },
+    "OrganismDetails": {
+        "id": [],
+        "name": []
+    },
+    "TissueDetails": {
+        "id": [],
+        "name": []
+    }
+}
