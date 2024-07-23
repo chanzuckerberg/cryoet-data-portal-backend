@@ -4094,8 +4094,8 @@ class DatasetEntity(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
-    metadata: Dataset = Field(
-        ...,
+    metadata: Optional[Dataset] = Field(
+        None,
         description="""High-level description of a cryoET dataset.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4311,8 +4311,8 @@ class DepositionEntity(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
-    metadata: Deposition = Field(
-        ...,
+    metadata: Optional[Deposition] = Field(
+        None,
         description="""Metadata describing a deposition.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5289,8 +5289,8 @@ class TiltSeriesEntity(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
-    metadata: TiltSeries = Field(
-        ...,
+    metadata: Optional[TiltSeries] = Field(
+        None,
         description="""Metadata describing a tilt series.""",
         json_schema_extra={
             "linkml_meta": {

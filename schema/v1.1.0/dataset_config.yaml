@@ -267,7 +267,6 @@ classes:
     attributes:
       metadata:
         range: Dataset
-        required: true
       sources:
         multivalued: true
         range: DatasetSource
@@ -293,7 +292,6 @@ classes:
     attributes:
       metadata:
         range: Deposition
-        required: true
       sources:
         multivalued: true
         range: DepositionSource
@@ -410,7 +408,6 @@ classes:
     attributes:
       metadata:
         range: TiltSeries
-        required: true
       sources:
         multivalued: true
         range: TiltSeriesSource

@@ -1252,7 +1252,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: Dataset
-        required: true
         inlined: true
         inlined_as_list: true
       sources:
@@ -1414,7 +1413,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: Deposition
-        required: true
         inlined: true
         inlined_as_list: true
       sources:
@@ -2084,7 +2082,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: TiltSeries
-        required: true
         inlined: true
         inlined_as_list: true
       sources:
