@@ -406,15 +406,22 @@ classes:
       - AuthorEntityMixin
     description: Author of a deposition
     attributes:
-      tomogram:
+      deposition:
         range: Deposition
         inverse: Deposition.authors
     annotations:
       plural: DepositionAuthors
+
   Deposition:
     mixins:
       - IDMixin
+      - CrossReferencedEntityMixin
+      - DateStampedEntityMixin
     attributes:
+      authors:
+        range: DepositionAuthor
+        inverse: DepositionAuthor.deposition
+        multivalued: true
       alignments:
         range: Alignment
         inverse: Alignment.deposition
@@ -439,8 +446,29 @@ classes:
         range: Tomograms
         inverse: Tomogram.deposition
         multivalued: true
+      deposition_title:
+        exact_mappings:
+          - cdp-common:deposition_title
+      deposition_description:
+        exact_mappings:
+          - cdp-common:deposition_description
+      deposition_types:
+        range: DepositionType
+        inverse: DepositionType.deposition
+        multivalued: true
     annotations:
       plural: Depositions
+  DepositionType:
+    mixins:
+      - IDMixin
+    attributes:
+      depositions:
+        range: Deposition
+        inverse: Deposition.type
+      type:
+        range: cdp-common:deposition_types_enum
+    annotations:
+      plural: DepositionTypes
   Frame:
     mixins:
       - IDMixin
@@ -467,7 +495,7 @@ classes:
           - cdp-common:api_frame_dose
       is_gain_corrected:
         exact_mappings:
-          - cdp-common:api_frame_is_gain-corrected
+          - cdp-common:api_frame_is_gain_corrected
       s3_gain_file:
         exact_mappings:
           - cdp-common:api_frame_s3_gain_file

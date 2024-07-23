@@ -963,6 +963,15 @@ slots:
     unit:
       descriptive_name: electrons per square angstrom
       symbol: e-/Å2
+  api_frame_https_gain_file:
+    range: string
+    description: HTTPS path to the gain file for this frame
+  api_frame_s3_gain_file:
+    range: string
+    description: S3 path to the gain file for this frame
+  api_frame_is_gain_corrected:
+    range: boolean
+    description: Whether this frame has been gain corrected
 
 
 enums:
