@@ -1344,7 +1344,7 @@
                             "type": "string"
                         },
                         {
-                            "$ref": "#/$defs/MicroscopeManufacturerEnum"
+                            "$ref": "#/$defs/TiltseriesMicroscopeManufacturerEnum"
                         }
                     ],
                     "description": "Name of the microscope manufacturer",
@@ -1361,16 +1361,6 @@
             ],
             "title": "MicroscopeDetails",
             "type": "object"
-        },
-        "MicroscopeManufacturerEnum": {
-            "description": "Microscope manufacturer",
-            "enum": [
-                "FEI",
-                "TFS",
-                "JEOL"
-            ],
-            "title": "MicroscopeManufacturerEnum",
-            "type": "string"
         },
         "MicroscopeOpticalSetup": {
             "additionalProperties": false,
@@ -1990,6 +1980,16 @@
                 "cds"
             ],
             "title": "TiltseriesCameraAcquireModeEnum",
+            "type": "string"
+        },
+        "TiltseriesMicroscopeManufacturerEnum": {
+            "description": "Microscope manufacturer",
+            "enum": [
+                "FEI",
+                "TFS",
+                "JEOL"
+            ],
+            "title": "TiltseriesMicroscopeManufacturerEnum",
             "type": "string"
         },
         "TissueDetails": {

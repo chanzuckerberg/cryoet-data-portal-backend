@@ -553,7 +553,7 @@ class TiltseriesCameraAcquireModeEnum(str, Enum):
     cds = "cds"
 
 
-class MicroscopeManufacturerEnum(str, Enum):
+class TiltseriesMicroscopeManufacturerEnum(str, Enum):
     """
     Microscope manufacturer
     """
@@ -1713,13 +1713,13 @@ class MicroscopeDetails(ConfiguredBaseModel):
             }
         },
     )
-    manufacturer: Union[MicroscopeManufacturerEnum, str] = Field(
+    manufacturer: Union[TiltseriesMicroscopeManufacturerEnum, str] = Field(
         ...,
         description="""Name of the microscope manufacturer""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "manufacturer",
-                "any_of": [{"range": "StringFormattedString"}, {"range": "microscope_manufacturer_enum"}],
+                "any_of": [{"range": "StringFormattedString"}, {"range": "tiltseries_microscope_manufacturer_enum"}],
                 "domain_of": ["CameraDetails", "MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_manufacturer"],
             }
@@ -2401,10 +2401,10 @@ class Tomogram(AuthoredEntity):
         },
     )
     affine_transformation_matrix: Optional[
-        conlist(min_length=4, max_length=4, item_type=conlist(min_length=4, max_length=4, item_type=Any))
+        conlist(min_length=4, max_length=4, item_type=conlist(min_length=4, max_length=4, item_type=float))
     ] = Field(
         None,
-        description="""A placeholder for any type of data.""",
+        description="""The flip or rotation transformation of this author submitted tomogram is indicated here""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "affine_transformation_matrix",
