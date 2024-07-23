@@ -118,6 +118,10 @@ classes:
         range: AnnotationFile
         inverse: AnnotationFile.alignment
         multivalued: true
+      per_section_alignments:
+        range: PerSectionAlignment
+        inverse: PerSectionAlignment.alignment
+        multivalued: true
       deposition:
         range: Deposition
         inverse: Deposition.alignments
@@ -461,8 +465,44 @@ classes:
       dose:
         exact_mappings:
           - cdp-common:api_frame_dose
+      is_gain_corrected:
+        exact_mappings:
+          - cdp-common:api_frame_is_gain-corrected
+      s3_gain_file:
+        exact_mappings:
+          - cdp-common:api_frame_s3_gain_file
+      https_gain_file:
+        exact_mappings:
+          - cdp-common:api_frame_https_gain_file
     annotations:
       plural: Frames
+  PerSectionAlignment:
+    mixins:
+      - IDMixin
+    description: Record how frames get mapped to TiltSeries
+    attributes:
+      alignment:
+        range: Alignment
+        inverse: Alignment.per_section_alignments
+        required: True
+      tiltseries:
+        range: Tiltseries
+        inverse: Tiltseries.per_section_alignments
+        required: True
+      z_index:
+        exact_mappings:
+          - cdp-common:per_section_z_index
+      defocus:
+        exact_mappings:
+          - cdp-common:per_section_defocus
+      astigmatism:
+        exact_mappings:
+          - cdp-common:per_section_astigmatism
+      astigmatic_angle:
+        exact_mappings:
+          - cdp-common:per_section_astigmatic_angle
+    annotations:
+      plural: PerSectionParameters
   PerSectionParameters:
     mixins:
       - IDMixin
@@ -536,6 +576,10 @@ classes:
         range: Alignment
         required: true
         inverse: Alignment.tiltseries
+      per_section_alignments:
+        range: PerSectionAlignment
+        inverse: PerSectionAlignment.tiltseries
+        multivalued: true
       per_section_parameters:
         range: PerSectionParameters
         inverse: PerSectionParameters.tiltseries
