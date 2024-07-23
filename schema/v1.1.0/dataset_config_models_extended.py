@@ -287,10 +287,7 @@ def validate_ontology_object(
     """
     Validates a typical object with an ontology ID and name
     """
-    if not running_network_validation:
-        return self
-
-    if self.id is None:
+    if not running_network_validation or self.id is None:
         return self
 
     validate_id_name_object(self.id.strip(), self.name.strip().lower(), True, ancestor)
@@ -302,10 +299,7 @@ def validate_organism_object(self: OrganismDetails) -> OrganismDetails:
     """
     Validates an organism object, with slightly different validation (taxonomy_id, but needs to be prefixed with NCBITaxon)
     """
-    if not running_network_validation:
-        return self
-
-    if self.taxonomy_id is None:
+    if not running_network_validation or self.taxonomy_id is None:
         return self
 
     validate_id_name_object(f"NCBITaxon:{self.taxonomy_id}", self.name.strip().lower(), validate_name=False)
@@ -318,10 +312,7 @@ def validate_organism_object(self: OrganismDetails) -> OrganismDetails:
 # ==============================================================================
 @alru_cache
 async def validate_image_format(image_url: str | None) -> bool:
-    if not running_network_validation:
-        return True
-
-    if image_url is None:
+    if not running_network_validation or image_url is None:
         return True
 
     # don't check non-http(s) URLs
@@ -420,10 +411,7 @@ async def validate_publication_lists(publication_list: List[str]) -> List[str]:
 
 
 def validate_publications(publications: Optional[str]) -> Optional[str]:
-    if not running_network_validation:
-        return publications
-
-    if publications is None or publications == "":
+    if not running_network_validation or not publications:
         return publications
 
     # Convert the string to a list of publications
