@@ -1,5 +1,3 @@
-
-
 # Class: AnnotationOrientedPointFile
 
 
@@ -14,35 +12,30 @@ URI: [cdp-meta:AnnotationOrientedPointFile](metadataAnnotationOrientedPointFile)
 
 
 
-
-
 ```mermaid
  classDiagram
     class AnnotationOrientedPointFile
-    click AnnotationOrientedPointFile href "../AnnotationOrientedPointFile"
       AnnotationSourceFile <|-- AnnotationOrientedPointFile
-        click AnnotationSourceFile href "../AnnotationSourceFile"
-
+      
 
       AnnotationOrientedPointFile <|-- AnnotationInstanceSegmentationFile
-        click AnnotationInstanceSegmentationFile href "../AnnotationInstanceSegmentationFile"
-
-
+      
+      
       AnnotationOrientedPointFile : binning
-
+        
       AnnotationOrientedPointFile : file_format
-
+        
       AnnotationOrientedPointFile : filter_value
-
+        
       AnnotationOrientedPointFile : glob_string
-
+        
       AnnotationOrientedPointFile : glob_strings
-
+        
       AnnotationOrientedPointFile : is_visualization_default
-
+        
       AnnotationOrientedPointFile : order
-
-
+        
+      
 ```
 
 
@@ -63,9 +56,9 @@ URI: [cdp-meta:AnnotationOrientedPointFile](metadataAnnotationOrientedPointFile)
 | [binning](binning.md) | 0..1 <br/> [Float](Float.md) | The binning factor for a point / oriented point / instance segmentation annot... | direct |
 | [filter_value](filter_value.md) | 0..1 <br/> [String](String.md) | The filter value for an oriented point / instance segmentation annotation fil... | direct |
 | [order](order.md) | 0..1 <br/> [String](String.md) | The order of axes for an oriented point / instance segmentation annotation fi... | direct |
-| [file_format](file_format.md) | 1 <br/> [String](String.md) | File format for this file | direct |
+| [file_format](file_format.md) | 1..1 <br/> [String](String.md) | File format for this file | direct |
 | [glob_string](glob_string.md) | 0..1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
-| [glob_strings](glob_strings.md) | * <br/> [String](String.md) | Glob strings to match annotation files in the dataset | direct |
+| [glob_strings](glob_strings.md) | 0..* <br/> [String](String.md) | Glob strings to match annotation files in the dataset | direct |
 | [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation will be rendered in neuroglancer by default | direct |
 
 
@@ -97,14 +90,13 @@ URI: [cdp-meta:AnnotationOrientedPointFile](metadataAnnotationOrientedPointFile)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationOrientedPointFile |
 | native | cdp-meta:AnnotationOrientedPointFile |
-
-
 
 
 
@@ -224,6 +216,7 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_source_file_glob_strings
+    multivalued: true
     alias: glob_strings
     owner: AnnotationOrientedPointFile
     domain_of:
@@ -235,7 +228,6 @@ attributes:
     - AnnotationSemanticSegmentationMaskFile
     range: string
     required: false
-    multivalued: true
     inlined: true
     inlined_as_list: true
   is_visualization_default:
@@ -371,6 +363,7 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_source_file_glob_strings
+    multivalued: true
     alias: glob_strings
     owner: AnnotationOrientedPointFile
     domain_of:
@@ -382,7 +375,6 @@ attributes:
     - AnnotationSemanticSegmentationMaskFile
     range: string
     required: false
-    multivalued: true
     inlined: true
     inlined_as_list: true
   is_visualization_default:

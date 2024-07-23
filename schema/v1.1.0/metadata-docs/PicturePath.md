@@ -1,5 +1,3 @@
-
-
 # Class: PicturePath
 
 
@@ -14,17 +12,14 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 
 
-
-
 ```mermaid
  classDiagram
     class PicturePath
-    click PicturePath href "../PicturePath"
       PicturePath : snapshot
-
+        
       PicturePath : thumbnail
-
-
+        
+      
 ```
 
 
@@ -71,14 +66,13 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:PicturePath |
 | native | cdp-meta:PicturePath |
-
-
 
 
 

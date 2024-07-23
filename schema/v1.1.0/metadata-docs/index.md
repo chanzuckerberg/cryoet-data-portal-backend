@@ -175,6 +175,7 @@ Name: cdp-meta
 
 | Enumeration | Description |
 | --- | --- |
+| [AnnotationFileShapeTypeEnum](AnnotationFileShapeTypeEnum.md) | Describes the shape of the annotation |
 | [AnnotationMethodLinkTypeEnum](AnnotationMethodLinkTypeEnum.md) | Describes the type of link associated to the annotation method |
 | [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Describes how the annotations were generated |
 | [DepositionTypesEnum](DepositionTypesEnum.md) | Types of data a deposition has |

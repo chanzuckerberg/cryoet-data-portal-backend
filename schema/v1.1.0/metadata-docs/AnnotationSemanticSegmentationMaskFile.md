@@ -1,5 +1,3 @@
-
-
 # Class: AnnotationSemanticSegmentationMaskFile
 
 
@@ -14,26 +12,22 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
 
 
 
-
-
 ```mermaid
  classDiagram
     class AnnotationSemanticSegmentationMaskFile
-    click AnnotationSemanticSegmentationMaskFile href "../AnnotationSemanticSegmentationMaskFile"
       AnnotationSourceFile <|-- AnnotationSemanticSegmentationMaskFile
-        click AnnotationSourceFile href "../AnnotationSourceFile"
-
+      
       AnnotationSemanticSegmentationMaskFile : file_format
-
+        
       AnnotationSemanticSegmentationMaskFile : glob_string
-
+        
       AnnotationSemanticSegmentationMaskFile : glob_strings
-
+        
       AnnotationSemanticSegmentationMaskFile : is_visualization_default
-
+        
       AnnotationSemanticSegmentationMaskFile : mask_label
-
-
+        
+      
 ```
 
 
@@ -51,9 +45,9 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [mask_label](mask_label.md) | 0..1 <br/> [Integer](Integer.md) | The mask label for a semantic segmentation mask annotation file | direct |
-| [file_format](file_format.md) | 1 <br/> [String](String.md) | File format for this file | direct |
+| [file_format](file_format.md) | 1..1 <br/> [String](String.md) | File format for this file | direct |
 | [glob_string](glob_string.md) | 0..1 <br/> [String](String.md) | Glob string to match annotation files in the dataset | direct |
-| [glob_strings](glob_strings.md) | * <br/> [String](String.md) | Glob strings to match annotation files in the dataset | direct |
+| [glob_strings](glob_strings.md) | 0..* <br/> [String](String.md) | Glob strings to match annotation files in the dataset | direct |
 | [is_visualization_default](is_visualization_default.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation will be rendered in neuroglancer by default | direct |
 
 
@@ -85,14 +79,13 @@ URI: [cdp-meta:AnnotationSemanticSegmentationMaskFile](metadataAnnotationSemanti
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationSemanticSegmentationMaskFile |
 | native | cdp-meta:AnnotationSemanticSegmentationMaskFile |
-
-
 
 
 
@@ -175,6 +168,7 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_source_file_glob_strings
+    multivalued: true
     alias: glob_strings
     owner: AnnotationSemanticSegmentationMaskFile
     domain_of:
@@ -186,7 +180,6 @@ attributes:
     - AnnotationSemanticSegmentationMaskFile
     range: string
     required: false
-    multivalued: true
     inlined: true
     inlined_as_list: true
   is_visualization_default:
@@ -285,6 +278,7 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:annotation_source_file_glob_strings
+    multivalued: true
     alias: glob_strings
     owner: AnnotationSemanticSegmentationMaskFile
     domain_of:
@@ -296,7 +290,6 @@ attributes:
     - AnnotationSemanticSegmentationMaskFile
     range: string
     required: false
-    multivalued: true
     inlined: true
     inlined_as_list: true
   is_visualization_default:

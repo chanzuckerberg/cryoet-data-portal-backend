@@ -1,5 +1,3 @@
-
-
 # Slot: email
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:email](metadataemail)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Author](Author.md) | Author of a scientific data entity |  no  |
+[Author](Author.md) | Author of a scientific data entity |  no  |
 
 
 
@@ -49,17 +46,6 @@ URI: [cdp-meta:email](metadataemail)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:email |
-| native | cdp-meta:email |
-| exact | cdp-common:author_email |
 
 
 

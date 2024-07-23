@@ -1,5 +1,3 @@
-
-
 # Slot: publications
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:publications](metadatapublications)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
+[CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
 
 
 
@@ -53,16 +50,6 @@ URI: [cdp-meta:publications](metadatapublications)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:publications |
-| native | cdp-meta:publications |
 
 
 

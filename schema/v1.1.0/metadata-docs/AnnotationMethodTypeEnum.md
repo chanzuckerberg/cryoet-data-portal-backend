@@ -47,8 +47,6 @@ URI: [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md)
 
 
 
-
-
 ## LinkML Source
 
 <details>

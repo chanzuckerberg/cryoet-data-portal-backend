@@ -1,5 +1,3 @@
-
-
 # Slot: deposition_types
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:deposition_types](metadatadeposition_types)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Deposition](Deposition.md) | Metadata describing a deposition |  no  |
+[Deposition](Deposition.md) | Metadata describing a deposition |  no  |
 
 
 
@@ -59,17 +56,6 @@ URI: [cdp-meta:deposition_types](metadatadeposition_types)
 
 
 
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:deposition_types |
-| native | cdp-meta:deposition_types |
-| exact | cdp-common:deposition_types |
-
-
-
-
 ## LinkML Source
 
 <details>
@@ -80,13 +66,13 @@ from_schema: metadata
 exact_mappings:
 - cdp-common:deposition_types
 rank: 1000
+multivalued: true
 alias: deposition_types
 owner: Deposition
 domain_of:
 - Deposition
 range: deposition_types_enum
 required: true
-multivalued: true
 inlined: true
 inlined_as_list: true
 pattern: (^annotation$)|(^dataset$)|(^tomogram$)

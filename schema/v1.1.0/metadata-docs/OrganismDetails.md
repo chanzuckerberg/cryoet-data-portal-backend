@@ -1,5 +1,3 @@
-
-
 # Class: OrganismDetails
 
 
@@ -14,17 +12,14 @@ URI: [cdp-meta:OrganismDetails](metadataOrganismDetails)
 
 
 
-
-
 ```mermaid
  classDiagram
     class OrganismDetails
-    click OrganismDetails href "../OrganismDetails"
       OrganismDetails : name
-
+        
       OrganismDetails : taxonomy_id
-
-
+        
+      
 ```
 
 
@@ -37,7 +32,7 @@ URI: [cdp-meta:OrganismDetails](metadataOrganismDetails)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 1 <br/> [String](String.md) | Name of the organism from which a biological sample used in a CryoET study is... | direct |
+| [name](name.md) | 1..1 <br/> [String](String.md) | Name of the organism from which a biological sample used in a CryoET study is... | direct |
 | [taxonomy_id](taxonomy_id.md) | 0..1 _recommended_ <br/> [Integer](Integer.md) | NCBI taxonomy identifier for the organism, e | direct |
 
 
@@ -72,14 +67,13 @@ URI: [cdp-meta:OrganismDetails](metadataOrganismDetails)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:OrganismDetails |
 | native | cdp-meta:OrganismDetails |
-
-
 
 
 

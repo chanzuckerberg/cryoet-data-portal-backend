@@ -36,10 +36,3 @@ URI: [cdp-meta:BTO_ID](metadataBTO_ID)
 
 
 
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:BTO_ID |
-| native | cdp-meta:BTO_ID |

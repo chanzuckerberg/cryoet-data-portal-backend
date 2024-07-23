@@ -1,5 +1,3 @@
-
-
 # Slot: annotation_publications
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:annotation_publications](metadataannotation_publications)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -51,17 +48,6 @@ URI: [cdp-meta:annotation_publications](metadataannotation_publications)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:annotation_publications |
-| native | cdp-meta:annotation_publications |
-| exact | cdp-common:annotation_publications |
 
 
 

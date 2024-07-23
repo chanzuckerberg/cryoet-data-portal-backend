@@ -1,5 +1,3 @@
-
-
 # Class: CameraDetails
 
 
@@ -14,19 +12,16 @@ URI: [cdp-meta:CameraDetails](metadataCameraDetails)
 
 
 
-
-
 ```mermaid
  classDiagram
     class CameraDetails
-    click CameraDetails href "../CameraDetails"
       CameraDetails : acquire_mode
-
+        
       CameraDetails : manufacturer
-
+        
       CameraDetails : model
-
-
+        
+      
 ```
 
 
@@ -39,9 +34,9 @@ URI: [cdp-meta:CameraDetails](metadataCameraDetails)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [acquire_mode](acquire_mode.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md) | Camera acquisition mode | direct |
-| [manufacturer](manufacturer.md) | 1 <br/> [String](String.md) | Name of the camera manufacturer | direct |
-| [model](model.md) | 1 <br/> [String](String.md) | Camera model name | direct |
+| [acquire_mode](acquire_mode.md) | 0..1 <br/> [String](String.md) | Camera acquisition mode | direct |
+| [manufacturer](manufacturer.md) | 1..1 <br/> [String](String.md) | Name of the camera manufacturer | direct |
+| [model](model.md) | 1..1 <br/> [String](String.md) | Camera model name | direct |
 
 
 
@@ -74,14 +69,13 @@ URI: [cdp-meta:CameraDetails](metadataCameraDetails)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CameraDetails |
 | native | cdp-meta:CameraDetails |
-
-
 
 
 

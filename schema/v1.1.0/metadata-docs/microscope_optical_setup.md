@@ -1,5 +1,3 @@
-
-
 # Slot: microscope_optical_setup
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:microscope_optical_setup](metadatamicroscope_optical_setup)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -51,16 +48,6 @@ URI: [cdp-meta:microscope_optical_setup](metadatamicroscope_optical_setup)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:microscope_optical_setup |
-| native | cdp-meta:microscope_optical_setup |
 
 
 

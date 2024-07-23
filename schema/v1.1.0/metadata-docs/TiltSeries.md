@@ -1,5 +1,3 @@
-
-
 # Class: TiltSeries
 
 
@@ -14,79 +12,56 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 
 
 
-
-
 ```mermaid
  classDiagram
     class TiltSeries
-    click TiltSeries href "../TiltSeries"
       TiltSeries : acceleration_voltage
-
+        
       TiltSeries : aligned_tiltseries_binning
-
+        
       TiltSeries : binning_from_frames
-
+        
       TiltSeries : camera
-
-
-
-
-    TiltSeries --> "1" CameraDetails : camera
-    click CameraDetails href "../CameraDetails"
-
-
+        
+          TiltSeries --> CameraDetails : camera
+        
       TiltSeries : data_acquisition_software
-
+        
       TiltSeries : frames_count
-
+        
       TiltSeries : is_aligned
-
+        
       TiltSeries : microscope
-
-
-
-
-    TiltSeries --> "1" MicroscopeDetails : microscope
-    click MicroscopeDetails href "../MicroscopeDetails"
-
-
+        
+          TiltSeries --> MicroscopeDetails : microscope
+        
       TiltSeries : microscope_optical_setup
-
-
-
-
-    TiltSeries --> "1" MicroscopeOpticalSetup : microscope_optical_setup
-    click MicroscopeOpticalSetup href "../MicroscopeOpticalSetup"
-
-
+        
+          TiltSeries --> MicroscopeOpticalSetup : microscope_optical_setup
+        
       TiltSeries : pixel_spacing
-
+        
       TiltSeries : related_empiar_entry
-
+        
       TiltSeries : spherical_aberration_constant
-
+        
       TiltSeries : tilt_alignment_software
-
+        
       TiltSeries : tilt_axis
-
+        
       TiltSeries : tilt_range
-
-
-
-
-    TiltSeries --> "1" TiltRange : tilt_range
-    click TiltRange href "../TiltRange"
-
-
+        
+          TiltSeries --> TiltRange : tilt_range
+        
       TiltSeries : tilt_series_quality
-
+        
       TiltSeries : tilt_step
-
+        
       TiltSeries : tilting_scheme
-
+        
       TiltSeries : total_flux
-
-
+        
+      
 ```
 
 
@@ -99,25 +74,25 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [acceleration_voltage](acceleration_voltage.md) | 1 <br/> [Float](Float.md) | Electron Microscope Accelerator voltage in volts | direct |
-| [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Binning factor of the aligned tilt series | direct |
-| [binning_from_frames](binning_from_frames.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Describes the binning factor from frames to tilt series file | direct |
-| [camera](camera.md) | 1 <br/> [CameraDetails](CameraDetails.md) | The camera used to collect the tilt series | direct |
-| [data_acquisition_software](data_acquisition_software.md) | 1 <br/> [String](String.md) | Software used to collect data | direct |
+| [acceleration_voltage](acceleration_voltage.md) | 1..1 <br/> [Float](Float.md) | Electron Microscope Accelerator voltage in volts | direct |
+| [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | 0..1 <br/> [String](String.md) | Binning factor of the aligned tilt series | direct |
+| [binning_from_frames](binning_from_frames.md) | 0..1 <br/> [String](String.md) | Describes the binning factor from frames to tilt series file | direct |
+| [camera](camera.md) | 1..1 <br/> [CameraDetails](CameraDetails.md) | The camera used to collect the tilt series | direct |
+| [data_acquisition_software](data_acquisition_software.md) | 1..1 <br/> [String](String.md) | Software used to collect data | direct |
 | [frames_count](frames_count.md) | 0..1 <br/> [Integer](Integer.md) | Number of frames associated with this tiltseries | direct |
-| [is_aligned](is_aligned.md) | 1 <br/> [Boolean](Boolean.md) | Whether this tilt series is aligned | direct |
-| [microscope](microscope.md) | 1 <br/> [MicroscopeDetails](MicroscopeDetails.md) | The microscope used to collect the tilt series | direct |
-| [microscope_optical_setup](microscope_optical_setup.md) | 1 <br/> [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series | direct |
+| [is_aligned](is_aligned.md) | 1..1 <br/> [Boolean](Boolean.md) | Whether this tilt series is aligned | direct |
+| [microscope](microscope.md) | 1..1 <br/> [MicroscopeDetails](MicroscopeDetails.md) | The microscope used to collect the tilt series | direct |
+| [microscope_optical_setup](microscope_optical_setup.md) | 1..1 <br/> [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series | direct |
 | [related_empiar_entry](related_empiar_entry.md) | 0..1 <br/> [EMPIARID](EMPIARID.md) | If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifie... | direct |
-| [spherical_aberration_constant](spherical_aberration_constant.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Spherical Aberration Constant of the objective lens in millimeters | direct |
+| [spherical_aberration_constant](spherical_aberration_constant.md) | 1..1 <br/> [String](String.md) | Spherical Aberration Constant of the objective lens in millimeters | direct |
 | [tilt_alignment_software](tilt_alignment_software.md) | 0..1 <br/> [String](String.md) | Software used for tilt alignment | direct |
-| [tilt_axis](tilt_axis.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Rotation angle in degrees | direct |
-| [tilt_range](tilt_range.md) | 1 <br/> [TiltRange](TiltRange.md) | The range of tilt angles in the tilt series | direct |
-| [tilt_series_quality](tilt_series_quality.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Integer](Integer.md)&nbsp;or&nbsp;<br />[IntegerFormattedString](IntegerFormattedString.md) | Author assessment of tilt series quality within the dataset (1-5, 5 is best) | direct |
-| [tilt_step](tilt_step.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Tilt step in degrees | direct |
-| [tilting_scheme](tilting_scheme.md) | 1 <br/> [String](String.md) | The order of stage tilting during acquisition of the data | direct |
-| [total_flux](total_flux.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Number of Electrons reaching the specimen in a square Angstrom area for the e... | direct |
-| [pixel_spacing](pixel_spacing.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Pixel spacing for the tilt series | direct |
+| [tilt_axis](tilt_axis.md) | 1..1 <br/> [String](String.md) | Rotation angle in degrees | direct |
+| [tilt_range](tilt_range.md) | 1..1 <br/> [TiltRange](TiltRange.md) | The range of tilt angles in the tilt series | direct |
+| [tilt_series_quality](tilt_series_quality.md) | 1..1 <br/> [String](String.md) | Author assessment of tilt series quality within the dataset (1-5, 5 is best) | direct |
+| [tilt_step](tilt_step.md) | 1..1 <br/> [String](String.md) | Tilt step in degrees | direct |
+| [tilting_scheme](tilting_scheme.md) | 1..1 <br/> [String](String.md) | The order of stage tilting during acquisition of the data | direct |
+| [total_flux](total_flux.md) | 1..1 <br/> [String](String.md) | Number of Electrons reaching the specimen in a square Angstrom area for the e... | direct |
+| [pixel_spacing](pixel_spacing.md) | 1..1 <br/> [String](String.md) | Pixel spacing for the tilt series | direct |
 
 
 
@@ -143,14 +118,13 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:TiltSeries |
 | native | cdp-meta:TiltSeries |
-
-
 
 
 

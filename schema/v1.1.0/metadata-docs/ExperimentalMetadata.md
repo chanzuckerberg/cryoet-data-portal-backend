@@ -1,5 +1,3 @@
-
-
 # Class: ExperimentalMetadata
 
 
@@ -16,76 +14,42 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 
 
-
-
 ```mermaid
  classDiagram
     class ExperimentalMetadata
-    click ExperimentalMetadata href "../ExperimentalMetadata"
       ExperimentalMetadata <|-- Dataset
-        click Dataset href "../Dataset"
-
+      
       ExperimentalMetadata : cell_component
-
-
-
-
-    ExperimentalMetadata --> "0..1" CellComponent : cell_component
-    click CellComponent href "../CellComponent"
-
-
+        
+          ExperimentalMetadata --> CellComponent : cell_component
+        
       ExperimentalMetadata : cell_strain
-
-
-
-
-    ExperimentalMetadata --> "0..1" CellStrain : cell_strain
-    click CellStrain href "../CellStrain"
-
-
+        
+          ExperimentalMetadata --> CellStrain : cell_strain
+        
       ExperimentalMetadata : cell_type
-
-
-
-
-    ExperimentalMetadata --> "0..1" CellType : cell_type
-    click CellType href "../CellType"
-
-
+        
+          ExperimentalMetadata --> CellType : cell_type
+        
       ExperimentalMetadata : grid_preparation
-
+        
       ExperimentalMetadata : organism
-
-
-
-
-    ExperimentalMetadata --> "0..1" OrganismDetails : organism
-    click OrganismDetails href "../OrganismDetails"
-
-
+        
+          ExperimentalMetadata --> OrganismDetails : organism
+        
       ExperimentalMetadata : other_setup
-
+        
       ExperimentalMetadata : sample_preparation
-
+        
       ExperimentalMetadata : sample_type
-
-
-
-
-    ExperimentalMetadata --> "1" SampleTypeEnum : sample_type
-    click SampleTypeEnum href "../SampleTypeEnum"
-
-
+        
+          ExperimentalMetadata --> sample_type_enum : sample_type
+        
       ExperimentalMetadata : tissue
-
-
-
-
-    ExperimentalMetadata --> "0..1" TissueDetails : tissue
-    click TissueDetails href "../TissueDetails"
-
-
-
+        
+          ExperimentalMetadata --> TissueDetails : tissue
+        
+      
 ```
 
 
@@ -98,7 +62,7 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [sample_type](sample_type.md) | 1 <br/> [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study | direct |
+| [sample_type](sample_type.md) | 1..1 <br/> [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study | direct |
 | [sample_preparation](sample_preparation.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes how the sample was prepared | direct |
 | [grid_preparation](grid_preparation.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes Cryo-ET grid preparation | direct |
 | [other_setup](other_setup.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes other setup not covered by sample preparation or grid preparation t... | direct |
@@ -132,14 +96,13 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:ExperimentalMetadata |
 | native | cdp-meta:ExperimentalMetadata |
-
-
 
 
 

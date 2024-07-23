@@ -1,5 +1,3 @@
-
-
 # Class: AnnotationMethodLinks
 
 
@@ -14,26 +12,18 @@ URI: [cdp-meta:AnnotationMethodLinks](metadataAnnotationMethodLinks)
 
 
 
-
-
 ```mermaid
  classDiagram
     class AnnotationMethodLinks
-    click AnnotationMethodLinks href "../AnnotationMethodLinks"
       AnnotationMethodLinks : link
-
+        
       AnnotationMethodLinks : link_type
-
-
-
-
-    AnnotationMethodLinks --> "1" AnnotationMethodLinkTypeEnum : link_type
-    click AnnotationMethodLinkTypeEnum href "../AnnotationMethodLinkTypeEnum"
-
-
+        
+          AnnotationMethodLinks --> annotation_method_link_type_enum : link_type
+        
       AnnotationMethodLinks : name
-
-
+        
+      
 ```
 
 
@@ -46,8 +36,8 @@ URI: [cdp-meta:AnnotationMethodLinks](metadataAnnotationMethodLinks)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [link](link.md) | 1 <br/> [String](String.md) | URL to the resource | direct |
-| [link_type](link_type.md) | 1 <br/> [AnnotationMethodLinkTypeEnum](AnnotationMethodLinkTypeEnum.md) | Type of link (e | direct |
+| [link](link.md) | 1..1 <br/> [String](String.md) | URL to the resource | direct |
+| [link_type](link_type.md) | 1..1 <br/> [AnnotationMethodLinkTypeEnum](AnnotationMethodLinkTypeEnum.md) | Type of link (e | direct |
 | [name](name.md) | 0..1 _recommended_ <br/> [String](String.md) | user readable name of the resource | direct |
 
 
@@ -74,14 +64,13 @@ URI: [cdp-meta:AnnotationMethodLinks](metadataAnnotationMethodLinks)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationMethodLinks |
 | native | cdp-meta:AnnotationMethodLinks |
-
-
 
 
 

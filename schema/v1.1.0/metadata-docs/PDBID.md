@@ -36,10 +36,3 @@ URI: [cdp-meta:PDB_ID](metadataPDB_ID)
 
 
 
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:PDB_ID |
-| native | cdp-meta:PDB_ID |

@@ -1,5 +1,3 @@
-
-
 # Slot: cross_references
 
 URI: [cdp-meta:cross_references](metadatacross_references)
@@ -11,14 +9,13 @@ URI: [cdp-meta:cross_references](metadatacross_references)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [CrossReferencedEntity](CrossReferencedEntity.md) | An entity with associated cross-references to other databases and publication... |  no  |
-| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
-| [Deposition](Deposition.md) | Metadata describing a deposition |  no  |
+[CrossReferencedEntity](CrossReferencedEntity.md) | An entity with associated cross-references to other databases and publication... |  no  |
+[Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+[Deposition](Deposition.md) | Metadata describing a deposition |  no  |
 
 
 
@@ -39,16 +36,6 @@ URI: [cdp-meta:cross_references](metadatacross_references)
 
 
 
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:cross_references |
-| native | cdp-meta:cross_references |
 
 
 

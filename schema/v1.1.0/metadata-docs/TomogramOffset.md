@@ -1,5 +1,3 @@
-
-
 # Class: TomogramOffset
 
 
@@ -14,19 +12,16 @@ URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
 
 
 
-
-
 ```mermaid
  classDiagram
     class TomogramOffset
-    click TomogramOffset href "../TomogramOffset"
       TomogramOffset : x
-
+        
       TomogramOffset : y
-
+        
       TomogramOffset : z
-
-
+        
+      
 ```
 
 
@@ -39,9 +34,9 @@ URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [x](x.md) | 1 <br/> [Integer](Integer.md) | x offset data relative to the canonical tomogram in pixels | direct |
-| [y](y.md) | 1 <br/> [Integer](Integer.md) | y offset data relative to the canonical tomogram in pixels | direct |
-| [z](z.md) | 1 <br/> [Integer](Integer.md) | z offset data relative to the canonical tomogram in pixels | direct |
+| [x](x.md) | 1..1 <br/> [Integer](Integer.md) | x offset data relative to the canonical tomogram in pixels | direct |
+| [y](y.md) | 1..1 <br/> [Integer](Integer.md) | y offset data relative to the canonical tomogram in pixels | direct |
+| [z](z.md) | 1..1 <br/> [Integer](Integer.md) | z offset data relative to the canonical tomogram in pixels | direct |
 
 
 
@@ -74,14 +69,13 @@ URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:TomogramOffset |
 | native | cdp-meta:TomogramOffset |
-
-
 
 
 

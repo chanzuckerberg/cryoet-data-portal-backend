@@ -1,5 +1,3 @@
-
-
 # Slot: columns
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:columns](metadatacolumns)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation |  no  |
+[AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation |  no  |
 
 
 
@@ -49,17 +46,6 @@ URI: [cdp-meta:columns](metadatacolumns)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:columns |
-| native | cdp-meta:columns |
-| exact | cdp-common:annotation_source_file_columns |
 
 
 

@@ -36,10 +36,3 @@ URI: [cdp-meta:EMDB_ID](metadataEMDB_ID)
 
 
 
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:EMDB_ID |
-| native | cdp-meta:EMDB_ID |

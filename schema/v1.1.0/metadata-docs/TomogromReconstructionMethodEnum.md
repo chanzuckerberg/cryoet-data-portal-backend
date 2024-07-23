@@ -43,8 +43,6 @@ URI: [TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md)
 
 
 
-
-
 ## LinkML Source
 
 <details>

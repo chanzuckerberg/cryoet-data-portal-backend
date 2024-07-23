@@ -1,5 +1,3 @@
-
-
 # Slot: ctf_corrected
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:ctf_corrected](metadatactf_corrected)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -51,17 +48,6 @@ URI: [cdp-meta:ctf_corrected](metadatactf_corrected)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:ctf_corrected |
-| native | cdp-meta:ctf_corrected |
-| exact | cdp-common:tomogram_ctf_corrected |
 
 
 

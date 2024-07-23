@@ -1,5 +1,3 @@
-
-
 # Slot: deposition_title
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:deposition_title](metadatadeposition_title)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Deposition](Deposition.md) | Metadata describing a deposition |  no  |
+[Deposition](Deposition.md) | Metadata describing a deposition |  no  |
 
 
 
@@ -51,17 +48,6 @@ URI: [cdp-meta:deposition_title](metadatadeposition_title)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:deposition_title |
-| native | cdp-meta:deposition_title |
-| exact | cdp-common:deposition_title |
 
 
 

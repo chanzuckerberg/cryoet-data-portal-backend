@@ -1,5 +1,3 @@
-
-
 # Class: AnnotationObject
 
 
@@ -14,21 +12,18 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 
 
-
-
 ```mermaid
  classDiagram
     class AnnotationObject
-    click AnnotationObject href "../AnnotationObject"
       AnnotationObject : description
-
+        
       AnnotationObject : id
-
+        
       AnnotationObject : name
-
+        
       AnnotationObject : state
-
-
+        
+      
 ```
 
 
@@ -41,8 +36,8 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [id](id.md) | 1 <br/> [GOID](GOID.md) | Gene Ontology Cellular Component identifier for the annotation object | direct |
-| [name](name.md) | 1 <br/> [String](String.md) | Name of the object being annotated (e | direct |
+| [id](id.md) | 1..1 <br/> [GOID](GOID.md) | Gene Ontology Cellular Component identifier for the annotation object | direct |
+| [name](name.md) | 1..1 <br/> [String](String.md) | Name of the object being annotated (e | direct |
 | [description](description.md) | 0..1 <br/> [String](String.md) | A textual description of the annotation object, can be a longer description t... | direct |
 | [state](state.md) | 0..1 <br/> [String](String.md) | Molecule state annotated (e | direct |
 
@@ -77,14 +72,13 @@ URI: [cdp-meta:AnnotationObject](metadataAnnotationObject)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:AnnotationObject |
 | native | cdp-meta:AnnotationObject |
-
-
 
 
 

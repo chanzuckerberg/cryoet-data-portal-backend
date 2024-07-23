@@ -41,8 +41,6 @@ URI: [MicroscopeManufacturerEnum](MicroscopeManufacturerEnum.md)
 
 
 
-
-
 ## LinkML Source
 
 <details>

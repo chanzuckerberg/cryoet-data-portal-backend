@@ -36,10 +36,3 @@ URI: [cdp-meta:GO_ID](metadataGO_ID)
 
 
 
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:GO_ID |
-| native | cdp-meta:GO_ID |

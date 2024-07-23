@@ -1,5 +1,3 @@
-
-
 # Class: CellType
 
 
@@ -14,17 +12,14 @@ URI: [cdp-meta:CellType](metadataCellType)
 
 
 
-
-
 ```mermaid
  classDiagram
     class CellType
-    click CellType href "../CellType"
       CellType : id
-
+        
       CellType : name
-
-
+        
+      
 ```
 
 
@@ -37,7 +32,7 @@ URI: [cdp-meta:CellType](metadataCellType)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 1 <br/> [String](String.md) | Name of the cell type from which a biological sample used in a CryoET study i... | direct |
+| [name](name.md) | 1..1 <br/> [String](String.md) | Name of the cell type from which a biological sample used in a CryoET study i... | direct |
 | [id](id.md) | 0..1 _recommended_ <br/> [CLID](CLID.md) | Cell Ontology identifier for the cell type | direct |
 
 
@@ -72,14 +67,13 @@ URI: [cdp-meta:CellType](metadataCellType)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CellType |
 | native | cdp-meta:CellType |
-
-
 
 
 

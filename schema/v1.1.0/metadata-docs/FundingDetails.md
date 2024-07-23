@@ -1,5 +1,3 @@
-
-
 # Class: FundingDetails
 
 
@@ -14,17 +12,14 @@ URI: [cdp-meta:FundingDetails](metadataFundingDetails)
 
 
 
-
-
 ```mermaid
  classDiagram
     class FundingDetails
-    click FundingDetails href "../FundingDetails"
       FundingDetails : funding_agency_name
-
+        
       FundingDetails : grant_id
-
-
+        
+      
 ```
 
 
@@ -72,14 +67,13 @@ URI: [cdp-meta:FundingDetails](metadataFundingDetails)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:FundingDetails |
 | native | cdp-meta:FundingDetails |
-
-
 
 
 

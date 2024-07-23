@@ -1,5 +1,3 @@
-
-
 # Class: DateStamp
 
 
@@ -14,19 +12,16 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 
 
-
-
 ```mermaid
  classDiagram
     class DateStamp
-    click DateStamp href "../DateStamp"
       DateStamp : deposition_date
-
+        
       DateStamp : last_modified_date
-
+        
       DateStamp : release_date
-
-
+        
+      
 ```
 
 
@@ -39,9 +34,9 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [deposition_date](deposition_date.md) | 1 <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
-| [release_date](release_date.md) | 1 <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
-| [last_modified_date](last_modified_date.md) | 1 <br/> [Date](Date.md) | The date a piece of data was last modified on the cryoET data portal | direct |
+| [deposition_date](deposition_date.md) | 1..1 <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
+| [release_date](release_date.md) | 1..1 <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
+| [last_modified_date](last_modified_date.md) | 1..1 <br/> [Date](Date.md) | The date a piece of data was last modified on the cryoET data portal | direct |
 
 
 
@@ -77,14 +72,13 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:DateStamp |
 | native | cdp-meta:DateStamp |
-
-
 
 
 

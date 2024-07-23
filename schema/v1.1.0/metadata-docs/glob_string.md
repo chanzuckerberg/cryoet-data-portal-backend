@@ -1,5 +1,3 @@
-
-
 # Slot: glob_string
 
 URI: [cdp-meta:glob_string](metadataglob_string)
@@ -11,17 +9,16 @@ URI: [cdp-meta:glob_string](metadataglob_string)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [AnnotationSemanticSegmentationMaskFile](AnnotationSemanticSegmentationMaskFile.md) | File and sourcing data for a semantic segmentation mask annotation |  no  |
-| [AnnotationSegmentationMaskFile](AnnotationSegmentationMaskFile.md) | File and sourcing data for a segmentation mask annotation |  no  |
-| [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation |  no  |
-| [AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation |  no  |
-| [AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation |  no  |
-| [AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation |  no  |
+[AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation |  no  |
+[AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation |  no  |
+[AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation |  no  |
+[AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation |  no  |
+[AnnotationSegmentationMaskFile](AnnotationSegmentationMaskFile.md) | File and sourcing data for a segmentation mask annotation |  no  |
+[AnnotationSemanticSegmentationMaskFile](AnnotationSemanticSegmentationMaskFile.md) | File and sourcing data for a semantic segmentation mask annotation |  no  |
 
 
 
@@ -42,16 +39,6 @@ URI: [cdp-meta:glob_string](metadataglob_string)
 
 
 
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:glob_string |
-| native | cdp-meta:glob_string |
 
 
 

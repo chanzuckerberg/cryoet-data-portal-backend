@@ -1,5 +1,3 @@
-
-
 # Slot: link_type
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:link_type](metadatalink_type)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [AnnotationMethodLinks](AnnotationMethodLinks.md) | A set of links to models, sourcecode, documentation, etc referenced by annota... |  no  |
+[AnnotationMethodLinks](AnnotationMethodLinks.md) | A set of links to models, sourcecode, documentation, etc referenced by annota... |  no  |
 
 
 
@@ -53,16 +50,6 @@ URI: [cdp-meta:link_type](metadatalink_type)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:link_type |
-| native | cdp-meta:link_type |
 
 
 

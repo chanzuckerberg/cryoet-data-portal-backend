@@ -1,5 +1,3 @@
-
-
 # Class: Annotation
 
 
@@ -14,86 +12,51 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 
 
 
-
-
 ```mermaid
  classDiagram
     class Annotation
-    click Annotation href "../Annotation"
       DatestampedEntity <|-- Annotation
-        click DatestampedEntity href "../DatestampedEntity"
       AuthoredEntity <|-- Annotation
-        click AuthoredEntity href "../AuthoredEntity"
-
+      
       Annotation : annotation_method
-
+        
       Annotation : annotation_object
-
-
-
-
-    Annotation --> "1" AnnotationObject : annotation_object
-    click AnnotationObject href "../AnnotationObject"
-
-
+        
+          Annotation --> AnnotationObject : annotation_object
+        
       Annotation : annotation_publications
-
+        
       Annotation : annotation_software
-
+        
       Annotation : authors
-
-
-
-
-    Annotation --> "1..*" Author : authors
-    click Author href "../Author"
-
-
+        
+          Annotation --> Author : authors
+        
       Annotation : confidence
-
-
-
-
-    Annotation --> "0..1" AnnotationConfidence : confidence
-    click AnnotationConfidence href "../AnnotationConfidence"
-
-
+        
+          Annotation --> AnnotationConfidence : confidence
+        
       Annotation : dates
-
-
-
-
-    Annotation --> "1" DateStamp : dates
-    click DateStamp href "../DateStamp"
-
-
+        
+          Annotation --> DateStamp : dates
+        
       Annotation : files
-
-
-
-
-    Annotation --> "*" AnnotationSourceFile : files
-    click AnnotationSourceFile href "../AnnotationSourceFile"
-
-
+        
+          Annotation --> AnnotationSourceFile : files
+        
       Annotation : ground_truth_status
-
+        
       Annotation : is_curator_recommended
-
+        
       Annotation : method_type
-
-
-
-
-    Annotation --> "1" AnnotationMethodTypeEnum : method_type
-    click AnnotationMethodTypeEnum href "../AnnotationMethodTypeEnum"
-
-
+        
+          Annotation --> annotation_method_type_enum : method_type
+        
       Annotation : object_count
-
+        
       Annotation : version
-
-
+        
+      
 ```
 
 
@@ -109,18 +72,18 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [annotation_method](annotation_method.md) | 1 <br/> [String](String.md) | Describe how the annotation is made (e | direct |
-| [annotation_object](annotation_object.md) | 1 <br/> [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated | direct |
+| [annotation_method](annotation_method.md) | 1..1 <br/> [String](String.md) | Describe how the annotation is made (e | direct |
+| [annotation_object](annotation_object.md) | 1..1 <br/> [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated | direct |
 | [annotation_publications](annotation_publications.md) | 0..1 <br/> [EMPIAREMDBDOIPDBLIST](EMPIAREMDBDOIPDBLIST.md) | List of publication IDs (EMPIAR, EMDB, DOI) that describe this annotation met... | direct |
 | [annotation_software](annotation_software.md) | 0..1 _recommended_ <br/> [String](String.md) | Software used for generating this annotation | direct |
 | [confidence](confidence.md) | 0..1 <br/> [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation | direct |
-| [files](files.md) | * <br/> [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation | direct |
+| [files](files.md) | 0..* <br/> [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation | direct |
 | [ground_truth_status](ground_truth_status.md) | 0..1 _recommended_ <br/> [Boolean](Boolean.md) | Whether an annotation is considered ground truth, as determined by the annota... | direct |
 | [is_curator_recommended](is_curator_recommended.md) | 0..1 <br/> [Boolean](Boolean.md) | This annotation is recommended by the curator to be preferred for this object... | direct |
-| [method_type](method_type.md) | 1 <br/> [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Classification of the annotation method based on supervision | direct |
+| [method_type](method_type.md) | 1..1 <br/> [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Classification of the annotation method based on supervision | direct |
 | [object_count](object_count.md) | 0..1 <br/> [Integer](Integer.md) | Number of objects identified | direct |
 | [version](version.md) | 0..1 <br/> [VersionString](VersionString.md) | Version of annotation | direct |
-| [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
+| [dates](dates.md) | 1..1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
 
 
@@ -147,14 +110,13 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 
 
 
+
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Annotation |
 | native | cdp-meta:Annotation |
-
-
 
 
 
@@ -253,13 +215,13 @@ attributes:
       annotation.sources.
     from_schema: metadata
     rank: 1000
+    multivalued: true
     list_elements_ordered: true
     alias: files
     owner: Annotation
     domain_of:
     - Annotation
     range: AnnotationSourceFile
-    multivalued: true
     inlined: true
     inlined_as_list: true
   ground_truth_status:
@@ -359,6 +321,7 @@ attributes:
     name: authors
     description: Author of a scientific data entity.
     from_schema: metadata
+    multivalued: true
     list_elements_ordered: true
     alias: authors
     owner: Annotation
@@ -370,7 +333,6 @@ attributes:
     - Annotation
     range: Author
     required: true
-    multivalued: true
     inlined: true
     inlined_as_list: true
 
@@ -466,13 +428,13 @@ attributes:
       annotation.sources.
     from_schema: metadata
     rank: 1000
+    multivalued: true
     list_elements_ordered: true
     alias: files
     owner: Annotation
     domain_of:
     - Annotation
     range: AnnotationSourceFile
-    multivalued: true
     inlined: true
     inlined_as_list: true
   ground_truth_status:
@@ -572,6 +534,7 @@ attributes:
     name: authors
     description: Author of a scientific data entity.
     from_schema: metadata
+    multivalued: true
     list_elements_ordered: true
     alias: authors
     owner: Annotation
@@ -583,7 +546,6 @@ attributes:
     - Annotation
     range: Author
     required: true
-    multivalued: true
     inlined: true
     inlined_as_list: true
 

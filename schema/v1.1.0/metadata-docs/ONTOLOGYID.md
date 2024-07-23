@@ -36,10 +36,3 @@ URI: [cdp-meta:ONTOLOGY_ID](metadataONTOLOGY_ID)
 
 
 
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:ONTOLOGY_ID |
-| native | cdp-meta:ONTOLOGY_ID |

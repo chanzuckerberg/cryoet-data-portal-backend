@@ -1,5 +1,3 @@
-
-
 # Slot: delimiter
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:delimiter](metadatadelimiter)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation |  no  |
+[AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation |  no  |
 
 
 
@@ -49,17 +46,6 @@ URI: [cdp-meta:delimiter](metadatadelimiter)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:delimiter |
-| native | cdp-meta:delimiter |
-| exact | cdp-common:annotation_source_file_delimiter |
 
 
 

@@ -47,8 +47,6 @@ URI: [DepositionTypesEnum](DepositionTypesEnum.md)
 
 
 
-
-
 ## LinkML Source
 
 <details>

@@ -1,5 +1,3 @@
-
-
 # Slot: taxonomy_id
 
 
@@ -16,12 +14,11 @@ URI: [cdp-meta:taxonomy_id](metadatataxonomy_id)
 
 
 
-
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [OrganismDetails](OrganismDetails.md) | The species from which the sample was derived |  no  |
+[OrganismDetails](OrganismDetails.md) | The species from which the sample was derived |  no  |
 
 
 
@@ -53,17 +50,6 @@ URI: [cdp-meta:taxonomy_id](metadatataxonomy_id)
 
 
 * from schema: metadata
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | cdp-meta:taxonomy_id |
-| native | cdp-meta:taxonomy_id |
-| exact | cdp-common:organism_taxid |
 
 
 
