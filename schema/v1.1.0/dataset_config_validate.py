@@ -21,7 +21,7 @@ logger.setLevel(logging.INFO)
 
 DATASET_CONFIGS_DIR = "../../ingestion_tools/dataset_configs/"
 ERRORS_OUTPUT_DIR = "./dataset_config_validate_errors"
-FIELD_WHITELIST_FILE = "dataset_config_field_whitelist.json"
+FIELD_EXCLUDELIST_FILE = "dataset_config_field_excludelist.json"
 
 # The permitted parent attribute for formatted strings and its corresponding depth
 # If the attribute has a parent attribute in this list, it is allowed to be a formatted string
@@ -111,10 +111,10 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
     help="Exclude files that contain the following keywords in the filename, used in conjunction with --input-dir. Repeat the flag for multiple keywords.",
 )
 @click.option(
-    "--field-whitelist-file",
+    "--field-excludelist-file",
     type=str,
-    default=FIELD_WHITELIST_FILE,
-    help="Path to the whitelist file containing class-field-value mappings to ignore during validation. See docs for more information.",
+    default=FIELD_EXCLUDELIST_FILE,
+    help="Path to the excludelist file containing class-field-value mappings to ignore during validation. See docs for more information.",
 )
 @click.option(
     "--output-dir",
@@ -133,7 +133,7 @@ def main(
     input_dir: str,
     include_glob: str,
     exclude_keywords: str,
-    field_whitelist_file: str,
+    field_excludelist_file: str,
     output_dir: str,
     network_validation: bool,
     verbose: bool,
@@ -164,9 +164,9 @@ def main(
         logger.warning("No files to validate.")
         return
 
-    with open(field_whitelist_file, "r") as f:
-        field_whitelist = json.load(f)
-    logger.debug("Using field whitelist: %s", field_whitelist_file)
+    with open(field_excludelist_file, "r") as f:
+        field_excludelist = json.load(f)
+    logger.debug("Using field excludelist: %s", field_excludelist_file)
 
     # Remove existing dir
     if os.path.exists(output_dir):
@@ -190,7 +190,7 @@ def main(
                 ExtendedValidationContainer(
                     **config_data,
                     network_validation=network_validation,
-                    field_whitelist=field_whitelist,
+                    field_excludelist=field_excludelist,
                 )
         except ValidationError as e:
             validation_succeeded = False
