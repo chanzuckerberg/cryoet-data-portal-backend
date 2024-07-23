@@ -68,7 +68,7 @@ def to_dataset_config(
 
     config = {
         "dataset_identifier": dataset_id,
-        "dataset_description": dataset["description"],
+        "dataset_description": dataset["description"].strip(),
         "dataset_title": dataset["title"].strip(),
         "authors": authors,
         "organism": dataset["organism"],
