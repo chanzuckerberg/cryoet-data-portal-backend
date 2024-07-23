@@ -379,7 +379,7 @@ slots:
   tiltseries_microscope_manufacturer:
     any_of:
       - range: StringFormattedString
-      - range: microscope_manufacturer_enum
+      - range: tiltseries_microscope_manufacturer_enum
     required: true
     description: Name of the microscope manufacturer
   tiltseries_microscope_model:
@@ -812,7 +812,7 @@ enums:
       cds:
         description: Correlated double sampling mode
 
-  microscope_manufacturer_enum:
+  tiltseries_microscope_manufacturer_enum:
     description: Microscope manufacturer
     permissible_values:
       FEI:

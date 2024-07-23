@@ -7,7 +7,7 @@ Make sure you have at least python 3.11 installed. If you need to work with mult
 
 Before running the script, ensure all the required packages are installed in a virtualenv:
 ```bash
-cd ingestion_tools
+cd schema/
 python3 -m venv .venv  # create a virtualenv
 source .venv/bin/activate  # activate the virtualenv
 python3 -m pip install poetry  # Install the poetry package manager
@@ -45,5 +45,7 @@ python dataset_config_validate.py --exclude-keywords "draft" --exclude-keywords 
 ```
 
 `--output-dir`: Sets the directory where all validation errors will be saved. The default is `./dataset_config_validate_errors`, and the directory will be recreated at each script run, removing previous contents.
+
+`--network-validation`: Enables network validation, which checks for the existence of all referenced files in the dataset configuration files by sending HTTPS requests to relevant APIs. This option is disabled by default and increases the runtime of the script considerably.
 
 `--verbose`: Enables verbose output, showing all validation errors for each dataset configuration file.

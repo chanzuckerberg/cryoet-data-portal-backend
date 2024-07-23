@@ -40,7 +40,7 @@ URI: [cdp-meta:MicroscopeDetails](metadataMicroscopeDetails)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [additional_info](additional_info.md) | 0..1 <br/> [String](String.md) | Other microscope optical setup information, in addition to energy filter, pha... | direct |
-| [manufacturer](manufacturer.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[MicroscopeManufacturerEnum](MicroscopeManufacturerEnum.md) | Name of the microscope manufacturer | direct |
+| [manufacturer](manufacturer.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[TiltseriesMicroscopeManufacturerEnum](TiltseriesMicroscopeManufacturerEnum.md) | Name of the microscope manufacturer | direct |
 | [model](model.md) | 1 <br/> [String](String.md) | Microscope model name | direct |
 
 
@@ -131,7 +131,7 @@ attributes:
     pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^FEI$)|(^TFS$)|(^JEOL$)
     any_of:
     - range: StringFormattedString
-    - range: microscope_manufacturer_enum
+    - range: tiltseries_microscope_manufacturer_enum
   model:
     name: model
     description: Microscope model name
@@ -192,7 +192,7 @@ attributes:
     pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^FEI$)|(^TFS$)|(^JEOL$)
     any_of:
     - range: StringFormattedString
-    - range: microscope_manufacturer_enum
+    - range: tiltseries_microscope_manufacturer_enum
   model:
     name: model
     description: Microscope model name

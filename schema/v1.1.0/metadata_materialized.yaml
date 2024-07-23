@@ -458,8 +458,8 @@ enums:
       cds:
         text: cds
         description: Correlated double sampling mode
-  microscope_manufacturer_enum:
-    name: microscope_manufacturer_enum
+  tiltseries_microscope_manufacturer_enum:
+    name: tiltseries_microscope_manufacturer_enum
     description: Microscope manufacturer
     from_schema: metadata
     permissible_values:
@@ -1623,7 +1623,7 @@ classes:
         pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^FEI$)|(^TFS$)|(^JEOL$)
         any_of:
         - range: StringFormattedString
-        - range: microscope_manufacturer_enum
+        - range: tiltseries_microscope_manufacturer_enum
       model:
         name: model
         description: Microscope model name
@@ -2329,7 +2329,8 @@ classes:
         inlined_as_list: true
       affine_transformation_matrix:
         name: affine_transformation_matrix
-        description: A placeholder for any type of data.
+        description: The flip or rotation transformation of this author submitted
+          tomogram is indicated here
         from_schema: metadata
         array:
           exact_number_dimensions: 2
@@ -2340,7 +2341,7 @@ classes:
         owner: Tomogram
         domain_of:
         - Tomogram
-        range: Any
+        range: float
         inlined: true
         inlined_as_list: true
       size:
