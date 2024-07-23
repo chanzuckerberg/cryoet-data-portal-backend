@@ -754,8 +754,8 @@ slots:
   per_section_defocus:
     range: float
     description: defocus amount
-    min_value: 100
-    max_value: 100
+    minimum_value: 100
+    maximum_value: 100
     unit:
       descriptive_name: microns
       symbol: µm
@@ -765,8 +765,8 @@ slots:
   per_section_astigmatic_angle:
     range: float
     description: Angle of ast
-    min_value: -180
-    max_value: 180
+    minimum_value: -180
+    maximum_value: 180
     unit:
       descriptive_name: degrees
       symbol: °
@@ -935,6 +935,13 @@ slots:
     range: tomogram_reconstruction_method_enum
     required: true
     description: Describe reconstruction method (WBP, SART, SIRT)
+  api_tomogram_is_standardized:
+    range: boolean
+    required: true
+    description: Whether this tomogram was generated per the portal's standards
+  api_annotation_file_source:
+    range: annotation_file_source_enum
+    description: The source type for the annotation file
   api_alignment:
     range: string
     required: true
@@ -962,6 +969,15 @@ enums:
   # ============================================================================
   # Controlled vocabularies
   # ============================================================================
+  annotation_file_source_enum:
+    description: How the annotation file was acquired
+    permissible_values:
+      dataset_author:
+        description: Annotation submitted by dataset author
+      community:
+        description: Annotation submitted by community member
+      portal_standard:
+        description: Annotation submitted by portal standardization
   annotation_method_type_enum:
     description: Describes how the annotations were generated.
     permissible_values:

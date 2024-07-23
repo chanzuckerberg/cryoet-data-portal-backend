@@ -173,6 +173,9 @@ classes:
       is_visualization_default:
         exact_mappings:
           - cdp-common:annotation_source_file_is_visualization_default
+      source:
+        exact_mappings:
+          - cdp-common:api_annotation_file_source
     annotations:
       plural: AnnotationFiles
   AnnotationShape:
@@ -804,7 +807,7 @@ classes:
         range: TomogramType
       is_standardized:
         exact_mappings:
-          - cdp-common:tomogram_is_standandardized
+          - cdp-common:api_tomogram_is_standardized
     annotations:
       plural: Tomograms
   # ============================================================================
