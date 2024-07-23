@@ -114,9 +114,6 @@ def check_excludelist_skip_validation(obj: BaseModel, field_name: str, case_sens
         if field_name not in FIELD_EXCLUDELIST[base.__name__]:
             continue
 
-        print(base.__name__)
-        print(FIELD_EXCLUDELIST[base.__name__])
-
         field_excludelist = [
             field if case_sensitive else field.lower() for field in FIELD_EXCLUDELIST[base.__name__][field_name]
         ]
