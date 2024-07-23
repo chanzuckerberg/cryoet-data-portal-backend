@@ -685,6 +685,60 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
+  CrossReferences:
+    name: CrossReferences
+    description: A set of cross-references to other databases and publications.
+    from_schema: metadata
+    attributes:
+      publications:
+        name: publications
+        description: Comma-separated list of DOIs for publications associated with
+          the dataset.
+        from_schema: metadata
+        alias: publications
+        owner: CrossReferences
+        domain_of:
+        - CrossReferences
+        range: DOI_LIST
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
+      related_database_entries:
+        name: related_database_entries
+        description: Comma-separated list of related database entries for the dataset.
+        from_schema: metadata
+        alias: related_database_entries
+        owner: CrossReferences
+        domain_of:
+        - CrossReferences
+        range: EMPIAR_EMDB_PDB_LIST
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)
+      related_database_links:
+        name: related_database_links
+        description: Comma-separated list of related database links for the dataset.
+        from_schema: metadata
+        alias: related_database_links
+        owner: CrossReferences
+        domain_of:
+        - CrossReferences
+        range: string
+        inlined: true
+        inlined_as_list: true
+      dataset_citations:
+        name: dataset_citations
+        description: Comma-separated list of DOIs for publications citing the dataset.
+        from_schema: metadata
+        alias: dataset_citations
+        owner: CrossReferences
+        domain_of:
+        - CrossReferences
+        range: string
+        inlined: true
+        inlined_as_list: true
   FundingDetails:
     name: FundingDetails
     description: A funding source for a scientific data entity (base for JSON and
@@ -1088,8 +1142,8 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: ^GO:[0-9]{7}$
-  ExperimentalMetadata:
-    name: ExperimentalMetadata
+  ExperimentMetadata:
+    name: ExperimentMetadata
     description: Metadata describing sample and sample preparation methods used in
       a cryoET dataset.
     from_schema: metadata
@@ -1102,9 +1156,9 @@ classes:
         exact_mappings:
         - cdp-common:preparation_sample_type
         alias: sample_type
-        owner: ExperimentalMetadata
+        owner: ExperimentMetadata
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: sample_type_enum
         required: true
         inlined: true
@@ -1117,9 +1171,9 @@ classes:
         exact_mappings:
         - cdp-common:sample_preparation
         alias: sample_preparation
-        owner: ExperimentalMetadata
+        owner: ExperimentMetadata
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: string
         recommended: true
         inlined: true
@@ -1131,9 +1185,9 @@ classes:
         exact_mappings:
         - cdp-common:grid_preparation
         alias: grid_preparation
-        owner: ExperimentalMetadata
+        owner: ExperimentMetadata
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: string
         recommended: true
         inlined: true
@@ -1146,9 +1200,9 @@ classes:
         exact_mappings:
         - cdp-common:preparation_other_setup
         alias: other_setup
-        owner: ExperimentalMetadata
+        owner: ExperimentMetadata
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: string
         recommended: true
         inlined: true
@@ -1158,9 +1212,9 @@ classes:
         description: The species from which the sample was derived.
         from_schema: metadata
         alias: organism
-        owner: ExperimentalMetadata
+        owner: ExperimentMetadata
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: OrganismDetails
         inlined: true
         inlined_as_list: true
@@ -1169,9 +1223,9 @@ classes:
         description: The type of tissue from which the sample was derived.
         from_schema: metadata
         alias: tissue
-        owner: ExperimentalMetadata
+        owner: ExperimentMetadata
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: TissueDetails
         inlined: true
         inlined_as_list: true
@@ -1180,9 +1234,9 @@ classes:
         description: The cell type from which the sample was derived.
         from_schema: metadata
         alias: cell_type
-        owner: ExperimentalMetadata
+        owner: ExperimentMetadata
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: CellType
         inlined: true
         inlined_as_list: true
@@ -1191,9 +1245,9 @@ classes:
         description: The strain or cell line from which the sample was derived.
         from_schema: metadata
         alias: cell_strain
-        owner: ExperimentalMetadata
+        owner: ExperimentMetadata
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: CellStrain
         inlined: true
         inlined_as_list: true
@@ -1202,9 +1256,9 @@ classes:
         description: The cellular component from which the sample was derived.
         from_schema: metadata
         alias: cell_component
-        owner: ExperimentalMetadata
+        owner: ExperimentMetadata
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: CellComponent
         inlined: true
         inlined_as_list: true
@@ -1217,7 +1271,7 @@ classes:
     - AuthoredEntity
     - FundedEntity
     - CrossReferencedEntity
-    - ExperimentalMetadata
+    - ExperimentMetadata
     attributes:
       dataset_identifier:
         name: dataset_identifier
@@ -1325,7 +1379,7 @@ classes:
         alias: sample_type
         owner: Dataset
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: sample_type_enum
         required: true
         inlined: true
@@ -1340,7 +1394,7 @@ classes:
         alias: sample_preparation
         owner: Dataset
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: string
         recommended: true
         inlined: true
@@ -1354,7 +1408,7 @@ classes:
         alias: grid_preparation
         owner: Dataset
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: string
         recommended: true
         inlined: true
@@ -1369,7 +1423,7 @@ classes:
         alias: other_setup
         owner: Dataset
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: string
         recommended: true
         inlined: true
@@ -1381,7 +1435,7 @@ classes:
         alias: organism
         owner: Dataset
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: OrganismDetails
         inlined: true
         inlined_as_list: true
@@ -1392,7 +1446,7 @@ classes:
         alias: tissue
         owner: Dataset
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: TissueDetails
         inlined: true
         inlined_as_list: true
@@ -1403,7 +1457,7 @@ classes:
         alias: cell_type
         owner: Dataset
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: CellType
         inlined: true
         inlined_as_list: true
@@ -1414,7 +1468,7 @@ classes:
         alias: cell_strain
         owner: Dataset
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: CellStrain
         inlined: true
         inlined_as_list: true
@@ -1425,7 +1479,7 @@ classes:
         alias: cell_component
         owner: Dataset
         domain_of:
-        - ExperimentalMetadata
+        - ExperimentMetadata
         range: CellComponent
         inlined: true
         inlined_as_list: true
@@ -3261,60 +3315,6 @@ classes:
     description: A placeholder for any type of data.
     from_schema: metadata
     class_uri: linkml:Any
-  CrossReferences:
-    name: CrossReferences
-    description: A set of cross-references to other databases and publications.
-    from_schema: metadata
-    attributes:
-      publications:
-        name: publications
-        description: Comma-separated list of DOIs for publications associated with
-          the dataset.
-        from_schema: metadata
-        alias: publications
-        owner: CrossReferences
-        domain_of:
-        - CrossReferences
-        range: DOI_LIST
-        recommended: true
-        inlined: true
-        inlined_as_list: true
-        pattern: (^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
-      related_database_entries:
-        name: related_database_entries
-        description: Comma-separated list of related database entries for the dataset.
-        from_schema: metadata
-        alias: related_database_entries
-        owner: CrossReferences
-        domain_of:
-        - CrossReferences
-        range: EMPIAR_EMDB_PDB_LIST
-        recommended: true
-        inlined: true
-        inlined_as_list: true
-        pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)
-      related_database_links:
-        name: related_database_links
-        description: Comma-separated list of related database links for the dataset.
-        from_schema: metadata
-        alias: related_database_links
-        owner: CrossReferences
-        domain_of:
-        - CrossReferences
-        range: string
-        inlined: true
-        inlined_as_list: true
-      dataset_citations:
-        name: dataset_citations
-        description: Comma-separated list of DOIs for publications citing the dataset.
-        from_schema: metadata
-        alias: dataset_citations
-        owner: CrossReferences
-        domain_of:
-        - CrossReferences
-        range: string
-        inlined: true
-        inlined_as_list: true
   AnnotationMethodLinks:
     name: AnnotationMethodLinks
     description: A set of links to models, sourcecode, documentation, etc referenced

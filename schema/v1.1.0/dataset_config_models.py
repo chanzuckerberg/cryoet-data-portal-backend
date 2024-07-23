@@ -791,6 +791,67 @@ class Author(ConfiguredBaseModel):
         return v
 
 
+class CrossReferences(ConfiguredBaseModel):
+    """
+    A set of cross-references to other databases and publications.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    publications: Optional[str] = Field(
+        None,
+        description="""Comma-separated list of DOIs for publications associated with the dataset.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "publications", "domain_of": ["CrossReferences"], "recommended": True}
+        },
+    )
+    related_database_entries: Optional[str] = Field(
+        None,
+        description="""Comma-separated list of related database entries for the dataset.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "related_database_entries", "domain_of": ["CrossReferences"], "recommended": True}
+        },
+    )
+    related_database_links: Optional[str] = Field(
+        None,
+        description="""Comma-separated list of related database links for the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "related_database_links", "domain_of": ["CrossReferences"]}},
+    )
+    dataset_citations: Optional[str] = Field(
+        None,
+        description="""Comma-separated list of DOIs for publications citing the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferences"]}},
+    )
+
+    @field_validator("publications")
+    def pattern_publications(cls, v):
+        pattern = re.compile(
+            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid publications format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid publications format: {v}")
+        return v
+
+    @field_validator("related_database_entries")
+    def pattern_related_database_entries(cls, v):
+        pattern = re.compile(
+            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid related_database_entries format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid related_database_entries format: {v}")
+        return v
+
+
 class FundingDetails(ConfiguredBaseModel):
     """
     A funding source for a scientific data entity (base for JSON and DB representation).
@@ -1210,7 +1271,7 @@ class CellComponent(ConfiguredBaseModel):
         return v
 
 
-class ExperimentalMetadata(ConfiguredBaseModel):
+class ExperimentMetadata(ConfiguredBaseModel):
     """
     Metadata describing sample and sample preparation methods used in a cryoET dataset.
     """
@@ -1223,7 +1284,7 @@ class ExperimentalMetadata(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sample_type",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_sample_type"],
             }
         },
@@ -1234,7 +1295,7 @@ class ExperimentalMetadata(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sample_preparation",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:sample_preparation"],
                 "recommended": True,
             }
@@ -1246,7 +1307,7 @@ class ExperimentalMetadata(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "grid_preparation",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:grid_preparation"],
                 "recommended": True,
             }
@@ -1258,7 +1319,7 @@ class ExperimentalMetadata(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "other_setup",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_other_setup"],
                 "recommended": True,
             }
@@ -1267,29 +1328,27 @@ class ExperimentalMetadata(ConfiguredBaseModel):
     organism: Optional[OrganismDetails] = Field(
         None,
         description="""The species from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "organism", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "organism", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     tissue: Optional[TissueDetails] = Field(
         None,
         description="""The type of tissue from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "tissue", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "tissue", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     cell_type: Optional[CellType] = Field(
         None,
         description="""The cell type from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "cell_type", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "cell_type", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     cell_strain: Optional[CellStrain] = Field(
         None,
         description="""The strain or cell line from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "cell_strain", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "cell_strain", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     cell_component: Optional[CellComponent] = Field(
         None,
         description="""The cellular component from which the sample was derived.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "cell_component", "domain_of": ["ExperimentalMetadata", "Dataset"]}
-        },
+        json_schema_extra={"linkml_meta": {"alias": "cell_component", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
 
     @field_validator("sample_type")
@@ -1307,7 +1366,7 @@ class ExperimentalMetadata(ConfiguredBaseModel):
         return v
 
 
-class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, AuthoredEntity, DatestampedEntity):
+class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredEntity, DatestampedEntity):
     """
     High-level description of a cryoET dataset.
     """
@@ -1320,7 +1379,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
                 "AuthoredEntity",
                 "FundedEntity",
                 "CrossReferencedEntity",
-                "ExperimentalMetadata",
+                "ExperimentMetadata",
             ],
         }
     )
@@ -1404,7 +1463,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sample_type",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_sample_type"],
             }
         },
@@ -1415,7 +1474,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sample_preparation",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:sample_preparation"],
                 "recommended": True,
             }
@@ -1427,7 +1486,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         json_schema_extra={
             "linkml_meta": {
                 "alias": "grid_preparation",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:grid_preparation"],
                 "recommended": True,
             }
@@ -1439,7 +1498,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         json_schema_extra={
             "linkml_meta": {
                 "alias": "other_setup",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_other_setup"],
                 "recommended": True,
             }
@@ -1448,29 +1507,27 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
     organism: Optional[OrganismDetails] = Field(
         None,
         description="""The species from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "organism", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "organism", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     tissue: Optional[TissueDetails] = Field(
         None,
         description="""The type of tissue from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "tissue", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "tissue", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     cell_type: Optional[CellType] = Field(
         None,
         description="""The cell type from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "cell_type", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "cell_type", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     cell_strain: Optional[CellStrain] = Field(
         None,
         description="""The strain or cell line from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "cell_strain", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "cell_strain", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     cell_component: Optional[CellComponent] = Field(
         None,
         description="""The cellular component from which the sample was derived.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "cell_component", "domain_of": ["ExperimentalMetadata", "Dataset"]}
-        },
+        json_schema_extra={"linkml_meta": {"alias": "cell_component", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
 
     @field_validator("sample_type")
@@ -3338,67 +3395,6 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         elif isinstance(v, str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid method_type format: {v}")
-        return v
-
-
-class CrossReferences(ConfiguredBaseModel):
-    """
-    A set of cross-references to other databases and publications.
-    """
-
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
-
-    publications: Optional[str] = Field(
-        None,
-        description="""Comma-separated list of DOIs for publications associated with the dataset.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "publications", "domain_of": ["CrossReferences"], "recommended": True}
-        },
-    )
-    related_database_entries: Optional[str] = Field(
-        None,
-        description="""Comma-separated list of related database entries for the dataset.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "related_database_entries", "domain_of": ["CrossReferences"], "recommended": True}
-        },
-    )
-    related_database_links: Optional[str] = Field(
-        None,
-        description="""Comma-separated list of related database links for the dataset.""",
-        json_schema_extra={"linkml_meta": {"alias": "related_database_links", "domain_of": ["CrossReferences"]}},
-    )
-    dataset_citations: Optional[str] = Field(
-        None,
-        description="""Comma-separated list of DOIs for publications citing the dataset.""",
-        json_schema_extra={"linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferences"]}},
-    )
-
-    @field_validator("publications")
-    def pattern_publications(cls, v):
-        pattern = re.compile(
-            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
-        )
-        if isinstance(v, list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid publications format: {element}")
-        elif isinstance(v, str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid publications format: {v}")
-        return v
-
-    @field_validator("related_database_entries")
-    def pattern_related_database_entries(cls, v):
-        pattern = re.compile(
-            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)"
-        )
-        if isinstance(v, list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid related_database_entries format: {element}")
-        elif isinstance(v, str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid related_database_entries format: {v}")
         return v
 
 
@@ -5826,6 +5822,7 @@ class TomogramHeader(ConfiguredBaseModel):
 # see https://pydantic-docs.helpmanual.io/usage/models/#rebuilding-a-model
 PicturePath.model_rebuild()
 Author.model_rebuild()
+CrossReferences.model_rebuild()
 FundingDetails.model_rebuild()
 DateStamp.model_rebuild()
 DatestampedEntity.model_rebuild()
@@ -5838,7 +5835,7 @@ TissueDetails.model_rebuild()
 CellType.model_rebuild()
 CellStrain.model_rebuild()
 CellComponent.model_rebuild()
-ExperimentalMetadata.model_rebuild()
+ExperimentMetadata.model_rebuild()
 Dataset.model_rebuild()
 Deposition.model_rebuild()
 CameraDetails.model_rebuild()
@@ -5858,7 +5855,6 @@ AnnotationPointFile.model_rebuild()
 AnnotationSegmentationMaskFile.model_rebuild()
 AnnotationSemanticSegmentationMaskFile.model_rebuild()
 Annotation.model_rebuild()
-CrossReferences.model_rebuild()
 AnnotationMethodLinks.model_rebuild()
 Container.model_rebuild()
 GeneralGlob.model_rebuild()

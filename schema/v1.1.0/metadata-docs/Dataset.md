@@ -28,8 +28,8 @@ URI: [cdp-meta:Dataset](metadataDataset)
         click FundedEntity href "../FundedEntity"
       CrossReferencedEntity <|-- Dataset
         click CrossReferencedEntity href "../CrossReferencedEntity"
-      ExperimentalMetadata <|-- Dataset
-        click ExperimentalMetadata href "../ExperimentalMetadata"
+      ExperimentMetadata <|-- Dataset
+        click ExperimentMetadata href "../ExperimentMetadata"
 
       Dataset : authors
 
@@ -141,7 +141,7 @@ URI: [cdp-meta:Dataset](metadataDataset)
 
 
 ## Inheritance
-* **Dataset** [ [DatestampedEntity](DatestampedEntity.md) [AuthoredEntity](AuthoredEntity.md) [FundedEntity](FundedEntity.md) [CrossReferencedEntity](CrossReferencedEntity.md) [ExperimentalMetadata](ExperimentalMetadata.md)]
+* **Dataset** [ [DatestampedEntity](DatestampedEntity.md) [AuthoredEntity](AuthoredEntity.md) [FundedEntity](FundedEntity.md) [CrossReferencedEntity](CrossReferencedEntity.md) [ExperimentMetadata](ExperimentMetadata.md)]
 
 
 
@@ -219,7 +219,7 @@ mixins:
 - AuthoredEntity
 - FundedEntity
 - CrossReferencedEntity
-- ExperimentalMetadata
+- ExperimentMetadata
 attributes:
   dataset_identifier:
     name: dataset_identifier
@@ -340,7 +340,7 @@ attributes:
     alias: sample_type
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: sample_type_enum
     required: true
@@ -356,7 +356,7 @@ attributes:
     alias: sample_preparation
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -371,7 +371,7 @@ attributes:
     alias: grid_preparation
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -387,7 +387,7 @@ attributes:
     alias: other_setup
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -400,7 +400,7 @@ attributes:
     alias: organism
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: OrganismDetails
     inlined: true
@@ -412,7 +412,7 @@ attributes:
     alias: tissue
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: TissueDetails
     inlined: true
@@ -424,7 +424,7 @@ attributes:
     alias: cell_type
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellType
     inlined: true
@@ -436,7 +436,7 @@ attributes:
     alias: cell_strain
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellStrain
     inlined: true
@@ -448,7 +448,7 @@ attributes:
     alias: cell_component
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellComponent
     inlined: true
@@ -469,7 +469,7 @@ mixins:
 - AuthoredEntity
 - FundedEntity
 - CrossReferencedEntity
-- ExperimentalMetadata
+- ExperimentMetadata
 attributes:
   dataset_identifier:
     name: dataset_identifier
@@ -590,7 +590,7 @@ attributes:
     alias: sample_type
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: sample_type_enum
     required: true
@@ -606,7 +606,7 @@ attributes:
     alias: sample_preparation
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -621,7 +621,7 @@ attributes:
     alias: grid_preparation
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -637,7 +637,7 @@ attributes:
     alias: other_setup
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -650,7 +650,7 @@ attributes:
     alias: organism
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: OrganismDetails
     inlined: true
@@ -662,7 +662,7 @@ attributes:
     alias: tissue
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: TissueDetails
     inlined: true
@@ -674,7 +674,7 @@ attributes:
     alias: cell_type
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellType
     inlined: true
@@ -686,7 +686,7 @@ attributes:
     alias: cell_strain
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellStrain
     inlined: true
@@ -698,7 +698,7 @@ attributes:
     alias: cell_component
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellComponent
     inlined: true
