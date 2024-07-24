@@ -1,7 +1,12 @@
 {
     "AnnotationObject": {
         "id": [],
-        "name": []
+        "name": [
+            "microtubule doublet 48 nm repeat",
+            "microtubule doublet 96 nm repeat",
+            "sars-cov2 spike protein",
+            "hydrogen-dependent co2 reductase filament"
+        ]
     },
     "CellComponent": {
         "id": [],
