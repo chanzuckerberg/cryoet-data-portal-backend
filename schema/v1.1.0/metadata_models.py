@@ -5,14 +5,7 @@ from enum import Enum
 import re
 import sys
 from typing import Any, ClassVar, List, Literal, Dict, Optional, Union
-from pydantic.version import VERSION as PYDANTIC_VERSION
-
-if int(PYDANTIC_VERSION[0]) >= 2:
-    from pydantic import BaseModel, ConfigDict, Field, RootModel, field_validator
-else:
-    from pydantic import BaseModel, Field, validator
-
-from pydantic import conlist
+from pydantic import BaseModel, ConfigDict, Field, RootModel, field_validator, conlist
 
 metamodel_version = "None"
 version = "1.1.0"
@@ -799,6 +792,67 @@ class Author(ConfiguredBaseModel):
         return v
 
 
+class CrossReferences(ConfiguredBaseModel):
+    """
+    A set of cross-references to other databases and publications.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    publications: Optional[str] = Field(
+        None,
+        description="""Comma-separated list of DOIs for publications associated with the dataset.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "publications", "domain_of": ["CrossReferences"], "recommended": True}
+        },
+    )
+    related_database_entries: Optional[str] = Field(
+        None,
+        description="""Comma-separated list of related database entries for the dataset.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "related_database_entries", "domain_of": ["CrossReferences"], "recommended": True}
+        },
+    )
+    related_database_links: Optional[str] = Field(
+        None,
+        description="""Comma-separated list of related database links for the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "related_database_links", "domain_of": ["CrossReferences"]}},
+    )
+    dataset_citations: Optional[str] = Field(
+        None,
+        description="""Comma-separated list of DOIs for publications citing the dataset.""",
+        json_schema_extra={"linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferences"]}},
+    )
+
+    @field_validator("publications")
+    def pattern_publications(cls, v):
+        pattern = re.compile(
+            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid publications format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid publications format: {v}")
+        return v
+
+    @field_validator("related_database_entries")
+    def pattern_related_database_entries(cls, v):
+        pattern = re.compile(
+            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid related_database_entries format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid related_database_entries format: {v}")
+        return v
+
+
 class FundingDetails(ConfiguredBaseModel):
     """
     A funding source for a scientific data entity (base for JSON and DB representation).
@@ -874,7 +928,7 @@ class DateStamp(ConfiguredBaseModel):
     )
 
 
-class DatestampedEntity(ConfiguredBaseModel):
+class DateStampedEntity(ConfiguredBaseModel):
     """
     An entity with associated deposition, release and last modified dates.
     """
@@ -885,7 +939,7 @@ class DatestampedEntity(ConfiguredBaseModel):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
 
@@ -898,8 +952,9 @@ class AuthoredEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
 
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
@@ -918,7 +973,7 @@ class FundedEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
 
     funding: Optional[List[FundingDetails]] = Field(
-        default_factory=list,
+        None,
         description="""A funding source for a scientific data entity (base for JSON and DB representation).""",
         json_schema_extra={
             "linkml_meta": {
@@ -1218,7 +1273,7 @@ class CellComponent(ConfiguredBaseModel):
         return v
 
 
-class ExperimentalMetadata(ConfiguredBaseModel):
+class ExperimentMetadata(ConfiguredBaseModel):
     """
     Metadata describing sample and sample preparation methods used in a cryoET dataset.
     """
@@ -1231,7 +1286,7 @@ class ExperimentalMetadata(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sample_type",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_sample_type"],
             }
         },
@@ -1242,7 +1297,7 @@ class ExperimentalMetadata(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sample_preparation",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:sample_preparation"],
                 "recommended": True,
             }
@@ -1254,7 +1309,7 @@ class ExperimentalMetadata(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "grid_preparation",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:grid_preparation"],
                 "recommended": True,
             }
@@ -1266,7 +1321,7 @@ class ExperimentalMetadata(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "other_setup",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_other_setup"],
                 "recommended": True,
             }
@@ -1275,29 +1330,27 @@ class ExperimentalMetadata(ConfiguredBaseModel):
     organism: Optional[OrganismDetails] = Field(
         None,
         description="""The species from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "organism", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "organism", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     tissue: Optional[TissueDetails] = Field(
         None,
         description="""The type of tissue from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "tissue", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "tissue", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     cell_type: Optional[CellType] = Field(
         None,
         description="""The cell type from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "cell_type", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "cell_type", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     cell_strain: Optional[CellStrain] = Field(
         None,
         description="""The strain or cell line from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "cell_strain", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "cell_strain", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     cell_component: Optional[CellComponent] = Field(
         None,
         description="""The cellular component from which the sample was derived.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "cell_component", "domain_of": ["ExperimentalMetadata", "Dataset"]}
-        },
+        json_schema_extra={"linkml_meta": {"alias": "cell_component", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
 
     @field_validator("sample_type")
@@ -1315,7 +1368,7 @@ class ExperimentalMetadata(ConfiguredBaseModel):
         return v
 
 
-class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, AuthoredEntity, DatestampedEntity):
+class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredEntity, DateStampedEntity):
     """
     High-level description of a cryoET dataset.
     """
@@ -1324,11 +1377,11 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         {
             "from_schema": "metadata",
             "mixins": [
-                "DatestampedEntity",
+                "DateStampedEntity",
                 "AuthoredEntity",
                 "FundedEntity",
                 "CrossReferencedEntity",
-                "ExperimentalMetadata",
+                "ExperimentMetadata",
             ],
         }
     )
@@ -1370,12 +1423,13 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
@@ -1385,7 +1439,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         },
     )
     funding: Optional[List[FundingDetails]] = Field(
-        default_factory=list,
+        None,
         description="""A funding source for a scientific data entity (base for JSON and DB representation).""",
         json_schema_extra={
             "linkml_meta": {
@@ -1412,7 +1466,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sample_type",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_sample_type"],
             }
         },
@@ -1423,7 +1477,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sample_preparation",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:sample_preparation"],
                 "recommended": True,
             }
@@ -1435,7 +1489,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         json_schema_extra={
             "linkml_meta": {
                 "alias": "grid_preparation",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:grid_preparation"],
                 "recommended": True,
             }
@@ -1447,7 +1501,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         json_schema_extra={
             "linkml_meta": {
                 "alias": "other_setup",
-                "domain_of": ["ExperimentalMetadata", "Dataset"],
+                "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_other_setup"],
                 "recommended": True,
             }
@@ -1456,29 +1510,27 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
     organism: Optional[OrganismDetails] = Field(
         None,
         description="""The species from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "organism", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "organism", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     tissue: Optional[TissueDetails] = Field(
         None,
         description="""The type of tissue from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "tissue", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "tissue", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     cell_type: Optional[CellType] = Field(
         None,
         description="""The cell type from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "cell_type", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "cell_type", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     cell_strain: Optional[CellStrain] = Field(
         None,
         description="""The strain or cell line from which the sample was derived.""",
-        json_schema_extra={"linkml_meta": {"alias": "cell_strain", "domain_of": ["ExperimentalMetadata", "Dataset"]}},
+        json_schema_extra={"linkml_meta": {"alias": "cell_strain", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
     cell_component: Optional[CellComponent] = Field(
         None,
         description="""The cellular component from which the sample was derived.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "cell_component", "domain_of": ["ExperimentalMetadata", "Dataset"]}
-        },
+        json_schema_extra={"linkml_meta": {"alias": "cell_component", "domain_of": ["ExperimentMetadata", "Dataset"]}},
     )
 
     @field_validator("sample_type")
@@ -1496,13 +1548,13 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         return v
 
 
-class Deposition(CrossReferencedEntity, AuthoredEntity, DatestampedEntity):
+class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
     """
     Metadata describing a deposition.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "metadata", "mixins": ["DatestampedEntity", "AuthoredEntity", "CrossReferencedEntity"]}
+        {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity", "CrossReferencedEntity"]}
     )
 
     deposition_description: str = Field(
@@ -1539,8 +1591,9 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DatestampedEntity):
         },
     )
     deposition_types: List[DepositionTypesEnum] = Field(
-        ...,
+        default_factory=list,
         description="""Type of data in the deposition (e.g. dataset, annotation, tomogram)""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "deposition_types",
@@ -1553,12 +1606,13 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DatestampedEntity):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
@@ -2378,8 +2432,9 @@ class Tomogram(AuthoredEntity):
         json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram"]}},
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
@@ -2604,7 +2659,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2726,7 +2781,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2848,7 +2903,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2971,7 +3026,7 @@ class AnnotationPointFile(AnnotationSourceFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3053,7 +3108,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3147,7 +3202,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3185,13 +3240,13 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
     )
 
 
-class Annotation(AuthoredEntity, DatestampedEntity):
+class Annotation(AuthoredEntity, DateStampedEntity):
     """
     Metadata describing an annotation.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "metadata", "mixins": ["DatestampedEntity", "AuthoredEntity"]}
+        {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity"]}
     )
 
     annotation_method: str = Field(
@@ -3239,7 +3294,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         json_schema_extra={"linkml_meta": {"alias": "confidence", "domain_of": ["Annotation"]}},
     )
     files: Optional[List[AnnotationSourceFile]] = Field(
-        default_factory=list,
+        None,
         description="""File and sourcing data for an annotation. Represents an entry in annotation.sources.""",
         json_schema_extra={
             "linkml_meta": {"alias": "files", "domain_of": ["Annotation"], "list_elements_ordered": True}
@@ -3307,12 +3362,13 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
@@ -3346,67 +3402,6 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         elif isinstance(v, str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid method_type format: {v}")
-        return v
-
-
-class CrossReferences(ConfiguredBaseModel):
-    """
-    A set of cross-references to other databases and publications.
-    """
-
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
-
-    publications: Optional[str] = Field(
-        None,
-        description="""Comma-separated list of DOIs for publications associated with the dataset.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "publications", "domain_of": ["CrossReferences"], "recommended": True}
-        },
-    )
-    related_database_entries: Optional[str] = Field(
-        None,
-        description="""Comma-separated list of related database entries for the dataset.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "related_database_entries", "domain_of": ["CrossReferences"], "recommended": True}
-        },
-    )
-    related_database_links: Optional[str] = Field(
-        None,
-        description="""Comma-separated list of related database links for the dataset.""",
-        json_schema_extra={"linkml_meta": {"alias": "related_database_links", "domain_of": ["CrossReferences"]}},
-    )
-    dataset_citations: Optional[str] = Field(
-        None,
-        description="""Comma-separated list of DOIs for publications citing the dataset.""",
-        json_schema_extra={"linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferences"]}},
-    )
-
-    @field_validator("publications")
-    def pattern_publications(cls, v):
-        pattern = re.compile(
-            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
-        )
-        if isinstance(v, list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid publications format: {element}")
-        elif isinstance(v, str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid publications format: {v}")
-        return v
-
-    @field_validator("related_database_entries")
-    def pattern_related_database_entries(cls, v):
-        pattern = re.compile(
-            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)"
-        )
-        if isinstance(v, list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid related_database_entries format: {element}")
-        elif isinstance(v, str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid related_database_entries format: {v}")
         return v
 
 
@@ -3465,9 +3460,10 @@ class AnnotationMethodLinks(ConfiguredBaseModel):
 # see https://pydantic-docs.helpmanual.io/usage/models/#rebuilding-a-model
 PicturePath.model_rebuild()
 Author.model_rebuild()
+CrossReferences.model_rebuild()
 FundingDetails.model_rebuild()
 DateStamp.model_rebuild()
-DatestampedEntity.model_rebuild()
+DateStampedEntity.model_rebuild()
 AuthoredEntity.model_rebuild()
 FundedEntity.model_rebuild()
 CrossReferencedEntity.model_rebuild()
@@ -3477,7 +3473,7 @@ TissueDetails.model_rebuild()
 CellType.model_rebuild()
 CellStrain.model_rebuild()
 CellComponent.model_rebuild()
-ExperimentalMetadata.model_rebuild()
+ExperimentMetadata.model_rebuild()
 Dataset.model_rebuild()
 Deposition.model_rebuild()
 CameraDetails.model_rebuild()
@@ -3497,5 +3493,4 @@ AnnotationPointFile.model_rebuild()
 AnnotationSegmentationMaskFile.model_rebuild()
 AnnotationSemanticSegmentationMaskFile.model_rebuild()
 Annotation.model_rebuild()
-CrossReferences.model_rebuild()
 AnnotationMethodLinks.model_rebuild()

@@ -17,7 +17,7 @@ URI: [cdp-meta:cell_strain](metadatacell_strain)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
-| [ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET da... |  no  |
+| [ExperimentMetadata](ExperimentMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET da... |  no  |
 
 
 
@@ -59,7 +59,7 @@ URI: [cdp-meta:cell_strain](metadatacell_strain)
 name: cell_strain
 alias: cell_strain
 domain_of:
-- ExperimentalMetadata
+- ExperimentMetadata
 - Dataset
 range: string
 
