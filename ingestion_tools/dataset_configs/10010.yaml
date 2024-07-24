@@ -179,6 +179,7 @@ tiltseries:
     tilt_step: 2
     tilting_scheme: min to max tilt
     total_flux: float {tilt_series_total_flux}
+    tilt_axis: 86.2
   sources:
   - source_glob:
       list_glob: Tilt_Series/{run_name}.mrc
