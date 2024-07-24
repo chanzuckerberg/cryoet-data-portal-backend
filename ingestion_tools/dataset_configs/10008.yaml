@@ -104,7 +104,6 @@ datasets:
       corresponding_author_status: true
       name: Jan Michael Schuller
     cell_strain:
-      id: NCBITaxon:2325
       name: LKT-1
     cross_references:
       publications: doi:10.1038/s41586-022-04971-z
