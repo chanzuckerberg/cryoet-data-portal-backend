@@ -68,8 +68,8 @@ def to_dataset_config(
 
     config = {
         "dataset_identifier": dataset_id,
-        "dataset_description": dataset["description"],
-        "dataset_title": dataset["title"],
+        "dataset_description": dataset["description"].strip(),
+        "dataset_title": dataset["title"].strip(),
         "authors": authors,
         "organism": dataset["organism"],
         "sample_type": dataset["sample_type"],
@@ -92,8 +92,9 @@ def to_dataset_config(
 
     if dataset["cellular_component"]:
         ids = [entry for entry in dataset["cellular_component"] if entry.startswith("GO")]
-        config["cell_component"] = {"id": ",".join(ids)}
-    if dataset["cellular_strain"]:
+        if ids:
+            config["cell_component"] = {"id": ",".join(ids)}
+    if dataset["cellular_strain"] and (dataset["cellular_strain"].get("id") or dataset["cellular_strain"].get("name")):
         config["cell_strain"] = dataset["cellular_strain"]
     if dataset["cell_type"]:
         cell_type = dataset["cell_type"]
@@ -101,7 +102,9 @@ def to_dataset_config(
             "id": cell_type.get("id") or cell_type.get("cell_type_id"),
             "name": cell_type.get("name") or cell_type.get("cell_name"),
         }
-    if dataset["tissue"]:
+        if not config["cell_type"]["id"] and not config["cell_type"]["name"]:
+            del config["cell_type"]
+    if dataset["tissue"] and (dataset["tissue"].get("id") or dataset["tissue"].get("name")):
         config["tissue"] = dataset["tissue"]
     if cross_reference:
         config["cross_references"] = cross_reference
