@@ -183,8 +183,6 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: TFS Selectris X
-      image_corrector: null
-      phase_plate: null
     pixel_spacing: 1.89
     spherical_aberration_constant: 2.7
     tilt_axis: 84.2

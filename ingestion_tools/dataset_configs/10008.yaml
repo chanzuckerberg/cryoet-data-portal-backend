@@ -189,7 +189,6 @@ tiltseries:
       model: KRIOS
     microscope_optical_setup:
       energy_filter: GIF Quantum LS
-      phase_plate: null
     pixel_spacing: 3.52
     related_empiar_entry: EMPIAR-11058
     spherical_aberration_constant: 2.7

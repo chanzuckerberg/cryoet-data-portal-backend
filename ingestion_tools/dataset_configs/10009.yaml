@@ -316,7 +316,6 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup: &id006
       energy_filter: GIF Quantum LS
-      phase_plate: null
     pixel_spacing: 3.42
     related_empiar_entry: EMPIAR-11078
     spherical_aberration_constant: 2.7

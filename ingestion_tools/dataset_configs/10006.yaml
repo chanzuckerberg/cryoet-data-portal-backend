@@ -183,7 +183,6 @@ tiltseries:
       model: TITAN
     microscope_optical_setup:
       energy_filter: GIF Bioquantum
-      phase_plate: null
     pixel_spacing: 1.532
     spherical_aberration_constant: 2.7
     tilt_axis: 85.6

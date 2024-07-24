@@ -117,10 +117,7 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: Gatan Quantum LS
-      image_corrector: null
-      phase_plate: null
     pixel_spacing: 1.07837
-    related_empiar_entry: null
     spherical_aberration_constant: 2.7
     tilt_axis: 0.0
     tilt_range:
