@@ -670,7 +670,6 @@ slots:
     range: boolean
     description: This annotation is recommended by the curator to be preferred for this object type.
     ifabsent: false
-  # NOTE: Not used
   annotation_method_links:
     range: AnnotationMethodLinks
     description: A set of links to models, sourcecode, documentation, etc referenced by annotation the method
@@ -954,7 +953,7 @@ classes:
     description: A placeholder for any type of data.
 
   # ============================================================================
-  # Annotation Method Links NOTE: Not used
+  # Annotation Method Links
   # ============================================================================
   AnnotationMethodLinks:
     description: A set of links to models, sourcecode, documentation, etc referenced by annotation the method
