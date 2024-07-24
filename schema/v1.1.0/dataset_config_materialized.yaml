@@ -552,6 +552,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
       deposition_keyphotos:
         name: deposition_keyphotos
         description: A deposition key photo entity.
@@ -577,6 +578,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
       frames:
         name: frames
         description: A frame entity.
@@ -638,6 +640,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
       standardization_config:
         name: standardization_config
         description: A standardization configuration.
@@ -687,6 +690,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
     tree_root: true
   GeneralGlob:
     name: GeneralGlob
@@ -839,6 +843,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   DefaultSource:
     name: DefaultSource
     description: A generalized source class with glob finders.
@@ -1033,6 +1038,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   KeyPhotoEntity:
     name: KeyPhotoEntity
     description: A key photo entity.
@@ -1062,6 +1068,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   KeyPhotoSource:
     name: KeyPhotoSource
     description: A key photo source.
@@ -1158,6 +1165,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   AnnotationSource:
     name: AnnotationSource
     description: An annotation source.
@@ -1279,6 +1287,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   DatasetSource:
     name: DatasetSource
     description: A dataset source.
@@ -1366,6 +1375,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   DepositionKeyPhotoEntity:
     name: DepositionKeyPhotoEntity
     description: A deposition key photo entity.
@@ -1396,6 +1406,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   DepositionEntity:
     name: DepositionEntity
     description: A deposition entity.
@@ -1440,6 +1451,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   DepositionSource:
     name: DepositionSource
     description: A deposition source.
@@ -1526,6 +1538,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   FrameSource:
     name: FrameSource
     description: A frame source.
@@ -1625,6 +1638,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   GainSource:
     name: GainSource
     description: A gain source.
@@ -1724,6 +1738,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   KeyImageSource:
     name: KeyImageSource
     description: A key image source.
@@ -1823,6 +1838,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   RawTiltSource:
     name: RawTiltSource
     description: A raw tilt source.
@@ -1922,6 +1938,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   RunSource:
     name: RunSource
     description: A run source.
@@ -2109,6 +2126,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   TiltSeriesSource:
     name: TiltSeriesSource
     description: A tilt series source.
@@ -2223,6 +2241,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   TomogramSource:
     name: TomogramSource
     description: A tomogram source.
@@ -2322,6 +2341,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   VoxelSpacingSource:
     name: VoxelSpacingSource
     description: A voxel spacing source.
@@ -2409,6 +2429,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   TomogramHeader:
     name: TomogramHeader
     description: A tomogram header, a unique source attribute for voxel spacing.
@@ -2457,60 +2478,6 @@ classes:
     description: A placeholder for any type of data.
     from_schema: cdp-dataset-config
     class_uri: linkml:Any
-  CrossReferences:
-    name: CrossReferences
-    description: A set of cross-references to other databases and publications.
-    from_schema: cdp-dataset-config
-    attributes:
-      publications:
-        name: publications
-        description: Comma-separated list of DOIs for publications associated with
-          the dataset.
-        from_schema: cdp-dataset-config
-        alias: publications
-        owner: CrossReferences
-        domain_of:
-        - CrossReferences
-        range: DOI_LIST
-        recommended: true
-        inlined: true
-        inlined_as_list: true
-        pattern: (^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
-      related_database_entries:
-        name: related_database_entries
-        description: Comma-separated list of related database entries for the dataset.
-        from_schema: cdp-dataset-config
-        alias: related_database_entries
-        owner: CrossReferences
-        domain_of:
-        - CrossReferences
-        range: EMPIAR_EMDB_PDB_LIST
-        recommended: true
-        inlined: true
-        inlined_as_list: true
-        pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)
-      related_database_links:
-        name: related_database_links
-        description: Comma-separated list of related database links for the dataset.
-        from_schema: cdp-dataset-config
-        alias: related_database_links
-        owner: CrossReferences
-        domain_of:
-        - CrossReferences
-        range: string
-        inlined: true
-        inlined_as_list: true
-      dataset_citations:
-        name: dataset_citations
-        description: Comma-separated list of DOIs for publications citing the dataset.
-        from_schema: cdp-dataset-config
-        alias: dataset_citations
-        owner: CrossReferences
-        domain_of:
-        - CrossReferences
-        range: string
-        inlined: true
-        inlined_as_list: true
   AnnotationMethodLinks:
     name: AnnotationMethodLinks
     description: A set of links to models, sourcecode, documentation, etc referenced

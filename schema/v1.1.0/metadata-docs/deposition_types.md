@@ -90,6 +90,7 @@ multivalued: true
 inlined: true
 inlined_as_list: true
 pattern: (^annotation$)|(^dataset$)|(^tomogram$)
+minimum_cardinality: 1
 
 ```
 </details>

@@ -953,27 +953,6 @@ classes:
     description: A placeholder for any type of data.
 
   # ============================================================================
-  # Cross-references to other databases and publications
-  # ============================================================================
-  CrossReferences:
-    description: A set of cross-references to other databases and publications.
-    attributes:
-      publications:
-        range: DOI_LIST
-        recommended: true
-        description: Comma-separated list of DOIs for publications associated with the dataset.
-      related_database_entries:
-        range: EMPIAR_EMDB_PDB_LIST
-        recommended: true
-        description: Comma-separated list of related database entries for the dataset.
-      related_database_links: # DEPRECATED
-        range: string
-        description: Comma-separated list of related database links for the dataset.
-      dataset_citations: # DEPRECATED
-        range: string
-        description: Comma-separated list of DOIs for publications citing the dataset.
-
-  # ============================================================================
   # Annotation Method Links
   # ============================================================================
   AnnotationMethodLinks:

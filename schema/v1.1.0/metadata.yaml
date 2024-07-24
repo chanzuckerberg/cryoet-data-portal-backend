@@ -65,7 +65,27 @@ classes:
           - cdp-common:author_orcid
   # ============================================================================
 
-
+  # ============================================================================
+  # Cross-references to other databases and publications
+  # ============================================================================
+  CrossReferences:
+    description: A set of cross-references to other databases and publications.
+    attributes:
+      publications:
+        range: DOI_LIST
+        recommended: true
+        description: Comma-separated list of DOIs for publications associated with the dataset.
+      related_database_entries:
+        range: EMPIAR_EMDB_PDB_LIST
+        recommended: true
+        description: Comma-separated list of related database entries for the dataset.
+      related_database_links: # DEPRECATED
+        range: string
+        description: Comma-separated list of related database links for the dataset.
+      dataset_citations: # DEPRECATED
+        range: string
+        description: Comma-separated list of DOIs for publications citing the dataset.
+  # ============================================================================
 
   # ============================================================================
   # Funding source information
@@ -101,7 +121,7 @@ classes:
   # ============================================================================
   # Meta-Mixins
   # ============================================================================
-  DatestampedEntity:
+  DateStampedEntity:
     abstract: true
     description: An entity with associated deposition, release and last modified dates.
     attributes:
@@ -205,7 +225,7 @@ classes:
         exact_mappings:
           - cdp-common:cell_component_id
 
-  ExperimentalMetadata:
+  ExperimentMetadata:
     abstract: true
     description: Metadata describing sample and sample preparation methods used in a cryoET dataset.
     attributes:
@@ -244,11 +264,11 @@ classes:
   Dataset:
     description: High-level description of a cryoET dataset.
     mixins:
-      - DatestampedEntity
+      - DateStampedEntity
       - AuthoredEntity
       - FundedEntity
       - CrossReferencedEntity
-      - ExperimentalMetadata
+      - ExperimentMetadata
 
     attributes:
       dataset_identifier:
@@ -269,7 +289,7 @@ classes:
   Deposition:
     description: Metadata describing a deposition.
     mixins:
-      - DatestampedEntity
+      - DateStampedEntity
       - AuthoredEntity
       - CrossReferencedEntity
 
@@ -659,7 +679,7 @@ classes:
   Annotation:
     description: Metadata describing an annotation.
     mixins:
-    - DatestampedEntity
+    - DateStampedEntity
     - AuthoredEntity
 
     attributes:
