@@ -453,7 +453,7 @@ def validate_publications(publications: Optional[str]) -> Optional[str]:
     publication_list = publications.replace(" ", "").rstrip(",").split(",")
 
     invalid_publications = asyncio.run(validate_publication_lists(publication_list))
-    if len(invalid_publications) > 0:
+    if invalid_publications:
         raise ValueError(f"Invalid publications found in annotation publications: {invalid_publications}")
 
     return publications
@@ -478,7 +478,7 @@ def validate_sources_parent_filters(source_list: List[SourceParentFiltersEntity]
                 continue
 
             # the list of parents that are being filtered (annotation, dataset, run, etc.)
-            filters = [filter for filter in parent_filter.model_fields if len(getattr(parent_filter, filter, [])) != 0]
+            filters = [filter for filter in parent_filter.model_fields if getattr(parent_filter, filter)]
             for filter in filters:
                 if class_name in FLATTENED_DEP_TREE[filter]:
                     continue
@@ -531,7 +531,7 @@ def validate_sources(
         # For verifying that all parent_filters' include and exclude entries have the right filters
         total_errors += validate_sources_parent_filters(source_list, class_name)
 
-    if len(total_errors) > 0:
+    if total_errors:
         raise ValueError(total_errors)
 
 
@@ -585,7 +585,7 @@ class ExtendedValidationAnnotation(Annotation):
     def valid_annotation_authors(cls: Self, authors: List[Author]) -> List[Author]:
         all_errors = validate_authors(authors)
 
-        if len(all_errors) > 0:
+        if all_errors:
             raise ValueError(all_errors)
 
         return authors
@@ -646,7 +646,7 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
                 if has_glob_string and has_glob_strings:
                     multiple_glob_strings_errors.append((i, shape))
 
-        if len(shapes_used_multiple_times_errors) > 0:
+        if shapes_used_multiple_times_errors:
             total_errors.append(
                 ValueError(f"Annotation cannot have multiple same-shape sources: {shapes_used_multiple_times_errors}"),
             )
@@ -662,7 +662,7 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
         # For verifying that all parent_filters' include and exclude entries have the right filters
         total_errors += validate_sources_parent_filters(source_list, AnnotationImporter.type_key)
 
-        if len(total_errors) > 0:
+        if total_errors:
             raise ValueError(total_errors)
 
         return source_list
@@ -742,14 +742,14 @@ class ExtendedValidationDataset(Dataset):
     def valid_dataset_authors(cls: Self, authors: List[Author]) -> List[Author]:
         all_errors = validate_authors(authors)
 
-        if len(all_errors) > 0:
+        if all_errors:
             raise ValueError(all_errors)
 
         return authors
 
 
 class ExtendedValidationDatasetEntity(DatasetEntity):
-    metadata: ExtendedValidationDataset = DatasetEntity.model_fields["metadata"]
+    metadata: Optional[ExtendedValidationDataset] = DatasetEntity.model_fields["metadata"]
 
     @field_validator("sources")
     @classmethod
@@ -782,14 +782,14 @@ class ExtendedValidationDeposition(Deposition):
     def valid_deposition_authors(cls: Self, authors: List[Author]) -> List[Author]:
         all_errors = validate_authors(authors)
 
-        if len(all_errors) > 0:
+        if all_errors:
             raise ValueError(all_errors)
 
         return authors
 
 
 class ExtendedValidationDepositionEntity(DepositionEntity):
-    metadata: ExtendedValidationDeposition = DepositionEntity.model_fields["metadata"]
+    metadata: Optional[ExtendedValidationDeposition] = DepositionEntity.model_fields["metadata"]
 
     @field_validator("sources")
     @classmethod
@@ -891,7 +891,7 @@ class ExtendedValidationTiltSeries(TiltSeries):
 
 
 class ExtendedValidationTiltSeriesEntity(TiltSeriesEntity):
-    metadata: ExtendedValidationTiltSeries = TiltSeriesEntity.model_fields["metadata"]
+    metadata: Optional[ExtendedValidationTiltSeries] = TiltSeriesEntity.model_fields["metadata"]
 
     @field_validator("sources")
     @classmethod
@@ -935,14 +935,14 @@ class ExtendedValidationTomogram(Tomogram):
     def valid_tomogram_authors(cls: Self, authors: List[Author]) -> List[Author]:
         all_errors = validate_authors(authors)
 
-        if len(all_errors) > 0:
+        if all_errors:
             raise ValueError(all_errors)
 
         return authors
 
 
 class ExtendedValidationTomogramEntity(TomogramEntity):
-    metadata: ExtendedValidationTomogram = TomogramEntity.model_fields["metadata"]
+    metadata: Optional[ExtendedValidationTomogram] = TomogramEntity.model_fields["metadata"]
 
     @field_validator("sources")
     @classmethod
@@ -982,7 +982,7 @@ class ExtendedValidationContainer(Container):
     gains: Optional[List[ExtendedValidationGainEntity]] = Container.model_fields["gains"]
     key_images: Optional[List[ExtendedValidationKeyImageEntity]] = Container.model_fields["key_images"]
     rawtilts: Optional[List[ExtendedValidationRawTiltEntity]] = Container.model_fields["rawtilts"]
-    runs: Optional[List[ExtendedValidationRunEntity]] = Container.model_fields["runs"]
+    runs: List[ExtendedValidationRunEntity] = Container.model_fields["runs"]
     tiltseries: Optional[List[ExtendedValidationTiltSeriesEntity]] = Container.model_fields["tiltseries"]
     tomograms: Optional[List[ExtendedValidationTomogramEntity]] = Container.model_fields["tomograms"]
-    voxel_spacings: Optional[List[ExtendedValidationVoxelSpacingEntity]] = Container.model_fields["voxel_spacings"]
+    voxel_spacings: List[ExtendedValidationVoxelSpacingEntity] = Container.model_fields["voxel_spacings"]
