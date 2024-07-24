@@ -103,8 +103,8 @@ annotations:
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
-      id: GO:0035869
-      name: MTD stellate / Y-shaped link
+      id: GO:0097537
+      name: Y-shaped link
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
@@ -125,7 +125,7 @@ annotations:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
       id: GO:0030992
-      name: IFT-B
+      name: IFT B complex
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
@@ -146,7 +146,7 @@ annotations:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
       id: GO:0030991
-      name: IFT-A
+      name: IFT A complex
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
