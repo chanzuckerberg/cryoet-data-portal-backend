@@ -48,7 +48,7 @@ annotations:
       release_date: '2023-12-10'
     ground_truth_status: true
     is_curator_recommended: true
-    method_type: automated
+    method_type: hybrid
     version: 1.0
   sources:
   - OrientedPoint:
