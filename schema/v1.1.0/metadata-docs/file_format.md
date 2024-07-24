@@ -17,11 +17,11 @@ URI: [cdp-meta:file_format](metadatafile_format)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation |  no  |
+| [AnnotationSegmentationMaskFile](AnnotationSegmentationMaskFile.md) | File and sourcing data for a segmentation mask annotation |  no  |
+| [AnnotationSemanticSegmentationMaskFile](AnnotationSemanticSegmentationMaskFile.md) | File and sourcing data for a semantic segmentation mask annotation |  no  |
+| [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation |  no  |
 | [AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation |  no  |
 | [AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation |  no  |
-| [AnnotationSemanticSegmentationMaskFile](AnnotationSemanticSegmentationMaskFile.md) | File and sourcing data for a semantic segmentation mask annotation |  no  |
-| [AnnotationSegmentationMaskFile](AnnotationSegmentationMaskFile.md) | File and sourcing data for a segmentation mask annotation |  no  |
-| [AnnotationSourceFile](AnnotationSourceFile.md) | File and sourcing data for an annotation |  no  |
 
 
 

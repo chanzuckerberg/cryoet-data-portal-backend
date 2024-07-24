@@ -679,6 +679,7 @@
                     "items": {
                         "$ref": "#/$defs/RunEntity"
                     },
+                    "minItems": 1,
                     "type": "array"
                 },
                 "standardization_config": {
@@ -711,6 +712,7 @@
             "required": [
                 "datasets",
                 "depositions",
+                "runs",
                 "standardization_config",
                 "voxel_spacings"
             ],
@@ -849,7 +851,6 @@
                 }
             },
             "required": [
-                "metadata",
                 "sources"
             ],
             "title": "DatasetEntity",
@@ -1048,7 +1049,6 @@
                 }
             },
             "required": [
-                "metadata",
                 "sources"
             ],
             "title": "DepositionEntity",
@@ -1958,7 +1958,6 @@
                 }
             },
             "required": [
-                "metadata",
                 "sources"
             ],
             "title": "TiltSeriesEntity",
@@ -2167,7 +2166,6 @@
                 }
             },
             "required": [
-                "metadata",
                 "sources"
             ],
             "title": "TomogramEntity",
@@ -2450,6 +2448,7 @@
             "items": {
                 "$ref": "#/$defs/RunEntity"
             },
+            "minItems": 1,
             "type": "array"
         },
         "standardization_config": {
@@ -2482,6 +2481,7 @@
     "required": [
         "datasets",
         "depositions",
+        "runs",
         "standardization_config",
         "voxel_spacings"
     ],

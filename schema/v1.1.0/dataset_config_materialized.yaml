@@ -636,9 +636,11 @@ classes:
         domain_of:
         - Container
         range: RunEntity
+        required: true
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
       standardization_config:
         name: standardization_config
         description: A standardization configuration.
@@ -1259,7 +1261,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: Dataset
-        required: true
         inlined: true
         inlined_as_list: true
       sources:
@@ -1424,7 +1425,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: Deposition
-        required: true
         inlined: true
         inlined_as_list: true
       sources:
@@ -2100,7 +2100,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: TiltSeries
-        required: true
         inlined: true
         inlined_as_list: true
       sources:
@@ -2216,7 +2215,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: Tomogram
-        required: true
         inlined: true
         inlined_as_list: true
       sources:

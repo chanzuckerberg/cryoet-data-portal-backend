@@ -3513,10 +3513,10 @@ class Container(ConfiguredBaseModel):
         description="""A raw tilt entity.""",
         json_schema_extra={"linkml_meta": {"alias": "rawtilts", "domain_of": ["Container"]}},
     )
-    runs: Optional[List[RunEntity]] = Field(
-        default_factory=list,
+    runs: List[RunEntity] = Field(
+        ...,
         description="""A run entity.""",
-        json_schema_extra={"linkml_meta": {"alias": "runs", "domain_of": ["Container"]}},
+        json_schema_extra={"linkml_meta": {"alias": "runs", "domain_of": ["Container"], "minimum_cardinality": 1}},
     )
     standardization_config: StandardizationConfig = Field(
         ...,
@@ -4112,8 +4112,8 @@ class DatasetEntity(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
-    metadata: Dataset = Field(
-        ...,
+    metadata: Optional[Dataset] = Field(
+        None,
         description="""High-level description of a cryoET dataset.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4332,8 +4332,8 @@ class DepositionEntity(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
-    metadata: Deposition = Field(
-        ...,
+    metadata: Optional[Deposition] = Field(
+        None,
         description="""Metadata describing a deposition.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5316,8 +5316,8 @@ class TiltSeriesEntity(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
-    metadata: TiltSeries = Field(
-        ...,
+    metadata: Optional[TiltSeries] = Field(
+        None,
         description="""Metadata describing a tilt series.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5491,8 +5491,8 @@ class TomogramEntity(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
-    metadata: Tomogram = Field(
-        ...,
+    metadata: Optional[Tomogram] = Field(
+        None,
         description="""Metadata describing a tomogram.""",
         json_schema_extra={
             "linkml_meta": {
