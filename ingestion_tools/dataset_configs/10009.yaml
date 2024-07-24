@@ -327,6 +327,7 @@ tiltseries:
     tilt_step: 2.0
     tilting_scheme: Dose-symmetric
     total_flux: 100
+    tilt_axis: 0.0
   sources:
   - parent_filters:
       exclude:

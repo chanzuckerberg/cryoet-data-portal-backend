@@ -3,7 +3,7 @@ annotations:
     annotation_method: crYOLO picking
     annotation_object:
       description: Cytosolic ribosome
-      id: GO:0009326
+      id: GO:0022626
       name: cytosolic ribosome
     annotation_publications: doi:10.1101/2023.08.18.553799
     authors:
