@@ -3,7 +3,7 @@ annotations:
     annotation_method: Template matching + 3D classification filtering
     annotation_object:
       description: SARS-CoV2 Spike protein
-      id: GO:0019062
+      id: GO:0044423
       name: SARS-CoV2 spike protein
     annotation_publications: doi:10.1038/s41586-020-2665-2
     annotation_software: TOM/AV3 + RELION
