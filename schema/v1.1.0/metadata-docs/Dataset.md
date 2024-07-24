@@ -20,8 +20,8 @@ URI: [cdp-meta:Dataset](metadataDataset)
  classDiagram
     class Dataset
     click Dataset href "../Dataset"
-      DatestampedEntity <|-- Dataset
-        click DatestampedEntity href "../DatestampedEntity"
+      DateStampedEntity <|-- Dataset
+        click DateStampedEntity href "../DateStampedEntity"
       AuthoredEntity <|-- Dataset
         click AuthoredEntity href "../AuthoredEntity"
       FundedEntity <|-- Dataset
@@ -141,7 +141,7 @@ URI: [cdp-meta:Dataset](metadataDataset)
 
 
 ## Inheritance
-* **Dataset** [ [DatestampedEntity](DatestampedEntity.md) [AuthoredEntity](AuthoredEntity.md) [FundedEntity](FundedEntity.md) [CrossReferencedEntity](CrossReferencedEntity.md) [ExperimentMetadata](ExperimentMetadata.md)]
+* **Dataset** [ [DateStampedEntity](DateStampedEntity.md) [AuthoredEntity](AuthoredEntity.md) [FundedEntity](FundedEntity.md) [CrossReferencedEntity](CrossReferencedEntity.md) [ExperimentMetadata](ExperimentMetadata.md)]
 
 
 
@@ -215,7 +215,7 @@ name: Dataset
 description: High-level description of a cryoET dataset.
 from_schema: metadata
 mixins:
-- DatestampedEntity
+- DateStampedEntity
 - AuthoredEntity
 - FundedEntity
 - CrossReferencedEntity
@@ -276,7 +276,7 @@ attributes:
     alias: dates
     owner: Dataset
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation
@@ -302,6 +302,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
   funding:
     name: funding
     description: A funding source for a scientific data entity (base for JSON and
@@ -465,7 +466,7 @@ name: Dataset
 description: High-level description of a cryoET dataset.
 from_schema: metadata
 mixins:
-- DatestampedEntity
+- DateStampedEntity
 - AuthoredEntity
 - FundedEntity
 - CrossReferencedEntity
@@ -526,7 +527,7 @@ attributes:
     alias: dates
     owner: Dataset
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation
@@ -552,6 +553,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
   funding:
     name: funding
     description: A funding source for a scientific data entity (base for JSON and

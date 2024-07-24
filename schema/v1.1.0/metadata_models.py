@@ -5,14 +5,7 @@ from enum import Enum
 import re
 import sys
 from typing import Any, ClassVar, List, Literal, Dict, Optional, Union
-from pydantic.version import VERSION as PYDANTIC_VERSION
-
-if int(PYDANTIC_VERSION[0]) >= 2:
-    from pydantic import BaseModel, ConfigDict, Field, RootModel, field_validator
-else:
-    from pydantic import BaseModel, Field, validator
-
-from pydantic import conlist
+from pydantic import BaseModel, ConfigDict, Field, RootModel, field_validator, conlist
 
 metamodel_version = "None"
 version = "1.1.0"
@@ -935,7 +928,7 @@ class DateStamp(ConfiguredBaseModel):
     )
 
 
-class DatestampedEntity(ConfiguredBaseModel):
+class DateStampedEntity(ConfiguredBaseModel):
     """
     An entity with associated deposition, release and last modified dates.
     """
@@ -946,7 +939,7 @@ class DatestampedEntity(ConfiguredBaseModel):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
 
@@ -959,8 +952,9 @@ class AuthoredEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
 
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
@@ -979,7 +973,7 @@ class FundedEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
 
     funding: Optional[List[FundingDetails]] = Field(
-        default_factory=list,
+        None,
         description="""A funding source for a scientific data entity (base for JSON and DB representation).""",
         json_schema_extra={
             "linkml_meta": {
@@ -1374,7 +1368,7 @@ class ExperimentMetadata(ConfiguredBaseModel):
         return v
 
 
-class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredEntity, DatestampedEntity):
+class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredEntity, DateStampedEntity):
     """
     High-level description of a cryoET dataset.
     """
@@ -1383,7 +1377,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
         {
             "from_schema": "metadata",
             "mixins": [
-                "DatestampedEntity",
+                "DateStampedEntity",
                 "AuthoredEntity",
                 "FundedEntity",
                 "CrossReferencedEntity",
@@ -1429,12 +1423,13 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
@@ -1444,7 +1439,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
         },
     )
     funding: Optional[List[FundingDetails]] = Field(
-        default_factory=list,
+        None,
         description="""A funding source for a scientific data entity (base for JSON and DB representation).""",
         json_schema_extra={
             "linkml_meta": {
@@ -1553,13 +1548,13 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
         return v
 
 
-class Deposition(CrossReferencedEntity, AuthoredEntity, DatestampedEntity):
+class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
     """
     Metadata describing a deposition.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "metadata", "mixins": ["DatestampedEntity", "AuthoredEntity", "CrossReferencedEntity"]}
+        {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity", "CrossReferencedEntity"]}
     )
 
     deposition_description: str = Field(
@@ -1596,8 +1591,9 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DatestampedEntity):
         },
     )
     deposition_types: List[DepositionTypesEnum] = Field(
-        ...,
+        default_factory=list,
         description="""Type of data in the deposition (e.g. dataset, annotation, tomogram)""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "deposition_types",
@@ -1610,12 +1606,13 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DatestampedEntity):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
@@ -2435,8 +2432,9 @@ class Tomogram(AuthoredEntity):
         json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram"]}},
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
@@ -2661,7 +2659,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2783,7 +2781,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2905,7 +2903,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3028,7 +3026,7 @@ class AnnotationPointFile(AnnotationSourceFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3110,7 +3108,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3204,7 +3202,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3242,13 +3240,13 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
     )
 
 
-class Annotation(AuthoredEntity, DatestampedEntity):
+class Annotation(AuthoredEntity, DateStampedEntity):
     """
     Metadata describing an annotation.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "metadata", "mixins": ["DatestampedEntity", "AuthoredEntity"]}
+        {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity"]}
     )
 
     annotation_method: str = Field(
@@ -3296,7 +3294,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         json_schema_extra={"linkml_meta": {"alias": "confidence", "domain_of": ["Annotation"]}},
     )
     files: Optional[List[AnnotationSourceFile]] = Field(
-        default_factory=list,
+        None,
         description="""File and sourcing data for an annotation. Represents an entry in annotation.sources.""",
         json_schema_extra={
             "linkml_meta": {"alias": "files", "domain_of": ["Annotation"], "list_elements_ordered": True}
@@ -3364,12 +3362,13 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
-        ...,
+        default_factory=list,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
@@ -3464,7 +3463,7 @@ Author.model_rebuild()
 CrossReferences.model_rebuild()
 FundingDetails.model_rebuild()
 DateStamp.model_rebuild()
-DatestampedEntity.model_rebuild()
+DateStampedEntity.model_rebuild()
 AuthoredEntity.model_rebuild()
 FundedEntity.model_rebuild()
 CrossReferencedEntity.model_rebuild()
