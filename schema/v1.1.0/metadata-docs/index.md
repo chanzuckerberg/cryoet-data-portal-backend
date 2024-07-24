@@ -33,7 +33,7 @@ Name: cdp-meta
 | [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications. |
 | [Dataset](Dataset.md) | High-level description of a cryoET dataset. |
 | [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modified. |
-| [DatestampedEntity](DatestampedEntity.md) | An entity with associated deposition, release and last modified dates. |
+| [DateStampedEntity](DateStampedEntity.md) | An entity with associated deposition, release and last modified dates. |
 | [Deposition](Deposition.md) | Metadata describing a deposition. |
 | [ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET dataset. |
 | [FundedEntity](FundedEntity.md) | An entity with associated funding sources. |

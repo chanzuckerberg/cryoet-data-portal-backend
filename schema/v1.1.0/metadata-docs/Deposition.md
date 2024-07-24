@@ -20,8 +20,8 @@ URI: [cdp-meta:Deposition](metadataDeposition)
  classDiagram
     class Deposition
     click Deposition href "../Deposition"
-      DatestampedEntity <|-- Deposition
-        click DatestampedEntity href "../DatestampedEntity"
+      DateStampedEntity <|-- Deposition
+        click DateStampedEntity href "../DateStampedEntity"
       AuthoredEntity <|-- Deposition
         click AuthoredEntity href "../AuthoredEntity"
       CrossReferencedEntity <|-- Deposition
@@ -77,7 +77,7 @@ URI: [cdp-meta:Deposition](metadataDeposition)
 
 
 ## Inheritance
-* **Deposition** [ [DatestampedEntity](DatestampedEntity.md) [AuthoredEntity](AuthoredEntity.md) [CrossReferencedEntity](CrossReferencedEntity.md)]
+* **Deposition** [ [DateStampedEntity](DateStampedEntity.md) [AuthoredEntity](AuthoredEntity.md) [CrossReferencedEntity](CrossReferencedEntity.md)]
 
 
 
@@ -142,7 +142,7 @@ name: Deposition
 description: Metadata describing a deposition.
 from_schema: metadata
 mixins:
-- DatestampedEntity
+- DateStampedEntity
 - AuthoredEntity
 - CrossReferencedEntity
 attributes:
@@ -219,7 +219,7 @@ attributes:
     alias: dates
     owner: Deposition
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation
@@ -271,7 +271,7 @@ name: Deposition
 description: Metadata describing a deposition.
 from_schema: metadata
 mixins:
-- DatestampedEntity
+- DateStampedEntity
 - AuthoredEntity
 - CrossReferencedEntity
 attributes:
@@ -348,7 +348,7 @@ attributes:
     alias: dates
     owner: Deposition
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation

@@ -20,8 +20,8 @@ URI: [cdp-meta:Dataset](metadataDataset)
  classDiagram
     class Dataset
     click Dataset href "../Dataset"
-      DatestampedEntity <|-- Dataset
-        click DatestampedEntity href "../DatestampedEntity"
+      DateStampedEntity <|-- Dataset
+        click DateStampedEntity href "../DateStampedEntity"
       AuthoredEntity <|-- Dataset
         click AuthoredEntity href "../AuthoredEntity"
       FundedEntity <|-- Dataset
@@ -141,7 +141,7 @@ URI: [cdp-meta:Dataset](metadataDataset)
 
 
 ## Inheritance
-* **Dataset** [ [DatestampedEntity](DatestampedEntity.md) [AuthoredEntity](AuthoredEntity.md) [FundedEntity](FundedEntity.md) [CrossReferencedEntity](CrossReferencedEntity.md) [ExperimentalMetadata](ExperimentalMetadata.md)]
+* **Dataset** [ [DateStampedEntity](DateStampedEntity.md) [AuthoredEntity](AuthoredEntity.md) [FundedEntity](FundedEntity.md) [CrossReferencedEntity](CrossReferencedEntity.md) [ExperimentalMetadata](ExperimentalMetadata.md)]
 
 
 
@@ -215,7 +215,7 @@ name: Dataset
 description: High-level description of a cryoET dataset.
 from_schema: metadata
 mixins:
-- DatestampedEntity
+- DateStampedEntity
 - AuthoredEntity
 - FundedEntity
 - CrossReferencedEntity
@@ -276,7 +276,7 @@ attributes:
     alias: dates
     owner: Dataset
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation
@@ -466,7 +466,7 @@ name: Dataset
 description: High-level description of a cryoET dataset.
 from_schema: metadata
 mixins:
-- DatestampedEntity
+- DateStampedEntity
 - AuthoredEntity
 - FundedEntity
 - CrossReferencedEntity
@@ -527,7 +527,7 @@ attributes:
     alias: dates
     owner: Dataset
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation
