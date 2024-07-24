@@ -302,6 +302,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
   funding:
     name: funding
     description: A funding source for a scientific data entity (base for JSON and
@@ -552,6 +553,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
   funding:
     name: funding
     description: A funding source for a scientific data entity (base for JSON and

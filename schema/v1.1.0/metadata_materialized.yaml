@@ -807,6 +807,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   FundedEntity:
     name: FundedEntity
     description: An entity with associated funding sources.
@@ -1290,6 +1291,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
       funding:
         name: funding
         description: A funding source for a scientific data entity (base for JSON
@@ -1498,6 +1500,7 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: (^annotation$)|(^dataset$)|(^tomogram$)
+        minimum_cardinality: 1
       dates:
         name: dates
         description: A set of dates at which a data item was deposited, published
@@ -1525,6 +1528,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
       cross_references:
         name: cross_references
         description: A set of cross-references to other databases and publications.
@@ -2382,6 +2386,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   AnnotationConfidence:
     name: AnnotationConfidence
     description: Metadata describing the confidence of an annotation.
@@ -3257,6 +3262,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   Any:
     name: Any
     description: A placeholder for any type of data.

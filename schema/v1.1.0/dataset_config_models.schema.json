@@ -26,6 +26,7 @@
                     "items": {
                         "$ref": "#/$defs/Author"
                     },
+                    "minItems": 1,
                     "type": "array"
                 },
                 "confidence": {
@@ -113,6 +114,7 @@
                     "items": {
                         "$ref": "#/$defs/AnnotationSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -626,6 +628,7 @@
                     "items": {
                         "$ref": "#/$defs/DatasetEntity"
                     },
+                    "minItems": 1,
                     "type": "array"
                 },
                 "deposition_keyphotos": {
@@ -640,6 +643,7 @@
                     "items": {
                         "$ref": "#/$defs/DepositionEntity"
                     },
+                    "minItems": 1,
                     "type": "array"
                 },
                 "frames": {
@@ -700,6 +704,7 @@
                     "items": {
                         "$ref": "#/$defs/VoxelSpacingEntity"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -747,6 +752,7 @@
                     "items": {
                         "$ref": "#/$defs/Author"
                     },
+                    "minItems": 1,
                     "type": "array"
                 },
                 "cell_component": {
@@ -838,6 +844,7 @@
                     "items": {
                         "$ref": "#/$defs/DatasetSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -857,6 +864,7 @@
                     "items": {
                         "$ref": "#/$defs/KeyPhotoSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -927,6 +935,7 @@
                     "items": {
                         "$ref": "#/$defs/Any"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -977,6 +986,7 @@
                     "items": {
                         "$ref": "#/$defs/Author"
                     },
+                    "minItems": 1,
                     "type": "array"
                 },
                 "cross_references": {
@@ -1005,6 +1015,7 @@
                         "$ref": "#/$defs/DepositionTypesEnum",
                         "pattern": "(^annotation$)|(^dataset$)|(^tomogram$)"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1032,6 +1043,7 @@
                     "items": {
                         "$ref": "#/$defs/DepositionSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1051,6 +1063,7 @@
                     "items": {
                         "$ref": "#/$defs/KeyPhotoSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1135,6 +1148,7 @@
                     "items": {
                         "$ref": "#/$defs/FrameSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1197,6 +1211,7 @@
                     "items": {
                         "$ref": "#/$defs/GainSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1243,6 +1258,7 @@
                     "items": {
                         "$ref": "#/$defs/KeyImageSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1289,6 +1305,7 @@
                     "items": {
                         "$ref": "#/$defs/KeyPhotoSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1432,6 +1449,7 @@
                     "items": {
                         "$ref": "#/$defs/RawTiltSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1478,6 +1496,7 @@
                     "items": {
                         "$ref": "#/$defs/RunSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1562,6 +1581,7 @@
                     "items": {
                         "type": "string"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1933,6 +1953,7 @@
                     "items": {
                         "$ref": "#/$defs/TiltSeriesSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -2039,6 +2060,7 @@
                     "items": {
                         "$ref": "#/$defs/Author"
                     },
+                    "minItems": 1,
                     "type": "array"
                 },
                 "ctf_corrected": {
@@ -2140,6 +2162,7 @@
                     "items": {
                         "$ref": "#/$defs/TomogramSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -2293,6 +2316,7 @@
                     "items": {
                         "$ref": "#/$defs/VoxelSpacingSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -2311,6 +2335,7 @@
                     "items": {
                         "type": "number"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -2374,6 +2399,7 @@
             "items": {
                 "$ref": "#/$defs/DatasetEntity"
             },
+            "minItems": 1,
             "type": "array"
         },
         "deposition_keyphotos": {
@@ -2388,6 +2414,7 @@
             "items": {
                 "$ref": "#/$defs/DepositionEntity"
             },
+            "minItems": 1,
             "type": "array"
         },
         "frames": {
@@ -2448,6 +2475,7 @@
             "items": {
                 "$ref": "#/$defs/VoxelSpacingEntity"
             },
+            "minItems": 1,
             "type": "array"
         }
     },

@@ -210,6 +210,7 @@ attributes:
     inlined: true
     inlined_as_list: true
     pattern: (^annotation$)|(^dataset$)|(^tomogram$)
+    minimum_cardinality: 1
   dates:
     name: dates
     description: A set of dates at which a data item was deposited, published and
@@ -244,6 +245,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
   cross_references:
     name: cross_references
     description: A set of cross-references to other databases and publications.
@@ -337,6 +339,7 @@ attributes:
     inlined: true
     inlined_as_list: true
     pattern: (^annotation$)|(^dataset$)|(^tomogram$)
+    minimum_cardinality: 1
   dates:
     name: dates
     description: A set of dates at which a data item was deposited, published and
@@ -371,6 +374,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
   cross_references:
     name: cross_references
     description: A set of cross-references to other databases and publications.
