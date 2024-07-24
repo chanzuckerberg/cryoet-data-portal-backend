@@ -16,9 +16,9 @@ URI: [cdp-meta:dates](metadatadates)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
+| [Deposition](Deposition.md) | Metadata describing a deposition |  no  |
 | [DatestampedEntity](DatestampedEntity.md) | An entity with associated deposition, release and last modified dates |  no  |
 | [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
-| [Deposition](Deposition.md) | Metadata describing a deposition |  no  |
 | [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 

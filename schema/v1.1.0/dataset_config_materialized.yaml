@@ -634,6 +634,7 @@ classes:
         domain_of:
         - Container
         range: RunEntity
+        required: true
         multivalued: true
         inlined: true
         inlined_as_list: true
@@ -1252,7 +1253,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: Dataset
-        required: true
         inlined: true
         inlined_as_list: true
       sources:
@@ -1414,7 +1414,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: Deposition
-        required: true
         inlined: true
         inlined_as_list: true
       sources:
@@ -2084,7 +2083,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: TiltSeries
-        required: true
         inlined: true
         inlined_as_list: true
       sources:
@@ -2199,7 +2197,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: Tomogram
-        required: true
         inlined: true
         inlined_as_list: true
       sources:
