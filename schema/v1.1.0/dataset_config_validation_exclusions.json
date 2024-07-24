@@ -13,7 +13,9 @@
         "name": []
     },
     "CellStrain": {
-        "id": [],
+        "id": [
+            "WBStrain00050783"
+        ],
         "name": []
     },
     "CellType": {
