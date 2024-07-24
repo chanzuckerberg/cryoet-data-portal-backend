@@ -768,8 +768,8 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-  DatestampedEntity:
-    name: DatestampedEntity
+  DateStampedEntity:
+    name: DateStampedEntity
     description: An entity with associated deposition, release and last modified dates.
     from_schema: metadata
     abstract: true
@@ -780,9 +780,9 @@ classes:
           and last modified.
         from_schema: metadata
         alias: dates
-        owner: DatestampedEntity
+        owner: DateStampedEntity
         domain_of:
-        - DatestampedEntity
+        - DateStampedEntity
         range: DateStamp
         required: true
         inlined: true
@@ -807,6 +807,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   FundedEntity:
     name: FundedEntity
     description: An entity with associated funding sources.
@@ -1213,7 +1214,7 @@ classes:
     description: High-level description of a cryoET dataset.
     from_schema: metadata
     mixins:
-    - DatestampedEntity
+    - DateStampedEntity
     - AuthoredEntity
     - FundedEntity
     - CrossReferencedEntity
@@ -1271,7 +1272,7 @@ classes:
         alias: dates
         owner: Dataset
         domain_of:
-        - DatestampedEntity
+        - DateStampedEntity
         range: DateStamp
         required: true
         inlined: true
@@ -1290,6 +1291,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
       funding:
         name: funding
         description: A funding source for a scientific data entity (base for JSON
@@ -1434,7 +1436,7 @@ classes:
     description: Metadata describing a deposition.
     from_schema: metadata
     mixins:
-    - DatestampedEntity
+    - DateStampedEntity
     - AuthoredEntity
     - CrossReferencedEntity
     attributes:
@@ -1498,6 +1500,7 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: (^annotation$)|(^dataset$)|(^tomogram$)
+        minimum_cardinality: 1
       dates:
         name: dates
         description: A set of dates at which a data item was deposited, published
@@ -1506,7 +1509,7 @@ classes:
         alias: dates
         owner: Deposition
         domain_of:
-        - DatestampedEntity
+        - DateStampedEntity
         range: DateStamp
         required: true
         inlined: true
@@ -1525,6 +1528,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
       cross_references:
         name: cross_references
         description: A set of cross-references to other databases and publications.
@@ -2382,6 +2386,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   AnnotationConfidence:
     name: AnnotationConfidence
     description: Metadata describing the confidence of an annotation.
@@ -3074,7 +3079,7 @@ classes:
     description: Metadata describing an annotation.
     from_schema: metadata
     mixins:
-    - DatestampedEntity
+    - DateStampedEntity
     - AuthoredEntity
     attributes:
       annotation_method:
@@ -3238,7 +3243,7 @@ classes:
         alias: dates
         owner: Annotation
         domain_of:
-        - DatestampedEntity
+        - DateStampedEntity
         range: DateStamp
         required: true
         inlined: true
@@ -3257,6 +3262,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   Any:
     name: Any
     description: A placeholder for any type of data.

@@ -20,8 +20,8 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
  classDiagram
     class Annotation
     click Annotation href "../Annotation"
-      DatestampedEntity <|-- Annotation
-        click DatestampedEntity href "../DatestampedEntity"
+      DateStampedEntity <|-- Annotation
+        click DateStampedEntity href "../DateStampedEntity"
       AuthoredEntity <|-- Annotation
         click AuthoredEntity href "../AuthoredEntity"
 
@@ -101,7 +101,7 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 
 
 ## Inheritance
-* **Annotation** [ [DatestampedEntity](DatestampedEntity.md) [AuthoredEntity](AuthoredEntity.md)]
+* **Annotation** [ [DateStampedEntity](DateStampedEntity.md) [AuthoredEntity](AuthoredEntity.md)]
 
 
 
@@ -172,7 +172,7 @@ name: Annotation
 description: Metadata describing an annotation.
 from_schema: metadata
 mixins:
-- DatestampedEntity
+- DateStampedEntity
 - AuthoredEntity
 attributes:
   annotation_method:
@@ -347,7 +347,7 @@ attributes:
     alias: dates
     owner: Annotation
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation
@@ -373,6 +373,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
 
 ```
 </details>
@@ -385,7 +386,7 @@ name: Annotation
 description: Metadata describing an annotation.
 from_schema: metadata
 mixins:
-- DatestampedEntity
+- DateStampedEntity
 - AuthoredEntity
 attributes:
   annotation_method:
@@ -560,7 +561,7 @@ attributes:
     alias: dates
     owner: Annotation
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation
@@ -586,6 +587,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
 
 ```
 </details>

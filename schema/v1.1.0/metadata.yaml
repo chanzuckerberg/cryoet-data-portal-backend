@@ -101,7 +101,7 @@ classes:
   # ============================================================================
   # Meta-Mixins
   # ============================================================================
-  DatestampedEntity:
+  DateStampedEntity:
     abstract: true
     description: An entity with associated deposition, release and last modified dates.
     attributes:
@@ -244,7 +244,7 @@ classes:
   Dataset:
     description: High-level description of a cryoET dataset.
     mixins:
-      - DatestampedEntity
+      - DateStampedEntity
       - AuthoredEntity
       - FundedEntity
       - CrossReferencedEntity
@@ -269,7 +269,7 @@ classes:
   Deposition:
     description: Metadata describing a deposition.
     mixins:
-      - DatestampedEntity
+      - DateStampedEntity
       - AuthoredEntity
       - CrossReferencedEntity
 
@@ -659,7 +659,7 @@ classes:
   Annotation:
     description: Metadata describing an annotation.
     mixins:
-    - DatestampedEntity
+    - DateStampedEntity
     - AuthoredEntity
 
     attributes:

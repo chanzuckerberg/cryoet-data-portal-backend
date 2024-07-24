@@ -866,7 +866,7 @@ class DateStamp(ConfiguredBaseModel):
     )
 
 
-class DatestampedEntity(ConfiguredBaseModel):
+class DateStampedEntity(ConfiguredBaseModel):
     """
     An entity with associated deposition, release and last modified dates.
     """
@@ -877,7 +877,7 @@ class DatestampedEntity(ConfiguredBaseModel):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
 
@@ -897,6 +897,7 @@ class AuthoredEntity(ConfiguredBaseModel):
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -1307,7 +1308,7 @@ class ExperimentalMetadata(ConfiguredBaseModel):
         return v
 
 
-class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, AuthoredEntity, DatestampedEntity):
+class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, AuthoredEntity, DateStampedEntity):
     """
     High-level description of a cryoET dataset.
     """
@@ -1316,7 +1317,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         {
             "from_schema": "metadata",
             "mixins": [
-                "DatestampedEntity",
+                "DateStampedEntity",
                 "AuthoredEntity",
                 "FundedEntity",
                 "CrossReferencedEntity",
@@ -1362,7 +1363,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
@@ -1373,6 +1374,7 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -1488,13 +1490,13 @@ class Dataset(ExperimentalMetadata, CrossReferencedEntity, FundedEntity, Authore
         return v
 
 
-class Deposition(CrossReferencedEntity, AuthoredEntity, DatestampedEntity):
+class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
     """
     Metadata describing a deposition.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "metadata", "mixins": ["DatestampedEntity", "AuthoredEntity", "CrossReferencedEntity"]}
+        {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity", "CrossReferencedEntity"]}
     )
 
     deposition_description: str = Field(
@@ -1538,6 +1540,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DatestampedEntity):
                 "alias": "deposition_types",
                 "domain_of": ["Deposition"],
                 "exact_mappings": ["cdp-common:deposition_types"],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -1545,7 +1548,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DatestampedEntity):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
@@ -1556,6 +1559,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DatestampedEntity):
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -2377,6 +2381,7 @@ class Tomogram(AuthoredEntity):
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -3177,13 +3182,13 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
     )
 
 
-class Annotation(AuthoredEntity, DatestampedEntity):
+class Annotation(AuthoredEntity, DateStampedEntity):
     """
     Metadata describing an annotation.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "metadata", "mixins": ["DatestampedEntity", "AuthoredEntity"]}
+        {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity"]}
     )
 
     annotation_method: str = Field(
@@ -3299,7 +3304,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DatestampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
@@ -3310,6 +3315,7 @@ class Annotation(AuthoredEntity, DatestampedEntity):
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -3473,7 +3479,7 @@ class Container(ConfiguredBaseModel):
     datasets: List[DatasetEntity] = Field(
         ...,
         description="""A dataset entity.""",
-        json_schema_extra={"linkml_meta": {"alias": "datasets", "domain_of": ["Container"]}},
+        json_schema_extra={"linkml_meta": {"alias": "datasets", "domain_of": ["Container"], "minimum_cardinality": 1}},
     )
     deposition_keyphotos: Optional[List[DepositionKeyPhotoEntity]] = Field(
         default_factory=list,
@@ -3483,7 +3489,9 @@ class Container(ConfiguredBaseModel):
     depositions: List[DepositionEntity] = Field(
         ...,
         description="""A deposition entity.""",
-        json_schema_extra={"linkml_meta": {"alias": "depositions", "domain_of": ["Container"]}},
+        json_schema_extra={
+            "linkml_meta": {"alias": "depositions", "domain_of": ["Container"], "minimum_cardinality": 1}
+        },
     )
     frames: Optional[List[FrameEntity]] = Field(
         default_factory=list,
@@ -3508,7 +3516,7 @@ class Container(ConfiguredBaseModel):
     runs: List[RunEntity] = Field(
         ...,
         description="""A run entity.""",
-        json_schema_extra={"linkml_meta": {"alias": "runs", "domain_of": ["Container"]}},
+        json_schema_extra={"linkml_meta": {"alias": "runs", "domain_of": ["Container"], "minimum_cardinality": 1}},
     )
     standardization_config: StandardizationConfig = Field(
         ...,
@@ -3528,7 +3536,9 @@ class Container(ConfiguredBaseModel):
     voxel_spacings: List[VoxelSpacingEntity] = Field(
         ...,
         description="""A voxel spacing entity.""",
-        json_schema_extra={"linkml_meta": {"alias": "voxel_spacings", "domain_of": ["Container"]}},
+        json_schema_extra={
+            "linkml_meta": {"alias": "voxel_spacings", "domain_of": ["Container"], "minimum_cardinality": 1}
+        },
     )
 
 
@@ -3665,7 +3675,9 @@ class SourceMultiGlob(ConfiguredBaseModel):
     list_globs: List[str] = Field(
         ...,
         description="""The globs for the file.""",
-        json_schema_extra={"linkml_meta": {"alias": "list_globs", "domain_of": ["SourceMultiGlob"]}},
+        json_schema_extra={
+            "linkml_meta": {"alias": "list_globs", "domain_of": ["SourceMultiGlob"], "minimum_cardinality": 1}
+        },
     )
 
 
@@ -3870,7 +3882,11 @@ class DefaultLiteral(ConfiguredBaseModel):
         ...,
         description="""A placeholder for any type of data.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "value", "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"]}
+            "linkml_meta": {
+                "alias": "value",
+                "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"],
+                "minimum_cardinality": 1,
+            }
         },
     )
 
@@ -3904,6 +3920,7 @@ class KeyPhotoEntity(ConfiguredBaseModel):
                     "DatasetKeyPhotoEntity",
                     "DepositionKeyPhotoEntity",
                 ],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -4026,6 +4043,7 @@ class AnnotationEntity(ConfiguredBaseModel):
                     "DatasetKeyPhotoEntity",
                     "DepositionKeyPhotoEntity",
                 ],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -4132,6 +4150,7 @@ class DatasetEntity(ConfiguredBaseModel):
                     "DatasetKeyPhotoEntity",
                     "DepositionKeyPhotoEntity",
                 ],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -4265,6 +4284,7 @@ class DatasetKeyPhotoEntity(KeyPhotoEntity):
                     "DatasetKeyPhotoEntity",
                     "DepositionKeyPhotoEntity",
                 ],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -4299,6 +4319,7 @@ class DepositionKeyPhotoEntity(KeyPhotoEntity):
                     "DatasetKeyPhotoEntity",
                     "DepositionKeyPhotoEntity",
                 ],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -4349,6 +4370,7 @@ class DepositionEntity(ConfiguredBaseModel):
                     "DatasetKeyPhotoEntity",
                     "DepositionKeyPhotoEntity",
                 ],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -4482,6 +4504,7 @@ class FrameEntity(ConfiguredBaseModel):
                     "DatasetKeyPhotoEntity",
                     "DepositionKeyPhotoEntity",
                 ],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -4640,6 +4663,7 @@ class GainEntity(ConfiguredBaseModel):
                     "DatasetKeyPhotoEntity",
                     "DepositionKeyPhotoEntity",
                 ],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -4798,6 +4822,7 @@ class KeyImageEntity(ConfiguredBaseModel):
                     "DatasetKeyPhotoEntity",
                     "DepositionKeyPhotoEntity",
                 ],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -4956,6 +4981,7 @@ class RawTiltEntity(ConfiguredBaseModel):
                     "DatasetKeyPhotoEntity",
                     "DepositionKeyPhotoEntity",
                 ],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -5114,6 +5140,7 @@ class RunEntity(ConfiguredBaseModel):
                     "DatasetKeyPhotoEntity",
                     "DepositionKeyPhotoEntity",
                 ],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -5327,6 +5354,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
                     "DatasetKeyPhotoEntity",
                     "DepositionKeyPhotoEntity",
                 ],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -5501,6 +5529,7 @@ class TomogramEntity(ConfiguredBaseModel):
                     "DatasetKeyPhotoEntity",
                     "DepositionKeyPhotoEntity",
                 ],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -5659,6 +5688,7 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
                     "DatasetKeyPhotoEntity",
                     "DepositionKeyPhotoEntity",
                 ],
+                "minimum_cardinality": 1,
             }
         },
     )
@@ -5780,7 +5810,11 @@ class VoxelSpacingLiteral(ConfiguredBaseModel):
         ...,
         description="""The value for the voxel spacing literal.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "value", "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"]}
+            "linkml_meta": {
+                "alias": "value",
+                "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"],
+                "minimum_cardinality": 1,
+            }
         },
     )
 
@@ -5828,7 +5862,7 @@ PicturePath.model_rebuild()
 Author.model_rebuild()
 FundingDetails.model_rebuild()
 DateStamp.model_rebuild()
-DatestampedEntity.model_rebuild()
+DateStampedEntity.model_rebuild()
 AuthoredEntity.model_rebuild()
 FundedEntity.model_rebuild()
 CrossReferencedEntity.model_rebuild()
