@@ -84,7 +84,7 @@ from ingestion_tools.scripts.standardize_dirs import IMPORTER_DEP_TREE, flatten_
 
 logger = logging.getLogger("dataset_config_validate")
 
-FIELD_EXCLUDELIST = {}
+validation_exclusions = {}
 CELLULAR_COMPONENT_GO_ID = "GO:0005575"
 STRING_FORMATTED_STRING_REGEX = r"^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$"
 VALID_IMAGE_FORMATS = ("image/png", "image/jpeg", "image/jpg", "image/gif")
@@ -105,22 +105,24 @@ running_network_validation = False
 # ==============================================================================
 # Helper Functions
 # ==============================================================================
-def check_excludelist_skip_validation(obj: BaseModel, field_name: str, case_sensitive: bool = False) -> bool:
-    # Check if the original class name is in the field excludelist
+def check_skip_validation(obj: BaseModel, field_name: str, case_sensitive: bool = False) -> bool:
+    # Check if the original class name is in the validation exclusions
+    global validation_exclusions
+
     for base in obj.__class__.__bases__:
-        if base.__name__ not in FIELD_EXCLUDELIST:
+        if base.__name__ not in validation_exclusions:
             continue
 
-        if field_name not in FIELD_EXCLUDELIST[base.__name__]:
+        if field_name not in validation_exclusions[base.__name__]:
             continue
 
-        field_excludelist = [
-            field if case_sensitive else field.lower() for field in FIELD_EXCLUDELIST[base.__name__][field_name]
+        field_exclusions = [
+            field if case_sensitive else field.lower() for field in validation_exclusions[base.__name__][field_name]
         ]
         field_value = getattr(obj, field_name) if case_sensitive else getattr(obj, field_name).lower()
-        if field_value in field_excludelist:
+        if field_value in field_exclusions:
             logger.debug(
-                "Skipping %s %s validation for %s, found in excludelist",
+                "Skipping %s %s validation for %s, found in validation exclusions",
                 base.__name__,
                 field_name,
                 field_value,
@@ -318,11 +320,11 @@ def validate_ontology_object(
     if not running_network_validation or self.id is None:
         return self
 
-    validate_object = check_excludelist_skip_validation(self, "id", case_sensitive=True)
+    validate_object = check_skip_validation(self, "id", case_sensitive=True)
     if not validate_object:
         return self
 
-    validate_name = check_excludelist_skip_validation(self, "name", case_sensitive=False)
+    validate_name = check_skip_validation(self, "name", case_sensitive=False)
     validate_id_name_object(self.id.strip(), self.name.strip().lower(), validate_name, ancestor)
 
     return self
@@ -962,9 +964,9 @@ class ExtendedValidationContainer(Container):
     # Set global network_validation flag
     def __init__(self, **data):
         global running_network_validation
-        global FIELD_EXCLUDELIST
+        global validation_exclusions
         running_network_validation = data.pop("network_validation", False)
-        FIELD_EXCLUDELIST = data.pop("field_excludelist", {})
+        validation_exclusions = data.pop("validation_exclusions", {})
         super().__init__(**data)
 
     annotations: Optional[List[ExtendedValidationAnnotationEntity]] = Container.model_fields["annotations"]

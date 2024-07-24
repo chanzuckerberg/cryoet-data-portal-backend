@@ -21,7 +21,7 @@ logger.setLevel(logging.INFO)
 
 DATASET_CONFIGS_DIR = "../../ingestion_tools/dataset_configs/"
 ERRORS_OUTPUT_DIR = "./dataset_config_validate_errors"
-FIELD_EXCLUDELIST_FILE = "dataset_config_field_excludelist.json"
+VALIDATION_EXCLUSIONS_FILE = "dataset_config_validation_exclusions.json"
 
 # The permitted parent attribute for formatted strings and its corresponding depth
 # If the attribute has a parent attribute in this list, it is allowed to be a formatted string
@@ -111,10 +111,10 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
     help="Exclude files that contain the following keywords in the filename, used in conjunction with --input-dir. Repeat the flag for multiple keywords.",
 )
 @click.option(
-    "--field-excludelist-file",
+    "--validation-exclusions-file",
     type=str,
-    default=FIELD_EXCLUDELIST_FILE,
-    help="Path to the excludelist file containing class-field-value mappings to ignore during validation. See docs for more information.",
+    default=VALIDATION_EXCLUSIONS_FILE,
+    help="Path to the validation exclusions file containing class-field-value mappings to ignore during validation. See docs for more information.",
 )
 @click.option(
     "--output-dir",
@@ -133,7 +133,7 @@ def main(
     input_dir: str,
     include_glob: str,
     exclude_keywords: str,
-    field_excludelist_file: str,
+    validation_exclusions_file: str,
     output_dir: str,
     network_validation: bool,
     verbose: bool,
@@ -164,9 +164,9 @@ def main(
         logger.warning("No files to validate.")
         return
 
-    with open(field_excludelist_file, "r") as f:
-        field_excludelist = json.load(f)
-    logger.debug("Using field excludelist: %s", field_excludelist_file)
+    with open(validation_exclusions_file, "r") as f:
+        validation_exclusions = json.load(f)
+    logger.info("Using validation exclusions file: %s", validation_exclusions_file)
 
     # Remove existing dir
     if os.path.exists(output_dir):
@@ -190,7 +190,7 @@ def main(
                 ExtendedValidationContainer(
                     **config_data,
                     network_validation=network_validation,
-                    field_excludelist=field_excludelist,
+                    validation_exclusions=validation_exclusions,
                 )
         except ValidationError as e:
             validation_succeeded = False

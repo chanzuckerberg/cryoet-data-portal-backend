@@ -49,7 +49,7 @@ Example:
 python dataset_config_validate.py --exclude-keywords "draft" --exclude-keywords "test"
 ```
 
-### `--field-excludelist-file`
+### `--validation-exclusions-file`
 A JSON file specifying which class-field-value mappings do not need to be validated when running Pydantic **extended validation**. Note that requirement / pattern / enum / type validation will still be performed.
 
 **Currently only supports skipping ontology object validation (dataset config fields: annotation_object, cell_component, cell_strain, cell_type, organism, tissue)**. This option is useful when you want to skip certain fields that intentionally fail validation. For example, sometimes validation doesn't want to be run on the name of a cell_strain, as it may not be what the cell strain's id corresponds to online.
