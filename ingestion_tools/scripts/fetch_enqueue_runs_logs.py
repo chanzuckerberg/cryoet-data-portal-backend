@@ -48,7 +48,7 @@ def get_log_events(session: Session, log_group_name, log_stream_name):
 @click.argument("execution-arn", type=str, nargs=-1)
 @click.option("--input-file", type=str, help="A file containing a list of execution ARNs.")
 @click.option("--output-dir", type=str, default="./fetch-logs", help="The directory to save the logs to.")
-@click.option("--profile", type=str, help="The AWS profile to use.")
+@click.option("--profile", type=str, default=None, help="The AWS profile to use.")
 def main(execution_arn: list[str], input_file: str, output_dir: str, profile: str):
     input_execution_arn = execution_arn
 
@@ -77,7 +77,7 @@ def main(execution_arn: list[str], input_file: str, output_dir: str, profile: st
     os.makedirs(f"{output_dir}/success")
 
     input_execution_arn = list(set(input_execution_arn))
-    session = Session(region_name=input_execution_arn[0].split(":")[3], profile_name=(profile if profile else None))
+    session = Session(region_name=input_execution_arn[0].split(":")[3], profile_name=profile)
 
     failed_count = 0
     successful_count = 0
