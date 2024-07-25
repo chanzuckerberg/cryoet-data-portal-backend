@@ -20,7 +20,7 @@ Before running the script, you need to set up your AWS profile. This can be done
 `export AWS_PROFILE=your-profile-name`
 
 ## Script Usage
-To generate the log file for the jobs run with `enqueue_runs.py`, run `enqueue_runs.py` with an output log file specified using the `--state-machine-log` flag. This will generate a file containing the execution ARNs of the jobs run with `enqueue_runs.py`. This file can be used as input to `fetch_enqueue_runs_logs.py` to fetch the logs for the jobs.
+To generate the log file for the jobs run with `enqueue_runs.py`, run `enqueue_runs.py` with an output log file specified using the `--execution-machine-log` flag. This will generate a file containing the execution ARNs of the jobs run with `enqueue_runs.py`. This file can be used as input to `fetch_enqueue_runs_logs.py` to fetch the logs for the jobs.
 
 Command-Line Arguments
 
@@ -30,14 +30,14 @@ Command-Line Arguments
 
 `--output-dir`: Directory to save the fetched logs. Defaults to ./fetch-logs.
 
-`--region`: The AWS region to use for the API calls.
+`--profile`: AWS profile to use. If not provided, your default profile will be used.
 
 ## Examples:
 
 Fetch logs for specific execution ARNs:
 
-`python db_import.py arn:aws:states:us-west-2:123456789012:execution:StateMachineName:execution1 arn:aws:states:us-west-2:123456789012:execution:StateMachineName:execution2 --region us-west-2`
+`python db_import.py arn:aws:states:us-west-2:123456789012:execution:StateMachineName:execution1 arn:aws:states:us-west-2:123456789012:execution:StateMachineName:execution2`
 
 Fetch logs using an input file containing execution ARNs:
 
-`python db_import.py --input-file execution_arns.txt --region us-west-2`
+`python db_import.py --input-file execution_arns.txt --output-dir /tmp/fetch-logs`
