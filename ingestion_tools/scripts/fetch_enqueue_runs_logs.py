@@ -27,6 +27,9 @@ def get_log_stream(session: Session, execution_arn: str) -> Tuple[bool, str]:
         for event in history
         if event["type"] == "TaskScheduled" and "LogStreamName" in event["taskScheduledEventDetails"]["parameters"]
     ]
+    if len(history) == 0:
+        logger.error("Skipping, no log stream found for %s", execution_arn)
+        return False, None
     last_task_submitted = history[-1]
     parameters = last_task_submitted["taskScheduledEventDetails"]["parameters"]
     failed = re.search(r'"Status":"FAILED"', parameters, re.IGNORECASE)
@@ -84,6 +87,8 @@ def main(execution_arn: list[str], input_file: str, output_dir: str, profile: st
 
     for arn in input_execution_arn:
         log_stream_failed, log_stream_name = get_log_stream(session, arn)
+        if not log_stream_name:
+            continue
         logger.info("%s: %s", "FAILED" if log_stream_failed else "SUCCESS", log_stream_name)
         output_file = (
             output_dir
