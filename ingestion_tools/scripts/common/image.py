@@ -132,7 +132,7 @@ class VolumeReader(ABC):
     def get_volume_info(self) -> VolumeInfo:
         pass
 
-    def get_mrc_extended_header(self) -> np.record | None:
+    def get_mrc_extended_header(self) -> np.ndarray | None:
         return None
 
     def get_mrc_header(self) -> np.record | None:
@@ -161,7 +161,7 @@ class MRCReader(VolumeReader):
     def get_mrc_header(self) -> np.rec.array:
         return self.header
 
-    def get_mrc_extended_header(self) -> np.rec.array:
+    def get_mrc_extended_header(self) -> np.ndarray:
         return self.extended_header
 
     def get_pyramid_base_data(self) -> np.ndarray:
@@ -353,7 +353,10 @@ class TomoConverter:
             if old_header.exttyp.item().decode().strip():
                 header.nsymbt = old_header.nsymbt
                 header.exttyp = old_header.exttyp
-                if ext := self.volume_reader.get_mrc_extended_header():
+                ext = self.volume_reader.get_mrc_extended_header()
+                # Converting to list, so we can compare both for None and empty np.ndarray. Actually setting the
+                # ndarray.
+                if ext.tolist():
                     mrcfile.set_extended_header(ext)
 
         if header_mapper:
