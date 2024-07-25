@@ -32,37 +32,6 @@ classes:
       id:
         exact_mappings:
           - cdp-common:api_sequential_identifier
-  DateStampedEntityMixin:
-    description: A set of dates at which a data item was deposited, published and last modified.
-    mixin: true
-    attributes:
-      deposition_date:
-        exact_mappings:
-          - cdp-common:deposition_date
-      release_date:
-        exact_mappings:
-          - cdp-common:release_date
-      last_modified_date:
-        exact_mappings:
-          - cdp-common:last_modified_date
-  CrossReferencedEntityMixin:
-    description: A set of cross-references to other databases and publications.
-    mixin: true
-    attributes:
-      publications:
-        range: cdp-common:DOI_LIST
-        recommended: true
-        description: Comma-separated list of DOIs for publications associated with the dataset.
-      related_database_entries:
-        range: cdp-common:EMPIAR_EMDB_PDB_LIST
-        recommended: true
-        description: Comma-separated list of related database entries for the dataset.
-      related_database_links: # DEPRECATED
-        range: string
-        description: Comma-separated list of related database links for the dataset.
-      dataset_citations: # DEPRECATED
-        range: string
-        description: Comma-separated list of DOIs for publications citing the dataset.
   S3PrefixedEntityMixin:
     description: An entity with s3/https prefixes
     mixin: true
@@ -76,31 +45,12 @@ classes:
   AuthorEntityMixin:
     description: An entity with author data
     mixin: true
+    mixins:
+      - AuthorMixin
     attributes:
       author_list_order:
         exact_mappings:
           - cdp-common:api_author_list_order
-      name:
-        exact_mappings:
-          - cdp-common:author_name
-      email:
-        exact_mappings:
-          - cdp-common:author_email
-      affiliation_name:
-        exact_mappings:
-          - cdp-common:author_affiliation_name
-      affiliation_address:
-        exact_mappings:
-          - cdp-common:author_affiliation_address
-      affiliation_identifier:
-        exact_mappings:
-          - cdp-common:author_affiliation_identifier
-      corresponding_author_status:
-        exact_mappings:
-          - cdp-common:author_corresponding_author_status
-      primary_author_status:
-        exact_mappings:
-          - cdp-common:author_primary_author_status
       orcid:
         exact_mappings:
           - cdp-common:author_orcid
@@ -274,7 +224,7 @@ classes:
     mixins:
       - IDMixin
       - DateStampedEntityMixin
-      - CrossReferencedEntityMixin
+      - CrossReferencesMixin
       - S3PrefixedEntityMixin
     description: An author of a dataset
     attributes:

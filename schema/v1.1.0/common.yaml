@@ -1001,10 +1001,28 @@ classes:
     description: A placeholder for any type of data.
 
   # ============================================================================
+  # Mixins
+  # ============================================================================
+  DateStampedEntityMixin:
+    description: A set of dates at which a data item was deposited, published and last modified.
+    mixin: true
+    attributes:
+      deposition_date:
+        exact_mappings:
+          - cdp-common:deposition_date
+      release_date:
+        exact_mappings:
+          - cdp-common:release_date
+      last_modified_date:
+        exact_mappings:
+          - cdp-common:last_modified_date
+
+  # ============================================================================
   # Cross-references to other databases and publications
   # ============================================================================
-  CrossReferences:
+  CrossReferencesMixin:
     description: A set of cross-references to other databases and publications.
+    mixin: true
     attributes:
       publications:
         range: DOI_LIST
@@ -1020,6 +1038,32 @@ classes:
       dataset_citations: # DEPRECATED
         range: string
         description: Comma-separated list of DOIs for publications citing the dataset.
+
+  AuthorMixin:
+    description: An entity with author data
+    mixin: true
+    attributes:
+      name:
+        exact_mappings:
+          - cdp-common:author_name
+      email:
+        exact_mappings:
+          - cdp-common:author_email
+      affiliation_name:
+        exact_mappings:
+          - cdp-common:author_affiliation_name
+      affiliation_address:
+        exact_mappings:
+          - cdp-common:author_affiliation_address
+      affiliation_identifier:
+        exact_mappings:
+          - cdp-common:author_affiliation_identifier
+      corresponding_author_status:
+        exact_mappings:
+          - cdp-common:author_corresponding_author_status
+      primary_author_status:
+        exact_mappings:
+          - cdp-common:author_primary_author_status
 
   # ============================================================================
   # Annotation Method Links

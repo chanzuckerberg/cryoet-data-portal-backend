@@ -36,30 +36,11 @@ classes:
   # Author / Annotator
   # ============================================================================
   Author:
+    mixins:
+      - AuthorMixin
     description: >-
       Author of a scientific data entity.
     attributes:
-      name:
-        exact_mappings:
-          - cdp-common:author_name
-      email:
-        exact_mappings:
-          - cdp-common:author_email
-      affiliation_name:
-        exact_mappings:
-          - cdp-common:author_affiliation_name
-      affiliation_address:
-        exact_mappings:
-          - cdp-common:author_affiliation_address
-      affiliation_identifier:
-        exact_mappings:
-          - cdp-common:author_affiliation_identifier
-      corresponding_author_status:
-        exact_mappings:
-          - cdp-common:author_corresponding_author_status
-      primary_author_status:
-        exact_mappings:
-          - cdp-common:author_primary_author_status
       ORCID:
         exact_mappings:
           - cdp-common:author_orcid
@@ -87,16 +68,8 @@ classes:
   # ============================================================================
   DateStamp:
     description: A set of dates at which a data item was deposited, published and last modified.
-    attributes:
-      deposition_date:
-        exact_mappings:
-          - cdp-common:deposition_date
-      release_date:
-        exact_mappings:
-          - cdp-common:release_date
-      last_modified_date:
-        exact_mappings:
-          - cdp-common:last_modified_date
+    mixins:
+    - DateStampedEntityMixin
 
   # ============================================================================
   # Meta-Mixins
@@ -133,12 +106,18 @@ classes:
         inlined_as_list: true
         list_elements_ordered: true
 
+  CrossReferencesEntity:
+    abstract: true
+    description: A set of cross-references to other databases and publications.
+    mixins:
+      - CrossReferencesMixin
+
   CrossReferencedEntity:
     abstract: true
     description: An entity with associated cross-references to other databases and publications.
     attributes:
       cross_references:
-        range: CrossReferences
+        range: CrossReferencesEntity
 
   PicturedEntity:
     abstract: true
