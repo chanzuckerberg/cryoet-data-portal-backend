@@ -16,6 +16,8 @@ from boto3 import Session
 logger = logging.getLogger("db_import")
 logging.basicConfig(level=logging.INFO)
 
+KEY_EXCLUDE_LIST = ["file_format", "value", "name_regex", "match_regex"]
+
 
 def get_header_data_maps(data: str, filetype: str) -> dict[str, str]:
     """
@@ -45,6 +47,8 @@ def replace_if_formatted_string(value: str, header_data_map: dict[str, str]) -> 
     if "{" not in value or "}" not in value:
         return value
     header = value.split("{")[1].split("}")[0]
+    if header.isnumeric():
+        return value
     if header in header_data_map:
         return value.replace("{" + header + "}", header_data_map[header])
     else:
@@ -94,12 +98,12 @@ def recursive_check_files_exist(data: dict, all_files: list[str]) -> list[str]:
             for item in value:
                 if isinstance(item, dict):
                     files_found += recursive_check_files_exist(item, all_files)
-                elif isinstance(item, str):
+                elif isinstance(item, str) and key not in KEY_EXCLUDE_LIST:
                     hits = check_glob_exists(item, all_files)
                     if len(hits) == 0:
                         logger.error("Field %s: %s did not match any files", key, item)
                     files_found += hits
-        elif isinstance(value, str):
+        elif isinstance(value, str) and key not in KEY_EXCLUDE_LIST:
             hits = check_glob_exists(value, all_files)
             if len(hits) == 0:
                 logger.error("Field %s: %s did not match any files", key, value)
@@ -131,16 +135,24 @@ def check_yaml_sources_valid(yaml_data: dict, all_files: list[str], exclude_root
     return list(set(files_found))
 
 
-def config_check_valid_files(yaml_data: dict, input_bucket: str, region: str, exclude_root_entries: list[str]):
+def config_check_valid_files(
+    yaml_data: dict,
+    input_bucket: str,
+    region: str,
+    profile: str | None,
+    exclude_root_entries: list[str],
+):
     """
     Given the provided yaml data and S3 bucket, check if all the files / globs in the sources are valid.
     Pull down the run_data_map_file and replace any formatted strings with their corresponding values.
     Also retrieve a full list of files in the bucket to determine which files were not referenced at all.
     """
     standardization_config = yaml_data.get("standardization_config")
-    session = Session(region_name=region)
+    session = Session(region_name=region, profile_name=profile)
     s3 = session.client("s3")
     prefix = standardization_config["source_prefix"]
+    if not prefix.endswith("/"):
+        prefix += "/"
     run_data_map_file = standardization_config.get("run_data_map_file")
     # run_to_frame_map_csv = standardization_config.get("run_to_frame_map_csv")
     # run_to_tomo_map_csv = standardization_config.get("run_to_tomo_map_csv")
@@ -166,6 +178,7 @@ def config_check_valid_files(yaml_data: dict, input_bucket: str, region: str, ex
             all_files_found += check_yaml_sources_valid(replaced_yaml_data, all_files, exclude_root_entries)
 
     files_not_found = list(set(all_files) - set(all_files_found) - set(run_data_map_file))
+    files_not_found.sort()
     if len(files_not_found) == 0:
         logger.info("SUCCESS: All files were at referenced by at least one source")
     else:
@@ -192,17 +205,18 @@ def config_check_valid_files(yaml_data: dict, input_bucket: str, region: str, ex
 @click.option("--yaml-file", type=str, required=True, help="The YAML file to check.")
 @click.option("--input-bucket", type=str, required=True, help="The S3 bucket to check.")
 @click.option("--region", type=str, required=True, help="The AWS region to use.")
+@click.option("--profile", type=str, default=None, help="The AWS profile to use.")
 @click.option(
     "--exclude-root-entries",
     type=str,
     default="",
     help="Comma-separated list of root entries to exclude from file checking.",
 )
-def main(yaml_file: str, input_bucket: str, region: str, exclude_root_entries: str):
+def main(yaml_file: str, input_bucket: str, region: str, profile: str | None, exclude_root_entries: str):
     with open(yaml_file, "r") as file:
         try:
             yaml_data = yaml.safe_load(file)
-            config_check_valid_files(yaml_data, input_bucket, region, exclude_root_entries.split(","))
+            config_check_valid_files(yaml_data, input_bucket, region, profile, exclude_root_entries.split(","))
         except yaml.YAMLError as exc:
             logger.error("Error in file %s: %s", yaml_file, exc)
             exit(1)
