@@ -71,13 +71,16 @@ def main(execution_arn: list[str], input_file: str, output_dir: str, profile: st
         with open(input_file, "r") as f:
             input_execution_arn = f.read().splitlines()
 
+    if output_dir[-1] != "/":
+        output_dir += "/"
+
     if os.path.exists(output_dir):
         logger.warning("Removing existing %s directory.", output_dir)
         shutil.rmtree(output_dir)
 
     os.makedirs(output_dir)
-    os.makedirs(f"{output_dir}/failed")
-    os.makedirs(f"{output_dir}/success")
+    os.makedirs(f"{output_dir}failed")
+    os.makedirs(f"{output_dir}success")
 
     input_execution_arn = list(set(input_execution_arn))
     session = Session(region_name=input_execution_arn[0].split(":")[3], profile_name=profile)
@@ -91,11 +94,7 @@ def main(execution_arn: list[str], input_file: str, output_dir: str, profile: st
             continue
         logger.info("%s: %s", "FAILED" if log_stream_failed else "SUCCESS", log_stream_name)
         output_file = (
-            output_dir
-            + "/"
-            + ("failed/" if log_stream_failed else "success/")
-            + log_stream_name.replace("/", "_")
-            + ".log"
+            output_dir + ("failed/" if log_stream_failed else "success/") + log_stream_name.replace("/", "_") + ".log"
         )
         if log_stream_failed:
             failed_count += 1
