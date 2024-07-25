@@ -132,10 +132,10 @@ class VolumeReader(ABC):
     def get_volume_info(self) -> VolumeInfo:
         pass
 
-    def get_mrc_extended_header(self) -> np.ndarray | None:
+    def get_mrc_extended_header(self) -> np.ndarray | np.recarray | None:
         return None
 
-    def get_mrc_header(self) -> np.record | None:
+    def get_mrc_header(self) -> np.recarray | None:
         return None
 
 
@@ -158,10 +158,10 @@ class MRCReader(VolumeReader):
             self.extended_header = mrc.extended_header
             self.data: np.ndarray = mrc.data
 
-    def get_mrc_header(self) -> np.rec.array:
+    def get_mrc_header(self) -> np.recarray:
         return self.header
 
-    def get_mrc_extended_header(self) -> np.ndarray:
+    def get_mrc_extended_header(self) -> np.ndarray | np.recarray:
         return self.extended_header
 
     def get_pyramid_base_data(self) -> np.ndarray:
@@ -354,9 +354,12 @@ class TomoConverter:
                 header.nsymbt = old_header.nsymbt
                 header.exttyp = old_header.exttyp
                 ext = self.volume_reader.get_mrc_extended_header()
-                # Converting to list, so we can compare both for None and empty np.ndarray. Actually setting the
-                # ndarray.
-                if ext.tolist():
+                # In order to cover the following cases:
+                # 1. do set on filled np.ndarray > np.array(val: np.ndarray).tolist() -> list
+                # 2. do set on filled np.recarray > np.array(val: np.recarray).tolist() -> list
+                # 3. skip setting on empty np.ndarray > np.array(np.empty(0)).tolist() == []
+                # 4. skip setting on None > np.array(None).tolist() == None
+                if np.array(ext).tolist():
                     mrcfile.set_extended_header(ext)
 
         if header_mapper:
