@@ -1045,20 +1045,19 @@ classes:
         name: annotation_files
         description: Files associated with an annotation
         from_schema: cdp-dataset-config
-        multivalued: true
         alias: annotation_files
         owner: Annotation
         domain_of:
         - Annotation
         inverse: AnnotationFile.annotation
         range: AnnotationFile
+        multivalued: true
         inlined: true
         inlined_as_list: true
       authors:
         name: authors
         description: Author of an annotation
         from_schema: cdp-dataset-config
-        multivalued: true
         alias: authors
         owner: Annotation
         domain_of:
@@ -1067,6 +1066,7 @@ classes:
         - Tomograms
         inverse: AnnotationAuthor.annotation
         range: AnnotationAuthor
+        multivalued: true
         inlined: true
         inlined_as_list: true
       deposition:
@@ -1667,20 +1667,19 @@ classes:
         name: funding_sources
         description: Information about how a dataset was funded
         from_schema: cdp-dataset-config
-        multivalued: true
         alias: funding_sources
         owner: Dataset
         domain_of:
         - Dataset
         inverse: DatasetFunding.dataset
         range: DatasetFunding
+        multivalued: true
         inlined: true
         inlined_as_list: true
       authors:
         name: authors
         description: An author of a dataset
         from_schema: cdp-dataset-config
-        multivalued: true
         alias: authors
         owner: Dataset
         domain_of:
@@ -1689,31 +1688,32 @@ classes:
         - Tomograms
         inverse: DatasetAuthor.dataset
         range: DatasetAuthor
+        multivalued: true
         inlined: true
         inlined_as_list: true
       runs:
         name: runs
         from_schema: cdp-dataset-config
-        multivalued: true
         alias: runs
         owner: Dataset
         domain_of:
         - Dataset
         inverse: Run.dataset
         range: Run
+        multivalued: true
         inlined: true
         inlined_as_list: true
       dataset_authors:
         name: dataset_authors
         description: An author of a dataset
         from_schema: cdp-dataset-config
-        multivalued: true
         alias: dataset_authors
         owner: Dataset
         domain_of:
         - Dataset
         inverse: DatasetAuthor.dataset
         range: DatasetAuthor
+        multivalued: true
         inlined: true
         inlined_as_list: true
       title:
@@ -2110,20 +2110,19 @@ classes:
         name: datasets
         description: An author of a dataset
         from_schema: cdp-dataset-config
-        multivalued: true
         alias: datasets
         owner: Deposition
         domain_of:
         - Deposition
         inverse: Dataset.deposition
         range: Dataset
+        multivalued: true
         inlined: true
         inlined_as_list: true
       annotations:
         name: annotations
         description: Metadata about an annotation for a run
         from_schema: cdp-dataset-config
-        multivalued: true
         alias: annotations
         owner: Deposition
         domain_of:
@@ -2131,13 +2130,13 @@ classes:
         - TomogramVoxelSpacing
         inverse: Annotation.deposition
         range: Annotation
+        multivalued: true
         inlined: true
         inlined_as_list: true
       tomograms:
         name: tomograms
         description: Metadata describing a tomogram.
         from_schema: cdp-dataset-config
-        multivalued: true
         alias: tomograms
         owner: Deposition
         domain_of:
@@ -2145,6 +2144,7 @@ classes:
         - TomogramVoxelSpacing
         inverse: Tomogram.deposition
         range: Tomograms
+        multivalued: true
         inlined: true
         inlined_as_list: true
       id:
@@ -2190,26 +2190,26 @@ classes:
       tiltseries:
         name: tiltseries
         from_schema: cdp-dataset-config
-        multivalued: true
         alias: tiltseries
         owner: Run
         domain_of:
         - Run
         inverse: Tiltseries.run
         range: Tiltseries
+        multivalued: true
         inlined: true
         inlined_as_list: true
       tomogram_voxel_spacings:
         name: tomogram_voxel_spacings
         description: Voxel spacings for a run
         from_schema: cdp-dataset-config
-        multivalued: true
         alias: tomogram_voxel_spacings
         owner: Run
         domain_of:
         - Run
         inverse: TomogramVoxelSpacing.run
         range: TomogramVoxelSpacing
+        multivalued: true
         inlined: true
         inlined_as_list: true
       name:
@@ -3037,7 +3037,6 @@ classes:
       tomograms:
         name: tomograms
         from_schema: cdp-dataset-config
-        multivalued: true
         alias: tomograms
         owner: TomogramVoxelSpacing
         domain_of:
@@ -3045,13 +3044,13 @@ classes:
         - TomogramVoxelSpacing
         inverse: Tomogram.tomogram_voxel_spacing
         range: Tomogram
+        multivalued: true
         inlined: true
         inlined_as_list: true
       annotations:
         name: annotations
         description: Metadata about an annotation for a run
         from_schema: cdp-dataset-config
-        multivalued: true
         alias: annotations
         owner: TomogramVoxelSpacing
         domain_of:
@@ -3059,6 +3058,7 @@ classes:
         - TomogramVoxelSpacing
         inverse: Annotation.tomogram_voxel_spacing
         range: Annotation
+        multivalued: true
         inlined: true
         inlined_as_list: true
       voxel_spacing:
@@ -3166,7 +3166,6 @@ classes:
         name: authors
         description: Author of a tomogram
         from_schema: cdp-dataset-config
-        multivalued: true
         alias: authors
         owner: Tomograms
         domain_of:
@@ -3175,6 +3174,7 @@ classes:
         - Tomograms
         inverse: TomogramAuthor.tomogram
         range: TomogramAuthor
+        multivalued: true
         inlined: true
         inlined_as_list: true
       name:

@@ -33,7 +33,7 @@ URI: [cdp-meta:reconstruction_method](metadatareconstruction_method)
 
 * Range: [String](String.md)&nbsp;or&nbsp;<br />[TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)
 
-* Regex pattern: `^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
+* Regex pattern: `(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)`
 
 
 
@@ -80,7 +80,8 @@ domain_of:
 range: string
 inlined: true
 inlined_as_list: true
-pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
+  ]*$)
 any_of:
 - range: tomogrom_reconstruction_method_enum
 - range: StringFormattedString

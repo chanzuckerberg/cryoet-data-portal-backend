@@ -39,7 +39,7 @@ def _add_to_slot_minimum_value(slot: dict, minimum_value: Union[int, float]) -> 
     """
     Add the minimum_value from the common schema to the slot minimum_value.
     """
-    if "minimum_value" in slot and slot["minimum_value"] is not None:
+    if "minimum_value" in slot and slot["minimum_value"] is not None and slot["minimum_value"] != minimum_value:
         print(
             f"[WARNING]: Minimum value already set for slot {slot['name']} ({slot['minimum_value']}). NOT overwriting with {minimum_value}",
         )
@@ -52,7 +52,7 @@ def _add_to_slot_maximum_value(slot: dict, maximum_value: Union[int, float]) -> 
     """
     Add the maximum_value from the common schema to the slot maximum_value.
     """
-    if "maximum_value" in slot and slot["maximum_value"] is not None:
+    if "maximum_value" in slot and slot["maximum_value"] is not None and slot["maximum_value"] != maximum_value:
         print(
             f"[WARNING]: Maximum value already set for slot {slot['name']} ({slot['maximum_value']}). NOT overwriting with {maximum_value}",
         )
@@ -136,6 +136,7 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
                             slot["description"] = common_slot["description"]
                             slot["unit"] = common_slot["unit"]
                             a["range"] = common_slot["range"]
+                            range_type = a["range"]
                             a["minimum_value"] = common_slot["minimum_value"]
                             a["maximum_value"] = common_slot["maximum_value"]
                         if range_type in schema_enums:

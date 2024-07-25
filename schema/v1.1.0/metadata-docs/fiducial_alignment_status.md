@@ -33,7 +33,7 @@ URI: [cdp-meta:fiducial_alignment_status](metadatafiducial_alignment_status)
 
 * Range: [String](String.md)&nbsp;or&nbsp;<br />[FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)
 
-* Regex pattern: `^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
+* Regex pattern: `(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)`
 
 
 
@@ -80,7 +80,7 @@ domain_of:
 range: string
 inlined: true
 inlined_as_list: true
-pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
 any_of:
 - range: fiducial_alignment_status_enum
 - range: StringFormattedString

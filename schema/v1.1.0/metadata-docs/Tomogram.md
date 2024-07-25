@@ -22,69 +22,69 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
     click Tomogram href "../Tomogram"
       AuthoredEntity <|-- Tomogram
         click AuthoredEntity href "../AuthoredEntity"
-      
+
       Tomogram : affine_transformation_matrix
-        
-          
-    
-    
+
+
+
+
     Tomogram --> "0..1" Any : affine_transformation_matrix
     click Any href "../Any"
 
-        
+
       Tomogram : align_software
-        
+
       Tomogram : authors
-        
-          
-    
-    
+
+
+
+
     Tomogram --> "1..*" Author : authors
     click Author href "../Author"
 
-        
+
       Tomogram : ctf_corrected
-        
+
       Tomogram : fiducial_alignment_status
-        
+
       Tomogram : offset
-        
-          
-    
-    
+
+
+
+
     Tomogram --> "1" TomogramOffset : offset
     click TomogramOffset href "../TomogramOffset"
 
-        
+
       Tomogram : processing
-        
-          
-    
-    
+
+
+
+
     Tomogram --> "1" TomogramProcessingEnum : processing
     click TomogramProcessingEnum href "../TomogramProcessingEnum"
 
-        
+
       Tomogram : processing_software
-        
+
       Tomogram : reconstruction_method
-        
+
       Tomogram : reconstruction_software
-        
+
       Tomogram : size
-        
-          
-    
-    
+
+
+
+
     Tomogram --> "0..1" TomogramSize : size
     click TomogramSize href "../TomogramSize"
 
-        
+
       Tomogram : tomogram_version
-        
+
       Tomogram : voxel_spacing
-        
-      
+
+
 ```
 
 
@@ -199,7 +199,7 @@ attributes:
     range: string
     inlined: true
     inlined_as_list: true
-    pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
     any_of:
     - range: fiducial_alignment_status_enum
     - range: StringFormattedString
@@ -244,7 +244,8 @@ attributes:
     range: string
     inlined: true
     inlined_as_list: true
-    pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
+      ]*$)
     any_of:
     - range: tomogrom_reconstruction_method_enum
     - range: StringFormattedString
@@ -418,7 +419,7 @@ attributes:
     range: string
     inlined: true
     inlined_as_list: true
-    pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
     any_of:
     - range: fiducial_alignment_status_enum
     - range: StringFormattedString
@@ -463,7 +464,8 @@ attributes:
     range: string
     inlined: true
     inlined_as_list: true
-    pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
+      ]*$)
     any_of:
     - range: tomogrom_reconstruction_method_enum
     - range: StringFormattedString

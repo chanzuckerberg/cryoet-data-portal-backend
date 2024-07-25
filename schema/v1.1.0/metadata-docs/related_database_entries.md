@@ -16,8 +16,8 @@ URI: [cdp-meta:related_database_entries](metadatarelated_database_entries)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [CrossReferencesEntity](CrossReferencesEntity.md) | A set of cross-references to other databases and publications |  no  |
 | [CrossReferencesMixin](CrossReferencesMixin.md) | A set of cross-references to other databases and publications |  no  |
+| [CrossReferencesEntity](CrossReferencesEntity.md) | A set of cross-references to other databases and publications |  no  |
 
 
 

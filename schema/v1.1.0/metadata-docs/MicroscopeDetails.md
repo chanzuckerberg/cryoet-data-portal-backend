@@ -21,12 +21,12 @@ URI: [cdp-meta:MicroscopeDetails](metadataMicroscopeDetails)
     class MicroscopeDetails
     click MicroscopeDetails href "../MicroscopeDetails"
       MicroscopeDetails : additional_info
-        
+
       MicroscopeDetails : manufacturer
-        
+
       MicroscopeDetails : model
-        
-      
+
+
 ```
 
 
@@ -126,7 +126,7 @@ attributes:
     range: string
     inlined: true
     inlined_as_list: true
-    pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    pattern: (^FEI$)|(^TFS$)|(^JEOL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
     any_of:
     - range: microscope_manufacturer_enum
     - range: StringFormattedString
@@ -184,7 +184,7 @@ attributes:
     range: string
     inlined: true
     inlined_as_list: true
-    pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+    pattern: (^FEI$)|(^TFS$)|(^JEOL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
     any_of:
     - range: microscope_manufacturer_enum
     - range: StringFormattedString
