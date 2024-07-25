@@ -4,8 +4,10 @@
 clean:
 	rm -rf metadata-docs
 	rm -rf metadata_materialized.yaml
+	rm -rf api_models_materialized.yaml
 	rm -rf dataset_config_materialized.yaml
 	rm -rf metadata_models.py
+	rm -rf api_models.py
 	rm -rf dataset_config_models.py
 
 .PHONY: build
