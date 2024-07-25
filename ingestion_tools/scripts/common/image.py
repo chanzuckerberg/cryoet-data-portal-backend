@@ -270,7 +270,7 @@ class TomoConverter:
         # Ensure voxel spacing rounded to 3rd digit
         voxel_spacing = round(voxel_spacing, 3)
 
-        pyramid = [self.volume_reader.get_pyramid_base_data()]
+        pyramid = [self.scaled_data_transformation(self.volume_reader.get_pyramid_base_data())]
         pyramid_voxel_spacing = [(voxel_spacing, voxel_spacing, voxel_spacing)]
         z_scale = 2 if scale_z_axis else 1
         # Then make a pyramid of 100/50/25 percent scale volumes
