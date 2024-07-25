@@ -92,10 +92,9 @@ def main(execution_arn: list[str], input_file: str, output_dir: str, profile: st
         log_stream_failed, log_stream_name = get_log_stream(session, arn)
         if not log_stream_name:
             continue
-        logger.info("%s: %s", "FAILED" if log_stream_failed else "SUCCESS", log_stream_name)
-        output_file = (
-            output_dir + ("failed/" if log_stream_failed else "success/") + log_stream_name.replace("/", "_") + ".log"
-        )
+        logger.info("%s: %s", "FAILED" if log_stream_failed else "SUCCESS", arn)
+        output_file = output_dir + ("failed/" if log_stream_failed else "success/") + arn.replace("/", "_") + ".log"
+        logger.info("Writing to %s", output_file)
         if log_stream_failed:
             failed_count += 1
         else:
