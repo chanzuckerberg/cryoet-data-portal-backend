@@ -18,7 +18,7 @@ datasets:
       id: null
       name: subsp. jejuni 81116
     cross_references:
-      dataset_publications: 10.1073/pnas.1518952113
+      publications: 10.1073/pnas.1518952113
     dataset_description: This is 10th of 24 sets of data studying Campylobacter jejuni
       collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10210
@@ -44,7 +44,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10029
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:

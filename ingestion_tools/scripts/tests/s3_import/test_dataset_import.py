@@ -4,6 +4,7 @@ from importers.dataset import DatasetImporter
 from importers.dataset_key_photo import DatasetKeyPhotoImporter
 from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
+from tests.s3_import.util import list_dir
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
@@ -41,12 +42,7 @@ def test_key_photo_import_http(s3_fs: FileSystemApi, test_output_bucket: str, s3
     metadata = json.loads(output)
     assert metadata["dataset_title"] == "Dataset 1"
 
-    # Make sure the files are actually present and non-zero length.
-    files = s3_client.list_objects(Bucket=test_output_bucket, Prefix=f"{output_prefix}/10001/Images")
-    s3_files: list[str] = []
-    for item in files["Contents"]:
-        s3_files.append(item["Key"])
-        assert item["Size"] > 0
+    s3_files = list_dir(s3_client, test_output_bucket, f"{output_prefix}/10001/Images", assert_non_zero_size=True)
 
     # Make sure the files are in our metadata and match our s3 file paths
     for key, path in metadata["key_photos"].items():

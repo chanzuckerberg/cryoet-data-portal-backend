@@ -18,7 +18,7 @@ datasets:
       id: null
       name: ATCC 23769
     cross_references:
-      dataset_publications: 10.1128/JB.00371-20
+      publications: 10.1128/JB.00371-20
     dataset_description: This is 13th of 16 sets of data studying Gluconacetobacter
       hansenii collected by William Nicolas and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10034
@@ -46,7 +46,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10018
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:

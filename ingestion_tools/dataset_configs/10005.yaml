@@ -7,8 +7,7 @@ annotations:
       state: 48 nm repeat
     annotation_publications: doi:10.1101/2022.09.28.510016
     authors: &id001
-    - ORCID: null
-      corresponding_author_status: false
+    - corresponding_author_status: false
       name: Zhen Chen
       primary_author_status: true
     - ORCID: 0000-0003-3460-2758
@@ -86,7 +85,7 @@ datasets:
       id: CL:0000019
       name: Sperm
     cross_references:
-      dataset_publications: doi:10.1101/2022.09.28.510016
+      publications: doi:10.1101/2022.09.28.510016
     dataset_description: Cryo-electron tomograms of mouse sperm flagella from FIB-SEM
       lamella.
     dataset_identifier: 10005
@@ -119,7 +118,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10005
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:
@@ -153,7 +152,6 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: GIF Bioquantum
-      phase_plate: null
     pixel_spacing: 2.612
     spherical_aberration_constant: 2.7
     tilt_axis: 6.4
@@ -195,7 +193,7 @@ tomograms:
       y: 0
       z: 0
     processing: raw
-    reconstruction_method: UNKNOWN
+    reconstruction_method: Unknown
     reconstruction_software: Tomo3D
     tomogram_version: 1
     voxel_spacing: 5.224

@@ -15,10 +15,7 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_component:
-      id: null
-    cell_strain:
-      id: null
-      name: null
+      id: GO:0051301,GO:0043093
     dataset_description: This is 1st of 2 sets of data studying Nitrosopumilus maritimus
       collected by Rasika Ramdasi and is a part of Caltech Jensen  lab etdb.  Looking
       for cell division related CDV proteins.
@@ -46,7 +43,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10027
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:

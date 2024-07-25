@@ -17,7 +17,7 @@ datasets:
       id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=88888
       name: Strain 1
     cross_references:
-      dataset_publications: doi:10.1101/2022.01.01.00001
+      publications: doi:10.1101/2022.01.01.00001
       related_database_entries: EMPIAR-00001, EMD-00001, EMD-00002
     dataset_description: Description for Dataset 1
     dataset_identifier: 20002

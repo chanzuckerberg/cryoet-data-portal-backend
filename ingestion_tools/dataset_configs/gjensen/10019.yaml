@@ -18,7 +18,7 @@ datasets:
       id: null
       name: CCAP 1403/13F
     cross_references:
-      dataset_publications: 10.1016/j.str.2023.03.011
+      publications: 10.1016/j.str.2023.03.011
       related_database_entries: EMD-29922, EMD-29923, EMD-29925, EMD-29924
     dataset_description: This is 6th of 7 sets of data studying Dolichospermum flos-aquae
       collected by Przemek Dutka and is a part of Caltech Jensen  lab etdb.
@@ -47,7 +47,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10014
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:

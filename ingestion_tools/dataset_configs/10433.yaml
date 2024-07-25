@@ -24,11 +24,14 @@ datasets:
       corresponding_author_status: true
       name: Justin W. Taraska
       primary_author_status: false
-    cell_type:
+    cell_strain:
       id: CLO:0001230
       name: HEK293
+    cell_type:
+      id: CL:0000010
+      name: cultured cell
     cross_references:
-      dataset_publications: 10.1101/2024.06.27.600657
+      publications: 10.1101/2024.06.27.600657
       related_database_entries: EMD-44921, EMD-44909, EMD-44922
     dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
       contains 10 grids. This is grid 8 of 10 and contains apical membranes of HEK293
@@ -71,7 +74,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10306
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:
@@ -114,10 +117,7 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: Gatan Quantum LS
-      image_corrector: null
-      phase_plate: null
     pixel_spacing: 1.07837
-    related_empiar_entry: null
     spherical_aberration_constant: 2.7
     tilt_axis: 0.0
     tilt_range:
@@ -127,6 +127,10 @@ tiltseries:
     tilt_step: 2.0
     tilting_scheme: dose-symmetric
     total_flux: float {tilt_series_total_flux}
+  sources:
+  - literal:
+      value:
+      - validation placeholder
 tomograms:
 - metadata:
     affine_transformation_matrix:

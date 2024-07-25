@@ -18,7 +18,7 @@ datasets:
       id: null
       name: HD100
     cross_references:
-      dataset_publications: 10.1038/s41564-023-01401-2
+      publications: 10.1038/s41564-023-01401-2
     dataset_description: This is 4th of 4 sets of data studying Bdellovibrio bacteriovorus
       collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb. Bdellovibrio
       HI Strain 2492 in mixture with E. coli WM3433 minicells
@@ -47,7 +47,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10032
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:

@@ -4,7 +4,7 @@ annotations:
     annotation_object:
       description: proton-transporting ATP synthase complex
       id: GO:0045259
-      name: F1-F0-ATPase complex
+      name: F1-F0 complex
     annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
     annotation_software: STOPGAP
     authors: &id001
@@ -61,8 +61,8 @@ annotations:
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
       description: mitochondrial proton-transporting ATP synthase complex
-      id: GO:0005753
-      name: mitochondrial F1-F0-ATPase complex
+      id: GO:0045259
+      name: F1-F0 complex
     annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
     annotation_software: STOPGAP
     authors: *id001
@@ -226,7 +226,7 @@ datasets:
     cell_type:
       name: Chlamydomonas reinhardtii
     cross_references:
-      dataset_publications: 10.1093/micmic/ozad067.480
+      publications: 10.1093/micmic/ozad067.480
       related_database_entries: EMPIAR-11756
     dataset_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
       lamella.
@@ -249,7 +249,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10300
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:
@@ -300,8 +300,6 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: Selectris X
-      image_corrector: null
-      phase_plate: null
     pixel_spacing: 1.96
     related_empiar_entry: EMPIAR-11756
     spherical_aberration_constant: 2.7

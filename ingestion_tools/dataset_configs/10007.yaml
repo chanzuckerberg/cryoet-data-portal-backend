@@ -3,7 +3,7 @@ annotations:
     annotation_method: crYOLO picking
     annotation_object:
       description: Cytosolic ribosome
-      id: GO:0009326
+      id: GO:0022626
       name: cytosolic ribosome
     annotation_publications: doi:10.1101/2023.08.18.553799
     authors:
@@ -66,7 +66,7 @@ datasets:
       corresponding_author_status: true
       name: Ellen D. Zhong
     cross_references:
-      dataset_publications: doi:10.1101/2023.08.18.553799
+      publications: doi:10.1101/2023.08.18.553799
       related_database_entries: EMPIAR-11658
     dataset_description: Cryo-electron tomograms of S.cerevisiae of plasma FIB-SEM
       lamella. with CryoDRGN reconstructed 80S ribosome.
@@ -96,7 +96,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10007
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:
@@ -146,8 +146,6 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup: &id005
       energy_filter: Selectris X
-      image_corrector: null
-      phase_plate: null
     pixel_spacing: 1.96
     related_empiar_entry: EMPIAR-11658
     spherical_aberration_constant: 2.7

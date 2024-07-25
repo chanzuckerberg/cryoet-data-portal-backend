@@ -14,7 +14,7 @@ URI: [cdp-meta:EMPIAR_ID](metadataEMPIAR_ID)
 
 
 
-* [pattern](https://w3id.org/linkml/pattern): `^EMPIAR-[0-9]{5}$`
+* [pattern](https://w3id.org/linkml/pattern): `^EMPIAR-[0-9]+$`
 
 
 

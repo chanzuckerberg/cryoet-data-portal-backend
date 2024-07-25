@@ -48,7 +48,7 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [ExperimentalMetadata](ExperimentalMetadata.md) | [cell_strain](cell_strain.md) | range | [CellStrain](CellStrain.md) |
+| [ExperimentMetadata](ExperimentMetadata.md) | [cell_strain](cell_strain.md) | range | [CellStrain](CellStrain.md) |
 | [Dataset](Dataset.md) | [cell_strain](cell_strain.md) | range | [CellStrain](CellStrain.md) |
 
 
@@ -136,7 +136,7 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
-    pattern: ^[A-Z]+:[0-9]+$
+    pattern: ^[a-zA-Z]+:[0-9]+$
 
 ```
 </details>
@@ -188,7 +188,7 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
-    pattern: ^[A-Z]+:[0-9]+$
+    pattern: ^[a-zA-Z]+:[0-9]+$
 
 ```
 </details>

@@ -18,7 +18,7 @@ datasets:
       id: null
       name: Nine Mile phase II clone 4
     cross_references:
-      dataset_publications: 10.1016/j.isci.2023.107210
+      publications: 10.1016/j.isci.2023.107210
       related_database_entries: EMD-28281, EMD-28282, EMD-28283
     dataset_description: This is 2nd of 5 sets of data studying Coxiella burnetii
       collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Nine
@@ -47,7 +47,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10045
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:

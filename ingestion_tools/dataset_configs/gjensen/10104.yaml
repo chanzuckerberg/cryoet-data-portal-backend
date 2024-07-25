@@ -14,9 +14,6 @@ datasets:
     - corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
-    cell_strain:
-      id: null
-      name: ''
     dataset_description: This is 2nd of 2 sets of data studying MLV collected by Luiza
       Mendonca and is a part of Caltech Jensen  lab etdb. wild type, WT, 1st batch
     dataset_identifier: 10104
@@ -28,7 +25,7 @@ datasets:
     grid_preparation: null
     organism:
       name: MLV
-      taxonomy_id: 0
+      taxonomy_id: 11786
     sample_preparation: MLV 43D
     sample_type: organism
   sources:
@@ -42,7 +39,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10051
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:

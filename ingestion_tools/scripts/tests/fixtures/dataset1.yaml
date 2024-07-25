@@ -46,8 +46,8 @@ datasets:
     cell_strain:
       id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=88888
       name: Strain 1
-    cross_references:
-      dataset_publications: doi:10.1101/2022.01.01.00001
+    cross_references: &id003
+      publications: doi:10.1101/2022.01.01.00001
       related_database_entries: EMPIAR-00001, EMD-00001, EMD-00002
     dataset_description: Description for Dataset 1
     dataset_identifier: 10001
@@ -66,6 +66,24 @@ datasets:
   - literal:
       value:
       - '10001'
+depositions:
+- metadata:
+    authors: *id002
+    cross_references: *id003
+    deposition_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
+    deposition_identifier: 10301
+    deposition_title: Deposition 1
+    dates: *id001
+  sources:
+  - literal:
+      value:
+      - '10301'
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: http://nginx:80/input_bucket/snapshot.gif
+        thumbnail: http://nginx:80/input_bucket/thumbnail.gif
 gains:
 - sources:
   - source_multi_glob:

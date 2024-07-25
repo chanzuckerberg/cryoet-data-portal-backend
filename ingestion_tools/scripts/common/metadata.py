@@ -43,6 +43,10 @@ class DatasetMetadata(MergedMetadata):
     pass
 
 
+class DepositionMetadata(MergedMetadata):
+    pass
+
+
 class RunMetadata(MergedMetadata):
     pass
 
@@ -69,7 +73,7 @@ class AnnotationMetadata(MergedMetadata):
                 [
                     str(identifier),
                     re.sub("[^0-9a-z]", "_", obj.lower()),
-                    re.sub("[^0-9a-z.]", "_", f"{version.lower()}"),
+                    re.sub("[^0-9a-z.]", "_", f"{str(version).lower()}"),
                 ],
             ),
         )

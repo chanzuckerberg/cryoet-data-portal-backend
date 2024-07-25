@@ -108,10 +108,10 @@ datasets:
       name: "M. J\xFCrgen Plitzko"
       primary_author_status: false
     cell_strain:
-      id: https://cgc.umn.edu/strain/NK2476
+      id: WBStrain00050783
       name: NK2476
     cross_references:
-      dataset_publications: doi:10.1101/2023.04.28.538734
+      publications: doi:10.1101/2023.04.28.538734
       related_database_entries: EMD-17241, EMD-17242, EMD-17243, EMD-17244, EMD-17245
     dataset_description: Partial dataset used in the ribosome subtomogram reconstruction
       selected from tomograms from double-sided attachment Serial Lift-Out experiment.
@@ -134,7 +134,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10004
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:
@@ -183,8 +183,6 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: TFS Selectris X
-      image_corrector: null
-      phase_plate: null
     pixel_spacing: 1.89
     spherical_aberration_constant: 2.7
     tilt_axis: 84.2

@@ -68,8 +68,8 @@ def to_dataset_config(
 
     config = {
         "dataset_identifier": dataset_id,
-        "dataset_description": dataset["description"],
-        "dataset_title": dataset["title"],
+        "dataset_description": dataset["description"].strip(),
+        "dataset_title": dataset["title"].strip(),
         "authors": authors,
         "organism": dataset["organism"],
         "sample_type": dataset["sample_type"],
@@ -92,8 +92,9 @@ def to_dataset_config(
 
     if dataset["cellular_component"]:
         ids = [entry for entry in dataset["cellular_component"] if entry.startswith("GO")]
-        config["cell_component"] = {"id": ",".join(ids)}
-    if dataset["cellular_strain"]:
+        if ids:
+            config["cell_component"] = {"id": ",".join(ids)}
+    if dataset["cellular_strain"] and (dataset["cellular_strain"].get("id") or dataset["cellular_strain"].get("name")):
         config["cell_strain"] = dataset["cellular_strain"]
     if dataset["cell_type"]:
         cell_type = dataset["cell_type"]
@@ -101,7 +102,9 @@ def to_dataset_config(
             "id": cell_type.get("id") or cell_type.get("cell_type_id"),
             "name": cell_type.get("name") or cell_type.get("cell_name"),
         }
-    if dataset["tissue"]:
+        if not config["cell_type"]["id"] and not config["cell_type"]["name"]:
+            del config["cell_type"]
+    if dataset["tissue"] and (dataset["tissue"].get("id") or dataset["tissue"].get("name")):
         config["tissue"] = dataset["tissue"]
     if cross_reference:
         config["cross_references"] = cross_reference
@@ -314,6 +317,8 @@ def to_tomogram(
     tomogram["authors"] = authors
     tomogram["tomogram_version"] = 1
     tomogram["reconstruction_method"] = normalize_invalid_to_none(tomogram.get("reconstruction_method"))
+    if tomogram["reconstruction_method"] == "Weighted back projection":
+        tomogram["reconstruction_method"] = "WBP"
     tomogram["reconstruction_software"] = normalize_invalid_to_none(tomogram.get("reconstruction_software"))
     tomogram["align_software"] = "+".join(tomogram.pop("align_softwares", []))
     tomogram["processing"] = normalize_processing(tomogram.get("processing"))
@@ -377,10 +382,16 @@ def get_deposition_map(input_dir: str) -> dict[int, int]:
     return dataset_deposition_id_mapping
 
 
+def update_cross_reference(config):
+    if config and "dataset_publications" in config:
+        config["publications"] = config.pop("dataset_publications").replace("https://doi.org/", "")
+    return config
+
+
 def get_cross_reference_mapping(input_dir: str) -> dict[int, dict[str, str]]:
     with open(os.path.join(input_dir, "cross_references.json"), "r") as file:
         data = json.load(file)
-    return {int(key): val for key, val in data.items()}
+    return {int(key): update_cross_reference(val) for key, val in data.items()}
 
 
 def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> None:

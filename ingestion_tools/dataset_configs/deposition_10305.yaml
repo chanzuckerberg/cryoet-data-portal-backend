@@ -37,8 +37,8 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10305
     deposition_title: TBA
-    deposition_type:
-    - annotations
+    deposition_types:
+    - annotation
   sources:
   - literal:
       value:

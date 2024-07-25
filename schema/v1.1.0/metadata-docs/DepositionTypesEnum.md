@@ -14,11 +14,17 @@ URI: [DepositionTypesEnum](DepositionTypesEnum.md)
 | Value | Meaning | Description |
 | --- | --- | --- |
 | annotation | None | The deposition comprises of new annotations for existing datasets |
-| datasets | None | The deposition comprises of new dataset(s) |
-| tomograms | None | The deposition comprises of new tomograms for existing datasets |
+| dataset | None | The deposition comprises of new dataset(s) |
+| tomogram | None | The deposition comprises of new tomograms for existing datasets |
 
 
 
+
+## Slots
+
+| Name | Description |
+| ---  | --- |
+| [deposition_types](deposition_types.md) | Type of data in the deposition (e |
 
 
 
@@ -55,11 +61,11 @@ permissible_values:
   annotation:
     text: annotation
     description: The deposition comprises of new annotations for existing datasets
-  datasets:
-    text: datasets
+  dataset:
+    text: dataset
     description: The deposition comprises of new dataset(s).
-  tomograms:
-    text: tomograms
+  tomogram:
+    text: tomogram
     description: The deposition comprises of new tomograms for existing datasets
 
 ```

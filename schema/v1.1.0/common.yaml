@@ -379,7 +379,7 @@ slots:
   tiltseries_microscope_manufacturer:
     any_of:
       - range: StringFormattedString
-      - range: microscope_manufacturer_enum
+      - range: tiltseries_microscope_manufacturer_enum
     required: true
     description: Name of the microscope manufacturer
   tiltseries_microscope_model:
@@ -604,9 +604,9 @@ slots:
     range: annotation_method_type_enum
     required: true
     description: Classification of the annotation method based on supervision.
-  annotation_publication:
-    range: string
-    description: DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.
+  annotation_publications:
+    range: EMPIAR_EMDB_DOI_PDB_LIST
+    description: List of publication IDs (EMPIAR, EMDB, DOI) that describe this annotation method. Comma separated.
   annotation_software:
     range: string
     description: Software used for generating this annotation
@@ -775,9 +775,9 @@ enums:
     permissible_values:
       annotation:
         description: The deposition comprises of new annotations for existing datasets
-      datasets:
+      dataset:
         description: The deposition comprises of new dataset(s).
-      tomograms:
+      tomogram:
         description: The deposition comprises of new tomograms for existing datasets
 
   sample_type_enum:
@@ -812,7 +812,7 @@ enums:
       cds:
         description: Correlated double sampling mode
 
-  microscope_manufacturer_enum:
+  tiltseries_microscope_manufacturer_enum:
     description: Microscope manufacturer
     permissible_values:
       FEI:
@@ -845,13 +845,13 @@ enums:
     permissible_values:
       SART:
         description: Simultaneous Algebraic Reconstruction Technique
-      FOURIER SPACE:
+      Fourier Space:
         description: Fourier space reconstruction
       SIRT:
         description: Simultaneous Iterative Reconstruction Technique
       WBP:
         description: Weighted Back-Projection
-      UNKNOWN:
+      Unknown:
         description: Unknown reconstruction method
 
   tomogram_type_enum:
@@ -910,7 +910,7 @@ types:
   ONTOLOGY_ID:
     description: An ontology identifier
     base: str
-    pattern: '^[A-Z]+:[0-9]+$'
+    pattern: '^[a-zA-Z]+:[0-9]+$'
 
   DOI:
     description: A Digital Object Identifier
@@ -925,43 +925,32 @@ types:
   EMPIAR_ID:
     description: An Electron Microscopy Public Image Archive identifier
     base: str
-    pattern: '^EMPIAR-[0-9]{5}$'
+    pattern: '^EMPIAR-[0-9]+$'
 
   EMDB_ID:
     description: An Electron Microscopy Data Bank identifier
     base: str
     pattern: '^EMD-[0-9]{4,5}$'
 
-  EMPIAR_EMDB_LIST:
-    description: A list of EMPIAR and EMDB identifiers
+  PDB_ID:
+    description: A Protein Data Bank identifier
     base: str
-    pattern: '^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}))*$'
+    pattern: '^pdb[0-9a-zA-Z]{4,8}$'
+
+  EMPIAR_EMDB_PDB_LIST:
+    description: A list of EMPIAR, EMDB, and PDB identifiers
+    base: str
+    pattern: '^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$'
+
+  EMPIAR_EMDB_DOI_PDB_LIST:
+    description: A list of EMPIAR, EMDB, DOI, and PDB identifiers
+    base: str
+    pattern: '^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$'
 
 classes:
   Any:
     class_uri: linkml:Any
     description: A placeholder for any type of data.
-
-  # ============================================================================
-  # Cross-references to other databases and publications
-  # ============================================================================
-  CrossReferences:
-    description: A set of cross-references to other databases and publications.
-    attributes:
-      dataset_publications:
-        range: DOI_LIST
-        recommended: true
-        description: Comma-separated list of DOIs for publications associated with the dataset.
-      related_database_entries:
-        range: EMPIAR_EMDB_LIST
-        recommended: true
-        description: Comma-separated list of related database entries for the dataset.
-      related_database_links: # DEPRECATED
-        range: string
-        description: Comma-separated list of related database links for the dataset.
-      dataset_citations: # DEPRECATED
-        range: string
-        description: Comma-separated list of DOIs for publications citing the dataset.
 
   # ============================================================================
   # Annotation Method Links

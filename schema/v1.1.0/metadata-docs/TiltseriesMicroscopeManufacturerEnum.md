@@ -1,4 +1,4 @@
-# Enum: MicroscopeManufacturerEnum
+# Enum: TiltseriesMicroscopeManufacturerEnum
 
 
 
@@ -7,7 +7,7 @@ _Microscope manufacturer_
 
 
 
-URI: [MicroscopeManufacturerEnum](MicroscopeManufacturerEnum.md)
+URI: [TiltseriesMicroscopeManufacturerEnum](TiltseriesMicroscopeManufacturerEnum.md)
 
 ## Permissible Values
 
@@ -47,7 +47,7 @@ URI: [MicroscopeManufacturerEnum](MicroscopeManufacturerEnum.md)
 
 <details>
 ```yaml
-name: microscope_manufacturer_enum
+name: tiltseries_microscope_manufacturer_enum
 description: Microscope manufacturer
 from_schema: metadata
 rank: 1000

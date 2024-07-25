@@ -11,7 +11,7 @@ annotations: OPTIONAL
       id: REQUIRED, STRING (GO_ID)
       name: REQUIRED, STRING
       state: OPTIONAL, STRING
-    annotation_publications: OPTIONAL, STRING
+    annotation_publications: OPTIONAL, STRING (DOI / EMPIAR / EMDB / PDB IDs)
     annotation_software: RECOMMENDED, STRING
     authors: REQUIRED
     - name: REQUIRED, STRING
@@ -47,6 +47,7 @@ annotations: OPTIONAL
       binning: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
       filter_value: OPTIONAL, STRING
       order: OPTIONAL, STRING (DEFAULT xyz)
+      parent_filters: SEE runs.sources.parent_filters
   - OrientedPoint:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
@@ -55,6 +56,7 @@ annotations: OPTIONAL
       binning: see InstanceSegmentation.binning
       filter_value: see InstanceSegmentation.filter_value
       order: see InstanceSegmentation.order
+      parent_filters: see InstanceSegmentation.parent_filters
   - Point:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
@@ -63,25 +65,29 @@ annotations: OPTIONAL
       binning: see InstanceSegmentation.binning
       columns: OPTIONAL, STRING (DEFAULT xyz)
       delimiter: OPTIONAL, STRING (DEFAULT ',')
+      parent_filters: see InstanceSegmentation.parent_filters
   - SegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
+      parent_filters: see InstanceSegmentation.parent_filters
   - SemanticSegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
       mask_label: OPTIONAL, INTEGER (DEFAULT 1)
+      parent_filters: see InstanceSegmentation.parent_filters
 dataset_keyphotos: OPTIONAL
 - sources: REQUIRED
   - literal: REQUIRED
       value: REQUIRED
         snapshot: RECOMMENDED, STRING
         thumbnail: RECOMMENDED, STRING
+    parent_filters: SEE runs.sources.parent_filters
 datasets: REQUIRED
-- metadata: REQUIRED
+- metadata: OPTIONAL
     authors: SEE annotations.authors
     cell_component: OPTIONAL
       id: OPTIONAL, STRING (GO_ID)
@@ -99,8 +105,8 @@ datasets: REQUIRED
       name: REQUIRED, STRING
       taxonomy_id: OPTIONAL, INTEGER
     cross_references: OPTIONAL
-      dataset_publications: RECOMMENDED, STRING (DOIs)
-      related_database_entries: RECOMMENDED, STRING (EMPIAR / EMDB IDs)
+      publications: RECOMMENDED, STRING (DOIs)
+      related_database_entries: RECOMMENDED, STRING (EMPIAR / EMDB / PDB IDs)
     dataset_description: REQUIRED, STRING
     dataset_identifier: REQUIRED, INTEGER
     dataset_title: REQUIRED, STRING
@@ -118,6 +124,7 @@ datasets: REQUIRED
       list_glob: REQUIRED, STRING (REGEX)
       match_regex: OPTIONAL, STRING (REGEX) (DEFAULT '.*')
       name_regex: OPTIONAL, STRING (REGEX) (DEFAULT '(.*)')
+    parent_filters: SEE runs.sources.parent_filters
   - source_multi_glob:
       list_globs:
         - REQUIRED, STRING
@@ -129,10 +136,11 @@ datasets: REQUIRED
     parent_filters: SEE runs.sources.parent_filters
   - literal: OPTIONAL
       value:
-      - REQUIRED, STRING
+      - REQUIRED, ANY (STRING, INTEGER, FLOAT, BOOLEAN)
     parent_filters: SEE runs.sources.parent_filters
-depositions:
-  - metadata: REQUIRED
+deposition_keyphotos: SEE dataset_keyphotos
+depositions: REQUIRED
+  - metadata: OPTIONAL
       authors: SEE annotations.authors
       cross_references: SEE datasets.cross_references
       dates: SEE annotations.dates
@@ -140,9 +148,8 @@ depositions:
       deposition_identifier: REQUIRED, INTEGER
       deposition_title: REQUIRED, STRING
       deposition_types: REQUIRED
-      - STRING (ENUM [ANNOTATION, DATASET, TOMOGRAM])
+      - STRING (ENUM [annotation, dataset, tomogram])
     sources: REQUIRED (source_glob, source_multi_glob, destination_glob, literal)
-deposition_keyphotos: SEE dataset_keyphotos
 frames: OPTIONAL
 - sources: SEE datasets.sources and runs.sources.parent_filters
 gains: OPTIONAL
@@ -151,9 +158,9 @@ key_images: OPTIONAL
 - sources: SEE dataset.sources and runs.sources.parent_filters
 rawtilts: OPTIONAL
 - sources: SEE datasets.sources and runs.sources.parent_filters
-runs:
+runs: REQUIRED
 - sources: SEE datasets.sources (source_glob) and below
-    # parent filters must be paired with a finder type (source_glob, source_multi_glob, ...)
+    # parent filters must be paired with a finder type (source_glob, source_multi_glob, ...) as one list entry
     # can only exclude / include parent types (see IMPORTER_DEP_TREE)
     # in this case of being in the runs attribute, only dataset can be excluded / included
     # in dataset level, nothing can be excluded / included
@@ -172,7 +179,7 @@ standardization_config: REQUIRED
   run_to_ts_map_csv: OPTIONAL, STRING
   source_prefix: REQUIRED, STRING
 tiltseries: OPTIONAL
-- metadata: REQUIRED
+- metadata: OPTIONAL
     acceleration_voltage: REQUIRED, FLOAT (> 20000) (V)
     aligned_tiltseries_binning: OPTIONAL, FLOAT (Default 1) (POSITIVE)
     alignment_binning_factor: # DEPRECATED
@@ -192,7 +199,7 @@ tiltseries: OPTIONAL
       image_corrector: OPTIONAL, STRING
       phase_plate: OPTIONAL, STRING
     pixel_spacing: REQUIRED, FLOAT (POSITIVE)
-    related_empiar_entry: OPTIONAL, STRING
+    related_empiar_entry: OPTIONAL, STRING (EMPIAR_ID)
     spherical_aberration_constant: REQUIRED, FLOAT (POSITIVE) (mm)
     tilt_alignment_software: OPTIONAL, STRING
     tilt_axis: REQUIRED, FLOAT ([-360, 360]) (DEGREES)
@@ -206,7 +213,7 @@ tiltseries: OPTIONAL
   sources: REQUIRED
   - source_glob: SEE dataset.sources.source_glob
 tomograms: OPTIONAL
-- metadata: REQUIRED
+- metadata: OPTIONAL
     affine_transformation_matrix: OPTIONAL 4x4 FLOAT MATRIX (DEFAULT 4x4 identity matrix)
       - - REQUIRED, FLOAT
         - ... (4 ELEMENTS)
@@ -225,7 +232,7 @@ tomograms: OPTIONAL
       z: REQUIRED, INTEGER
     processing: REQUIRED, STRING (ENUM [denoised, filtered, raw])
     processing_software: RECOMMENDED, STRING
-    reconstruction_method: REQUIRED, STRING (ENUM [SART, FOURIER SPACE, SIRT, WBP, UNKNOWN])
+    reconstruction_method: REQUIRED, STRING (ENUM [SART, Fourier Space, SIRT, WBP, Unknown])
     reconstruction_software: REQUIRED, STRING
     tomogram_type: OPTIONAL, STRING (ENUM [CANONICAL])
     tomogram_version: REQUIRED, FLOAT
@@ -235,7 +242,6 @@ voxel_spacings: REQUIRED
 - sources: REQUIRED
   - destination_glob: see datasets.sources.destination_glob and runs.sources.parent_filters
   - source_glob: SEE datasets.sources.source_glob and runs.sources.parent_filters
-  - source_multi_glob: SEE datasets.sources.source_multi_glob and runs.sources.parent_filters
   - literal: SEE datasets.sources.literal and runs.sources.parent_filters
   - tomogram_header: SEE runs.sources.parent_filters
       list_glob: REQUIRED, STRING (REGEX)

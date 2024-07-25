@@ -1,4 +1,4 @@
-[project]
+[tool.poetry]
 name = "schema_manager"
 version = "1.0"
 description = "Tools for managing schema of the CryoET Data Portal"
@@ -6,6 +6,17 @@ authors = [
     "CZI Imaging Team <cryoetdataportal@chanzuckerberg.com>"
 ]
 license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiohttp = "^3.9.5"
+async-lru = "^2.0.4"
+click = "^8.1.7"
+linkml = "^1.8.1"
+numpy = "^1.26.4"
+pydantic = "^2.8.2"
+typing-extensions = "^4.12.2"
+pyyaml = "^6.0.1"
 
 [tool.black]
 line-length = 120

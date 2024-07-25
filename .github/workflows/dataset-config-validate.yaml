@@ -5,18 +5,16 @@ on:
     branches:
       - main
     paths:
-        - ingestion_tools/dataset_configs/
-        - ingestion_tools/scripts/dataset_config_validate.py
-        - schema/v1.1.0/Makefile
-        - schema/v1.1.0/*.yaml
-        - schema/v1.1.0/*.py
+      - ingestion_tools/dataset_configs/
+      - schema/v1.1.0/Makefile
+      - schema/v1.1.0/*.yaml
+      - schema/v1.1.0/*.py
   pull_request:
     paths:
-        - ingestion_tools/dataset_configs/
-        - ingestion_tools/scripts/dataset_config_validate.py
-        - schema/v1.1.0/Makefile
-        - schema/v1.1.0/*.yaml
-        - schema/v1.1.0/*.py
+      - ingestion_tools/dataset_configs/
+      - schema/v1.1.0/Makefile
+      - schema/v1.1.0/*.yaml
+      - schema/v1.1.0/*.py
   workflow_dispatch:
 
 jobs:
@@ -30,18 +28,22 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install linkml
-        run: pip install linkml
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --no-cache-dir poetry
+          poetry config virtualenvs.create false
+          poetry install
+        working-directory: schema/
       - name: Build Pydantic models
         run: make build
         working-directory: schema/v1.1.0
       - name: Validate dataset configs
         run: |
-          python dataset_config_validate.py
+          make validate-configs-with-network
         working-directory: schema/v1.1.0
       - name: Archive validation results
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: dataset-configs-validation-logs
-          path: ingestion_tools/scripts/dataset_config_validate_errors/
+          path: schema/v1.1.0/dataset_config_validate_errors/

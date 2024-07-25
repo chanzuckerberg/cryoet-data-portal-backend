@@ -14,9 +14,6 @@ datasets:
     - corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
-    cell_strain:
-      id: null
-      name: ''
     dataset_description: This is 9th of 9 sets of data studying Pseudomonas aeruginosa
       collected by Ariane Briegel and is a part of Caltech Jensen  lab etdb. Pseudomonas
       full length aer2 on plasmid, no induction
@@ -43,7 +40,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10040
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:

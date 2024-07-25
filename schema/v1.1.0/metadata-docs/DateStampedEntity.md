@@ -1,6 +1,6 @@
 
 
-# Class: DatestampedEntity
+# Class: DateStampedEntity
 
 
 _An entity with associated deposition, release and last modified dates._
@@ -11,7 +11,7 @@ _An entity with associated deposition, release and last modified dates._
 * __NOTE__: this is an abstract class and should not be instantiated directly
 
 
-URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
+URI: [cdp-meta:DateStampedEntity](metadataDateStampedEntity)
 
 
 
@@ -20,19 +20,21 @@ URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
 
 ```mermaid
  classDiagram
-    class DatestampedEntity
-    click DatestampedEntity href "../DatestampedEntity"
-      DatestampedEntity <|-- Dataset
+    class DateStampedEntity
+    click DateStampedEntity href "../DateStampedEntity"
+      DateStampedEntity <|-- Dataset
         click Dataset href "../Dataset"
-      DatestampedEntity <|-- Annotation
+      DateStampedEntity <|-- Deposition
+        click Deposition href "../Deposition"
+      DateStampedEntity <|-- Annotation
         click Annotation href "../Annotation"
 
-      DatestampedEntity : dates
+      DateStampedEntity : dates
 
 
 
 
-    DatestampedEntity --> "1" DateStamp : dates
+    DateStampedEntity --> "1" DateStamp : dates
     click DateStamp href "../DateStamp"
 
 
@@ -79,8 +81,8 @@ URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:DatestampedEntity |
-| native | cdp-meta:DatestampedEntity |
+| self | cdp-meta:DateStampedEntity |
+| native | cdp-meta:DateStampedEntity |
 
 
 
@@ -96,7 +98,7 @@ URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
 
 <details>
 ```yaml
-name: DatestampedEntity
+name: DateStampedEntity
 description: An entity with associated deposition, release and last modified dates.
 from_schema: metadata
 abstract: true
@@ -108,10 +110,11 @@ attributes:
     from_schema: metadata
     rank: 1000
     alias: dates
-    owner: DatestampedEntity
+    owner: DateStampedEntity
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
+    - Deposition
     - Annotation
     range: DateStamp
     required: true
@@ -125,7 +128,7 @@ attributes:
 
 <details>
 ```yaml
-name: DatestampedEntity
+name: DateStampedEntity
 description: An entity with associated deposition, release and last modified dates.
 from_schema: metadata
 abstract: true
@@ -137,10 +140,11 @@ attributes:
     from_schema: metadata
     rank: 1000
     alias: dates
-    owner: DatestampedEntity
+    owner: DateStampedEntity
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
+    - Deposition
     - Annotation
     range: DateStamp
     required: true

@@ -18,7 +18,7 @@ datasets:
       id: null
       name: Philadelphia-1_Lp02
     cross_references:
-      dataset_publications: 10.1038/s41564-019-0427-4
+      publications: 10.1038/s41564-019-0427-4
     dataset_description: This is 26th of 41 sets of data studying Legionella pneumophila
       collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. JV9082:DotF-sfGFP
       fusion
@@ -49,7 +49,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10038
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:

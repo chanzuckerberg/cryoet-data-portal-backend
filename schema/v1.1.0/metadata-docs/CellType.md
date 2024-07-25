@@ -48,7 +48,7 @@ URI: [cdp-meta:CellType](metadataCellType)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [ExperimentalMetadata](ExperimentalMetadata.md) | [cell_type](cell_type.md) | range | [CellType](CellType.md) |
+| [ExperimentMetadata](ExperimentMetadata.md) | [cell_type](cell_type.md) | range | [CellType](CellType.md) |
 | [Dataset](Dataset.md) | [cell_type](cell_type.md) | range | [CellType](CellType.md) |
 
 

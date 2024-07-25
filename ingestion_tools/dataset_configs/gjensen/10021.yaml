@@ -18,7 +18,7 @@ datasets:
       id: null
       name: c2
     cross_references:
-      dataset_publications: 10.1038/s41467-022-32584-7
+      publications: 10.1038/s41467-022-32584-7
       related_database_entries: EMD-27654, EMPIAR-11125
     dataset_description: ' and is a part of Caltech Jensen  lab etdb. Carboxysomes
       purified from H. Neapolitanus, WT, high resolution'
@@ -46,7 +46,7 @@ depositions:
     deposition_description: TBA
     deposition_identifier: 10049
     deposition_title: TBA
-    deposition_type:
+    deposition_types:
     - dataset
   sources:
   - literal:
