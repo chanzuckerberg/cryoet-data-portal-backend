@@ -126,11 +126,21 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
             # also add any corresponding minimum_value and maximum_value attributes
             if "any_of" in slot:
                 for _, a in enumerate(slot["any_of"]):
-                    if "range" in a and a["range"] in schema_types and "pattern" in schema.get_type(a["range"]):
-                        slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(a["range"]).pattern)
-                    if "range" in a and a["range"] in schema_enums:
-                        for _, e in enumerate(schema.get_enum(a["range"]).permissible_values):
-                            slot["pattern"] = _add_to_slot_pattern(slot, f"^{e}$")
+                    range_type = None
+                    if "range" in a:
+                        range_type = a["range"].replace("cdp-common:", "")
+                        if range_type in schema_types and "pattern" in schema.get_type(range_type):
+                            a["range"] = range_type
+                            slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(range_type).pattern)
+                        if common_slot := common_slots.get(range_type):
+                            slot["description"] = common_slot["description"]
+                            slot["unit"] = common_slot["unit"]
+                            a["range"] = common_slot["range"]
+                            a["minimum_value"] = common_slot["minimum_value"]
+                            a["maximum_value"] = common_slot["maximum_value"]
+                        if range_type in schema_enums:
+                            for _, e in enumerate(schema.get_enum(range_type).permissible_values):
+                                slot["pattern"] = _add_to_slot_pattern(slot, f"^{e}$")
                     if "minimum_value" in a and a["minimum_value"] is not None:
                         slot["minimum_value"] = _add_to_slot_minimum_value(slot, a["minimum_value"])
                     if "maximum_value" in a and a["maximum_value"] is not None:
