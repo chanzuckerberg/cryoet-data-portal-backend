@@ -431,10 +431,10 @@ classes:
           - cdp-common:tiltseries_acceleration_voltage
       spherical_abberation_constant:
         exact_mappings:
-          - cdp-common:api_tiltseries_spherical_aberration_constant
+          - cdp-common:tiltseries_spherical_aberration_constant
       microscope_manufacturer:
         exact_mappings:
-          - cdp-common:api_tiltseries_microscope_manufacturer
+          - cdp-common:tiltseries_microscope_manufacturer
       microscope_model:
         exact_mappings:
           - cdp-common:tiltseries_microscope_model
@@ -458,25 +458,25 @@ classes:
           - cdp-common:tiltseries_camera_model
       tilt_min:
         exact_mappings:
-          - cdp-common:api_tiltseries_tilt_min
+          - cdp-common:tiltseries_tilt_min
       tilt_max:
         exact_mappings:
-          - cdp-common:api_tiltseries_tilt_max
+          - cdp-common:tiltseries_tilt_max
       tilt_range:
         exact_mappings:
           - cdp-common:api_tiltseries_tilt_range
       tilt_step:
         exact_mappings:
-          - cdp-common:api_tiltseries_tilt_step
+          - cdp-common:tiltseries_tilt_step
       tilting_scheme:
         exact_mappings:
           - cdp-common:tiltseries_tilting_scheme
       tilt_axis:
         exact_mappings:
-          - cdp-common:api_tiltseries_tilt_axis
+          - cdp-common:tiltseries_tilt_axis
       total_flux:
         exact_mappings:
-          - cdp-common:api_tiltseries_total_flux
+          - cdp-common:tiltseries_total_flux
       data_acquisition_software:
         exact_mappings:
           - cdp-common:tiltseries_data_acquisition_software
@@ -485,19 +485,19 @@ classes:
           - cdp-common:tiltseries_related_empiar_entry
       binning_from_frames:
         exact_mappings:
-          - cdp-common:api_tiltseries_binning_from_frames
+          - cdp-common:tiltseries_binning_from_frames
       tilt_series_quality:
         exact_mappings:
-          - cdp-common:api_tiltseries_tilt_series_quality
+          - cdp-common:tiltseries_tilt_series_quality
       is_aligned:
         exact_mappings:
           - cdp-common:tiltseries_is_aligned
       pixel_spacing:
         exact_mappings:
-          - cdp-common:api_tiltseries_pixel_spacing
+          - cdp-common:tiltseries_pixel_spacing
       aligned_tiltseries_binning:
         exact_mappings:
-          - cdp-common:api_tiltseries_aligned_tiltseries_binning
+          - cdp-common:tiltseries_aligned_tiltseries_binning
       tiltseries_frames_count:
         exact_mappings:
           - cdp-common:tiltseries_frames_count
@@ -533,7 +533,7 @@ classes:
         multivalued: true
       voxel_spacing:
         exact_mappings:
-          - cdp-common:api_tomogram_voxel_spacing
+          - cdp-common:tomogram_voxel_spacing
     annotations:
       plural: TomogramVoxelSpacings
   Tomograms:
@@ -566,13 +566,13 @@ classes:
           - cdp-common:api_tomogram_size_z
       voxel_spacing:
         exact_mappings:
-          - cdp-common:api_tomogram_voxel_spacing
+          - cdp-common:tomogram_voxel_spacing
       fiducial_alignment_status:
         exact_mappings:
-          - cdp-common:api_tomogram_fiducial_alignment_status
+          - cdp-common:tomogram_fiducial_alignment_status
       reconstruction_method:
         exact_mappings:
-          - cdp-common:api_tomogram_reconstruction_method
+          - cdp-common:tomogram_reconstruction_method
       processing:
         exact_mappings:
           - cdp-common:tomogram_processing
