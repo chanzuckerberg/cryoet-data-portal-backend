@@ -1,9 +1,6 @@
+
+
 # Slot: related_database_links
-
-
-_Comma-separated list of related database links for the dataset._
-
-
 
 URI: [cdp-meta:related_database_links](metadatarelated_database_links)
 
@@ -14,11 +11,13 @@ URI: [cdp-meta:related_database_links](metadatarelated_database_links)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
+| [CrossReferencesEntity](CrossReferencesEntity.md) | A set of cross-references to other databases and publications |  no  |
+| [CrossReferencesMixin](CrossReferencesMixin.md) | A set of cross-references to other databases and publications |  no  |
 
 
 
@@ -42,10 +41,13 @@ URI: [cdp-meta:related_database_links](metadatarelated_database_links)
 
 
 
-### Schema Source
 
+## Mappings
 
-* from schema: metadata
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:related_database_links |
+| native | cdp-meta:related_database_links |
 
 
 
@@ -55,16 +57,11 @@ URI: [cdp-meta:related_database_links](metadatarelated_database_links)
 <details>
 ```yaml
 name: related_database_links
-description: Comma-separated list of related database links for the dataset.
-from_schema: metadata
-rank: 1000
 alias: related_database_links
-owner: CrossReferences
 domain_of:
-- CrossReferences
+- CrossReferencesEntity
+- CrossReferencesMixin
 range: string
-inlined: true
-inlined_as_list: true
 
 ```
 </details>

@@ -1,9 +1,6 @@
+
+
 # Slot: email
-
-
-_The email address of the author._
-
-
 
 URI: [cdp-meta:email](metadataemail)
 
@@ -14,11 +11,13 @@ URI: [cdp-meta:email](metadataemail)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Author](Author.md) | Author of a scientific data entity |  no  |
+| [Author](Author.md) | Author of a scientific data entity |  no  |
+| [AuthorMixin](AuthorMixin.md) | An entity with author data |  no  |
 
 
 
@@ -42,10 +41,13 @@ URI: [cdp-meta:email](metadataemail)
 
 
 
-### Schema Source
 
+## Mappings
 
-* from schema: metadata
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:email |
+| native | cdp-meta:email |
 
 
 
@@ -55,18 +57,11 @@ URI: [cdp-meta:email](metadataemail)
 <details>
 ```yaml
 name: email
-description: The email address of the author.
-from_schema: metadata
-exact_mappings:
-- cdp-common:author_email
-rank: 1000
 alias: email
-owner: Author
 domain_of:
 - Author
+- AuthorMixin
 range: string
-inlined: true
-inlined_as_list: true
 
 ```
 </details>

@@ -1,3 +1,5 @@
+
+
 # Class: Deposition
 
 
@@ -12,24 +14,45 @@ URI: [cdp-meta:Deposition](metadataDeposition)
 
 
 
+
+
 ```mermaid
  classDiagram
     class Deposition
+    click Deposition href "../Deposition"
       DatestampedEntity <|-- Deposition
+        click DatestampedEntity href "../DatestampedEntity"
       AuthoredEntity <|-- Deposition
+        click AuthoredEntity href "../AuthoredEntity"
       CrossReferencedEntity <|-- Deposition
+        click CrossReferencedEntity href "../CrossReferencedEntity"
       
       Deposition : authors
         
-          Deposition --> Author : authors
+          
+    
+    
+    Deposition --> "1..*" Author : authors
+    click Author href "../Author"
+
         
       Deposition : cross_references
         
-          Deposition --> CrossReferences : cross_references
+          
+    
+    
+    Deposition --> "0..1" CrossReferencesEntity : cross_references
+    click CrossReferencesEntity href "../CrossReferencesEntity"
+
         
       Deposition : dates
         
-          Deposition --> DateStamp : dates
+          
+    
+    
+    Deposition --> "1" DateStamp : dates
+    click DateStamp href "../DateStamp"
+
         
       Deposition : deposition_description
         
@@ -39,7 +62,12 @@ URI: [cdp-meta:Deposition](metadataDeposition)
         
       Deposition : deposition_types
         
-          Deposition --> deposition_types_enum : deposition_types
+          
+    
+    
+    Deposition --> "1..*" DepositionTypesEnum : deposition_types
+    click DepositionTypesEnum href "../DepositionTypesEnum"
+
         
       
 ```
@@ -57,13 +85,13 @@ URI: [cdp-meta:Deposition](metadataDeposition)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [deposition_description](deposition_description.md) | 1..1 <br/> [String](String.md) | A short description of the deposition, similar to an abstract for a journal a... | direct |
-| [deposition_identifier](deposition_identifier.md) | 1..1 <br/> [Integer](Integer.md) | An identifier for a CryoET deposition, assigned by the Data Portal | direct |
-| [deposition_title](deposition_title.md) | 1..1 <br/> [String](String.md) | Title of a CryoET deposition | direct |
+| [deposition_description](deposition_description.md) | 1 <br/> [String](String.md) | A short description of the deposition, similar to an abstract for a journal a... | direct |
+| [deposition_identifier](deposition_identifier.md) | 1 <br/> [Integer](Integer.md) | An identifier for a CryoET deposition, assigned by the Data Portal | direct |
+| [deposition_title](deposition_title.md) | 1 <br/> [String](String.md) | Title of a CryoET deposition | direct |
 | [deposition_types](deposition_types.md) | 1..* <br/> [DepositionTypesEnum](DepositionTypesEnum.md) | Type of data in the deposition (e | direct |
-| [dates](dates.md) | 1..1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
+| [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
-| [cross_references](cross_references.md) | 0..1 <br/> [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications | direct |
+| [cross_references](cross_references.md) | 0..1 <br/> [CrossReferencesEntity](CrossReferencesEntity.md) | A set of cross-references to other databases and publications | direct |
 
 
 
@@ -89,13 +117,14 @@ URI: [cdp-meta:Deposition](metadataDeposition)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Deposition |
 | native | cdp-meta:Deposition |
+
+
 
 
 
@@ -171,13 +200,13 @@ attributes:
     exact_mappings:
     - cdp-common:deposition_types
     rank: 1000
-    multivalued: true
     alias: deposition_types
     owner: Deposition
     domain_of:
     - Deposition
     range: deposition_types_enum
     required: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
     pattern: (^annotation$)|(^dataset$)|(^tomogram$)
@@ -201,7 +230,6 @@ attributes:
     name: authors
     description: Author of a scientific data entity.
     from_schema: metadata
-    multivalued: true
     list_elements_ordered: true
     alias: authors
     owner: Deposition
@@ -213,6 +241,7 @@ attributes:
     - Annotation
     range: Author
     required: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
   cross_references:
@@ -225,7 +254,7 @@ attributes:
     - CrossReferencedEntity
     - Dataset
     - Deposition
-    range: CrossReferences
+    range: CrossReferencesEntity
     inlined: true
     inlined_as_list: true
 
@@ -298,13 +327,13 @@ attributes:
     exact_mappings:
     - cdp-common:deposition_types
     rank: 1000
-    multivalued: true
     alias: deposition_types
     owner: Deposition
     domain_of:
     - Deposition
     range: deposition_types_enum
     required: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
     pattern: (^annotation$)|(^dataset$)|(^tomogram$)
@@ -328,7 +357,6 @@ attributes:
     name: authors
     description: Author of a scientific data entity.
     from_schema: metadata
-    multivalued: true
     list_elements_ordered: true
     alias: authors
     owner: Deposition
@@ -340,6 +368,7 @@ attributes:
     - Annotation
     range: Author
     required: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
   cross_references:
@@ -352,7 +381,7 @@ attributes:
     - CrossReferencedEntity
     - Dataset
     - Deposition
-    range: CrossReferences
+    range: CrossReferencesEntity
     inlined: true
     inlined_as_list: true
 

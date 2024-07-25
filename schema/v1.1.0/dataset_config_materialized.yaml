@@ -2477,10 +2477,64 @@ classes:
     description: A placeholder for any type of data.
     from_schema: cdp-dataset-config
     class_uri: linkml:Any
-  CrossReferences:
-    name: CrossReferences
+  DateStampedEntityMixin:
+    name: DateStampedEntityMixin
+    description: A set of dates at which a data item was deposited, published and
+      last modified.
+    from_schema: cdp-dataset-config
+    mixin: true
+    attributes:
+      deposition_date:
+        name: deposition_date
+        description: The date a data item was received by the cryoET data portal.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:deposition_date
+        alias: deposition_date
+        owner: DateStampedEntityMixin
+        domain_of:
+        - DateStampedEntityMixin
+        - DateStamp
+        range: date
+        required: true
+        inlined: true
+        inlined_as_list: true
+      release_date:
+        name: release_date
+        description: The date a data item was received by the cryoET data portal.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:release_date
+        alias: release_date
+        owner: DateStampedEntityMixin
+        domain_of:
+        - DateStampedEntityMixin
+        - DateStamp
+        range: date
+        required: true
+        inlined: true
+        inlined_as_list: true
+      last_modified_date:
+        name: last_modified_date
+        description: The date a piece of data was last modified on the cryoET data
+          portal.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:last_modified_date
+        alias: last_modified_date
+        owner: DateStampedEntityMixin
+        domain_of:
+        - DateStampedEntityMixin
+        - DateStamp
+        range: date
+        required: true
+        inlined: true
+        inlined_as_list: true
+  CrossReferencesMixin:
+    name: CrossReferencesMixin
     description: A set of cross-references to other databases and publications.
     from_schema: cdp-dataset-config
+    mixin: true
     attributes:
       publications:
         name: publications
@@ -2488,9 +2542,10 @@ classes:
           the dataset.
         from_schema: cdp-dataset-config
         alias: publications
-        owner: CrossReferences
+        owner: CrossReferencesMixin
         domain_of:
-        - CrossReferences
+        - CrossReferencesMixin
+        - CrossReferencesEntity
         range: DOI_LIST
         recommended: true
         inlined: true
@@ -2501,9 +2556,10 @@ classes:
         description: Comma-separated list of related database entries for the dataset.
         from_schema: cdp-dataset-config
         alias: related_database_entries
-        owner: CrossReferences
+        owner: CrossReferencesMixin
         domain_of:
-        - CrossReferences
+        - CrossReferencesMixin
+        - CrossReferencesEntity
         range: EMPIAR_EMDB_PDB_LIST
         recommended: true
         inlined: true
@@ -2514,9 +2570,10 @@ classes:
         description: Comma-separated list of related database links for the dataset.
         from_schema: cdp-dataset-config
         alias: related_database_links
-        owner: CrossReferences
+        owner: CrossReferencesMixin
         domain_of:
-        - CrossReferences
+        - CrossReferencesMixin
+        - CrossReferencesEntity
         range: string
         inlined: true
         inlined_as_list: true
@@ -2525,10 +2582,126 @@ classes:
         description: Comma-separated list of DOIs for publications citing the dataset.
         from_schema: cdp-dataset-config
         alias: dataset_citations
-        owner: CrossReferences
+        owner: CrossReferencesMixin
         domain_of:
-        - CrossReferences
+        - CrossReferencesMixin
+        - CrossReferencesEntity
         range: string
+        inlined: true
+        inlined_as_list: true
+  AuthorMixin:
+    name: AuthorMixin
+    description: An entity with author data
+    from_schema: cdp-dataset-config
+    mixin: true
+    attributes:
+      name:
+        name: name
+        description: The full name of the author.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_name
+        alias: name
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        - AnnotationMethodLinks
+        - Author
+        - OrganismDetails
+        - TissueDetails
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      email:
+        name: email
+        description: The email address of the author.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_email
+        alias: email
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        - Author
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_name:
+        name: affiliation_name
+        description: The name of the author's affiliation.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_affiliation_name
+        alias: affiliation_name
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        - Author
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_address:
+        name: affiliation_address
+        description: The address of the author's affiliation.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_affiliation_address
+        alias: affiliation_address
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        - Author
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_identifier:
+        name: affiliation_identifier
+        description: A Research Organization Registry (ROR) identifier.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_affiliation_identifier
+        alias: affiliation_identifier
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        - Author
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+      corresponding_author_status:
+        name: corresponding_author_status
+        description: Whether the author is a corresponding author.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_corresponding_author_status
+        ifabsent: 'False'
+        alias: corresponding_author_status
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        - Author
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      primary_author_status:
+        name: primary_author_status
+        description: Whether the author is a primary author.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_primary_author_status
+        ifabsent: 'False'
+        alias: primary_author_status
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        - Author
+        range: boolean
         inlined: true
         inlined_as_list: true
   AnnotationMethodLinks:
@@ -2569,6 +2742,7 @@ classes:
         alias: name
         owner: AnnotationMethodLinks
         domain_of:
+        - AuthorMixin
         - AnnotationMethodLinks
         - Author
         - OrganismDetails

@@ -1,3 +1,5 @@
+
+
 # Slot: voxel_spacing
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
+| [Tomogram](Tomogram.md) | Metadata describing a tomogram |  no  |
 
 
 
@@ -28,9 +31,7 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 ## Properties
 
-* Range: [String](String.md)
-
-* Required: True
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Minimum Value: 0
 
@@ -56,6 +57,16 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:voxel_spacing |
+| native | cdp-meta:voxel_spacing |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -63,15 +74,12 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 name: voxel_spacing
 description: Voxel spacing equal in all three axes in angstroms
 from_schema: metadata
-exact_mappings:
-- cdp-common:tomogram_voxel_spacing
 rank: 1000
 alias: voxel_spacing
 owner: Tomogram
 domain_of:
 - Tomogram
 range: string
-required: true
 inlined: true
 inlined_as_list: true
 minimum_value: 0.001

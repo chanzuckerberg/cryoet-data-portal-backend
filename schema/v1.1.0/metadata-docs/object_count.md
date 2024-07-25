@@ -1,3 +1,5 @@
+
+
 # Slot: object_count
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:object_count](metadataobject_count)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -46,6 +49,17 @@ URI: [cdp-meta:object_count](metadataobject_count)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:object_count |
+| native | cdp-meta:object_count |
+| exact | cdp-common:annotation_object_count |
 
 
 

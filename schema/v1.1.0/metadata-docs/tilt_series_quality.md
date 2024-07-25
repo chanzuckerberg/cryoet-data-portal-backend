@@ -1,3 +1,5 @@
+
+
 # Slot: tilt_series_quality
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -28,9 +31,7 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 ## Properties
 
-* Range: [String](String.md)
-
-* Required: True
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[Integer](Integer.md)&nbsp;or&nbsp;<br />[IntegerFormattedString](IntegerFormattedString.md)
 
 * Minimum Value: 1
 
@@ -58,6 +59,16 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tilt_series_quality |
+| native | cdp-meta:tilt_series_quality |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -66,15 +77,12 @@ name: tilt_series_quality
 description: Author assessment of tilt series quality within the dataset (1-5, 5 is
   best)
 from_schema: metadata
-exact_mappings:
-- cdp-common:tiltseries_tilt_series_quality
 rank: 1000
 alias: tilt_series_quality
 owner: TiltSeries
 domain_of:
 - TiltSeries
 range: string
-required: true
 inlined: true
 inlined_as_list: true
 minimum_value: 1

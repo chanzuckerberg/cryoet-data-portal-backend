@@ -36,3 +36,13 @@ URI: [cdp-meta:URLorS3URI](metadataURLorS3URI)
 
 
 
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:URLorS3URI |
+| native | cdp-meta:URLorS3URI |
+
+
+

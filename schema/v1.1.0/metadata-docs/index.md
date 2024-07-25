@@ -25,15 +25,18 @@ Name: cdp-meta
 | [Any](Any.md) | A placeholder for any type of data. |
 | [Author](Author.md) | Author of a scientific data entity. |
 | [AuthoredEntity](AuthoredEntity.md) | An entity with associated authors. |
+| [AuthorMixin](AuthorMixin.md) | An entity with author data |
 | [CameraDetails](CameraDetails.md) | The camera used to collect the tilt series. |
 | [CellComponent](CellComponent.md) | The cellular component from which the sample was derived. |
 | [CellStrain](CellStrain.md) | The strain or cell line from which the sample was derived. |
 | [CellType](CellType.md) | The cell type from which the sample was derived. |
 | [CrossReferencedEntity](CrossReferencedEntity.md) | An entity with associated cross-references to other databases and publications. |
-| [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications. |
+| [CrossReferencesEntity](CrossReferencesEntity.md) | A set of cross-references to other databases and publications. |
+| [CrossReferencesMixin](CrossReferencesMixin.md) | A set of cross-references to other databases and publications. |
 | [Dataset](Dataset.md) | High-level description of a cryoET dataset. |
 | [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modified. |
 | [DatestampedEntity](DatestampedEntity.md) | An entity with associated deposition, release and last modified dates. |
+| [DateStampedEntityMixin](DateStampedEntityMixin.md) | A set of dates at which a data item was deposited, published and last modified. |
 | [Deposition](Deposition.md) | Metadata describing a deposition. |
 | [ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET dataset. |
 | [FundedEntity](FundedEntity.md) | An entity with associated funding sources. |

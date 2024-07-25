@@ -1,3 +1,5 @@
+
+
 # Slot: camera
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:camera](metadatacamera)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -48,6 +51,16 @@ URI: [cdp-meta:camera](metadatacamera)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:camera |
+| native | cdp-meta:camera |
 
 
 

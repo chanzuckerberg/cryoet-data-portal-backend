@@ -1,3 +1,5 @@
+
+
 # Slot: tilt_axis
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -28,9 +31,7 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 ## Properties
 
-* Range: [String](String.md)
-
-* Required: True
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Minimum Value: -360
 
@@ -58,6 +59,16 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tilt_axis |
+| native | cdp-meta:tilt_axis |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -65,15 +76,12 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 name: tilt_axis
 description: Rotation angle in degrees
 from_schema: metadata
-exact_mappings:
-- cdp-common:tiltseries_tilt_axis
 rank: 1000
 alias: tilt_axis
 owner: TiltSeries
 domain_of:
 - TiltSeries
 range: string
-required: true
 inlined: true
 inlined_as_list: true
 minimum_value: -360

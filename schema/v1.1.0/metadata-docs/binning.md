@@ -1,3 +1,5 @@
+
+
 # Slot: binning
 
 URI: [cdp-meta:binning](metadatabinning)
@@ -9,13 +11,14 @@ URI: [cdp-meta:binning](metadatabinning)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation |  no  |
-[AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation |  no  |
-[AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation |  no  |
+| [AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation |  no  |
+| [AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation |  no  |
+| [AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation |  no  |
 
 
 
@@ -36,6 +39,16 @@ URI: [cdp-meta:binning](metadatabinning)
 
 
 
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:binning |
+| native | cdp-meta:binning |
 
 
 

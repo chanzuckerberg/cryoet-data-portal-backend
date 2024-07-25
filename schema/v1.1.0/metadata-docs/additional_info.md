@@ -1,3 +1,5 @@
+
+
 # Slot: additional_info
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:additional_info](metadataadditional_info)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[MicroscopeDetails](MicroscopeDetails.md) | The microscope used to collect the tilt series |  no  |
+| [MicroscopeDetails](MicroscopeDetails.md) | The microscope used to collect the tilt series |  no  |
 
 
 
@@ -46,6 +49,17 @@ URI: [cdp-meta:additional_info](metadataadditional_info)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:additional_info |
+| native | cdp-meta:additional_info |
+| exact | cdp-common:tiltseries_microscope_additional_info |
 
 
 

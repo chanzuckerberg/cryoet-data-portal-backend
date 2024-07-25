@@ -1,3 +1,5 @@
+
+
 # Class: TissueDetails
 
 
@@ -12,9 +14,12 @@ URI: [cdp-meta:TissueDetails](metadataTissueDetails)
 
 
 
+
+
 ```mermaid
  classDiagram
     class TissueDetails
+    click TissueDetails href "../TissueDetails"
       TissueDetails : id
         
       TissueDetails : name
@@ -32,7 +37,7 @@ URI: [cdp-meta:TissueDetails](metadataTissueDetails)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 1..1 <br/> [String](String.md) | Name of the tissue from which a biological sample used in a CryoET study is d... | direct |
+| [name](name.md) | 1 <br/> [String](String.md) | Name of the tissue from which a biological sample used in a CryoET study is d... | direct |
 | [id](id.md) | 0..1 _recommended_ <br/> [BTOID](BTOID.md) | The UBERON identifier for the tissue | direct |
 
 
@@ -67,13 +72,14 @@ URI: [cdp-meta:TissueDetails](metadataTissueDetails)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:TissueDetails |
 | native | cdp-meta:TissueDetails |
+
+
 
 
 
@@ -101,14 +107,15 @@ attributes:
     alias: name
     owner: TissueDetails
     domain_of:
-    - Author
     - OrganismDetails
     - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AuthorMixin
     - AnnotationMethodLinks
+    - Author
     range: string
     required: true
     inlined: true
@@ -155,14 +162,15 @@ attributes:
     alias: name
     owner: TissueDetails
     domain_of:
-    - Author
     - OrganismDetails
     - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AuthorMixin
     - AnnotationMethodLinks
+    - Author
     range: string
     required: true
     inlined: true

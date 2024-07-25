@@ -1,3 +1,5 @@
+
+
 # Slot: confidence
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:confidence](metadataconfidence)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -46,6 +49,16 @@ URI: [cdp-meta:confidence](metadataconfidence)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:confidence |
+| native | cdp-meta:confidence |
 
 
 

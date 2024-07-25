@@ -1,3 +1,5 @@
+
+
 # Slot: cell_type
 
 URI: [cdp-meta:cell_type](metadatacell_type)
@@ -9,12 +11,13 @@ URI: [cdp-meta:cell_type](metadatacell_type)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET da... |  no  |
-[Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+| [ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET da... |  no  |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 
 
 
@@ -35,6 +38,16 @@ URI: [cdp-meta:cell_type](metadatacell_type)
 
 
 
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:cell_type |
+| native | cdp-meta:cell_type |
 
 
 

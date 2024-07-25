@@ -1,3 +1,5 @@
+
+
 # Class: PicturedEntity
 
 
@@ -14,12 +16,20 @@ URI: [cdp-meta:PicturedEntity](metadataPicturedEntity)
 
 
 
+
+
 ```mermaid
  classDiagram
     class PicturedEntity
+    click PicturedEntity href "../PicturedEntity"
       PicturedEntity : key_photos
         
-          PicturedEntity --> PicturePath : key_photos
+          
+    
+    
+    PicturedEntity --> "1" PicturePath : key_photos
+    click PicturePath href "../PicturePath"
+
         
       
 ```
@@ -34,7 +44,7 @@ URI: [cdp-meta:PicturedEntity](metadataPicturedEntity)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [key_photos](key_photos.md) | 1..1 <br/> [PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data | direct |
+| [key_photos](key_photos.md) | 1 <br/> [PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data | direct |
 
 
 
@@ -60,13 +70,14 @@ URI: [cdp-meta:PicturedEntity](metadataPicturedEntity)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:PicturedEntity |
 | native | cdp-meta:PicturedEntity |
+
+
 
 
 

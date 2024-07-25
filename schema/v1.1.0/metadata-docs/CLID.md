@@ -36,3 +36,13 @@ URI: [cdp-meta:CL_ID](metadataCL_ID)
 
 
 
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:CL_ID |
+| native | cdp-meta:CL_ID |
+
+
+

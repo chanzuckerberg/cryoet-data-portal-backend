@@ -1,3 +1,5 @@
+
+
 # Slot: thumbnail
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data |  no  |
+| [PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data |  no  |
 
 
 
@@ -50,6 +53,17 @@ URI: [cdp-meta:thumbnail](metadatathumbnail)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:thumbnail |
+| native | cdp-meta:thumbnail |
+| exact | cdp-common:thumbnail |
 
 
 

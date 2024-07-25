@@ -36,3 +36,13 @@ URI: [cdp-meta:EMPIAR_ID](metadataEMPIAR_ID)
 
 
 
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:EMPIAR_ID |
+| native | cdp-meta:EMPIAR_ID |
+
+
+

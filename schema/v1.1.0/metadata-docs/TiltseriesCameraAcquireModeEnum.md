@@ -42,6 +42,8 @@ URI: [TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md)
 
 
 
+
+
 ## LinkML Source
 
 <details>

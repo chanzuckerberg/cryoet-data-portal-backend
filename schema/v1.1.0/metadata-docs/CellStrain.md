@@ -1,3 +1,5 @@
+
+
 # Class: CellStrain
 
 
@@ -12,9 +14,12 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
 
 
 
+
+
 ```mermaid
  classDiagram
     class CellStrain
+    click CellStrain href "../CellStrain"
       CellStrain : id
         
       CellStrain : name
@@ -32,7 +37,7 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [name](name.md) | 1..1 <br/> [String](String.md) | Cell line or strain for the sample | direct |
+| [name](name.md) | 1 <br/> [String](String.md) | Cell line or strain for the sample | direct |
 | [id](id.md) | 0..1 _recommended_ <br/> [ONTOLOGYID](ONTOLOGYID.md) | Link to more information about the cell strain | direct |
 
 
@@ -67,13 +72,14 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CellStrain |
 | native | cdp-meta:CellStrain |
+
+
 
 
 
@@ -100,14 +106,15 @@ attributes:
     alias: name
     owner: CellStrain
     domain_of:
-    - Author
     - OrganismDetails
     - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AuthorMixin
     - AnnotationMethodLinks
+    - Author
     range: string
     required: true
     inlined: true
@@ -152,14 +159,15 @@ attributes:
     alias: name
     owner: CellStrain
     domain_of:
-    - Author
     - OrganismDetails
     - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AuthorMixin
     - AnnotationMethodLinks
+    - Author
     range: string
     required: true
     inlined: true

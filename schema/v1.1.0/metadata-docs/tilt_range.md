@@ -1,3 +1,5 @@
+
+
 # Slot: tilt_range
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:tilt_range](metadatatilt_range)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -48,6 +51,16 @@ URI: [cdp-meta:tilt_range](metadatatilt_range)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tilt_range |
+| native | cdp-meta:tilt_range |
 
 
 

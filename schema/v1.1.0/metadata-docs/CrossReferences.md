@@ -1,3 +1,5 @@
+
+
 # Class: CrossReferences
 
 
@@ -12,9 +14,12 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 
 
 
+
+
 ```mermaid
  classDiagram
     class CrossReferences
+    click CrossReferences href "../CrossReferences"
       CrossReferences : dataset_citations
         
       CrossReferences : publications
@@ -74,13 +79,14 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CrossReferences |
 | native | cdp-meta:CrossReferences |
+
+
 
 
 

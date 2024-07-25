@@ -36,3 +36,13 @@ URI: [cdp-meta:StringFormattedString](metadataStringFormattedString)
 
 
 
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:StringFormattedString |
+| native | cdp-meta:StringFormattedString |
+
+
+

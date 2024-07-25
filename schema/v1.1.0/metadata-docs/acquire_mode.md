@@ -1,3 +1,5 @@
+
+
 # Slot: acquire_mode
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:acquire_mode](metadataacquire_mode)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[CameraDetails](CameraDetails.md) | The camera used to collect the tilt series |  no  |
+| [CameraDetails](CameraDetails.md) | The camera used to collect the tilt series |  no  |
 
 
 
@@ -28,7 +31,7 @@ URI: [cdp-meta:acquire_mode](metadataacquire_mode)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md)
 
 * Regex pattern: `(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^counting$)|(^superresolution$)|(^linear$)|(^cds$)`
 
@@ -48,6 +51,17 @@ URI: [cdp-meta:acquire_mode](metadataacquire_mode)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:acquire_mode |
+| native | cdp-meta:acquire_mode |
+| exact | cdp-common:tiltseries_camera_acquire_mode |
 
 
 
