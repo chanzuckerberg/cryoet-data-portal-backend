@@ -48,8 +48,8 @@ def get_log_events(session: Session, log_group_name, log_stream_name):
 @click.argument("execution-arn", type=str, nargs=-1)
 @click.option("--input-file", type=str, help="A file containing a list of execution ARNs.")
 @click.option("--output-dir", type=str, default="./fetch-logs", help="The directory to save the logs to.")
-@click.option("--region", type=str, required=True, help="The AWS region to use.")
-def main(execution_arn: str, input_file: str, output_dir: str, region: str):
+@click.option("--profile", type=str, help="The AWS profile to use.")
+def main(execution_arn: list[str], input_file: str, output_dir: str, profile: str):
     input_execution_arn = execution_arn
 
     if not execution_arn and not input_file:
@@ -76,19 +76,19 @@ def main(execution_arn: str, input_file: str, output_dir: str, region: str):
     os.makedirs(f"{output_dir}/failed")
     os.makedirs(f"{output_dir}/success")
 
-    session = Session(region_name=region)
+    input_execution_arn = list(set(input_execution_arn))
+    session = Session(region_name=input_execution_arn[0].split(":")[3], profile_name=(profile if profile else None))
 
     failed_count = 0
     successful_count = 0
 
-    input_execution_arn = list(set(input_execution_arn))
     for arn in input_execution_arn:
         log_stream_failed, log_stream_name = get_log_stream(session, arn)
         logger.info("%s: %s", "FAILED" if log_stream_failed else "SUCCESS", log_stream_name)
         output_file = (
             output_dir
             + "/"
-            + ("failed" if log_stream_failed else "success")
+            + ("failed/" if log_stream_failed else "success/")
             + log_stream_name.replace("/", "_")
             + ".log"
         )

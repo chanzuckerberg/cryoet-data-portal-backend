@@ -63,7 +63,7 @@ def enqueue_common_options(func):
     return func
 
 
-def create_state_machine_log_file(filename):
+def create_execution_machine_log_file(filename):
     if os.path.exists(filename):
         os.remove(filename)
         logger.warning("Removing existing %s file.", filename)
@@ -104,17 +104,13 @@ def run_job(
     ecr_repo: str,
     ecr_tag: str,
     memory: int | None = None,
-    state_machine_log: str | None = None,
+    execution_machine_log: str | None = None,
     **kwargs,  # Ignore any the extra vars this method doesn't need.
 ):
     if not memory:
         memory = 24000
 
     state_machine_arn = f"arn:aws:states:{aws_region}:{aws_account_id}:stateMachine:{sfn_name}"
-
-    if state_machine_log is not None:
-        with open(state_machine_log, "a") as f:
-            f.write(state_machine_arn + "\n")
 
     execution_name = re.sub(r"[^0-9a-zA-Z-]", r"-", execution_name)
     sfn_input_json = {
@@ -139,11 +135,17 @@ def run_job(
         service_name="stepfunctions",
     )
 
-    return client.start_execution(
+    execution = client.start_execution(
         stateMachineArn=state_machine_arn,
         name=execution_name,
         input=json.dumps(sfn_input_json),
     )
+
+    if execution_machine_log is not None:
+        with open(execution_machine_log, "a") as f:
+            f.write(execution["executionArn"] + "\n")
+
+    return execution
 
 
 def get_aws_env(environment):
@@ -247,10 +249,10 @@ def to_args(**kwargs) -> list[str]:
     help="Specify wdl key for custom workload",
 )
 @click.option(
-    "--state-machine-log",
+    "--execution-machine-log",
     type=str,
     default=None,
-    help="Log state machine ARNs to this file",
+    help="Log execution machine ARNs to this file",
 )
 @db_import_options
 @enqueue_common_options
@@ -265,7 +267,7 @@ def db_import(
     include_dataset: list[str],
     exclude_dataset: list[str],
     swipe_wdl_key: str,
-    state_machine_log: str,
+    execution_machine_log: str,
     **kwargs,
 ):
     handle_common_options(ctx, kwargs)
@@ -286,8 +288,8 @@ def db_import(
     if not ctx.obj.get("memory"):
         ctx.obj["memory"] = 4000
 
-    if state_machine_log is not None:
-        create_state_machine_log_file(state_machine_log)
+    if execution_machine_log is not None:
+        create_execution_machine_log_file(execution_machine_log)
 
     futures = []
     with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
@@ -326,7 +328,7 @@ def db_import(
                         execution_name,
                         wdl_args,
                         swipe_wdl_key=swipe_wdl_key,
-                        state_machine_log=state_machine_log,
+                        execution_machine_log=execution_machine_log,
                         **ctx.obj,
                     ),
                 ),
@@ -365,10 +367,10 @@ def db_import(
     help="Exclude runs matching this regex. If not specified, all runs are processed",
 )
 @click.option(
-    "--state-machine-log",
+    "--execution-machine-log",
     type=str,
     default=None,
-    help="Log state machine ARNs to this file",
+    help="Log execution machine ARNs to this file",
 )
 @ingest_common_options
 @enqueue_common_options
@@ -384,7 +386,7 @@ def queue(
     force_overwrite: bool,
     swipe_wdl_key: str,
     skip_until_run_name: str,
-    state_machine_log: str,
+    execution_machine_log: str,
     **kwargs,
 ):
     handle_common_options(ctx, kwargs)
@@ -407,8 +409,8 @@ def queue(
     filter_datasets = [re.compile(pattern) for pattern in kwargs.get("filter_dataset_name", [])]
     exclude_datasets = [re.compile(pattern) for pattern in kwargs.get("exclude_dataset_name", [])]
 
-    if state_machine_log is not None:
-        create_state_machine_log_file(state_machine_log)
+    if execution_machine_log is not None:
+        create_execution_machine_log_file(execution_machine_log)
 
     # Always iterate over datasets and runs.
     datasets = DatasetImporter.finder(config)
@@ -474,7 +476,7 @@ def queue(
                             execution_name,
                             wdl_args,
                             swipe_wdl_key=swipe_wdl_key,
-                            state_machine_log=state_machine_log,
+                            execution_machine_log=execution_machine_log,
                             **ctx.obj,
                         ),
                     ),
@@ -515,10 +517,10 @@ class OrderedSyncFilters(click.Command):
     help="Specify wdl key for custom workload",
 )
 @click.option(
-    "--state-machine-log",
+    "--execution-machine-log",
     type=str,
     default=None,
-    help="Log state machine ARNs to this file",
+    help="Log execution machine ARNs to this file",
 )
 @enqueue_common_options
 @click.pass_context
@@ -533,7 +535,7 @@ def sync(
     include_dataset: list[str],
     exclude_dataset: list[str],
     swipe_wdl_key: str,
-    state_machine_log: str,
+    execution_machine_log: str,
     **kwargs,
 ):
     handle_common_options(ctx, kwargs)
@@ -552,8 +554,8 @@ def sync(
     for param, value in OrderedSyncFilters._options:
         new_args.append(f"--{param.name} '{value}'")
 
-    if state_machine_log is not None:
-        create_state_machine_log_file(state_machine_log)
+    if execution_machine_log is not None:
+        create_execution_machine_log_file(execution_machine_log)
 
     futures = []
     with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
@@ -588,7 +590,7 @@ def sync(
                         execution_name,
                         wdl_args,
                         swipe_wdl_key=swipe_wdl_key,
-                        state_machine_log=state_machine_log,
+                        execution_machine_log=execution_machine_log,
                         **ctx.obj,
                     ),
                 ),
