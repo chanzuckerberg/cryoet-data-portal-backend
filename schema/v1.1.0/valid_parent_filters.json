@@ -1,0 +1,75 @@
+{
+  "deposition": [],
+  "tiltseries": [
+    "deposition",
+    "dataset",
+    "run"
+  ],
+  "gain": [
+    "deposition",
+    "dataset",
+    "run"
+  ],
+  "voxel_spacing": [
+    "deposition",
+    "dataset",
+    "run"
+  ],
+  "frame": [
+    "deposition",
+    "dataset",
+    "run"
+  ],
+  "run": [
+    "deposition",
+    "dataset"
+  ],
+  "rawtilt": [
+    "deposition",
+    "dataset",
+    "run"
+  ],
+  "deposition_keyphoto": [
+    "deposition"
+  ],
+  "key_image": [
+    "deposition",
+    "dataset",
+    "run",
+    "voxel_spacing",
+    "tomogram"
+  ],
+  "annotation": [
+    "deposition",
+    "dataset",
+    "run",
+    "voxel_spacing"
+  ],
+  "annotation_viz": [
+    "deposition",
+    "dataset",
+    "run",
+    "voxel_spacing",
+    "annotation"
+  ],
+  "dataset_keyphoto": [
+    "deposition",
+    "dataset"
+  ],
+  "dataset": [
+    "deposition"
+  ],
+  "viz_config": [
+    "deposition",
+    "dataset",
+    "run",
+    "voxel_spacing",
+    "tomogram"
+  ],
+  "tomogram": [
+    "deposition",
+    "dataset",
+    "run",
+    "voxel_spacing"
+  ]
+}

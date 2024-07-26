@@ -1,3 +1,4 @@
+import json
 import re
 from typing import Any, Optional
 
@@ -178,6 +179,31 @@ def convert(
         needs_iteration = to_import.union(metadata_import)
         to_iterate = needs_iteration.union({k for k, v in iteration_deps if needs_iteration.intersection(v)})
     do_import(config, IMPORTER_DEP_TREE, to_import, metadata_import, to_iterate, kwargs)
+
+
+@cli.command()
+@click.option("--output-file", type=str)
+def generate_child_to_parents_deps(output_file):
+    with open(output_file, "w") as f:
+        # from flattening the tree, we can get the parent to children mapping
+        parent_to_children = {
+            key.type_key: list({value.type_key for value in value_set})
+            for key, value_set in flatten_dependency_tree(IMPORTER_DEP_TREE).items()
+        }
+        # but we want to know what parents are associated with each child (for validation purposes)
+        child_to_parents = {}
+        for parent, children in parent_to_children.items():
+            for child in children:
+                if parent not in parent_to_children:
+                    continue
+                # add it for consistency, even though it might not have any entries
+                if parent not in child_to_parents:
+                    child_to_parents[parent] = []
+                if child not in child_to_parents:
+                    child_to_parents[child] = []
+                # parent is unique, so we can just append it (no need to check for duplicates)
+                child_to_parents[child] += [parent]
+        json.dump(child_to_parents, f, indent=2, default=str)
 
 
 if __name__ == "__main__":
