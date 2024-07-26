@@ -215,9 +215,12 @@ depositions:
   - metadata:
       authors: *id001
       dates: *id002
-      deposition_description: TBA
+      deposition_description: This deposition contains three datasets of dormant microsporidian spores from
+        Encephalitozoon intestinalis and Encephalitozoon hellem. The datasets contain raw frames, tilt series, tomogram
+        reconstructions and segmentations. Samples were prepared using the waffle-method and cryo-FIB milled. A subset
+        of runs contains manual and manually curated annotations of spore organelles.
       deposition_identifier: 10307
-      deposition_title: TBA
+      deposition_title: In situ architecture of the polar tube invasion apparatus from microsporidian parasites
       deposition_types:
         - dataset
     sources:
