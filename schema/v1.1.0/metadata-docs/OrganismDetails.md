@@ -21,10 +21,10 @@ URI: [cdp-meta:OrganismDetails](metadataOrganismDetails)
     class OrganismDetails
     click OrganismDetails href "../OrganismDetails"
       OrganismDetails : name
-        
+
       OrganismDetails : taxonomy_id
-        
-      
+
+
 ```
 
 
@@ -48,7 +48,7 @@ URI: [cdp-meta:OrganismDetails](metadataOrganismDetails)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [ExperimentalMetadata](ExperimentalMetadata.md) | [organism](organism.md) | range | [OrganismDetails](OrganismDetails.md) |
+| [ExperimentMetadata](ExperimentMetadata.md) | [organism](organism.md) | range | [OrganismDetails](OrganismDetails.md) |
 | [Dataset](Dataset.md) | [organism](organism.md) | range | [OrganismDetails](OrganismDetails.md) |
 
 

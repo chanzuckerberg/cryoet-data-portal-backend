@@ -114,6 +114,9 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
                 slot["recommended"] = common_slot["recommended"]
                 slot["pattern"] = _add_to_slot_pattern(slot, common_slot["pattern"])
                 slot["ifabsent"] = common_slot["ifabsent"]
+            # if the slot's multivalued and required, add a minimum_cardinality of 1
+            if slot["multivalued"] and slot["required"]:
+                slot["minimum_cardinality"] = 1
             # if the slot's range is a type, add the pattern from the type
             if slot["range"] in schema_types:
                 slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(slot["range"]).pattern)

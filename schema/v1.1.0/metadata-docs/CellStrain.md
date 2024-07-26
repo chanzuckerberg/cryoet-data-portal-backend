@@ -21,10 +21,10 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
     class CellStrain
     click CellStrain href "../CellStrain"
       CellStrain : id
-        
+
       CellStrain : name
-        
-      
+
+
 ```
 
 
@@ -48,7 +48,7 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [ExperimentalMetadata](ExperimentalMetadata.md) | [cell_strain](cell_strain.md) | range | [CellStrain](CellStrain.md) |
+| [ExperimentMetadata](ExperimentMetadata.md) | [cell_strain](cell_strain.md) | range | [CellStrain](CellStrain.md) |
 | [Dataset](Dataset.md) | [cell_strain](cell_strain.md) | range | [CellStrain](CellStrain.md) |
 
 

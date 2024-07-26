@@ -469,8 +469,8 @@ enums:
       cds:
         text: cds
         description: Correlated double sampling mode
-  microscope_manufacturer_enum:
-    name: microscope_manufacturer_enum
+  tiltseries_microscope_manufacturer_enum:
+    name: tiltseries_microscope_manufacturer_enum
     description: Microscope manufacturer
     from_schema: cdp-dataset-config
     permissible_values:
@@ -2475,7 +2475,7 @@ classes:
         owner: Tiltseries
         domain_of:
         - Tiltseries
-        range: microscope_manufacturer_enum
+        range: tiltseries_microscope_manufacturer_enum
         required: true
         inlined: true
         inlined_as_list: true

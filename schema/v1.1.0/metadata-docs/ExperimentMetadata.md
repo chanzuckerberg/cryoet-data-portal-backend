@@ -1,6 +1,6 @@
 
 
-# Class: ExperimentalMetadata
+# Class: ExperimentMetadata
 
 
 _Metadata describing sample and sample preparation methods used in a cryoET dataset._
@@ -11,7 +11,7 @@ _Metadata describing sample and sample preparation methods used in a cryoET data
 * __NOTE__: this is an abstract class and should not be instantiated directly
 
 
-URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
+URI: [cdp-meta:ExperimentMetadata](metadataExperimentMetadata)
 
 
 
@@ -20,72 +20,72 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 ```mermaid
  classDiagram
-    class ExperimentalMetadata
-    click ExperimentalMetadata href "../ExperimentalMetadata"
-      ExperimentalMetadata <|-- Dataset
+    class ExperimentMetadata
+    click ExperimentMetadata href "../ExperimentMetadata"
+      ExperimentMetadata <|-- Dataset
         click Dataset href "../Dataset"
-      
-      ExperimentalMetadata : cell_component
-        
-          
-    
-    
-    ExperimentalMetadata --> "0..1" CellComponent : cell_component
+
+      ExperimentMetadata : cell_component
+
+
+
+
+    ExperimentMetadata --> "0..1" CellComponent : cell_component
     click CellComponent href "../CellComponent"
 
-        
-      ExperimentalMetadata : cell_strain
-        
-          
-    
-    
-    ExperimentalMetadata --> "0..1" CellStrain : cell_strain
+
+      ExperimentMetadata : cell_strain
+
+
+
+
+    ExperimentMetadata --> "0..1" CellStrain : cell_strain
     click CellStrain href "../CellStrain"
 
-        
-      ExperimentalMetadata : cell_type
-        
-          
-    
-    
-    ExperimentalMetadata --> "0..1" CellType : cell_type
+
+      ExperimentMetadata : cell_type
+
+
+
+
+    ExperimentMetadata --> "0..1" CellType : cell_type
     click CellType href "../CellType"
 
-        
-      ExperimentalMetadata : grid_preparation
-        
-      ExperimentalMetadata : organism
-        
-          
-    
-    
-    ExperimentalMetadata --> "0..1" OrganismDetails : organism
+
+      ExperimentMetadata : grid_preparation
+
+      ExperimentMetadata : organism
+
+
+
+
+    ExperimentMetadata --> "0..1" OrganismDetails : organism
     click OrganismDetails href "../OrganismDetails"
 
-        
-      ExperimentalMetadata : other_setup
-        
-      ExperimentalMetadata : sample_preparation
-        
-      ExperimentalMetadata : sample_type
-        
-          
-    
-    
-    ExperimentalMetadata --> "1" SampleTypeEnum : sample_type
+
+      ExperimentMetadata : other_setup
+
+      ExperimentMetadata : sample_preparation
+
+      ExperimentMetadata : sample_type
+
+
+
+
+    ExperimentMetadata --> "1" SampleTypeEnum : sample_type
     click SampleTypeEnum href "../SampleTypeEnum"
 
-        
-      ExperimentalMetadata : tissue
-        
-          
-    
-    
-    ExperimentalMetadata --> "0..1" TissueDetails : tissue
+
+      ExperimentMetadata : tissue
+
+
+
+
+    ExperimentMetadata --> "0..1" TissueDetails : tissue
     click TissueDetails href "../TissueDetails"
 
-        
-      
+
+
 ```
 
 
@@ -136,8 +136,8 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:ExperimentalMetadata |
-| native | cdp-meta:ExperimentalMetadata |
+| self | cdp-meta:ExperimentMetadata |
+| native | cdp-meta:ExperimentMetadata |
 
 
 
@@ -153,7 +153,7 @@ URI: [cdp-meta:ExperimentalMetadata](metadataExperimentalMetadata)
 
 <details>
 ```yaml
-name: ExperimentalMetadata
+name: ExperimentMetadata
 description: Metadata describing sample and sample preparation methods used in a cryoET
   dataset.
 from_schema: metadata
@@ -167,9 +167,9 @@ attributes:
     - cdp-common:preparation_sample_type
     rank: 1000
     alias: sample_type
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: sample_type_enum
     required: true
@@ -184,9 +184,9 @@ attributes:
     - cdp-common:sample_preparation
     rank: 1000
     alias: sample_preparation
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -200,9 +200,9 @@ attributes:
     - cdp-common:grid_preparation
     rank: 1000
     alias: grid_preparation
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -217,9 +217,9 @@ attributes:
     - cdp-common:preparation_other_setup
     rank: 1000
     alias: other_setup
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -231,9 +231,9 @@ attributes:
     from_schema: metadata
     rank: 1000
     alias: organism
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: OrganismDetails
     inlined: true
@@ -244,9 +244,9 @@ attributes:
     from_schema: metadata
     rank: 1000
     alias: tissue
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: TissueDetails
     inlined: true
@@ -257,9 +257,9 @@ attributes:
     from_schema: metadata
     rank: 1000
     alias: cell_type
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellType
     inlined: true
@@ -270,9 +270,9 @@ attributes:
     from_schema: metadata
     rank: 1000
     alias: cell_strain
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellStrain
     inlined: true
@@ -283,9 +283,9 @@ attributes:
     from_schema: metadata
     rank: 1000
     alias: cell_component
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellComponent
     inlined: true
@@ -298,7 +298,7 @@ attributes:
 
 <details>
 ```yaml
-name: ExperimentalMetadata
+name: ExperimentMetadata
 description: Metadata describing sample and sample preparation methods used in a cryoET
   dataset.
 from_schema: metadata
@@ -312,9 +312,9 @@ attributes:
     - cdp-common:preparation_sample_type
     rank: 1000
     alias: sample_type
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: sample_type_enum
     required: true
@@ -329,9 +329,9 @@ attributes:
     - cdp-common:sample_preparation
     rank: 1000
     alias: sample_preparation
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -345,9 +345,9 @@ attributes:
     - cdp-common:grid_preparation
     rank: 1000
     alias: grid_preparation
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -362,9 +362,9 @@ attributes:
     - cdp-common:preparation_other_setup
     rank: 1000
     alias: other_setup
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -376,9 +376,9 @@ attributes:
     from_schema: metadata
     rank: 1000
     alias: organism
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: OrganismDetails
     inlined: true
@@ -389,9 +389,9 @@ attributes:
     from_schema: metadata
     rank: 1000
     alias: tissue
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: TissueDetails
     inlined: true
@@ -402,9 +402,9 @@ attributes:
     from_schema: metadata
     rank: 1000
     alias: cell_type
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellType
     inlined: true
@@ -415,9 +415,9 @@ attributes:
     from_schema: metadata
     rank: 1000
     alias: cell_strain
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellStrain
     inlined: true
@@ -428,9 +428,9 @@ attributes:
     from_schema: metadata
     rank: 1000
     alias: cell_component
-    owner: ExperimentalMetadata
+    owner: ExperimentMetadata
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellComponent
     inlined: true

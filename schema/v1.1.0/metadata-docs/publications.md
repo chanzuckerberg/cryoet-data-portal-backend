@@ -16,8 +16,9 @@ URI: [cdp-meta:publications](metadatapublications)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [CrossReferencesMixin](CrossReferencesMixin.md) | A set of cross-references to other databases and publications |  no  |
+| [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |  no  |
 | [CrossReferencesEntity](CrossReferencesEntity.md) | A set of cross-references to other databases and publications |  no  |
+| [CrossReferencesMixin](CrossReferencesMixin.md) | A set of cross-references to other databases and publications |  no  |
 
 
 
@@ -59,6 +60,7 @@ URI: [cdp-meta:publications](metadatapublications)
 name: publications
 alias: publications
 domain_of:
+- CrossReferences
 - CrossReferencesEntity
 - CrossReferencesMixin
 range: string

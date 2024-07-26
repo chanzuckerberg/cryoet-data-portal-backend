@@ -21,10 +21,10 @@ URI: [cdp-meta:TissueDetails](metadataTissueDetails)
     class TissueDetails
     click TissueDetails href "../TissueDetails"
       TissueDetails : id
-        
+
       TissueDetails : name
-        
-      
+
+
 ```
 
 
@@ -48,7 +48,7 @@ URI: [cdp-meta:TissueDetails](metadataTissueDetails)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [ExperimentalMetadata](ExperimentalMetadata.md) | [tissue](tissue.md) | range | [TissueDetails](TissueDetails.md) |
+| [ExperimentMetadata](ExperimentMetadata.md) | [tissue](tissue.md) | range | [TissueDetails](TissueDetails.md) |
 | [Dataset](Dataset.md) | [tissue](tissue.md) | range | [TissueDetails](TissueDetails.md) |
 
 

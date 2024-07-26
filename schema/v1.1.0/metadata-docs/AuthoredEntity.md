@@ -30,17 +30,17 @@ URI: [cdp-meta:AuthoredEntity](metadataAuthoredEntity)
         click Tomogram href "../Tomogram"
       AuthoredEntity <|-- Annotation
         click Annotation href "../Annotation"
-      
+
       AuthoredEntity : authors
-        
-          
-    
-    
+
+
+
+
     AuthoredEntity --> "1..*" Author : authors
     click Author href "../Author"
 
-        
-      
+
+
 ```
 
 
@@ -124,6 +124,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
 
 ```
 </details>
@@ -156,6 +157,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
 
 ```
 </details>

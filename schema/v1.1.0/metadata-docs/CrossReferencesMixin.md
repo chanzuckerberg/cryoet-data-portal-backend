@@ -22,16 +22,16 @@ URI: [cdp-meta:CrossReferencesMixin](metadataCrossReferencesMixin)
     click CrossReferencesMixin href "../CrossReferencesMixin"
       CrossReferencesMixin <|-- CrossReferencesEntity
         click CrossReferencesEntity href "../CrossReferencesEntity"
-      
+
       CrossReferencesMixin : dataset_citations
-        
+
       CrossReferencesMixin : publications
-        
+
       CrossReferencesMixin : related_database_entries
-        
+
       CrossReferencesMixin : related_database_links
-        
-      
+
+
 ```
 
 
@@ -115,6 +115,7 @@ attributes:
     owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
+    - CrossReferences
     - CrossReferencesEntity
     range: DOI_LIST
     recommended: true
@@ -129,6 +130,7 @@ attributes:
     owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
+    - CrossReferences
     - CrossReferencesEntity
     range: EMPIAR_EMDB_PDB_LIST
     recommended: true
@@ -143,6 +145,7 @@ attributes:
     owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
+    - CrossReferences
     - CrossReferencesEntity
     range: string
     inlined: true
@@ -155,6 +158,7 @@ attributes:
     owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
+    - CrossReferences
     - CrossReferencesEntity
     range: string
     inlined: true
@@ -181,6 +185,7 @@ attributes:
     owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
+    - CrossReferences
     - CrossReferencesEntity
     range: DOI_LIST
     recommended: true
@@ -195,6 +200,7 @@ attributes:
     owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
+    - CrossReferences
     - CrossReferencesEntity
     range: EMPIAR_EMDB_PDB_LIST
     recommended: true
@@ -209,6 +215,7 @@ attributes:
     owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
+    - CrossReferences
     - CrossReferencesEntity
     range: string
     inlined: true
@@ -221,6 +228,7 @@ attributes:
     owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
+    - CrossReferences
     - CrossReferencesEntity
     range: string
     inlined: true

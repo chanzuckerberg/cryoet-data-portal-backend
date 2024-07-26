@@ -21,10 +21,10 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
     class CellComponent
     click CellComponent href "../CellComponent"
       CellComponent : id
-        
+
       CellComponent : name
-        
-      
+
+
 ```
 
 
@@ -48,7 +48,7 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [ExperimentalMetadata](ExperimentalMetadata.md) | [cell_component](cell_component.md) | range | [CellComponent](CellComponent.md) |
+| [ExperimentMetadata](ExperimentMetadata.md) | [cell_component](cell_component.md) | range | [CellComponent](CellComponent.md) |
 | [Dataset](Dataset.md) | [cell_component](cell_component.md) | range | [CellComponent](CellComponent.md) |
 
 

@@ -20,80 +20,80 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
  classDiagram
     class Annotation
     click Annotation href "../Annotation"
-      DatestampedEntity <|-- Annotation
-        click DatestampedEntity href "../DatestampedEntity"
+      DateStampedEntity <|-- Annotation
+        click DateStampedEntity href "../DateStampedEntity"
       AuthoredEntity <|-- Annotation
         click AuthoredEntity href "../AuthoredEntity"
-      
+
       Annotation : annotation_method
-        
+
       Annotation : annotation_object
-        
-          
-    
-    
+
+
+
+
     Annotation --> "1" AnnotationObject : annotation_object
     click AnnotationObject href "../AnnotationObject"
 
-        
+
       Annotation : annotation_publications
-        
+
       Annotation : annotation_software
-        
+
       Annotation : authors
-        
-          
-    
-    
+
+
+
+
     Annotation --> "1..*" Author : authors
     click Author href "../Author"
 
-        
+
       Annotation : confidence
-        
-          
-    
-    
+
+
+
+
     Annotation --> "0..1" AnnotationConfidence : confidence
     click AnnotationConfidence href "../AnnotationConfidence"
 
-        
+
       Annotation : dates
-        
-          
-    
-    
+
+
+
+
     Annotation --> "1" DateStamp : dates
     click DateStamp href "../DateStamp"
 
-        
+
       Annotation : files
-        
-          
-    
-    
+
+
+
+
     Annotation --> "*" AnnotationSourceFile : files
     click AnnotationSourceFile href "../AnnotationSourceFile"
 
-        
+
       Annotation : ground_truth_status
-        
+
       Annotation : is_curator_recommended
-        
+
       Annotation : method_type
-        
-          
-    
-    
+
+
+
+
     Annotation --> "1" AnnotationMethodTypeEnum : method_type
     click AnnotationMethodTypeEnum href "../AnnotationMethodTypeEnum"
 
-        
+
       Annotation : object_count
-        
+
       Annotation : version
-        
-      
+
+
 ```
 
 
@@ -101,7 +101,7 @@ URI: [cdp-meta:Annotation](metadataAnnotation)
 
 
 ## Inheritance
-* **Annotation** [ [DatestampedEntity](DatestampedEntity.md) [AuthoredEntity](AuthoredEntity.md)]
+* **Annotation** [ [DateStampedEntity](DateStampedEntity.md) [AuthoredEntity](AuthoredEntity.md)]
 
 
 
@@ -172,7 +172,7 @@ name: Annotation
 description: Metadata describing an annotation.
 from_schema: metadata
 mixins:
-- DatestampedEntity
+- DateStampedEntity
 - AuthoredEntity
 attributes:
   annotation_method:
@@ -347,7 +347,7 @@ attributes:
     alias: dates
     owner: Annotation
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation
@@ -373,6 +373,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
 
 ```
 </details>
@@ -385,7 +386,7 @@ name: Annotation
 description: Metadata describing an annotation.
 from_schema: metadata
 mixins:
-- DatestampedEntity
+- DateStampedEntity
 - AuthoredEntity
 attributes:
   annotation_method:
@@ -560,7 +561,7 @@ attributes:
     alias: dates
     owner: Annotation
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation
@@ -586,6 +587,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
 
 ```
 </details>

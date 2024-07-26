@@ -20,120 +20,120 @@ URI: [cdp-meta:Dataset](metadataDataset)
  classDiagram
     class Dataset
     click Dataset href "../Dataset"
-      DatestampedEntity <|-- Dataset
-        click DatestampedEntity href "../DatestampedEntity"
+      DateStampedEntity <|-- Dataset
+        click DateStampedEntity href "../DateStampedEntity"
       AuthoredEntity <|-- Dataset
         click AuthoredEntity href "../AuthoredEntity"
       FundedEntity <|-- Dataset
         click FundedEntity href "../FundedEntity"
       CrossReferencedEntity <|-- Dataset
         click CrossReferencedEntity href "../CrossReferencedEntity"
-      ExperimentalMetadata <|-- Dataset
-        click ExperimentalMetadata href "../ExperimentalMetadata"
-      
+      ExperimentMetadata <|-- Dataset
+        click ExperimentMetadata href "../ExperimentMetadata"
+
       Dataset : authors
-        
-          
-    
-    
+
+
+
+
     Dataset --> "1..*" Author : authors
     click Author href "../Author"
 
-        
+
       Dataset : cell_component
-        
-          
-    
-    
+
+
+
+
     Dataset --> "0..1" CellComponent : cell_component
     click CellComponent href "../CellComponent"
 
-        
+
       Dataset : cell_strain
-        
-          
-    
-    
+
+
+
+
     Dataset --> "0..1" CellStrain : cell_strain
     click CellStrain href "../CellStrain"
 
-        
+
       Dataset : cell_type
-        
-          
-    
-    
+
+
+
+
     Dataset --> "0..1" CellType : cell_type
     click CellType href "../CellType"
 
-        
+
       Dataset : cross_references
-        
-          
-    
-    
+
+
+
+
     Dataset --> "0..1" CrossReferencesEntity : cross_references
     click CrossReferencesEntity href "../CrossReferencesEntity"
 
-        
+
       Dataset : dataset_description
-        
+
       Dataset : dataset_identifier
-        
+
       Dataset : dataset_title
-        
+
       Dataset : dates
-        
-          
-    
-    
+
+
+
+
     Dataset --> "1" DateStamp : dates
     click DateStamp href "../DateStamp"
 
-        
+
       Dataset : funding
-        
-          
-    
-    
+
+
+
+
     Dataset --> "* _recommended_" FundingDetails : funding
     click FundingDetails href "../FundingDetails"
 
-        
+
       Dataset : grid_preparation
-        
+
       Dataset : organism
-        
-          
-    
-    
+
+
+
+
     Dataset --> "0..1" OrganismDetails : organism
     click OrganismDetails href "../OrganismDetails"
 
-        
+
       Dataset : other_setup
-        
+
       Dataset : sample_preparation
-        
+
       Dataset : sample_type
-        
-          
-    
-    
+
+
+
+
     Dataset --> "1" SampleTypeEnum : sample_type
     click SampleTypeEnum href "../SampleTypeEnum"
 
-        
+
       Dataset : tissue
-        
-          
-    
-    
+
+
+
+
     Dataset --> "0..1" TissueDetails : tissue
     click TissueDetails href "../TissueDetails"
 
-        
-      
+
+
 ```
 
 
@@ -141,7 +141,7 @@ URI: [cdp-meta:Dataset](metadataDataset)
 
 
 ## Inheritance
-* **Dataset** [ [DatestampedEntity](DatestampedEntity.md) [AuthoredEntity](AuthoredEntity.md) [FundedEntity](FundedEntity.md) [CrossReferencedEntity](CrossReferencedEntity.md) [ExperimentalMetadata](ExperimentalMetadata.md)]
+* **Dataset** [ [DateStampedEntity](DateStampedEntity.md) [AuthoredEntity](AuthoredEntity.md) [FundedEntity](FundedEntity.md) [CrossReferencedEntity](CrossReferencedEntity.md) [ExperimentMetadata](ExperimentMetadata.md)]
 
 
 
@@ -215,11 +215,11 @@ name: Dataset
 description: High-level description of a cryoET dataset.
 from_schema: metadata
 mixins:
-- DatestampedEntity
+- DateStampedEntity
 - AuthoredEntity
 - FundedEntity
 - CrossReferencedEntity
-- ExperimentalMetadata
+- ExperimentMetadata
 attributes:
   dataset_identifier:
     name: dataset_identifier
@@ -276,7 +276,7 @@ attributes:
     alias: dates
     owner: Dataset
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation
@@ -302,6 +302,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
   funding:
     name: funding
     description: A funding source for a scientific data entity (base for JSON and
@@ -340,7 +341,7 @@ attributes:
     alias: sample_type
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: sample_type_enum
     required: true
@@ -356,7 +357,7 @@ attributes:
     alias: sample_preparation
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -371,7 +372,7 @@ attributes:
     alias: grid_preparation
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -387,7 +388,7 @@ attributes:
     alias: other_setup
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -400,7 +401,7 @@ attributes:
     alias: organism
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: OrganismDetails
     inlined: true
@@ -412,7 +413,7 @@ attributes:
     alias: tissue
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: TissueDetails
     inlined: true
@@ -424,7 +425,7 @@ attributes:
     alias: cell_type
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellType
     inlined: true
@@ -436,7 +437,7 @@ attributes:
     alias: cell_strain
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellStrain
     inlined: true
@@ -448,7 +449,7 @@ attributes:
     alias: cell_component
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellComponent
     inlined: true
@@ -465,11 +466,11 @@ name: Dataset
 description: High-level description of a cryoET dataset.
 from_schema: metadata
 mixins:
-- DatestampedEntity
+- DateStampedEntity
 - AuthoredEntity
 - FundedEntity
 - CrossReferencedEntity
-- ExperimentalMetadata
+- ExperimentMetadata
 attributes:
   dataset_identifier:
     name: dataset_identifier
@@ -526,7 +527,7 @@ attributes:
     alias: dates
     owner: Dataset
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation
@@ -552,6 +553,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
   funding:
     name: funding
     description: A funding source for a scientific data entity (base for JSON and
@@ -590,7 +592,7 @@ attributes:
     alias: sample_type
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: sample_type_enum
     required: true
@@ -606,7 +608,7 @@ attributes:
     alias: sample_preparation
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -621,7 +623,7 @@ attributes:
     alias: grid_preparation
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -637,7 +639,7 @@ attributes:
     alias: other_setup
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: string
     recommended: true
@@ -650,7 +652,7 @@ attributes:
     alias: organism
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: OrganismDetails
     inlined: true
@@ -662,7 +664,7 @@ attributes:
     alias: tissue
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: TissueDetails
     inlined: true
@@ -674,7 +676,7 @@ attributes:
     alias: cell_type
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellType
     inlined: true
@@ -686,7 +688,7 @@ attributes:
     alias: cell_strain
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellStrain
     inlined: true
@@ -698,7 +700,7 @@ attributes:
     alias: cell_component
     owner: Dataset
     domain_of:
-    - ExperimentalMetadata
+    - ExperimentMetadata
     - Dataset
     range: CellComponent
     inlined: true

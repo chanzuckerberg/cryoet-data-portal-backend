@@ -26,6 +26,7 @@
                     "items": {
                         "$ref": "#/$defs/Author"
                     },
+                    "minItems": 1,
                     "type": "array"
                 },
                 "confidence": {
@@ -113,6 +114,7 @@
                     "items": {
                         "$ref": "#/$defs/AnnotationSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -637,6 +639,7 @@
                     "items": {
                         "$ref": "#/$defs/DatasetEntity"
                     },
+                    "minItems": 1,
                     "type": "array"
                 },
                 "deposition_keyphotos": {
@@ -651,6 +654,7 @@
                     "items": {
                         "$ref": "#/$defs/DepositionEntity"
                     },
+                    "minItems": 1,
                     "type": "array"
                 },
                 "frames": {
@@ -686,6 +690,7 @@
                     "items": {
                         "$ref": "#/$defs/RunEntity"
                     },
+                    "minItems": 1,
                     "type": "array"
                 },
                 "standardization_config": {
@@ -711,16 +716,44 @@
                     "items": {
                         "$ref": "#/$defs/VoxelSpacingEntity"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
             "required": [
                 "datasets",
                 "depositions",
+                "runs",
                 "standardization_config",
                 "voxel_spacings"
             ],
             "title": "Container",
+            "type": "object"
+        },
+        "CrossReferences": {
+            "additionalProperties": false,
+            "description": "A set of cross-references to other databases and publications.",
+            "properties": {
+                "dataset_citations": {
+                    "description": "Comma-separated list of DOIs for publications citing the dataset.",
+                    "type": "string"
+                },
+                "publications": {
+                    "description": "Comma-separated list of DOIs for publications associated with the dataset.",
+                    "pattern": "(^(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\\s*,\\s*(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\\s*,\\s*(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)",
+                    "type": "string"
+                },
+                "related_database_entries": {
+                    "description": "Comma-separated list of related database entries for the dataset.",
+                    "pattern": "(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)",
+                    "type": "string"
+                },
+                "related_database_links": {
+                    "description": "Comma-separated list of related database links for the dataset.",
+                    "type": "string"
+                }
+            },
+            "title": "CrossReferences",
             "type": "object"
         },
         "Dataset": {
@@ -732,6 +765,7 @@
                     "items": {
                         "$ref": "#/$defs/Author"
                     },
+                    "minItems": 1,
                     "type": "array"
                 },
                 "cell_component": {
@@ -823,11 +857,11 @@
                     "items": {
                         "$ref": "#/$defs/DatasetSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
             "required": [
-                "metadata",
                 "sources"
             ],
             "title": "DatasetEntity",
@@ -842,6 +876,7 @@
                     "items": {
                         "$ref": "#/$defs/KeyPhotoSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -912,6 +947,7 @@
                     "items": {
                         "$ref": "#/$defs/Any"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -962,6 +998,7 @@
                     "items": {
                         "$ref": "#/$defs/Author"
                     },
+                    "minItems": 1,
                     "type": "array"
                 },
                 "cross_references": {
@@ -990,6 +1027,7 @@
                         "$ref": "#/$defs/DepositionTypesEnum",
                         "pattern": "(^annotation$)|(^dataset$)|(^tomogram$)"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1017,11 +1055,11 @@
                     "items": {
                         "$ref": "#/$defs/DepositionSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
             "required": [
-                "metadata",
                 "sources"
             ],
             "title": "DepositionEntity",
@@ -1036,6 +1074,7 @@
                     "items": {
                         "$ref": "#/$defs/KeyPhotoSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1120,6 +1159,7 @@
                     "items": {
                         "$ref": "#/$defs/FrameSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1182,6 +1222,7 @@
                     "items": {
                         "$ref": "#/$defs/GainSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1228,6 +1269,7 @@
                     "items": {
                         "$ref": "#/$defs/KeyImageSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1274,6 +1316,7 @@
                     "items": {
                         "$ref": "#/$defs/KeyPhotoSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1325,7 +1368,7 @@
                 "manufacturer": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/MicroscopeManufacturerEnum"
+                            "$ref": "#/$defs/TiltseriesMicroscopeManufacturerEnum"
                         },
                         {
                             "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
@@ -1346,16 +1389,6 @@
             ],
             "title": "MicroscopeDetails",
             "type": "object"
-        },
-        "MicroscopeManufacturerEnum": {
-            "description": "Microscope manufacturer",
-            "enum": [
-                "FEI",
-                "TFS",
-                "JEOL"
-            ],
-            "title": "MicroscopeManufacturerEnum",
-            "type": "string"
         },
         "MicroscopeOpticalSetup": {
             "additionalProperties": false,
@@ -1427,6 +1460,7 @@
                     "items": {
                         "$ref": "#/$defs/RawTiltSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1473,6 +1507,7 @@
                     "items": {
                         "$ref": "#/$defs/RunSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1557,6 +1592,7 @@
                     "items": {
                         "type": "string"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -1928,11 +1964,11 @@
                     "items": {
                         "$ref": "#/$defs/TiltSeriesSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
             "required": [
-                "metadata",
                 "sources"
             ],
             "title": "TiltSeriesEntity",
@@ -1975,6 +2011,16 @@
                 "cds"
             ],
             "title": "TiltseriesCameraAcquireModeEnum",
+            "type": "string"
+        },
+        "TiltseriesMicroscopeManufacturerEnum": {
+            "description": "Microscope manufacturer",
+            "enum": [
+                "FEI",
+                "TFS",
+                "JEOL"
+            ],
+            "title": "TiltseriesMicroscopeManufacturerEnum",
             "type": "string"
         },
         "TissueDetails": {
@@ -2024,6 +2070,7 @@
                     "items": {
                         "$ref": "#/$defs/Author"
                     },
+                    "minItems": 1,
                     "type": "array"
                 },
                 "ctf_corrected": {
@@ -2124,11 +2171,11 @@
                     "items": {
                         "$ref": "#/$defs/TomogramSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
             "required": [
-                "metadata",
                 "sources"
             ],
             "title": "TomogramEntity",
@@ -2277,6 +2324,7 @@
                     "items": {
                         "$ref": "#/$defs/VoxelSpacingSource"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -2295,6 +2343,7 @@
                     "items": {
                         "type": "number"
                     },
+                    "minItems": 1,
                     "type": "array"
                 }
             },
@@ -2358,6 +2407,7 @@
             "items": {
                 "$ref": "#/$defs/DatasetEntity"
             },
+            "minItems": 1,
             "type": "array"
         },
         "deposition_keyphotos": {
@@ -2372,6 +2422,7 @@
             "items": {
                 "$ref": "#/$defs/DepositionEntity"
             },
+            "minItems": 1,
             "type": "array"
         },
         "frames": {
@@ -2407,6 +2458,7 @@
             "items": {
                 "$ref": "#/$defs/RunEntity"
             },
+            "minItems": 1,
             "type": "array"
         },
         "standardization_config": {
@@ -2432,12 +2484,14 @@
             "items": {
                 "$ref": "#/$defs/VoxelSpacingEntity"
             },
+            "minItems": 1,
             "type": "array"
         }
     },
     "required": [
         "datasets",
         "depositions",
+        "runs",
         "standardization_config",
         "voxel_spacings"
     ],

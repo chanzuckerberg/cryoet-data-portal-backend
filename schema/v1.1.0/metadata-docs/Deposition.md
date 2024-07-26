@@ -20,56 +20,56 @@ URI: [cdp-meta:Deposition](metadataDeposition)
  classDiagram
     class Deposition
     click Deposition href "../Deposition"
-      DatestampedEntity <|-- Deposition
-        click DatestampedEntity href "../DatestampedEntity"
+      DateStampedEntity <|-- Deposition
+        click DateStampedEntity href "../DateStampedEntity"
       AuthoredEntity <|-- Deposition
         click AuthoredEntity href "../AuthoredEntity"
       CrossReferencedEntity <|-- Deposition
         click CrossReferencedEntity href "../CrossReferencedEntity"
-      
+
       Deposition : authors
-        
-          
-    
-    
+
+
+
+
     Deposition --> "1..*" Author : authors
     click Author href "../Author"
 
-        
+
       Deposition : cross_references
-        
-          
-    
-    
+
+
+
+
     Deposition --> "0..1" CrossReferencesEntity : cross_references
     click CrossReferencesEntity href "../CrossReferencesEntity"
 
-        
+
       Deposition : dates
-        
-          
-    
-    
+
+
+
+
     Deposition --> "1" DateStamp : dates
     click DateStamp href "../DateStamp"
 
-        
+
       Deposition : deposition_description
-        
+
       Deposition : deposition_identifier
-        
+
       Deposition : deposition_title
-        
+
       Deposition : deposition_types
-        
-          
-    
-    
+
+
+
+
     Deposition --> "1..*" DepositionTypesEnum : deposition_types
     click DepositionTypesEnum href "../DepositionTypesEnum"
 
-        
-      
+
+
 ```
 
 
@@ -77,7 +77,7 @@ URI: [cdp-meta:Deposition](metadataDeposition)
 
 
 ## Inheritance
-* **Deposition** [ [DatestampedEntity](DatestampedEntity.md) [AuthoredEntity](AuthoredEntity.md) [CrossReferencedEntity](CrossReferencedEntity.md)]
+* **Deposition** [ [DateStampedEntity](DateStampedEntity.md) [AuthoredEntity](AuthoredEntity.md) [CrossReferencedEntity](CrossReferencedEntity.md)]
 
 
 
@@ -142,7 +142,7 @@ name: Deposition
 description: Metadata describing a deposition.
 from_schema: metadata
 mixins:
-- DatestampedEntity
+- DateStampedEntity
 - AuthoredEntity
 - CrossReferencedEntity
 attributes:
@@ -210,6 +210,7 @@ attributes:
     inlined: true
     inlined_as_list: true
     pattern: (^annotation$)|(^dataset$)|(^tomogram$)
+    minimum_cardinality: 1
   dates:
     name: dates
     description: A set of dates at which a data item was deposited, published and
@@ -218,7 +219,7 @@ attributes:
     alias: dates
     owner: Deposition
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation
@@ -244,6 +245,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
   cross_references:
     name: cross_references
     description: A set of cross-references to other databases and publications.
@@ -269,7 +271,7 @@ name: Deposition
 description: Metadata describing a deposition.
 from_schema: metadata
 mixins:
-- DatestampedEntity
+- DateStampedEntity
 - AuthoredEntity
 - CrossReferencedEntity
 attributes:
@@ -337,6 +339,7 @@ attributes:
     inlined: true
     inlined_as_list: true
     pattern: (^annotation$)|(^dataset$)|(^tomogram$)
+    minimum_cardinality: 1
   dates:
     name: dates
     description: A set of dates at which a data item was deposited, published and
@@ -345,7 +348,7 @@ attributes:
     alias: dates
     owner: Deposition
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation
@@ -371,6 +374,7 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
   cross_references:
     name: cross_references
     description: A set of cross-references to other databases and publications.

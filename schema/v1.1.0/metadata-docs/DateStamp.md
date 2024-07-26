@@ -22,14 +22,14 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
     click DateStamp href "../DateStamp"
       DateStampedEntityMixin <|-- DateStamp
         click DateStampedEntityMixin href "../DateStampedEntityMixin"
-      
+
       DateStamp : deposition_date
-        
+
       DateStamp : last_modified_date
-        
+
       DateStamp : release_date
-        
-      
+
+
 ```
 
 
@@ -57,7 +57,7 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [DatestampedEntity](DatestampedEntity.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
+| [DateStampedEntity](DateStampedEntity.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
 | [Dataset](Dataset.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
 | [Deposition](Deposition.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
 | [Annotation](Annotation.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |

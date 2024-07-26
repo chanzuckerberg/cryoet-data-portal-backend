@@ -459,8 +459,8 @@ enums:
       cds:
         text: cds
         description: Correlated double sampling mode
-  microscope_manufacturer_enum:
-    name: microscope_manufacturer_enum
+  tiltseries_microscope_manufacturer_enum:
+    name: tiltseries_microscope_manufacturer_enum
     description: Microscope manufacturer
     from_schema: cdp-dataset-config
     permissible_values:
@@ -569,6 +569,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
       deposition_keyphotos:
         name: deposition_keyphotos
         description: A deposition key photo entity.
@@ -594,6 +595,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
       frames:
         name: frames
         description: A frame entity.
@@ -651,9 +653,11 @@ classes:
         domain_of:
         - Container
         range: RunEntity
+        required: true
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
       standardization_config:
         name: standardization_config
         description: A standardization configuration.
@@ -703,6 +707,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
     tree_root: true
   GeneralGlob:
     name: GeneralGlob
@@ -855,6 +860,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   DefaultSource:
     name: DefaultSource
     description: A generalized source class with glob finders.
@@ -1049,6 +1055,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   KeyPhotoEntity:
     name: KeyPhotoEntity
     description: A key photo entity.
@@ -1078,6 +1085,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   KeyPhotoSource:
     name: KeyPhotoSource
     description: A key photo source.
@@ -1174,6 +1182,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   AnnotationSource:
     name: AnnotationSource
     description: An annotation source.
@@ -1269,7 +1278,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: Dataset
-        required: true
         inlined: true
         inlined_as_list: true
       sources:
@@ -1296,6 +1304,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   DatasetSource:
     name: DatasetSource
     description: A dataset source.
@@ -1383,6 +1392,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   DepositionKeyPhotoEntity:
     name: DepositionKeyPhotoEntity
     description: A deposition key photo entity.
@@ -1413,6 +1423,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   DepositionEntity:
     name: DepositionEntity
     description: A deposition entity.
@@ -1431,7 +1442,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: Deposition
-        required: true
         inlined: true
         inlined_as_list: true
       sources:
@@ -1458,6 +1468,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   DepositionSource:
     name: DepositionSource
     description: A deposition source.
@@ -1544,6 +1555,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   FrameSource:
     name: FrameSource
     description: A frame source.
@@ -1643,6 +1655,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   GainSource:
     name: GainSource
     description: A gain source.
@@ -1742,6 +1755,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   KeyImageSource:
     name: KeyImageSource
     description: A key image source.
@@ -1841,6 +1855,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   RawTiltSource:
     name: RawTiltSource
     description: A raw tilt source.
@@ -1940,6 +1955,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   RunSource:
     name: RunSource
     description: A run source.
@@ -2101,7 +2117,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: TiltSeries
-        required: true
         inlined: true
         inlined_as_list: true
       sources:
@@ -2128,6 +2143,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   TiltSeriesSource:
     name: TiltSeriesSource
     description: A tilt series source.
@@ -2216,7 +2232,6 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         range: Tomogram
-        required: true
         inlined: true
         inlined_as_list: true
       sources:
@@ -2243,6 +2258,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   TomogramSource:
     name: TomogramSource
     description: A tomogram source.
@@ -2342,6 +2358,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   VoxelSpacingSource:
     name: VoxelSpacingSource
     description: A voxel spacing source.
@@ -2429,6 +2446,7 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        minimum_cardinality: 1
   TomogramHeader:
     name: TomogramHeader
     description: A tomogram header, a unique source attribute for voxel spacing.
@@ -2545,6 +2563,7 @@ classes:
         owner: CrossReferencesMixin
         domain_of:
         - CrossReferencesMixin
+        - CrossReferences
         - CrossReferencesEntity
         range: DOI_LIST
         recommended: true
@@ -2559,6 +2578,7 @@ classes:
         owner: CrossReferencesMixin
         domain_of:
         - CrossReferencesMixin
+        - CrossReferences
         - CrossReferencesEntity
         range: EMPIAR_EMDB_PDB_LIST
         recommended: true
@@ -2573,6 +2593,7 @@ classes:
         owner: CrossReferencesMixin
         domain_of:
         - CrossReferencesMixin
+        - CrossReferences
         - CrossReferencesEntity
         range: string
         inlined: true
@@ -2585,6 +2606,7 @@ classes:
         owner: CrossReferencesMixin
         domain_of:
         - CrossReferencesMixin
+        - CrossReferences
         - CrossReferencesEntity
         range: string
         inlined: true
