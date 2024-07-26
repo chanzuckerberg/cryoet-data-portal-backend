@@ -104,8 +104,8 @@ def main(execution_arn: list[str], input_file: str, output_dir: str, profile: st
             f.write("\n".join(logs))
 
     logger.info("====================================")
-    logger.info("TOTAL FAILED: %d", failed_count)
-    logger.info("TOTAL SUCCEEDED %d", successful_count)
+    logger.info("TOTAL FAILED: %d/%d", failed_count, len(input_execution_arn))
+    logger.info("TOTAL SUCCEEDED %d/%d", successful_count, len(input_execution_arn))
 
 
 if __name__ == "__main__":
