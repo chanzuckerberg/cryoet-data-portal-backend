@@ -324,18 +324,10 @@ dataset_keyphotos:
             snapshot: 'cryoetportal-rawdatasets-dev/mahrukh_usmani_06_2024/Data_Set_4/snapshot.png'
             thumbnail: 'cryoetportal-rawdatasets-dev/mahrukh_usmani_06_2024/Data_Set_4/thumbnail.png'
 depositions:
-  - metadata:
-      authors: *id001
-      dates: *id002
-      deposition_description: TBA
-      deposition_identifier: 10307
-      deposition_title: TBA
-      deposition_types:
-        - dataset
-    sources:
-      - literal:
-          value:
-            - 10307
+  - sources:
+    - literal:
+        value:
+          - 10307
 
 frames: []
 
