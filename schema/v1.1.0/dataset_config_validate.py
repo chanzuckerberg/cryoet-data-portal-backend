@@ -101,14 +101,14 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
     "--include-glob",
     type=str,
     default=None,
-    help="Include only files that match the given glob pattern, used in conjunction with --input-dir.",
+    help="Include only files that match the given glob pattern, can be used for both --input-dir and input files.",
 )
 @click.option(
     "--exclude-keywords",
     type=str,
     default=EXCLUDE_KEYWORDS_LIST,
     multiple=True,
-    help="Exclude files that contain the following keywords in the filename, used in conjunction with --input-dir. Repeat the flag for multiple keywords.",
+    help="Exclude files that contain the following keywords in the filename, can be used for both --input-dir and input files.",
 )
 @click.option(
     "--validation-exclusions-file",
