@@ -105,7 +105,7 @@ running_network_validation = False
 # ==============================================================================
 # Helper Functions
 # ==============================================================================
-def skip_validation(obj: BaseModel, field_name: str, case_sensitive: bool = False) -> bool:
+def skip_validation(obj: BaseModel, field_name: str, case_sensitive: bool = True) -> bool:
     # Check if the original class name is in the validation exclusions
     global validation_exclusions
 
