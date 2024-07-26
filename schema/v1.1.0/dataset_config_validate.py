@@ -21,6 +21,7 @@ logger.setLevel(logging.INFO)
 
 DATASET_CONFIGS_DIR = "../../ingestion_tools/dataset_configs/"
 ERRORS_OUTPUT_DIR = "./dataset_config_validate_errors"
+VALIDATION_EXCLUSIONS_FILE = "dataset_config_validation_exclusions.json"
 
 # The permitted parent attribute for formatted strings and its corresponding depth
 # If the attribute has a parent attribute in this list, it is allowed to be a formatted string
@@ -110,6 +111,12 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
     help="Exclude files that contain the following keywords in the filename, used in conjunction with --input-dir. Repeat the flag for multiple keywords.",
 )
 @click.option(
+    "--validation-exclusions-file",
+    type=str,
+    default=VALIDATION_EXCLUSIONS_FILE,
+    help="Path to the validation exclusions file containing class-field-value mappings to ignore during validation. See docs for more information.",
+)
+@click.option(
     "--output-dir",
     type=str,
     default=ERRORS_OUTPUT_DIR,
@@ -126,12 +133,13 @@ def main(
     input_dir: str,
     include_glob: str,
     exclude_keywords: str,
+    validation_exclusions_file: str,
     output_dir: str,
     network_validation: bool,
     verbose: bool,
 ):
     """
-    See ingestion_tools/docs/dataset_config_validation.md for more information.
+    See ingestion_tools/docs/dataset_config_validate.md for more information.
     """
     if verbose:
         logger.setLevel(logging.DEBUG)
@@ -156,6 +164,12 @@ def main(
         logger.warning("No files to validate.")
         return
 
+    with open(validation_exclusions_file, "r") as f:
+        validation_exclusions = json.load(f)
+    logger.info("Using validation exclusions file: %s", validation_exclusions_file)
+
+    if output_dir[-1] != "/":
+        output_dir += "/"
     # Remove existing dir
     if os.path.exists(output_dir):
         logging.warning("Removing existing %s directory.", output_dir)
@@ -175,7 +189,11 @@ def main(
                 # formatted strings and the base type in the same field)
                 # https://github.com/linkml/linkml/issues/1521
                 config_data = replace_formatted_strings(config_data, 0, False)
-                ExtendedValidationContainer(**config_data, network_validation=network_validation)
+                ExtendedValidationContainer(
+                    **config_data,
+                    network_validation=network_validation,
+                    validation_exclusions=validation_exclusions,
+                )
         except ValidationError as e:
             validation_succeeded = False
             # Get all errors and convert them to strings
@@ -195,7 +213,7 @@ def main(
     with open(os.path.join(output_dir, "dataset_config_validate_errors.json"), "w") as f:
         json.dump(dict(sorted(errors.items())), f, indent=2, default=str)
 
-    logger.error("Validation failed. See dataset_config_validate_errors.json for details.")
+    logger.error("Validation failed. See %s for errors.", output_dir)
     exit(1)
 
 

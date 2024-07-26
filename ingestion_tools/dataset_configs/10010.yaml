@@ -168,8 +168,6 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: '{energy_filter}'
-      image_corrector: null
-      phase_plate: null
     pixel_spacing: float {tilt_series_pixel_spacing}
     spherical_aberration_constant: 2.7
     tilt_range:
@@ -179,6 +177,7 @@ tiltseries:
     tilt_step: 2
     tilting_scheme: min to max tilt
     total_flux: float {tilt_series_total_flux}
+    tilt_axis: 86.2
   sources:
   - source_glob:
       list_glob: Tilt_Series/{run_name}.mrc

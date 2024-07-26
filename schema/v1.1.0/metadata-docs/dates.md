@@ -16,10 +16,10 @@ URI: [cdp-meta:dates](metadatadates)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [DatestampedEntity](DatestampedEntity.md) | An entity with associated deposition, release and last modified dates |  no  |
-| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 | [Deposition](Deposition.md) | Metadata describing a deposition |  no  |
+| [DateStampedEntity](DateStampedEntity.md) | An entity with associated deposition, release and last modified dates |  no  |
 | [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 
 
 
@@ -61,7 +61,7 @@ URI: [cdp-meta:dates](metadatadates)
 name: dates
 alias: dates
 domain_of:
-- DatestampedEntity
+- DateStampedEntity
 - Dataset
 - Deposition
 - Annotation
