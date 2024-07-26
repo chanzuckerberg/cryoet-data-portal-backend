@@ -1,6 +1,6 @@
 {
     "AnnotationObject": {
-        "id": [],
+        "id": ["GO:0160201", "GO:0160202"],
         "name": [
             "microtubule doublet 48 nm repeat",
             "microtubule doublet 96 nm repeat",
@@ -8,7 +8,8 @@
             "hydrogen-dependent co2 reductase filament",
             "stellate",
             "mtd sleeve",
-            "dynein-1b"
+            "dynein-1b",
+            "polaroplast"
         ]
     },
     "CellComponent": {
