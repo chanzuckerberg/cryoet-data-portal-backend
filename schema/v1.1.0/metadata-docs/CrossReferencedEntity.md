@@ -8,8 +8,6 @@ _An entity with associated cross-references to other databases and publications.
 
 
 
-* __NOTE__: this is an abstract class and should not be instantiated directly
-
 
 URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 
@@ -26,17 +24,17 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
         click Dataset href "../Dataset"
       CrossReferencedEntity <|-- Deposition
         click Deposition href "../Deposition"
-      
-      CrossReferencedEntity : cross_references
-        
-          
-    
-    
-    CrossReferencedEntity --> "0..1" CrossReferencesEntity : cross_references
-    click CrossReferencesEntity href "../CrossReferencesEntity"
 
-        
-      
+      CrossReferencedEntity : cross_references
+
+
+
+
+    CrossReferencedEntity --> "0..1" CrossReferences : cross_references
+    click CrossReferences href "../CrossReferences"
+
+
+
 ```
 
 
@@ -49,8 +47,16 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [cross_references](cross_references.md) | 0..1 <br/> [CrossReferencesEntity](CrossReferencesEntity.md) | A set of cross-references to other databases and publications | direct |
+| [cross_references](cross_references.md) | 0..1 <br/> [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications | direct |
 
+
+
+## Mixin Usage
+
+| mixed into | description |
+| --- | --- |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |
+| [Deposition](Deposition.md) | Metadata describing a deposition |
 
 
 
@@ -99,7 +105,7 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 name: CrossReferencedEntity
 description: An entity with associated cross-references to other databases and publications.
 from_schema: metadata
-abstract: true
+mixin: true
 attributes:
   cross_references:
     name: cross_references
@@ -112,7 +118,7 @@ attributes:
     - CrossReferencedEntity
     - Dataset
     - Deposition
-    range: CrossReferencesEntity
+    range: CrossReferences
     inlined: true
     inlined_as_list: true
 
@@ -126,7 +132,7 @@ attributes:
 name: CrossReferencedEntity
 description: An entity with associated cross-references to other databases and publications.
 from_schema: metadata
-abstract: true
+mixin: true
 attributes:
   cross_references:
     name: cross_references
@@ -139,7 +145,7 @@ attributes:
     - CrossReferencedEntity
     - Dataset
     - Deposition
-    range: CrossReferencesEntity
+    range: CrossReferences
     inlined: true
     inlined_as_list: true
 

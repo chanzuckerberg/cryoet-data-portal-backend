@@ -47,28 +47,6 @@ classes:
   # ============================================================================
 
   # ============================================================================
-  # Cross-references to other databases and publications
-  # ============================================================================
-  CrossReferences:
-    description: A set of cross-references to other databases and publications.
-    attributes:
-      publications:
-        range: DOI_LIST
-        recommended: true
-        description: Comma-separated list of DOIs for publications associated with the dataset.
-      related_database_entries:
-        range: EMPIAR_EMDB_PDB_LIST
-        recommended: true
-        description: Comma-separated list of related database entries for the dataset.
-      related_database_links: # DEPRECATED
-        range: string
-        description: Comma-separated list of related database links for the dataset.
-      dataset_citations: # DEPRECATED
-        range: string
-        description: Comma-separated list of DOIs for publications citing the dataset.
-  # ============================================================================
-
-  # ============================================================================
   # Funding source information
   # ============================================================================
   # Updating name from Funding to FundingDetails to avoid conflict in case insensitive file names
@@ -126,18 +104,18 @@ classes:
         inlined_as_list: true
         list_elements_ordered: true
 
-  CrossReferencesEntity:
+  CrossReferences:
     abstract: true
     description: A set of cross-references to other databases and publications.
     mixins:
       - CrossReferencesMixin
 
   CrossReferencedEntity:
-    abstract: true
+    mixin: true
     description: An entity with associated cross-references to other databases and publications.
     attributes:
       cross_references:
-        range: CrossReferencesEntity
+        range: CrossReferences
 
   PicturedEntity:
     abstract: true

@@ -41,8 +41,8 @@ URI: [cdp-meta:Deposition](metadataDeposition)
 
 
 
-    Deposition --> "0..1" CrossReferencesEntity : cross_references
-    click CrossReferencesEntity href "../CrossReferencesEntity"
+    Deposition --> "0..1" CrossReferences : cross_references
+    click CrossReferences href "../CrossReferences"
 
 
       Deposition : dates
@@ -91,7 +91,7 @@ URI: [cdp-meta:Deposition](metadataDeposition)
 | [deposition_types](deposition_types.md) | 1..* <br/> [DepositionTypesEnum](DepositionTypesEnum.md) | Type of data in the deposition (e | direct |
 | [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
-| [cross_references](cross_references.md) | 0..1 <br/> [CrossReferencesEntity](CrossReferencesEntity.md) | A set of cross-references to other databases and publications | direct |
+| [cross_references](cross_references.md) | 0..1 <br/> [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications | direct |
 
 
 
@@ -256,7 +256,7 @@ attributes:
     - CrossReferencedEntity
     - Dataset
     - Deposition
-    range: CrossReferencesEntity
+    range: CrossReferences
     inlined: true
     inlined_as_list: true
 
@@ -385,7 +385,7 @@ attributes:
     - CrossReferencedEntity
     - Dataset
     - Deposition
-    range: CrossReferencesEntity
+    range: CrossReferences
     inlined: true
     inlined_as_list: true
 

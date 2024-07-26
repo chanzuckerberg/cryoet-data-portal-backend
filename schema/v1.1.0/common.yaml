@@ -792,6 +792,7 @@ enums:
         description: Annotations were generated automatically.
       hybrid:
         description: Annotations were generated semi-automatically.
+
   annotation_file_shape_type_enum:
     description: Describes the shape of the annotation
     permissible_values:

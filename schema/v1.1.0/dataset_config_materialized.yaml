@@ -2564,7 +2564,6 @@ classes:
         domain_of:
         - CrossReferencesMixin
         - CrossReferences
-        - CrossReferencesEntity
         range: DOI_LIST
         recommended: true
         inlined: true
@@ -2579,7 +2578,6 @@ classes:
         domain_of:
         - CrossReferencesMixin
         - CrossReferences
-        - CrossReferencesEntity
         range: EMPIAR_EMDB_PDB_LIST
         recommended: true
         inlined: true
@@ -2594,7 +2592,6 @@ classes:
         domain_of:
         - CrossReferencesMixin
         - CrossReferences
-        - CrossReferencesEntity
         range: string
         inlined: true
         inlined_as_list: true
@@ -2607,7 +2604,6 @@ classes:
         domain_of:
         - CrossReferencesMixin
         - CrossReferences
-        - CrossReferencesEntity
         range: string
         inlined: true
         inlined_as_list: true

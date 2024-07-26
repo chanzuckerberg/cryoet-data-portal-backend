@@ -32,7 +32,6 @@ Name: cdp-meta
 | [CellType](CellType.md) | The cell type from which the sample was derived. |
 | [CrossReferencedEntity](CrossReferencedEntity.md) | An entity with associated cross-references to other databases and publications. |
 | [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications. |
-| [CrossReferencesEntity](CrossReferencesEntity.md) | A set of cross-references to other databases and publications. |
 | [CrossReferencesMixin](CrossReferencesMixin.md) | A set of cross-references to other databases and publications. |
 | [Dataset](Dataset.md) | High-level description of a cryoET dataset. |
 | [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modified. |

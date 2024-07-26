@@ -72,8 +72,8 @@ URI: [cdp-meta:Dataset](metadataDataset)
 
 
 
-    Dataset --> "0..1" CrossReferencesEntity : cross_references
-    click CrossReferencesEntity href "../CrossReferencesEntity"
+    Dataset --> "0..1" CrossReferences : cross_references
+    click CrossReferences href "../CrossReferences"
 
 
       Dataset : dataset_description
@@ -155,7 +155,7 @@ URI: [cdp-meta:Dataset](metadataDataset)
 | [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
 | [funding](funding.md) | * _recommended_ <br/> [FundingDetails](FundingDetails.md) | A funding source for a scientific data entity (base for JSON and DB represent... | direct |
-| [cross_references](cross_references.md) | 0..1 <br/> [CrossReferencesEntity](CrossReferencesEntity.md) | A set of cross-references to other databases and publications | direct |
+| [cross_references](cross_references.md) | 0..1 <br/> [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications | direct |
 | [sample_type](sample_type.md) | 1 <br/> [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study | direct |
 | [sample_preparation](sample_preparation.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes how the sample was prepared | direct |
 | [grid_preparation](grid_preparation.md) | 0..1 _recommended_ <br/> [String](String.md) | Describes Cryo-ET grid preparation | direct |
@@ -329,7 +329,7 @@ attributes:
     - CrossReferencedEntity
     - Dataset
     - Deposition
-    range: CrossReferencesEntity
+    range: CrossReferences
     inlined: true
     inlined_as_list: true
   sample_type:
@@ -580,7 +580,7 @@ attributes:
     - CrossReferencedEntity
     - Dataset
     - Deposition
-    range: CrossReferencesEntity
+    range: CrossReferences
     inlined: true
     inlined_as_list: true
   sample_type:

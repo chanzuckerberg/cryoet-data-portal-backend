@@ -20,8 +20,8 @@ URI: [cdp-meta:CrossReferencesMixin](metadataCrossReferencesMixin)
  classDiagram
     class CrossReferencesMixin
     click CrossReferencesMixin href "../CrossReferencesMixin"
-      CrossReferencesMixin <|-- CrossReferencesEntity
-        click CrossReferencesEntity href "../CrossReferencesEntity"
+      CrossReferencesMixin <|-- CrossReferences
+        click CrossReferences href "../CrossReferences"
 
       CrossReferencesMixin : dataset_citations
 
@@ -55,7 +55,7 @@ URI: [cdp-meta:CrossReferencesMixin](metadataCrossReferencesMixin)
 
 | mixed into | description |
 | --- | --- |
-| [CrossReferencesEntity](CrossReferencesEntity.md) | A set of cross-references to other databases and publications |
+| [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |
 
 
 
@@ -116,7 +116,6 @@ attributes:
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
-    - CrossReferencesEntity
     range: DOI_LIST
     recommended: true
     inlined: true
@@ -131,7 +130,6 @@ attributes:
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
-    - CrossReferencesEntity
     range: EMPIAR_EMDB_PDB_LIST
     recommended: true
     inlined: true
@@ -146,7 +144,6 @@ attributes:
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
-    - CrossReferencesEntity
     range: string
     inlined: true
     inlined_as_list: true
@@ -159,7 +156,6 @@ attributes:
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
-    - CrossReferencesEntity
     range: string
     inlined: true
     inlined_as_list: true
@@ -186,7 +182,6 @@ attributes:
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
-    - CrossReferencesEntity
     range: DOI_LIST
     recommended: true
     inlined: true
@@ -201,7 +196,6 @@ attributes:
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
-    - CrossReferencesEntity
     range: EMPIAR_EMDB_PDB_LIST
     recommended: true
     inlined: true
@@ -216,7 +210,6 @@ attributes:
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
-    - CrossReferencesEntity
     range: string
     inlined: true
     inlined_as_list: true
@@ -229,7 +222,6 @@ attributes:
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
-    - CrossReferencesEntity
     range: string
     inlined: true
     inlined_as_list: true

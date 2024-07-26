@@ -688,85 +688,6 @@ class PicturePath(ConfiguredBaseModel):
         return v
 
 
-class CrossReferences(ConfiguredBaseModel):
-    """
-    A set of cross-references to other databases and publications.
-    """
-
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
-
-    publications: Optional[str] = Field(
-        None,
-        description="""Comma-separated list of DOIs for publications associated with the dataset.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "publications",
-                "domain_of": ["CrossReferences", "CrossReferencesMixin", "CrossReferencesEntity"],
-                "recommended": True,
-            }
-        },
-    )
-    related_database_entries: Optional[str] = Field(
-        None,
-        description="""Comma-separated list of related database entries for the dataset.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "related_database_entries",
-                "domain_of": ["CrossReferences", "CrossReferencesMixin", "CrossReferencesEntity"],
-                "recommended": True,
-            }
-        },
-    )
-    related_database_links: Optional[str] = Field(
-        None,
-        description="""Comma-separated list of related database links for the dataset.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "related_database_links",
-                "domain_of": ["CrossReferences", "CrossReferencesMixin", "CrossReferencesEntity"],
-            }
-        },
-    )
-    dataset_citations: Optional[str] = Field(
-        None,
-        description="""Comma-separated list of DOIs for publications citing the dataset.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "dataset_citations",
-                "domain_of": ["CrossReferences", "CrossReferencesMixin", "CrossReferencesEntity"],
-            }
-        },
-    )
-
-    @field_validator("publications")
-    def pattern_publications(cls, v):
-        pattern = re.compile(
-            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
-        )
-        if isinstance(v, list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid publications format: {element}")
-        elif isinstance(v, str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid publications format: {v}")
-        return v
-
-    @field_validator("related_database_entries")
-    def pattern_related_database_entries(cls, v):
-        pattern = re.compile(
-            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)"
-        )
-        if isinstance(v, list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid related_database_entries format: {element}")
-        elif isinstance(v, str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid related_database_entries format: {v}")
-        return v
-
-
 class FundingDetails(ConfiguredBaseModel):
     """
     A funding source for a scientific data entity (base for JSON and DB representation).
@@ -863,9 +784,9 @@ class CrossReferencedEntity(ConfiguredBaseModel):
     An entity with associated cross-references to other databases and publications.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata", "mixin": True})
 
-    cross_references: Optional[CrossReferencesEntity] = Field(
+    cross_references: Optional[CrossReferences] = Field(
         None,
         description="""A set of cross-references to other databases and publications.""",
         json_schema_extra={
@@ -1327,7 +1248,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
             }
         },
     )
-    cross_references: Optional[CrossReferencesEntity] = Field(
+    cross_references: Optional[CrossReferences] = Field(
         None,
         description="""A set of cross-references to other databases and publications.""",
         json_schema_extra={
@@ -1498,7 +1419,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
             }
         },
     )
-    cross_references: Optional[CrossReferencesEntity] = Field(
+    cross_references: Optional[CrossReferences] = Field(
         None,
         description="""A set of cross-references to other databases and publications.""",
         json_schema_extra={
@@ -3366,7 +3287,7 @@ class CrossReferencesMixin(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "publications",
-                "domain_of": ["CrossReferencesMixin", "CrossReferences", "CrossReferencesEntity"],
+                "domain_of": ["CrossReferencesMixin", "CrossReferences"],
                 "recommended": True,
             }
         },
@@ -3377,7 +3298,7 @@ class CrossReferencesMixin(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "related_database_entries",
-                "domain_of": ["CrossReferencesMixin", "CrossReferences", "CrossReferencesEntity"],
+                "domain_of": ["CrossReferencesMixin", "CrossReferences"],
                 "recommended": True,
             }
         },
@@ -3386,20 +3307,14 @@ class CrossReferencesMixin(ConfiguredBaseModel):
         None,
         description="""Comma-separated list of related database links for the dataset.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "related_database_links",
-                "domain_of": ["CrossReferencesMixin", "CrossReferences", "CrossReferencesEntity"],
-            }
+            "linkml_meta": {"alias": "related_database_links", "domain_of": ["CrossReferencesMixin", "CrossReferences"]}
         },
     )
     dataset_citations: Optional[str] = Field(
         None,
         description="""Comma-separated list of DOIs for publications citing the dataset.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "dataset_citations",
-                "domain_of": ["CrossReferencesMixin", "CrossReferences", "CrossReferencesEntity"],
-            }
+            "linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferencesMixin", "CrossReferences"]}
         },
     )
 
@@ -3432,7 +3347,7 @@ class CrossReferencesMixin(ConfiguredBaseModel):
         return v
 
 
-class CrossReferencesEntity(CrossReferencesMixin):
+class CrossReferences(CrossReferencesMixin):
     """
     A set of cross-references to other databases and publications.
     """
@@ -3447,7 +3362,7 @@ class CrossReferencesEntity(CrossReferencesMixin):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "publications",
-                "domain_of": ["CrossReferencesMixin", "CrossReferences", "CrossReferencesEntity"],
+                "domain_of": ["CrossReferencesMixin", "CrossReferences"],
                 "recommended": True,
             }
         },
@@ -3458,7 +3373,7 @@ class CrossReferencesEntity(CrossReferencesMixin):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "related_database_entries",
-                "domain_of": ["CrossReferencesMixin", "CrossReferences", "CrossReferencesEntity"],
+                "domain_of": ["CrossReferencesMixin", "CrossReferences"],
                 "recommended": True,
             }
         },
@@ -3467,20 +3382,14 @@ class CrossReferencesEntity(CrossReferencesMixin):
         None,
         description="""Comma-separated list of related database links for the dataset.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "related_database_links",
-                "domain_of": ["CrossReferencesMixin", "CrossReferences", "CrossReferencesEntity"],
-            }
+            "linkml_meta": {"alias": "related_database_links", "domain_of": ["CrossReferencesMixin", "CrossReferences"]}
         },
     )
     dataset_citations: Optional[str] = Field(
         None,
         description="""Comma-separated list of DOIs for publications citing the dataset.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "dataset_citations",
-                "domain_of": ["CrossReferencesMixin", "CrossReferences", "CrossReferencesEntity"],
-            }
+            "linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferencesMixin", "CrossReferences"]}
         },
     )
 
@@ -6187,7 +6096,6 @@ class TomogramHeader(ConfiguredBaseModel):
 # Model rebuild
 # see https://pydantic-docs.helpmanual.io/usage/models/#rebuilding-a-model
 PicturePath.model_rebuild()
-CrossReferences.model_rebuild()
 FundingDetails.model_rebuild()
 DateStampedEntity.model_rebuild()
 AuthoredEntity.model_rebuild()
@@ -6222,7 +6130,7 @@ Annotation.model_rebuild()
 DateStampedEntityMixin.model_rebuild()
 DateStamp.model_rebuild()
 CrossReferencesMixin.model_rebuild()
-CrossReferencesEntity.model_rebuild()
+CrossReferences.model_rebuild()
 AuthorMixin.model_rebuild()
 Author.model_rebuild()
 AnnotationMethodLinks.model_rebuild()
