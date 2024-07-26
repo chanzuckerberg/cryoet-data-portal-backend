@@ -132,7 +132,7 @@ def main(
     input_files: str,
     input_dir: str,
     include_glob: str,
-    exclude_keywords: str,
+    exclude_keywords: list[str],
     validation_exclusions_file: str,
     output_dir: str,
     network_validation: bool,
@@ -144,21 +144,17 @@ def main(
     if verbose:
         logger.setLevel(logging.DEBUG)
 
-    files_to_validate = []
     if input_files and input_dir:
         logger.error("Provide input files or --input-dir, not both.")
         exit(1)
-    elif input_files:
-        files_to_validate = input_files
-        if include_glob:
-            logger.warning("Ignoring --include-glob option because input files were provided.")
-        if exclude_keywords:
-            logger.warning("Ignoring --exclude-keywords option because input files were provided.")
-    elif input_dir:
-        files_to_validate = get_yaml_config_files(include_glob, exclude_keywords, input_dir, verbose)
-    else:
-        logger.info("No input files or directory provided. Using default input directory: %s", DATASET_CONFIGS_DIR)
-        files_to_validate = get_yaml_config_files(include_glob, exclude_keywords, DATASET_CONFIGS_DIR, verbose)
+
+    files_to_validate = get_yaml_config_files(
+        input_files=input_files,
+        include_glob=include_glob,
+        exclude_keywords_list=exclude_keywords,
+        dataset_configs_dir=input_dir,
+        verbose=verbose,
+    )
 
     if not files_to_validate:
         logger.warning("No files to validate.")

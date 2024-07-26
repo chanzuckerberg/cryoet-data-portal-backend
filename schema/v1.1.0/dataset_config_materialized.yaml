@@ -296,6 +296,12 @@ types:
     from_schema: cdp-dataset-config
     base: str
     pattern: ^GO:[0-9]{7}$
+  WORMBASE_ID:
+    name: WORMBASE_ID
+    description: A WormBase identifier
+    from_schema: cdp-dataset-config
+    base: str
+    pattern: WBStrain[0-9]{8}$
   ONTOLOGY_ID:
     name: ONTOLOGY_ID
     description: An ontology identifier

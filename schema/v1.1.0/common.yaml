@@ -242,7 +242,9 @@ slots:
     description: >-
       Cell line or strain for the sample.
   cell_strain_id:
-    range: ONTOLOGY_ID
+    any_of:
+      - range: WORMBASE_ID
+      - range: ONTOLOGY_ID
     recommended: true
     description: >-
       Link to more information about the cell strain.
@@ -906,6 +908,11 @@ types:
     description: A Gene Ontology identifier
     base: str
     pattern: '^GO:[0-9]{7}$'
+
+  WORMBASE_ID:
+    description: A WormBase identifier
+    base: str
+    pattern: 'WBStrain[0-9]{8}$'
 
   ONTOLOGY_ID:
     description: An ontology identifier

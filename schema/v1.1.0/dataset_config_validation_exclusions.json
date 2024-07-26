@@ -16,9 +16,7 @@
         "name": []
     },
     "CellStrain": {
-        "id": [
-            "WBStrain00050783"
-        ],
+        "id": [],
         "name": []
     },
     "CellType": {
@@ -26,8 +24,7 @@
         "name": []
     },
     "OrganismDetails": {
-        "id": [],
-        "name": []
+        "taxonomy_id": []
     },
     "TissueDetails": {
         "id": [],

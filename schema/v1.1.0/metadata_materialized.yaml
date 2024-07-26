@@ -312,6 +312,12 @@ types:
     from_schema: metadata
     base: str
     pattern: ^GO:[0-9]{7}$
+  WORMBASE_ID:
+    name: WORMBASE_ID
+    description: A WormBase identifier
+    from_schema: metadata
+    base: str
+    pattern: WBStrain[0-9]{8}$
   ONTOLOGY_ID:
     name: ONTOLOGY_ID
     description: An ontology identifier
@@ -1093,11 +1099,13 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
-        range: ONTOLOGY_ID
         recommended: true
         inlined: true
         inlined_as_list: true
-        pattern: ^[a-zA-Z]+:[0-9]+$
+        pattern: (WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)
+        any_of:
+        - range: WORMBASE_ID
+        - range: ONTOLOGY_ID
   CellComponent:
     name: CellComponent
     description: The cellular component from which the sample was derived.

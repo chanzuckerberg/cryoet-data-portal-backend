@@ -12,6 +12,8 @@ python3 -m venv .venv  # create a virtualenv
 source .venv/bin/activate  # activate the virtualenv
 python3 -m pip install poetry  # Install the poetry package manager
 poetry install  # Use poetry to install this package's dependencies
+cd ../ingestion_tools/  # Move to the ingestion_tools directory
+poetry install  # Use poetry to install this package's dependencies
 ```
 
 ## Running the script
