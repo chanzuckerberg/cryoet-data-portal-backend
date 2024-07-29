@@ -772,6 +772,111 @@ slots:
       symbol: °
 
   # ============================================================================
+  # Alignment Parameters fields
+  # ============================================================================
+  alignment_alignment_type:
+    range: alignment_type_enum
+    description: Type of alignment included, i.e. is a non-rigid alignment included?
+
+  alignment_volume_x_dimension:
+    range: float
+    description: X dimension of the reconstruction volume in angstrom
+    unit:
+      descriptive_name: Angstrom
+      symbol: Å
+
+  alignment_volume_y_dimension:
+    range: float
+    description: Y dimension of the reconstruction volume in angstrom
+    unit:
+      descriptive_name: Angstrom
+      symbol: Å
+
+  alignment_volume_z_dimension:
+    range: float
+    description: Z dimension of the reconstruction volume in angstrom
+    unit:
+      descriptive_name: Angstrom
+      symbol: Å
+
+  alignment_volume_x_offset:
+    range: float
+    description: X shift of the reconstruction volume in angstrom
+    unit:
+      descriptive_name: Angstrom
+      symbol: Å
+
+  alignment_volume_y_offset:
+    range: float
+    description: Y shift of the reconstruction volume in angstrom
+    unit:
+      descriptive_name: Angstrom
+      symbol: Å
+
+  alignment_volume_z_offset:
+    range: float
+    description: Z shift of the reconstruction volume in angstrom
+    unit:
+      descriptive_name: Angstrom
+      symbol: Å
+
+  alignment_volume_x_rotation:
+    range: float
+    description: Additional X rotation of the reconstruction volume in degrees
+    unit:
+      descriptive_name: degrees
+      symbol: °
+
+  alignment_tilt_offset:
+    range: float
+    description: Additional tilt offset in degrees
+    unit:
+      descriptive_name: degrees
+      symbol: °
+
+  alignment_local_alignment_file:
+    range: string
+    description: Path to the local alignment file
+
+  # ============================================================================
+  # Per Section Alignment Parameters fields
+  # ============================================================================
+  per_section_alignment_x_offset:
+    range: float
+    description: In-plane X-shift of the projection in angstrom
+    unit:
+      descriptive_name: Angstrom
+      symbol: Å
+
+  per_section_alignment_y_offset:
+    range: float
+    description: In-plane Y-shift of the projection in angstrom
+    unit:
+        descriptive_name: Angstrom
+        symbol: Å
+
+  per_section_alignment_in_plane_rotation:
+    range: float
+    description: In-plane rotation of the projection in degrees
+    unit:
+      descriptive_name: degrees
+      symbol: °
+
+  per_section_alignment_beam_tilt:
+    range: float
+    description: Beam tilt during projection in degrees
+    unit:
+      descriptive_name: degrees
+      symbol: °
+
+  per_section_alignment_tilt_angle:
+    range: float
+    description: Tilt angle of the projection in degrees
+    unit:
+      descriptive_name: degrees
+      symbol: °
+
+  # ============================================================================
   # API slots
   # ============================================================================
   api_sequential_identifier:
@@ -1111,6 +1216,14 @@ enums:
     permissible_values:
       CANONICAL:
         description: Canonical tomogram (basis geometry for all annotations)
+
+  alignment_type_enum:
+    description: Type of alignment
+    permissible_values:
+      LOCAL:
+        description: per-section non-rigid alignment available
+      GLOBAL:
+        description: only per-section rigid alignment available
 
 types:
   StringFormattedString:

@@ -138,6 +138,36 @@ classes:
       alignment:
         exact_mappings:
           - cdp-common:api_alignment
+      alignment_type:
+        exact_mappings:
+          - cdp-common:alignment_alignment_type
+      volume_x_dimension:
+        exact_mappings:
+          - cdp-common:alignment_volume_x_dimension
+      volume_y_dimension:
+        exact_mappings:
+          - cdp-common:alignment_volume_y_dimension
+      volume_z_dimension:
+        exact_mappings:
+          - cdp-common:alignment_volume_z_dimension
+      volume_x_offset:
+        exact_mappings:
+          - cdp-common:alignment_volume_x_offset
+      volume_y_offset:
+        exact_mappings:
+          - cdp-common:alignment_volume_y_offset
+      volume_z_offset:
+        exact_mappings:
+          - cdp-common:alignment_volume_z_offset
+      volume_x_rotation:
+        exact_mappings:
+          - cdp-common:alignment_volume_x_rotation
+      tilt_offset:
+        exact_mappings:
+          - cdp-common:alignment_tilt_offset
+      local_alignment_file:
+        exact_mappings:
+          - cdp-common:alignment_local_alignment_file
     annotations:
       plural: Alignments
   AnnotationAuthor:
@@ -558,6 +588,37 @@ classes:
           - cdp-common:per_section_astigmatic_angle
     annotations:
       plural: PerSectionParameters
+
+  PerSectionAlignmentParameters:
+    mixins:
+      - IDMixin
+    description: Map alignment parameters to tilt series frames
+    attributes:
+      tiltseries:
+        range: Tiltseries
+        inverse: Tiltseries.per_section_parameters
+        required: True
+      z_index:
+        exact_mappings:
+          - cdp-common:per_section_z_index
+      x_offset:
+        exact_mappings:
+          - cdp-common:per_section_alignment_x_offset
+      y_offset:
+        exact_mappings:
+          - cdp-common:per_section_alignment_y_offset
+      in_plane_rotation:
+        exact_mappings:
+          - cdp-common:per_section_alignment_in_plane_rotation
+      beam_tilt:
+        exact_mappings:
+          - cdp-common:per_section_alignment_beam_tilt
+      tilt_angle:
+        exact_mappings:
+          - cdp-common:per_section_alignment_tilt_angle
+    annotations:
+      plural: PerSectionAlignmentParameters
+
   Run:
     mixins:
       - IDMixin
