@@ -36,3 +36,10 @@ URI: [cdp-meta:DOI](metadataDOI)
 
 
 
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:DOI |
+| native | cdp-meta:DOI |

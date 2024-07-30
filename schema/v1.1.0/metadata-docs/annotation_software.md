@@ -1,3 +1,5 @@
+
+
 # Slot: annotation_software
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:annotation_software](metadataannotation_software)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -48,6 +51,17 @@ URI: [cdp-meta:annotation_software](metadataannotation_software)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:annotation_software |
+| native | cdp-meta:annotation_software |
+| exact | cdp-common:annotation_software |
 
 
 

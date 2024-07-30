@@ -1,3 +1,5 @@
+
+
 # Class: Tomogram
 
 
@@ -12,50 +14,70 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 
 
+
+
 ```mermaid
  classDiagram
     class Tomogram
+    click Tomogram href "../Tomogram"
       AuthoredEntity <|-- Tomogram
-      
+        click AuthoredEntity href "../AuthoredEntity"
+
       Tomogram : affine_transformation_matrix
-        
-          Tomogram --> Any : affine_transformation_matrix
-        
+
       Tomogram : align_software
-        
+
       Tomogram : authors
-        
-          Tomogram --> Author : authors
-        
+
+
+
+
+    Tomogram --> "1..*" Author : authors
+    click Author href "../Author"
+
+
       Tomogram : ctf_corrected
-        
+
       Tomogram : fiducial_alignment_status
-        
-          Tomogram --> fiducial_alignment_status_enum : fiducial_alignment_status
-        
+
       Tomogram : offset
-        
-          Tomogram --> TomogramOffset : offset
-        
+
+
+
+
+    Tomogram --> "1" TomogramOffset : offset
+    click TomogramOffset href "../TomogramOffset"
+
+
       Tomogram : processing
-        
-          Tomogram --> tomogram_processing_enum : processing
-        
+
+
+
+
+    Tomogram --> "1" TomogramProcessingEnum : processing
+    click TomogramProcessingEnum href "../TomogramProcessingEnum"
+
+
       Tomogram : processing_software
-        
+
       Tomogram : reconstruction_method
-        
+
       Tomogram : reconstruction_software
-        
+
       Tomogram : size
-        
-          Tomogram --> TomogramSize : size
-        
+
+
+
+
+    Tomogram --> "0..1" TomogramSize : size
+    click TomogramSize href "../TomogramSize"
+
+
       Tomogram : tomogram_version
-        
+
       Tomogram : voxel_spacing
-        
-      
+
+
 ```
 
 
@@ -71,18 +93,18 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [voxel_spacing](voxel_spacing.md) | 1..1 <br/> [String](String.md) | Voxel spacing equal in all three axes in angstroms | direct |
-| [fiducial_alignment_status](fiducial_alignment_status.md) | 1..1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
+| [voxel_spacing](voxel_spacing.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Voxel spacing equal in all three axes in angstroms | direct |
+| [fiducial_alignment_status](fiducial_alignment_status.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
 | [ctf_corrected](ctf_corrected.md) | 0..1 _recommended_ <br/> [Boolean](Boolean.md) | Whether this tomogram is CTF corrected | direct |
 | [align_software](align_software.md) | 0..1 <br/> [String](String.md) | Software used for alignment | direct |
-| [reconstruction_method](reconstruction_method.md) | 1..1 <br/> [String](String.md) | Describe reconstruction method (WBP, SART, SIRT) | direct |
-| [reconstruction_software](reconstruction_software.md) | 1..1 <br/> [String](String.md) | Name of software used for reconstruction | direct |
-| [processing](processing.md) | 1..1 <br/> [TomogramProcessingEnum](TomogramProcessingEnum.md) | Describe additional processing used to derive the tomogram | direct |
+| [reconstruction_method](reconstruction_method.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md) | Describe reconstruction method (WBP, SART, SIRT) | direct |
+| [reconstruction_software](reconstruction_software.md) | 1 <br/> [String](String.md) | Name of software used for reconstruction | direct |
+| [processing](processing.md) | 1 <br/> [TomogramProcessingEnum](TomogramProcessingEnum.md) | Describe additional processing used to derive the tomogram | direct |
 | [processing_software](processing_software.md) | 0..1 _recommended_ <br/> [String](String.md) | Processing software used to derive the tomogram | direct |
-| [tomogram_version](tomogram_version.md) | 1..1 <br/> [VersionString](VersionString.md) | Version of tomogram | direct |
-| [affine_transformation_matrix](affine_transformation_matrix.md) | 0..1 <br/> [Any](Any.md) | A placeholder for any type of data | direct |
+| [tomogram_version](tomogram_version.md) | 1 <br/> [VersionString](VersionString.md) | Version of tomogram | direct |
+| [affine_transformation_matrix](affine_transformation_matrix.md) | 0..1 <br/> [Float](Float.md) | The flip or rotation transformation of this author submitted tomogram is indi... | direct |
 | [size](size.md) | 0..1 <br/> [TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension | direct |
-| [offset](offset.md) | 1..1 <br/> [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... | direct |
+| [offset](offset.md) | 1 <br/> [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... | direct |
 | [authors](authors.md) | 1..* <br/> [Author](Author.md) | Author of a scientific data entity | direct |
 
 
@@ -109,13 +131,14 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:Tomogram |
 | native | cdp-meta:Tomogram |
+
+
 
 
 
@@ -139,14 +162,12 @@ attributes:
     name: voxel_spacing
     description: Voxel spacing equal in all three axes in angstroms
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_voxel_spacing
     rank: 1000
     alias: voxel_spacing
     owner: Tomogram
     domain_of:
     - Tomogram
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
     minimum_value: 0.001
@@ -163,15 +184,12 @@ attributes:
     description: Whether the tomographic alignment was computed based on fiducial
       markers.
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_fiducial_alignment_status
     rank: 1000
     alias: fiducial_alignment_status
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: fiducial_alignment_status_enum
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
     pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
@@ -211,20 +229,19 @@ attributes:
     name: reconstruction_method
     description: Describe reconstruction method (WBP, SART, SIRT)
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_reconstruction_method
     rank: 1000
     alias: reconstruction_method
     owner: Tomogram
     domain_of:
     - Tomogram
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
-    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)
+    pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
+      ]*$)
     any_of:
-    - range: StringFormattedString
     - range: tomogrom_reconstruction_method_enum
+    - range: StringFormattedString
   reconstruction_software:
     name: reconstruction_software
     description: Name of software used for reconstruction
@@ -288,7 +305,8 @@ attributes:
     inlined_as_list: true
   affine_transformation_matrix:
     name: affine_transformation_matrix
-    description: A placeholder for any type of data.
+    description: The flip or rotation transformation of this author submitted tomogram
+      is indicated here
     from_schema: metadata
     rank: 1000
     array:
@@ -300,7 +318,7 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: Any
+    range: float
     inlined: true
     inlined_as_list: true
   size:
@@ -333,7 +351,6 @@ attributes:
     name: authors
     description: Author of a scientific data entity.
     from_schema: metadata
-    multivalued: true
     list_elements_ordered: true
     alias: authors
     owner: Tomogram
@@ -345,8 +362,10 @@ attributes:
     - Annotation
     range: Author
     required: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
 
 ```
 </details>
@@ -365,15 +384,12 @@ attributes:
     name: voxel_spacing
     description: Voxel spacing equal in all three axes in angstroms
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_voxel_spacing
     rank: 1000
     alias: voxel_spacing
     owner: Tomogram
     domain_of:
     - Tomogram
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 0.001
@@ -390,15 +406,12 @@ attributes:
     description: Whether the tomographic alignment was computed based on fiducial
       markers.
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_fiducial_alignment_status
     rank: 1000
     alias: fiducial_alignment_status
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: fiducial_alignment_status_enum
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
     pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
@@ -438,21 +451,19 @@ attributes:
     name: reconstruction_method
     description: Describe reconstruction method (WBP, SART, SIRT)
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_reconstruction_method
     rank: 1000
     alias: reconstruction_method
     owner: Tomogram
     domain_of:
     - Tomogram
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
-    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)
+    pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
+      ]*$)
     any_of:
-    - range: StringFormattedString
     - range: tomogrom_reconstruction_method_enum
+    - range: StringFormattedString
   reconstruction_software:
     name: reconstruction_software
     description: Name of software used for reconstruction
@@ -516,7 +527,8 @@ attributes:
     inlined_as_list: true
   affine_transformation_matrix:
     name: affine_transformation_matrix
-    description: A placeholder for any type of data.
+    description: The flip or rotation transformation of this author submitted tomogram
+      is indicated here
     from_schema: metadata
     rank: 1000
     array:
@@ -528,7 +540,7 @@ attributes:
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: Any
+    range: float
     inlined: true
     inlined_as_list: true
   size:
@@ -561,7 +573,6 @@ attributes:
     name: authors
     description: Author of a scientific data entity.
     from_schema: metadata
-    multivalued: true
     list_elements_ordered: true
     alias: authors
     owner: Tomogram
@@ -573,8 +584,10 @@ attributes:
     - Annotation
     range: Author
     required: true
+    multivalued: true
     inlined: true
     inlined_as_list: true
+    minimum_cardinality: 1
 
 ```
 </details>

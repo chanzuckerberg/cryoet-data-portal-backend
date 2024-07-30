@@ -108,7 +108,7 @@ datasets:
       name: "M. J\xFCrgen Plitzko"
       primary_author_status: false
     cell_strain:
-      id: https://cgc.umn.edu/strain/NK2476
+      id: WBStrain00050783
       name: NK2476
     cross_references:
       publications: doi:10.1101/2023.04.28.538734
@@ -183,8 +183,6 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: TFS Selectris X
-      image_corrector: null
-      phase_plate: null
     pixel_spacing: 1.89
     spherical_aberration_constant: 2.7
     tilt_axis: 84.2

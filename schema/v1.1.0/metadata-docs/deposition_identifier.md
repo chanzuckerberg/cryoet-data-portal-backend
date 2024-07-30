@@ -1,3 +1,5 @@
+
+
 # Slot: deposition_identifier
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:deposition_identifier](metadatadeposition_identifier)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Deposition](Deposition.md) | Metadata describing a deposition |  no  |
+| [Deposition](Deposition.md) | Metadata describing a deposition |  no  |
 
 
 
@@ -48,6 +51,17 @@ URI: [cdp-meta:deposition_identifier](metadatadeposition_identifier)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:deposition_identifier |
+| native | cdp-meta:deposition_identifier |
+| exact | cdp-common:deposition_identifier |
 
 
 

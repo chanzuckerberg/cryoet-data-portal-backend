@@ -1,3 +1,5 @@
+
+
 # Slot: version
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:version](metadataversion)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -46,6 +49,17 @@ URI: [cdp-meta:version](metadataversion)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:version |
+| native | cdp-meta:version |
+| exact | cdp-common:annotation_version |
 
 
 

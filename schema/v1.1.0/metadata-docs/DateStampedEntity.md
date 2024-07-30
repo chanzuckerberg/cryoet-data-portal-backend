@@ -1,4 +1,6 @@
-# Class: DatestampedEntity
+
+
+# Class: DateStampedEntity
 
 
 _An entity with associated deposition, release and last modified dates._
@@ -9,23 +11,34 @@ _An entity with associated deposition, release and last modified dates._
 * __NOTE__: this is an abstract class and should not be instantiated directly
 
 
-URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
+URI: [cdp-meta:DateStampedEntity](metadataDateStampedEntity)
+
+
 
 
 
 
 ```mermaid
  classDiagram
-    class DatestampedEntity
-      DatestampedEntity <|-- Dataset
-      DatestampedEntity <|-- Deposition
-      DatestampedEntity <|-- Annotation
-      
-      DatestampedEntity : dates
-        
-          DatestampedEntity --> DateStamp : dates
-        
-      
+    class DateStampedEntity
+    click DateStampedEntity href "../DateStampedEntity"
+      DateStampedEntity <|-- Dataset
+        click Dataset href "../Dataset"
+      DateStampedEntity <|-- Deposition
+        click Deposition href "../Deposition"
+      DateStampedEntity <|-- Annotation
+        click Annotation href "../Annotation"
+
+      DateStampedEntity : dates
+
+
+
+
+    DateStampedEntity --> "1" DateStamp : dates
+    click DateStamp href "../DateStamp"
+
+
+
 ```
 
 
@@ -38,7 +51,7 @@ URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [dates](dates.md) | 1..1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
+| [dates](dates.md) | 1 <br/> [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... | direct |
 
 
 
@@ -64,13 +77,14 @@ URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:DatestampedEntity |
-| native | cdp-meta:DatestampedEntity |
+| self | cdp-meta:DateStampedEntity |
+| native | cdp-meta:DateStampedEntity |
+
+
 
 
 
@@ -84,7 +98,7 @@ URI: [cdp-meta:DatestampedEntity](metadataDatestampedEntity)
 
 <details>
 ```yaml
-name: DatestampedEntity
+name: DateStampedEntity
 description: An entity with associated deposition, release and last modified dates.
 from_schema: metadata
 abstract: true
@@ -96,9 +110,9 @@ attributes:
     from_schema: metadata
     rank: 1000
     alias: dates
-    owner: DatestampedEntity
+    owner: DateStampedEntity
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation
@@ -114,7 +128,7 @@ attributes:
 
 <details>
 ```yaml
-name: DatestampedEntity
+name: DateStampedEntity
 description: An entity with associated deposition, release and last modified dates.
 from_schema: metadata
 abstract: true
@@ -126,9 +140,9 @@ attributes:
     from_schema: metadata
     rank: 1000
     alias: dates
-    owner: DatestampedEntity
+    owner: DateStampedEntity
     domain_of:
-    - DatestampedEntity
+    - DateStampedEntity
     - Dataset
     - Deposition
     - Annotation

@@ -1,3 +1,5 @@
+
+
 # Class: DateStamp
 
 
@@ -12,31 +14,40 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 
 
+
+
 ```mermaid
  classDiagram
     class DateStamp
+    click DateStamp href "../DateStamp"
+      DateStampedEntityMixin <|-- DateStamp
+        click DateStampedEntityMixin href "../DateStampedEntityMixin"
+
       DateStamp : deposition_date
-        
+
       DateStamp : last_modified_date
-        
+
       DateStamp : release_date
-        
-      
+
+
 ```
 
 
 
 
-<!-- no inheritance hierarchy -->
+
+## Inheritance
+* **DateStamp** [ [DateStampedEntityMixin](DateStampedEntityMixin.md)]
+
 
 
 ## Slots
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [deposition_date](deposition_date.md) | 1..1 <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
-| [release_date](release_date.md) | 1..1 <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
-| [last_modified_date](last_modified_date.md) | 1..1 <br/> [Date](Date.md) | The date a piece of data was last modified on the cryoET data portal | direct |
+| [deposition_date](deposition_date.md) | 1 <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
+| [release_date](release_date.md) | 1 <br/> [Date](Date.md) | The date a data item was received by the cryoET data portal | direct |
+| [last_modified_date](last_modified_date.md) | 1 <br/> [Date](Date.md) | The date a piece of data was last modified on the cryoET data portal | direct |
 
 
 
@@ -46,7 +57,7 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [DatestampedEntity](DatestampedEntity.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
+| [DateStampedEntity](DateStampedEntity.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
 | [Dataset](Dataset.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
 | [Deposition](Deposition.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
 | [Annotation](Annotation.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
@@ -72,13 +83,14 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:DateStamp |
 | native | cdp-meta:DateStamp |
+
+
 
 
 
@@ -96,6 +108,8 @@ name: DateStamp
 description: A set of dates at which a data item was deposited, published and last
   modified.
 from_schema: metadata
+mixins:
+- DateStampedEntityMixin
 attributes:
   deposition_date:
     name: deposition_date
@@ -107,6 +121,7 @@ attributes:
     alias: deposition_date
     owner: DateStamp
     domain_of:
+    - DateStampedEntityMixin
     - DateStamp
     range: date
     required: true
@@ -122,6 +137,7 @@ attributes:
     alias: release_date
     owner: DateStamp
     domain_of:
+    - DateStampedEntityMixin
     - DateStamp
     range: date
     required: true
@@ -137,6 +153,7 @@ attributes:
     alias: last_modified_date
     owner: DateStamp
     domain_of:
+    - DateStampedEntityMixin
     - DateStamp
     range: date
     required: true
@@ -154,6 +171,8 @@ name: DateStamp
 description: A set of dates at which a data item was deposited, published and last
   modified.
 from_schema: metadata
+mixins:
+- DateStampedEntityMixin
 attributes:
   deposition_date:
     name: deposition_date
@@ -165,6 +184,7 @@ attributes:
     alias: deposition_date
     owner: DateStamp
     domain_of:
+    - DateStampedEntityMixin
     - DateStamp
     range: date
     required: true
@@ -180,6 +200,7 @@ attributes:
     alias: release_date
     owner: DateStamp
     domain_of:
+    - DateStampedEntityMixin
     - DateStamp
     range: date
     required: true
@@ -195,6 +216,7 @@ attributes:
     alias: last_modified_date
     owner: DateStamp
     domain_of:
+    - DateStampedEntityMixin
     - DateStamp
     range: date
     required: true

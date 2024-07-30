@@ -1,3 +1,5 @@
+
+
 # Class: CrossReferencedEntity
 
 
@@ -6,10 +8,10 @@ _An entity with associated cross-references to other databases and publications.
 
 
 
-* __NOTE__: this is an abstract class and should not be instantiated directly
-
 
 URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
+
+
 
 
 
@@ -17,14 +19,22 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 ```mermaid
  classDiagram
     class CrossReferencedEntity
+    click CrossReferencedEntity href "../CrossReferencedEntity"
       CrossReferencedEntity <|-- Dataset
+        click Dataset href "../Dataset"
       CrossReferencedEntity <|-- Deposition
-      
+        click Deposition href "../Deposition"
+
       CrossReferencedEntity : cross_references
-        
-          CrossReferencedEntity --> CrossReferences : cross_references
-        
-      
+
+
+
+
+    CrossReferencedEntity --> "0..1" CrossReferences : cross_references
+    click CrossReferences href "../CrossReferences"
+
+
+
 ```
 
 
@@ -39,6 +49,14 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 | ---  | --- | --- | --- |
 | [cross_references](cross_references.md) | 0..1 <br/> [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications | direct |
 
+
+
+## Mixin Usage
+
+| mixed into | description |
+| --- | --- |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |
+| [Deposition](Deposition.md) | Metadata describing a deposition |
 
 
 
@@ -63,13 +81,14 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CrossReferencedEntity |
 | native | cdp-meta:CrossReferencedEntity |
+
+
 
 
 
@@ -86,7 +105,7 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 name: CrossReferencedEntity
 description: An entity with associated cross-references to other databases and publications.
 from_schema: metadata
-abstract: true
+mixin: true
 attributes:
   cross_references:
     name: cross_references
@@ -113,7 +132,7 @@ attributes:
 name: CrossReferencedEntity
 description: An entity with associated cross-references to other databases and publications.
 from_schema: metadata
-abstract: true
+mixin: true
 attributes:
   cross_references:
     name: cross_references

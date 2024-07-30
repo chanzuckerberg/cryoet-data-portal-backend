@@ -104,7 +104,6 @@ datasets:
       corresponding_author_status: true
       name: Jan Michael Schuller
     cell_strain:
-      id: NCBI:txid2325
       name: LKT-1
     cross_references:
       publications: doi:10.1038/s41586-022-04971-z
@@ -190,7 +189,6 @@ tiltseries:
       model: KRIOS
     microscope_optical_setup:
       energy_filter: GIF Quantum LS
-      phase_plate: null
     pixel_spacing: 3.52
     related_empiar_entry: EMPIAR-11058
     spherical_aberration_constant: 2.7

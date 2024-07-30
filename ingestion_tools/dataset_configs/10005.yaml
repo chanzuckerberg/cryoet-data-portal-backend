@@ -7,8 +7,7 @@ annotations:
       state: 48 nm repeat
     annotation_publications: doi:10.1101/2022.09.28.510016
     authors: &id001
-    - ORCID: null
-      corresponding_author_status: false
+    - corresponding_author_status: false
       name: Zhen Chen
       primary_author_status: true
     - ORCID: 0000-0003-3460-2758
@@ -153,7 +152,6 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: GIF Bioquantum
-      phase_plate: null
     pixel_spacing: 2.612
     spherical_aberration_constant: 2.7
     tilt_axis: 6.4

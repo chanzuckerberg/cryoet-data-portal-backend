@@ -36,36 +36,15 @@ classes:
   # Author / Annotator
   # ============================================================================
   Author:
+    mixins:
+      - AuthorMixin
     description: >-
       Author of a scientific data entity.
     attributes:
-      name:
-        exact_mappings:
-          - cdp-common:author_name
-      email:
-        exact_mappings:
-          - cdp-common:author_email
-      affiliation_name:
-        exact_mappings:
-          - cdp-common:author_affiliation_name
-      affiliation_address:
-        exact_mappings:
-          - cdp-common:author_affiliation_address
-      affiliation_identifier:
-        exact_mappings:
-          - cdp-common:author_affiliation_identifier
-      corresponding_author_status:
-        exact_mappings:
-          - cdp-common:author_corresponding_author_status
-      primary_author_status:
-        exact_mappings:
-          - cdp-common:author_primary_author_status
       ORCID:
         exact_mappings:
           - cdp-common:author_orcid
   # ============================================================================
-
-
 
   # ============================================================================
   # Funding source information
@@ -87,21 +66,13 @@ classes:
   # ============================================================================
   DateStamp:
     description: A set of dates at which a data item was deposited, published and last modified.
-    attributes:
-      deposition_date:
-        exact_mappings:
-          - cdp-common:deposition_date
-      release_date:
-        exact_mappings:
-          - cdp-common:release_date
-      last_modified_date:
-        exact_mappings:
-          - cdp-common:last_modified_date
+    mixins:
+    - DateStampedEntityMixin
 
   # ============================================================================
   # Meta-Mixins
   # ============================================================================
-  DatestampedEntity:
+  DateStampedEntity:
     abstract: true
     description: An entity with associated deposition, release and last modified dates.
     attributes:
@@ -133,8 +104,14 @@ classes:
         inlined_as_list: true
         list_elements_ordered: true
 
-  CrossReferencedEntity:
+  CrossReferences:
     abstract: true
+    description: A set of cross-references to other databases and publications.
+    mixins:
+      - CrossReferencesMixin
+
+  CrossReferencedEntity:
+    mixin: true
     description: An entity with associated cross-references to other databases and publications.
     attributes:
       cross_references:
@@ -205,7 +182,7 @@ classes:
         exact_mappings:
           - cdp-common:cell_component_id
 
-  ExperimentalMetadata:
+  ExperimentMetadata:
     abstract: true
     description: Metadata describing sample and sample preparation methods used in a cryoET dataset.
     attributes:
@@ -244,11 +221,11 @@ classes:
   Dataset:
     description: High-level description of a cryoET dataset.
     mixins:
-      - DatestampedEntity
+      - DateStampedEntity
       - AuthoredEntity
       - FundedEntity
       - CrossReferencedEntity
-      - ExperimentalMetadata
+      - ExperimentMetadata
 
     attributes:
       dataset_identifier:
@@ -269,7 +246,7 @@ classes:
   Deposition:
     description: Metadata describing a deposition.
     mixins:
-      - DatestampedEntity
+      - DateStampedEntity
       - AuthoredEntity
       - CrossReferencedEntity
 
@@ -312,8 +289,9 @@ classes:
         exact_mappings:
           - cdp-common:tiltseries_microscope_additional_info
       manufacturer:
-        exact_mappings:
-          - cdp-common:tiltseries_microscope_manufacturer
+        any_of:
+          - range: cdp-common:tiltseries_microscope_manufacturer
+          - range: cdp-common:StringFormattedString
       model:
         exact_mappings:
           - cdp-common:tiltseries_microscope_model
@@ -335,11 +313,13 @@ classes:
     description: &desc_tilt_range The range of tilt angles in the tilt series.
     attributes:
       min:
-        exact_mappings:
-          - cdp-common:tiltseries_tilt_min
+        any_of:
+          - range: cdp-common:tiltseries_tilt_min
+          - range: cdp-common:FloatFormattedString
       max:
-        exact_mappings:
-          - cdp-common:tiltseries_tilt_max
+        any_of:
+          - range: cdp-common:tiltseries_tilt_max
+          - range: cdp-common:FloatFormattedString
   # ============================================================================
 
   # ============================================================================
@@ -353,11 +333,15 @@ classes:
         exact_mappings:
           - cdp-common:tiltseries_acceleration_voltage
       aligned_tiltseries_binning:
-        exact_mappings:
-          - cdp-common:tiltseries_aligned_tiltseries_binning
+        any_of:
+          - range: cdp-common:tiltseries_aligned_tiltseries_binning
+          - range: cdp-common:FloatFormattedString
+        ifabsent: 'float(1)'
       binning_from_frames:
-        exact_mappings:
-          - cdp-common:tiltseries_binning_from_frames
+        any_of:
+          - range: cdp-common:tiltseries_binning_from_frames
+          - range: cdp-common:FloatFormattedString
+        ifabsent: 'float(1)'
       camera:
         description: *desc_camera
         range: CameraDetails
@@ -383,33 +367,39 @@ classes:
         exact_mappings:
           - cdp-common:tiltseries_related_empiar_entry
       spherical_aberration_constant:
-        exact_mappings:
-          - cdp-common:tiltseries_spherical_aberration_constant
+        any_of:
+          - range: cdp-common:tiltseries_spherical_aberration_constant
+          - range: cdp-common:FloatFormattedString
       tilt_alignment_software:
         exact_mappings:
           - cdp-common:tiltseries_tilt_alignment_software
       tilt_axis:
-        exact_mappings:
-          - cdp-common:tiltseries_tilt_axis
+        any_of:
+          - range: cdp-common:tiltseries_tilt_axis
+          - range: cdp-common:FloatFormattedString
       tilt_range:
         description: *desc_tilt_range
         range: TiltRange
         required: true
       tilt_series_quality:
-        exact_mappings:
-          - cdp-common:tiltseries_tilt_series_quality
+        any_of:
+          - range: cdp-common:tiltseries_tilt_series_quality
+          - range: cdp-common:IntegerFormattedString
       tilt_step:
-        exact_mappings:
-          - cdp-common:tiltseries_tilt_step
+        any_of:
+          - range: cdp-common:tiltseries_tilt_step
+          - range: cdp-common:FloatFormattedString
       tilting_scheme:
         exact_mappings:
           - cdp-common:tiltseries_tilting_scheme
       total_flux:
-        exact_mappings:
-          - cdp-common:tiltseries_total_flux
+        any_of:
+          - range: cdp-common:tiltseries_total_flux
+          - range: cdp-common:FloatFormattedString
       pixel_spacing:
-        exact_mappings:
-          - cdp-common:tiltseries_pixel_spacing
+        any_of:
+          - range: cdp-common:tiltseries_pixel_spacing
+          - range: cdp-common:FloatFormattedString
   # ============================================================================
 
   TomogramSize:
@@ -504,11 +494,13 @@ classes:
 
     attributes:
       voxel_spacing:
-        exact_mappings:
-          - cdp-common:tomogram_voxel_spacing
+        any_of:
+          - range: cdp-common:tomogram_voxel_spacing
+          - range: cdp-common:FloatFormattedString
       fiducial_alignment_status:
-        exact_mappings:
-          - cdp-common:tomogram_fiducial_alignment_status
+        any_of:
+          - range: cdp-common:tomogram_fiducial_alignment_status
+          - range: cdp-common:StringFormattedString
       ctf_corrected:
         exact_mappings:
           - cdp-common:tomogram_ctf_corrected
@@ -516,8 +508,9 @@ classes:
         exact_mappings:
           - cdp-common:tomogram_align_software
       reconstruction_method:
-        exact_mappings:
-          - cdp-common:tomogram_reconstruction_method
+        any_of:
+          - range: cdp-common:tomogram_reconstruction_method
+          - range: cdp-common:StringFormattedString
       reconstruction_software:
         exact_mappings:
           - cdp-common:tomogram_reconstruction_software
@@ -532,7 +525,7 @@ classes:
           - cdp-common:tomogram_version
       affine_transformation_matrix:
           description: The flip or rotation transformation of this author submitted tomogram is indicated here
-          range: Any
+          range: float
           array:
             exact_number_dimensions: 2
             dimensions:
@@ -659,7 +652,7 @@ classes:
   Annotation:
     description: Metadata describing an annotation.
     mixins:
-    - DatestampedEntity
+    - DateStampedEntity
     - AuthoredEntity
 
     attributes:

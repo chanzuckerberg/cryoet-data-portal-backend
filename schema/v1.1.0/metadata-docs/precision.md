@@ -1,3 +1,5 @@
+
+
 # Slot: precision
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:precision](metadataprecision)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation |  no  |
+| [AnnotationConfidence](AnnotationConfidence.md) | Metadata describing the confidence of an annotation |  no  |
 
 
 
@@ -50,6 +53,17 @@ URI: [cdp-meta:precision](metadataprecision)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:precision |
+| native | cdp-meta:precision |
+| exact | cdp-common:annotation_confidence_precision |
 
 
 

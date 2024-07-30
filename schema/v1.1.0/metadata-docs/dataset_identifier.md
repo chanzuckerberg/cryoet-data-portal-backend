@@ -1,3 +1,5 @@
+
+
 # Slot: dataset_identifier
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:dataset_identifier](metadatadataset_identifier)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 
 
 
@@ -48,6 +51,17 @@ URI: [cdp-meta:dataset_identifier](metadatadataset_identifier)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:dataset_identifier |
+| native | cdp-meta:dataset_identifier |
+| exact | cdp-common:dataset_identifier |
 
 
 

@@ -128,8 +128,6 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: Selectris X
-      image_corrector: null
-      phase_plate: null
     pixel_spacing: 1.96
     related_empiar_entry: EMPIAR-11830
     spherical_aberration_constant: 2.7

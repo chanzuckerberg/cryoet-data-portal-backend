@@ -1,9 +1,6 @@
+
+
 # Slot: deposition_date
-
-
-_The date a data item was received by the cryoET data portal._
-
-
 
 URI: [cdp-meta:deposition_date](metadatadeposition_date)
 
@@ -14,11 +11,13 @@ URI: [cdp-meta:deposition_date](metadatadeposition_date)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |  no  |
+| [DateStampedEntityMixin](DateStampedEntityMixin.md) | A set of dates at which a data item was deposited, published and last modifie... |  no  |
+| [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |  no  |
 
 
 
@@ -28,9 +27,7 @@ URI: [cdp-meta:deposition_date](metadatadeposition_date)
 
 ## Properties
 
-* Range: [Date](Date.md)
-
-* Required: True
+* Range: [String](String.md)
 
 
 
@@ -44,10 +41,13 @@ URI: [cdp-meta:deposition_date](metadatadeposition_date)
 
 
 
-### Schema Source
 
+## Mappings
 
-* from schema: metadata
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:deposition_date |
+| native | cdp-meta:deposition_date |
 
 
 
@@ -57,19 +57,11 @@ URI: [cdp-meta:deposition_date](metadatadeposition_date)
 <details>
 ```yaml
 name: deposition_date
-description: The date a data item was received by the cryoET data portal.
-from_schema: metadata
-exact_mappings:
-- cdp-common:deposition_date
-rank: 1000
 alias: deposition_date
-owner: DateStamp
 domain_of:
 - DateStamp
-range: date
-required: true
-inlined: true
-inlined_as_list: true
+- DateStampedEntityMixin
+range: string
 
 ```
 </details>

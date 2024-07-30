@@ -132,10 +132,10 @@ class VolumeReader(ABC):
     def get_volume_info(self) -> VolumeInfo:
         pass
 
-    def get_mrc_extended_header(self) -> np.record | None:
+    def get_mrc_extended_header(self) -> np.ndarray | np.recarray | None:
         return None
 
-    def get_mrc_header(self) -> np.record | None:
+    def get_mrc_header(self) -> np.recarray | None:
         return None
 
 
@@ -158,10 +158,10 @@ class MRCReader(VolumeReader):
             self.extended_header = mrc.extended_header
             self.data: np.ndarray = mrc.data
 
-    def get_mrc_header(self) -> np.rec.array:
+    def get_mrc_header(self) -> np.recarray:
         return self.header
 
-    def get_mrc_extended_header(self) -> np.rec.array:
+    def get_mrc_extended_header(self) -> np.ndarray | np.recarray:
         return self.extended_header
 
     def get_pyramid_base_data(self) -> np.ndarray:
@@ -270,7 +270,7 @@ class TomoConverter:
         # Ensure voxel spacing rounded to 3rd digit
         voxel_spacing = round(voxel_spacing, 3)
 
-        pyramid = [self.volume_reader.get_pyramid_base_data()]
+        pyramid = [self.scaled_data_transformation(self.volume_reader.get_pyramid_base_data())]
         pyramid_voxel_spacing = [(voxel_spacing, voxel_spacing, voxel_spacing)]
         z_scale = 2 if scale_z_axis else 1
         # Then make a pyramid of 100/50/25 percent scale volumes
@@ -351,10 +351,19 @@ class TomoConverter:
             header.extra1 = old_header.extra1
             header.extra2 = old_header.extra2
             if old_header.exttyp.item().decode().strip():
-                header.nsymbt = old_header.nsymbt
-                header.exttyp = old_header.exttyp
-                if ext := self.volume_reader.get_mrc_extended_header():
+                ext = self.volume_reader.get_mrc_extended_header()
+                # In order to cover the following cases:
+                # 1. do set on filled np.ndarray > np.array(val: np.ndarray).tolist() -> list
+                # 2. do set on filled np.recarray > np.array(val: np.recarray).tolist() -> list
+                # 3. skip setting on empty np.ndarray > np.array(np.empty(0)).tolist() == []
+                # 4. skip setting on None > np.array(None).tolist() == None
+                if np.array(ext).tolist():
+                    header.exttyp = old_header.exttyp
                     mrcfile.set_extended_header(ext)
+                else:
+                    # Empty extended header
+                    header.exttyp = b"MRCO"
+                    header.nsymbt = 0
 
         if header_mapper:
             header_mapper(header)

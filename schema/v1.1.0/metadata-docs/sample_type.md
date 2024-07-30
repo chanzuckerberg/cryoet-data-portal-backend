@@ -1,3 +1,5 @@
+
+
 # Slot: sample_type
 
 URI: [cdp-meta:sample_type](metadatasample_type)
@@ -9,12 +11,13 @@ URI: [cdp-meta:sample_type](metadatasample_type)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET da... |  no  |
-[Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+| [ExperimentMetadata](ExperimentMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET da... |  no  |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 
 
 
@@ -39,6 +42,16 @@ URI: [cdp-meta:sample_type](metadatasample_type)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:sample_type |
+| native | cdp-meta:sample_type |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -46,7 +59,7 @@ URI: [cdp-meta:sample_type](metadatasample_type)
 name: sample_type
 alias: sample_type
 domain_of:
-- ExperimentalMetadata
+- ExperimentMetadata
 - Dataset
 range: string
 

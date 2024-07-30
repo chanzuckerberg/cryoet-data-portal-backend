@@ -1,3 +1,5 @@
+
+
 # Slot: tilt_step
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:tilt_step](metadatatilt_step)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
+| [TiltSeries](TiltSeries.md) | Metadata describing a tilt series |  no  |
 
 
 
@@ -28,9 +31,7 @@ URI: [cdp-meta:tilt_step](metadatatilt_step)
 
 ## Properties
 
-* Range: [String](String.md)
-
-* Required: True
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Minimum Value: 0
 
@@ -58,6 +59,16 @@ URI: [cdp-meta:tilt_step](metadatatilt_step)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tilt_step |
+| native | cdp-meta:tilt_step |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -65,15 +76,12 @@ URI: [cdp-meta:tilt_step](metadatatilt_step)
 name: tilt_step
 description: Tilt step in degrees
 from_schema: metadata
-exact_mappings:
-- cdp-common:tiltseries_tilt_step
 rank: 1000
 alias: tilt_step
 owner: TiltSeries
 domain_of:
 - TiltSeries
 range: string
-required: true
 inlined: true
 inlined_as_list: true
 minimum_value: 0

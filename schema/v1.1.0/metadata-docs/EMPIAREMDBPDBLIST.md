@@ -36,3 +36,10 @@ URI: [cdp-meta:EMPIAR_EMDB_PDB_LIST](metadataEMPIAR_EMDB_PDB_LIST)
 
 
 
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:EMPIAR_EMDB_PDB_LIST |
+| native | cdp-meta:EMPIAR_EMDB_PDB_LIST |

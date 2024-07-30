@@ -111,7 +111,10 @@ datasets:
       name: Judith B. Zaugg
     cell_type:
       id: CL:0002586
-      name: Retinal pigment epithelial-1
+      name: retinal pigment epithelial cell
+    cell_strain:
+      id: BTO:0004790
+      name: hTERT-RPE1 cell
     cross_references:
       publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
       related_database_entries: EMPIAR-10989

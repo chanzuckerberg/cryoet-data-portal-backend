@@ -1,3 +1,5 @@
+
+
 # Slot: mask_label
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:mask_label](metadatamask_label)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[AnnotationSemanticSegmentationMaskFile](AnnotationSemanticSegmentationMaskFile.md) | File and sourcing data for a semantic segmentation mask annotation |  no  |
+| [AnnotationSemanticSegmentationMaskFile](AnnotationSemanticSegmentationMaskFile.md) | File and sourcing data for a semantic segmentation mask annotation |  no  |
 
 
 
@@ -46,6 +49,17 @@ URI: [cdp-meta:mask_label](metadatamask_label)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:mask_label |
+| native | cdp-meta:mask_label |
+| exact | cdp-common:annotation_source_file_mask_label |
 
 
 

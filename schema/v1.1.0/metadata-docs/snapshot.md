@@ -1,3 +1,5 @@
+
+
 # Slot: snapshot
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:snapshot](metadatasnapshot)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data |  no  |
+| [PicturePath](PicturePath.md) | A set of paths to representative images of a piece of data |  no  |
 
 
 
@@ -50,6 +53,17 @@ URI: [cdp-meta:snapshot](metadatasnapshot)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:snapshot |
+| native | cdp-meta:snapshot |
+| exact | cdp-common:snapshot |
 
 
 

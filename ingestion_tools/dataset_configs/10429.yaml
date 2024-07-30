@@ -115,10 +115,7 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: Gatan BioContinuum
-      image_corrector: null
-      phase_plate: null
     pixel_spacing: 1.058
-    related_empiar_entry: null
     spherical_aberration_constant: 2.7
     tilt_axis: 0.0
     tilt_range:
@@ -128,6 +125,10 @@ tiltseries:
     tilt_step: 2.0
     tilting_scheme: dose-symmetric
     total_flux: float {tilt_series_total_flux}
+  sources:
+  - literal:
+      value:
+      - validation placeholder
 tomograms:
 - metadata:
     affine_transformation_matrix:

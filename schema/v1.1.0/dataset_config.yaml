@@ -62,6 +62,7 @@ classes:
         description: Runs for the dataset.
         multivalued: true
         range: RunEntity
+        required: true
       standardization_config:
         description: Standardization config for the dataset.
         range: StandardizationConfig
@@ -267,7 +268,6 @@ classes:
     attributes:
       metadata:
         range: Dataset
-        required: true
       sources:
         multivalued: true
         range: DatasetSource
@@ -293,7 +293,6 @@ classes:
     attributes:
       metadata:
         range: Deposition
-        required: true
       sources:
         multivalued: true
         range: DepositionSource
@@ -410,7 +409,6 @@ classes:
     attributes:
       metadata:
         range: TiltSeries
-        required: true
       sources:
         multivalued: true
         range: TiltSeriesSource
@@ -428,7 +426,6 @@ classes:
     attributes:
       metadata:
         range: Tomogram
-        required: true
       sources:
         multivalued: true
         range: TomogramSource

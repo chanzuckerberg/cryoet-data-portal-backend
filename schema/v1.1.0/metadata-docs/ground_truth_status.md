@@ -1,3 +1,5 @@
+
+
 # Slot: ground_truth_status
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:ground_truth_status](metadataground_truth_status)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -48,6 +51,17 @@ URI: [cdp-meta:ground_truth_status](metadataground_truth_status)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:ground_truth_status |
+| native | cdp-meta:ground_truth_status |
+| exact | cdp-common:annotation_ground_truth_status |
 
 
 

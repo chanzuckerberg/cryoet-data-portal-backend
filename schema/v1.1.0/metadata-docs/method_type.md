@@ -1,3 +1,5 @@
+
+
 # Slot: method_type
 
 
@@ -14,11 +16,12 @@ URI: [cdp-meta:method_type](metadatamethod_type)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[Annotation](Annotation.md) | Metadata describing an annotation |  no  |
+| [Annotation](Annotation.md) | Metadata describing an annotation |  no  |
 
 
 
@@ -50,6 +53,17 @@ URI: [cdp-meta:method_type](metadatamethod_type)
 
 
 * from schema: metadata
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:method_type |
+| native | cdp-meta:method_type |
+| exact | cdp-common:annotation_method_type |
 
 
 

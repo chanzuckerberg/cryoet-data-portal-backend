@@ -8,7 +8,6 @@ EXCLUDE_KEYWORDS_LIST = ["draft"]
 YAML_EXTENSIONS = (".yaml", ".yml")
 
 # Set up logging
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 

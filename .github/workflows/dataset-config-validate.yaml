@@ -28,14 +28,18 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install linkml
-        run: pip install linkml
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --no-cache-dir poetry
+          poetry config virtualenvs.create false
+          poetry install
+        working-directory: schema/
       - name: Build Pydantic models
         run: make build
         working-directory: schema/v1.1.0
       - name: Validate dataset configs
         run: |
-          python dataset_config_validate.py
+          make validate-configs-with-network
         working-directory: schema/v1.1.0
       - name: Archive validation results
         if: failure()

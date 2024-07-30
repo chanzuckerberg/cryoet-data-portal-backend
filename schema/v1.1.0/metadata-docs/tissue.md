@@ -1,3 +1,5 @@
+
+
 # Slot: tissue
 
 URI: [cdp-meta:tissue](metadatatissue)
@@ -9,12 +11,13 @@ URI: [cdp-meta:tissue](metadatatissue)
 
 
 
+
 ## Applicable Classes
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-[ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET da... |  no  |
-[Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+| [ExperimentMetadata](ExperimentMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET da... |  no  |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 
 
 
@@ -39,6 +42,16 @@ URI: [cdp-meta:tissue](metadatatissue)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | cdp-meta:tissue |
+| native | cdp-meta:tissue |
+
+
+
+
 ## LinkML Source
 
 <details>
@@ -46,7 +59,7 @@ URI: [cdp-meta:tissue](metadatatissue)
 name: tissue
 alias: tissue
 domain_of:
-- ExperimentalMetadata
+- ExperimentMetadata
 - Dataset
 range: string
 

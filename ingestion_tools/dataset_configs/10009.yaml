@@ -103,8 +103,8 @@ annotations:
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
-      id: GO:0035869
-      name: MTD stellate / Y-shaped link
+      id: GO:0097537
+      name: Y-shaped link
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
@@ -125,7 +125,7 @@ annotations:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
       id: GO:0030992
-      name: IFT-B
+      name: IFT B complex
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
@@ -146,7 +146,7 @@ annotations:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
       id: GO:0030991
-      name: IFT-A
+      name: IFT A complex
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
@@ -316,7 +316,6 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup: &id006
       energy_filter: GIF Quantum LS
-      phase_plate: null
     pixel_spacing: 3.42
     related_empiar_entry: EMPIAR-11078
     spherical_aberration_constant: 2.7
@@ -327,6 +326,7 @@ tiltseries:
     tilt_step: 2.0
     tilting_scheme: Dose-symmetric
     total_flux: 100
+    tilt_axis: 0.0
   sources:
   - parent_filters:
       exclude:
@@ -351,6 +351,7 @@ tiltseries:
     tilt_step: 2.0
     tilting_scheme: bi-directional
     total_flux: 100
+    tilt_axis: 0.0
   sources:
   - parent_filters:
       include:
@@ -372,6 +373,7 @@ tiltseries:
     tilt_step: 2.0
     tilting_scheme: Dose-symmetric
     total_flux: 100
+    tilt_axis: 0.0
   sources:
   - parent_filters:
       include:

@@ -1,3 +1,5 @@
+
+
 # Class: CrossReferences
 
 
@@ -6,8 +8,12 @@ _A set of cross-references to other databases and publications._
 
 
 
+* __NOTE__: this is an abstract class and should not be instantiated directly
+
 
 URI: [cdp-meta:CrossReferences](metadataCrossReferences)
+
+
 
 
 
@@ -15,21 +21,28 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 ```mermaid
  classDiagram
     class CrossReferences
+    click CrossReferences href "../CrossReferences"
+      CrossReferencesMixin <|-- CrossReferences
+        click CrossReferencesMixin href "../CrossReferencesMixin"
+
       CrossReferences : dataset_citations
-        
+
       CrossReferences : publications
-        
+
       CrossReferences : related_database_entries
-        
+
       CrossReferences : related_database_links
-        
-      
+
+
 ```
 
 
 
 
-<!-- no inheritance hierarchy -->
+
+## Inheritance
+* **CrossReferences** [ [CrossReferencesMixin](CrossReferencesMixin.md)]
+
 
 
 ## Slots
@@ -74,13 +87,14 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 
 
 
-
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
 | self | cdp-meta:CrossReferences |
 | native | cdp-meta:CrossReferences |
+
+
 
 
 
@@ -97,6 +111,9 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 name: CrossReferences
 description: A set of cross-references to other databases and publications.
 from_schema: metadata
+abstract: true
+mixins:
+- CrossReferencesMixin
 attributes:
   publications:
     name: publications
@@ -107,6 +124,7 @@ attributes:
     alias: publications
     owner: CrossReferences
     domain_of:
+    - CrossReferencesMixin
     - CrossReferences
     range: DOI_LIST
     recommended: true
@@ -121,6 +139,7 @@ attributes:
     alias: related_database_entries
     owner: CrossReferences
     domain_of:
+    - CrossReferencesMixin
     - CrossReferences
     range: EMPIAR_EMDB_PDB_LIST
     recommended: true
@@ -135,6 +154,7 @@ attributes:
     alias: related_database_links
     owner: CrossReferences
     domain_of:
+    - CrossReferencesMixin
     - CrossReferences
     range: string
     inlined: true
@@ -147,6 +167,7 @@ attributes:
     alias: dataset_citations
     owner: CrossReferences
     domain_of:
+    - CrossReferencesMixin
     - CrossReferences
     range: string
     inlined: true
@@ -162,6 +183,9 @@ attributes:
 name: CrossReferences
 description: A set of cross-references to other databases and publications.
 from_schema: metadata
+abstract: true
+mixins:
+- CrossReferencesMixin
 attributes:
   publications:
     name: publications
@@ -172,6 +196,7 @@ attributes:
     alias: publications
     owner: CrossReferences
     domain_of:
+    - CrossReferencesMixin
     - CrossReferences
     range: DOI_LIST
     recommended: true
@@ -186,6 +211,7 @@ attributes:
     alias: related_database_entries
     owner: CrossReferences
     domain_of:
+    - CrossReferencesMixin
     - CrossReferences
     range: EMPIAR_EMDB_PDB_LIST
     recommended: true
@@ -200,6 +226,7 @@ attributes:
     alias: related_database_links
     owner: CrossReferences
     domain_of:
+    - CrossReferencesMixin
     - CrossReferences
     range: string
     inlined: true
@@ -212,6 +239,7 @@ attributes:
     alias: dataset_citations
     owner: CrossReferences
     domain_of:
+    - CrossReferencesMixin
     - CrossReferences
     range: string
     inlined: true
