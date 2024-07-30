@@ -1,6 +1,6 @@
 
 
-# Class: DateStamp
+# Class: DateStampedEntityMixin
 
 
 _A set of dates at which a data item was deposited, published and last modified._
@@ -9,7 +9,7 @@ _A set of dates at which a data item was deposited, published and last modified.
 
 
 
-URI: [cdp-meta:DateStamp](metadataDateStamp)
+URI: [cdp-meta:DateStampedEntityMixin](metadataDateStampedEntityMixin)
 
 
 
@@ -18,16 +18,16 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 ```mermaid
  classDiagram
-    class DateStamp
-    click DateStamp href "../DateStamp"
+    class DateStampedEntityMixin
+    click DateStampedEntityMixin href "../DateStampedEntityMixin"
       DateStampedEntityMixin <|-- DateStamp
-        click DateStampedEntityMixin href "../DateStampedEntityMixin"
+        click DateStamp href "../DateStamp"
 
-      DateStamp : deposition_date
+      DateStampedEntityMixin : deposition_date
 
-      DateStamp : last_modified_date
+      DateStampedEntityMixin : last_modified_date
 
-      DateStamp : release_date
+      DateStampedEntityMixin : release_date
 
 
 ```
@@ -35,10 +35,7 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 
 
-
-## Inheritance
-* **DateStamp** [ [DateStampedEntityMixin](DateStampedEntityMixin.md)]
-
+<!-- no inheritance hierarchy -->
 
 
 ## Slots
@@ -51,16 +48,13 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 
 
+## Mixin Usage
+
+| mixed into | description |
+| --- | --- |
+| [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |
 
 
-## Usages
-
-| used by | used in | type | used |
-| ---  | --- | --- | --- |
-| [DateStampedEntity](DateStampedEntity.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
-| [Dataset](Dataset.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
-| [Deposition](Deposition.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
-| [Annotation](Annotation.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
 
 
 
@@ -87,8 +81,8 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:DateStamp |
-| native | cdp-meta:DateStamp |
+| self | cdp-meta:DateStampedEntityMixin |
+| native | cdp-meta:DateStampedEntityMixin |
 
 
 
@@ -104,12 +98,11 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 <details>
 ```yaml
-name: DateStamp
+name: DateStampedEntityMixin
 description: A set of dates at which a data item was deposited, published and last
   modified.
 from_schema: metadata
-mixins:
-- DateStampedEntityMixin
+mixin: true
 attributes:
   deposition_date:
     name: deposition_date
@@ -117,9 +110,8 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:deposition_date
-    rank: 1000
     alias: deposition_date
-    owner: DateStamp
+    owner: DateStampedEntityMixin
     domain_of:
     - DateStampedEntityMixin
     - DateStamp
@@ -133,9 +125,8 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:release_date
-    rank: 1000
     alias: release_date
-    owner: DateStamp
+    owner: DateStampedEntityMixin
     domain_of:
     - DateStampedEntityMixin
     - DateStamp
@@ -149,9 +140,8 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:last_modified_date
-    rank: 1000
     alias: last_modified_date
-    owner: DateStamp
+    owner: DateStampedEntityMixin
     domain_of:
     - DateStampedEntityMixin
     - DateStamp
@@ -167,12 +157,11 @@ attributes:
 
 <details>
 ```yaml
-name: DateStamp
+name: DateStampedEntityMixin
 description: A set of dates at which a data item was deposited, published and last
   modified.
 from_schema: metadata
-mixins:
-- DateStampedEntityMixin
+mixin: true
 attributes:
   deposition_date:
     name: deposition_date
@@ -180,9 +169,8 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:deposition_date
-    rank: 1000
     alias: deposition_date
-    owner: DateStamp
+    owner: DateStampedEntityMixin
     domain_of:
     - DateStampedEntityMixin
     - DateStamp
@@ -196,9 +184,8 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:release_date
-    rank: 1000
     alias: release_date
-    owner: DateStamp
+    owner: DateStampedEntityMixin
     domain_of:
     - DateStampedEntityMixin
     - DateStamp
@@ -212,9 +199,8 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:last_modified_date
-    rank: 1000
     alias: last_modified_date
-    owner: DateStamp
+    owner: DateStampedEntityMixin
     domain_of:
     - DateStampedEntityMixin
     - DateStamp

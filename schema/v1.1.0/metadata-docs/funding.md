@@ -16,8 +16,8 @@ URI: [cdp-meta:funding](metadatafunding)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [FundedEntity](FundedEntity.md) | An entity with associated funding sources |  no  |
 | [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
+| [FundedEntity](FundedEntity.md) | An entity with associated funding sources |  no  |
 
 
 
