@@ -180,6 +180,7 @@ class Annotation(BaseModel):
     ground_truth_used = CharField()
     is_curator_recommended = BooleanField(default=False)
     method_type = CharField()
+    method_links = CharField(null=True)
     deposition_id = IntegerField(null=True)
 
 
