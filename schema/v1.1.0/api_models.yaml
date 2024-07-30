@@ -395,7 +395,7 @@ classes:
   Deposition:
     mixins:
       - IDMixin
-      - CrossReferencedEntityMixin
+      - CrossReferencesMixin
       - DateStampedEntityMixin
     attributes:
       authors:
@@ -510,7 +510,7 @@ classes:
         exact_mappings:
           - cdp-common:per_section_astigmatic_angle
     annotations:
-      plural: PerSectionParameters
+      plural: PerSectionAlignments
   PerSectionParameters:
     mixins:
       - IDMixin
