@@ -43,6 +43,3 @@ URI: [cdp-meta:EMPIAR_ID](metadataEMPIAR_ID)
 | ---  | ---  |
 | self | cdp-meta:EMPIAR_ID |
 | native | cdp-meta:EMPIAR_ID |
-
-
-

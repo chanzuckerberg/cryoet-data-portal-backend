@@ -23,15 +23,15 @@ URI: [cdp-meta:PicturedEntity](metadataPicturedEntity)
     class PicturedEntity
     click PicturedEntity href "../PicturedEntity"
       PicturedEntity : key_photos
-        
-          
-    
-    
+
+
+
+
     PicturedEntity --> "1" PicturePath : key_photos
     click PicturePath href "../PicturePath"
 
-        
-      
+
+
 ```
 
 

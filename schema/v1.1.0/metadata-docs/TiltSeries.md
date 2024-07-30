@@ -21,72 +21,72 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
     class TiltSeries
     click TiltSeries href "../TiltSeries"
       TiltSeries : acceleration_voltage
-        
+
       TiltSeries : aligned_tiltseries_binning
-        
+
       TiltSeries : binning_from_frames
-        
+
       TiltSeries : camera
-        
-          
-    
-    
+
+
+
+
     TiltSeries --> "1" CameraDetails : camera
     click CameraDetails href "../CameraDetails"
 
-        
+
       TiltSeries : data_acquisition_software
-        
+
       TiltSeries : frames_count
-        
+
       TiltSeries : is_aligned
-        
+
       TiltSeries : microscope
-        
-          
-    
-    
+
+
+
+
     TiltSeries --> "1" MicroscopeDetails : microscope
     click MicroscopeDetails href "../MicroscopeDetails"
 
-        
+
       TiltSeries : microscope_optical_setup
-        
-          
-    
-    
+
+
+
+
     TiltSeries --> "1" MicroscopeOpticalSetup : microscope_optical_setup
     click MicroscopeOpticalSetup href "../MicroscopeOpticalSetup"
 
-        
+
       TiltSeries : pixel_spacing
-        
+
       TiltSeries : related_empiar_entry
-        
+
       TiltSeries : spherical_aberration_constant
-        
+
       TiltSeries : tilt_alignment_software
-        
+
       TiltSeries : tilt_axis
-        
+
       TiltSeries : tilt_range
-        
-          
-    
-    
+
+
+
+
     TiltSeries --> "1" TiltRange : tilt_range
     click TiltRange href "../TiltRange"
 
-        
+
       TiltSeries : tilt_series_quality
-        
+
       TiltSeries : tilt_step
-        
+
       TiltSeries : tilting_scheme
-        
+
       TiltSeries : total_flux
-        
-      
+
+
 ```
 
 

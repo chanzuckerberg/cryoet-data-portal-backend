@@ -24,17 +24,17 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
         click Dataset href "../Dataset"
       CrossReferencedEntity <|-- Deposition
         click Deposition href "../Deposition"
-      
+
       CrossReferencedEntity : cross_references
-        
-          
-    
-    
+
+
+
+
     CrossReferencedEntity --> "0..1" CrossReferences : cross_references
     click CrossReferences href "../CrossReferences"
 
-        
-      
+
+
 ```
 
 

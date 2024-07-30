@@ -26,50 +26,50 @@ URI: [cdp-meta:Deposition](metadataDeposition)
         click AuthoredEntity href "../AuthoredEntity"
       CrossReferencedEntity <|-- Deposition
         click CrossReferencedEntity href "../CrossReferencedEntity"
-      
+
       Deposition : authors
-        
-          
-    
-    
+
+
+
+
     Deposition --> "1..*" Author : authors
     click Author href "../Author"
 
-        
+
       Deposition : cross_references
-        
-          
-    
-    
+
+
+
+
     Deposition --> "0..1" CrossReferences : cross_references
     click CrossReferences href "../CrossReferences"
 
-        
+
       Deposition : dates
-        
-          
-    
-    
+
+
+
+
     Deposition --> "1" DateStamp : dates
     click DateStamp href "../DateStamp"
 
-        
+
       Deposition : deposition_description
-        
+
       Deposition : deposition_identifier
-        
+
       Deposition : deposition_title
-        
+
       Deposition : deposition_types
-        
-          
-    
-    
+
+
+
+
     Deposition --> "1..*" DepositionTypesEnum : deposition_types
     click DepositionTypesEnum href "../DepositionTypesEnum"
 
-        
-      
+
+
 ```
 
 

@@ -22,27 +22,27 @@ URI: [cdp-meta:AnnotationOrientedPointFile](metadataAnnotationOrientedPointFile)
     click AnnotationOrientedPointFile href "../AnnotationOrientedPointFile"
       AnnotationSourceFile <|-- AnnotationOrientedPointFile
         click AnnotationSourceFile href "../AnnotationSourceFile"
-      
+
 
       AnnotationOrientedPointFile <|-- AnnotationInstanceSegmentationFile
         click AnnotationInstanceSegmentationFile href "../AnnotationInstanceSegmentationFile"
-      
-      
+
+
       AnnotationOrientedPointFile : binning
-        
+
       AnnotationOrientedPointFile : file_format
-        
+
       AnnotationOrientedPointFile : filter_value
-        
+
       AnnotationOrientedPointFile : glob_string
-        
+
       AnnotationOrientedPointFile : glob_strings
-        
+
       AnnotationOrientedPointFile : is_visualization_default
-        
+
       AnnotationOrientedPointFile : order
-        
-      
+
+
 ```
 
 

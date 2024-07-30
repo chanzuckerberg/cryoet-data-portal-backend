@@ -22,24 +22,24 @@ URI: [cdp-meta:Author](metadataAuthor)
     click Author href "../Author"
       AuthorMixin <|-- Author
         click AuthorMixin href "../AuthorMixin"
-      
+
       Author : affiliation_address
-        
+
       Author : affiliation_identifier
-        
+
       Author : affiliation_name
-        
+
       Author : corresponding_author_status
-        
+
       Author : email
-        
+
       Author : name
-        
+
       Author : ORCID
-        
+
       Author : primary_author_status
-        
-      
+
+
 ```
 
 

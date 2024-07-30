@@ -22,14 +22,14 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
     click DateStamp href "../DateStamp"
       DateStampedEntityMixin <|-- DateStamp
         click DateStampedEntityMixin href "../DateStampedEntityMixin"
-      
+
       DateStamp : deposition_date
-        
+
       DateStamp : last_modified_date
-        
+
       DateStamp : release_date
-        
-      
+
+
 ```
 
 

@@ -43,6 +43,3 @@ URI: [cdp-meta:FloatFormattedString](metadataFloatFormattedString)
 | ---  | ---  |
 | self | cdp-meta:FloatFormattedString |
 | native | cdp-meta:FloatFormattedString |
-
-
-

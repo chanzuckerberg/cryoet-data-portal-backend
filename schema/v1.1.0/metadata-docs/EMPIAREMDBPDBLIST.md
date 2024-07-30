@@ -43,6 +43,3 @@ URI: [cdp-meta:EMPIAR_EMDB_PDB_LIST](metadataEMPIAR_EMDB_PDB_LIST)
 | ---  | ---  |
 | self | cdp-meta:EMPIAR_EMDB_PDB_LIST |
 | native | cdp-meta:EMPIAR_EMDB_PDB_LIST |
-
-
-

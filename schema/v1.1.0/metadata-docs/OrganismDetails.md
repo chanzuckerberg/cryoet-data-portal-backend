@@ -21,10 +21,10 @@ URI: [cdp-meta:OrganismDetails](metadataOrganismDetails)
     class OrganismDetails
     click OrganismDetails href "../OrganismDetails"
       OrganismDetails : name
-        
+
       OrganismDetails : taxonomy_id
-        
-      
+
+
 ```
 
 

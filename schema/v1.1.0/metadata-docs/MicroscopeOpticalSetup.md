@@ -21,12 +21,12 @@ URI: [cdp-meta:MicroscopeOpticalSetup](metadataMicroscopeOpticalSetup)
     class MicroscopeOpticalSetup
     click MicroscopeOpticalSetup href "../MicroscopeOpticalSetup"
       MicroscopeOpticalSetup : energy_filter
-        
+
       MicroscopeOpticalSetup : image_corrector
-        
+
       MicroscopeOpticalSetup : phase_plate
-        
-      
+
+
 ```
 
 

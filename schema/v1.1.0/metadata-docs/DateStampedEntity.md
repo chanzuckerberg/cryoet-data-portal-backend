@@ -28,17 +28,17 @@ URI: [cdp-meta:DateStampedEntity](metadataDateStampedEntity)
         click Deposition href "../Deposition"
       DateStampedEntity <|-- Annotation
         click Annotation href "../Annotation"
-      
+
       DateStampedEntity : dates
-        
-          
-    
-    
+
+
+
+
     DateStampedEntity --> "1" DateStamp : dates
     click DateStamp href "../DateStamp"
 
-        
-      
+
+
 ```
 
 

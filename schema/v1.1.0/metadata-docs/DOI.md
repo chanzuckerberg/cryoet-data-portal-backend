@@ -43,6 +43,3 @@ URI: [cdp-meta:DOI](metadataDOI)
 | ---  | ---  |
 | self | cdp-meta:DOI |
 | native | cdp-meta:DOI |
-
-
-
