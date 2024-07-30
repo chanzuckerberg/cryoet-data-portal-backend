@@ -139,6 +139,7 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
                             slot["description"] = common_slot["description"]
                             slot["unit"] = common_slot["unit"]
                             a["range"] = common_slot["range"]
+                            # Switch range_type to the field's type so that we can check it for ENUM-ness below.
                             range_type = a["range"]
                             a["minimum_value"] = common_slot["minimum_value"]
                             a["maximum_value"] = common_slot["maximum_value"]
