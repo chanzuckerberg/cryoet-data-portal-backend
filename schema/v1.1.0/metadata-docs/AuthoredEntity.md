@@ -30,17 +30,17 @@ URI: [cdp-meta:AuthoredEntity](metadataAuthoredEntity)
         click Tomogram href "../Tomogram"
       AuthoredEntity <|-- Annotation
         click Annotation href "../Annotation"
-
+      
       AuthoredEntity : authors
-
-
-
-
+        
+          
+    
+    
     AuthoredEntity --> "1..*" Author : authors
     click Author href "../Author"
 
-
-
+        
+      
 ```
 
 

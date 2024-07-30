@@ -536,37 +536,37 @@ classes:
         name: annotations
         description: An annotation entity.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: annotations
         owner: Container
         domain_of:
         - Container
         range: AnnotationEntity
-        multivalued: true
         inlined: true
         inlined_as_list: true
       dataset_keyphotos:
         name: dataset_keyphotos
         description: A dataset key photo entity.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: dataset_keyphotos
         owner: Container
         domain_of:
         - Container
         range: DatasetKeyPhotoEntity
-        multivalued: true
         inlined: true
         inlined_as_list: true
       datasets:
         name: datasets
         description: A dataset entity.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: datasets
         owner: Container
         domain_of:
         - Container
         range: DatasetEntity
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -574,25 +574,25 @@ classes:
         name: deposition_keyphotos
         description: A deposition key photo entity.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: deposition_keyphotos
         owner: Container
         domain_of:
         - Container
         range: DepositionKeyPhotoEntity
-        multivalued: true
         inlined: true
         inlined_as_list: true
       depositions:
         name: depositions
         description: A deposition entity.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: depositions
         owner: Container
         domain_of:
         - Container
         range: DepositionEntity
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -600,61 +600,61 @@ classes:
         name: frames
         description: A frame entity.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: frames
         owner: Container
         domain_of:
         - Container
         range: FrameEntity
-        multivalued: true
         inlined: true
         inlined_as_list: true
       gains:
         name: gains
         description: A gain entity.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: gains
         owner: Container
         domain_of:
         - Container
         range: GainEntity
-        multivalued: true
         inlined: true
         inlined_as_list: true
       key_images:
         name: key_images
         description: A key image entity.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: key_images
         owner: Container
         domain_of:
         - Container
         range: KeyImageEntity
-        multivalued: true
         inlined: true
         inlined_as_list: true
       rawtilts:
         name: rawtilts
         description: A raw tilt entity.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: rawtilts
         owner: Container
         domain_of:
         - Container
         range: RawTiltEntity
-        multivalued: true
         inlined: true
         inlined_as_list: true
       runs:
         name: runs
         description: A run entity.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: runs
         owner: Container
         domain_of:
         - Container
         range: RunEntity
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -674,37 +674,37 @@ classes:
         name: tiltseries
         description: A tilt series entity.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: tiltseries
         owner: Container
         domain_of:
         - Container
         range: TiltSeriesEntity
-        multivalued: true
         inlined: true
         inlined_as_list: true
       tomograms:
         name: tomograms
         description: A tomogram entity.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: tomograms
         owner: Container
         domain_of:
         - Container
         range: TomogramEntity
-        multivalued: true
         inlined: true
         inlined_as_list: true
       voxel_spacings:
         name: voxel_spacings
         description: A voxel spacing entity.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: voxel_spacings
         owner: Container
         domain_of:
         - Container
         range: VoxelSpacingEntity
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -851,13 +851,13 @@ classes:
         name: list_globs
         description: The globs for the file.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: list_globs
         owner: SourceMultiGlob
         domain_of:
         - SourceMultiGlob
         range: string
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -959,61 +959,61 @@ classes:
         name: annotation
         description: Include or exclude annotations.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: annotation
         owner: SourceParent
         domain_of:
         - SourceParent
         range: string
-        multivalued: true
         inlined: true
         inlined_as_list: true
       dataset:
         name: dataset
         description: Include or exclude datasets.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: dataset
         owner: SourceParent
         domain_of:
         - SourceParent
         range: string
-        multivalued: true
         inlined: true
         inlined_as_list: true
       run:
         name: run
         description: Include or exclude runs.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: run
         owner: SourceParent
         domain_of:
         - SourceParent
         range: string
-        multivalued: true
         inlined: true
         inlined_as_list: true
       tomogram:
         name: tomogram
         description: Include or exclude tomograms.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: tomogram
         owner: SourceParent
         domain_of:
         - SourceParent
         range: string
-        multivalued: true
         inlined: true
         inlined_as_list: true
       voxel_spacing:
         name: voxel_spacing
         description: Include or exclude voxel spacings.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: voxel_spacing
         owner: SourceParent
         domain_of:
         - Tomogram
         - SourceParent
         range: string
-        multivalued: true
         inlined: true
         inlined_as_list: true
   DefaultLiteralEntity:
@@ -1044,6 +1044,7 @@ classes:
         name: value
         description: A placeholder for any type of data.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: value
         owner: DefaultLiteral
         domain_of:
@@ -1052,7 +1053,6 @@ classes:
         - VoxelSpacingLiteral
         range: Any
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -1065,6 +1065,7 @@ classes:
         name: sources
         description: A key photo source.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: sources
         owner: KeyPhotoEntity
         domain_of:
@@ -1082,7 +1083,6 @@ classes:
         - VoxelSpacingEntity
         range: KeyPhotoSource
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -1162,6 +1162,7 @@ classes:
         name: sources
         description: An annotation source.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: sources
         owner: AnnotationEntity
         domain_of:
@@ -1179,7 +1180,6 @@ classes:
         - VoxelSpacingEntity
         range: AnnotationSource
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -1284,6 +1284,7 @@ classes:
         name: sources
         description: A dataset source.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: sources
         owner: DatasetEntity
         domain_of:
@@ -1301,7 +1302,6 @@ classes:
         - VoxelSpacingEntity
         range: DatasetSource
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -1372,6 +1372,7 @@ classes:
         name: sources
         description: A key photo source.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: sources
         owner: DatasetKeyPhotoEntity
         domain_of:
@@ -1389,7 +1390,6 @@ classes:
         - VoxelSpacingEntity
         range: KeyPhotoSource
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -1403,6 +1403,7 @@ classes:
         name: sources
         description: A key photo source.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: sources
         owner: DepositionKeyPhotoEntity
         domain_of:
@@ -1420,7 +1421,6 @@ classes:
         - VoxelSpacingEntity
         range: KeyPhotoSource
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -1448,6 +1448,7 @@ classes:
         name: sources
         description: A deposition source.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: sources
         owner: DepositionEntity
         domain_of:
@@ -1465,7 +1466,6 @@ classes:
         - VoxelSpacingEntity
         range: DepositionSource
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -1535,6 +1535,7 @@ classes:
         name: sources
         description: A frame source.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: sources
         owner: FrameEntity
         domain_of:
@@ -1552,7 +1553,6 @@ classes:
         - VoxelSpacingEntity
         range: FrameSource
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -1635,6 +1635,7 @@ classes:
         name: sources
         description: A gain source.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: sources
         owner: GainEntity
         domain_of:
@@ -1652,7 +1653,6 @@ classes:
         - VoxelSpacingEntity
         range: GainSource
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -1735,6 +1735,7 @@ classes:
         name: sources
         description: A key image source.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: sources
         owner: KeyImageEntity
         domain_of:
@@ -1752,7 +1753,6 @@ classes:
         - VoxelSpacingEntity
         range: KeyImageSource
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -1835,6 +1835,7 @@ classes:
         name: sources
         description: A raw tilt source.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: sources
         owner: RawTiltEntity
         domain_of:
@@ -1852,7 +1853,6 @@ classes:
         - VoxelSpacingEntity
         range: RawTiltSource
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -1935,6 +1935,7 @@ classes:
         name: sources
         description: A run source.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: sources
         owner: RunEntity
         domain_of:
@@ -1952,7 +1953,6 @@ classes:
         - VoxelSpacingEntity
         range: RunSource
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -2123,6 +2123,7 @@ classes:
         name: sources
         description: A tilt series source.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: sources
         owner: TiltSeriesEntity
         domain_of:
@@ -2140,7 +2141,6 @@ classes:
         - VoxelSpacingEntity
         range: TiltSeriesSource
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -2238,6 +2238,7 @@ classes:
         name: sources
         description: A tomogram source.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: sources
         owner: TomogramEntity
         domain_of:
@@ -2255,7 +2256,6 @@ classes:
         - VoxelSpacingEntity
         range: TomogramSource
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -2338,6 +2338,7 @@ classes:
         name: sources
         description: A voxel spacing source.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: sources
         owner: VoxelSpacingEntity
         domain_of:
@@ -2355,7 +2356,6 @@ classes:
         - VoxelSpacingEntity
         range: VoxelSpacingSource
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -2435,6 +2435,7 @@ classes:
         name: value
         description: The value for the voxel spacing literal.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: value
         owner: VoxelSpacingLiteral
         domain_of:
@@ -2443,7 +2444,6 @@ classes:
         - VoxelSpacingLiteral
         range: float
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1

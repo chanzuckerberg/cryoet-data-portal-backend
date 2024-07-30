@@ -22,16 +22,16 @@ URI: [cdp-meta:CrossReferencesMixin](metadataCrossReferencesMixin)
     click CrossReferencesMixin href "../CrossReferencesMixin"
       CrossReferencesMixin <|-- CrossReferences
         click CrossReferences href "../CrossReferences"
-
+      
       CrossReferencesMixin : dataset_citations
-
+        
       CrossReferencesMixin : publications
-
+        
       CrossReferencesMixin : related_database_entries
-
+        
       CrossReferencesMixin : related_database_links
-
-
+        
+      
 ```
 
 

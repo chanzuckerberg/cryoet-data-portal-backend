@@ -16,8 +16,8 @@ URI: [cdp-meta:email](metadataemail)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Author](Author.md) | Author of a scientific data entity |  no  |
 | [AuthorMixin](AuthorMixin.md) | An entity with author data |  no  |
+| [Author](Author.md) | Author of a scientific data entity |  no  |
 
 
 

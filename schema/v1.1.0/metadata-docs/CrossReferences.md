@@ -24,16 +24,16 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
     click CrossReferences href "../CrossReferences"
       CrossReferencesMixin <|-- CrossReferences
         click CrossReferencesMixin href "../CrossReferencesMixin"
-
+      
       CrossReferences : dataset_citations
-
+        
       CrossReferences : publications
-
+        
       CrossReferences : related_database_entries
-
+        
       CrossReferences : related_database_links
-
-
+        
+      
 ```
 
 
