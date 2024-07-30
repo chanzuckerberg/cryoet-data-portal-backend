@@ -328,7 +328,8 @@ CREATE TABLE public.annotations (
     annotation_software character varying,
     is_curator_recommended boolean DEFAULT false,
     deposition_id integer,
-    method_type character varying
+    method_type character varying,
+    method_links character varying
 );
 
 
