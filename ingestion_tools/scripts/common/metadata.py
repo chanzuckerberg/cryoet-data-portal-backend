@@ -73,7 +73,7 @@ class AnnotationMetadata(MergedMetadata):
                 [
                     str(identifier),
                     re.sub("[^0-9a-z]", "_", obj.lower()),
-                    re.sub("[^0-9a-z.]", "_", str(version).lower()),
+                    re.sub("[^0-9a-z.]", "_", f"{str(version).lower()}"),
                 ],
             ),
         )

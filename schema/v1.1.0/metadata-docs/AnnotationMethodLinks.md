@@ -134,14 +134,15 @@ attributes:
     alias: name
     owner: AnnotationMethodLinks
     domain_of:
+    - AuthorMixin
     - AnnotationMethodLinks
-    - Author
     - OrganismDetails
     - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - Author
     range: string
     recommended: true
     inlined: true
@@ -193,14 +194,15 @@ attributes:
     alias: name
     owner: AnnotationMethodLinks
     domain_of:
+    - AuthorMixin
     - AnnotationMethodLinks
-    - Author
     - OrganismDetails
     - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - Author
     range: string
     recommended: true
     inlined: true

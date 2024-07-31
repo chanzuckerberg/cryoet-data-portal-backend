@@ -48,7 +48,7 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [ExperimentalMetadata](ExperimentalMetadata.md) | [cell_strain](cell_strain.md) | range | [CellStrain](CellStrain.md) |
+| [ExperimentMetadata](ExperimentMetadata.md) | [cell_strain](cell_strain.md) | range | [CellStrain](CellStrain.md) |
 | [Dataset](Dataset.md) | [cell_strain](cell_strain.md) | range | [CellStrain](CellStrain.md) |
 
 
@@ -106,14 +106,15 @@ attributes:
     alias: name
     owner: CellStrain
     domain_of:
-    - Author
     - OrganismDetails
     - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AuthorMixin
     - AnnotationMethodLinks
+    - Author
     range: string
     required: true
     inlined: true
@@ -136,7 +137,7 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
-    pattern: ^[A-Z]+:[0-9]+$
+    pattern: ^[a-zA-Z]+:[0-9]+$
 
 ```
 </details>
@@ -158,14 +159,15 @@ attributes:
     alias: name
     owner: CellStrain
     domain_of:
-    - Author
     - OrganismDetails
     - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AuthorMixin
     - AnnotationMethodLinks
+    - Author
     range: string
     required: true
     inlined: true
@@ -188,7 +190,7 @@ attributes:
     recommended: true
     inlined: true
     inlined_as_list: true
-    pattern: ^[A-Z]+:[0-9]+$
+    pattern: ^[a-zA-Z]+:[0-9]+$
 
 ```
 </details>

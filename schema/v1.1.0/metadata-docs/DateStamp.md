@@ -20,6 +20,9 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
  classDiagram
     class DateStamp
     click DateStamp href "../DateStamp"
+      DateStampedEntityMixin <|-- DateStamp
+        click DateStampedEntityMixin href "../DateStampedEntityMixin"
+
       DateStamp : deposition_date
 
       DateStamp : last_modified_date
@@ -32,7 +35,10 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 
 
-<!-- no inheritance hierarchy -->
+
+## Inheritance
+* **DateStamp** [ [DateStampedEntityMixin](DateStampedEntityMixin.md)]
+
 
 
 ## Slots
@@ -51,7 +57,7 @@ URI: [cdp-meta:DateStamp](metadataDateStamp)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [DatestampedEntity](DatestampedEntity.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
+| [DateStampedEntity](DateStampedEntity.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
 | [Dataset](Dataset.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
 | [Deposition](Deposition.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
 | [Annotation](Annotation.md) | [dates](dates.md) | range | [DateStamp](DateStamp.md) |
@@ -102,6 +108,8 @@ name: DateStamp
 description: A set of dates at which a data item was deposited, published and last
   modified.
 from_schema: metadata
+mixins:
+- DateStampedEntityMixin
 attributes:
   deposition_date:
     name: deposition_date
@@ -113,6 +121,7 @@ attributes:
     alias: deposition_date
     owner: DateStamp
     domain_of:
+    - DateStampedEntityMixin
     - DateStamp
     range: date
     required: true
@@ -128,6 +137,7 @@ attributes:
     alias: release_date
     owner: DateStamp
     domain_of:
+    - DateStampedEntityMixin
     - DateStamp
     range: date
     required: true
@@ -143,6 +153,7 @@ attributes:
     alias: last_modified_date
     owner: DateStamp
     domain_of:
+    - DateStampedEntityMixin
     - DateStamp
     range: date
     required: true
@@ -160,6 +171,8 @@ name: DateStamp
 description: A set of dates at which a data item was deposited, published and last
   modified.
 from_schema: metadata
+mixins:
+- DateStampedEntityMixin
 attributes:
   deposition_date:
     name: deposition_date
@@ -171,6 +184,7 @@ attributes:
     alias: deposition_date
     owner: DateStamp
     domain_of:
+    - DateStampedEntityMixin
     - DateStamp
     range: date
     required: true
@@ -186,6 +200,7 @@ attributes:
     alias: release_date
     owner: DateStamp
     domain_of:
+    - DateStampedEntityMixin
     - DateStamp
     range: date
     required: true
@@ -201,6 +216,7 @@ attributes:
     alias: last_modified_date
     owner: DateStamp
     domain_of:
+    - DateStampedEntityMixin
     - DateStamp
     range: date
     required: true

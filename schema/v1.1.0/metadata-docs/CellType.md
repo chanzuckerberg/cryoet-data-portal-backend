@@ -48,7 +48,7 @@ URI: [cdp-meta:CellType](metadataCellType)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [ExperimentalMetadata](ExperimentalMetadata.md) | [cell_type](cell_type.md) | range | [CellType](CellType.md) |
+| [ExperimentMetadata](ExperimentMetadata.md) | [cell_type](cell_type.md) | range | [CellType](CellType.md) |
 | [Dataset](Dataset.md) | [cell_type](cell_type.md) | range | [CellType](CellType.md) |
 
 
@@ -107,14 +107,15 @@ attributes:
     alias: name
     owner: CellType
     domain_of:
-    - Author
     - OrganismDetails
     - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AuthorMixin
     - AnnotationMethodLinks
+    - Author
     range: string
     required: true
     inlined: true
@@ -160,14 +161,15 @@ attributes:
     alias: name
     owner: CellType
     domain_of:
-    - Author
     - OrganismDetails
     - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AuthorMixin
     - AnnotationMethodLinks
+    - Author
     range: string
     required: true
     inlined: true

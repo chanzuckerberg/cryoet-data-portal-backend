@@ -372,8 +372,8 @@ datasets:
       corresponding_author_status: true
       name: Judith B. Zaugg
     cell_strain:
-      id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=284812
-      name: K972 Sp h-wild type
+      id: NCBITaxon:284812
+      name: Schizosaccharomyces pombe 972h-
     cross_references:
       publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
       related_database_entries: EMPIAR-10988, EMD-14404, EMD-14405, EMD-14406, EMD-14408,
@@ -455,7 +455,6 @@ tiltseries:
       model: Krios
     microscope_optical_setup:
       energy_filter: GIF Quantum LS
-      image_corrector: null
       phase_plate: Volta Phase Plate
     pixel_spacing: 3.3702
     related_empiar_entry: EMPIAR-10988

@@ -272,12 +272,25 @@ class VolumeAnnotationSource(BaseAnnotationSource):
 
 class SegmentationMaskAnnotation(VolumeAnnotationSource):
     shape = "SegmentationMask"  # Don't expose SemanticSegmentationMask to the public portal.
+    mask_label: int
+
+    def __init__(
+        self,
+        mask_label: int | None = None,
+        *args,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        if not mask_label:
+            mask_label = 1
+        self.mask_label = mask_label
 
     def convert(self, output_prefix: str):
         return make_pyramids(
             self.config.fs,
             self.get_output_filename(output_prefix),
             self.path,
+            label=self.mask_label,
             write_mrc=self.config.write_mrc,
             write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_voxel_spacing().as_float(),

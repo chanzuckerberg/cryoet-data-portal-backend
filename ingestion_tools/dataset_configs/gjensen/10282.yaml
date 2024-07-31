@@ -14,9 +14,6 @@ datasets:
     - corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
-    cell_strain:
-      id: null
-      name: ''
     dataset_description: This is 5th of 9 sets of data studying Pseudomonas aeruginosa
       collected by Ariane Briegel and is a part of Caltech Jensen  lab etdb. PW 1307
       Pseudomonas aeruginosa PAO1 delta CheA (F7) transposon mutant collection

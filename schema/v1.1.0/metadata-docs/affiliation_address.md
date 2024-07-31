@@ -2,11 +2,6 @@
 
 # Slot: affiliation_address
 
-
-_The address of the author's affiliation._
-
-
-
 URI: [cdp-meta:affiliation_address](metadataaffiliation_address)
 
 
@@ -22,6 +17,7 @@ URI: [cdp-meta:affiliation_address](metadataaffiliation_address)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [Author](Author.md) | Author of a scientific data entity |  no  |
+| [AuthorMixin](AuthorMixin.md) | An entity with author data |  no  |
 
 
 
@@ -45,13 +41,6 @@ URI: [cdp-meta:affiliation_address](metadataaffiliation_address)
 
 
 
-### Schema Source
-
-
-* from schema: metadata
-
-
-
 
 ## Mappings
 
@@ -59,7 +48,6 @@ URI: [cdp-meta:affiliation_address](metadataaffiliation_address)
 | ---  | ---  |
 | self | cdp-meta:affiliation_address |
 | native | cdp-meta:affiliation_address |
-| exact | cdp-common:author_affiliation_address |
 
 
 
@@ -69,18 +57,11 @@ URI: [cdp-meta:affiliation_address](metadataaffiliation_address)
 <details>
 ```yaml
 name: affiliation_address
-description: The address of the author's affiliation.
-from_schema: metadata
-exact_mappings:
-- cdp-common:author_affiliation_address
-rank: 1000
 alias: affiliation_address
-owner: Author
 domain_of:
 - Author
+- AuthorMixin
 range: string
-inlined: true
-inlined_as_list: true
 
 ```
 </details>

@@ -33,6 +33,10 @@ classes:
         multivalued: true
         range: DatasetEntity
         required: true
+      deposition_keyphotos:
+        description: Key photos for the deposition.
+        multivalued: true
+        range: DepositionKeyPhotoEntity
       depositions:
         description: Depositions for the dataset.
         multivalued: true
@@ -58,6 +62,7 @@ classes:
         description: Runs for the dataset.
         multivalued: true
         range: RunEntity
+        required: true
       standardization_config:
         description: Standardization config for the dataset.
         range: StandardizationConfig
@@ -195,6 +200,31 @@ classes:
         range: Any
         required: true
 
+  KeyPhotoEntity:
+    description: A key photo entity.
+    attributes:
+      sources:
+        multivalued: true
+        range: KeyPhotoSource
+        required: true
+
+  KeyPhotoSource:
+    description: A key photo source.
+    mixins:
+      - SourceParentFiltersEntity
+    attributes:
+      literal:
+        description: A literal for a key photo.
+        range: KeyPhotoLiteral
+
+  KeyPhotoLiteral:
+    description: A literal for a key photo.
+    attributes:
+      value:
+        description: The value for the key photo literal.
+        range: PicturePath
+        required: true
+
   # ============================================================================
   # Dataset config classes
   # ============================================================================
@@ -238,7 +268,6 @@ classes:
     attributes:
       metadata:
         range: Dataset
-        required: true
       sources:
         multivalued: true
         range: DatasetSource
@@ -253,35 +282,17 @@ classes:
 
   DatasetKeyPhotoEntity:
     description: A dataset key photo entity.
-    attributes:
-      sources:
-        multivalued: true
-        range: DatasetKeyPhotoSource
-        required: true
+    is_a: KeyPhotoEntity
 
-  DatasetKeyPhotoSource:
-    description: A dataset key photo source.
-    mixins:
-      - SourceParentFiltersEntity
-    attributes:
-      literal:
-        description: A literal for a dataset key photo.
-        range: DatasetKeyPhotoLiteral
-
-  DatasetKeyPhotoLiteral:
-    description: A literal for a dataset key photo.
-    attributes:
-      value:
-        description: The value for the dataset key photo literal.
-        range: PicturePath
-        required: true
+  DepositionKeyPhotoEntity:
+    description: A deposition key photo entity.
+    is_a: KeyPhotoEntity
 
   DepositionEntity:
     description: A deposition entity.
     attributes:
       metadata:
         range: Deposition
-        required: true
       sources:
         multivalued: true
         range: DepositionSource
@@ -398,7 +409,6 @@ classes:
     attributes:
       metadata:
         range: TiltSeries
-        required: true
       sources:
         multivalued: true
         range: TiltSeriesSource
@@ -416,7 +426,6 @@ classes:
     attributes:
       metadata:
         range: Tomogram
-        required: true
       sources:
         multivalued: true
         range: TomogramSource

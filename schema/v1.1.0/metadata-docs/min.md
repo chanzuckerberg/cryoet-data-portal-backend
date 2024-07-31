@@ -33,8 +33,6 @@ URI: [cdp-meta:min](metadatamin)
 
 * Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
-* Required: True
-
 * Minimum Value: -90
 
 * Maximum Value: 90
@@ -67,7 +65,6 @@ URI: [cdp-meta:min](metadatamin)
 | ---  | ---  |
 | self | cdp-meta:min |
 | native | cdp-meta:min |
-| exact | cdp-common:tiltseries_tilt_min |
 
 
 
@@ -79,15 +76,12 @@ URI: [cdp-meta:min](metadatamin)
 name: min
 description: Minimal tilt angle in degrees
 from_schema: metadata
-exact_mappings:
-- cdp-common:tiltseries_tilt_min
 rank: 1000
 alias: min
 owner: TiltRange
 domain_of:
 - TiltRange
 range: string
-required: true
 inlined: true
 inlined_as_list: true
 minimum_value: -90
