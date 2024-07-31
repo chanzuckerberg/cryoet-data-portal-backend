@@ -375,6 +375,23 @@ enums:
       hybrid:
         text: hybrid
         description: Annotations were generated semi-automatically.
+  annotation_file_shape_type_enum:
+    name: annotation_file_shape_type_enum
+    description: Describes the shape of the annotation
+    from_schema: metadata
+    permissible_values:
+      SegmentationMask:
+        text: SegmentationMask
+        description: A binary mask volume
+      OrientedPoint:
+        text: OrientedPoint
+        description: A series of coordinates and an orientation
+      Point:
+        text: Point
+        description: A series of coordinates
+      InstanceSegmentation:
+        text: InstanceSegmentation
+        description: A volume with labels for multiple instances
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -567,109 +584,9 @@ classes:
     name: Author
     description: Author of a scientific data entity.
     from_schema: metadata
+    mixins:
+    - AuthorMixin
     attributes:
-      name:
-        name: name
-        description: The full name of the author.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_name
-        alias: name
-        owner: Author
-        domain_of:
-        - Author
-        - OrganismDetails
-        - TissueDetails
-        - CellType
-        - CellStrain
-        - CellComponent
-        - AnnotationObject
-        - AnnotationMethodLinks
-        range: string
-        required: true
-        inlined: true
-        inlined_as_list: true
-      email:
-        name: email
-        description: The email address of the author.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_email
-        alias: email
-        owner: Author
-        domain_of:
-        - Author
-        range: string
-        inlined: true
-        inlined_as_list: true
-      affiliation_name:
-        name: affiliation_name
-        description: The name of the author's affiliation.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_affiliation_name
-        alias: affiliation_name
-        owner: Author
-        domain_of:
-        - Author
-        range: string
-        inlined: true
-        inlined_as_list: true
-      affiliation_address:
-        name: affiliation_address
-        description: The address of the author's affiliation.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_affiliation_address
-        alias: affiliation_address
-        owner: Author
-        domain_of:
-        - Author
-        range: string
-        inlined: true
-        inlined_as_list: true
-      affiliation_identifier:
-        name: affiliation_identifier
-        description: A Research Organization Registry (ROR) identifier.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_affiliation_identifier
-        alias: affiliation_identifier
-        owner: Author
-        domain_of:
-        - Author
-        range: string
-        recommended: true
-        inlined: true
-        inlined_as_list: true
-      corresponding_author_status:
-        name: corresponding_author_status
-        description: Whether the author is a corresponding author.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_corresponding_author_status
-        ifabsent: 'False'
-        alias: corresponding_author_status
-        owner: Author
-        domain_of:
-        - Author
-        range: boolean
-        inlined: true
-        inlined_as_list: true
-      primary_author_status:
-        name: primary_author_status
-        description: Whether the author is a primary author.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:author_primary_author_status
-        ifabsent: 'False'
-        alias: primary_author_status
-        owner: Author
-        domain_of:
-        - Author
-        range: boolean
-        inlined: true
-        inlined_as_list: true
       ORCID:
         name: ORCID
         description: The ORCID identifier for the author.
@@ -685,58 +602,106 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
-  CrossReferences:
-    name: CrossReferences
-    description: A set of cross-references to other databases and publications.
-    from_schema: metadata
-    attributes:
-      publications:
-        name: publications
-        description: Comma-separated list of DOIs for publications associated with
-          the dataset.
+      name:
+        name: name
+        description: The full name of the author.
         from_schema: metadata
-        alias: publications
-        owner: CrossReferences
+        exact_mappings:
+        - cdp-common:author_name
+        alias: name
+        owner: Author
         domain_of:
-        - CrossReferences
-        range: DOI_LIST
-        recommended: true
+        - AuthorMixin
+        - AnnotationMethodLinks
+        - OrganismDetails
+        - TissueDetails
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
-      related_database_entries:
-        name: related_database_entries
-        description: Comma-separated list of related database entries for the dataset.
+      email:
+        name: email
+        description: The email address of the author.
         from_schema: metadata
-        alias: related_database_entries
-        owner: CrossReferences
+        exact_mappings:
+        - cdp-common:author_email
+        alias: email
+        owner: Author
         domain_of:
-        - CrossReferences
-        range: EMPIAR_EMDB_PDB_LIST
-        recommended: true
-        inlined: true
-        inlined_as_list: true
-        pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)
-      related_database_links:
-        name: related_database_links
-        description: Comma-separated list of related database links for the dataset.
-        from_schema: metadata
-        alias: related_database_links
-        owner: CrossReferences
-        domain_of:
-        - CrossReferences
+        - AuthorMixin
         range: string
         inlined: true
         inlined_as_list: true
-      dataset_citations:
-        name: dataset_citations
-        description: Comma-separated list of DOIs for publications citing the dataset.
+      affiliation_name:
+        name: affiliation_name
+        description: The name of the author's affiliation.
         from_schema: metadata
-        alias: dataset_citations
-        owner: CrossReferences
+        exact_mappings:
+        - cdp-common:author_affiliation_name
+        alias: affiliation_name
+        owner: Author
         domain_of:
-        - CrossReferences
+        - AuthorMixin
         range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_address:
+        name: affiliation_address
+        description: The address of the author's affiliation.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:author_affiliation_address
+        alias: affiliation_address
+        owner: Author
+        domain_of:
+        - AuthorMixin
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_identifier:
+        name: affiliation_identifier
+        description: A Research Organization Registry (ROR) identifier.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:author_affiliation_identifier
+        alias: affiliation_identifier
+        owner: Author
+        domain_of:
+        - AuthorMixin
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+      corresponding_author_status:
+        name: corresponding_author_status
+        description: Whether the author is a corresponding author.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:author_corresponding_author_status
+        ifabsent: 'False'
+        alias: corresponding_author_status
+        owner: Author
+        domain_of:
+        - AuthorMixin
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      primary_author_status:
+        name: primary_author_status
+        description: Whether the author is a primary author.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:author_primary_author_status
+        ifabsent: 'False'
+        alias: primary_author_status
+        owner: Author
+        domain_of:
+        - AuthorMixin
+        range: boolean
         inlined: true
         inlined_as_list: true
   FundingDetails:
@@ -778,6 +743,8 @@ classes:
     description: A set of dates at which a data item was deposited, published and
       last modified.
     from_schema: metadata
+    mixins:
+    - DateStampedEntityMixin
     attributes:
       deposition_date:
         name: deposition_date
@@ -788,7 +755,7 @@ classes:
         alias: deposition_date
         owner: DateStamp
         domain_of:
-        - DateStamp
+        - DateStampedEntityMixin
         range: date
         required: true
         inlined: true
@@ -802,7 +769,7 @@ classes:
         alias: release_date
         owner: DateStamp
         domain_of:
-        - DateStamp
+        - DateStampedEntityMixin
         range: date
         required: true
         inlined: true
@@ -817,7 +784,7 @@ classes:
         alias: last_modified_date
         owner: DateStamp
         domain_of:
-        - DateStamp
+        - DateStampedEntityMixin
         range: date
         required: true
         inlined: true
@@ -883,12 +850,69 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+  CrossReferences:
+    name: CrossReferences
+    description: A set of cross-references to other databases and publications.
+    from_schema: metadata
+    abstract: true
+    mixins:
+    - CrossReferencesMixin
+    attributes:
+      publications:
+        name: publications
+        description: Comma-separated list of DOIs for publications associated with
+          the dataset.
+        from_schema: metadata
+        alias: publications
+        owner: CrossReferences
+        domain_of:
+        - CrossReferencesMixin
+        range: DOI_LIST
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
+      related_database_entries:
+        name: related_database_entries
+        description: Comma-separated list of related database entries for the dataset.
+        from_schema: metadata
+        alias: related_database_entries
+        owner: CrossReferences
+        domain_of:
+        - CrossReferencesMixin
+        range: EMPIAR_EMDB_PDB_LIST
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)
+      related_database_links:
+        name: related_database_links
+        description: Comma-separated list of related database links for the dataset.
+        from_schema: metadata
+        alias: related_database_links
+        owner: CrossReferences
+        domain_of:
+        - CrossReferencesMixin
+        range: string
+        inlined: true
+        inlined_as_list: true
+      dataset_citations:
+        name: dataset_citations
+        description: Comma-separated list of DOIs for publications citing the dataset.
+        from_schema: metadata
+        alias: dataset_citations
+        owner: CrossReferences
+        domain_of:
+        - CrossReferencesMixin
+        range: string
+        inlined: true
+        inlined_as_list: true
   CrossReferencedEntity:
     name: CrossReferencedEntity
     description: An entity with associated cross-references to other databases and
       publications.
     from_schema: metadata
-    abstract: true
+    mixin: true
     attributes:
       cross_references:
         name: cross_references
@@ -934,13 +958,13 @@ classes:
         alias: name
         owner: OrganismDetails
         domain_of:
-        - Author
         - OrganismDetails
         - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AuthorMixin
         - AnnotationMethodLinks
         range: string
         required: true
@@ -976,13 +1000,13 @@ classes:
         alias: name
         owner: TissueDetails
         domain_of:
-        - Author
         - OrganismDetails
         - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AuthorMixin
         - AnnotationMethodLinks
         range: string
         required: true
@@ -1022,13 +1046,13 @@ classes:
         alias: name
         owner: CellType
         domain_of:
-        - Author
         - OrganismDetails
         - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AuthorMixin
         - AnnotationMethodLinks
         range: string
         required: true
@@ -1067,13 +1091,13 @@ classes:
         alias: name
         owner: CellStrain
         domain_of:
-        - Author
         - OrganismDetails
         - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AuthorMixin
         - AnnotationMethodLinks
         range: string
         required: true
@@ -1112,13 +1136,13 @@ classes:
         alias: name
         owner: CellComponent
         domain_of:
-        - Author
         - OrganismDetails
         - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AuthorMixin
         - AnnotationMethodLinks
         range: string
         required: true
@@ -1668,20 +1692,18 @@ classes:
         name: manufacturer
         description: Name of the microscope manufacturer
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_microscope_manufacturer
         alias: manufacturer
         owner: MicroscopeDetails
         domain_of:
         - CameraDetails
         - MicroscopeDetails
-        required: true
+        range: string
         inlined: true
         inlined_as_list: true
-        pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^FEI$)|(^TFS$)|(^JEOL$)
+        pattern: (^FEI$)|(^TFS$)|(^JEOL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
         any_of:
-        - range: StringFormattedString
         - range: tiltseries_microscope_manufacturer_enum
+        - range: StringFormattedString
       model:
         name: model
         description: Microscope model name
@@ -1751,13 +1773,11 @@ classes:
         name: min
         description: Minimal tilt angle in degrees
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_tilt_min
         alias: min
         owner: TiltRange
         domain_of:
         - TiltRange
-        required: true
+        range: string
         inlined: true
         inlined_as_list: true
         minimum_value: -90
@@ -1775,13 +1795,11 @@ classes:
         name: max
         description: Maximal tilt angle in degrees
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_tilt_max
         alias: max
         owner: TiltRange
         domain_of:
         - TiltRange
-        required: true
+        range: string
         inlined: true
         inlined_as_list: true
         minimum_value: -90
@@ -1822,13 +1840,12 @@ classes:
         name: aligned_tiltseries_binning
         description: Binning factor of the aligned tilt series
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_aligned_tiltseries_binning
         ifabsent: float(1)
         alias: aligned_tiltseries_binning
         owner: TiltSeries
         domain_of:
         - TiltSeries
+        range: string
         inlined: true
         inlined_as_list: true
         minimum_value: 0
@@ -1841,13 +1858,12 @@ classes:
         name: binning_from_frames
         description: Describes the binning factor from frames to tilt series file
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_binning_from_frames
         ifabsent: float(1)
         alias: binning_from_frames
         owner: TiltSeries
         domain_of:
         - TiltSeries
+        range: string
         inlined: true
         inlined_as_list: true
         minimum_value: 0
@@ -1953,13 +1969,11 @@ classes:
         name: spherical_aberration_constant
         description: Spherical Aberration Constant of the objective lens in millimeters
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_spherical_aberration_constant
         alias: spherical_aberration_constant
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        required: true
+        range: string
         inlined: true
         inlined_as_list: true
         minimum_value: 0
@@ -1988,13 +2002,11 @@ classes:
         name: tilt_axis
         description: Rotation angle in degrees
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_tilt_axis
         alias: tilt_axis
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        required: true
+        range: string
         inlined: true
         inlined_as_list: true
         minimum_value: -360
@@ -2025,13 +2037,11 @@ classes:
         description: Author assessment of tilt series quality within the dataset (1-5,
           5 is best)
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_tilt_series_quality
         alias: tilt_series_quality
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        required: true
+        range: string
         inlined: true
         inlined_as_list: true
         minimum_value: 1
@@ -2046,13 +2056,11 @@ classes:
         name: tilt_step
         description: Tilt step in degrees
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_tilt_step
         alias: tilt_step
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        required: true
+        range: string
         inlined: true
         inlined_as_list: true
         minimum_value: 0
@@ -2085,13 +2093,11 @@ classes:
         description: Number of Electrons reaching the specimen in a square Angstrom
           area for the entire tilt series
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_total_flux
         alias: total_flux
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        required: true
+        range: string
         inlined: true
         inlined_as_list: true
         minimum_value: 0
@@ -2107,13 +2113,11 @@ classes:
         name: pixel_spacing
         description: Pixel spacing for the tilt series
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tiltseries_pixel_spacing
         alias: pixel_spacing
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        required: true
+        range: string
         inlined: true
         inlined_as_list: true
         minimum_value: 0.001
@@ -2247,13 +2251,11 @@ classes:
         name: voxel_spacing
         description: Voxel spacing equal in all three axes in angstroms
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tomogram_voxel_spacing
         alias: voxel_spacing
         owner: Tomogram
         domain_of:
         - Tomogram
-        required: true
+        range: string
         inlined: true
         inlined_as_list: true
         minimum_value: 0.001
@@ -2270,14 +2272,11 @@ classes:
         description: Whether the tomographic alignment was computed based on fiducial
           markers.
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tomogram_fiducial_alignment_status
         alias: fiducial_alignment_status
         owner: Tomogram
         domain_of:
         - Tomogram
-        range: fiducial_alignment_status_enum
-        required: true
+        range: string
         inlined: true
         inlined_as_list: true
         pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
@@ -2315,19 +2314,18 @@ classes:
         name: reconstruction_method
         description: Describe reconstruction method (WBP, SART, SIRT)
         from_schema: metadata
-        exact_mappings:
-        - cdp-common:tomogram_reconstruction_method
         alias: reconstruction_method
         owner: Tomogram
         domain_of:
         - Tomogram
-        required: true
+        range: string
         inlined: true
         inlined_as_list: true
-        pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)
+        pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
+          ]*$)
         any_of:
-        - range: StringFormattedString
         - range: tomogrom_reconstruction_method_enum
+        - range: StringFormattedString
       reconstruction_software:
         name: reconstruction_software
         description: Name of software used for reconstruction
@@ -2532,13 +2530,13 @@ classes:
         alias: name
         owner: AnnotationObject
         domain_of:
-        - Author
         - OrganismDetails
         - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AuthorMixin
         - AnnotationMethodLinks
         range: string
         required: true
@@ -3322,6 +3320,219 @@ classes:
     description: A placeholder for any type of data.
     from_schema: metadata
     class_uri: linkml:Any
+  DateStampedEntityMixin:
+    name: DateStampedEntityMixin
+    description: A set of dates at which a data item was deposited, published and
+      last modified.
+    from_schema: metadata
+    mixin: true
+    attributes:
+      deposition_date:
+        name: deposition_date
+        description: The date a data item was received by the cryoET data portal.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:deposition_date
+        alias: deposition_date
+        owner: DateStampedEntityMixin
+        domain_of:
+        - DateStampedEntityMixin
+        range: date
+        required: true
+        inlined: true
+        inlined_as_list: true
+      release_date:
+        name: release_date
+        description: The date a data item was received by the cryoET data portal.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:release_date
+        alias: release_date
+        owner: DateStampedEntityMixin
+        domain_of:
+        - DateStampedEntityMixin
+        range: date
+        required: true
+        inlined: true
+        inlined_as_list: true
+      last_modified_date:
+        name: last_modified_date
+        description: The date a piece of data was last modified on the cryoET data
+          portal.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:last_modified_date
+        alias: last_modified_date
+        owner: DateStampedEntityMixin
+        domain_of:
+        - DateStampedEntityMixin
+        range: date
+        required: true
+        inlined: true
+        inlined_as_list: true
+  CrossReferencesMixin:
+    name: CrossReferencesMixin
+    description: A set of cross-references to other databases and publications.
+    from_schema: metadata
+    mixin: true
+    attributes:
+      publications:
+        name: publications
+        description: Comma-separated list of DOIs for publications associated with
+          the dataset.
+        from_schema: metadata
+        alias: publications
+        owner: CrossReferencesMixin
+        domain_of:
+        - CrossReferencesMixin
+        range: DOI_LIST
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
+      related_database_entries:
+        name: related_database_entries
+        description: Comma-separated list of related database entries for the dataset.
+        from_schema: metadata
+        alias: related_database_entries
+        owner: CrossReferencesMixin
+        domain_of:
+        - CrossReferencesMixin
+        range: EMPIAR_EMDB_PDB_LIST
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)
+      related_database_links:
+        name: related_database_links
+        description: Comma-separated list of related database links for the dataset.
+        from_schema: metadata
+        alias: related_database_links
+        owner: CrossReferencesMixin
+        domain_of:
+        - CrossReferencesMixin
+        range: string
+        inlined: true
+        inlined_as_list: true
+      dataset_citations:
+        name: dataset_citations
+        description: Comma-separated list of DOIs for publications citing the dataset.
+        from_schema: metadata
+        alias: dataset_citations
+        owner: CrossReferencesMixin
+        domain_of:
+        - CrossReferencesMixin
+        range: string
+        inlined: true
+        inlined_as_list: true
+  AuthorMixin:
+    name: AuthorMixin
+    description: An entity with author data
+    from_schema: metadata
+    mixin: true
+    attributes:
+      name:
+        name: name
+        description: The full name of the author.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:author_name
+        alias: name
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        - AnnotationMethodLinks
+        - OrganismDetails
+        - TissueDetails
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      email:
+        name: email
+        description: The email address of the author.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:author_email
+        alias: email
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_name:
+        name: affiliation_name
+        description: The name of the author's affiliation.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:author_affiliation_name
+        alias: affiliation_name
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_address:
+        name: affiliation_address
+        description: The address of the author's affiliation.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:author_affiliation_address
+        alias: affiliation_address
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_identifier:
+        name: affiliation_identifier
+        description: A Research Organization Registry (ROR) identifier.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:author_affiliation_identifier
+        alias: affiliation_identifier
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+      corresponding_author_status:
+        name: corresponding_author_status
+        description: Whether the author is a corresponding author.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:author_corresponding_author_status
+        ifabsent: 'False'
+        alias: corresponding_author_status
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      primary_author_status:
+        name: primary_author_status
+        description: Whether the author is a primary author.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:author_primary_author_status
+        ifabsent: 'False'
+        alias: primary_author_status
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        range: boolean
+        inlined: true
+        inlined_as_list: true
   AnnotationMethodLinks:
     name: AnnotationMethodLinks
     description: A set of links to models, sourcecode, documentation, etc referenced
@@ -3360,8 +3571,8 @@ classes:
         alias: name
         owner: AnnotationMethodLinks
         domain_of:
+        - AuthorMixin
         - AnnotationMethodLinks
-        - Author
         - OrganismDetails
         - TissueDetails
         - CellType

@@ -314,19 +314,13 @@ slots:
       descriptive_name: volts
       symbol: V
   tiltseries_aligned_tiltseries_binning:
-    any_of:
-      - range: float
-        minimum_value: 0
-      - range: FloatFormattedString
+    range: float
+    minimum_value: 0
     description: Binning factor of the aligned tilt series
-    ifabsent: 'float(1)'
   tiltseries_binning_from_frames:
-    any_of:
-      - range: float
-        minimum_value: 0
-      - range: FloatFormattedString
+    range: float
+    minimum_value: 0
     description: Describes the binning factor from frames to tilt series file
-    ifabsent: 'float(1)'
   tiltseries_camera_acquire_mode:
     any_of:
       - range: StringFormattedString
@@ -377,9 +371,7 @@ slots:
     range: string
     description: Image corrector setup
   tiltseries_microscope_manufacturer:
-    any_of:
-      - range: StringFormattedString
-      - range: tiltseries_microscope_manufacturer_enum
+    range: tiltseries_microscope_manufacturer_enum
     required: true
     description: Name of the microscope manufacturer
   tiltseries_microscope_model:
@@ -390,10 +382,8 @@ slots:
     range: string
     description: Phase plate configuration
   tiltseries_pixel_spacing:
-    any_of:
-      - range: float
-        minimum_value: 0.001
-      - range: FloatFormattedString
+    range: float
+    minimum_value: 0.001
     required: true
     description: Pixel spacing for the tilt series
     unit:
@@ -418,10 +408,8 @@ slots:
     range: string
     description: S3 path to this tiltseries in multiscale OME-Zarr format
   tiltseries_spherical_aberration_constant:
-    any_of:
-      - range: float
-        minimum_value: 0
-      - range: FloatFormattedString
+    range: float
+    minimum_value: 0
     required: true
     description: Spherical Aberration Constant of the objective lens in millimeters
     unit:
@@ -431,52 +419,42 @@ slots:
     range: string
     description: Software used for tilt alignment
   tiltseries_tilt_axis:
-    any_of:
-      - range: float
-        minimum_value: -360
-        maximum_value: 360
-      - range: FloatFormattedString
+    range: float
+    minimum_value: -360
+    maximum_value: 360
     required: true
     description: Rotation angle in degrees
     unit:
       descriptive_name: degrees
       symbol: °
   tiltseries_tilt_max:
-    any_of:
-      - range: float
-        minimum_value: -90
-        maximum_value: 90
-      - range: FloatFormattedString
+    range: float
+    minimum_value: -90
+    maximum_value: 90
     required: true
     description: Maximal tilt angle in degrees
     unit:
       descriptive_name: degrees
       symbol: °
   tiltseries_tilt_min:
-    any_of:
-      - range: float
-        minimum_value: -90
-        maximum_value: 90
-      - range: FloatFormattedString
+    range: float
+    minimum_value: -90
+    maximum_value: 90
     required: true
     description: Minimal tilt angle in degrees
     unit:
       descriptive_name: degrees
       symbol: °
   tiltseries_tilt_series_quality:
-    any_of:
-      - range: integer
-        minimum_value: 1
-        maximum_value: 5
-      - range: IntegerFormattedString
+    range: integer
+    minimum_value: 1
+    maximum_value: 5
     required: true
     description: Author assessment of tilt series quality within the dataset (1-5, 5 is best)
   tiltseries_tilt_step:
-    any_of:
-      - range: float
-        minimum_value: 0
-        maximum_value: 90
-      - range: FloatFormattedString
+    range: float
+    minimum_value: 0
+    maximum_value: 90
     required: true
     description: Tilt step in degrees
     unit:
@@ -487,10 +465,8 @@ slots:
     required: true
     description: The order of stage tilting during acquisition of the data
   tiltseries_total_flux:
-    any_of:
-      - range: float
-        minimum_value: 0
-      - range: FloatFormattedString
+    range: float
+    minimum_value: 0
     required: true
     description: Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series
     unit:
@@ -513,9 +489,6 @@ slots:
     description: Reference to the dataset this tomogram is a part of
   tomogram_fiducial_alignment_status:
     range: fiducial_alignment_status_enum
-    any_of:
-      - range: fiducial_alignment_status_enum
-      - range: StringFormattedString
     required: true
     description: Whether the tomographic alignment was computed based on fiducial markers.
   tomogram_https_mrc_scale0:
@@ -548,9 +521,7 @@ slots:
     description: Processing software used to derive the tomogram
     recommended: true
   tomogram_reconstruction_method:
-    any_of:
-      - range: StringFormattedString
-      - range: tomogrom_reconstruction_method_enum
+    range: tomogrom_reconstruction_method_enum
     required: true
     description: Describe reconstruction method (WBP, SART, SIRT)
   tomogram_reconstruction_software:
@@ -581,10 +552,8 @@ slots:
     range: string
     description: "Tomogram purpose (ex: CANONICAL)"
   tomogram_voxel_spacing:
-    any_of:
-      - range: float
-        minimum_value: 0.001
-      - range: FloatFormattedString
+    range: float
+    minimum_value: 0.001
     required: true
     description: Voxel spacing equal in all three axes in angstroms
     unit:
@@ -741,6 +710,74 @@ slots:
     ifabsent: 'int(1)'
 
   # ============================================================================
+  # API slots
+  # ============================================================================
+  api_sequential_identifier:
+    range: integer
+    description: An identifier to refer to a specific instance of this type
+    required: true
+  api_author_list_order:
+    range: integer
+    description: The order that the author is listed as in the associated publication
+    required: true
+  api_file_format:
+    range: string
+    description: File format label
+    required: true
+  api_s3_path:
+    range: string
+    description: Path to the file in s3
+    required: true
+  api_https_path:
+    range: string
+    description: Path to the file as an https url
+    required: true
+  api_s3_prefix:
+    range: string
+    description: Path to a directory containing data for this entity as an S3 url
+    required: true
+  api_https_prefix:
+    range: string
+    description: Path to a directory containing data for this entity as an HTTPS url
+    required: true
+  api_run_name:
+    range: string
+    description: Name of a run
+    required: true
+  api_tiltseries_tilt_range:
+    range: float
+    minimum_value: 0
+    maximum_value: 180
+    required: true
+    description: Total tilt range from min to max in degrees
+    unit:
+      descriptive_name: degrees
+      symbol: °
+  api_tomogram_size_x:
+    range: float
+    minimum_value: 0
+    required: true
+    description: Tomogram voxels in the x dimension
+    unit:
+      descriptive_name: voxels
+      symbol: voxel
+  api_tomogram_size_y:
+    range: float
+    minimum_value: 0
+    required: true
+    description: Tomogram voxels in the y dimension
+    unit:
+      descriptive_name: voxels
+      symbol: voxel
+  api_tomogram_size_z:
+    range: float
+    minimum_value: 0
+    required: true
+    description: Tomogram voxels in the z dimension
+    unit:
+      descriptive_name: voxels
+      symbol: voxel
+
 
 enums:
   # ============================================================================
@@ -755,6 +792,18 @@ enums:
         description: Annotations were generated automatically.
       hybrid:
         description: Annotations were generated semi-automatically.
+
+  annotation_file_shape_type_enum:
+    description: Describes the shape of the annotation
+    permissible_values:
+      SegmentationMask:
+        description: A binary mask volume
+      OrientedPoint:
+        description: A series of coordinates and an orientation
+      Point:
+        description: A series of coordinates
+      InstanceSegmentation:
+        description: A volume with labels for multiple instances
 
   annotation_method_link_type_enum:
     description: Describes the type of link associated to the annotation method.
@@ -951,6 +1000,71 @@ classes:
   Any:
     class_uri: linkml:Any
     description: A placeholder for any type of data.
+
+  # ============================================================================
+  # Mixins
+  # ============================================================================
+  DateStampedEntityMixin:
+    description: A set of dates at which a data item was deposited, published and last modified.
+    mixin: true
+    attributes:
+      deposition_date:
+        exact_mappings:
+          - cdp-common:deposition_date
+      release_date:
+        exact_mappings:
+          - cdp-common:release_date
+      last_modified_date:
+        exact_mappings:
+          - cdp-common:last_modified_date
+
+  # ============================================================================
+  # Cross-references to other databases and publications
+  # ============================================================================
+  CrossReferencesMixin:
+    description: A set of cross-references to other databases and publications.
+    mixin: true
+    attributes:
+      publications:
+        range: DOI_LIST
+        recommended: true
+        description: Comma-separated list of DOIs for publications associated with the dataset.
+      related_database_entries:
+        range: EMPIAR_EMDB_PDB_LIST
+        recommended: true
+        description: Comma-separated list of related database entries for the dataset.
+      related_database_links: # DEPRECATED
+        range: string
+        description: Comma-separated list of related database links for the dataset.
+      dataset_citations: # DEPRECATED
+        range: string
+        description: Comma-separated list of DOIs for publications citing the dataset.
+
+  AuthorMixin:
+    description: An entity with author data
+    mixin: true
+    attributes:
+      name:
+        exact_mappings:
+          - cdp-common:author_name
+      email:
+        exact_mappings:
+          - cdp-common:author_email
+      affiliation_name:
+        exact_mappings:
+          - cdp-common:author_affiliation_name
+      affiliation_address:
+        exact_mappings:
+          - cdp-common:author_affiliation_address
+      affiliation_identifier:
+        exact_mappings:
+          - cdp-common:author_affiliation_identifier
+      corresponding_author_status:
+        exact_mappings:
+          - cdp-common:author_corresponding_author_status
+      primary_author_status:
+        exact_mappings:
+          - cdp-common:author_primary_author_status
 
   # ============================================================================
   # Annotation Method Links

@@ -31,9 +31,7 @@ URI: [cdp-meta:fiducial_alignment_status](metadatafiducial_alignment_status)
 
 ## Properties
 
-* Range: [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)
-
-* Required: True
+* Range: [String](String.md)&nbsp;or&nbsp;<br />[FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)
 
 * Regex pattern: `(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)`
 
@@ -63,7 +61,6 @@ URI: [cdp-meta:fiducial_alignment_status](metadatafiducial_alignment_status)
 | ---  | ---  |
 | self | cdp-meta:fiducial_alignment_status |
 | native | cdp-meta:fiducial_alignment_status |
-| exact | cdp-common:tomogram_fiducial_alignment_status |
 
 
 
@@ -75,15 +72,12 @@ URI: [cdp-meta:fiducial_alignment_status](metadatafiducial_alignment_status)
 name: fiducial_alignment_status
 description: Whether the tomographic alignment was computed based on fiducial markers.
 from_schema: metadata
-exact_mappings:
-- cdp-common:tomogram_fiducial_alignment_status
 rank: 1000
 alias: fiducial_alignment_status
 owner: Tomogram
 domain_of:
 - Tomogram
-range: fiducial_alignment_status_enum
-required: true
+range: string
 inlined: true
 inlined_as_list: true
 pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)

@@ -63,7 +63,6 @@ URI: [cdp-meta:aligned_tiltseries_binning](metadataaligned_tiltseries_binning)
 | ---  | ---  |
 | self | cdp-meta:aligned_tiltseries_binning |
 | native | cdp-meta:aligned_tiltseries_binning |
-| exact | cdp-common:tiltseries_aligned_tiltseries_binning |
 
 
 
@@ -75,8 +74,6 @@ URI: [cdp-meta:aligned_tiltseries_binning](metadataaligned_tiltseries_binning)
 name: aligned_tiltseries_binning
 description: Binning factor of the aligned tilt series
 from_schema: metadata
-exact_mappings:
-- cdp-common:tiltseries_aligned_tiltseries_binning
 rank: 1000
 ifabsent: float(1)
 alias: aligned_tiltseries_binning

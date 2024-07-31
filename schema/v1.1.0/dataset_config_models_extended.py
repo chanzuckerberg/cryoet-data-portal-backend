@@ -105,7 +105,7 @@ running_network_validation = False
 # ==============================================================================
 # Helper Functions
 # ==============================================================================
-def check_skip_validation(obj: BaseModel, field_name: str, case_sensitive: bool = False) -> bool:
+def check_skip_validation(obj: BaseModel, field_name: str, case_sensitive: bool = True) -> bool:
     # Check if the original class name is in the validation exclusions
     global validation_exclusions
 
@@ -295,7 +295,7 @@ def validate_id_name_object(
     # check if the name matches the ID's label or any of its synonyms
     valid_name = False
     for entry in id_data["_embedded"]["terms"]:
-        if name == entry["label"].lower() or name in [synonym.lower() for synonym in entry["synonyms"]]:
+        if name == entry["label"] or name in entry["synonyms"]:
             valid_name = True
             break
 
@@ -320,12 +320,12 @@ def validate_ontology_object(
     if not running_network_validation or self.id is None:
         return self
 
-    validate_object = check_skip_validation(self, "id", case_sensitive=True)
+    validate_object = check_skip_validation(self, "id")
     if not validate_object:
         return self
 
-    validate_name = check_skip_validation(self, "name", case_sensitive=False)
-    validate_id_name_object(self.id.strip(), self.name.strip().lower(), validate_name, ancestor)
+    validate_name = check_skip_validation(self, "name")
+    validate_id_name_object(self.id.strip(), self.name.strip(), validate_name, ancestor)
 
     return self
 
@@ -337,7 +337,7 @@ def validate_organism_object(self: OrganismDetails) -> OrganismDetails:
     if not running_network_validation or self.taxonomy_id is None:
         return self
 
-    validate_id_name_object(f"NCBITaxon:{self.taxonomy_id}", self.name.strip().lower(), validate_name=False)
+    validate_id_name_object(f"NCBITaxon:{self.taxonomy_id}", self.name.strip(), validate_name=False)
 
     return self
 

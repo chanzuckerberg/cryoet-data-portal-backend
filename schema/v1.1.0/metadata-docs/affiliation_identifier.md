@@ -2,11 +2,6 @@
 
 # Slot: affiliation_identifier
 
-
-_A Research Organization Registry (ROR) identifier._
-
-
-
 URI: [cdp-meta:affiliation_identifier](metadataaffiliation_identifier)
 
 
@@ -21,6 +16,7 @@ URI: [cdp-meta:affiliation_identifier](metadataaffiliation_identifier)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
+| [AuthorMixin](AuthorMixin.md) | An entity with author data |  no  |
 | [Author](Author.md) | Author of a scientific data entity |  no  |
 
 
@@ -32,8 +28,6 @@ URI: [cdp-meta:affiliation_identifier](metadataaffiliation_identifier)
 ## Properties
 
 * Range: [String](String.md)
-
-* Recommended: True
 
 
 
@@ -47,13 +41,6 @@ URI: [cdp-meta:affiliation_identifier](metadataaffiliation_identifier)
 
 
 
-### Schema Source
-
-
-* from schema: metadata
-
-
-
 
 ## Mappings
 
@@ -61,7 +48,6 @@ URI: [cdp-meta:affiliation_identifier](metadataaffiliation_identifier)
 | ---  | ---  |
 | self | cdp-meta:affiliation_identifier |
 | native | cdp-meta:affiliation_identifier |
-| exact | cdp-common:author_affiliation_identifier |
 
 
 
@@ -71,19 +57,11 @@ URI: [cdp-meta:affiliation_identifier](metadataaffiliation_identifier)
 <details>
 ```yaml
 name: affiliation_identifier
-description: A Research Organization Registry (ROR) identifier.
-from_schema: metadata
-exact_mappings:
-- cdp-common:author_affiliation_identifier
-rank: 1000
 alias: affiliation_identifier
-owner: Author
 domain_of:
 - Author
+- AuthorMixin
 range: string
-recommended: true
-inlined: true
-inlined_as_list: true
 
 ```
 </details>

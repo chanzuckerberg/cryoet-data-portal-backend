@@ -2,11 +2,6 @@
 
 # Slot: release_date
 
-
-_The date a data item was received by the cryoET data portal._
-
-
-
 URI: [cdp-meta:release_date](metadatarelease_date)
 
 
@@ -21,6 +16,7 @@ URI: [cdp-meta:release_date](metadatarelease_date)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
+| [DateStampedEntityMixin](DateStampedEntityMixin.md) | A set of dates at which a data item was deposited, published and last modifie... |  no  |
 | [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |  no  |
 
 
@@ -31,9 +27,7 @@ URI: [cdp-meta:release_date](metadatarelease_date)
 
 ## Properties
 
-* Range: [Date](Date.md)
-
-* Required: True
+* Range: [String](String.md)
 
 
 
@@ -47,13 +41,6 @@ URI: [cdp-meta:release_date](metadatarelease_date)
 
 
 
-### Schema Source
-
-
-* from schema: metadata
-
-
-
 
 ## Mappings
 
@@ -61,7 +48,6 @@ URI: [cdp-meta:release_date](metadatarelease_date)
 | ---  | ---  |
 | self | cdp-meta:release_date |
 | native | cdp-meta:release_date |
-| exact | cdp-common:release_date |
 
 
 
@@ -71,19 +57,11 @@ URI: [cdp-meta:release_date](metadatarelease_date)
 <details>
 ```yaml
 name: release_date
-description: The date a data item was received by the cryoET data portal.
-from_schema: metadata
-exact_mappings:
-- cdp-common:release_date
-rank: 1000
 alias: release_date
-owner: DateStamp
 domain_of:
 - DateStamp
-range: date
-required: true
-inlined: true
-inlined_as_list: true
+- DateStampedEntityMixin
+range: string
 
 ```
 </details>
