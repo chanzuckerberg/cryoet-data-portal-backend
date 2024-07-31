@@ -19,12 +19,6 @@ URI: [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)
 
 
 
-## Slots
-
-| Name | Description |
-| ---  | --- |
-| [fiducial_alignment_status](fiducial_alignment_status.md) | Whether the tomographic alignment was computed based on fiducial markers |
-
 
 
 

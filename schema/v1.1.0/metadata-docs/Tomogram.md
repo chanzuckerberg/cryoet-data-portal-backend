@@ -40,13 +40,6 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
       Tomogram : fiducial_alignment_status
 
-
-
-
-    Tomogram --> "1" FiducialAlignmentStatusEnum : fiducial_alignment_status
-    click FiducialAlignmentStatusEnum href "../FiducialAlignmentStatusEnum"
-
-
       Tomogram : offset
 
 
@@ -100,11 +93,11 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [voxel_spacing](voxel_spacing.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Voxel spacing equal in all three axes in angstroms | direct |
-| [fiducial_alignment_status](fiducial_alignment_status.md) | 1 <br/> [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
+| [voxel_spacing](voxel_spacing.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Voxel spacing equal in all three axes in angstroms | direct |
+| [fiducial_alignment_status](fiducial_alignment_status.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
 | [ctf_corrected](ctf_corrected.md) | 0..1 _recommended_ <br/> [Boolean](Boolean.md) | Whether this tomogram is CTF corrected | direct |
 | [align_software](align_software.md) | 0..1 <br/> [String](String.md) | Software used for alignment | direct |
-| [reconstruction_method](reconstruction_method.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md) | Describe reconstruction method (WBP, SART, SIRT) | direct |
+| [reconstruction_method](reconstruction_method.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md) | Describe reconstruction method (WBP, SART, SIRT) | direct |
 | [reconstruction_software](reconstruction_software.md) | 1 <br/> [String](String.md) | Name of software used for reconstruction | direct |
 | [processing](processing.md) | 1 <br/> [TomogramProcessingEnum](TomogramProcessingEnum.md) | Describe additional processing used to derive the tomogram | direct |
 | [processing_software](processing_software.md) | 0..1 _recommended_ <br/> [String](String.md) | Processing software used to derive the tomogram | direct |
@@ -169,14 +162,12 @@ attributes:
     name: voxel_spacing
     description: Voxel spacing equal in all three axes in angstroms
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_voxel_spacing
     rank: 1000
     alias: voxel_spacing
     owner: Tomogram
     domain_of:
     - Tomogram
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
     minimum_value: 0.001
@@ -193,15 +184,12 @@ attributes:
     description: Whether the tomographic alignment was computed based on fiducial
       markers.
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_fiducial_alignment_status
     rank: 1000
     alias: fiducial_alignment_status
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: fiducial_alignment_status_enum
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
     pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
@@ -241,20 +229,19 @@ attributes:
     name: reconstruction_method
     description: Describe reconstruction method (WBP, SART, SIRT)
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_reconstruction_method
     rank: 1000
     alias: reconstruction_method
     owner: Tomogram
     domain_of:
     - Tomogram
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
-    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)
+    pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
+      ]*$)
     any_of:
-    - range: StringFormattedString
     - range: tomogrom_reconstruction_method_enum
+    - range: StringFormattedString
   reconstruction_software:
     name: reconstruction_software
     description: Name of software used for reconstruction
@@ -397,15 +384,12 @@ attributes:
     name: voxel_spacing
     description: Voxel spacing equal in all three axes in angstroms
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_voxel_spacing
     rank: 1000
     alias: voxel_spacing
     owner: Tomogram
     domain_of:
     - Tomogram
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 0.001
@@ -422,15 +406,12 @@ attributes:
     description: Whether the tomographic alignment was computed based on fiducial
       markers.
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_fiducial_alignment_status
     rank: 1000
     alias: fiducial_alignment_status
     owner: Tomogram
     domain_of:
     - Tomogram
-    range: fiducial_alignment_status_enum
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
     pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
@@ -470,21 +451,19 @@ attributes:
     name: reconstruction_method
     description: Describe reconstruction method (WBP, SART, SIRT)
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tomogram_reconstruction_method
     rank: 1000
     alias: reconstruction_method
     owner: Tomogram
     domain_of:
     - Tomogram
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
-    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)
+    pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
+      ]*$)
     any_of:
-    - range: StringFormattedString
     - range: tomogrom_reconstruction_method_enum
+    - range: StringFormattedString
   reconstruction_software:
     name: reconstruction_software
     description: Name of software used for reconstruction

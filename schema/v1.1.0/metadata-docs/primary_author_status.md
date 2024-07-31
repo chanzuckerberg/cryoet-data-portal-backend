@@ -2,11 +2,6 @@
 
 # Slot: primary_author_status
 
-
-_Whether the author is a primary author._
-
-
-
 URI: [cdp-meta:primary_author_status](metadataprimary_author_status)
 
 
@@ -22,6 +17,7 @@ URI: [cdp-meta:primary_author_status](metadataprimary_author_status)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [Author](Author.md) | Author of a scientific data entity |  no  |
+| [AuthorMixin](AuthorMixin.md) | An entity with author data |  no  |
 
 
 
@@ -31,7 +27,7 @@ URI: [cdp-meta:primary_author_status](metadataprimary_author_status)
 
 ## Properties
 
-* Range: [Boolean](Boolean.md)
+* Range: [String](String.md)
 
 
 
@@ -45,13 +41,6 @@ URI: [cdp-meta:primary_author_status](metadataprimary_author_status)
 
 
 
-### Schema Source
-
-
-* from schema: metadata
-
-
-
 
 ## Mappings
 
@@ -59,7 +48,6 @@ URI: [cdp-meta:primary_author_status](metadataprimary_author_status)
 | ---  | ---  |
 | self | cdp-meta:primary_author_status |
 | native | cdp-meta:primary_author_status |
-| exact | cdp-common:author_primary_author_status |
 
 
 
@@ -69,19 +57,11 @@ URI: [cdp-meta:primary_author_status](metadataprimary_author_status)
 <details>
 ```yaml
 name: primary_author_status
-description: Whether the author is a primary author.
-from_schema: metadata
-exact_mappings:
-- cdp-common:author_primary_author_status
-rank: 1000
-ifabsent: 'False'
 alias: primary_author_status
-owner: Author
 domain_of:
 - Author
-range: boolean
-inlined: true
-inlined_as_list: true
+- AuthorMixin
+range: string
 
 ```
 </details>
