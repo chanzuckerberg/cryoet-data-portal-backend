@@ -168,6 +168,8 @@ def main(
         validation_exclusions = json.load(f)
     logger.info("Using validation exclusions file: %s", validation_exclusions_file)
 
+    if output_dir[-1] != "/":
+        output_dir += "/"
     # Remove existing dir
     if os.path.exists(output_dir):
         logging.warning("Removing existing %s directory.", output_dir)
@@ -211,7 +213,7 @@ def main(
     with open(os.path.join(output_dir, "dataset_config_validate_errors.json"), "w") as f:
         json.dump(dict(sorted(errors.items())), f, indent=2, default=str)
 
-    logger.error("Validation failed. See dataset_config_validate_errors.json for details.")
+    logger.error("Validation failed. See %s for errors.", output_dir)
     exit(1)
 
 

@@ -16,8 +16,8 @@ URI: [cdp-meta:affiliation_name](metadataaffiliation_name)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [AuthorMixin](AuthorMixin.md) | An entity with author data |  no  |
 | [Author](Author.md) | Author of a scientific data entity |  no  |
+| [AuthorMixin](AuthorMixin.md) | An entity with author data |  no  |
 
 
 
