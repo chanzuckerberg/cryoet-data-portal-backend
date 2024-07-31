@@ -1,6 +1,6 @@
 
 
-# Class: CrossReferences
+# Class: CrossReferencesMixin
 
 
 _A set of cross-references to other databases and publications._
@@ -8,10 +8,8 @@ _A set of cross-references to other databases and publications._
 
 
 
-* __NOTE__: this is an abstract class and should not be instantiated directly
 
-
-URI: [cdp-meta:CrossReferences](metadataCrossReferences)
+URI: [cdp-meta:CrossReferencesMixin](metadataCrossReferencesMixin)
 
 
 
@@ -20,18 +18,18 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 
 ```mermaid
  classDiagram
-    class CrossReferences
-    click CrossReferences href "../CrossReferences"
+    class CrossReferencesMixin
+    click CrossReferencesMixin href "../CrossReferencesMixin"
       CrossReferencesMixin <|-- CrossReferences
-        click CrossReferencesMixin href "../CrossReferencesMixin"
+        click CrossReferences href "../CrossReferences"
 
-      CrossReferences : dataset_citations
+      CrossReferencesMixin : dataset_citations
 
-      CrossReferences : publications
+      CrossReferencesMixin : publications
 
-      CrossReferences : related_database_entries
+      CrossReferencesMixin : related_database_entries
 
-      CrossReferences : related_database_links
+      CrossReferencesMixin : related_database_links
 
 
 ```
@@ -39,10 +37,7 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 
 
 
-
-## Inheritance
-* **CrossReferences** [ [CrossReferencesMixin](CrossReferencesMixin.md)]
-
+<!-- no inheritance hierarchy -->
 
 
 ## Slots
@@ -56,15 +51,13 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 
 
 
+## Mixin Usage
+
+| mixed into | description |
+| --- | --- |
+| [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications |
 
 
-## Usages
-
-| used by | used in | type | used |
-| ---  | --- | --- | --- |
-| [CrossReferencedEntity](CrossReferencedEntity.md) | [cross_references](cross_references.md) | range | [CrossReferences](CrossReferences.md) |
-| [Dataset](Dataset.md) | [cross_references](cross_references.md) | range | [CrossReferences](CrossReferences.md) |
-| [Deposition](Deposition.md) | [cross_references](cross_references.md) | range | [CrossReferences](CrossReferences.md) |
 
 
 
@@ -91,8 +84,8 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:CrossReferences |
-| native | cdp-meta:CrossReferences |
+| self | cdp-meta:CrossReferencesMixin |
+| native | cdp-meta:CrossReferencesMixin |
 
 
 
@@ -108,21 +101,18 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 
 <details>
 ```yaml
-name: CrossReferences
+name: CrossReferencesMixin
 description: A set of cross-references to other databases and publications.
 from_schema: metadata
-abstract: true
-mixins:
-- CrossReferencesMixin
+mixin: true
 attributes:
   publications:
     name: publications
     description: Comma-separated list of DOIs for publications associated with the
       dataset.
     from_schema: metadata
-    rank: 1000
     alias: publications
-    owner: CrossReferences
+    owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
@@ -135,9 +125,8 @@ attributes:
     name: related_database_entries
     description: Comma-separated list of related database entries for the dataset.
     from_schema: metadata
-    rank: 1000
     alias: related_database_entries
-    owner: CrossReferences
+    owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
@@ -150,9 +139,8 @@ attributes:
     name: related_database_links
     description: Comma-separated list of related database links for the dataset.
     from_schema: metadata
-    rank: 1000
     alias: related_database_links
-    owner: CrossReferences
+    owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
@@ -163,9 +151,8 @@ attributes:
     name: dataset_citations
     description: Comma-separated list of DOIs for publications citing the dataset.
     from_schema: metadata
-    rank: 1000
     alias: dataset_citations
-    owner: CrossReferences
+    owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
@@ -180,21 +167,18 @@ attributes:
 
 <details>
 ```yaml
-name: CrossReferences
+name: CrossReferencesMixin
 description: A set of cross-references to other databases and publications.
 from_schema: metadata
-abstract: true
-mixins:
-- CrossReferencesMixin
+mixin: true
 attributes:
   publications:
     name: publications
     description: Comma-separated list of DOIs for publications associated with the
       dataset.
     from_schema: metadata
-    rank: 1000
     alias: publications
-    owner: CrossReferences
+    owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
@@ -207,9 +191,8 @@ attributes:
     name: related_database_entries
     description: Comma-separated list of related database entries for the dataset.
     from_schema: metadata
-    rank: 1000
     alias: related_database_entries
-    owner: CrossReferences
+    owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
@@ -222,9 +205,8 @@ attributes:
     name: related_database_links
     description: Comma-separated list of related database links for the dataset.
     from_schema: metadata
-    rank: 1000
     alias: related_database_links
-    owner: CrossReferences
+    owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
     - CrossReferences
@@ -235,9 +217,8 @@ attributes:
     name: dataset_citations
     description: Comma-separated list of DOIs for publications citing the dataset.
     from_schema: metadata
-    rank: 1000
     alias: dataset_citations
-    owner: CrossReferences
+    owner: CrossReferencesMixin
     domain_of:
     - CrossReferencesMixin
     - CrossReferences

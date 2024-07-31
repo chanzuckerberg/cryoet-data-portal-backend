@@ -33,8 +33,6 @@ URI: [cdp-meta:spherical_aberration_constant](metadataspherical_aberration_const
 
 * Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
-* Required: True
-
 * Minimum Value: 0
 
 * Regex pattern: `^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
@@ -65,7 +63,6 @@ URI: [cdp-meta:spherical_aberration_constant](metadataspherical_aberration_const
 | ---  | ---  |
 | self | cdp-meta:spherical_aberration_constant |
 | native | cdp-meta:spherical_aberration_constant |
-| exact | cdp-common:tiltseries_spherical_aberration_constant |
 
 
 
@@ -77,15 +74,12 @@ URI: [cdp-meta:spherical_aberration_constant](metadataspherical_aberration_const
 name: spherical_aberration_constant
 description: Spherical Aberration Constant of the objective lens in millimeters
 from_schema: metadata
-exact_mappings:
-- cdp-common:tiltseries_spherical_aberration_constant
 rank: 1000
 alias: spherical_aberration_constant
 owner: TiltSeries
 domain_of:
 - TiltSeries
 range: string
-required: true
 inlined: true
 inlined_as_list: true
 minimum_value: 0

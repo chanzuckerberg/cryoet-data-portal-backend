@@ -33,8 +33,6 @@ URI: [cdp-meta:tilt_step](metadatatilt_step)
 
 * Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
-* Required: True
-
 * Minimum Value: 0
 
 * Maximum Value: 90
@@ -67,7 +65,6 @@ URI: [cdp-meta:tilt_step](metadatatilt_step)
 | ---  | ---  |
 | self | cdp-meta:tilt_step |
 | native | cdp-meta:tilt_step |
-| exact | cdp-common:tiltseries_tilt_step |
 
 
 
@@ -79,15 +76,12 @@ URI: [cdp-meta:tilt_step](metadatatilt_step)
 name: tilt_step
 description: Tilt step in degrees
 from_schema: metadata
-exact_mappings:
-- cdp-common:tiltseries_tilt_step
 rank: 1000
 alias: tilt_step
 owner: TiltSeries
 domain_of:
 - TiltSeries
 range: string
-required: true
 inlined: true
 inlined_as_list: true
 minimum_value: 0

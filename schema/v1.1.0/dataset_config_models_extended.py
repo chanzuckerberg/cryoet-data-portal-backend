@@ -84,7 +84,7 @@ running_network_validation = False
 # ==============================================================================
 # Helper Functions
 # ==============================================================================
-def check_skip_validation(obj: BaseModel, field_name: str, case_sensitive: bool = False) -> bool:
+def skip_validation(obj: BaseModel, field_name: str, case_sensitive: bool = True) -> bool:
     # Check if the original class name is in the validation exclusions
     global validation_exclusions
 
@@ -106,8 +106,8 @@ def check_skip_validation(obj: BaseModel, field_name: str, case_sensitive: bool 
                 field_name,
                 field_value,
             )
-            return False
-    return True
+            return True
+    return False
 
 
 # ==============================================================================
@@ -206,9 +206,9 @@ class ExtendedValidationDateStamp(DateStamp):
 # ID Object Validation
 # ==============================================================================
 @alru_cache
-async def validate_id(id: str) -> Tuple[dict, bool]:
+async def validate_id(id: str) -> Tuple[List[str], bool]:
     """
-    Returns a tuple of the ID data and whether or not it is valid.
+    Returns a tuple of the ID names (including original label) and whether or not it is valid.
     """
     # Encode the IRI
     iri = f"http://purl.obolibrary.org/obo/{id.replace(':', '_')}"
@@ -220,8 +220,14 @@ async def validate_id(id: str) -> Tuple[dict, bool]:
     logger.debug("Getting ID %s at %s", id, url)
 
     async with aiohttp.ClientSession() as session, session.get(url) as response:
-        data = await response.json() if response.status == 200 else {}
-        return data, data.get("page", {}).get("totalElements", 0) > 0
+        if response.status >= 400:
+            return [], False
+        data = await response.json()
+        names = []
+        for entry in data["_embedded"]["terms"]:
+            names.append(entry["label"])
+            names += entry["synonyms"]
+        return names, True
 
 
 @alru_cache
@@ -247,11 +253,45 @@ async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
         return response.status == 200 and id_ancestor in ancestor_ids
 
 
+@alru_cache
+async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
+    """
+    Returns a tuple of the ID names (including original label) and whether or not it is valid.
+    """
+
+    url = f"http://rest.wormbase.org/rest/field/strain/{id}/name"
+
+    logger.debug("Getting ID %s at %s", id, url)
+
+    names = []
+    async with aiohttp.ClientSession() as session, session.get(url) as response:
+        if response.status >= 400:
+            return [], False
+        data = await response.json()
+        if label := data.get("name", {}).get("data", {}).get("label", ""):
+            names.append(label)
+
+    names_url = f"http://rest.wormbase.org/rest/field/strain/{id}/other_names"
+
+    async with aiohttp.ClientSession() as session, session.get(names_url) as response:
+        if response.status >= 400:
+            return names, True
+        data = await response.json()
+        if other_names := data.get("other_names", {}).get("data", []):
+            names += other_names
+
+    return names, True
+
+
 def validate_id_name_object(
+    self: Union[AnnotationObject, CellComponent, CellStrain, CellType, OrganismDetails, TissueDetails],
     id: str,
     name: str,
+    id_field_name: str = "id",
     validate_name: bool = True,
     ancestor: str | None = None,
+    validate_id_function: callable = validate_id,
+    validate_ancestor_function: callable = is_id_ancestor,
 ) -> None:
     """
     Validates the ID and name, ensuring that:
@@ -259,24 +299,29 @@ def validate_id_name_object(
     - The name matches the ID
     - The name is an ancestor of the ancestor ID (if provided)
     """
+    if (
+        not running_network_validation
+        or getattr(self, id_field_name) is None
+        or skip_validation(self, id_field_name, case_sensitive=True)
+    ):
+        return
+
     logger.debug("Validating %s with ID %s", name, id)
 
-    id_data, valid_id = asyncio.run(validate_id(id))
+    id = id.strip()
+    name = name.strip()
+    retrieved_names, valid_id = asyncio.run(validate_id_function(id))
 
     if not valid_id:
         raise ValueError(f"Invalid ID {id}")
 
     # return here since if name validation is not done, we don't need to check ancestors
-    if not validate_name:
+    if not validate_name or skip_validation(self, "name", case_sensitive=True):
         return
 
     logger.debug("Valid ID, now checking if name '%s' matches ID: %s", name, id)
-    # check if the name matches the ID's label or any of its synonyms
-    valid_name = False
-    for entry in id_data["_embedded"]["terms"]:
-        if name == entry["label"].lower() or name in [synonym.lower() for synonym in entry["synonyms"]]:
-            valid_name = True
-            break
+
+    valid_name = any(name == retrieved_name for retrieved_name in retrieved_names)
 
     if not valid_name:
         raise ValueError(f"name '{name}' does not match id: {id}")
@@ -285,38 +330,21 @@ def validate_id_name_object(
         return
 
     logger.debug("Valid name, now checking if %s is an ancestor of %s", name, ancestor)
-    if not asyncio.run(is_id_ancestor(ancestor, id)):
+    if not asyncio.run(validate_ancestor_function(ancestor, id)):
         raise ValueError(f"'{name}' is not a descendant of {ancestor}")
 
 
-def validate_ontology_object(
-    self: Union[AnnotationObject, CellComponent, CellStrain, CellType, TissueDetails],
-    ancestor: str = None,
-) -> CellType:
+def validate_cell_strain_object(self: CellStrain) -> CellStrain:
     """
-    Validates a typical object with an ontology ID and name
+    Validates a cell strain object, with slightly different validation (also looking at wormbase cell strain IDs)
     """
     if not running_network_validation or self.id is None:
         return self
 
-    validate_object = check_skip_validation(self, "id", case_sensitive=True)
-    if not validate_object:
-        return self
-
-    validate_name = check_skip_validation(self, "name", case_sensitive=False)
-    validate_id_name_object(self.id.strip(), self.name.strip().lower(), validate_name, ancestor)
-
-    return self
-
-
-def validate_organism_object(self: OrganismDetails) -> OrganismDetails:
-    """
-    Validates an organism object, with slightly different validation (taxonomy_id, but needs to be prefixed with NCBITaxon)
-    """
-    if not running_network_validation or self.taxonomy_id is None:
-        return self
-
-    validate_id_name_object(f"NCBITaxon:{self.taxonomy_id}", self.name.strip().lower(), validate_name=False)
+    if self.id.startswith("WBStrain"):
+        validate_id_name_object(self, self.id, self.name, validate_id_function=validate_wormbase_id)
+    else:
+        validate_id_name_object(self, self.id, self.name)
 
     return self
 
@@ -488,7 +516,8 @@ def validate_sources(source_list: List[DefaultSource] | List[VoxelSpacingSource]
 class ExtendedValidationAnnotationObject(AnnotationObject):
     @model_validator(mode="after")
     def validate_annotation_object(self) -> Self:
-        return validate_ontology_object(self, CELLULAR_COMPONENT_GO_ID)
+        validate_id_name_object(self, self.id, self.name, ancestor=CELLULAR_COMPONENT_GO_ID)
+        return self
 
 
 # ==============================================================================
@@ -634,31 +663,41 @@ class ExtendedValidationDatasetKeyPhotoEntity(DatasetKeyPhotoEntity):
 class ExtendedValidationCellComponent(CellComponent):
     @model_validator(mode="after")
     def validate_cell_component(self) -> Self:
-        return validate_ontology_object(self, CELLULAR_COMPONENT_GO_ID)
+        validate_id_name_object(self, self.id, self.name, ancestor=CELLULAR_COMPONENT_GO_ID)
+        return self
 
 
 class ExtendedValidationCellStrain(CellStrain):
     @model_validator(mode="after")
     def validate_cell_strain(self) -> Self:
-        return validate_ontology_object(self)
+        return validate_cell_strain_object(self)
 
 
 class ExtendedValidationCellType(CellType):
     @model_validator(mode="after")
     def validate_cell_type(self) -> Self:
-        return validate_ontology_object(self)
+        validate_id_name_object(self, self.id, self.name)
+        return self
 
 
 class ExtendedValidationTissue(TissueDetails):
     @model_validator(mode="after")
     def validate_tissue(self) -> Self:
-        return validate_ontology_object(self)
+        validate_id_name_object(self, self.id, self.name)
+        return self
 
 
 class ExtendedValidationOrganism(OrganismDetails):
     @model_validator(mode="after")
     def validate_organism(self) -> Self:
-        return validate_organism_object(self)
+        validate_id_name_object(
+            self,
+            f"NCBITaxon:{self.taxonomy_id}",
+            self.name,
+            id_field_name="taxonomy_id",
+            validate_name=False,
+        )
+        return self
 
 
 class ExtendedValidationDataset(Dataset):

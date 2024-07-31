@@ -4,14 +4,17 @@
 clean:
 	rm -rf metadata-docs
 	rm -rf metadata_materialized.yaml
+	rm -rf api_models_materialized.yaml
 	rm -rf dataset_config_materialized.yaml
 	rm -rf metadata_models.py
+	rm -rf api_models.py
 	rm -rf dataset_config_models.py
 
 .PHONY: build
 build:
 	python schema.py materialize metadata.yaml common.yaml metadata_materialized.yaml
 	python schema.py materialize dataset_config.yaml common.yaml dataset_config_materialized.yaml
+	python schema.py materialize api_models.yaml common.yaml api_models_materialized.yaml
 	gen-doc -d metadata-docs --no-mergeimports --hierarchical-class-view --stacktrace metadata_materialized.yaml
 	gen-pydantic --black metadata_materialized.yaml > metadata_models.py
 	gen-pydantic --black dataset_config_materialized.yaml > dataset_config_models.py

@@ -1,15 +1,15 @@
 
 
-# Class: Author
+# Class: AuthorMixin
 
 
-_Author of a scientific data entity._
+_An entity with author data_
 
 
 
 
 
-URI: [cdp-meta:Author](metadataAuthor)
+URI: [cdp-meta:AuthorMixin](metadataAuthorMixin)
 
 
 
@@ -18,26 +18,24 @@ URI: [cdp-meta:Author](metadataAuthor)
 
 ```mermaid
  classDiagram
-    class Author
-    click Author href "../Author"
+    class AuthorMixin
+    click AuthorMixin href "../AuthorMixin"
       AuthorMixin <|-- Author
-        click AuthorMixin href "../AuthorMixin"
+        click Author href "../Author"
 
-      Author : affiliation_address
+      AuthorMixin : affiliation_address
 
-      Author : affiliation_identifier
+      AuthorMixin : affiliation_identifier
 
-      Author : affiliation_name
+      AuthorMixin : affiliation_name
 
-      Author : corresponding_author_status
+      AuthorMixin : corresponding_author_status
 
-      Author : email
+      AuthorMixin : email
 
-      Author : name
+      AuthorMixin : name
 
-      Author : ORCID
-
-      Author : primary_author_status
+      AuthorMixin : primary_author_status
 
 
 ```
@@ -45,17 +43,13 @@ URI: [cdp-meta:Author](metadataAuthor)
 
 
 
-
-## Inheritance
-* **Author** [ [AuthorMixin](AuthorMixin.md)]
-
+<!-- no inheritance hierarchy -->
 
 
 ## Slots
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [ORCID](ORCID.md) | 0..1 _recommended_ <br/> [ORCID](ORCID.md) | The ORCID identifier for the author | direct |
 | [name](name.md) | 1 <br/> [String](String.md) | The full name of the author | direct |
 | [email](email.md) | 0..1 <br/> [String](String.md) | The email address of the author | direct |
 | [affiliation_name](affiliation_name.md) | 0..1 <br/> [String](String.md) | The name of the author's affiliation | direct |
@@ -66,17 +60,13 @@ URI: [cdp-meta:Author](metadataAuthor)
 
 
 
+## Mixin Usage
+
+| mixed into | description |
+| --- | --- |
+| [Author](Author.md) | Author of a scientific data entity |
 
 
-## Usages
-
-| used by | used in | type | used |
-| ---  | --- | --- | --- |
-| [AuthoredEntity](AuthoredEntity.md) | [authors](authors.md) | range | [Author](Author.md) |
-| [Dataset](Dataset.md) | [authors](authors.md) | range | [Author](Author.md) |
-| [Deposition](Deposition.md) | [authors](authors.md) | range | [Author](Author.md) |
-| [Tomogram](Tomogram.md) | [authors](authors.md) | range | [Author](Author.md) |
-| [Annotation](Annotation.md) | [authors](authors.md) | range | [Author](Author.md) |
 
 
 
@@ -103,8 +93,8 @@ URI: [cdp-meta:Author](metadataAuthor)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | cdp-meta:Author |
-| native | cdp-meta:Author |
+| self | cdp-meta:AuthorMixin |
+| native | cdp-meta:AuthorMixin |
 
 
 
@@ -120,37 +110,19 @@ URI: [cdp-meta:Author](metadataAuthor)
 
 <details>
 ```yaml
-name: Author
-description: Author of a scientific data entity.
+name: AuthorMixin
+description: An entity with author data
 from_schema: metadata
-mixins:
-- AuthorMixin
+mixin: true
 attributes:
-  ORCID:
-    name: ORCID
-    description: The ORCID identifier for the author.
-    from_schema: metadata
-    exact_mappings:
-    - cdp-common:author_orcid
-    rank: 1000
-    alias: ORCID
-    owner: Author
-    domain_of:
-    - Author
-    range: ORCID
-    recommended: true
-    inlined: true
-    inlined_as_list: true
-    pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
   name:
     name: name
     description: The full name of the author.
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_name
-    rank: 1000
     alias: name
-    owner: Author
+    owner: AuthorMixin
     domain_of:
     - AuthorMixin
     - AnnotationMethodLinks
@@ -171,9 +143,8 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_email
-    rank: 1000
     alias: email
-    owner: Author
+    owner: AuthorMixin
     domain_of:
     - AuthorMixin
     - Author
@@ -186,9 +157,8 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_affiliation_name
-    rank: 1000
     alias: affiliation_name
-    owner: Author
+    owner: AuthorMixin
     domain_of:
     - AuthorMixin
     - Author
@@ -201,9 +171,8 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_affiliation_address
-    rank: 1000
     alias: affiliation_address
-    owner: Author
+    owner: AuthorMixin
     domain_of:
     - AuthorMixin
     - Author
@@ -216,9 +185,8 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_affiliation_identifier
-    rank: 1000
     alias: affiliation_identifier
-    owner: Author
+    owner: AuthorMixin
     domain_of:
     - AuthorMixin
     - Author
@@ -232,10 +200,9 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_corresponding_author_status
-    rank: 1000
     ifabsent: 'False'
     alias: corresponding_author_status
-    owner: Author
+    owner: AuthorMixin
     domain_of:
     - AuthorMixin
     - Author
@@ -248,10 +215,9 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_primary_author_status
-    rank: 1000
     ifabsent: 'False'
     alias: primary_author_status
-    owner: Author
+    owner: AuthorMixin
     domain_of:
     - AuthorMixin
     - Author
@@ -266,37 +232,19 @@ attributes:
 
 <details>
 ```yaml
-name: Author
-description: Author of a scientific data entity.
+name: AuthorMixin
+description: An entity with author data
 from_schema: metadata
-mixins:
-- AuthorMixin
+mixin: true
 attributes:
-  ORCID:
-    name: ORCID
-    description: The ORCID identifier for the author.
-    from_schema: metadata
-    exact_mappings:
-    - cdp-common:author_orcid
-    rank: 1000
-    alias: ORCID
-    owner: Author
-    domain_of:
-    - Author
-    range: ORCID
-    recommended: true
-    inlined: true
-    inlined_as_list: true
-    pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
   name:
     name: name
     description: The full name of the author.
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_name
-    rank: 1000
     alias: name
-    owner: Author
+    owner: AuthorMixin
     domain_of:
     - AuthorMixin
     - AnnotationMethodLinks
@@ -317,9 +265,8 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_email
-    rank: 1000
     alias: email
-    owner: Author
+    owner: AuthorMixin
     domain_of:
     - AuthorMixin
     - Author
@@ -332,9 +279,8 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_affiliation_name
-    rank: 1000
     alias: affiliation_name
-    owner: Author
+    owner: AuthorMixin
     domain_of:
     - AuthorMixin
     - Author
@@ -347,9 +293,8 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_affiliation_address
-    rank: 1000
     alias: affiliation_address
-    owner: Author
+    owner: AuthorMixin
     domain_of:
     - AuthorMixin
     - Author
@@ -362,9 +307,8 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_affiliation_identifier
-    rank: 1000
     alias: affiliation_identifier
-    owner: Author
+    owner: AuthorMixin
     domain_of:
     - AuthorMixin
     - Author
@@ -378,10 +322,9 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_corresponding_author_status
-    rank: 1000
     ifabsent: 'False'
     alias: corresponding_author_status
-    owner: Author
+    owner: AuthorMixin
     domain_of:
     - AuthorMixin
     - Author
@@ -394,10 +337,9 @@ attributes:
     from_schema: metadata
     exact_mappings:
     - cdp-common:author_primary_author_status
-    rank: 1000
     ifabsent: 'False'
     alias: primary_author_status
-    owner: Author
+    owner: AuthorMixin
     domain_of:
     - AuthorMixin
     - Author
