@@ -33,8 +33,6 @@ URI: [cdp-meta:max](metadatamax)
 
 * Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
-* Required: True
-
 * Minimum Value: -90
 
 * Maximum Value: 90
@@ -67,7 +65,6 @@ URI: [cdp-meta:max](metadatamax)
 | ---  | ---  |
 | self | cdp-meta:max |
 | native | cdp-meta:max |
-| exact | cdp-common:tiltseries_tilt_max |
 
 
 
@@ -79,15 +76,12 @@ URI: [cdp-meta:max](metadatamax)
 name: max
 description: Maximal tilt angle in degrees
 from_schema: metadata
-exact_mappings:
-- cdp-common:tiltseries_tilt_max
 rank: 1000
 alias: max
 owner: TiltRange
 domain_of:
 - TiltRange
 range: string
-required: true
 inlined: true
 inlined_as_list: true
 minimum_value: -90

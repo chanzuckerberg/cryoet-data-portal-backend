@@ -33,8 +33,6 @@ URI: [cdp-meta:total_flux](metadatatotal_flux)
 
 * Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
-* Required: True
-
 * Minimum Value: 0
 
 * Regex pattern: `^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
@@ -65,7 +63,6 @@ URI: [cdp-meta:total_flux](metadatatotal_flux)
 | ---  | ---  |
 | self | cdp-meta:total_flux |
 | native | cdp-meta:total_flux |
-| exact | cdp-common:tiltseries_total_flux |
 
 
 
@@ -78,15 +75,12 @@ name: total_flux
 description: Number of Electrons reaching the specimen in a square Angstrom area for
   the entire tilt series
 from_schema: metadata
-exact_mappings:
-- cdp-common:tiltseries_total_flux
 rank: 1000
 alias: total_flux
 owner: TiltSeries
 domain_of:
 - TiltSeries
 range: string
-required: true
 inlined: true
 inlined_as_list: true
 minimum_value: 0
