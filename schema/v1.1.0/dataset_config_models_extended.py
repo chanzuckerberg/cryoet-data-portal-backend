@@ -246,8 +246,8 @@ async def validate_id(id: str) -> Tuple[List[str], bool]:
         data = await response.json()
         names = []
         for entry in data["_embedded"]["terms"]:
-            names.append(entry["label"].lower())
-            names += [synonym.lower() for synonym in entry["synonyms"]]
+            names.append(entry["label"])
+            names += entry["synonyms"]
         return names, True
 
 
@@ -290,7 +290,7 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
             return [], False
         data = await response.json()
         if label := data.get("name", {}).get("data", {}).get("label", ""):
-            names.append(label.lower())
+            names.append(label)
 
     names_url = f"http://rest.wormbase.org/rest/field/strain/{id}/other_names"
 
@@ -299,7 +299,7 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
             return names, True
         data = await response.json()
         if other_names := data.get("other_names", {}).get("data", []):
-            names += [other_name.lower() for other_name in other_names]
+            names += other_names
 
     return names, True
 
@@ -330,14 +330,14 @@ def validate_id_name_object(
     logger.debug("Validating %s with ID %s", name, id)
 
     id = id.strip()
-    name = name.strip().lower()
+    name = name.strip()
     retrieved_names, valid_id = asyncio.run(validate_id_function(id))
 
     if not valid_id:
         raise ValueError(f"Invalid ID {id}")
 
     # return here since if name validation is not done, we don't need to check ancestors
-    if not validate_name or skip_validation(self, "name", case_sensitive=False):
+    if not validate_name or skip_validation(self, "name", case_sensitive=True):
         return
 
     logger.debug("Valid ID, now checking if name '%s' matches ID: %s", name, id)

@@ -168,7 +168,7 @@ def main(
         output_dir += "/"
     # Remove existing dir
     if os.path.exists(output_dir):
-        logging.warning("Removing existing %s directory.", output_dir)
+        logger.warning("Removing existing %s directory.", output_dir)
         shutil.rmtree(output_dir)
     os.makedirs(output_dir, exist_ok=True)
 
