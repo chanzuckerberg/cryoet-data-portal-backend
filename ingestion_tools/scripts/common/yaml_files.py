@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 def get_yaml_config_files(
     input_files: list[str] = None,
     include_glob: str = None,
-    exclude_keywords_list: list[str] = EXCLUDE_KEYWORDS_LIST,
-    dataset_configs_dir: str = DATASET_CONFIGS_DIR,
+    exclude_keywords_list: list[str] = None,
+    dataset_configs_dir: str = None,
     verbose: bool = False,
 ) -> list:
     """
@@ -24,10 +24,10 @@ def get_yaml_config_files(
     if verbose:
         logger.setLevel(logging.DEBUG)
 
-    if exclude_keywords_list:
-        logger.info("Excluding files that contain any of the following keywords: %s", exclude_keywords_list)
-    else:
-        exclude_keywords_list = []
+    if not exclude_keywords_list:
+        exclude_keywords_list = EXCLUDE_KEYWORDS_LIST
+
+    logger.info("Excluding files that contain any of the following keywords: %s", exclude_keywords_list)
 
     # in the case that a None is passed in, set the default value
     if not dataset_configs_dir:
