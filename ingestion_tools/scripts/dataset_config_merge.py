@@ -37,8 +37,6 @@ ALLOWED_PRIMITIVE_TYPES = [int, float, str, bool, list, datetime.date]
 DATASET_CONFIGS_FOLDER = "../dataset_configs/"
 OUTPUT_FILE = DATASET_CONFIGS_FOLDER + "dataset_config_merged.yaml"
 
-keep_unique_values = False
-
 """
 Merges two lists together, keeping only values that are of unique types (values are arbitrary, as long as they are unique).
 
@@ -46,9 +44,11 @@ If keep_unique_values is true, not only are unique types kept, but unique values
 """
 
 
-def keep_unique_datatypes(original_list: list, new_value: Union[int, float, str, bool, list, datetime.date]) -> list:
-    global keep_unique_values
-
+def keep_unique_datatypes(
+    original_list: list,
+    new_value: Union[int, float, str, bool, list, datetime.date, None],
+    keep_unique_values: bool,
+) -> list:
     if new_value is None:
         return original_list
 
@@ -80,8 +80,8 @@ Returns False when there are conflicting datatypes, otherwise true.
 def primitive_data_check(
     original_value: Union[int, float, str, bool, list, datetime.date],
     new_value: Union[int, float, str, bool, list, datetime.date],
+    keep_unique_values: bool,
 ) -> bool:
-    global keep_unique_values
 
     if original_value is None:
         return True
@@ -112,7 +112,12 @@ current_entries[key] is modified to a list of one element if that element has di
 """
 
 
-def recursive_dict_update_list_helper(current_entries: dict, key: str, new_entry_values: list) -> dict:
+def recursive_dict_update_list_helper(
+    current_entries: dict,
+    key: str,
+    new_entry_values: list,
+    keep_unique_values: bool,
+) -> dict:
     # nothing to update with
     if len(new_entry_values) == 0:
         return current_entries
@@ -142,10 +147,14 @@ def recursive_dict_update_list_helper(current_entries: dict, key: str, new_entry
                         f"Unresolvable conflict for {current_entries[key]} (type: {type(current_entries[key])}), {new_entry_values[i]} (type: {type(new_entry_values[i])})",
                     )
 
-            current_entries[key] = recursive_dict_update(corresponding_entry, new_entry_values[i])
+            current_entries[key] = recursive_dict_update(corresponding_entry, new_entry_values[i], keep_unique_values)
         else:
-            primitive_data_check(current_entries.get(key), new_entry_values)
-            current_entries[key] = keep_unique_datatypes(current_entries.get(key, []), new_entry_values[i])
+            primitive_data_check(current_entries.get(key), new_entry_values, keep_unique_values)
+            current_entries[key] = keep_unique_datatypes(
+                current_entries.get(key, []),
+                new_entry_values[i],
+                keep_unique_values,
+            )
     # if new_entry_values was a list of dictionaries, the current_entries[key] will be a dictionary instead of a list (recursive_dict_update returns a dictionary)
     # so we need to convert it back to a list
     if not isinstance(current_entries[key], list):
@@ -162,7 +171,7 @@ In-place modifications are made to the current_entries dictionary, but if it is 
 """
 
 
-def recursive_dict_update(current_entries: dict, new_entries: dict) -> dict:
+def recursive_dict_update(current_entries: dict, new_entries: dict, keep_unique_values: bool) -> dict:
     for key, new_value in new_entries.items():
         # Regular scenarios
         if new_value is None:
@@ -171,19 +180,19 @@ def recursive_dict_update(current_entries: dict, new_entries: dict) -> dict:
         if isinstance(new_value, dict) and (
             isinstance(current_entries.get(key), dict) or current_entries.get(key) is None
         ):
-            current_entries[key] = recursive_dict_update(current_entries.get(key, {}), new_value)
+            current_entries[key] = recursive_dict_update(current_entries.get(key, {}), new_value, keep_unique_values)
         # current value: list and new value: list situation
         elif isinstance(new_value, list) and (
             isinstance(current_entries.get(key), list) or current_entries.get(key) is None
         ):
-            current_entries = recursive_dict_update_list_helper(current_entries, key, new_value)
+            current_entries = recursive_dict_update_list_helper(current_entries, key, new_value, keep_unique_values)
         # current value: dict and new value: non-dict (list or primitive)
         elif isinstance(current_entries.get(key), dict) and not isinstance(new_value, dict):
             # edge case: current value: dict and a new value: list, add the dict to the list
             if isinstance(new_value, list):
                 new_list = new_value + [current_entries.get(key)]
                 # and then now it is list, list situation
-                current_entries = recursive_dict_update_list_helper(current_entries, key, new_list)
+                current_entries = recursive_dict_update_list_helper(current_entries, key, new_list, keep_unique_values)
             # edge case: current value: dict and a new value: primitive, just keep the dict and print a warning
             else:
                 print("type conflict:")
@@ -196,13 +205,13 @@ def recursive_dict_update(current_entries: dict, new_entries: dict) -> dict:
             if isinstance(new_value, dict):
                 new_list = [new_value] + current_entries.get(key)
                 # and then now it is list, list situation
-                current_entries = recursive_dict_update_list_helper(current_entries, key, new_list)
+                current_entries = recursive_dict_update_list_helper(current_entries, key, new_list, keep_unique_values)
             # edge case: current-value: list and a new value: primitive, just keep the list and print a warning
             else:
-                current_entries[key] = keep_unique_datatypes(current_entries.get(key), new_value)
+                current_entries[key] = keep_unique_datatypes(current_entries.get(key), new_value, keep_unique_values)
         # non-dict, non-list (primitive) and non-dict, non-list (primitive)
         else:
-            datatypes_match = primitive_data_check(current_entries.get(key, None), new_value)
+            datatypes_match = primitive_data_check(current_entries.get(key, None), new_value, keep_unique_values)
             # if the primitive datatypes don't match, create a new list representing multiple datatypes (but not multivalued attribute necessarily)
             if not datatypes_match:
                 current_entries[key] = [new_value, current_entries[key]]
@@ -219,9 +228,6 @@ def recursive_dict_update(current_entries: dict, new_entries: dict) -> dict:
     help="If set, not only are unique types kept, but unique values are kept as well. Note that this works only for primitive types, and non-multivalued attributes may display as multivalued (because they are represented as a list of unique values).",
 )
 def main(unique_values: bool):
-    global keep_unique_values
-    keep_unique_values = unique_values
-
     all_files: list[str] = [
         os.path.join(directory_path, file)
         for directory_path, _, filename in os.walk(os.path.expanduser(DATASET_CONFIGS_FOLDER))
@@ -240,7 +246,7 @@ def main(unique_values: bool):
                 config_file: dict = yaml.safe_load(stream)
                 # a temp is created to avoid a half-merged config file after an exception since recursive_dict_update modifies in-place
                 temp_unified_config = unified_config.copy()
-                recursive_dict_update(temp_unified_config, config_file)
+                recursive_dict_update(temp_unified_config, config_file, keep_unique_values=unique_values)
                 unified_config = temp_unified_config
             except yaml.YAMLError as exc:
                 print(exc)
