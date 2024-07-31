@@ -96,10 +96,10 @@ datasets:
       primary_author_status: false
     cell_component:
       id: GO:0005741
-      name: Mitochondrial Outer Membrane
+      name: mitochondrial outer membrane
     cell_type:
       id: CL:2000042
-      name: Embryonic fibroblast
+      name: embryonic fibroblast
     cross_references:
       publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
       related_database_entries: EMPIAR-11370
