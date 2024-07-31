@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import asyncio
-import json
 import logging
 import re
 import urllib
@@ -29,12 +28,14 @@ from dataset_config_models import (
     Dataset,
     DatasetEntity,
     DatasetKeyPhotoEntity,
+    DatasetKeyPhotoSource,
     DatasetSource,
     DateStamp,
     DefaultSource,
     Deposition,
     DepositionEntity,
     DepositionKeyPhotoEntity,
+    DepositionKeyPhotoSource,
     DepositionSource,
     FrameEntity,
     FrameSource,
@@ -43,7 +44,6 @@ from dataset_config_models import (
     KeyImageEntity,
     KeyImageSource,
     KeyPhotoLiteral,
-    KeyPhotoSource,
     OrganismDetails,
     PicturePath,
     RawTiltEntity,
@@ -51,7 +51,6 @@ from dataset_config_models import (
     RunEntity,
     RunSource,
     SampleTypeEnum,
-    SourceParentFiltersEntity,
     TiltRange,
     TiltSeries,
     TiltSeriesEntity,
@@ -77,9 +76,6 @@ CAMERA_MANUFACTURER_TO_MODEL = {
     ("FEI", "TFS"): ["FALCON IV", "Falcon4i"],
     ("Gatan", "GATAN"): ["K2", "K2 SUMMIT", "K3", "K3 BIOQUANTUM", "UltraCam", "UltraScan"],
 }
-VALID_PARENT_FILTERS = None
-with open("valid_parent_filters.json", "r") as f:
-    VALID_PARENT_FILTERS = json.load(f)
 
 # Flag to determine if network validation should be run (set by provided Container arg)
 running_network_validation = False
@@ -369,8 +365,12 @@ class ExtendedValidationKeyPhotoLiteral(KeyPhotoLiteral):
     value: ExtendedValidationPicturePath = KeyPhotoLiteral.model_fields["value"]
 
 
-class ExtendedValidationKeyPhotoSource(KeyPhotoSource):
-    literal: Optional[ExtendedValidationKeyPhotoLiteral] = KeyPhotoSource.model_fields["literal"]
+class ExtendedValidationDatasetKeyPhotoSource(DatasetKeyPhotoSource):
+    literal: Optional[ExtendedValidationKeyPhotoLiteral] = DatasetKeyPhotoSource.model_fields["literal"]
+
+
+class ExtendedValidationDepositionKeyPhotoSource(DepositionKeyPhotoSource):
+    literal: Optional[ExtendedValidationKeyPhotoLiteral] = DepositionKeyPhotoSource.model_fields["literal"]
 
 
 # ==============================================================================
@@ -445,34 +445,6 @@ def validate_publications(publications: Optional[str]) -> Optional[str]:
 # ==============================================================================
 # Sources Validation
 # ==============================================================================
-def validate_sources_parent_filters(source_list: List[SourceParentFiltersEntity], class_name: str) -> None:
-    errors = []
-
-    # list of sources, each possibly with a parent_filters attribute
-    for i, source_element in enumerate(source_list):
-        parent_filters = getattr(source_element, "parent_filters", None)
-        if parent_filters is None:
-            continue
-
-        # list of types of filters being applied (include, exclude, etc.)
-        for filter_type in parent_filters.model_fields:
-            parent_filter = getattr(parent_filters, filter_type)
-            if parent_filter is None:
-                continue
-
-            # the list of parents that are being filtered (annotation, dataset, run, etc.)
-            filters = [filter for filter in parent_filter.model_fields if getattr(parent_filter, filter, None)]
-            for filter in filters:
-                if filter in VALID_PARENT_FILTERS[class_name]:
-                    continue
-
-                errors.append(
-                    ValueError(f"Source entry {i} parent filter '{filter}' cannot be used with '{class_name}'"),
-                )
-
-    return errors
-
-
 def validate_sources(source_list: List[DefaultSource] | List[VoxelSpacingSource], class_name: str) -> None:
     total_errors = []
 
@@ -505,9 +477,6 @@ def validate_sources(source_list: List[DefaultSource] | List[VoxelSpacingSource]
         )
     for index in standalone_finders_in_each_source_entries_errors:
         total_errors.append(ValueError(f"Source entry {index} cannot only have a parent_filters entry"))
-
-    # For verifying that all parent_filters' include and exclude entries have the right filters
-    total_errors += validate_sources_parent_filters(source_list, class_name)
 
     if total_errors:
         raise ValueError(total_errors)
@@ -639,9 +608,6 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
                 ValueError(f"Source entry {i} shape {shape} must have exactly one of glob_string or glob_strings"),
             )
 
-        # For verifying that all parent_filters' include and exclude entries have the right filters
-        total_errors += validate_sources_parent_filters(source_list, "annotation")
-
         if total_errors:
             raise ValueError(total_errors)
 
@@ -654,11 +620,11 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
 
 
 class ExtendedValidationDatasetKeyPhotoEntity(DatasetKeyPhotoEntity):
-    sources: List[ExtendedValidationKeyPhotoSource] = DatasetKeyPhotoEntity.model_fields["sources"]
+    sources: List[ExtendedValidationDatasetKeyPhotoSource] = DatasetKeyPhotoEntity.model_fields["sources"]
 
     @field_validator("sources")
     @classmethod
-    def valid_sources(cls: Self, source_list: List[KeyPhotoSource]) -> List[KeyPhotoSource]:
+    def valid_sources(cls: Self, source_list: List[DatasetKeyPhotoSource]) -> List[DatasetKeyPhotoSource]:
         return validate_sources(source_list, "dataset")
 
 
@@ -741,11 +707,11 @@ class ExtendedValidationDatasetEntity(DatasetEntity):
 # Deposition Key Photo Validation
 # ==============================================================================
 class ExtendedValidationDepositionKeyPhotoEntity(DepositionKeyPhotoEntity):
-    sources: List[ExtendedValidationKeyPhotoSource] = DepositionKeyPhotoEntity.model_fields["sources"]
+    sources: List[ExtendedValidationDepositionKeyPhotoSource] = DepositionKeyPhotoEntity.model_fields["sources"]
 
     @field_validator("sources")
     @classmethod
-    def valid_sources(cls: Self, source_list: List[KeyPhotoSource]) -> List[KeyPhotoSource]:
+    def valid_sources(cls: Self, source_list: List[DepositionKeyPhotoSource]) -> List[DepositionKeyPhotoSource]:
         # TODO: change "deposition_keyphoto" to the correct importer type when it gets implemented
         return validate_sources(source_list, "deposition_keyphoto")
 
