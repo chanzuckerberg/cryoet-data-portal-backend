@@ -83,7 +83,7 @@ datasets:
       name: C57BI/6J
     cell_type:
       id: CL:0000019
-      name: Sperm
+      name: sperm
     cross_references:
       publications: doi:10.1101/2022.09.28.510016
     dataset_description: Cryo-electron tomograms of mouse sperm flagella from FIB-SEM

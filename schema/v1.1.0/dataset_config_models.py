@@ -176,6 +176,13 @@ linkml_meta = LinkMLMeta(
                 "minimum_value": 0,
                 "name": "VersionString",
             },
+            "WORMBASE_ID": {
+                "base": "str",
+                "description": "A WormBase identifier",
+                "from_schema": "cdp-dataset-config",
+                "name": "WORMBASE_ID",
+                "pattern": "WBStrain[0-9]{8}$",
+            },
             "boolean": {
                 "base": "Bool",
                 "description": "A binary (true or false) value",
@@ -997,6 +1004,7 @@ class CellStrain(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "id",
+                "any_of": [{"range": "WORMBASE_ID"}, {"range": "ONTOLOGY_ID"}],
                 "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:cell_strain_id"],
                 "recommended": True,
@@ -1006,7 +1014,7 @@ class CellStrain(ConfiguredBaseModel):
 
     @field_validator("id")
     def pattern_id(cls, v):
-        pattern = re.compile(r"^[a-zA-Z]+:[0-9]+$")
+        pattern = re.compile(r"(WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
