@@ -766,7 +766,6 @@ class ExtendedValidationDepositionKeyPhotoEntity(DepositionKeyPhotoEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[KeyPhotoSource]) -> List[KeyPhotoSource]:
-        # TODO: change "deposition_keyphoto" to the correct importer type when it gets implemented
         return validate_sources_parent_filters(source_list, "deposition_keyphoto")
 
 
@@ -794,7 +793,6 @@ class ExtendedValidationDepositionEntity(DepositionEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[DepositionSource]) -> List[DepositionSource]:
-        # TODO: change "deposition" to the correct importer type
         return validate_sources(source_list, "deposition", skip_parent_filters=True)
 
 

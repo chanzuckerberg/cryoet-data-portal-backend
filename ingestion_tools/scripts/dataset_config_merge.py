@@ -1,6 +1,6 @@
 """
 Usage (from ingestion_tools/scripts directory):
-python dataset_config_merge.py (--unique_values)
+python dataset_config_merge.py (--unique-values)
 
 Will write to OUTPUT_FILE (see below)
 
@@ -37,17 +37,17 @@ ALLOWED_PRIMITIVE_TYPES = [int, float, str, bool, list, datetime.date]
 DATASET_CONFIGS_FOLDER = "../dataset_configs/"
 OUTPUT_FILE = DATASET_CONFIGS_FOLDER + "dataset_config_merged.yaml"
 
-unique_values = False
+keep_unique_values = False
 
 """
 Merges two lists together, keeping only values that are of unique types (values are arbitrary, as long as they are unique).
 
-If unique_values is true, not only are unique types kept, but unique values are kept as well.
+If keep_unique_values is true, not only are unique types kept, but unique values are kept as well.
 """
 
 
 def keep_unique_datatypes(original_list: list, new_value: Union[int, float, str, bool, list, datetime.date]) -> list:
-    global unique_values
+    global keep_unique_values
 
     if new_value is None:
         return original_list
@@ -59,7 +59,7 @@ def keep_unique_datatypes(original_list: list, new_value: Union[int, float, str,
         return [new_value]
 
     new_list = original_list.copy()
-    if unique_values and new_value not in original_list:
+    if keep_unique_values and new_value not in original_list:
         new_list.append(new_value)
     elif type(new_value) not in [type(value) for value in original_list]:
         new_list.append(new_value)
@@ -71,7 +71,7 @@ def keep_unique_datatypes(original_list: list, new_value: Union[int, float, str,
 """
 Runs a data check on non-dict items and reports any warnings about potential different-type attributes across files.
 
-If unique_values is true, not only are unique types kept, but unique values are kept as well.
+If keep_unique_values is true, not only are unique types kept, but unique values are kept as well.
 
 Returns False when there are conflicting datatypes, otherwise true.
 """
@@ -81,7 +81,7 @@ def primitive_data_check(
     original_value: Union[int, float, str, bool, list, datetime.date],
     new_value: Union[int, float, str, bool, list, datetime.date],
 ) -> bool:
-    global unique_values
+    global keep_unique_values
 
     if original_value is None:
         return True
@@ -96,7 +96,7 @@ def primitive_data_check(
         print(f"Warning: Data type conflict: {original_value} | {new_value}")
         return False
 
-    if unique_values and original_value != new_value:
+    if keep_unique_values and original_value != new_value:
         return False
 
     return True
@@ -214,13 +214,13 @@ def recursive_dict_update(current_entries: dict, new_entries: dict) -> dict:
 
 @click.command()
 @click.option(
-    "--keep_unique_values",
+    "--unique-values",
     is_flag=True,
     help="If set, not only are unique types kept, but unique values are kept as well. Note that this works only for primitive types, and non-multivalued attributes may display as multivalued (because they are represented as a list of unique values).",
 )
-def main(keep_unique_values: bool):
-    global unique_values
-    unique_values = keep_unique_values
+def main(unique_values: bool):
+    global keep_unique_values
+    keep_unique_values = unique_values
 
     all_files: list[str] = [
         os.path.join(directory_path, file)
