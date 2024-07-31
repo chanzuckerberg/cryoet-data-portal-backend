@@ -16,8 +16,8 @@ URI: [cdp-meta:corresponding_author_status](metadatacorresponding_author_status)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Author](Author.md) | Author of a scientific data entity |  no  |
 | [AuthorMixin](AuthorMixin.md) | An entity with author data |  no  |
+| [Author](Author.md) | Author of a scientific data entity |  no  |
 
 
 

@@ -93,8 +93,8 @@ tiltseries:
     tilt_alignment_software: '{ts-tilt_alignment_software}'
     tilt_axis: 84.3
     tilt_range:
-      max: -50.0
-      min: 50.0
+      max: 50.0
+      min: -50.0
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 2.0
     tilting_scheme: min to max tilt
