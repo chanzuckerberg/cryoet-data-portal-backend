@@ -21,19 +21,19 @@ URI: [cdp-meta:AnnotationMethodLinks](metadataAnnotationMethodLinks)
     class AnnotationMethodLinks
     click AnnotationMethodLinks href "../AnnotationMethodLinks"
       AnnotationMethodLinks : link
-
+        
       AnnotationMethodLinks : link_type
-
-
-
-
+        
+          
+    
+    
     AnnotationMethodLinks --> "1" AnnotationMethodLinkTypeEnum : link_type
     click AnnotationMethodLinkTypeEnum href "../AnnotationMethodLinkTypeEnum"
 
-
+        
       AnnotationMethodLinks : name
-
-
+        
+      
 ```
 
 

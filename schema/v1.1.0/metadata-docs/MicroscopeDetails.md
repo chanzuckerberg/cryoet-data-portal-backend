@@ -21,12 +21,12 @@ URI: [cdp-meta:MicroscopeDetails](metadataMicroscopeDetails)
     class MicroscopeDetails
     click MicroscopeDetails href "../MicroscopeDetails"
       MicroscopeDetails : additional_info
-
+        
       MicroscopeDetails : manufacturer
-
+        
       MicroscopeDetails : model
-
-
+        
+      
 ```
 
 

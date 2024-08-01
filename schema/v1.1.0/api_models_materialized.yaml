@@ -361,6 +361,20 @@ enums:
       UNKNOWN:
         text: UNKNOWN
         description: Tomogram's was not submitted by the dataset author
+  annotation_file_source_enum:
+    name: annotation_file_source_enum
+    description: How the annotation file was acquired
+    from_schema: cdp-dataset-config
+    permissible_values:
+      dataset_author:
+        text: dataset_author
+        description: Annotation submitted by dataset author
+      community:
+        text: community
+        description: Annotation submitted by community member
+      portal_standard:
+        text: portal_standard
+        description: Annotation submitted by portal standardization
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.
@@ -514,8 +528,8 @@ enums:
       raw:
         text: raw
         description: Tomogram was not processed
-  tomogrom_reconstruction_method_enum:
-    name: tomogrom_reconstruction_method_enum
+  tomogram_reconstruction_method_enum:
+    name: tomogram_reconstruction_method_enum
     description: Tomogram reconstruction method
     from_schema: cdp-dataset-config
     permissible_values:
@@ -542,6 +556,17 @@ enums:
       CANONICAL:
         text: CANONICAL
         description: Canonical tomogram (basis geometry for all annotations)
+  alignment_type_enum:
+    name: alignment_type_enum
+    description: Type of alignment
+    from_schema: cdp-dataset-config
+    permissible_values:
+      LOCAL:
+        text: LOCAL
+        description: per-section non-rigid alignment available
+      GLOBAL:
+        text: GLOBAL
+        description: only per-section rigid alignment available
 classes:
   IDMixin:
     name: IDMixin
@@ -650,7 +675,7 @@ classes:
         - AnnotationMethodLinks
         - DatasetAuthor
         - Run
-        - Tomograms
+        - Tomogram
         range: string
         required: true
         inlined: true
@@ -742,6 +767,294 @@ classes:
         range: boolean
         inlined: true
         inlined_as_list: true
+  Alignment:
+    name: Alignment
+    annotations:
+      plural:
+        tag: plural
+        value: Alignments
+    description: Tiltseries Alignment
+    from_schema: cdp-dataset-config
+    mixins:
+    - IDMixin
+    attributes:
+      annotation_files:
+        name: annotation_files
+        description: Files associated with an annotation
+        from_schema: cdp-dataset-config
+        multivalued: true
+        alias: annotation_files
+        owner: Alignment
+        domain_of:
+        - Alignment
+        - TomogramVoxelSpacing
+        inverse: AnnotationFile.alignment
+        range: AnnotationFile
+        inlined: true
+        inlined_as_list: true
+      per_section_alignments:
+        name: per_section_alignments
+        description: Map alignment parameters to tilt series frames
+        from_schema: cdp-dataset-config
+        multivalued: true
+        alias: per_section_alignments
+        owner: Alignment
+        domain_of:
+        - Alignment
+        inverse: PerSectionAlignmentParameters.alignment
+        range: PerSectionAlignmentParameters
+        inlined: true
+        inlined_as_list: true
+      deposition:
+        name: deposition
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: Alignment
+        domain_of:
+        - Alignment
+        - Annotation
+        - Dataset
+        - DepositionAuthor
+        - Frame
+        - Tiltseries
+        - Tomogram
+        inverse: Deposition.alignments
+        range: Deposition
+        inlined: true
+        inlined_as_list: true
+      tiltseries:
+        name: tiltseries
+        from_schema: cdp-dataset-config
+        alias: tiltseries
+        owner: Alignment
+        domain_of:
+        - Alignment
+        - Deposition
+        - PerSectionParameters
+        - Run
+        inverse: Tiltseries.alignments
+        range: Tiltseries
+        inlined: true
+        inlined_as_list: true
+      tomograms:
+        name: tomograms
+        description: Metadata describing a tomogram.
+        from_schema: cdp-dataset-config
+        multivalued: true
+        alias: tomograms
+        owner: Alignment
+        domain_of:
+        - Alignment
+        - Deposition
+        - Run
+        - TomogramVoxelSpacing
+        inverse: Tomogram.alignment
+        range: Tomogram
+        inlined: true
+        inlined_as_list: true
+      run:
+        name: run
+        from_schema: cdp-dataset-config
+        alias: run
+        owner: Alignment
+        domain_of:
+        - Alignment
+        - Annotation
+        - Frame
+        - Tiltseries
+        - TomogramVoxelSpacing
+        - Tomogram
+        inverse: Run.alignments
+        range: Run
+        inlined: true
+        inlined_as_list: true
+      alignment:
+        name: alignment
+        description: Describe a tiltseries alignment
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_alignment
+        alias: alignment
+        owner: Alignment
+        domain_of:
+        - Alignment
+        - AnnotationFile
+        - PerSectionAlignmentParameters
+        - Tiltseries
+        - Tomogram
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      alignment_type:
+        name: alignment_type
+        description: Type of alignment included, i.e. is a non-rigid alignment included?
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:alignment_alignment_type
+        alias: alignment_type
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: alignment_type_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: (^LOCAL$)|(^GLOBAL$)
+      volume_x_dimension:
+        name: volume_x_dimension
+        description: X dimension of the reconstruction volume in angstrom
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:alignment_volume_x_dimension
+        alias: volume_x_dimension
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      volume_y_dimension:
+        name: volume_y_dimension
+        description: Y dimension of the reconstruction volume in angstrom
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:alignment_volume_y_dimension
+        alias: volume_y_dimension
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      volume_z_dimension:
+        name: volume_z_dimension
+        description: Z dimension of the reconstruction volume in angstrom
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:alignment_volume_z_dimension
+        alias: volume_z_dimension
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      volume_x_offset:
+        name: volume_x_offset
+        description: X shift of the reconstruction volume in angstrom
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:alignment_volume_x_offset
+        alias: volume_x_offset
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      volume_y_offset:
+        name: volume_y_offset
+        description: Y shift of the reconstruction volume in angstrom
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:alignment_volume_y_offset
+        alias: volume_y_offset
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      volume_z_offset:
+        name: volume_z_offset
+        description: Z shift of the reconstruction volume in angstrom
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:alignment_volume_z_offset
+        alias: volume_z_offset
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      volume_x_rotation:
+        name: volume_x_rotation
+        description: Additional X rotation of the reconstruction volume in degrees
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:alignment_volume_x_rotation
+        alias: volume_x_rotation
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      tilt_offset:
+        name: tilt_offset
+        description: Additional tilt offset in degrees
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:alignment_tilt_offset
+        alias: tilt_offset
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      local_alignment_file:
+        name: local_alignment_file
+        description: Path to the local alignment file
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:alignment_local_alignment_file
+        alias: local_alignment_file
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: string
+        inlined: true
+        inlined_as_list: true
+      id:
+        name: id
+        description: An identifier to refer to a specific instance of this type
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_sequential_identifier
+        alias: id
+        owner: Alignment
+        domain_of:
+        - IDMixin
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
   AnnotationAuthor:
     name: AnnotationAuthor
     annotations:
@@ -762,7 +1075,7 @@ classes:
         owner: AnnotationAuthor
         domain_of:
         - AnnotationAuthor
-        - AnnotationFile
+        - AnnotationShape
         inverse: Annotation.authors
         range: Annotation
         inlined: true
@@ -825,7 +1138,7 @@ classes:
         - AnnotationMethodLinks
         - DatasetAuthor
         - Run
-        - Tomograms
+        - Tomogram
         range: string
         required: true
         inlined: true
@@ -928,30 +1241,47 @@ classes:
     mixins:
     - IDMixin
     attributes:
-      annotation:
-        name: annotation
-        description: Metadata about an annotation for a run
+      alignment:
+        name: alignment
+        description: Tiltseries Alignment
         from_schema: cdp-dataset-config
-        alias: annotation
+        alias: alignment
         owner: AnnotationFile
         domain_of:
-        - AnnotationAuthor
+        - Alignment
         - AnnotationFile
-        inverse: Annotation.annotation_files
-        range: Annotation
+        - PerSectionAlignmentParameters
+        - Tiltseries
+        - Tomogram
+        inverse: Alignment.annotation_files
+        range: Alignment
         inlined: true
         inlined_as_list: true
-      shape_type:
-        name: shape_type
+      shape:
+        name: shape
+        description: Shapes associated with an annotation
         from_schema: cdp-dataset-config
-        alias: shape_type
+        alias: shape
         owner: AnnotationFile
         domain_of:
         - AnnotationFile
-        range: annotation_file_shape_type_enum
+        inverse: AnnotationShape.annotation_files
+        range: AnnotationShape
         inlined: true
         inlined_as_list: true
-        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)
+      tomogram_voxel_spacing:
+        name: tomogram_voxel_spacing
+        description: Voxel spacings for a run
+        from_schema: cdp-dataset-config
+        alias: tomogram_voxel_spacing
+        owner: AnnotationFile
+        domain_of:
+        - AnnotationFile
+        - Tomogram
+        inverse: TomogramVoxelSpacing.annotation_files
+        range: TomogramVoxelSpacing
+        inlined: true
+        inlined_as_list: true
       format:
         name: format
         description: File format label
@@ -1008,6 +1338,20 @@ classes:
         range: boolean
         inlined: true
         inlined_as_list: true
+      source:
+        name: source
+        description: The source type for the annotation file
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_annotation_file_source
+        alias: source
+        owner: AnnotationFile
+        domain_of:
+        - AnnotationFile
+        range: annotation_file_source_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: (^dataset_author$)|(^community$)|(^portal_standard$)
       id:
         name: id
         description: An identifier to refer to a specific instance of this type
@@ -1016,6 +1360,55 @@ classes:
         - cdp-common:api_sequential_identifier
         alias: id
         owner: AnnotationFile
+        domain_of:
+        - IDMixin
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+  AnnotationShape:
+    name: AnnotationShape
+    annotations:
+      plural:
+        tag: plural
+        value: AnnotationShapes
+    description: Shapes associated with an annotation
+    from_schema: cdp-dataset-config
+    mixins:
+    - IDMixin
+    attributes:
+      annotation:
+        name: annotation
+        description: Metadata about an annotation for a run
+        from_schema: cdp-dataset-config
+        alias: annotation
+        owner: AnnotationShape
+        domain_of:
+        - AnnotationAuthor
+        - AnnotationShape
+        inverse: Annotation.annotation_files
+        range: Annotation
+        inlined: true
+        inlined_as_list: true
+      shape_type:
+        name: shape_type
+        from_schema: cdp-dataset-config
+        alias: shape_type
+        owner: AnnotationShape
+        domain_of:
+        - AnnotationShape
+        range: annotation_file_shape_type_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)
+      id:
+        name: id
+        description: An identifier to refer to a specific instance of this type
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_sequential_identifier
+        alias: id
+        owner: AnnotationShape
         domain_of:
         - IDMixin
         range: integer
@@ -1034,45 +1427,49 @@ classes:
     - IDMixin
     - DateStampedEntityMixin
     attributes:
-      tomogram_voxel_spacing:
-        name: tomogram_voxel_spacing
-        description: Voxel spacings for a run
+      run:
+        name: run
         from_schema: cdp-dataset-config
-        alias: tomogram_voxel_spacing
+        alias: run
         owner: Annotation
         domain_of:
+        - Alignment
         - Annotation
-        - Tomograms
-        inverse: TomogramVoxelSpacing.annotations
-        range: TomogramVoxelSpacing
+        - Frame
+        - Tiltseries
+        - TomogramVoxelSpacing
+        - Tomogram
+        inverse: Run.annotations
+        range: Run
         inlined: true
         inlined_as_list: true
-      annotation_files:
-        name: annotation_files
-        description: Files associated with an annotation
+      annotation_shapes:
+        name: annotation_shapes
+        description: Shapes associated with an annotation
         from_schema: cdp-dataset-config
-        alias: annotation_files
+        multivalued: true
+        alias: annotation_shapes
         owner: Annotation
         domain_of:
         - Annotation
-        inverse: AnnotationFile.annotation
-        range: AnnotationFile
-        multivalued: true
+        inverse: AnnotationShape.annotation
+        range: AnnotationShape
         inlined: true
         inlined_as_list: true
       authors:
         name: authors
         description: Author of an annotation
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: authors
         owner: Annotation
         domain_of:
         - Annotation
         - Dataset
-        - Tomograms
+        - Deposition
+        - Tomogram
         inverse: AnnotationAuthor.annotation
         range: AnnotationAuthor
-        multivalued: true
         inlined: true
         inlined_as_list: true
       deposition:
@@ -1081,9 +1478,13 @@ classes:
         alias: deposition
         owner: Annotation
         domain_of:
+        - Alignment
         - Annotation
         - Dataset
-        - Tomograms
+        - DepositionAuthor
+        - Frame
+        - Tiltseries
+        - Tomogram
         inverse: Deposition.annotations
         range: Deposition
         inlined: true
@@ -1439,7 +1840,7 @@ classes:
         - AnnotationMethodLinks
         - DatasetAuthor
         - Run
-        - Tomograms
+        - Tomogram
         range: string
         required: true
         inlined: true
@@ -1662,9 +2063,13 @@ classes:
         alias: deposition
         owner: Dataset
         domain_of:
+        - Alignment
         - Annotation
         - Dataset
-        - Tomograms
+        - DepositionAuthor
+        - Frame
+        - Tiltseries
+        - Tomogram
         inverse: Deposition.datasets
         range: Deposition
         inlined: true
@@ -1673,53 +2078,54 @@ classes:
         name: funding_sources
         description: Information about how a dataset was funded
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: funding_sources
         owner: Dataset
         domain_of:
         - Dataset
         inverse: DatasetFunding.dataset
         range: DatasetFunding
-        multivalued: true
         inlined: true
         inlined_as_list: true
       authors:
         name: authors
         description: An author of a dataset
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: authors
         owner: Dataset
         domain_of:
         - Annotation
         - Dataset
-        - Tomograms
+        - Deposition
+        - Tomogram
         inverse: DatasetAuthor.dataset
         range: DatasetAuthor
-        multivalued: true
         inlined: true
         inlined_as_list: true
       runs:
         name: runs
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: runs
         owner: Dataset
         domain_of:
         - Dataset
         inverse: Run.dataset
         range: Run
-        multivalued: true
         inlined: true
         inlined_as_list: true
       dataset_authors:
         name: dataset_authors
         description: An author of a dataset
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: dataset_authors
         owner: Dataset
         domain_of:
         - Dataset
         inverse: DatasetAuthor.dataset
         range: DatasetAuthor
-        multivalued: true
         inlined: true
         inlined_as_list: true
       title:
@@ -1925,7 +2331,7 @@ classes:
         owner: Dataset
         domain_of:
         - Dataset
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -1939,7 +2345,7 @@ classes:
         owner: Dataset
         domain_of:
         - Dataset
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -2108,51 +2514,337 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-  Deposition:
-    name: Deposition
+  DepositionAuthor:
+    name: DepositionAuthor
+    annotations:
+      plural:
+        tag: plural
+        value: DepositionAuthors
+    description: Author of a deposition
     from_schema: cdp-dataset-config
     mixins:
     - IDMixin
+    - AuthorEntityMixin
     attributes:
-      datasets:
-        name: datasets
-        description: An author of a dataset
+      deposition:
+        name: deposition
         from_schema: cdp-dataset-config
-        alias: datasets
+        alias: deposition
+        owner: DepositionAuthor
+        domain_of:
+        - Alignment
+        - Annotation
+        - Dataset
+        - DepositionAuthor
+        - Frame
+        - Tiltseries
+        - Tomogram
+        inverse: Deposition.authors
+        range: Deposition
+        inlined: true
+        inlined_as_list: true
+      id:
+        name: id
+        description: An identifier to refer to a specific instance of this type
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_sequential_identifier
+        alias: id
+        owner: DepositionAuthor
+        domain_of:
+        - IDMixin
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+      author_list_order:
+        name: author_list_order
+        description: The order that the author is listed as in the associated publication
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_author_list_order
+        alias: author_list_order
+        owner: DepositionAuthor
+        domain_of:
+        - AuthorEntityMixin
+        - DatasetAuthor
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+      orcid:
+        name: orcid
+        description: The ORCID identifier for the author.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_orcid
+        alias: orcid
+        owner: DepositionAuthor
+        domain_of:
+        - AuthorEntityMixin
+        - DatasetAuthor
+        range: ORCID
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
+      name:
+        name: name
+        description: The full name of the author.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_name
+        alias: name
+        owner: DepositionAuthor
+        domain_of:
+        - AuthorMixin
+        - AnnotationMethodLinks
+        - DatasetAuthor
+        - Run
+        - Tomogram
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      email:
+        name: email
+        description: The email address of the author.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_email
+        alias: email
+        owner: DepositionAuthor
+        domain_of:
+        - AuthorMixin
+        - DatasetAuthor
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_name:
+        name: affiliation_name
+        description: The name of the author's affiliation.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_affiliation_name
+        alias: affiliation_name
+        owner: DepositionAuthor
+        domain_of:
+        - AuthorMixin
+        - DatasetAuthor
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_address:
+        name: affiliation_address
+        description: The address of the author's affiliation.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_affiliation_address
+        alias: affiliation_address
+        owner: DepositionAuthor
+        domain_of:
+        - AuthorMixin
+        - DatasetAuthor
+        range: string
+        inlined: true
+        inlined_as_list: true
+      affiliation_identifier:
+        name: affiliation_identifier
+        description: A Research Organization Registry (ROR) identifier.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_affiliation_identifier
+        alias: affiliation_identifier
+        owner: DepositionAuthor
+        domain_of:
+        - AuthorMixin
+        - DatasetAuthor
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+      corresponding_author_status:
+        name: corresponding_author_status
+        description: Whether the author is a corresponding author.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_corresponding_author_status
+        ifabsent: 'False'
+        alias: corresponding_author_status
+        owner: DepositionAuthor
+        domain_of:
+        - AuthorMixin
+        - DatasetAuthor
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      primary_author_status:
+        name: primary_author_status
+        description: Whether the author is a primary author.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:author_primary_author_status
+        ifabsent: 'False'
+        alias: primary_author_status
+        owner: DepositionAuthor
+        domain_of:
+        - AuthorMixin
+        - DatasetAuthor
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+  Deposition:
+    name: Deposition
+    annotations:
+      plural:
+        tag: plural
+        value: Depositions
+    from_schema: cdp-dataset-config
+    mixins:
+    - IDMixin
+    - CrossReferencesMixin
+    - DateStampedEntityMixin
+    attributes:
+      authors:
+        name: authors
+        description: Author of a deposition
+        from_schema: cdp-dataset-config
+        multivalued: true
+        alias: authors
+        owner: Deposition
+        domain_of:
+        - Annotation
+        - Dataset
+        - Deposition
+        - Tomogram
+        inverse: DepositionAuthor.deposition
+        range: DepositionAuthor
+        inlined: true
+        inlined_as_list: true
+      alignments:
+        name: alignments
+        description: Tiltseries Alignment
+        from_schema: cdp-dataset-config
+        multivalued: true
+        alias: alignments
         owner: Deposition
         domain_of:
         - Deposition
-        inverse: Dataset.deposition
-        range: Dataset
-        multivalued: true
+        - Run
+        inverse: Alignment.deposition
+        range: Alignment
         inlined: true
         inlined_as_list: true
       annotations:
         name: annotations
         description: Metadata about an annotation for a run
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: annotations
         owner: Deposition
         domain_of:
         - Deposition
+        - Run
         - TomogramVoxelSpacing
         inverse: Annotation.deposition
         range: Annotation
+        inlined: true
+        inlined_as_list: true
+      datasets:
+        name: datasets
+        description: An author of a dataset
+        from_schema: cdp-dataset-config
         multivalued: true
+        alias: datasets
+        owner: Deposition
+        domain_of:
+        - Deposition
+        inverse: Dataset.deposition
+        range: Dataset
+        inlined: true
+        inlined_as_list: true
+      frames:
+        name: frames
+        from_schema: cdp-dataset-config
+        multivalued: true
+        alias: frames
+        owner: Deposition
+        domain_of:
+        - Deposition
+        - Run
+        inverse: Frame.deposition
+        range: Frame
+        inlined: true
+        inlined_as_list: true
+      tiltseries:
+        name: tiltseries
+        from_schema: cdp-dataset-config
+        multivalued: true
+        alias: tiltseries
+        owner: Deposition
+        domain_of:
+        - Alignment
+        - Deposition
+        - PerSectionParameters
+        - Run
+        inverse: Tiltseries.deposition
+        range: Tiltseries
         inlined: true
         inlined_as_list: true
       tomograms:
         name: tomograms
-        description: Metadata describing a tomogram.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: tomograms
         owner: Deposition
         domain_of:
+        - Alignment
         - Deposition
+        - Run
         - TomogramVoxelSpacing
         inverse: Tomogram.deposition
         range: Tomograms
+        inlined: true
+        inlined_as_list: true
+      deposition_title:
+        name: deposition_title
+        description: Title of a CryoET deposition.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:deposition_title
+        alias: deposition_title
+        owner: Deposition
+        domain_of:
+        - Deposition
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      deposition_description:
+        name: deposition_description
+        description: A short description of the deposition, similar to an abstract
+          for a journal article or dataset.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:deposition_description
+        alias: deposition_description
+        owner: Deposition
+        domain_of:
+        - Deposition
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      deposition_types:
+        name: deposition_types
+        from_schema: cdp-dataset-config
         multivalued: true
+        alias: deposition_types
+        owner: Deposition
+        domain_of:
+        - Deposition
+        inverse: DepositionType.deposition
+        range: DepositionType
         inlined: true
         inlined_as_list: true
       id:
@@ -2163,6 +2855,589 @@ classes:
         - cdp-common:api_sequential_identifier
         alias: id
         owner: Deposition
+        domain_of:
+        - IDMixin
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+      publications:
+        name: publications
+        description: Comma-separated list of DOIs for publications associated with
+          the dataset.
+        from_schema: cdp-dataset-config
+        alias: publications
+        owner: Deposition
+        domain_of:
+        - CrossReferencesMixin
+        range: DOI_LIST
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
+      related_database_entries:
+        name: related_database_entries
+        description: Comma-separated list of related database entries for the dataset.
+        from_schema: cdp-dataset-config
+        alias: related_database_entries
+        owner: Deposition
+        domain_of:
+        - CrossReferencesMixin
+        range: EMPIAR_EMDB_PDB_LIST
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)
+      related_database_links:
+        name: related_database_links
+        description: Comma-separated list of related database links for the dataset.
+        from_schema: cdp-dataset-config
+        alias: related_database_links
+        owner: Deposition
+        domain_of:
+        - CrossReferencesMixin
+        range: string
+        inlined: true
+        inlined_as_list: true
+      dataset_citations:
+        name: dataset_citations
+        description: Comma-separated list of DOIs for publications citing the dataset.
+        from_schema: cdp-dataset-config
+        alias: dataset_citations
+        owner: Deposition
+        domain_of:
+        - CrossReferencesMixin
+        range: string
+        inlined: true
+        inlined_as_list: true
+      deposition_date:
+        name: deposition_date
+        description: The date a data item was received by the cryoET data portal.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:deposition_date
+        alias: deposition_date
+        owner: Deposition
+        domain_of:
+        - DateStampedEntityMixin
+        range: date
+        required: true
+        inlined: true
+        inlined_as_list: true
+      release_date:
+        name: release_date
+        description: The date a data item was received by the cryoET data portal.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:release_date
+        alias: release_date
+        owner: Deposition
+        domain_of:
+        - DateStampedEntityMixin
+        range: date
+        required: true
+        inlined: true
+        inlined_as_list: true
+      last_modified_date:
+        name: last_modified_date
+        description: The date a piece of data was last modified on the cryoET data
+          portal.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:last_modified_date
+        alias: last_modified_date
+        owner: Deposition
+        domain_of:
+        - DateStampedEntityMixin
+        range: date
+        required: true
+        inlined: true
+        inlined_as_list: true
+  DepositionType:
+    name: DepositionType
+    annotations:
+      plural:
+        tag: plural
+        value: DepositionTypes
+    from_schema: cdp-dataset-config
+    mixins:
+    - IDMixin
+    attributes:
+      depositions:
+        name: depositions
+        from_schema: cdp-dataset-config
+        alias: depositions
+        owner: DepositionType
+        domain_of:
+        - DepositionType
+        inverse: Deposition.type
+        range: Deposition
+        inlined: true
+        inlined_as_list: true
+      type:
+        name: type
+        from_schema: cdp-dataset-config
+        alias: type
+        owner: DepositionType
+        domain_of:
+        - DepositionType
+        - Tomogram
+        range: cdp-common:deposition_types_enum
+        inlined: true
+        inlined_as_list: true
+      id:
+        name: id
+        description: An identifier to refer to a specific instance of this type
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_sequential_identifier
+        alias: id
+        owner: DepositionType
+        domain_of:
+        - IDMixin
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+  Frame:
+    name: Frame
+    annotations:
+      plural:
+        tag: plural
+        value: Frames
+    from_schema: cdp-dataset-config
+    mixins:
+    - IDMixin
+    - S3PrefixedEntityMixin
+    attributes:
+      deposition:
+        name: deposition
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: Frame
+        domain_of:
+        - Alignment
+        - Annotation
+        - Dataset
+        - DepositionAuthor
+        - Frame
+        - Tiltseries
+        - Tomogram
+        inverse: Deposition.frames
+        range: Deposition
+        inlined: true
+        inlined_as_list: true
+      per_section_parameters:
+        name: per_section_parameters
+        description: Record how frames get mapped to TiltSeries
+        from_schema: cdp-dataset-config
+        multivalued: true
+        alias: per_section_parameters
+        owner: Frame
+        domain_of:
+        - Frame
+        - Tiltseries
+        inverse: PerSectionParameters.frames
+        range: PerSectionParameters
+        inlined: true
+        inlined_as_list: true
+      run:
+        name: run
+        from_schema: cdp-dataset-config
+        alias: run
+        owner: Frame
+        domain_of:
+        - Alignment
+        - Annotation
+        - Frame
+        - Tiltseries
+        - TomogramVoxelSpacing
+        - Tomogram
+        inverse: Run.frames
+        range: Run
+        inlined: true
+        inlined_as_list: true
+      raw_angle:
+        name: raw_angle
+        description: Camera angle for a frame
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_frame_raw_angle
+        alias: raw_angle
+        owner: Frame
+        domain_of:
+        - Frame
+        range: float
+        required: true
+        inlined: true
+        inlined_as_list: true
+        minimum_value: -90
+        maximum_value: 90
+      acquisition_order:
+        name: acquisition_order
+        description: Frame's acquistion order within a tilt experiment
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_frame_acquisition_order
+        alias: acquisition_order
+        owner: Frame
+        domain_of:
+        - Frame
+        range: int
+        required: false
+        inlined: true
+        inlined_as_list: true
+      dose:
+        name: dose
+        description: The raw camera angle for a frame
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_frame_dose
+        alias: dose
+        owner: Frame
+        domain_of:
+        - Frame
+        range: float
+        required: true
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: e-/Å2
+          descriptive_name: electrons per square angstrom
+      is_gain_corrected:
+        name: is_gain_corrected
+        description: Whether this frame has been gain corrected
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_frame_is_gain_corrected
+        alias: is_gain_corrected
+        owner: Frame
+        domain_of:
+        - Frame
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      s3_gain_file:
+        name: s3_gain_file
+        description: S3 path to the gain file for this frame
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_frame_s3_gain_file
+        alias: s3_gain_file
+        owner: Frame
+        domain_of:
+        - Frame
+        - Tiltseries
+        range: string
+        inlined: true
+        inlined_as_list: true
+      https_gain_file:
+        name: https_gain_file
+        description: HTTPS path to the gain file for this frame
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_frame_https_gain_file
+        alias: https_gain_file
+        owner: Frame
+        domain_of:
+        - Frame
+        - Tiltseries
+        range: string
+        inlined: true
+        inlined_as_list: true
+      id:
+        name: id
+        description: An identifier to refer to a specific instance of this type
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_sequential_identifier
+        alias: id
+        owner: Frame
+        domain_of:
+        - IDMixin
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+      s3_prefix:
+        name: s3_prefix
+        description: Path to a directory containing data for this entity as an S3
+          url
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_s3_prefix
+        alias: s3_prefix
+        owner: Frame
+        domain_of:
+        - S3PrefixedEntityMixin
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      https_prefix:
+        name: https_prefix
+        description: Path to a directory containing data for this entity as an HTTPS
+          url
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_https_prefix
+        alias: https_prefix
+        owner: Frame
+        domain_of:
+        - S3PrefixedEntityMixin
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+  PerSectionParameters:
+    name: PerSectionParameters
+    annotations:
+      plural:
+        tag: plural
+        value: PerSectionParameters
+    description: Record how frames get mapped to TiltSeries
+    from_schema: cdp-dataset-config
+    mixins:
+    - IDMixin
+    attributes:
+      frame:
+        name: frame
+        from_schema: cdp-dataset-config
+        alias: frame
+        owner: PerSectionParameters
+        domain_of:
+        - PerSectionParameters
+        inverse: Frame.per_section_parameters
+        range: Frame
+        required: true
+        inlined: true
+        inlined_as_list: true
+      tiltseries:
+        name: tiltseries
+        from_schema: cdp-dataset-config
+        alias: tiltseries
+        owner: PerSectionParameters
+        domain_of:
+        - Alignment
+        - Deposition
+        - PerSectionParameters
+        - Run
+        inverse: Tiltseries.per_section_parameters
+        range: Tiltseries
+        required: true
+        inlined: true
+        inlined_as_list: true
+      z_index:
+        name: z_index
+        description: z-index of the frame in the tiltseries
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:per_section_z_index
+        alias: z_index
+        owner: PerSectionParameters
+        domain_of:
+        - PerSectionParameters
+        - PerSectionAlignmentParameters
+        range: int
+        required: true
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+      defocus:
+        name: defocus
+        description: defocus amount
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:per_section_defocus
+        alias: defocus
+        owner: PerSectionParameters
+        domain_of:
+        - PerSectionParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 100
+        maximum_value: 100
+        unit:
+          symbol: µm
+          descriptive_name: microns
+      astigmatism:
+        name: astigmatism
+        description: Astigmatism amount for this frame
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:per_section_astigmatism
+        alias: astigmatism
+        owner: PerSectionParameters
+        domain_of:
+        - PerSectionParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+      astigmatic_angle:
+        name: astigmatic_angle
+        description: Angle of ast
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:per_section_astigmatic_angle
+        alias: astigmatic_angle
+        owner: PerSectionParameters
+        domain_of:
+        - PerSectionParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        minimum_value: -180
+        maximum_value: 180
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      id:
+        name: id
+        description: An identifier to refer to a specific instance of this type
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_sequential_identifier
+        alias: id
+        owner: PerSectionParameters
+        domain_of:
+        - IDMixin
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+  PerSectionAlignmentParameters:
+    name: PerSectionAlignmentParameters
+    annotations:
+      plural:
+        tag: plural
+        value: PerSectionAlignmentParameters
+    description: Map alignment parameters to tilt series frames
+    from_schema: cdp-dataset-config
+    mixins:
+    - IDMixin
+    attributes:
+      alignment:
+        name: alignment
+        description: Tiltseries Alignment
+        from_schema: cdp-dataset-config
+        alias: alignment
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - Alignment
+        - AnnotationFile
+        - PerSectionAlignmentParameters
+        - Tiltseries
+        - Tomogram
+        inverse: Alignment.per_section_alignments
+        range: Alignment
+        required: true
+        inlined: true
+        inlined_as_list: true
+      z_index:
+        name: z_index
+        description: z-index of the frame in the tiltseries
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:per_section_z_index
+        alias: z_index
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionParameters
+        - PerSectionAlignmentParameters
+        range: int
+        required: true
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+      x_offset:
+        name: x_offset
+        description: In-plane X-shift of the projection in angstrom
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:per_section_alignment_x_offset
+        alias: x_offset
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      y_offset:
+        name: y_offset
+        description: In-plane Y-shift of the projection in angstrom
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:per_section_alignment_y_offset
+        alias: y_offset
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      in_plane_rotation:
+        name: in_plane_rotation
+        description: In-plane rotation of the projection in degrees
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:per_section_alignment_in_plane_rotation
+        alias: in_plane_rotation
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      beam_tilt:
+        name: beam_tilt
+        description: Beam tilt during projection in degrees
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:per_section_alignment_beam_tilt
+        alias: beam_tilt
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      tilt_angle:
+        name: tilt_angle
+        description: Tilt angle of the projection in degrees
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:per_section_alignment_tilt_angle
+        alias: tilt_angle
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      id:
+        name: id
+        description: An identifier to refer to a specific instance of this type
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_sequential_identifier
+        alias: id
+        owner: PerSectionAlignmentParameters
         domain_of:
         - IDMixin
         range: integer
@@ -2180,6 +3455,35 @@ classes:
     - IDMixin
     - S3PrefixedEntityMixin
     attributes:
+      alignments:
+        name: alignments
+        description: Tiltseries Alignment
+        from_schema: cdp-dataset-config
+        multivalued: true
+        alias: alignments
+        owner: Run
+        domain_of:
+        - Deposition
+        - Run
+        inverse: Alignment.run
+        range: Alignment
+        inlined: true
+        inlined_as_list: true
+      annotations:
+        name: annotations
+        description: Metadata about an annotation for a run
+        from_schema: cdp-dataset-config
+        multivalued: true
+        alias: annotations
+        owner: Run
+        domain_of:
+        - Deposition
+        - Run
+        - TomogramVoxelSpacing
+        inverse: Annotation.run
+        range: Annotation
+        inlined: true
+        inlined_as_list: true
       dataset:
         name: dataset
         description: An author of a dataset
@@ -2195,29 +3499,61 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+      frames:
+        name: frames
+        from_schema: cdp-dataset-config
+        multivalued: true
+        alias: frames
+        owner: Run
+        domain_of:
+        - Deposition
+        - Run
+        inverse: Frame.run
+        range: Frame
+        inlined: true
+        inlined_as_list: true
       tiltseries:
         name: tiltseries
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: tiltseries
         owner: Run
         domain_of:
+        - Alignment
+        - Deposition
+        - PerSectionParameters
         - Run
         inverse: Tiltseries.run
         range: Tiltseries
-        multivalued: true
         inlined: true
         inlined_as_list: true
       tomogram_voxel_spacings:
         name: tomogram_voxel_spacings
         description: Voxel spacings for a run
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: tomogram_voxel_spacings
         owner: Run
         domain_of:
         - Run
         inverse: TomogramVoxelSpacing.run
         range: TomogramVoxelSpacing
+        inlined: true
+        inlined_as_list: true
+      tomograms:
+        name: tomograms
+        description: Metadata describing a tomogram.
+        from_schema: cdp-dataset-config
         multivalued: true
+        alias: tomograms
+        owner: Run
+        domain_of:
+        - Alignment
+        - Deposition
+        - Run
+        - TomogramVoxelSpacing
+        inverse: Tomogram.run
+        range: Tomogram
         inlined: true
         inlined_as_list: true
       name:
@@ -2233,7 +3569,7 @@ classes:
         - AnnotationMethodLinks
         - DatasetAuthor
         - Run
-        - Tomograms
+        - Tomogram
         range: string
         required: true
         inlined: true
@@ -2292,16 +3628,69 @@ classes:
     mixins:
     - IDMixin
     attributes:
+      alignment:
+        name: alignment
+        description: Tiltseries Alignment
+        from_schema: cdp-dataset-config
+        alias: alignment
+        owner: Tiltseries
+        domain_of:
+        - Alignment
+        - AnnotationFile
+        - PerSectionAlignmentParameters
+        - Tiltseries
+        - Tomogram
+        inverse: Alignment.tiltseries
+        range: Alignment
+        required: true
+        inlined: true
+        inlined_as_list: true
+      per_section_parameters:
+        name: per_section_parameters
+        description: Record how frames get mapped to TiltSeries
+        from_schema: cdp-dataset-config
+        multivalued: true
+        alias: per_section_parameters
+        owner: Tiltseries
+        domain_of:
+        - Frame
+        - Tiltseries
+        inverse: PerSectionParameters.tiltseries
+        range: PerSectionParameters
+        inlined: true
+        inlined_as_list: true
       run:
         name: run
         from_schema: cdp-dataset-config
         alias: run
         owner: Tiltseries
         domain_of:
+        - Alignment
+        - Annotation
+        - Frame
         - Tiltseries
         - TomogramVoxelSpacing
+        - Tomogram
         inverse: Run.tiltseries
         range: Run
+        required: true
+        inlined: true
+        inlined_as_list: true
+      deposition:
+        name: deposition
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: Tiltseries
+        domain_of:
+        - Alignment
+        - Annotation
+        - Dataset
+        - DepositionAuthor
+        - Frame
+        - Tiltseries
+        - Tomogram
+        inverse: Deposition.tiltseries
+        range: Deposition
         required: true
         inlined: true
         inlined_as_list: true
@@ -2315,7 +3704,7 @@ classes:
         owner: Tiltseries
         domain_of:
         - Tiltseries
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -2342,7 +3731,7 @@ classes:
         owner: Tiltseries
         domain_of:
         - Tiltseries
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -2411,28 +3800,30 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
-      s3_alignment_file:
-        name: s3_alignment_file
-        description: S3 path to the alignment file for this tiltseries
+      s3_gain_file:
+        name: s3_gain_file
+        description: S3 path to the gain file for this tiltseries
         from_schema: cdp-dataset-config
         exact_mappings:
-        - cdp-common:tiltseries_s3_alignment_file
-        alias: s3_alignment_file
+        - cdp-common:tiltseries_s3_gain_file
+        alias: s3_gain_file
         owner: Tiltseries
         domain_of:
+        - Frame
         - Tiltseries
         range: string
         inlined: true
         inlined_as_list: true
-      https_alignment_file:
-        name: https_alignment_file
-        description: HTTPS path to the alignment file for this tiltseries
+      https_gain_file:
+        name: https_gain_file
+        description: HTTPS path to the gain file for this tiltseries
         from_schema: cdp-dataset-config
         exact_mappings:
-        - cdp-common:tiltseries_https_alignment_file
-        alias: https_alignment_file
+        - cdp-common:tiltseries_https_gain_file
+        alias: https_gain_file
         owner: Tiltseries
         domain_of:
+        - Frame
         - Tiltseries
         range: string
         inlined: true
@@ -2859,6 +4250,7 @@ classes:
     attributes:
       tomogram:
         name: tomogram
+        description: Metadata describing a tomogram.
         from_schema: cdp-dataset-config
         alias: tomogram
         owner: TomogramAuthor
@@ -2926,7 +4318,7 @@ classes:
         - AnnotationMethodLinks
         - DatasetAuthor
         - Run
-        - Tomograms
+        - Tomogram
         range: string
         required: true
         inlined: true
@@ -3030,43 +4422,65 @@ classes:
     - IDMixin
     - S3PrefixedEntityMixin
     attributes:
+      annotation_files:
+        name: annotation_files
+        description: Files associated with an annotation
+        from_schema: cdp-dataset-config
+        multivalued: true
+        alias: annotation_files
+        owner: TomogramVoxelSpacing
+        domain_of:
+        - Alignment
+        - TomogramVoxelSpacing
+        inverse: AnnotationFile.tomogram_voxel_spacing
+        range: AnnotationFile
+        inlined: true
+        inlined_as_list: true
       run:
         name: run
         from_schema: cdp-dataset-config
         alias: run
         owner: TomogramVoxelSpacing
         domain_of:
+        - Alignment
+        - Annotation
+        - Frame
         - Tiltseries
         - TomogramVoxelSpacing
+        - Tomogram
         inverse: run.tomogram_voxel_spacings
         range: Run
         inlined: true
         inlined_as_list: true
       tomograms:
         name: tomograms
+        description: Metadata describing a tomogram.
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: tomograms
         owner: TomogramVoxelSpacing
         domain_of:
+        - Alignment
         - Deposition
+        - Run
         - TomogramVoxelSpacing
         inverse: Tomogram.tomogram_voxel_spacing
         range: Tomogram
-        multivalued: true
         inlined: true
         inlined_as_list: true
       annotations:
         name: annotations
         description: Metadata about an annotation for a run
         from_schema: cdp-dataset-config
+        multivalued: true
         alias: annotations
         owner: TomogramVoxelSpacing
         domain_of:
         - Deposition
+        - Run
         - TomogramVoxelSpacing
         inverse: Annotation.tomogram_voxel_spacing
         range: Annotation
-        multivalued: true
         inlined: true
         inlined_as_list: true
       voxel_spacing:
@@ -3079,7 +4493,7 @@ classes:
         owner: TomogramVoxelSpacing
         domain_of:
         - TomogramVoxelSpacing
-        - Tomograms
+        - Tomogram
         range: float
         required: true
         inlined: true
@@ -3132,8 +4546,8 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-  Tomograms:
-    name: Tomograms
+  Tomogram:
+    name: Tomogram
     annotations:
       plural:
         tag: plural
@@ -3144,17 +4558,69 @@ classes:
     - IDMixin
     - S3PrefixedEntityMixin
     attributes:
+      alignment:
+        name: alignment
+        description: Tiltseries Alignment
+        from_schema: cdp-dataset-config
+        alias: alignment
+        owner: Tomogram
+        domain_of:
+        - Alignment
+        - AnnotationFile
+        - PerSectionAlignmentParameters
+        - Tiltseries
+        - Tomogram
+        inverse: Alignment.tomograms
+        range: Alignment
+        inlined: true
+        inlined_as_list: true
+      authors:
+        name: authors
+        description: Author of a tomogram
+        from_schema: cdp-dataset-config
+        multivalued: true
+        alias: authors
+        owner: Tomogram
+        domain_of:
+        - Annotation
+        - Dataset
+        - Deposition
+        - Tomogram
+        inverse: TomogramAuthor.tomogram
+        range: TomogramAuthor
+        inlined: true
+        inlined_as_list: true
       deposition:
         name: deposition
         from_schema: cdp-dataset-config
         alias: deposition
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
+        - Alignment
         - Annotation
         - Dataset
-        - Tomograms
-        inverse: deposition.tomograms
+        - DepositionAuthor
+        - Frame
+        - Tiltseries
+        - Tomogram
+        inverse: Deposition.tomograms
         range: Deposition
+        inlined: true
+        inlined_as_list: true
+      run:
+        name: run
+        from_schema: cdp-dataset-config
+        alias: run
+        owner: Tomogram
+        domain_of:
+        - Alignment
+        - Annotation
+        - Frame
+        - Tiltseries
+        - TomogramVoxelSpacing
+        - Tomogram
+        inverse: Run.tomograms
+        range: Run
         inlined: true
         inlined_as_list: true
       tomogram_voxel_spacing:
@@ -3162,27 +4628,12 @@ classes:
         description: Voxel spacings for a run
         from_schema: cdp-dataset-config
         alias: tomogram_voxel_spacing
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Annotation
-        - Tomograms
+        - AnnotationFile
+        - Tomogram
         inverse: tomogram_voxel_spacing.tomograms
         range: TomogramVoxelSpacing
-        inlined: true
-        inlined_as_list: true
-      authors:
-        name: authors
-        description: Author of a tomogram
-        from_schema: cdp-dataset-config
-        alias: authors
-        owner: Tomograms
-        domain_of:
-        - Annotation
-        - Dataset
-        - Tomograms
-        inverse: TomogramAuthor.tomogram
-        range: TomogramAuthor
-        multivalued: true
         inlined: true
         inlined_as_list: true
       name:
@@ -3192,13 +4643,13 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_name
         alias: name
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
         - AuthorMixin
         - AnnotationMethodLinks
         - DatasetAuthor
         - Run
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -3209,9 +4660,9 @@ classes:
         exact_mappings:
         - cdp-common:api_tomogram_size_x
         alias: size_x
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: float
         required: true
         inlined: true
@@ -3227,9 +4678,9 @@ classes:
         exact_mappings:
         - cdp-common:api_tomogram_size_y
         alias: size_y
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: float
         required: true
         inlined: true
@@ -3245,9 +4696,9 @@ classes:
         exact_mappings:
         - cdp-common:api_tomogram_size_z
         alias: size_z
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: float
         required: true
         inlined: true
@@ -3263,10 +4714,10 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_voxel_spacing
         alias: voxel_spacing
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
         - TomogramVoxelSpacing
-        - Tomograms
+        - Tomogram
         range: float
         required: true
         inlined: true
@@ -3283,9 +4734,9 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_fiducial_alignment_status
         alias: fiducial_alignment_status
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: fiducial_alignment_status_enum
         required: true
         inlined: true
@@ -3298,10 +4749,10 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_reconstruction_method
         alias: reconstruction_method
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
-        range: tomogrom_reconstruction_method_enum
+        - Tomogram
+        range: tomogram_reconstruction_method_enum
         required: true
         inlined: true
         inlined_as_list: true
@@ -3313,9 +4764,9 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_processing
         alias: processing
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: tomogram_processing_enum
         required: true
         inlined: true
@@ -3326,9 +4777,9 @@ classes:
         description: whether this tomogram is canonical for the run
         from_schema: cdp-dataset-config
         alias: is_canonical
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: boolean
         inlined: true
         inlined_as_list: true
@@ -3339,10 +4790,10 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_s3_omezarr_dir
         alias: s3_omezarr_dir
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
         - Tiltseries
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -3353,10 +4804,10 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_https_omezarr_dir
         alias: https_omezarr_dir
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
         - Tiltseries
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -3367,9 +4818,9 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_s3_mrc_scale0
         alias: s3_mrc_scale0
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -3380,9 +4831,9 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_https_mrc_scale0
         alias: https_mrc_scale0
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -3393,9 +4844,9 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_scale0_dimensions
         alias: scale0_dimensions
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -3406,9 +4857,9 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_scale1_dimensions
         alias: scale1_dimensions
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -3419,9 +4870,9 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_scale2_dimensions
         alias: scale2_dimensions
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -3432,9 +4883,9 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_ctf_corrected
         alias: ctf_corrected
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: boolean
         recommended: true
         inlined: true
@@ -3444,9 +4895,9 @@ classes:
         description: x offset data relative to the canonical tomogram in pixels
         from_schema: cdp-dataset-config
         alias: offset_x
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: integer
         required: true
         inlined: true
@@ -3459,9 +4910,9 @@ classes:
         description: y offset data relative to the canonical tomogram in pixels
         from_schema: cdp-dataset-config
         alias: offset_y
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: integer
         required: true
         inlined: true
@@ -3474,9 +4925,9 @@ classes:
         description: z offset data relative to the canonical tomogram in pixels
         from_schema: cdp-dataset-config
         alias: offset_z
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: integer
         required: true
         inlined: true
@@ -3494,9 +4945,9 @@ classes:
           - exact_cardinality: 4
           - exact_cardinality: 4
         alias: affine_transformation_matrix
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: Any
         inlined: true
         inlined_as_list: true
@@ -3507,10 +4958,10 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_key_photo_url
         alias: key_photo_url
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
         - Dataset
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -3521,10 +4972,10 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_key_photo_thumbnail_url
         alias: key_photo_thumbnail_url
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
         - Dataset
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -3535,9 +4986,9 @@ classes:
         exact_mappings:
         - cdp-common:tomogram_neuroglancer_config
         alias: neuroglancer_config
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -3545,10 +4996,25 @@ classes:
         name: type
         from_schema: cdp-dataset-config
         alias: type
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
-        - Tomograms
+        - DepositionType
+        - Tomogram
         range: TomogramType
+        inlined: true
+        inlined_as_list: true
+      is_standardized:
+        name: is_standardized
+        description: Whether this tomogram was generated per the portal's standards
+        from_schema: cdp-dataset-config
+        exact_mappings:
+        - cdp-common:api_tomogram_is_standardized
+        alias: is_standardized
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        range: boolean
+        required: true
         inlined: true
         inlined_as_list: true
       id:
@@ -3558,7 +5024,7 @@ classes:
         exact_mappings:
         - cdp-common:api_sequential_identifier
         alias: id
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
         - IDMixin
         range: integer
@@ -3573,7 +5039,7 @@ classes:
         exact_mappings:
         - cdp-common:api_s3_prefix
         alias: s3_prefix
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
         - S3PrefixedEntityMixin
         range: string
@@ -3588,7 +5054,7 @@ classes:
         exact_mappings:
         - cdp-common:api_https_prefix
         alias: https_prefix
-        owner: Tomograms
+        owner: Tomogram
         domain_of:
         - S3PrefixedEntityMixin
         range: string
@@ -3724,7 +5190,7 @@ classes:
         - AnnotationMethodLinks
         - DatasetAuthor
         - Run
-        - Tomograms
+        - Tomogram
         range: string
         required: true
         inlined: true
@@ -3858,7 +5324,7 @@ classes:
         - AnnotationMethodLinks
         - DatasetAuthor
         - Run
-        - Tomograms
+        - Tomogram
         range: string
         recommended: true
         inlined: true

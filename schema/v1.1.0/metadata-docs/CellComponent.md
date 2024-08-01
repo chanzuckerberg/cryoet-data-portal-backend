@@ -21,10 +21,10 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
     class CellComponent
     click CellComponent href "../CellComponent"
       CellComponent : id
-
+        
       CellComponent : name
-
-
+        
+      
 ```
 
 

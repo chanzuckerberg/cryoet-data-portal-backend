@@ -44,3 +44,6 @@ URI: [linkml:DateOrDatetime](https://w3id.org/linkml/DateOrDatetime)
 | ---  | ---  |
 | self | linkml:DateOrDatetime |
 | native | cdp-meta:date_or_datetime |
+
+
+

@@ -22,62 +22,62 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
     click Tomogram href "../Tomogram"
       AuthoredEntity <|-- Tomogram
         click AuthoredEntity href "../AuthoredEntity"
-
+      
       Tomogram : affine_transformation_matrix
-
+        
       Tomogram : align_software
-
+        
       Tomogram : authors
-
-
-
-
+        
+          
+    
+    
     Tomogram --> "1..*" Author : authors
     click Author href "../Author"
 
-
+        
       Tomogram : ctf_corrected
-
+        
       Tomogram : fiducial_alignment_status
-
+        
       Tomogram : offset
-
-
-
-
+        
+          
+    
+    
     Tomogram --> "1" TomogramOffset : offset
     click TomogramOffset href "../TomogramOffset"
 
-
+        
       Tomogram : processing
-
-
-
-
+        
+          
+    
+    
     Tomogram --> "1" TomogramProcessingEnum : processing
     click TomogramProcessingEnum href "../TomogramProcessingEnum"
 
-
+        
       Tomogram : processing_software
-
+        
       Tomogram : reconstruction_method
-
+        
       Tomogram : reconstruction_software
-
+        
       Tomogram : size
-
-
-
-
+        
+          
+    
+    
     Tomogram --> "0..1" TomogramSize : size
     click TomogramSize href "../TomogramSize"
 
-
+        
       Tomogram : tomogram_version
-
+        
       Tomogram : voxel_spacing
-
-
+        
+      
 ```
 
 
@@ -97,7 +97,7 @@ URI: [cdp-meta:Tomogram](metadataTomogram)
 | [fiducial_alignment_status](fiducial_alignment_status.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md) | Whether the tomographic alignment was computed based on fiducial markers | direct |
 | [ctf_corrected](ctf_corrected.md) | 0..1 _recommended_ <br/> [Boolean](Boolean.md) | Whether this tomogram is CTF corrected | direct |
 | [align_software](align_software.md) | 0..1 <br/> [String](String.md) | Software used for alignment | direct |
-| [reconstruction_method](reconstruction_method.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md) | Describe reconstruction method (WBP, SART, SIRT) | direct |
+| [reconstruction_method](reconstruction_method.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[TomogramReconstructionMethodEnum](TomogramReconstructionMethodEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md) | Describe reconstruction method (WBP, SART, SIRT) | direct |
 | [reconstruction_software](reconstruction_software.md) | 1 <br/> [String](String.md) | Name of software used for reconstruction | direct |
 | [processing](processing.md) | 1 <br/> [TomogramProcessingEnum](TomogramProcessingEnum.md) | Describe additional processing used to derive the tomogram | direct |
 | [processing_software](processing_software.md) | 0..1 _recommended_ <br/> [String](String.md) | Processing software used to derive the tomogram | direct |
@@ -240,7 +240,7 @@ attributes:
     pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
       ]*$)
     any_of:
-    - range: tomogrom_reconstruction_method_enum
+    - range: tomogram_reconstruction_method_enum
     - range: StringFormattedString
   reconstruction_software:
     name: reconstruction_software
@@ -462,7 +462,7 @@ attributes:
     pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
       ]*$)
     any_of:
-    - range: tomogrom_reconstruction_method_enum
+    - range: tomogram_reconstruction_method_enum
     - range: StringFormattedString
   reconstruction_software:
     name: reconstruction_software

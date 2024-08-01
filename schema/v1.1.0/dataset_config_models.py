@@ -479,6 +479,19 @@ linkml_meta = LinkMLMeta(
 )
 
 
+class AnnotationFileSourceEnum(str, Enum):
+    """
+    How the annotation file was acquired
+    """
+
+    # Annotation submitted by dataset author
+    dataset_author = "dataset_author"
+    # Annotation submitted by community member
+    community = "community"
+    # Annotation submitted by portal standardization
+    portal_standard = "portal_standard"
+
+
 class AnnotationMethodTypeEnum(str, Enum):
     """
     Describes how the annotations were generated.
@@ -612,7 +625,7 @@ class TomogramProcessingEnum(str, Enum):
     raw = "raw"
 
 
-class TomogromReconstructionMethodEnum(str, Enum):
+class TomogramReconstructionMethodEnum(str, Enum):
     """
     Tomogram reconstruction method
     """
@@ -636,6 +649,17 @@ class TomogramTypeEnum(str, Enum):
 
     # Canonical tomogram (basis geometry for all annotations)
     CANONICAL = "CANONICAL"
+
+
+class AlignmentTypeEnum(str, Enum):
+    """
+    Type of alignment
+    """
+
+    # per-section non-rigid alignment available
+    LOCAL = "LOCAL"
+    # only per-section rigid alignment available
+    GLOBAL = "GLOBAL"
 
 
 class PicturePath(ConfiguredBaseModel):
@@ -2141,13 +2165,13 @@ class Tomogram(AuthoredEntity):
             }
         },
     )
-    reconstruction_method: Optional[Union[TomogromReconstructionMethodEnum, str]] = Field(
+    reconstruction_method: Optional[Union[TomogramReconstructionMethodEnum, str]] = Field(
         None,
         description="""Describe reconstruction method (WBP, SART, SIRT)""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "reconstruction_method",
-                "any_of": [{"range": "tomogrom_reconstruction_method_enum"}, {"range": "StringFormattedString"}],
+                "any_of": [{"range": "tomogram_reconstruction_method_enum"}, {"range": "StringFormattedString"}],
                 "domain_of": ["Tomogram"],
             }
         },
@@ -6183,3 +6207,4 @@ VoxelSpacingEntity.model_rebuild()
 VoxelSpacingSource.model_rebuild()
 VoxelSpacingLiteral.model_rebuild()
 TomogramHeader.model_rebuild()
+

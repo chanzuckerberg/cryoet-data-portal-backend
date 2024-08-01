@@ -1,5 +1,14 @@
 {
     "$defs": {
+        "AlignmentTypeEnum": {
+            "description": "Type of alignment",
+            "enum": [
+                "LOCAL",
+                "GLOBAL"
+            ],
+            "title": "AlignmentTypeEnum",
+            "type": "string"
+        },
         "Annotation": {
             "additionalProperties": false,
             "description": "Metadata describing an annotation.",
@@ -134,6 +143,16 @@
                 "InstanceSegmentation"
             ],
             "title": "AnnotationFileShapeTypeEnum",
+            "type": "string"
+        },
+        "AnnotationFileSourceEnum": {
+            "description": "How the annotation file was acquired",
+            "enum": [
+                "dataset_author",
+                "community",
+                "portal_standard"
+            ],
+            "title": "AnnotationFileSourceEnum",
             "type": "string"
         },
         "AnnotationInstanceSegmentationFile": {
@@ -2090,7 +2109,7 @@
                 "reconstruction_method": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/TomogromReconstructionMethodEnum"
+                            "$ref": "#/$defs/TomogramReconstructionMethodEnum"
                         },
                         {
                             "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
@@ -2222,6 +2241,18 @@
             "title": "TomogramProcessingEnum",
             "type": "string"
         },
+        "TomogramReconstructionMethodEnum": {
+            "description": "Tomogram reconstruction method",
+            "enum": [
+                "SART",
+                "Fourier Space",
+                "SIRT",
+                "WBP",
+                "Unknown"
+            ],
+            "title": "TomogramReconstructionMethodEnum",
+            "type": "string"
+        },
         "TomogramSize": {
             "additionalProperties": false,
             "description": "The size of a tomogram in voxels in each dimension.",
@@ -2284,18 +2315,6 @@
                 "CANONICAL"
             ],
             "title": "TomogramTypeEnum",
-            "type": "string"
-        },
-        "TomogromReconstructionMethodEnum": {
-            "description": "Tomogram reconstruction method",
-            "enum": [
-                "SART",
-                "Fourier Space",
-                "SIRT",
-                "WBP",
-                "Unknown"
-            ],
-            "title": "TomogromReconstructionMethodEnum",
             "type": "string"
         },
         "VoxelSpacingEntity": {

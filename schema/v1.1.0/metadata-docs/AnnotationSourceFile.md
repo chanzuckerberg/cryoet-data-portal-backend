@@ -28,16 +28,16 @@ URI: [cdp-meta:AnnotationSourceFile](metadataAnnotationSourceFile)
         click AnnotationSegmentationMaskFile href "../AnnotationSegmentationMaskFile"
       AnnotationSourceFile <|-- AnnotationSemanticSegmentationMaskFile
         click AnnotationSemanticSegmentationMaskFile href "../AnnotationSemanticSegmentationMaskFile"
-
+      
       AnnotationSourceFile : file_format
-
+        
       AnnotationSourceFile : glob_string
-
+        
       AnnotationSourceFile : glob_strings
-
+        
       AnnotationSourceFile : is_visualization_default
-
-
+        
+      
 ```
 
 

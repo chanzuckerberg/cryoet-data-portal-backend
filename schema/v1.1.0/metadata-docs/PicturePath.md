@@ -21,10 +21,10 @@ URI: [cdp-meta:PicturePath](metadataPicturePath)
     class PicturePath
     click PicturePath href "../PicturePath"
       PicturePath : snapshot
-
+        
       PicturePath : thumbnail
-
-
+        
+      
 ```
 
 
