@@ -53,7 +53,13 @@ class AnnotationIdentifierHelper:
     loaded_vs_metadatas: dict[str, bool] = {}
 
     @classmethod
-    def load_current_ids(cls, next_id_key: str, config: DepositionImportConfig, vs: VoxelSpacingImporter):
+    def load_current_ids(
+        cls,
+        next_id_key: str,
+        config: DepositionImportConfig,
+        vs: VoxelSpacingImporter,
+        deposition_id: int,
+    ):
         if next_id_key in cls.loaded_vs_metadatas:
             return
         metadatas = {}
@@ -65,16 +71,16 @@ class AnnotationIdentifierHelper:
                 cls.next_identifier[next_id_key] = identifier + 1
             metadata = json.loads(config.fs.open(file, "r").read())
             metadatas[identifier] = metadata
-            current_ids_key = cls.get_ids_key(next_id_key, config, metadata)
+            current_ids_key = cls.get_ids_key(next_id_key, metadata, deposition_id)
             cls.cached_identifiers[current_ids_key] = identifier
         cls.loaded_vs_metadatas[next_id_key] = True
 
     @classmethod
-    def get_ids_key(cls, next_id_key, config, metadata):
+    def get_ids_key(cls, next_id_key, metadata, deposition_id):
         return "-".join(
             [
                 next_id_key,
-                str(metadata.get("deposition_id", config.deposition_id)),
+                str(metadata.get("deposition_id", deposition_id)),
                 metadata["annotation_object"].get("description") or "",
                 metadata["annotation_object"]["name"],
                 metadata["annotation_method"],
@@ -85,9 +91,10 @@ class AnnotationIdentifierHelper:
     def get_identifier(cls, config: DepositionImportConfig, metadata: dict[str, Any], parents: dict[str, Any]):
         vs = parents["voxel_spacing"]
         next_id_key = vs.get_output_path()
+        deposition_id = int(parents["deposition"].name)
 
-        current_ids_key = cls.get_ids_key(next_id_key, config, metadata)
-        cls.load_current_ids(next_id_key, config, vs)
+        current_ids_key = cls.get_ids_key(next_id_key, metadata, deposition_id)
+        cls.load_current_ids(next_id_key, config, vs, deposition_id)
 
         if cached_id := cls.cached_identifiers.get(current_ids_key):
             return cached_id
@@ -171,7 +178,7 @@ class AnnotationImporter(BaseImporter):
         super().__init__(*args, **kwargs)
         self.identifier: int = identifier
         self.local_metadata = {"object_count": 0, "files": []}
-        self.annotation_metadata = AnnotationMetadata(self.config.fs, self.config.deposition_id, self.metadata)
+        self.annotation_metadata = AnnotationMetadata(self.config.fs, self.get_deposition().name, self.metadata)
 
     # Functions to support writing annotation data
     def import_item(self):
