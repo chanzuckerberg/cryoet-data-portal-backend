@@ -473,7 +473,7 @@ def validate_publications(publications: Optional[str]) -> Optional[str]:
 # ==============================================================================
 # Sources Validation
 # ==============================================================================
-def validate_sources(source_list: List[DefaultSource] | List[VoxelSpacingSource], class_name: str) -> None:
+def validate_sources(source_list: List[DefaultSource] | List[VoxelSpacingSource]) -> None:
     total_errors = []
 
     # For verifying that all source entries each only have one finder type
@@ -654,7 +654,7 @@ class ExtendedValidationDatasetKeyPhotoEntity(DatasetKeyPhotoEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[DatasetKeyPhotoSource]) -> List[DatasetKeyPhotoSource]:
-        return validate_sources(source_list, "dataset")
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -739,7 +739,7 @@ class ExtendedValidationDatasetEntity(DatasetEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[DatasetSource]) -> List[DatasetSource]:
-        return validate_sources(source_list, "dataset")
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -751,8 +751,7 @@ class ExtendedValidationDepositionKeyPhotoEntity(DepositionKeyPhotoEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[DepositionKeyPhotoSource]) -> List[DepositionKeyPhotoSource]:
-        # TODO: change "deposition_keyphoto" to the correct importer type when it gets implemented
-        return validate_sources(source_list, "deposition_keyphoto")
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -779,8 +778,7 @@ class ExtendedValidationDepositionEntity(DepositionEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[DepositionSource]) -> List[DepositionSource]:
-        # TODO: change "deposition" to the correct importer type
-        return validate_sources(source_list, "deposition")
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -790,7 +788,7 @@ class ExtendedValidationFrameEntity(FrameEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[FrameSource]) -> List[FrameSource]:
-        return validate_sources(source_list, "frame")
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -800,7 +798,7 @@ class ExtendedValidationGainEntity(GainEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[GainSource]) -> List[GainSource]:
-        return validate_sources(source_list, "gain")
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -810,7 +808,7 @@ class ExtendedValidationKeyImageEntity(KeyImageEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[KeyImageSource]) -> List[KeyImageSource]:
-        return validate_sources(source_list, "key_image")
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -820,7 +818,7 @@ class ExtendedValidationRawTiltEntity(RawTiltEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[RawTiltSource]) -> List[RawTiltSource]:
-        return validate_sources(source_list, "rawtilt")
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -830,7 +828,7 @@ class ExtendedValidationRunEntity(RunEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[RunSource]) -> List[RunSource]:
-        return validate_sources(source_list, "run")
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -881,7 +879,7 @@ class ExtendedValidationTiltSeriesEntity(TiltSeriesEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[TiltSeriesSource]) -> List[TiltSeriesSource]:
-        return validate_sources(source_list, "tiltseries")
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -932,7 +930,7 @@ class ExtendedValidationTomogramEntity(TomogramEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[TomogramSource]) -> List[TomogramSource]:
-        return validate_sources(source_list, "tomogram")
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -942,7 +940,7 @@ class ExtendedValidationVoxelSpacingEntity(VoxelSpacingEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[VoxelSpacingSource]) -> List[VoxelSpacingSource]:
-        return validate_sources(source_list, "voxel_spacing")
+        return validate_sources(source_list)
 
 
 class ExtendedValidationContainer(Container):

@@ -149,7 +149,6 @@ classes:
         range: string
         required: true
 
-  # TODO: LinkML doesn't support all the validation for sources, so we'll need to extend it more in Python / JSON Schema
   DefaultSource:
     description: A generalized source class with glob finders.
     attributes:
