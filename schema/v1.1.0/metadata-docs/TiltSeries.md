@@ -109,15 +109,15 @@ URI: [cdp-meta:TiltSeries](metadataTiltSeries)
 | [microscope](microscope.md) | 1 <br/> [MicroscopeDetails](MicroscopeDetails.md) | The microscope used to collect the tilt series | direct |
 | [microscope_optical_setup](microscope_optical_setup.md) | 1 <br/> [MicroscopeOpticalSetup](MicroscopeOpticalSetup.md) | The optical setup of the microscope used to collect the tilt series | direct |
 | [related_empiar_entry](related_empiar_entry.md) | 0..1 <br/> [EMPIARID](EMPIARID.md) | If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifie... | direct |
-| [spherical_aberration_constant](spherical_aberration_constant.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Spherical Aberration Constant of the objective lens in millimeters | direct |
+| [spherical_aberration_constant](spherical_aberration_constant.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Spherical Aberration Constant of the objective lens in millimeters | direct |
 | [tilt_alignment_software](tilt_alignment_software.md) | 0..1 <br/> [String](String.md) | Software used for tilt alignment | direct |
-| [tilt_axis](tilt_axis.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Rotation angle in degrees | direct |
+| [tilt_axis](tilt_axis.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Rotation angle in degrees | direct |
 | [tilt_range](tilt_range.md) | 1 <br/> [TiltRange](TiltRange.md) | The range of tilt angles in the tilt series | direct |
-| [tilt_series_quality](tilt_series_quality.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Integer](Integer.md)&nbsp;or&nbsp;<br />[IntegerFormattedString](IntegerFormattedString.md) | Author assessment of tilt series quality within the dataset (1-5, 5 is best) | direct |
-| [tilt_step](tilt_step.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Tilt step in degrees | direct |
+| [tilt_series_quality](tilt_series_quality.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Integer](Integer.md)&nbsp;or&nbsp;<br />[IntegerFormattedString](IntegerFormattedString.md) | Author assessment of tilt series quality within the dataset (1-5, 5 is best) | direct |
+| [tilt_step](tilt_step.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Tilt step in degrees | direct |
 | [tilting_scheme](tilting_scheme.md) | 1 <br/> [String](String.md) | The order of stage tilting during acquisition of the data | direct |
-| [total_flux](total_flux.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Number of Electrons reaching the specimen in a square Angstrom area for the e... | direct |
-| [pixel_spacing](pixel_spacing.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Pixel spacing for the tilt series | direct |
+| [total_flux](total_flux.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Number of Electrons reaching the specimen in a square Angstrom area for the e... | direct |
+| [pixel_spacing](pixel_spacing.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md) | Pixel spacing for the tilt series | direct |
 
 
 
@@ -191,14 +191,13 @@ attributes:
     name: aligned_tiltseries_binning
     description: Binning factor of the aligned tilt series
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_aligned_tiltseries_binning
     rank: 1000
     ifabsent: float(1)
     alias: aligned_tiltseries_binning
     owner: TiltSeries
     domain_of:
     - TiltSeries
+    range: string
     inlined: true
     inlined_as_list: true
     minimum_value: 0
@@ -211,14 +210,13 @@ attributes:
     name: binning_from_frames
     description: Describes the binning factor from frames to tilt series file
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_binning_from_frames
     rank: 1000
     ifabsent: float(1)
     alias: binning_from_frames
     owner: TiltSeries
     domain_of:
     - TiltSeries
+    range: string
     inlined: true
     inlined_as_list: true
     minimum_value: 0
@@ -330,14 +328,12 @@ attributes:
     name: spherical_aberration_constant
     description: Spherical Aberration Constant of the objective lens in millimeters
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_spherical_aberration_constant
     rank: 1000
     alias: spherical_aberration_constant
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
     minimum_value: 0
@@ -367,14 +363,12 @@ attributes:
     name: tilt_axis
     description: Rotation angle in degrees
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_tilt_axis
     rank: 1000
     alias: tilt_axis
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
     minimum_value: -360
@@ -406,14 +400,12 @@ attributes:
     description: Author assessment of tilt series quality within the dataset (1-5,
       5 is best)
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_tilt_series_quality
     rank: 1000
     alias: tilt_series_quality
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
     minimum_value: 1
@@ -428,14 +420,12 @@ attributes:
     name: tilt_step
     description: Tilt step in degrees
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_tilt_step
     rank: 1000
     alias: tilt_step
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
     minimum_value: 0
@@ -469,14 +459,12 @@ attributes:
     description: Number of Electrons reaching the specimen in a square Angstrom area
       for the entire tilt series
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_total_flux
     rank: 1000
     alias: total_flux
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
     minimum_value: 0
@@ -492,14 +480,12 @@ attributes:
     name: pixel_spacing
     description: Pixel spacing for the tilt series
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_pixel_spacing
     rank: 1000
     alias: pixel_spacing
     owner: TiltSeries
     domain_of:
     - TiltSeries
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
     minimum_value: 0.001
@@ -546,8 +532,6 @@ attributes:
     name: aligned_tiltseries_binning
     description: Binning factor of the aligned tilt series
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_aligned_tiltseries_binning
     rank: 1000
     ifabsent: float(1)
     alias: aligned_tiltseries_binning
@@ -567,8 +551,6 @@ attributes:
     name: binning_from_frames
     description: Describes the binning factor from frames to tilt series file
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_binning_from_frames
     rank: 1000
     ifabsent: float(1)
     alias: binning_from_frames
@@ -687,15 +669,12 @@ attributes:
     name: spherical_aberration_constant
     description: Spherical Aberration Constant of the objective lens in millimeters
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_spherical_aberration_constant
     rank: 1000
     alias: spherical_aberration_constant
     owner: TiltSeries
     domain_of:
     - TiltSeries
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 0
@@ -725,15 +704,12 @@ attributes:
     name: tilt_axis
     description: Rotation angle in degrees
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_tilt_axis
     rank: 1000
     alias: tilt_axis
     owner: TiltSeries
     domain_of:
     - TiltSeries
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
     minimum_value: -360
@@ -765,15 +741,12 @@ attributes:
     description: Author assessment of tilt series quality within the dataset (1-5,
       5 is best)
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_tilt_series_quality
     rank: 1000
     alias: tilt_series_quality
     owner: TiltSeries
     domain_of:
     - TiltSeries
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 1
@@ -788,15 +761,12 @@ attributes:
     name: tilt_step
     description: Tilt step in degrees
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_tilt_step
     rank: 1000
     alias: tilt_step
     owner: TiltSeries
     domain_of:
     - TiltSeries
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 0
@@ -830,15 +800,12 @@ attributes:
     description: Number of Electrons reaching the specimen in a square Angstrom area
       for the entire tilt series
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_total_flux
     rank: 1000
     alias: total_flux
     owner: TiltSeries
     domain_of:
     - TiltSeries
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 0
@@ -854,15 +821,12 @@ attributes:
     name: pixel_spacing
     description: Pixel spacing for the tilt series
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_pixel_spacing
     rank: 1000
     alias: pixel_spacing
     owner: TiltSeries
     domain_of:
     - TiltSeries
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
     minimum_value: 0.001

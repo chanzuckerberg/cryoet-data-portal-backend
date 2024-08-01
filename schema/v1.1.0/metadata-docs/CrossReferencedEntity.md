@@ -8,8 +8,6 @@ _An entity with associated cross-references to other databases and publications.
 
 
 
-* __NOTE__: this is an abstract class and should not be instantiated directly
-
 
 URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 
@@ -51,6 +49,14 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 | ---  | --- | --- | --- |
 | [cross_references](cross_references.md) | 0..1 <br/> [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications | direct |
 
+
+
+## Mixin Usage
+
+| mixed into | description |
+| --- | --- |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |
+| [Deposition](Deposition.md) | Metadata describing a deposition |
 
 
 
@@ -99,7 +105,7 @@ URI: [cdp-meta:CrossReferencedEntity](metadataCrossReferencedEntity)
 name: CrossReferencedEntity
 description: An entity with associated cross-references to other databases and publications.
 from_schema: metadata
-abstract: true
+mixin: true
 attributes:
   cross_references:
     name: cross_references
@@ -126,7 +132,7 @@ attributes:
 name: CrossReferencedEntity
 description: An entity with associated cross-references to other databases and publications.
 from_schema: metadata
-abstract: true
+mixin: true
 attributes:
   cross_references:
     name: cross_references

@@ -33,8 +33,6 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 * Range: [String](String.md)&nbsp;or&nbsp;<br />[Integer](Integer.md)&nbsp;or&nbsp;<br />[IntegerFormattedString](IntegerFormattedString.md)
 
-* Required: True
-
 * Minimum Value: 1
 
 * Maximum Value: 5
@@ -67,7 +65,6 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 | ---  | ---  |
 | self | cdp-meta:tilt_series_quality |
 | native | cdp-meta:tilt_series_quality |
-| exact | cdp-common:tiltseries_tilt_series_quality |
 
 
 
@@ -80,15 +77,12 @@ name: tilt_series_quality
 description: Author assessment of tilt series quality within the dataset (1-5, 5 is
   best)
 from_schema: metadata
-exact_mappings:
-- cdp-common:tiltseries_tilt_series_quality
 rank: 1000
 alias: tilt_series_quality
 owner: TiltSeries
 domain_of:
 - TiltSeries
 range: string
-required: true
 inlined: true
 inlined_as_list: true
 minimum_value: 1

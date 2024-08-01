@@ -4,11 +4,11 @@
         "name": [
             "microtubule doublet 48 nm repeat",
             "microtubule doublet 96 nm repeat",
-            "sars-cov2 spike protein",
-            "hydrogen-dependent co2 reductase filament",
+            "SARS-CoV2 spike protein",
+            "hydrogen-dependent CO2 reductase filament",
             "stellate",
-            "mtd sleeve",
-            "dynein-1b",
+            "MTD sleeve",
+            "Dynein-1b",
             "polaroplast"
         ]
     },
@@ -17,9 +17,7 @@
         "name": []
     },
     "CellStrain": {
-        "id": [
-            "WBStrain00050783"
-        ],
+        "id": [],
         "name": []
     },
     "CellType": {
@@ -27,8 +25,7 @@
         "name": []
     },
     "OrganismDetails": {
-        "id": [],
-        "name": []
+        "taxonomy_id": []
     },
     "TissueDetails": {
         "id": [],

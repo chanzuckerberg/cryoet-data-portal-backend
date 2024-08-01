@@ -63,7 +63,6 @@ URI: [cdp-meta:binning_from_frames](metadatabinning_from_frames)
 | ---  | ---  |
 | self | cdp-meta:binning_from_frames |
 | native | cdp-meta:binning_from_frames |
-| exact | cdp-common:tiltseries_binning_from_frames |
 
 
 
@@ -75,8 +74,6 @@ URI: [cdp-meta:binning_from_frames](metadatabinning_from_frames)
 name: binning_from_frames
 description: Describes the binning factor from frames to tilt series file
 from_schema: metadata
-exact_mappings:
-- cdp-common:tiltseries_binning_from_frames
 rank: 1000
 ifabsent: float(1)
 alias: binning_from_frames
