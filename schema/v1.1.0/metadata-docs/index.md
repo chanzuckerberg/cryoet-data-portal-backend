@@ -231,6 +231,7 @@ Name: cdp-meta
 | [Uriorcurie](Uriorcurie.md) | a URI or a CURIE |
 | [URLorS3URI](URLorS3URI.md) | A URL or S3 URI |
 | [VersionString](VersionString.md) | A version number (only major, minor versions) |
+| [WORMBASEID](WORMBASEID.md) | A WormBase identifier |
 
 
 ## Subsets

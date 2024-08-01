@@ -12,6 +12,8 @@ python3 -m venv .venv  # create a virtualenv
 source .venv/bin/activate  # activate the virtualenv
 python3 -m pip install poetry  # Install the poetry package manager
 poetry install  # Use poetry to install this package's dependencies
+cd ../ingestion_tools/  # Move to the ingestion_tools directory
+poetry install  # Use poetry to install this package's dependencies
 ```
 
 ## Running the script
@@ -42,7 +44,7 @@ python dataset_config_validate.py --include-glob ".*104[0-9]{2}.*"
 ```
 
 ### `--exclude-keywords`
-Exclude files that contain the following keywords in the filename, used in conjunction with --input-dir. Repeat the flag for multiple keywords. By default, any file containing "draft" will be excluded. Note that this exclude option is applied BEFORE the include option.
+Exclude files that contain the following keywords in the filename. Repeat the flag for multiple keywords. By default, any file containing "draft" will be excluded. Note that this exclude option takes superiority over the include option.
 
 Example:
 ```bash

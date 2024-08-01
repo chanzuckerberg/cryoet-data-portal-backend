@@ -19,10 +19,10 @@ datasets:
       name: deltaQ 167
     cross_references:
       publications: 10.1128/mBio.01898-15
-    dataset_description: 'This is 9th of 17 sets of data studying Magnetospirillum
+    dataset_description: This is 9th of 17 sets of data studying Magnetospirillum
       magneticum  collected by Poorna Subramanian and is a part of Caltech Jensen  lab
       etdb. plasmid is present for dQdQ167 is the strain in which dQ has been mutated
-      and an inducible '
+      and an inducible
     dataset_identifier: 10126
     dataset_title: M. magneticum dQ167_14h_induced
     dates: &id002

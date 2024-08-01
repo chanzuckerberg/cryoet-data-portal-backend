@@ -581,9 +581,18 @@
             "description": "The strain or cell line from which the sample was derived.",
             "properties": {
                 "id": {
+                    "anyOf": [
+                        {
+                            "pattern": "WBStrain[0-9]{8}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^[a-zA-Z]+:[0-9]+$",
+                            "type": "string"
+                        }
+                    ],
                     "description": "Link to more information about the cell strain.",
-                    "pattern": "^[a-zA-Z]+:[0-9]+$",
-                    "type": "string"
+                    "pattern": "(WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)"
                 },
                 "name": {
                     "description": "Cell line or strain for the sample.",

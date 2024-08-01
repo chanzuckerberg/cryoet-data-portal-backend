@@ -17,8 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: ATCC 51449
-    dataset_description: ' and is a part of Caltech Jensen  lab etdb. Helicobacter
-      hepaticus cell poles'
+    dataset_description: This is a single dataset studying Helicobacter hepaticus
+      collected by Ariane Briegel and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10287
     dataset_title: H.hepaticus
     dates: &id002

@@ -16,8 +16,8 @@ URI: [cdp-meta:last_modified_date](metadatalast_modified_date)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [DateStampedEntityMixin](DateStampedEntityMixin.md) | A set of dates at which a data item was deposited, published and last modifie... |  no  |
 | [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modifie... |  no  |
+| [DateStampedEntityMixin](DateStampedEntityMixin.md) | A set of dates at which a data item was deposited, published and last modifie... |  no  |
 
 
 

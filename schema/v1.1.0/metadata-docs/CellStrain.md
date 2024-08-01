@@ -38,7 +38,7 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [name](name.md) | 1 <br/> [String](String.md) | Cell line or strain for the sample | direct |
-| [id](id.md) | 0..1 _recommended_ <br/> [ONTOLOGYID](ONTOLOGYID.md) | Link to more information about the cell strain | direct |
+| [id](id.md) | 0..1 _recommended_ <br/> [String](String.md)&nbsp;or&nbsp;<br />[WORMBASEID](WORMBASEID.md)&nbsp;or&nbsp;<br />[ONTOLOGYID](ONTOLOGYID.md) | Link to more information about the cell strain | direct |
 
 
 
@@ -133,11 +133,13 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: ONTOLOGY_ID
     recommended: true
     inlined: true
     inlined_as_list: true
-    pattern: ^[a-zA-Z]+:[0-9]+$
+    pattern: (WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)
+    any_of:
+    - range: WORMBASE_ID
+    - range: ONTOLOGY_ID
 
 ```
 </details>
@@ -186,11 +188,14 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: ONTOLOGY_ID
+    range: string
     recommended: true
     inlined: true
     inlined_as_list: true
-    pattern: ^[a-zA-Z]+:[0-9]+$
+    pattern: (WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)
+    any_of:
+    - range: WORMBASE_ID
+    - range: ONTOLOGY_ID
 
 ```
 </details>

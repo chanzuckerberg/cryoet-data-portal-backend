@@ -230,7 +230,7 @@ datasets:
       name: Benjamin D. Engel
     cell_component:
       id: GO:0005929
-      name: Cilium
+      name: cilium
     cell_strain:
       name: CC-3994
     cross_references:

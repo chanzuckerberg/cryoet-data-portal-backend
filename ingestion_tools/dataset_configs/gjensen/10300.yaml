@@ -17,8 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: NA1000
-    dataset_description: ' and is a part of Caltech Jensen  lab etdb. high-order DNA,
-      H-NS, nucleoid, asymmetric cell division'
+    dataset_description: This is a single dataset studying Caulobacter crescentus
+      collected by Jian Shi and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10300
     dataset_title: C. crescentus Calubactor EB session22 27.5KX
     dates: &id002

@@ -17,7 +17,8 @@ datasets:
     cell_strain:
       id: null
       name: G27
-    dataset_description: ' and is a part of Caltech Jensen  lab etdb.'
+    dataset_description: This is a single dataset studying Helicobacter pylori collected
+      by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10159
     dataset_title: Helicobacter pylori G27
     dates: &id002

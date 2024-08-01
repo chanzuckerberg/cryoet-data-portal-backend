@@ -16,7 +16,8 @@ datasets:
       primary_author_status: false
     cross_references:
       publications: 10.1091/mbc.E12-11-0785
-    dataset_description: ' and is a part of Caltech Jensen  lab etdb.'
+    dataset_description: This is a single dataset studying CHMP1B tubes collected
+      by Zhiheng Yu and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10288
     dataset_title: CHMP1B tubes
     dates: &id002
@@ -28,7 +29,7 @@ datasets:
       name: Homo sapiens
       taxonomy_id: 9606
     sample_preparation: null
-    sample_type: in_vitro
+    sample_type: organism
   sources:
   - literal:
       value:
