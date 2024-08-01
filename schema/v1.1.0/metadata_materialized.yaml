@@ -367,6 +367,20 @@ types:
     base: str
     pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$
 enums:
+  annotation_file_source_enum:
+    name: annotation_file_source_enum
+    description: How the annotation file was acquired
+    from_schema: metadata
+    permissible_values:
+      dataset_author:
+        text: dataset_author
+        description: Annotation submitted by dataset author
+      community:
+        text: community
+        description: Annotation submitted by community member
+      portal_standard:
+        text: portal_standard
+        description: Annotation submitted by portal standardization
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.
@@ -520,8 +534,8 @@ enums:
       raw:
         text: raw
         description: Tomogram was not processed
-  tomogrom_reconstruction_method_enum:
-    name: tomogrom_reconstruction_method_enum
+  tomogram_reconstruction_method_enum:
+    name: tomogram_reconstruction_method_enum
     description: Tomogram reconstruction method
     from_schema: metadata
     permissible_values:
@@ -548,6 +562,17 @@ enums:
       CANONICAL:
         text: CANONICAL
         description: Canonical tomogram (basis geometry for all annotations)
+  alignment_type_enum:
+    name: alignment_type_enum
+    description: Type of alignment
+    from_schema: metadata
+    permissible_values:
+      LOCAL:
+        text: LOCAL
+        description: per-section non-rigid alignment available
+      GLOBAL:
+        text: GLOBAL
+        description: only per-section rigid alignment available
 classes:
   PicturePath:
     name: PicturePath
@@ -824,6 +849,7 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: AuthoredEntity
@@ -831,7 +857,6 @@ classes:
         - AuthoredEntity
         range: Author
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -846,6 +871,7 @@ classes:
         description: A funding source for a scientific data entity (base for JSON
           and DB representation).
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: funding
         owner: FundedEntity
@@ -853,7 +879,6 @@ classes:
         - FundedEntity
         range: FundingDetails
         recommended: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
   CrossReferences:
@@ -1367,6 +1392,7 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: Dataset
@@ -1374,7 +1400,6 @@ classes:
         - AuthoredEntity
         range: Author
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -1383,6 +1408,7 @@ classes:
         description: A funding source for a scientific data entity (base for JSON
           and DB representation).
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: funding
         owner: Dataset
@@ -1390,7 +1416,6 @@ classes:
         - FundedEntity
         range: FundingDetails
         recommended: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
       cross_references:
@@ -1576,13 +1601,13 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:deposition_types
+        multivalued: true
         alias: deposition_types
         owner: Deposition
         domain_of:
         - Deposition
         range: deposition_types_enum
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         pattern: (^annotation$)|(^dataset$)|(^tomogram$)
@@ -1604,6 +1629,7 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: Deposition
@@ -1611,7 +1637,6 @@ classes:
         - AuthoredEntity
         range: Author
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -2332,7 +2357,7 @@ classes:
         pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
           ]*$)
         any_of:
-        - range: tomogrom_reconstruction_method_enum
+        - range: tomogram_reconstruction_method_enum
         - range: StringFormattedString
       reconstruction_software:
         name: reconstruction_software
@@ -2436,6 +2461,7 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: Tomogram
@@ -2443,7 +2469,6 @@ classes:
         - AuthoredEntity
         range: Author
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
@@ -2620,13 +2645,13 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_strings
+        multivalued: true
         alias: glob_strings
         owner: AnnotationSourceFile
         domain_of:
         - AnnotationSourceFile
         range: string
         required: false
-        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2734,13 +2759,13 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_strings
+        multivalued: true
         alias: glob_strings
         owner: AnnotationOrientedPointFile
         domain_of:
         - AnnotationSourceFile
         range: string
         required: false
-        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2848,13 +2873,13 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_strings
+        multivalued: true
         alias: glob_strings
         owner: AnnotationInstanceSegmentationFile
         domain_of:
         - AnnotationSourceFile
         range: string
         required: false
-        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -2961,13 +2986,13 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_strings
+        multivalued: true
         alias: glob_strings
         owner: AnnotationPointFile
         domain_of:
         - AnnotationSourceFile
         range: string
         required: false
-        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -3029,13 +3054,13 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_strings
+        multivalued: true
         alias: glob_strings
         owner: AnnotationSegmentationMaskFile
         domain_of:
         - AnnotationSourceFile
         range: string
         required: false
-        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -3111,13 +3136,13 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_source_file_glob_strings
+        multivalued: true
         alias: glob_strings
         owner: AnnotationSemanticSegmentationMaskFile
         domain_of:
         - AnnotationSourceFile
         range: string
         required: false
-        multivalued: true
         inlined: true
         inlined_as_list: true
       is_visualization_default:
@@ -3214,13 +3239,13 @@ classes:
         description: File and sourcing data for an annotation. Represents an entry
           in annotation.sources.
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: files
         owner: Annotation
         domain_of:
         - Annotation
         range: AnnotationSourceFile
-        multivalued: true
         inlined: true
         inlined_as_list: true
       ground_truth_status:
@@ -3312,6 +3337,7 @@ classes:
         name: authors
         description: Author of a scientific data entity.
         from_schema: metadata
+        multivalued: true
         list_elements_ordered: true
         alias: authors
         owner: Annotation
@@ -3319,7 +3345,6 @@ classes:
         - AuthoredEntity
         range: Author
         required: true
-        multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1

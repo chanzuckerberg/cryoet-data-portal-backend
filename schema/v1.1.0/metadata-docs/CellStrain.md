@@ -21,10 +21,10 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
     class CellStrain
     click CellStrain href "../CellStrain"
       CellStrain : id
-
+        
       CellStrain : name
-
-
+        
+      
 ```
 
 

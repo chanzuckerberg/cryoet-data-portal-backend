@@ -178,7 +178,9 @@ Name: cdp-meta
 
 | Enumeration | Description |
 | --- | --- |
+| [AlignmentTypeEnum](AlignmentTypeEnum.md) | Type of alignment |
 | [AnnotationFileShapeTypeEnum](AnnotationFileShapeTypeEnum.md) | Describes the shape of the annotation |
+| [AnnotationFileSourceEnum](AnnotationFileSourceEnum.md) | How the annotation file was acquired |
 | [AnnotationMethodLinkTypeEnum](AnnotationMethodLinkTypeEnum.md) | Describes the type of link associated to the annotation method |
 | [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Describes how the annotations were generated |
 | [DepositionTypesEnum](DepositionTypesEnum.md) | Types of data a deposition has |
@@ -187,8 +189,8 @@ Name: cdp-meta
 | [TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md) | Camera acquisition mode |
 | [TiltseriesMicroscopeManufacturerEnum](TiltseriesMicroscopeManufacturerEnum.md) | Microscope manufacturer |
 | [TomogramProcessingEnum](TomogramProcessingEnum.md) | Tomogram processing method |
+| [TomogramReconstructionMethodEnum](TomogramReconstructionMethodEnum.md) | Tomogram reconstruction method |
 | [TomogramTypeEnum](TomogramTypeEnum.md) | Tomogram type |
-| [TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md) | Tomogram reconstruction method |
 
 
 ## Types

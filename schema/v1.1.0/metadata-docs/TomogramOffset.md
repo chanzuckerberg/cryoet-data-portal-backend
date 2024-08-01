@@ -21,12 +21,12 @@ URI: [cdp-meta:TomogramOffset](metadataTomogramOffset)
     class TomogramOffset
     click TomogramOffset href "../TomogramOffset"
       TomogramOffset : x
-
+        
       TomogramOffset : y
-
+        
       TomogramOffset : z
-
-
+        
+      
 ```
 
 

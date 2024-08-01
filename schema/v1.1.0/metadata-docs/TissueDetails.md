@@ -21,10 +21,10 @@ URI: [cdp-meta:TissueDetails](metadataTissueDetails)
     class TissueDetails
     click TissueDetails href "../TissueDetails"
       TissueDetails : id
-
+        
       TissueDetails : name
-
-
+        
+      
 ```
 
 
