@@ -143,6 +143,36 @@ files = [
 frozenlist = ">=1.1.0"
 
 [[package]]
+name = "allure-pytest"
+version = "2.13.5"
+description = "Allure pytest integration"
+optional = false
+python-versions = "*"
+files = [
+    {file = "allure-pytest-2.13.5.tar.gz", hash = "sha256:0ef8e1790c44a988db6b83c4d4f5e91451e2c4c8ea10601dfa88528d23afcf6e"},
+    {file = "allure_pytest-2.13.5-py3-none-any.whl", hash = "sha256:94130bac32964b78058e62cf4b815ad97a5ac82a065e6dd2d43abac2be7640fc"},
+]
+
+[package.dependencies]
+allure-python-commons = "2.13.5"
+pytest = ">=4.5.0"
+
+[[package]]
+name = "allure-python-commons"
+version = "2.13.5"
+description = "('Contains the API for end users as well as helper functions and classes to build Allure adapters for Python test frameworks',)"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "allure-python-commons-2.13.5.tar.gz", hash = "sha256:a232e7955811f988e49a4c1dd6c16cce7e9b81d0ea0422b1e5654d3254e2caf3"},
+    {file = "allure_python_commons-2.13.5-py3-none-any.whl", hash = "sha256:8b0e837b6e32d810adec563f49e1d04127a5b6770e0232065b7cb09b9953980d"},
+]
+
+[package.dependencies]
+attrs = ">=16.0.0"
+pluggy = ">=0.4.0"
+
+[[package]]
 name = "annotated-types"
 version = "0.7.0"
 description = "Reusable constraint types to use with typing.Annotated"
@@ -2894,6 +2924,25 @@ python-dateutil = ">=2.7"
 dev = ["meson-python (>=0.13.1)", "numpy (>=1.25)", "pybind11 (>=2.6)", "setuptools (>=64)", "setuptools_scm (>=7)"]
 
 [[package]]
+name = "mdocfile"
+version = "0.1.2"
+description = "SerialEM mdoc files as pandas dataframes."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "mdocfile-0.1.2-py3-none-any.whl", hash = "sha256:1d4fbc9caa2e5608fd2dbca5d7c79cd9aeb87ec56b49fff0688c389cc24a74d9"},
+    {file = "mdocfile-0.1.2.tar.gz", hash = "sha256:ea2a408fa7c60f29f080e8a0f548a83752c0eafc485c0773d435b027102d2421"},
+]
+
+[package.dependencies]
+pandas = "*"
+pydantic = ">=2"
+
+[package.extras]
+dev = ["black", "ipython", "mypy", "pdbpp", "pre-commit", "pytest", "pytest-cov", "rich", "ruff"]
+test = ["pytest (>=6.0)", "pytest-cov"]
+
+[[package]]
 name = "mrcfile"
 version = "1.5.1"
 description = "MRC file I/O library"
@@ -5503,4 +5552,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "bbd640396642827ae4e4ffc3ec39f3f5d3701832855e5c297e9262cab153c5e2"
+content-hash = "03783f1560feaacca08e7bb58ff91477e16d5a542d9011c84ae893f3e2c90601"
