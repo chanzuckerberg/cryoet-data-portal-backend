@@ -69,8 +69,8 @@ classes:
         inverse: AnnotationFile.alignment
         multivalued: true
       per_section_alignments:
-        range: PerSectionAlignment
-        inverse: PerSectionAlignment.alignment
+        range: PerSectionAlignmentParameters
+        inverse: PerSectionAlignmentParameters.alignment
         multivalued: true
       deposition:
         range: Deposition
@@ -484,33 +484,6 @@ classes:
           - cdp-common:api_frame_https_gain_file
     annotations:
       plural: Frames
-  PerSectionAlignment:
-    mixins:
-      - IDMixin
-    description: Record how frames get mapped to TiltSeries
-    attributes:
-      alignment:
-        range: Alignment
-        inverse: Alignment.per_section_alignments
-        required: True
-      tiltseries:
-        range: Tiltseries
-        inverse: Tiltseries.per_section_alignments
-        required: True
-      z_index:
-        exact_mappings:
-          - cdp-common:per_section_z_index
-      defocus:
-        exact_mappings:
-          - cdp-common:per_section_defocus
-      astigmatism:
-        exact_mappings:
-          - cdp-common:per_section_astigmatism
-      astigmatic_angle:
-        exact_mappings:
-          - cdp-common:per_section_astigmatic_angle
-    annotations:
-      plural: PerSectionAlignments
   PerSectionParameters:
     mixins:
       - IDMixin
@@ -544,9 +517,9 @@ classes:
       - IDMixin
     description: Map alignment parameters to tilt series frames
     attributes:
-      tiltseries:
-        range: Tiltseries
-        inverse: Tiltseries.per_section_parameters
+      alignment:
+        range: Alignment
+        inverse: Alignment.per_section_alignments
         required: True
       z_index:
         exact_mappings:
@@ -615,10 +588,6 @@ classes:
         range: Alignment
         required: true
         inverse: Alignment.tiltseries
-      per_section_alignments:
-        range: PerSectionAlignment
-        inverse: PerSectionAlignment.tiltseries
-        multivalued: true
       per_section_parameters:
         range: PerSectionParameters
         inverse: PerSectionParameters.tiltseries
