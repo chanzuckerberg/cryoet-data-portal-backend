@@ -5,7 +5,6 @@ from __future__ import annotations
 import asyncio
 import logging
 import re
-import sys
 import urllib
 from typing import List, Optional, Set, Tuple, Union
 
@@ -29,12 +28,14 @@ from dataset_config_models import (
     Dataset,
     DatasetEntity,
     DatasetKeyPhotoEntity,
+    DatasetKeyPhotoSource,
     DatasetSource,
     DateStamp,
     DefaultSource,
     Deposition,
     DepositionEntity,
     DepositionKeyPhotoEntity,
+    DepositionKeyPhotoSource,
     DepositionSource,
     FrameEntity,
     FrameSource,
@@ -43,7 +44,6 @@ from dataset_config_models import (
     KeyImageEntity,
     KeyImageSource,
     KeyPhotoLiteral,
-    KeyPhotoSource,
     OrganismDetails,
     PicturePath,
     RawTiltEntity,
@@ -51,7 +51,6 @@ from dataset_config_models import (
     RunEntity,
     RunSource,
     SampleTypeEnum,
-    SourceParentFiltersEntity,
     TiltRange,
     TiltSeries,
     TiltSeriesEntity,
@@ -66,22 +65,6 @@ from dataset_config_models import (
 from pydantic import BaseModel, field_validator, model_validator
 from typing_extensions import Self
 
-ROOT_DIR = "../../"
-sys.path.append(ROOT_DIR)
-sys.path.append(ROOT_DIR + "ingestion_tools/scripts/")
-
-from ingestion_tools.scripts.importers.annotation import AnnotationImporter  # noqa: E402
-from ingestion_tools.scripts.importers.dataset import DatasetImporter  # noqa: E402
-from ingestion_tools.scripts.importers.dataset_key_photo import DatasetKeyPhotoImporter  # noqa: E402
-from ingestion_tools.scripts.importers.frame import FrameImporter  # noqa: E402
-from ingestion_tools.scripts.importers.gain import GainImporter  # noqa: E402
-from ingestion_tools.scripts.importers.rawtilt import RawTiltImporter  # noqa: E402
-from ingestion_tools.scripts.importers.run import RunImporter  # noqa: E402
-from ingestion_tools.scripts.importers.tiltseries import TiltSeriesImporter  # noqa: E402
-from ingestion_tools.scripts.importers.tomogram import TomogramImporter  # noqa: E402
-from ingestion_tools.scripts.importers.voxel_spacing import VoxelSpacingImporter  # noqa: E402
-from ingestion_tools.scripts.standardize_dirs import IMPORTER_DEP_TREE, flatten_dependency_tree  # noqa: E402
-
 logger = logging.getLogger("dataset_config_validate")
 
 validation_exclusions = {}
@@ -92,10 +75,6 @@ VALID_IMAGE_FORMATS = ("image/png", "image/jpeg", "image/jpg", "image/gif")
 CAMERA_MANUFACTURER_TO_MODEL = {
     ("FEI", "TFS"): ["FALCON IV", "Falcon4i"],
     ("Gatan", "GATAN"): ["K2", "K2 SUMMIT", "K3", "K3 BIOQUANTUM", "UltraCam", "UltraScan"],
-}
-FLATTENED_DEP_TREE = {
-    key.type_key: {value.type_key for value in value_set}
-    for key, value_set in flatten_dependency_tree(IMPORTER_DEP_TREE).items()
 }
 
 # Flag to determine if network validation should be run (set by provided Container arg)
@@ -414,8 +393,12 @@ class ExtendedValidationKeyPhotoLiteral(KeyPhotoLiteral):
     value: ExtendedValidationPicturePath = KeyPhotoLiteral.model_fields["value"]
 
 
-class ExtendedValidationKeyPhotoSource(KeyPhotoSource):
-    literal: Optional[ExtendedValidationKeyPhotoLiteral] = KeyPhotoSource.model_fields["literal"]
+class ExtendedValidationDatasetKeyPhotoSource(DatasetKeyPhotoSource):
+    literal: Optional[ExtendedValidationKeyPhotoLiteral] = DatasetKeyPhotoSource.model_fields["literal"]
+
+
+class ExtendedValidationDepositionKeyPhotoSource(DepositionKeyPhotoSource):
+    literal: Optional[ExtendedValidationKeyPhotoLiteral] = DepositionKeyPhotoSource.model_fields["literal"]
 
 
 # ==============================================================================
@@ -490,39 +473,7 @@ def validate_publications(publications: Optional[str]) -> Optional[str]:
 # ==============================================================================
 # Sources Validation
 # ==============================================================================
-def validate_sources_parent_filters(source_list: List[SourceParentFiltersEntity], class_name: str) -> None:
-    errors = []
-
-    # list of sources, each possibly with a parent_filters attribute
-    for i, source_element in enumerate(source_list):
-        parent_filters = source_element.parent_filters
-        if parent_filters is None:
-            continue
-
-        # list of types of filters being applied (include, exclude, etc.)
-        for filter_type in parent_filters.model_fields:
-            parent_filter = getattr(parent_filters, filter_type)
-            if parent_filter is None:
-                continue
-
-            # the list of parents that are being filtered (annotation, dataset, run, etc.)
-            filters = [filter for filter in parent_filter.model_fields if getattr(parent_filter, filter)]
-            for filter in filters:
-                if class_name in FLATTENED_DEP_TREE[filter]:
-                    continue
-
-                errors.append(
-                    ValueError(f"Source entry {i} parent filter '{filter}' cannot be used with '{class_name}'"),
-                )
-
-    return errors
-
-
-def validate_sources(
-    source_list: List[DefaultSource] | List[VoxelSpacingSource],
-    class_name: str,
-    skip_parent_filters: bool = False,
-) -> None:
+def validate_sources(source_list: List[DefaultSource] | List[VoxelSpacingSource]) -> None:
     total_errors = []
 
     # For verifying that all source entries each only have one finder type
@@ -554,10 +505,6 @@ def validate_sources(
         )
     for index in standalone_finders_in_each_source_entries_errors:
         total_errors.append(ValueError(f"Source entry {index} cannot only have a parent_filters entry"))
-
-    if not skip_parent_filters:
-        # For verifying that all parent_filters' include and exclude entries have the right filters
-        total_errors += validate_sources_parent_filters(source_list, class_name)
 
     if total_errors:
         raise ValueError(total_errors)
@@ -654,6 +601,8 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
             for shape in source_element.model_fields:
                 if getattr(source_element, shape) is None:
                     continue
+                if shape == "parent_filters":
+                    continue
 
                 # If the shape is not None, add it to the list of shapes in the source entry
                 shapes_in_source_entry.append(shape)
@@ -688,9 +637,6 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
                 ValueError(f"Source entry {i} shape {shape} must have exactly one of glob_string or glob_strings"),
             )
 
-        # For verifying that all parent_filters' include and exclude entries have the right filters
-        total_errors += validate_sources_parent_filters(source_list, AnnotationImporter.type_key)
-
         if total_errors:
             raise ValueError(total_errors)
 
@@ -703,12 +649,12 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
 
 
 class ExtendedValidationDatasetKeyPhotoEntity(DatasetKeyPhotoEntity):
-    sources: List[ExtendedValidationKeyPhotoSource] = DatasetKeyPhotoEntity.model_fields["sources"]
+    sources: List[ExtendedValidationDatasetKeyPhotoSource] = DatasetKeyPhotoEntity.model_fields["sources"]
 
     @field_validator("sources")
     @classmethod
-    def valid_sources(cls: Self, source_list: List[KeyPhotoSource]) -> List[KeyPhotoSource]:
-        return validate_sources_parent_filters(source_list, DatasetKeyPhotoImporter.type_key)
+    def valid_sources(cls: Self, source_list: List[DatasetKeyPhotoSource]) -> List[DatasetKeyPhotoSource]:
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -793,19 +739,19 @@ class ExtendedValidationDatasetEntity(DatasetEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[DatasetSource]) -> List[DatasetSource]:
-        return validate_sources(source_list, DatasetImporter.type_key, skip_parent_filters=True)
+        return validate_sources(source_list)
 
 
 # ==============================================================================
 # Deposition Key Photo Validation
 # ==============================================================================
 class ExtendedValidationDepositionKeyPhotoEntity(DepositionKeyPhotoEntity):
-    sources: List[ExtendedValidationKeyPhotoSource] = DepositionKeyPhotoEntity.model_fields["sources"]
+    sources: List[ExtendedValidationDepositionKeyPhotoSource] = DepositionKeyPhotoEntity.model_fields["sources"]
 
     @field_validator("sources")
     @classmethod
-    def valid_sources(cls: Self, source_list: List[KeyPhotoSource]) -> List[KeyPhotoSource]:
-        return validate_sources_parent_filters(source_list, "deposition_keyphoto")
+    def valid_sources(cls: Self, source_list: List[DepositionKeyPhotoSource]) -> List[DepositionKeyPhotoSource]:
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -832,7 +778,7 @@ class ExtendedValidationDepositionEntity(DepositionEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[DepositionSource]) -> List[DepositionSource]:
-        return validate_sources(source_list, "deposition", skip_parent_filters=True)
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -842,7 +788,7 @@ class ExtendedValidationFrameEntity(FrameEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[FrameSource]) -> List[FrameSource]:
-        return validate_sources(source_list, FrameImporter.type_key)
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -852,7 +798,7 @@ class ExtendedValidationGainEntity(GainEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[GainSource]) -> List[GainSource]:
-        return validate_sources(source_list, GainImporter.type_key)
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -862,7 +808,7 @@ class ExtendedValidationKeyImageEntity(KeyImageEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[KeyImageSource]) -> List[KeyImageSource]:
-        return validate_sources(source_list, "key_image")
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -872,7 +818,7 @@ class ExtendedValidationRawTiltEntity(RawTiltEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[RawTiltSource]) -> List[RawTiltSource]:
-        return validate_sources(source_list, RawTiltImporter.type_key)
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -882,7 +828,7 @@ class ExtendedValidationRunEntity(RunEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[RunSource]) -> List[RunSource]:
-        return validate_sources(source_list, RunImporter.type_key)
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -933,7 +879,7 @@ class ExtendedValidationTiltSeriesEntity(TiltSeriesEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[TiltSeriesSource]) -> List[TiltSeriesSource]:
-        return validate_sources(source_list, TiltSeriesImporter.type_key)
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -984,7 +930,7 @@ class ExtendedValidationTomogramEntity(TomogramEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[TomogramSource]) -> List[TomogramSource]:
-        return validate_sources(source_list, TomogramImporter.type_key)
+        return validate_sources(source_list)
 
 
 # ==============================================================================
@@ -994,7 +940,7 @@ class ExtendedValidationVoxelSpacingEntity(VoxelSpacingEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[VoxelSpacingSource]) -> List[VoxelSpacingSource]:
-        return validate_sources(source_list, VoxelSpacingImporter.type_key)
+        return validate_sources(source_list)
 
 
 class ExtendedValidationContainer(Container):

@@ -16,7 +16,9 @@ ROOT_DIR = "../../"
 sys.path.append(ROOT_DIR)  # To import the helper function from common.py
 from ingestion_tools.scripts.common.yaml_files import EXCLUDE_KEYWORDS_LIST, get_yaml_config_files  # noqa: E402
 
-logger = logging.getLogger("dataset_config_validate")
+logger = logging.getLogger(__name__)
+logger_handler = logging.StreamHandler()
+logger.addHandler(logger_handler)
 logger.setLevel(logging.INFO)
 
 DATASET_CONFIGS_DIR = "../../ingestion_tools/dataset_configs/"
@@ -154,6 +156,7 @@ def main(
         exclude_keywords_list=exclude_keywords,
         dataset_configs_dir=input_dir,
         verbose=verbose,
+        logger_name=__name__,
     )
 
     if not files_to_validate:
@@ -179,6 +182,7 @@ def main(
     for file in files_to_validate:
         try:
             with open(file, "r") as stream:
+                logger.debug("Validating %s", file)
                 config_data = yaml.safe_load(stream)
                 # TODO: Remove this once issue below is fixed
                 # Being done because "any_of" doesn't work on LinkML right now (so we can't support both

@@ -298,6 +298,58 @@
             "title": "AnnotationOrientedPointFile",
             "type": "object"
         },
+        "AnnotationParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of an annotation source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "dataset": {
+                    "description": "Include or exclude datasets for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "run": {
+                    "description": "Include or exclude runs for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "voxel_spacing": {
+                    "description": "Include or exclude voxel spacings for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "AnnotationParent",
+            "type": "object"
+        },
+        "AnnotationParentFilters": {
+            "additionalProperties": false,
+            "description": "Filters for the parent of an annotation source.",
+            "properties": {
+                "exclude": {
+                    "$ref": "#/$defs/AnnotationParent",
+                    "description": "A filter for a parent class of an annotation source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "$ref": "#/$defs/AnnotationParent",
+                    "description": "A filter for a parent class of an annotation source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "AnnotationParentFilters",
+            "type": "object"
+        },
         "AnnotationPointFile": {
             "additionalProperties": false,
             "description": "File and sourcing data for a point annotation. Annotation that identifies points in the volume.",
@@ -430,8 +482,8 @@
                     "description": "File and sourcing data for a semantic segmentation mask annotation. Annotation that identifies classes of objects."
                 },
                 "parent_filters": {
-                    "$ref": "#/$defs/SourceParentFilters",
-                    "description": "Filters for the parent of a source."
+                    "$ref": "#/$defs/AnnotationParentFilters",
+                    "description": "Filters for the parent of an annotation source."
                 }
             },
             "title": "AnnotationSource",
@@ -857,7 +909,7 @@
                 "sources": {
                     "description": "A key photo source.",
                     "items": {
-                        "$ref": "#/$defs/KeyPhotoSource"
+                        "$ref": "#/$defs/DatasetKeyPhotoSource"
                     },
                     "minItems": 1,
                     "type": "array"
@@ -867,6 +919,84 @@
                 "sources"
             ],
             "title": "DatasetKeyPhotoEntity",
+            "type": "object"
+        },
+        "DatasetKeyPhotoParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "DatasetKeyPhotoParent",
+            "type": "object"
+        },
+        "DatasetKeyPhotoParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for a key photo source.",
+            "properties": {
+                "exclude": {
+                    "$ref": "#/$defs/DatasetKeyPhotoParent",
+                    "description": "A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "$ref": "#/$defs/DatasetKeyPhotoParent",
+                    "description": "A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "DatasetKeyPhotoParentFilters",
+            "type": "object"
+        },
+        "DatasetKeyPhotoSource": {
+            "additionalProperties": false,
+            "description": "A key photo source.",
+            "properties": {
+                "literal": {
+                    "$ref": "#/$defs/KeyPhotoLiteral",
+                    "description": "A literal for a key photo."
+                },
+                "parent_filters": {
+                    "$ref": "#/$defs/DatasetKeyPhotoParentFilters",
+                    "description": "Types of parent filters for a key photo source."
+                }
+            },
+            "title": "DatasetKeyPhotoSource",
+            "type": "object"
+        },
+        "DatasetParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of a dataset source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "DatasetParent",
+            "type": "object"
+        },
+        "DatasetParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for a dataset source.",
+            "properties": {
+                "exclude": {
+                    "$ref": "#/$defs/DatasetParent",
+                    "description": "A filter for a parent class of a dataset source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "$ref": "#/$defs/DatasetParent",
+                    "description": "A filter for a parent class of a dataset source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "DatasetParentFilters",
             "type": "object"
         },
         "DatasetSource": {
@@ -880,6 +1010,10 @@
                 "literal": {
                     "$ref": "#/$defs/DefaultLiteral",
                     "description": "A literal class with a value attribute."
+                },
+                "parent_filters": {
+                    "$ref": "#/$defs/DatasetParentFilters",
+                    "description": "Types of parent filters for a dataset source."
                 },
                 "source_glob": {
                     "$ref": "#/$defs/SourceGlob",
@@ -1055,7 +1189,7 @@
                 "sources": {
                     "description": "A key photo source.",
                     "items": {
-                        "$ref": "#/$defs/KeyPhotoSource"
+                        "$ref": "#/$defs/DepositionKeyPhotoSource"
                     },
                     "minItems": 1,
                     "type": "array"
@@ -1065,6 +1199,53 @@
                 "sources"
             ],
             "title": "DepositionKeyPhotoEntity",
+            "type": "object"
+        },
+        "DepositionKeyPhotoParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "DepositionKeyPhotoParent",
+            "type": "object"
+        },
+        "DepositionKeyPhotoParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for a key photo source.",
+            "properties": {
+                "exclude": {
+                    "$ref": "#/$defs/DepositionKeyPhotoParent",
+                    "description": "A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "$ref": "#/$defs/DepositionKeyPhotoParent",
+                    "description": "A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "DepositionKeyPhotoParentFilters",
+            "type": "object"
+        },
+        "DepositionKeyPhotoSource": {
+            "additionalProperties": false,
+            "description": "A key photo source.",
+            "properties": {
+                "literal": {
+                    "$ref": "#/$defs/KeyPhotoLiteral",
+                    "description": "A literal for a key photo."
+                },
+                "parent_filters": {
+                    "$ref": "#/$defs/DepositionKeyPhotoParentFilters",
+                    "description": "Types of parent filters for a key photo source."
+                }
+            },
+            "title": "DepositionKeyPhotoSource",
             "type": "object"
         },
         "DepositionSource": {
@@ -1152,6 +1333,51 @@
             "title": "FrameEntity",
             "type": "object"
         },
+        "FrameParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of a frame source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "dataset": {
+                    "description": "Include or exclude datasets for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "run": {
+                    "description": "Include or exclude runs for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "FrameParent",
+            "type": "object"
+        },
+        "FrameParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for a frame source.",
+            "properties": {
+                "exclude": {
+                    "$ref": "#/$defs/FrameParent",
+                    "description": "A filter for a parent class of a frame source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "$ref": "#/$defs/FrameParent",
+                    "description": "A filter for a parent class of a frame source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "FrameParentFilters",
+            "type": "object"
+        },
         "FrameSource": {
             "additionalProperties": false,
             "description": "A frame source.",
@@ -1165,8 +1391,8 @@
                     "description": "A literal class with a value attribute."
                 },
                 "parent_filters": {
-                    "$ref": "#/$defs/SourceParentFilters",
-                    "description": "Filters for the parent of a source."
+                    "$ref": "#/$defs/FrameParentFilters",
+                    "description": "Types of parent filters for a frame source."
                 },
                 "source_glob": {
                     "$ref": "#/$defs/SourceGlob",
@@ -1215,6 +1441,51 @@
             "title": "GainEntity",
             "type": "object"
         },
+        "GainParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of a gain source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "dataset": {
+                    "description": "Include or exclude datasets for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "run": {
+                    "description": "Include or exclude runs for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "GainParent",
+            "type": "object"
+        },
+        "GainParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for a gain source.",
+            "properties": {
+                "exclude": {
+                    "$ref": "#/$defs/GainParent",
+                    "description": "A filter for a parent class of a gain source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "$ref": "#/$defs/GainParent",
+                    "description": "A filter for a parent class of a gain source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "GainParentFilters",
+            "type": "object"
+        },
         "GainSource": {
             "additionalProperties": false,
             "description": "A gain source.",
@@ -1228,8 +1499,8 @@
                     "description": "A literal class with a value attribute."
                 },
                 "parent_filters": {
-                    "$ref": "#/$defs/SourceParentFilters",
-                    "description": "Filters for the parent of a source."
+                    "$ref": "#/$defs/GainParentFilters",
+                    "description": "Types of parent filters for a gain source."
                 },
                 "source_glob": {
                     "$ref": "#/$defs/SourceGlob",
@@ -1262,6 +1533,65 @@
             "title": "KeyImageEntity",
             "type": "object"
         },
+        "KeyImageParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of a key image source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "dataset": {
+                    "description": "Include or exclude datasets for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "run": {
+                    "description": "Include or exclude runs for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "tomogram": {
+                    "description": "Include or exclude tomograms for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "voxel_spacing": {
+                    "description": "Include or exclude voxel spacings for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "KeyImageParent",
+            "type": "object"
+        },
+        "KeyImageParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for a key image source.",
+            "properties": {
+                "exclude": {
+                    "$ref": "#/$defs/KeyImageParent",
+                    "description": "A filter for a parent class of a key image source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "$ref": "#/$defs/KeyImageParent",
+                    "description": "A filter for a parent class of a key image source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "KeyImageParentFilters",
+            "type": "object"
+        },
         "KeyImageSource": {
             "additionalProperties": false,
             "description": "A key image source.",
@@ -1275,8 +1605,8 @@
                     "description": "A literal class with a value attribute."
                 },
                 "parent_filters": {
-                    "$ref": "#/$defs/SourceParentFilters",
-                    "description": "Filters for the parent of a source."
+                    "$ref": "#/$defs/KeyImageParentFilters",
+                    "description": "Types of parent filters for a key image source."
                 },
                 "source_glob": {
                     "$ref": "#/$defs/SourceGlob",
@@ -1288,25 +1618,6 @@
                 }
             },
             "title": "KeyImageSource",
-            "type": "object"
-        },
-        "KeyPhotoEntity": {
-            "additionalProperties": false,
-            "description": "A key photo entity.",
-            "properties": {
-                "sources": {
-                    "description": "A key photo source.",
-                    "items": {
-                        "$ref": "#/$defs/KeyPhotoSource"
-                    },
-                    "minItems": 1,
-                    "type": "array"
-                }
-            },
-            "required": [
-                "sources"
-            ],
-            "title": "KeyPhotoEntity",
             "type": "object"
         },
         "KeyPhotoLiteral": {
@@ -1322,22 +1633,6 @@
                 "value"
             ],
             "title": "KeyPhotoLiteral",
-            "type": "object"
-        },
-        "KeyPhotoSource": {
-            "additionalProperties": false,
-            "description": "A key photo source.",
-            "properties": {
-                "literal": {
-                    "$ref": "#/$defs/KeyPhotoLiteral",
-                    "description": "A literal for a key photo."
-                },
-                "parent_filters": {
-                    "$ref": "#/$defs/SourceParentFilters",
-                    "description": "Filters for the parent of a source."
-                }
-            },
-            "title": "KeyPhotoSource",
             "type": "object"
         },
         "MicroscopeDetails": {
@@ -1453,6 +1748,51 @@
             "title": "RawTiltEntity",
             "type": "object"
         },
+        "RawTiltParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of a raw tilt source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "dataset": {
+                    "description": "Include or exclude datasets for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "run": {
+                    "description": "Include or exclude runs for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "RawTiltParent",
+            "type": "object"
+        },
+        "RawTiltParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for a raw tilt source.",
+            "properties": {
+                "exclude": {
+                    "$ref": "#/$defs/RawTiltParent",
+                    "description": "A filter for a parent class of a raw tilt source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "$ref": "#/$defs/RawTiltParent",
+                    "description": "A filter for a parent class of a raw tilt source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "RawTiltParentFilters",
+            "type": "object"
+        },
         "RawTiltSource": {
             "additionalProperties": false,
             "description": "A raw tilt source.",
@@ -1466,8 +1806,8 @@
                     "description": "A literal class with a value attribute."
                 },
                 "parent_filters": {
-                    "$ref": "#/$defs/SourceParentFilters",
-                    "description": "Filters for the parent of a source."
+                    "$ref": "#/$defs/RawTiltParentFilters",
+                    "description": "Types of parent filters for a raw tilt source."
                 },
                 "source_glob": {
                     "$ref": "#/$defs/SourceGlob",
@@ -1500,6 +1840,44 @@
             "title": "RunEntity",
             "type": "object"
         },
+        "RunParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of a run source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "dataset": {
+                    "description": "Include or exclude datasets for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "RunParent",
+            "type": "object"
+        },
+        "RunParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for a run source.",
+            "properties": {
+                "exclude": {
+                    "$ref": "#/$defs/RunParent",
+                    "description": "A filter for a parent class of a run source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "$ref": "#/$defs/RunParent",
+                    "description": "A filter for a parent class of a run source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "RunParentFilters",
+            "type": "object"
+        },
         "RunSource": {
             "additionalProperties": false,
             "description": "A run source.",
@@ -1513,8 +1891,8 @@
                     "description": "A literal class with a value attribute."
                 },
                 "parent_filters": {
-                    "$ref": "#/$defs/SourceParentFilters",
-                    "description": "Filters for the parent of a source."
+                    "$ref": "#/$defs/RunParentFilters",
+                    "description": "Types of parent filters for a run source."
                 },
                 "source_glob": {
                     "$ref": "#/$defs/SourceGlob",
@@ -1583,77 +1961,6 @@
                 "list_globs"
             ],
             "title": "SourceMultiGlob",
-            "type": "object"
-        },
-        "SourceParent": {
-            "additionalProperties": false,
-            "description": "A filter for a parent class of a source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
-            "properties": {
-                "annotation": {
-                    "description": "Include or exclude annotations.",
-                    "items": {
-                        "type": "string"
-                    },
-                    "type": "array"
-                },
-                "dataset": {
-                    "description": "Include or exclude datasets.",
-                    "items": {
-                        "type": "string"
-                    },
-                    "type": "array"
-                },
-                "run": {
-                    "description": "Include or exclude runs.",
-                    "items": {
-                        "type": "string"
-                    },
-                    "type": "array"
-                },
-                "tomogram": {
-                    "description": "Include or exclude tomograms.",
-                    "items": {
-                        "type": "string"
-                    },
-                    "type": "array"
-                },
-                "voxel_spacing": {
-                    "description": "Include or exclude voxel spacings.",
-                    "items": {
-                        "type": "string"
-                    },
-                    "type": "array"
-                }
-            },
-            "title": "SourceParent",
-            "type": "object"
-        },
-        "SourceParentFilters": {
-            "additionalProperties": false,
-            "description": "Filters for the parent of a source.",
-            "properties": {
-                "exclude": {
-                    "$ref": "#/$defs/SourceParent",
-                    "description": "A filter for a parent class of a source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
-                },
-                "include": {
-                    "$ref": "#/$defs/SourceParent",
-                    "description": "A filter for a parent class of a source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
-                }
-            },
-            "title": "SourceParentFilters",
-            "type": "object"
-        },
-        "SourceParentFiltersEntity": {
-            "additionalProperties": false,
-            "description": "Used as a mixin with root-level classes that contain sources that can have parent filters.",
-            "properties": {
-                "parent_filters": {
-                    "$ref": "#/$defs/SourceParentFilters",
-                    "description": "Filters for the parent of a source."
-                }
-            },
-            "title": "SourceParentFiltersEntity",
             "type": "object"
         },
         "StandardizationConfig": {
@@ -1957,6 +2264,51 @@
             "title": "TiltSeriesEntity",
             "type": "object"
         },
+        "TiltSeriesParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of a tilt series source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "dataset": {
+                    "description": "Include or exclude datasets for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "run": {
+                    "description": "Include or exclude runs for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "TiltSeriesParent",
+            "type": "object"
+        },
+        "TiltSeriesParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for a tilt series source.",
+            "properties": {
+                "exclude": {
+                    "$ref": "#/$defs/TiltSeriesParent",
+                    "description": "A filter for a parent class of a tilt series source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "$ref": "#/$defs/TiltSeriesParent",
+                    "description": "A filter for a parent class of a tilt series source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "TiltSeriesParentFilters",
+            "type": "object"
+        },
         "TiltSeriesSource": {
             "additionalProperties": false,
             "description": "A tilt series source.",
@@ -1970,8 +2322,8 @@
                     "description": "A literal class with a value attribute."
                 },
                 "parent_filters": {
-                    "$ref": "#/$defs/SourceParentFilters",
-                    "description": "Filters for the parent of a source."
+                    "$ref": "#/$defs/TiltSeriesParentFilters",
+                    "description": "Types of parent filters for a tilt series source."
                 },
                 "source_glob": {
                     "$ref": "#/$defs/SourceGlob",
@@ -2212,6 +2564,58 @@
             "title": "TomogramOffset",
             "type": "object"
         },
+        "TomogramParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of a tomogram source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "dataset": {
+                    "description": "Include or exclude datasets for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "run": {
+                    "description": "Include or exclude runs for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "voxel_spacing": {
+                    "description": "Include or exclude voxel spacings for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "TomogramParent",
+            "type": "object"
+        },
+        "TomogramParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for a tomogram source.",
+            "properties": {
+                "exclude": {
+                    "$ref": "#/$defs/TomogramParent",
+                    "description": "A filter for a parent class of a tomogram source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "$ref": "#/$defs/TomogramParent",
+                    "description": "A filter for a parent class of a tomogram source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "TomogramParentFilters",
+            "type": "object"
+        },
         "TomogramProcessingEnum": {
             "description": "Tomogram processing method",
             "enum": [
@@ -2263,8 +2667,8 @@
                     "description": "A literal class with a value attribute."
                 },
                 "parent_filters": {
-                    "$ref": "#/$defs/SourceParentFilters",
-                    "description": "Filters for the parent of a source."
+                    "$ref": "#/$defs/TomogramParentFilters",
+                    "description": "Types of parent filters for a tomogram source."
                 },
                 "source_glob": {
                     "$ref": "#/$defs/SourceGlob",
@@ -2336,6 +2740,51 @@
             "title": "VoxelSpacingLiteral",
             "type": "object"
         },
+        "VoxelSpacingParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of a voxel spacing source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "dataset": {
+                    "description": "Include or exclude datasets for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "run": {
+                    "description": "Include or exclude runs for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "VoxelSpacingParent",
+            "type": "object"
+        },
+        "VoxelSpacingParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for a voxel spacing source.",
+            "properties": {
+                "exclude": {
+                    "$ref": "#/$defs/VoxelSpacingParent",
+                    "description": "A filter for a parent class of a voxel spacing source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "$ref": "#/$defs/VoxelSpacingParent",
+                    "description": "A filter for a parent class of a voxel spacing source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "VoxelSpacingParentFilters",
+            "type": "object"
+        },
         "VoxelSpacingSource": {
             "additionalProperties": false,
             "description": "A voxel spacing source.",
@@ -2349,8 +2798,8 @@
                     "description": "A literal for a voxel spacing."
                 },
                 "parent_filters": {
-                    "$ref": "#/$defs/SourceParentFilters",
-                    "description": "Filters for the parent of a source."
+                    "$ref": "#/$defs/VoxelSpacingParentFilters",
+                    "description": "Types of parent filters for a voxel spacing source."
                 },
                 "source_glob": {
                     "$ref": "#/$defs/SourceGlob",

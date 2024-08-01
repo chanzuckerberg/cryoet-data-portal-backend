@@ -2102,7 +2102,7 @@ class Tomogram(AuthoredEntity):
             "linkml_meta": {
                 "alias": "voxel_spacing",
                 "any_of": [{"minimum_value": 0.001, "range": "float"}, {"range": "FloatFormattedString"}],
-                "domain_of": ["Tomogram", "SourceParent"],
+                "domain_of": ["Tomogram", "AnnotationParent", "KeyImageParent", "TomogramParent"],
                 "unit": {"descriptive_name": "Angstroms per voxel", "symbol": "Å/voxel"},
             }
         },
@@ -4000,90 +4000,6 @@ class DefaultSource(ConfiguredBaseModel):
     )
 
 
-class SourceParentFiltersEntity(ConfiguredBaseModel):
-    """
-    Used as a mixin with root-level classes that contain sources that can have parent filters.
-    """
-
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
-
-    parent_filters: Optional[SourceParentFilters] = Field(
-        None,
-        description="""Filters for the parent of a source.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "parent_filters",
-                "domain_of": [
-                    "SourceParentFiltersEntity",
-                    "AnnotationSource",
-                    "KeyPhotoSource",
-                    "FrameSource",
-                    "GainSource",
-                    "KeyImageSource",
-                    "RawTiltSource",
-                    "RunSource",
-                    "TiltSeriesSource",
-                    "TomogramSource",
-                    "VoxelSpacingSource",
-                ],
-            }
-        },
-    )
-
-
-class SourceParentFilters(ConfiguredBaseModel):
-    """
-    Filters for the parent of a source.
-    """
-
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
-
-    include: Optional[SourceParent] = Field(
-        None,
-        description="""A filter for a parent class of a source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
-        json_schema_extra={"linkml_meta": {"alias": "include", "domain_of": ["SourceParentFilters"]}},
-    )
-    exclude: Optional[SourceParent] = Field(
-        None,
-        description="""A filter for a parent class of a source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
-        json_schema_extra={"linkml_meta": {"alias": "exclude", "domain_of": ["SourceParentFilters"]}},
-    )
-
-
-class SourceParent(ConfiguredBaseModel):
-    """
-    A filter for a parent class of a source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
-    """
-
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
-
-    annotation: Optional[List[str]] = Field(
-        default_factory=list,
-        description="""Include or exclude annotations.""",
-        json_schema_extra={"linkml_meta": {"alias": "annotation", "domain_of": ["SourceParent"]}},
-    )
-    dataset: Optional[List[str]] = Field(
-        default_factory=list,
-        description="""Include or exclude datasets.""",
-        json_schema_extra={"linkml_meta": {"alias": "dataset", "domain_of": ["SourceParent"]}},
-    )
-    run: Optional[List[str]] = Field(
-        default_factory=list,
-        description="""Include or exclude runs.""",
-        json_schema_extra={"linkml_meta": {"alias": "run", "domain_of": ["SourceParent"]}},
-    )
-    tomogram: Optional[List[str]] = Field(
-        default_factory=list,
-        description="""Include or exclude tomograms.""",
-        json_schema_extra={"linkml_meta": {"alias": "tomogram", "domain_of": ["SourceParent"]}},
-    )
-    voxel_spacing: Optional[List[str]] = Field(
-        default_factory=list,
-        description="""Include or exclude voxel spacings.""",
-        json_schema_extra={"linkml_meta": {"alias": "voxel_spacing", "domain_of": ["Tomogram", "SourceParent"]}},
-    )
-
-
 class DefaultLiteralEntity(ConfiguredBaseModel):
     """
     Used as a mixin with root-level classes that contain sources that have literals.
@@ -4099,7 +4015,8 @@ class DefaultLiteralEntity(ConfiguredBaseModel):
                 "alias": "literal",
                 "domain_of": [
                     "DefaultLiteralEntity",
-                    "KeyPhotoSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
@@ -4131,97 +4048,6 @@ class DefaultLiteral(ConfiguredBaseModel):
                 "alias": "value",
                 "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"],
                 "minimum_cardinality": 1,
-            }
-        },
-    )
-
-
-class KeyPhotoEntity(ConfiguredBaseModel):
-    """
-    A key photo entity.
-    """
-
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
-
-    sources: List[KeyPhotoSource] = Field(
-        default_factory=list,
-        description="""A key photo source.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "sources",
-                "domain_of": [
-                    "KeyPhotoEntity",
-                    "AnnotationEntity",
-                    "DatasetEntity",
-                    "DepositionEntity",
-                    "FrameEntity",
-                    "GainEntity",
-                    "KeyImageEntity",
-                    "RawTiltEntity",
-                    "RunEntity",
-                    "TiltSeriesEntity",
-                    "TomogramEntity",
-                    "VoxelSpacingEntity",
-                    "DatasetKeyPhotoEntity",
-                    "DepositionKeyPhotoEntity",
-                ],
-                "minimum_cardinality": 1,
-            }
-        },
-    )
-
-
-class KeyPhotoSource(SourceParentFiltersEntity):
-    """
-    A key photo source.
-    """
-
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-dataset-config", "mixins": ["SourceParentFiltersEntity"]}
-    )
-
-    literal: Optional[KeyPhotoLiteral] = Field(
-        None,
-        description="""A literal for a key photo.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "literal",
-                "domain_of": [
-                    "DefaultLiteralEntity",
-                    "KeyPhotoSource",
-                    "VoxelSpacingSource",
-                    "DatasetSource",
-                    "DepositionSource",
-                    "FrameSource",
-                    "GainSource",
-                    "KeyImageSource",
-                    "RawTiltSource",
-                    "RunSource",
-                    "TiltSeriesSource",
-                    "TomogramSource",
-                ],
-            }
-        },
-    )
-    parent_filters: Optional[SourceParentFilters] = Field(
-        None,
-        description="""Filters for the parent of a source.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "parent_filters",
-                "domain_of": [
-                    "SourceParentFiltersEntity",
-                    "AnnotationSource",
-                    "KeyPhotoSource",
-                    "FrameSource",
-                    "GainSource",
-                    "KeyImageSource",
-                    "RawTiltSource",
-                    "RunSource",
-                    "TiltSeriesSource",
-                    "TomogramSource",
-                    "VoxelSpacingSource",
-                ],
             }
         },
     )
@@ -4273,10 +4099,11 @@ class AnnotationEntity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "sources",
                 "domain_of": [
-                    "KeyPhotoEntity",
                     "AnnotationEntity",
                     "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
                     "DepositionEntity",
+                    "DepositionKeyPhotoEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4285,8 +4112,6 @@ class AnnotationEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                     "VoxelSpacingEntity",
-                    "DatasetKeyPhotoEntity",
-                    "DepositionKeyPhotoEntity",
                 ],
                 "minimum_cardinality": 1,
             }
@@ -4326,16 +4151,17 @@ class AnnotationSource(ConfiguredBaseModel):
         description="""File and sourcing data for a semantic segmentation mask annotation. Annotation that identifies classes of objects.""",
         json_schema_extra={"linkml_meta": {"alias": "SemanticSegmentationMask", "domain_of": ["AnnotationSource"]}},
     )
-    parent_filters: Optional[SourceParentFilters] = Field(
+    parent_filters: Optional[AnnotationParentFilters] = Field(
         None,
-        description="""Filters for the parent of a source.""",
+        description="""Filters for the parent of an annotation source.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "parent_filters",
                 "domain_of": [
-                    "SourceParentFiltersEntity",
                     "AnnotationSource",
-                    "KeyPhotoSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4345,6 +4171,142 @@ class AnnotationSource(ConfiguredBaseModel):
                     "TomogramSource",
                     "VoxelSpacingSource",
                 ],
+            }
+        },
+    )
+
+
+class AnnotationParentFilters(ConfiguredBaseModel):
+    """
+    Filters for the parent of an annotation source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    include: Optional[AnnotationParent] = Field(
+        None,
+        description="""A filter for a parent class of an annotation source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "include",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+    exclude: Optional[AnnotationParent] = Field(
+        None,
+        description="""A filter for a parent class of an annotation source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+
+
+class AnnotationParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of an annotation source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    dataset: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude datasets for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "dataset",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    deposition: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude depositions for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition",
+                "domain_of": [
+                    "AnnotationParent",
+                    "DatasetParent",
+                    "DatasetKeyPhotoParent",
+                    "DepositionKeyPhotoParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    run: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude runs for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "run",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    voxel_spacing: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude voxel spacings for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "voxel_spacing",
+                "domain_of": ["Tomogram", "AnnotationParent", "KeyImageParent", "TomogramParent"],
             }
         },
     )
@@ -4380,10 +4342,11 @@ class DatasetEntity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "sources",
                 "domain_of": [
-                    "KeyPhotoEntity",
                     "AnnotationEntity",
                     "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
                     "DepositionEntity",
+                    "DepositionKeyPhotoEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4392,8 +4355,6 @@ class DatasetEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                     "VoxelSpacingEntity",
-                    "DatasetKeyPhotoEntity",
-                    "DepositionKeyPhotoEntity",
                 ],
                 "minimum_cardinality": 1,
             }
@@ -4410,6 +4371,29 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
         {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
+    parent_filters: Optional[DatasetParentFilters] = Field(
+        None,
+        description="""Types of parent filters for a dataset source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "parent_filters",
+                "domain_of": [
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
     destination_glob: Optional[DestinationGlob] = Field(
         None,
         description="""A glob class for finding files in the output / destination directory.""",
@@ -4483,7 +4467,8 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                 "alias": "literal",
                 "domain_of": [
                     "DefaultLiteralEntity",
-                    "KeyPhotoSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
@@ -4500,24 +4485,112 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
     )
 
 
-class DatasetKeyPhotoEntity(KeyPhotoEntity):
+class DatasetParentFilters(ConfiguredBaseModel):
+    """
+    Types of parent filters for a dataset source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    include: Optional[DatasetParent] = Field(
+        None,
+        description="""A filter for a parent class of a dataset source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "include",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+    exclude: Optional[DatasetParent] = Field(
+        None,
+        description="""A filter for a parent class of a dataset source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+
+
+class DatasetParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of a dataset source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    deposition: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude depositions for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition",
+                "domain_of": [
+                    "AnnotationParent",
+                    "DatasetParent",
+                    "DatasetKeyPhotoParent",
+                    "DepositionKeyPhotoParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+
+
+class DatasetKeyPhotoEntity(ConfiguredBaseModel):
     """
     A dataset key photo entity.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
-    sources: List[KeyPhotoSource] = Field(
+    sources: List[DatasetKeyPhotoSource] = Field(
         default_factory=list,
         description="""A key photo source.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sources",
                 "domain_of": [
-                    "KeyPhotoEntity",
                     "AnnotationEntity",
                     "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
                     "DepositionEntity",
+                    "DepositionKeyPhotoEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4526,8 +4599,6 @@ class DatasetKeyPhotoEntity(KeyPhotoEntity):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                     "VoxelSpacingEntity",
-                    "DatasetKeyPhotoEntity",
-                    "DepositionKeyPhotoEntity",
                 ],
                 "minimum_cardinality": 1,
             }
@@ -4535,36 +4606,144 @@ class DatasetKeyPhotoEntity(KeyPhotoEntity):
     )
 
 
-class DepositionKeyPhotoEntity(KeyPhotoEntity):
+class DatasetKeyPhotoSource(ConfiguredBaseModel):
     """
-    A deposition key photo entity.
+    A key photo source.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
-    sources: List[KeyPhotoSource] = Field(
-        default_factory=list,
-        description="""A key photo source.""",
+    literal: Optional[KeyPhotoLiteral] = Field(
+        None,
+        description="""A literal for a key photo.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "sources",
+                "alias": "literal",
                 "domain_of": [
-                    "KeyPhotoEntity",
-                    "AnnotationEntity",
-                    "DatasetEntity",
-                    "DepositionEntity",
-                    "FrameEntity",
-                    "GainEntity",
-                    "KeyImageEntity",
-                    "RawTiltEntity",
-                    "RunEntity",
-                    "TiltSeriesEntity",
-                    "TomogramEntity",
-                    "VoxelSpacingEntity",
-                    "DatasetKeyPhotoEntity",
-                    "DepositionKeyPhotoEntity",
+                    "DefaultLiteralEntity",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "VoxelSpacingSource",
+                    "DatasetSource",
+                    "DepositionSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
                 ],
-                "minimum_cardinality": 1,
+            }
+        },
+    )
+    parent_filters: Optional[DatasetKeyPhotoParentFilters] = Field(
+        None,
+        description="""Types of parent filters for a key photo source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "parent_filters",
+                "domain_of": [
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
+
+
+class DatasetKeyPhotoParentFilters(ConfiguredBaseModel):
+    """
+    Types of parent filters for a key photo source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    include: Optional[DatasetKeyPhotoParent] = Field(
+        None,
+        description="""A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "include",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+    exclude: Optional[DatasetKeyPhotoParent] = Field(
+        None,
+        description="""A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+
+
+class DatasetKeyPhotoParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    deposition: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude depositions for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition",
+                "domain_of": [
+                    "AnnotationParent",
+                    "DatasetParent",
+                    "DatasetKeyPhotoParent",
+                    "DepositionKeyPhotoParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
             }
         },
     )
@@ -4600,10 +4779,11 @@ class DepositionEntity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "sources",
                 "domain_of": [
-                    "KeyPhotoEntity",
                     "AnnotationEntity",
                     "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
                     "DepositionEntity",
+                    "DepositionKeyPhotoEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4612,8 +4792,6 @@ class DepositionEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                     "VoxelSpacingEntity",
-                    "DatasetKeyPhotoEntity",
-                    "DepositionKeyPhotoEntity",
                 ],
                 "minimum_cardinality": 1,
             }
@@ -4703,7 +4881,8 @@ class DepositionSource(DefaultLiteralEntity, DefaultSource):
                 "alias": "literal",
                 "domain_of": [
                     "DefaultLiteralEntity",
-                    "KeyPhotoSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
@@ -4714,6 +4893,183 @@ class DepositionSource(DefaultLiteralEntity, DefaultSource):
                     "RunSource",
                     "TiltSeriesSource",
                     "TomogramSource",
+                ],
+            }
+        },
+    )
+
+
+class DepositionKeyPhotoEntity(ConfiguredBaseModel):
+    """
+    A deposition key photo entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    sources: List[DepositionKeyPhotoSource] = Field(
+        default_factory=list,
+        description="""A key photo source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "sources",
+                "domain_of": [
+                    "AnnotationEntity",
+                    "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
+                    "DepositionEntity",
+                    "DepositionKeyPhotoEntity",
+                    "FrameEntity",
+                    "GainEntity",
+                    "KeyImageEntity",
+                    "RawTiltEntity",
+                    "RunEntity",
+                    "TiltSeriesEntity",
+                    "TomogramEntity",
+                    "VoxelSpacingEntity",
+                ],
+                "minimum_cardinality": 1,
+            }
+        },
+    )
+
+
+class DepositionKeyPhotoSource(ConfiguredBaseModel):
+    """
+    A key photo source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    literal: Optional[KeyPhotoLiteral] = Field(
+        None,
+        description="""A literal for a key photo.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": [
+                    "DefaultLiteralEntity",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "VoxelSpacingSource",
+                    "DatasetSource",
+                    "DepositionSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    parent_filters: Optional[DepositionKeyPhotoParentFilters] = Field(
+        None,
+        description="""Types of parent filters for a key photo source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "parent_filters",
+                "domain_of": [
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
+
+
+class DepositionKeyPhotoParentFilters(ConfiguredBaseModel):
+    """
+    Types of parent filters for a key photo source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    include: Optional[DepositionKeyPhotoParent] = Field(
+        None,
+        description="""A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "include",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+    exclude: Optional[DepositionKeyPhotoParent] = Field(
+        None,
+        description="""A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+
+
+class DepositionKeyPhotoParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    deposition: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude depositions for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition",
+                "domain_of": [
+                    "AnnotationParent",
+                    "DatasetParent",
+                    "DatasetKeyPhotoParent",
+                    "DepositionKeyPhotoParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
                 ],
             }
         },
@@ -4734,10 +5090,11 @@ class FrameEntity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "sources",
                 "domain_of": [
-                    "KeyPhotoEntity",
                     "AnnotationEntity",
                     "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
                     "DepositionEntity",
+                    "DepositionKeyPhotoEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4746,8 +5103,6 @@ class FrameEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                     "VoxelSpacingEntity",
-                    "DatasetKeyPhotoEntity",
-                    "DepositionKeyPhotoEntity",
                 ],
                 "minimum_cardinality": 1,
             }
@@ -4755,18 +5110,38 @@ class FrameEntity(ConfiguredBaseModel):
     )
 
 
-class FrameSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
+class FrameSource(DefaultLiteralEntity, DefaultSource):
     """
     A frame source.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {
-            "from_schema": "cdp-dataset-config",
-            "mixins": ["DefaultSource", "DefaultLiteralEntity", "SourceParentFiltersEntity"],
-        }
+        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
+    parent_filters: Optional[FrameParentFilters] = Field(
+        None,
+        description="""Types of parent filters for a frame source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "parent_filters",
+                "domain_of": [
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
     destination_glob: Optional[DestinationGlob] = Field(
         None,
         description="""A glob class for finding files in the output / destination directory.""",
@@ -4840,7 +5215,8 @@ class FrameSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource
                 "alias": "literal",
                 "domain_of": [
                     "DefaultLiteralEntity",
-                    "KeyPhotoSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
@@ -4855,24 +5231,128 @@ class FrameSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource
             }
         },
     )
-    parent_filters: Optional[SourceParentFilters] = Field(
+
+
+class FrameParentFilters(ConfiguredBaseModel):
+    """
+    Types of parent filters for a frame source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    include: Optional[FrameParent] = Field(
         None,
-        description="""Filters for the parent of a source.""",
+        description="""A filter for a parent class of a frame source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "parent_filters",
+                "alias": "include",
                 "domain_of": [
-                    "SourceParentFiltersEntity",
-                    "AnnotationSource",
-                    "KeyPhotoSource",
-                    "FrameSource",
-                    "GainSource",
-                    "KeyImageSource",
-                    "RawTiltSource",
-                    "RunSource",
-                    "TiltSeriesSource",
-                    "TomogramSource",
-                    "VoxelSpacingSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+    exclude: Optional[FrameParent] = Field(
+        None,
+        description="""A filter for a parent class of a frame source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+
+
+class FrameParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of a frame source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    dataset: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude datasets for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "dataset",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    deposition: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude depositions for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition",
+                "domain_of": [
+                    "AnnotationParent",
+                    "DatasetParent",
+                    "DatasetKeyPhotoParent",
+                    "DepositionKeyPhotoParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    run: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude runs for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "run",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
                 ],
             }
         },
@@ -4893,10 +5373,11 @@ class GainEntity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "sources",
                 "domain_of": [
-                    "KeyPhotoEntity",
                     "AnnotationEntity",
                     "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
                     "DepositionEntity",
+                    "DepositionKeyPhotoEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -4905,8 +5386,6 @@ class GainEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                     "VoxelSpacingEntity",
-                    "DatasetKeyPhotoEntity",
-                    "DepositionKeyPhotoEntity",
                 ],
                 "minimum_cardinality": 1,
             }
@@ -4914,18 +5393,38 @@ class GainEntity(ConfiguredBaseModel):
     )
 
 
-class GainSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
+class GainSource(DefaultLiteralEntity, DefaultSource):
     """
     A gain source.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {
-            "from_schema": "cdp-dataset-config",
-            "mixins": ["DefaultSource", "DefaultLiteralEntity", "SourceParentFiltersEntity"],
-        }
+        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
+    parent_filters: Optional[GainParentFilters] = Field(
+        None,
+        description="""Types of parent filters for a gain source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "parent_filters",
+                "domain_of": [
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
     destination_glob: Optional[DestinationGlob] = Field(
         None,
         description="""A glob class for finding files in the output / destination directory.""",
@@ -4999,7 +5498,8 @@ class GainSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource)
                 "alias": "literal",
                 "domain_of": [
                     "DefaultLiteralEntity",
-                    "KeyPhotoSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
@@ -5014,24 +5514,128 @@ class GainSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource)
             }
         },
     )
-    parent_filters: Optional[SourceParentFilters] = Field(
+
+
+class GainParentFilters(ConfiguredBaseModel):
+    """
+    Types of parent filters for a gain source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    include: Optional[GainParent] = Field(
         None,
-        description="""Filters for the parent of a source.""",
+        description="""A filter for a parent class of a gain source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "parent_filters",
+                "alias": "include",
                 "domain_of": [
-                    "SourceParentFiltersEntity",
-                    "AnnotationSource",
-                    "KeyPhotoSource",
-                    "FrameSource",
-                    "GainSource",
-                    "KeyImageSource",
-                    "RawTiltSource",
-                    "RunSource",
-                    "TiltSeriesSource",
-                    "TomogramSource",
-                    "VoxelSpacingSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+    exclude: Optional[GainParent] = Field(
+        None,
+        description="""A filter for a parent class of a gain source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+
+
+class GainParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of a gain source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    dataset: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude datasets for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "dataset",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    deposition: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude depositions for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition",
+                "domain_of": [
+                    "AnnotationParent",
+                    "DatasetParent",
+                    "DatasetKeyPhotoParent",
+                    "DepositionKeyPhotoParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    run: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude runs for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "run",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
                 ],
             }
         },
@@ -5052,10 +5656,11 @@ class KeyImageEntity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "sources",
                 "domain_of": [
-                    "KeyPhotoEntity",
                     "AnnotationEntity",
                     "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
                     "DepositionEntity",
+                    "DepositionKeyPhotoEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -5064,8 +5669,6 @@ class KeyImageEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                     "VoxelSpacingEntity",
-                    "DatasetKeyPhotoEntity",
-                    "DepositionKeyPhotoEntity",
                 ],
                 "minimum_cardinality": 1,
             }
@@ -5073,18 +5676,38 @@ class KeyImageEntity(ConfiguredBaseModel):
     )
 
 
-class KeyImageSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
+class KeyImageSource(DefaultLiteralEntity, DefaultSource):
     """
     A key image source.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {
-            "from_schema": "cdp-dataset-config",
-            "mixins": ["DefaultSource", "DefaultLiteralEntity", "SourceParentFiltersEntity"],
-        }
+        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
+    parent_filters: Optional[KeyImageParentFilters] = Field(
+        None,
+        description="""Types of parent filters for a key image source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "parent_filters",
+                "domain_of": [
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
     destination_glob: Optional[DestinationGlob] = Field(
         None,
         description="""A glob class for finding files in the output / destination directory.""",
@@ -5158,7 +5781,8 @@ class KeyImageSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                 "alias": "literal",
                 "domain_of": [
                     "DefaultLiteralEntity",
-                    "KeyPhotoSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
@@ -5173,25 +5797,144 @@ class KeyImageSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
             }
         },
     )
-    parent_filters: Optional[SourceParentFilters] = Field(
+
+
+class KeyImageParentFilters(ConfiguredBaseModel):
+    """
+    Types of parent filters for a key image source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    include: Optional[KeyImageParent] = Field(
         None,
-        description="""Filters for the parent of a source.""",
+        description="""A filter for a parent class of a key image source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "parent_filters",
+                "alias": "include",
                 "domain_of": [
-                    "SourceParentFiltersEntity",
-                    "AnnotationSource",
-                    "KeyPhotoSource",
-                    "FrameSource",
-                    "GainSource",
-                    "KeyImageSource",
-                    "RawTiltSource",
-                    "RunSource",
-                    "TiltSeriesSource",
-                    "TomogramSource",
-                    "VoxelSpacingSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
                 ],
+            }
+        },
+    )
+    exclude: Optional[KeyImageParent] = Field(
+        None,
+        description="""A filter for a parent class of a key image source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+
+
+class KeyImageParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of a key image source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    dataset: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude datasets for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "dataset",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    deposition: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude depositions for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition",
+                "domain_of": [
+                    "AnnotationParent",
+                    "DatasetParent",
+                    "DatasetKeyPhotoParent",
+                    "DepositionKeyPhotoParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    run: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude runs for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "run",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    tomogram: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude tomograms for a source.""",
+        json_schema_extra={"linkml_meta": {"alias": "tomogram", "domain_of": ["KeyImageParent"]}},
+    )
+    voxel_spacing: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude voxel spacings for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "voxel_spacing",
+                "domain_of": ["Tomogram", "AnnotationParent", "KeyImageParent", "TomogramParent"],
             }
         },
     )
@@ -5211,10 +5954,11 @@ class RawTiltEntity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "sources",
                 "domain_of": [
-                    "KeyPhotoEntity",
                     "AnnotationEntity",
                     "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
                     "DepositionEntity",
+                    "DepositionKeyPhotoEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -5223,8 +5967,6 @@ class RawTiltEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                     "VoxelSpacingEntity",
-                    "DatasetKeyPhotoEntity",
-                    "DepositionKeyPhotoEntity",
                 ],
                 "minimum_cardinality": 1,
             }
@@ -5232,18 +5974,38 @@ class RawTiltEntity(ConfiguredBaseModel):
     )
 
 
-class RawTiltSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
+class RawTiltSource(DefaultLiteralEntity, DefaultSource):
     """
     A raw tilt source.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {
-            "from_schema": "cdp-dataset-config",
-            "mixins": ["DefaultSource", "DefaultLiteralEntity", "SourceParentFiltersEntity"],
-        }
+        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
+    parent_filters: Optional[RawTiltParentFilters] = Field(
+        None,
+        description="""Types of parent filters for a raw tilt source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "parent_filters",
+                "domain_of": [
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
     destination_glob: Optional[DestinationGlob] = Field(
         None,
         description="""A glob class for finding files in the output / destination directory.""",
@@ -5317,7 +6079,8 @@ class RawTiltSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSour
                 "alias": "literal",
                 "domain_of": [
                     "DefaultLiteralEntity",
-                    "KeyPhotoSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
@@ -5332,24 +6095,128 @@ class RawTiltSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSour
             }
         },
     )
-    parent_filters: Optional[SourceParentFilters] = Field(
+
+
+class RawTiltParentFilters(ConfiguredBaseModel):
+    """
+    Types of parent filters for a raw tilt source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    include: Optional[RawTiltParent] = Field(
         None,
-        description="""Filters for the parent of a source.""",
+        description="""A filter for a parent class of a raw tilt source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "parent_filters",
+                "alias": "include",
                 "domain_of": [
-                    "SourceParentFiltersEntity",
-                    "AnnotationSource",
-                    "KeyPhotoSource",
-                    "FrameSource",
-                    "GainSource",
-                    "KeyImageSource",
-                    "RawTiltSource",
-                    "RunSource",
-                    "TiltSeriesSource",
-                    "TomogramSource",
-                    "VoxelSpacingSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+    exclude: Optional[RawTiltParent] = Field(
+        None,
+        description="""A filter for a parent class of a raw tilt source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+
+
+class RawTiltParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of a raw tilt source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    dataset: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude datasets for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "dataset",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    deposition: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude depositions for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition",
+                "domain_of": [
+                    "AnnotationParent",
+                    "DatasetParent",
+                    "DatasetKeyPhotoParent",
+                    "DepositionKeyPhotoParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    run: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude runs for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "run",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
                 ],
             }
         },
@@ -5370,10 +6237,11 @@ class RunEntity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "sources",
                 "domain_of": [
-                    "KeyPhotoEntity",
                     "AnnotationEntity",
                     "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
                     "DepositionEntity",
+                    "DepositionKeyPhotoEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -5382,8 +6250,6 @@ class RunEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                     "VoxelSpacingEntity",
-                    "DatasetKeyPhotoEntity",
-                    "DepositionKeyPhotoEntity",
                 ],
                 "minimum_cardinality": 1,
             }
@@ -5391,18 +6257,38 @@ class RunEntity(ConfiguredBaseModel):
     )
 
 
-class RunSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
+class RunSource(DefaultLiteralEntity, DefaultSource):
     """
     A run source.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {
-            "from_schema": "cdp-dataset-config",
-            "mixins": ["DefaultSource", "DefaultLiteralEntity", "SourceParentFiltersEntity"],
-        }
+        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
+    parent_filters: Optional[RunParentFilters] = Field(
+        None,
+        description="""Types of parent filters for a run source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "parent_filters",
+                "domain_of": [
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
     destination_glob: Optional[DestinationGlob] = Field(
         None,
         description="""A glob class for finding files in the output / destination directory.""",
@@ -5476,7 +6362,8 @@ class RunSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
                 "alias": "literal",
                 "domain_of": [
                     "DefaultLiteralEntity",
-                    "KeyPhotoSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
@@ -5491,24 +6378,109 @@ class RunSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
             }
         },
     )
-    parent_filters: Optional[SourceParentFilters] = Field(
+
+
+class RunParentFilters(ConfiguredBaseModel):
+    """
+    Types of parent filters for a run source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    include: Optional[RunParent] = Field(
         None,
-        description="""Filters for the parent of a source.""",
+        description="""A filter for a parent class of a run source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "parent_filters",
+                "alias": "include",
                 "domain_of": [
-                    "SourceParentFiltersEntity",
-                    "AnnotationSource",
-                    "KeyPhotoSource",
-                    "FrameSource",
-                    "GainSource",
-                    "KeyImageSource",
-                    "RawTiltSource",
-                    "RunSource",
-                    "TiltSeriesSource",
-                    "TomogramSource",
-                    "VoxelSpacingSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+    exclude: Optional[RunParent] = Field(
+        None,
+        description="""A filter for a parent class of a run source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+
+
+class RunParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of a run source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    dataset: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude datasets for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "dataset",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    deposition: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude depositions for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition",
+                "domain_of": [
+                    "AnnotationParent",
+                    "DatasetParent",
+                    "DatasetKeyPhotoParent",
+                    "DepositionKeyPhotoParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
                 ],
             }
         },
@@ -5584,10 +6556,11 @@ class TiltSeriesEntity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "sources",
                 "domain_of": [
-                    "KeyPhotoEntity",
                     "AnnotationEntity",
                     "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
                     "DepositionEntity",
+                    "DepositionKeyPhotoEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -5596,8 +6569,6 @@ class TiltSeriesEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                     "VoxelSpacingEntity",
-                    "DatasetKeyPhotoEntity",
-                    "DepositionKeyPhotoEntity",
                 ],
                 "minimum_cardinality": 1,
             }
@@ -5605,18 +6576,38 @@ class TiltSeriesEntity(ConfiguredBaseModel):
     )
 
 
-class TiltSeriesSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
+class TiltSeriesSource(DefaultLiteralEntity, DefaultSource):
     """
     A tilt series source.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {
-            "from_schema": "cdp-dataset-config",
-            "mixins": ["DefaultSource", "DefaultLiteralEntity", "SourceParentFiltersEntity"],
-        }
+        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
+    parent_filters: Optional[TiltSeriesParentFilters] = Field(
+        None,
+        description="""Types of parent filters for a tilt series source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "parent_filters",
+                "domain_of": [
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
     destination_glob: Optional[DestinationGlob] = Field(
         None,
         description="""A glob class for finding files in the output / destination directory.""",
@@ -5690,7 +6681,8 @@ class TiltSeriesSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultS
                 "alias": "literal",
                 "domain_of": [
                     "DefaultLiteralEntity",
-                    "KeyPhotoSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
@@ -5705,24 +6697,128 @@ class TiltSeriesSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultS
             }
         },
     )
-    parent_filters: Optional[SourceParentFilters] = Field(
+
+
+class TiltSeriesParentFilters(ConfiguredBaseModel):
+    """
+    Types of parent filters for a tilt series source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    include: Optional[TiltSeriesParent] = Field(
         None,
-        description="""Filters for the parent of a source.""",
+        description="""A filter for a parent class of a tilt series source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "parent_filters",
+                "alias": "include",
                 "domain_of": [
-                    "SourceParentFiltersEntity",
-                    "AnnotationSource",
-                    "KeyPhotoSource",
-                    "FrameSource",
-                    "GainSource",
-                    "KeyImageSource",
-                    "RawTiltSource",
-                    "RunSource",
-                    "TiltSeriesSource",
-                    "TomogramSource",
-                    "VoxelSpacingSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+    exclude: Optional[TiltSeriesParent] = Field(
+        None,
+        description="""A filter for a parent class of a tilt series source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+
+
+class TiltSeriesParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of a tilt series source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    dataset: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude datasets for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "dataset",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    deposition: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude depositions for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition",
+                "domain_of": [
+                    "AnnotationParent",
+                    "DatasetParent",
+                    "DatasetKeyPhotoParent",
+                    "DepositionKeyPhotoParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    run: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude runs for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "run",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
                 ],
             }
         },
@@ -5759,10 +6855,11 @@ class TomogramEntity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "sources",
                 "domain_of": [
-                    "KeyPhotoEntity",
                     "AnnotationEntity",
                     "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
                     "DepositionEntity",
+                    "DepositionKeyPhotoEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -5771,8 +6868,6 @@ class TomogramEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                     "VoxelSpacingEntity",
-                    "DatasetKeyPhotoEntity",
-                    "DepositionKeyPhotoEntity",
                 ],
                 "minimum_cardinality": 1,
             }
@@ -5780,18 +6875,38 @@ class TomogramEntity(ConfiguredBaseModel):
     )
 
 
-class TomogramSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSource):
+class TomogramSource(DefaultLiteralEntity, DefaultSource):
     """
     A tomogram source.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {
-            "from_schema": "cdp-dataset-config",
-            "mixins": ["DefaultSource", "DefaultLiteralEntity", "SourceParentFiltersEntity"],
-        }
+        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
+    parent_filters: Optional[TomogramParentFilters] = Field(
+        None,
+        description="""Types of parent filters for a tomogram source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "parent_filters",
+                "domain_of": [
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
     destination_glob: Optional[DestinationGlob] = Field(
         None,
         description="""A glob class for finding files in the output / destination directory.""",
@@ -5865,7 +6980,8 @@ class TomogramSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
                 "alias": "literal",
                 "domain_of": [
                     "DefaultLiteralEntity",
-                    "KeyPhotoSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
@@ -5880,25 +6996,139 @@ class TomogramSource(DefaultLiteralEntity, SourceParentFiltersEntity, DefaultSou
             }
         },
     )
-    parent_filters: Optional[SourceParentFilters] = Field(
+
+
+class TomogramParentFilters(ConfiguredBaseModel):
+    """
+    Types of parent filters for a tomogram source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    include: Optional[TomogramParent] = Field(
         None,
-        description="""Filters for the parent of a source.""",
+        description="""A filter for a parent class of a tomogram source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "parent_filters",
+                "alias": "include",
                 "domain_of": [
-                    "SourceParentFiltersEntity",
-                    "AnnotationSource",
-                    "KeyPhotoSource",
-                    "FrameSource",
-                    "GainSource",
-                    "KeyImageSource",
-                    "RawTiltSource",
-                    "RunSource",
-                    "TiltSeriesSource",
-                    "TomogramSource",
-                    "VoxelSpacingSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
                 ],
+            }
+        },
+    )
+    exclude: Optional[TomogramParent] = Field(
+        None,
+        description="""A filter for a parent class of a tomogram source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+
+
+class TomogramParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of a tomogram source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    dataset: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude datasets for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "dataset",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    deposition: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude depositions for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition",
+                "domain_of": [
+                    "AnnotationParent",
+                    "DatasetParent",
+                    "DatasetKeyPhotoParent",
+                    "DepositionKeyPhotoParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    run: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude runs for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "run",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    voxel_spacing: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude voxel spacings for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "voxel_spacing",
+                "domain_of": ["Tomogram", "AnnotationParent", "KeyImageParent", "TomogramParent"],
             }
         },
     )
@@ -5918,10 +7148,11 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "sources",
                 "domain_of": [
-                    "KeyPhotoEntity",
                     "AnnotationEntity",
                     "DatasetEntity",
+                    "DatasetKeyPhotoEntity",
                     "DepositionEntity",
+                    "DepositionKeyPhotoEntity",
                     "FrameEntity",
                     "GainEntity",
                     "KeyImageEntity",
@@ -5930,8 +7161,6 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                     "VoxelSpacingEntity",
-                    "DatasetKeyPhotoEntity",
-                    "DepositionKeyPhotoEntity",
                 ],
                 "minimum_cardinality": 1,
             }
@@ -5939,14 +7168,12 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
     )
 
 
-class VoxelSpacingSource(SourceParentFiltersEntity):
+class VoxelSpacingSource(ConfiguredBaseModel):
     """
     A voxel spacing source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-dataset-config", "mixins": ["SourceParentFiltersEntity"]}
-    )
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
 
     destination_glob: Optional[DestinationGlob] = Field(
         None,
@@ -6000,7 +7227,8 @@ class VoxelSpacingSource(SourceParentFiltersEntity):
                 "alias": "literal",
                 "domain_of": [
                     "DefaultLiteralEntity",
-                    "KeyPhotoSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
@@ -6020,16 +7248,17 @@ class VoxelSpacingSource(SourceParentFiltersEntity):
         description="""A tomogram header, a unique source attribute for voxel spacing.""",
         json_schema_extra={"linkml_meta": {"alias": "tomogram_header", "domain_of": ["VoxelSpacingSource"]}},
     )
-    parent_filters: Optional[SourceParentFilters] = Field(
+    parent_filters: Optional[VoxelSpacingParentFilters] = Field(
         None,
-        description="""Filters for the parent of a source.""",
+        description="""Types of parent filters for a voxel spacing source.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "parent_filters",
                 "domain_of": [
-                    "SourceParentFiltersEntity",
                     "AnnotationSource",
-                    "KeyPhotoSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -6038,6 +7267,132 @@ class VoxelSpacingSource(SourceParentFiltersEntity):
                     "TiltSeriesSource",
                     "TomogramSource",
                     "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
+
+
+class VoxelSpacingParentFilters(ConfiguredBaseModel):
+    """
+    Types of parent filters for a voxel spacing source.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    include: Optional[VoxelSpacingParent] = Field(
+        None,
+        description="""A filter for a parent class of a voxel spacing source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "include",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+    exclude: Optional[VoxelSpacingParent] = Field(
+        None,
+        description="""A filter for a parent class of a voxel spacing source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                ],
+            }
+        },
+    )
+
+
+class VoxelSpacingParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of a voxel spacing source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+
+    dataset: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude datasets for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "dataset",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    deposition: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude depositions for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "deposition",
+                "domain_of": [
+                    "AnnotationParent",
+                    "DatasetParent",
+                    "DatasetKeyPhotoParent",
+                    "DepositionKeyPhotoParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "RunParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
+                ],
+            }
+        },
+    )
+    run: Optional[List[str]] = Field(
+        default_factory=list,
+        description="""Include or exclude runs for a source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "run",
+                "domain_of": [
+                    "AnnotationParent",
+                    "FrameParent",
+                    "GainParent",
+                    "KeyImageParent",
+                    "RawTiltParent",
+                    "TiltSeriesParent",
+                    "TomogramParent",
+                    "VoxelSpacingParent",
                 ],
             }
         },
@@ -6148,38 +7503,59 @@ DestinationGlob.model_rebuild()
 SourceGlob.model_rebuild()
 SourceMultiGlob.model_rebuild()
 DefaultSource.model_rebuild()
-SourceParentFiltersEntity.model_rebuild()
-SourceParentFilters.model_rebuild()
-SourceParent.model_rebuild()
 DefaultLiteralEntity.model_rebuild()
 DefaultLiteral.model_rebuild()
-KeyPhotoEntity.model_rebuild()
-KeyPhotoSource.model_rebuild()
 KeyPhotoLiteral.model_rebuild()
 AnnotationEntity.model_rebuild()
 AnnotationSource.model_rebuild()
+AnnotationParentFilters.model_rebuild()
+AnnotationParent.model_rebuild()
 DatasetEntity.model_rebuild()
 DatasetSource.model_rebuild()
+DatasetParentFilters.model_rebuild()
+DatasetParent.model_rebuild()
 DatasetKeyPhotoEntity.model_rebuild()
-DepositionKeyPhotoEntity.model_rebuild()
+DatasetKeyPhotoSource.model_rebuild()
+DatasetKeyPhotoParentFilters.model_rebuild()
+DatasetKeyPhotoParent.model_rebuild()
 DepositionEntity.model_rebuild()
 DepositionSource.model_rebuild()
+DepositionKeyPhotoEntity.model_rebuild()
+DepositionKeyPhotoSource.model_rebuild()
+DepositionKeyPhotoParentFilters.model_rebuild()
+DepositionKeyPhotoParent.model_rebuild()
 FrameEntity.model_rebuild()
 FrameSource.model_rebuild()
+FrameParentFilters.model_rebuild()
+FrameParent.model_rebuild()
 GainEntity.model_rebuild()
 GainSource.model_rebuild()
+GainParentFilters.model_rebuild()
+GainParent.model_rebuild()
 KeyImageEntity.model_rebuild()
 KeyImageSource.model_rebuild()
+KeyImageParentFilters.model_rebuild()
+KeyImageParent.model_rebuild()
 RawTiltEntity.model_rebuild()
 RawTiltSource.model_rebuild()
+RawTiltParentFilters.model_rebuild()
+RawTiltParent.model_rebuild()
 RunEntity.model_rebuild()
 RunSource.model_rebuild()
+RunParentFilters.model_rebuild()
+RunParent.model_rebuild()
 StandardizationConfig.model_rebuild()
 TiltSeriesEntity.model_rebuild()
 TiltSeriesSource.model_rebuild()
+TiltSeriesParentFilters.model_rebuild()
+TiltSeriesParent.model_rebuild()
 TomogramEntity.model_rebuild()
 TomogramSource.model_rebuild()
+TomogramParentFilters.model_rebuild()
+TomogramParent.model_rebuild()
 VoxelSpacingEntity.model_rebuild()
 VoxelSpacingSource.model_rebuild()
+VoxelSpacingParentFilters.model_rebuild()
+VoxelSpacingParent.model_rebuild()
 VoxelSpacingLiteral.model_rebuild()
 TomogramHeader.model_rebuild()
