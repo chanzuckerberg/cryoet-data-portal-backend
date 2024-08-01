@@ -13,8 +13,8 @@ repos:
     # These files are codegen'd and non-compliant :'(
     exclude: |
       (?x)(
-          ^schema/v1.1.0/metadata_models.py|
-          ^schema/v1.1.0/dataset_config_models.py
+          ^schema/.*/metadata_models.py|
+          ^schema/.*/dataset_config_models.py
       )
     args:
     - --fix
@@ -50,6 +50,6 @@ repos:
   hooks:
   - id: dataset-config-validation
     name: dataset-config-validation
-    entry: bash -c "cd schema/v1.1.0/ && make validate-configs"
+    entry: bash -c "cd schema/ && make validate-configs"
     language: system
-    files: '^(ingestion_tools/dataset_configs/|schema/v1.1.0/.*\.(py|yaml|Makefile))'
+    files: '^(ingestion_tools/dataset_configs/|schema/.*\.(py|yaml|Makefile))'

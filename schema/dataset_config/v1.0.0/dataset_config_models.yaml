@@ -1,0 +1,714 @@
+name: cdp-dataset-config
+id: cdp-dataset-config
+version: 1.1.0
+description: Schema for dataset configs
+imports:
+- linkml:types
+- ../../core/v1.1.0/codegen/metadata_materialized
+- ../../core/v1.1.0/common
+prefixes:
+  linkml:
+    prefix_prefix: linkml
+    prefix_reference: https://w3id.org/linkml/
+
+slots:
+  # ============================================================================
+  # Slots to use for parent filters
+  # ============================================================================
+  annotation:
+    description: Include or exclude annotations for a source.
+    multivalued: true
+    range: string
+  dataset:
+    description: Include or exclude datasets for a source.
+    multivalued: true
+    range: string
+  deposition:
+    description: Include or exclude depositions for a source.
+    multivalued: true
+    range: string
+  run:
+    description: Include or exclude runs for a source.
+    multivalued: true
+    range: string
+  tomogram:
+    description: Include or exclude tomograms for a source.
+    multivalued: true
+    range: string
+  voxel_spacing:
+    description: Include or exclude voxel spacings for a source.
+    multivalued: true
+    range: string
+
+
+classes:
+  # ============================================================================
+  # Configuration file class (and its subclasses)
+  # ============================================================================
+
+  Container:
+    description: Class that models the dataset config.
+    tree_root: true
+    attributes:
+      annotations:
+        description: Annotations for the dataset.
+        multivalued: true
+        range: AnnotationEntity
+      dataset_keyphotos:
+        description: Key photos for the dataset.
+        multivalued: true
+        range: DatasetKeyPhotoEntity
+      datasets:
+        description: Datasets for the dataset.
+        multivalued: true
+        range: DatasetEntity
+        required: true
+      deposition_keyphotos:
+        description: Key photos for the deposition.
+        multivalued: true
+        range: DepositionKeyPhotoEntity
+      depositions:
+        description: Depositions for the dataset.
+        multivalued: true
+        range: DepositionEntity
+        required: true
+      frames:
+        description: Frames for the dataset.
+        multivalued: true
+        range: FrameEntity
+      gains:
+        description: Gains for the dataset.
+        multivalued: true
+        range: GainEntity
+      key_images:
+        description: Key images for the dataset.
+        multivalued: true
+        range: KeyImageEntity
+      rawtilts:
+        description: Raw tilts for the dataset.
+        multivalued: true
+        range: RawTiltEntity
+      runs:
+        description: Runs for the dataset.
+        multivalued: true
+        range: RunEntity
+        required: true
+      standardization_config:
+        description: Standardization config for the dataset.
+        range: StandardizationConfig
+        required: true
+      tiltseries:
+        description: Tilt series for the dataset.
+        multivalued: true
+        range: TiltSeriesEntity
+      tomograms:
+        description: Tomograms for the dataset.
+        multivalued: true
+        range: TomogramEntity
+      voxel_spacings:
+        description: Voxel spacings for the dataset.
+        multivalued: true
+        range: VoxelSpacingEntity
+        required: true
+
+  # ============================================================================
+  # Reused / general classes
+  # ============================================================================
+
+  GeneralGlob:
+    description: An abstracted glob class for destination and source globs.
+    abstract: true
+    attributes:
+      list_glob:
+        description: The glob for the file.
+        range: string
+        required: true
+      match_regex:
+        description: The regex for the file.
+        range: string
+        ifabsent: string(.*)
+      name_regex:
+        description: The regex for the name of the file.
+        range: string
+        ifabsent: string((.*))
+
+  DestinationGlob:
+    description: A glob class for finding files in the output / destination directory.
+    is_a: GeneralGlob
+
+  SourceGlob:
+    description: A glob class for finding files in the source directory.
+    is_a: GeneralGlob
+
+  SourceMultiGlob:
+    description: A glob class for finding files in the source directory (with multiple globs).
+    attributes:
+      list_globs:
+        description: The globs for the file.
+        multivalued: true
+        range: string
+        required: true
+
+  DefaultSource:
+    description: A generalized source class with glob finders.
+    attributes:
+      destination_glob:
+        description: The glob object for the destination file.
+        range: DestinationGlob
+      source_glob:
+        description: The glob object for the source file.
+        range: SourceGlob
+      source_multi_glob:
+        description: The glob object for the source file (with multiple globs).
+        range: SourceMultiGlob
+      # Would also have literal here, but literal schema varies by class, so we have DefaultLiteralEntity instead
+      # Would also have parent_filters here, but sometimes parent_filters doesn't apply (e.g., Dataset),
+      # so we have individual ParentFiltersEntity instead
+
+  DefaultLiteralEntity:
+    description: Used as a mixin with root-level classes that contain sources that have literals.
+    attributes:
+      literal:
+        description: A literal class with a value attribute.
+        range: DefaultLiteral
+
+  DefaultLiteral:
+    description: A literal class with a value attribute.
+    attributes:
+      value:
+        description: The value for the literal.
+        multivalued: true
+        range: Any
+        required: true
+
+  KeyPhotoLiteral:
+    description: A literal for a key photo.
+    attributes:
+      value:
+        description: The value for the key photo literal.
+        range: PicturePath
+        required: true
+
+  # ============================================================================
+  # Dataset config classes
+  # ============================================================================
+  AnnotationEntity:
+    description: An annotation entity.
+    attributes:
+      metadata:
+        description: The metadata for the annotation.
+        range: Annotation
+        required: true
+      sources:
+        description: The sources for the annotation.
+        multivalued: true
+        range: AnnotationSource
+        required: true
+
+  AnnotationSource:
+    description: An annotation source.
+    attributes:
+      InstanceSegmentation:
+        description: The instance segmentation annotation source.
+        range: AnnotationInstanceSegmentationFile
+      OrientedPoint:
+        description: The oriented point annotation source.
+        range: AnnotationOrientedPointFile
+      Point:
+        description: The point annotation source.
+        range: AnnotationPointFile
+      SegmentationMask:
+        description: The segmentation mask annotation source.
+        range: AnnotationSegmentationMaskFile
+      SemanticSegmentationMask:
+        description: The semantic segmentation mask annotation source.
+        range: AnnotationSemanticSegmentationMaskFile
+      parent_filters:
+        description: Filters for the parent of a source.
+        range: AnnotationParentFilters
+
+  AnnotationParentFilters:
+    description: Filters for the parent of an annotation source.
+    attributes:
+      include:
+        description: Include files for the parent of an annotation source (regexes).
+        range: AnnotationParent
+      exclude:
+        description: Exclude files for the parent of an annotation source (regexes).
+        range: AnnotationParent
+
+  AnnotationParent:
+    description: A filter for a parent class of an annotation source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - dataset
+      - deposition
+      - run
+      - voxel_spacing
+
+  DatasetEntity:
+    description: A dataset entity.
+    attributes:
+      metadata:
+        range: Dataset
+      sources:
+        multivalued: true
+        range: DatasetSource
+        required: true
+
+  DatasetSource:
+    description: A dataset source.
+    mixins:
+      - DefaultSource
+      - DefaultLiteralEntity
+    attributes:
+      parent_filters:
+        description: Permitted parent filters for a dataset source.
+        range: DatasetParentFilters
+
+  DatasetParentFilters:
+    description: Types of parent filters for a dataset source.
+    attributes:
+      include:
+        description: Include files for the parent of a dataset source (regexes).
+        range: DatasetParent
+      exclude:
+        description: Exclude files for the parent of a dataset source (regexes).
+        range: DatasetParent
+
+  DatasetParent:
+    description: A filter for a parent class of a dataset source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - deposition
+
+  DatasetKeyPhotoEntity:
+    description: A dataset key photo entity.
+    attributes:
+      sources:
+        multivalued: true
+        range: DatasetKeyPhotoSource
+        required: true
+
+  DatasetKeyPhotoSource:
+    description: A key photo source.
+    attributes:
+      literal:
+        description: A literal for a key photo.
+        range: KeyPhotoLiteral
+      parent_filters:
+        description: Permitted parent filters for a key photo source.
+        range: DatasetKeyPhotoParentFilters
+
+  DatasetKeyPhotoParentFilters:
+    description: Types of parent filters for a key photo source.
+    attributes:
+      include:
+        description: Include files for the parent of a key photo source (regexes).
+        range: DatasetKeyPhotoParent
+      exclude:
+        description: Exclude files for the parent of a key photo source (regexes).
+        range: DatasetKeyPhotoParent
+
+  DatasetKeyPhotoParent:
+    description: A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - deposition
+
+  DepositionEntity:
+    description: A deposition entity.
+    attributes:
+      metadata:
+        range: Deposition
+      sources:
+        multivalued: true
+        range: DepositionSource
+        required: true
+
+  DepositionSource:
+    description: A deposition source.
+    mixins:
+      - DefaultSource
+      - DefaultLiteralEntity
+      # No ParentFiltersEntity because parent_filters doesn't apply to Deposition
+
+  DepositionKeyPhotoEntity:
+    description: A deposition key photo entity.
+    attributes:
+      sources:
+        multivalued: true
+        range: DepositionKeyPhotoSource
+        required: true
+
+  DepositionKeyPhotoSource:
+    description: A key photo source.
+    attributes:
+      literal:
+        description: A literal for a key photo.
+        range: KeyPhotoLiteral
+      parent_filters:
+        description: Permitted parent filters for a key photo source.
+        range: DepositionKeyPhotoParentFilters
+
+  DepositionKeyPhotoParentFilters:
+    description: Types of parent filters for a key photo source.
+    attributes:
+      include:
+        description: Include files for the parent of a key photo source (regexes).
+        range: DepositionKeyPhotoParent
+      exclude:
+        description: Exclude files for the parent of a key photo source (regexes).
+        range: DepositionKeyPhotoParent
+
+  DepositionKeyPhotoParent:
+    description: A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - deposition
+
+  FrameEntity:
+    description: A frame entity.
+    attributes:
+      sources:
+        multivalued: true
+        range: FrameSource
+        required: true
+
+  FrameSource:
+    description: A frame source.
+    mixins:
+      - DefaultSource
+      - DefaultLiteralEntity
+    attributes:
+      parent_filters:
+        description: Permitted parent filters for a frame source.
+        range: FrameParentFilters
+
+  FrameParentFilters:
+    description: Types of parent filters for a frame source.
+    attributes:
+      include:
+        description: Include files for the parent of a frame source (regexes).
+        range: FrameParent
+      exclude:
+        description: Exclude files for the parent of a frame source (regexes).
+        range: FrameParent
+
+  FrameParent:
+    description: A filter for a parent class of a frame source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - dataset
+      - deposition
+      - run
+
+  GainEntity:
+    description: A gain entity.
+    attributes:
+      sources:
+        multivalued: true
+        range: GainSource
+        required: true
+
+  GainSource:
+    description: A gain source.
+    mixins:
+      - DefaultSource
+      - DefaultLiteralEntity
+    attributes:
+      parent_filters:
+        description: Permitted parent filters for a gain source.
+        range: GainParentFilters
+
+  GainParentFilters:
+    description: Types of parent filters for a gain source.
+    attributes:
+      include:
+        description: Include files for the parent of a gain source (regexes).
+        range: GainParent
+      exclude:
+        description: Exclude files for the parent of a gain source (regexes).
+        range: GainParent
+
+  GainParent:
+    description: A filter for a parent class of a gain source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - dataset
+      - deposition
+      - run
+
+  KeyImageEntity:
+    description: A key image entity.
+    attributes:
+      sources:
+        multivalued: true
+        range: KeyImageSource
+        required: true
+
+  KeyImageSource:
+    description: A key image source.
+    mixins:
+      - DefaultSource
+      - DefaultLiteralEntity
+    attributes:
+      parent_filters:
+        description: Permitted parent filters for a key image source.
+        range: KeyImageParentFilters
+
+  KeyImageParentFilters:
+    description: Types of parent filters for a key image source.
+    attributes:
+      include:
+        description: Include files for the parent of a key image source (regexes).
+        range: KeyImageParent
+      exclude:
+        description: Exclude files for the parent of a key image source (regexes).
+        range: KeyImageParent
+
+  KeyImageParent:
+    description: A filter for a parent class of a key image source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - dataset
+      - deposition
+      - run
+      - tomogram
+      - voxel_spacing
+
+  RawTiltEntity:
+    description: A raw tilt entity.
+    attributes:
+      sources:
+        multivalued: true
+        range: RawTiltSource
+        required: true
+
+  RawTiltSource:
+    description: A raw tilt source.
+    mixins:
+      - DefaultSource
+      - DefaultLiteralEntity
+    attributes:
+      parent_filters:
+        description: Permitted parent filters for a raw tilt source.
+        range: RawTiltParentFilters
+
+  RawTiltParentFilters:
+    description: Types of parent filters for a raw tilt source.
+    attributes:
+      include:
+        description: Include files for the parent of a raw tilt source (regexes).
+        range: RawTiltParent
+      exclude:
+        description: Exclude files for the parent of a raw tilt source (regexes).
+        range: RawTiltParent
+
+  RawTiltParent:
+    description: A filter for a parent class of a raw tilt source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - dataset
+      - deposition
+      - run
+
+  RunEntity:
+    description: A run entity.
+    attributes:
+      sources:
+        multivalued: true
+        range: RunSource
+        required: true
+
+  RunSource:
+    description: A run source.
+    mixins:
+      - DefaultSource
+      - DefaultLiteralEntity
+    attributes:
+      parent_filters:
+        description: Permitted parent filters for a run source.
+        range: RunParentFilters
+
+  RunParentFilters:
+    description: Types of parent filters for a run source.
+    attributes:
+      include:
+        description: Include files for the parent of a run source (regexes).
+        range: RunParent
+      exclude:
+        description: Exclude files for the parent of a run source (regexes).
+        range: RunParent
+
+  RunParent:
+    description: A filter for a parent class of a run source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - dataset
+      - deposition
+
+  StandardizationConfig:
+    description: A standardization configuration.
+    attributes:
+      deposition_id:
+        description: The deposition ID.
+        range: integer
+        required: true
+      run_data_map_file:
+        description: The run data map file.
+        range: string
+      run_to_frame_map_csv:
+        description: The run to frame map CSV.
+        range: string
+      run_to_tomo_map_csv:
+        description: The run to tomogram map CSV.
+        range: string
+      run_to_ts_map_csv:
+        description: The run to tilt series map CSV.
+        range: string
+      source_prefix:
+        description: The source prefix of the input files.
+        range: string
+        required: true
+
+  TiltSeriesEntity:
+    description: A tilt series entity.
+    attributes:
+      metadata:
+        range: TiltSeries
+      sources:
+        multivalued: true
+        range: TiltSeriesSource
+        required: true
+
+  TiltSeriesSource:
+    description: A tilt series source.
+    mixins:
+      - DefaultSource
+      - DefaultLiteralEntity
+    attributes:
+      parent_filters:
+        description: Permitted parent filters for a tilt series source.
+        range: TiltSeriesParentFilters
+
+  TiltSeriesParentFilters:
+    description: Types of parent filters for a tilt series source.
+    attributes:
+      include:
+        description: Include files for the parent of a tilt series source (regexes).
+        range: TiltSeriesParent
+      exclude:
+        description: Exclude files for the parent of a tilt series source (regexes).
+        range: TiltSeriesParent
+
+  TiltSeriesParent:
+    description: A filter for a parent class of a tilt series source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - dataset
+      - deposition
+      - run
+
+  TomogramEntity:
+    description: A tomogram entity.
+    attributes:
+      metadata:
+        range: Tomogram
+      sources:
+        multivalued: true
+        range: TomogramSource
+        required: true
+
+  TomogramSource:
+    description: A tomogram source.
+    mixins:
+      - DefaultSource
+      - DefaultLiteralEntity
+    attributes:
+      parent_filters:
+        description: Permitted parent filters for a tomogram source.
+        range: TomogramParentFilters
+
+  TomogramParentFilters:
+    description: Types of parent filters for a tomogram source.
+    attributes:
+      include:
+        description: Include files for the parent of a tomogram source (regexes).
+        range: TomogramParent
+      exclude:
+        description: Exclude files for the parent of a tomogram source (regexes).
+        range: TomogramParent
+
+  TomogramParent:
+    description: A filter for a parent class of a tomogram source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - dataset
+      - deposition
+      - run
+      - voxel_spacing
+
+  VoxelSpacingEntity:
+    description: A voxel spacing entity.
+    attributes:
+      sources:
+        multivalued: true
+        range: VoxelSpacingSource
+        required: true
+
+  # Can't use DefaultSource since it doesn't permit source_multi_glob
+  VoxelSpacingSource:
+    description: A voxel spacing source.
+    attributes:
+      destination_glob:
+        description: The glob object for the destination file.
+        range: DestinationGlob
+      source_glob:
+        description: The glob object for the source file.
+        range: SourceGlob
+      literal:
+        range: VoxelSpacingLiteral
+      tomogram_header:
+        description: The header for the voxel spacing.
+        range: TomogramHeader
+      parent_filters:
+        description: Permitted parent filters for a voxel spacing source.
+        range: VoxelSpacingParentFilters
+
+  VoxelSpacingParentFilters:
+    description: Types of parent filters for a voxel spacing source.
+    attributes:
+      include:
+        description: Include files for the parent of a voxel spacing source (regexes).
+        range: VoxelSpacingParent
+      exclude:
+        description: Exclude files for the parent of a voxel spacing source (regexes).
+        range: VoxelSpacingParent
+
+  VoxelSpacingParent:
+    description: A filter for a parent class of a voxel spacing source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - dataset
+      - deposition
+      - run
+
+  VoxelSpacingLiteral:
+    description: A literal for a voxel spacing.
+    attributes:
+      value:
+        description: The value for the voxel spacing literal.
+        multivalued: true
+        range: float
+        required: true
+        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+        # any_of:
+        #   - range: float
+        #   - range: FloatFormattedString
+
+  TomogramHeader:
+    description: A tomogram header, a unique source attribute for voxel spacing.
+    attributes:
+      list_glob:
+        description: The glob for the tomogram header file.
+        range: string
+        required: true
+      match_regex:
+        description: The regex for the tomogram header file.
+        range: string
+        ifabsent: string(.*)
+      header_key:
+        description: The key in the header file for the voxel spacing.
+        range: string
+        ifabsent: string(voxel_size)
+
+source_file: ../../schema/v1.1.0/metadata
