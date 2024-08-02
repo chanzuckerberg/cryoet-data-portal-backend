@@ -65,11 +65,12 @@ def enqueue_common_options(func):
 
 
 def create_execution_machine_log_file(filename):
-    if os.path.exists(filename):
-        os.remove(filename)
+    abs_path = os.path.abspath(filename)
+    if os.path.exists(abs_path):
+        os.remove(abs_path)
         logger.warning("Removing existing %s file.", filename)
 
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    os.makedirs(os.path.dirname(abs_path))
 
 
 def handle_common_options(ctx, kwargs):
