@@ -16,9 +16,9 @@ URI: [cdp-meta:cross_references](metadatacross_references)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
+| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 | [Deposition](Deposition.md) | Metadata describing a deposition |  no  |
 | [CrossReferencedEntity](CrossReferencedEntity.md) | An entity with associated cross-references to other databases and publication... |  no  |
-| [Dataset](Dataset.md) | High-level description of a cryoET dataset |  no  |
 
 
 
@@ -28,7 +28,7 @@ URI: [cdp-meta:cross_references](metadatacross_references)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -63,7 +63,7 @@ domain_of:
 - CrossReferencedEntity
 - Dataset
 - Deposition
-range: string
+range: Any
 
 ```
 </details>

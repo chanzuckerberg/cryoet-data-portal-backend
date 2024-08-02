@@ -27,7 +27,7 @@ URI: [cdp-meta:publications](metadatapublications)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: publications
 domain_of:
 - CrossReferences
 - CrossReferencesMixin
-range: string
+range: Any
 
 ```
 </details>

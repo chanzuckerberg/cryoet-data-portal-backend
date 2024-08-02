@@ -27,7 +27,7 @@ URI: [cdp-meta:related_database_links](metadatarelated_database_links)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: related_database_links
 domain_of:
 - CrossReferences
 - CrossReferencesMixin
-range: string
+range: Any
 
 ```
 </details>

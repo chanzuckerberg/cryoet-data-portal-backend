@@ -27,7 +27,7 @@ URI: [cdp-meta:y](metadatay)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: y
 domain_of:
 - TomogramSize
 - TomogramOffset
-range: string
+range: Any
 
 ```
 </details>

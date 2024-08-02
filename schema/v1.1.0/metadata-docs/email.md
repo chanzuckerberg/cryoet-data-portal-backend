@@ -27,7 +27,7 @@ URI: [cdp-meta:email](metadataemail)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: email
 domain_of:
 - Author
 - AuthorMixin
-range: string
+range: Any
 
 ```
 </details>

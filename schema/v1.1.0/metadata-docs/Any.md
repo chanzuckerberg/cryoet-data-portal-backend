@@ -3,11 +3,6 @@
 # Class: Any
 
 
-_A placeholder for any type of data._
-
-
-
-
 
 URI: [linkml:Any](https://w3id.org/linkml/Any)
 
@@ -36,6 +31,28 @@ URI: [linkml:Any](https://w3id.org/linkml/Any)
 
 
 
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [CellStrain](CellStrain.md) | [id](id.md) | range | [Any](Any.md) |
+| [CameraDetails](CameraDetails.md) | [acquire_mode](acquire_mode.md) | range | [Any](Any.md) |
+| [MicroscopeDetails](MicroscopeDetails.md) | [manufacturer](manufacturer.md) | range | [Any](Any.md) |
+| [TiltRange](TiltRange.md) | [min](min.md) | range | [Any](Any.md) |
+| [TiltRange](TiltRange.md) | [max](max.md) | range | [Any](Any.md) |
+| [TiltSeries](TiltSeries.md) | [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | range | [Any](Any.md) |
+| [TiltSeries](TiltSeries.md) | [binning_from_frames](binning_from_frames.md) | range | [Any](Any.md) |
+| [TiltSeries](TiltSeries.md) | [spherical_aberration_constant](spherical_aberration_constant.md) | range | [Any](Any.md) |
+| [TiltSeries](TiltSeries.md) | [tilt_axis](tilt_axis.md) | range | [Any](Any.md) |
+| [TiltSeries](TiltSeries.md) | [tilt_series_quality](tilt_series_quality.md) | range | [Any](Any.md) |
+| [TiltSeries](TiltSeries.md) | [tilt_step](tilt_step.md) | range | [Any](Any.md) |
+| [TiltSeries](TiltSeries.md) | [total_flux](total_flux.md) | range | [Any](Any.md) |
+| [TiltSeries](TiltSeries.md) | [pixel_spacing](pixel_spacing.md) | range | [Any](Any.md) |
+| [Tomogram](Tomogram.md) | [voxel_spacing](voxel_spacing.md) | range | [Any](Any.md) |
+| [Tomogram](Tomogram.md) | [fiducial_alignment_status](fiducial_alignment_status.md) | range | [Any](Any.md) |
+| [Tomogram](Tomogram.md) | [reconstruction_method](reconstruction_method.md) | range | [Any](Any.md) |
 
 
 
@@ -80,7 +97,6 @@ URI: [linkml:Any](https://w3id.org/linkml/Any)
 <details>
 ```yaml
 name: Any
-description: A placeholder for any type of data.
 from_schema: metadata
 class_uri: linkml:Any
 
@@ -92,7 +108,6 @@ class_uri: linkml:Any
 <details>
 ```yaml
 name: Any
-description: A placeholder for any type of data.
 from_schema: metadata
 class_uri: linkml:Any
 

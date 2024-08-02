@@ -27,7 +27,7 @@ URI: [cdp-meta:funding](metadatafunding)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: funding
 domain_of:
 - FundedEntity
 - Dataset
-range: string
+range: Any
 
 ```
 </details>
