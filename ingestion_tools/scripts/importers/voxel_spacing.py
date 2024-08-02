@@ -1,6 +1,6 @@
 import os
 import re
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 from common.config import DepositionImportConfig
 from common.finders import (
@@ -12,11 +12,6 @@ from common.finders import (
 )
 from common.image import get_voxel_size
 from importers.base_importer import BaseImporter
-
-if TYPE_CHECKING:
-    from importers.run import RunImporter
-else:
-    RunImporter = "RunImporter"
 
 
 class VoxelSpacingLiteralValueFinder(BaseLiteralValueFinder):

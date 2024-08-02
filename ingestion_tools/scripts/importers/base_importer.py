@@ -10,16 +10,18 @@ if TYPE_CHECKING:
     from common.config import DepositionImportConfig
     from importers.annotation import BaseAnnotationSource
     from importers.dataset import DatasetImporter
+    from importers.deposition import DepositionImporter
     from importers.run import RunImporter
     from importers.tomogram import TomogramImporter
     from importers.voxel_spacing import VoxelSpacingImporter
 else:
-    RunImporter = "RunImporter"
+    BaseAnnotationSource = "BaseAnnotationSource"
     DatasetImporter = "DatasetImporter"
+    DepositionImporter = "DepositionImporter"
+    DepositionImportConfig = "DepositionImportConfig"
+    RunImporter = "RunImporter"
     TomogramImporter = "TomogramImporter"
     VoxelSpacingImporter = "VoxelSpacingImporter"
-    DepositionImportConfig = "DepositionImportConfig"
-    BaseAnnotationSource = "BaseAnnotationSource"
 
 
 class BaseImporter:
@@ -73,11 +75,14 @@ class BaseImporter:
                 glob_vars.update(parent.get_glob_vars())
         return glob_vars
 
-    def get_run(self) -> RunImporter:
-        return self.parent_getter("run")
+    def get_deposition(self) -> DepositionImporter:
+        return self.parent_getter("deposition")
 
     def get_dataset(self) -> DatasetImporter:
         return self.parent_getter("dataset")
+
+    def get_run(self) -> RunImporter:
+        return self.parent_getter("run")
 
     def get_tomogram(self) -> TomogramImporter:
         return self.parent_getter("tomogram")

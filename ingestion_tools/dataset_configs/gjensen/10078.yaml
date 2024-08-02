@@ -19,9 +19,9 @@ datasets:
       name: Philadelphia-1_Lp02
     cross_references:
       publications: 10.1038/s41564-019-0427-4
-    dataset_description: 'This is 21th of 41 sets of data studying Legionella pneumophila
+    dataset_description: This is 21th of 41 sets of data studying Legionella pneumophila
       collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. JV7091
-      is a double mutant that lacks dotE and dotP (Lp02). '
+      is a double mutant that lacks dotE and dotP (Lp02).
     dataset_identifier: 10078
     dataset_title: L. pneumophila JV7091
     dates: &id002
