@@ -277,7 +277,7 @@ tiltseries:
     total_flux: float {tilt_series_total_flux}
   sources:
   - source_glob:
-      list_glob: validation_placeholder_for_unavailable_ts/*.st
+      list_glob: validation_placeholder/for_unavailable_ts.st
 tomograms:
 - metadata:
     affine_transformation_matrix:

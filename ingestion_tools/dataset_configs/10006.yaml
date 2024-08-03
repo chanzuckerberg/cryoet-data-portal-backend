@@ -195,7 +195,7 @@ tiltseries:
     total_flux: 120
   sources:
   - source_glob:
-      list_glob: validation_placeholder_for_unavailable_ts/*.st
+      list_glob: validation_placeholder/for_unavailable_ts.st
 tomograms:
 - metadata:
     authors: *id002
