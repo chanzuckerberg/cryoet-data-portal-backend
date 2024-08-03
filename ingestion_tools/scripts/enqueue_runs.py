@@ -57,6 +57,14 @@ def enqueue_common_options(func):
             help="Specify docker image tag, defaults to 'main'",
         ),
     )
+    options.append(
+        click.option(
+            "--execution-machine-log",
+            type=str,
+            default=None,
+            help="Log execution machine ARNs to this file",
+        ),
+    )
     options.append(click.option("--memory", type=int, default=None, help="Specify memory allocation override"))
     options.append(click.option("--parallelism", required=True, type=int, default=20))
     for option in options:
@@ -78,11 +86,12 @@ def handle_common_options(ctx, kwargs):
         "environment": kwargs["environment"],
         "ecr_repo": kwargs["ecr_repo"],
         "ecr_tag": kwargs["ecr_tag"],
+        "execution_machine_log": kwargs["execution_machine_log"],
         "memory": kwargs["memory"],
         "parallelism": kwargs["parallelism"],
         **get_aws_env(kwargs["environment"]),
     }
-    enqueue_common_keys = ["environment", "ecr_repo", "ecr_tag", "memory", "parallelism"]
+    enqueue_common_keys = ["environment", "ecr_repo", "ecr_tag", "execution_machine_log", "memory", "parallelism"]
     # Make sure to remove these common options from the list of args processed by commands.
     for opt in enqueue_common_keys:
         del kwargs[opt]
@@ -250,12 +259,6 @@ def to_args(**kwargs) -> list[str]:
     default="db_import-v0.0.1.wdl",
     help="Specify wdl key for custom workload",
 )
-@click.option(
-    "--execution-machine-log",
-    type=str,
-    default=None,
-    help="Log execution machine ARNs to this file",
-)
 @db_import_options
 @enqueue_common_options
 @click.pass_context
@@ -269,7 +272,6 @@ def db_import(
     include_dataset: list[str],
     exclude_dataset: list[str],
     swipe_wdl_key: str,
-    execution_machine_log: str,
     **kwargs,
 ):
     handle_common_options(ctx, kwargs)
@@ -290,8 +292,8 @@ def db_import(
     if not ctx.obj.get("memory"):
         ctx.obj["memory"] = 4000
 
-    if execution_machine_log is not None:
-        create_execution_machine_log_file(execution_machine_log)
+    if ctx.obj.get("execution_machine_log") is not None:
+        create_execution_machine_log_file(ctx.obj.get("execution_machine_log"))
 
     futures = []
     with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
@@ -330,7 +332,6 @@ def db_import(
                         execution_name,
                         wdl_args,
                         swipe_wdl_key=swipe_wdl_key,
-                        execution_machine_log=execution_machine_log,
                         **ctx.obj,
                     ),
                 ),
@@ -368,12 +369,6 @@ def db_import(
     multiple=False,
     help="Exclude runs matching this regex. If not specified, all runs are processed",
 )
-@click.option(
-    "--execution-machine-log",
-    type=str,
-    default=None,
-    help="Log execution machine ARNs to this file",
-)
 @ingest_common_options
 @enqueue_common_options
 @click.pass_context
@@ -388,7 +383,6 @@ def queue(
     force_overwrite: bool,
     swipe_wdl_key: str,
     skip_until_run_name: str,
-    execution_machine_log: str,
     **kwargs,
 ):
     handle_common_options(ctx, kwargs)
@@ -411,8 +405,8 @@ def queue(
     filter_datasets = [re.compile(pattern) for pattern in kwargs.get("filter_dataset_name", [])]
     exclude_datasets = [re.compile(pattern) for pattern in kwargs.get("exclude_dataset_name", [])]
 
-    if execution_machine_log is not None:
-        create_execution_machine_log_file(execution_machine_log)
+    if ctx.obj.get("execution_machine_log") is not None:
+        create_execution_machine_log_file(ctx.obj.get("execution_machine_log"))
 
     # Always iterate over depostions, datasets and runs.
     for deposition in DepositionImporter.finder(config):
@@ -482,7 +476,6 @@ def queue(
                                 execution_name,
                                 wdl_args,
                                 swipe_wdl_key=swipe_wdl_key,
-                                execution_machine_log=execution_machine_log,
                                 **ctx.obj,
                             ),
                         ),
@@ -522,12 +515,6 @@ class OrderedSyncFilters(click.Command):
     default="sync-v0.0.1.wdl",
     help="Specify wdl key for custom workload",
 )
-@click.option(
-    "--execution-machine-log",
-    type=str,
-    default=None,
-    help="Log execution machine ARNs to this file",
-)
 @enqueue_common_options
 @click.pass_context
 def sync(
@@ -541,7 +528,6 @@ def sync(
     include_dataset: list[str],
     exclude_dataset: list[str],
     swipe_wdl_key: str,
-    execution_machine_log: str,
     **kwargs,
 ):
     handle_common_options(ctx, kwargs)
@@ -560,8 +546,8 @@ def sync(
     for param, value in OrderedSyncFilters._options:
         new_args.append(f"--{param.name} '{value}'")
 
-    if execution_machine_log is not None:
-        create_execution_machine_log_file(execution_machine_log)
+    if ctx.obj.get("execution_machine_log") is not None:
+        create_execution_machine_log_file(ctx.obj.get("execution_machine_log"))
 
     futures = []
     with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
@@ -596,7 +582,6 @@ def sync(
                         execution_name,
                         wdl_args,
                         swipe_wdl_key=swipe_wdl_key,
-                        execution_machine_log=execution_machine_log,
                         **ctx.obj,
                     ),
                 ),
