@@ -2,6 +2,7 @@ import logging
 import os
 import re
 import shutil
+from concurrent.futures import ThreadPoolExecutor
 from typing import Tuple
 
 import click
@@ -47,12 +48,40 @@ def get_log_events(session: Session, log_group_name, log_stream_name):
     return [event["message"] for event in events]
 
 
+def process_arn(arn: str, session: Session, output_dir: str, failed_only: bool, links_only: bool) -> str:
+    log_stream_failed, log_stream_name = get_log_stream(session, arn)
+    if not log_stream_name:
+        logger.warning("No log stream found for %s, possibly still running", arn)
+        return
+
+    result = "FAILED" if log_stream_failed else "SUCCESS"
+    logger.info("%s: %s", result, arn)
+    output_file = output_dir + ("failed/" if log_stream_failed else "success/") + arn.replace("/", "_") + ".log"
+
+    if links_only:
+        link = f"https://console.aws.amazon.com/cloudwatch/home?region={session.region_name}#logEventViewer:group={LOG_GROUP_NAME};stream={log_stream_name}"
+        logger.info("Link: %s", link)
+        return result
+
+    if failed_only and not log_stream_failed:
+        return result
+
+    logger.info("Writing to %s", output_file)
+    logs = get_log_events(session, LOG_GROUP_NAME, log_stream_name)
+    with open(output_file, "w") as f:
+        f.write("\n".join(logs))
+
+    return result
+
+
 @click.command()
 @click.argument("execution-arn", type=str, nargs=-1)
 @click.option("--input-file", type=str, help="A file containing a list of execution ARNs.")
 @click.option("--output-dir", type=str, default="./fetch-logs", help="The directory to save the logs to.")
 @click.option("--profile", type=str, default=None, help="The AWS profile to use.")
-def main(execution_arn: list[str], input_file: str, output_dir: str, profile: str):
+@click.option("--failed-only", is_flag=True, help="Only fetch logs for failed executions.")
+@click.option("--links-only", is_flag=True, help="Only get CloudWatch log links, not the logs themselves.")
+def main(execution_arn: list[str], input_file: str, output_dir: str, profile: str, failed_only: bool, links_only: bool):
     input_execution_arn = execution_arn
 
     if not execution_arn and not input_file:
@@ -74,13 +103,15 @@ def main(execution_arn: list[str], input_file: str, output_dir: str, profile: st
     if output_dir[-1] != "/":
         output_dir += "/"
 
-    if os.path.exists(output_dir):
-        logger.warning("Removing existing %s directory.", output_dir)
-        shutil.rmtree(output_dir)
+    # setup output directory
+    if not links_only:
+        if os.path.exists(output_dir):
+            logger.warning("Removing existing %s directory.", output_dir)
+            shutil.rmtree(output_dir)
 
-    os.makedirs(output_dir)
-    os.makedirs(f"{output_dir}failed")
-    os.makedirs(f"{output_dir}success")
+        os.makedirs(output_dir)
+        os.makedirs(f"{output_dir}failed")
+        os.makedirs(f"{output_dir}success")
 
     input_execution_arn = list(set(input_execution_arn))
     session = Session(region_name=input_execution_arn[0].split(":")[3], profile_name=profile)
@@ -88,24 +119,22 @@ def main(execution_arn: list[str], input_file: str, output_dir: str, profile: st
     failed_count = 0
     successful_count = 0
 
-    for arn in input_execution_arn:
-        log_stream_failed, log_stream_name = get_log_stream(session, arn)
-        if not log_stream_name:
-            continue
-        logger.info("%s: %s", "FAILED" if log_stream_failed else "SUCCESS", arn)
-        output_file = output_dir + ("failed/" if log_stream_failed else "success/") + arn.replace("/", "_") + ".log"
-        logger.info("Writing to %s", output_file)
-        if log_stream_failed:
-            failed_count += 1
-        else:
-            successful_count += 1
-        logs = get_log_events(session, LOG_GROUP_NAME, log_stream_name)
-        with open(output_file, "w") as f:
-            f.write("\n".join(logs))
+    # fetch logs, multithreaded
+    with ThreadPoolExecutor() as executor:
+        results = executor.map(
+            lambda arn: process_arn(arn, session, output_dir, failed_only, links_only),
+            input_execution_arn,
+        )
+        for result in results:
+            if result == "FAILED":
+                failed_count += 1
+            elif result == "SUCCESS":
+                successful_count += 1
 
     logger.info("====================================")
     logger.info("TOTAL FAILED: %d/%d", failed_count, len(input_execution_arn))
     logger.info("TOTAL SUCCEEDED %d/%d", successful_count, len(input_execution_arn))
+    logger.info("TOTAL SKIPPED: %d", len(input_execution_arn) - failed_count - successful_count)
 
 
 if __name__ == "__main__":

@@ -32,6 +32,10 @@ Command-Line Arguments
 
 `--profile`: AWS profile to use. If not provided, your default profile will be used.
 
+`--failed-only`: Fetch logs only for failed executions.
+
+`--links-only`: Only retrieve links to the CloudWatch logs, don't fetch any actual logs.
+
 ## Examples:
 
 Fetch logs for specific execution ARNs:

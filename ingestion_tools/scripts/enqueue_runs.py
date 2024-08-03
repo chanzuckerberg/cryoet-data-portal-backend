@@ -70,7 +70,7 @@ def create_execution_machine_log_file(filename):
         os.remove(abs_path)
         logger.warning("Removing existing %s file.", filename)
 
-    os.makedirs(os.path.dirname(abs_path))
+    os.makedirs(os.path.dirname(abs_path), exist_ok=True)
 
 
 def handle_common_options(ctx, kwargs):
