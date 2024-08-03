@@ -194,9 +194,8 @@ tiltseries:
     tilting_scheme: Dose symmetric from 0.0 degrees
     total_flux: 120
   sources:
-  - literal:
-      value:
-      - validation placeholder
+  - source_glob:
+      list_glob: validation_placeholder_for_unavailable_ts/*.st
 tomograms:
 - metadata:
     authors: *id002

@@ -124,9 +124,8 @@ tiltseries:
     tilting_scheme: dose-symmetric
     total_flux: float {tilt_series_total_flux}
   sources:
-  - literal:
-      value:
-      - validation placeholder
+  - source_glob:
+      list_glob: validation_placeholder_for_unavailable_ts/*.st
 tomograms:
 - metadata:
     affine_transformation_matrix:
