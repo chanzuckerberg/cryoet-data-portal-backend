@@ -27,5 +27,6 @@
     "mrc_files": [
         "ts_foo.mrc"
     ],
-    "run_name": "RUN3"
+    "run_name": "RUN3",
+    "deposition_id": 300
 }

@@ -35,5 +35,6 @@
         "ts_foo.mrc"
     ],
     "run_name": "RUN1",
-    "frames_count": 60
+    "frames_count": 60,
+    "deposition_id": 300
 }

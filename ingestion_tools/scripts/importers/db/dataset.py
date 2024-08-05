@@ -78,7 +78,7 @@ class DatasetDBImporter(BaseDBImporter):
         if thumbnail_path := key_photos.get("thumbnail"):
             extra_data["key_photo_thumbnail_url"] = self.join_path(https_prefix, thumbnail_path)
 
-        deposition = importers.db.deposition.get_deposition(self.config, int(self.metadata.get("deposition_id")))
+        deposition = importers.db.deposition.get_deposition(self.config, self.metadata.get("deposition_id"))
         extra_data["deposition_id"] = deposition.id
         return extra_data
 

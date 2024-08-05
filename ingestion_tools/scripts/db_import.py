@@ -7,6 +7,7 @@ from botocore.config import Config
 from importers.db.annotation import AnnotationAuthorDBImporter, AnnotationDBImporter, StaleAnnotationDeletionDBImporter
 from importers.db.base_importer import DBImportConfig
 from importers.db.dataset import DatasetAuthorDBImporter, DatasetDBImporter, DatasetFundingDBImporter
+from importers.db.deposition import DepositionAuthorDBImporter, DepositionDBImporter
 from importers.db.run import RunDBImporter, StaleRunDeletionDBImporter
 from importers.db.tiltseries import StaleTiltSeriesDeletionDBImporter, TiltSeriesDBImporter
 from importers.db.tomogram import StaleTomogramDeletionDBImporter, TomogramAuthorDBImporter, TomogramDBImporter
@@ -29,12 +30,14 @@ def db_import_options(func):
     options.append(click.option("--import-annotation-authors", is_flag=True, default=False))
     options.append(click.option("--import-dataset-authors", is_flag=True, default=False))
     options.append(click.option("--import-dataset-funding", is_flag=True, default=False))
+    options.append(click.option("--import-depositions", is_flag=True, default=False))
     options.append(click.option("--import-runs", is_flag=True, default=False))
     options.append(click.option("--import-tiltseries", is_flag=True, default=False))
     options.append(click.option("--import-tomograms", is_flag=True, default=False))
     options.append(click.option("--import-tomogram-authors", is_flag=True, default=False))
     options.append(click.option("--import-tomogram-voxel-spacing", is_flag=True, default=False))
     options.append(click.option("--import-everything", is_flag=True, default=False))
+    options.append(click.option("--deposition-id", type=str, default=None, multiple=True))
     options.append(
         click.option(
             "--anonymous",
@@ -78,12 +81,14 @@ def load(
     import_annotation_authors: bool,
     import_dataset_authors: bool,
     import_dataset_funding: bool,
+    import_depositions: bool,
     import_runs: bool,
     import_tiltseries: bool,
     import_tomograms: bool,
     import_tomogram_authors: bool,
     import_tomogram_voxel_spacing: bool,
     import_everything: bool,
+    deposition_id: list[str],
     endpoint_url: str,
 ):
     db_models.db.init(postgres_url)
@@ -98,6 +103,7 @@ def load(
         import_annotation_authors = True
         import_dataset_authors = True
         import_dataset_funding = True
+        import_depositions = True
         import_runs = True
         import_tiltseries = True
         import_tomograms = True
@@ -112,6 +118,13 @@ def load(
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     s3_client = boto3.client("s3", endpoint_url=endpoint_url, config=s3_config)
     config = DBImportConfig(s3_client, s3_bucket, https_prefix)
+
+    if import_depositions and deposition_id:
+        for dep_id in deposition_id:
+            for deposition_importer in DepositionDBImporter.get_items(config, dep_id):
+                deposition_obj = deposition_importer.import_to_db()
+                deposition_authors = DepositionAuthorDBImporter.get_item(deposition_obj, deposition_importer, config)
+                deposition_authors.import_to_db()
 
     for dataset in DatasetDBImporter.get_items(config, s3_prefix):
         if filter_dataset and dataset.dir_prefix not in filter_dataset:

@@ -47,7 +47,6 @@ class DepositionDBImporter(BaseDBImporter):
     def get_computed_fields(self) -> dict[str, Any]:
         https_prefix = self.config.https_prefix
         extra_data = {
-            "global_id": f"CZCDP-{self.metadata['deposition_identifier']}",
             "s3_prefix": self.join_path(self.config.s3_prefix, self.dir_prefix),
             "https_prefix": self.join_path(https_prefix, self.dir_prefix),
             "key_photo_url": None,
@@ -61,17 +60,14 @@ class DepositionDBImporter(BaseDBImporter):
             extra_data["key_photo_url"] = self.join_path(https_prefix, snapshot_path)
         if thumbnail_path := key_photos.get("thumbnail"):
             extra_data["key_photo_thumbnail_url"] = self.join_path(https_prefix, thumbnail_path)
-        if "last_updated_at" in self.metadata:
-            extra_data["metadata_last_updated_at"] = to_datetime(self.metadata["last_updated_at"])
-
         return extra_data
 
     @classmethod
-    def get_items(cls, config: DBImportConfig, prefix: str) -> Iterable["DepositionDBImporter"]:
+    def get_items(cls, config: DBImportConfig, deposition_id: int) -> Iterable["DepositionDBImporter"]:
         return [
             cls(deposition_id, config)
             for deposition_id in config.find_subdirs_with_files(
-                f"depositions_metadata/{prefix}",
+                f"depositions_metadata/{deposition_id}",
                 "deposition_metadata.json",
             )
         ]
@@ -83,8 +79,6 @@ class DepositionAuthorDBImporter(AuthorsStaleDeletionDBImporter):
         self.parent = parent
         self.config = config
         self.metadata = parent.metadata.get("authors", [])
-        s3_last_updated_at = parent.metadata.get("last_updated_at")
-        self.metadata_last_updated_at = to_datetime(s3_last_updated_at) if s3_last_updated_at else None
 
     def get_data_map(self) -> dict[str, Any]:
         return {
@@ -98,7 +92,6 @@ class DepositionAuthorDBImporter(AuthorsStaleDeletionDBImporter):
             "affiliation_address": ["affiliation_address"],
             "affiliation_identifier": ["affiliation_identifier"],
             "author_list_order": ["author_list_order"],
-            "metadata_last_updated_at": self.metadata_last_updated_at,
         }
 
     @classmethod
@@ -122,14 +115,18 @@ class DepositionAuthorDBImporter(AuthorsStaleDeletionDBImporter):
         return cls(deposition_id, parent, config)
 
 
-# TODO: Make this a container class that caches depositions
-def get_deposition(config: DBImportConfig, deposition_id: int) -> db_models.Deposition:
+# TODO: Make this a container that caches depositions so we aren't hitting the database multiple times for the same id
+def get_deposition(config: DBImportConfig, deposition_id: str | int) -> db_models.Deposition:
+    if not deposition_id:
+        raise ValueError(f"invalid deposition_id provided {deposition_id}")
+
+    deposition_id = int(deposition_id)
     deposition = db_models.Deposition.get_or_none(deposition_id)
     if deposition:
         return deposition
 
     depositions = []
-    for deposition_importer in DepositionDBImporter.get_items(config, str(deposition_id)):
+    for deposition_importer in DepositionDBImporter.get_items(config, deposition_id):
         deposition_obj = deposition_importer.import_to_db()
         depositions.append(deposition_obj)
         deposition_authors = DepositionAuthorDBImporter.get_item(deposition_obj, deposition_importer, config)

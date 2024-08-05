@@ -26,7 +26,6 @@ class Deposition(BaseModel):
     title = CharField()
     description = CharField()
     deposition_date = DateField()
-    global_id = CharField()
     release_date = DateField()
     last_modified_date = DateField()
     related_database_entries = CharField(null=True)
@@ -85,6 +84,7 @@ class Dataset(BaseModel):
     cell_component_id = CharField(null=True)
     key_photo_url = CharField(null=True)
     key_photo_thumbnail_url = CharField(null=True)
+    deposition_id = IntegerField(null=True)
 
 
 class DatasetAuthor(BaseModel):
@@ -290,3 +290,4 @@ class TiltSeries(BaseModel):
     pixel_spacing = FloatField()
     aligned_tiltseries_binning = IntegerField(null=True)
     frames_count = IntegerField(null=True)
+    deposition_id = IntegerField(null=True)
