@@ -9,7 +9,6 @@ select_permissions:
         - deposition_publications
         - deposition_types
         - description
-        - global_id
         - https_prefix
         - id
         - last_modified_date
