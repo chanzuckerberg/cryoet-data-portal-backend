@@ -17,7 +17,8 @@ class BaseMetadata:
         self.deposition_id = deposition_id
 
     def add_defaults(self, metadata: dict[str, Any]) -> dict[str, Any]:
-        metadata["deposition_id"] = self.deposition_id
+        if not metadata.get("deposition_id"):
+            metadata["deposition_id"] = self.deposition_id
         metadata["last_updated_at"] = int(datetime.now().timestamp())
         return metadata
 
