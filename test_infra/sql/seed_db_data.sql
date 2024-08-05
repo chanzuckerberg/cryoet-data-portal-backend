@@ -32,7 +32,7 @@ INSERT INTO public.annotations VALUES (45, 's3://test-public-bucket/20002/RUN002
 INSERT INTO public.annotation_authors VALUES (50, 40, 'Author 1', '0000-0000-0000-0007', false, true, NULL, NULL, NULL, NULL, NULL, true);
 INSERT INTO public.annotation_authors VALUES (51, 40, 'Author 2', '0000-0000-0000-0008', false, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO public.annotation_authors VALUES (52, 41, 'Author 1', '0000-0000-0000-0007', false, true, NULL, NULL, NULL, NULL, NULL, true);
-INSERT INTO public.annotation_authors VALUES (53, 41, 'Author 2', '0000-0000-0000-0008', true,  NULL, NULL, NULL, NULL, NULL, NULL  NULL);
+INSERT INTO public.annotation_authors VALUES (53, 41, 'Author 2', '0000-0000-0000-0008', true,  NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO public.annotation_authors VALUES (54, 42, 'Author 3', '0000-0000-0000-0039', false, true, NULL, NULL, NULL, NULL, NULL, true);
 INSERT INTO public.annotation_authors VALUES (55, 42, 'Author 4', '0000-0000-0000-0049', true, false, NULL, NULL, NULL, NULL, NULL, false);
 INSERT INTO public.annotation_authors VALUES (56, 43, 'Author 5', '0000-0000-0000-0059', false, true, NULL, NULL, NULL, NULL, NULL, true);
