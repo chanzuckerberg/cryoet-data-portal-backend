@@ -56,7 +56,9 @@ def process_arn(arn: str, session: Session, output_dir: str, failed_only: bool, 
 
     result = "FAILED" if log_stream_failed else "SUCCESS"
     logger.info("%s: %s", result, arn)
-    output_file = output_dir + ("failed/" if log_stream_failed else "success/") + arn.replace("/", "_") + ".log"
+    output_file = (
+        output_dir + ("failed/" if log_stream_failed else "success/") + arn.replace("/", "_").replace(":", "_") + ".log"
+    )
 
     if links_only:
         link = f"https://console.aws.amazon.com/cloudwatch/home?region={session.region_name}#logEventViewer:group={LOG_GROUP_NAME};stream={log_stream_name}"
