@@ -1,16 +1,12 @@
-from datetime import datetime
-
 from peewee import (
     BooleanField,
     CharField,
     DateField,
-    DateTimeField,
     FloatField,
     ForeignKeyField,
     IntegerField,
     Model,
     PostgresqlDatabase,
-    TimestampField,
 )
 from playhouse.postgres_ext import ArrayField
 
@@ -38,8 +34,6 @@ class Deposition(BaseModel):
     deposition_types = CharField()
     s3_prefix = CharField()
     https_prefix = CharField()
-    metadata_last_updated_at = DateTimeField(null=True)
-    updated_at = DateTimeField(default=datetime.utcnow)
 
 
 class DepositionAuthor(BaseModel):
@@ -57,8 +51,6 @@ class DepositionAuthor(BaseModel):
     affiliation_address = CharField(null=True)
     affiliation_identifier = CharField(null=True)
     author_list_order = IntegerField()
-    metadata_last_updated_at = TimestampField(null=True)
-    updated_at = DateTimeField(default=datetime.now)
 
 
 class Dataset(BaseModel):

@@ -50,14 +50,12 @@ select_permissions:
         - related_database_entries
         - related_database_links
         - release_date
-        - metadata_last_updated_at
         - s3_prefix
         - sample_preparation
         - sample_type
         - tissue_id
         - tissue_name
         - title
-        - updated_at
       filter: {}
       allow_aggregations: true
       query_root_fields:

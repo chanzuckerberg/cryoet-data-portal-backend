@@ -44,10 +44,8 @@ select_permissions:
         - object_name
         - object_state
         - release_date
-        - metadata_last_updated_at
         - s3_metadata_path
         - tomogram_voxel_spacing_id
-        - updated_at
       filter: {}
       allow_aggregations: true
       query_root_fields:

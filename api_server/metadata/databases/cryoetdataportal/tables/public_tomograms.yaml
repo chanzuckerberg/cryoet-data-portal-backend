@@ -41,7 +41,6 @@ select_permissions:
         - reconstruction_software
         - s3_mrc_scale0
         - s3_omezarr_dir
-        - metadata_last_updated_at
         - scale0_dimensions
         - scale1_dimensions
         - scale2_dimensions
@@ -51,7 +50,6 @@ select_permissions:
         - tomogram_version
         - tomogram_voxel_spacing_id
         - type
-        - updated_at
         - voxel_spacing
       filter: {}
       allow_aggregations: true

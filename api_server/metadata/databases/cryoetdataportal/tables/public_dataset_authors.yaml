@@ -20,8 +20,6 @@ select_permissions:
         - name
         - orcid
         - primary_author_status
-        - metadata_last_updated_at
-        - updated_at
       filter: {}
       allow_aggregations: true
       query_root_fields:

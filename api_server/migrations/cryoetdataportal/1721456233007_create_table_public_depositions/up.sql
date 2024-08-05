@@ -10,10 +10,7 @@ CREATE TABLE "public"."depositions" (
     "deposition_types" varchar NOT NULL,
     "s3_prefix" varchar,
     "https_prefix" varchar,
-    "updated_at" timestamptz NOT NULL DEFAULT now(),
-    "metadata_last_updated_at" timestamptz,
-    "global_id" varchar NOT NULL,
-    PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("global_id")
+    PRIMARY KEY ("id") , UNIQUE ("id")
 );
 
 COMMENT ON TABLE "public"."depositions" IS E'Deposition metadata';
@@ -27,8 +24,5 @@ COMMENT ON COLUMN public.depositions.deposition_publications IS 'The publication
 COMMENT ON COLUMN public.depositions.related_database_entries IS 'The related database entries to this deposition';
 COMMENT ON COLUMN public.depositions.s3_prefix IS 'The S3 public bucket path where data about this deposition is contained';
 COMMENT ON COLUMN public.depositions.https_prefix IS 'The https directory path where data about this deposition is contained';
-COMMENT ON COLUMN public.depositions.updated_at IS 'The last time this db record was modified';
-COMMENT ON COLUMN public.depositions.metadata_last_updated_at IS 'The last time this s3 metadata was modified';
-COMMENT ON COLUMN public.depositions.global_id IS 'The global_id associated with this deposition';
 
 CREATE  INDEX "depositions_type" on "public"."depositions" using btree ("deposition_types");

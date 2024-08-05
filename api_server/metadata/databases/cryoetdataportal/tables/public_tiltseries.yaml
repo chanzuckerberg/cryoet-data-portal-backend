@@ -36,7 +36,6 @@ select_permissions:
         - s3_alignment_file
         - s3_angle_list
         - s3_collection_metadata
-        - metadata_last_updated_at
         - s3_mrc_bin1
         - s3_omezarr_dir
         - spherical_aberration_constant
@@ -48,7 +47,6 @@ select_permissions:
         - tilt_step
         - tilting_scheme
         - total_flux
-        - updated_at
       filter: {}
       allow_aggregations: true
       query_root_fields:
