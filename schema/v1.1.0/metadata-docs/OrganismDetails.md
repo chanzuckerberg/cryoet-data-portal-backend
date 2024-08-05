@@ -48,7 +48,7 @@ URI: [cdp-meta:OrganismDetails](metadataOrganismDetails)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [ExperimentalMetadata](ExperimentalMetadata.md) | [organism](organism.md) | range | [OrganismDetails](OrganismDetails.md) |
+| [ExperimentMetadata](ExperimentMetadata.md) | [organism](organism.md) | range | [OrganismDetails](OrganismDetails.md) |
 | [Dataset](Dataset.md) | [organism](organism.md) | range | [OrganismDetails](OrganismDetails.md) |
 
 
@@ -107,14 +107,15 @@ attributes:
     alias: name
     owner: OrganismDetails
     domain_of:
-    - Author
     - OrganismDetails
     - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AuthorMixin
     - AnnotationMethodLinks
+    - Author
     range: string
     required: true
     inlined: true
@@ -157,14 +158,15 @@ attributes:
     alias: name
     owner: OrganismDetails
     domain_of:
-    - Author
     - OrganismDetails
     - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AuthorMixin
     - AnnotationMethodLinks
+    - Author
     range: string
     required: true
     inlined: true

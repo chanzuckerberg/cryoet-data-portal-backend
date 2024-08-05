@@ -3,7 +3,7 @@ annotations:
     annotation_method: Template matching + 3D classification filtering
     annotation_object:
       description: SARS-CoV2 Spike protein
-      id: GO:0019062
+      id: GO:0044423
       name: SARS-CoV2 spike protein
     annotation_publications: doi:10.1038/s41586-020-2665-2
     annotation_software: TOM/AV3 + RELION
@@ -48,7 +48,7 @@ annotations:
       release_date: '2023-12-10'
     ground_truth_status: true
     is_curator_recommended: true
-    method_type: automated
+    method_type: hybrid
     version: 1.0
   sources:
   - OrientedPoint:
@@ -183,7 +183,6 @@ tiltseries:
       model: TITAN
     microscope_optical_setup:
       energy_filter: GIF Bioquantum
-      phase_plate: null
     pixel_spacing: 1.532
     spherical_aberration_constant: 2.7
     tilt_axis: 85.6
@@ -194,6 +193,9 @@ tiltseries:
     tilt_step: 3
     tilting_scheme: Dose symmetric from 0.0 degrees
     total_flux: 120
+  sources:
+  - source_glob:
+      list_glob: validation_placeholder/for_unavailable_ts.st
 tomograms:
 - metadata:
     authors: *id002

@@ -33,8 +33,6 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 
 * Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
-* Required: True
-
 * Minimum Value: 0
 
 * Regex pattern: `^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$`
@@ -65,7 +63,6 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 | ---  | ---  |
 | self | cdp-meta:voxel_spacing |
 | native | cdp-meta:voxel_spacing |
-| exact | cdp-common:tomogram_voxel_spacing |
 
 
 
@@ -77,15 +74,12 @@ URI: [cdp-meta:voxel_spacing](metadatavoxel_spacing)
 name: voxel_spacing
 description: Voxel spacing equal in all three axes in angstroms
 from_schema: metadata
-exact_mappings:
-- cdp-common:tomogram_voxel_spacing
 rank: 1000
 alias: voxel_spacing
 owner: Tomogram
 domain_of:
 - Tomogram
 range: string
-required: true
 inlined: true
 inlined_as_list: true
 minimum_value: 0.001

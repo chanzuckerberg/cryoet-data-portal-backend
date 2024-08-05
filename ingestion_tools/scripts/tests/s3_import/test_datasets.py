@@ -2,6 +2,7 @@ import json
 
 from importers.dataset import DatasetImporter
 from importers.dataset_key_photo import DatasetKeyPhotoImporter
+from importers.deposition import DepositionImporter
 from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
 from tests.s3_import.util import list_dir
@@ -13,15 +14,17 @@ from common.fs import FileSystemApi
 def test_import_dataset_metadata(s3_fs: FileSystemApi, test_output_bucket: str) -> None:
     config_file = "tests/fixtures/dataset1.yaml"
     output_path = f"{test_output_bucket}/output"
-    input_bucket = "input_bucket"
+    input_bucket = "test-public-bucket"
     config = DepositionImportConfig(s3_fs, config_file, output_path, input_bucket, IMPORTERS)
-    dataset = list(DatasetImporter.finder(config))[0]
+    deposition = list(DepositionImporter.finder(config))[0]
+    dataset = list(DatasetImporter.finder(config, deposition=deposition))[0]
     dataset.import_metadata()
 
     with s3_fs.open(f"{output_path}/10001/dataset_metadata.json", "r") as fh:
         output = fh.read()
     metadata = json.loads(output)
     assert metadata["dataset_title"] == "Dataset 1"
+    assert metadata["deposition_id"] == "10301"
 
 
 def test_key_photo_import_http(s3_fs: FileSystemApi, test_output_bucket: str, s3_client: S3Client) -> None:
@@ -31,7 +34,8 @@ def test_key_photo_import_http(s3_fs: FileSystemApi, test_output_bucket: str, s3
     input_bucket = "test-public-bucket"
     config = DepositionImportConfig(s3_fs, config_file, output_path, input_bucket, IMPORTERS)
 
-    dataset = list(DatasetImporter.finder(config))[0]
+    deposition = list(DepositionImporter.finder(config))[0]
+    dataset = list(DatasetImporter.finder(config, deposition=deposition))[0]
     keyphotos = DatasetKeyPhotoImporter.finder(config, dataset=dataset)
     for item in keyphotos:
         item.import_item()
@@ -41,6 +45,7 @@ def test_key_photo_import_http(s3_fs: FileSystemApi, test_output_bucket: str, s3
         output = fh.read()
     metadata = json.loads(output)
     assert metadata["dataset_title"] == "Dataset 1"
+    assert metadata["deposition_id"] == "10301"
 
     s3_files = list_dir(s3_client, test_output_bucket, f"{output_prefix}/10001/Images", assert_non_zero_size=True)
 

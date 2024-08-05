@@ -39,7 +39,7 @@ class TiltSeriesImporter(VolumeImporter):
         merge_data["frames_count"] = self.get_frames_count()
         base_metadata = self.get_base_metadata()
         merge_data["pixel_spacing"] = self.get_pixel_spacing()
-        metadata = TiltSeriesMetadata(self.config.fs, self.config.deposition_id, base_metadata)
+        metadata = TiltSeriesMetadata(self.config.fs, self.get_deposition().name, base_metadata)
         metadata.write_metadata(dest_ts_metadata, merge_data)
 
     def get_pixel_spacing(self) -> float:

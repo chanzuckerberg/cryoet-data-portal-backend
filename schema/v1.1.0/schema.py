@@ -39,7 +39,7 @@ def _add_to_slot_minimum_value(slot: dict, minimum_value: Union[int, float]) -> 
     """
     Add the minimum_value from the common schema to the slot minimum_value.
     """
-    if "minimum_value" in slot and slot["minimum_value"] is not None:
+    if "minimum_value" in slot and slot["minimum_value"] is not None and slot["minimum_value"] != minimum_value:
         print(
             f"[WARNING]: Minimum value already set for slot {slot['name']} ({slot['minimum_value']}). NOT overwriting with {minimum_value}",
         )
@@ -52,7 +52,7 @@ def _add_to_slot_maximum_value(slot: dict, maximum_value: Union[int, float]) -> 
     """
     Add the maximum_value from the common schema to the slot maximum_value.
     """
-    if "maximum_value" in slot and slot["maximum_value"] is not None:
+    if "maximum_value" in slot and slot["maximum_value"] is not None and slot["maximum_value"] != maximum_value:
         print(
             f"[WARNING]: Maximum value already set for slot {slot['name']} ({slot['maximum_value']}). NOT overwriting with {maximum_value}",
         )
@@ -82,13 +82,18 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
         clz = schema.get_class(c)
         for s in clz.attributes:
             slot = clz.attributes[s]
-            mappings = slot["exact_mappings"]
-            if mappings:
-                mappings = [m.replace("cdp-common:", "") for m in mappings if "cdp-common:" in m]
+            original_mappings = slot["exact_mappings"]
+            if original_mappings:
+                mappings = [m.replace("cdp-common:", "") for m in original_mappings if "cdp-common:" in m]
 
                 if len(mappings) > 1:
                     raise ValueError(
-                        f"Slot {slot['name']} has multiple mappings to common schema",
+                        f"Slot {slot['name']} with mappings {original_mappings} has multiple mappings to common schema",
+                    )
+
+                if len(mappings) == 0:
+                    raise ValueError(
+                        f"Slot {slot['name']} with mappings {original_mappings} does not have a mapping to common schema",
                     )
 
                 common_slot = common_slots.get(mappings[0])
@@ -109,6 +114,9 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
                 slot["recommended"] = common_slot["recommended"]
                 slot["pattern"] = _add_to_slot_pattern(slot, common_slot["pattern"])
                 slot["ifabsent"] = common_slot["ifabsent"]
+            # if the slot's multivalued and required, add a minimum_cardinality of 1
+            if slot["multivalued"] and slot["required"]:
+                slot["minimum_cardinality"] = 1
             # if the slot's range is a type, add the pattern from the type
             if slot["range"] in schema_types:
                 slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(slot["range"]).pattern)
@@ -121,11 +129,23 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
             # also add any corresponding minimum_value and maximum_value attributes
             if "any_of" in slot:
                 for _, a in enumerate(slot["any_of"]):
-                    if "range" in a and a["range"] in schema_types and "pattern" in schema.get_type(a["range"]):
-                        slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(a["range"]).pattern)
-                    if "range" in a and a["range"] in schema_enums:
-                        for _, e in enumerate(schema.get_enum(a["range"]).permissible_values):
-                            slot["pattern"] = _add_to_slot_pattern(slot, f"^{e}$")
+                    range_type = None
+                    if "range" in a:
+                        range_type = a["range"].replace("cdp-common:", "")
+                        if range_type in schema_types and "pattern" in schema.get_type(range_type):
+                            a["range"] = range_type
+                            slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(range_type).pattern)
+                        if common_slot := common_slots.get(range_type):
+                            slot["description"] = common_slot["description"]
+                            slot["unit"] = common_slot["unit"]
+                            a["range"] = common_slot["range"]
+                            # Switch range_type to the field's type so that we can check it for ENUM-ness below.
+                            range_type = a["range"]
+                            a["minimum_value"] = common_slot["minimum_value"]
+                            a["maximum_value"] = common_slot["maximum_value"]
+                        if range_type in schema_enums:
+                            for _, e in enumerate(schema.get_enum(range_type).permissible_values):
+                                slot["pattern"] = _add_to_slot_pattern(slot, f"^{e}$")
                     if "minimum_value" in a and a["minimum_value"] is not None:
                         slot["minimum_value"] = _add_to_slot_minimum_value(slot, a["minimum_value"])
                     if "maximum_value" in a and a["maximum_value"] is not None:

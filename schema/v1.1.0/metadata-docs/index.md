@@ -25,17 +25,20 @@ Name: cdp-meta
 | [Any](Any.md) | A placeholder for any type of data. |
 | [Author](Author.md) | Author of a scientific data entity. |
 | [AuthoredEntity](AuthoredEntity.md) | An entity with associated authors. |
+| [AuthorMixin](AuthorMixin.md) | An entity with author data |
 | [CameraDetails](CameraDetails.md) | The camera used to collect the tilt series. |
 | [CellComponent](CellComponent.md) | The cellular component from which the sample was derived. |
 | [CellStrain](CellStrain.md) | The strain or cell line from which the sample was derived. |
 | [CellType](CellType.md) | The cell type from which the sample was derived. |
 | [CrossReferencedEntity](CrossReferencedEntity.md) | An entity with associated cross-references to other databases and publications. |
 | [CrossReferences](CrossReferences.md) | A set of cross-references to other databases and publications. |
+| [CrossReferencesMixin](CrossReferencesMixin.md) | A set of cross-references to other databases and publications. |
 | [Dataset](Dataset.md) | High-level description of a cryoET dataset. |
 | [DateStamp](DateStamp.md) | A set of dates at which a data item was deposited, published and last modified. |
-| [DatestampedEntity](DatestampedEntity.md) | An entity with associated deposition, release and last modified dates. |
+| [DateStampedEntity](DateStampedEntity.md) | An entity with associated deposition, release and last modified dates. |
+| [DateStampedEntityMixin](DateStampedEntityMixin.md) | A set of dates at which a data item was deposited, published and last modified. |
 | [Deposition](Deposition.md) | Metadata describing a deposition. |
-| [ExperimentalMetadata](ExperimentalMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET dataset. |
+| [ExperimentMetadata](ExperimentMetadata.md) | Metadata describing sample and sample preparation methods used in a cryoET dataset. |
 | [FundedEntity](FundedEntity.md) | An entity with associated funding sources. |
 | [FundingDetails](FundingDetails.md) | A funding source for a scientific data entity (base for JSON and DB representation). |
 | [MicroscopeDetails](MicroscopeDetails.md) | The microscope used to collect the tilt series. |
@@ -62,7 +65,7 @@ Name: cdp-meta
 | [affiliation_address](affiliation_address.md) | The address of the author's affiliation |
 | [affiliation_identifier](affiliation_identifier.md) | A Research Organization Registry (ROR) identifier |
 | [affiliation_name](affiliation_name.md) | The name of the author's affiliation |
-| [affine_transformation_matrix](affine_transformation_matrix.md) | A placeholder for any type of data |
+| [affine_transformation_matrix](affine_transformation_matrix.md) | The flip or rotation transformation of this author submitted tomogram is indi... |
 | [align_software](align_software.md) | Software used for alignment |
 | [aligned_tiltseries_binning](aligned_tiltseries_binning.md) | Binning factor of the aligned tilt series |
 | [annotation_method](annotation_method.md) | Describe how the annotation is made (e |
@@ -175,13 +178,14 @@ Name: cdp-meta
 
 | Enumeration | Description |
 | --- | --- |
+| [AnnotationFileShapeTypeEnum](AnnotationFileShapeTypeEnum.md) | Describes the shape of the annotation |
 | [AnnotationMethodLinkTypeEnum](AnnotationMethodLinkTypeEnum.md) | Describes the type of link associated to the annotation method |
 | [AnnotationMethodTypeEnum](AnnotationMethodTypeEnum.md) | Describes how the annotations were generated |
 | [DepositionTypesEnum](DepositionTypesEnum.md) | Types of data a deposition has |
 | [FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md) | Fiducial Alignment method |
-| [MicroscopeManufacturerEnum](MicroscopeManufacturerEnum.md) | Microscope manufacturer |
 | [SampleTypeEnum](SampleTypeEnum.md) | Type of sample imaged in a CryoET study |
 | [TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md) | Camera acquisition mode |
+| [TiltseriesMicroscopeManufacturerEnum](TiltseriesMicroscopeManufacturerEnum.md) | Microscope manufacturer |
 | [TomogramProcessingEnum](TomogramProcessingEnum.md) | Tomogram processing method |
 | [TomogramTypeEnum](TomogramTypeEnum.md) | Tomogram type |
 | [TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md) | Tomogram reconstruction method |
@@ -227,6 +231,7 @@ Name: cdp-meta
 | [Uriorcurie](Uriorcurie.md) | a URI or a CURIE |
 | [URLorS3URI](URLorS3URI.md) | A URL or S3 URI |
 | [VersionString](VersionString.md) | A version number (only major, minor versions) |
+| [WORMBASEID](WORMBASEID.md) | A WormBase identifier |
 
 
 ## Subsets

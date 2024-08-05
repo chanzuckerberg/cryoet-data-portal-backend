@@ -14,11 +14,8 @@ datasets:
     - corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
-    cell_strain:
-      id: null
-      name: ''
-    dataset_description: ' and is a part of Caltech Jensen  lab etdb. ribbon near
-      membrane, possibly something between ribbon and membrane'
+    dataset_description: This is a single dataset studying Spiroplasma melliferum
+      collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10242
     dataset_title: Spiroplasma melliferum
     dates: &id002

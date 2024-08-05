@@ -48,7 +48,7 @@ URI: [cdp-meta:CellComponent](metadataCellComponent)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [ExperimentalMetadata](ExperimentalMetadata.md) | [cell_component](cell_component.md) | range | [CellComponent](CellComponent.md) |
+| [ExperimentMetadata](ExperimentMetadata.md) | [cell_component](cell_component.md) | range | [CellComponent](CellComponent.md) |
 | [Dataset](Dataset.md) | [cell_component](cell_component.md) | range | [CellComponent](CellComponent.md) |
 
 
@@ -106,14 +106,15 @@ attributes:
     alias: name
     owner: CellComponent
     domain_of:
-    - Author
     - OrganismDetails
     - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AuthorMixin
     - AnnotationMethodLinks
+    - Author
     range: string
     required: true
     inlined: true
@@ -158,14 +159,15 @@ attributes:
     alias: name
     owner: CellComponent
     domain_of:
-    - Author
     - OrganismDetails
     - TissueDetails
     - CellType
     - CellStrain
     - CellComponent
     - AnnotationObject
+    - AuthorMixin
     - AnnotationMethodLinks
+    - Author
     range: string
     required: true
     inlined: true

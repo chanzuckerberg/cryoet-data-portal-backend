@@ -40,7 +40,7 @@ URI: [cdp-meta:MicroscopeDetails](metadataMicroscopeDetails)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [additional_info](additional_info.md) | 0..1 <br/> [String](String.md) | Other microscope optical setup information, in addition to energy filter, pha... | direct |
-| [manufacturer](manufacturer.md) | 1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[MicroscopeManufacturerEnum](MicroscopeManufacturerEnum.md) | Name of the microscope manufacturer | direct |
+| [manufacturer](manufacturer.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[TiltseriesMicroscopeManufacturerEnum](TiltseriesMicroscopeManufacturerEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md) | Name of the microscope manufacturer | direct |
 | [model](model.md) | 1 <br/> [String](String.md) | Microscope model name | direct |
 
 
@@ -118,20 +118,18 @@ attributes:
     name: manufacturer
     description: Name of the microscope manufacturer
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_microscope_manufacturer
     alias: manufacturer
     owner: MicroscopeDetails
     domain_of:
     - CameraDetails
     - MicroscopeDetails
-    required: true
+    range: string
     inlined: true
     inlined_as_list: true
-    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^FEI$)|(^TFS$)|(^JEOL$)
+    pattern: (^FEI$)|(^TFS$)|(^JEOL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
     any_of:
+    - range: tiltseries_microscope_manufacturer_enum
     - range: StringFormattedString
-    - range: microscope_manufacturer_enum
   model:
     name: model
     description: Microscope model name
@@ -178,21 +176,18 @@ attributes:
     name: manufacturer
     description: Name of the microscope manufacturer
     from_schema: metadata
-    exact_mappings:
-    - cdp-common:tiltseries_microscope_manufacturer
     alias: manufacturer
     owner: MicroscopeDetails
     domain_of:
     - CameraDetails
     - MicroscopeDetails
     range: string
-    required: true
     inlined: true
     inlined_as_list: true
-    pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^FEI$)|(^TFS$)|(^JEOL$)
+    pattern: (^FEI$)|(^TFS$)|(^JEOL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
     any_of:
+    - range: tiltseries_microscope_manufacturer_enum
     - range: StringFormattedString
-    - range: microscope_manufacturer_enum
   model:
     name: model
     description: Microscope model name
