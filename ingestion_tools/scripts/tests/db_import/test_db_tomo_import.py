@@ -89,6 +89,7 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "key_photo_thumbnail_url": f"{http_prefix}/{run1_vs_path}KeyPhotos/key-photo-thumbnail.png",
         "neuroglancer_config": '{"foo":"bar","baz":"test"}',
         "type": "CANONICAL",
+        "deposition_id": 301,
     }
     run2_tomo = {
         "name": "RUN2",
@@ -115,7 +116,7 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "offset_z": 0,
         "neuroglancer_config": "{}",
         "type": "CANONICAL",
-        "deposition_id": 111111,
+        "deposition_id": 300,
     }
     return {
         "RUN1": {
