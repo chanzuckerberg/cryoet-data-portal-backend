@@ -10,6 +10,8 @@ from common.db_models import (
     Dataset,
     DatasetAuthor,
     DatasetFunding,
+    Deposition,
+    DepositionAuthor,
     Run,
     TiltSeries,
     Tomogram,
@@ -20,6 +22,9 @@ from common.db_models import (
 DATASET_ID = 30001
 DATASET_AUTHOR_ID = 301
 DATASET_FUNDING_ID = 302
+DEPOSITION_ID1 = 300
+DEPOSITION_ID2 = 301
+DEPOSITION_AUTHOR_ID = 201
 RUN1_ID = 401
 RUN4_ID = 402
 TILTSERIES_ID = 501
@@ -34,6 +39,39 @@ ANNOTATION_AUTHOR_ID = 702
 STALE_RUN_ID = 902
 STALE_TOMOGRAM_ID = 903
 STALE_ANNOTATION_ID = 904
+
+
+def stale_deposition_metadata() -> dict:
+    return {
+        "id": DEPOSITION_ID1,
+        "title": "Test Deposition",
+        "description": "Test Description",
+        "deposition_date": datetime.now().date(),
+        "release_date": datetime.now().date(),
+        "last_modified_date": datetime.now().date(),
+        "deposition_types": "annotation",
+        "s3_prefix": "s3://invalid_bucket/dep1",
+        "https_prefix": "https://invalid-site.com/1234",
+    }
+
+
+def populate_deposition() -> None:
+    Deposition.create(**stale_deposition_metadata())
+
+
+def stale_deposition_author() -> dict:
+    return {
+        "id": DEPOSITION_AUTHOR_ID,
+        "deposition_id": DEPOSITION_ID1,
+        "name": "Author 1",
+        "author_list_order": 1,
+        "corresponding_author_status": False,
+        "primary_author_status": False,
+    }
+
+
+def populate_deposition_authors() -> None:
+    DepositionAuthor.create(**stale_deposition_author())
 
 
 def populate_dataset() -> None:
@@ -408,3 +446,8 @@ def clean_all_mock_data() -> None:
                 voxel_spacing.delete_instance()
             run.delete_instance()
         dataset.delete_instance()
+
+    for deposition in Deposition.select().where(Deposition.id << [DEPOSITION_ID1, DEPOSITION_ID2]):
+        for author in deposition.authors:
+            author.delete_instance()
+        deposition.delete_instance()

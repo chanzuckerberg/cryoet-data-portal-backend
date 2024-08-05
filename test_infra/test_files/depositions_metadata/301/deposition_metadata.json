@@ -7,6 +7,10 @@
         },
         {
             "ORCID": "0000-0000-0000-0005",
+            "name": "Author 4"
+        },
+        {
+            "ORCID": "0000-0000-0000-0002",
             "corresponding_author_status": true,
             "name": "Author 2"
         }
@@ -15,6 +19,10 @@
         "deposition_date": "2023-04-02",
         "last_modified_date": "2023-09-02",
         "release_date": "2024-06-01"
+    },
+    "cross_references": {
+        "related_database_entries": "EMPIAR-1000, EMDB-1001",
+        "publications": "doi:10.1000/1234"
     },
     "deposition_description": "A really awesome deposition",
     "deposition_identifier": 301,
