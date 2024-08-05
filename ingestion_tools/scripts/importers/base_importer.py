@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, Any, Optional
 
 from common.copy import copy_by_src
 from common.finders import DepositionObjectImporterFactory
-from common.image import VolumeInfo, get_tomo_metadata, get_volume_info, get_voxel_size, make_pyramids
+from common.image import VolumeInfo, get_volume_info, get_volume_metadata, get_voxel_size, make_pyramids
 
 if TYPE_CHECKING:
     from common.config import DepositionImportConfig
@@ -157,7 +157,7 @@ class VolumeImporter(BaseImporter):
     def load_extra_metadata(self) -> dict[str, Any]:
         run: RunImporter = self.get_run()
         output_prefix = self.get_output_path()
-        metadata = get_tomo_metadata(self.config.fs, output_prefix)
+        metadata = get_volume_metadata(self.config.fs, output_prefix)
         metadata["run_name"] = run.name
         return metadata
 
