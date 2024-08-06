@@ -16,9 +16,9 @@ URI: [cdp-meta:binning](metadatabinning)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation |  no  |
-| [AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation |  no  |
 | [AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation |  no  |
+| [AnnotationPointFile](AnnotationPointFile.md) | File and sourcing data for a point annotation |  no  |
+| [AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation |  no  |
 
 
 
@@ -28,7 +28,7 @@ URI: [cdp-meta:binning](metadatabinning)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -63,7 +63,7 @@ domain_of:
 - AnnotationOrientedPointFile
 - AnnotationInstanceSegmentationFile
 - AnnotationPointFile
-range: string
+range: Any
 
 ```
 </details>

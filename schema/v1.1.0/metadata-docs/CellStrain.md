@@ -22,6 +22,13 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
     click CellStrain href "../CellStrain"
       CellStrain : id
 
+
+
+
+    CellStrain --> "0..1 _recommended_" Any : id
+    click Any href "../Any"
+
+
       CellStrain : name
 
 
@@ -38,7 +45,7 @@ URI: [cdp-meta:CellStrain](metadataCellStrain)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [name](name.md) | 1 <br/> [String](String.md) | Cell line or strain for the sample | direct |
-| [id](id.md) | 0..1 _recommended_ <br/> [String](String.md)&nbsp;or&nbsp;<br />[WORMBASEID](WORMBASEID.md)&nbsp;or&nbsp;<br />[ONTOLOGYID](ONTOLOGYID.md) | Link to more information about the cell strain | direct |
+| [id](id.md) | 0..1 _recommended_ <br/> [Any](Any.md)&nbsp;or&nbsp;<br />[WORMBASEID](WORMBASEID.md)&nbsp;or&nbsp;<br />[ONTOLOGYID](ONTOLOGYID.md) | Link to more information about the cell strain | direct |
 
 
 
@@ -188,7 +195,7 @@ attributes:
     - CellStrain
     - CellComponent
     - AnnotationObject
-    range: string
+    range: Any
     recommended: true
     inlined: true
     inlined_as_list: true

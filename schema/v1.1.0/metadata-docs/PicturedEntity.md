@@ -8,8 +8,6 @@ _An entity with associated preview images._
 
 
 
-* __NOTE__: this is an abstract class and should not be instantiated directly
-
 
 URI: [cdp-meta:PicturedEntity](metadataPicturedEntity)
 
@@ -94,7 +92,6 @@ URI: [cdp-meta:PicturedEntity](metadataPicturedEntity)
 name: PicturedEntity
 description: An entity with associated preview images.
 from_schema: metadata
-abstract: true
 attributes:
   key_photos:
     name: key_photos
@@ -120,7 +117,6 @@ attributes:
 name: PicturedEntity
 description: An entity with associated preview images.
 from_schema: metadata
-abstract: true
 attributes:
   key_photos:
     name: key_photos

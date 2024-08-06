@@ -8,8 +8,6 @@ _A set of cross-references to other databases and publications._
 
 
 
-* __NOTE__: this is an abstract class and should not be instantiated directly
-
 
 URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 
@@ -111,7 +109,6 @@ URI: [cdp-meta:CrossReferences](metadataCrossReferences)
 name: CrossReferences
 description: A set of cross-references to other databases and publications.
 from_schema: metadata
-abstract: true
 mixins:
 - CrossReferencesMixin
 attributes:
@@ -183,7 +180,6 @@ attributes:
 name: CrossReferences
 description: A set of cross-references to other databases and publications.
 from_schema: metadata
-abstract: true
 mixins:
 - CrossReferencesMixin
 attributes:

@@ -31,7 +31,7 @@ URI: [cdp-meta:reconstruction_method](metadatareconstruction_method)
 
 ## Properties
 
-* Range: [String](String.md)&nbsp;or&nbsp;<br />[TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)
+* Range: [Any](Any.md)&nbsp;or&nbsp;<br />[TomogromReconstructionMethodEnum](TomogromReconstructionMethodEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)
 
 * Regex pattern: `(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)`
 
@@ -77,7 +77,7 @@ alias: reconstruction_method
 owner: Tomogram
 domain_of:
 - Tomogram
-range: string
+range: Any
 inlined: true
 inlined_as_list: true
 pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[

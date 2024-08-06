@@ -22,6 +22,13 @@ URI: [cdp-meta:CameraDetails](metadataCameraDetails)
     click CameraDetails href "../CameraDetails"
       CameraDetails : acquire_mode
 
+
+
+
+    CameraDetails --> "0..1" Any : acquire_mode
+    click Any href "../Any"
+
+
       CameraDetails : manufacturer
 
       CameraDetails : model
@@ -39,7 +46,7 @@ URI: [cdp-meta:CameraDetails](metadataCameraDetails)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [acquire_mode](acquire_mode.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md) | Camera acquisition mode | direct |
+| [acquire_mode](acquire_mode.md) | 0..1 <br/> [Any](Any.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)&nbsp;or&nbsp;<br />[TiltseriesCameraAcquireModeEnum](TiltseriesCameraAcquireModeEnum.md) | Camera acquisition mode | direct |
 | [manufacturer](manufacturer.md) | 1 <br/> [String](String.md) | Name of the camera manufacturer | direct |
 | [model](model.md) | 1 <br/> [String](String.md) | Camera model name | direct |
 
@@ -171,7 +178,7 @@ attributes:
     owner: CameraDetails
     domain_of:
     - CameraDetails
-    range: string
+    range: Any
     inlined: true
     inlined_as_list: true
     pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^counting$)|(^superresolution$)|(^linear$)|(^cds$)

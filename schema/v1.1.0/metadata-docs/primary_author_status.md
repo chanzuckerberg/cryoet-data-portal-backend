@@ -27,7 +27,7 @@ URI: [cdp-meta:primary_author_status](metadataprimary_author_status)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: primary_author_status
 domain_of:
 - Author
 - AuthorMixin
-range: string
+range: Any
 
 ```
 </details>

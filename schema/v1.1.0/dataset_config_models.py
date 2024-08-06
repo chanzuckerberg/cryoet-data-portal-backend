@@ -733,7 +733,7 @@ class DateStampedEntity(ConfiguredBaseModel):
     An entity with associated deposition, release and last modified dates.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
     dates: DateStamp = Field(
         ...,
@@ -749,7 +749,7 @@ class AuthoredEntity(ConfiguredBaseModel):
     An entity with associated authors.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
     authors: List[Author] = Field(
         default_factory=list,
@@ -770,7 +770,7 @@ class FundedEntity(ConfiguredBaseModel):
     An entity with associated funding sources.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
     funding: Optional[List[FundingDetails]] = Field(
         default_factory=list,
@@ -810,7 +810,7 @@ class PicturedEntity(ConfiguredBaseModel):
     An entity with associated preview images.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
     key_photos: PicturePath = Field(
         ...,
@@ -1084,7 +1084,7 @@ class ExperimentMetadata(ConfiguredBaseModel):
     Metadata describing sample and sample preparation methods used in a cryoET dataset.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "metadata"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
     sample_type: SampleTypeEnum = Field(
         ...,
@@ -3360,9 +3360,7 @@ class CrossReferences(CrossReferencesMixin):
     A set of cross-references to other databases and publications.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"abstract": True, "from_schema": "metadata", "mixins": ["CrossReferencesMixin"]}
-    )
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata", "mixins": ["CrossReferencesMixin"]})
 
     publications: Optional[str] = Field(
         None,
@@ -4042,7 +4040,7 @@ class DefaultLiteral(ConfiguredBaseModel):
 
     value: List[Any] = Field(
         default_factory=list,
-        description="""A placeholder for any type of data.""",
+        description="""The value for the literal.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "value",

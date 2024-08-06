@@ -8,8 +8,6 @@ _Metadata describing sample and sample preparation methods used in a cryoET data
 
 
 
-* __NOTE__: this is an abstract class and should not be instantiated directly
-
 
 URI: [cdp-meta:ExperimentMetadata](metadataExperimentMetadata)
 
@@ -157,7 +155,6 @@ name: ExperimentMetadata
 description: Metadata describing sample and sample preparation methods used in a cryoET
   dataset.
 from_schema: metadata
-abstract: true
 attributes:
   sample_type:
     name: sample_type
@@ -302,7 +299,6 @@ name: ExperimentMetadata
 description: Metadata describing sample and sample preparation methods used in a cryoET
   dataset.
 from_schema: metadata
-abstract: true
 attributes:
   sample_type:
     name: sample_type

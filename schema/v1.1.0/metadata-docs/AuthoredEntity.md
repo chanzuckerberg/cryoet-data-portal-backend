@@ -8,8 +8,6 @@ _An entity with associated authors._
 
 
 
-* __NOTE__: this is an abstract class and should not be instantiated directly
-
 
 URI: [cdp-meta:AuthoredEntity](metadataAuthoredEntity)
 
@@ -103,7 +101,6 @@ URI: [cdp-meta:AuthoredEntity](metadataAuthoredEntity)
 name: AuthoredEntity
 description: An entity with associated authors.
 from_schema: metadata
-abstract: true
 attributes:
   authors:
     name: authors
@@ -136,7 +133,6 @@ attributes:
 name: AuthoredEntity
 description: An entity with associated authors.
 from_schema: metadata
-abstract: true
 attributes:
   authors:
     name: authors

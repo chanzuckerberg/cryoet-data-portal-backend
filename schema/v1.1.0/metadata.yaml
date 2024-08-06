@@ -12,7 +12,7 @@ prefixes:
   #cdp-common: common
 imports:
   - linkml:types
-default_range: string
+default_range: Any
 default_prefix: cdp-meta
 
 classes:
@@ -73,7 +73,6 @@ classes:
   # Meta-Mixins
   # ============================================================================
   DateStampedEntity:
-    abstract: true
     description: An entity with associated deposition, release and last modified dates.
     attributes:
       dates:
@@ -81,7 +80,6 @@ classes:
         required: true
 
   AuthoredEntity:
-    abstract: true
     description: An entity with associated authors.
     attributes:
       authors:
@@ -93,7 +91,6 @@ classes:
         list_elements_ordered: true
 
   FundedEntity:
-    abstract: true
     description: An entity with associated funding sources.
     attributes:
       funding:
@@ -105,7 +102,6 @@ classes:
         list_elements_ordered: true
 
   CrossReferences:
-    abstract: true
     description: A set of cross-references to other databases and publications.
     mixins:
       - CrossReferencesMixin
@@ -118,7 +114,6 @@ classes:
         range: CrossReferences
 
   PicturedEntity:
-    abstract: true
     description: An entity with associated preview images.
     attributes:
       key_photos:
@@ -183,7 +178,6 @@ classes:
           - cdp-common:cell_component_id
 
   ExperimentMetadata:
-    abstract: true
     description: Metadata describing sample and sample preparation methods used in a cryoET dataset.
     attributes:
       sample_type:

@@ -8,8 +8,6 @@ _An entity with associated deposition, release and last modified dates._
 
 
 
-* __NOTE__: this is an abstract class and should not be instantiated directly
-
 
 URI: [cdp-meta:DateStampedEntity](metadataDateStampedEntity)
 
@@ -101,7 +99,6 @@ URI: [cdp-meta:DateStampedEntity](metadataDateStampedEntity)
 name: DateStampedEntity
 description: An entity with associated deposition, release and last modified dates.
 from_schema: metadata
-abstract: true
 attributes:
   dates:
     name: dates
@@ -131,7 +128,6 @@ attributes:
 name: DateStampedEntity
 description: An entity with associated deposition, release and last modified dates.
 from_schema: metadata
-abstract: true
 attributes:
   dates:
     name: dates

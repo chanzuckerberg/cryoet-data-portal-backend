@@ -31,7 +31,7 @@ URI: [cdp-meta:pixel_spacing](metadatapixel_spacing)
 
 ## Properties
 
-* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
+* Range: [Any](Any.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Minimum Value: 0
 
@@ -79,7 +79,7 @@ alias: pixel_spacing
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: string
+range: Any
 inlined: true
 inlined_as_list: true
 minimum_value: 0.001

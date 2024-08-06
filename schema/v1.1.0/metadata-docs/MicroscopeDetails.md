@@ -24,6 +24,13 @@ URI: [cdp-meta:MicroscopeDetails](metadataMicroscopeDetails)
 
       MicroscopeDetails : manufacturer
 
+
+
+
+    MicroscopeDetails --> "0..1" Any : manufacturer
+    click Any href "../Any"
+
+
       MicroscopeDetails : model
 
 
@@ -40,7 +47,7 @@ URI: [cdp-meta:MicroscopeDetails](metadataMicroscopeDetails)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [additional_info](additional_info.md) | 0..1 <br/> [String](String.md) | Other microscope optical setup information, in addition to energy filter, pha... | direct |
-| [manufacturer](manufacturer.md) | 0..1 <br/> [String](String.md)&nbsp;or&nbsp;<br />[TiltseriesMicroscopeManufacturerEnum](TiltseriesMicroscopeManufacturerEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md) | Name of the microscope manufacturer | direct |
+| [manufacturer](manufacturer.md) | 0..1 <br/> [Any](Any.md)&nbsp;or&nbsp;<br />[TiltseriesMicroscopeManufacturerEnum](TiltseriesMicroscopeManufacturerEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md) | Name of the microscope manufacturer | direct |
 | [model](model.md) | 1 <br/> [String](String.md) | Microscope model name | direct |
 
 
@@ -123,7 +130,7 @@ attributes:
     domain_of:
     - CameraDetails
     - MicroscopeDetails
-    range: string
+    range: Any
     inlined: true
     inlined_as_list: true
     pattern: (^FEI$)|(^TFS$)|(^JEOL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
@@ -181,7 +188,7 @@ attributes:
     domain_of:
     - CameraDetails
     - MicroscopeDetails
-    range: string
+    range: Any
     inlined: true
     inlined_as_list: true
     pattern: (^FEI$)|(^TFS$)|(^JEOL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
