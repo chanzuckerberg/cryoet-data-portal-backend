@@ -5,7 +5,7 @@ comment on column "public"."datasets"."related_database_links" is E'If a CryoET 
 
 comment on table "public"."dataset_authors" is E'Metadata for authors of a dataset';
 comment on column "public"."dataset_authors"."dataset_id" is E'Numeric identifier for the dataset this author corresponds to';
-comment on column "public"."dataset_authors"."id" is E'A numeric identifier for this author';
+comment on column "public"."dataset_authors"."id" is E'A numeric identifier for this author (May change!)';
 comment on column "public"."dataset_authors"."primary_author_status" is E'Indicating whether an author is the main person associated with the corresponding dataset';
 
 comment on table "public"."dataset_funding" is E'Metadata for a dataset''s funding sources';
@@ -16,11 +16,11 @@ comment on table "public"."runs" is E'Metadata for an experiment run';
 comment on column "public"."runs"."https_prefix" is E'The HTTPS directory path where this dataset is contained';
 comment on column "public"."runs"."name" is E'Short name for this experiment run';
 
-comment on table "public"."tomogram_voxel_spacings" is E'Metadata for a set of tomograms and annotations of a given voxel spacing';
+comment on table "public"."tomogram_voxel_spacings" is E'Metadata for a given voxel spacing related to tomograms and annotations';
 comment on column "public"."tomogram_voxel_spacings"."https_prefix" is E'The HTTPS directory path where this tomogram voxel spacing is contained';
 comment on column "public"."tomogram_voxel_spacings"."id" is E'Numeric identifier (May change!)';
 comment on column "public"."tomogram_voxel_spacings"."run_id" is E'The ID of the run this tomogram voxel spacing is a part of';
-comment on column "public"."tomogram_voxel_spacings"."s3_prefix" is E'The S3 public bucket path where this dataset is contained';
+comment on column "public"."tomogram_voxel_spacings"."s3_prefix" is E'The S3 public bucket path where this tomogram voxel spacing is contained';
 comment on column "public"."tomogram_voxel_spacings"."voxel_spacing" is E'The voxel spacing for the tomograms in this set in angstroms';
 
 comment on table "public"."tomograms" is E'Metadata for a tomogram';
