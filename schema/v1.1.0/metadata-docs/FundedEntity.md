@@ -8,8 +8,6 @@ _An entity with associated funding sources._
 
 
 
-* __NOTE__: this is an abstract class and should not be instantiated directly
-
 
 URI: [cdp-meta:FundedEntity](metadataFundedEntity)
 
@@ -97,7 +95,6 @@ URI: [cdp-meta:FundedEntity](metadataFundedEntity)
 name: FundedEntity
 description: An entity with associated funding sources.
 from_schema: metadata
-abstract: true
 attributes:
   funding:
     name: funding
@@ -127,7 +124,6 @@ attributes:
 name: FundedEntity
 description: An entity with associated funding sources.
 from_schema: metadata
-abstract: true
 attributes:
   funding:
     name: funding

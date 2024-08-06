@@ -31,7 +31,7 @@ URI: [cdp-meta:tilt_step](metadatatilt_step)
 
 ## Properties
 
-* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
+* Range: [Any](Any.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Minimum Value: 0
 
@@ -81,7 +81,7 @@ alias: tilt_step
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: string
+range: Any
 inlined: true
 inlined_as_list: true
 minimum_value: 0

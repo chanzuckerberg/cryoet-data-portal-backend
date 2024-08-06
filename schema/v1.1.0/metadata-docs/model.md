@@ -27,7 +27,7 @@ URI: [cdp-meta:model](metadatamodel)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: model
 domain_of:
 - CameraDetails
 - MicroscopeDetails
-range: string
+range: Any
 
 ```
 </details>

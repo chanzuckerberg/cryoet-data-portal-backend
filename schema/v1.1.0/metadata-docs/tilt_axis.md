@@ -31,7 +31,7 @@ URI: [cdp-meta:tilt_axis](metadatatilt_axis)
 
 ## Properties
 
-* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
+* Range: [Any](Any.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Minimum Value: -360
 
@@ -81,7 +81,7 @@ alias: tilt_axis
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: string
+range: Any
 inlined: true
 inlined_as_list: true
 minimum_value: -360

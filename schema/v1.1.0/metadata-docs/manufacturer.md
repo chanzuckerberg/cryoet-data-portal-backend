@@ -27,7 +27,7 @@ URI: [cdp-meta:manufacturer](metadatamanufacturer)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: manufacturer
 domain_of:
 - CameraDetails
 - MicroscopeDetails
-range: string
+range: Any
 
 ```
 </details>

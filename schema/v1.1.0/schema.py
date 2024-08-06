@@ -157,6 +157,8 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
         for m in clz.mixins:
             mixin = schema.get_class(m)
             for name, attr in mixin.attributes.items():
+                if attr.description is None:
+                    continue
                 clz.attributes[name].description = attr.description
 
     # Make sure the attributes that have classes as range have their descriptions set
@@ -164,6 +166,8 @@ def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> Schema
         clz = schema.get_class(c)
         for _, attr in clz.attributes.items():
             if attr.range in schema.all_classes():
+                if schema.get_class(attr.range).description is None:
+                    continue
                 attr.description = schema.get_class(attr.range).description
 
     return schema

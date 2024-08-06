@@ -31,7 +31,7 @@ URI: [cdp-meta:total_flux](metadatatotal_flux)
 
 ## Properties
 
-* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
+* Range: [Any](Any.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Minimum Value: 0
 
@@ -80,7 +80,7 @@ alias: total_flux
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: string
+range: Any
 inlined: true
 inlined_as_list: true
 minimum_value: 0

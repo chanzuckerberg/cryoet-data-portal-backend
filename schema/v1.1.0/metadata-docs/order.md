@@ -16,8 +16,8 @@ URI: [cdp-meta:order](metadataorder)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation |  no  |
 | [AnnotationOrientedPointFile](AnnotationOrientedPointFile.md) | File and sourcing data for an oriented point annotation |  no  |
+| [AnnotationInstanceSegmentationFile](AnnotationInstanceSegmentationFile.md) | File and sourcing data for an instance segmentation annotation |  no  |
 
 
 
@@ -27,7 +27,7 @@ URI: [cdp-meta:order](metadataorder)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: order
 domain_of:
 - AnnotationOrientedPointFile
 - AnnotationInstanceSegmentationFile
-range: string
+range: Any
 
 ```
 </details>

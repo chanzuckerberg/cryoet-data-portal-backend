@@ -31,7 +31,7 @@ URI: [cdp-meta:tilt_series_quality](metadatatilt_series_quality)
 
 ## Properties
 
-* Range: [String](String.md)&nbsp;or&nbsp;<br />[Integer](Integer.md)&nbsp;or&nbsp;<br />[IntegerFormattedString](IntegerFormattedString.md)
+* Range: [Any](Any.md)&nbsp;or&nbsp;<br />[Integer](Integer.md)&nbsp;or&nbsp;<br />[IntegerFormattedString](IntegerFormattedString.md)
 
 * Minimum Value: 1
 
@@ -82,7 +82,7 @@ alias: tilt_series_quality
 owner: TiltSeries
 domain_of:
 - TiltSeries
-range: string
+range: Any
 inlined: true
 inlined_as_list: true
 minimum_value: 1

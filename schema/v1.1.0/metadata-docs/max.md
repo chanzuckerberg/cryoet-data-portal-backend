@@ -31,7 +31,7 @@ URI: [cdp-meta:max](metadatamax)
 
 ## Properties
 
-* Range: [String](String.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
+* Range: [Any](Any.md)&nbsp;or&nbsp;<br />[Float](Float.md)&nbsp;or&nbsp;<br />[FloatFormattedString](FloatFormattedString.md)
 
 * Minimum Value: -90
 
@@ -81,7 +81,7 @@ alias: max
 owner: TiltRange
 domain_of:
 - TiltRange
-range: string
+range: Any
 inlined: true
 inlined_as_list: true
 minimum_value: -90

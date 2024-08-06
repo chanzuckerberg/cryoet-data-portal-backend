@@ -27,7 +27,7 @@ URI: [cdp-meta:dataset_citations](metadatadataset_citations)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: dataset_citations
 domain_of:
 - CrossReferences
 - CrossReferencesMixin
-range: string
+range: Any
 
 ```
 </details>
