@@ -3486,7 +3486,8 @@ classes:
           descriptive_name: pixels
       affine_transformation_matrix:
         name: affine_transformation_matrix
-        description: A placeholder for any type of data.
+        description: The flip or rotation transformation of this author submitted
+          tomogram is indicated here
         from_schema: cdp-api-models
         array:
           exact_number_dimensions: 2
@@ -3597,7 +3598,6 @@ classes:
         inlined_as_list: true
   Any:
     name: Any
-    description: A placeholder for any type of data.
     from_schema: cdp-api-models
     class_uri: linkml:Any
   DateStampedEntityMixin:

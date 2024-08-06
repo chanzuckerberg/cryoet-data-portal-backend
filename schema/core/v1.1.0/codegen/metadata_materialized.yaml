@@ -26,7 +26,7 @@ prefixes:
     prefix_prefix: GO
     prefix_reference: http://purl.obolibrary.org/obo/GO_
 default_prefix: cdp-meta
-default_range: string
+default_range: Any
 types:
   string:
     name: string
@@ -799,7 +799,6 @@ classes:
     name: DateStampedEntity
     description: An entity with associated deposition, release and last modified dates.
     from_schema: metadata
-    abstract: true
     attributes:
       dates:
         name: dates
@@ -818,7 +817,6 @@ classes:
     name: AuthoredEntity
     description: An entity with associated authors.
     from_schema: metadata
-    abstract: true
     attributes:
       authors:
         name: authors
@@ -839,7 +837,6 @@ classes:
     name: FundedEntity
     description: An entity with associated funding sources.
     from_schema: metadata
-    abstract: true
     attributes:
       funding:
         name: funding
@@ -860,7 +857,6 @@ classes:
     name: CrossReferences
     description: A set of cross-references to other databases and publications.
     from_schema: metadata
-    abstract: true
     mixins:
     - CrossReferencesMixin
     attributes:
@@ -935,7 +931,6 @@ classes:
     name: PicturedEntity
     description: An entity with associated preview images.
     from_schema: metadata
-    abstract: true
     attributes:
       key_photos:
         name: key_photos
@@ -1180,7 +1175,6 @@ classes:
     description: Metadata describing sample and sample preparation methods used in
       a cryoET dataset.
     from_schema: metadata
-    abstract: true
     attributes:
       sample_type:
         name: sample_type
@@ -1705,7 +1699,7 @@ classes:
         domain_of:
         - CameraDetails
         - MicroscopeDetails
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
         pattern: (^FEI$)|(^TFS$)|(^JEOL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
@@ -1785,7 +1779,7 @@ classes:
         owner: TiltRange
         domain_of:
         - TiltRange
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
         minimum_value: -90
@@ -1807,7 +1801,7 @@ classes:
         owner: TiltRange
         domain_of:
         - TiltRange
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
         minimum_value: -90
@@ -1853,7 +1847,7 @@ classes:
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
         minimum_value: 0
@@ -1871,7 +1865,7 @@ classes:
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
         minimum_value: 0
@@ -1981,7 +1975,7 @@ classes:
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
         minimum_value: 0
@@ -2014,7 +2008,7 @@ classes:
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
         minimum_value: -360
@@ -2049,7 +2043,7 @@ classes:
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
         minimum_value: 1
@@ -2068,7 +2062,7 @@ classes:
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
         minimum_value: 0
@@ -2105,7 +2099,7 @@ classes:
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
         minimum_value: 0
@@ -2125,7 +2119,7 @@ classes:
         owner: TiltSeries
         domain_of:
         - TiltSeries
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
         minimum_value: 0.001
@@ -2263,7 +2257,7 @@ classes:
         owner: Tomogram
         domain_of:
         - Tomogram
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
         minimum_value: 0.001
@@ -2284,7 +2278,7 @@ classes:
         owner: Tomogram
         domain_of:
         - Tomogram
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
         pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
@@ -2326,7 +2320,7 @@ classes:
         owner: Tomogram
         domain_of:
         - Tomogram
-        range: string
+        range: Any
         inlined: true
         inlined_as_list: true
         pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
@@ -3325,7 +3319,6 @@ classes:
         minimum_cardinality: 1
   Any:
     name: Any
-    description: A placeholder for any type of data.
     from_schema: metadata
     class_uri: linkml:Any
   DateStampedEntityMixin:

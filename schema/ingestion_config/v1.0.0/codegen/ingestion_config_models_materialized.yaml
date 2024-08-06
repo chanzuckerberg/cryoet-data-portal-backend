@@ -1011,7 +1011,7 @@ classes:
     attributes:
       value:
         name: value
-        description: A placeholder for any type of data.
+        description: The value for the literal.
         from_schema: cdp-ingestion-config
         alias: value
         owner: DefaultLiteral
@@ -4017,7 +4017,6 @@ classes:
         inlined_as_list: true
   Any:
     name: Any
-    description: A placeholder for any type of data.
     from_schema: cdp-ingestion-config
     class_uri: linkml:Any
   DateStampedEntityMixin:
