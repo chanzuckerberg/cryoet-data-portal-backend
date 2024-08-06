@@ -3,6 +3,7 @@ table:
   schema: public
 object_relationships:
   - name: dataset
+    comment: The dataset this run is a part of
     using:
       foreign_key_constraint_on: dataset_id
 array_relationships:
