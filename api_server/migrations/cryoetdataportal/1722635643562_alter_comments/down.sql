@@ -66,7 +66,7 @@ comment on column "public"."tiltseries"."pixel_spacing" is E'Pixel spacing for t
 comment on column "public"."tiltseries"."related_empiar_entry" is E'If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier';
 comment on column "public"."tiltseries"."run_id" is NULL;
 comment on column "public"."tiltseries"."s3_alignment_file" is NULL;
-comment on column "public"."tiltseries"."s3_angle_list" is NULL; 
+comment on column "public"."tiltseries"."s3_angle_list" is NULL;
 comment on column "public"."tiltseries"."s3_collection_metadata" is NULL;
 comment on column "public"."tiltseries"."s3_mrc_bin1" is NULL;
 comment on column "public"."tiltseries"."s3_omezarr_dir" is NULL;
