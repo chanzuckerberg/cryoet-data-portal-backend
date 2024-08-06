@@ -40,9 +40,11 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 2 sets of data studying Caulobacter crescentus collected
+      by Yi-Wei Chang and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10056
-    deposition_title: TBA
+    deposition_title: Caulobacter crescentus (tax_id=565050) strain:NA1000 by Yi-Wei
+      Chang
     deposition_types:
     - dataset
   sources:

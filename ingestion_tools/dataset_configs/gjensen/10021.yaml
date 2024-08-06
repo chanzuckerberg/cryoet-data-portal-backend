@@ -42,10 +42,16 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1038/s41467-022-32584-7
+      related_database_entries: EMD-27654,EMPIAR-11125
     dates: *id002
-    deposition_description: TBA
+    deposition_description: Single set of data studying Halothiobacillus neapolitanus
+      (tax_id=555778) strain:c2 by LaurenAnn Metskas and is a part of Caltech Jensen
+      lab etdb.
     deposition_identifier: 10049
-    deposition_title: TBA
+    deposition_title: Halothiobacillus neapolitanus (tax_id=555778) strain:c2 by LaurenAnn
+      Metskas
     deposition_types:
     - dataset
   sources:

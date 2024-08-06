@@ -43,10 +43,15 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1016/j.isci.2023.107210
+      related_database_entries: EMD-28282,EMD-28283,EMD-28281
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 5 sets of data studying Coxiella burnetii collected by
+      Debnath Ghosal and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10045
-    deposition_title: TBA
+    deposition_title: Coxiella burnetii (tax_id=777) strain:Nine Mile phase II clone
+      4 by Debnath Ghosal
     deposition_types:
     - dataset
   sources:

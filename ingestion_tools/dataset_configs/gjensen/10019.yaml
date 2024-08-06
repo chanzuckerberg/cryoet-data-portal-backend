@@ -43,10 +43,15 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1016/j.str.2023.03.011
+      related_database_entries: EMD-29924,EMD-29923,EMD-29922,EMD-29925
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 7 sets of data studying Dolichospermum flos-aquae collected
+      by Przemek Dutka and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10014
-    deposition_title: TBA
+    deposition_title: Dolichospermum flos-aquae (tax_id=315271) strain:CCAP 1403/13F
+      by Przemek Dutka
     deposition_types:
     - dataset
   sources:

@@ -37,9 +37,10 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 3 sets of data studying Streptococcus pneumoniae collected
+      by Elitza Tocheva and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10047
-    deposition_title: TBA
+    deposition_title: 'Streptococcus pneumoniae (tax_id=1313) strain: by Elitza Tocheva'
     deposition_types:
     - dataset
   sources:

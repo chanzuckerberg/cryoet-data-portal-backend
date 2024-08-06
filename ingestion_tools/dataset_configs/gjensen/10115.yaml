@@ -37,9 +37,11 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 'Single set of data studying Sulfolobus acidocaldarius
+      (tax_id=2285) strain: by Rasika Ramdasi and is a part of Caltech Jensen lab
+      etdb.'
     deposition_identifier: 10050
-    deposition_title: TBA
+    deposition_title: 'Sulfolobus acidocaldarius (tax_id=2285) strain: by Rasika Ramdasi'
     deposition_types:
     - dataset
   sources:

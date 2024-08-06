@@ -43,10 +43,14 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1111/mmi.13593
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 5 sets of data studying Hyphomonas neptunium collected
+      by Yi-Wei Chang and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10046
-    deposition_title: TBA
+    deposition_title: Hyphomonas neptunium (tax_id=228405) strain:ATCC 15444 by Yi-Wei
+      Chang
     deposition_types:
     - dataset
   sources:

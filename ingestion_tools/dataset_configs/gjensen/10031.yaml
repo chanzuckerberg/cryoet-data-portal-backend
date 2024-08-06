@@ -41,10 +41,14 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1128/JB.00371-20
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 16 sets of data studying Gluconacetobacter hansenii collected
+      by William Nicolas and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10018
-    deposition_title: TBA
+    deposition_title: Gluconacetobacter hansenii (tax_id=714995) strain:ATCC 23769
+      by William Nicolas
     deposition_types:
     - dataset
   sources:

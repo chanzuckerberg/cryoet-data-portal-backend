@@ -40,9 +40,10 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 3 sets of data studying Treponema primitia collected by
+      Elitza Tocheva and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10035
-    deposition_title: TBA
+    deposition_title: Treponema primitia (tax_id=545694) strain:ZAS-2 by Elitza Tocheva
     deposition_types:
     - dataset
   sources:
