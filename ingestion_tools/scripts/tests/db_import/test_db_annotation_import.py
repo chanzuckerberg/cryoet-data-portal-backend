@@ -38,7 +38,7 @@ def expected_annotations(http_prefix: str) -> list[dict[str, Any]]:
             "annotation_software": "pyTOM + Keras",
             "is_curator_recommended": True,
             "object_count": 16,
-            "deposition_id": 111111,
+            "deposition_id": 301,
             "method_type": "hybrid",
             "method_links": json.dumps(
                 [

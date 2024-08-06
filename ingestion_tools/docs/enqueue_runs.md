@@ -100,13 +100,13 @@ python3 enqueue_runs.py db-import --environment prod --import-annotation-authors
 | --import-everything | | If this flag is passed in, the script will attempt to ingest all data specified in the dataset config, (datasets, runs, annotations, etc etc) |
 
 ### Other interesting options to be aware of
-| Option | Default | Explanation                                                                                                                                                                                        |
-| --- | --- | --- |
+| Option            | Default | Explanation                                                                                                                                                                                        |
+|-------------------| --- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | --filter-datasets | null | Supply a regular expression to apply to the list of available dataset ID's, to only run import for certain datasets. This option can be specified multiple times with multiple regular expressions |
 | --include-dataset | null | Specify specific datasets to import. This option can be specified multiple times with multiple dataset id's                                                                                        |
 | --exclude-dataset | null | Supply a regular expression to exclude a list of dataset ID's the import. This option can be specified multiple times with multiple regular expressions.                                           |
-| --s3-prefix | null | Only look for datasets in a particular subdirectory (this is faster than the filter/include filters) when importing a single dataset                                                               |
-
+| --s3-prefix       | null | Only look for datasets in a particular subdirectory (this is faster than the filter/include filters) when importing a single dataset                                                               |
+| --deposition-id   | null | To be used with the --import-depositions flag to specify the depositions to be imported                                                                                                            |
 
 
 ## S3 File Sync (`sync` subcommand)

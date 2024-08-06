@@ -1,6 +1,7 @@
 import json
 from typing import Any, Iterator
 
+import importers.db.deposition
 from common import db_models
 from common.db_models import BaseModel
 from importers.db.base_importer import (
@@ -31,6 +32,7 @@ class AnnotationDBImporter(BaseDBImporter):
         self.metadata = config.load_key_json(self.metadata_path)
 
     def get_data_map(self) -> dict[str, Any]:
+        deposition = importers.db.deposition.get_deposition(self.config, self.metadata.get("deposition_id"))
         method_links = self.metadata.get("method_links")
         return {
             "tomogram_voxel_spacing_id": self.voxel_spacing_id,
@@ -53,7 +55,7 @@ class AnnotationDBImporter(BaseDBImporter):
             "annotation_software": ["annotation_software"],
             "is_curator_recommended": ["is_curator_recommended"],
             "method_type": ["method_type"],
-            "deposition_id": ["deposition_id"],
+            "deposition_id": deposition.id,
             "method_links": json.dumps(method_links) if method_links else None,
         }
 

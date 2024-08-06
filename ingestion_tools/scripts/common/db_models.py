@@ -18,6 +18,40 @@ class BaseModel(Model):
         database = db
 
 
+class Deposition(BaseModel):
+    class Meta:
+        table_name = "depositions"
+
+    id = IntegerField(primary_key=True)
+    title = CharField()
+    description = CharField()
+    deposition_date = DateField()
+    release_date = DateField()
+    last_modified_date = DateField()
+    related_database_entries = CharField(null=True)
+    deposition_publications = CharField(null=True)
+    deposition_types = CharField()
+    s3_prefix = CharField()
+    https_prefix = CharField()
+
+
+class DepositionAuthor(BaseModel):
+    class Meta:
+        table_name = "deposition_authors"
+
+    id = IntegerField(primary_key=True)
+    deposition_id = ForeignKeyField(Deposition, backref="authors")
+    orcid = CharField(null=True)
+    name = CharField()
+    corresponding_author_status = BooleanField(default=False)
+    primary_author_status = BooleanField(default=False)
+    email = CharField(null=True)
+    affiliation_name = CharField(null=True)
+    affiliation_address = CharField(null=True)
+    affiliation_identifier = CharField(null=True)
+    author_list_order = IntegerField()
+
+
 class Dataset(BaseModel):
     class Meta:
         table_name = "datasets"
@@ -50,6 +84,7 @@ class Dataset(BaseModel):
     cell_component_id = CharField(null=True)
     key_photo_url = CharField(null=True)
     key_photo_thumbnail_url = CharField(null=True)
+    deposition_id = IntegerField(null=True)
 
 
 class DatasetAuthor(BaseModel):
@@ -256,3 +291,4 @@ class TiltSeries(BaseModel):
     pixel_spacing = FloatField()
     aligned_tiltseries_binning = IntegerField(null=True)
     frames_count = IntegerField(null=True)
+    deposition_id = IntegerField(null=True)
