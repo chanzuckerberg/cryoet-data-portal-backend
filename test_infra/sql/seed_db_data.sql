@@ -21,7 +21,6 @@ SET row_security = off;
 --
 
 COPY public.datasets (id, title, description, deposition_date, release_date, last_modified_date, related_database_entries, related_database_links, dataset_publications, dataset_citations, sample_type, organism_name, organism_taxid, tissue_name, tissue_id, cell_name, cell_type_id, cell_strain_name, cell_strain_id, sample_preparation, grid_preparation, other_setup, s3_prefix, https_prefix, key_photo_url, key_photo_thumbnail_url, cell_component_name, cell_component_id, deposition_id) FROM stdin;
-30001	Lorem ipsum dolor	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.	2023-04-01	2023-06-02	2023-08-05	TEST-1243435	\N	test-publication-data	10.1101/2024.01.12.111111	organism	Foo Bar	1111	test-tissue1	1234	foo	4321	test value	999999	method1: value1, method2: value3	method3: value8, method6: value4	\N	s3://test-public-bucket/30001/	https://foo.com/30001/	https://foo.com/30001/KeyPhoto/snapshot.png	https://foo.com/30001/KeyPhoto/thumbnail.png	tail	GO:123435	300
 10000	S. pombe cells with defocus	Defocus cryo-electron tomography of S. pombe cryo-FIB lamellae with comprehensive annotations of structures and macromolecules	2023-04-01	2023-06-01	2023-06-01	EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420	\N	doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2	\N	organism	Schizosaccharomyces pombe	4896	\N	\N	\N	\N	Schizosaccharomyces pombe 972h-	NCBITaxon:284812	buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type: subtomogram_averaging_preparation	model: Quantifoil R2/1, material: COPPER, mesh: 200, support_film_film_type_id: 1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type: support_film, pretreatment_type_: GLOW DISCHARGE	\N	s3://cryoet-data-portal-staging/10000/	https://files.cryoetdataportal.cziscience.com/10000/	https://files.cryoetdataportal.cziscience.com/10000/Images/snapshot.gif	https://files.cryoetdataportal.cziscience.com/10000/Images/thumbnail.gif	\N	\N	10000
 \.
 
@@ -238,7 +237,6 @@ COPY public.dataset_funding (id, dataset_id, funding_agency_name, grant_id) FROM
 --
 
 COPY public.depositions (id, title, description, deposition_date, release_date, last_modified_date, related_database_entries, deposition_publications, deposition_types, s3_prefix, https_prefix) FROM stdin;
-300	Test Deposition	Test Description	2024-08-05	2024-08-05	2024-08-05	\N	\N	annotation	s3://invalid_bucket/dep1	https://invalid-site.com/1234
 10000	TBA	TBA	2023-04-01	2023-06-01	2023-06-01	\N	\N	dataset	s3://cryoetportal-output-test/depositions_metadata/10000/	https://files.cryoetdataportal.cziscience.com/depositions_metadata/10000/
 \.
 
@@ -248,7 +246,6 @@ COPY public.depositions (id, title, description, deposition_date, release_date, 
 --
 
 COPY public.deposition_authors (id, name, orcid, corresponding_author_status, email, affiliation_name, affiliation_address, affiliation_identifier, deposition_id, primary_author_status, author_list_order) FROM stdin;
-201	Author 1	\N	f	\N	\N	\N	\N	300	f	1
 57	Irene de Teresa Trueba	0000-0002-4691-9501	\N	\N	\N	\N	\N	10000	t	1
 58	Sara Goetz	0000-0002-9903-3667	\N	\N	\N	\N	\N	10000	\N	2
 59	Alexander Mattausch	0000-0003-0901-8701	\N	\N	\N	\N	\N	10000	\N	3
