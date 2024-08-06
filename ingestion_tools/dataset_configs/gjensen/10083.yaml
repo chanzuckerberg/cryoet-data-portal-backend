@@ -46,7 +46,7 @@ depositions:
 - metadata:
     authors: *id001
     cross_references:
-      publications: 10.1038/s41564-019-0603-6,10.1038/s41564-019-0427-4
+      publications: 10.1038/s41564-019-0427-4,10.1038/s41564-019-0603-6
       related_database_entries: EMD-0566
     dates: *id002
     deposition_description: 41 sets of data studying Legionella pneumophila collected

@@ -19,7 +19,7 @@ datasets:
       name: c2
     cross_references:
       publications: 10.1038/s41467-022-32584-7
-      related_database_entries: EMD-27654, EMPIAR-11125
+      related_database_entries: EMD-27654,EMPIAR-11125
     dataset_description: This is a single dataset studying Halothiobacillus neapolitanus
       collected by LaurenAnn Metskas and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10021

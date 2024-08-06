@@ -19,7 +19,7 @@ datasets:
       name: CCAP 1403/13F
     cross_references:
       publications: 10.1016/j.str.2023.03.011
-      related_database_entries: EMD-29922, EMD-29923, EMD-29925, EMD-29924
+      related_database_entries: EMD-29922,EMD-29923,EMD-29924,EMD-29925
     dataset_description: This is 2nd of 7 sets of data studying Dolichospermum flos-aquae
       collected by Przemek Dutka and is a part of Caltech Jensen  lab etdb. Gas vesicles,
       GvpA, delta GvpC
@@ -50,7 +50,7 @@ depositions:
     authors: *id001
     cross_references:
       publications: 10.1016/j.str.2023.03.011
-      related_database_entries: EMD-29924,EMD-29923,EMD-29922,EMD-29925
+      related_database_entries: EMD-29922,EMD-29923,EMD-29924,EMD-29925
     dates: *id002
     deposition_description: 7 sets of data studying Dolichospermum flos-aquae collected
       by Przemek Dutka and is a part of Caltech Jensen lab etdb.
