@@ -1,6 +1,7 @@
 import json
 from typing import Any, Iterator
 
+import importers.db.deposition
 from common import db_models
 from common.db_models import BaseModel
 from common.normalize_fields import normalize_fiducial_alignment
@@ -100,6 +101,8 @@ class TomogramDBImporter(BaseDBImporter):
             scale = self.metadata["scales"][i]
             extra_data[f"scale{i}_dimensions"] = ",".join([str(scale[p]) for p in "xyz"])
 
+        deposition = importers.db.deposition.get_deposition(self.config, self.metadata.get("deposition_id"))
+        extra_data["deposition_id"] = deposition.id
         return extra_data
 
     @classmethod

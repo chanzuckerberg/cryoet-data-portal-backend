@@ -17,6 +17,8 @@ from common.db_models import (
     Dataset,
     DatasetAuthor,
     DatasetFunding,
+    Deposition,
+    DepositionAuthor,
     Run,
     TiltSeries,
     Tomogram,
@@ -43,6 +45,8 @@ def mock_db(db_connection: str) -> [list[BaseModel], Generator[SqliteDatabase, A
         Dataset,
         DatasetAuthor,
         DatasetFunding,
+        Deposition,
+        DepositionAuthor,
         Run,
         TiltSeries,
         TomogramVoxelSpacing,
@@ -122,4 +126,5 @@ def expected_dataset(http_prefix: str) -> dict[str, Any]:
         "tissue_name": "test-tissue1",
         "key_photo_url": f"{http_prefix}/{DATASET_ID}/KeyPhoto/snapshot.png",
         "key_photo_thumbnail_url": f"{http_prefix}/{DATASET_ID}/KeyPhoto/thumbnail.png",
+        "deposition_id": 300,
     }
