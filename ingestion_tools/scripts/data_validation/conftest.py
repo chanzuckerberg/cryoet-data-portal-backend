@@ -10,14 +10,15 @@ import pytest
 # from allure_pytest.utils import ALLURE_LABEL_MARK
 # from pytest import MarkDecorator
 # Local fixtures and common functions
-sys.path.append("./")
-sys.path.append("../")
-from data_validation_common import *  # noqa: F403, F401
-from fixtures.data import *  # noqa: F403, F401
-from fixtures.parser import *  # noqa: F403, F401
-from fixtures.path import *  # noqa: F403, F401
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(CURRENT_DIR)
+sys.path.append(os.path.join(CURRENT_DIR, ".."))
+from data_validation_common import *  # noqa: E402, F403
+from fixtures.data import *  # noqa: E402, F403
+from fixtures.parser import *  # noqa: E402, F403
+from fixtures.path import *  # noqa: E402, F403
 
-from common.fs import FileSystemApi, S3Filesystem
+from common.fs import FileSystemApi, S3Filesystem  # noqa: E402, F403
 
 
 # ============================================================================
