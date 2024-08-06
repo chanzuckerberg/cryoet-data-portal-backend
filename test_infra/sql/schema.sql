@@ -210,6 +210,7 @@ CREATE TABLE public.annotations (
     is_curator_recommended boolean DEFAULT false,
     method_type character varying,
     deposition_id integer
+    method_links json
 );
 
 

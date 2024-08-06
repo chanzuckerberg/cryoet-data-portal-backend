@@ -55,5 +55,17 @@
             "is_visualization_default": false
         }
     ],
+    "method_links": [
+        {
+            "link": "https://fake-link.com/resources/100-foo-1.0_method.pdf",
+            "link_type": "documentation",
+            "name": "Method Documentation"
+        },
+        {
+            "link": "https://another-link.com/100-foo-1.0_code.zip",
+            "link_type": "source_code",
+            "name": "Source Code"
+        }
+    ],
     "deposition_id": 301
 }
