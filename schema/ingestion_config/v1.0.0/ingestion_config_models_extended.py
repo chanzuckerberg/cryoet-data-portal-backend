@@ -11,7 +11,7 @@ from typing import List, Optional, Set, Tuple, Union
 import aiohttp
 import numpy
 from async_lru import alru_cache
-from codegen.dataset_config_models import (
+from codegen.ingestion_config_models import (
     Annotation,
     AnnotationConfidence,
     AnnotationEntity,
@@ -65,7 +65,7 @@ from codegen.dataset_config_models import (
 from pydantic import BaseModel, field_validator, model_validator
 from typing_extensions import Self
 
-logger = logging.getLogger("dataset_config_validate")
+logger = logging.getLogger(__name__)
 
 validation_exclusions = {}
 CELLULAR_COMPONENT_GO_ID = "GO:0005575"
@@ -948,8 +948,12 @@ class ExtendedValidationContainer(Container):
     def __init__(self, **data):
         global running_network_validation
         global validation_exclusions
+        global logger
         running_network_validation = data.pop("network_validation", False)
         validation_exclusions = data.pop("validation_exclusions", {})
+        if logger_name := data.pop("logger_name", None):
+            logger = logging.getLogger(logger_name)
+
         super().__init__(**data)
 
     annotations: Optional[List[ExtendedValidationAnnotationEntity]] = Container.model_fields["annotations"]

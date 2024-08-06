@@ -14,7 +14,7 @@ repos:
     exclude: |
       (?x)(
           ^schema/.*/metadata_models.py|
-          ^schema/.*/dataset_config_models.py
+          ^schema/.*/ingestion_config_models.py
       )
     args:
     - --fix

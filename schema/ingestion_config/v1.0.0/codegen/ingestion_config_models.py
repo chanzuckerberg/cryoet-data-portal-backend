@@ -1,16 +1,16 @@
 from __future__ import annotations
-
-import re
-from datetime import date
+from datetime import datetime, date
+from decimal import Decimal
 from enum import Enum
-from typing import Any, ClassVar, Dict, List, Optional, Union
-
+import re
+import sys
+from typing import Any, ClassVar, List, Literal, Dict, Optional, Union
 from pydantic.version import VERSION as PYDANTIC_VERSION
 
 if int(PYDANTIC_VERSION[0]) >= 2:
     from pydantic import BaseModel, ConfigDict, Field, RootModel, field_validator
 else:
-    from pydantic import BaseModel, Field
+    from pydantic import BaseModel, Field, validator
 
 from pydantic import conlist
 
@@ -49,141 +49,141 @@ class LinkMLMeta(RootModel):
 
 linkml_meta = LinkMLMeta(
     {
-        "default_prefix": "cdp-dataset-config/",
-        "description": "Schema for dataset configs",
-        "id": "cdp-dataset-config",
+        "default_prefix": "cdp-ingestion-config/",
+        "description": "Schema for ingestion configs",
+        "id": "cdp-ingestion-config",
         "imports": [
             "linkml:types",
             "../../../core/v1.1.0/codegen/metadata_materialized",
             "../../../core/v1.1.0/common",
         ],
-        "name": "cdp-dataset-config",
+        "name": "cdp-ingestion-config",
         "prefixes": {"linkml": {"prefix_prefix": "linkml", "prefix_reference": "https://w3id.org/linkml/"}},
-        "source_file": "dataset_config/v1.0.0/codegen/dataset_config_models_materialized.yaml",
+        "source_file": "ingestion_config/v1.0.0/codegen/ingestion_config_models_materialized.yaml",
         "types": {
             "BTO_ID": {
                 "base": "str",
                 "description": "A BRENDA Tissue Ontology identifier",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "BTO_ID",
                 "pattern": "^BTO:[0-9]{7}$",
             },
             "CL_ID": {
                 "base": "str",
                 "description": "A Cell Ontology identifier",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "CL_ID",
                 "pattern": "^CL:[0-9]{7}$",
             },
             "DOI": {
                 "base": "str",
                 "description": "A Digital Object Identifier",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "DOI",
                 "pattern": "^(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$",
             },
             "DOI_LIST": {
                 "base": "str",
                 "description": "A list of Digital Object Identifiers",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "DOI_LIST",
                 "pattern": "^(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\\s*,\\s*(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$",
             },
             "EMDB_ID": {
                 "base": "str",
-                "description": "An Electron Microscopy Data Bank identifier",
-                "from_schema": "cdp-dataset-config",
+                "description": "An Electron Microscopy Data Bank " "identifier",
+                "from_schema": "cdp-ingestion-config",
                 "name": "EMDB_ID",
                 "pattern": "^EMD-[0-9]{4,5}$",
             },
             "EMPIAR_EMDB_DOI_PDB_LIST": {
                 "base": "str",
-                "description": "A list of EMPIAR, EMDB, DOI, and PDB identifiers",
-                "from_schema": "cdp-dataset-config",
+                "description": "A list of EMPIAR, " "EMDB, DOI, and PDB " "identifiers",
+                "from_schema": "cdp-ingestion-config",
                 "name": "EMPIAR_EMDB_DOI_PDB_LIST",
                 "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$",
             },
             "EMPIAR_EMDB_PDB_LIST": {
                 "base": "str",
-                "description": "A list of EMPIAR, EMDB, and PDB identifiers",
-                "from_schema": "cdp-dataset-config",
+                "description": "A list of EMPIAR, EMDB, " "and PDB identifiers",
+                "from_schema": "cdp-ingestion-config",
                 "name": "EMPIAR_EMDB_PDB_LIST",
                 "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$",
             },
             "EMPIAR_ID": {
                 "base": "str",
-                "description": "An Electron Microscopy Public Image Archive identifier",
-                "from_schema": "cdp-dataset-config",
+                "description": "An Electron Microscopy Public Image " "Archive identifier",
+                "from_schema": "cdp-ingestion-config",
                 "name": "EMPIAR_ID",
                 "pattern": "^EMPIAR-[0-9]+$",
             },
             "FloatFormattedString": {
                 "base": "str",
-                "description": "A formatted string that represents a floating point number.",
-                "from_schema": "cdp-dataset-config",
+                "description": "A formatted string that " "represents a floating " "point number.",
+                "from_schema": "cdp-ingestion-config",
                 "name": "FloatFormattedString",
-                "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                "pattern": "^float[ " "]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
             },
             "GO_ID": {
                 "base": "str",
                 "description": "A Gene Ontology identifier",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "GO_ID",
                 "pattern": "^GO:[0-9]{7}$",
             },
             "IntegerFormattedString": {
                 "base": "str",
-                "description": "A formatted string that represents an integer.",
-                "from_schema": "cdp-dataset-config",
+                "description": "A formatted string that " "represents an integer.",
+                "from_schema": "cdp-ingestion-config",
                 "name": "IntegerFormattedString",
-                "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                "pattern": "^int[ " "]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
             },
             "ONTOLOGY_ID": {
                 "base": "str",
                 "description": "An ontology identifier",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "ONTOLOGY_ID",
                 "pattern": "^[a-zA-Z]+:[0-9]+$",
             },
             "ORCID": {
                 "base": "str",
-                "description": "A unique, persistent identifier for researchers, provided by ORCID.",
-                "from_schema": "cdp-dataset-config",
+                "description": "A unique, persistent identifier for " "researchers, provided by ORCID.",
+                "from_schema": "cdp-ingestion-config",
                 "name": "ORCID",
                 "pattern": "[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
             },
             "PDB_ID": {
                 "base": "str",
                 "description": "A Protein Data Bank identifier",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "PDB_ID",
                 "pattern": "^pdb[0-9a-zA-Z]{4,8}$",
             },
             "StringFormattedString": {
                 "base": "str",
-                "description": "A formatted string (variable) that represents a string.",
-                "from_schema": "cdp-dataset-config",
+                "description": "A formatted string " "(variable) that " "represents a string.",
+                "from_schema": "cdp-ingestion-config",
                 "name": "StringFormattedString",
-                "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ " "]*$",
             },
             "URLorS3URI": {
                 "base": "str",
                 "description": "A URL or S3 URI",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "URLorS3URI",
                 "pattern": "^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$",
             },
             "VersionString": {
                 "base": "float",
-                "description": "A version number (only major, minor versions)",
-                "from_schema": "cdp-dataset-config",
+                "description": "A version number (only major, " "minor versions)",
+                "from_schema": "cdp-ingestion-config",
                 "minimum_value": 0,
                 "name": "VersionString",
             },
             "WORMBASE_ID": {
                 "base": "str",
                 "description": "A WormBase identifier",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "WORMBASE_ID",
                 "pattern": "WBStrain[0-9]{8}$",
             },
@@ -191,12 +191,12 @@ linkml_meta = LinkMLMeta(
                 "base": "Bool",
                 "description": "A binary (true or false) value",
                 "exact_mappings": ["schema:Boolean"],
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "boolean",
                 "notes": [
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
-                    '"boolean".',
+                    '"boolean".'
                 ],
                 "repr": "bool",
                 "uri": "xsd:boolean",
@@ -204,29 +204,29 @@ linkml_meta = LinkMLMeta(
             "curie": {
                 "base": "Curie",
                 "comments": [
-                    "in RDF serializations this MUST be expanded to a URI",
-                    "in non-RDF serializations MAY be serialized as the compact representation",
+                    "in RDF serializations this MUST be expanded " "to a URI",
+                    "in non-RDF serializations MAY be serialized " "as the compact representation",
                 ],
                 "conforms_to": "https://www.w3.org/TR/curie/",
                 "description": "a compact URI",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "curie",
                 "notes": [
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
-                    '"curie".',
+                    '"curie".'
                 ],
                 "repr": "str",
                 "uri": "xsd:string",
             },
             "date": {
                 "base": "XSDDate",
-                "description": "a date (year, month and day) in an idealized calendar",
+                "description": "a date (year, month and day) in an " "idealized calendar",
                 "exact_mappings": ["schema:Date"],
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "date",
                 "notes": [
-                    "URI is dateTime because OWL reasoners don't work with straight date or time",
+                    "URI is dateTime because OWL reasoners don't " "work with straight date or time",
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
                     '"date".',
@@ -237,13 +237,13 @@ linkml_meta = LinkMLMeta(
             "date_or_datetime": {
                 "base": "str",
                 "description": "Either a date or a datetime",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "date_or_datetime",
                 "notes": [
                     "If you are authoring schemas in "
                     "LinkML YAML, the type is referenced "
                     "with the lower case "
-                    '"date_or_datetime".',
+                    '"date_or_datetime".'
                 ],
                 "repr": "str",
                 "uri": "linkml:DateOrDatetime",
@@ -252,12 +252,12 @@ linkml_meta = LinkMLMeta(
                 "base": "XSDDateTime",
                 "description": "The combination of a date and time",
                 "exact_mappings": ["schema:DateTime"],
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "datetime",
                 "notes": [
                     "If you are authoring schemas in LinkML "
                     "YAML, the type is referenced with the lower "
-                    'case "datetime".',
+                    'case "datetime".'
                 ],
                 "repr": "str",
                 "uri": "xsd:dateTime",
@@ -268,38 +268,38 @@ linkml_meta = LinkMLMeta(
                 "description": "A real number with arbitrary precision "
                 "that conforms to the xsd:decimal "
                 "specification",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "decimal",
                 "notes": [
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
-                    '"decimal".',
+                    '"decimal".'
                 ],
                 "uri": "xsd:decimal",
             },
             "double": {
                 "base": "float",
                 "close_mappings": ["schema:Float"],
-                "description": "A real number that conforms to the xsd:double specification",
-                "from_schema": "cdp-dataset-config",
+                "description": "A real number that conforms to the " "xsd:double specification",
+                "from_schema": "cdp-ingestion-config",
                 "name": "double",
                 "notes": [
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
-                    '"double".',
+                    '"double".'
                 ],
                 "uri": "xsd:double",
             },
             "float": {
                 "base": "float",
-                "description": "A real number that conforms to the xsd:float specification",
+                "description": "A real number that conforms to the " "xsd:float specification",
                 "exact_mappings": ["schema:Float"],
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "float",
                 "notes": [
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
-                    '"float".',
+                    '"float".'
                 ],
                 "uri": "xsd:float",
             },
@@ -307,12 +307,12 @@ linkml_meta = LinkMLMeta(
                 "base": "int",
                 "description": "An integer",
                 "exact_mappings": ["schema:Integer"],
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "integer",
                 "notes": [
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
-                    '"integer".',
+                    '"integer".'
                 ],
                 "uri": "xsd:integer",
             },
@@ -325,12 +325,12 @@ linkml_meta = LinkMLMeta(
                 "dereference to zero or more valid "
                 "objects within the current instance "
                 "document when encoded in tree form.",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "jsonpath",
                 "notes": [
                     "If you are authoring schemas in LinkML "
                     "YAML, the type is referenced with the lower "
-                    'case "jsonpath".',
+                    'case "jsonpath".'
                 ],
                 "repr": "str",
                 "uri": "xsd:string",
@@ -344,12 +344,12 @@ linkml_meta = LinkMLMeta(
                 "SHOULD dereference to a valid "
                 "object within the current instance "
                 "document when encoded in tree form.",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "jsonpointer",
                 "notes": [
                     "If you are authoring schemas in LinkML "
                     "YAML, the type is referenced with the "
-                    'lower case "jsonpointer".',
+                    'lower case "jsonpointer".'
                 ],
                 "repr": "str",
                 "uri": "xsd:string",
@@ -357,41 +357,41 @@ linkml_meta = LinkMLMeta(
             "ncname": {
                 "base": "NCName",
                 "description": "Prefix part of CURIE",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "ncname",
                 "notes": [
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
-                    '"ncname".',
+                    '"ncname".'
                 ],
                 "repr": "str",
                 "uri": "xsd:string",
             },
             "nodeidentifier": {
                 "base": "NodeIdentifier",
-                "description": "A URI, CURIE or BNODE that represents a node in a model.",
-                "from_schema": "cdp-dataset-config",
+                "description": "A URI, CURIE or BNODE that " "represents a node in a model.",
+                "from_schema": "cdp-ingestion-config",
                 "name": "nodeidentifier",
                 "notes": [
                     "If you are authoring schemas in "
                     "LinkML YAML, the type is referenced "
                     "with the lower case "
-                    '"nodeidentifier".',
+                    '"nodeidentifier".'
                 ],
                 "repr": "str",
                 "uri": "shex:nonLiteral",
             },
             "objectidentifier": {
                 "base": "ElementIdentifier",
-                "comments": ["Used for inheritance and type checking"],
-                "description": "A URI or CURIE that represents an object in the model.",
-                "from_schema": "cdp-dataset-config",
+                "comments": ["Used for inheritance and type " "checking"],
+                "description": "A URI or CURIE that represents " "an object in the model.",
+                "from_schema": "cdp-ingestion-config",
                 "name": "objectidentifier",
                 "notes": [
                     "If you are authoring schemas in "
                     "LinkML YAML, the type is referenced "
                     "with the lower case "
-                    '"objectidentifier".',
+                    '"objectidentifier".'
                 ],
                 "repr": "str",
                 "uri": "shex:iri",
@@ -405,12 +405,12 @@ linkml_meta = LinkMLMeta(
                 "dereference to zero or more valid "
                 "objects within the current instance "
                 "document when encoded as RDF.",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "sparqlpath",
                 "notes": [
                     "If you are authoring schemas in LinkML "
                     "YAML, the type is referenced with the "
-                    'lower case "sparqlpath".',
+                    'lower case "sparqlpath".'
                 ],
                 "repr": "str",
                 "uri": "xsd:string",
@@ -419,25 +419,25 @@ linkml_meta = LinkMLMeta(
                 "base": "str",
                 "description": "A character string",
                 "exact_mappings": ["schema:Text"],
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "string",
                 "notes": [
                     "In RDF serializations, a slot with range of "
                     "string is treated as a literal or type "
                     "xsd:string.   If you are authoring schemas in "
                     "LinkML YAML, the type is referenced with the "
-                    'lower case "string".',
+                    'lower case "string".'
                 ],
                 "uri": "xsd:string",
             },
             "time": {
                 "base": "XSDTime",
-                "description": "A time object represents a (local) time of day, independent of any particular day",
+                "description": "A time object represents a (local) time of " "day, independent of any particular day",
                 "exact_mappings": ["schema:Time"],
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "time",
                 "notes": [
-                    "URI is dateTime because OWL reasoners do not work with straight date or time",
+                    "URI is dateTime because OWL reasoners do not " "work with straight date or time",
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
                     '"time".',
@@ -453,14 +453,14 @@ linkml_meta = LinkMLMeta(
                     "uri is treated as a literal or type "
                     "xsd:anyURI unless it is an identifier or a "
                     "reference to an identifier, in which case it "
-                    "is translated directly to a node",
+                    "is translated directly to a node"
                 ],
                 "conforms_to": "https://www.ietf.org/rfc/rfc3987.txt",
                 "description": "a complete URI",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "uri",
                 "notes": [
-                    "If you are authoring schemas in LinkML YAML, the " 'type is referenced with the lower case "uri".',
+                    "If you are authoring schemas in LinkML YAML, the " 'type is referenced with the lower case "uri".'
                 ],
                 "repr": "str",
                 "uri": "xsd:anyURI",
@@ -468,18 +468,18 @@ linkml_meta = LinkMLMeta(
             "uriorcurie": {
                 "base": "URIorCURIE",
                 "description": "a URI or a CURIE",
-                "from_schema": "cdp-dataset-config",
+                "from_schema": "cdp-ingestion-config",
                 "name": "uriorcurie",
                 "notes": [
                     "If you are authoring schemas in LinkML "
                     "YAML, the type is referenced with the "
-                    'lower case "uriorcurie".',
+                    'lower case "uriorcurie".'
                 ],
                 "repr": "str",
                 "uri": "xsd:anyURI",
             },
         },
-    },
+    }
 )
 
 
@@ -658,7 +658,7 @@ class PicturePath(ConfiguredBaseModel):
                 "domain_of": ["PicturePath"],
                 "exact_mappings": ["cdp-common:snapshot"],
                 "recommended": True,
-            },
+            }
         },
     )
     thumbnail: Optional[str] = Field(
@@ -670,7 +670,7 @@ class PicturePath(ConfiguredBaseModel):
                 "domain_of": ["PicturePath"],
                 "exact_mappings": ["cdp-common:thumbnail"],
                 "recommended": True,
-            },
+            }
         },
     )
 
@@ -715,7 +715,7 @@ class FundingDetails(ConfiguredBaseModel):
                 "domain_of": ["FundingDetails"],
                 "exact_mappings": ["cdp-common:funding_agency_name"],
                 "recommended": True,
-            },
+            }
         },
     )
     grant_id: Optional[str] = Field(
@@ -727,7 +727,7 @@ class FundingDetails(ConfiguredBaseModel):
                 "domain_of": ["FundingDetails"],
                 "exact_mappings": ["cdp-common:funding_grant_id"],
                 "recommended": True,
-            },
+            }
         },
     )
 
@@ -743,10 +743,7 @@ class DateStampedEntity(ConfiguredBaseModel):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "dates",
-                "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"],
-            },
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
 
@@ -767,7 +764,7 @@ class AuthoredEntity(ConfiguredBaseModel):
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -788,7 +785,7 @@ class FundedEntity(ConfiguredBaseModel):
                 "domain_of": ["FundedEntity", "Dataset"],
                 "list_elements_ordered": True,
                 "recommended": True,
-            },
+            }
         },
     )
 
@@ -807,7 +804,7 @@ class CrossReferencedEntity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "cross_references",
                 "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
-            },
+            }
         },
     )
 
@@ -851,7 +848,7 @@ class OrganismDetails(ConfiguredBaseModel):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:organism_name"],
-            },
+            }
         },
     )
     taxonomy_id: Optional[int] = Field(
@@ -864,7 +861,7 @@ class OrganismDetails(ConfiguredBaseModel):
                 "domain_of": ["OrganismDetails"],
                 "exact_mappings": ["cdp-common:organism_taxid"],
                 "recommended": True,
-            },
+            }
         },
     )
 
@@ -894,7 +891,7 @@ class TissueDetails(ConfiguredBaseModel):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:tissue_name"],
-            },
+            }
         },
     )
     id: Optional[str] = Field(
@@ -906,7 +903,7 @@ class TissueDetails(ConfiguredBaseModel):
                 "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:tissue_id"],
                 "recommended": True,
-            },
+            }
         },
     )
 
@@ -948,7 +945,7 @@ class CellType(ConfiguredBaseModel):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:cell_name"],
-            },
+            }
         },
     )
     id: Optional[str] = Field(
@@ -960,7 +957,7 @@ class CellType(ConfiguredBaseModel):
                 "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:cell_type_id"],
                 "recommended": True,
-            },
+            }
         },
     )
 
@@ -1002,7 +999,7 @@ class CellStrain(ConfiguredBaseModel):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:cell_strain_name"],
-            },
+            }
         },
     )
     id: Optional[str] = Field(
@@ -1015,7 +1012,7 @@ class CellStrain(ConfiguredBaseModel):
                 "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:cell_strain_id"],
                 "recommended": True,
-            },
+            }
         },
     )
 
@@ -1057,7 +1054,7 @@ class CellComponent(ConfiguredBaseModel):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:cell_component_name"],
-            },
+            }
         },
     )
     id: Optional[str] = Field(
@@ -1069,7 +1066,7 @@ class CellComponent(ConfiguredBaseModel):
                 "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:cell_component_id"],
                 "recommended": True,
-            },
+            }
         },
     )
 
@@ -1101,7 +1098,7 @@ class ExperimentMetadata(ConfiguredBaseModel):
                 "alias": "sample_type",
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_sample_type"],
-            },
+            }
         },
     )
     sample_preparation: Optional[str] = Field(
@@ -1113,7 +1110,7 @@ class ExperimentMetadata(ConfiguredBaseModel):
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:sample_preparation"],
                 "recommended": True,
-            },
+            }
         },
     )
     grid_preparation: Optional[str] = Field(
@@ -1125,7 +1122,7 @@ class ExperimentMetadata(ConfiguredBaseModel):
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:grid_preparation"],
                 "recommended": True,
-            },
+            }
         },
     )
     other_setup: Optional[str] = Field(
@@ -1137,7 +1134,7 @@ class ExperimentMetadata(ConfiguredBaseModel):
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_other_setup"],
                 "recommended": True,
-            },
+            }
         },
     )
     organism: Optional[OrganismDetails] = Field(
@@ -1169,7 +1166,7 @@ class ExperimentMetadata(ConfiguredBaseModel):
     @field_validator("sample_type")
     def pattern_sample_type(cls, v):
         pattern = re.compile(
-            r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)",
+            r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)"
         )
         if isinstance(v, list):
             for element in v:
@@ -1196,7 +1193,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "CrossReferencedEntity",
                 "ExperimentMetadata",
             ],
-        },
+        }
     )
 
     dataset_identifier: int = Field(
@@ -1207,7 +1204,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "alias": "dataset_identifier",
                 "domain_of": ["Dataset"],
                 "exact_mappings": ["cdp-common:dataset_identifier"],
-            },
+            }
         },
     )
     dataset_title: str = Field(
@@ -1218,7 +1215,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "alias": "dataset_title",
                 "domain_of": ["Dataset"],
                 "exact_mappings": ["cdp-common:dataset_title"],
-            },
+            }
         },
     )
     dataset_description: str = Field(
@@ -1229,17 +1226,14 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "alias": "dataset_description",
                 "domain_of": ["Dataset"],
                 "exact_mappings": ["cdp-common:dataset_description"],
-            },
+            }
         },
     )
     dates: DateStamp = Field(
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "dates",
-                "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"],
-            },
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
@@ -1251,7 +1245,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
     funding: Optional[List[FundingDetails]] = Field(
@@ -1263,7 +1257,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "domain_of": ["FundedEntity", "Dataset"],
                 "list_elements_ordered": True,
                 "recommended": True,
-            },
+            }
         },
     )
     cross_references: Optional[CrossReferences] = Field(
@@ -1273,7 +1267,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
             "linkml_meta": {
                 "alias": "cross_references",
                 "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
-            },
+            }
         },
     )
     sample_type: SampleTypeEnum = Field(
@@ -1284,7 +1278,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "alias": "sample_type",
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_sample_type"],
-            },
+            }
         },
     )
     sample_preparation: Optional[str] = Field(
@@ -1296,7 +1290,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:sample_preparation"],
                 "recommended": True,
-            },
+            }
         },
     )
     grid_preparation: Optional[str] = Field(
@@ -1308,7 +1302,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:grid_preparation"],
                 "recommended": True,
-            },
+            }
         },
     )
     other_setup: Optional[str] = Field(
@@ -1320,7 +1314,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_other_setup"],
                 "recommended": True,
-            },
+            }
         },
     )
     organism: Optional[OrganismDetails] = Field(
@@ -1352,7 +1346,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
     @field_validator("sample_type")
     def pattern_sample_type(cls, v):
         pattern = re.compile(
-            r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)",
+            r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)"
         )
         if isinstance(v, list):
             for element in v:
@@ -1370,7 +1364,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity", "CrossReferencedEntity"]},
+        {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity", "CrossReferencedEntity"]}
     )
 
     deposition_description: str = Field(
@@ -1381,7 +1375,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
                 "alias": "deposition_description",
                 "domain_of": ["Deposition"],
                 "exact_mappings": ["cdp-common:deposition_description"],
-            },
+            }
         },
     )
     deposition_identifier: int = Field(
@@ -1392,7 +1386,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
                 "alias": "deposition_identifier",
                 "domain_of": ["Deposition"],
                 "exact_mappings": ["cdp-common:deposition_identifier"],
-            },
+            }
         },
     )
     deposition_title: str = Field(
@@ -1403,7 +1397,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
                 "alias": "deposition_title",
                 "domain_of": ["Deposition"],
                 "exact_mappings": ["cdp-common:deposition_title"],
-            },
+            }
         },
     )
     deposition_types: List[DepositionTypesEnum] = Field(
@@ -1415,17 +1409,14 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
                 "domain_of": ["Deposition"],
                 "exact_mappings": ["cdp-common:deposition_types"],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
     dates: DateStamp = Field(
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "dates",
-                "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"],
-            },
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
@@ -1437,7 +1428,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
     cross_references: Optional[CrossReferences] = Field(
@@ -1447,7 +1438,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
             "linkml_meta": {
                 "alias": "cross_references",
                 "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
-            },
+            }
         },
     )
 
@@ -1480,7 +1471,7 @@ class CameraDetails(ConfiguredBaseModel):
                 "any_of": [{"range": "StringFormattedString"}, {"range": "tiltseries_camera_acquire_mode_enum"}],
                 "domain_of": ["CameraDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_camera_acquire_mode"],
-            },
+            }
         },
     )
     manufacturer: str = Field(
@@ -1491,7 +1482,7 @@ class CameraDetails(ConfiguredBaseModel):
                 "alias": "manufacturer",
                 "domain_of": ["CameraDetails", "MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_camera_manufacturer"],
-            },
+            }
         },
     )
     model: str = Field(
@@ -1502,7 +1493,7 @@ class CameraDetails(ConfiguredBaseModel):
                 "alias": "model",
                 "domain_of": ["CameraDetails", "MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_camera_model"],
-            },
+            }
         },
     )
 
@@ -1534,7 +1525,7 @@ class MicroscopeDetails(ConfiguredBaseModel):
                 "alias": "additional_info",
                 "domain_of": ["MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_additional_info"],
-            },
+            }
         },
     )
     manufacturer: Optional[Union[TiltseriesMicroscopeManufacturerEnum, str]] = Field(
@@ -1545,7 +1536,7 @@ class MicroscopeDetails(ConfiguredBaseModel):
                 "alias": "manufacturer",
                 "any_of": [{"range": "tiltseries_microscope_manufacturer_enum"}, {"range": "StringFormattedString"}],
                 "domain_of": ["CameraDetails", "MicroscopeDetails"],
-            },
+            }
         },
     )
     model: str = Field(
@@ -1556,7 +1547,7 @@ class MicroscopeDetails(ConfiguredBaseModel):
                 "alias": "model",
                 "domain_of": ["CameraDetails", "MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_model"],
-            },
+            }
         },
     )
 
@@ -1588,7 +1579,7 @@ class MicroscopeOpticalSetup(ConfiguredBaseModel):
                 "alias": "energy_filter",
                 "domain_of": ["MicroscopeOpticalSetup"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_energy_filter"],
-            },
+            }
         },
     )
     phase_plate: Optional[str] = Field(
@@ -1599,7 +1590,7 @@ class MicroscopeOpticalSetup(ConfiguredBaseModel):
                 "alias": "phase_plate",
                 "domain_of": ["MicroscopeOpticalSetup"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_phase_plate"],
-            },
+            }
         },
     )
     image_corrector: Optional[str] = Field(
@@ -1610,7 +1601,7 @@ class MicroscopeOpticalSetup(ConfiguredBaseModel):
                 "alias": "image_corrector",
                 "domain_of": ["MicroscopeOpticalSetup"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_image_corrector"],
-            },
+            }
         },
     )
 
@@ -1636,7 +1627,7 @@ class TiltRange(ConfiguredBaseModel):
                 ],
                 "domain_of": ["TiltRange"],
                 "unit": {"descriptive_name": "degrees", "symbol": "°"},
-            },
+            }
         },
     )
     max: Optional[Union[float, str]] = Field(
@@ -1653,7 +1644,7 @@ class TiltRange(ConfiguredBaseModel):
                 ],
                 "domain_of": ["TiltRange"],
                 "unit": {"descriptive_name": "degrees", "symbol": "°"},
-            },
+            }
         },
     )
 
@@ -1699,7 +1690,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_acceleration_voltage"],
                 "unit": {"descriptive_name": "volts", "symbol": "V"},
-            },
+            }
         },
     )
     aligned_tiltseries_binning: Optional[Union[float, str]] = Field(
@@ -1712,7 +1703,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "any_of": [{"minimum_value": 0, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["TiltSeries"],
                 "ifabsent": "float(1)",
-            },
+            }
         },
     )
     binning_from_frames: Optional[Union[float, str]] = Field(
@@ -1725,7 +1716,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "any_of": [{"minimum_value": 0, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["TiltSeries"],
                 "ifabsent": "float(1)",
-            },
+            }
         },
     )
     camera: CameraDetails = Field(
@@ -1741,7 +1732,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "alias": "data_acquisition_software",
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_data_acquisition_software"],
-            },
+            }
         },
     )
     frames_count: Optional[int] = Field(
@@ -1752,7 +1743,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "alias": "frames_count",
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_frames_count"],
-            },
+            }
         },
     )
     is_aligned: bool = Field(
@@ -1763,7 +1754,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "alias": "is_aligned",
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_is_aligned"],
-            },
+            }
         },
     )
     microscope: MicroscopeDetails = Field(
@@ -1784,7 +1775,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "alias": "related_empiar_entry",
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_related_empiar_entry"],
-            },
+            }
         },
     )
     spherical_aberration_constant: Optional[Union[float, str]] = Field(
@@ -1797,7 +1788,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "any_of": [{"minimum_value": 0, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["TiltSeries"],
                 "unit": {"descriptive_name": "millimeters", "symbol": "mm"},
-            },
+            }
         },
     )
     tilt_alignment_software: Optional[str] = Field(
@@ -1808,7 +1799,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "alias": "tilt_alignment_software",
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_tilt_alignment_software"],
-            },
+            }
         },
     )
     tilt_axis: Optional[Union[float, str]] = Field(
@@ -1825,7 +1816,7 @@ class TiltSeries(ConfiguredBaseModel):
                 ],
                 "domain_of": ["TiltSeries"],
                 "unit": {"descriptive_name": "degrees", "symbol": "°"},
-            },
+            }
         },
     )
     tilt_range: TiltRange = Field(
@@ -1846,7 +1837,7 @@ class TiltSeries(ConfiguredBaseModel):
                     {"range": "IntegerFormattedString"},
                 ],
                 "domain_of": ["TiltSeries"],
-            },
+            }
         },
     )
     tilt_step: Optional[Union[float, str]] = Field(
@@ -1863,7 +1854,7 @@ class TiltSeries(ConfiguredBaseModel):
                 ],
                 "domain_of": ["TiltSeries"],
                 "unit": {"descriptive_name": "degrees", "symbol": "°"},
-            },
+            }
         },
     )
     tilting_scheme: str = Field(
@@ -1874,7 +1865,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "alias": "tilting_scheme",
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_tilting_scheme"],
-            },
+            }
         },
     )
     total_flux: Optional[Union[float, str]] = Field(
@@ -1887,7 +1878,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "any_of": [{"minimum_value": 0, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["TiltSeries"],
                 "unit": {"descriptive_name": "electrons per square Angstrom", "symbol": "e^-/Å^2"},
-            },
+            }
         },
     )
     pixel_spacing: Optional[Union[float, str]] = Field(
@@ -1900,7 +1891,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "any_of": [{"minimum_value": 0.001, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["TiltSeries"],
                 "unit": {"descriptive_name": "Angstroms per pixel", "symbol": "Å/px"},
-            },
+            }
         },
     )
 
@@ -2029,7 +2020,7 @@ class TomogramSize(ConfiguredBaseModel):
                 "alias": "x",
                 "domain_of": ["TomogramSize", "TomogramOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            },
+            }
         },
     )
     y: int = Field(
@@ -2041,7 +2032,7 @@ class TomogramSize(ConfiguredBaseModel):
                 "alias": "y",
                 "domain_of": ["TomogramSize", "TomogramOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            },
+            }
         },
     )
     z: int = Field(
@@ -2053,7 +2044,7 @@ class TomogramSize(ConfiguredBaseModel):
                 "alias": "z",
                 "domain_of": ["TomogramSize", "TomogramOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            },
+            }
         },
     )
 
@@ -2073,7 +2064,7 @@ class TomogramOffset(ConfiguredBaseModel):
                 "alias": "x",
                 "domain_of": ["TomogramSize", "TomogramOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            },
+            }
         },
     )
     y: int = Field(
@@ -2084,7 +2075,7 @@ class TomogramOffset(ConfiguredBaseModel):
                 "alias": "y",
                 "domain_of": ["TomogramSize", "TomogramOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            },
+            }
         },
     )
     z: int = Field(
@@ -2095,7 +2086,7 @@ class TomogramOffset(ConfiguredBaseModel):
                 "alias": "z",
                 "domain_of": ["TomogramSize", "TomogramOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            },
+            }
         },
     )
 
@@ -2117,7 +2108,7 @@ class Tomogram(AuthoredEntity):
                 "any_of": [{"minimum_value": 0.001, "range": "float"}, {"range": "FloatFormattedString"}],
                 "domain_of": ["Tomogram", "AnnotationParent", "KeyImageParent", "TomogramParent"],
                 "unit": {"descriptive_name": "Angstroms per voxel", "symbol": "Å/voxel"},
-            },
+            }
         },
     )
     fiducial_alignment_status: Optional[Union[FiducialAlignmentStatusEnum, str]] = Field(
@@ -2128,7 +2119,7 @@ class Tomogram(AuthoredEntity):
                 "alias": "fiducial_alignment_status",
                 "any_of": [{"range": "fiducial_alignment_status_enum"}, {"range": "StringFormattedString"}],
                 "domain_of": ["Tomogram"],
-            },
+            }
         },
     )
     ctf_corrected: Optional[bool] = Field(
@@ -2140,7 +2131,7 @@ class Tomogram(AuthoredEntity):
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_ctf_corrected"],
                 "recommended": True,
-            },
+            }
         },
     )
     align_software: Optional[str] = Field(
@@ -2151,7 +2142,7 @@ class Tomogram(AuthoredEntity):
                 "alias": "align_software",
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_align_software"],
-            },
+            }
         },
     )
     reconstruction_method: Optional[Union[TomogromReconstructionMethodEnum, str]] = Field(
@@ -2162,7 +2153,7 @@ class Tomogram(AuthoredEntity):
                 "alias": "reconstruction_method",
                 "any_of": [{"range": "tomogrom_reconstruction_method_enum"}, {"range": "StringFormattedString"}],
                 "domain_of": ["Tomogram"],
-            },
+            }
         },
     )
     reconstruction_software: str = Field(
@@ -2173,7 +2164,7 @@ class Tomogram(AuthoredEntity):
                 "alias": "reconstruction_software",
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_reconstruction_software"],
-            },
+            }
         },
     )
     processing: TomogramProcessingEnum = Field(
@@ -2184,7 +2175,7 @@ class Tomogram(AuthoredEntity):
                 "alias": "processing",
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_processing"],
-            },
+            }
         },
     )
     processing_software: Optional[str] = Field(
@@ -2196,7 +2187,7 @@ class Tomogram(AuthoredEntity):
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_processing_software"],
                 "recommended": True,
-            },
+            }
         },
     )
     tomogram_version: float = Field(
@@ -2207,7 +2198,7 @@ class Tomogram(AuthoredEntity):
                 "alias": "tomogram_version",
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_version"],
-            },
+            }
         },
     )
     affine_transformation_matrix: Optional[
@@ -2223,7 +2214,7 @@ class Tomogram(AuthoredEntity):
                     "exact_number_dimensions": 2,
                 },
                 "domain_of": ["Tomogram"],
-            },
+            }
         },
     )
     size: Optional[TomogramSize] = Field(
@@ -2245,7 +2236,7 @@ class Tomogram(AuthoredEntity):
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -2316,7 +2307,7 @@ class AnnotationConfidence(ConfiguredBaseModel):
                 "domain_of": ["AnnotationConfidence"],
                 "exact_mappings": ["cdp-common:annotation_confidence_precision"],
                 "unit": {"descriptive_name": "percentage", "symbol": "%"},
-            },
+            }
         },
     )
     recall: Optional[float] = Field(
@@ -2330,7 +2321,7 @@ class AnnotationConfidence(ConfiguredBaseModel):
                 "domain_of": ["AnnotationConfidence"],
                 "exact_mappings": ["cdp-common:annotation_confidence_recall"],
                 "unit": {"descriptive_name": "percentage", "symbol": "%"},
-            },
+            }
         },
     )
     ground_truth_used: Optional[str] = Field(
@@ -2341,7 +2332,7 @@ class AnnotationConfidence(ConfiguredBaseModel):
                 "alias": "ground_truth_used",
                 "domain_of": ["AnnotationConfidence"],
                 "exact_mappings": ["cdp-common:annotation_ground_truth_used"],
-            },
+            }
         },
     )
 
@@ -2361,7 +2352,7 @@ class AnnotationObject(ConfiguredBaseModel):
                 "alias": "id",
                 "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:annotation_object_id"],
-            },
+            }
         },
     )
     name: str = Field(
@@ -2382,7 +2373,7 @@ class AnnotationObject(ConfiguredBaseModel):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:annotation_object_name"],
-            },
+            }
         },
     )
     description: Optional[str] = Field(
@@ -2393,7 +2384,7 @@ class AnnotationObject(ConfiguredBaseModel):
                 "alias": "description",
                 "domain_of": ["AnnotationObject"],
                 "exact_mappings": ["cdp-common:annotation_object_description"],
-            },
+            }
         },
     )
     state: Optional[str] = Field(
@@ -2404,7 +2395,7 @@ class AnnotationObject(ConfiguredBaseModel):
                 "alias": "state",
                 "domain_of": ["AnnotationObject"],
                 "exact_mappings": ["cdp-common:annotation_object_state"],
-            },
+            }
         },
     )
 
@@ -2443,7 +2434,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            },
+            }
         },
     )
     glob_string: Optional[str] = Field(
@@ -2461,7 +2452,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            },
+            }
         },
     )
     glob_strings: Optional[List[str]] = Field(
@@ -2479,7 +2470,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            },
+            }
         },
     )
     is_visualization_default: Optional[bool] = Field(
@@ -2498,7 +2489,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
-            },
+            }
         },
     )
 
@@ -2524,7 +2515,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_binning"],
                 "ifabsent": "float(1)",
-            },
+            }
         },
     )
     filter_value: Optional[str] = Field(
@@ -2535,7 +2526,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                 "alias": "filter_value",
                 "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_filter_value"],
-            },
+            }
         },
     )
     order: Optional[str] = Field(
@@ -2547,7 +2538,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                 "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_order"],
                 "ifabsent": "string(xyz)",
-            },
+            }
         },
     )
     file_format: str = Field(
@@ -2565,7 +2556,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            },
+            }
         },
     )
     glob_string: Optional[str] = Field(
@@ -2583,7 +2574,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            },
+            }
         },
     )
     glob_strings: Optional[List[str]] = Field(
@@ -2601,7 +2592,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            },
+            }
         },
     )
     is_visualization_default: Optional[bool] = Field(
@@ -2620,7 +2611,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
-            },
+            }
         },
     )
 
@@ -2646,7 +2637,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_binning"],
                 "ifabsent": "float(1)",
-            },
+            }
         },
     )
     filter_value: Optional[str] = Field(
@@ -2657,7 +2648,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                 "alias": "filter_value",
                 "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_filter_value"],
-            },
+            }
         },
     )
     order: Optional[str] = Field(
@@ -2669,7 +2660,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                 "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_order"],
                 "ifabsent": "string(xyz)",
-            },
+            }
         },
     )
     file_format: str = Field(
@@ -2687,7 +2678,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            },
+            }
         },
     )
     glob_string: Optional[str] = Field(
@@ -2705,7 +2696,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            },
+            }
         },
     )
     glob_strings: Optional[List[str]] = Field(
@@ -2723,7 +2714,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            },
+            }
         },
     )
     is_visualization_default: Optional[bool] = Field(
@@ -2742,7 +2733,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
-            },
+            }
         },
     )
 
@@ -2768,7 +2759,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_binning"],
                 "ifabsent": "float(1)",
-            },
+            }
         },
     )
     columns: Optional[str] = Field(
@@ -2780,7 +2771,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                 "domain_of": ["AnnotationPointFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_columns"],
                 "ifabsent": "string(xyz)",
-            },
+            }
         },
     )
     delimiter: Optional[str] = Field(
@@ -2792,7 +2783,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                 "domain_of": ["AnnotationPointFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_delimiter"],
                 "ifabsent": "string(,)",
-            },
+            }
         },
     )
     file_format: str = Field(
@@ -2810,7 +2801,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            },
+            }
         },
     )
     glob_string: Optional[str] = Field(
@@ -2828,7 +2819,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            },
+            }
         },
     )
     glob_strings: Optional[List[str]] = Field(
@@ -2846,7 +2837,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            },
+            }
         },
     )
     is_visualization_default: Optional[bool] = Field(
@@ -2865,7 +2856,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
-            },
+            }
         },
     )
 
@@ -2892,7 +2883,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            },
+            }
         },
     )
     glob_string: Optional[str] = Field(
@@ -2910,7 +2901,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            },
+            }
         },
     )
     glob_strings: Optional[List[str]] = Field(
@@ -2928,7 +2919,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            },
+            }
         },
     )
     is_visualization_default: Optional[bool] = Field(
@@ -2947,7 +2938,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
-            },
+            }
         },
     )
 
@@ -2968,7 +2959,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                 "domain_of": ["AnnotationSemanticSegmentationMaskFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_mask_label"],
                 "ifabsent": "int(1)",
-            },
+            }
         },
     )
     file_format: str = Field(
@@ -2986,7 +2977,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            },
+            }
         },
     )
     glob_string: Optional[str] = Field(
@@ -3004,7 +2995,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            },
+            }
         },
     )
     glob_strings: Optional[List[str]] = Field(
@@ -3022,7 +3013,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSemanticSegmentationMaskFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            },
+            }
         },
     )
     is_visualization_default: Optional[bool] = Field(
@@ -3041,7 +3032,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
-            },
+            }
         },
     )
 
@@ -3052,7 +3043,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity"]},
+        {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity"]}
     )
 
     annotation_method: str = Field(
@@ -3063,7 +3054,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "alias": "annotation_method",
                 "domain_of": ["Annotation"],
                 "exact_mappings": ["cdp-common:annotation_method"],
-            },
+            }
         },
     )
     annotation_object: AnnotationObject = Field(
@@ -3079,7 +3070,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "alias": "annotation_publications",
                 "domain_of": ["Annotation"],
                 "exact_mappings": ["cdp-common:annotation_publications"],
-            },
+            }
         },
     )
     annotation_software: Optional[str] = Field(
@@ -3091,7 +3082,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "domain_of": ["Annotation"],
                 "exact_mappings": ["cdp-common:annotation_software"],
                 "recommended": True,
-            },
+            }
         },
     )
     confidence: Optional[AnnotationConfidence] = Field(
@@ -3103,7 +3094,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
         default_factory=list,
         description="""File and sourcing data for an annotation. Represents an entry in annotation.sources.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "files", "domain_of": ["Annotation"], "list_elements_ordered": True},
+            "linkml_meta": {"alias": "files", "domain_of": ["Annotation"], "list_elements_ordered": True}
         },
     )
     ground_truth_status: Optional[bool] = Field(
@@ -3116,7 +3107,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "exact_mappings": ["cdp-common:annotation_ground_truth_status"],
                 "ifabsent": "False",
                 "recommended": True,
-            },
+            }
         },
     )
     is_curator_recommended: Optional[bool] = Field(
@@ -3128,7 +3119,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "domain_of": ["Annotation"],
                 "exact_mappings": ["cdp-common:annotation_is_curator_recommended"],
                 "ifabsent": "False",
-            },
+            }
         },
     )
     method_type: AnnotationMethodTypeEnum = Field(
@@ -3139,7 +3130,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "alias": "method_type",
                 "domain_of": ["Annotation"],
                 "exact_mappings": ["cdp-common:annotation_method_type"],
-            },
+            }
         },
     )
     object_count: Optional[int] = Field(
@@ -3150,7 +3141,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "alias": "object_count",
                 "domain_of": ["Annotation"],
                 "exact_mappings": ["cdp-common:annotation_object_count"],
-            },
+            }
         },
     )
     version: Optional[float] = Field(
@@ -3161,17 +3152,14 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "alias": "version",
                 "domain_of": ["Annotation"],
                 "exact_mappings": ["cdp-common:annotation_version"],
-            },
+            }
         },
     )
     dates: DateStamp = Field(
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "dates",
-                "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"],
-            },
+            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
         },
     )
     authors: List[Author] = Field(
@@ -3183,14 +3171,14 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
     @field_validator("annotation_publications")
     def pattern_annotation_publications(cls, v):
         pattern = re.compile(
-            r"^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$",
+            r"^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$"
         )
         if isinstance(v, list):
             for element in v:
@@ -3219,7 +3207,7 @@ class DateStampedEntityMixin(ConfiguredBaseModel):
     A set of dates at which a data item was deposited, published and last modified.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config", "mixin": True})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config", "mixin": True})
 
     deposition_date: date = Field(
         ...,
@@ -3229,7 +3217,7 @@ class DateStampedEntityMixin(ConfiguredBaseModel):
                 "alias": "deposition_date",
                 "domain_of": ["DateStampedEntityMixin", "DateStamp"],
                 "exact_mappings": ["cdp-common:deposition_date"],
-            },
+            }
         },
     )
     release_date: date = Field(
@@ -3240,7 +3228,7 @@ class DateStampedEntityMixin(ConfiguredBaseModel):
                 "alias": "release_date",
                 "domain_of": ["DateStampedEntityMixin", "DateStamp"],
                 "exact_mappings": ["cdp-common:release_date"],
-            },
+            }
         },
     )
     last_modified_date: date = Field(
@@ -3251,7 +3239,7 @@ class DateStampedEntityMixin(ConfiguredBaseModel):
                 "alias": "last_modified_date",
                 "domain_of": ["DateStampedEntityMixin", "DateStamp"],
                 "exact_mappings": ["cdp-common:last_modified_date"],
-            },
+            }
         },
     )
 
@@ -3271,7 +3259,7 @@ class DateStamp(DateStampedEntityMixin):
                 "alias": "deposition_date",
                 "domain_of": ["DateStampedEntityMixin", "DateStamp"],
                 "exact_mappings": ["cdp-common:deposition_date"],
-            },
+            }
         },
     )
     release_date: date = Field(
@@ -3282,7 +3270,7 @@ class DateStamp(DateStampedEntityMixin):
                 "alias": "release_date",
                 "domain_of": ["DateStampedEntityMixin", "DateStamp"],
                 "exact_mappings": ["cdp-common:release_date"],
-            },
+            }
         },
     )
     last_modified_date: date = Field(
@@ -3293,7 +3281,7 @@ class DateStamp(DateStampedEntityMixin):
                 "alias": "last_modified_date",
                 "domain_of": ["DateStampedEntityMixin", "DateStamp"],
                 "exact_mappings": ["cdp-common:last_modified_date"],
-            },
+            }
         },
     )
 
@@ -3303,7 +3291,7 @@ class CrossReferencesMixin(ConfiguredBaseModel):
     A set of cross-references to other databases and publications.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config", "mixin": True})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config", "mixin": True})
 
     publications: Optional[str] = Field(
         None,
@@ -3313,7 +3301,7 @@ class CrossReferencesMixin(ConfiguredBaseModel):
                 "alias": "publications",
                 "domain_of": ["CrossReferencesMixin", "CrossReferences"],
                 "recommended": True,
-            },
+            }
         },
     )
     related_database_entries: Optional[str] = Field(
@@ -3324,31 +3312,28 @@ class CrossReferencesMixin(ConfiguredBaseModel):
                 "alias": "related_database_entries",
                 "domain_of": ["CrossReferencesMixin", "CrossReferences"],
                 "recommended": True,
-            },
+            }
         },
     )
     related_database_links: Optional[str] = Field(
         None,
         description="""Comma-separated list of related database links for the dataset.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "related_database_links",
-                "domain_of": ["CrossReferencesMixin", "CrossReferences"],
-            },
+            "linkml_meta": {"alias": "related_database_links", "domain_of": ["CrossReferencesMixin", "CrossReferences"]}
         },
     )
     dataset_citations: Optional[str] = Field(
         None,
         description="""Comma-separated list of DOIs for publications citing the dataset.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferencesMixin", "CrossReferences"]},
+            "linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferencesMixin", "CrossReferences"]}
         },
     )
 
     @field_validator("publications")
     def pattern_publications(cls, v):
         pattern = re.compile(
-            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)",
+            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
         )
         if isinstance(v, list):
             for element in v:
@@ -3362,7 +3347,7 @@ class CrossReferencesMixin(ConfiguredBaseModel):
     @field_validator("related_database_entries")
     def pattern_related_database_entries(cls, v):
         pattern = re.compile(
-            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)",
+            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)"
         )
         if isinstance(v, list):
             for element in v:
@@ -3380,7 +3365,7 @@ class CrossReferences(CrossReferencesMixin):
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"abstract": True, "from_schema": "metadata", "mixins": ["CrossReferencesMixin"]},
+        {"abstract": True, "from_schema": "metadata", "mixins": ["CrossReferencesMixin"]}
     )
 
     publications: Optional[str] = Field(
@@ -3391,7 +3376,7 @@ class CrossReferences(CrossReferencesMixin):
                 "alias": "publications",
                 "domain_of": ["CrossReferencesMixin", "CrossReferences"],
                 "recommended": True,
-            },
+            }
         },
     )
     related_database_entries: Optional[str] = Field(
@@ -3402,31 +3387,28 @@ class CrossReferences(CrossReferencesMixin):
                 "alias": "related_database_entries",
                 "domain_of": ["CrossReferencesMixin", "CrossReferences"],
                 "recommended": True,
-            },
+            }
         },
     )
     related_database_links: Optional[str] = Field(
         None,
         description="""Comma-separated list of related database links for the dataset.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "related_database_links",
-                "domain_of": ["CrossReferencesMixin", "CrossReferences"],
-            },
+            "linkml_meta": {"alias": "related_database_links", "domain_of": ["CrossReferencesMixin", "CrossReferences"]}
         },
     )
     dataset_citations: Optional[str] = Field(
         None,
         description="""Comma-separated list of DOIs for publications citing the dataset.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferencesMixin", "CrossReferences"]},
+            "linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferencesMixin", "CrossReferences"]}
         },
     )
 
     @field_validator("publications")
     def pattern_publications(cls, v):
         pattern = re.compile(
-            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)",
+            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
         )
         if isinstance(v, list):
             for element in v:
@@ -3440,7 +3422,7 @@ class CrossReferences(CrossReferencesMixin):
     @field_validator("related_database_entries")
     def pattern_related_database_entries(cls, v):
         pattern = re.compile(
-            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)",
+            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)"
         )
         if isinstance(v, list):
             for element in v:
@@ -3457,7 +3439,7 @@ class AuthorMixin(ConfiguredBaseModel):
     An entity with author data
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config", "mixin": True})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config", "mixin": True})
 
     name: str = Field(
         ...,
@@ -3477,7 +3459,7 @@ class AuthorMixin(ConfiguredBaseModel):
                     "AnnotationObject",
                 ],
                 "exact_mappings": ["cdp-common:author_name"],
-            },
+            }
         },
     )
     email: Optional[str] = Field(
@@ -3488,7 +3470,7 @@ class AuthorMixin(ConfiguredBaseModel):
                 "alias": "email",
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_email"],
-            },
+            }
         },
     )
     affiliation_name: Optional[str] = Field(
@@ -3499,7 +3481,7 @@ class AuthorMixin(ConfiguredBaseModel):
                 "alias": "affiliation_name",
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_affiliation_name"],
-            },
+            }
         },
     )
     affiliation_address: Optional[str] = Field(
@@ -3510,7 +3492,7 @@ class AuthorMixin(ConfiguredBaseModel):
                 "alias": "affiliation_address",
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_affiliation_address"],
-            },
+            }
         },
     )
     affiliation_identifier: Optional[str] = Field(
@@ -3522,7 +3504,7 @@ class AuthorMixin(ConfiguredBaseModel):
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_affiliation_identifier"],
                 "recommended": True,
-            },
+            }
         },
     )
     corresponding_author_status: Optional[bool] = Field(
@@ -3534,7 +3516,7 @@ class AuthorMixin(ConfiguredBaseModel):
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_corresponding_author_status"],
                 "ifabsent": "False",
-            },
+            }
         },
     )
     primary_author_status: Optional[bool] = Field(
@@ -3546,7 +3528,7 @@ class AuthorMixin(ConfiguredBaseModel):
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_primary_author_status"],
                 "ifabsent": "False",
-            },
+            }
         },
     )
 
@@ -3567,7 +3549,7 @@ class Author(AuthorMixin):
                 "domain_of": ["Author"],
                 "exact_mappings": ["cdp-common:author_orcid"],
                 "recommended": True,
-            },
+            }
         },
     )
     name: str = Field(
@@ -3588,7 +3570,7 @@ class Author(AuthorMixin):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:author_name"],
-            },
+            }
         },
     )
     email: Optional[str] = Field(
@@ -3599,7 +3581,7 @@ class Author(AuthorMixin):
                 "alias": "email",
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_email"],
-            },
+            }
         },
     )
     affiliation_name: Optional[str] = Field(
@@ -3610,7 +3592,7 @@ class Author(AuthorMixin):
                 "alias": "affiliation_name",
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_affiliation_name"],
-            },
+            }
         },
     )
     affiliation_address: Optional[str] = Field(
@@ -3621,7 +3603,7 @@ class Author(AuthorMixin):
                 "alias": "affiliation_address",
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_affiliation_address"],
-            },
+            }
         },
     )
     affiliation_identifier: Optional[str] = Field(
@@ -3633,7 +3615,7 @@ class Author(AuthorMixin):
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_affiliation_identifier"],
                 "recommended": True,
-            },
+            }
         },
     )
     corresponding_author_status: Optional[bool] = Field(
@@ -3645,7 +3627,7 @@ class Author(AuthorMixin):
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_corresponding_author_status"],
                 "ifabsent": "False",
-            },
+            }
         },
     )
     primary_author_status: Optional[bool] = Field(
@@ -3657,7 +3639,7 @@ class Author(AuthorMixin):
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_primary_author_status"],
                 "ifabsent": "False",
-            },
+            }
         },
     )
 
@@ -3679,7 +3661,7 @@ class AnnotationMethodLinks(ConfiguredBaseModel):
     A set of links to models, sourcecode, documentation, etc referenced by annotation the method
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     link: str = Field(
         ...,
@@ -3709,7 +3691,7 @@ class AnnotationMethodLinks(ConfiguredBaseModel):
                     "AnnotationObject",
                 ],
                 "recommended": True,
-            },
+            }
         },
     )
 
@@ -3728,10 +3710,10 @@ class AnnotationMethodLinks(ConfiguredBaseModel):
 
 class Container(ConfiguredBaseModel):
     """
-    Class that models the dataset config.
+    Class that models the ingestion config file.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config", "tree_root": True})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config", "tree_root": True})
 
     annotations: Optional[List[AnnotationEntity]] = Field(
         default_factory=list,
@@ -3757,7 +3739,7 @@ class Container(ConfiguredBaseModel):
         default_factory=list,
         description="""A deposition entity.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "depositions", "domain_of": ["Container"], "minimum_cardinality": 1},
+            "linkml_meta": {"alias": "depositions", "domain_of": ["Container"], "minimum_cardinality": 1}
         },
     )
     frames: Optional[List[FrameEntity]] = Field(
@@ -3804,7 +3786,7 @@ class Container(ConfiguredBaseModel):
         default_factory=list,
         description="""A voxel spacing entity.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "voxel_spacings", "domain_of": ["Container"], "minimum_cardinality": 1},
+            "linkml_meta": {"alias": "voxel_spacings", "domain_of": ["Container"], "minimum_cardinality": 1}
         },
     )
 
@@ -3814,7 +3796,7 @@ class GeneralGlob(ConfiguredBaseModel):
     An abstracted glob class for destination and source globs.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"abstract": True, "from_schema": "cdp-ingestion-config"})
 
     list_glob: str = Field(
         ...,
@@ -3823,7 +3805,7 @@ class GeneralGlob(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "list_glob",
                 "domain_of": ["GeneralGlob", "TomogramHeader", "DestinationGlob", "SourceGlob"],
-            },
+            }
         },
     )
     match_regex: Optional[str] = Field(
@@ -3834,7 +3816,7 @@ class GeneralGlob(ConfiguredBaseModel):
                 "alias": "match_regex",
                 "domain_of": ["GeneralGlob", "TomogramHeader", "DestinationGlob", "SourceGlob"],
                 "ifabsent": "string(.*)",
-            },
+            }
         },
     )
     name_regex: Optional[str] = Field(
@@ -3845,7 +3827,7 @@ class GeneralGlob(ConfiguredBaseModel):
                 "alias": "name_regex",
                 "domain_of": ["GeneralGlob", "DestinationGlob", "SourceGlob"],
                 "ifabsent": "string((.*))",
-            },
+            }
         },
     )
 
@@ -3855,7 +3837,7 @@ class DestinationGlob(GeneralGlob):
     A glob class for finding files in the output / destination directory.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     list_glob: str = Field(
         ...,
@@ -3864,7 +3846,7 @@ class DestinationGlob(GeneralGlob):
             "linkml_meta": {
                 "alias": "list_glob",
                 "domain_of": ["GeneralGlob", "TomogramHeader", "DestinationGlob", "SourceGlob"],
-            },
+            }
         },
     )
     match_regex: Optional[str] = Field(
@@ -3875,7 +3857,7 @@ class DestinationGlob(GeneralGlob):
                 "alias": "match_regex",
                 "domain_of": ["GeneralGlob", "TomogramHeader", "DestinationGlob", "SourceGlob"],
                 "ifabsent": "string(.*)",
-            },
+            }
         },
     )
     name_regex: Optional[str] = Field(
@@ -3886,7 +3868,7 @@ class DestinationGlob(GeneralGlob):
                 "alias": "name_regex",
                 "domain_of": ["GeneralGlob", "DestinationGlob", "SourceGlob"],
                 "ifabsent": "string((.*))",
-            },
+            }
         },
     )
 
@@ -3896,7 +3878,7 @@ class SourceGlob(GeneralGlob):
     A glob class for finding files in the source directory.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     list_glob: str = Field(
         ...,
@@ -3905,7 +3887,7 @@ class SourceGlob(GeneralGlob):
             "linkml_meta": {
                 "alias": "list_glob",
                 "domain_of": ["GeneralGlob", "TomogramHeader", "DestinationGlob", "SourceGlob"],
-            },
+            }
         },
     )
     match_regex: Optional[str] = Field(
@@ -3916,7 +3898,7 @@ class SourceGlob(GeneralGlob):
                 "alias": "match_regex",
                 "domain_of": ["GeneralGlob", "TomogramHeader", "DestinationGlob", "SourceGlob"],
                 "ifabsent": "string(.*)",
-            },
+            }
         },
     )
     name_regex: Optional[str] = Field(
@@ -3927,7 +3909,7 @@ class SourceGlob(GeneralGlob):
                 "alias": "name_regex",
                 "domain_of": ["GeneralGlob", "DestinationGlob", "SourceGlob"],
                 "ifabsent": "string((.*))",
-            },
+            }
         },
     )
 
@@ -3937,13 +3919,13 @@ class SourceMultiGlob(ConfiguredBaseModel):
     A glob class for finding files in the source directory (with multiple globs).
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     list_globs: List[str] = Field(
         default_factory=list,
         description="""The globs for the file.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "list_globs", "domain_of": ["SourceMultiGlob"], "minimum_cardinality": 1},
+            "linkml_meta": {"alias": "list_globs", "domain_of": ["SourceMultiGlob"], "minimum_cardinality": 1}
         },
     )
 
@@ -3953,7 +3935,7 @@ class DefaultSource(ConfiguredBaseModel):
     A generalized source class with glob finders.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     destination_glob: Optional[DestinationGlob] = Field(
         None,
@@ -3974,7 +3956,7 @@ class DefaultSource(ConfiguredBaseModel):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_glob: Optional[SourceGlob] = Field(
@@ -3996,7 +3978,7 @@ class DefaultSource(ConfiguredBaseModel):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_multi_glob: Optional[SourceMultiGlob] = Field(
@@ -4017,7 +3999,7 @@ class DefaultSource(ConfiguredBaseModel):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
 
@@ -4027,7 +4009,7 @@ class DefaultLiteralEntity(ConfiguredBaseModel):
     Used as a mixin with root-level classes that contain sources that have literals.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     literal: Optional[DefaultLiteral] = Field(
         None,
@@ -4050,7 +4032,7 @@ class DefaultLiteralEntity(ConfiguredBaseModel):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
 
@@ -4060,7 +4042,7 @@ class DefaultLiteral(ConfiguredBaseModel):
     A literal class with a value attribute.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     value: List[Any] = Field(
         default_factory=list,
@@ -4070,7 +4052,7 @@ class DefaultLiteral(ConfiguredBaseModel):
                 "alias": "value",
                 "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -4080,16 +4062,13 @@ class KeyPhotoLiteral(ConfiguredBaseModel):
     A literal for a key photo.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     value: PicturePath = Field(
         ...,
         description="""A set of paths to representative images of a piece of data.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "value",
-                "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"],
-            },
+            "linkml_meta": {"alias": "value", "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"]}
         },
     )
 
@@ -4099,7 +4078,7 @@ class AnnotationEntity(ConfiguredBaseModel):
     An annotation entity.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     metadata: Annotation = Field(
         ...,
@@ -4114,7 +4093,7 @@ class AnnotationEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                 ],
-            },
+            }
         },
     )
     sources: List[AnnotationSource] = Field(
@@ -4139,7 +4118,7 @@ class AnnotationEntity(ConfiguredBaseModel):
                     "VoxelSpacingEntity",
                 ],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -4149,7 +4128,7 @@ class AnnotationSource(ConfiguredBaseModel):
     An annotation source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     InstanceSegmentation: Optional[AnnotationInstanceSegmentationFile] = Field(
         None,
@@ -4196,7 +4175,7 @@ class AnnotationSource(ConfiguredBaseModel):
                     "TomogramSource",
                     "VoxelSpacingSource",
                 ],
-            },
+            }
         },
     )
 
@@ -4206,7 +4185,7 @@ class AnnotationParentFilters(ConfiguredBaseModel):
     Filters for the parent of an annotation source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     include: Optional[AnnotationParent] = Field(
         None,
@@ -4228,7 +4207,7 @@ class AnnotationParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
     exclude: Optional[AnnotationParent] = Field(
@@ -4251,7 +4230,7 @@ class AnnotationParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
 
@@ -4261,7 +4240,7 @@ class AnnotationParent(ConfiguredBaseModel):
     A filter for a parent class of an annotation source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
         default_factory=list,
@@ -4280,7 +4259,7 @@ class AnnotationParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     deposition: Optional[List[str]] = Field(
@@ -4303,7 +4282,7 @@ class AnnotationParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     run: Optional[List[str]] = Field(
@@ -4322,7 +4301,7 @@ class AnnotationParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     voxel_spacing: Optional[List[str]] = Field(
@@ -4332,7 +4311,7 @@ class AnnotationParent(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "voxel_spacing",
                 "domain_of": ["Tomogram", "AnnotationParent", "KeyImageParent", "TomogramParent"],
-            },
+            }
         },
     )
 
@@ -4342,7 +4321,7 @@ class DatasetEntity(ConfiguredBaseModel):
     A dataset entity.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     metadata: Optional[Dataset] = Field(
         None,
@@ -4357,7 +4336,7 @@ class DatasetEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                 ],
-            },
+            }
         },
     )
     sources: List[DatasetSource] = Field(
@@ -4382,7 +4361,7 @@ class DatasetEntity(ConfiguredBaseModel):
                     "VoxelSpacingEntity",
                 ],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -4393,7 +4372,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]},
+        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
     parent_filters: Optional[DatasetParentFilters] = Field(
@@ -4416,7 +4395,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                     "TomogramSource",
                     "VoxelSpacingSource",
                 ],
-            },
+            }
         },
     )
     destination_glob: Optional[DestinationGlob] = Field(
@@ -4438,7 +4417,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_glob: Optional[SourceGlob] = Field(
@@ -4460,7 +4439,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_multi_glob: Optional[SourceMultiGlob] = Field(
@@ -4481,7 +4460,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     literal: Optional[DefaultLiteral] = Field(
@@ -4505,7 +4484,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
 
@@ -4515,7 +4494,7 @@ class DatasetParentFilters(ConfiguredBaseModel):
     Types of parent filters for a dataset source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     include: Optional[DatasetParent] = Field(
         None,
@@ -4537,7 +4516,7 @@ class DatasetParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
     exclude: Optional[DatasetParent] = Field(
@@ -4560,7 +4539,7 @@ class DatasetParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
 
@@ -4570,7 +4549,7 @@ class DatasetParent(ConfiguredBaseModel):
     A filter for a parent class of a dataset source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     deposition: Optional[List[str]] = Field(
         default_factory=list,
@@ -4592,7 +4571,7 @@ class DatasetParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
 
@@ -4602,7 +4581,7 @@ class DatasetKeyPhotoEntity(ConfiguredBaseModel):
     A dataset key photo entity.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[DatasetKeyPhotoSource] = Field(
         default_factory=list,
@@ -4626,7 +4605,7 @@ class DatasetKeyPhotoEntity(ConfiguredBaseModel):
                     "VoxelSpacingEntity",
                 ],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -4636,7 +4615,7 @@ class DatasetKeyPhotoSource(ConfiguredBaseModel):
     A key photo source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     literal: Optional[KeyPhotoLiteral] = Field(
         None,
@@ -4659,7 +4638,7 @@ class DatasetKeyPhotoSource(ConfiguredBaseModel):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     parent_filters: Optional[DatasetKeyPhotoParentFilters] = Field(
@@ -4682,7 +4661,7 @@ class DatasetKeyPhotoSource(ConfiguredBaseModel):
                     "TomogramSource",
                     "VoxelSpacingSource",
                 ],
-            },
+            }
         },
     )
 
@@ -4692,7 +4671,7 @@ class DatasetKeyPhotoParentFilters(ConfiguredBaseModel):
     Types of parent filters for a key photo source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     include: Optional[DatasetKeyPhotoParent] = Field(
         None,
@@ -4714,7 +4693,7 @@ class DatasetKeyPhotoParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
     exclude: Optional[DatasetKeyPhotoParent] = Field(
@@ -4737,7 +4716,7 @@ class DatasetKeyPhotoParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
 
@@ -4747,7 +4726,7 @@ class DatasetKeyPhotoParent(ConfiguredBaseModel):
     A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     deposition: Optional[List[str]] = Field(
         default_factory=list,
@@ -4769,7 +4748,7 @@ class DatasetKeyPhotoParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
 
@@ -4779,7 +4758,7 @@ class DepositionEntity(ConfiguredBaseModel):
     A deposition entity.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     metadata: Optional[Deposition] = Field(
         None,
@@ -4794,7 +4773,7 @@ class DepositionEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                 ],
-            },
+            }
         },
     )
     sources: List[DepositionSource] = Field(
@@ -4819,7 +4798,7 @@ class DepositionEntity(ConfiguredBaseModel):
                     "VoxelSpacingEntity",
                 ],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -4830,7 +4809,7 @@ class DepositionSource(DefaultLiteralEntity, DefaultSource):
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]},
+        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
     destination_glob: Optional[DestinationGlob] = Field(
@@ -4852,7 +4831,7 @@ class DepositionSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_glob: Optional[SourceGlob] = Field(
@@ -4874,7 +4853,7 @@ class DepositionSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_multi_glob: Optional[SourceMultiGlob] = Field(
@@ -4895,7 +4874,7 @@ class DepositionSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     literal: Optional[DefaultLiteral] = Field(
@@ -4919,7 +4898,7 @@ class DepositionSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
 
@@ -4929,7 +4908,7 @@ class DepositionKeyPhotoEntity(ConfiguredBaseModel):
     A deposition key photo entity.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[DepositionKeyPhotoSource] = Field(
         default_factory=list,
@@ -4953,7 +4932,7 @@ class DepositionKeyPhotoEntity(ConfiguredBaseModel):
                     "VoxelSpacingEntity",
                 ],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -4963,7 +4942,7 @@ class DepositionKeyPhotoSource(ConfiguredBaseModel):
     A key photo source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     literal: Optional[KeyPhotoLiteral] = Field(
         None,
@@ -4986,7 +4965,7 @@ class DepositionKeyPhotoSource(ConfiguredBaseModel):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     parent_filters: Optional[DepositionKeyPhotoParentFilters] = Field(
@@ -5009,7 +4988,7 @@ class DepositionKeyPhotoSource(ConfiguredBaseModel):
                     "TomogramSource",
                     "VoxelSpacingSource",
                 ],
-            },
+            }
         },
     )
 
@@ -5019,7 +4998,7 @@ class DepositionKeyPhotoParentFilters(ConfiguredBaseModel):
     Types of parent filters for a key photo source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     include: Optional[DepositionKeyPhotoParent] = Field(
         None,
@@ -5041,7 +5020,7 @@ class DepositionKeyPhotoParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
     exclude: Optional[DepositionKeyPhotoParent] = Field(
@@ -5064,7 +5043,7 @@ class DepositionKeyPhotoParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
 
@@ -5074,7 +5053,7 @@ class DepositionKeyPhotoParent(ConfiguredBaseModel):
     A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     deposition: Optional[List[str]] = Field(
         default_factory=list,
@@ -5096,7 +5075,7 @@ class DepositionKeyPhotoParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
 
@@ -5106,7 +5085,7 @@ class FrameEntity(ConfiguredBaseModel):
     A frame entity.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[FrameSource] = Field(
         default_factory=list,
@@ -5130,7 +5109,7 @@ class FrameEntity(ConfiguredBaseModel):
                     "VoxelSpacingEntity",
                 ],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -5141,7 +5120,7 @@ class FrameSource(DefaultLiteralEntity, DefaultSource):
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]},
+        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
     parent_filters: Optional[FrameParentFilters] = Field(
@@ -5164,7 +5143,7 @@ class FrameSource(DefaultLiteralEntity, DefaultSource):
                     "TomogramSource",
                     "VoxelSpacingSource",
                 ],
-            },
+            }
         },
     )
     destination_glob: Optional[DestinationGlob] = Field(
@@ -5186,7 +5165,7 @@ class FrameSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_glob: Optional[SourceGlob] = Field(
@@ -5208,7 +5187,7 @@ class FrameSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_multi_glob: Optional[SourceMultiGlob] = Field(
@@ -5229,7 +5208,7 @@ class FrameSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     literal: Optional[DefaultLiteral] = Field(
@@ -5253,7 +5232,7 @@ class FrameSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
 
@@ -5263,7 +5242,7 @@ class FrameParentFilters(ConfiguredBaseModel):
     Types of parent filters for a frame source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     include: Optional[FrameParent] = Field(
         None,
@@ -5285,7 +5264,7 @@ class FrameParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
     exclude: Optional[FrameParent] = Field(
@@ -5308,7 +5287,7 @@ class FrameParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
 
@@ -5318,7 +5297,7 @@ class FrameParent(ConfiguredBaseModel):
     A filter for a parent class of a frame source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
         default_factory=list,
@@ -5337,7 +5316,7 @@ class FrameParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     deposition: Optional[List[str]] = Field(
@@ -5360,7 +5339,7 @@ class FrameParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     run: Optional[List[str]] = Field(
@@ -5379,7 +5358,7 @@ class FrameParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
 
@@ -5389,7 +5368,7 @@ class GainEntity(ConfiguredBaseModel):
     A gain entity.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[GainSource] = Field(
         default_factory=list,
@@ -5413,7 +5392,7 @@ class GainEntity(ConfiguredBaseModel):
                     "VoxelSpacingEntity",
                 ],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -5424,7 +5403,7 @@ class GainSource(DefaultLiteralEntity, DefaultSource):
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]},
+        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
     parent_filters: Optional[GainParentFilters] = Field(
@@ -5447,7 +5426,7 @@ class GainSource(DefaultLiteralEntity, DefaultSource):
                     "TomogramSource",
                     "VoxelSpacingSource",
                 ],
-            },
+            }
         },
     )
     destination_glob: Optional[DestinationGlob] = Field(
@@ -5469,7 +5448,7 @@ class GainSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_glob: Optional[SourceGlob] = Field(
@@ -5491,7 +5470,7 @@ class GainSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_multi_glob: Optional[SourceMultiGlob] = Field(
@@ -5512,7 +5491,7 @@ class GainSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     literal: Optional[DefaultLiteral] = Field(
@@ -5536,7 +5515,7 @@ class GainSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
 
@@ -5546,7 +5525,7 @@ class GainParentFilters(ConfiguredBaseModel):
     Types of parent filters for a gain source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     include: Optional[GainParent] = Field(
         None,
@@ -5568,7 +5547,7 @@ class GainParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
     exclude: Optional[GainParent] = Field(
@@ -5591,7 +5570,7 @@ class GainParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
 
@@ -5601,7 +5580,7 @@ class GainParent(ConfiguredBaseModel):
     A filter for a parent class of a gain source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
         default_factory=list,
@@ -5620,7 +5599,7 @@ class GainParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     deposition: Optional[List[str]] = Field(
@@ -5643,7 +5622,7 @@ class GainParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     run: Optional[List[str]] = Field(
@@ -5662,7 +5641,7 @@ class GainParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
 
@@ -5672,7 +5651,7 @@ class KeyImageEntity(ConfiguredBaseModel):
     A key image entity.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[KeyImageSource] = Field(
         default_factory=list,
@@ -5696,7 +5675,7 @@ class KeyImageEntity(ConfiguredBaseModel):
                     "VoxelSpacingEntity",
                 ],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -5707,7 +5686,7 @@ class KeyImageSource(DefaultLiteralEntity, DefaultSource):
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]},
+        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
     parent_filters: Optional[KeyImageParentFilters] = Field(
@@ -5730,7 +5709,7 @@ class KeyImageSource(DefaultLiteralEntity, DefaultSource):
                     "TomogramSource",
                     "VoxelSpacingSource",
                 ],
-            },
+            }
         },
     )
     destination_glob: Optional[DestinationGlob] = Field(
@@ -5752,7 +5731,7 @@ class KeyImageSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_glob: Optional[SourceGlob] = Field(
@@ -5774,7 +5753,7 @@ class KeyImageSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_multi_glob: Optional[SourceMultiGlob] = Field(
@@ -5795,7 +5774,7 @@ class KeyImageSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     literal: Optional[DefaultLiteral] = Field(
@@ -5819,7 +5798,7 @@ class KeyImageSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
 
@@ -5829,7 +5808,7 @@ class KeyImageParentFilters(ConfiguredBaseModel):
     Types of parent filters for a key image source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     include: Optional[KeyImageParent] = Field(
         None,
@@ -5851,7 +5830,7 @@ class KeyImageParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
     exclude: Optional[KeyImageParent] = Field(
@@ -5874,7 +5853,7 @@ class KeyImageParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
 
@@ -5884,7 +5863,7 @@ class KeyImageParent(ConfiguredBaseModel):
     A filter for a parent class of a key image source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
         default_factory=list,
@@ -5903,7 +5882,7 @@ class KeyImageParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     deposition: Optional[List[str]] = Field(
@@ -5926,7 +5905,7 @@ class KeyImageParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     run: Optional[List[str]] = Field(
@@ -5945,7 +5924,7 @@ class KeyImageParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     tomogram: Optional[List[str]] = Field(
@@ -5960,7 +5939,7 @@ class KeyImageParent(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "voxel_spacing",
                 "domain_of": ["Tomogram", "AnnotationParent", "KeyImageParent", "TomogramParent"],
-            },
+            }
         },
     )
 
@@ -5970,7 +5949,7 @@ class RawTiltEntity(ConfiguredBaseModel):
     A raw tilt entity.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[RawTiltSource] = Field(
         default_factory=list,
@@ -5994,7 +5973,7 @@ class RawTiltEntity(ConfiguredBaseModel):
                     "VoxelSpacingEntity",
                 ],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -6005,7 +5984,7 @@ class RawTiltSource(DefaultLiteralEntity, DefaultSource):
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]},
+        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
     parent_filters: Optional[RawTiltParentFilters] = Field(
@@ -6028,7 +6007,7 @@ class RawTiltSource(DefaultLiteralEntity, DefaultSource):
                     "TomogramSource",
                     "VoxelSpacingSource",
                 ],
-            },
+            }
         },
     )
     destination_glob: Optional[DestinationGlob] = Field(
@@ -6050,7 +6029,7 @@ class RawTiltSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_glob: Optional[SourceGlob] = Field(
@@ -6072,7 +6051,7 @@ class RawTiltSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_multi_glob: Optional[SourceMultiGlob] = Field(
@@ -6093,7 +6072,7 @@ class RawTiltSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     literal: Optional[DefaultLiteral] = Field(
@@ -6117,7 +6096,7 @@ class RawTiltSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
 
@@ -6127,7 +6106,7 @@ class RawTiltParentFilters(ConfiguredBaseModel):
     Types of parent filters for a raw tilt source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     include: Optional[RawTiltParent] = Field(
         None,
@@ -6149,7 +6128,7 @@ class RawTiltParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
     exclude: Optional[RawTiltParent] = Field(
@@ -6172,7 +6151,7 @@ class RawTiltParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
 
@@ -6182,7 +6161,7 @@ class RawTiltParent(ConfiguredBaseModel):
     A filter for a parent class of a raw tilt source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
         default_factory=list,
@@ -6201,7 +6180,7 @@ class RawTiltParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     deposition: Optional[List[str]] = Field(
@@ -6224,7 +6203,7 @@ class RawTiltParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     run: Optional[List[str]] = Field(
@@ -6243,7 +6222,7 @@ class RawTiltParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
 
@@ -6253,7 +6232,7 @@ class RunEntity(ConfiguredBaseModel):
     A run entity.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[RunSource] = Field(
         default_factory=list,
@@ -6277,7 +6256,7 @@ class RunEntity(ConfiguredBaseModel):
                     "VoxelSpacingEntity",
                 ],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -6288,7 +6267,7 @@ class RunSource(DefaultLiteralEntity, DefaultSource):
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]},
+        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
     parent_filters: Optional[RunParentFilters] = Field(
@@ -6311,7 +6290,7 @@ class RunSource(DefaultLiteralEntity, DefaultSource):
                     "TomogramSource",
                     "VoxelSpacingSource",
                 ],
-            },
+            }
         },
     )
     destination_glob: Optional[DestinationGlob] = Field(
@@ -6333,7 +6312,7 @@ class RunSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_glob: Optional[SourceGlob] = Field(
@@ -6355,7 +6334,7 @@ class RunSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_multi_glob: Optional[SourceMultiGlob] = Field(
@@ -6376,7 +6355,7 @@ class RunSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     literal: Optional[DefaultLiteral] = Field(
@@ -6400,7 +6379,7 @@ class RunSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
 
@@ -6410,7 +6389,7 @@ class RunParentFilters(ConfiguredBaseModel):
     Types of parent filters for a run source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     include: Optional[RunParent] = Field(
         None,
@@ -6432,7 +6411,7 @@ class RunParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
     exclude: Optional[RunParent] = Field(
@@ -6455,7 +6434,7 @@ class RunParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
 
@@ -6465,7 +6444,7 @@ class RunParent(ConfiguredBaseModel):
     A filter for a parent class of a run source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
         default_factory=list,
@@ -6484,7 +6463,7 @@ class RunParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     deposition: Optional[List[str]] = Field(
@@ -6507,7 +6486,7 @@ class RunParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
 
@@ -6517,7 +6496,7 @@ class StandardizationConfig(ConfiguredBaseModel):
     A standardization configuration.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     deposition_id: int = Field(
         ...,
@@ -6556,7 +6535,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
     A tilt series entity.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     metadata: Optional[TiltSeries] = Field(
         None,
@@ -6571,7 +6550,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                 ],
-            },
+            }
         },
     )
     sources: List[TiltSeriesSource] = Field(
@@ -6596,7 +6575,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
                     "VoxelSpacingEntity",
                 ],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -6607,7 +6586,7 @@ class TiltSeriesSource(DefaultLiteralEntity, DefaultSource):
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]},
+        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
     parent_filters: Optional[TiltSeriesParentFilters] = Field(
@@ -6630,7 +6609,7 @@ class TiltSeriesSource(DefaultLiteralEntity, DefaultSource):
                     "TomogramSource",
                     "VoxelSpacingSource",
                 ],
-            },
+            }
         },
     )
     destination_glob: Optional[DestinationGlob] = Field(
@@ -6652,7 +6631,7 @@ class TiltSeriesSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_glob: Optional[SourceGlob] = Field(
@@ -6674,7 +6653,7 @@ class TiltSeriesSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_multi_glob: Optional[SourceMultiGlob] = Field(
@@ -6695,7 +6674,7 @@ class TiltSeriesSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     literal: Optional[DefaultLiteral] = Field(
@@ -6719,7 +6698,7 @@ class TiltSeriesSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
 
@@ -6729,7 +6708,7 @@ class TiltSeriesParentFilters(ConfiguredBaseModel):
     Types of parent filters for a tilt series source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     include: Optional[TiltSeriesParent] = Field(
         None,
@@ -6751,7 +6730,7 @@ class TiltSeriesParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
     exclude: Optional[TiltSeriesParent] = Field(
@@ -6774,7 +6753,7 @@ class TiltSeriesParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
 
@@ -6784,7 +6763,7 @@ class TiltSeriesParent(ConfiguredBaseModel):
     A filter for a parent class of a tilt series source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
         default_factory=list,
@@ -6803,7 +6782,7 @@ class TiltSeriesParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     deposition: Optional[List[str]] = Field(
@@ -6826,7 +6805,7 @@ class TiltSeriesParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     run: Optional[List[str]] = Field(
@@ -6845,7 +6824,7 @@ class TiltSeriesParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
 
@@ -6855,7 +6834,7 @@ class TomogramEntity(ConfiguredBaseModel):
     A tomogram entity.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     metadata: Optional[Tomogram] = Field(
         None,
@@ -6870,7 +6849,7 @@ class TomogramEntity(ConfiguredBaseModel):
                     "TiltSeriesEntity",
                     "TomogramEntity",
                 ],
-            },
+            }
         },
     )
     sources: List[TomogramSource] = Field(
@@ -6895,7 +6874,7 @@ class TomogramEntity(ConfiguredBaseModel):
                     "VoxelSpacingEntity",
                 ],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -6906,7 +6885,7 @@ class TomogramSource(DefaultLiteralEntity, DefaultSource):
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-dataset-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]},
+        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
     )
 
     parent_filters: Optional[TomogramParentFilters] = Field(
@@ -6929,7 +6908,7 @@ class TomogramSource(DefaultLiteralEntity, DefaultSource):
                     "TomogramSource",
                     "VoxelSpacingSource",
                 ],
-            },
+            }
         },
     )
     destination_glob: Optional[DestinationGlob] = Field(
@@ -6951,7 +6930,7 @@ class TomogramSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_glob: Optional[SourceGlob] = Field(
@@ -6973,7 +6952,7 @@ class TomogramSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_multi_glob: Optional[SourceMultiGlob] = Field(
@@ -6994,7 +6973,7 @@ class TomogramSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     literal: Optional[DefaultLiteral] = Field(
@@ -7018,7 +6997,7 @@ class TomogramSource(DefaultLiteralEntity, DefaultSource):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
 
@@ -7028,7 +7007,7 @@ class TomogramParentFilters(ConfiguredBaseModel):
     Types of parent filters for a tomogram source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     include: Optional[TomogramParent] = Field(
         None,
@@ -7050,7 +7029,7 @@ class TomogramParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
     exclude: Optional[TomogramParent] = Field(
@@ -7073,7 +7052,7 @@ class TomogramParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
 
@@ -7083,7 +7062,7 @@ class TomogramParent(ConfiguredBaseModel):
     A filter for a parent class of a tomogram source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
         default_factory=list,
@@ -7102,7 +7081,7 @@ class TomogramParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     deposition: Optional[List[str]] = Field(
@@ -7125,7 +7104,7 @@ class TomogramParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     run: Optional[List[str]] = Field(
@@ -7144,7 +7123,7 @@ class TomogramParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     voxel_spacing: Optional[List[str]] = Field(
@@ -7154,7 +7133,7 @@ class TomogramParent(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "voxel_spacing",
                 "domain_of": ["Tomogram", "AnnotationParent", "KeyImageParent", "TomogramParent"],
-            },
+            }
         },
     )
 
@@ -7164,7 +7143,7 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
     A voxel spacing entity.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[VoxelSpacingSource] = Field(
         default_factory=list,
@@ -7188,7 +7167,7 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
                     "VoxelSpacingEntity",
                 ],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -7198,7 +7177,7 @@ class VoxelSpacingSource(ConfiguredBaseModel):
     A voxel spacing source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     destination_glob: Optional[DestinationGlob] = Field(
         None,
@@ -7219,7 +7198,7 @@ class VoxelSpacingSource(ConfiguredBaseModel):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     source_glob: Optional[SourceGlob] = Field(
@@ -7241,7 +7220,7 @@ class VoxelSpacingSource(ConfiguredBaseModel):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     literal: Optional[VoxelSpacingLiteral] = Field(
@@ -7265,7 +7244,7 @@ class VoxelSpacingSource(ConfiguredBaseModel):
                     "TiltSeriesSource",
                     "TomogramSource",
                 ],
-            },
+            }
         },
     )
     tomogram_header: Optional[TomogramHeader] = Field(
@@ -7293,7 +7272,7 @@ class VoxelSpacingSource(ConfiguredBaseModel):
                     "TomogramSource",
                     "VoxelSpacingSource",
                 ],
-            },
+            }
         },
     )
 
@@ -7303,7 +7282,7 @@ class VoxelSpacingParentFilters(ConfiguredBaseModel):
     Types of parent filters for a voxel spacing source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     include: Optional[VoxelSpacingParent] = Field(
         None,
@@ -7325,7 +7304,7 @@ class VoxelSpacingParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
     exclude: Optional[VoxelSpacingParent] = Field(
@@ -7348,7 +7327,7 @@ class VoxelSpacingParentFilters(ConfiguredBaseModel):
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
                 ],
-            },
+            }
         },
     )
 
@@ -7358,7 +7337,7 @@ class VoxelSpacingParent(ConfiguredBaseModel):
     A filter for a parent class of a voxel spacing source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
         default_factory=list,
@@ -7377,7 +7356,7 @@ class VoxelSpacingParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     deposition: Optional[List[str]] = Field(
@@ -7400,7 +7379,7 @@ class VoxelSpacingParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
     run: Optional[List[str]] = Field(
@@ -7419,7 +7398,7 @@ class VoxelSpacingParent(ConfiguredBaseModel):
                     "TomogramParent",
                     "VoxelSpacingParent",
                 ],
-            },
+            }
         },
     )
 
@@ -7429,7 +7408,7 @@ class VoxelSpacingLiteral(ConfiguredBaseModel):
     A literal for a voxel spacing.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     value: List[float] = Field(
         default_factory=list,
@@ -7439,7 +7418,7 @@ class VoxelSpacingLiteral(ConfiguredBaseModel):
                 "alias": "value",
                 "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"],
                 "minimum_cardinality": 1,
-            },
+            }
         },
     )
 
@@ -7449,7 +7428,7 @@ class TomogramHeader(ConfiguredBaseModel):
     A tomogram header, a unique source attribute for voxel spacing.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-dataset-config"})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     list_glob: str = Field(
         ...,
@@ -7458,7 +7437,7 @@ class TomogramHeader(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "list_glob",
                 "domain_of": ["GeneralGlob", "TomogramHeader", "DestinationGlob", "SourceGlob"],
-            },
+            }
         },
     )
     match_regex: Optional[str] = Field(
@@ -7469,14 +7448,14 @@ class TomogramHeader(ConfiguredBaseModel):
                 "alias": "match_regex",
                 "domain_of": ["GeneralGlob", "TomogramHeader", "DestinationGlob", "SourceGlob"],
                 "ifabsent": "string(.*)",
-            },
+            }
         },
     )
     header_key: Optional[str] = Field(
         "voxel_size",
         description="""The key in the header file for the voxel spacing.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "header_key", "domain_of": ["TomogramHeader"], "ifabsent": "string(voxel_size)"},
+            "linkml_meta": {"alias": "header_key", "domain_of": ["TomogramHeader"], "ifabsent": "string(voxel_size)"}
         },
     )
 

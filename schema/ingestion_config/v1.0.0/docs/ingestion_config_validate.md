@@ -1,6 +1,6 @@
 
-# dataset_config_validate.py
-This script enables us to run dataset config validation checks on all (or a glob-specified) set of dataset config files. It will output the full set of validation errors to `schema/v1.1.0/dataset_config_validate_errors`, while outputting a summary of the errors to stdout.
+# ingestion_config_validate.py
+This script enables us to run ingestion config validation checks on all (or a glob-specified) set of ingestion config files. It will output the full set of validation errors to `schema/ingestion_config/latest/ingestion_config_validate_errors`, while outputting a summary of the errors to stdout.
 
 ## One-time Setup
 Make sure you have at least python 3.11 installed. If you need to work with multiple versions of python, [pyenv](https://github.com/pyenv/pyenv) can help with that.
@@ -18,29 +18,29 @@ poetry install  # Use poetry to install this package's dependencies
 
 ## Running the script
 
-To run the script, you can use the following command, from the `schema/v1.1.0` directory:
+To run the script, you can use the following command, from the `schema/ingestion_config/latest/` directory:
 ```bash
-python dataset_config_validate.py [OPTIONS] [INPUT_FILES]
+python ingestion_config_validate.py [OPTIONS] [INPUT_FILES]
 ```
 
 ## Command Line Options
 This script supports several command line options that allow for selective validation:
 
 ### `INPUT_FILES`
-A non-option argument that specifies the dataset configuration files to validate. If no files are specified, all dataset configuration files in the specified `--input-dir` will be validated (or all files in the default directory if no `--input-dir` is specified).
+A non-option argument that specifies the ingestion configuration files to validate. If no files are specified, all ingestion configuration files in the specified `--input-dir` will be validated (or all files in the default directory if no `--input-dir` is specified).
 
 ### `--help`
 Shows the help message with all available options.
 
 ### `--input-dir`
-Specifies the directory where all dataset configuration files are stored. The default is `../dataset_configs/`.
+Specifies the directory where all ingestion configuration files are stored. The default is `ingestion_tools/dataset_configs/`.
 
 ### `--include-glob`
 Specifies a glob pattern to include only specific files for validation. This option is helpful when you want to validate a subset of all available YAML configuration files. Note that only YAML files are considered for validation, regardless of this option.
 
 Example:
 ```bash
-python dataset_config_validate.py --include-glob ".*104[0-9]{2}.*"
+python ingestion_config_validate.py --include-glob ".*104[0-9]{2}.*"
 ```
 
 ### `--exclude-keywords`
@@ -48,15 +48,15 @@ Exclude files that contain the following keywords in the filename. Repeat the fl
 
 Example:
 ```bash
-python dataset_config_validate.py --exclude-keywords "draft" --exclude-keywords "test"
+python ingestion_config_validate.py --exclude-keywords "draft" --exclude-keywords "test"
 ```
 
 ### `--validation-exclusions-file`
 A JSON file specifying which class-field-value mappings do not need to be validated when running Pydantic **extended validation**. Note that requirement / pattern / enum / type validation will still be performed.
 
-**Currently only supports skipping ontology object validation (dataset config fields: annotation_object, cell_component, cell_strain, cell_type, organism, tissue)**. This option is useful when you want to skip certain fields that intentionally fail validation. For example, sometimes validation doesn't want to be run on the name of a cell_strain, as it may not be what the cell strain's id corresponds to online.
+**Currently only supports skipping ontology object validation (ingestion config fields: annotation_object, cell_component, cell_strain, cell_type, organism, tissue)**. This option is useful when you want to skip certain fields that intentionally fail validation. For example, sometimes validation doesn't want to be run on the name of a cell_strain, as it may not be what the cell strain's id corresponds to online.
 
-JSON file format (note that the `ClassNameToSkipOn` is the class name in the `schema/v1.1.0/dataset_config_models.py`, which may be different from the class name in the dataset configuration file):
+JSON file format (note that the `ClassNameToSkipOn` is the class name in the `schema/latest/codegen/ingestion_config_models.py`, which may be different from the class name in the ingestion configuration file):
 ```json
 {
     "ClassNameToSkipOn": {
@@ -86,10 +86,10 @@ Example file:
 ```
 
 ### `--output-dir`
-Sets the directory where all validation errors will be saved. The default is `./dataset_config_validate_errors`, and the directory will be recreated at each script run, removing previous contents.
+Sets the directory where all validation errors will be saved. The default is `./ingestion_config_validate_errors`, and the directory will be recreated at each script run, removing previous contents.
 
 ### `--network-validation`
-Enables network validation, which checks for the existence of all referenced files in the dataset configuration files by sending HTTPS requests to relevant APIs. This option is disabled by default and increases the runtime of the script considerably.
+Enables network validation, which checks for the existence of all referenced files in the ingestion configuration files by sending HTTPS requests to relevant APIs. This option is disabled by default and increases the runtime of the script considerably.
 
 ### `--verbose`
-Enables verbose output, showing all validation errors for each dataset configuration file.
+Enables verbose output, showing all validation errors for each ingestion configuration file.

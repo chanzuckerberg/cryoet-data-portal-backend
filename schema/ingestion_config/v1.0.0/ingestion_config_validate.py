@@ -9,7 +9,7 @@ from typing import List, Union
 
 import click
 import yaml
-from dataset_config_models_extended import ExtendedValidationContainer
+from ingestion_config_models_extended import ExtendedValidationContainer
 from pydantic import ValidationError
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -18,13 +18,13 @@ sys.path.append(ROOT_DIR)  # To import the helper function from common.py
 from ingestion_tools.scripts.common.yaml_files import EXCLUDE_KEYWORDS_LIST, get_yaml_config_files  # noqa: E402
 
 logger = logging.getLogger(__name__)
-logger_handler = logging.StreamHandler()
-logger.addHandler(logger_handler)
+log_handler = logging.StreamHandler()
+logger.addHandler(log_handler)
 logger.setLevel(logging.INFO)
 
 DATASET_CONFIGS_DIR = "../../../ingestion_tools/dataset_configs/"
-ERRORS_OUTPUT_DIR = "./dataset_config_validate_errors"
-VALIDATION_EXCLUSIONS_FILE = "dataset_config_validation_exclusions.json"
+ERRORS_OUTPUT_DIR = "./ingestion_config_validate_errors"
+VALIDATION_EXCLUSIONS_FILE = "ingestion_config_validation_exclusions.json"
 
 # The permitted parent attribute for formatted strings and its corresponding depth
 # If the attribute has a parent attribute in this list, it is allowed to be a formatted string
@@ -98,7 +98,7 @@ def replace_formatted_strings(config_data: dict, depth: int, permitted_parent: b
 @click.option(
     "--input-dir",
     type=str,
-    help="Directory containing dataset config files to validate. Use this OR provide input files, not both.",
+    help="Directory containing ingestion config files to validate. Use this OR provide input files, not both.",
 )
 @click.option(
     "--include-glob",
@@ -142,7 +142,7 @@ def main(
     verbose: bool,
 ):
     """
-    See ingestion_tools/docs/dataset_config_validate.md for more information.
+    See schema/ingestion_config/latest/docs/ingestion_config_validate.md for more information.
     """
     if verbose:
         logger.setLevel(logging.DEBUG)
@@ -194,6 +194,7 @@ def main(
                     **config_data,
                     network_validation=network_validation,
                     validation_exclusions=validation_exclusions,
+                    logger_name=__name__,
                 )
         except ValidationError as e:
             validation_succeeded = False
@@ -211,7 +212,7 @@ def main(
         return
 
     # Write all errors to a file
-    with open(os.path.join(output_dir, "dataset_config_validate_errors.json"), "w") as f:
+    with open(os.path.join(output_dir, "ingestion_config_validate_errors.json"), "w") as f:
         json.dump(dict(sorted(errors.items())), f, indent=2, default=str)
 
     logger.error("Validation failed. See %s for errors.", output_dir)

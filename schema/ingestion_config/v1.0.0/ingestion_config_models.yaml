@@ -1,7 +1,7 @@
-name: cdp-dataset-config
-id: cdp-dataset-config
+name: cdp-ingestion-config
+id: cdp-ingestion-config
 version: 1.1.0
-description: Schema for dataset configs
+description: Schema for ingestion configs
 imports:
 - linkml:types
 - ../../core/v1.1.0/codegen/metadata_materialized
@@ -47,7 +47,7 @@ classes:
   # ============================================================================
 
   Container:
-    description: Class that models the dataset config.
+    description: Class that models the ingestion config file.
     tree_root: true
     attributes:
       annotations:
@@ -190,7 +190,7 @@ classes:
         required: true
 
   # ============================================================================
-  # Dataset config classes
+  # Ingestion config classes
   # ============================================================================
   AnnotationEntity:
     description: An annotation entity.
@@ -710,5 +710,3 @@ classes:
         description: The key in the header file for the voxel spacing.
         range: string
         ifabsent: string(voxel_size)
-
-source_file: ../../schema/v1.1.0/metadata

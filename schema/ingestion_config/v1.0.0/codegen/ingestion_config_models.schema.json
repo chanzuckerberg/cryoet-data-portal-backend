@@ -679,7 +679,7 @@
         },
         "Container": {
             "additionalProperties": false,
-            "description": "Class that models the dataset config.",
+            "description": "Class that models the ingestion config file.",
             "properties": {
                 "annotations": {
                     "description": "An annotation entity.",
@@ -2814,10 +2814,10 @@
             "type": "object"
         }
     },
-    "$id": "cdp-dataset-config",
+    "$id": "cdp-ingestion-config",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
     "additionalProperties": true,
-    "description": "Class that models the dataset config.",
+    "description": "Class that models the ingestion config file.",
     "metamodel_version": "1.7.0",
     "properties": {
         "annotations": {
@@ -2927,7 +2927,7 @@
         "standardization_config",
         "voxel_spacings"
     ],
-    "title": "cdp-dataset-config",
+    "title": "cdp-ingestion-config",
     "type": "object",
     "version": "1.1.0"
 }

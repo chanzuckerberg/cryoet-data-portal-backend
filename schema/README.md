@@ -45,6 +45,6 @@ Metadata file and directory layout specs:
 To build the schema, markdown docs and pydantic classes:
 
 ```bash
-cd schema/v1.1.0
+cd schema/
 make build
 ```

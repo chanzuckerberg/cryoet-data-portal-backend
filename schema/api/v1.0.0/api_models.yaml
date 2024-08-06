@@ -1,7 +1,7 @@
-name: cdp-dataset-config
-id: cdp-dataset-config
+name: cdp-api-models
+id: cdp-api-models
 version: 1.1.0
-description: Schema for dataset configs
+description: Schema for CryoET Data Portal API
 imports:
 - linkml:types
 - ../../core/v1.1.0/common

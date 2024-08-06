@@ -36,14 +36,14 @@ jobs:
         working-directory: schema/
       - name: Build Pydantic models
         run: make build
-        working-directory: schema/v1.1.0
+        working-directory: schema/
       - name: Validate dataset configs
         run: |
           make validate-configs-with-network
-        working-directory: schema/v1.1.0
+        working-directory: schema/
       - name: Archive validation results
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: dataset-configs-validation-logs
-          path: schema/v1.1.0/dataset_config_validate_errors/
+          path: schema/ingestion_config/latest/ingestion_config_validate_errors/
