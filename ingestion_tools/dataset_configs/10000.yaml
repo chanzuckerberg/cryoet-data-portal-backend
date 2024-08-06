@@ -470,7 +470,7 @@ tiltseries:
   sources:
   - source_glob:
       list_glob: metadata/{run_name}.st
-      match_regex: (.*)\.rec
+      match_regex: (.*)\.st
 tomograms:
 - metadata:
     affine_transformation_matrix:

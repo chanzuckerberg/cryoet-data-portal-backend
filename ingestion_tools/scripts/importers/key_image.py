@@ -1,5 +1,5 @@
 import os
-from typing import TYPE_CHECKING, Generator
+from typing import Generator
 
 import imageio
 import numpy as np
@@ -10,11 +10,6 @@ from common.image import ZarrReader
 from common.make_key_image import generate_preview, process_key_image
 from importers.annotation import AnnotationImporter
 from importers.base_importer import BaseImporter
-
-if TYPE_CHECKING:
-    from importers.tomogram import TomogramImporter
-else:
-    TomogramImporter = "TomogramImporter"
 
 
 class KeyImageImporter(BaseImporter):
@@ -72,11 +67,11 @@ class KeyImageImporter(BaseImporter):
 
     def load_annotations(self) -> Generator[np.ndarray, None, None]:
         for annotation in AnnotationImporter.finder(self.config, **self.parents):
-            if annotation.shape.lower() not in ["orientedpoint", "point"]:
+            if annotation.shape.lower() not in {"orientedpoint", "point"}:
                 continue
             annotation_path = annotation.get_output_path()
             try:
-                annotation_data = annotation.get_output_data(self.config.fs, annotation_path)
+                annotation_data = annotation.get_output_data(annotation_path)
                 yield annotation_data
                 # We prefer point files over oriented point files, so stop if we just processed that.
                 if annotation.shape.lower() == "point":

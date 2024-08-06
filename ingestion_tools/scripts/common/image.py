@@ -387,11 +387,8 @@ class MaskConverter(TomoConverter):
         return np.any(self.volume_reader.data == self.label)
 
 
-def get_tomo_metadata(
-    fs: FileSystemApi,
-    output_prefix: str,
-) -> dict[str, Any]:
-    # Write a tomo metadata file.
+def get_volume_metadata(fs: FileSystemApi, output_prefix: str) -> dict[str, Any]:
+    # Generates metadata related to volume files.
     scales = []
     size: dict[str, float] = {}
     omezarr_dir = fs.destformat(f"{output_prefix}.zarr")
@@ -406,14 +403,12 @@ def get_tomo_metadata(
         if not size:
             size = dims
         scales.append(dims)
-
-    output_json = {
+    return {
         "scales": scales,
         "size": size,
         "omezarr_dir": os.path.basename(omezarr_dir),
         "mrc_files": [os.path.basename(f"{output_prefix}.mrc")],
     }
-    return output_json
 
 
 def get_voxel_size(fs: FileSystemApi, tomo_filename: str) -> float:
