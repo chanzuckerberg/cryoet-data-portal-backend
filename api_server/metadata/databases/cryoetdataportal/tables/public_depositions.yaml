@@ -2,7 +2,7 @@ table:
   name: depositions
   schema: public
 array_relationships:
-  - name: deposition_authors
+  - name: authors
     using:
       foreign_key_constraint_on:
         column: deposition_id
