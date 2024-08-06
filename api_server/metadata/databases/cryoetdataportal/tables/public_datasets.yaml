@@ -3,7 +3,6 @@ table:
   schema: public
 array_relationships:
   - name: authors
-    comment: The authors of this dataset
     using:
       foreign_key_constraint_on:
         column: dataset_id
@@ -11,7 +10,6 @@ array_relationships:
           name: dataset_authors
           schema: public
   - name: funding_sources
-    comment: The funding sources of this dataset
     using:
       foreign_key_constraint_on:
         column: dataset_id
@@ -19,7 +17,6 @@ array_relationships:
           name: dataset_funding
           schema: public
   - name: runs
-    comment: The runs of this dataset
     using:
       foreign_key_constraint_on:
         column: dataset_id
