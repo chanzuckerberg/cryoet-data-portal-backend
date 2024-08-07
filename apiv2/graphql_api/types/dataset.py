@@ -224,9 +224,6 @@ class DatasetWhereClause(TypedDict):
     )
     authors: Optional[Annotated["DatasetAuthorWhereClause", strawberry.lazy("graphql_api.types.dataset_author")]] | None
     runs: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
-    dataset_authors: (
-        Optional[Annotated["DatasetAuthorWhereClause", strawberry.lazy("graphql_api.types.dataset_author")]] | None
-    )
     title: Optional[StrComparators] | None
     description: Optional[StrComparators] | None
     organism_name: Optional[StrComparators] | None
@@ -319,12 +316,6 @@ class Dataset(EntityInterface):
     runs_aggregate: Optional[Annotated["RunAggregate", strawberry.lazy("graphql_api.types.run")]] = (
         load_run_aggregate_rows
     )  # type:ignore
-    dataset_authors: Sequence[Annotated["DatasetAuthor", strawberry.lazy("graphql_api.types.dataset_author")]] = (
-        load_dataset_author_rows
-    )  # type:ignore
-    dataset_authors_aggregate: Optional[
-        Annotated["DatasetAuthorAggregate", strawberry.lazy("graphql_api.types.dataset_author")]
-    ] = load_dataset_author_aggregate_rows  # type:ignore
     title: str
     description: str
     organism_name: str
@@ -425,7 +416,6 @@ class DatasetCountColumns(enum.Enum):
     fundingSources = "funding_sources"
     authors = "authors"
     runs = "runs"
-    datasetAuthors = "dataset_authors"
     title = "title"
     description = "description"
     organismName = "organism_name"

@@ -11,17 +11,13 @@ resourcePolicy:
     - actions: ['view']
       effect: EFFECT_ALLOW
       derivedRoles:
-        - project_viewer
+        - anonymous
 
-    - actions: ['view', 'create', 'update']
-      effect: EFFECT_ALLOW
-      derivedRoles:
-        - project_member
+    - actions: ['create', 'update']
+      effect: EFFECT_DENY
 
     - actions: ['download', 'delete']
-      effect: EFFECT_ALLOW
-      derivedRoles:
-        - owner
+      effect: EFFECT_DENY
   schemas:
     principalSchema:
       ref: cerbos:///principal.json

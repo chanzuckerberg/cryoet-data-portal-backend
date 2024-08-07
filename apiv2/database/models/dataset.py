@@ -62,12 +62,6 @@ class Dataset(Base):
         uselist=True,
         foreign_keys="Run.dataset_id",
     )
-    dataset_authors: Mapped[list[DatasetAuthor]] = relationship(
-        "DatasetAuthor",
-        back_populates="dataset",
-        uselist=True,
-        foreign_keys="DatasetAuthor.dataset_id",
-    )
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)
     organism_name: Mapped[str] = mapped_column(String, nullable=False)

@@ -38,10 +38,13 @@ build: ## Build docker containers
 .PHONY: init
 init:
 	docker compose up -d
-	$(docker_compose_run) $(APP_CONTAINER) python3 -m platformics.cli.main api generate --schemafile /app/schema/schema.yaml --skip-render-files --output-prefix /app
+	$(MAKE) seed-moto
+
+.PHONY: update-schema
+update-schema:
+	$(MAKE) codegen
 	$(MAKE) alembic-autogenerate
 	$(MAKE) alembic-upgrade-head
-	$(docker_compose_run) $(APP_CONTAINER) black .
 	# $(docker_compose_run) $(CONTAINER) ruff check --fix .
 	$(docker_compose_run) $(APP_CONTAINER) sh -c 'strawberry export-schema main:schema > /app/graphql_api/schema.graphql'
 	docker compose up -d
@@ -70,7 +73,8 @@ start: ## Start the local dev environment.
 
 .PHONY: codegen
 codegen: ## Run codegen to convert the LinkML schema to a GQL API
-	$(docker_compose_run) $(APP_CONTAINER) python3 -m platformics.cli.main api generate --schemafile ./schema/schema.yaml --output-prefix .
+	$(docker_compose_run) $(APP_CONTAINER) python3 -m platformics.cli.main api generate --template-override-paths ./template_overrides --schemafile ./schema/schema.yaml --skip-render-files --output-prefix .
+	$(docker_compose_run) $(APP_CONTAINER) black .
 
 .PHONY: test
 test: init ## Run tests
@@ -102,7 +106,7 @@ logs: ## Tail the logs of the dev env containers. ex: make logs CONTAINER=graphq
 
 .PHONY: token
 token: ## Copy an auth token for this local dev env to the system clipboard
-	TOKEN=$$($(docker_compose_run) -w /platformics $(APP_CONTAINER) python3 -m platformics.cli.main auth generate-token 111 --project 444:owner --expiration 99999); echo '{"Authorization":"Bearer '$$TOKEN'"}' | tee >(pbcopy)
+	TOKEN=$$($(docker_compose_run) $(APP_CONTAINER) python3 -m platformics.cli.main auth generate-token 111 --project 444:owner --expiration 99999); echo '{"Authorization":"Bearer '$$TOKEN'"}' | tee >(pbcopy)
 
 .PHONY: update-cli
 update-cli:  ## Update the GQL types used by the CLI

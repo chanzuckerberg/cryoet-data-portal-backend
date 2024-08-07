@@ -1259,13 +1259,6 @@ classes:
         multivalued: true
         inverse: Run.dataset
         range: Run
-      dataset_authors:
-        name: dataset_authors
-        description: An author of a dataset
-        from_schema: cdp-dataset-config
-        multivalued: true
-        inverse: DatasetAuthor.dataset
-        range: DatasetAuthor
       title:
         name: title
         description: Title of a CryoET dataset.

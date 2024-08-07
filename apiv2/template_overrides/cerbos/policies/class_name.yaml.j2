@@ -6,7 +6,7 @@ resourcePolicy:
   version: "default"
   importDerivedRoles:
     - common_roles
-  resource: "tomogram_author"
+  resource: "{{cls.snake_name}}"
   rules:
     - actions: ['view']
       effect: EFFECT_ALLOW

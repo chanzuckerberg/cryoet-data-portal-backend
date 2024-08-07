@@ -9,14 +9,8 @@ resourcePolicy:
   resource: "file"
   rules:
     - actions: ['*']
-      effect: EFFECT_ALLOW
-      derivedRoles:
-        - project_member
+      effect: EFFECT_DENY
 
-    - actions: ['download']
-      effect: EFFECT_ALLOW
-      derivedRoles:
-        - owner
   schemas:
     principalSchema:
       ref: cerbos:///principal.json
