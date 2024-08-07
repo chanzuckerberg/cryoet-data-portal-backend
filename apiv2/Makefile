@@ -58,12 +58,6 @@ seed-moto: ## Seed the moto db by running the ./bin/seed_moto.sh script
 
 .PHONY: clean
 clean: ## Remove all codegen'd artifacts.
-	rm -rf graphql_api
-	rm -rf cerbos
-	rm -rf support
-	rm -rf database
-	rm -rf .moto_recording
-	rm -rf test_infra
 	$(docker_compose) --profile '*' down
 
 .PHONY: start
