@@ -103,7 +103,6 @@ def generate_entity_import_files(
     import_templates = [
         "cerbos/config.yaml",
         "cerbos/policies/file.yaml",
-        "cerbos/policies/entity.yaml",
         "cerbos/policies/derived_roles_common.yaml",
         "cerbos/policies/_schemas/principal.json",
         "database/models/__init__.py",

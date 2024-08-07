@@ -15,9 +15,13 @@ resourcePolicy:
 
     - actions: ['create', 'update']
       effect: EFFECT_DENY
+      derivedRoles:
+        - anonymous
 
     - actions: ['download', 'delete']
       effect: EFFECT_DENY
+      derivedRoles:
+        - anonymous
   schemas:
     principalSchema:
       ref: cerbos:///principal.json

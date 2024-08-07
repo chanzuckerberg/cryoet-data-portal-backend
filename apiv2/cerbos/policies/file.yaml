@@ -10,6 +10,8 @@ resourcePolicy:
   rules:
     - actions: ['*']
       effect: EFFECT_DENY
+      derivedRoles:
+        - anonymous
 
   schemas:
     principalSchema:
