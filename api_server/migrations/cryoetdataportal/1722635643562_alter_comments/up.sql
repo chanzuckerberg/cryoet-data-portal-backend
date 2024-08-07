@@ -10,7 +10,7 @@ comment on column "public"."dataset_authors"."primary_author_status" is E'Indica
 
 comment on table "public"."dataset_funding" is E'Metadata for a dataset''s funding sources';
 comment on column "public"."dataset_funding"."dataset_id" is E'Numeric identifier for the dataset this funding source corresponds to';
-comment on column "public"."dataset_funding"."id" is E'A numeric identifier for this funding record';
+comment on column "public"."dataset_funding"."id" is E'A numeric identifier for this funding record (May change!)';
 
 comment on table "public"."runs" is E'Metadata for an experiment run';
 comment on column "public"."runs"."https_prefix" is E'The HTTPS directory path where this dataset is contained';
