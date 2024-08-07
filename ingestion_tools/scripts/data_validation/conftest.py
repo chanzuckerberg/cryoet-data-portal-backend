@@ -13,7 +13,6 @@ import pytest
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(CURRENT_DIR)
 sys.path.append(os.path.join(CURRENT_DIR, ".."))
-from data_validation_common import *  # noqa: E402, F403
 from fixtures.data import *  # noqa: E402, F403
 from fixtures.parser import *  # noqa: E402, F403
 from fixtures.path import *  # noqa: E402, F403

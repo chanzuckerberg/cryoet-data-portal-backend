@@ -91,20 +91,25 @@ def annotation_metadata(annotation_meta_files: str, filesystem: FileSystemApi) -
     return metadata_objs
 
 
-@pytest.fixture(scope="session")
-def point_annotations(
-    point_annotation_files: Dict[str, List[str]],
-    filesystem: FileSystemApi,
-) -> Dict[str, Dict[str, Dict]]:
-    """Load point annotations."""
+def get_annotations(annotation_files: Dict[str, List[str]], filesystem: FileSystemApi) -> Dict[str, Dict[str, Dict]]:
+    """Load annotations."""
     annotations = {}
-    for annoname, files in point_annotation_files.items():
+    for annoname, files in annotation_files.items():
         annotations[annoname] = {}
         for file in files:
             with filesystem.open(file, "r") as f:
                 annotations[annoname][file] = ndjson.load(f)
 
     return annotations
+
+
+@pytest.fixture(scope="session")
+def point_annotations(
+    point_annotation_files: Dict[str, List[str]],
+    filesystem: FileSystemApi,
+) -> Dict[str, Dict[str, Dict]]:
+    """Load point annotations."""
+    return get_annotations(point_annotation_files, filesystem)
 
 
 @pytest.fixture(scope="session")
@@ -113,14 +118,16 @@ def oriented_point_annotations(
     filesystem: FileSystemApi,
 ) -> Dict[str, Dict[str, Dict]]:
     """Load oriented point annotations."""
-    annotations = {}
-    for annoname, files in oriented_point_annotation_files.items():
-        annotations[annoname] = {}
-        for file in files:
-            with filesystem.open(file, "r") as f:
-                annotations[annoname][file] = ndjson.load(f)
+    return get_annotations(oriented_point_annotation_files, filesystem)
 
-    return annotations
+
+@pytest.fixture(scope="session")
+def instance_seg_annotations(
+    instance_seg_annotation_files: Dict[str, List[str]],
+    filesystem: FileSystemApi,
+) -> Dict[str, Dict[str, Dict]]:
+    """Load instance segmentation annotations."""
+    return get_annotations(instance_seg_annotation_files, filesystem)
 
 
 @pytest.fixture(scope="session")

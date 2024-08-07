@@ -4,7 +4,7 @@ Paths returned as strings (singular fixture name) or lists of strings (plural fi
 """
 
 import os
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import pytest
 
@@ -269,32 +269,42 @@ def annotation_meta_files(annotations_dir: str, filesystem: FileSystemApi) -> Li
     return files
 
 
+def annotation_files(
+    bucket: str,
+    annotation_metadata: Dict[str, Any],
+    filesystem: FileSystemApi,
+    name: str,
+    format: Optional[str] = None,
+) -> Dict[str, List[str]]:
+    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/[annotation_name].*"""
+
+    files = {}
+    count = 0
+
+    for filename, metadata in annotation_metadata.items():
+        files[filename] = []
+        for annot in metadata["files"]:
+            if annot["shape"] == name and (format is None or annot["format"] == format):
+                file = f"s3://{bucket}/{annot['path']}"
+                if not filesystem.s3fs.exists(file):
+                    pytest.fail(f"{name} {format if format else ''} annotation file not found: {file}")
+
+                files[filename].append(file)
+                count += 1
+
+    if count == 0:
+        pytest.skip(f"No {name} {format if format else ''} annotation files found.")
+
+    return files
+
+
 @pytest.fixture(scope="session")
 def point_annotation_files(
     bucket: str,
     annotation_metadata: Dict[str, Any],
     filesystem: FileSystemApi,
 ) -> Dict[str, List[str]]:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/[annotation_name].ndjson"""
-
-    point_files = {}
-    count = 0
-
-    for filename, metadata in annotation_metadata.items():
-        point_files[filename] = []
-        for annot in metadata["files"]:
-            if annot["shape"] == "Point":
-                ndfile = f"s3://{bucket}/{annot['path']}"
-                if not filesystem.s3fs.exists(ndfile):
-                    pytest.fail(f"Point annotation file not found: {ndfile}")
-
-                point_files[filename].append(ndfile)
-                count += 1
-
-    if count == 0:
-        pytest.skip("No point annotation files found.")
-
-    return point_files
+    return annotation_files(bucket, annotation_metadata, filesystem, "Point")
 
 
 @pytest.fixture(scope="session")
@@ -303,26 +313,16 @@ def oriented_point_annotation_files(
     annotation_metadata: Dict[str, Any],
     filesystem: FileSystemApi,
 ) -> Dict[str, List[str]]:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/[annotation_name].ndjson"""
+    return annotation_files(bucket, annotation_metadata, filesystem, "OrientedPoint")
 
-    point_files = {}
-    count = 0
 
-    for filename, metadata in annotation_metadata.items():
-        point_files[filename] = []
-        for annot in metadata["files"]:
-            if annot["shape"] == "OrientedPoint":
-                ndfile = f"s3://{bucket}/{annot['path']}"
-                if not filesystem.s3fs.exists(ndfile):
-                    pytest.fail(f"OrientedPoint annotation file not found: {ndfile}")
-
-                point_files[filename].append(ndfile)
-                count += 1
-
-    if count == 0:
-        pytest.skip("No oriented point annotation files found.")
-
-    return point_files
+@pytest.fixture(scope="session")
+def instance_seg_annotation_files(
+    bucket: str,
+    annotation_metadata: Dict[str, Any],
+    filesystem: FileSystemApi,
+) -> Dict[str, List[str]]:
+    return annotation_files(bucket, annotation_metadata, filesystem, "InstanceSegmentation")
 
 
 @pytest.fixture(scope="session")
@@ -331,23 +331,13 @@ def seg_mask_annotation_mrc_files(
     annotation_metadata: Dict[str, Any],
     filesystem: FileSystemApi,
 ) -> Dict[str, List[str]]:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/[annotation_name].mrc"""
+    return annotation_files(bucket, annotation_metadata, filesystem, "SegmentationMask", "mrc")
 
-    mrc_files = {}
-    count = 0
 
-    for filename, metadata in annotation_metadata.items():
-        mrc_files[filename] = []
-        for annot in metadata["files"]:
-            if annot["shape"] == "SegmentationMask" and annot["format"] == "mrc":
-                mrcfile = f"s3://{bucket}/{annot['path']}"
-                if not filesystem.s3fs.exists(mrcfile):
-                    pytest.fail(f"OrientedPoint annotation file not found: {mrcfile}")
-
-                mrc_files[filename].append(mrcfile)
-                count += 1
-
-    if count == 0:
-        pytest.skip("No segmask mrc annotation files found.")
-
-    return mrc_files
+@pytest.fixture(scope="session")
+def seg_mask_annotation_zarr_files(
+    bucket: str,
+    annotation_metadata: Dict[str, Any],
+    filesystem: FileSystemApi,
+) -> Dict[str, List[str]]:
+    return annotation_files(bucket, annotation_metadata, filesystem, "SegmentationMask", "zarr")
