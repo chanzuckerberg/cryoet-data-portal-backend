@@ -215,8 +215,7 @@ types:
     uri: xsd:string
     repr: string
 enums:
-  tomogram_type:
-    name: tomogram_type
+  tomogram_type_enum:
     description: Describes a tomogram's usage
     from_schema: cdp-dataset-config
     permissible_values:
@@ -413,14 +412,6 @@ enums:
       Unknown:
         text: Unknown
         description: Unknown reconstruction method
-  tomogram_type_enum:
-    name: tomogram_type_enum
-    description: Tomogram type
-    from_schema: cdp-dataset-config
-    permissible_values:
-      CANONICAL:
-        text: CANONICAL
-        description: Canonical tomogram (basis geometry for all annotations)
   alignment_type_enum:
     name: alignment_type_enum
     description: Type of alignment
@@ -1171,22 +1162,10 @@ classes:
         ifabsent: false
         range: boolean
       orcid:
-        name: orcid
         description: The ORCID identifier for the author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_orcid
         range: string
         recommended: true
         pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
-      annotation_id:
-        name: annotation_id
-        description: An identifier to refer to a specific instance of this type
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - api_sequential_identifier
-        range: integer
-        required: true
   DatasetFunding:
     name: DatasetFunding
     annotations:
@@ -1295,14 +1274,11 @@ classes:
         recommended: true
         minimum_value: 1
       tissue_name:
-        name: tissue_name
         description: Name of the tissue from which a biological sample used in a CryoET
           study is derived from.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - tissue_name
         range: string
-        required: true
+        # TODO THIS SHOULD BE REQUIRED
+        required: false
       tissue_id:
         name: tissue_id
         description: The UBERON identifier for the tissue.
@@ -1316,11 +1292,9 @@ classes:
         name: cell_name
         description: Name of the cell type from which a biological sample used in
           a CryoET study is derived from.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - cell_name
         range: string
-        required: true
+        # TODO THIS SHOULD BE REQUIRED
+        required: false
       cell_type_id:
         name: cell_type_id
         description: Cell Ontology identifier for the cell type
@@ -1347,6 +1321,11 @@ classes:
         recommended: true
         pattern: (WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)
         range: string
+      sample_type:
+        name: sample_type
+        description: Type of sample imaged in a CryoET study
+        range: sample_type_enum
+        recommended: true
       sample_preparation:
         name: sample_preparation
         description: Describes how the sample was prepared.
@@ -1389,17 +1368,12 @@ classes:
       cell_component_name:
         name: cell_component_name
         description: Name of the cellular component.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - cell_component_name
         range: string
-        required: true
+        # TODO THIS SHOULD BE REQUIRED
+        required: false
       cell_component_id:
         name: cell_component_id
         description: The GO identifier for the cellular component.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - cell_component_id
         range: string
         recommended: true
         pattern: ^GO:[0-9]{7}$
@@ -2062,7 +2036,7 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.tiltseries
         range: Deposition
-        required: true
+        required: false
       s3_omezarr_dir:
         name: s3_omezarr_dir
         description: S3 path to this tiltseries in multiscale OME-Zarr format
@@ -2145,12 +2119,8 @@ classes:
         unit:
           symbol: V
           descriptive_name: volts
-      spherical_abberation_constant:
-        name: spherical_abberation_constant
+      spherical_aberration_constant:
         description: Spherical Aberration Constant of the objective lens in millimeters
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - tiltseries_spherical_aberration_constant
         range: float
         required: true
         minimum_value: 0
@@ -2536,7 +2506,6 @@ classes:
     from_schema: cdp-dataset-config
     mixins:
     - IDMixin
-    - S3PrefixedEntityMixin
     attributes:
       alignment:
         name: alignment
@@ -2633,14 +2602,9 @@ classes:
         required: true
         pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)
       reconstruction_method:
-        name: reconstruction_method
         description: Describe reconstruction method (WBP, SART, SIRT)
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - tomogram_reconstruction_method
         range: tomogram_reconstruction_method_enum
         required: true
-        pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)
       processing:
         name: processing
         description: Describe additional processing used to derive the tomogram
@@ -2650,6 +2614,17 @@ classes:
         range: tomogram_processing_enum
         required: true
         pattern: (^denoised$)|(^filtered$)|(^raw$)
+      tomogram_version:
+        range: float
+        description: Version of tomogram
+      processing_software:
+        range: string
+        description: Processing software used to derive the tomogram
+        recommended: true
+      reconstruction_software:
+        range: string
+        required: true
+        description: Name of software used for reconstruction
       is_canonical:
         name: is_canonical
         description: whether this tomogram is canonical for the run
@@ -2770,36 +2745,14 @@ classes:
         exact_mappings:
         - tomogram_neuroglancer_config
         range: string
-      type:
-        name: type
-        from_schema: cdp-dataset-config
-        range: tomogram_type
+      tomogram_type:
+        range: tomogram_type_enum
       is_standardized:
-        name: is_standardized
         description: Whether this tomogram was generated per the portal's standards
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - api_tomogram_is_standardized
         range: boolean
         required: true
-      s3_prefix:
-        name: s3_prefix
-        description: Path to a directory containing data for this entity as an S3
-          url
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - api_s3_prefix
-        range: string
-        required: true
-      https_prefix:
-        name: https_prefix
-        description: Path to a directory containing data for this entity as an HTTPS
-          url
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - api_https_prefix
-        range: string
-        required: true
+        # TODO - is this reasonable?
+        ifabsent: false
   DateStampedEntityMixin:
     name: DateStampedEntityMixin
     description: A set of dates at which a data item was deposited, published and

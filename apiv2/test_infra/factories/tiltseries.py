@@ -52,7 +52,7 @@ class TiltseriesFactory(CommonFactory):
     s3_gain_file = fuzzy.FuzzyText()
     https_gain_file = fuzzy.FuzzyText()
     acceleration_voltage = fuzzy.FuzzyFloat(1, 100)
-    spherical_abberation_constant = fuzzy.FuzzyFloat(1, 100)
+    spherical_aberration_constant = fuzzy.FuzzyFloat(1, 100)
     microscope_manufacturer = fuzzy.FuzzyChoice(["FEI", "TFS", "JEOL"])
     microscope_model = fuzzy.FuzzyText()
     microscope_energy_filter = fuzzy.FuzzyText()

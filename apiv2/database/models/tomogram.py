@@ -19,7 +19,7 @@ from support.enums import (
     fiducial_alignment_status_enum,
     tomogram_reconstruction_method_enum,
     tomogram_processing_enum,
-    tomogram_type,
+    tomogram_type_enum,
 )
 from platformics.database.models.file import File
 
@@ -92,6 +92,9 @@ class Tomogram(Base):
     processing: Mapped[tomogram_processing_enum] = mapped_column(
         Enum(tomogram_processing_enum, native_enum=False), nullable=False
     )
+    tomogram_version: Mapped[float] = mapped_column(Float, nullable=True)
+    processing_software: Mapped[str] = mapped_column(String, nullable=True)
+    reconstruction_software: Mapped[str] = mapped_column(String, nullable=False)
     is_canonical: Mapped[bool] = mapped_column(Boolean, nullable=True)
     s3_omezarr_dir: Mapped[str] = mapped_column(String, nullable=True)
     https_omezarr_dir: Mapped[str] = mapped_column(String, nullable=True)
@@ -108,8 +111,8 @@ class Tomogram(Base):
     key_photo_url: Mapped[str] = mapped_column(String, nullable=True)
     key_photo_thumbnail_url: Mapped[str] = mapped_column(String, nullable=True)
     neuroglancer_config: Mapped[str] = mapped_column(String, nullable=True)
-    type: Mapped[tomogram_type] = mapped_column(Enum(tomogram_type, native_enum=False), nullable=True)
+    tomogram_type: Mapped[tomogram_type_enum] = mapped_column(
+        Enum(tomogram_type_enum, native_enum=False), nullable=True
+    )
     is_standardized: Mapped[bool] = mapped_column(Boolean, nullable=False)
-    s3_prefix: Mapped[str] = mapped_column(String, nullable=False)
-    https_prefix: Mapped[str] = mapped_column(String, nullable=False)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

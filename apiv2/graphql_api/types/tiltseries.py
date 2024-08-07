@@ -232,7 +232,7 @@ class TiltseriesWhereClause(TypedDict):
     s3_gain_file: Optional[StrComparators] | None
     https_gain_file: Optional[StrComparators] | None
     acceleration_voltage: Optional[FloatComparators] | None
-    spherical_abberation_constant: Optional[FloatComparators] | None
+    spherical_aberration_constant: Optional[FloatComparators] | None
     microscope_manufacturer: Optional[EnumComparators[tiltseries_microscope_manufacturer_enum]] | None
     microscope_model: Optional[StrComparators] | None
     microscope_energy_filter: Optional[StrComparators] | None
@@ -279,7 +279,7 @@ class TiltseriesOrderByClause(TypedDict):
     s3_gain_file: Optional[orderBy] | None
     https_gain_file: Optional[orderBy] | None
     acceleration_voltage: Optional[orderBy] | None
-    spherical_abberation_constant: Optional[orderBy] | None
+    spherical_aberration_constant: Optional[orderBy] | None
     microscope_manufacturer: Optional[orderBy] | None
     microscope_model: Optional[orderBy] | None
     microscope_energy_filter: Optional[orderBy] | None
@@ -340,7 +340,7 @@ class Tiltseries(EntityInterface):
     s3_gain_file: Optional[str] = None
     https_gain_file: Optional[str] = None
     acceleration_voltage: float
-    spherical_abberation_constant: float
+    spherical_aberration_constant: float
     microscope_manufacturer: tiltseries_microscope_manufacturer_enum
     microscope_model: str
     microscope_energy_filter: str
@@ -388,7 +388,7 @@ Define columns that support numerical aggregations
 @strawberry.type
 class TiltseriesNumericalColumns:
     acceleration_voltage: Optional[float] = None
-    spherical_abberation_constant: Optional[float] = None
+    spherical_aberration_constant: Optional[float] = None
     tilt_min: Optional[float] = None
     tilt_max: Optional[float] = None
     tilt_range: Optional[float] = None
@@ -421,7 +421,7 @@ class TiltseriesMinMaxColumns:
     s3_gain_file: Optional[str] = None
     https_gain_file: Optional[str] = None
     acceleration_voltage: Optional[float] = None
-    spherical_abberation_constant: Optional[float] = None
+    spherical_aberration_constant: Optional[float] = None
     microscope_model: Optional[str] = None
     microscope_energy_filter: Optional[str] = None
     microscope_phase_plate: Optional[str] = None
@@ -468,7 +468,7 @@ class TiltseriesCountColumns(enum.Enum):
     s3GainFile = "s3_gain_file"
     httpsGainFile = "https_gain_file"
     accelerationVoltage = "acceleration_voltage"
-    sphericalAbberationConstant = "spherical_abberation_constant"
+    sphericalAberrationConstant = "spherical_aberration_constant"
     microscopeManufacturer = "microscope_manufacturer"
     microscopeModel = "microscope_model"
     microscopeEnergyFilter = "microscope_energy_filter"
@@ -539,7 +539,7 @@ Mutation types
 @strawberry.input()
 class TiltseriesCreateInput:
     run_id: strawberry.ID
-    deposition_id: strawberry.ID
+    deposition_id: Optional[strawberry.ID] = None
     s3_omezarr_dir: Optional[str] = None
     s3_mrc_bin1: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
@@ -551,7 +551,7 @@ class TiltseriesCreateInput:
     s3_gain_file: Optional[str] = None
     https_gain_file: Optional[str] = None
     acceleration_voltage: float
-    spherical_abberation_constant: float
+    spherical_aberration_constant: float
     microscope_manufacturer: tiltseries_microscope_manufacturer_enum
     microscope_model: str
     microscope_energy_filter: str
@@ -593,7 +593,7 @@ class TiltseriesUpdateInput:
     s3_gain_file: Optional[str] = None
     https_gain_file: Optional[str] = None
     acceleration_voltage: Optional[float] = None
-    spherical_abberation_constant: Optional[float] = None
+    spherical_aberration_constant: Optional[float] = None
     microscope_manufacturer: Optional[tiltseries_microscope_manufacturer_enum] = None
     microscope_model: Optional[str] = None
     microscope_energy_filter: Optional[str] = None

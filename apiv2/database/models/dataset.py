@@ -15,6 +15,7 @@ from sqlalchemy import ForeignKey, String, Float, Integer, Enum, Boolean, DateTi
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
+from support.enums import sample_type_enum
 from platformics.database.models.file import File
 
 if TYPE_CHECKING:
@@ -66,18 +67,19 @@ class Dataset(Base):
     description: Mapped[str] = mapped_column(String, nullable=False)
     organism_name: Mapped[str] = mapped_column(String, nullable=False)
     organism_taxid: Mapped[int] = mapped_column(Integer, nullable=True)
-    tissue_name: Mapped[str] = mapped_column(String, nullable=False)
+    tissue_name: Mapped[str] = mapped_column(String, nullable=True)
     tissue_id: Mapped[str] = mapped_column(String, nullable=True)
-    cell_name: Mapped[str] = mapped_column(String, nullable=False)
+    cell_name: Mapped[str] = mapped_column(String, nullable=True)
     cell_type_id: Mapped[str] = mapped_column(String, nullable=True)
     cell_strain_name: Mapped[str] = mapped_column(String, nullable=False)
     cell_strain_id: Mapped[str] = mapped_column(String, nullable=True)
+    sample_type: Mapped[sample_type_enum] = mapped_column(Enum(sample_type_enum, native_enum=False), nullable=True)
     sample_preparation: Mapped[str] = mapped_column(String, nullable=True)
     grid_preparation: Mapped[str] = mapped_column(String, nullable=True)
     other_setup: Mapped[str] = mapped_column(String, nullable=True)
     key_photo_url: Mapped[str] = mapped_column(String, nullable=True)
     key_photo_thumbnail_url: Mapped[str] = mapped_column(String, nullable=True)
-    cell_component_name: Mapped[str] = mapped_column(String, nullable=False)
+    cell_component_name: Mapped[str] = mapped_column(String, nullable=True)
     cell_component_id: Mapped[str] = mapped_column(String, nullable=True)
     deposition_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     release_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)

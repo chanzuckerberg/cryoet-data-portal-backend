@@ -44,7 +44,7 @@ class TiltseriesGroupByOptions:
     s3_gain_file: Optional[str] = None
     https_gain_file: Optional[str] = None
     acceleration_voltage: Optional[float] = None
-    spherical_abberation_constant: Optional[float] = None
+    spherical_aberration_constant: Optional[float] = None
     microscope_manufacturer: Optional[tiltseries_microscope_manufacturer_enum] = None
     microscope_model: Optional[str] = None
     microscope_energy_filter: Optional[str] = None

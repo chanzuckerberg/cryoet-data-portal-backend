@@ -8,6 +8,8 @@ Make changes to the template codegen/templates/validators/class_name.py.j2 inste
 # ruff: noqa: E501 Line too long
 
 
+from support.enums import sample_type_enum
+
 import typing
 import datetime
 import uuid
@@ -45,7 +47,7 @@ class DatasetCreateInputValidator(BaseModel):
         ),
     ]
     tissue_name: Annotated[
-        str,
+        str | None,
         StringConstraints(
             strip_whitespace=True,
         ),
@@ -58,7 +60,7 @@ class DatasetCreateInputValidator(BaseModel):
         ),
     ]
     cell_name: Annotated[
-        str,
+        str | None,
         StringConstraints(
             strip_whitespace=True,
         ),
@@ -83,6 +85,7 @@ class DatasetCreateInputValidator(BaseModel):
             pattern=r"(WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)",
         ),
     ]
+    sample_type: Annotated[sample_type_enum | None, Field()]
     sample_preparation: Annotated[
         str | None,
         StringConstraints(
@@ -114,7 +117,7 @@ class DatasetCreateInputValidator(BaseModel):
         ),
     ]
     cell_component_name: Annotated[
-        str,
+        str | None,
         StringConstraints(
             strip_whitespace=True,
         ),
@@ -237,6 +240,7 @@ class DatasetUpdateInputValidator(BaseModel):
             pattern=r"(WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)",
         ),
     ]
+    sample_type: Annotated[sample_type_enum | None, Field()]
     sample_preparation: Annotated[
         str | None,
         StringConstraints(

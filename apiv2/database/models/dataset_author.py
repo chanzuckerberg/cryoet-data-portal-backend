@@ -47,5 +47,4 @@ class DatasetAuthor(Base):
     corresponding_author_status: Mapped[bool] = mapped_column(Boolean, nullable=True)
     primary_author_status: Mapped[bool] = mapped_column(Boolean, nullable=True)
     orcid: Mapped[str] = mapped_column(String, nullable=True)
-    annotation_id: Mapped[int] = mapped_column(Integer, nullable=False)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

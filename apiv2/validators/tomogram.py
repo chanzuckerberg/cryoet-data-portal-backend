@@ -12,7 +12,7 @@ from support.enums import (
     fiducial_alignment_status_enum,
     tomogram_reconstruction_method_enum,
     tomogram_processing_enum,
-    tomogram_type,
+    tomogram_type_enum,
 )
 
 import typing
@@ -63,6 +63,19 @@ class TomogramCreateInputValidator(BaseModel):
     fiducial_alignment_status: Annotated[fiducial_alignment_status_enum, Field()]
     reconstruction_method: Annotated[tomogram_reconstruction_method_enum, Field()]
     processing: Annotated[tomogram_processing_enum, Field()]
+    tomogram_version: Annotated[float | None, Field()]
+    processing_software: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    reconstruction_software: Annotated[
+        str,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
     is_canonical: Annotated[bool | None, Field()]
     s3_omezarr_dir: Annotated[
         str | None,
@@ -134,20 +147,8 @@ class TomogramCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    type: Annotated[tomogram_type | None, Field()]
+    tomogram_type: Annotated[tomogram_type_enum | None, Field()]
     is_standardized: Annotated[bool, Field()]
-    s3_prefix: Annotated[
-        str,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    https_prefix: Annotated[
-        str,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
     id: Annotated[int, Field()]
 
 
@@ -191,6 +192,19 @@ class TomogramUpdateInputValidator(BaseModel):
     fiducial_alignment_status: Annotated[fiducial_alignment_status_enum | None, Field()]
     reconstruction_method: Annotated[tomogram_reconstruction_method_enum | None, Field()]
     processing: Annotated[tomogram_processing_enum | None, Field()]
+    tomogram_version: Annotated[float | None, Field()]
+    processing_software: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    reconstruction_software: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
     is_canonical: Annotated[bool | None, Field()]
     s3_omezarr_dir: Annotated[
         str | None,
@@ -262,18 +276,6 @@ class TomogramUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    type: Annotated[tomogram_type | None, Field()]
+    tomogram_type: Annotated[tomogram_type_enum | None, Field()]
     is_standardized: Annotated[bool | None, Field()]
-    s3_prefix: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    https_prefix: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
     id: Annotated[int | None, Field()]

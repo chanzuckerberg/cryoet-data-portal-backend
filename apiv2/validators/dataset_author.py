@@ -60,7 +60,6 @@ class DatasetAuthorCreateInputValidator(BaseModel):
             pattern=r"[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
         ),
     ]
-    annotation_id: Annotated[int, Field()]
     id: Annotated[int, Field()]
 
 
@@ -108,5 +107,4 @@ class DatasetAuthorUpdateInputValidator(BaseModel):
             pattern=r"[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
         ),
     ]
-    annotation_id: Annotated[int | None, Field()]
     id: Annotated[int | None, Field()]

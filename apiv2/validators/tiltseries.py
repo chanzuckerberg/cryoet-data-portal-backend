@@ -22,7 +22,7 @@ class TiltseriesCreateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
     run_id: Annotated[uuid.UUID, Field()]
-    deposition_id: Annotated[uuid.UUID, Field()]
+    deposition_id: Annotated[uuid.UUID | None, Field()]
     s3_omezarr_dir: Annotated[
         str | None,
         StringConstraints(
@@ -89,7 +89,7 @@ class TiltseriesCreateInputValidator(BaseModel):
             ge=20000,
         ),
     ]
-    spherical_abberation_constant: Annotated[
+    spherical_aberration_constant: Annotated[
         float,
         Field(
             ge=0,
@@ -299,7 +299,7 @@ class TiltseriesUpdateInputValidator(BaseModel):
             ge=20000,
         ),
     ]
-    spherical_abberation_constant: Annotated[
+    spherical_aberration_constant: Annotated[
         float | None,
         Field(
             ge=0,

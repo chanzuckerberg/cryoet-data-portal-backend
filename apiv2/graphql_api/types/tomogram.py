@@ -49,7 +49,7 @@ from support.enums import (
     fiducial_alignment_status_enum,
     tomogram_reconstruction_method_enum,
     tomogram_processing_enum,
-    tomogram_type,
+    tomogram_type_enum,
 )
 
 
@@ -235,6 +235,9 @@ class TomogramWhereClause(TypedDict):
     fiducial_alignment_status: Optional[EnumComparators[fiducial_alignment_status_enum]] | None
     reconstruction_method: Optional[EnumComparators[tomogram_reconstruction_method_enum]] | None
     processing: Optional[EnumComparators[tomogram_processing_enum]] | None
+    tomogram_version: Optional[FloatComparators] | None
+    processing_software: Optional[StrComparators] | None
+    reconstruction_software: Optional[StrComparators] | None
     is_canonical: Optional[BoolComparators] | None
     s3_omezarr_dir: Optional[StrComparators] | None
     https_omezarr_dir: Optional[StrComparators] | None
@@ -251,10 +254,8 @@ class TomogramWhereClause(TypedDict):
     key_photo_url: Optional[StrComparators] | None
     key_photo_thumbnail_url: Optional[StrComparators] | None
     neuroglancer_config: Optional[StrComparators] | None
-    type: Optional[EnumComparators[tomogram_type]] | None
+    tomogram_type: Optional[EnumComparators[tomogram_type_enum]] | None
     is_standardized: Optional[BoolComparators] | None
-    s3_prefix: Optional[StrComparators] | None
-    https_prefix: Optional[StrComparators] | None
     id: Optional[IntComparators] | None
 
 
@@ -282,6 +283,9 @@ class TomogramOrderByClause(TypedDict):
     fiducial_alignment_status: Optional[orderBy] | None
     reconstruction_method: Optional[orderBy] | None
     processing: Optional[orderBy] | None
+    tomogram_version: Optional[orderBy] | None
+    processing_software: Optional[orderBy] | None
+    reconstruction_software: Optional[orderBy] | None
     is_canonical: Optional[orderBy] | None
     s3_omezarr_dir: Optional[orderBy] | None
     https_omezarr_dir: Optional[orderBy] | None
@@ -298,10 +302,8 @@ class TomogramOrderByClause(TypedDict):
     key_photo_url: Optional[orderBy] | None
     key_photo_thumbnail_url: Optional[orderBy] | None
     neuroglancer_config: Optional[orderBy] | None
-    type: Optional[orderBy] | None
+    tomogram_type: Optional[orderBy] | None
     is_standardized: Optional[orderBy] | None
-    s3_prefix: Optional[orderBy] | None
-    https_prefix: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
 
@@ -336,6 +338,9 @@ class Tomogram(EntityInterface):
     fiducial_alignment_status: fiducial_alignment_status_enum
     reconstruction_method: tomogram_reconstruction_method_enum
     processing: tomogram_processing_enum
+    tomogram_version: Optional[float] = None
+    processing_software: Optional[str] = None
+    reconstruction_software: str
     is_canonical: Optional[bool] = None
     s3_omezarr_dir: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
@@ -352,10 +357,8 @@ class Tomogram(EntityInterface):
     key_photo_url: Optional[str] = None
     key_photo_thumbnail_url: Optional[str] = None
     neuroglancer_config: Optional[str] = None
-    type: Optional[tomogram_type] = None
+    tomogram_type: Optional[tomogram_type_enum] = None
     is_standardized: bool
-    s3_prefix: str
-    https_prefix: str
     id: int
 
 
@@ -383,6 +386,7 @@ class TomogramNumericalColumns:
     size_y: Optional[float] = None
     size_z: Optional[float] = None
     voxel_spacing: Optional[float] = None
+    tomogram_version: Optional[float] = None
     offset_x: Optional[int] = None
     offset_y: Optional[int] = None
     offset_z: Optional[int] = None
@@ -401,6 +405,9 @@ class TomogramMinMaxColumns:
     size_y: Optional[float] = None
     size_z: Optional[float] = None
     voxel_spacing: Optional[float] = None
+    tomogram_version: Optional[float] = None
+    processing_software: Optional[str] = None
+    reconstruction_software: Optional[str] = None
     s3_omezarr_dir: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
     s3_mrc_scale0: Optional[str] = None
@@ -415,8 +422,6 @@ class TomogramMinMaxColumns:
     key_photo_url: Optional[str] = None
     key_photo_thumbnail_url: Optional[str] = None
     neuroglancer_config: Optional[str] = None
-    s3_prefix: Optional[str] = None
-    https_prefix: Optional[str] = None
     id: Optional[int] = None
 
 
@@ -440,6 +445,9 @@ class TomogramCountColumns(enum.Enum):
     fiducialAlignmentStatus = "fiducial_alignment_status"
     reconstructionMethod = "reconstruction_method"
     processing = "processing"
+    tomogramVersion = "tomogram_version"
+    processingSoftware = "processing_software"
+    reconstructionSoftware = "reconstruction_software"
     isCanonical = "is_canonical"
     s3OmezarrDir = "s3_omezarr_dir"
     httpsOmezarrDir = "https_omezarr_dir"
@@ -456,10 +464,8 @@ class TomogramCountColumns(enum.Enum):
     keyPhotoUrl = "key_photo_url"
     keyPhotoThumbnailUrl = "key_photo_thumbnail_url"
     neuroglancerConfig = "neuroglancer_config"
-    type = "type"
+    tomogramType = "tomogram_type"
     isStandardized = "is_standardized"
-    s3Prefix = "s3_prefix"
-    httpsPrefix = "https_prefix"
     id = "id"
 
 
@@ -516,6 +522,9 @@ class TomogramCreateInput:
     fiducial_alignment_status: fiducial_alignment_status_enum
     reconstruction_method: tomogram_reconstruction_method_enum
     processing: tomogram_processing_enum
+    tomogram_version: Optional[float] = None
+    processing_software: Optional[str] = None
+    reconstruction_software: str
     is_canonical: Optional[bool] = None
     s3_omezarr_dir: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
@@ -532,10 +541,8 @@ class TomogramCreateInput:
     key_photo_url: Optional[str] = None
     key_photo_thumbnail_url: Optional[str] = None
     neuroglancer_config: Optional[str] = None
-    type: Optional[tomogram_type] = None
+    tomogram_type: Optional[tomogram_type_enum] = None
     is_standardized: bool
-    s3_prefix: str
-    https_prefix: str
     id: int
 
 
@@ -553,6 +560,9 @@ class TomogramUpdateInput:
     fiducial_alignment_status: Optional[fiducial_alignment_status_enum] = None
     reconstruction_method: Optional[tomogram_reconstruction_method_enum] = None
     processing: Optional[tomogram_processing_enum] = None
+    tomogram_version: Optional[float] = None
+    processing_software: Optional[str] = None
+    reconstruction_software: Optional[str] = None
     is_canonical: Optional[bool] = None
     s3_omezarr_dir: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
@@ -569,10 +579,8 @@ class TomogramUpdateInput:
     key_photo_url: Optional[str] = None
     key_photo_thumbnail_url: Optional[str] = None
     neuroglancer_config: Optional[str] = None
-    type: Optional[tomogram_type] = None
+    tomogram_type: Optional[tomogram_type_enum] = None
     is_standardized: Optional[bool] = None
-    s3_prefix: Optional[str] = None
-    https_prefix: Optional[str] = None
     id: Optional[int] = None
 
 

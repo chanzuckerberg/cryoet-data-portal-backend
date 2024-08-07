@@ -47,6 +47,7 @@ from strawberry.types import Info
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
 import enum
+from support.enums import sample_type_enum
 
 
 E = typing.TypeVar("E")
@@ -234,6 +235,7 @@ class DatasetWhereClause(TypedDict):
     cell_type_id: Optional[StrComparators] | None
     cell_strain_name: Optional[StrComparators] | None
     cell_strain_id: Optional[StrComparators] | None
+    sample_type: Optional[EnumComparators[sample_type_enum]] | None
     sample_preparation: Optional[StrComparators] | None
     grid_preparation: Optional[StrComparators] | None
     other_setup: Optional[StrComparators] | None
@@ -271,6 +273,7 @@ class DatasetOrderByClause(TypedDict):
     cell_type_id: Optional[orderBy] | None
     cell_strain_name: Optional[orderBy] | None
     cell_strain_id: Optional[orderBy] | None
+    sample_type: Optional[orderBy] | None
     sample_preparation: Optional[orderBy] | None
     grid_preparation: Optional[orderBy] | None
     other_setup: Optional[orderBy] | None
@@ -320,18 +323,19 @@ class Dataset(EntityInterface):
     description: str
     organism_name: str
     organism_taxid: Optional[int] = None
-    tissue_name: str
+    tissue_name: Optional[str] = None
     tissue_id: Optional[str] = None
-    cell_name: str
+    cell_name: Optional[str] = None
     cell_type_id: Optional[str] = None
     cell_strain_name: str
     cell_strain_id: Optional[str] = None
+    sample_type: Optional[sample_type_enum] = None
     sample_preparation: Optional[str] = None
     grid_preparation: Optional[str] = None
     other_setup: Optional[str] = None
     key_photo_url: Optional[str] = None
     key_photo_thumbnail_url: Optional[str] = None
-    cell_component_name: str
+    cell_component_name: Optional[str] = None
     cell_component_id: Optional[str] = None
     deposition_date: datetime.datetime
     release_date: datetime.datetime
@@ -426,6 +430,7 @@ class DatasetCountColumns(enum.Enum):
     cellTypeId = "cell_type_id"
     cellStrainName = "cell_strain_name"
     cellStrainId = "cell_strain_id"
+    sampleType = "sample_type"
     samplePreparation = "sample_preparation"
     gridPreparation = "grid_preparation"
     otherSetup = "other_setup"
@@ -491,18 +496,19 @@ class DatasetCreateInput:
     description: str
     organism_name: str
     organism_taxid: Optional[int] = None
-    tissue_name: str
+    tissue_name: Optional[str] = None
     tissue_id: Optional[str] = None
-    cell_name: str
+    cell_name: Optional[str] = None
     cell_type_id: Optional[str] = None
     cell_strain_name: str
     cell_strain_id: Optional[str] = None
+    sample_type: Optional[sample_type_enum] = None
     sample_preparation: Optional[str] = None
     grid_preparation: Optional[str] = None
     other_setup: Optional[str] = None
     key_photo_url: Optional[str] = None
     key_photo_thumbnail_url: Optional[str] = None
-    cell_component_name: str
+    cell_component_name: Optional[str] = None
     cell_component_id: Optional[str] = None
     deposition_date: datetime.datetime
     release_date: datetime.datetime
@@ -529,6 +535,7 @@ class DatasetUpdateInput:
     cell_type_id: Optional[str] = None
     cell_strain_name: Optional[str] = None
     cell_strain_id: Optional[str] = None
+    sample_type: Optional[sample_type_enum] = None
     sample_preparation: Optional[str] = None
     grid_preparation: Optional[str] = None
     other_setup: Optional[str] = None

@@ -57,7 +57,7 @@ class Tiltseries(Base):
         foreign_keys=run_id,
         back_populates="tiltseries",
     )
-    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=False, index=True)
+    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=True, index=True)
     deposition: Mapped["Deposition"] = relationship(
         "Deposition",
         foreign_keys=deposition_id,
@@ -74,7 +74,7 @@ class Tiltseries(Base):
     s3_gain_file: Mapped[str] = mapped_column(String, nullable=True)
     https_gain_file: Mapped[str] = mapped_column(String, nullable=True)
     acceleration_voltage: Mapped[float] = mapped_column(Float, nullable=False)
-    spherical_abberation_constant: Mapped[float] = mapped_column(Float, nullable=False)
+    spherical_aberration_constant: Mapped[float] = mapped_column(Float, nullable=False)
     microscope_manufacturer: Mapped[tiltseries_microscope_manufacturer_enum] = mapped_column(
         Enum(tiltseries_microscope_manufacturer_enum, native_enum=False), nullable=False
     )

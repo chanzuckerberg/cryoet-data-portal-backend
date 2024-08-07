@@ -13,7 +13,7 @@ from support.enums import (
     fiducial_alignment_status_enum,
     tomogram_reconstruction_method_enum,
     tomogram_processing_enum,
-    tomogram_type,
+    tomogram_type_enum,
 )
 from graphql_api.helpers.alignment import AlignmentGroupByOptions, build_alignment_groupby_output
 from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
@@ -61,6 +61,9 @@ class TomogramGroupByOptions:
     fiducial_alignment_status: Optional[fiducial_alignment_status_enum] = None
     reconstruction_method: Optional[tomogram_reconstruction_method_enum] = None
     processing: Optional[tomogram_processing_enum] = None
+    tomogram_version: Optional[float] = None
+    processing_software: Optional[str] = None
+    reconstruction_software: Optional[str] = None
     is_canonical: Optional[bool] = None
     s3_omezarr_dir: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
@@ -77,10 +80,8 @@ class TomogramGroupByOptions:
     key_photo_url: Optional[str] = None
     key_photo_thumbnail_url: Optional[str] = None
     neuroglancer_config: Optional[str] = None
-    type: Optional[tomogram_type] = None
+    tomogram_type: Optional[tomogram_type_enum] = None
     is_standardized: Optional[bool] = None
-    s3_prefix: Optional[str] = None
-    https_prefix: Optional[str] = None
     id: Optional[int] = None
 
 

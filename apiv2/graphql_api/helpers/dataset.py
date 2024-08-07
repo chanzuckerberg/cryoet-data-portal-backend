@@ -9,6 +9,7 @@ from typing import Any, Optional, TYPE_CHECKING
 import strawberry
 import datetime
 import uuid
+from support.enums import sample_type_enum
 from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
 
 if TYPE_CHECKING:
@@ -36,6 +37,7 @@ class DatasetGroupByOptions:
     cell_type_id: Optional[str] = None
     cell_strain_name: Optional[str] = None
     cell_strain_id: Optional[str] = None
+    sample_type: Optional[sample_type_enum] = None
     sample_preparation: Optional[str] = None
     grid_preparation: Optional[str] = None
     other_setup: Optional[str] = None

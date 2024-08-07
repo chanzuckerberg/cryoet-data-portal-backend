@@ -115,7 +115,6 @@ class DatasetAuthorWhereClause(TypedDict):
     corresponding_author_status: Optional[BoolComparators] | None
     primary_author_status: Optional[BoolComparators] | None
     orcid: Optional[StrComparators] | None
-    annotation_id: Optional[IntComparators] | None
     id: Optional[IntComparators] | None
 
 
@@ -136,7 +135,6 @@ class DatasetAuthorOrderByClause(TypedDict):
     corresponding_author_status: Optional[orderBy] | None
     primary_author_status: Optional[orderBy] | None
     orcid: Optional[orderBy] | None
-    annotation_id: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
 
@@ -159,7 +157,6 @@ class DatasetAuthor(EntityInterface):
     corresponding_author_status: Optional[bool] = None
     primary_author_status: Optional[bool] = None
     orcid: Optional[str] = None
-    annotation_id: int
     id: int
 
 
@@ -184,7 +181,6 @@ Define columns that support numerical aggregations
 @strawberry.type
 class DatasetAuthorNumericalColumns:
     author_list_order: Optional[int] = None
-    annotation_id: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -202,7 +198,6 @@ class DatasetAuthorMinMaxColumns:
     affiliation_address: Optional[str] = None
     affiliation_identifier: Optional[str] = None
     orcid: Optional[str] = None
-    annotation_id: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -223,7 +218,6 @@ class DatasetAuthorCountColumns(enum.Enum):
     correspondingAuthorStatus = "corresponding_author_status"
     primaryAuthorStatus = "primary_author_status"
     orcid = "orcid"
-    annotationId = "annotation_id"
     id = "id"
 
 
@@ -280,7 +274,6 @@ class DatasetAuthorCreateInput:
     corresponding_author_status: Optional[bool] = None
     primary_author_status: Optional[bool] = None
     orcid: Optional[str] = None
-    annotation_id: int
     id: int
 
 
@@ -296,7 +289,6 @@ class DatasetAuthorUpdateInput:
     corresponding_author_status: Optional[bool] = None
     primary_author_status: Optional[bool] = None
     orcid: Optional[str] = None
-    annotation_id: Optional[int] = None
     id: Optional[int] = None
 
 

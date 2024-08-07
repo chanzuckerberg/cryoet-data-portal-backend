@@ -44,5 +44,4 @@ class DatasetAuthorFactory(CommonFactory):
     corresponding_author_status = factory.Faker("boolean")
     primary_author_status = factory.Faker("boolean")
     orcid = fuzzy.FuzzyText()
-    annotation_id = fuzzy.FuzzyInteger(1, 1000)
     id = fuzzy.FuzzyInteger(1, 1000)

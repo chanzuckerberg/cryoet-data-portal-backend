@@ -35,7 +35,6 @@ class DatasetAuthorGroupByOptions:
     corresponding_author_status: Optional[bool] = None
     primary_author_status: Optional[bool] = None
     orcid: Optional[str] = None
-    annotation_id: Optional[int] = None
     id: Optional[int] = None
 
 

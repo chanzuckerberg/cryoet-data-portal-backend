@@ -48,7 +48,6 @@ update-schema:
 	# $(docker_compose_run) $(CONTAINER) ruff check --fix .
 	$(docker_compose_run) $(APP_CONTAINER) sh -c 'strawberry export-schema main:schema > /app/graphql_api/schema.graphql'
 	docker compose up -d
-	$(MAKE) seed-moto
 	sleep 5 # wait for the app to reload after having files updated.
 	docker compose exec $(APP_CONTAINER) python3 -m sgqlc.introspection --exclude-deprecated --exclude-description http://localhost:9009/graphql graphql_api/schema.json
 
@@ -69,7 +68,7 @@ clean: ## Remove all codegen'd artifacts.
 
 .PHONY: start
 start: ## Start the local dev environment.
-	$(docker_compose) start
+	$(docker_compose) up -d
 
 .PHONY: codegen
 codegen: ## Run codegen to convert the LinkML schema to a GQL API

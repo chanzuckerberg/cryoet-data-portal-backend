@@ -50,6 +50,7 @@ linkml-runtime = "^1.6.0"
 sqlalchemy_utils = "^0.41.1"
 strawberry-graphql = "0.237.3"
 typer = "^0.12.3"
+libcst = "^1.4.0"
 
 [build-system]
 requires = ["poetry-core"]

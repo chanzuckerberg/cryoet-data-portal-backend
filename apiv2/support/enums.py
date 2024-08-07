@@ -10,7 +10,7 @@ import enum
 
 
 @strawberry.enum
-class tomogram_type(enum.Enum):
+class tomogram_type_enum(enum.Enum):
     CANONICAL = "CANONICAL"
     UNKNOWN = "UNKNOWN"
 
@@ -100,11 +100,6 @@ class tomogram_reconstruction_method_enum(enum.Enum):
     SIRT = "SIRT"
     WBP = "WBP"
     Unknown = "Unknown"
-
-
-@strawberry.enum
-class tomogram_type_enum(enum.Enum):
-    CANONICAL = "CANONICAL"
 
 
 @strawberry.enum
