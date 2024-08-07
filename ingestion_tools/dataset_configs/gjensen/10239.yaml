@@ -40,9 +40,11 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 17 sets of data studying Salmonella typhimurium collected
+      by Morgan Beeby and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10022
-    deposition_title: TBA
+    deposition_title: Salmonella typhimurium (tax_id=99287) strain:serovar Typhimurium
+      str. LT2 by Morgan Beeby
     deposition_types:
     - dataset
   sources:

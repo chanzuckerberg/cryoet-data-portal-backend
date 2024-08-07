@@ -40,10 +40,13 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1128/JB.00505-12
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 5 sets of data studying Escherichia coli collected by
+      Matt Swulius and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10057
-    deposition_title: TBA
+    deposition_title: 'Escherichia coli (tax_id=562) strain: by Matt Swulius'
     deposition_types:
     - dataset
   sources:

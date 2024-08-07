@@ -38,10 +38,13 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1111/mmi.13937
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 11 sets of data studying Mycoplasma pneumoniae collected
+      by Jian Shi and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10043
-    deposition_title: TBA
+    deposition_title: Mycoplasma pneumoniae (tax_id=2104) strain:None by Jian Shi
     deposition_types:
     - dataset
   sources:

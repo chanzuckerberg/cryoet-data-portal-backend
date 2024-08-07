@@ -37,9 +37,10 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 2 sets of data studying Vibrio harveyi collected by Ariane
+      Briegel and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10044
-    deposition_title: TBA
+    deposition_title: 'Vibrio harveyi (tax_id=669) strain: by Ariane Briegel'
     deposition_types:
     - dataset
   sources:

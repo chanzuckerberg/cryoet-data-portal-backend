@@ -38,10 +38,16 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.15252/embr.201744070
+      related_database_entries: EMD-8603
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 'Single set of data studying Thermococcus kodakarensis
+      (tax_id=69014) strain: by Ariane Briegel and is a part of Caltech Jensen lab
+      etdb.'
     deposition_identifier: 10037
-    deposition_title: TBA
+    deposition_title: 'Thermococcus kodakarensis (tax_id=69014) strain: by Ariane
+      Briegel'
     deposition_types:
     - dataset
   sources:
