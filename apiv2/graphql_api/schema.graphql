@@ -1044,7 +1044,7 @@ type Dataset implements EntityInterface & Node {
   tissueId: String
   cellName: String
   cellTypeId: String
-  cellStrainName: String!
+  cellStrainName: String
   cellStrainId: String
   sampleType: sample_type_enum
   samplePreparation: String
@@ -1287,7 +1287,7 @@ input DatasetCreateInput {
   tissueId: String = null
   cellName: String = null
   cellTypeId: String = null
-  cellStrainName: String!
+  cellStrainName: String = null
   cellStrainId: String = null
   sampleType: sample_type_enum = null
   samplePreparation: String = null

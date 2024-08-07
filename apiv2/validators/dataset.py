@@ -73,7 +73,7 @@ class DatasetCreateInputValidator(BaseModel):
         ),
     ]
     cell_strain_name: Annotated[
-        str,
+        str | None,
         StringConstraints(
             strip_whitespace=True,
         ),

@@ -327,7 +327,7 @@ class Dataset(EntityInterface):
     tissue_id: Optional[str] = None
     cell_name: Optional[str] = None
     cell_type_id: Optional[str] = None
-    cell_strain_name: str
+    cell_strain_name: Optional[str] = None
     cell_strain_id: Optional[str] = None
     sample_type: Optional[sample_type_enum] = None
     sample_preparation: Optional[str] = None
@@ -500,7 +500,7 @@ class DatasetCreateInput:
     tissue_id: Optional[str] = None
     cell_name: Optional[str] = None
     cell_type_id: Optional[str] = None
-    cell_strain_name: str
+    cell_strain_name: Optional[str] = None
     cell_strain_id: Optional[str] = None
     sample_type: Optional[sample_type_enum] = None
     sample_preparation: Optional[str] = None

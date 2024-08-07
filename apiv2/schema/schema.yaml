@@ -1305,13 +1305,10 @@ classes:
         recommended: true
         pattern: ^CL:[0-9]{7}$
       cell_strain_name:
-        name: cell_strain_name
         description: Cell line or strain for the sample.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - cell_strain_name
         range: string
-        required: true
+        # TODO THIS SHOULD BE REQUIRED
+        required: false
       cell_strain_id:
         name: cell_strain_id
         description: Link to more information about the cell strain.

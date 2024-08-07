@@ -71,7 +71,7 @@ class Dataset(Base):
     tissue_id: Mapped[str] = mapped_column(String, nullable=True)
     cell_name: Mapped[str] = mapped_column(String, nullable=True)
     cell_type_id: Mapped[str] = mapped_column(String, nullable=True)
-    cell_strain_name: Mapped[str] = mapped_column(String, nullable=False)
+    cell_strain_name: Mapped[str] = mapped_column(String, nullable=True)
     cell_strain_id: Mapped[str] = mapped_column(String, nullable=True)
     sample_type: Mapped[sample_type_enum] = mapped_column(Enum(sample_type_enum, native_enum=False), nullable=True)
     sample_preparation: Mapped[str] = mapped_column(String, nullable=True)
