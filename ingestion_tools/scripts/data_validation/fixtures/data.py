@@ -9,24 +9,36 @@ import mdocfile
 import ndjson
 import pandas as pd
 import pytest
-from data_validation_common.mrc import get_header
 from mrcfile.mrcinterpreter import MrcInterpreter
 
 from common.fs import FileSystemApi
 
 
-### Tilt series fixtures ###
-@pytest.fixture(scope="session")
-def tiltseries_mrc_headers(tiltseries_mrc_files: List[str]) -> Dict[str, MrcInterpreter]:
-    """Get the mrc file headers for a tilt series."""
+def get_header(mrcfile: str) -> MrcInterpreter:
+    """Get the mrc file header for a tilt series without downloading the entire file."""
+    fs = FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
+    with fs.open(mrcfile, "rb") as f:
+        header = MrcInterpreter(iostream=f, permissive=True, header_only=True)
+    return header
+
+
+def get_headers(mrcfiles: List[str]) -> Dict[str, MrcInterpreter]:
+    """Get the mrc file headers for a list of mrc files."""
     headers = {}
-    for file in tiltseries_mrc_files:
+    for file in mrcfiles:
         try:
             headers[file] = get_header(file)
         except Exception as _:
             pytest.fail(f"Failed to get header for {file}")
 
     return headers
+
+
+### Tilt series fixtures ###
+@pytest.fixture(scope="session")
+def tiltseries_mrc_headers(tiltseries_mrc_files: List[str]) -> Dict[str, MrcInterpreter]:
+    """Get the mrc file headers for a tilt series."""
+    return get_headers(tiltseries_mrc_files)
 
 
 @pytest.fixture(scope="session")
@@ -36,7 +48,7 @@ def tiltseries_metadata(tiltseries_meta_file: str, filesystem: FileSystemApi) ->
         return json.load(f)
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def tiltseries_mdoc(tiltseries_mdoc_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
     """Load the tiltseries mdoc."""
 
@@ -44,7 +56,7 @@ def tiltseries_mdoc(tiltseries_mdoc_file: str, filesystem: FileSystemApi) -> pd.
         return mdocfile.read(f)
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def tiltseries_tlt(tiltseries_tlt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
     """Load the tiltseries tlt."""
 
@@ -56,14 +68,7 @@ def tiltseries_tlt(tiltseries_tlt_file: str, filesystem: FileSystemApi) -> pd.Da
 @pytest.fixture(scope="session")
 def canonical_tomo_mrc_headers(canonical_tomo_mrc_files: List[str]) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for a tomogram."""
-    headers = {}
-    for file in canonical_tomo_mrc_files:
-        try:
-            headers[file] = get_header(file)
-        except Exception as _:
-            pytest.fail(f"Failed to get header for {file}")
-
-    return headers
+    return get_headers(canonical_tomo_mrc_files)
 
 
 @pytest.fixture(scope="session")
@@ -125,11 +130,6 @@ def seg_mask_annotation_mrc_headers(
     """Get the mrc file headers for an mrc annotation file."""
     annotations = {}
     for annoname, files in seg_mask_annotation_mrc_files.items():
-        annotations[annoname] = {}
-        for file in files:
-            try:
-                annotations[annoname][file] = get_header(file)
-            except Exception as _:
-                pytest.fail(f"Failed to get header for {file}")
+        annotations[annoname] = get_headers(files)
 
     return annotations
