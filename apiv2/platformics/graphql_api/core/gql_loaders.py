@@ -1,7 +1,6 @@
 import typing
 from collections import defaultdict
 from typing import Any, Mapping, Optional, Sequence, Tuple
-from sqlalchemy_utils.functions import get_primary_keys
 
 from sqlalchemy.orm import RelationshipProperty
 from strawberry.dataloader import DataLoader
