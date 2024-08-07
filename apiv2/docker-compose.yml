@@ -1,0 +1,81 @@
+services:
+  # Mock boto with persistence.
+  # To use it from the CLI: aws --endpoint-url=http://localhost:4000 s3 ls
+  # To reset all services without restarting the container: curl -X POST http://localhost:4000/moto-api/reset
+  motoserver:
+    image: motoserver/moto:latest
+    ports:
+      - "4000:4000"
+    environment:
+      - MOTO_PORT=4000
+      - MOTO_ENABLE_RECORDING=True
+      - MOTO_S3_CUSTOM_ENDPOINTS=http://motoserver.platformics:4000
+      - S3_IGNORE_SUBDOMAIN_BUCKETNAME=True
+      - MOTO_DOCKER_NETWORK_NAME=platformics
+      - MOTO_DOCKER_NETWORK_MODE=overlay
+    volumes:
+      - .moto_recording:/moto/moto_recording
+      - ./bin:/moto/bin
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    entrypoint: ["/bin/bash"]
+    command: ["/moto/bin/init_moto.sh"]
+  platformics-db:
+    image: postgres:15
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password_postgres
+      - POSTGRES_DB=platformics
+      # The postgres image declares a mounted volume at /var/lib/postgresql/data
+      # by default, which means that the data in that directory is difficult to
+      # snapshot and export. Here, we're telling Postgres to use this (non-mounted)
+      # directory as its storage location instead so it works with our db snapshot
+      # workflow.
+      - PGDATA=/var/lib/platformics/data
+  cerbos:
+    image: ghcr.io/cerbos/cerbos:0.29.0
+    ports:
+      - "3692:3692"
+      - "3693:3693"
+    volumes:
+      - ./cerbos:/platformics
+    command:
+      ["server", "--config", "/platformics/config.yaml"]
+  graphql-api:
+    image: "graphql-api"
+    build:
+      context: "."
+      dockerfile: "Dockerfile"
+      args:
+        - BUILDKIT_INLINE_CACHE=1
+    restart: always
+    ports:
+      - "9008:9008"
+      - "9009:9009"
+    environment:
+      - PYTHONPATH=.
+      - CERBOS_URL=http://cerbos:3692
+      - PLATFORMICS_DATABASE_HOST=platformics-db.platformics
+      - PLATFORMICS_DATABASE_PORT=5432
+      - PLATFORMICS_DATABASE_USER=postgres
+      - PLATFORMICS_DATABASE_PASSWORD=password_postgres
+      - PLATFORMICS_DATABASE_NAME=platformics
+      - DEFAULT_UPLOAD_BUCKET=local-bucket
+      - DEFAULT_UPLOAD_PROTOCOL=s3
+      - OUTPUT_S3_PREFIX=platformics
+      - BOTO_ENDPOINT_URL=http://motoserver.platformics:4000
+      - AWS_REGION=us-west-2
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - DB_ECHO=true
+      # TODO - these are keypairs for testing only! Do not use in prod!!
+      - JWK_PUBLIC_KEY_FILE=/app/etc/public_key.pem
+      - JWK_PRIVATE_KEY_FILE=/app/etc/private_key.pem
+    volumes:
+      - .:/app
+    command: ["/usr/local/bin/supervisord", "-c", "/app/etc/supervisord.conf"]
+networks:
+  default:
+    name: platformics
+    driver: overlay
+    attachable: true
