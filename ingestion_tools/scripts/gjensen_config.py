@@ -420,8 +420,8 @@ def create_deposition_entity_map(
 
         entry_metadata = entry.get("deposition", {})
         if len(deposition_ids) != 1:
-            print(f"Multiple deposition ids found for {entry_metadata['deposition_title']}: {deposition_ids}")
-            raise ValueError("Multiple deposition ids found for a single deposition")
+            print(f"Deposition ids found for {entry_metadata['deposition_title']}: {deposition_ids}")
+            raise ValueError("Only one deposition ids should be mapped to a single deposition")
 
         deposition_id = deposition_ids.pop()
         metadata = {
