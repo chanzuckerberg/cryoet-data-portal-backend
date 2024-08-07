@@ -42,10 +42,14 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1128/mBio.01898-15
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 17 sets of data studying Magnetospirillum magneticum  collected
+      by Poorna Subramanian and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10039
-    deposition_title: TBA
+    deposition_title: Magnetospirillum magneticum  (tax_id=342108) strain:deltaQ 167
+      by Poorna Subramanian
     deposition_types:
     - dataset
   sources:

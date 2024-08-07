@@ -38,10 +38,13 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1128/JVI.02997-14
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 17 sets of data studying HUVECs collected by Cora Woodward
+      and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10025
-    deposition_title: TBA
+    deposition_title: 'HUVECs (tax_id=9606) strain: by Cora Woodward'
     deposition_types:
     - dataset
   sources:

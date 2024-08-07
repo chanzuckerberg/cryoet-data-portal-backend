@@ -42,9 +42,11 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 15 sets of data studying Vibrio cholerae collected by
+      Ariane Briegel and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10021
-    deposition_title: TBA
+    deposition_title: Vibrio cholerae (tax_id=686) strain:O1 biovar El Tor by Ariane
+      Briegel
     deposition_types:
     - dataset
   sources:

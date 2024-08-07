@@ -38,9 +38,11 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: Single set of data studying Caulobacter crescentus (tax_id=565050)
+      strain:NA1000 by Debnath Ghosal and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10015
-    deposition_title: TBA
+    deposition_title: Caulobacter crescentus (tax_id=565050) strain:NA1000 by Debnath
+      Ghosal
     deposition_types:
     - dataset
   sources:

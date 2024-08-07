@@ -38,9 +38,10 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 5 sets of data studying Pseudomonas aeruginosa collected
+      by Mohammed Kaplan and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10023
-    deposition_title: TBA
+    deposition_title: 'Pseudomonas aeruginosa (tax_id=287) strain: by Mohammed Kaplan'
     deposition_types:
     - dataset
   sources:
