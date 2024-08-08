@@ -39,6 +39,7 @@ build: ## Build docker containers
 init:
 	docker compose up -d
 	$(MAKE) seed-moto
+	$(MAKE) alembic-upgrade-head
 
 .PHONY: update-schema
 update-schema:
