@@ -1,5 +1,5 @@
 # Dataset Configuration Files Intellisense Setup Guide
-Enable intellisense for dataset configuration files in your IDE. The schema checking is done against the JSONSchema in `dataset_config_models.schema.json`, which is automatically generated when running `make` in the `schema/v1.1.0` directory.
+Enable intellisense for dataset configuration files in your IDE. The schema checking is done against the JSONSchema in `schema/ingestion_config/latest/codegen/ingestion_config_models.schema.json`, which is automatically generated when running `make` in the `schema/` directory.
 
 Note this does not include the extended validation done with Pydantic (network requests or non-network requests), it only includes the LinkML validation.
 **You may still run into errors even though they do not apper with the intellisense hints, because the extended Pydantic validation checks are not supported by JSONSchema.**
@@ -10,7 +10,7 @@ Note this does not include the extended validation done with Pydantic (network r
 2. In the bottom right of your screen, click on the field that says "No JSON schema"
     2a. If you don't see this, go to File -> Settings -> Languages & Frameworks -> Schemas and DTDs -> JSON Schema Mappings and click the "+" sign (skip to step 4)
 3. Then click New Schema Mapping
-4. Enter in "Schema file or URL:" schema\v1.1.0\dataset_config_models.schema.json
+4. Enter in "Schema file or URL:" schema\ingestion_config\latest\codegen\ingestion_config_models.schema.json
 5. Delete the current file entry (if it exists) and instead add a "Directory:" entry with the value: ingestion_tools\dataset_configs
 6. Press "Apply" and "OK" and you should be all setup! Errors will now highlight in yellow!
 
