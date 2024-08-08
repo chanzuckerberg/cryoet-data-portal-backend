@@ -3,14 +3,14 @@ from typing import Dict, List
 import numpy as np
 import pytest
 import zarr
-from base_annotation import BaseAnnotation
 from mrcfile import utils
 from mrcfile.mrcinterpreter import MrcInterpreter
 
 
 @pytest.mark.annotation
+# By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination
 @pytest.mark.parametrize("run_name, voxel_spacing", pytest.run_spacing_combinations, scope="session")
-class TestSegmentationMaskHeader(BaseAnnotation):
+class TestSegmentationMaskHeader:
     MAP_ID = b"MAP "
     VOLUME_SPACEGROUP = 1
     # Tolerance for voxel spacing assertions

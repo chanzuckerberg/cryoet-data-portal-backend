@@ -1,14 +1,13 @@
 from typing import Dict
 
 import pytest
-from base_annotation import BaseAnnotation
 from helpers_point import contained_in_tomo
 
 
 @pytest.mark.annotation
 @pytest.mark.metadata
 @pytest.mark.parametrize("run_name, voxel_spacing", pytest.run_spacing_combinations, scope="session")
-class TestInstanceSegmentationAnnotations(BaseAnnotation):
+class TestInstanceSegmentationAnnotations:
     ### BEGIN Self-consistency tests ###
     def test_instance_count_consistent(
         self,
