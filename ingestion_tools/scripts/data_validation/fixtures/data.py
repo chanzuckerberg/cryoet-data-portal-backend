@@ -13,6 +13,10 @@ from mrcfile.mrcinterpreter import MrcInterpreter
 
 from common.fs import FileSystemApi
 
+# ==================================================================================================
+# Helper functions
+# ==================================================================================================
+
 
 def get_header(mrcfile: str) -> MrcInterpreter:
     """Get the mrc file header for a tilt series without downloading the entire file."""
@@ -34,7 +38,11 @@ def get_headers(mrcfiles: List[str]) -> Dict[str, MrcInterpreter]:
     return headers
 
 
-### Tilt series fixtures ###
+# ==================================================================================================
+# Tiltseries fixtures
+# ==================================================================================================
+
+
 @pytest.fixture(scope="session")
 def tiltseries_mrc_headers(tiltseries_mrc_files: List[str]) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for a tilt series."""
@@ -49,22 +57,34 @@ def tiltseries_metadata(tiltseries_meta_file: str, filesystem: FileSystemApi) ->
 
 
 @pytest.fixture(scope="session")
-def tiltseries_mdoc(tiltseries_mdoc_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
+def tiltseries_mdoc(tiltseries_mdoc_files: List[str], filesystem: FileSystemApi) -> pd.DataFrame:
     """Load the tiltseries mdoc."""
+    mdocs = {}
 
-    with filesystem.open(tiltseries_mdoc_file, "r") as f:
-        return mdocfile.read(f)
+    for file in tiltseries_mdoc_files:
+        with filesystem.open(file, "r") as f:
+            mdocs[file] = mdocfile.read(f)
+
+    return mdocs
 
 
 @pytest.fixture(scope="session")
-def tiltseries_tlt(tiltseries_tlt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
+def tiltseries_tlt(tiltseries_tlt_files: List[str], filesystem: FileSystemApi) -> pd.DataFrame:
     """Load the tiltseries tlt."""
+    tlt_files = {}
 
-    with filesystem.open(tiltseries_tlt_file, "r") as f:
-        return pd.read_csv(f, sep=r"\s+", header=None, names=["tilt_angle"])
+    for file in tiltseries_tlt_files:
+        with filesystem.open(file, "r") as f:
+            tlt_files[file] = pd.read_csv(f, sep=r"\s+", header=None, names=["tilt_angle"])
+
+    return tlt_files
 
 
-### Tomogram fixtures ###
+# ==================================================================================================
+# Tomogram fixtures
+# ==================================================================================================
+
+
 @pytest.fixture(scope="session")
 def canonical_tomo_mrc_headers(canonical_tomo_mrc_files: List[str]) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for a tomogram."""
@@ -78,9 +98,13 @@ def canonical_tomogram_metadata(canonical_tomo_meta_file: str, filesystem: FileS
         return json.load(f)
 
 
-### Annotation fixtures ###
+# ==================================================================================================
+# Annotation fixtures
+# ==================================================================================================
+
+
 @pytest.fixture(scope="session")
-def annotation_metadata(annotation_meta_files: str, filesystem: FileSystemApi) -> Dict[str, Dict]:
+def annotation_metadata(annotation_meta_files: List[str], filesystem: FileSystemApi) -> Dict[str, Dict]:
     """Load the annotation metadata."""
     metadata_objs = {}
 

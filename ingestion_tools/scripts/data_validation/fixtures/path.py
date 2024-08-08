@@ -1,6 +1,8 @@
 """
 Fixtures for files and directories on the s3 bucket.
 Paths returned as strings (singular fixture name) or lists of strings (plural fixture name).
+Note that some of these fixtures, although session-scoped, can be re-initialized for every parameterized
+run_name and voxel_spacing combination.
 """
 
 import os
@@ -9,6 +11,10 @@ from typing import Any, Dict, List, Optional
 import pytest
 
 from common.fs import FileSystemApi
+
+# =============================================================================
+# FS & Dataset fixtures
+# =============================================================================
 
 
 @pytest.fixture(scope="session")
@@ -32,6 +38,11 @@ def dataset_meta_file(dataset_dir: str, filesystem: FileSystemApi) -> str:
         pytest.fail(f"Dataset metadata file not found: {dst}")
 
 
+# =============================================================================
+# Run fixtures
+# =============================================================================
+
+
 @pytest.fixture(scope="session")
 def run_dir(dataset_dir: str, run_name: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]"""
@@ -50,6 +61,11 @@ def run_meta_file(run_dir: str, filesystem: FileSystemApi) -> str:
         return dst
     else:
         pytest.fail(f"Run metadata file not found: {dst}")
+
+
+# =============================================================================
+# Run-specific fixtures, Frames
+# =============================================================================
 
 
 @pytest.fixture(scope="session")
@@ -73,6 +89,11 @@ def frame_acquisition_order_file(frames_dir: str, filesystem: FileSystemApi) -> 
         return dst
     else:
         pytest.fail(f"Frame acquisition order file not found: {dst}")
+
+
+# =============================================================================
+# Run-specific fixtures, Tiltseries & RawTilt
+# =============================================================================
 
 
 @pytest.fixture(scope="session")
@@ -136,7 +157,7 @@ def tiltseries_basenames(
 
 
 @pytest.fixture(scope="session")
-def tiltseries_mdoc_file(tiltseries_basenames: List[str], filesystem: FileSystemApi) -> List[str]:
+def tiltseries_mdoc_files(tiltseries_basenames: List[str], filesystem: FileSystemApi) -> List[str]:
     """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].mdoc"""
     files = [f"{tsbn}.mdoc" for tsbn in tiltseries_basenames if filesystem.s3fs.exists(f"{tsbn}.mdoc")]
     if len(files) == 0:
@@ -145,7 +166,7 @@ def tiltseries_mdoc_file(tiltseries_basenames: List[str], filesystem: FileSystem
 
 
 @pytest.fixture(scope="session")
-def tiltseries_rawtlt_file(tiltseries_basenames: List[str], filesystem: FileSystemApi) -> List[str]:
+def tiltseries_rawtlt_files(tiltseries_basenames: List[str], filesystem: FileSystemApi) -> List[str]:
     """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].rawtlt"""
     files = [f"{tsbn}.rawtlt" for tsbn in tiltseries_basenames if filesystem.s3fs.exists(f"{tsbn}.rawtlt")]
     if len(files) == 0:
@@ -154,12 +175,17 @@ def tiltseries_rawtlt_file(tiltseries_basenames: List[str], filesystem: FileSyst
 
 
 @pytest.fixture(scope="session")
-def tiltseries_tlt_file(tiltseries_basenames: List[str], filesystem: FileSystemApi) -> List[str]:
+def tiltseries_tlt_files(tiltseries_basenames: List[str], filesystem: FileSystemApi) -> List[str]:
     """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].tlt"""
     files = [f"{tsbn}.tlt" for tsbn in tiltseries_basenames if filesystem.s3fs.exists(f"{tsbn}.tlt")]
     if len(files) == 0:
         pytest.skip("No tlt files found.")
     return files
+
+
+# =============================================================================
+# Run and voxel-specific fixtures, Tomograms
+# =============================================================================
 
 
 @pytest.fixture(scope="session")
@@ -246,6 +272,11 @@ def canonical_tomo_basenames(
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name]"""
     basenames = [os.path.splitext(zarr)[0] for zarr in canonical_tomo_zarr_files]
     return basenames
+
+
+# =============================================================================
+# Run and voxel-specific fixtures, Annotations
+# =============================================================================
 
 
 @pytest.fixture(scope="session")
