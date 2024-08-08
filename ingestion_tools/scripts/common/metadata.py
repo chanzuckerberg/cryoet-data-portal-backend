@@ -2,6 +2,7 @@ import contextlib
 import os
 import re
 from copy import deepcopy
+from datetime import datetime
 from typing import Any
 
 from common.formats import tojson
@@ -15,9 +16,15 @@ class BaseMetadata:
         self.metadata = template
         self.deposition_id = deposition_id
 
+    def add_defaults(self, metadata: dict[str, Any]) -> dict[str, Any]:
+        if not metadata.get("deposition_id"):
+            metadata["deposition_id"] = self.deposition_id
+        metadata["last_updated_at"] = int(datetime.now().timestamp())
+        return metadata
+
     def write_metadata(self, filename: str, is_json=True) -> None:
         metadata = deepcopy(self.metadata)
-        metadata["deposition_id"] = self.deposition_id
+        metadata = self.add_defaults(metadata)
         with self.fs.open(filename, "w") as fh:
             data = tojson(metadata) if is_json else self.metadata
             fh.write(data)
@@ -26,7 +33,7 @@ class BaseMetadata:
 class MergedMetadata(BaseMetadata):
     def write_metadata(self, filename: str, merge_data: dict[str, Any]) -> None:
         metadata = deep_merge(self.metadata, merge_data)
-        metadata["deposition_id"] = self.deposition_id
+        metadata = self.add_defaults(metadata)
         with self.fs.open(filename, "w") as fh:
             fh.write(tojson(metadata))
 

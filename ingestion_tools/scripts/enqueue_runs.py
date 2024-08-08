@@ -15,6 +15,7 @@ from db_import import db_import_options
 from importers.dataset import DatasetImporter
 from importers.db.base_importer import DBImportConfig
 from importers.db.dataset import DatasetDBImporter
+from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from standardize_dirs import IMPORTERS
 from standardize_dirs import common_options as ingest_common_options
@@ -375,75 +376,79 @@ def queue(
     filter_datasets = [re.compile(pattern) for pattern in kwargs.get("filter_dataset_name", [])]
     exclude_datasets = [re.compile(pattern) for pattern in kwargs.get("exclude_dataset_name", [])]
 
-    # Always iterate over datasets and runs.
-    datasets = DatasetImporter.finder(config)
-    for dataset in datasets:
-        if list(filter(lambda x: x.match(dataset.name), exclude_datasets)):
-            print(f"Excluding {dataset.name}..")
-            continue
-        if filter_datasets and not list(filter(lambda x: x.match(dataset.name), filter_datasets)):
-            print(f"Skipping {dataset.name}..")
-            continue
-        runs = RunImporter.finder(config, dataset=dataset)
-        futures = []
-        with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
-            for run in runs:
-                if skip_run and not skip_run_until_regex.match(run.name):
-                    print(f"Skipping {run.name}..")
-                    continue
-                skip_run = False
+    # Always iterate over depostions, datasets and runs.
+    for deposition in DepositionImporter.finder(config):
+        print(f"Processing deposition: {deposition.name}")
+        datasets = DatasetImporter.finder(config, deposition=deposition)
+        for dataset in datasets:
+            if list(filter(lambda x: x.match(dataset.name), exclude_datasets)):
+                print(f"Excluding {dataset.name}..")
+                continue
+            if filter_datasets and not list(filter(lambda x: x.match(dataset.name), filter_datasets)):
+                print(f"Skipping {dataset.name}..")
+                continue
+            print(f"Processing dataset: {dataset.name}")
+            runs = RunImporter.finder(config, dataset=dataset)
+            futures = []
+            with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
+                for run in runs:
+                    if skip_run and not skip_run_until_regex.match(run.name):
+                        print(f"Skipping {run.name}..")
+                        continue
+                    skip_run = False
 
-                if list(filter(lambda x: x.match(run.name), exclude_runs)):
-                    print(f"Excluding {run.name}..")
-                    continue
-                if filter_runs and not list(filter(lambda x: x.match(run.name), filter_runs)):
-                    print(f"Skipping {run.name}..")
-                    continue
-                print(f"Processing {run.name}...")
+                    if list(filter(lambda x: x.match(run.name), exclude_runs)):
+                        print(f"Excluding {run.name}..")
+                        continue
+                    if filter_runs and not list(filter(lambda x: x.match(run.name), filter_runs)):
+                        print(f"Skipping {run.name}..")
+                        continue
+                    print(f"Processing {run.name}...")
 
-                per_run_args = {}
-                # Don't copy over dataset and run name filters to the queued jobs - they're intended to be batched into 1-run chunks.
-                excluded_args = ["filter_dataset_name", "filter_run_name"]
-                for k, v in kwargs.items():
-                    if any(substring in k for substring in excluded_args):
-                        break
-                    per_run_args[k] = v
-                new_args = to_args(
-                    import_everything=import_everything,
-                    write_mrc=write_mrc,
-                    write_zarr=write_zarr,
-                    force_overwrite=force_overwrite,
-                    **per_run_args,
-                )  # make a copy
-                new_args.append(f"--filter-dataset-name '^{dataset.name}$'")
-                new_args.append(f"--filter-run-name '^{run.name}$'")
+                    per_run_args = {}
+                    # Don't copy over dataset and run name filters to the queued jobs - they're intended to be
+                    # batched into 1-run chunks.
+                    excluded_args = ["filter_dataset_name", "filter_run_name"]
+                    for k, v in kwargs.items():
+                        if any(substring in k for substring in excluded_args):
+                            break
+                        per_run_args[k] = v
+                    new_args = to_args(
+                        import_everything=import_everything,
+                        write_mrc=write_mrc,
+                        write_zarr=write_zarr,
+                        force_overwrite=force_overwrite,
+                        **per_run_args,
+                    )  # make a copy
+                    new_args.append(f"--filter-dataset-name '^{dataset.name}$'")
+                    new_args.append(f"--filter-run-name '^{run.name}$'")
 
-                dataset_id = dataset.name
-                deposition_id = config.deposition_id
-                execution_name = f"{int(time.time())}-dep{deposition_id}-ds{dataset_id}-run{run.name}"
+                    dataset_id = dataset.name
+                    deposition_id = deposition.name
+                    execution_name = f"{int(time.time())}-dep{deposition_id}-ds{dataset_id}-run{run.name}"
 
-                # execution name greater than 80 chars causes boto ValidationException
-                if len(execution_name) > 80:
-                    execution_name = execution_name[-80:]
+                    # execution name greater than 80 chars causes boto ValidationException
+                    if len(execution_name) > 80:
+                        execution_name = execution_name[-80:]
 
-                wdl_args = {
-                    "config_file": config_file,
-                    "input_bucket": input_bucket,
-                    "output_path": output_path,
-                    "flags": " ".join(new_args),
-                }
-                futures.append(
-                    workerpool.submit(
-                        partial(
-                            run_job,
-                            execution_name,
-                            wdl_args,
-                            swipe_wdl_key=swipe_wdl_key,
-                            **ctx.obj,
+                    wdl_args = {
+                        "config_file": config_file,
+                        "input_bucket": input_bucket,
+                        "output_path": output_path,
+                        "flags": " ".join(new_args),
+                    }
+                    futures.append(
+                        workerpool.submit(
+                            partial(
+                                run_job,
+                                execution_name,
+                                wdl_args,
+                                swipe_wdl_key=swipe_wdl_key,
+                                **ctx.obj,
+                            ),
                         ),
-                    ),
-                )
-            wait(futures)
+                    )
+                wait(futures)
 
 
 class OrderedSyncFilters(click.Command):

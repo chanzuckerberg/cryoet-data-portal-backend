@@ -31,7 +31,7 @@ URI: [cdp-meta:fiducial_alignment_status](metadatafiducial_alignment_status)
 
 ## Properties
 
-* Range: [String](String.md)&nbsp;or&nbsp;<br />[FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)
+* Range: [Any](Any.md)&nbsp;or&nbsp;<br />[FiducialAlignmentStatusEnum](FiducialAlignmentStatusEnum.md)&nbsp;or&nbsp;<br />[StringFormattedString](StringFormattedString.md)
 
 * Regex pattern: `(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)`
 
@@ -77,7 +77,7 @@ alias: fiducial_alignment_status
 owner: Tomogram
 domain_of:
 - Tomogram
-range: string
+range: Any
 inlined: true
 inlined_as_list: true
 pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)

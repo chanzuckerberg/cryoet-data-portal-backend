@@ -16,15 +16,15 @@ URI: [cdp-meta:name](metadataname)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated |  no  |
-| [TissueDetails](TissueDetails.md) | The type of tissue from which the sample was derived |  no  |
-| [Author](Author.md) | Author of a scientific data entity |  no  |
 | [AuthorMixin](AuthorMixin.md) | An entity with author data |  no  |
-| [CellComponent](CellComponent.md) | The cellular component from which the sample was derived |  no  |
-| [OrganismDetails](OrganismDetails.md) | The species from which the sample was derived |  no  |
-| [CellStrain](CellStrain.md) | The strain or cell line from which the sample was derived |  no  |
-| [AnnotationMethodLinks](AnnotationMethodLinks.md) | A set of links to models, sourcecode, documentation, etc referenced by annota... |  no  |
+| [Author](Author.md) | Author of a scientific data entity |  no  |
 | [CellType](CellType.md) | The cell type from which the sample was derived |  no  |
+| [CellComponent](CellComponent.md) | The cellular component from which the sample was derived |  no  |
+| [AnnotationObject](AnnotationObject.md) | Metadata describing the object being annotated |  no  |
+| [AnnotationMethodLinks](AnnotationMethodLinks.md) | A set of links to models, sourcecode, documentation, etc referenced by annota... |  no  |
+| [CellStrain](CellStrain.md) | The strain or cell line from which the sample was derived |  no  |
+| [TissueDetails](TissueDetails.md) | The type of tissue from which the sample was derived |  no  |
+| [OrganismDetails](OrganismDetails.md) | The species from which the sample was derived |  no  |
 
 
 
@@ -34,7 +34,7 @@ URI: [cdp-meta:name](metadataname)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -75,7 +75,7 @@ domain_of:
 - AnnotationObject
 - AuthorMixin
 - AnnotationMethodLinks
-range: string
+range: Any
 
 ```
 </details>

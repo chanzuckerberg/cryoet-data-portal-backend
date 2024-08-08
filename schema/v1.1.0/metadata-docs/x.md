@@ -16,8 +16,8 @@ URI: [cdp-meta:x](metadatax)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension |  no  |
 | [TomogramOffset](TomogramOffset.md) | The offset of a tomogram in voxels in each dimension relative to the canonica... |  no  |
+| [TomogramSize](TomogramSize.md) | The size of a tomogram in voxels in each dimension |  no  |
 
 
 
@@ -27,7 +27,7 @@ URI: [cdp-meta:x](metadatax)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: x
 domain_of:
 - TomogramSize
 - TomogramOffset
-range: string
+range: Any
 
 ```
 </details>

@@ -27,7 +27,7 @@ URI: [cdp-meta:sample_type](metadatasample_type)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: sample_type
 domain_of:
 - ExperimentMetadata
 - Dataset
-range: string
+range: Any
 
 ```
 </details>

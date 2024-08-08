@@ -13,7 +13,7 @@ prefixes:
 imports:
   - linkml:types
 default_prefix: cdp-common
-default_range: string
+default_range: Any
 
 
 slots:
@@ -1006,7 +1006,6 @@ types:
 classes:
   Any:
     class_uri: linkml:Any
-    description: A placeholder for any type of data.
 
   # ============================================================================
   # Mixins

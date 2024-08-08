@@ -88,5 +88,6 @@
     "key_photo": {
         "snapshot": "30001/RUN1/Tomograms/VoxelSpacing12.300/KeyPhotos/key-photo-snapshot.png",
         "thumbnail": "30001/RUN1/Tomograms/VoxelSpacing12.300/KeyPhotos/key-photo-thumbnail.png"
-    }
+    },
+    "deposition_id": 301
 }

@@ -27,7 +27,7 @@ URI: [cdp-meta:organism](metadataorganism)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: organism
 domain_of:
 - ExperimentMetadata
 - Dataset
-range: string
+range: Any
 
 ```
 </details>

@@ -39,9 +39,10 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 3 sets of data studying Vibrio fischeri collected by Morgan
+      Beeby and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10055
-    deposition_title: TBA
+    deposition_title: Vibrio fischeri (tax_id=312309) strain:ES114 by Morgan Beeby
     deposition_types:
     - dataset
   sources:

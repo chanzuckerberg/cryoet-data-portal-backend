@@ -27,7 +27,7 @@ URI: [cdp-meta:affiliation_identifier](metadataaffiliation_identifier)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: affiliation_identifier
 domain_of:
 - Author
 - AuthorMixin
-range: string
+range: Any
 
 ```
 </details>

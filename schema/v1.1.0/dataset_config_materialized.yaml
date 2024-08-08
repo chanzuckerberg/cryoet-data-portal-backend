@@ -532,6 +532,82 @@ enums:
       CANONICAL:
         text: CANONICAL
         description: Canonical tomogram (basis geometry for all annotations)
+slots:
+  annotation:
+    name: annotation
+    description: Include or exclude annotations for a source.
+    from_schema: cdp-dataset-config
+    range: string
+    multivalued: true
+  dataset:
+    name: dataset
+    description: Include or exclude datasets for a source.
+    from_schema: cdp-dataset-config
+    domain_of:
+    - AnnotationParent
+    - FrameParent
+    - GainParent
+    - KeyImageParent
+    - RawTiltParent
+    - RunParent
+    - TiltSeriesParent
+    - TomogramParent
+    - VoxelSpacingParent
+    range: string
+    multivalued: true
+  deposition:
+    name: deposition
+    description: Include or exclude depositions for a source.
+    from_schema: cdp-dataset-config
+    domain_of:
+    - AnnotationParent
+    - DatasetParent
+    - DatasetKeyPhotoParent
+    - DepositionKeyPhotoParent
+    - FrameParent
+    - GainParent
+    - KeyImageParent
+    - RawTiltParent
+    - RunParent
+    - TiltSeriesParent
+    - TomogramParent
+    - VoxelSpacingParent
+    range: string
+    multivalued: true
+  run:
+    name: run
+    description: Include or exclude runs for a source.
+    from_schema: cdp-dataset-config
+    domain_of:
+    - AnnotationParent
+    - FrameParent
+    - GainParent
+    - KeyImageParent
+    - RawTiltParent
+    - TiltSeriesParent
+    - TomogramParent
+    - VoxelSpacingParent
+    range: string
+    multivalued: true
+  tomogram:
+    name: tomogram
+    description: Include or exclude tomograms for a source.
+    from_schema: cdp-dataset-config
+    domain_of:
+    - KeyImageParent
+    range: string
+    multivalued: true
+  voxel_spacing:
+    name: voxel_spacing
+    description: Include or exclude voxel spacings for a source.
+    from_schema: cdp-dataset-config
+    domain_of:
+    - Tomogram
+    - AnnotationParent
+    - KeyImageParent
+    - TomogramParent
+    range: string
+    multivalued: true
 classes:
   Container:
     name: Container
@@ -908,120 +984,6 @@ classes:
         range: SourceMultiGlob
         inlined: true
         inlined_as_list: true
-  SourceParentFiltersEntity:
-    name: SourceParentFiltersEntity
-    description: Used as a mixin with root-level classes that contain sources that
-      can have parent filters.
-    from_schema: cdp-dataset-config
-    attributes:
-      parent_filters:
-        name: parent_filters
-        description: Filters for the parent of a source.
-        from_schema: cdp-dataset-config
-        alias: parent_filters
-        owner: SourceParentFiltersEntity
-        domain_of:
-        - SourceParentFiltersEntity
-        - AnnotationSource
-        range: SourceParentFilters
-        inlined: true
-        inlined_as_list: true
-  SourceParentFilters:
-    name: SourceParentFilters
-    description: Filters for the parent of a source.
-    from_schema: cdp-dataset-config
-    attributes:
-      include:
-        name: include
-        description: A filter for a parent class of a source. For a given attribute,
-          it can only be used if the current class is a subclass of the attribute.
-        from_schema: cdp-dataset-config
-        alias: include
-        owner: SourceParentFilters
-        domain_of:
-        - SourceParentFilters
-        range: SourceParent
-        inlined: true
-        inlined_as_list: true
-      exclude:
-        name: exclude
-        description: A filter for a parent class of a source. For a given attribute,
-          it can only be used if the current class is a subclass of the attribute.
-        from_schema: cdp-dataset-config
-        alias: exclude
-        owner: SourceParentFilters
-        domain_of:
-        - SourceParentFilters
-        range: SourceParent
-        inlined: true
-        inlined_as_list: true
-  SourceParent:
-    name: SourceParent
-    description: A filter for a parent class of a source. For a given attribute, it
-      can only be used if the current class is a subclass of the attribute.
-    from_schema: cdp-dataset-config
-    attributes:
-      annotation:
-        name: annotation
-        description: Include or exclude annotations.
-        from_schema: cdp-dataset-config
-        alias: annotation
-        owner: SourceParent
-        domain_of:
-        - SourceParent
-        range: string
-        multivalued: true
-        inlined: true
-        inlined_as_list: true
-      dataset:
-        name: dataset
-        description: Include or exclude datasets.
-        from_schema: cdp-dataset-config
-        alias: dataset
-        owner: SourceParent
-        domain_of:
-        - SourceParent
-        range: string
-        multivalued: true
-        inlined: true
-        inlined_as_list: true
-      run:
-        name: run
-        description: Include or exclude runs.
-        from_schema: cdp-dataset-config
-        alias: run
-        owner: SourceParent
-        domain_of:
-        - SourceParent
-        range: string
-        multivalued: true
-        inlined: true
-        inlined_as_list: true
-      tomogram:
-        name: tomogram
-        description: Include or exclude tomograms.
-        from_schema: cdp-dataset-config
-        alias: tomogram
-        owner: SourceParent
-        domain_of:
-        - SourceParent
-        range: string
-        multivalued: true
-        inlined: true
-        inlined_as_list: true
-      voxel_spacing:
-        name: voxel_spacing
-        description: Include or exclude voxel spacings.
-        from_schema: cdp-dataset-config
-        alias: voxel_spacing
-        owner: SourceParent
-        domain_of:
-        - Tomogram
-        - SourceParent
-        range: string
-        multivalued: true
-        inlined: true
-        inlined_as_list: true
   DefaultLiteralEntity:
     name: DefaultLiteralEntity
     description: Used as a mixin with root-level classes that contain sources that
@@ -1036,7 +998,8 @@ classes:
         owner: DefaultLiteralEntity
         domain_of:
         - DefaultLiteralEntity
-        - KeyPhotoSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
@@ -1048,7 +1011,7 @@ classes:
     attributes:
       value:
         name: value
-        description: A placeholder for any type of data.
+        description: The value for the literal.
         from_schema: cdp-dataset-config
         alias: value
         owner: DefaultLiteral
@@ -1062,68 +1025,6 @@ classes:
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
-  KeyPhotoEntity:
-    name: KeyPhotoEntity
-    description: A key photo entity.
-    from_schema: cdp-dataset-config
-    attributes:
-      sources:
-        name: sources
-        description: A key photo source.
-        from_schema: cdp-dataset-config
-        alias: sources
-        owner: KeyPhotoEntity
-        domain_of:
-        - KeyPhotoEntity
-        - AnnotationEntity
-        - DatasetEntity
-        - DepositionEntity
-        - FrameEntity
-        - GainEntity
-        - KeyImageEntity
-        - RawTiltEntity
-        - RunEntity
-        - TiltSeriesEntity
-        - TomogramEntity
-        - VoxelSpacingEntity
-        range: KeyPhotoSource
-        required: true
-        multivalued: true
-        inlined: true
-        inlined_as_list: true
-        minimum_cardinality: 1
-  KeyPhotoSource:
-    name: KeyPhotoSource
-    description: A key photo source.
-    from_schema: cdp-dataset-config
-    mixins:
-    - SourceParentFiltersEntity
-    attributes:
-      literal:
-        name: literal
-        description: A literal for a key photo.
-        from_schema: cdp-dataset-config
-        alias: literal
-        owner: KeyPhotoSource
-        domain_of:
-        - DefaultLiteralEntity
-        - KeyPhotoSource
-        - VoxelSpacingSource
-        range: KeyPhotoLiteral
-        inlined: true
-        inlined_as_list: true
-      parent_filters:
-        name: parent_filters
-        description: Filters for the parent of a source.
-        from_schema: cdp-dataset-config
-        alias: parent_filters
-        owner: KeyPhotoSource
-        domain_of:
-        - SourceParentFiltersEntity
-        - AnnotationSource
-        range: SourceParentFilters
-        inlined: true
-        inlined_as_list: true
   KeyPhotoLiteral:
     name: KeyPhotoLiteral
     description: A literal for a key photo.
@@ -1171,10 +1072,11 @@ classes:
         alias: sources
         owner: AnnotationEntity
         domain_of:
-        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
+        - DatasetKeyPhotoEntity
         - DepositionEntity
+        - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1256,14 +1158,165 @@ classes:
         inlined_as_list: true
       parent_filters:
         name: parent_filters
-        description: Filters for the parent of a source.
+        description: Filters for the parent of an annotation source.
         from_schema: cdp-dataset-config
         alias: parent_filters
         owner: AnnotationSource
         domain_of:
-        - SourceParentFiltersEntity
         - AnnotationSource
-        range: SourceParentFilters
+        - DatasetSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - FrameSource
+        - GainSource
+        - KeyImageSource
+        - RawTiltSource
+        - RunSource
+        - TiltSeriesSource
+        - TomogramSource
+        - VoxelSpacingSource
+        range: AnnotationParentFilters
+        inlined: true
+        inlined_as_list: true
+  AnnotationParentFilters:
+    name: AnnotationParentFilters
+    description: Filters for the parent of an annotation source.
+    from_schema: cdp-dataset-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of an annotation source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
+        from_schema: cdp-dataset-config
+        alias: include
+        owner: AnnotationParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: AnnotationParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of an annotation source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
+        from_schema: cdp-dataset-config
+        alias: exclude
+        owner: AnnotationParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: AnnotationParent
+        inlined: true
+        inlined_as_list: true
+  AnnotationParent:
+    name: AnnotationParent
+    description: A filter for a parent class of an annotation source. For a given
+      attribute, it can only be used if the current class is a subclass of the attribute.
+    from_schema: cdp-dataset-config
+    slots:
+    - dataset
+    - deposition
+    - run
+    - voxel_spacing
+    attributes:
+      dataset:
+        name: dataset
+        description: Include or exclude datasets for a source.
+        from_schema: cdp-dataset-config
+        alias: dataset
+        owner: AnnotationParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      deposition:
+        name: deposition
+        description: Include or exclude depositions for a source.
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: AnnotationParent
+        domain_of:
+        - AnnotationParent
+        - DatasetParent
+        - DatasetKeyPhotoParent
+        - DepositionKeyPhotoParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      run:
+        name: run
+        description: Include or exclude runs for a source.
+        from_schema: cdp-dataset-config
+        alias: run
+        owner: AnnotationParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      voxel_spacing:
+        name: voxel_spacing
+        description: Include or exclude voxel spacings for a source.
+        from_schema: cdp-dataset-config
+        alias: voxel_spacing
+        owner: AnnotationParent
+        domain_of:
+        - Tomogram
+        - AnnotationParent
+        - KeyImageParent
+        - TomogramParent
+        range: string
+        multivalued: true
         inlined: true
         inlined_as_list: true
   DatasetEntity:
@@ -1293,10 +1346,11 @@ classes:
         alias: sources
         owner: DatasetEntity
         domain_of:
-        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
+        - DatasetKeyPhotoEntity
         - DepositionEntity
+        - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1319,6 +1373,28 @@ classes:
     - DefaultSource
     - DefaultLiteralEntity
     attributes:
+      parent_filters:
+        name: parent_filters
+        description: Types of parent filters for a dataset source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: DatasetSource
+        domain_of:
+        - AnnotationSource
+        - DatasetSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - FrameSource
+        - GainSource
+        - KeyImageSource
+        - RawTiltSource
+        - RunSource
+        - TiltSeriesSource
+        - TomogramSource
+        - VoxelSpacingSource
+        range: DatasetParentFilters
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -1363,16 +1439,100 @@ classes:
         owner: DatasetSource
         domain_of:
         - DefaultLiteralEntity
-        - KeyPhotoSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
+        inlined: true
+        inlined_as_list: true
+  DatasetParentFilters:
+    name: DatasetParentFilters
+    description: Types of parent filters for a dataset source.
+    from_schema: cdp-dataset-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of a dataset source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
+        from_schema: cdp-dataset-config
+        alias: include
+        owner: DatasetParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: DatasetParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of a dataset source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
+        from_schema: cdp-dataset-config
+        alias: exclude
+        owner: DatasetParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: DatasetParent
+        inlined: true
+        inlined_as_list: true
+  DatasetParent:
+    name: DatasetParent
+    description: A filter for a parent class of a dataset source. For a given attribute,
+      it can only be used if the current class is a subclass of the attribute.
+    from_schema: cdp-dataset-config
+    slots:
+    - deposition
+    attributes:
+      deposition:
+        name: deposition
+        description: Include or exclude depositions for a source.
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: DatasetParent
+        domain_of:
+        - AnnotationParent
+        - DatasetParent
+        - DatasetKeyPhotoParent
+        - DepositionKeyPhotoParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
         inlined: true
         inlined_as_list: true
   DatasetKeyPhotoEntity:
     name: DatasetKeyPhotoEntity
     description: A dataset key photo entity.
     from_schema: cdp-dataset-config
-    is_a: KeyPhotoEntity
     attributes:
       sources:
         name: sources
@@ -1381,10 +1541,11 @@ classes:
         alias: sources
         owner: DatasetKeyPhotoEntity
         domain_of:
-        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
+        - DatasetKeyPhotoEntity
         - DepositionEntity
+        - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1393,43 +1554,137 @@ classes:
         - TiltSeriesEntity
         - TomogramEntity
         - VoxelSpacingEntity
-        range: KeyPhotoSource
+        range: DatasetKeyPhotoSource
         required: true
         multivalued: true
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
-  DepositionKeyPhotoEntity:
-    name: DepositionKeyPhotoEntity
-    description: A deposition key photo entity.
+  DatasetKeyPhotoSource:
+    name: DatasetKeyPhotoSource
+    description: A key photo source.
     from_schema: cdp-dataset-config
-    is_a: KeyPhotoEntity
     attributes:
-      sources:
-        name: sources
-        description: A key photo source.
+      literal:
+        name: literal
+        description: A literal for a key photo.
         from_schema: cdp-dataset-config
-        alias: sources
-        owner: DepositionKeyPhotoEntity
+        alias: literal
+        owner: DatasetKeyPhotoSource
         domain_of:
-        - KeyPhotoEntity
-        - AnnotationEntity
-        - DatasetEntity
-        - DepositionEntity
-        - FrameEntity
-        - GainEntity
-        - KeyImageEntity
-        - RawTiltEntity
-        - RunEntity
-        - TiltSeriesEntity
-        - TomogramEntity
-        - VoxelSpacingEntity
-        range: KeyPhotoSource
-        required: true
+        - DefaultLiteralEntity
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - VoxelSpacingSource
+        range: KeyPhotoLiteral
+        inlined: true
+        inlined_as_list: true
+      parent_filters:
+        name: parent_filters
+        description: Types of parent filters for a key photo source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: DatasetKeyPhotoSource
+        domain_of:
+        - AnnotationSource
+        - DatasetSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - FrameSource
+        - GainSource
+        - KeyImageSource
+        - RawTiltSource
+        - RunSource
+        - TiltSeriesSource
+        - TomogramSource
+        - VoxelSpacingSource
+        range: DatasetKeyPhotoParentFilters
+        inlined: true
+        inlined_as_list: true
+  DatasetKeyPhotoParentFilters:
+    name: DatasetKeyPhotoParentFilters
+    description: Types of parent filters for a key photo source.
+    from_schema: cdp-dataset-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of a key photo source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
+        from_schema: cdp-dataset-config
+        alias: include
+        owner: DatasetKeyPhotoParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: DatasetKeyPhotoParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of a key photo source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
+        from_schema: cdp-dataset-config
+        alias: exclude
+        owner: DatasetKeyPhotoParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: DatasetKeyPhotoParent
+        inlined: true
+        inlined_as_list: true
+  DatasetKeyPhotoParent:
+    name: DatasetKeyPhotoParent
+    description: A filter for a parent class of a key photo source. For a given attribute,
+      it can only be used if the current class is a subclass of the attribute.
+    from_schema: cdp-dataset-config
+    slots:
+    - deposition
+    attributes:
+      deposition:
+        name: deposition
+        description: Include or exclude depositions for a source.
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: DatasetKeyPhotoParent
+        domain_of:
+        - AnnotationParent
+        - DatasetParent
+        - DatasetKeyPhotoParent
+        - DepositionKeyPhotoParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
         multivalued: true
         inlined: true
         inlined_as_list: true
-        minimum_cardinality: 1
   DepositionEntity:
     name: DepositionEntity
     description: A deposition entity.
@@ -1457,10 +1712,11 @@ classes:
         alias: sources
         owner: DepositionEntity
         domain_of:
-        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
+        - DatasetKeyPhotoEntity
         - DepositionEntity
+        - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1527,9 +1783,166 @@ classes:
         owner: DepositionSource
         domain_of:
         - DefaultLiteralEntity
-        - KeyPhotoSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
+        inlined: true
+        inlined_as_list: true
+  DepositionKeyPhotoEntity:
+    name: DepositionKeyPhotoEntity
+    description: A deposition key photo entity.
+    from_schema: cdp-dataset-config
+    attributes:
+      sources:
+        name: sources
+        description: A key photo source.
+        from_schema: cdp-dataset-config
+        alias: sources
+        owner: DepositionKeyPhotoEntity
+        domain_of:
+        - AnnotationEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - DepositionEntity
+        - DepositionKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: DepositionKeyPhotoSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+  DepositionKeyPhotoSource:
+    name: DepositionKeyPhotoSource
+    description: A key photo source.
+    from_schema: cdp-dataset-config
+    attributes:
+      literal:
+        name: literal
+        description: A literal for a key photo.
+        from_schema: cdp-dataset-config
+        alias: literal
+        owner: DepositionKeyPhotoSource
+        domain_of:
+        - DefaultLiteralEntity
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - VoxelSpacingSource
+        range: KeyPhotoLiteral
+        inlined: true
+        inlined_as_list: true
+      parent_filters:
+        name: parent_filters
+        description: Types of parent filters for a key photo source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: DepositionKeyPhotoSource
+        domain_of:
+        - AnnotationSource
+        - DatasetSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - FrameSource
+        - GainSource
+        - KeyImageSource
+        - RawTiltSource
+        - RunSource
+        - TiltSeriesSource
+        - TomogramSource
+        - VoxelSpacingSource
+        range: DepositionKeyPhotoParentFilters
+        inlined: true
+        inlined_as_list: true
+  DepositionKeyPhotoParentFilters:
+    name: DepositionKeyPhotoParentFilters
+    description: Types of parent filters for a key photo source.
+    from_schema: cdp-dataset-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of a key photo source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
+        from_schema: cdp-dataset-config
+        alias: include
+        owner: DepositionKeyPhotoParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: DepositionKeyPhotoParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of a key photo source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
+        from_schema: cdp-dataset-config
+        alias: exclude
+        owner: DepositionKeyPhotoParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: DepositionKeyPhotoParent
+        inlined: true
+        inlined_as_list: true
+  DepositionKeyPhotoParent:
+    name: DepositionKeyPhotoParent
+    description: A filter for a parent class of a key photo source. For a given attribute,
+      it can only be used if the current class is a subclass of the attribute.
+    from_schema: cdp-dataset-config
+    slots:
+    - deposition
+    attributes:
+      deposition:
+        name: deposition
+        description: Include or exclude depositions for a source.
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: DepositionKeyPhotoParent
+        domain_of:
+        - AnnotationParent
+        - DatasetParent
+        - DatasetKeyPhotoParent
+        - DepositionKeyPhotoParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
         inlined: true
         inlined_as_list: true
   FrameEntity:
@@ -1544,10 +1957,11 @@ classes:
         alias: sources
         owner: FrameEntity
         domain_of:
-        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
+        - DatasetKeyPhotoEntity
         - DepositionEntity
+        - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1569,8 +1983,29 @@ classes:
     mixins:
     - DefaultSource
     - DefaultLiteralEntity
-    - SourceParentFiltersEntity
     attributes:
+      parent_filters:
+        name: parent_filters
+        description: Types of parent filters for a frame source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: FrameSource
+        domain_of:
+        - AnnotationSource
+        - DatasetSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - FrameSource
+        - GainSource
+        - KeyImageSource
+        - RawTiltSource
+        - RunSource
+        - TiltSeriesSource
+        - TomogramSource
+        - VoxelSpacingSource
+        range: FrameParentFilters
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -1615,21 +2050,133 @@ classes:
         owner: FrameSource
         domain_of:
         - DefaultLiteralEntity
-        - KeyPhotoSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
         inlined_as_list: true
-      parent_filters:
-        name: parent_filters
-        description: Filters for the parent of a source.
+  FrameParentFilters:
+    name: FrameParentFilters
+    description: Types of parent filters for a frame source.
+    from_schema: cdp-dataset-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of a frame source. For a given attribute,
+          it can only be used if the current class is a subclass of the attribute.
         from_schema: cdp-dataset-config
-        alias: parent_filters
-        owner: FrameSource
+        alias: include
+        owner: FrameParentFilters
         domain_of:
-        - SourceParentFiltersEntity
-        - AnnotationSource
-        range: SourceParentFilters
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: FrameParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of a frame source. For a given attribute,
+          it can only be used if the current class is a subclass of the attribute.
+        from_schema: cdp-dataset-config
+        alias: exclude
+        owner: FrameParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: FrameParent
+        inlined: true
+        inlined_as_list: true
+  FrameParent:
+    name: FrameParent
+    description: A filter for a parent class of a frame source. For a given attribute,
+      it can only be used if the current class is a subclass of the attribute.
+    from_schema: cdp-dataset-config
+    slots:
+    - dataset
+    - deposition
+    - run
+    attributes:
+      dataset:
+        name: dataset
+        description: Include or exclude datasets for a source.
+        from_schema: cdp-dataset-config
+        alias: dataset
+        owner: FrameParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      deposition:
+        name: deposition
+        description: Include or exclude depositions for a source.
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: FrameParent
+        domain_of:
+        - AnnotationParent
+        - DatasetParent
+        - DatasetKeyPhotoParent
+        - DepositionKeyPhotoParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      run:
+        name: run
+        description: Include or exclude runs for a source.
+        from_schema: cdp-dataset-config
+        alias: run
+        owner: FrameParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
         inlined: true
         inlined_as_list: true
   GainEntity:
@@ -1644,10 +2191,11 @@ classes:
         alias: sources
         owner: GainEntity
         domain_of:
-        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
+        - DatasetKeyPhotoEntity
         - DepositionEntity
+        - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1669,8 +2217,29 @@ classes:
     mixins:
     - DefaultSource
     - DefaultLiteralEntity
-    - SourceParentFiltersEntity
     attributes:
+      parent_filters:
+        name: parent_filters
+        description: Types of parent filters for a gain source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: GainSource
+        domain_of:
+        - AnnotationSource
+        - DatasetSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - FrameSource
+        - GainSource
+        - KeyImageSource
+        - RawTiltSource
+        - RunSource
+        - TiltSeriesSource
+        - TomogramSource
+        - VoxelSpacingSource
+        range: GainParentFilters
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -1715,21 +2284,133 @@ classes:
         owner: GainSource
         domain_of:
         - DefaultLiteralEntity
-        - KeyPhotoSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
         inlined_as_list: true
-      parent_filters:
-        name: parent_filters
-        description: Filters for the parent of a source.
+  GainParentFilters:
+    name: GainParentFilters
+    description: Types of parent filters for a gain source.
+    from_schema: cdp-dataset-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of a gain source. For a given attribute,
+          it can only be used if the current class is a subclass of the attribute.
         from_schema: cdp-dataset-config
-        alias: parent_filters
-        owner: GainSource
+        alias: include
+        owner: GainParentFilters
         domain_of:
-        - SourceParentFiltersEntity
-        - AnnotationSource
-        range: SourceParentFilters
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: GainParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of a gain source. For a given attribute,
+          it can only be used if the current class is a subclass of the attribute.
+        from_schema: cdp-dataset-config
+        alias: exclude
+        owner: GainParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: GainParent
+        inlined: true
+        inlined_as_list: true
+  GainParent:
+    name: GainParent
+    description: A filter for a parent class of a gain source. For a given attribute,
+      it can only be used if the current class is a subclass of the attribute.
+    from_schema: cdp-dataset-config
+    slots:
+    - dataset
+    - deposition
+    - run
+    attributes:
+      dataset:
+        name: dataset
+        description: Include or exclude datasets for a source.
+        from_schema: cdp-dataset-config
+        alias: dataset
+        owner: GainParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      deposition:
+        name: deposition
+        description: Include or exclude depositions for a source.
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: GainParent
+        domain_of:
+        - AnnotationParent
+        - DatasetParent
+        - DatasetKeyPhotoParent
+        - DepositionKeyPhotoParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      run:
+        name: run
+        description: Include or exclude runs for a source.
+        from_schema: cdp-dataset-config
+        alias: run
+        owner: GainParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
         inlined: true
         inlined_as_list: true
   KeyImageEntity:
@@ -1744,10 +2425,11 @@ classes:
         alias: sources
         owner: KeyImageEntity
         domain_of:
-        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
+        - DatasetKeyPhotoEntity
         - DepositionEntity
+        - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1769,8 +2451,29 @@ classes:
     mixins:
     - DefaultSource
     - DefaultLiteralEntity
-    - SourceParentFiltersEntity
     attributes:
+      parent_filters:
+        name: parent_filters
+        description: Types of parent filters for a key image source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: KeyImageSource
+        domain_of:
+        - AnnotationSource
+        - DatasetSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - FrameSource
+        - GainSource
+        - KeyImageSource
+        - RawTiltSource
+        - RunSource
+        - TiltSeriesSource
+        - TomogramSource
+        - VoxelSpacingSource
+        range: KeyImageParentFilters
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -1815,21 +2518,164 @@ classes:
         owner: KeyImageSource
         domain_of:
         - DefaultLiteralEntity
-        - KeyPhotoSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
         inlined_as_list: true
-      parent_filters:
-        name: parent_filters
-        description: Filters for the parent of a source.
+  KeyImageParentFilters:
+    name: KeyImageParentFilters
+    description: Types of parent filters for a key image source.
+    from_schema: cdp-dataset-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of a key image source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
         from_schema: cdp-dataset-config
-        alias: parent_filters
-        owner: KeyImageSource
+        alias: include
+        owner: KeyImageParentFilters
         domain_of:
-        - SourceParentFiltersEntity
-        - AnnotationSource
-        range: SourceParentFilters
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: KeyImageParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of a key image source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
+        from_schema: cdp-dataset-config
+        alias: exclude
+        owner: KeyImageParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: KeyImageParent
+        inlined: true
+        inlined_as_list: true
+  KeyImageParent:
+    name: KeyImageParent
+    description: A filter for a parent class of a key image source. For a given attribute,
+      it can only be used if the current class is a subclass of the attribute.
+    from_schema: cdp-dataset-config
+    slots:
+    - dataset
+    - deposition
+    - run
+    - tomogram
+    - voxel_spacing
+    attributes:
+      dataset:
+        name: dataset
+        description: Include or exclude datasets for a source.
+        from_schema: cdp-dataset-config
+        alias: dataset
+        owner: KeyImageParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      deposition:
+        name: deposition
+        description: Include or exclude depositions for a source.
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: KeyImageParent
+        domain_of:
+        - AnnotationParent
+        - DatasetParent
+        - DatasetKeyPhotoParent
+        - DepositionKeyPhotoParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      run:
+        name: run
+        description: Include or exclude runs for a source.
+        from_schema: cdp-dataset-config
+        alias: run
+        owner: KeyImageParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      tomogram:
+        name: tomogram
+        description: Include or exclude tomograms for a source.
+        from_schema: cdp-dataset-config
+        alias: tomogram
+        owner: KeyImageParent
+        domain_of:
+        - KeyImageParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      voxel_spacing:
+        name: voxel_spacing
+        description: Include or exclude voxel spacings for a source.
+        from_schema: cdp-dataset-config
+        alias: voxel_spacing
+        owner: KeyImageParent
+        domain_of:
+        - Tomogram
+        - AnnotationParent
+        - KeyImageParent
+        - TomogramParent
+        range: string
+        multivalued: true
         inlined: true
         inlined_as_list: true
   RawTiltEntity:
@@ -1844,10 +2690,11 @@ classes:
         alias: sources
         owner: RawTiltEntity
         domain_of:
-        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
+        - DatasetKeyPhotoEntity
         - DepositionEntity
+        - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1869,8 +2716,29 @@ classes:
     mixins:
     - DefaultSource
     - DefaultLiteralEntity
-    - SourceParentFiltersEntity
     attributes:
+      parent_filters:
+        name: parent_filters
+        description: Types of parent filters for a raw tilt source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: RawTiltSource
+        domain_of:
+        - AnnotationSource
+        - DatasetSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - FrameSource
+        - GainSource
+        - KeyImageSource
+        - RawTiltSource
+        - RunSource
+        - TiltSeriesSource
+        - TomogramSource
+        - VoxelSpacingSource
+        range: RawTiltParentFilters
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -1915,21 +2783,135 @@ classes:
         owner: RawTiltSource
         domain_of:
         - DefaultLiteralEntity
-        - KeyPhotoSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
         inlined_as_list: true
-      parent_filters:
-        name: parent_filters
-        description: Filters for the parent of a source.
+  RawTiltParentFilters:
+    name: RawTiltParentFilters
+    description: Types of parent filters for a raw tilt source.
+    from_schema: cdp-dataset-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of a raw tilt source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
         from_schema: cdp-dataset-config
-        alias: parent_filters
-        owner: RawTiltSource
+        alias: include
+        owner: RawTiltParentFilters
         domain_of:
-        - SourceParentFiltersEntity
-        - AnnotationSource
-        range: SourceParentFilters
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: RawTiltParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of a raw tilt source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
+        from_schema: cdp-dataset-config
+        alias: exclude
+        owner: RawTiltParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: RawTiltParent
+        inlined: true
+        inlined_as_list: true
+  RawTiltParent:
+    name: RawTiltParent
+    description: A filter for a parent class of a raw tilt source. For a given attribute,
+      it can only be used if the current class is a subclass of the attribute.
+    from_schema: cdp-dataset-config
+    slots:
+    - dataset
+    - deposition
+    - run
+    attributes:
+      dataset:
+        name: dataset
+        description: Include or exclude datasets for a source.
+        from_schema: cdp-dataset-config
+        alias: dataset
+        owner: RawTiltParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      deposition:
+        name: deposition
+        description: Include or exclude depositions for a source.
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: RawTiltParent
+        domain_of:
+        - AnnotationParent
+        - DatasetParent
+        - DatasetKeyPhotoParent
+        - DepositionKeyPhotoParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      run:
+        name: run
+        description: Include or exclude runs for a source.
+        from_schema: cdp-dataset-config
+        alias: run
+        owner: RawTiltParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
         inlined: true
         inlined_as_list: true
   RunEntity:
@@ -1944,10 +2926,11 @@ classes:
         alias: sources
         owner: RunEntity
         domain_of:
-        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
+        - DatasetKeyPhotoEntity
         - DepositionEntity
+        - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -1969,8 +2952,29 @@ classes:
     mixins:
     - DefaultSource
     - DefaultLiteralEntity
-    - SourceParentFiltersEntity
     attributes:
+      parent_filters:
+        name: parent_filters
+        description: Types of parent filters for a run source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: RunSource
+        domain_of:
+        - AnnotationSource
+        - DatasetSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - FrameSource
+        - GainSource
+        - KeyImageSource
+        - RawTiltSource
+        - RunSource
+        - TiltSeriesSource
+        - TomogramSource
+        - VoxelSpacingSource
+        range: RunParentFilters
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -2015,21 +3019,113 @@ classes:
         owner: RunSource
         domain_of:
         - DefaultLiteralEntity
-        - KeyPhotoSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
         inlined_as_list: true
-      parent_filters:
-        name: parent_filters
-        description: Filters for the parent of a source.
+  RunParentFilters:
+    name: RunParentFilters
+    description: Types of parent filters for a run source.
+    from_schema: cdp-dataset-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of a run source. For a given attribute,
+          it can only be used if the current class is a subclass of the attribute.
         from_schema: cdp-dataset-config
-        alias: parent_filters
-        owner: RunSource
+        alias: include
+        owner: RunParentFilters
         domain_of:
-        - SourceParentFiltersEntity
-        - AnnotationSource
-        range: SourceParentFilters
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: RunParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of a run source. For a given attribute,
+          it can only be used if the current class is a subclass of the attribute.
+        from_schema: cdp-dataset-config
+        alias: exclude
+        owner: RunParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: RunParent
+        inlined: true
+        inlined_as_list: true
+  RunParent:
+    name: RunParent
+    description: A filter for a parent class of a run source. For a given attribute,
+      it can only be used if the current class is a subclass of the attribute.
+    from_schema: cdp-dataset-config
+    slots:
+    - dataset
+    - deposition
+    attributes:
+      dataset:
+        name: dataset
+        description: Include or exclude datasets for a source.
+        from_schema: cdp-dataset-config
+        alias: dataset
+        owner: RunParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      deposition:
+        name: deposition
+        description: Include or exclude depositions for a source.
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: RunParent
+        domain_of:
+        - AnnotationParent
+        - DatasetParent
+        - DatasetKeyPhotoParent
+        - DepositionKeyPhotoParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
         inlined: true
         inlined_as_list: true
   StandardizationConfig:
@@ -2132,10 +3228,11 @@ classes:
         alias: sources
         owner: TiltSeriesEntity
         domain_of:
-        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
+        - DatasetKeyPhotoEntity
         - DepositionEntity
+        - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -2157,8 +3254,29 @@ classes:
     mixins:
     - DefaultSource
     - DefaultLiteralEntity
-    - SourceParentFiltersEntity
     attributes:
+      parent_filters:
+        name: parent_filters
+        description: Types of parent filters for a tilt series source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: TiltSeriesSource
+        domain_of:
+        - AnnotationSource
+        - DatasetSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - FrameSource
+        - GainSource
+        - KeyImageSource
+        - RawTiltSource
+        - RunSource
+        - TiltSeriesSource
+        - TomogramSource
+        - VoxelSpacingSource
+        range: TiltSeriesParentFilters
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -2203,21 +3321,135 @@ classes:
         owner: TiltSeriesSource
         domain_of:
         - DefaultLiteralEntity
-        - KeyPhotoSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
         inlined_as_list: true
-      parent_filters:
-        name: parent_filters
-        description: Filters for the parent of a source.
+  TiltSeriesParentFilters:
+    name: TiltSeriesParentFilters
+    description: Types of parent filters for a tilt series source.
+    from_schema: cdp-dataset-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of a tilt series source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
         from_schema: cdp-dataset-config
-        alias: parent_filters
-        owner: TiltSeriesSource
+        alias: include
+        owner: TiltSeriesParentFilters
         domain_of:
-        - SourceParentFiltersEntity
-        - AnnotationSource
-        range: SourceParentFilters
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: TiltSeriesParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of a tilt series source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
+        from_schema: cdp-dataset-config
+        alias: exclude
+        owner: TiltSeriesParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: TiltSeriesParent
+        inlined: true
+        inlined_as_list: true
+  TiltSeriesParent:
+    name: TiltSeriesParent
+    description: A filter for a parent class of a tilt series source. For a given
+      attribute, it can only be used if the current class is a subclass of the attribute.
+    from_schema: cdp-dataset-config
+    slots:
+    - dataset
+    - deposition
+    - run
+    attributes:
+      dataset:
+        name: dataset
+        description: Include or exclude datasets for a source.
+        from_schema: cdp-dataset-config
+        alias: dataset
+        owner: TiltSeriesParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      deposition:
+        name: deposition
+        description: Include or exclude depositions for a source.
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: TiltSeriesParent
+        domain_of:
+        - AnnotationParent
+        - DatasetParent
+        - DatasetKeyPhotoParent
+        - DepositionKeyPhotoParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      run:
+        name: run
+        description: Include or exclude runs for a source.
+        from_schema: cdp-dataset-config
+        alias: run
+        owner: TiltSeriesParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
         inlined: true
         inlined_as_list: true
   TomogramEntity:
@@ -2247,10 +3479,11 @@ classes:
         alias: sources
         owner: TomogramEntity
         domain_of:
-        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
+        - DatasetKeyPhotoEntity
         - DepositionEntity
+        - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -2272,8 +3505,29 @@ classes:
     mixins:
     - DefaultSource
     - DefaultLiteralEntity
-    - SourceParentFiltersEntity
     attributes:
+      parent_filters:
+        name: parent_filters
+        description: Types of parent filters for a tomogram source.
+        from_schema: cdp-dataset-config
+        alias: parent_filters
+        owner: TomogramSource
+        domain_of:
+        - AnnotationSource
+        - DatasetSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - FrameSource
+        - GainSource
+        - KeyImageSource
+        - RawTiltSource
+        - RunSource
+        - TiltSeriesSource
+        - TomogramSource
+        - VoxelSpacingSource
+        range: TomogramParentFilters
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -2318,21 +3572,151 @@ classes:
         owner: TomogramSource
         domain_of:
         - DefaultLiteralEntity
-        - KeyPhotoSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
         - VoxelSpacingSource
         range: DefaultLiteral
         inlined: true
         inlined_as_list: true
-      parent_filters:
-        name: parent_filters
-        description: Filters for the parent of a source.
+  TomogramParentFilters:
+    name: TomogramParentFilters
+    description: Types of parent filters for a tomogram source.
+    from_schema: cdp-dataset-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of a tomogram source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
         from_schema: cdp-dataset-config
-        alias: parent_filters
-        owner: TomogramSource
+        alias: include
+        owner: TomogramParentFilters
         domain_of:
-        - SourceParentFiltersEntity
-        - AnnotationSource
-        range: SourceParentFilters
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: TomogramParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of a tomogram source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
+        from_schema: cdp-dataset-config
+        alias: exclude
+        owner: TomogramParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: TomogramParent
+        inlined: true
+        inlined_as_list: true
+  TomogramParent:
+    name: TomogramParent
+    description: A filter for a parent class of a tomogram source. For a given attribute,
+      it can only be used if the current class is a subclass of the attribute.
+    from_schema: cdp-dataset-config
+    slots:
+    - dataset
+    - deposition
+    - run
+    - voxel_spacing
+    attributes:
+      dataset:
+        name: dataset
+        description: Include or exclude datasets for a source.
+        from_schema: cdp-dataset-config
+        alias: dataset
+        owner: TomogramParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      deposition:
+        name: deposition
+        description: Include or exclude depositions for a source.
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: TomogramParent
+        domain_of:
+        - AnnotationParent
+        - DatasetParent
+        - DatasetKeyPhotoParent
+        - DepositionKeyPhotoParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      run:
+        name: run
+        description: Include or exclude runs for a source.
+        from_schema: cdp-dataset-config
+        alias: run
+        owner: TomogramParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      voxel_spacing:
+        name: voxel_spacing
+        description: Include or exclude voxel spacings for a source.
+        from_schema: cdp-dataset-config
+        alias: voxel_spacing
+        owner: TomogramParent
+        domain_of:
+        - Tomogram
+        - AnnotationParent
+        - KeyImageParent
+        - TomogramParent
+        range: string
+        multivalued: true
         inlined: true
         inlined_as_list: true
   VoxelSpacingEntity:
@@ -2347,10 +3731,11 @@ classes:
         alias: sources
         owner: VoxelSpacingEntity
         domain_of:
-        - KeyPhotoEntity
         - AnnotationEntity
         - DatasetEntity
+        - DatasetKeyPhotoEntity
         - DepositionEntity
+        - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
         - KeyImageEntity
@@ -2369,8 +3754,6 @@ classes:
     name: VoxelSpacingSource
     description: A voxel spacing source.
     from_schema: cdp-dataset-config
-    mixins:
-    - SourceParentFiltersEntity
     attributes:
       destination_glob:
         name: destination_glob
@@ -2404,7 +3787,8 @@ classes:
         owner: VoxelSpacingSource
         domain_of:
         - DefaultLiteralEntity
-        - KeyPhotoSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
         - VoxelSpacingSource
         range: VoxelSpacingLiteral
         inlined: true
@@ -2422,14 +3806,149 @@ classes:
         inlined_as_list: true
       parent_filters:
         name: parent_filters
-        description: Filters for the parent of a source.
+        description: Types of parent filters for a voxel spacing source.
         from_schema: cdp-dataset-config
         alias: parent_filters
         owner: VoxelSpacingSource
         domain_of:
-        - SourceParentFiltersEntity
         - AnnotationSource
-        range: SourceParentFilters
+        - DatasetSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - FrameSource
+        - GainSource
+        - KeyImageSource
+        - RawTiltSource
+        - RunSource
+        - TiltSeriesSource
+        - TomogramSource
+        - VoxelSpacingSource
+        range: VoxelSpacingParentFilters
+        inlined: true
+        inlined_as_list: true
+  VoxelSpacingParentFilters:
+    name: VoxelSpacingParentFilters
+    description: Types of parent filters for a voxel spacing source.
+    from_schema: cdp-dataset-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of a voxel spacing source. For a
+          given attribute, it can only be used if the current class is a subclass
+          of the attribute.
+        from_schema: cdp-dataset-config
+        alias: include
+        owner: VoxelSpacingParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: VoxelSpacingParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of a voxel spacing source. For a
+          given attribute, it can only be used if the current class is a subclass
+          of the attribute.
+        from_schema: cdp-dataset-config
+        alias: exclude
+        owner: VoxelSpacingParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: VoxelSpacingParent
+        inlined: true
+        inlined_as_list: true
+  VoxelSpacingParent:
+    name: VoxelSpacingParent
+    description: A filter for a parent class of a voxel spacing source. For a given
+      attribute, it can only be used if the current class is a subclass of the attribute.
+    from_schema: cdp-dataset-config
+    slots:
+    - dataset
+    - deposition
+    - run
+    attributes:
+      dataset:
+        name: dataset
+        description: Include or exclude datasets for a source.
+        from_schema: cdp-dataset-config
+        alias: dataset
+        owner: VoxelSpacingParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      deposition:
+        name: deposition
+        description: Include or exclude depositions for a source.
+        from_schema: cdp-dataset-config
+        alias: deposition
+        owner: VoxelSpacingParent
+        domain_of:
+        - AnnotationParent
+        - DatasetParent
+        - DatasetKeyPhotoParent
+        - DepositionKeyPhotoParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      run:
+        name: run
+        description: Include or exclude runs for a source.
+        from_schema: cdp-dataset-config
+        alias: run
+        owner: VoxelSpacingParent
+        domain_of:
+        - AnnotationParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
         inlined: true
         inlined_as_list: true
   VoxelSpacingLiteral:
@@ -2498,7 +4017,6 @@ classes:
         inlined_as_list: true
   Any:
     name: Any
-    description: A placeholder for any type of data.
     from_schema: cdp-dataset-config
     class_uri: linkml:Any
   DateStampedEntityMixin:

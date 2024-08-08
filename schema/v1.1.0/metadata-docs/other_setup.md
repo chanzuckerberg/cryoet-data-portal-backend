@@ -27,7 +27,7 @@ URI: [cdp-meta:other_setup](metadataother_setup)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: other_setup
 domain_of:
 - ExperimentMetadata
 - Dataset
-range: string
+range: Any
 
 ```
 </details>

@@ -26,25 +26,42 @@ RAW_PROCESSING_TYPES = {
     "sirt",
     "raw",
 }
+RELATED_DATES = {
+    "deposition_date": datetime.date(2023, 10, 1).strftime("%Y-%m-%d"),
+    "last_modified_date": datetime.date(2023, 12, 1).strftime("%Y-%m-%d"),
+    "release_date": datetime.date(2023, 12, 1).strftime("%Y-%m-%d"),
+}
 
 
-def to_dataset_author(data: dict[str, Any]) -> list[dict[str, Any]]:
-    authors_data = data["authors"]
-    primary_author = set(authors_data["first_authors"])
+def get_json_data(input_dir: str, file_name: str) -> dict[str, Any]:
+    with open(os.path.join(input_dir, file_name), "r") as file:
+        data = json.load(file)
+    return data
+
+
+def to_author(authors_data: dict[str, Any], existing_author_obj: dict[str, Any] = None) -> list[dict[str, Any]]:
+    """
+    Convert authors data with first_authors and corresponding_authors to a list of author objects with
+    primary_author_status and corresponding_author_status.
+    If the optional existing_author_obj is provided, return the existing_author_obj if the newly created author object
+    is the same.
+    """
+    primary_authors = set(authors_data["first_authors"])
     corresponding_authors = set(authors_data["corresponding_authors"])
     authors = [
         {
             "name": name,
-            "primary_author_status": name in primary_author,
+            "primary_author_status": name in primary_authors,
             "corresponding_author_status": name in corresponding_authors,
         }
         for name in authors_data["authors"]
     ]
-    return sorted(
+    new_author_obj = sorted(
         authors,
         key=lambda x: (x["primary_author_status"], not x["corresponding_author_status"]),
         reverse=True,
     )
+    return existing_author_obj if existing_author_obj == new_author_obj else new_author_obj
 
 
 def clean(val: str) -> str | None:
@@ -75,11 +92,7 @@ def to_dataset_config(
         "sample_type": dataset["sample_type"],
         "sample_preparation": clean(dataset.get("sample_prep")),
         "grid_preparation": clean(dataset.get("grid_prep")),
-        "dates": {
-            "deposition_date": datetime.date(2023, 10, 1).strftime("%Y-%m-%d"),
-            "last_modified_date": datetime.date(2023, 12, 1).strftime("%Y-%m-%d"),
-            "release_date": datetime.date(2023, 12, 1).strftime("%Y-%m-%d"),
-        },
+        "dates": RELATED_DATES,
     }
 
     run_name = next((entry["run_name"] for entry in data.get("runs") if "run_name" in entry), None)
@@ -363,11 +376,12 @@ def cli(ctx):
 
 
 def get_deposition_map(input_dir: str) -> dict[int, int]:
-    with open(os.path.join(input_dir, "portal_dataset_grouping.json"), "r") as file:
-        groupings = json.load(file)
-
     deposition_id = 10014
-    data = next(entry["data"] for entry in groupings if entry["type"] == "table" and entry["name"] == "SubDatasetData")
+    data = next(
+        entry["data"]
+        for entry in get_json_data(input_dir, "portal_dataset_grouping.json")
+        if entry["type"] == "table" and entry["name"] == "SubDatasetData"
+    )
 
     dataset_deposition_id_mapping = {}
     deposition_id_mapping = {}
@@ -382,16 +396,72 @@ def get_deposition_map(input_dir: str) -> dict[int, int]:
     return dataset_deposition_id_mapping
 
 
-def update_cross_reference(config):
+def clean_delimited_values(delimited_values: str, delimiter: str = ",") -> list[str]:
+    return [r.strip() for r in delimited_values.split(delimiter)]
+
+
+def create_deposition_entity_map(
+    input_dir: str,
+    cross_reference_mapping: dict[int, dict[str, str]],
+    deposition_id_mapping: dict[int, int],
+) -> dict[int, dict[str, Any]]:
+    deposition_map = {}
+    for entry in get_json_data(input_dir, "deposition_dataset.json"):
+        deposition_ids = set()
+        publications = set()
+        related_database_entries = set()
+        for ds_id in entry["portal_dataset_ids"]:
+            deposition_ids.add(deposition_id_mapping.get(ds_id))
+            ds_cross_reference = cross_reference_mapping.get(ds_id, {})
+            if publication := ds_cross_reference.get("publications"):
+                publications.update(clean_delimited_values(publication))
+            if related_database_entry := ds_cross_reference.get("related_database_entries"):
+                related_database_entries.update(clean_delimited_values(related_database_entry))
+
+        entry_metadata = entry.get("deposition", {})
+        if len(deposition_ids) != 1:
+            print(f"Deposition ids found for {entry_metadata['deposition_title']}: {deposition_ids}")
+            raise ValueError("Only one deposition ids should be mapped to a single deposition")
+
+        deposition_id = deposition_ids.pop()
+        metadata = {
+            "authors": to_author(entry_metadata["deposition_authors"]),
+            "dates": RELATED_DATES,
+            "deposition_description": entry_metadata["deposition_description"].strip(),
+            "deposition_identifier": deposition_id,
+            "deposition_title": entry_metadata["deposition_title"].strip(),
+            "deposition_types": ["dataset"],
+        }
+        cross_reference = {}
+        if publications:
+            cross_reference["publications"] = ",".join(sorted(publications))
+        if related_database_entries:
+            cross_reference["related_database_entries"] = ",".join(sorted(related_database_entries))
+        if cross_reference:
+            metadata["cross_references"] = cross_reference
+
+        deposition_map[deposition_id] = {
+            "metadata": metadata,
+            "sources": [{"literal": {"value": [deposition_id]}}],
+        }
+
+    return deposition_map
+
+
+def update_cross_reference(config) -> dict[str, str]:
     if config and "dataset_publications" in config:
-        config["publications"] = config.pop("dataset_publications").replace("https://doi.org/", "")
+        publications = clean_delimited_values(config.pop("dataset_publications").replace("https://doi.org/", ""))
+        config["publications"] = ",".join(sorted(publications))
+    if config and config.get("related_database_entries"):
+        related_database_entries = sorted(clean_delimited_values(config.pop("related_database_entries")))
+        config["related_database_entries"] = ",".join(related_database_entries)
     return config
 
 
 def get_cross_reference_mapping(input_dir: str) -> dict[int, dict[str, str]]:
-    with open(os.path.join(input_dir, "cross_references.json"), "r") as file:
-        data = json.load(file)
-    return {int(key): update_cross_reference(val) for key, val in data.items()}
+    return {
+        int(key): update_cross_reference(val) for key, val in get_json_data(input_dir, "cross_references.json").items()
+    }
 
 
 def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> None:
@@ -419,8 +489,9 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     fs.makedirs(run_data_map_path)
     fs.makedirs(run_tomo_map_path)
     fs.makedirs(run_frames_map_path)
-    deposition_mapping = get_deposition_map(input_dir)
     cross_reference_mapping = get_cross_reference_mapping(input_dir)
+    deposition_mapping = get_deposition_map(input_dir)
+    deposition_entity_by_id = create_deposition_entity_map(input_dir, cross_reference_mapping, deposition_mapping)
     file_paths = fs.glob(os.path.join(input_dir, "portal_[0-9]*.json"))
     file_paths.sort()
     for file_path in file_paths:
@@ -432,10 +503,13 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
             print(f"Skipping dataset with id: {dataset_id}")
             continue
 
-        authors = to_dataset_author(val.get("dataset"))
+        deposition_entity = deposition_entity_by_id.get(deposition_mapping.get(dataset_id))
+        authors = to_author(val.get("dataset")["authors"], deposition_entity.get("metadata", {}).get("authors"))
+
         run_data_map = defaultdict(dict)
         dataset_config = {
             "dataset": to_dataset_config(dataset_id, val, authors, cross_reference_mapping.get(dataset_id, {})),
+            "depositions": [deposition_entity],
             "runs": {},
             "tiltseries": to_config_by_run(
                 dataset_id,

@@ -39,9 +39,10 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 'Single set of data studying Halobacterium salinarum (tax_id=64091)
+      strain: by Debnath Ghosal and is a part of Caltech Jensen lab etdb.'
     deposition_identifier: 10052
-    deposition_title: TBA
+    deposition_title: 'Halobacterium salinarum (tax_id=64091) strain: by Debnath Ghosal'
     deposition_types:
     - dataset
   sources:

@@ -27,7 +27,7 @@ URI: [cdp-meta:cell_type](metadatacell_type)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: cell_type
 domain_of:
 - ExperimentMetadata
 - Dataset
-range: string
+range: Any
 
 ```
 </details>

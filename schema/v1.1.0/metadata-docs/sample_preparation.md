@@ -27,7 +27,7 @@ URI: [cdp-meta:sample_preparation](metadatasample_preparation)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: sample_preparation
 domain_of:
 - ExperimentMetadata
 - Dataset
-range: string
+range: Any
 
 ```
 </details>

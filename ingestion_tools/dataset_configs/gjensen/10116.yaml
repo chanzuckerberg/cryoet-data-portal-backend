@@ -38,9 +38,11 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 2 sets of data studying Nitrosopumilus maritimus collected
+      by Rasika Ramdasi and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10027
-    deposition_title: TBA
+    deposition_title: Nitrosopumilus maritimus (tax_id=338192) strain:None by Rasika
+      Ramdasi
     deposition_types:
     - dataset
   sources:

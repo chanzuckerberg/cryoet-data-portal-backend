@@ -37,10 +37,13 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1091/mbc.E12-11-0785
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 'Single set of data studying CHMP1B tubes (tax_id=9606)
+      strain: by Zhiheng Yu and is a part of Caltech Jensen lab etdb.'
     deposition_identifier: 10041
-    deposition_title: TBA
+    deposition_title: 'CHMP1B tubes (tax_id=9606) strain: by Zhiheng Yu'
     deposition_types:
     - dataset
   sources:

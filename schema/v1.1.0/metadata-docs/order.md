@@ -27,7 +27,7 @@ URI: [cdp-meta:order](metadataorder)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: order
 domain_of:
 - AnnotationOrientedPointFile
 - AnnotationInstanceSegmentationFile
-range: string
+range: Any
 
 ```
 </details>

@@ -27,7 +27,7 @@ URI: [cdp-meta:filter_value](metadatafilter_value)
 
 ## Properties
 
-* Range: [String](String.md)
+* Range: [Any](Any.md)
 
 
 
@@ -61,7 +61,7 @@ alias: filter_value
 domain_of:
 - AnnotationOrientedPointFile
 - AnnotationInstanceSegmentationFile
-range: string
+range: Any
 
 ```
 </details>

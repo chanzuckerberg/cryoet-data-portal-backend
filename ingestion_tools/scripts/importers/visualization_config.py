@@ -26,7 +26,7 @@ class VisualizationConfigImporter(BaseImporter):
 
     def import_item(self) -> None:
         ng_contents = self._create_config()
-        meta = NeuroglancerMetadata(self.config.fs, self.config.deposition_id, ng_contents)
+        meta = NeuroglancerMetadata(self.config.fs, self.get_deposition().name, ng_contents)
         dest_file = self.get_output_path()
         meta.write_metadata(dest_file)
 
