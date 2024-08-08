@@ -10,6 +10,8 @@ from peewee import (
 )
 from playhouse.postgres_ext import ArrayField, JSONField
 
+from common.formats import json_dumps
+
 db = PostgresqlDatabase(None)
 
 
@@ -215,7 +217,7 @@ class Annotation(BaseModel):
     ground_truth_used = CharField()
     is_curator_recommended = BooleanField(default=False)
     method_type = CharField()
-    method_links = JSONField(null=True)
+    method_links = JSONField(null=True, dumps=json_dumps)
     deposition_id = IntegerField(null=True)
 
 
