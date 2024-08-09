@@ -52,7 +52,6 @@ from typing_extensions import TypedDict
 import enum
 from support.enums import alignment_type_enum
 
-
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
@@ -271,6 +270,7 @@ Define Strawberry GQL types
 ------------------------------------------------------------------------------
 """
 
+
 """
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
@@ -348,7 +348,7 @@ Define Alignment type
 """
 
 
-@strawberry.type
+@strawberry.type(description="Tiltseries Alignment")
 class Alignment(EntityInterface):
     annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = (
         load_annotation_file_rows
@@ -380,18 +380,34 @@ class Alignment(EntityInterface):
         load_tomogram_aggregate_rows
     )  # type:ignore
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
-    alignment: str
-    alignment_type: Optional[alignment_type_enum] = None
-    volume_x_dimension: Optional[float] = None
-    volume_y_dimension: Optional[float] = None
-    volume_z_dimension: Optional[float] = None
-    volume_x_offset: Optional[float] = None
-    volume_y_offset: Optional[float] = None
-    volume_z_offset: Optional[float] = None
-    volume_x_rotation: Optional[float] = None
-    tilt_offset: Optional[float] = None
-    local_alignment_file: Optional[str] = None
-    id: int
+    alignment: Optional[str] = strawberry.field(description="Describe a tiltseries alignment")
+    alignment_type: Optional[alignment_type_enum] = strawberry.field(
+        description="Type of alignment included, i.e. is a non-rigid alignment included?", default=None
+    )
+    volume_x_dimension: float = strawberry.field(
+        description="X dimension of the reconstruction volume in angstrom", default=None
+    )
+    volume_y_dimension: float = strawberry.field(
+        description="Y dimension of the reconstruction volume in angstrom", default=None
+    )
+    volume_z_dimension: float = strawberry.field(
+        description="Z dimension of the reconstruction volume in angstrom", default=None
+    )
+    volume_x_offset: float = strawberry.field(
+        description="X shift of the reconstruction volume in angstrom", default=None
+    )
+    volume_y_offset: float = strawberry.field(
+        description="Y shift of the reconstruction volume in angstrom", default=None
+    )
+    volume_z_offset: float = strawberry.field(
+        description="Z shift of the reconstruction volume in angstrom", default=None
+    )
+    volume_x_rotation: float = strawberry.field(
+        description="Additional X rotation of the reconstruction volume in degrees", default=None
+    )
+    tilt_offset: float = strawberry.field(description="Additional tilt offset in degrees", default=None)
+    local_alignment_file: str = strawberry.field(description="Path to the local alignment file", default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -513,40 +529,72 @@ Mutation types
 
 @strawberry.input()
 class AlignmentCreateInput:
-    deposition_id: Optional[strawberry.ID] = None
-    tiltseries_id: Optional[strawberry.ID] = None
-    run_id: Optional[strawberry.ID] = None
-    alignment: str
-    alignment_type: Optional[alignment_type_enum] = None
-    volume_x_dimension: Optional[float] = None
-    volume_y_dimension: Optional[float] = None
-    volume_z_dimension: Optional[float] = None
-    volume_x_offset: Optional[float] = None
-    volume_y_offset: Optional[float] = None
-    volume_z_offset: Optional[float] = None
-    volume_x_rotation: Optional[float] = None
-    tilt_offset: Optional[float] = None
-    local_alignment_file: Optional[str] = None
-    id: int
+    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    tiltseries_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    alignment: str = strawberry.field(description="Describe a tiltseries alignment")
+    alignment_type: Optional[alignment_type_enum] = strawberry.field(
+        description="Type of alignment included, i.e. is a non-rigid alignment included?", default=None
+    )
+    volume_x_dimension: Optional[float] = strawberry.field(
+        description="X dimension of the reconstruction volume in angstrom", default=None
+    )
+    volume_y_dimension: Optional[float] = strawberry.field(
+        description="Y dimension of the reconstruction volume in angstrom", default=None
+    )
+    volume_z_dimension: Optional[float] = strawberry.field(
+        description="Z dimension of the reconstruction volume in angstrom", default=None
+    )
+    volume_x_offset: Optional[float] = strawberry.field(
+        description="X shift of the reconstruction volume in angstrom", default=None
+    )
+    volume_y_offset: Optional[float] = strawberry.field(
+        description="Y shift of the reconstruction volume in angstrom", default=None
+    )
+    volume_z_offset: Optional[float] = strawberry.field(
+        description="Z shift of the reconstruction volume in angstrom", default=None
+    )
+    volume_x_rotation: Optional[float] = strawberry.field(
+        description="Additional X rotation of the reconstruction volume in degrees", default=None
+    )
+    tilt_offset: Optional[float] = strawberry.field(description="Additional tilt offset in degrees", default=None)
+    local_alignment_file: Optional[str] = strawberry.field(description="Path to the local alignment file", default=None)
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
 class AlignmentUpdateInput:
-    deposition_id: Optional[strawberry.ID] = None
-    tiltseries_id: Optional[strawberry.ID] = None
-    run_id: Optional[strawberry.ID] = None
-    alignment: Optional[str] = None
-    alignment_type: Optional[alignment_type_enum] = None
-    volume_x_dimension: Optional[float] = None
-    volume_y_dimension: Optional[float] = None
-    volume_z_dimension: Optional[float] = None
-    volume_x_offset: Optional[float] = None
-    volume_y_offset: Optional[float] = None
-    volume_z_offset: Optional[float] = None
-    volume_x_rotation: Optional[float] = None
-    tilt_offset: Optional[float] = None
-    local_alignment_file: Optional[str] = None
-    id: Optional[int] = None
+    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    tiltseries_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    alignment: Optional[str] = strawberry.field(description="Describe a tiltseries alignment")
+    alignment_type: Optional[alignment_type_enum] = strawberry.field(
+        description="Type of alignment included, i.e. is a non-rigid alignment included?", default=None
+    )
+    volume_x_dimension: Optional[float] = strawberry.field(
+        description="X dimension of the reconstruction volume in angstrom", default=None
+    )
+    volume_y_dimension: Optional[float] = strawberry.field(
+        description="Y dimension of the reconstruction volume in angstrom", default=None
+    )
+    volume_z_dimension: Optional[float] = strawberry.field(
+        description="Z dimension of the reconstruction volume in angstrom", default=None
+    )
+    volume_x_offset: Optional[float] = strawberry.field(
+        description="X shift of the reconstruction volume in angstrom", default=None
+    )
+    volume_y_offset: Optional[float] = strawberry.field(
+        description="Y shift of the reconstruction volume in angstrom", default=None
+    )
+    volume_z_offset: Optional[float] = strawberry.field(
+        description="Z shift of the reconstruction volume in angstrom", default=None
+    )
+    volume_x_rotation: Optional[float] = strawberry.field(
+        description="Additional X rotation of the reconstruction volume in degrees", default=None
+    )
+    tilt_offset: Optional[float] = strawberry.field(description="Additional tilt offset in degrees", default=None)
+    local_alignment_file: Optional[str] = strawberry.field(description="Path to the local alignment file", default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

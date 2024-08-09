@@ -15,11 +15,15 @@ resourcePolicy:
 
     - actions: ['create', 'update']
       effect: EFFECT_DENY
+      roles:
+        - user
       derivedRoles:
         - anonymous
 
     - actions: ['download', 'delete']
       effect: EFFECT_DENY
+      roles:
+        - user
       derivedRoles:
         - anonymous
   schemas:

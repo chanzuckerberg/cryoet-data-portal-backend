@@ -7,6 +7,88 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+{%- set type_map = {
+    "uuid": "strawberry.ID",
+    "string": "str",
+    "Array2dFloat": "List[List[float]]",
+    "integer": "int",
+    "float": "float",
+    "boolean": "bool",
+    "date": "datetime.datetime",
+} %}
+{# Macro to print field description argument #}
+{%- macro getDescription(attr) -%}
+= strawberry.field(description={{ attr.description }}{%- if not attr.required -%}, default=None{%- endif -%})
+{%- endmacro %}
+
+{# Macro for mutations to output X or Optional[X] #}
+{% macro getTypeMutation(action, type, required) -%}
+    {%- if action == "Create" and required -%}
+      {{ type }}
+    {%- else -%}
+      Optional[{{ type }}]
+    {%- endif -%}
+{%- endmacro %}
+{# Macro to generate comparators for types #}
+{%- macro getComparators(field) -%}
+  {%- if field.type == "uuid" -%}
+    UUIDComparators
+  {%- elif field.type == "string" -%}
+    StrComparators
+  {%- elif field.type == "Array2dFloat" -%}
+    JSONB
+  {%- elif field.type == "integer" -%}
+    IntComparators
+  {%- elif field.type == "float" -%}
+    FloatComparators
+  {%- elif field.is_enum -%}
+    EnumComparators[{{ field.type }}]
+  {%- elif field.type == "boolean" -%}
+    BoolComparators
+  {%- elif field.type == "date" -%}
+    DatetimeComparators
+  {%- elif field.inverse -%}
+    Annotated["{{ field.type }}WhereClause", strawberry.lazy("graphql_api.types.{{ field.related_class.snake_name }}")]
+  {%- elif field.inverse -%}
+  {%- endif -%}
+{%- endmacro %}
+{# Macro to output "X" or "Optional[X]" #}
+{% macro getType(type, required) -%}
+    {%- if required %} {{ type }}
+    {%- else %} Optional[{{ type }}]
+    {%- endif %}
+{%- endmacro %}
+{# Macro to output a whole field definition for standard types #}
+{% macro getFieldDef(attr) -%}
+    {{ attr.name }}: {% if attr.required -%}Optional[{%- endif -%}{{ type_map[attr.type] }}{%- if attr.required -%}]{%- endif %} {{ getDescription(attr) }}
+{%- endmacro %}
+{# Macro to generate mutation input fields #}
+{% macro getInputFields(action, fields) -%}
+    {%- for attr in fields %}
+        {%- if attr.type == "string" %}
+    {{ attr.name }}: {{ getTypeMutation(action, "str", attr.required) }} {{ getDescription(attr) }}
+        {%- elif attr.type == "uuid" %}
+    {{ attr.name }}: {{ getTypeMutation(action, "strawberry.ID", attr.required) }} {{ getDescription(attr) }}
+        {%- elif attr.type == "Array2dFloat" %}
+    {{ attr.name }}: {{ getTypeMutation(action, "List[List[float]]", attr.required) }} {{ getDescription(attr) }}
+        {%- elif attr.is_enum %}
+    {{ attr.name }}: {{ getTypeMutation(action, attr.type, attr.required) }} {{ getDescription(attr) }}
+        {%- elif attr.type == "integer" %}
+    {{ attr.name }}: {{ getTypeMutation(action, "int", attr.required) }} {{ getDescription(attr) }}
+        {%- elif attr.type == "float" %}
+    {{ attr.name }}: {{ getTypeMutation(action, "float", attr.required) }} {{ getDescription(attr) }}
+        {%- elif attr.type == "boolean" %}
+    {{ attr.name }}: {{ getTypeMutation(action, "bool", attr.required) }} {{ getDescription(attr) }}
+        {%- elif attr.type == "date" %}
+    {{ attr.name }}: {{ getTypeMutation(action, "datetime.datetime", attr.required) }} {{ getDescription(attr) }}
+        {%- elif attr.type == "File" %}
+    {{ attr.name }}_id: {{ getTypeMutation(action, "strawberry.ID", attr.required) }} {{ getDescription(attr) }}
+        {%- elif attr.is_entity and not attr.is_virtual_relationship %} {# Don't include multivalued fields, only fields where we can update an ID #}
+    {{ attr.name }}_id: {{ getTypeMutation(action, "strawberry.ID", attr.required) }} {{ getDescription(attr) }}
+        {%- endif %}
+    {%- endfor %}
+{%- endmacro %}
+
 {% set related_fields = cls.related_fields | unique(attribute='related_class.name') | list %}
 {% set ignored_fields = [cls.name] %}
 
@@ -57,7 +139,6 @@ from support.enums import
     {{- field.type}}
     {{- "," if not loop.last else "" }}
 {%- endfor %}
-
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
@@ -175,28 +256,6 @@ Define Strawberry GQL types
 ------------------------------------------------------------------------------
 """
 
-{%- macro getComparators(field) -%}
-  {%- if field.type == "uuid" -%}
-    UUIDComparators
-  {%- elif field.type == "string" -%}
-    StrComparators
-  {%- elif field.type == "Array2dFloat" -%}
-    JSONB
-  {%- elif field.type == "integer" -%}
-    IntComparators
-  {%- elif field.type == "float" -%}
-    FloatComparators
-  {%- elif field.is_enum -%}
-    EnumComparators[{{ field.type }}]
-  {%- elif field.type == "boolean" -%}
-    BoolComparators
-  {%- elif field.type == "date" -%}
-    DatetimeComparators
-  {%- elif field.inverse -%}
-    Annotated["{{ field.type }}WhereClause", strawberry.lazy("graphql_api.types.{{ field.related_class.snake_name }}")]
-  {%- elif field.inverse -%}
-  {%- endif -%}
-{%- endmacro %}
 
 """
 Only let users specify IDs in WHERE clause when mutating data (for safety).
@@ -240,35 +299,15 @@ class {{ cls.name }}OrderByClause(TypedDict):
         {%- endif %}
     {%- endfor %}
 
-{# Macro to output "X" or "Optional[X]" #}
-{% macro getType(type, required) -%}
-    {%- if required %} {{ type }}
-    {%- else %} Optional[{{ type }}] = None
-    {%- endif %}
-{%- endmacro %}
 
 """
 Define {{ cls.name }} type
 """
-@strawberry.type
+@strawberry.type(description={{ cls.description }})
 class {{ cls.name }}(EntityInterface):
     {%- for attr in cls.visible_fields %}
-        {%- if attr.type == "uuid" %}
-    {{ attr.name }}: {{ getType("strawberry.ID", attr.required) }}
-        {%- elif attr.type == "string" %}
-    {{ attr.name }}: {{ getType("str", attr.required) }}
-        {%- elif attr.type == "Array2dFloat" %}
-    {{ attr.name }}: {{ getType("List[List[float]]", attr.required) }}
-        {%- elif attr.is_enum %}
-    {{ attr.name }}: {{ getType(attr.type, attr.required) }}
-        {%- elif attr.type == "integer" %}
-    {{ attr.name }}: {{ getType("int", attr.required) }}
-        {%- elif attr.type == "float" %}
-    {{ attr.name }}: {{ getType("float", attr.required) }}
-        {%- elif attr.type == "boolean" %}
-    {{ attr.name }}: {{ getType("bool", attr.required) }}
-        {%- elif attr.type == "date" %}
-    {{ attr.name }}: {{ getType("datetime.datetime", attr.required) }}
+        {%- if attr.is_enum %}
+    {{ attr.name }}: {{ getType(attr.type, attr.required) }} {{ getDescription(attr) }}
         {%- elif attr.type == "File" %}
     {{ attr.name }}_id: Optional[strawberry.ID]
     {{ attr.name }}: Optional[Annotated["File", strawberry.lazy("platformics.graphql_api.files")]] = load_files_from("{{ attr.name }}")  # type: ignore
@@ -279,6 +318,8 @@ class {{ cls.name }}(EntityInterface):
             {%- if attr.multivalued %}
     {{ attr.name }}_aggregate : Optional[Annotated["{{ attr.related_class.name }}Aggregate", strawberry.lazy("graphql_api.types.{{ attr.related_class.snake_name }}")]] = load_{{ attr.related_class.snake_name }}_aggregate_rows  # type:ignore
             {%- endif %}
+        {%- else %}
+    {{ getFieldDef(attr) }}
         {%- endif %}
     {%- endfor %}
 
@@ -304,9 +345,9 @@ Define columns that support numerical aggregations
 class {{ cls.name }}NumericalColumns:
     {%- for attr in cls.numeric_fields %}
         {%- if attr.type == "integer" %}
-    {{ attr.name }}: {{ getType("int", False) }}
+    {{ attr.name }}: {{ getType("int", False) }} = None
         {%- elif attr.type == "float" %}
-    {{ attr.name }}: {{ getType("float", False) }}
+    {{ attr.name }}: {{ getType("float", False) }} = None
         {%- endif %}
     {%- endfor %}
 {%- endif %}
@@ -318,13 +359,13 @@ Define columns that support min/max aggregations
 class {{ cls.name }}MinMaxColumns:
     {%- for attr in cls.visible_fields %}
         {%- if attr.type == "integer" %}
-    {{ attr.name }}: {{ getType("int", False) }}
+    {{ attr.name }}: {{ getType("int", False) }} = None
         {%- elif attr.type == "float" %}
-    {{ attr.name }}: {{ getType("float", False) }}
+    {{ attr.name }}: {{ getType("float", False) }} = None
         {%- elif attr.type == "string" %}
-    {{ attr.name }}: {{ getType("str", False) }}
+    {{ attr.name }}: {{ getType("str", False) }} = None
         {%- elif attr.type == "date" %}
-    {{ attr.name }}: {{ getType("datetime.datetime", False) }}
+    {{ attr.name }}: {{ getType("datetime.datetime", False) }} = None
         {%- endif %}
     {%- endfor %}
 
@@ -369,38 +410,6 @@ class {{ cls.name }}Aggregate:
 Mutation types
 ------------------------------------------------------------------------------
 """
-{# Macro for mutations to output X or Optional[X] #}
-{% macro getTypeMutation(action, type, required) -%}
-    {%- if action == "Create" and required %} {{ type }}
-    {%- else %} Optional[{{ type }}] = None
-    {%- endif %}
-{%- endmacro %}
-
-{% macro getInputFields(action, fields) -%}
-    {%- for attr in fields %}
-        {%- if attr.type == "string" %}
-    {{ attr.name }}: {{ getTypeMutation(action, "str", attr.required) }}
-        {%- elif attr.type == "uuid" %}
-    {{ attr.name }}: {{ getTypeMutation(action, "strawberry.ID", attr.required) }}
-        {%- elif attr.type == "Array2dFloat" %}
-    {{ attr.name }}: {{ getTypeMutation(action, "List[List[float]]", attr.required) }}
-        {%- elif attr.is_enum %}
-    {{ attr.name }}: {{ getTypeMutation(action, attr.type, attr.required) }}
-        {%- elif attr.type == "integer" %}
-    {{ attr.name }}: {{ getTypeMutation(action, "int", attr.required) }}
-        {%- elif attr.type == "float" %}
-    {{ attr.name }}: {{ getTypeMutation(action, "float", attr.required) }}
-        {%- elif attr.type == "boolean" %}
-    {{ attr.name }}: {{ getTypeMutation(action, "bool", attr.required) }}
-        {%- elif attr.type == "date" %}
-    {{ attr.name }}: {{ getTypeMutation(action, "datetime.datetime", attr.required) }}
-        {%- elif attr.type == "File" %}
-    {{ attr.name }}_id: {{ getTypeMutation(action, "strawberry.ID", attr.required) }}
-        {%- elif attr.is_entity and not attr.is_virtual_relationship %} {# Don't include multivalued fields, only fields where we can update an ID #}
-    {{ attr.name }}_id: {{ getTypeMutation(action, "strawberry.ID", attr.required) }}
-        {%- endif %}
-    {%- endfor %}
-{%- endmacro %}
 
 {# Generate Create and Update Strawberry input types #}
 {%- if cls.create_fields %}

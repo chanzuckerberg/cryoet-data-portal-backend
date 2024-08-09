@@ -47,7 +47,6 @@ from typing_extensions import TypedDict
 import enum
 from support.enums import annotation_file_shape_type_enum
 
-
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
@@ -129,6 +128,7 @@ Define Strawberry GQL types
 ------------------------------------------------------------------------------
 """
 
+
 """
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
@@ -172,7 +172,7 @@ Define AnnotationShape type
 """
 
 
-@strawberry.type
+@strawberry.type(description="Shapes associated with an annotation")
 class AnnotationShape(EntityInterface):
     annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
         load_annotation_rows
@@ -183,8 +183,8 @@ class AnnotationShape(EntityInterface):
     annotation_files_aggregate: Optional[
         Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]
     ] = load_annotation_file_aggregate_rows  # type:ignore
-    shape_type: Optional[annotation_file_shape_type_enum] = None
-    id: int
+    shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(description=None, default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -276,16 +276,20 @@ Mutation types
 
 @strawberry.input()
 class AnnotationShapeCreateInput:
-    annotation_id: Optional[strawberry.ID] = None
-    shape_type: Optional[annotation_file_shape_type_enum] = None
-    id: int
+    annotation_id: Optional[strawberry.ID] = strawberry.field(
+        description="Metadata about an annotation for a run", default=None
+    )
+    shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(description=None, default=None)
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
 class AnnotationShapeUpdateInput:
-    annotation_id: Optional[strawberry.ID] = None
-    shape_type: Optional[annotation_file_shape_type_enum] = None
-    id: Optional[int] = None
+    annotation_id: Optional[strawberry.ID] = strawberry.field(
+        description="Metadata about an annotation for a run", default=None
+    )
+    shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(description=None, default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

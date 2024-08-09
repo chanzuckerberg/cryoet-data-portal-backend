@@ -48,7 +48,6 @@ from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
 import enum
 
-
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
@@ -109,6 +108,7 @@ Define Strawberry GQL types
 ------------------------------------------------------------------------------
 """
 
+
 """
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
@@ -157,17 +157,17 @@ Define PerSectionParameters type
 """
 
 
-@strawberry.type
+@strawberry.type(description="Record how frames get mapped to TiltSeries")
 class PerSectionParameters(EntityInterface):
     frame: Optional[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]] = load_frame_rows  # type:ignore
     tiltseries: Optional[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
         load_tiltseries_rows
     )  # type:ignore
-    z_index: int
-    defocus: Optional[float] = None
-    astigmatism: Optional[float] = None
-    astigmatic_angle: Optional[float] = None
-    id: int
+    z_index: Optional[int] = strawberry.field(description="z-index of the frame in the tiltseries")
+    defocus: float = strawberry.field(description="defocus amount", default=None)
+    astigmatism: float = strawberry.field(description="Astigmatism amount for this frame", default=None)
+    astigmatic_angle: float = strawberry.field(description="Angle of ast", default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -270,24 +270,24 @@ Mutation types
 
 @strawberry.input()
 class PerSectionParametersCreateInput:
-    frame_id: strawberry.ID
-    tiltseries_id: strawberry.ID
-    z_index: int
-    defocus: Optional[float] = None
-    astigmatism: Optional[float] = None
-    astigmatic_angle: Optional[float] = None
-    id: int
+    frame_id: strawberry.ID = strawberry.field(description=None)
+    tiltseries_id: strawberry.ID = strawberry.field(description=None)
+    z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
+    defocus: Optional[float] = strawberry.field(description="defocus amount", default=None)
+    astigmatism: Optional[float] = strawberry.field(description="Astigmatism amount for this frame", default=None)
+    astigmatic_angle: Optional[float] = strawberry.field(description="Angle of ast", default=None)
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
 class PerSectionParametersUpdateInput:
-    frame_id: Optional[strawberry.ID] = None
-    tiltseries_id: Optional[strawberry.ID] = None
-    z_index: Optional[int] = None
-    defocus: Optional[float] = None
-    astigmatism: Optional[float] = None
-    astigmatic_angle: Optional[float] = None
-    id: Optional[int] = None
+    frame_id: Optional[strawberry.ID] = strawberry.field(description=None)
+    tiltseries_id: Optional[strawberry.ID] = strawberry.field(description=None)
+    z_index: Optional[int] = strawberry.field(description="z-index of the frame in the tiltseries")
+    defocus: Optional[float] = strawberry.field(description="defocus amount", default=None)
+    astigmatism: Optional[float] = strawberry.field(description="Astigmatism amount for this frame", default=None)
+    astigmatic_angle: Optional[float] = strawberry.field(description="Angle of ast", default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

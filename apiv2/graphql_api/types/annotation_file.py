@@ -46,7 +46,6 @@ from typing_extensions import TypedDict
 import enum
 from support.enums import annotation_file_source_enum
 
-
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
@@ -140,6 +139,7 @@ Define Strawberry GQL types
 ------------------------------------------------------------------------------
 """
 
+
 """
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
@@ -207,7 +207,7 @@ Define AnnotationFile type
 """
 
 
-@strawberry.type
+@strawberry.type(description="Files associated with an annotation")
 class AnnotationFile(EntityInterface):
     alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
         load_alignment_rows
@@ -218,12 +218,16 @@ class AnnotationFile(EntityInterface):
     tomogram_voxel_spacing: Optional[
         Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
     ] = load_tomogram_voxel_spacing_rows  # type:ignore
-    format: str
-    s3_path: str
-    https_path: str
-    is_visualization_default: Optional[bool] = None
-    source: Optional[annotation_file_source_enum] = None
-    id: int
+    format: Optional[str] = strawberry.field(description="File format label")
+    s3_path: Optional[str] = strawberry.field(description="Path to the file in s3")
+    https_path: Optional[str] = strawberry.field(description="Path to the file as an https url")
+    is_visualization_default: bool = strawberry.field(
+        description="This annotation will be rendered in neuroglancer by default.", default=None
+    )
+    source: Optional[annotation_file_source_enum] = strawberry.field(
+        description="The source type for the annotation file", default=None
+    )
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -323,28 +327,44 @@ Mutation types
 
 @strawberry.input()
 class AnnotationFileCreateInput:
-    alignment_id: Optional[strawberry.ID] = None
-    annotation_shape_id: Optional[strawberry.ID] = None
-    tomogram_voxel_spacing_id: Optional[strawberry.ID] = None
-    format: str
-    s3_path: str
-    https_path: str
-    is_visualization_default: Optional[bool] = None
-    source: Optional[annotation_file_source_enum] = None
-    id: int
+    alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment", default=None)
+    annotation_shape_id: Optional[strawberry.ID] = strawberry.field(
+        description="Shapes associated with an annotation", default=None
+    )
+    tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
+        description="Voxel spacings for a run", default=None
+    )
+    format: str = strawberry.field(description="File format label")
+    s3_path: str = strawberry.field(description="Path to the file in s3")
+    https_path: str = strawberry.field(description="Path to the file as an https url")
+    is_visualization_default: Optional[bool] = strawberry.field(
+        description="This annotation will be rendered in neuroglancer by default.", default=None
+    )
+    source: Optional[annotation_file_source_enum] = strawberry.field(
+        description="The source type for the annotation file", default=None
+    )
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
 class AnnotationFileUpdateInput:
-    alignment_id: Optional[strawberry.ID] = None
-    annotation_shape_id: Optional[strawberry.ID] = None
-    tomogram_voxel_spacing_id: Optional[strawberry.ID] = None
-    format: Optional[str] = None
-    s3_path: Optional[str] = None
-    https_path: Optional[str] = None
-    is_visualization_default: Optional[bool] = None
-    source: Optional[annotation_file_source_enum] = None
-    id: Optional[int] = None
+    alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment", default=None)
+    annotation_shape_id: Optional[strawberry.ID] = strawberry.field(
+        description="Shapes associated with an annotation", default=None
+    )
+    tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
+        description="Voxel spacings for a run", default=None
+    )
+    format: Optional[str] = strawberry.field(description="File format label")
+    s3_path: Optional[str] = strawberry.field(description="Path to the file in s3")
+    https_path: Optional[str] = strawberry.field(description="Path to the file as an https url")
+    is_visualization_default: Optional[bool] = strawberry.field(
+        description="This annotation will be rendered in neuroglancer by default.", default=None
+    )
+    source: Optional[annotation_file_source_enum] = strawberry.field(
+        description="The source type for the annotation file", default=None
+    )
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

@@ -46,7 +46,6 @@ from typing_extensions import TypedDict
 import enum
 from support.enums import deposition_types_enum
 
-
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
@@ -90,6 +89,7 @@ Define Strawberry GQL types
 ------------------------------------------------------------------------------
 """
 
+
 """
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
@@ -130,13 +130,13 @@ Define DepositionType type
 """
 
 
-@strawberry.type
+@strawberry.type(description=None)
 class DepositionType(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
-    type: Optional[deposition_types_enum] = None
-    id: int
+    type: Optional[deposition_types_enum] = strawberry.field(description=None, default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -227,16 +227,16 @@ Mutation types
 
 @strawberry.input()
 class DepositionTypeCreateInput:
-    deposition_id: Optional[strawberry.ID] = None
-    type: Optional[deposition_types_enum] = None
-    id: int
+    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    type: Optional[deposition_types_enum] = strawberry.field(description=None, default=None)
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
 class DepositionTypeUpdateInput:
-    deposition_id: Optional[strawberry.ID] = None
-    type: Optional[deposition_types_enum] = None
-    id: Optional[int] = None
+    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    type: Optional[deposition_types_enum] = strawberry.field(description=None, default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

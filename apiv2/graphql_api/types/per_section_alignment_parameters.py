@@ -48,7 +48,6 @@ from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
 import enum
 
-
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
@@ -89,6 +88,7 @@ async def load_alignment_rows(
 Define Strawberry GQL types
 ------------------------------------------------------------------------------
 """
+
 
 """
 Only let users specify IDs in WHERE clause when mutating data (for safety).
@@ -140,18 +140,20 @@ Define PerSectionAlignmentParameters type
 """
 
 
-@strawberry.type
+@strawberry.type(description="Map alignment parameters to tilt series frames")
 class PerSectionAlignmentParameters(EntityInterface):
     alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
         load_alignment_rows
     )  # type:ignore
-    z_index: int
-    x_offset: Optional[float] = None
-    y_offset: Optional[float] = None
-    in_plane_rotation: Optional[float] = None
-    beam_tilt: Optional[float] = None
-    tilt_angle: Optional[float] = None
-    id: int
+    z_index: Optional[int] = strawberry.field(description="z-index of the frame in the tiltseries")
+    x_offset: float = strawberry.field(description="In-plane X-shift of the projection in angstrom", default=None)
+    y_offset: float = strawberry.field(description="In-plane Y-shift of the projection in angstrom", default=None)
+    in_plane_rotation: float = strawberry.field(
+        description="In-plane rotation of the projection in degrees", default=None
+    )
+    beam_tilt: float = strawberry.field(description="Beam tilt during projection in degrees", default=None)
+    tilt_angle: float = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -259,26 +261,38 @@ Mutation types
 
 @strawberry.input()
 class PerSectionAlignmentParametersCreateInput:
-    alignment_id: strawberry.ID
-    z_index: int
-    x_offset: Optional[float] = None
-    y_offset: Optional[float] = None
-    in_plane_rotation: Optional[float] = None
-    beam_tilt: Optional[float] = None
-    tilt_angle: Optional[float] = None
-    id: int
+    alignment_id: strawberry.ID = strawberry.field(description="Tiltseries Alignment")
+    z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
+    x_offset: Optional[float] = strawberry.field(
+        description="In-plane X-shift of the projection in angstrom", default=None
+    )
+    y_offset: Optional[float] = strawberry.field(
+        description="In-plane Y-shift of the projection in angstrom", default=None
+    )
+    in_plane_rotation: Optional[float] = strawberry.field(
+        description="In-plane rotation of the projection in degrees", default=None
+    )
+    beam_tilt: Optional[float] = strawberry.field(description="Beam tilt during projection in degrees", default=None)
+    tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
 class PerSectionAlignmentParametersUpdateInput:
-    alignment_id: Optional[strawberry.ID] = None
-    z_index: Optional[int] = None
-    x_offset: Optional[float] = None
-    y_offset: Optional[float] = None
-    in_plane_rotation: Optional[float] = None
-    beam_tilt: Optional[float] = None
-    tilt_angle: Optional[float] = None
-    id: Optional[int] = None
+    alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment")
+    z_index: Optional[int] = strawberry.field(description="z-index of the frame in the tiltseries")
+    x_offset: Optional[float] = strawberry.field(
+        description="In-plane X-shift of the projection in angstrom", default=None
+    )
+    y_offset: Optional[float] = strawberry.field(
+        description="In-plane Y-shift of the projection in angstrom", default=None
+    )
+    in_plane_rotation: Optional[float] = strawberry.field(
+        description="In-plane rotation of the projection in degrees", default=None
+    )
+    beam_tilt: Optional[float] = strawberry.field(description="Beam tilt during projection in degrees", default=None)
+    tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

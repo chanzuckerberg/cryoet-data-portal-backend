@@ -50,7 +50,6 @@ from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
 import enum
 
-
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
@@ -164,6 +163,7 @@ Define Strawberry GQL types
 ------------------------------------------------------------------------------
 """
 
+
 """
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
@@ -212,7 +212,7 @@ Define TomogramVoxelSpacing type
 """
 
 
-@strawberry.type
+@strawberry.type(description="Voxel spacings for a run")
 class TomogramVoxelSpacing(EntityInterface):
     annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = (
         load_annotation_file_rows
@@ -227,10 +227,14 @@ class TomogramVoxelSpacing(EntityInterface):
     tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
         load_tomogram_aggregate_rows
     )  # type:ignore
-    voxel_spacing: float
-    s3_prefix: str
-    https_prefix: str
-    id: int
+    voxel_spacing: Optional[float] = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
+    s3_prefix: Optional[str] = strawberry.field(
+        description="Path to a directory containing data for this entity as an S3 url"
+    )
+    https_prefix: Optional[str] = strawberry.field(
+        description="Path to a directory containing data for this entity as an HTTPS url"
+    )
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -329,20 +333,26 @@ Mutation types
 
 @strawberry.input()
 class TomogramVoxelSpacingCreateInput:
-    run_id: Optional[strawberry.ID] = None
-    voxel_spacing: float
-    s3_prefix: str
-    https_prefix: str
-    id: int
+    run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    voxel_spacing: float = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
+    s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
+    https_prefix: str = strawberry.field(
+        description="Path to a directory containing data for this entity as an HTTPS url"
+    )
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
 class TomogramVoxelSpacingUpdateInput:
-    run_id: Optional[strawberry.ID] = None
-    voxel_spacing: Optional[float] = None
-    s3_prefix: Optional[str] = None
-    https_prefix: Optional[str] = None
-    id: Optional[int] = None
+    run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    voxel_spacing: Optional[float] = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
+    s3_prefix: Optional[str] = strawberry.field(
+        description="Path to a directory containing data for this entity as an S3 url"
+    )
+    https_prefix: Optional[str] = strawberry.field(
+        description="Path to a directory containing data for this entity as an HTTPS url"
+    )
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

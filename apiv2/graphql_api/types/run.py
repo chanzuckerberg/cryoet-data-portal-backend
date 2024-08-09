@@ -54,7 +54,6 @@ from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
 import enum
 
-
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
@@ -318,6 +317,7 @@ Define Strawberry GQL types
 ------------------------------------------------------------------------------
 """
 
+
 """
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
@@ -373,7 +373,7 @@ Define Run type
 """
 
 
-@strawberry.type
+@strawberry.type(description=None)
 class Run(EntityInterface):
     alignments: Sequence[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
         load_alignment_rows
@@ -412,10 +412,14 @@ class Run(EntityInterface):
     tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
         load_tomogram_aggregate_rows
     )  # type:ignore
-    name: str
-    s3_prefix: str
-    https_prefix: str
-    id: int
+    name: Optional[str] = strawberry.field(description="Name of a run")
+    s3_prefix: Optional[str] = strawberry.field(
+        description="Path to a directory containing data for this entity as an S3 url"
+    )
+    https_prefix: Optional[str] = strawberry.field(
+        description="Path to a directory containing data for this entity as an HTTPS url"
+    )
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -513,20 +517,26 @@ Mutation types
 
 @strawberry.input()
 class RunCreateInput:
-    dataset_id: strawberry.ID
-    name: str
-    s3_prefix: str
-    https_prefix: str
-    id: int
+    dataset_id: strawberry.ID = strawberry.field(description="An author of a dataset")
+    name: str = strawberry.field(description="Name of a run")
+    s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
+    https_prefix: str = strawberry.field(
+        description="Path to a directory containing data for this entity as an HTTPS url"
+    )
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
 class RunUpdateInput:
-    dataset_id: Optional[strawberry.ID] = None
-    name: Optional[str] = None
-    s3_prefix: Optional[str] = None
-    https_prefix: Optional[str] = None
-    id: Optional[int] = None
+    dataset_id: Optional[strawberry.ID] = strawberry.field(description="An author of a dataset")
+    name: Optional[str] = strawberry.field(description="Name of a run")
+    s3_prefix: Optional[str] = strawberry.field(
+        description="Path to a directory containing data for this entity as an S3 url"
+    )
+    https_prefix: Optional[str] = strawberry.field(
+        description="Path to a directory containing data for this entity as an HTTPS url"
+    )
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

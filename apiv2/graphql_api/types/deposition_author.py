@@ -45,7 +45,6 @@ from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
 import enum
 
-
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
@@ -88,6 +87,7 @@ async def load_deposition_rows(
 Define Strawberry GQL types
 ------------------------------------------------------------------------------
 """
+
 
 """
 Only let users specify IDs in WHERE clause when mutating data (for safety).
@@ -145,21 +145,27 @@ Define DepositionAuthor type
 """
 
 
-@strawberry.type
+@strawberry.type(description="Author of a deposition")
 class DepositionAuthor(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
-    author_list_order: int
-    orcid: Optional[str] = None
-    name: str
-    email: Optional[str] = None
-    affiliation_name: Optional[str] = None
-    affiliation_address: Optional[str] = None
-    affiliation_identifier: Optional[str] = None
-    corresponding_author_status: Optional[bool] = None
-    primary_author_status: Optional[bool] = None
-    id: int
+    author_list_order: Optional[int] = strawberry.field(
+        description="The order that the author is listed as in the associated publication"
+    )
+    orcid: str = strawberry.field(description="The ORCID identifier for the author.", default=None)
+    name: Optional[str] = strawberry.field(description="The full name of the author.")
+    email: str = strawberry.field(description="The email address of the author.", default=None)
+    affiliation_name: str = strawberry.field(description="The name of the author's affiliation.", default=None)
+    affiliation_address: str = strawberry.field(description="The address of the author's affiliation.", default=None)
+    affiliation_identifier: str = strawberry.field(
+        description="A Research Organization Registry (ROR) identifier.", default=None
+    )
+    corresponding_author_status: bool = strawberry.field(
+        description="Whether the author is a corresponding author.", default=None
+    )
+    primary_author_status: bool = strawberry.field(description="Whether the author is a primary author.", default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -266,32 +272,56 @@ Mutation types
 
 @strawberry.input()
 class DepositionAuthorCreateInput:
-    deposition_id: Optional[strawberry.ID] = None
-    author_list_order: int
-    orcid: Optional[str] = None
-    name: str
-    email: Optional[str] = None
-    affiliation_name: Optional[str] = None
-    affiliation_address: Optional[str] = None
-    affiliation_identifier: Optional[str] = None
-    corresponding_author_status: Optional[bool] = None
-    primary_author_status: Optional[bool] = None
-    id: int
+    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    author_list_order: int = strawberry.field(
+        description="The order that the author is listed as in the associated publication"
+    )
+    orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
+    name: str = strawberry.field(description="The full name of the author.")
+    email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
+    affiliation_name: Optional[str] = strawberry.field(
+        description="The name of the author's affiliation.", default=None
+    )
+    affiliation_address: Optional[str] = strawberry.field(
+        description="The address of the author's affiliation.", default=None
+    )
+    affiliation_identifier: Optional[str] = strawberry.field(
+        description="A Research Organization Registry (ROR) identifier.", default=None
+    )
+    corresponding_author_status: Optional[bool] = strawberry.field(
+        description="Whether the author is a corresponding author.", default=None
+    )
+    primary_author_status: Optional[bool] = strawberry.field(
+        description="Whether the author is a primary author.", default=None
+    )
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
 class DepositionAuthorUpdateInput:
-    deposition_id: Optional[strawberry.ID] = None
-    author_list_order: Optional[int] = None
-    orcid: Optional[str] = None
-    name: Optional[str] = None
-    email: Optional[str] = None
-    affiliation_name: Optional[str] = None
-    affiliation_address: Optional[str] = None
-    affiliation_identifier: Optional[str] = None
-    corresponding_author_status: Optional[bool] = None
-    primary_author_status: Optional[bool] = None
-    id: Optional[int] = None
+    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    author_list_order: Optional[int] = strawberry.field(
+        description="The order that the author is listed as in the associated publication"
+    )
+    orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
+    name: Optional[str] = strawberry.field(description="The full name of the author.")
+    email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
+    affiliation_name: Optional[str] = strawberry.field(
+        description="The name of the author's affiliation.", default=None
+    )
+    affiliation_address: Optional[str] = strawberry.field(
+        description="The address of the author's affiliation.", default=None
+    )
+    affiliation_identifier: Optional[str] = strawberry.field(
+        description="A Research Organization Registry (ROR) identifier.", default=None
+    )
+    corresponding_author_status: Optional[bool] = strawberry.field(
+        description="Whether the author is a corresponding author.", default=None
+    )
+    primary_author_status: Optional[bool] = strawberry.field(
+        description="Whether the author is a primary author.", default=None
+    )
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

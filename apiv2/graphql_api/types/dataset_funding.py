@@ -45,7 +45,6 @@ from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
 import enum
 
-
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
@@ -86,6 +85,7 @@ async def load_dataset_rows(
 Define Strawberry GQL types
 ------------------------------------------------------------------------------
 """
+
 
 """
 Only let users specify IDs in WHERE clause when mutating data (for safety).
@@ -129,14 +129,14 @@ Define DatasetFunding type
 """
 
 
-@strawberry.type
+@strawberry.type(description="Information about how a dataset was funded")
 class DatasetFunding(EntityInterface):
     dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
         load_dataset_rows
     )  # type:ignore
-    funding_agency_name: Optional[str] = None
-    grant_id: Optional[str] = None
-    id: int
+    funding_agency_name: str = strawberry.field(description="The name of the funding source.", default=None)
+    grant_id: str = strawberry.field(description="Grant identifier provided by the funding agency", default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -230,18 +230,22 @@ Mutation types
 
 @strawberry.input()
 class DatasetFundingCreateInput:
-    dataset_id: Optional[strawberry.ID] = None
-    funding_agency_name: Optional[str] = None
-    grant_id: Optional[str] = None
-    id: int
+    dataset_id: Optional[strawberry.ID] = strawberry.field(description="An author of a dataset", default=None)
+    funding_agency_name: Optional[str] = strawberry.field(description="The name of the funding source.", default=None)
+    grant_id: Optional[str] = strawberry.field(
+        description="Grant identifier provided by the funding agency", default=None
+    )
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
 class DatasetFundingUpdateInput:
-    dataset_id: Optional[strawberry.ID] = None
-    funding_agency_name: Optional[str] = None
-    grant_id: Optional[str] = None
-    id: Optional[int] = None
+    dataset_id: Optional[strawberry.ID] = strawberry.field(description="An author of a dataset", default=None)
+    funding_agency_name: Optional[str] = strawberry.field(description="The name of the funding source.", default=None)
+    grant_id: Optional[str] = strawberry.field(
+        description="Grant identifier provided by the funding agency", default=None
+    )
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

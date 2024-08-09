@@ -49,7 +49,6 @@ from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
 import enum
 
-
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
@@ -158,6 +157,7 @@ Define Strawberry GQL types
 ------------------------------------------------------------------------------
 """
 
+
 """
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
@@ -220,7 +220,7 @@ Define Frame type
 """
 
 
-@strawberry.type
+@strawberry.type(description=None)
 class Frame(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
@@ -232,15 +232,21 @@ class Frame(EntityInterface):
         Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]
     ] = load_per_section_parameters_aggregate_rows  # type:ignore
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
-    raw_angle: float
-    acquisition_order: Optional[int] = None
-    dose: float
-    is_gain_corrected: Optional[bool] = None
-    s3_gain_file: Optional[str] = None
-    https_gain_file: Optional[str] = None
-    s3_prefix: str
-    https_prefix: str
-    id: int
+    raw_angle: Optional[float] = strawberry.field(description="Camera angle for a frame")
+    acquisition_order: int = strawberry.field(
+        description="Frame's acquistion order within a tilt experiment", default=None
+    )
+    dose: Optional[float] = strawberry.field(description="The raw camera angle for a frame")
+    is_gain_corrected: bool = strawberry.field(description="Whether this frame has been gain corrected", default=None)
+    s3_gain_file: str = strawberry.field(description="S3 path to the gain file for this frame", default=None)
+    https_gain_file: str = strawberry.field(description="HTTPS path to the gain file for this frame", default=None)
+    s3_prefix: Optional[str] = strawberry.field(
+        description="Path to a directory containing data for this entity as an S3 url"
+    )
+    https_prefix: Optional[str] = strawberry.field(
+        description="Path to a directory containing data for this entity as an HTTPS url"
+    )
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -348,32 +354,50 @@ Mutation types
 
 @strawberry.input()
 class FrameCreateInput:
-    deposition_id: Optional[strawberry.ID] = None
-    run_id: Optional[strawberry.ID] = None
-    raw_angle: float
-    acquisition_order: Optional[int] = None
-    dose: float
-    is_gain_corrected: Optional[bool] = None
-    s3_gain_file: Optional[str] = None
-    https_gain_file: Optional[str] = None
-    s3_prefix: str
-    https_prefix: str
-    id: int
+    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    raw_angle: float = strawberry.field(description="Camera angle for a frame")
+    acquisition_order: Optional[int] = strawberry.field(
+        description="Frame's acquistion order within a tilt experiment", default=None
+    )
+    dose: float = strawberry.field(description="The raw camera angle for a frame")
+    is_gain_corrected: Optional[bool] = strawberry.field(
+        description="Whether this frame has been gain corrected", default=None
+    )
+    s3_gain_file: Optional[str] = strawberry.field(description="S3 path to the gain file for this frame", default=None)
+    https_gain_file: Optional[str] = strawberry.field(
+        description="HTTPS path to the gain file for this frame", default=None
+    )
+    s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
+    https_prefix: str = strawberry.field(
+        description="Path to a directory containing data for this entity as an HTTPS url"
+    )
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
 class FrameUpdateInput:
-    deposition_id: Optional[strawberry.ID] = None
-    run_id: Optional[strawberry.ID] = None
-    raw_angle: Optional[float] = None
-    acquisition_order: Optional[int] = None
-    dose: Optional[float] = None
-    is_gain_corrected: Optional[bool] = None
-    s3_gain_file: Optional[str] = None
-    https_gain_file: Optional[str] = None
-    s3_prefix: Optional[str] = None
-    https_prefix: Optional[str] = None
-    id: Optional[int] = None
+    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    raw_angle: Optional[float] = strawberry.field(description="Camera angle for a frame")
+    acquisition_order: Optional[int] = strawberry.field(
+        description="Frame's acquistion order within a tilt experiment", default=None
+    )
+    dose: Optional[float] = strawberry.field(description="The raw camera angle for a frame")
+    is_gain_corrected: Optional[bool] = strawberry.field(
+        description="Whether this frame has been gain corrected", default=None
+    )
+    s3_gain_file: Optional[str] = strawberry.field(description="S3 path to the gain file for this frame", default=None)
+    https_gain_file: Optional[str] = strawberry.field(
+        description="HTTPS path to the gain file for this frame", default=None
+    )
+    s3_prefix: Optional[str] = strawberry.field(
+        description="Path to a directory containing data for this entity as an S3 url"
+    )
+    https_prefix: Optional[str] = strawberry.field(
+        description="Path to a directory containing data for this entity as an HTTPS url"
+    )
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
