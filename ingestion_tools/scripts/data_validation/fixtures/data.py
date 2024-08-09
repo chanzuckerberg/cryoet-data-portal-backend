@@ -38,8 +38,12 @@ def get_zattrs(zarrfile: str, fs: FileSystemApi) -> Dict:
 def get_zarrays(zarrfile: str, fs: FileSystemApi) -> Dict:
     """Get the zarray for a zarr volume file without downloading the entire file."""
     zarrays = {}
-    for i in range(3):
-        with fs.open(zarrfile + f"/{i}/.zarray", "r") as f:
+    expected_subfolders = [f"{zarrfile}/{i}" for i in range(3)]
+    actual_subfolders = ["s3://" + folder for folder in fs.glob(zarrfile + "/*/")]
+    if set(expected_subfolders) != set(actual_subfolders):
+        pytest.fail(f"Expected zarr subfolders: {expected_subfolders}, Actual zarr subfolders: {actual_subfolders}")
+    for i, subfolder in enumerate(actual_subfolders):
+        with fs.open(subfolder + "/.zarray", "r") as f:
             zarrays[i] = json.load(f)
     return zarrays
 
@@ -112,7 +116,10 @@ def annotation_metadata(annotation_metadata_files: List[str], filesystem: FileSy
 
 
 def get_ndjson_annotations(annotation_files: Dict[str, str], filesystem: FileSystemApi) -> Dict[str, List[Dict]]:
-    """Load ndjson annotations. Dictionary structure: annotations = {annotation_a_filename: Dict, annotation_b_filename: ...}."""
+    """
+    Load ndjson annotations (a list of annotations, with each annotation being a Dict).
+    Dictionary structure: annotations = {annotation_a_filename: List[Dict], annotation_b_filename: List[Dict]}.
+    """
     annotations = {}
     for annotation_file, _ in annotation_files.items():
         with filesystem.open(annotation_file, "r") as f:
@@ -166,7 +173,10 @@ def seg_mask_annotation_zarr_headers(
     seg_mask_annotation_zarr_files_to_metadata_files: Dict[str, str],
     filesystem: FileSystemApi,
 ) -> Dict[str, Dict[str, Dict]]:
-    """Get the zattrs and zarray data for a zarr annotation file. Dictionary structure: headers = {annotation_a_filename: {zattrs": Dict, "zarrays": Dict}}, annotation_b_filename: ...}."""
+    """
+    Get the zattrs and zarray data for a zarr annotation file.
+    Dictionary structure: headers = {annotation_a_filename: {"zattrs": Dict, "zarrays": Dict}}, annotation_b_filename: ...}.
+    """
     headers = {}
     for zarr_filename, _ in seg_mask_annotation_zarr_files_to_metadata_files.items():
         headers[zarr_filename] = {
