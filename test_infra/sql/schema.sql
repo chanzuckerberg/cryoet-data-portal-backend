@@ -396,7 +396,9 @@ CREATE TABLE public.depositions (
     deposition_publications character varying,
     deposition_types character varying NOT NULL,
     s3_prefix character varying,
-    https_prefix character varying
+    https_prefix character varying,
+    key_photo_url character varying,
+    key_photo_thumbnail_url character varying
 );
 
 
