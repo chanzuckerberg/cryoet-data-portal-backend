@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 
 import pytest
 from helpers_point import contained_in_tomo
@@ -11,26 +11,26 @@ class TestInstanceSegmentationAnnotations:
     ### BEGIN Self-consistency tests ###
     def test_instance_count_consistent(
         self,
-        instance_seg_annotations: Dict[str, Dict[str, Dict]],
+        instance_seg_annotations: Dict[str, List[Dict]],
         annotation_metadata: Dict[str, Dict],
+        instance_seg_annotation_files_to_metadata_files: Dict[str, str],
     ):
         """Check that the number of instances is consistent between the metadata (object_count) and the ndjson file (# of unique instance_id)."""
         unique_instance_ids = set()
-        for base, annotations in instance_seg_annotations.items():
-            metadata = annotation_metadata[base]
-            print(f"Annotation Object: {base}")
-            for filename, points in annotations.items():
-                print(f"\tFile: {filename}")
-                for ann in points:
-                    unique_instance_ids.add(ann["instance_id"])
-                assert len(unique_instance_ids) == metadata["object_count"]
+        for filename, points in instance_seg_annotations.items():
+            print(f"\tFile: {filename}")
+            metadata_file = instance_seg_annotation_files_to_metadata_files[filename]
+            metadata = annotation_metadata[metadata_file]
+            for ann in points:
+                unique_instance_ids.add(ann["instance_id"])
+            assert len(unique_instance_ids) == metadata["object_count"]
 
     ### END Self-consistency tests ###
 
     ### BEGIN Tomogram-consistency tests ###
     def test_contained_in_tomo(
         self,
-        instance_seg_annotations: Dict[str, Dict[str, Dict]],
+        instance_seg_annotations: Dict[str, List[Dict]],
         canonical_tomogram_metadata: Dict,
     ):
         """Check that all points are contained within the tomogram dimensions."""

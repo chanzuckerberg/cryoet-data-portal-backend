@@ -12,11 +12,16 @@ class TestOrientedPointAnnotations:
     ### BEGIN Self-consistency tests ###
     def test_point_count_consistent(
         self,
-        oriented_point_annotations: Dict[str, Dict[str, Dict]],
+        oriented_point_annotations: Dict[str, List[Dict]],
         annotation_metadata: Dict[str, Dict],
+        oriented_point_annotation_files_to_metadata_files: Dict[str, str],
     ):
         """Check that the number of annotations is consistent between the metadata and the ndjson file."""
-        point_count_consistent(oriented_point_annotations, annotation_metadata)
+        point_count_consistent(
+            oriented_point_annotations,
+            annotation_metadata,
+            oriented_point_annotation_files_to_metadata_files,
+        )
 
     def valid_rotation_matrix(self, matrix: List[List[float]]) -> bool:
         """
@@ -30,21 +35,18 @@ class TestOrientedPointAnnotations:
         # If all rows are orthogonal, then the dot product of the matrix and its transpose should be the identity matrix.
         assert np.allclose(np.dot(np_matrix, np_matrix.T), np.eye(3))
 
-    def test_rotation_matrix(self, oriented_point_annotations: Dict[str, Dict[str, Dict]]):
-        for base, annotations in oriented_point_annotations.items():
-            print(f"Annotation Object: {base}")
-
-            for filename, points in annotations.items():
-                print(f"\tFile: {filename}")
-                for ann in points:
-                    self.valid_rotation_matrix(ann["xyz_rotation_matrix"])
+    def test_rotation_matrix(self, oriented_point_annotations: Dict[str, List[Dict]]):
+        for annotation_filename, points in oriented_point_annotations.items():
+            print(f"\tFile: {annotation_filename}")
+            for point in points:
+                self.valid_rotation_matrix(point["xyz_rotation_matrix"])
 
     ### END Self-consistency tests ###
 
     ### BEGIN Tomogram-consistency tests ###
     def test_contained_in_tomo(
         self,
-        oriented_point_annotations: Dict[str, Dict[str, Dict]],
+        oriented_point_annotations: Dict[str, List[Dict]],
         canonical_tomogram_metadata: Dict,
     ):
         """Check that all oriented points are contained within the tomogram dimensions."""
