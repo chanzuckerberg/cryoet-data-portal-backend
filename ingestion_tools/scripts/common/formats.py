@@ -12,3 +12,8 @@ def json_serial(obj: Any) -> str:
 
 def tojson(data: Any) -> str:
     return json.dumps(data, indent=4, default=json_serial)
+
+
+def json_dumps(value: str | dict) -> str:
+    """If value is a string, return it as is, otherwise convert to JSON string."""
+    return value if isinstance(value, str) else json.dumps(value)
