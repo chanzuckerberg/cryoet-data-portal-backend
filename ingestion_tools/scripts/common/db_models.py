@@ -35,6 +35,8 @@ class Deposition(BaseModel):
     deposition_types = CharField()
     s3_prefix = CharField()
     https_prefix = CharField()
+    key_photo_url = CharField(null=True)
+    key_photo_thumbnail_url = CharField(null=True)
 
 
 class DepositionAuthor(BaseModel):

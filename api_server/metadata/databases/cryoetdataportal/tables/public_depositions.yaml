@@ -55,6 +55,8 @@ select_permissions:
         - description
         - https_prefix
         - id
+        - key_photo_thumbnail_url
+        - key_photo_url
         - last_modified_date
         - related_database_entries
         - release_date
