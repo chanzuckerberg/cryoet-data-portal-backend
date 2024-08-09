@@ -115,13 +115,18 @@ def annotation_metadata(annotation_metadata_files: List[str], filesystem: FileSy
     return metadata_objs
 
 
-def get_ndjson_annotations(annotation_files: Dict[str, str], filesystem: FileSystemApi) -> Dict[str, List[Dict]]:
+def get_ndjson_annotations(
+    annotation_files_to_metadata_files: Dict[str, str],
+    filesystem: FileSystemApi,
+) -> Dict[str, List[Dict]]:
     """
-    Load ndjson annotations (a list of annotations, with each annotation being a Dict).
+    A helper function to load ndjson annotations (a list of annotations, with each annotation being a Dict)
+    for point, oriented point, and instance segmentation annotations.
     Dictionary structure: annotations = {annotation_a_filename: List[Dict], annotation_b_filename: List[Dict]}.
     """
     annotations = {}
-    for annotation_file, _ in annotation_files.items():
+    # Only need the annotation file to find the annotations.
+    for annotation_file, _ in annotation_files_to_metadata_files.items():
         with filesystem.open(annotation_file, "r") as f:
             annotations[annotation_file] = ndjson.load(f)
 

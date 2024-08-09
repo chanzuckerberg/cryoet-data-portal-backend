@@ -295,7 +295,7 @@ def annotation_metadata_files(annotations_dir: str, filesystem: FileSystemApi) -
     return files
 
 
-def get_annotation_files(
+def get_annotation_files_to_metadata_files(
     bucket: str,
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
@@ -303,6 +303,7 @@ def get_annotation_files(
     format: Optional[str] = None,
 ) -> Dict[str, str]:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/[annotation_name].*
+    Helper function for retrieving annotation files and their corresponding metadata files.
     Returns a dictionary of annotation files, annotation_filename -> metadata_filename.
     """
 
@@ -331,7 +332,7 @@ def point_annotation_files_to_metadata_files(
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
-    return get_annotation_files(bucket, annotation_metadata, filesystem, "Point")
+    return get_annotation_files_to_metadata_files(bucket, annotation_metadata, filesystem, "Point")
 
 
 @pytest.fixture(scope="session")
@@ -340,7 +341,7 @@ def oriented_point_annotation_files_to_metadata_files(
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
-    return get_annotation_files(bucket, annotation_metadata, filesystem, "OrientedPoint")
+    return get_annotation_files_to_metadata_files(bucket, annotation_metadata, filesystem, "OrientedPoint")
 
 
 @pytest.fixture(scope="session")
@@ -349,7 +350,7 @@ def instance_seg_annotation_files_to_metadata_files(
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
-    return get_annotation_files(bucket, annotation_metadata, filesystem, "InstanceSegmentation")
+    return get_annotation_files_to_metadata_files(bucket, annotation_metadata, filesystem, "InstanceSegmentation")
 
 
 @pytest.fixture(scope="session")
@@ -358,7 +359,7 @@ def seg_mask_annotation_mrc_files_to_metadata_files(
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
-    return get_annotation_files(bucket, annotation_metadata, filesystem, "SegmentationMask", "mrc")
+    return get_annotation_files_to_metadata_files(bucket, annotation_metadata, filesystem, "SegmentationMask", "mrc")
 
 
 @pytest.fixture(scope="session")
@@ -367,4 +368,4 @@ def seg_mask_annotation_zarr_files_to_metadata_files(
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
-    return get_annotation_files(bucket, annotation_metadata, filesystem, "SegmentationMask", "zarr")
+    return get_annotation_files_to_metadata_files(bucket, annotation_metadata, filesystem, "SegmentationMask", "zarr")
