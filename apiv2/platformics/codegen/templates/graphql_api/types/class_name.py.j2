@@ -60,7 +60,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 {%- endmacro %}
 {# Macro to output a whole field definition for standard types #}
 {% macro getFieldDef(attr) -%}
-    {{ attr.name }}: {% if attr.required -%}Optional[{%- endif -%}{{ type_map[attr.type] }}{%- if attr.required -%}]{%- endif %} {{ getDescription(attr) }}
+    {{ attr.name }}: {% if not attr.required -%}Optional[{%- endif -%}{{ type_map[attr.type] }}{%- if not attr.required -%}]{%- endif %} {{ getDescription(attr) }}
 {%- endmacro %}
 {# Macro to generate mutation input fields #}
 {% macro getInputFields(action, fields) -%}

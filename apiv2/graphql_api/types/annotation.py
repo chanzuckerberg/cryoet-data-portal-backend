@@ -300,60 +300,62 @@ class Annotation(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
-    s3_metadata_path: Optional[str] = strawberry.field(description="Path to the file in s3")
-    https_metadata_path: Optional[str] = strawberry.field(description="Path to the file as an https url")
-    annotation_publication: str = strawberry.field(
+    s3_metadata_path: str = strawberry.field(description="Path to the file in s3")
+    https_metadata_path: str = strawberry.field(description="Path to the file as an https url")
+    annotation_publication: Optional[str] = strawberry.field(
         description="List of publication IDs (EMPIAR, EMDB, DOI) that describe this annotation method. Comma separated.",
         default=None,
     )
-    annotation_method: Optional[str] = strawberry.field(
+    annotation_method: str = strawberry.field(
         description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)"
     )
-    ground_truth_status: bool = strawberry.field(
+    ground_truth_status: Optional[bool] = strawberry.field(
         description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None
     )
-    object_id: Optional[str] = strawberry.field(
+    object_id: str = strawberry.field(
         description="Gene Ontology Cellular Component identifier for the annotation object"
     )
-    object_name: Optional[str] = strawberry.field(
+    object_name: str = strawberry.field(
         description="Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)"
     )
-    object_description: str = strawberry.field(
+    object_description: Optional[str] = strawberry.field(
         description="A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.",
         default=None,
     )
-    object_state: str = strawberry.field(description="Molecule state annotated (e.g. open, closed)", default=None)
-    object_count: int = strawberry.field(description="Number of objects identified", default=None)
-    confidence_precision: float = strawberry.field(
+    object_state: Optional[str] = strawberry.field(
+        description="Molecule state annotated (e.g. open, closed)", default=None
+    )
+    object_count: Optional[int] = strawberry.field(description="Number of objects identified", default=None)
+    confidence_precision: Optional[float] = strawberry.field(
         description="Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive",
         default=None,
     )
-    confidence_recall: float = strawberry.field(
+    confidence_recall: Optional[float] = strawberry.field(
         description="Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly",
         default=None,
     )
-    ground_truth_used: str = strawberry.field(
+    ground_truth_used: Optional[str] = strawberry.field(
         description="Annotation filename used as ground truth for precision and recall", default=None
     )
-    annotation_software: str = strawberry.field(
+    annotation_software: Optional[str] = strawberry.field(
         description="Software used for generating this annotation", default=None
     )
-    is_curator_recommended: bool = strawberry.field(
+    is_curator_recommended: Optional[bool] = strawberry.field(
         description="This annotation is recommended by the curator to be preferred for this object type.", default=None
     )
     method_type: annotation_method_type_enum = strawberry.field(
         description="Classification of the annotation method based on supervision."
     )
-    deposition_date: Optional[datetime.datetime] = strawberry.field(
+    deposition_date: datetime.datetime = strawberry.field(
         description="The date a data item was received by the cryoET data portal."
     )
-    release_date: Optional[datetime.datetime] = strawberry.field(
+    release_date: datetime.datetime = strawberry.field(
         description="The date a data item was received by the cryoET data portal."
     )
-    last_modified_date: Optional[datetime.datetime] = strawberry.field(
+    last_modified_date: datetime.datetime = strawberry.field(
         description="The date a piece of data was last modified on the cryoET data portal."
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

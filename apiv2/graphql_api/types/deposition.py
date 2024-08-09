@@ -479,8 +479,8 @@ class Deposition(EntityInterface):
     tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
         load_tomogram_aggregate_rows
     )  # type:ignore
-    deposition_title: Optional[str] = strawberry.field(description="Title of a CryoET deposition.")
-    deposition_description: Optional[str] = strawberry.field(
+    deposition_title: str = strawberry.field(description="Title of a CryoET deposition.")
+    deposition_description: str = strawberry.field(
         description="A short description of the deposition, similar to an abstract for a journal article or dataset."
     )
     deposition_types: Sequence[Annotated["DepositionType", strawberry.lazy("graphql_api.types.deposition_type")]] = (
@@ -489,28 +489,28 @@ class Deposition(EntityInterface):
     deposition_types_aggregate: Optional[
         Annotated["DepositionTypeAggregate", strawberry.lazy("graphql_api.types.deposition_type")]
     ] = load_deposition_type_aggregate_rows  # type:ignore
-    publications: str = strawberry.field(
+    publications: Optional[str] = strawberry.field(
         description="Comma-separated list of DOIs for publications associated with the dataset.", default=None
     )
-    related_database_entries: str = strawberry.field(
+    related_database_entries: Optional[str] = strawberry.field(
         description="Comma-separated list of related database entries for the dataset.", default=None
     )
-    related_database_links: str = strawberry.field(
+    related_database_links: Optional[str] = strawberry.field(
         description="Comma-separated list of related database links for the dataset.", default=None
     )
-    dataset_citations: str = strawberry.field(
+    dataset_citations: Optional[str] = strawberry.field(
         description="Comma-separated list of DOIs for publications citing the dataset.", default=None
     )
-    deposition_date: Optional[datetime.datetime] = strawberry.field(
+    deposition_date: datetime.datetime = strawberry.field(
         description="The date a data item was received by the cryoET data portal."
     )
-    release_date: Optional[datetime.datetime] = strawberry.field(
+    release_date: datetime.datetime = strawberry.field(
         description="The date a data item was received by the cryoET data portal."
     )
-    last_modified_date: Optional[datetime.datetime] = strawberry.field(
+    last_modified_date: datetime.datetime = strawberry.field(
         description="The date a piece of data was last modified on the cryoET data portal."
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

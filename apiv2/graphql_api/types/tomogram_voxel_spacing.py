@@ -227,14 +227,12 @@ class TomogramVoxelSpacing(EntityInterface):
     tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
         load_tomogram_aggregate_rows
     )  # type:ignore
-    voxel_spacing: Optional[float] = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
-    s3_prefix: Optional[str] = strawberry.field(
-        description="Path to a directory containing data for this entity as an S3 url"
-    )
-    https_prefix: Optional[str] = strawberry.field(
+    voxel_spacing: float = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
+    s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
+    https_prefix: str = strawberry.field(
         description="Path to a directory containing data for this entity as an HTTPS url"
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

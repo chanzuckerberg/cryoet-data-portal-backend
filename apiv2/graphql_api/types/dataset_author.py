@@ -148,22 +148,28 @@ class DatasetAuthor(EntityInterface):
     dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
         load_dataset_rows
     )  # type:ignore
-    author_list_order: Optional[int] = strawberry.field(
+    author_list_order: int = strawberry.field(
         description="The order that the author is listed as in the associated publication"
     )
-    name: Optional[str] = strawberry.field(description="The full name of the author.")
-    email: str = strawberry.field(description="The email address of the author.", default=None)
-    affiliation_name: str = strawberry.field(description="The name of the author's affiliation.", default=None)
-    affiliation_address: str = strawberry.field(description="The address of the author's affiliation.", default=None)
-    affiliation_identifier: str = strawberry.field(
+    name: str = strawberry.field(description="The full name of the author.")
+    email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
+    affiliation_name: Optional[str] = strawberry.field(
+        description="The name of the author's affiliation.", default=None
+    )
+    affiliation_address: Optional[str] = strawberry.field(
+        description="The address of the author's affiliation.", default=None
+    )
+    affiliation_identifier: Optional[str] = strawberry.field(
         description="A Research Organization Registry (ROR) identifier.", default=None
     )
-    corresponding_author_status: bool = strawberry.field(
+    corresponding_author_status: Optional[bool] = strawberry.field(
         description="Whether the author is a corresponding author.", default=None
     )
-    primary_author_status: bool = strawberry.field(description="Whether the author is a primary author.", default=None)
-    orcid: str = strawberry.field(description="The ORCID identifier for the author.", default=None)
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    primary_author_status: Optional[bool] = strawberry.field(
+        description="Whether the author is a primary author.", default=None
+    )
+    orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

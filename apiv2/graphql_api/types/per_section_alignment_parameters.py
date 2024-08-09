@@ -145,15 +145,19 @@ class PerSectionAlignmentParameters(EntityInterface):
     alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
         load_alignment_rows
     )  # type:ignore
-    z_index: Optional[int] = strawberry.field(description="z-index of the frame in the tiltseries")
-    x_offset: float = strawberry.field(description="In-plane X-shift of the projection in angstrom", default=None)
-    y_offset: float = strawberry.field(description="In-plane Y-shift of the projection in angstrom", default=None)
-    in_plane_rotation: float = strawberry.field(
+    z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
+    x_offset: Optional[float] = strawberry.field(
+        description="In-plane X-shift of the projection in angstrom", default=None
+    )
+    y_offset: Optional[float] = strawberry.field(
+        description="In-plane Y-shift of the projection in angstrom", default=None
+    )
+    in_plane_rotation: Optional[float] = strawberry.field(
         description="In-plane rotation of the projection in degrees", default=None
     )
-    beam_tilt: float = strawberry.field(description="Beam tilt during projection in degrees", default=None)
-    tilt_angle: float = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    beam_tilt: Optional[float] = strawberry.field(description="Beam tilt during projection in degrees", default=None)
+    tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

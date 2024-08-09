@@ -136,7 +136,7 @@ class DepositionType(EntityInterface):
         load_deposition_rows
     )  # type:ignore
     type: Optional[deposition_types_enum] = strawberry.field(description=None, default=None)
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

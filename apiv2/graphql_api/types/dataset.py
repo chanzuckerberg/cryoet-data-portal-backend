@@ -319,69 +319,77 @@ class Dataset(EntityInterface):
     runs_aggregate: Optional[Annotated["RunAggregate", strawberry.lazy("graphql_api.types.run")]] = (
         load_run_aggregate_rows
     )  # type:ignore
-    title: Optional[str] = strawberry.field(description="Title of a CryoET dataset.")
-    description: Optional[str] = strawberry.field(
+    title: str = strawberry.field(description="Title of a CryoET dataset.")
+    description: str = strawberry.field(
         description="A short description of a CryoET dataset, similar to an abstract for a journal article or dataset."
     )
-    organism_name: Optional[str] = strawberry.field(
+    organism_name: str = strawberry.field(
         description="Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens."
     )
-    organism_taxid: int = strawberry.field(
+    organism_taxid: Optional[int] = strawberry.field(
         description="NCBI taxonomy identifier for the organism, e.g. 9606", default=None
     )
-    tissue_name: str = strawberry.field(
+    tissue_name: Optional[str] = strawberry.field(
         description="Name of the tissue from which a biological sample used in a CryoET study is derived from.",
         default=None,
     )
-    tissue_id: str = strawberry.field(description="The UBERON identifier for the tissue.", default=None)
-    cell_name: str = strawberry.field(
+    tissue_id: Optional[str] = strawberry.field(description="The UBERON identifier for the tissue.", default=None)
+    cell_name: Optional[str] = strawberry.field(
         description="Name of the cell type from which a biological sample used in a CryoET study is derived from.",
         default=None,
     )
-    cell_type_id: str = strawberry.field(description="Cell Ontology identifier for the cell type", default=None)
-    cell_strain_name: str = strawberry.field(description="Cell line or strain for the sample.", default=None)
-    cell_strain_id: str = strawberry.field(description="Link to more information about the cell strain.", default=None)
+    cell_type_id: Optional[str] = strawberry.field(
+        description="Cell Ontology identifier for the cell type", default=None
+    )
+    cell_strain_name: Optional[str] = strawberry.field(description="Cell line or strain for the sample.", default=None)
+    cell_strain_id: Optional[str] = strawberry.field(
+        description="Link to more information about the cell strain.", default=None
+    )
     sample_type: Optional[sample_type_enum] = strawberry.field(
         description="Type of sample imaged in a CryoET study", default=None
     )
-    sample_preparation: str = strawberry.field(description="Describes how the sample was prepared.", default=None)
-    grid_preparation: str = strawberry.field(description="Describes Cryo-ET grid preparation.", default=None)
-    other_setup: str = strawberry.field(
+    sample_preparation: Optional[str] = strawberry.field(
+        description="Describes how the sample was prepared.", default=None
+    )
+    grid_preparation: Optional[str] = strawberry.field(description="Describes Cryo-ET grid preparation.", default=None)
+    other_setup: Optional[str] = strawberry.field(
         description="Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication.",
         default=None,
     )
-    key_photo_url: str = strawberry.field(description="URL for the dataset preview image.", default=None)
-    key_photo_thumbnail_url: str = strawberry.field(description="URL for the thumbnail of preview image.", default=None)
-    cell_component_name: str = strawberry.field(description="Name of the cellular component.", default=None)
-    cell_component_id: str = strawberry.field(description="The GO identifier for the cellular component.", default=None)
-    deposition_date: Optional[datetime.datetime] = strawberry.field(
+    key_photo_url: Optional[str] = strawberry.field(description="URL for the dataset preview image.", default=None)
+    key_photo_thumbnail_url: Optional[str] = strawberry.field(
+        description="URL for the thumbnail of preview image.", default=None
+    )
+    cell_component_name: Optional[str] = strawberry.field(description="Name of the cellular component.", default=None)
+    cell_component_id: Optional[str] = strawberry.field(
+        description="The GO identifier for the cellular component.", default=None
+    )
+    deposition_date: datetime.datetime = strawberry.field(
         description="The date a data item was received by the cryoET data portal."
     )
-    release_date: Optional[datetime.datetime] = strawberry.field(
+    release_date: datetime.datetime = strawberry.field(
         description="The date a data item was received by the cryoET data portal."
     )
-    last_modified_date: Optional[datetime.datetime] = strawberry.field(
+    last_modified_date: datetime.datetime = strawberry.field(
         description="The date a piece of data was last modified on the cryoET data portal."
     )
-    publications: str = strawberry.field(
+    publications: Optional[str] = strawberry.field(
         description="Comma-separated list of DOIs for publications associated with the dataset.", default=None
     )
-    related_database_entries: str = strawberry.field(
+    related_database_entries: Optional[str] = strawberry.field(
         description="Comma-separated list of related database entries for the dataset.", default=None
     )
-    related_database_links: str = strawberry.field(
+    related_database_links: Optional[str] = strawberry.field(
         description="Comma-separated list of related database links for the dataset.", default=None
     )
-    dataset_citations: str = strawberry.field(
+    dataset_citations: Optional[str] = strawberry.field(
         description="Comma-separated list of DOIs for publications citing the dataset.", default=None
     )
-    s3_prefix: Optional[str] = strawberry.field(
-        description="Path to a directory containing data for this entity as an S3 url"
-    )
-    https_prefix: Optional[str] = strawberry.field(
+    s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
+    https_prefix: str = strawberry.field(
         description="Path to a directory containing data for this entity as an HTTPS url"
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

@@ -330,11 +330,11 @@ class Tomogram(EntityInterface):
     tomogram_voxel_spacing: Optional[
         Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
     ] = load_tomogram_voxel_spacing_rows  # type:ignore
-    name: str = strawberry.field(description="Short name for this tomogram", default=None)
-    size_x: Optional[float] = strawberry.field(description="Tomogram voxels in the x dimension")
-    size_y: Optional[float] = strawberry.field(description="Tomogram voxels in the y dimension")
-    size_z: Optional[float] = strawberry.field(description="Tomogram voxels in the z dimension")
-    voxel_spacing: Optional[float] = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
+    name: Optional[str] = strawberry.field(description="Short name for this tomogram", default=None)
+    size_x: float = strawberry.field(description="Tomogram voxels in the x dimension")
+    size_y: float = strawberry.field(description="Tomogram voxels in the y dimension")
+    size_z: float = strawberry.field(description="Tomogram voxels in the z dimension")
+    voxel_spacing: float = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
     fiducial_alignment_status: fiducial_alignment_status_enum = strawberry.field(
         description="Whether the tomographic alignment was computed based on fiducial markers."
     )
@@ -344,48 +344,54 @@ class Tomogram(EntityInterface):
     processing: tomogram_processing_enum = strawberry.field(
         description="Describe additional processing used to derive the tomogram"
     )
-    tomogram_version: float = strawberry.field(description="Version of tomogram", default=None)
-    processing_software: str = strawberry.field(
+    tomogram_version: Optional[float] = strawberry.field(description="Version of tomogram", default=None)
+    processing_software: Optional[str] = strawberry.field(
         description="Processing software used to derive the tomogram", default=None
     )
-    reconstruction_software: Optional[str] = strawberry.field(description="Name of software used for reconstruction")
-    is_canonical: bool = strawberry.field(description="whether this tomogram is canonical for the run", default=None)
-    s3_omezarr_dir: str = strawberry.field(
+    reconstruction_software: str = strawberry.field(description="Name of software used for reconstruction")
+    is_canonical: Optional[bool] = strawberry.field(
+        description="whether this tomogram is canonical for the run", default=None
+    )
+    s3_omezarr_dir: Optional[str] = strawberry.field(
         description="S3 path to this tomogram in multiscale OME-Zarr format", default=None
     )
-    https_omezarr_dir: str = strawberry.field(
+    https_omezarr_dir: Optional[str] = strawberry.field(
         description="HTTPS path to this tomogram in multiscale OME-Zarr format", default=None
     )
-    s3_mrc_scale0: str = strawberry.field(
+    s3_mrc_scale0: Optional[str] = strawberry.field(
         description="S3 path to this tomogram in MRC format (no scaling)", default=None
     )
-    https_mrc_scale0: str = strawberry.field(
+    https_mrc_scale0: Optional[str] = strawberry.field(
         description="HTTPS path to this tomogram in MRC format (no scaling)", default=None
     )
-    scale0_dimensions: str = strawberry.field(
+    scale0_dimensions: Optional[str] = strawberry.field(
         description="comma separated x,y,z dimensions of the unscaled tomogram", default=None
     )
-    scale1_dimensions: str = strawberry.field(
+    scale1_dimensions: Optional[str] = strawberry.field(
         description="comma separated x,y,z dimensions of the scale1 tomogram", default=None
     )
-    scale2_dimensions: str = strawberry.field(
+    scale2_dimensions: Optional[str] = strawberry.field(
         description="comma separated x,y,z dimensions of the scale2 tomogram", default=None
     )
-    ctf_corrected: bool = strawberry.field(description="Whether this tomogram is CTF corrected", default=None)
-    offset_x: Optional[int] = strawberry.field(description="x offset data relative to the canonical tomogram in pixels")
-    offset_y: Optional[int] = strawberry.field(description="y offset data relative to the canonical tomogram in pixels")
-    offset_z: Optional[int] = strawberry.field(description="z offset data relative to the canonical tomogram in pixels")
-    affine_transformation_matrix: str = strawberry.field(
+    ctf_corrected: Optional[bool] = strawberry.field(description="Whether this tomogram is CTF corrected", default=None)
+    offset_x: int = strawberry.field(description="x offset data relative to the canonical tomogram in pixels")
+    offset_y: int = strawberry.field(description="y offset data relative to the canonical tomogram in pixels")
+    offset_z: int = strawberry.field(description="z offset data relative to the canonical tomogram in pixels")
+    affine_transformation_matrix: Optional[str] = strawberry.field(
         description="A placeholder for any type of data.", default=None
     )
-    key_photo_url: str = strawberry.field(description="URL for the key photo", default=None)
-    key_photo_thumbnail_url: str = strawberry.field(description="URL for the thumbnail of key photo", default=None)
-    neuroglancer_config: str = strawberry.field(description="the compact json of neuroglancer config", default=None)
+    key_photo_url: Optional[str] = strawberry.field(description="URL for the key photo", default=None)
+    key_photo_thumbnail_url: Optional[str] = strawberry.field(
+        description="URL for the thumbnail of key photo", default=None
+    )
+    neuroglancer_config: Optional[str] = strawberry.field(
+        description="the compact json of neuroglancer config", default=None
+    )
     tomogram_type: Optional[tomogram_type_enum] = strawberry.field(description=None, default=None)
-    is_standardized: Optional[bool] = strawberry.field(
+    is_standardized: bool = strawberry.field(
         description="Whether this tomogram was generated per the portal's standards"
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

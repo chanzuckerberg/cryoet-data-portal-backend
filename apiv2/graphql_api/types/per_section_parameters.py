@@ -163,11 +163,11 @@ class PerSectionParameters(EntityInterface):
     tiltseries: Optional[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
         load_tiltseries_rows
     )  # type:ignore
-    z_index: Optional[int] = strawberry.field(description="z-index of the frame in the tiltseries")
-    defocus: float = strawberry.field(description="defocus amount", default=None)
-    astigmatism: float = strawberry.field(description="Astigmatism amount for this frame", default=None)
-    astigmatic_angle: float = strawberry.field(description="Angle of ast", default=None)
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
+    defocus: Optional[float] = strawberry.field(description="defocus amount", default=None)
+    astigmatism: Optional[float] = strawberry.field(description="Astigmatism amount for this frame", default=None)
+    astigmatic_angle: Optional[float] = strawberry.field(description="Angle of ast", default=None)
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

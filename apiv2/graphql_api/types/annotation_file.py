@@ -218,16 +218,16 @@ class AnnotationFile(EntityInterface):
     tomogram_voxel_spacing: Optional[
         Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
     ] = load_tomogram_voxel_spacing_rows  # type:ignore
-    format: Optional[str] = strawberry.field(description="File format label")
-    s3_path: Optional[str] = strawberry.field(description="Path to the file in s3")
-    https_path: Optional[str] = strawberry.field(description="Path to the file as an https url")
-    is_visualization_default: bool = strawberry.field(
+    format: str = strawberry.field(description="File format label")
+    s3_path: str = strawberry.field(description="Path to the file in s3")
+    https_path: str = strawberry.field(description="Path to the file as an https url")
+    is_visualization_default: Optional[bool] = strawberry.field(
         description="This annotation will be rendered in neuroglancer by default.", default=None
     )
     source: Optional[annotation_file_source_enum] = strawberry.field(
         description="The source type for the annotation file", default=None
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
