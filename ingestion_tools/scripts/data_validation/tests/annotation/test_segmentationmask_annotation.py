@@ -205,7 +205,7 @@ class TestSegmentationMaskHeader:
     ### BEGIN ZARR Self-consistency tests ###
     def test_zarr_zattrs_path(
         self,
-        seg_mask_annotation_zarr_headers: Dict[str, Dict],
+        seg_mask_annotation_zarr_headers: Dict[str, Dict[str, Dict]],
     ):
         """Check that the path is correct for a zarr annotation file."""
         for zarr_filename, header_data in seg_mask_annotation_zarr_headers.items():
@@ -216,7 +216,7 @@ class TestSegmentationMaskHeader:
 
     def test_zarr_zattrs_voxel_spacings(
         self,
-        seg_mask_annotation_zarr_headers: Dict[str, Dict],
+        seg_mask_annotation_zarr_headers: Dict[str, Dict[str, Dict]],
         voxel_spacing,
     ):
         """Check that the voxel spacings are correct for a zarr annotation file."""
@@ -229,7 +229,7 @@ class TestSegmentationMaskHeader:
 
     def test_zarr_zattrs_axes(
         self,
-        seg_mask_annotation_zarr_headers: Dict[str, Dict],
+        seg_mask_annotation_zarr_headers: Dict[str, Dict[str, Dict]],
     ):
         """Check that the voxel spacings are correct for a zarr annotation file."""
         for zarr_filename, header_data in seg_mask_annotation_zarr_headers.items():
@@ -243,7 +243,7 @@ class TestSegmentationMaskHeader:
                     "unit": "angstrom",
                 }
 
-    def test_zarr_zarray(self, seg_mask_annotation_zarr_headers: Dict[str, Dict]):
+    def test_zarr_zarray(self, seg_mask_annotation_zarr_headers: Dict[str, Dict[str, Dict]]):
         """Check that the data type is correct for each binning / scale of the zarr annotation file (int8)."""
         for zarr_filename, header_data in seg_mask_annotation_zarr_headers.items():
             print(f"Zarr File: {zarr_filename}")
@@ -258,7 +258,7 @@ class TestSegmentationMaskHeader:
     ### BEGIN Cross-format consistency tests ###
     def test_zarr_mrc_both_exist(
         self,
-        seg_mask_annotation_zarr_headers: Dict[str, Dict],
+        seg_mask_annotation_zarr_headers: Dict[str, Dict[str, Dict]],
         seg_mask_annotation_mrc_headers: Dict[str, MrcInterpreter],
     ):
         """Check that both the zarr and mrc annotation files exist for each annotation file."""
@@ -268,7 +268,7 @@ class TestSegmentationMaskHeader:
 
     def test_zarr_mrc_volume_size(
         self,
-        seg_mask_annotation_zarr_headers: Dict[str, Dict],
+        seg_mask_annotation_zarr_headers: Dict[str, Dict[str, Dict]],
         seg_mask_annotation_mrc_headers: Dict[str, MrcInterpreter],
     ):
         """Check that the zarr volume size matches the mrc volume size, for each zarr annotation file and its binnings."""

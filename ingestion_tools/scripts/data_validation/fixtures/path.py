@@ -6,7 +6,7 @@ run_name and voxel_spacing combination.
 """
 
 import os
-from typing import Any, Dict, List, Optional
+from typing import Dict, List, Optional
 
 import pytest
 
@@ -69,7 +69,7 @@ def run_meta_file(run_dir: str, filesystem: FileSystemApi) -> str:
 
 
 @pytest.fixture(scope="session")
-def frames_dir(run_dir: str, tiltseries_metadata: Dict[str, Any], filesystem: FileSystemApi) -> str:
+def frames_dir(run_dir: str, tiltseries_metadata: Dict, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/Frames"""
     dst = f"{run_dir}/Frames"
     if filesystem.s3fs.exists(dst):
@@ -122,7 +122,7 @@ def tiltseries_meta_file(
 @pytest.fixture(scope="session")
 def tiltseries_mrc_file(
     tiltseries_dir: str,
-    tiltseries_metadata: Dict[str, Any],
+    tiltseries_metadata: Dict,
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].mrc"""
@@ -136,7 +136,7 @@ def tiltseries_mrc_file(
 @pytest.fixture(scope="session")
 def tiltseries_zarr_file(
     tiltseries_dir: str,
-    tiltseries_metadata: Dict[str, Any],
+    tiltseries_metadata: Dict,
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].zarr"""
@@ -237,7 +237,7 @@ def canonical_tomo_meta_file(
 @pytest.fixture(scope="session")
 def canonical_tomo_mrc_file(
     canonical_tomo_dir: str,
-    canonical_tomogram_metadata: Dict[str, Any],
+    canonical_tomogram_metadata: Dict,
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name].mrc"""
@@ -251,7 +251,7 @@ def canonical_tomo_mrc_file(
 @pytest.fixture(scope="session")
 def canonical_tomo_zarr_file(
     canonical_tomo_dir: str,
-    canonical_tomogram_metadata: Dict[str, Any],
+    canonical_tomogram_metadata: Dict,
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name].zarr"""
@@ -328,7 +328,7 @@ def get_annotation_files(
 @pytest.fixture(scope="session")
 def point_annotation_files_to_metadata_files(
     bucket: str,
-    annotation_metadata: Dict[str, Any],
+    annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
     return get_annotation_files(bucket, annotation_metadata, filesystem, "Point")
@@ -337,7 +337,7 @@ def point_annotation_files_to_metadata_files(
 @pytest.fixture(scope="session")
 def oriented_point_annotation_files_to_metadata_files(
     bucket: str,
-    annotation_metadata: Dict[str, Any],
+    annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
     return get_annotation_files(bucket, annotation_metadata, filesystem, "OrientedPoint")
@@ -346,7 +346,7 @@ def oriented_point_annotation_files_to_metadata_files(
 @pytest.fixture(scope="session")
 def instance_seg_annotation_files_to_metadata_files(
     bucket: str,
-    annotation_metadata: Dict[str, Any],
+    annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
     return get_annotation_files(bucket, annotation_metadata, filesystem, "InstanceSegmentation")
@@ -355,7 +355,7 @@ def instance_seg_annotation_files_to_metadata_files(
 @pytest.fixture(scope="session")
 def seg_mask_annotation_mrc_files_to_metadata_files(
     bucket: str,
-    annotation_metadata: Dict[str, Any],
+    annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
     return get_annotation_files(bucket, annotation_metadata, filesystem, "SegmentationMask", "mrc")
@@ -364,7 +364,7 @@ def seg_mask_annotation_mrc_files_to_metadata_files(
 @pytest.fixture(scope="session")
 def seg_mask_annotation_zarr_files_to_metadata_files(
     bucket: str,
-    annotation_metadata: Dict[str, Any],
+    annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
     return get_annotation_files(bucket, annotation_metadata, filesystem, "SegmentationMask", "zarr")

@@ -101,7 +101,7 @@ def canonical_tomogram_metadata(canonical_tomo_meta_file: str, filesystem: FileS
 
 @pytest.fixture(scope="session")
 def annotation_metadata(annotation_metadata_files: List[str], filesystem: FileSystemApi) -> Dict[str, Dict]:
-    """Load the annotation metadata. Dictionary structure: metadata = {annotation_a_filename: {metadata_a_filename: Dict}, annotation_b_filename: ...}."""
+    """Load the annotation metadata. Dictionary structure: metadata = {metadata_a_filename: Dict}, metadata_b_filename: ...}."""
     metadata_objs = {}
 
     for file in annotation_metadata_files:
@@ -165,7 +165,7 @@ def seg_mask_annotation_mrc_headers(
 def seg_mask_annotation_zarr_headers(
     seg_mask_annotation_zarr_files_to_metadata_files: Dict[str, str],
     filesystem: FileSystemApi,
-) -> Dict[str, Dict]:
+) -> Dict[str, Dict[str, Dict]]:
     """Get the zattrs and zarray data for a zarr annotation file. Dictionary structure: headers = {annotation_a_filename: {zattrs": Dict, "zarrays": Dict}}, annotation_b_filename: ...}."""
     headers = {}
     for zarr_filename, _ in seg_mask_annotation_zarr_files_to_metadata_files.items():
