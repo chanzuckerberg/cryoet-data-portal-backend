@@ -820,13 +820,13 @@ referencing = ">=0.31.0"
 
 [[package]]
 name = "linkml"
-version = "1.8.1"
+version = "1.8.2"
 description = "Linked Open Data Modeling Language"
 optional = false
 python-versions = "<4.0.0,>=3.8.1"
 files = [
-    {file = "linkml-1.8.1-py3-none-any.whl", hash = "sha256:a68cb4f9bfa16353a4f84ae581db8272a5d151db46f1d6b601c87cb0be6e2d28"},
-    {file = "linkml-1.8.1.tar.gz", hash = "sha256:19e53478119af11e7a6633d764c13dc9d849d3ff9e7d2efc87c9158041e7b7bb"},
+    {file = "linkml-1.8.2-py3-none-any.whl", hash = "sha256:441e284f25d8d68a1ca58456651ccac29dc0319f9d18abceb677728eaeacc655"},
+    {file = "linkml-1.8.2.tar.gz", hash = "sha256:29e42e46e2777eb8b77e38775686b4ab385d5955bc5a0e6ec7c8f39dd4827544"},
 ]
 
 [package.dependencies]
@@ -839,7 +839,7 @@ jinja2 = ">=3.1.0"
 jsonasobj2 = ">=1.0.3,<2.0.0"
 jsonschema = {version = ">=4.0.0", extras = ["format"]}
 linkml-dataops = "*"
-linkml-runtime = "1.8.0"
+linkml-runtime = ">=1.8.1,<2.0.0"
 openpyxl = "*"
 parse = "*"
 prefixcommons = ">=0.1.7"
@@ -880,13 +880,13 @@ linkml-runtime = ">=1.1.6"
 
 [[package]]
 name = "linkml-runtime"
-version = "1.8.0"
+version = "1.8.1"
 description = "Runtime environment for LinkML, the Linked open data modeling language"
 optional = false
 python-versions = "<4.0,>=3.8"
 files = [
-    {file = "linkml_runtime-1.8.0-py3-none-any.whl", hash = "sha256:e99a809eda52640633f07a9e8b391d1a9da863eb68a475dfd74a79335b909931"},
-    {file = "linkml_runtime-1.8.0.tar.gz", hash = "sha256:436381a7bf791e9af4ef0a5adcac86762d451b77670fbdb3ba083d2c177fb5f2"},
+    {file = "linkml_runtime-1.8.1-py3-none-any.whl", hash = "sha256:bb825462d1609cea055ccf23ee772c846d3e14d34dc8286fa64a132cbf4aa3d2"},
+    {file = "linkml_runtime-1.8.1.tar.gz", hash = "sha256:2839143c1518579bc4baeaec3b1b854d241e1b792ccecc756bb860c66a633a44"},
 ]
 
 [package.dependencies]
@@ -2315,4 +2315,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "a549bd2abe8fe853005098d5abb7c2c002c08a9b19c97c54e02520cbbf28c0b6"
+content-hash = "c5f3646441b4a5ca015243bab7417f292817b475bfca80795881a43a0e819ea8"

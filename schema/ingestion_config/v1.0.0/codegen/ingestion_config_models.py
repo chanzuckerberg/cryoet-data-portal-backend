@@ -5,14 +5,7 @@ from enum import Enum
 import re
 import sys
 from typing import Any, ClassVar, List, Literal, Dict, Optional, Union
-from pydantic.version import VERSION as PYDANTIC_VERSION
-
-if int(PYDANTIC_VERSION[0]) >= 2:
-    from pydantic import BaseModel, ConfigDict, Field, RootModel, field_validator
-else:
-    from pydantic import BaseModel, Field, validator
-
-from pydantic import conlist
+from pydantic import BaseModel, ConfigDict, Field, RootModel, field_validator, conlist
 
 metamodel_version = "None"
 version = "1.1.0"
@@ -756,14 +749,14 @@ class AuthoredEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
     authors: List[Author] = Field(
-        default_factory=list,
+        ...,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -777,7 +770,7 @@ class FundedEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
     funding: Optional[List[FundingDetails]] = Field(
-        default_factory=list,
+        None,
         description="""A funding source for a scientific data entity (base for JSON and DB representation).""",
         json_schema_extra={
             "linkml_meta": {
@@ -1237,19 +1230,19 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
         },
     )
     authors: List[Author] = Field(
-        default_factory=list,
+        ...,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
-                "minimum_cardinality": 1,
             }
         },
     )
     funding: Optional[List[FundingDetails]] = Field(
-        default_factory=list,
+        None,
         description="""A funding source for a scientific data entity (base for JSON and DB representation).""",
         json_schema_extra={
             "linkml_meta": {
@@ -1401,14 +1394,14 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
         },
     )
     deposition_types: List[DepositionTypesEnum] = Field(
-        default_factory=list,
+        ...,
         description="""Type of data in the deposition (e.g. dataset, annotation, tomogram)""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "deposition_types",
                 "domain_of": ["Deposition"],
                 "exact_mappings": ["cdp-common:deposition_types"],
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -1420,14 +1413,14 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
         },
     )
     authors: List[Author] = Field(
-        default_factory=list,
+        ...,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -2228,14 +2221,14 @@ class Tomogram(AuthoredEntity):
         json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram"]}},
     )
     authors: List[Author] = Field(
-        default_factory=list,
+        ...,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -2456,7 +2449,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2578,7 +2571,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2700,7 +2693,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2823,7 +2816,7 @@ class AnnotationPointFile(AnnotationSourceFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2905,7 +2898,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -2999,7 +2992,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
         },
     )
     glob_strings: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3091,7 +3084,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
         json_schema_extra={"linkml_meta": {"alias": "confidence", "domain_of": ["Annotation"]}},
     )
     files: Optional[List[AnnotationSourceFile]] = Field(
-        default_factory=list,
+        None,
         description="""File and sourcing data for an annotation. Represents an entry in annotation.sources.""",
         json_schema_extra={
             "linkml_meta": {"alias": "files", "domain_of": ["Annotation"], "list_elements_ordered": True}
@@ -3163,14 +3156,14 @@ class Annotation(AuthoredEntity, DateStampedEntity):
         },
     )
     authors: List[Author] = Field(
-        default_factory=list,
+        ...,
         description="""Author of a scientific data entity.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -3714,56 +3707,57 @@ class Container(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config", "tree_root": True})
 
     annotations: Optional[List[AnnotationEntity]] = Field(
-        default_factory=list,
+        None,
         description="""An annotation entity.""",
         json_schema_extra={"linkml_meta": {"alias": "annotations", "domain_of": ["Container"]}},
     )
     dataset_keyphotos: Optional[List[DatasetKeyPhotoEntity]] = Field(
-        default_factory=list,
+        None,
         description="""A dataset key photo entity.""",
         json_schema_extra={"linkml_meta": {"alias": "dataset_keyphotos", "domain_of": ["Container"]}},
     )
     datasets: List[DatasetEntity] = Field(
-        default_factory=list,
+        ...,
         description="""A dataset entity.""",
-        json_schema_extra={"linkml_meta": {"alias": "datasets", "domain_of": ["Container"], "minimum_cardinality": 1}},
+        min_length=1,
+        json_schema_extra={"linkml_meta": {"alias": "datasets", "domain_of": ["Container"]}},
     )
     deposition_keyphotos: Optional[List[DepositionKeyPhotoEntity]] = Field(
-        default_factory=list,
+        None,
         description="""A deposition key photo entity.""",
         json_schema_extra={"linkml_meta": {"alias": "deposition_keyphotos", "domain_of": ["Container"]}},
     )
     depositions: List[DepositionEntity] = Field(
-        default_factory=list,
+        ...,
         description="""A deposition entity.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "depositions", "domain_of": ["Container"], "minimum_cardinality": 1}
-        },
+        min_length=1,
+        json_schema_extra={"linkml_meta": {"alias": "depositions", "domain_of": ["Container"]}},
     )
     frames: Optional[List[FrameEntity]] = Field(
-        default_factory=list,
+        None,
         description="""A frame entity.""",
         json_schema_extra={"linkml_meta": {"alias": "frames", "domain_of": ["Container"]}},
     )
     gains: Optional[List[GainEntity]] = Field(
-        default_factory=list,
+        None,
         description="""A gain entity.""",
         json_schema_extra={"linkml_meta": {"alias": "gains", "domain_of": ["Container"]}},
     )
     key_images: Optional[List[KeyImageEntity]] = Field(
-        default_factory=list,
+        None,
         description="""A key image entity.""",
         json_schema_extra={"linkml_meta": {"alias": "key_images", "domain_of": ["Container"]}},
     )
     rawtilts: Optional[List[RawTiltEntity]] = Field(
-        default_factory=list,
+        None,
         description="""A raw tilt entity.""",
         json_schema_extra={"linkml_meta": {"alias": "rawtilts", "domain_of": ["Container"]}},
     )
     runs: List[RunEntity] = Field(
-        default_factory=list,
+        ...,
         description="""A run entity.""",
-        json_schema_extra={"linkml_meta": {"alias": "runs", "domain_of": ["Container"], "minimum_cardinality": 1}},
+        min_length=1,
+        json_schema_extra={"linkml_meta": {"alias": "runs", "domain_of": ["Container"]}},
     )
     standardization_config: StandardizationConfig = Field(
         ...,
@@ -3771,21 +3765,20 @@ class Container(ConfiguredBaseModel):
         json_schema_extra={"linkml_meta": {"alias": "standardization_config", "domain_of": ["Container"]}},
     )
     tiltseries: Optional[List[TiltSeriesEntity]] = Field(
-        default_factory=list,
+        None,
         description="""A tilt series entity.""",
         json_schema_extra={"linkml_meta": {"alias": "tiltseries", "domain_of": ["Container"]}},
     )
     tomograms: Optional[List[TomogramEntity]] = Field(
-        default_factory=list,
+        None,
         description="""A tomogram entity.""",
         json_schema_extra={"linkml_meta": {"alias": "tomograms", "domain_of": ["Container"]}},
     )
     voxel_spacings: List[VoxelSpacingEntity] = Field(
-        default_factory=list,
+        ...,
         description="""A voxel spacing entity.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "voxel_spacings", "domain_of": ["Container"], "minimum_cardinality": 1}
-        },
+        min_length=1,
+        json_schema_extra={"linkml_meta": {"alias": "voxel_spacings", "domain_of": ["Container"]}},
     )
 
 
@@ -3920,11 +3913,10 @@ class SourceMultiGlob(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     list_globs: List[str] = Field(
-        default_factory=list,
+        ...,
         description="""The globs for the file.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "list_globs", "domain_of": ["SourceMultiGlob"], "minimum_cardinality": 1}
-        },
+        min_length=1,
+        json_schema_extra={"linkml_meta": {"alias": "list_globs", "domain_of": ["SourceMultiGlob"]}},
     )
 
 
@@ -4043,14 +4035,11 @@ class DefaultLiteral(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     value: List[Any] = Field(
-        default_factory=list,
+        ...,
         description="""The value for the literal.""",
+        min_length=1,
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "value",
-                "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"],
-                "minimum_cardinality": 1,
-            }
+            "linkml_meta": {"alias": "value", "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"]}
         },
     )
 
@@ -4095,8 +4084,9 @@ class AnnotationEntity(ConfiguredBaseModel):
         },
     )
     sources: List[AnnotationSource] = Field(
-        default_factory=list,
+        ...,
         description="""An annotation source.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sources",
@@ -4115,7 +4105,6 @@ class AnnotationEntity(ConfiguredBaseModel):
                     "TomogramEntity",
                     "VoxelSpacingEntity",
                 ],
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -4241,7 +4230,7 @@ class AnnotationParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude datasets for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4261,7 +4250,7 @@ class AnnotationParent(ConfiguredBaseModel):
         },
     )
     deposition: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude depositions for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4284,7 +4273,7 @@ class AnnotationParent(ConfiguredBaseModel):
         },
     )
     run: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude runs for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4303,7 +4292,7 @@ class AnnotationParent(ConfiguredBaseModel):
         },
     )
     voxel_spacing: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude voxel spacings for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4338,8 +4327,9 @@ class DatasetEntity(ConfiguredBaseModel):
         },
     )
     sources: List[DatasetSource] = Field(
-        default_factory=list,
+        ...,
         description="""A dataset source.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sources",
@@ -4358,7 +4348,6 @@ class DatasetEntity(ConfiguredBaseModel):
                     "TomogramEntity",
                     "VoxelSpacingEntity",
                 ],
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -4550,7 +4539,7 @@ class DatasetParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     deposition: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude depositions for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4582,8 +4571,9 @@ class DatasetKeyPhotoEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[DatasetKeyPhotoSource] = Field(
-        default_factory=list,
+        ...,
         description="""A key photo source.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sources",
@@ -4602,7 +4592,6 @@ class DatasetKeyPhotoEntity(ConfiguredBaseModel):
                     "TomogramEntity",
                     "VoxelSpacingEntity",
                 ],
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -4727,7 +4716,7 @@ class DatasetKeyPhotoParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     deposition: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude depositions for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -4775,8 +4764,9 @@ class DepositionEntity(ConfiguredBaseModel):
         },
     )
     sources: List[DepositionSource] = Field(
-        default_factory=list,
+        ...,
         description="""A deposition source.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sources",
@@ -4795,7 +4785,6 @@ class DepositionEntity(ConfiguredBaseModel):
                     "TomogramEntity",
                     "VoxelSpacingEntity",
                 ],
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -4909,8 +4898,9 @@ class DepositionKeyPhotoEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[DepositionKeyPhotoSource] = Field(
-        default_factory=list,
+        ...,
         description="""A key photo source.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sources",
@@ -4929,7 +4919,6 @@ class DepositionKeyPhotoEntity(ConfiguredBaseModel):
                     "TomogramEntity",
                     "VoxelSpacingEntity",
                 ],
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -5054,7 +5043,7 @@ class DepositionKeyPhotoParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     deposition: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude depositions for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5086,8 +5075,9 @@ class FrameEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[FrameSource] = Field(
-        default_factory=list,
+        ...,
         description="""A frame source.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sources",
@@ -5106,7 +5096,6 @@ class FrameEntity(ConfiguredBaseModel):
                     "TomogramEntity",
                     "VoxelSpacingEntity",
                 ],
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -5298,7 +5287,7 @@ class FrameParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude datasets for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5318,7 +5307,7 @@ class FrameParent(ConfiguredBaseModel):
         },
     )
     deposition: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude depositions for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5341,7 +5330,7 @@ class FrameParent(ConfiguredBaseModel):
         },
     )
     run: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude runs for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5369,8 +5358,9 @@ class GainEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[GainSource] = Field(
-        default_factory=list,
+        ...,
         description="""A gain source.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sources",
@@ -5389,7 +5379,6 @@ class GainEntity(ConfiguredBaseModel):
                     "TomogramEntity",
                     "VoxelSpacingEntity",
                 ],
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -5581,7 +5570,7 @@ class GainParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude datasets for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5601,7 +5590,7 @@ class GainParent(ConfiguredBaseModel):
         },
     )
     deposition: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude depositions for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5624,7 +5613,7 @@ class GainParent(ConfiguredBaseModel):
         },
     )
     run: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude runs for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5652,8 +5641,9 @@ class KeyImageEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[KeyImageSource] = Field(
-        default_factory=list,
+        ...,
         description="""A key image source.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sources",
@@ -5672,7 +5662,6 @@ class KeyImageEntity(ConfiguredBaseModel):
                     "TomogramEntity",
                     "VoxelSpacingEntity",
                 ],
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -5864,7 +5853,7 @@ class KeyImageParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude datasets for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5884,7 +5873,7 @@ class KeyImageParent(ConfiguredBaseModel):
         },
     )
     deposition: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude depositions for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5907,7 +5896,7 @@ class KeyImageParent(ConfiguredBaseModel):
         },
     )
     run: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude runs for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5926,12 +5915,12 @@ class KeyImageParent(ConfiguredBaseModel):
         },
     )
     tomogram: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude tomograms for a source.""",
         json_schema_extra={"linkml_meta": {"alias": "tomogram", "domain_of": ["KeyImageParent"]}},
     )
     voxel_spacing: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude voxel spacings for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5950,8 +5939,9 @@ class RawTiltEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[RawTiltSource] = Field(
-        default_factory=list,
+        ...,
         description="""A raw tilt source.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sources",
@@ -5970,7 +5960,6 @@ class RawTiltEntity(ConfiguredBaseModel):
                     "TomogramEntity",
                     "VoxelSpacingEntity",
                 ],
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -6162,7 +6151,7 @@ class RawTiltParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude datasets for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -6182,7 +6171,7 @@ class RawTiltParent(ConfiguredBaseModel):
         },
     )
     deposition: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude depositions for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -6205,7 +6194,7 @@ class RawTiltParent(ConfiguredBaseModel):
         },
     )
     run: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude runs for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -6233,8 +6222,9 @@ class RunEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[RunSource] = Field(
-        default_factory=list,
+        ...,
         description="""A run source.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sources",
@@ -6253,7 +6243,6 @@ class RunEntity(ConfiguredBaseModel):
                     "TomogramEntity",
                     "VoxelSpacingEntity",
                 ],
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -6445,7 +6434,7 @@ class RunParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude datasets for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -6465,7 +6454,7 @@ class RunParent(ConfiguredBaseModel):
         },
     )
     deposition: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude depositions for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -6552,8 +6541,9 @@ class TiltSeriesEntity(ConfiguredBaseModel):
         },
     )
     sources: List[TiltSeriesSource] = Field(
-        default_factory=list,
+        ...,
         description="""A tilt series source.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sources",
@@ -6572,7 +6562,6 @@ class TiltSeriesEntity(ConfiguredBaseModel):
                     "TomogramEntity",
                     "VoxelSpacingEntity",
                 ],
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -6764,7 +6753,7 @@ class TiltSeriesParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude datasets for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -6784,7 +6773,7 @@ class TiltSeriesParent(ConfiguredBaseModel):
         },
     )
     deposition: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude depositions for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -6807,7 +6796,7 @@ class TiltSeriesParent(ConfiguredBaseModel):
         },
     )
     run: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude runs for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -6851,8 +6840,9 @@ class TomogramEntity(ConfiguredBaseModel):
         },
     )
     sources: List[TomogramSource] = Field(
-        default_factory=list,
+        ...,
         description="""A tomogram source.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sources",
@@ -6871,7 +6861,6 @@ class TomogramEntity(ConfiguredBaseModel):
                     "TomogramEntity",
                     "VoxelSpacingEntity",
                 ],
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -7063,7 +7052,7 @@ class TomogramParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude datasets for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -7083,7 +7072,7 @@ class TomogramParent(ConfiguredBaseModel):
         },
     )
     deposition: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude depositions for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -7106,7 +7095,7 @@ class TomogramParent(ConfiguredBaseModel):
         },
     )
     run: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude runs for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -7125,7 +7114,7 @@ class TomogramParent(ConfiguredBaseModel):
         },
     )
     voxel_spacing: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude voxel spacings for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -7144,8 +7133,9 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     sources: List[VoxelSpacingSource] = Field(
-        default_factory=list,
+        ...,
         description="""A voxel spacing source.""",
+        min_length=1,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "sources",
@@ -7164,7 +7154,6 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
                     "TomogramEntity",
                     "VoxelSpacingEntity",
                 ],
-                "minimum_cardinality": 1,
             }
         },
     )
@@ -7338,7 +7327,7 @@ class VoxelSpacingParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     dataset: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude datasets for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -7358,7 +7347,7 @@ class VoxelSpacingParent(ConfiguredBaseModel):
         },
     )
     deposition: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude depositions for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -7381,7 +7370,7 @@ class VoxelSpacingParent(ConfiguredBaseModel):
         },
     )
     run: Optional[List[str]] = Field(
-        default_factory=list,
+        None,
         description="""Include or exclude runs for a source.""",
         json_schema_extra={
             "linkml_meta": {
@@ -7409,14 +7398,11 @@ class VoxelSpacingLiteral(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     value: List[float] = Field(
-        default_factory=list,
+        ...,
         description="""The value for the voxel spacing literal.""",
+        min_length=1,
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "value",
-                "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"],
-                "minimum_cardinality": 1,
-            }
+            "linkml_meta": {"alias": "value", "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"]}
         },
     )
 
