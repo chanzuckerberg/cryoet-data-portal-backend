@@ -49,6 +49,18 @@ def get_zarrays(zarrfile: str, fs: FileSystemApi) -> Dict:
 
 
 # ==================================================================================================
+# Dataset fixtures
+# ==================================================================================================
+
+
+@pytest.fixture(scope="session")
+def dataset_metadata(dataset_metadata_file: str, filesystem: FileSystemApi) -> Dict:
+    """Load the dataset metadata."""
+    with filesystem.open(dataset_metadata_file, "r") as f:
+        return json.load(f)
+
+
+# ==================================================================================================
 # Tiltseries fixtures
 # ==================================================================================================
 
@@ -116,7 +128,7 @@ def annotation_metadata(annotation_metadata_files: List[str], filesystem: FileSy
 
 
 def get_ndjson_annotations(
-    annotation_files_to_metadata_files: Dict[str, str],
+    annotation_files: List[str],
     filesystem: FileSystemApi,
 ) -> Dict[str, List[Dict]]:
     """
@@ -126,7 +138,7 @@ def get_ndjson_annotations(
     """
     annotations = {}
     # Only need the annotation file to find the annotations.
-    for annotation_file, _ in annotation_files_to_metadata_files.items():
+    for annotation_file in annotation_files:
         with filesystem.open(annotation_file, "r") as f:
             annotations[annotation_file] = ndjson.load(f)
 
@@ -135,39 +147,39 @@ def get_ndjson_annotations(
 
 @pytest.fixture(scope="session")
 def point_annotations(
-    point_annotation_files_to_metadata_files: Dict[str, str],
+    point_annotation_files: List[str],
     filesystem: FileSystemApi,
 ) -> Dict[str, List[Dict]]:
     """Load point annotations."""
-    return get_ndjson_annotations(point_annotation_files_to_metadata_files, filesystem)
+    return get_ndjson_annotations(point_annotation_files, filesystem)
 
 
 @pytest.fixture(scope="session")
 def oriented_point_annotations(
-    oriented_point_annotation_files_to_metadata_files: Dict[str, str],
+    oriented_point_annotation_files: List[str],
     filesystem: FileSystemApi,
 ) -> Dict[str, List[Dict]]:
     """Load oriented point annotations."""
-    return get_ndjson_annotations(oriented_point_annotation_files_to_metadata_files, filesystem)
+    return get_ndjson_annotations(oriented_point_annotation_files, filesystem)
 
 
 @pytest.fixture(scope="session")
 def instance_seg_annotations(
-    instance_seg_annotation_files_to_metadata_files: Dict[str, str],
+    instance_seg_annotation_files: List[str],
     filesystem: FileSystemApi,
 ) -> Dict[str, List[Dict]]:
     """Load instance segmentation annotations."""
-    return get_ndjson_annotations(instance_seg_annotation_files_to_metadata_files, filesystem)
+    return get_ndjson_annotations(instance_seg_annotation_files, filesystem)
 
 
 @pytest.fixture(scope="session")
 def seg_mask_annotation_mrc_headers(
-    seg_mask_annotation_mrc_files_to_metadata_files: Dict[str, str],
+    seg_mask_annotation_mrc_files: List[str],
     filesystem: FileSystemApi,
 ) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for an mrc annotation file."""
     headers = {}
-    for mrc_filename, _ in seg_mask_annotation_mrc_files_to_metadata_files.items():
+    for mrc_filename in seg_mask_annotation_mrc_files:
         headers[mrc_filename] = get_header(mrc_filename, filesystem)
 
     return headers
@@ -175,7 +187,7 @@ def seg_mask_annotation_mrc_headers(
 
 @pytest.fixture(scope="session")
 def seg_mask_annotation_zarr_headers(
-    seg_mask_annotation_zarr_files_to_metadata_files: Dict[str, str],
+    seg_mask_annotation_zarr_files: List[str],
     filesystem: FileSystemApi,
 ) -> Dict[str, Dict[str, Dict]]:
     """
@@ -183,7 +195,7 @@ def seg_mask_annotation_zarr_headers(
     Dictionary structure: headers = {annotation_a_filename: {"zattrs": Dict, "zarrays": Dict}}, annotation_b_filename: ...}.
     """
     headers = {}
-    for zarr_filename, _ in seg_mask_annotation_zarr_files_to_metadata_files.items():
+    for zarr_filename in seg_mask_annotation_zarr_files:
         headers[zarr_filename] = {
             "zattrs": get_zattrs(zarr_filename, filesystem),
             "zarrays": get_zarrays(zarr_filename, filesystem),

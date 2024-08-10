@@ -12,14 +12,15 @@ import pytest
 
 from common.fs import FileSystemApi
 
-# =============================================================================
-# FS & Dataset fixtures
-# =============================================================================
-
 
 @pytest.fixture(scope="session")
 def filesystem() -> FileSystemApi:
     return FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
+
+
+# =============================================================================
+# Dataset fixtures
+# =============================================================================
 
 
 @pytest.fixture(scope="session")
@@ -29,7 +30,7 @@ def dataset_dir(bucket: str, dataset: str) -> str:
 
 
 @pytest.fixture(scope="session")
-def dataset_meta_file(dataset_dir: str, filesystem: FileSystemApi) -> str:
+def dataset_metadata_file(dataset_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/dataset_metadata.json"""
     dst = f"{dataset_dir}/dataset_metadata.json"
     if filesystem.s3fs.exists(dst):
@@ -285,18 +286,29 @@ def annotations_dir(voxel_dir: str, filesystem: FileSystemApi) -> str:
 
 
 @pytest.fixture(scope="session")
+def annotation_files(
+    point_annotation_files: List[str],
+    oriented_point_annotation_files: List[str],
+    instance_seg_annotation_files: List[str],
+    seg_mask_annotation_mrc_files: List[str],
+) -> List[str]:
+    return (
+        point_annotation_files
+        + oriented_point_annotation_files
+        + instance_seg_annotation_files
+        + seg_mask_annotation_mrc_files
+    )
+
+
+@pytest.fixture(scope="session")
 def annotation_metadata_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/[annotation_name].json"""
-    files = filesystem.glob(f"{annotations_dir}/*.json")
-
-    if len(files) == 0:
-        pytest.skip("No annotation metadata files found.")
-
-    return files
+    return filesystem.glob(f"{annotations_dir}/*.json")
 
 
 def get_annotation_files_to_metadata_files(
     bucket: str,
+    annotation_files: List[str],
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
     name: str,
@@ -304,10 +316,12 @@ def get_annotation_files_to_metadata_files(
 ) -> Dict[str, str]:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/[annotation_name].*
     Helper function for retrieving annotation files and their corresponding metadata files.
+    Fails the test if the annotation file is not found for a given metadata file OR if there are any remaining annotation files.
     Returns a dictionary of annotation files, annotation_filename -> metadata_filename.
     """
 
-    annotation_files = {}
+    remaining_annotation_files = annotation_files.copy()
+    corresponding_annotation_files = {}
     count = 0
 
     for metadata_filename, metadata in annotation_metadata.items():
@@ -315,51 +329,121 @@ def get_annotation_files_to_metadata_files(
             if annotation["shape"] == name and (format is None or annotation["format"] == format):
                 file = f"s3://{bucket}/{annotation['path']}"
                 if not filesystem.s3fs.exists(file):
-                    pytest.fail(f"{name} {format if format else ''} annotation file not found: {file}")
+                    pytest.fail(f"{name} annotation file not found: {file}")
 
-                annotation_files[file] = metadata_filename
+                corresponding_annotation_files[file] = metadata_filename
+                remaining_annotation_files.remove(file)
                 count += 1
 
-    if count == 0:
-        pytest.skip(f"No {name} {format if format else ''} annotation files found.")
+    if len(remaining_annotation_files) > 0:
+        pytest.fail(
+            f"Metadata file not found for {len(remaining_annotation_files)} {name} annotation files.",
+        )
 
-    return annotation_files
+    if count == 0:
+        pytest.skip(f"No {name} annotation files found.")
+
+    return corresponding_annotation_files
+
+
+@pytest.fixture(scope="session")
+def point_annotation_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
+    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_point.ndjson"""
+    files = filesystem.glob(f"{annotations_dir}/*_point.ndjson")
+    return ["s3://" + file for file in files]
 
 
 @pytest.fixture(scope="session")
 def point_annotation_files_to_metadata_files(
     bucket: str,
+    point_annotation_files: List[str],
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
-    return get_annotation_files_to_metadata_files(bucket, annotation_metadata, filesystem, "Point")
+    return get_annotation_files_to_metadata_files(
+        bucket,
+        point_annotation_files,
+        annotation_metadata,
+        filesystem,
+        "Point",
+    )
+
+
+@pytest.fixture(scope="session")
+def oriented_point_annotation_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
+    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_orientedpoint.ndjson"""
+    files = filesystem.glob(f"{annotations_dir}/*_orientedpoint.ndjson")
+    return ["s3://" + file for file in files]
 
 
 @pytest.fixture(scope="session")
 def oriented_point_annotation_files_to_metadata_files(
     bucket: str,
+    oriented_point_annotation_files: List[str],
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
-    return get_annotation_files_to_metadata_files(bucket, annotation_metadata, filesystem, "OrientedPoint")
+    return get_annotation_files_to_metadata_files(
+        bucket,
+        oriented_point_annotation_files,
+        annotation_metadata,
+        filesystem,
+        "OrientedPoint",
+    )
+
+
+@pytest.fixture(scope="session")
+def instance_seg_annotation_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
+    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_instancesegmentation.ndjson"""
+    files = filesystem.glob(f"{annotations_dir}/*_instancesegmentation.ndjson")
+    return ["s3://" + file for file in files]
 
 
 @pytest.fixture(scope="session")
 def instance_seg_annotation_files_to_metadata_files(
     bucket: str,
+    instance_seg_annotation_files: List[str],
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
-    return get_annotation_files_to_metadata_files(bucket, annotation_metadata, filesystem, "InstanceSegmentation")
+    return get_annotation_files_to_metadata_files(
+        bucket,
+        instance_seg_annotation_files,
+        annotation_metadata,
+        filesystem,
+        "InstanceSegmentation",
+    )
+
+
+@pytest.fixture(scope="session")
+def seg_mask_annotation_mrc_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
+    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_segmentationmask.mrc"""
+    files = filesystem.glob(f"{annotations_dir}/*_segmentationmask.mrc")
+    return ["s3://" + file for file in files]
 
 
 @pytest.fixture(scope="session")
 def seg_mask_annotation_mrc_files_to_metadata_files(
     bucket: str,
+    seg_mask_annotation_mrc_files: List[str],
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
-    return get_annotation_files_to_metadata_files(bucket, annotation_metadata, filesystem, "SegmentationMask", "mrc")
+    return get_annotation_files_to_metadata_files(
+        bucket,
+        seg_mask_annotation_mrc_files,
+        annotation_metadata,
+        filesystem,
+        "SegmentationMask",
+        "mrc",
+    )
+
+
+@pytest.fixture(scope="session")
+def seg_mask_annotation_zarr_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
+    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_segmentationmask.zarr"""
+    files = filesystem.glob(f"{annotations_dir}/*_segmentationmask.zarr")
+    return ["s3://" + file for file in files]
 
 
 @pytest.fixture(scope="session")
