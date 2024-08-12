@@ -52,4 +52,4 @@ repos:
     name: dataset-config-validation
     entry: bash -c "cd schema/v1.1.0/ && make validate-configs"
     language: system
-    files: '^(ingestion_tools/dataset_configs/|schema/v1.1.0/.*\.(py|yaml|Makefile))'
+    files: '^(ingestion_tools/dataset_configs/|schema/v1.1.0/.*\.(json|py|yaml|Makefile))'

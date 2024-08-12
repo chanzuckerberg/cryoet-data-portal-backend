@@ -9,12 +9,14 @@ on:
       - schema/v1.1.0/Makefile
       - schema/v1.1.0/*.yaml
       - schema/v1.1.0/*.py
+      - schema/v1.1.0/*.json
   pull_request:
     paths:
       - ingestion_tools/dataset_configs/**
       - schema/v1.1.0/Makefile
       - schema/v1.1.0/*.yaml
       - schema/v1.1.0/*.py
+      - schema/v1.1.0/*.json
   workflow_dispatch:
 
 jobs:
