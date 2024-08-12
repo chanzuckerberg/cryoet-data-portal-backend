@@ -39,9 +39,10 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: Gas vesicle shell segmentations predicted using membrain-seg without rescaling and weights
+      MemBrain_seg_v10_alpha.ckpt
     deposition_identifier: 10303
-    deposition_title: TBA
+    deposition_title: membrain-seg gas vesicle shell predictions
     deposition_types:
     - annotation
   sources:
