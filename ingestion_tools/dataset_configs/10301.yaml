@@ -246,9 +246,12 @@ depositions:
 - metadata:
     authors: *id003
     dates: *id002
-    deposition_description: TBA
+    deposition_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
+      lamella of Chlamydomonas reinhardtii. Contained tomograms are partially annotated, including annotations for 
+      ribosomes, nucleosomes, F1F0-ATPase, RubisCO, and microtubules.
     deposition_identifier: 10300
-    deposition_title: TBA
+    deposition_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
+      cryo-plasmaFIB milling
     deposition_types:
     - dataset
   sources:

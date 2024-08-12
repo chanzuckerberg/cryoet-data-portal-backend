@@ -67,9 +67,10 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: Cryo-electron tomography datasets used in the development and evaluation of the unroofing 
+      method for preparation of plasma membranes and associated proteins.
     deposition_identifier: 10306
-    deposition_title: TBA
+    deposition_title: Unroofed eukaryotic cells.
     deposition_types:
     - dataset
   sources:

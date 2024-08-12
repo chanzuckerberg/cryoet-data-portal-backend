@@ -139,9 +139,10 @@ depositions:
 - metadata:
     authors: *id003
     dates: *id002
-    deposition_description: TBA
+    deposition_description: Cryo-electron tomograms of T. kivui FIB-SEM lamellas, including annotations of 
+      membrane-anchored hydrogen-dependent CO2 reductase filaments and ribosomes, refined using STOPGAP.
     deposition_identifier: 10008
-    deposition_title: TBA
+    deposition_title: Membrane-anchored Hydrogen-dependent CO2 reductase nanowires in T. kivui
     deposition_types:
     - dataset
   sources:
