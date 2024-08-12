@@ -93,9 +93,11 @@ depositions:
 - metadata:
     authors: *id002
     dates: *id001
-    deposition_description: TBA
+    deposition_description: Cryo-electron tomograms of S.cerevisiae of plasma FIB-SEM
+      lamella, including 80S ribosome annotations generated using crYOLO. This dataset was used for evaluation of the
+      cryoDRGN-ET reconstruction of the 80S ribosome conformational landscape inside cells.
     deposition_identifier: 10007
-    deposition_title: TBA
+    deposition_title: Saccharomyces cerevisiae cryo-FIB lamella tomograms
     deposition_types:
     - dataset
   sources:
