@@ -39,15 +39,16 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
-    deposition_identifier: 10303
-    deposition_title: TBA
+    deposition_description: Gas vesicle shell segmentations predicted using membrain-seg without rescaling and weights
+      MemBrain_seg_v10_alpha.ckpt
+    deposition_identifier: 10307
+    deposition_title: membrain-seg gas vesicle shell predictions
     deposition_types:
     - annotation
   sources:
   - literal:
       value:
-      - 10303
+      - 10307
 runs:
 - sources:
   - source_glob:
@@ -55,7 +56,7 @@ runs:
       match_regex: .*
       name_regex: (.*)
 standardization_config:
-  deposition_id: 10303
+  deposition_id: 10307
   source_prefix: membrain/outputs/
 voxel_spacings:
 - sources:
