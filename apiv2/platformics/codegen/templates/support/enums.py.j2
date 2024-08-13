@@ -13,6 +13,7 @@ import enum
 @strawberry.enum
 class {{enum.name}}(enum.Enum):
     {%- for value in enum.permissible_values %}
-    {{value | regex_replace('[^0-9A-Za-z]', '_') }} = "{{value}}"
+    {#- SQLAlchemy freaks out about spaces in enum values :'( #}
+    {{value | regex_replace('[^0-9A-Za-z]', '_') }} = "{{value | regex_replace('[^0-9A-Za-z]', '_') }}"
     {%- endfor %}
 {%- endfor %}

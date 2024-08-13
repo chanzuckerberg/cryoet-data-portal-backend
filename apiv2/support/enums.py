@@ -96,7 +96,7 @@ class tomogram_processing_enum(enum.Enum):
 @strawberry.enum
 class tomogram_reconstruction_method_enum(enum.Enum):
     SART = "SART"
-    Fourier_Space = "Fourier Space"
+    Fourier_Space = "Fourier_Space"
     SIRT = "SIRT"
     WBP = "WBP"
     Unknown = "Unknown"

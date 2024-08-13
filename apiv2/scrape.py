@@ -4,6 +4,7 @@ import cryoet_data_portal as cdp
 
 from database import models
 from platformics.database.connect import init_sync_db
+from support.enums import tomogram_reconstruction_method_enum as reconstruction_enum
 
 # cleanup:
 # delete from annotation_author; delete from dataset_author; delete from deposition_author; delete from annotation_file ; delete from annotation_shape ; delete from dataset_funding; delete from tomogram_author; delete from tomogram; delete from annotation; delete from annotation; delete from tomogram_voxel_spacing; delete from per_section_alignment_parameters; delete from per_section_parameters; delete from alignment; delete from frame; delete from tiltseries; delete from run; delete from run; delete from dataset; delete from deposition;
@@ -256,20 +257,15 @@ def add(session, model, item, parents):
         # Special handling for converting values.
         reconstruction_method = remote_item["reconstruction_method"].lower()
         if "wbp" in reconstruction_method or "weighted" in reconstruction_method:
-            local_item_data["reconstruction_method"] = "WBP"
-            local_item_data["reconstruction_method"] = "WBP"
+            local_item_data["reconstruction_method"] = reconstruction_enum.WBP
         elif "sirt" in reconstruction_method or "iterative" in reconstruction_method:
-            local_item_data["reconstruction_method"] = "SIRT"
+            local_item_data["reconstruction_method"] = reconstruction_enum.SIRT
         elif "sart" in reconstruction_method or "algebraic" in reconstruction_method:
-            local_item_data["reconstruction_method"] = "SART"
+            local_item_data["reconstruction_method"] = reconstruction_enum.SART
         elif "fourier" in reconstruction_method:
-            local_item_data["reconstruction_method"] = "Fourier Space"
+            local_item_data["reconstruction_method"] = reconstruction_enum.Fourier_Space
         else:
-            # TODO FIXME THIS IS A NOT NULL COL!!
-            print(f"Error: could not map reconstruction method {reconstruction_method}")
-            # local_item_data["reconstruction_method"] = None
-            # TODO FIXME TEMPORARY HACK TO TEST OTHER THINGS
-            local_item_data["reconstruction_method"] = "WBP"
+            local_item_data["reconstruction_method"] = reconstruction_enum.Unknown
     if model == models.TomogramVoxelSpacing:
         local_item_data = {
             "voxel_spacing": remote_item["voxel_spacing"],
@@ -293,7 +289,14 @@ def do_import():
     client = cdp.Client()
     db = init_sync_db("postgresql+psycopg://postgres:password_postgres@platformics-db:5432/platformics")
     with db.session() as session:
+        high_water_mark = 10005
+        passed_hwm = False
         for dataset in cdp.Dataset.find(client):
+            if not passed_hwm and dataset.id != high_water_mark:
+                continue
+            passed_hwm = True
+            if dataset.id == high_water_mark:
+                continue
             ds = add(session, models.Dataset, dataset, {})
             for dsauthor in cdp.DatasetAuthor.find(client, [cdp.DatasetAuthor.dataset_id == dataset.id]):
                 dsa = add(session, models.DatasetAuthor, dsauthor, {"dataset_id": ds.id})
@@ -329,7 +332,6 @@ def do_import():
             session.commit()
         print("done")
         session.commit()
-    return annotation
 
 
 if __name__ == "__main__":
