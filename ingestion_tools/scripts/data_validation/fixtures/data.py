@@ -9,7 +9,9 @@ import mdocfile
 import ndjson
 import pandas as pd
 import pytest
+import zarr
 from mrcfile.mrcinterpreter import MrcInterpreter
+from ome_zarr.io import ZarrLocation
 
 from common.fs import FileSystemApi
 
@@ -28,24 +30,24 @@ def get_header(mrcfile: str, fs: FileSystemApi) -> MrcInterpreter:
         pytest.fail(f"Failed to get header for {mrcfile}")
 
 
-def get_zattrs(zarrfile: str, fs: FileSystemApi) -> Dict:
-    """Get the zattrs for a zarr volume file without downloading the entire file."""
-    with fs.open(zarrfile + "/.zattrs", "r") as f:
-        zattrs = json.load(f)
-    return zattrs
-
-
-def get_zarrays(zarrfile: str, fs: FileSystemApi) -> Dict:
-    """Get the zarray for a zarr volume file without downloading the entire file."""
-    zarrays = {}
-    expected_subfolders = [f"{zarrfile}/{i}" for i in range(3)]
-    actual_subfolders = ["s3://" + folder for folder in fs.glob(zarrfile + "/*/")]
-    if set(expected_subfolders) != set(actual_subfolders):
+def get_zarr_headers(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
+    """Get the zattrs and zarray data for a zarr volume file."""
+    expected_subfolders = {f"{zarrfile}/{i}" for i in range(3)}.union({f"{zarrfile}/.zattrs", f"{zarrfile}/.zgroup"})
+    actual_subfolders = {"s3://" + folder for folder in fs.glob(zarrfile + "/*")}
+    if expected_subfolders != actual_subfolders:
         pytest.fail(f"Expected zarr subfolders: {expected_subfolders}, Actual zarr subfolders: {actual_subfolders}")
-    for i, subfolder in enumerate(actual_subfolders):
-        with fs.open(subfolder + "/.zarray", "r") as f:
-            zarrays[i] = json.load(f)
-    return zarrays
+
+    fsstore = zarr.storage.FSStore(url=zarrfile, mode="r", fs=fs.s3fs, dimension_separator="/")
+    fsstore_subfolders = set(fsstore.listdir())
+    expected_fsstore_subfolders = {str(i) for i in range(3)}.union({".zattrs", ".zgroup"})
+    if expected_fsstore_subfolders != fsstore_subfolders:
+        pytest.fail(f"Expected zarr subfolders: {expected_subfolders}, Actual zarr subfolders: {fsstore_subfolders}")
+
+    loc = ZarrLocation(fsstore)
+    zarrays = {}
+    for i in range(3):
+        zarrays[i] = json.loads(fsstore[str(i) + "/.zarray"].decode())
+    return {"zattrs": loc.root_attrs, "zarrays": zarrays}
 
 
 # ==================================================================================================
@@ -196,9 +198,6 @@ def seg_mask_annotation_zarr_headers(
     """
     headers = {}
     for zarr_filename in seg_mask_annotation_zarr_files:
-        headers[zarr_filename] = {
-            "zattrs": get_zattrs(zarr_filename, filesystem),
-            "zarrays": get_zarrays(zarr_filename, filesystem),
-        }
+        headers[zarr_filename] = get_zarr_headers(zarr_filename, filesystem)
 
     return headers
