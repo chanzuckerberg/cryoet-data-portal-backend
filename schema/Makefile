@@ -44,15 +44,15 @@ build: clean
 	python schema.py materialize $(METADATA_YAML) $(COMMON_YAML) $(METADATA_MATERIALIZED_YAML)
 	python schema.py materialize $(API_MODELS_YAML) $(COMMON_YAML) $(API_MODELS_MATERIALIZED_YAML)
 	python schema.py materialize $(INGESTION_CONFIG_MODELS_YAML) $(COMMON_YAML) $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML)
-	gen-pydantic --black $(METADATA_MATERIALIZED_YAML) > $(METADATA_MODELS_PY)
-	gen-pydantic --black $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_MODELS_PY)
-	gen-json-schema $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_JSON_SCHEMA)
+	linkml generate pydantic --black $(METADATA_MATERIALIZED_YAML) > $(METADATA_MODELS_PY)
+	linkml generate pydantic $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_MODELS_PY)
+	linkml generate json-schema $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_JSON_SCHEMA)
 	cd ingestion_config && ln -s $(INGESTION_CONFIG_VERSION) latest && cd ..
 
 # `make build` must be run before `make build-docs`
 .PHONY: build-docs
 build-docs: clean-docs
-	gen-doc -d $(METADATA_DOCS) --no-mergeimports --hierarchical-class-view --stacktrace $(METADATA_MATERIALIZED_YAML)
+	linkml generate doc -d $(METADATA_DOCS) --no-mergeimports --hierarchical-class-view --stacktrace $(METADATA_MATERIALIZED_YAML)
 
 .PHONY: validate-configs
 validate-configs:
