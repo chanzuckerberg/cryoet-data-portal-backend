@@ -1,5 +1,6 @@
 from typing import Any
 
+import importers.db.deposition
 from common import db_models
 from common.db_models import BaseModel
 from importers.db.base_importer import BaseDBImporter, DBImportConfig, StaleParentDeletionDBImporter
@@ -89,6 +90,9 @@ class TiltSeriesDBImporter(BaseDBImporter):
         if alignment_file_path := self.get_first_match_file_name("*.xf"):
             extra_data["s3_alignment_file"] = self.join_path(s3_prefix, alignment_file_path)
             extra_data["https_alignment_file"] = self.join_path(https_prefix, alignment_file_path)
+
+        deposition = importers.db.deposition.get_deposition(self.config, self.metadata.get("deposition_id"))
+        extra_data["deposition_id"] = deposition.id
 
         return extra_data
 

@@ -17,6 +17,8 @@ from common.db_models import (
     Dataset,
     DatasetAuthor,
     DatasetFunding,
+    Deposition,
+    DepositionAuthor,
     Run,
     TiltSeries,
     Tomogram,
@@ -43,6 +45,8 @@ def mock_db(db_connection: str) -> [list[BaseModel], Generator[SqliteDatabase, A
         Dataset,
         DatasetAuthor,
         DatasetFunding,
+        Deposition,
+        DepositionAuthor,
         Run,
         TiltSeries,
         TomogramVoxelSpacing,
@@ -60,12 +64,16 @@ def mock_db(db_connection: str) -> [list[BaseModel], Generator[SqliteDatabase, A
 
 @pytest.fixture
 def verify_model():
-    def _verify_model(actual: BaseModel, expected_values: dict[str, Any]):
-        for key, value in actual.__data__.items():
-            if key == "id" and key not in expected_values:
+    def _verify_model(actual_model: BaseModel, expected_values: dict[str, Any]):
+        actual_data = actual_model.__data__
+        for key, expected in expected_values.items():
+            actual = actual_data.get(key)
+            assert actual == expected, f"Unexpected value for {key} actual={actual} expected={expected}"
+        for key in actual_data.keys() - expected_values.keys():
+            if "id" in key:
                 continue
-            expected = expected_values.get(key)
-            assert value == expected, f"Unexpected value for {key} actual={value} expected={expected}"
+            actual = actual_data.get(key)
+            assert actual is None, f"Unexpected value for {key} actual={actual} expected=None"
 
     return _verify_model
 
@@ -108,7 +116,6 @@ def expected_dataset(http_prefix: str) -> dict[str, Any]:
         "related_database_entries": "TEST-1243435",
         "sample_preparation": "method1: value1, method2: value3",
         "grid_preparation": "method3: value8, method6: value4",
-        "dataset_identifier": DATASET_ID,
         "sample_type": "organism",
         "cell_component_id": "GO:123435",
         "cell_component_name": "tail",
@@ -122,4 +129,5 @@ def expected_dataset(http_prefix: str) -> dict[str, Any]:
         "tissue_name": "test-tissue1",
         "key_photo_url": f"{http_prefix}/{DATASET_ID}/KeyPhoto/snapshot.png",
         "key_photo_thumbnail_url": f"{http_prefix}/{DATASET_ID}/KeyPhoto/thumbnail.png",
+        "deposition_id": 300,
     }

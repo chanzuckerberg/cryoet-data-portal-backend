@@ -42,10 +42,13 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.15252/embj.201696235
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 2 sets of data studying Proteus mirabilis collected by
+      Qing Yao and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10034
-    deposition_title: TBA
+    deposition_title: Proteus mirabilis (tax_id=584) strain:HI4320 by Qing Yao
     deposition_types:
     - dataset
   sources:

@@ -122,9 +122,11 @@ depositions:
 - metadata:
     authors: *id003
     dates: *id002
-    deposition_description: TBA
+    deposition_description: This dataset contains cryo-electron tomograms of mouse embryonic
+      fibroblasts from FIB-SEM lamella. The dataset was used to develop and evaluate a surface morphometrics
+      pipeline to quantify organellar membrane ultrastructure.
     deposition_identifier: 10010
-    deposition_title: TBA
+    deposition_title: Surface morphometrics of organellar membranes
     deposition_types:
     - dataset
   sources:

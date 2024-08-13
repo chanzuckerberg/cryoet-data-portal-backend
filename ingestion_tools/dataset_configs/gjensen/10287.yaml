@@ -39,9 +39,11 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: Single set of data studying Helicobacter hepaticus (tax_id=235279)
+      strain:ATCC 51449 by Ariane Briegel and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10054
-    deposition_title: TBA
+    deposition_title: Helicobacter hepaticus (tax_id=235279) strain:ATCC 51449 by
+      Ariane Briegel
     deposition_types:
     - dataset
   sources:

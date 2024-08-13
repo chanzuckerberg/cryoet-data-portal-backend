@@ -54,6 +54,7 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "aligned_tiltseries_binning": 3,
             "pixel_spacing": 4.370,
             "frames_count": 60,
+            "deposition_id": 300,
         },
         {
             "s3_mrc_bin1": f"s3://test-public-bucket/{DATASET_ID}/RUN3/TiltSeries/ts_foo.mrc",
@@ -80,6 +81,7 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "tilt_series_quality": 2,
             "is_aligned": False,
             "pixel_spacing": 5.240,
+            "deposition_id": 300,
         },
     ]
 
