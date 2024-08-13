@@ -43,6 +43,7 @@ repos:
   - id: check-yaml
     exclude: ingestion_tools/dataset_configs/template.yaml
   - id: check-json
+    exclude: "launch.json"
   - id: check-merge-conflict
   - id: end-of-file-fixer
   - id: trailing-whitespace
