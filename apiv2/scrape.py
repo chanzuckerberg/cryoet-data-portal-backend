@@ -12,8 +12,11 @@ from platformics.database.connect import init_sync_db
 # Adapted from https://github.com/sqlalchemy/sqlalchemy/wiki/UniqueObject
 
 
-def get_or_create(session, cls, row_id, data):
-    obj = session.query(cls).where(cls.id == row_id).first()
+def get_or_create(session, cls, row_id, filters, data):
+    query = session.query(cls)
+    for filter in filters:
+        query = query.where(filter)
+    obj = query.first()
     if obj:
         for k, v in data.items():
             try:
@@ -59,11 +62,53 @@ def add(session, model, item, parents):
             "last_modified_date": remote_item["last_modified_date"],
         }
     if model == models.AnnotationAuthor:
+        if "author_list_order" not in remote_item:
+            remote_item["author_list_order"] = 1  # TODO FIXME this isn't quite accurate!
         local_item_data = {
-            "author_list_order": 1,
+            "annotation_id": parents["annotation_id"],
+            "author_list_order": remote_item["author_list_order"],
+            "orcid": remote_item["orcid"],
+            "name": remote_item["name"],
+            "email": remote_item["email"],
+            "affiliation_name": remote_item["affiliation_name"],
+            "affiliation_address": remote_item["affiliation_address"],
+            "affiliation_identifier": remote_item["affiliation_identifier"],
         }
+        if remote_item.get("primary_annotator_status") or remote_item.get("primary_annotator_status"):
+            local_item_data["primary_author_status"] = True
+        if remote_item.get("corresponding_annotator_status") or remote_item.get("corresponding_annotator_status"):
+            local_item_data["corresponding_author_status"] = True
     if model == models.AnnotationFile:
-        pass
+        # Get-Or-Create annotation shapes first.
+        shape_data = {
+            "annotation_id": parents["annotation_id"],
+            "shape_type": remote_item["shape_type"],
+        }
+        shape = get_or_create(
+            session,
+            models.AnnotationShape,
+            remote_item[
+                "id"
+            ],  # The first annotation file/shape to be inserted will get the previous annotation file id
+            [
+                (models.AnnotationShape.annotation_id == parents["annotation_id"]),
+                (models.AnnotationShape.shape_type == remote_item["shape_type"]),
+            ],
+            shape_data,
+        )
+        session.add(shape)
+
+        local_item_data = {
+            # "alignment_id": remote_item["alignment_id"], # Doesn't exist in the old API
+            "annotation_shape_id": shape.id,
+            "tomogram_voxel_spacing_id": parents["tomogram_voxel_spacing_id"],
+            "format": remote_item["format"],
+            "s3_path": remote_item["s3_path"],
+            "https_path": remote_item["https_path"],
+            "is_visualization_default": remote_item["is_visualization_default"],
+            # "source": remote_item["source"], # Doesn't exist in the old api
+        }
+
     if model == models.Dataset:
         local_item_data = {
             "title": remote_item["title"],
@@ -210,18 +255,21 @@ def add(session, model, item, parents):
         }
         # Special handling for converting values.
         reconstruction_method = remote_item["reconstruction_method"].lower()
-        if "weighted" in reconstruction_method:
+        if "wbp" in reconstruction_method or "weighted" in reconstruction_method:
             local_item_data["reconstruction_method"] = "WBP"
-        elif "iterative" in reconstruction_method:
+            local_item_data["reconstruction_method"] = "WBP"
+        elif "sirt" in reconstruction_method or "iterative" in reconstruction_method:
             local_item_data["reconstruction_method"] = "SIRT"
-        elif "algebraic" in reconstruction_method:
+        elif "sart" in reconstruction_method or "algebraic" in reconstruction_method:
             local_item_data["reconstruction_method"] = "SART"
         elif "fourier" in reconstruction_method:
             local_item_data["reconstruction_method"] = "Fourier Space"
         else:
             # TODO FIXME THIS IS A NOT NULL COL!!
             print(f"Error: could not map reconstruction method {reconstruction_method}")
-            local_item_data["reconstruction_method"] = None
+            # local_item_data["reconstruction_method"] = None
+            # TODO FIXME TEMPORARY HACK TO TEST OTHER THINGS
+            local_item_data["reconstruction_method"] = "WBP"
     if model == models.TomogramVoxelSpacing:
         local_item_data = {
             "voxel_spacing": remote_item["voxel_spacing"],
@@ -232,6 +280,7 @@ def add(session, model, item, parents):
         session,
         model,
         remote_item["id"],
+        [(model.id == remote_item["id"])],
         local_item_data,
     )
 
@@ -241,7 +290,6 @@ def add(session, model, item, parents):
 
 
 def do_import():
-    annotation = models.Annotation
     client = cdp.Client()
     db = init_sync_db("postgresql+psycopg://postgres:password_postgres@platformics-db:5432/platformics")
     with db.session() as session:
@@ -259,12 +307,15 @@ def do_import():
                         t = add(session, models.Tomogram, tomo, {"run_id": r.id, "tomogram_voxel_spacing_id": v.id})
                         for tomoauthor in cdp.TomogramAuthor.find(client, [cdp.TomogramAuthor.tomogram_id == tomo.id]):
                             ta = add(session, models.TomogramAuthor, tomoauthor, {"tomogram_id": t.id})
-                    continue
                     for anno in cdp.Annotation.find(client, [cdp.Annotation.tomogram_voxel_spacing_id == vs.id]):
-                        a = add(session, models.Annotation, anno, {"run_id": r.id})
-                        # TODO this needs a bit of work.
-                        # for annofile in cdp.AnnotationFile.find(client, [cdp.AnnotationFile.annotation_id == anno.id]):
-                        #     af = add(session, models.AnnotationFile, annofile, {"annotation_id": a.id})
+                        a = add(session, models.Annotation, anno, {"run_id": r.id, "tomogram_voxel_spacing_id": v.id})
+                        for annofile in cdp.AnnotationFile.find(client, [cdp.AnnotationFile.annotation_id == anno.id]):
+                            af = add(
+                                session,
+                                models.AnnotationFile,
+                                annofile,
+                                {"annotation_id": a.id, "tomogram_voxel_spacing_id": v.id},
+                            )
                         for annoauthor in cdp.AnnotationAuthor.find(
                             client,
                             [cdp.AnnotationAuthor.annotation_id == anno.id],
