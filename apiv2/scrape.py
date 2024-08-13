@@ -1,5 +1,7 @@
 import json
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
+import click
 import cryoet_data_portal as cdp
 
 from database import models
@@ -11,8 +13,6 @@ from support.enums import tomogram_reconstruction_method_enum as reconstruction_
 
 
 # Adapted from https://github.com/sqlalchemy/sqlalchemy/wiki/UniqueObject
-
-
 def get_or_create(session, cls, row_id, filters, data):
     query = session.query(cls)
     for filter in filters:
@@ -285,53 +285,76 @@ def add(session, model, item, parents):
     return item
 
 
-def do_import():
-    client = cdp.Client()
+def import_dataset(dataset_id: int):
     db = init_sync_db("postgresql+psycopg://postgres:password_postgres@platformics-db:5432/platformics")
+    client = cdp.Client()
+    dataset = cdp.Dataset.get_by_id(client, dataset_id)
     with db.session() as session:
-        high_water_mark = 10005
-        passed_hwm = False
-        for dataset in cdp.Dataset.find(client):
-            if not passed_hwm and dataset.id != high_water_mark:
-                continue
-            passed_hwm = True
-            if dataset.id == high_water_mark:
-                continue
-            ds = add(session, models.Dataset, dataset, {})
-            for dsauthor in cdp.DatasetAuthor.find(client, [cdp.DatasetAuthor.dataset_id == dataset.id]):
-                dsa = add(session, models.DatasetAuthor, dsauthor, {"dataset_id": ds.id})
-            for dsfunding in cdp.DatasetFunding.find(client, [cdp.DatasetFunding.dataset_id == dataset.id]):
-                dsf = add(session, models.DatasetFunding, dsfunding, {"dataset_id": ds.id})
-            for run in cdp.Run.find(client, [cdp.Run.dataset_id == dataset.id]):
-                r = add(session, models.Run, run, {"dataset_id": ds.id})
-                for vs in cdp.TomogramVoxelSpacing.find(client, [cdp.TomogramVoxelSpacing.run_id == run.id]):
-                    v = add(session, models.TomogramVoxelSpacing, vs, {"run_id": r.id})
-                    for tomo in cdp.Tomogram.find(client, [cdp.Tomogram.tomogram_voxel_spacing_id == vs.id]):
-                        t = add(session, models.Tomogram, tomo, {"run_id": r.id, "tomogram_voxel_spacing_id": v.id})
-                        for tomoauthor in cdp.TomogramAuthor.find(client, [cdp.TomogramAuthor.tomogram_id == tomo.id]):
-                            ta = add(session, models.TomogramAuthor, tomoauthor, {"tomogram_id": t.id})
-                    for anno in cdp.Annotation.find(client, [cdp.Annotation.tomogram_voxel_spacing_id == vs.id]):
-                        a = add(session, models.Annotation, anno, {"run_id": r.id, "tomogram_voxel_spacing_id": v.id})
-                        for annofile in cdp.AnnotationFile.find(client, [cdp.AnnotationFile.annotation_id == anno.id]):
-                            af = add(
-                                session,
-                                models.AnnotationFile,
-                                annofile,
-                                {"annotation_id": a.id, "tomogram_voxel_spacing_id": v.id},
-                            )
-                        for annoauthor in cdp.AnnotationAuthor.find(
-                            client,
-                            [cdp.AnnotationAuthor.annotation_id == anno.id],
-                        ):
-                            aa = add(session, models.AnnotationAuthor, annoauthor, {"annotation_id": a.id})
-                for tiltseries in cdp.TiltSeries.find(client, [cdp.TiltSeries.run_id == run.id]):
-                    ts = add(session, models.Tiltseries, tiltseries, {"run_id": r.id})
-                print(f"run {dataset.id}/{run.name} done")
-                session.commit()
-            print(f"dataset {dataset.id} done")
+        print(f"processing {dataset.id}")
+        ds = add(session, models.Dataset, dataset, {})
+        for dsauthor in cdp.DatasetAuthor.find(client, [cdp.DatasetAuthor.dataset_id == dataset.id]):
+            dsa = add(session, models.DatasetAuthor, dsauthor, {"dataset_id": ds.id})
+        for dsfunding in cdp.DatasetFunding.find(client, [cdp.DatasetFunding.dataset_id == dataset.id]):
+            dsf = add(session, models.DatasetFunding, dsfunding, {"dataset_id": ds.id})
+        for run in cdp.Run.find(client, [cdp.Run.dataset_id == dataset.id]):
+            r = add(session, models.Run, run, {"dataset_id": ds.id})
+            for vs in cdp.TomogramVoxelSpacing.find(client, [cdp.TomogramVoxelSpacing.run_id == run.id]):
+                v = add(session, models.TomogramVoxelSpacing, vs, {"run_id": r.id})
+                for tomo in cdp.Tomogram.find(client, [cdp.Tomogram.tomogram_voxel_spacing_id == vs.id]):
+                    t = add(session, models.Tomogram, tomo, {"run_id": r.id, "tomogram_voxel_spacing_id": v.id})
+                    for tomoauthor in cdp.TomogramAuthor.find(client, [cdp.TomogramAuthor.tomogram_id == tomo.id]):
+                        ta = add(session, models.TomogramAuthor, tomoauthor, {"tomogram_id": t.id})
+                for anno in cdp.Annotation.find(client, [cdp.Annotation.tomogram_voxel_spacing_id == vs.id]):
+                    a = add(session, models.Annotation, anno, {"run_id": r.id, "tomogram_voxel_spacing_id": v.id})
+                    for annofile in cdp.AnnotationFile.find(client, [cdp.AnnotationFile.annotation_id == anno.id]):
+                        af = add(
+                            session,
+                            models.AnnotationFile,
+                            annofile,
+                            {"annotation_id": a.id, "tomogram_voxel_spacing_id": v.id},
+                        )
+                    for annoauthor in cdp.AnnotationAuthor.find(
+                        client,
+                        [cdp.AnnotationAuthor.annotation_id == anno.id],
+                    ):
+                        aa = add(session, models.AnnotationAuthor, annoauthor, {"annotation_id": a.id})
+            for tiltseries in cdp.TiltSeries.find(client, [cdp.TiltSeries.run_id == run.id]):
+                ts = add(session, models.Tiltseries, tiltseries, {"run_id": r.id})
+            print(f"run {dataset.id}/{run.name} done")
             session.commit()
-        print("done")
+        print(f"dataset {dataset.id} done")
         session.commit()
+    print(f"DATASET {dataset_id} done")
+    session.commit()
+    return dataset_id
+
+
+@click.command()
+@click.option("--skip-until", help="skip all datasets until and including this one")
+@click.option("--parallelism", help="how many processes to run in parallel", required=True, default=10)
+def do_import(skip_until, parallelism):
+    client = cdp.Client()
+    futures = []
+    with ProcessPoolExecutor(max_workers=parallelism) as workerpool:
+        datasets = cdp.Dataset.find(client)
+        datasets.sort(key=lambda a: a.id)  # Sort datasets by id
+        for dataset in datasets:
+            if skip_until:
+                if dataset.id == int(skip_until):
+                    skip_until = None
+                continue
+
+            futures.append(
+                workerpool.submit(
+                    import_dataset,
+                    dataset.id,
+                ),
+            )
+    for future in as_completed(futures):
+        if exc := future.exception():
+            print(exc)
+        else:
+            print(f"success: {future.result}")
 
 
 if __name__ == "__main__":
