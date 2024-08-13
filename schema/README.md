@@ -42,7 +42,33 @@ Metadata file and directory layout specs:
 
 ## Building the schema and docs
 
-To build the schema, markdown docs and pydantic classes:
+To build the schema (core schema, API schema, and ingestion config file schema), run the following command:
+
+```bash
+cd schema/
+make build
+```
+
+To build the docs, run the following command:
+
+```bash
+cd schema/
+make build-docs
+```
+
+## Upgrading schema versions (api/, core/, and ingestion_config/)
+
+After creating the new version(s) in their respective directories (with the folder name being the version), edit the corresponding version string(s) in the .version file in the schema/ directory.
+
+Additionally, if you are updating the ingestion_config/ directory, update the "latest/" symbolic link to the new version:
+
+```bash
+cd schema/ingestion_config
+rm latest
+ln -s [new_version] latest
+```
+
+Finally, rebuild the schema:
 
 ```bash
 cd schema/
