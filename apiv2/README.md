@@ -8,3 +8,10 @@ docker compose exec graphql-api pip install cryoet_data_portal
 # You can stop this after a few screenfuls of output if you don't need a full import.
 docker compose exec graphql-api python3 scrape.py
 ```
+
+## How to make changes to the schema
+
+```
+# First, make any necessary changes to apiv2/schema/schema.yaml, then run this to generate new code & migrations and apply them:
+make update-schema
+```
