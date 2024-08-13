@@ -249,6 +249,7 @@ class TestSegmentationMaskHeader:
             print(f"Zarr File: {zarr_filename}")
 
             zarrays = header_data["zarrays"]
+            assert len(zarrays) == 3
             for i, zarray in zarrays.items():
                 print(f"\t\tZarray: {i}")
                 assert np.dtype(zarray["dtype"]) == np.int8
