@@ -83,6 +83,8 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 # Ignore `SIM115` (not using open() in a context manager) since all calls to this method *do* use a context manager.
 "scripts/common/fs.py" = ["SIM115"]
+"**/graphql_api/**" = ["B008", "N815", "B006", "N801", "E721", "SIM118", "B904", "DTZ001", "E722"]
+"**/support/enums.py" = ["N801"]
 
 [tool.ruff.lint.isort]
 known-first-party =["common"]

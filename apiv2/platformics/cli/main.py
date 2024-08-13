@@ -6,7 +6,6 @@ Cerbos policies, and Factoryboy factories from a LinkML schema.
 import logging
 
 import click
-
 from platformics.codegen.generator import generate
 from platformics.security.token_auth import create_token
 from platformics.settings import Settings

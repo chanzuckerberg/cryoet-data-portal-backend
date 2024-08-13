@@ -3,7 +3,6 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import click
 import cryoet_data_portal as cdp
-
 from database import models
 from platformics.database.connect import init_sync_db
 from support.enums import tomogram_reconstruction_method_enum as reconstruction_enum
@@ -293,9 +292,9 @@ def import_dataset(dataset_id: int):
         print(f"processing {dataset.id}")
         ds = add(session, models.Dataset, dataset, {})
         for dsauthor in cdp.DatasetAuthor.find(client, [cdp.DatasetAuthor.dataset_id == dataset.id]):
-            dsa = add(session, models.DatasetAuthor, dsauthor, {"dataset_id": ds.id})
+            add(session, models.DatasetAuthor, dsauthor, {"dataset_id": ds.id})
         for dsfunding in cdp.DatasetFunding.find(client, [cdp.DatasetFunding.dataset_id == dataset.id]):
-            dsf = add(session, models.DatasetFunding, dsfunding, {"dataset_id": ds.id})
+            add(session, models.DatasetFunding, dsfunding, {"dataset_id": ds.id})
         for run in cdp.Run.find(client, [cdp.Run.dataset_id == dataset.id]):
             r = add(session, models.Run, run, {"dataset_id": ds.id})
             for vs in cdp.TomogramVoxelSpacing.find(client, [cdp.TomogramVoxelSpacing.run_id == run.id]):
@@ -303,11 +302,11 @@ def import_dataset(dataset_id: int):
                 for tomo in cdp.Tomogram.find(client, [cdp.Tomogram.tomogram_voxel_spacing_id == vs.id]):
                     t = add(session, models.Tomogram, tomo, {"run_id": r.id, "tomogram_voxel_spacing_id": v.id})
                     for tomoauthor in cdp.TomogramAuthor.find(client, [cdp.TomogramAuthor.tomogram_id == tomo.id]):
-                        ta = add(session, models.TomogramAuthor, tomoauthor, {"tomogram_id": t.id})
+                        add(session, models.TomogramAuthor, tomoauthor, {"tomogram_id": t.id})
                 for anno in cdp.Annotation.find(client, [cdp.Annotation.tomogram_voxel_spacing_id == vs.id]):
                     a = add(session, models.Annotation, anno, {"run_id": r.id, "tomogram_voxel_spacing_id": v.id})
                     for annofile in cdp.AnnotationFile.find(client, [cdp.AnnotationFile.annotation_id == anno.id]):
-                        af = add(
+                        add(
                             session,
                             models.AnnotationFile,
                             annofile,
@@ -317,9 +316,9 @@ def import_dataset(dataset_id: int):
                         client,
                         [cdp.AnnotationAuthor.annotation_id == anno.id],
                     ):
-                        aa = add(session, models.AnnotationAuthor, annoauthor, {"annotation_id": a.id})
+                        add(session, models.AnnotationAuthor, annoauthor, {"annotation_id": a.id})
             for tiltseries in cdp.TiltSeries.find(client, [cdp.TiltSeries.run_id == run.id]):
-                ts = add(session, models.Tiltseries, tiltseries, {"run_id": r.id})
+                add(session, models.Tiltseries, tiltseries, {"run_id": r.id})
             print(f"run {dataset.id}/{run.name} done")
             session.commit()
         print(f"dataset {dataset.id} done")

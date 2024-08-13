@@ -6,6 +6,7 @@ import factory.random
 from platformics.database.connect import init_sync_db
 from platformics.settings import CLISettings
 from platformics.test_infra.factories.base import FileFactory, SessionStorage
+
 from test_infra.factories.sample import SampleFactory
 from test_infra.factories.sequencing_read import SequencingReadFactory
 

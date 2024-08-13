@@ -5,14 +5,10 @@ File factory
 import factory
 import faker
 import sqlalchemy as sa
-import uuid6
-from platformics.database.models.base import Base
 from factory import Faker, fuzzy
 from faker_biology.bioseq import Bioseq
 from faker_biology.physiology import Organ
 from faker_enum import EnumProvider
-from sqlalchemy_utils.functions import get_primary_keys
-
 from platformics.database.models.file import File, FileStatus
 from platformics.support import sqlalchemy_helpers
 

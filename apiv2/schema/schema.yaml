@@ -2899,4 +2899,3 @@ classes:
         range: string
         recommended: true
 source_file: api_models.yaml
-

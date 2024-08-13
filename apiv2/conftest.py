@@ -6,16 +6,19 @@ import json
 import os
 import typing
 from typing import Optional
-from platformics.graphql_api.core.error_handler import HandleErrors
 
 import boto3
 import pytest
 import pytest_asyncio
-from platformics.security.authorization import Principal
+import strawberry
 from fastapi import FastAPI
+from graphql_api.mutations import Mutation
+from graphql_api.queries import Query
 from httpx import AsyncClient
 from moto import mock_s3
 from mypy_boto3_s3.client import S3Client
+from platformics.database.connect import AsyncDB, SyncDB, init_async_db, init_sync_db
+from platformics.database.models.base import Base
 from platformics.graphql_api.core.deps import (
     get_auth_principal,
     get_db_session,
@@ -23,20 +26,16 @@ from platformics.graphql_api.core.deps import (
     get_s3_client,
     require_auth_principal,
 )
-from platformics.graphql_api.setup import get_app
-from platformics.database.connect import AsyncDB, SyncDB, init_async_db, init_sync_db
-from platformics.database.models.base import Base
+from platformics.graphql_api.core.error_handler import HandleErrors
+from platformics.graphql_api.setup import get_app, get_strawberry_config
+from platformics.security.authorization import Principal
+from platformics.settings import APISettings
 from platformics.test_infra.factories.base import FileFactory, SessionStorage
 from pytest_postgresql import factories
 from pytest_postgresql.executor_noop import NoopExecutor
 from pytest_postgresql.janitor import DatabaseJanitor
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.requests import Request
-from platformics.settings import APISettings
-from platformics.graphql_api.setup import get_strawberry_config
-from graphql_api.mutations import Mutation
-from graphql_api.queries import Query
-import strawberry
 
 __all__ = [
     "gql_client",
@@ -48,7 +47,8 @@ __all__ = [
 
 
 test_db: NoopExecutor = factories.postgresql_noproc(
-    host=os.getenv("PLATFORMICS_DATABASE_HOST"), password=os.getenv("PLATFORMICS_DATABASE_PASSWORD")
+    host=os.getenv("PLATFORMICS_DATABASE_HOST"),
+    password=os.getenv("PLATFORMICS_DATABASE_PASSWORD"),
 )  # type: ignore
 
 
@@ -87,7 +87,7 @@ def sync_db(test_db: NoopExecutor) -> typing.Generator[SyncDB, None, None]:
                 db_user=pg_user,
                 db_pass=pg_password,
                 db_name=pg_db,
-            )
+            ),
         )
         Base.metadata.create_all(db.engine)
         yield db
@@ -112,7 +112,7 @@ async def async_db(sync_db: SyncDB, test_db: NoopExecutor) -> typing.AsyncGenera
             db_user=pg_user,
             db_pass=pg_password,
             db_name=pg_db,
-        )
+        ),
     )
     yield db
 

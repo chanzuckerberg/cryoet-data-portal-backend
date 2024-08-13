@@ -38,7 +38,9 @@ def upgrade() -> None:
         sa.Column("entity_field_name", sa.String(), nullable=False),
         sa.Column("entity_class_name", sa.String(), nullable=False),
         sa.Column(
-            "status", sa.Enum("SUCCESS", "FAILED", "PENDING", name="filestatus", native_enum=False), nullable=False
+            "status",
+            sa.Enum("SUCCESS", "FAILED", "PENDING", name="filestatus", native_enum=False),
+            nullable=False,
         ),
         sa.Column("protocol", sa.Enum("s3", "https", name="fileaccessprotocol", native_enum=False), nullable=False),
         sa.Column("namespace", sa.String(), nullable=False),
@@ -121,7 +123,9 @@ def upgrade() -> None:
         sa.Column("primary_author_status", sa.Boolean(), nullable=True),
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.ForeignKeyConstraint(
-            ["deposition_id"], ["deposition.id"], name=op.f("fk_deposition_author_deposition_id_deposition")
+            ["deposition_id"],
+            ["deposition.id"],
+            name=op.f("fk_deposition_author_deposition_id_deposition"),
         ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_deposition_author")),
     )
@@ -137,7 +141,9 @@ def upgrade() -> None:
         ),
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.ForeignKeyConstraint(
-            ["deposition_id"], ["deposition.id"], name=op.f("fk_deposition_type_deposition_id_deposition")
+            ["deposition_id"],
+            ["deposition.id"],
+            name=op.f("fk_deposition_type_deposition_id_deposition"),
         ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_deposition_type")),
     )
@@ -213,7 +219,9 @@ def upgrade() -> None:
         sa.Column("last_modified_date", sa.DateTime(timezone=True), nullable=False),
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.ForeignKeyConstraint(
-            ["deposition_id"], ["deposition.id"], name=op.f("fk_annotation_deposition_id_deposition")
+            ["deposition_id"],
+            ["deposition.id"],
+            name=op.f("fk_annotation_deposition_id_deposition"),
         ),
         sa.ForeignKeyConstraint(["run_id"], ["run.id"], name=op.f("fk_annotation_run_id_run")),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_annotation")),
@@ -286,7 +294,9 @@ def upgrade() -> None:
         sa.Column("tiltseries_frames_count", sa.Integer(), nullable=True),
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.ForeignKeyConstraint(
-            ["deposition_id"], ["deposition.id"], name=op.f("fk_tiltseries_deposition_id_deposition")
+            ["deposition_id"],
+            ["deposition.id"],
+            name=op.f("fk_tiltseries_deposition_id_deposition"),
         ),
         sa.ForeignKeyConstraint(["run_id"], ["run.id"], name=op.f("fk_tiltseries_run_id_run")),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_tiltseries")),
@@ -313,7 +323,9 @@ def upgrade() -> None:
         sa.Column("run_id", sa.Integer(), nullable=True),
         sa.Column("alignment", sa.String(), nullable=False),
         sa.Column(
-            "alignment_type", sa.Enum("LOCAL", "GLOBAL", name="alignment_type_enum", native_enum=False), nullable=True
+            "alignment_type",
+            sa.Enum("LOCAL", "GLOBAL", name="alignment_type_enum", native_enum=False),
+            nullable=True,
         ),
         sa.Column("volume_x_dimension", sa.Float(), nullable=True),
         sa.Column("volume_y_dimension", sa.Float(), nullable=True),
@@ -326,11 +338,15 @@ def upgrade() -> None:
         sa.Column("local_alignment_file", sa.String(), nullable=True),
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.ForeignKeyConstraint(
-            ["deposition_id"], ["deposition.id"], name=op.f("fk_alignment_deposition_id_deposition")
+            ["deposition_id"],
+            ["deposition.id"],
+            name=op.f("fk_alignment_deposition_id_deposition"),
         ),
         sa.ForeignKeyConstraint(["run_id"], ["run.id"], name=op.f("fk_alignment_run_id_run")),
         sa.ForeignKeyConstraint(
-            ["tiltseries_id"], ["tiltseries.id"], name=op.f("fk_alignment_tiltseries_id_tiltseries")
+            ["tiltseries_id"],
+            ["tiltseries.id"],
+            name=op.f("fk_alignment_tiltseries_id_tiltseries"),
         ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_alignment")),
     )
@@ -352,7 +368,9 @@ def upgrade() -> None:
         sa.Column("primary_author_status", sa.Boolean(), nullable=True),
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.ForeignKeyConstraint(
-            ["annotation_id"], ["annotation.id"], name=op.f("fk_annotation_author_annotation_id_annotation")
+            ["annotation_id"],
+            ["annotation.id"],
+            name=op.f("fk_annotation_author_annotation_id_annotation"),
         ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_annotation_author")),
     )
@@ -375,7 +393,9 @@ def upgrade() -> None:
         ),
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.ForeignKeyConstraint(
-            ["annotation_id"], ["annotation.id"], name=op.f("fk_annotation_shape_annotation_id_annotation")
+            ["annotation_id"],
+            ["annotation.id"],
+            name=op.f("fk_annotation_shape_annotation_id_annotation"),
         ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_annotation_shape")),
     )
@@ -392,14 +412,19 @@ def upgrade() -> None:
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.ForeignKeyConstraint(["frame_id"], ["frame.id"], name=op.f("fk_per_section_parameters_frame_id_frame")),
         sa.ForeignKeyConstraint(
-            ["tiltseries_id"], ["tiltseries.id"], name=op.f("fk_per_section_parameters_tiltseries_id_tiltseries")
+            ["tiltseries_id"],
+            ["tiltseries.id"],
+            name=op.f("fk_per_section_parameters_tiltseries_id_tiltseries"),
         ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_per_section_parameters")),
     )
     op.create_index(op.f("ix_per_section_parameters_frame_id"), "per_section_parameters", ["frame_id"], unique=False)
     op.create_index(op.f("ix_per_section_parameters_id"), "per_section_parameters", ["id"], unique=False)
     op.create_index(
-        op.f("ix_per_section_parameters_tiltseries_id"), "per_section_parameters", ["tiltseries_id"], unique=False
+        op.f("ix_per_section_parameters_tiltseries_id"),
+        "per_section_parameters",
+        ["tiltseries_id"],
+        unique=False,
     )
     op.create_table(
         "annotation_file",
@@ -413,13 +438,19 @@ def upgrade() -> None:
         sa.Column(
             "source",
             sa.Enum(
-                "dataset_author", "community", "portal_standard", name="annotation_file_source_enum", native_enum=False
+                "dataset_author",
+                "community",
+                "portal_standard",
+                name="annotation_file_source_enum",
+                native_enum=False,
             ),
             nullable=True,
         ),
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.ForeignKeyConstraint(
-            ["alignment_id"], ["alignment.id"], name=op.f("fk_annotation_file_alignment_id_alignment")
+            ["alignment_id"],
+            ["alignment.id"],
+            name=op.f("fk_annotation_file_alignment_id_alignment"),
         ),
         sa.ForeignKeyConstraint(
             ["annotation_shape_id"],
@@ -435,7 +466,10 @@ def upgrade() -> None:
     )
     op.create_index(op.f("ix_annotation_file_alignment_id"), "annotation_file", ["alignment_id"], unique=False)
     op.create_index(
-        op.f("ix_annotation_file_annotation_shape_id"), "annotation_file", ["annotation_shape_id"], unique=False
+        op.f("ix_annotation_file_annotation_shape_id"),
+        "annotation_file",
+        ["annotation_shape_id"],
+        unique=False,
     )
     op.create_index(op.f("ix_annotation_file_id"), "annotation_file", ["id"], unique=False)
     op.create_index(
@@ -455,7 +489,9 @@ def upgrade() -> None:
         sa.Column("tilt_angle", sa.Float(), nullable=True),
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.ForeignKeyConstraint(
-            ["alignment_id"], ["alignment.id"], name=op.f("fk_per_section_alignment_parameters_alignment_id_alignment")
+            ["alignment_id"],
+            ["alignment.id"],
+            name=op.f("fk_per_section_alignment_parameters_alignment_id_alignment"),
         ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_per_section_alignment_parameters")),
     )
@@ -466,7 +502,10 @@ def upgrade() -> None:
         unique=False,
     )
     op.create_index(
-        op.f("ix_per_section_alignment_parameters_id"), "per_section_alignment_parameters", ["id"], unique=False
+        op.f("ix_per_section_alignment_parameters_id"),
+        "per_section_alignment_parameters",
+        ["id"],
+        unique=False,
     )
     op.create_table(
         "tomogram",
@@ -530,7 +569,9 @@ def upgrade() -> None:
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.ForeignKeyConstraint(["alignment_id"], ["alignment.id"], name=op.f("fk_tomogram_alignment_id_alignment")),
         sa.ForeignKeyConstraint(
-            ["deposition_id"], ["deposition.id"], name=op.f("fk_tomogram_deposition_id_deposition")
+            ["deposition_id"],
+            ["deposition.id"],
+            name=op.f("fk_tomogram_deposition_id_deposition"),
         ),
         sa.ForeignKeyConstraint(["run_id"], ["run.id"], name=op.f("fk_tomogram_run_id_run")),
         sa.ForeignKeyConstraint(
@@ -545,7 +586,10 @@ def upgrade() -> None:
     op.create_index(op.f("ix_tomogram_id"), "tomogram", ["id"], unique=False)
     op.create_index(op.f("ix_tomogram_run_id"), "tomogram", ["run_id"], unique=False)
     op.create_index(
-        op.f("ix_tomogram_tomogram_voxel_spacing_id"), "tomogram", ["tomogram_voxel_spacing_id"], unique=False
+        op.f("ix_tomogram_tomogram_voxel_spacing_id"),
+        "tomogram",
+        ["tomogram_voxel_spacing_id"],
+        unique=False,
     )
     op.create_table(
         "tomogram_author",
@@ -581,7 +625,8 @@ def downgrade() -> None:
     op.drop_table("tomogram")
     op.drop_index(op.f("ix_per_section_alignment_parameters_id"), table_name="per_section_alignment_parameters")
     op.drop_index(
-        op.f("ix_per_section_alignment_parameters_alignment_id"), table_name="per_section_alignment_parameters"
+        op.f("ix_per_section_alignment_parameters_alignment_id"),
+        table_name="per_section_alignment_parameters",
     )
     op.drop_table("per_section_alignment_parameters")
     op.drop_index(op.f("ix_annotation_file_tomogram_voxel_spacing_id"), table_name="annotation_file")

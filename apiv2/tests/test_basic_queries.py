@@ -3,9 +3,11 @@ Test basic queries and mutations
 """
 
 import datetime
+
 import pytest
-from platformics.database.connect import SyncDB
 from conftest import GQLTestClient, SessionStorage
+from platformics.database.connect import SyncDB
+
 from test_infra.factories.sample import SampleFactory
 
 date_now = datetime.datetime.now()

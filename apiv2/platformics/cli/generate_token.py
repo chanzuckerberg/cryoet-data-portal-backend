@@ -2,7 +2,6 @@
 import logging
 
 import click
-
 from platformics.security.token_auth import create_token
 from platformics.settings import Settings
 

@@ -8,52 +8,47 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+import datetime
+import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
+from typing import TYPE_CHECKING, Annotated, Optional, Sequence
 
-import platformics.database.models as base_db
 import database.models as db
 import strawberry
-import datetime
-from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
-from validators.per_section_parameters import PerSectionParametersCreateInputValidator
-from validators.per_section_parameters import PerSectionParametersUpdateInputValidator
+from fastapi import Depends
 from graphql_api.helpers.per_section_parameters import (
     PerSectionParametersGroupByOptions,
     build_per_section_parameters_groupby_output,
 )
-from platformics.graphql_api.core.relay_interface import EntityInterface
-from fastapi import Depends
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
 from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
+from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
 from platformics.graphql_api.core.query_input_types import (
+    FloatComparators,
+    IntComparators,
     aggregator_map,
     orderBy,
-    EnumComparators,
-    DatetimeComparators,
-    IntComparators,
-    FloatComparators,
-    StrComparators,
-    UUIDComparators,
-    BoolComparators,
 )
+from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
-from strawberry import relay
 from strawberry.types import Info
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-import enum
+from validators.per_section_parameters import (
+    PerSectionParametersCreateInputValidator,
+    PerSectionParametersUpdateInputValidator,
+)
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.frame import FrameOrderByClause, FrameWhereClause, Frame
-    from graphql_api.types.tiltseries import TiltseriesOrderByClause, TiltseriesWhereClause, Tiltseries
+    from graphql_api.types.frame import Frame, FrameOrderByClause, FrameWhereClause
+    from graphql_api.types.tiltseries import Tiltseries, TiltseriesOrderByClause, TiltseriesWhereClause
 
     pass
 else:
@@ -237,7 +232,9 @@ class PerSectionParametersAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[PerSectionParametersCountColumns] = None
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[PerSectionParametersCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -324,7 +321,7 @@ def format_per_section_parameters_aggregate_output(
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if not type(query_results) is list:
+    if type(query_results) is not list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_per_section_parameters_aggregate_row(row))
@@ -343,10 +340,10 @@ def format_per_section_parameters_aggregate_row(row: RowMapping) -> PerSectionPa
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not getattr(output, "groupBy"):
-                setattr(output, "groupBy", PerSectionParametersGroupByOptions())
-            group = build_per_section_parameters_groupby_output(getattr(output, "groupBy"), group_keys, value)
-            setattr(output, "groupBy", group)
+            if not output.groupBy:
+                output.groupBy = PerSectionParametersGroupByOptions()
+            group = build_per_section_parameters_groupby_output(output.groupBy, group_keys, value)
+            output.groupBy = group
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -377,8 +374,8 @@ async def resolve_per_section_parameters_aggregate(
     # Get the selected aggregate functions and columns to operate on, and groupby options if any were provided.
     # TODO: not sure why selected_fields is a list
     selections = info.selected_fields[0].selections[0].selections
-    aggregate_selections = [selection for selection in selections if getattr(selection, "name") != "groupBy"]
-    groupby_selections = [selection for selection in selections if getattr(selection, "name") == "groupBy"]
+    aggregate_selections = [selection for selection in selections if selection.name != "groupBy"]
+    groupby_selections = [selection for selection in selections if selection.name == "groupBy"]
     groupby_selections = groupby_selections[0].selections if groupby_selections else []
 
     if not aggregate_selections:
@@ -409,7 +406,13 @@ async def create_per_section_parameters(
     # Check that frame relationship is accessible.
     if validated.frame_id:
         frame = await get_db_rows(
-            db.Frame, session, authz_client, principal, {"id": {"_eq": validated.frame_id}}, [], AuthzAction.VIEW
+            db.Frame,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.frame_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not frame:
             raise PlatformicsError("Unauthorized: frame does not exist")
@@ -464,7 +467,13 @@ async def update_per_section_parameters(
     # Check that frame relationship is accessible.
     if validated.frame_id:
         frame = await get_db_rows(
-            db.Frame, session, authz_client, principal, {"id": {"_eq": validated.frame_id}}, [], AuthzAction.VIEW
+            db.Frame,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.frame_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not frame:
             raise PlatformicsError("Unauthorized: frame does not exist")
@@ -488,7 +497,13 @@ async def update_per_section_parameters(
 
     # Fetch entities for update, if we have access to them
     entities = await get_db_rows(
-        db.PerSectionParameters, session, authz_client, principal, where, [], AuthzAction.UPDATE
+        db.PerSectionParameters,
+        session,
+        authz_client,
+        principal,
+        where,
+        [],
+        AuthzAction.UPDATE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
@@ -520,7 +535,13 @@ async def delete_per_section_parameters(
     """
     # Fetch entities for deletion, if we have access to them
     entities = await get_db_rows(
-        db.PerSectionParameters, session, authz_client, principal, where, [], AuthzAction.DELETE
+        db.PerSectionParameters,
+        session,
+        authz_client,
+        principal,
+        where,
+        [],
+        AuthzAction.DELETE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")

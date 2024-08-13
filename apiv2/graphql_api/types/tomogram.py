@@ -8,33 +8,29 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+import datetime
+import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
+from typing import TYPE_CHECKING, Annotated, Optional, Sequence
 
-import platformics.database.models as base_db
 import database.models as db
 import strawberry
-import datetime
-from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
-from validators.tomogram import TomogramCreateInputValidator
-from validators.tomogram import TomogramUpdateInputValidator
-from graphql_api.helpers.tomogram import TomogramGroupByOptions, build_tomogram_groupby_output
-from platformics.graphql_api.core.relay_interface import EntityInterface
-from graphql_api.types.tomogram_author import TomogramAuthorAggregate, format_tomogram_author_aggregate_output
 from fastapi import Depends
+from graphql_api.helpers.tomogram import TomogramGroupByOptions, build_tomogram_groupby_output
+from graphql_api.types.tomogram_author import TomogramAuthorAggregate, format_tomogram_author_aggregate_output
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
 from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
+from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
 from platformics.graphql_api.core.query_input_types import (
+    BoolComparators,
+    EnumComparators,
+    FloatComparators,
+    IntComparators,
+    StrComparators,
     aggregator_map,
     orderBy,
-    EnumComparators,
-    DatetimeComparators,
-    IntComparators,
-    FloatComparators,
-    StrComparators,
-    UUIDComparators,
-    BoolComparators,
 )
+from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
@@ -42,28 +38,28 @@ from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
 from strawberry import relay
 from strawberry.types import Info
-from support.limit_offset import LimitOffsetClause
-from typing_extensions import TypedDict
-import enum
 from support.enums import (
     fiducial_alignment_status_enum,
-    tomogram_reconstruction_method_enum,
     tomogram_processing_enum,
+    tomogram_reconstruction_method_enum,
     tomogram_type_enum,
 )
+from support.limit_offset import LimitOffsetClause
+from typing_extensions import TypedDict
+from validators.tomogram import TomogramCreateInputValidator, TomogramUpdateInputValidator
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.alignment import AlignmentOrderByClause, AlignmentWhereClause, Alignment
-    from graphql_api.types.tomogram_author import TomogramAuthorOrderByClause, TomogramAuthorWhereClause, TomogramAuthor
-    from graphql_api.types.deposition import DepositionOrderByClause, DepositionWhereClause, Deposition
-    from graphql_api.types.run import RunOrderByClause, RunWhereClause, Run
+    from graphql_api.types.alignment import Alignment, AlignmentOrderByClause, AlignmentWhereClause
+    from graphql_api.types.deposition import Deposition, DepositionOrderByClause, DepositionWhereClause
+    from graphql_api.types.run import Run, RunOrderByClause, RunWhereClause
+    from graphql_api.types.tomogram_author import TomogramAuthor, TomogramAuthorOrderByClause, TomogramAuthorWhereClause
     from graphql_api.types.tomogram_voxel_spacing import (
+        TomogramVoxelSpacing,
         TomogramVoxelSpacingOrderByClause,
         TomogramVoxelSpacingWhereClause,
-        TomogramVoxelSpacing,
     )
 
     pass
@@ -110,7 +106,7 @@ async def load_alignment_rows(
 @relay.connection(
     relay.ListConnection[
         Annotated["TomogramAuthor", strawberry.lazy("graphql_api.types.tomogram_author")]
-    ]  # type:ignore
+    ],  # type:ignore
 )
 async def load_tomogram_author_rows(
     root: "Tomogram",
@@ -186,7 +182,7 @@ async def load_tomogram_voxel_spacing_rows(
     mapper = inspect(db.Tomogram)
     relationship = mapper.relationships["tomogram_voxel_spacing"]
     return await dataloader.loader_for(relationship, where, order_by).load(
-        root.tomogram_voxel_spacing_id
+        root.tomogram_voxel_spacing_id,
     )  # type:ignore
 
 
@@ -336,60 +332,72 @@ class Tomogram(EntityInterface):
     size_z: float = strawberry.field(description="Tomogram voxels in the z dimension")
     voxel_spacing: float = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
     fiducial_alignment_status: fiducial_alignment_status_enum = strawberry.field(
-        description="Whether the tomographic alignment was computed based on fiducial markers."
+        description="Whether the tomographic alignment was computed based on fiducial markers.",
     )
     reconstruction_method: tomogram_reconstruction_method_enum = strawberry.field(
-        description="Describe reconstruction method (WBP, SART, SIRT)"
+        description="Describe reconstruction method (WBP, SART, SIRT)",
     )
     processing: tomogram_processing_enum = strawberry.field(
-        description="Describe additional processing used to derive the tomogram"
+        description="Describe additional processing used to derive the tomogram",
     )
     tomogram_version: Optional[float] = strawberry.field(description="Version of tomogram", default=None)
     processing_software: Optional[str] = strawberry.field(
-        description="Processing software used to derive the tomogram", default=None
+        description="Processing software used to derive the tomogram",
+        default=None,
     )
     reconstruction_software: str = strawberry.field(description="Name of software used for reconstruction")
     is_canonical: Optional[bool] = strawberry.field(
-        description="whether this tomogram is canonical for the run", default=None
+        description="whether this tomogram is canonical for the run",
+        default=None,
     )
     s3_omezarr_dir: Optional[str] = strawberry.field(
-        description="S3 path to this tomogram in multiscale OME-Zarr format", default=None
+        description="S3 path to this tomogram in multiscale OME-Zarr format",
+        default=None,
     )
     https_omezarr_dir: Optional[str] = strawberry.field(
-        description="HTTPS path to this tomogram in multiscale OME-Zarr format", default=None
+        description="HTTPS path to this tomogram in multiscale OME-Zarr format",
+        default=None,
     )
     s3_mrc_scale0: Optional[str] = strawberry.field(
-        description="S3 path to this tomogram in MRC format (no scaling)", default=None
+        description="S3 path to this tomogram in MRC format (no scaling)",
+        default=None,
     )
     https_mrc_scale0: Optional[str] = strawberry.field(
-        description="HTTPS path to this tomogram in MRC format (no scaling)", default=None
+        description="HTTPS path to this tomogram in MRC format (no scaling)",
+        default=None,
     )
     scale0_dimensions: Optional[str] = strawberry.field(
-        description="comma separated x,y,z dimensions of the unscaled tomogram", default=None
+        description="comma separated x,y,z dimensions of the unscaled tomogram",
+        default=None,
     )
     scale1_dimensions: Optional[str] = strawberry.field(
-        description="comma separated x,y,z dimensions of the scale1 tomogram", default=None
+        description="comma separated x,y,z dimensions of the scale1 tomogram",
+        default=None,
     )
     scale2_dimensions: Optional[str] = strawberry.field(
-        description="comma separated x,y,z dimensions of the scale2 tomogram", default=None
+        description="comma separated x,y,z dimensions of the scale2 tomogram",
+        default=None,
     )
     ctf_corrected: Optional[bool] = strawberry.field(description="Whether this tomogram is CTF corrected", default=None)
     offset_x: int = strawberry.field(description="x offset data relative to the canonical tomogram in pixels")
     offset_y: int = strawberry.field(description="y offset data relative to the canonical tomogram in pixels")
     offset_z: int = strawberry.field(description="z offset data relative to the canonical tomogram in pixels")
     affine_transformation_matrix: Optional[str] = strawberry.field(
-        description="A placeholder for any type of data.", default=None
+        description="A placeholder for any type of data.",
+        default=None,
     )
     key_photo_url: Optional[str] = strawberry.field(description="URL for the key photo", default=None)
     key_photo_thumbnail_url: Optional[str] = strawberry.field(
-        description="URL for the thumbnail of key photo", default=None
+        description="URL for the thumbnail of key photo",
+        default=None,
     )
     neuroglancer_config: Optional[str] = strawberry.field(
-        description="the compact json of neuroglancer config", default=None
+        description="the compact json of neuroglancer config",
+        default=None,
     )
     tomogram_type: Optional[tomogram_type_enum] = strawberry.field(description=None, default=None)
     is_standardized: bool = strawberry.field(
-        description="Whether this tomogram was generated per the portal's standards"
+        description="Whether this tomogram was generated per the portal's standards",
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -546,7 +554,8 @@ class TomogramCreateInput:
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
-        description="Voxel spacings for a run", default=None
+        description="Voxel spacings for a run",
+        default=None,
     )
     name: Optional[str] = strawberry.field(description="Short name for this tomogram", default=None)
     size_x: float = strawberry.field(description="Tomogram voxels in the x dimension")
@@ -554,60 +563,72 @@ class TomogramCreateInput:
     size_z: float = strawberry.field(description="Tomogram voxels in the z dimension")
     voxel_spacing: float = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
     fiducial_alignment_status: fiducial_alignment_status_enum = strawberry.field(
-        description="Whether the tomographic alignment was computed based on fiducial markers."
+        description="Whether the tomographic alignment was computed based on fiducial markers.",
     )
     reconstruction_method: tomogram_reconstruction_method_enum = strawberry.field(
-        description="Describe reconstruction method (WBP, SART, SIRT)"
+        description="Describe reconstruction method (WBP, SART, SIRT)",
     )
     processing: tomogram_processing_enum = strawberry.field(
-        description="Describe additional processing used to derive the tomogram"
+        description="Describe additional processing used to derive the tomogram",
     )
     tomogram_version: Optional[float] = strawberry.field(description="Version of tomogram", default=None)
     processing_software: Optional[str] = strawberry.field(
-        description="Processing software used to derive the tomogram", default=None
+        description="Processing software used to derive the tomogram",
+        default=None,
     )
     reconstruction_software: str = strawberry.field(description="Name of software used for reconstruction")
     is_canonical: Optional[bool] = strawberry.field(
-        description="whether this tomogram is canonical for the run", default=None
+        description="whether this tomogram is canonical for the run",
+        default=None,
     )
     s3_omezarr_dir: Optional[str] = strawberry.field(
-        description="S3 path to this tomogram in multiscale OME-Zarr format", default=None
+        description="S3 path to this tomogram in multiscale OME-Zarr format",
+        default=None,
     )
     https_omezarr_dir: Optional[str] = strawberry.field(
-        description="HTTPS path to this tomogram in multiscale OME-Zarr format", default=None
+        description="HTTPS path to this tomogram in multiscale OME-Zarr format",
+        default=None,
     )
     s3_mrc_scale0: Optional[str] = strawberry.field(
-        description="S3 path to this tomogram in MRC format (no scaling)", default=None
+        description="S3 path to this tomogram in MRC format (no scaling)",
+        default=None,
     )
     https_mrc_scale0: Optional[str] = strawberry.field(
-        description="HTTPS path to this tomogram in MRC format (no scaling)", default=None
+        description="HTTPS path to this tomogram in MRC format (no scaling)",
+        default=None,
     )
     scale0_dimensions: Optional[str] = strawberry.field(
-        description="comma separated x,y,z dimensions of the unscaled tomogram", default=None
+        description="comma separated x,y,z dimensions of the unscaled tomogram",
+        default=None,
     )
     scale1_dimensions: Optional[str] = strawberry.field(
-        description="comma separated x,y,z dimensions of the scale1 tomogram", default=None
+        description="comma separated x,y,z dimensions of the scale1 tomogram",
+        default=None,
     )
     scale2_dimensions: Optional[str] = strawberry.field(
-        description="comma separated x,y,z dimensions of the scale2 tomogram", default=None
+        description="comma separated x,y,z dimensions of the scale2 tomogram",
+        default=None,
     )
     ctf_corrected: Optional[bool] = strawberry.field(description="Whether this tomogram is CTF corrected", default=None)
     offset_x: int = strawberry.field(description="x offset data relative to the canonical tomogram in pixels")
     offset_y: int = strawberry.field(description="y offset data relative to the canonical tomogram in pixels")
     offset_z: int = strawberry.field(description="z offset data relative to the canonical tomogram in pixels")
     affine_transformation_matrix: Optional[str] = strawberry.field(
-        description="A placeholder for any type of data.", default=None
+        description="A placeholder for any type of data.",
+        default=None,
     )
     key_photo_url: Optional[str] = strawberry.field(description="URL for the key photo", default=None)
     key_photo_thumbnail_url: Optional[str] = strawberry.field(
-        description="URL for the thumbnail of key photo", default=None
+        description="URL for the thumbnail of key photo",
+        default=None,
     )
     neuroglancer_config: Optional[str] = strawberry.field(
-        description="the compact json of neuroglancer config", default=None
+        description="the compact json of neuroglancer config",
+        default=None,
     )
     tomogram_type: Optional[tomogram_type_enum] = strawberry.field(description=None, default=None)
     is_standardized: bool = strawberry.field(
-        description="Whether this tomogram was generated per the portal's standards"
+        description="Whether this tomogram was generated per the portal's standards",
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -618,7 +639,8 @@ class TomogramUpdateInput:
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
-        description="Voxel spacings for a run", default=None
+        description="Voxel spacings for a run",
+        default=None,
     )
     name: Optional[str] = strawberry.field(description="Short name for this tomogram", default=None)
     size_x: Optional[float] = strawberry.field(description="Tomogram voxels in the x dimension")
@@ -626,60 +648,72 @@ class TomogramUpdateInput:
     size_z: Optional[float] = strawberry.field(description="Tomogram voxels in the z dimension")
     voxel_spacing: Optional[float] = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
     fiducial_alignment_status: Optional[fiducial_alignment_status_enum] = strawberry.field(
-        description="Whether the tomographic alignment was computed based on fiducial markers."
+        description="Whether the tomographic alignment was computed based on fiducial markers.",
     )
     reconstruction_method: Optional[tomogram_reconstruction_method_enum] = strawberry.field(
-        description="Describe reconstruction method (WBP, SART, SIRT)"
+        description="Describe reconstruction method (WBP, SART, SIRT)",
     )
     processing: Optional[tomogram_processing_enum] = strawberry.field(
-        description="Describe additional processing used to derive the tomogram"
+        description="Describe additional processing used to derive the tomogram",
     )
     tomogram_version: Optional[float] = strawberry.field(description="Version of tomogram", default=None)
     processing_software: Optional[str] = strawberry.field(
-        description="Processing software used to derive the tomogram", default=None
+        description="Processing software used to derive the tomogram",
+        default=None,
     )
     reconstruction_software: Optional[str] = strawberry.field(description="Name of software used for reconstruction")
     is_canonical: Optional[bool] = strawberry.field(
-        description="whether this tomogram is canonical for the run", default=None
+        description="whether this tomogram is canonical for the run",
+        default=None,
     )
     s3_omezarr_dir: Optional[str] = strawberry.field(
-        description="S3 path to this tomogram in multiscale OME-Zarr format", default=None
+        description="S3 path to this tomogram in multiscale OME-Zarr format",
+        default=None,
     )
     https_omezarr_dir: Optional[str] = strawberry.field(
-        description="HTTPS path to this tomogram in multiscale OME-Zarr format", default=None
+        description="HTTPS path to this tomogram in multiscale OME-Zarr format",
+        default=None,
     )
     s3_mrc_scale0: Optional[str] = strawberry.field(
-        description="S3 path to this tomogram in MRC format (no scaling)", default=None
+        description="S3 path to this tomogram in MRC format (no scaling)",
+        default=None,
     )
     https_mrc_scale0: Optional[str] = strawberry.field(
-        description="HTTPS path to this tomogram in MRC format (no scaling)", default=None
+        description="HTTPS path to this tomogram in MRC format (no scaling)",
+        default=None,
     )
     scale0_dimensions: Optional[str] = strawberry.field(
-        description="comma separated x,y,z dimensions of the unscaled tomogram", default=None
+        description="comma separated x,y,z dimensions of the unscaled tomogram",
+        default=None,
     )
     scale1_dimensions: Optional[str] = strawberry.field(
-        description="comma separated x,y,z dimensions of the scale1 tomogram", default=None
+        description="comma separated x,y,z dimensions of the scale1 tomogram",
+        default=None,
     )
     scale2_dimensions: Optional[str] = strawberry.field(
-        description="comma separated x,y,z dimensions of the scale2 tomogram", default=None
+        description="comma separated x,y,z dimensions of the scale2 tomogram",
+        default=None,
     )
     ctf_corrected: Optional[bool] = strawberry.field(description="Whether this tomogram is CTF corrected", default=None)
     offset_x: Optional[int] = strawberry.field(description="x offset data relative to the canonical tomogram in pixels")
     offset_y: Optional[int] = strawberry.field(description="y offset data relative to the canonical tomogram in pixels")
     offset_z: Optional[int] = strawberry.field(description="z offset data relative to the canonical tomogram in pixels")
     affine_transformation_matrix: Optional[str] = strawberry.field(
-        description="A placeholder for any type of data.", default=None
+        description="A placeholder for any type of data.",
+        default=None,
     )
     key_photo_url: Optional[str] = strawberry.field(description="URL for the key photo", default=None)
     key_photo_thumbnail_url: Optional[str] = strawberry.field(
-        description="URL for the thumbnail of key photo", default=None
+        description="URL for the thumbnail of key photo",
+        default=None,
     )
     neuroglancer_config: Optional[str] = strawberry.field(
-        description="the compact json of neuroglancer config", default=None
+        description="the compact json of neuroglancer config",
+        default=None,
     )
     tomogram_type: Optional[tomogram_type_enum] = strawberry.field(description=None, default=None)
     is_standardized: Optional[bool] = strawberry.field(
-        description="Whether this tomogram was generated per the portal's standards"
+        description="Whether this tomogram was generated per the portal's standards",
     )
     id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -716,7 +750,7 @@ def format_tomogram_aggregate_output(query_results: Sequence[RowMapping] | RowMa
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if not type(query_results) is list:
+    if type(query_results) is not list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_tomogram_aggregate_row(row))
@@ -735,10 +769,10 @@ def format_tomogram_aggregate_row(row: RowMapping) -> TomogramAggregateFunctions
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not getattr(output, "groupBy"):
-                setattr(output, "groupBy", TomogramGroupByOptions())
-            group = build_tomogram_groupby_output(getattr(output, "groupBy"), group_keys, value)
-            setattr(output, "groupBy", group)
+            if not output.groupBy:
+                output.groupBy = TomogramGroupByOptions()
+            group = build_tomogram_groupby_output(output.groupBy, group_keys, value)
+            output.groupBy = group
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -769,8 +803,8 @@ async def resolve_tomograms_aggregate(
     # Get the selected aggregate functions and columns to operate on, and groupby options if any were provided.
     # TODO: not sure why selected_fields is a list
     selections = info.selected_fields[0].selections[0].selections
-    aggregate_selections = [selection for selection in selections if getattr(selection, "name") != "groupBy"]
-    groupby_selections = [selection for selection in selections if getattr(selection, "name") == "groupBy"]
+    aggregate_selections = [selection for selection in selections if selection.name != "groupBy"]
+    groupby_selections = [selection for selection in selections if selection.name == "groupBy"]
     groupby_selections = groupby_selections[0].selections if groupby_selections else []
 
     if not aggregate_selections:
@@ -827,7 +861,13 @@ async def create_tomogram(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -912,7 +952,13 @@ async def update_tomogram(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")

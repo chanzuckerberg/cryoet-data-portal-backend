@@ -7,17 +7,16 @@ Make changes to the template codegen/templates/test_infra/factories/class_name.p
 
 # ruff: noqa: E501 Line too long
 
-import random
 import factory
-import uuid6
 from database.models import Tiltseries
-from platformics.test_infra.factories.base import FileFactory, CommonFactory
-from test_infra.factories.run import RunFactory
-from test_infra.factories.deposition import DepositionFactory
 from factory import Faker, fuzzy
 from faker_biology.bioseq import Bioseq
 from faker_biology.physiology import Organ
 from faker_enum import EnumProvider
+from platformics.test_infra.factories.base import CommonFactory
+
+from test_infra.factories.deposition import DepositionFactory
+from test_infra.factories.run import RunFactory
 
 Faker.add_provider(Bioseq)
 Faker.add_provider(Organ)

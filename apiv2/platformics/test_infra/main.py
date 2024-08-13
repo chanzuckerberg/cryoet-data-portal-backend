@@ -10,7 +10,6 @@ from factory import Faker, fuzzy
 from faker_biology.bioseq import Bioseq
 from faker_biology.physiology import Organ
 from faker_enum import EnumProvider
-
 from platformics.database.models import Entity, File, FileStatus
 
 Faker.add_provider(Bioseq)

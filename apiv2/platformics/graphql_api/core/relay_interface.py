@@ -1,10 +1,9 @@
 from typing import Any, Iterable
 
 import strawberry
-from strawberry.types import Info
-
-from strawberry import relay
 from platformics.support import sqlalchemy_helpers
+from strawberry import relay
+from strawberry.types import Info
 
 
 @strawberry.interface

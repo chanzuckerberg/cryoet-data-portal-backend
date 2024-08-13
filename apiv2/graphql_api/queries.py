@@ -8,7 +8,6 @@ Make changes to the template codegen/templates/graphql_api/queries.py.j2 instead
 from typing import Sequence
 
 import strawberry
-
 from graphql_api.types.alignment import Alignment, AlignmentAggregate, resolve_alignments, resolve_alignments_aggregate
 from graphql_api.types.annotation import (
     Annotation,

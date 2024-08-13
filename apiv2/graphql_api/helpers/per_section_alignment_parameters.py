@@ -5,10 +5,9 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import Any, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Optional
+
 import strawberry
-import datetime
-import uuid
 from graphql_api.helpers.alignment import AlignmentGroupByOptions, build_alignment_groupby_output
 
 if TYPE_CHECKING:

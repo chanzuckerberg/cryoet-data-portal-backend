@@ -4,8 +4,6 @@ Launch the GraphQL server.
 
 import strawberry
 import uvicorn
-from fastapi import Depends
-
 from cerbos.sdk.model import Principal
 from graphql_api.mutations import Mutation
 from graphql_api.queries import Query
