@@ -1,7 +1,6 @@
 import logging
 import os
 import re
-import shutil
 from concurrent.futures import ThreadPoolExecutor
 from typing import Tuple
 
@@ -68,8 +67,11 @@ def process_arn(arn: str, session: Session, output_dir: str, failed_only: bool, 
     if failed_only and not log_stream_failed:
         return result
 
-    logger.info("Writing to %s", output_file)
     logs = get_log_events(session, LOG_GROUP_NAME, log_stream_name)
+    if os.path.exists(output_file):
+        logger.warning("Removing existing %s", output_file)
+        os.remove(output_file)
+    logger.info("Writing to %s", output_file)
     with open(output_file, "w") as f:
         f.write("\n".join(logs))
 
@@ -107,13 +109,12 @@ def main(execution_arn: list[str], input_file: str, output_dir: str, profile: st
 
     # setup output directory
     if not links_only:
-        if os.path.exists(output_dir):
-            logger.warning("Removing existing %s directory.", output_dir)
-            shutil.rmtree(output_dir)
-
-        os.makedirs(output_dir)
-        os.makedirs(f"{output_dir}failed")
-        os.makedirs(f"{output_dir}success")
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        if not os.path.exists(f"{output_dir}failed"):
+            os.makedirs(f"{output_dir}failed")
+        if not os.path.exists(f"{output_dir}success"):
+            os.makedirs(f"{output_dir}success")
 
     input_execution_arn = list(set(input_execution_arn))
     session = Session(region_name=input_execution_arn[0].split(":")[3], profile_name=profile)
