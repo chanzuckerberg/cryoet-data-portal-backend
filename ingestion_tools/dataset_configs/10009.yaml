@@ -105,6 +105,7 @@ annotations:
     annotation_object:
       id: GO:0097537
       name: Y-shaped link
+      description: MTD stellate
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
