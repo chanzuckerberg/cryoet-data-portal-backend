@@ -9,6 +9,7 @@ on:
       - schema/**/*.py
       - schema/**/*.yaml
       - schema/**/Makefile
+      - schema/**/*.json # ingestion_config_validation_exclusions.json
       - schema/.version
   pull_request:
     paths:
@@ -16,6 +17,7 @@ on:
       - schema/**/*.py
       - schema/**/*.yaml
       - schema/**/Makefile
+      - schema/**/*.json # ingestion_config_validation_exclusions.json
       - schema/.version
   workflow_dispatch:
 
