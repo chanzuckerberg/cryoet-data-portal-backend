@@ -56,7 +56,7 @@ class TestFrame:
             remaining_frame_files.remove(angle_files[0])
             tilt_angle_to_frame_mapping[angle] = angle_files[0]
 
-        assert len(remaining_frame_files) == 0
+        assert remaining_frame_files == [], f"Frame files not accounted for: {remaining_frame_files}"
 
     def test_frames_filenames(self, frames_dir: str, frame_files: List[str], tiltseries_metadata: Dict):
         """Check that the filenames of the frames are consistent with the metadata."""
