@@ -504,8 +504,8 @@ enums:
       raw:
         text: raw
         description: Tomogram was not processed
-  tomogrom_reconstruction_method_enum:
-    name: tomogrom_reconstruction_method_enum
+  tomogram_reconstruction_method_enum:
+    name: tomogram_reconstruction_method_enum
     description: Tomogram reconstruction method
     from_schema: cdp-ingestion-config
     permissible_values:

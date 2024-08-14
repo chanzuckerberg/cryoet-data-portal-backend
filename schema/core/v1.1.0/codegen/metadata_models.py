@@ -613,7 +613,7 @@ class TomogramProcessingEnum(str, Enum):
     raw = "raw"
 
 
-class TomogromReconstructionMethodEnum(str, Enum):
+class TomogramReconstructionMethodEnum(str, Enum):
     """
     Tomogram reconstruction method
     """
@@ -2142,13 +2142,13 @@ class Tomogram(AuthoredEntity):
             }
         },
     )
-    reconstruction_method: Optional[Union[TomogromReconstructionMethodEnum, str]] = Field(
+    reconstruction_method: Optional[Union[TomogramReconstructionMethodEnum, str]] = Field(
         None,
         description="""Describe reconstruction method (WBP, SART, SIRT)""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "reconstruction_method",
-                "any_of": [{"range": "tomogrom_reconstruction_method_enum"}, {"range": "StringFormattedString"}],
+                "any_of": [{"range": "tomogram_reconstruction_method_enum"}, {"range": "StringFormattedString"}],
                 "domain_of": ["Tomogram"],
             }
         },
@@ -3744,3 +3744,4 @@ CrossReferences.model_rebuild()
 AuthorMixin.model_rebuild()
 Author.model_rebuild()
 AnnotationMethodLinks.model_rebuild()
+

@@ -520,8 +520,8 @@ enums:
       raw:
         text: raw
         description: Tomogram was not processed
-  tomogrom_reconstruction_method_enum:
-    name: tomogrom_reconstruction_method_enum
+  tomogram_reconstruction_method_enum:
+    name: tomogram_reconstruction_method_enum
     description: Tomogram reconstruction method
     from_schema: metadata
     permissible_values:
@@ -2326,7 +2326,7 @@ classes:
         pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
           ]*$)
         any_of:
-        - range: tomogrom_reconstruction_method_enum
+        - range: tomogram_reconstruction_method_enum
         - range: StringFormattedString
       reconstruction_software:
         name: reconstruction_software
