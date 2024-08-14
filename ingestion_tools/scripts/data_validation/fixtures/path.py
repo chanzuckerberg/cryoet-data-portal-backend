@@ -83,6 +83,13 @@ def frames_dir(run_dir: str, tiltseries_metadata: Dict, filesystem: FileSystemAp
 
 
 @pytest.fixture(scope="session")
+def frame_files(frames_dir: str, filesystem: FileSystemApi) -> List[str]:
+    """[Dataset]/[ExperimentRun]/Frames/[frame_name].mrc"""
+    files = filesystem.glob(f"{frames_dir}/*")
+    return ["s3://" + file for file in files]
+
+
+@pytest.fixture(scope="session")
 def frame_acquisition_order_file(frames_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/Frames/frame_acquisition_order.json"""
     dst = f"{frames_dir}/frame_acquisition_order.json"
@@ -128,7 +135,7 @@ def tiltseries_mrc_file(
 ) -> str:
     """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].mrc"""
     # TODO FIXME List[str] mrc_files should really just become str mrc_file, and then adjust this fixture accordingly
-    file = tiltseries_dir + "/" + tiltseries_metadata["mrc_files"][0]
+    file = f"{tiltseries_dir}/{tiltseries_metadata['mrc_files'][0]}"
     if not filesystem.s3fs.exists(file):
         pytest.fail(f"Tilt series mrc file not found: {file}")
     return file
@@ -144,6 +151,7 @@ def tiltseries_zarr_file(
     file = f"{tiltseries_dir}/{tiltseries_metadata['omezarr_dir']}"
     if not filesystem.s3fs.exists(file):
         pytest.fail(f"Tilt series OME-Zarr file not found: {file}")
+    return file
 
 
 @pytest.fixture(scope="session")
@@ -155,10 +163,13 @@ def tiltseries_basename(
 
 
 @pytest.fixture(scope="session")
-def tiltseries_mdoc_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].mdoc"""
-    if filesystem.s3fs.exists(f"{tiltseries_basename}.mdoc"):
-        return f"{tiltseries_basename}.mdoc"
+def tiltseries_mdoc_file(tiltseries_dir: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/TiltSeries/*.mdoc"""
+    mdoc_file = filesystem.glob(f"{tiltseries_dir}/*.mdoc")
+    if len(mdoc_file) == 1:
+        return mdoc_file[0]
+    elif len(mdoc_file) > 1:
+        pytest.fail("Multiple mdoc files found.")
     else:
         pytest.skip("No mdoc file found.")
 
@@ -243,7 +254,7 @@ def canonical_tomo_mrc_file(
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name].mrc"""
     # TODO FIXME List[str] mrc_files should really just become str mrc_file, and then adjust this fixture accordingly
-    file = canonical_tomo_dir + "/" + canonical_tomogram_metadata["mrc_files"][0]
+    file = f"{canonical_tomo_dir}/{canonical_tomogram_metadata['mrc_files'][0]}"
     if not filesystem.s3fs.exists(file):
         pytest.fail(f"Canonical tomogram mrc file not found: {file}")
     return file

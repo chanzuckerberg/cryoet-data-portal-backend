@@ -84,7 +84,7 @@ def tiltseries_metadata(tiltseries_meta_file: str, filesystem: FileSystemApi) ->
 def tiltseries_mdoc(tiltseries_mdoc_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
     """Load the tiltseries mdoc."""
     with filesystem.open(tiltseries_mdoc_file, "r") as f:
-        return mdocfile.read(f)
+        return mdocfile.read_string(f.read())
 
 
 @pytest.fixture(scope="session")
