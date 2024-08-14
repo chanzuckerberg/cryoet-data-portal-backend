@@ -133,6 +133,7 @@ runs:
 standardization_config:
   deposition_id: 10007
   run_to_tomo_map_csv: run_to_tomo_map.csv
+  run_data_map_file: run_data_map.csv
   source_prefix: Abhay_yeast
 tiltseries:
 - metadata:
@@ -155,7 +156,7 @@ tiltseries:
     tilt_range: &id006
       max: 60
       min: -60
-    tilt_series_quality: 5
+    tilt_series_quality: int {ts_quality_score}
     tilt_step: 3
     tilting_scheme: Dose symmetric from lamella pre-tilt
     total_flux: 143.5
