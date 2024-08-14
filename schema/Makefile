@@ -41,9 +41,9 @@ clean-docs:
 
 .PHONY: build
 build: clean
-	python schema.py materialize $(METADATA_YAML) $(COMMON_YAML) $(METADATA_MATERIALIZED_YAML)
-	python schema.py materialize $(API_MODELS_YAML) $(COMMON_YAML) $(API_MODELS_MATERIALIZED_YAML)
-	python schema.py materialize $(INGESTION_CONFIG_MODELS_YAML) $(COMMON_YAML) $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML)
+	python3 schema.py materialize $(METADATA_YAML) $(METADATA_MATERIALIZED_YAML)
+	python3 schema.py materialize $(API_MODELS_YAML) $(API_MODELS_MATERIALIZED_YAML)
+	python3 schema.py materialize $(INGESTION_CONFIG_MODELS_YAML) $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML)
 	linkml generate pydantic --black $(METADATA_MATERIALIZED_YAML) > $(METADATA_MODELS_PY)
 	linkml generate pydantic $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_MODELS_PY)
 	linkml generate json-schema $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_JSON_SCHEMA)
@@ -56,8 +56,8 @@ build-docs: clean-docs
 
 .PHONY: validate-configs
 validate-configs:
-	python $(VALIDATE_CONFIGS)
+	python3 $(VALIDATE_CONFIGS)
 
 .PHONY: validate-configs-with-network
 validate-configs-with-network:
-	python $(VALIDATE_CONFIGS) --network-validation
+	python3 $(VALIDATE_CONFIGS) --network-validation

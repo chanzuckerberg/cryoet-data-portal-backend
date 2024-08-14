@@ -56,7 +56,7 @@ linkml_meta = LinkMLMeta(
             "cdp-meta": {"prefix_prefix": "cdp-meta", "prefix_reference": "metadata"},
             "linkml": {"prefix_prefix": "linkml", "prefix_reference": "https://w3id.org/linkml/"},
         },
-        "source_file": "core/v1.1.0/codegen/metadata_materialized.yaml",
+        "source_file": "core/v2.0.0/codegen/metadata_materialized.yaml",
         "types": {
             "BTO_ID": {
                 "base": "str",
@@ -480,6 +480,19 @@ linkml_meta = LinkMLMeta(
 )
 
 
+class AnnotationFileSourceEnum(str, Enum):
+    """
+    How the annotation file was acquired
+    """
+
+    # Annotation submitted by dataset author
+    dataset_author = "dataset_author"
+    # Annotation submitted by community member
+    community = "community"
+    # Annotation submitted by portal standardization
+    portal_standard = "portal_standard"
+
+
 class AnnotationMethodTypeEnum(str, Enum):
     """
     Describes how the annotations were generated.
@@ -637,6 +650,17 @@ class TomogramTypeEnum(str, Enum):
 
     # Canonical tomogram (basis geometry for all annotations)
     CANONICAL = "CANONICAL"
+
+
+class AlignmentTypeEnum(str, Enum):
+    """
+    Type of alignment
+    """
+
+    # per-section non-rigid alignment available
+    LOCAL = "LOCAL"
+    # only per-section rigid alignment available
+    GLOBAL = "GLOBAL"
 
 
 class DateStampedEntityMixin(ConfiguredBaseModel):
@@ -2031,7 +2055,7 @@ class MicroscopeDetails(ConfiguredBaseModel):
     )
     manufacturer: Optional[Union[TiltseriesMicroscopeManufacturerEnum, str]] = Field(
         None,
-        description="""Name of the microscope manufacturer""",
+        description="""A placeholder for any type of data.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "manufacturer",
@@ -2116,7 +2140,7 @@ class TiltRange(ConfiguredBaseModel):
 
     min: Optional[Union[float, str]] = Field(
         None,
-        description="""Minimal tilt angle in degrees""",
+        description="""A placeholder for any type of data.""",
         ge=-90,
         le=90,
         json_schema_extra={
@@ -2133,7 +2157,7 @@ class TiltRange(ConfiguredBaseModel):
     )
     max: Optional[Union[float, str]] = Field(
         None,
-        description="""Maximal tilt angle in degrees""",
+        description="""A placeholder for any type of data.""",
         ge=-90,
         le=90,
         json_schema_extra={
@@ -2196,7 +2220,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     aligned_tiltseries_binning: Optional[Union[float, str]] = Field(
         1.0,
-        description="""Binning factor of the aligned tilt series""",
+        description="""A placeholder for any type of data.""",
         ge=0,
         json_schema_extra={
             "linkml_meta": {
@@ -2209,7 +2233,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     binning_from_frames: Optional[Union[float, str]] = Field(
         1.0,
-        description="""Describes the binning factor from frames to tilt series file""",
+        description="""A placeholder for any type of data.""",
         ge=0,
         json_schema_extra={
             "linkml_meta": {
@@ -2281,7 +2305,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     spherical_aberration_constant: Optional[Union[float, str]] = Field(
         None,
-        description="""Spherical Aberration Constant of the objective lens in millimeters""",
+        description="""A placeholder for any type of data.""",
         ge=0,
         json_schema_extra={
             "linkml_meta": {
@@ -2305,7 +2329,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     tilt_axis: Optional[Union[float, str]] = Field(
         None,
-        description="""Rotation angle in degrees""",
+        description="""A placeholder for any type of data.""",
         ge=-360,
         le=360,
         json_schema_extra={
@@ -2327,7 +2351,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     tilt_series_quality: Optional[Union[int, str]] = Field(
         None,
-        description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""",
+        description="""A placeholder for any type of data.""",
         ge=1,
         le=5,
         json_schema_extra={
@@ -2343,7 +2367,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     tilt_step: Optional[Union[float, str]] = Field(
         None,
-        description="""Tilt step in degrees""",
+        description="""A placeholder for any type of data.""",
         ge=0,
         le=90,
         json_schema_extra={
@@ -2371,7 +2395,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     total_flux: Optional[Union[float, str]] = Field(
         None,
-        description="""Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series""",
+        description="""A placeholder for any type of data.""",
         ge=0,
         json_schema_extra={
             "linkml_meta": {
@@ -2384,7 +2408,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     pixel_spacing: Optional[Union[float, str]] = Field(
         None,
-        description="""Pixel spacing for the tilt series""",
+        description="""A placeholder for any type of data.""",
         ge=0.001,
         json_schema_extra={
             "linkml_meta": {
@@ -2601,7 +2625,7 @@ class Tomogram(AuthoredEntity):
 
     voxel_spacing: Optional[Union[float, str]] = Field(
         None,
-        description="""Voxel spacing equal in all three axes in angstroms""",
+        description="""A placeholder for any type of data.""",
         ge=0.001,
         json_schema_extra={
             "linkml_meta": {
@@ -2614,7 +2638,7 @@ class Tomogram(AuthoredEntity):
     )
     fiducial_alignment_status: Optional[Union[FiducialAlignmentStatusEnum, str]] = Field(
         None,
-        description="""Whether the tomographic alignment was computed based on fiducial markers.""",
+        description="""A placeholder for any type of data.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "fiducial_alignment_status",
@@ -2648,7 +2672,7 @@ class Tomogram(AuthoredEntity):
     )
     reconstruction_method: Optional[Union[TomogramReconstructionMethodEnum, str]] = Field(
         None,
-        description="""Describe reconstruction method (WBP, SART, SIRT)""",
+        description="""A placeholder for any type of data.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "reconstruction_method",

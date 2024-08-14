@@ -1,10 +1,82 @@
 import os
-from typing import Union
+from collections import deque
+from functools import lru_cache
+from pathlib import Path
+from typing import Any, List, Optional, Union
 
 import click
 from linkml.utils.helpers import write_to_file
 from linkml_runtime.dumpers import yaml_dumper
 from linkml_runtime.utils.schemaview import SchemaView
+
+
+# Temporary hacky monkeypatch :'( , waiting for this bug to be fixed:
+# https://github.com/linkml/linkml/issues/1228
+@lru_cache(None)
+def imports_closure(self, imports: bool = True, traverse: Optional[bool] = None, inject_metadata=True) -> List[Any]:
+    if self.schema_map is None:
+        self.schema_map = {self.schema.name: self.schema}
+
+    closure = deque()
+    visited = set()
+    todo = [self.schema.name]
+
+    if not imports or (not traverse and traverse is not None):
+        return todo
+
+    while len(todo) > 0:
+        # visit item
+        sn = todo.pop()
+        if sn not in self.schema_map:
+            imported_schema = self.load_import(sn)
+            self.schema_map[sn] = imported_schema
+
+        # resolve item's imports if it has not been visited already
+        # we will get duplicates, but not cycles this way, and
+        # filter out dupes, preserving the first entry, at the end.
+        if sn not in visited:
+            for i in self.schema_map[sn].imports:
+                # no self imports ;)
+                if i == sn:
+                    continue
+
+                # resolve relative imports relative to the importing schema, rather than the
+                # origin schema. Imports can be a URI or Curie, and imports from the same
+                # directory don't require a ./, so if the current (sn) import is a relative
+                # path, and the target import doesn't have : (as in a curie or a URI)
+                # we prepend the relative path. This WILL make the key in the `schema_map` not
+                # equal to the literal text specified in the importing schema, but this is
+                # essential to sensible deduplication: eg. for
+                # - main.yaml (imports ./types.yaml, ./subdir/subschema.yaml)
+                # - types.yaml
+                # - subdir/subschema.yaml (imports ./types.yaml)
+                # - subdir/types.yaml
+                # we should treat the two `types.yaml` as separate schemas from the POV of the
+                # origin schema.
+                if sn.startswith(".") and ":" not in i:
+                    i = os.path.normpath(str(Path(sn).parent / i))
+                todo.append(i)
+
+        # add item to closure
+        # append + pop (above) is FILO queue, which correctly extends tree leaves,
+        # but in backwards order.
+        closure.appendleft(sn)
+        visited.add(sn)
+
+    # filter duplicates, keeping first entry
+    closure = list({k: None for k in closure}.keys())
+
+    if inject_metadata:
+        for s in self.schema_map.values():
+            for x in {**s.classes, **s.enums, **s.slots, **s.subsets, **s.types}.values():
+                x.from_schema = s.id
+            for c in s.classes.values():
+                for a in c.attributes.values():
+                    a.from_schema = s.id
+    return closure
+
+
+SchemaView.imports_closure = imports_closure
 
 
 def _materialize_classes(schema: SchemaView) -> dict:
@@ -208,12 +280,20 @@ def cli(ctx):
 
 @cli.command()
 @click.argument("schema_file", required=True, type=str)
-@click.argument("common_schema_file", required=True, type=str)
 @click.argument("output_path", required=True, type=str)
 @click.pass_context
-def materialize(ctx, schema_file: str, common_schema_file: str, output_path: str):
+def materialize(ctx, schema_file: str, output_path: str):
     # Load
     schema = SchemaView(schema_file)
+
+    # Try to identify the common import from the list of imports in the schema.
+    common_schema_file = None
+    for import_filename in schema.imports_closure():
+        if import_filename.endswith("common"):
+            common_schema_file = os.path.abspath(os.path.join(os.path.dirname(schema_file), import_filename + ".yaml"))
+            break
+    if not common_schema_file:
+        raise Exception("Could not identify common schema import!")
     common_schema = SchemaView(common_schema_file)
 
     # Copy common elements from common definitions to schema
