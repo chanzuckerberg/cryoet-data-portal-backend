@@ -1492,7 +1492,7 @@ class CameraDetails(ConfiguredBaseModel):
 
     @field_validator("acquire_mode")
     def pattern_acquire_mode(cls, v):
-        pattern = re.compile(r"(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^counting$)|(^superresolution$)|(^linear$)|(^cds$)")
+        pattern = re.compile(r"(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|((^counting$)|(^superresolution$)|(^linear$)|(^cds$))")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
@@ -1521,13 +1521,21 @@ class MicroscopeDetails(ConfiguredBaseModel):
             }
         },
     )
-    manufacturer: Optional[Union[TiltseriesMicroscopeManufacturerEnum, str]] = Field(
-        None,
+    manufacturer: Union[TiltseriesMicroscopeManufacturerEnum, str] = Field(
+        ...,
         description="""Name of the microscope manufacturer""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "manufacturer",
-                "any_of": [{"range": "tiltseries_microscope_manufacturer_enum"}, {"range": "StringFormattedString"}],
+                "any_of": [
+                    {
+                        "description": "Name of the microscope manufacturer",
+                        "exact_mappings": ["cdp-common:tiltseries_microscope_manufacturer"],
+                        "range": "tiltseries_microscope_manufacturer_enum",
+                        "required": True,
+                    },
+                    {"range": "StringFormattedString"},
+                ],
                 "domain_of": ["CameraDetails", "MicroscopeDetails"],
             }
         },
@@ -1606,8 +1614,8 @@ class TiltRange(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    min: Optional[Union[float, str]] = Field(
-        None,
+    min: Union[float, str] = Field(
+        ...,
         description="""Minimal tilt angle in degrees""",
         ge=-90,
         le=90,
@@ -1615,7 +1623,15 @@ class TiltRange(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "min",
                 "any_of": [
-                    {"maximum_value": 90, "minimum_value": -90, "range": "float"},
+                    {
+                        "description": "Minimal tilt angle in degrees",
+                        "exact_mappings": ["cdp-common:tiltseries_tilt_min"],
+                        "maximum_value": 90,
+                        "minimum_value": -90,
+                        "range": "float",
+                        "required": True,
+                        "unit": {"descriptive_name": "degrees", "symbol": "°"},
+                    },
                     {"range": "FloatFormattedString"},
                 ],
                 "domain_of": ["TiltRange"],
@@ -1623,8 +1639,8 @@ class TiltRange(ConfiguredBaseModel):
             }
         },
     )
-    max: Optional[Union[float, str]] = Field(
-        None,
+    max: Union[float, str] = Field(
+        ...,
         description="""Maximal tilt angle in degrees""",
         ge=-90,
         le=90,
@@ -1632,7 +1648,15 @@ class TiltRange(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "max",
                 "any_of": [
-                    {"maximum_value": 90, "minimum_value": -90, "range": "float"},
+                    {
+                        "description": "Maximal tilt angle in degrees",
+                        "exact_mappings": ["cdp-common:tiltseries_tilt_max"],
+                        "maximum_value": 90,
+                        "minimum_value": -90,
+                        "range": "float",
+                        "required": True,
+                        "unit": {"descriptive_name": "degrees", "symbol": "°"},
+                    },
                     {"range": "FloatFormattedString"},
                 ],
                 "domain_of": ["TiltRange"],
@@ -1693,7 +1717,15 @@ class TiltSeries(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "aligned_tiltseries_binning",
-                "any_of": [{"minimum_value": 0, "range": "float"}, {"range": "FloatFormattedString"}],
+                "any_of": [
+                    {
+                        "description": "Binning factor of the aligned tilt series",
+                        "exact_mappings": ["cdp-common:tiltseries_aligned_tiltseries_binning"],
+                        "minimum_value": 0,
+                        "range": "float",
+                    },
+                    {"range": "FloatFormattedString"},
+                ],
                 "domain_of": ["TiltSeries"],
                 "ifabsent": "float(1)",
             }
@@ -1706,7 +1738,15 @@ class TiltSeries(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "binning_from_frames",
-                "any_of": [{"minimum_value": 0, "range": "float"}, {"range": "FloatFormattedString"}],
+                "any_of": [
+                    {
+                        "description": "Describes the binning factor from frames to tilt " "series file",
+                        "exact_mappings": ["cdp-common:tiltseries_binning_from_frames"],
+                        "minimum_value": 0,
+                        "range": "float",
+                    },
+                    {"range": "FloatFormattedString"},
+                ],
                 "domain_of": ["TiltSeries"],
                 "ifabsent": "float(1)",
             }
@@ -1771,14 +1811,24 @@ class TiltSeries(ConfiguredBaseModel):
             }
         },
     )
-    spherical_aberration_constant: Optional[Union[float, str]] = Field(
-        None,
+    spherical_aberration_constant: Union[float, str] = Field(
+        ...,
         description="""Spherical Aberration Constant of the objective lens in millimeters""",
         ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "spherical_aberration_constant",
-                "any_of": [{"minimum_value": 0, "range": "float"}, {"range": "FloatFormattedString"}],
+                "any_of": [
+                    {
+                        "description": "Spherical Aberration Constant of the objective " "lens in millimeters",
+                        "exact_mappings": ["cdp-common:tiltseries_spherical_aberration_constant"],
+                        "minimum_value": 0,
+                        "range": "float",
+                        "required": True,
+                        "unit": {"descriptive_name": "millimeters", "symbol": "mm"},
+                    },
+                    {"range": "FloatFormattedString"},
+                ],
                 "domain_of": ["TiltSeries"],
                 "unit": {"descriptive_name": "millimeters", "symbol": "mm"},
             }
@@ -1795,8 +1845,8 @@ class TiltSeries(ConfiguredBaseModel):
             }
         },
     )
-    tilt_axis: Optional[Union[float, str]] = Field(
-        None,
+    tilt_axis: Union[float, str] = Field(
+        ...,
         description="""Rotation angle in degrees""",
         ge=-360,
         le=360,
@@ -1804,7 +1854,15 @@ class TiltSeries(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "tilt_axis",
                 "any_of": [
-                    {"maximum_value": 360, "minimum_value": -360, "range": "float"},
+                    {
+                        "description": "Rotation angle in degrees",
+                        "exact_mappings": ["cdp-common:tiltseries_tilt_axis"],
+                        "maximum_value": 360,
+                        "minimum_value": -360,
+                        "range": "float",
+                        "required": True,
+                        "unit": {"descriptive_name": "degrees", "symbol": "°"},
+                    },
                     {"range": "FloatFormattedString"},
                 ],
                 "domain_of": ["TiltSeries"],
@@ -1817,8 +1875,8 @@ class TiltSeries(ConfiguredBaseModel):
         description="""The range of tilt angles in the tilt series.""",
         json_schema_extra={"linkml_meta": {"alias": "tilt_range", "domain_of": ["TiltSeries"]}},
     )
-    tilt_series_quality: Optional[Union[int, str]] = Field(
-        None,
+    tilt_series_quality: Union[int, str] = Field(
+        ...,
         description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""",
         ge=1,
         le=5,
@@ -1826,15 +1884,23 @@ class TiltSeries(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "tilt_series_quality",
                 "any_of": [
-                    {"maximum_value": 5, "minimum_value": 1, "range": "integer"},
+                    {
+                        "description": "Author assessment of tilt series quality within "
+                        "the dataset (1-5, 5 is best)",
+                        "exact_mappings": ["cdp-common:tiltseries_tilt_series_quality"],
+                        "maximum_value": 5,
+                        "minimum_value": 1,
+                        "range": "integer",
+                        "required": True,
+                    },
                     {"range": "IntegerFormattedString"},
                 ],
                 "domain_of": ["TiltSeries"],
             }
         },
     )
-    tilt_step: Optional[Union[float, str]] = Field(
-        None,
+    tilt_step: Union[float, str] = Field(
+        ...,
         description="""Tilt step in degrees""",
         ge=0,
         le=90,
@@ -1842,7 +1908,15 @@ class TiltSeries(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "tilt_step",
                 "any_of": [
-                    {"maximum_value": 90, "minimum_value": 0, "range": "float"},
+                    {
+                        "description": "Tilt step in degrees",
+                        "exact_mappings": ["cdp-common:tiltseries_tilt_step"],
+                        "maximum_value": 90,
+                        "minimum_value": 0,
+                        "range": "float",
+                        "required": True,
+                        "unit": {"descriptive_name": "degrees", "symbol": "°"},
+                    },
                     {"range": "FloatFormattedString"},
                 ],
                 "domain_of": ["TiltSeries"],
@@ -1861,27 +1935,48 @@ class TiltSeries(ConfiguredBaseModel):
             }
         },
     )
-    total_flux: Optional[Union[float, str]] = Field(
-        None,
+    total_flux: Union[float, str] = Field(
+        ...,
         description="""Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series""",
         ge=0,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "total_flux",
-                "any_of": [{"minimum_value": 0, "range": "float"}, {"range": "FloatFormattedString"}],
+                "any_of": [
+                    {
+                        "description": "Number of Electrons reaching the specimen in a "
+                        "square Angstrom area for the entire tilt series",
+                        "exact_mappings": ["cdp-common:tiltseries_total_flux"],
+                        "minimum_value": 0,
+                        "range": "float",
+                        "required": True,
+                        "unit": {"descriptive_name": "electrons per square Angstrom", "symbol": "e^-/Å^2"},
+                    },
+                    {"range": "FloatFormattedString"},
+                ],
                 "domain_of": ["TiltSeries"],
                 "unit": {"descriptive_name": "electrons per square Angstrom", "symbol": "e^-/Å^2"},
             }
         },
     )
-    pixel_spacing: Optional[Union[float, str]] = Field(
-        None,
+    pixel_spacing: Union[float, str] = Field(
+        ...,
         description="""Pixel spacing for the tilt series""",
         ge=0.001,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "pixel_spacing",
-                "any_of": [{"minimum_value": 0.001, "range": "float"}, {"range": "FloatFormattedString"}],
+                "any_of": [
+                    {
+                        "description": "Pixel spacing for the tilt series",
+                        "exact_mappings": ["cdp-common:tiltseries_pixel_spacing"],
+                        "minimum_value": 0.001,
+                        "range": "float",
+                        "required": True,
+                        "unit": {"descriptive_name": "Angstroms per pixel", "symbol": "Å/px"},
+                    },
+                    {"range": "FloatFormattedString"},
+                ],
                 "domain_of": ["TiltSeries"],
                 "unit": {"descriptive_name": "Angstroms per pixel", "symbol": "Å/px"},
             }
@@ -2091,26 +2186,44 @@ class Tomogram(AuthoredEntity):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata", "mixins": ["AuthoredEntity"]})
 
-    voxel_spacing: Optional[Union[float, str]] = Field(
-        None,
+    voxel_spacing: Union[float, str] = Field(
+        ...,
         description="""Voxel spacing equal in all three axes in angstroms""",
         ge=0.001,
         json_schema_extra={
             "linkml_meta": {
                 "alias": "voxel_spacing",
-                "any_of": [{"minimum_value": 0.001, "range": "float"}, {"range": "FloatFormattedString"}],
+                "any_of": [
+                    {
+                        "description": "Voxel spacing equal in all three axes in " "angstroms",
+                        "exact_mappings": ["cdp-common:tomogram_voxel_spacing"],
+                        "minimum_value": 0.001,
+                        "range": "float",
+                        "required": True,
+                        "unit": {"descriptive_name": "Angstroms per voxel", "symbol": "Å/voxel"},
+                    },
+                    {"range": "FloatFormattedString"},
+                ],
                 "domain_of": ["Tomogram", "AnnotationParent", "KeyImageParent", "TomogramParent"],
                 "unit": {"descriptive_name": "Angstroms per voxel", "symbol": "Å/voxel"},
             }
         },
     )
-    fiducial_alignment_status: Optional[Union[FiducialAlignmentStatusEnum, str]] = Field(
-        None,
+    fiducial_alignment_status: Union[FiducialAlignmentStatusEnum, str] = Field(
+        ...,
         description="""Whether the tomographic alignment was computed based on fiducial markers.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "fiducial_alignment_status",
-                "any_of": [{"range": "fiducial_alignment_status_enum"}, {"range": "StringFormattedString"}],
+                "any_of": [
+                    {
+                        "description": "Whether the tomographic alignment was computed " "based on fiducial markers.",
+                        "exact_mappings": ["cdp-common:tomogram_fiducial_alignment_status"],
+                        "range": "fiducial_alignment_status_enum",
+                        "required": True,
+                    },
+                    {"range": "StringFormattedString"},
+                ],
                 "domain_of": ["Tomogram"],
             }
         },
@@ -2138,13 +2251,21 @@ class Tomogram(AuthoredEntity):
             }
         },
     )
-    reconstruction_method: Optional[Union[TomogromReconstructionMethodEnum, str]] = Field(
-        None,
+    reconstruction_method: Union[TomogromReconstructionMethodEnum, str] = Field(
+        ...,
         description="""Describe reconstruction method (WBP, SART, SIRT)""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "reconstruction_method",
-                "any_of": [{"range": "tomogrom_reconstruction_method_enum"}, {"range": "StringFormattedString"}],
+                "any_of": [
+                    {
+                        "description": "Describe reconstruction method (WBP, SART, SIRT)",
+                        "exact_mappings": ["cdp-common:tomogram_reconstruction_method"],
+                        "range": "tomogrom_reconstruction_method_enum",
+                        "required": True,
+                    },
+                    {"range": "StringFormattedString"},
+                ],
                 "domain_of": ["Tomogram"],
             }
         },
