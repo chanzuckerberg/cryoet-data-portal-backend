@@ -690,12 +690,12 @@ classes:
         multivalued: true
         required: true
         range: float
-        any_of:
-          # TODO: uncomment after this is fixed https://github.com/linkml/linkml/pull/2273
-          # - range: float
-          #   # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-          #   # minimum_value: 0.0
-          # - range: FloatFormattedString
+        # TODO: uncomment after this is fixed https://github.com/linkml/linkml/pull/2273
+        # any_of:
+        #   - range: float
+        #     # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+        #     # minimum_value: 0.0
+        #   - range: FloatFormattedString
 
   TomogramHeader:
     description: A tomogram header, a unique source attribute for voxel spacing.
