@@ -2279,13 +2279,17 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: integer
+        range: Any
         required: true
         inlined: true
         inlined_as_list: true
+        pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
         unit:
           symbol: px
           descriptive_name: pixels
+        any_of:
+        - range: integer
+        - range: IntegerFormattedString
       y:
         name: y
         description: y offset data relative to the canonical tomogram in pixels
@@ -2295,13 +2299,17 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: integer
+        range: Any
         required: true
         inlined: true
         inlined_as_list: true
+        pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
         unit:
           symbol: px
           descriptive_name: pixels
+        any_of:
+        - range: integer
+        - range: IntegerFormattedString
       z:
         name: z
         description: z offset data relative to the canonical tomogram in pixels
@@ -2311,13 +2319,17 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: integer
+        range: Any
         required: true
         inlined: true
         inlined_as_list: true
+        pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
         unit:
           symbol: px
           descriptive_name: pixels
+        any_of:
+        - range: integer
+        - range: IntegerFormattedString
   Tomogram:
     name: Tomogram
     description: Metadata describing a tomogram.

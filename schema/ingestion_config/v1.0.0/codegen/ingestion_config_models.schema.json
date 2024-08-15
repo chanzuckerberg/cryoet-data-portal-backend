@@ -3726,16 +3726,46 @@
             "description": "The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.",
             "properties": {
                 "x": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
                     "description": "x offset data relative to the canonical tomogram in pixels",
-                    "type": "integer"
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "y": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
                     "description": "y offset data relative to the canonical tomogram in pixels",
-                    "type": "integer"
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "z": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
                     "description": "z offset data relative to the canonical tomogram in pixels",
-                    "type": "integer"
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
             },
             "required": [

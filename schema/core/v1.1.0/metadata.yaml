@@ -443,33 +443,27 @@ classes:
     description: &desc_tomogram_offset The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.
     attributes:
       x:
-        range: integer
-        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-        # any_of:
-        #   - range: integer
-        #   - range: IntegerFormattedString
+        any_of:
+          - range: integer
+          - range: cdp-common:IntegerFormattedString
         required: true
         description: x offset data relative to the canonical tomogram in pixels
         unit:
           descriptive_name: pixels
           symbol: px
       y:
-        range: integer
-        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-        # any_of:
-        #   - range: integer
-        #   - range: IntegerFormattedString
+        any_of:
+          - range: integer
+          - range: cdp-common:IntegerFormattedString
         required: true
         description: y offset data relative to the canonical tomogram in pixels
         unit:
           descriptive_name: pixels
           symbol: px
       z:
-        range: integer
-        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-        # any_of:
-        #   - range: integer
-        #   - range: IntegerFormattedString
+        any_of:
+          - range: integer
+          - range: cdp-common:IntegerFormattedString
         required: true
         description: z offset data relative to the canonical tomogram in pixels
         unit:

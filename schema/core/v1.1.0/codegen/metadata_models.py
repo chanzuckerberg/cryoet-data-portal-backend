@@ -2148,39 +2148,78 @@ class TomogramOffset(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    x: int = Field(
+    x: Union[int, str] = Field(
         ...,
         description="""x offset data relative to the canonical tomogram in pixels""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "x",
+                "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
                 "domain_of": ["TomogramSize", "TomogramOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
     )
-    y: int = Field(
+    y: Union[int, str] = Field(
         ...,
         description="""y offset data relative to the canonical tomogram in pixels""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "y",
+                "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
                 "domain_of": ["TomogramSize", "TomogramOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
     )
-    z: int = Field(
+    z: Union[int, str] = Field(
         ...,
         description="""z offset data relative to the canonical tomogram in pixels""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "z",
+                "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
                 "domain_of": ["TomogramSize", "TomogramOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
     )
+
+    @field_validator("x")
+    def pattern_x(cls, v):
+        pattern = re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid x format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid x format: {v}")
+        return v
+
+    @field_validator("y")
+    def pattern_y(cls, v):
+        pattern = re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid y format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid y format: {v}")
+        return v
+
+    @field_validator("z")
+    def pattern_z(cls, v):
+        pattern = re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid z format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid z format: {v}")
+        return v
 
 
 class Tomogram(AuthoredEntity):
