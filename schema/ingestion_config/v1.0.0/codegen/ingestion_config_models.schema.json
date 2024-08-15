@@ -831,7 +831,7 @@
                         }
                     ],
                     "description": "Camera acquisition mode",
-                    "pattern": "(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|(^counting$)|(^superresolution$)|(^linear$)|(^cds$)"
+                    "pattern": "(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|((^counting$)|(^superresolution$)|(^linear$)|(^cds$))"
                 },
                 "manufacturer": {
                     "description": "Name of the camera manufacturer",
@@ -2524,16 +2524,15 @@
                     ]
                 },
                 "manufacturer": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/TiltseriesMicroscopeManufacturerEnum"
+                            "$ref": "#/$defs/TiltseriesMicroscopeManufacturerEnum",
+                            "description": "Name of the microscope manufacturer"
                         },
                         {
                             "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "Name of the microscope manufacturer",
@@ -2545,6 +2544,7 @@
                 }
             },
             "required": [
+                "manufacturer",
                 "model"
             ],
             "title": "MicroscopeDetails",
@@ -3047,8 +3047,10 @@
             "description": "The range of tilt angles in the tilt series.",
             "properties": {
                 "max": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
+                            "description": "Maximal tilt angle in degrees",
                             "maximum": 90,
                             "minimum": -90,
                             "type": "number"
@@ -3056,9 +3058,6 @@
                         {
                             "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "Maximal tilt angle in degrees",
@@ -3067,8 +3066,10 @@
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "min": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
+                            "description": "Minimal tilt angle in degrees",
                             "maximum": 90,
                             "minimum": -90,
                             "type": "number"
@@ -3076,9 +3077,6 @@
                         {
                             "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "Minimal tilt angle in degrees",
@@ -3087,6 +3085,10 @@
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
             },
+            "required": [
+                "min",
+                "max"
+            ],
             "title": "TiltRange",
             "type": "object"
         },
@@ -3102,6 +3104,7 @@
                 "aligned_tiltseries_binning": {
                     "anyOf": [
                         {
+                            "description": "Binning factor of the aligned tilt series",
                             "minimum": 0,
                             "type": "number"
                         },
@@ -3120,6 +3123,7 @@
                 "binning_from_frames": {
                     "anyOf": [
                         {
+                            "description": "Describes the binning factor from frames to tilt series file",
                             "minimum": 0,
                             "type": "number"
                         },
@@ -3163,17 +3167,16 @@
                     "description": "The optical setup of the microscope used to collect the tilt series."
                 },
                 "pixel_spacing": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
+                            "description": "Pixel spacing for the tilt series",
                             "minimum": 0.001,
                             "type": "number"
                         },
                         {
                             "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "Pixel spacing for the tilt series",
@@ -3189,17 +3192,16 @@
                     ]
                 },
                 "spherical_aberration_constant": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
+                            "description": "Spherical Aberration Constant of the objective lens in millimeters",
                             "minimum": 0,
                             "type": "number"
                         },
                         {
                             "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "Spherical Aberration Constant of the objective lens in millimeters",
@@ -3214,8 +3216,10 @@
                     ]
                 },
                 "tilt_axis": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
+                            "description": "Rotation angle in degrees",
                             "maximum": 360,
                             "minimum": -360,
                             "type": "number"
@@ -3223,9 +3227,6 @@
                         {
                             "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "Rotation angle in degrees",
@@ -3238,8 +3239,10 @@
                     "description": "The range of tilt angles in the tilt series."
                 },
                 "tilt_series_quality": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
+                            "description": "Author assessment of tilt series quality within the dataset (1-5, 5 is best)",
                             "maximum": 5,
                             "minimum": 1,
                             "type": "integer"
@@ -3247,9 +3250,6 @@
                         {
                             "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "Author assessment of tilt series quality within the dataset (1-5, 5 is best)",
@@ -3258,8 +3258,10 @@
                     "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "tilt_step": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
+                            "description": "Tilt step in degrees",
                             "maximum": 90,
                             "minimum": 0,
                             "type": "number"
@@ -3267,9 +3269,6 @@
                         {
                             "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "Tilt step in degrees",
@@ -3282,17 +3281,16 @@
                     "type": "string"
                 },
                 "total_flux": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
+                            "description": "Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series",
                             "minimum": 0,
                             "type": "number"
                         },
                         {
                             "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series",
@@ -3307,8 +3305,14 @@
                 "is_aligned",
                 "microscope",
                 "microscope_optical_setup",
+                "spherical_aberration_constant",
+                "tilt_axis",
                 "tilt_range",
-                "tilting_scheme"
+                "tilt_series_quality",
+                "tilt_step",
+                "tilting_scheme",
+                "total_flux",
+                "pixel_spacing"
             ],
             "title": "TiltSeries",
             "type": "object"
@@ -3562,16 +3566,15 @@
                     ]
                 },
                 "fiducial_alignment_status": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/FiducialAlignmentStatusEnum"
+                            "$ref": "#/$defs/FiducialAlignmentStatusEnum",
+                            "description": "Whether the tomographic alignment was computed based on fiducial markers."
                         },
                         {
                             "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "Whether the tomographic alignment was computed based on fiducial markers.",
@@ -3594,16 +3597,15 @@
                     ]
                 },
                 "reconstruction_method": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/TomogromReconstructionMethodEnum"
+                            "$ref": "#/$defs/TomogromReconstructionMethodEnum",
+                            "description": "Describe reconstruction method (WBP, SART, SIRT)"
                         },
                         {
                             "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "Describe reconstruction method (WBP, SART, SIRT)",
@@ -3630,17 +3632,16 @@
                     "type": "number"
                 },
                 "voxel_spacing": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
+                            "description": "Voxel spacing equal in all three axes in angstroms",
                             "minimum": 0.001,
                             "type": "number"
                         },
                         {
                             "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "Voxel spacing equal in all three axes in angstroms",
@@ -3649,6 +3650,9 @@
                 }
             },
             "required": [
+                "voxel_spacing",
+                "fiducial_alignment_status",
+                "reconstruction_method",
                 "reconstruction_software",
                 "processing",
                 "tomogram_version",
@@ -3722,16 +3726,46 @@
             "description": "The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.",
             "properties": {
                 "x": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
                     "description": "x offset data relative to the canonical tomogram in pixels",
-                    "type": "integer"
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "y": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
                     "description": "y offset data relative to the canonical tomogram in pixels",
-                    "type": "integer"
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "z": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
                     "description": "z offset data relative to the canonical tomogram in pixels",
-                    "type": "integer"
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
             },
             "required": [
