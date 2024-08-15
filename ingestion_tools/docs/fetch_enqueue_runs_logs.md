@@ -40,8 +40,8 @@ Command-Line Arguments
 
 Fetch logs for specific execution ARNs:
 
-`python db_import.py arn:aws:states:us-west-2:123456789012:execution:StateMachineName:execution1 arn:aws:states:us-west-2:123456789012:execution:StateMachineName:execution2`
+`python fetch_enqueue_runs_logs.py arn:aws:states:us-west-2:123456789012:execution:StateMachineName:execution1 arn:aws:states:us-west-2:123456789012:execution:StateMachineName:execution2`
 
 Fetch logs using an input file containing execution ARNs:
 
-`python db_import.py --input-file execution_arns.txt --output-dir /tmp/fetch-logs`
+`python fetch_enqueue_runs_logs.py --input-file execution_arns.txt --output-dir /tmp/fetch-logs`
