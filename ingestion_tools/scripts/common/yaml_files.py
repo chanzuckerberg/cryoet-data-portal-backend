@@ -7,9 +7,6 @@ EXCLUDE_LIST = ["template.yaml", "dataset_config_merged.yaml"]
 EXCLUDE_KEYWORDS_LIST = ["draft"]
 YAML_EXTENSIONS = (".yaml", ".yml")
 
-# Set up logging
-logger = logging.getLogger(__name__)
-
 
 def get_yaml_config_files(
     input_files: list[str] = None,
@@ -17,10 +14,13 @@ def get_yaml_config_files(
     exclude_keywords_list: list[str] = None,
     dataset_configs_dir: str = None,
     verbose: bool = False,
+    logger_name: str = None,
 ) -> list:
     """
     Returns a list of files to validate based on the include glob and exclude keywords.
     """
+    logger = logging.getLogger(logger_name) if logger_name else logging.getLogger(__name__)
+
     if verbose:
         logger.setLevel(logging.DEBUG)
 

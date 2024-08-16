@@ -68,7 +68,7 @@ datasets:
       publications: doi:10.1038/s41586-022-05255-2, doi:10.1038/s41592-020-01054-7
       related_database_entries: EMPIAR-10731, EMPIAR-10499
     dataset_description: Cryo-electron tomograms of native M. pneumoniae cells. Cells
-      treated with chloramphenicol
+      treated with chloramphenicol.
     dataset_identifier: 10003
     dataset_title: 70S ribosome with chloramphenicol
     dates: *id001
@@ -95,9 +95,10 @@ depositions:
 - metadata:
     authors: *id002
     dates: *id001
-    deposition_description: TBA
+    deposition_description: Cryo-electron tomograms of native M. pneumoniae cells. Cells
+      treated with chloramphenicol. Annotations of 70S ribosome refined using RELION and M.
     deposition_identifier: 10003
-    deposition_title: TBA
+    deposition_title: Warp/M evaluation dataset - Mycoplasma pneumoniae treated with chloramphenicol
     deposition_types:
     - dataset
   sources:
@@ -153,9 +154,8 @@ tiltseries:
     tilting_scheme: Dose symmetric from 0.0 degrees
     total_flux: 120
   sources:
-  - literal:
-      value:
-      - validation placeholder
+  - source_glob:
+      list_glob: validation_placeholder/for_unavailable_ts.st
 tomograms:
 - metadata:
     affine_transformation_matrix:

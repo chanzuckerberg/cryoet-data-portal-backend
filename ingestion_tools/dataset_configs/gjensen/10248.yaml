@@ -41,10 +41,14 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1111/mmi.12201
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 4 sets of data studying Bacillus subtilis collected by
+      Elitza Tocheva and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10019
-    deposition_title: TBA
+    deposition_title: Bacillus subtilis (tax_id=224308) strain:subsp. subtilis str.
+      168 by Elitza Tocheva
     deposition_types:
     - dataset
   sources:

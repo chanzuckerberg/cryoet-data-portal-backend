@@ -1,9 +1,10 @@
 import json
 import os
 import os.path
+from abc import abstractmethod
 from collections import defaultdict
 from functools import partial
-from typing import Any, TYPE_CHECKING, TypedDict
+from typing import Any, TYPE_CHECKING
 
 import ndjson
 
@@ -21,30 +22,6 @@ else:
     VoxelSpacingImporter = "VoxelSpacingImporter"
 
 
-class AnnotationObject(TypedDict):
-    name: str
-    id: str
-    description: str
-    state: str
-
-
-class AnnotationSource(TypedDict):
-    columns: str
-    shape: str
-    file_format: str
-    delimiter: str | None
-    binning: int | None
-    order: str | None
-    filter_value: str | None
-    is_visualization_default: bool | None
-    mask_label: int | None
-
-
-class AnnotationMap(TypedDict):
-    metadata: dict[str, Any]
-    sources: list[AnnotationSource]
-
-
 # This class is basically a global var that lets us cache metadata and identifiers for annotations,
 # so we can generate non-conflicting sequential identifiers for annotations as they're imported.
 class AnnotationIdentifierHelper:
@@ -53,7 +30,13 @@ class AnnotationIdentifierHelper:
     loaded_vs_metadatas: dict[str, bool] = {}
 
     @classmethod
-    def load_current_ids(cls, next_id_key: str, config: DepositionImportConfig, vs: VoxelSpacingImporter):
+    def load_current_ids(
+        cls,
+        next_id_key: str,
+        config: DepositionImportConfig,
+        vs: VoxelSpacingImporter,
+        deposition_id: int,
+    ):
         if next_id_key in cls.loaded_vs_metadatas:
             return
         metadatas = {}
@@ -65,16 +48,16 @@ class AnnotationIdentifierHelper:
                 cls.next_identifier[next_id_key] = identifier + 1
             metadata = json.loads(config.fs.open(file, "r").read())
             metadatas[identifier] = metadata
-            current_ids_key = cls.get_ids_key(next_id_key, config, metadata)
+            current_ids_key = cls.get_ids_key(next_id_key, metadata, deposition_id)
             cls.cached_identifiers[current_ids_key] = identifier
         cls.loaded_vs_metadatas[next_id_key] = True
 
     @classmethod
-    def get_ids_key(cls, next_id_key, config, metadata):
+    def get_ids_key(cls, next_id_key, metadata, deposition_id):
         return "-".join(
             [
                 next_id_key,
-                str(metadata.get("deposition_id", config.deposition_id)),
+                str(metadata.get("deposition_id", deposition_id)),
                 metadata["annotation_object"].get("description") or "",
                 metadata["annotation_object"]["name"],
                 metadata["annotation_method"],
@@ -85,9 +68,10 @@ class AnnotationIdentifierHelper:
     def get_identifier(cls, config: DepositionImportConfig, metadata: dict[str, Any], parents: dict[str, Any]):
         vs = parents["voxel_spacing"]
         next_id_key = vs.get_output_path()
+        deposition_id = int(parents["deposition"].name)
 
-        current_ids_key = cls.get_ids_key(next_id_key, config, metadata)
-        cls.load_current_ids(next_id_key, config, vs)
+        current_ids_key = cls.get_ids_key(next_id_key, metadata, deposition_id)
+        cls.load_current_ids(next_id_key, config, vs, deposition_id)
 
         if cached_id := cls.cached_identifiers.get(current_ids_key):
             return cached_id
@@ -173,7 +157,7 @@ class AnnotationImporter(BaseImporter):
         super().__init__(*args, **kwargs)
         self.identifier: int = identifier
         self.local_metadata = {"object_count": 0, "files": []}
-        self.annotation_metadata = AnnotationMetadata(self.config.fs, self.config.deposition_id, self.metadata)
+        self.annotation_metadata = AnnotationMetadata(self.config.fs, self.get_deposition().name, self.metadata)
 
     # Functions to support writing annotation data
     def import_item(self):
@@ -232,15 +216,24 @@ class BaseAnnotationSource(AnnotationImporter):
 
         super().__init__(*args, **kwargs)
 
+    @abstractmethod
     def convert(self, output_prefix: str):
+        # To be overridden by subclasses to handle the import of the annotation.
         pass
 
     def get_object_count(self, output_prefix: str) -> int:
+        # To be overridden by subclasses where necessary to return the number of objects in the annotation.
         return 0
 
     def is_valid(self, *args, **kwargs) -> bool:
-        # To be overridden by subclasses to communicate whether this source contains valid information for this run.
+        # To be overridden by subclasses when additional check needed to validate if a source contains valid information
+        # for this run.
         return True
+
+    @abstractmethod
+    def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
+        # To be overridden by subclasses to return the metadata for the files property of the metadata.
+        pass
 
     def get_output_filename(self, output_prefix: str, extension: str | None = None) -> str:
         filename = f"{output_prefix}_{self.shape.lower()}"
@@ -327,9 +320,7 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
 
 
 class AbstractPointAnnotation(BaseAnnotationSource):
-    shape = "Point"
     map_functions = {}
-    valid_file_formats = []
 
     def __init__(
         self,
@@ -344,6 +335,7 @@ class AbstractPointAnnotation(BaseAnnotationSource):
         super().__init__(*args, **kwargs)
 
     def get_converter_args(self):
+        # To be overridden by subclasses to return the arguments to pass to the point converter function.
         return {}
 
     def load(
@@ -441,7 +433,7 @@ class OrientedPointAnnotation(AbstractPointAnnotation):
 
     binning: int
     order: str | None
-    filter_value: str
+    filter_value: str | None
 
     def __init__(
         self,

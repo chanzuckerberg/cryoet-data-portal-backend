@@ -68,15 +68,7 @@ datasets:
       value:
       - '10432'
 depositions:
-- metadata:
-    authors: *id001
-    dates: *id002
-    deposition_description: TBA
-    deposition_identifier: 10306
-    deposition_title: TBA
-    deposition_types:
-    - dataset
-  sources:
+- sources:
   - literal:
       value:
       - 10306
@@ -128,9 +120,8 @@ tiltseries:
     tilting_scheme: dose-symmetric
     total_flux: float {tilt_series_total_flux}
   sources:
-  - literal:
-      value:
-      - validation placeholder
+  - source_glob:
+      list_glob: validation_placeholder/for_unavailable_ts.st
 tomograms:
 - metadata:
     affine_transformation_matrix:

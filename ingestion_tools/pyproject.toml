@@ -47,6 +47,7 @@ mypy = "^1.8.0"
 cryoet-data-portal-neuroglancer = { git = "https://github.com/chanzuckerberg/cryoet-data-portal-neuroglancer.git", branch = "main" }
 distinctipy = "^1.3.4"
 imodmodel = "0.0.12"
+mdocfile = "^0.1.2"
 trimesh = "^4.4.4"
 vtk = "^9.3.1"
 numpy = "^1.22.0"
@@ -99,3 +100,7 @@ show_error_codes = true
 ignore_missing_imports = true
 warn_unreachable = true
 strict = true
+
+[tool.pytest.ini_options]
+# Ignore tests in a data_validation folder (asterisk before to glob if in scripts/ or ingestion_tools/ folder)
+addopts = "--ignore-glob=*data_validation/"

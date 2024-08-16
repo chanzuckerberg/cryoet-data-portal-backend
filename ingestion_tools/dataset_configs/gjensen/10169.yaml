@@ -43,9 +43,10 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 3 sets of data studying Jurkat Human T-cell collected
+      by Cora Woodward and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10033
-    deposition_title: TBA
+    deposition_title: Jurkat Human T-cell (CL:0000084) strain:Clone E6-1 by Cora Woodward
     deposition_types:
     - dataset
   sources:

@@ -34,9 +34,9 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: Manual annotations of flagellar basal body, created and pre-oriented using IMOD.
     deposition_identifier: 10302
-    deposition_title: TBA
+    deposition_title: Manual annotations of flagellar basal body
     deposition_types:
     - annotation
   sources:

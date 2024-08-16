@@ -48,10 +48,15 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1038/s41564-019-0427-4,10.1038/s41564-019-0603-6
+      related_database_entries: EMD-0566
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 41 sets of data studying Legionella pneumophila collected
+      by Debnath Ghosal and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10038
-    deposition_title: TBA
+    deposition_title: Legionella pneumophila (tax_id=1080311) strain:Philadelphia-1_Lp02
+      by Debnath Ghosal
     deposition_types:
     - dataset
   sources:

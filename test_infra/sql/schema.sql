@@ -22,17 +22,23 @@ ALTER TABLE IF EXISTS ONLY public.tomogram_voxel_spacings DROP CONSTRAINT IF EXI
 ALTER TABLE IF EXISTS ONLY public.tomogram_authors DROP CONSTRAINT IF EXISTS tomogram_authors_tomogram_id_fkey;
 ALTER TABLE IF EXISTS ONLY public.tiltseries DROP CONSTRAINT IF EXISTS tiltseries_run_id_fkey;
 ALTER TABLE IF EXISTS ONLY public.runs DROP CONSTRAINT IF EXISTS runs_dataset_id_fkey;
+ALTER TABLE IF EXISTS ONLY public.deposition_authors DROP CONSTRAINT IF EXISTS deposition_authors_deposition_id_fkey;
 ALTER TABLE IF EXISTS ONLY public.dataset_funding DROP CONSTRAINT IF EXISTS dataset_funding_dataset_id_fkey;
 ALTER TABLE IF EXISTS ONLY public.dataset_authors DROP CONSTRAINT IF EXISTS dataset_authors_dataset_id_fkey;
 ALTER TABLE IF EXISTS ONLY public.annotations DROP CONSTRAINT IF EXISTS annotations_tomogram_voxel_spacing_id_fkey;
 ALTER TABLE IF EXISTS ONLY public.annotation_files DROP CONSTRAINT IF EXISTS annotation_files_annotation_id_fkey;
 ALTER TABLE IF EXISTS ONLY public.annotation_authors DROP CONSTRAINT IF EXISTS annotation_authors_annotation_id_fkey;
 DROP INDEX IF EXISTS public.tomograms_tomogram_voxel_spacing_id;
+DROP INDEX IF EXISTS public.tomograms_deposition_id;
 DROP INDEX IF EXISTS public.tomogram_voxel_spacing_run;
 DROP INDEX IF EXISTS public.tiltseries_run;
+DROP INDEX IF EXISTS public.tiltseries_deposition_id;
+DROP INDEX IF EXISTS public.depositions_type;
 DROP INDEX IF EXISTS public.dataset_funding_dataset;
+DROP INDEX IF EXISTS public.dataset_deposition_id;
 DROP INDEX IF EXISTS public.dataset_authors_dataset;
 DROP INDEX IF EXISTS public.annotations_tomogram_voxel_spacing;
+DROP INDEX IF EXISTS public.annotations_deposition_id;
 DROP INDEX IF EXISTS public.annotation_files_annotation_id;
 ALTER TABLE IF EXISTS ONLY public.tomograms DROP CONSTRAINT IF EXISTS tomograms_pkey;
 ALTER TABLE IF EXISTS ONLY public.tomogram_voxel_spacings DROP CONSTRAINT IF EXISTS tomogram_voxel_spacing_pkey;
@@ -42,6 +48,8 @@ ALTER TABLE IF EXISTS ONLY public.tomogram_authors DROP CONSTRAINT IF EXISTS tom
 ALTER TABLE IF EXISTS ONLY public.tiltseries DROP CONSTRAINT IF EXISTS tiltseries_pkey;
 ALTER TABLE IF EXISTS ONLY public.runs DROP CONSTRAINT IF EXISTS runs_pkey;
 ALTER TABLE IF EXISTS ONLY public.runs DROP CONSTRAINT IF EXISTS runs_dataset_id_name_key;
+ALTER TABLE IF EXISTS ONLY public.depositions DROP CONSTRAINT IF EXISTS depositions_pkey;
+ALTER TABLE IF EXISTS ONLY public.deposition_authors DROP CONSTRAINT IF EXISTS deposition_authors_pkey;
 ALTER TABLE IF EXISTS ONLY public.datasets DROP CONSTRAINT IF EXISTS datasets_pkey;
 ALTER TABLE IF EXISTS ONLY public.dataset_funding DROP CONSTRAINT IF EXISTS dataset_funding_pkey;
 ALTER TABLE IF EXISTS ONLY public.dataset_authors DROP CONSTRAINT IF EXISTS dataset_authors_pkey;
@@ -55,6 +63,8 @@ ALTER TABLE IF EXISTS public.tomogram_voxel_spacings ALTER COLUMN id DROP DEFAUL
 ALTER TABLE IF EXISTS public.tomogram_authors ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE IF EXISTS public.tiltseries ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE IF EXISTS public.runs ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE IF EXISTS public.depositions ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE IF EXISTS public.deposition_authors ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE IF EXISTS public.dataset_funding ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE IF EXISTS public.dataset_authors ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE IF EXISTS public.annotations ALTER COLUMN id DROP DEFAULT;
@@ -71,6 +81,10 @@ DROP SEQUENCE IF EXISTS public.tiltseries_id_seq;
 DROP TABLE IF EXISTS public.tiltseries;
 DROP SEQUENCE IF EXISTS public.runs_id_seq;
 DROP TABLE IF EXISTS public.runs;
+DROP SEQUENCE IF EXISTS public.depositions_id_seq;
+DROP TABLE IF EXISTS public.depositions;
+DROP SEQUENCE IF EXISTS public.deposition_authors_id_seq;
+DROP TABLE IF EXISTS public.deposition_authors;
 DROP TABLE IF EXISTS public.datasets;
 DROP SEQUENCE IF EXISTS public.dataset_funding_id_seq;
 DROP TABLE IF EXISTS public.dataset_funding;
@@ -88,13 +102,6 @@ DROP SCHEMA IF EXISTS public;
 --
 
 CREATE SCHEMA public;
-
-
---
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON SCHEMA public IS 'standard public schema';
 
 
 SET default_tablespace = '';
@@ -119,90 +126,6 @@ CREATE TABLE public.annotation_authors (
     author_list_order integer,
     primary_author_status boolean
 );
-
-
---
--- Name: TABLE annotation_authors; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.annotation_authors IS 'Authors for an annotation';
-
-
---
--- Name: COLUMN annotation_authors.id; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_authors.id IS 'Numeric identifier for this annotation author (this may change!)';
-
-
---
--- Name: COLUMN annotation_authors.annotation_id; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_authors.annotation_id IS 'Reference to the annotation this author contributed to';
-
-
---
--- Name: COLUMN annotation_authors.name; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_authors.name IS 'Full name of an annotation author (e.g. Jane Doe).';
-
-
---
--- Name: COLUMN annotation_authors.orcid; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_authors.orcid IS 'A unique, persistent identifier for researchers, provided by ORCID.';
-
-
---
--- Name: COLUMN annotation_authors.corresponding_author_status; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_authors.corresponding_author_status IS 'Indicating whether an annotator is the corresponding author (YES or NO)';
-
-
---
--- Name: COLUMN annotation_authors.primary_annotator_status; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_authors.primary_annotator_status IS 'Indicating whether an annotator is the main person executing the annotation, especially on manual annotation (YES or NO)';
-
-
---
--- Name: COLUMN annotation_authors.email; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_authors.email IS 'Email address for this author';
-
-
---
--- Name: COLUMN annotation_authors.affiliation_name; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_authors.affiliation_name IS 'Name of the institution an annotator is affiliated with. Sometimes, one annotator may have multiple affiliations.';
-
-
---
--- Name: COLUMN annotation_authors.affiliation_address; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_authors.affiliation_address IS 'Address of the institution an annotator is affiliated with.';
-
-
---
--- Name: COLUMN annotation_authors.affiliation_identifier; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_authors.affiliation_identifier IS 'A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).';
-
-
---
--- Name: COLUMN annotation_authors.author_list_order; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_authors.author_list_order IS 'The order in which the author appears in the publication';
 
 
 --
@@ -238,48 +161,6 @@ CREATE TABLE public.annotation_files (
     s3_path character varying NOT NULL,
     is_visualization_default boolean DEFAULT false
 );
-
-
---
--- Name: TABLE annotation_files; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.annotation_files IS 'Information about associated files for a given annotation';
-
-
---
--- Name: COLUMN annotation_files.shape_type; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_files.shape_type IS 'The type of the annotation';
-
-
---
--- Name: COLUMN annotation_files.format; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_files.format IS 'Format of the annotation object file';
-
-
---
--- Name: COLUMN annotation_files.https_path; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_files.https_path IS 'https path of the annotation file';
-
-
---
--- Name: COLUMN annotation_files.s3_path; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_files.s3_path IS 's3 path of the annotation file';
-
-
---
--- Name: COLUMN annotation_files.is_visualization_default; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotation_files.is_visualization_default IS 'Data curator’s subjective choice of default annotation to display in visualization for an object';
 
 
 --
@@ -327,142 +208,10 @@ CREATE TABLE public.annotations (
     tomogram_voxel_spacing_id integer,
     annotation_software character varying,
     is_curator_recommended boolean DEFAULT false,
+    method_type character varying,
     deposition_id integer,
-    method_type character varying
+    method_links json
 );
-
-
---
--- Name: TABLE annotations; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.annotations IS 'Inoformation about annotations for a given run';
-
-
---
--- Name: COLUMN annotations.id; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.id IS 'Numeric identifier (May change!)';
-
-
---
--- Name: COLUMN annotations.s3_metadata_path; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.s3_metadata_path IS 's3 path for the metadata json file for this annotation';
-
-
---
--- Name: COLUMN annotations.https_metadata_path; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.https_metadata_path IS 'https path for the metadata json file for this annotation';
-
-
---
--- Name: COLUMN annotations.deposition_date; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.deposition_date IS 'Date when an annotation set is initially received by the Data Portal.';
-
-
---
--- Name: COLUMN annotations.release_date; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.release_date IS 'Date when annotation data is made public by the Data Portal.';
-
-
---
--- Name: COLUMN annotations.last_modified_date; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.last_modified_date IS 'Date when an annotation was last modified in the Data Portal';
-
-
---
--- Name: COLUMN annotations.annotation_publication; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.annotation_publication IS 'DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.';
-
-
---
--- Name: COLUMN annotations.annotation_method; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.annotation_method IS 'Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)';
-
-
---
--- Name: COLUMN annotations.ground_truth_status; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.ground_truth_status IS 'Whether an annotation is considered ground truth, as determined by the annotator.';
-
-
---
--- Name: COLUMN annotations.object_name; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.object_name IS 'Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)';
-
-
---
--- Name: COLUMN annotations.object_id; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.object_id IS 'Gene Ontology Cellular Component identifier for the annotation object';
-
-
---
--- Name: COLUMN annotations.object_description; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.object_description IS 'A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.';
-
-
---
--- Name: COLUMN annotations.object_state; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.object_state IS 'Molecule state annotated (e.g. open, closed)';
-
-
---
--- Name: COLUMN annotations.object_count; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.object_count IS 'Number of objects identified';
-
-
---
--- Name: COLUMN annotations.confidence_precision; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.confidence_precision IS 'Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive';
-
-
---
--- Name: COLUMN annotations.confidence_recall; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.confidence_recall IS 'Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly';
-
-
---
--- Name: COLUMN annotations.ground_truth_used; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.ground_truth_used IS 'Annotation filename used as ground truth for precision and recall';
-
-
---
--- Name: COLUMN annotations.is_curator_recommended; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.annotations.is_curator_recommended IS 'Data curator’s subjective choice as the best annotation of the same annotation object ID';
 
 
 --
@@ -505,69 +254,6 @@ CREATE TABLE public.dataset_authors (
 
 
 --
--- Name: TABLE dataset_authors; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.dataset_authors IS 'Authors of a dataset';
-
-
---
--- Name: COLUMN dataset_authors.name; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.dataset_authors.name IS 'Full name of a dataset author (e.g. Jane Doe).';
-
-
---
--- Name: COLUMN dataset_authors.orcid; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.dataset_authors.orcid IS 'A unique, persistent identifier for researchers, provided by ORCID.';
-
-
---
--- Name: COLUMN dataset_authors.corresponding_author_status; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.dataset_authors.corresponding_author_status IS 'Indicating whether an author is the corresponding author';
-
-
---
--- Name: COLUMN dataset_authors.email; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.dataset_authors.email IS 'Email address for each author';
-
-
---
--- Name: COLUMN dataset_authors.affiliation_name; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.dataset_authors.affiliation_name IS 'Name of the institutions an author is affiliated with. Comma separated';
-
-
---
--- Name: COLUMN dataset_authors.affiliation_address; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.dataset_authors.affiliation_address IS 'Address of the institution an author is affiliated with.';
-
-
---
--- Name: COLUMN dataset_authors.affiliation_identifier; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.dataset_authors.affiliation_identifier IS 'A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).';
-
-
---
--- Name: COLUMN dataset_authors.author_list_order; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.dataset_authors.author_list_order IS 'The order in which the author appears in the publication';
-
-
---
 -- Name: dataset_authors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -597,27 +283,6 @@ CREATE TABLE public.dataset_funding (
     funding_agency_name character varying NOT NULL,
     grant_id character varying
 );
-
-
---
--- Name: TABLE dataset_funding; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.dataset_funding IS 'Funding sources for a dataset';
-
-
---
--- Name: COLUMN dataset_funding.funding_agency_name; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.dataset_funding.funding_agency_name IS 'Name of the funding agency.';
-
-
---
--- Name: COLUMN dataset_funding.grant_id; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.dataset_funding.grant_id IS 'Grant identifier provided by the funding agency.';
 
 
 --
@@ -672,211 +337,89 @@ CREATE TABLE public.datasets (
     key_photo_url character varying,
     key_photo_thumbnail_url character varying,
     cell_component_name character varying,
-    cell_component_id character varying
+    cell_component_id character varying,
+    deposition_id integer
 );
 
 
 --
--- Name: TABLE datasets; Type: COMMENT; Schema: public; Owner: -
+-- Name: deposition_authors; Type: TABLE; Schema: public; Owner: -
 --
 
-COMMENT ON TABLE public.datasets IS 'Dataset Metadata';
-
-
---
--- Name: COLUMN datasets.id; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.id IS 'An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree';
-
-
---
--- Name: COLUMN datasets.title; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.title IS 'Title of a CryoET dataset';
+CREATE TABLE public.deposition_authors (
+    id integer NOT NULL,
+    name character varying NOT NULL,
+    orcid character varying,
+    corresponding_author_status boolean DEFAULT false,
+    email character varying,
+    affiliation_name character varying,
+    affiliation_address character varying,
+    affiliation_identifier character varying,
+    deposition_id integer NOT NULL,
+    primary_author_status boolean DEFAULT false,
+    author_list_order integer NOT NULL
+);
 
 
 --
--- Name: COLUMN datasets.description; Type: COMMENT; Schema: public; Owner: -
+-- Name: deposition_authors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.datasets.description IS 'A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.';
-
-
---
--- Name: COLUMN datasets.deposition_date; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.deposition_date IS 'Date when a dataset is initially received by the Data Portal.';
-
-
---
--- Name: COLUMN datasets.release_date; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.release_date IS 'Date when a dataset is made available on the Data Portal.';
+CREATE SEQUENCE public.deposition_authors_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
 
 --
--- Name: COLUMN datasets.last_modified_date; Type: COMMENT; Schema: public; Owner: -
+-- Name: deposition_authors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.datasets.last_modified_date IS 'Date when a released dataset is last modified.';
-
-
---
--- Name: COLUMN datasets.related_database_entries; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.related_database_entries IS 'If a CryoET dataset is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.';
+ALTER SEQUENCE public.deposition_authors_id_seq OWNED BY public.deposition_authors.id;
 
 
 --
--- Name: COLUMN datasets.related_database_links; Type: COMMENT; Schema: public; Owner: -
+-- Name: depositions; Type: TABLE; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.datasets.related_database_links IS 'If a CryoET dataset is also deposited into another database, e.g. EMPAIR, enter the database identifier here (e.g.https://www.ebi.ac.uk/empiar/EMPIAR-12345/).  Use a comma to separate multiple links.';
-
-
---
--- Name: COLUMN datasets.dataset_publications; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.dataset_publications IS 'DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.';
-
-
---
--- Name: COLUMN datasets.dataset_citations; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.dataset_citations IS 'DOIs for publications that cite the dataset. Use a comma to separate multiple DOIs.';
-
-
---
--- Name: COLUMN datasets.sample_type; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.sample_type IS 'Type of samples used in a CryoET study. (cell, tissue, organism, intact organelle, in-vitro mixture, in-silico synthetic data, other)';
+CREATE TABLE public.depositions (
+    id integer NOT NULL,
+    title character varying NOT NULL,
+    description character varying NOT NULL,
+    deposition_date date NOT NULL,
+    release_date date NOT NULL,
+    last_modified_date date NOT NULL,
+    related_database_entries character varying,
+    deposition_publications character varying,
+    deposition_types character varying NOT NULL,
+    s3_prefix character varying,
+    https_prefix character varying,
+    key_photo_url character varying,
+    key_photo_thumbnail_url character varying
+);
 
 
 --
--- Name: COLUMN datasets.organism_name; Type: COMMENT; Schema: public; Owner: -
+-- Name: depositions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.datasets.organism_name IS 'Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens';
-
-
---
--- Name: COLUMN datasets.organism_taxid; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.organism_taxid IS 'NCBI taxonomy identifier for the organism, e.g. 9606';
-
-
---
--- Name: COLUMN datasets.tissue_name; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.tissue_name IS 'Name of the tissue from which a biological sample used in a CryoET study is derived from.';
+CREATE SEQUENCE public.depositions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
 
 --
--- Name: COLUMN datasets.tissue_id; Type: COMMENT; Schema: public; Owner: -
+-- Name: depositions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.datasets.tissue_id IS 'UBERON identifier for the tissue';
-
-
---
--- Name: COLUMN datasets.cell_name; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.cell_name IS 'Name of the cell from which a biological sample used in a CryoET study is derived from.';
-
-
---
--- Name: COLUMN datasets.cell_type_id; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.cell_type_id IS 'Cell Ontology identifier for the cell type';
-
-
---
--- Name: COLUMN datasets.cell_strain_name; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.cell_strain_name IS 'Cell line or strain for the sample.';
-
-
---
--- Name: COLUMN datasets.cell_strain_id; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.cell_strain_id IS 'NCBI Identifier for the cell line or strain';
-
-
---
--- Name: COLUMN datasets.sample_preparation; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.sample_preparation IS 'Describe how the sample was prepared.';
-
-
---
--- Name: COLUMN datasets.grid_preparation; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.grid_preparation IS 'Describe Cryo-ET grid preparation.';
-
-
---
--- Name: COLUMN datasets.other_setup; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.other_setup IS 'Describe other setup not covered by sample preparation or grid preparation that may make this dataset unique in  the same publication';
-
-
---
--- Name: COLUMN datasets.s3_prefix; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.s3_prefix IS 'The S3 public bucket path where this dataset is contained';
-
-
---
--- Name: COLUMN datasets.https_prefix; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.https_prefix IS 'The https directory path where this dataset is contained';
-
-
---
--- Name: COLUMN datasets.key_photo_url; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.key_photo_url IS 'URL for the dataset preview image.';
-
-
---
--- Name: COLUMN datasets.key_photo_thumbnail_url; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.key_photo_thumbnail_url IS 'URL for the thumbnail of preview image.';
-
-
---
--- Name: COLUMN datasets.cell_component_name; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.cell_component_name IS 'Name of the cellular component';
-
-
---
--- Name: COLUMN datasets.cell_component_id; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.datasets.cell_component_id IS 'If this dataset only focuses on a specific part of a cell, include the subset here';
+ALTER SEQUENCE public.depositions_id_seq OWNED BY public.depositions.id;
 
 
 --
@@ -890,48 +433,6 @@ CREATE TABLE public.runs (
     s3_prefix character varying NOT NULL,
     https_prefix character varying NOT NULL
 );
-
-
---
--- Name: TABLE runs; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.runs IS 'Data related to an experiment run';
-
-
---
--- Name: COLUMN runs.id; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.runs.id IS 'Numeric identifier (May change!)';
-
-
---
--- Name: COLUMN runs.dataset_id; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.runs.dataset_id IS 'Reference to the dataset this run is a part of';
-
-
---
--- Name: COLUMN runs.name; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.runs.name IS 'Short name for the tilt series';
-
-
---
--- Name: COLUMN runs.s3_prefix; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.runs.s3_prefix IS 'The S3 public bucket path where this dataset is contained';
-
-
---
--- Name: COLUMN runs.https_prefix; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.runs.https_prefix IS 'The https directory path where this dataset is contained';
 
 
 --
@@ -995,183 +496,9 @@ CREATE TABLE public.tiltseries (
     is_aligned boolean DEFAULT false NOT NULL,
     pixel_spacing numeric,
     aligned_tiltseries_binning integer,
-    frames_count integer DEFAULT 0
+    frames_count integer DEFAULT 0,
+    deposition_id integer
 );
-
-
---
--- Name: TABLE tiltseries; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.tiltseries IS 'Tilt Series Metadata';
-
-
---
--- Name: COLUMN tiltseries.acceleration_voltage; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.acceleration_voltage IS 'Electron Microscope Accelerator voltage in volts';
-
-
---
--- Name: COLUMN tiltseries.spherical_aberration_constant; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.spherical_aberration_constant IS 'Spherical Aberration Constant of the objective lens in millimeters';
-
-
---
--- Name: COLUMN tiltseries.microscope_manufacturer; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.microscope_manufacturer IS 'Name of the microscope manufacturer';
-
-
---
--- Name: COLUMN tiltseries.microscope_model; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.microscope_model IS 'Microscope model name';
-
-
---
--- Name: COLUMN tiltseries.microscope_energy_filter; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.microscope_energy_filter IS 'Energy filter setup used';
-
-
---
--- Name: COLUMN tiltseries.microscope_phase_plate; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.microscope_phase_plate IS 'Phase plate configuration';
-
-
---
--- Name: COLUMN tiltseries.microscope_image_corrector; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.microscope_image_corrector IS 'Image corrector setup';
-
-
---
--- Name: COLUMN tiltseries.microscope_additional_info; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.microscope_additional_info IS 'Other microscope optical setup information, in addition to energy filter, phase plate and image corrector';
-
-
---
--- Name: COLUMN tiltseries.camera_manufacturer; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.camera_manufacturer IS 'Name of the camera manufacturer';
-
-
---
--- Name: COLUMN tiltseries.camera_model; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.camera_model IS 'Camera model name';
-
-
---
--- Name: COLUMN tiltseries.tilt_min; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.tilt_min IS 'Minimal tilt angle in degrees';
-
-
---
--- Name: COLUMN tiltseries.tilt_max; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.tilt_max IS 'Maximal tilt angle in degrees';
-
-
---
--- Name: COLUMN tiltseries.tilt_range; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.tilt_range IS 'The difference between tilt_min and tilt_max';
-
-
---
--- Name: COLUMN tiltseries.tilting_scheme; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.tilting_scheme IS 'The order of stage tilting during acquisition of the data';
-
-
---
--- Name: COLUMN tiltseries.tilt_axis; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.tilt_axis IS 'Rotation angle in degrees';
-
-
---
--- Name: COLUMN tiltseries.total_flux; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.total_flux IS 'Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series';
-
-
---
--- Name: COLUMN tiltseries.data_acquisition_software; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.data_acquisition_software IS 'Software used to collect data';
-
-
---
--- Name: COLUMN tiltseries.related_empiar_entry; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.related_empiar_entry IS 'If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier';
-
-
---
--- Name: COLUMN tiltseries.binning_from_frames; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.binning_from_frames IS 'Describes the binning factor from frames to tilt series file';
-
-
---
--- Name: COLUMN tiltseries.tilt_series_quality; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.tilt_series_quality IS 'Author assessment of tilt series quality within the dataset (1-5, 5 is best)';
-
-
---
--- Name: COLUMN tiltseries.is_aligned; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.is_aligned IS 'Tilt series is aligned';
-
-
---
--- Name: COLUMN tiltseries.pixel_spacing; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.pixel_spacing IS 'Pixel spacing equal in both axes in angstrom';
-
-
---
--- Name: COLUMN tiltseries.aligned_tiltseries_binning; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.aligned_tiltseries_binning IS 'The binning factor between the unaligned tilt series and the aligned tiltseries.';
-
-
---
--- Name: COLUMN tiltseries.frames_count; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tiltseries.frames_count IS 'Number of frames associated to the tilt series';
 
 
 --
@@ -1214,90 +541,6 @@ CREATE TABLE public.tomogram_authors (
 
 
 --
--- Name: TABLE tomogram_authors; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.tomogram_authors IS 'Authors for a tomogram';
-
-
---
--- Name: COLUMN tomogram_authors.id; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomogram_authors.id IS 'Numeric identifier for this tomogram author (this may change!)';
-
-
---
--- Name: COLUMN tomogram_authors.tomogram_id; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomogram_authors.tomogram_id IS 'Reference to the tomogram this author contributed to';
-
-
---
--- Name: COLUMN tomogram_authors.author_list_order; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomogram_authors.author_list_order IS 'The order in which the author appears in the publication';
-
-
---
--- Name: COLUMN tomogram_authors.name; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomogram_authors.name IS 'Full name of an tomogram author (e.g. Jane Doe).';
-
-
---
--- Name: COLUMN tomogram_authors.orcid; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomogram_authors.orcid IS 'A unique, persistent identifier for researchers, provided by ORCID.';
-
-
---
--- Name: COLUMN tomogram_authors.corresponding_author_status; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomogram_authors.corresponding_author_status IS 'Indicating whether an author is the corresponding author (YES or NO)';
-
-
---
--- Name: COLUMN tomogram_authors.primary_author_status; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomogram_authors.primary_author_status IS 'Indicating whether an author is the main person creating the tomogram (YES or NO)';
-
-
---
--- Name: COLUMN tomogram_authors.email; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomogram_authors.email IS 'Email address for this author';
-
-
---
--- Name: COLUMN tomogram_authors.affiliation_name; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomogram_authors.affiliation_name IS 'Name of the institution an annotator is affiliated with. Sometimes, one annotator may have multiple affiliations.';
-
-
---
--- Name: COLUMN tomogram_authors.affiliation_address; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomogram_authors.affiliation_address IS 'Address of the institution an annotator is affiliated with.';
-
-
---
--- Name: COLUMN tomogram_authors.affiliation_identifier; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomogram_authors.affiliation_identifier IS 'A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).';
-
-
---
 -- Name: tomogram_authors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -1328,13 +571,6 @@ CREATE TABLE public.tomogram_type (
 
 
 --
--- Name: TABLE tomogram_type; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.tomogram_type IS 'The type of tomograms';
-
-
---
 -- Name: tomogram_voxel_spacings; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1345,13 +581,6 @@ CREATE TABLE public.tomogram_voxel_spacings (
     s3_prefix character varying,
     https_prefix character varying
 );
-
-
---
--- Name: TABLE tomogram_voxel_spacings; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.tomogram_voxel_spacings IS 'The tomograms for each run are grouped by their voxel spacing';
 
 
 --
@@ -1414,202 +643,6 @@ CREATE TABLE public.tomograms (
 
 
 --
--- Name: TABLE tomograms; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.tomograms IS 'information about the tomograms in the CryoET Data Portal';
-
-
---
--- Name: COLUMN tomograms.id; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.id IS 'Numeric identifier for this tomogram (this may change!)';
-
-
---
--- Name: COLUMN tomograms.name; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.name IS 'Short name for this tomogram';
-
-
---
--- Name: COLUMN tomograms.size_x; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.size_x IS 'Number of pixels in the 3D data fast axis';
-
-
---
--- Name: COLUMN tomograms.size_y; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.size_y IS 'Number of pixels in the 3D data medium axis';
-
-
---
--- Name: COLUMN tomograms.size_z; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.size_z IS 'Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt';
-
-
---
--- Name: COLUMN tomograms.voxel_spacing; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.voxel_spacing IS 'Voxel spacing equal in all three axes in angstroms';
-
-
---
--- Name: COLUMN tomograms.fiducial_alignment_status; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.fiducial_alignment_status IS 'Fiducial Alignment status: True = aligned with fiducial False = aligned without fiducial';
-
-
---
--- Name: COLUMN tomograms.reconstruction_method; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.reconstruction_method IS 'Describe reconstruction method (Weighted backprojection, SART, SIRT)';
-
-
---
--- Name: COLUMN tomograms.reconstruction_software; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.reconstruction_software IS 'Name of software used for reconstruction';
-
-
---
--- Name: COLUMN tomograms.processing; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.processing IS 'Describe additional processing used to derive the tomogram';
-
-
---
--- Name: COLUMN tomograms.processing_software; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.processing_software IS 'Processing software used to derive the tomogram';
-
-
---
--- Name: COLUMN tomograms.tomogram_version; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.tomogram_version IS 'Version of tomogram using the same software and post-processing. Version of tomogram using the same software and post-processing. This will be presented as the latest version';
-
-
---
--- Name: COLUMN tomograms.is_canonical; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.is_canonical IS 'Is this tomogram considered the canonical tomogram for the run experiment? True=Yes';
-
-
---
--- Name: COLUMN tomograms.s3_omezarr_dir; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.s3_omezarr_dir IS 'S3 path to the this multiscale omezarr tomogram';
-
-
---
--- Name: COLUMN tomograms.https_omezarr_dir; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.https_omezarr_dir IS 'HTTPS path to the this multiscale omezarr tomogram';
-
-
---
--- Name: COLUMN tomograms.s3_mrc_scale0; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.s3_mrc_scale0 IS 'S3 path to this tomogram in MRC format (no scaling)';
-
-
---
--- Name: COLUMN tomograms.https_mrc_scale0; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.https_mrc_scale0 IS 'https path to this tomogram in MRC format (no scaling)';
-
-
---
--- Name: COLUMN tomograms.scale0_dimensions; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.scale0_dimensions IS 'comma separated x,y,z dimensions of the unscaled tomogram';
-
-
---
--- Name: COLUMN tomograms.scale1_dimensions; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.scale1_dimensions IS 'comma separated x,y,z dimensions of the scale1 tomogram';
-
-
---
--- Name: COLUMN tomograms.scale2_dimensions; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.scale2_dimensions IS 'comma separated x,y,z dimensions of the scale2 tomogram';
-
-
---
--- Name: COLUMN tomograms.offset_x; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.offset_x IS 'x offset data relative to the canonical tomogram in pixels';
-
-
---
--- Name: COLUMN tomograms.offset_y; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.offset_y IS 'y offset data relative to the canonical tomogram in pixels';
-
-
---
--- Name: COLUMN tomograms.offset_z; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.offset_z IS 'z offset data relative to the canonical tomogram in pixels';
-
-
---
--- Name: COLUMN tomograms.affine_transformation_matrix; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.affine_transformation_matrix IS 'The flip or rotation transformation of this author submitted tomogram is indicated here';
-
-
---
--- Name: COLUMN tomograms.key_photo_url; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.key_photo_url IS 'URL for the key photo';
-
-
---
--- Name: COLUMN tomograms.key_photo_thumbnail_url; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.key_photo_thumbnail_url IS 'URL for the thumbnail of key photo';
-
-
---
--- Name: COLUMN tomograms.neuroglancer_config; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tomograms.neuroglancer_config IS 'the compact json of neuroglancer config';
-
-
---
 -- Name: tomograms_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -1662,6 +695,20 @@ ALTER TABLE ONLY public.dataset_authors ALTER COLUMN id SET DEFAULT nextval('pub
 --
 
 ALTER TABLE ONLY public.dataset_funding ALTER COLUMN id SET DEFAULT nextval('public.dataset_funding_id_seq'::regclass);
+
+
+--
+-- Name: deposition_authors id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.deposition_authors ALTER COLUMN id SET DEFAULT nextval('public.deposition_authors_id_seq'::regclass);
+
+
+--
+-- Name: depositions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.depositions ALTER COLUMN id SET DEFAULT nextval('public.depositions_id_seq'::regclass);
 
 
 --
@@ -1764,6 +811,22 @@ ALTER TABLE ONLY public.datasets
 
 
 --
+-- Name: deposition_authors deposition_authors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.deposition_authors
+    ADD CONSTRAINT deposition_authors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: depositions depositions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.depositions
+    ADD CONSTRAINT depositions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: runs runs_dataset_id_name_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1835,6 +898,13 @@ CREATE INDEX annotation_files_annotation_id ON public.annotation_files USING btr
 
 
 --
+-- Name: annotations_deposition_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX annotations_deposition_id ON public.annotations USING btree (deposition_id);
+
+
+--
 -- Name: annotations_tomogram_voxel_spacing; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1849,10 +919,31 @@ CREATE INDEX dataset_authors_dataset ON public.dataset_authors USING btree (data
 
 
 --
+-- Name: dataset_deposition_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX dataset_deposition_id ON public.datasets USING btree (deposition_id);
+
+
+--
 -- Name: dataset_funding_dataset; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX dataset_funding_dataset ON public.dataset_funding USING btree (dataset_id);
+
+
+--
+-- Name: depositions_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX depositions_type ON public.depositions USING btree (deposition_types);
+
+
+--
+-- Name: tiltseries_deposition_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX tiltseries_deposition_id ON public.tiltseries USING btree (deposition_id);
 
 
 --
@@ -1867,6 +958,13 @@ CREATE INDEX tiltseries_run ON public.tiltseries USING btree (run_id);
 --
 
 CREATE INDEX tomogram_voxel_spacing_run ON public.tomogram_voxel_spacings USING btree (run_id);
+
+
+--
+-- Name: tomograms_deposition_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX tomograms_deposition_id ON public.tomograms USING btree (deposition_id);
 
 
 --
@@ -1914,6 +1012,14 @@ ALTER TABLE ONLY public.dataset_authors
 
 ALTER TABLE ONLY public.dataset_funding
     ADD CONSTRAINT dataset_funding_dataset_id_fkey FOREIGN KEY (dataset_id) REFERENCES public.datasets(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: deposition_authors deposition_authors_deposition_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.deposition_authors
+    ADD CONSTRAINT deposition_authors_deposition_id_fkey FOREIGN KEY (deposition_id) REFERENCES public.depositions(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --

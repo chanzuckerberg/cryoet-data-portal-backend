@@ -105,6 +105,7 @@ annotations:
     annotation_object:
       id: GO:0097537
       name: Y-shaped link
+      description: MTD stellate
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
@@ -236,7 +237,7 @@ datasets:
     cross_references:
       publications: doi:10.1126/science.abm6704
       related_database_entries: EMPIAR-11078
-    dataset_description: Cryo-electron tomograms of Chlamydomonasfrom FIB-SEM lamella.
+    dataset_description: Cryo-electron tomograms of Chlamydomonas from FIB-SEM lamella.
     dataset_identifier: 10009
     dataset_title: C. reinhardtii ciliary transition zone
     dates: *id002
@@ -269,9 +270,10 @@ depositions:
 - metadata:
     authors: *id003
     dates: *id002
-    deposition_description: TBA
+    deposition_description: Cryo-electron tomograms of FIB-SEM lamellas of the Chlamydomonas reinhardtii ciliary base,
+      including annotations of the intraflagellar transport machinery, refined using STOPGAP.
     deposition_identifier: 10009
-    deposition_title: TBA
+    deposition_title: Architecture of the Chlamydomonas reinhardtii ciliary base
     deposition_types:
     - dataset
   sources:

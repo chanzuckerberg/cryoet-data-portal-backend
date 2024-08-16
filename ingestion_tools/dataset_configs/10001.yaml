@@ -400,15 +400,7 @@ datasets:
       value:
       - '10001'
 depositions:
-- metadata:
-    authors: *id003
-    dates: *id002
-    deposition_description: TBA
-    deposition_identifier: 10000
-    deposition_title: TBA
-    deposition_types:
-    - dataset
-  sources:
+- sources:
   - literal:
       value:
       - 10000
@@ -470,7 +462,7 @@ tiltseries:
   sources:
   - source_glob:
       list_glob: metadata/{run_name}.st
-      match_regex: (.*)\.rec
+      match_regex: (.*)\.st
 tomograms:
 - metadata:
     affine_transformation_matrix:

@@ -138,9 +138,10 @@ depositions:
 - metadata:
     authors: *id002
     dates: *id001
-    deposition_description: TBA
+    deposition_description: Cryo-electron tomograms of SARS-CoV-2 spike proteins on intact
+      virions with annotations of spike proteins, refined using RELION.
     deposition_identifier: 10006
-    deposition_title: TBA
+    deposition_title: Structures and distributions of severe acute respiratory syndrome coronavirus 2 spike proteins
     deposition_types:
     - dataset
   sources:
@@ -194,9 +195,8 @@ tiltseries:
     tilting_scheme: Dose symmetric from 0.0 degrees
     total_flux: 120
   sources:
-  - literal:
-      value:
-      - validation placeholder
+  - source_glob:
+      list_glob: validation_placeholder/for_unavailable_ts.st
 tomograms:
 - metadata:
     authors: *id002

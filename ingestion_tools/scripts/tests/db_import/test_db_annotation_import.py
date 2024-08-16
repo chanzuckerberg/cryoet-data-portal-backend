@@ -37,8 +37,20 @@ def expected_annotations(http_prefix: str) -> list[dict[str, Any]]:
             "annotation_software": "pyTOM + Keras",
             "is_curator_recommended": True,
             "object_count": 16,
-            "deposition_id": 111111,
+            "deposition_id": 301,
             "method_type": "hybrid",
+            "method_links": [
+                {
+                    "link": "https://fake-link.com/resources/100-foo-1.0_method.pdf",
+                    "link_type": "documentation",
+                    "name": "Method Documentation",
+                },
+                {
+                    "link": "https://another-link.com/100-foo-1.0_code.zip",
+                    "link_type": "source_code",
+                    "name": "Source Code",
+                },
+            ],
         },
     ]
 

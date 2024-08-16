@@ -39,9 +39,10 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: Single set of data studying Vibrio cholerae (tax_id=412614)
+      strain:2740-80 by Martin Pilhofer and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10020
-    deposition_title: TBA
+    deposition_title: Vibrio cholerae (tax_id=412614) strain:2740-80 by Martin Pilhofer
     deposition_types:
     - dataset
   sources:
