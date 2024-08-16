@@ -476,10 +476,6 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
     """Triangular Meshes are converted to glb format"""
     shape = "TriangularMesh"
     map_functions = {
-        # TODO: resolve hff
-        # "hff": mc.from_hff,  # this is hdf5 format https://sfftk.readthedocs.io/en/latest/
-        # The hff can support multiple meshes, how does this work with this paradigm? We can either askt eh user to
-        # specify eacgh mesh to extra in the metadata or extract them all here.
         "obj": mc.from_obj,
         "stl": mc.from_stl,
         "vtk": mc.from_vtk,
