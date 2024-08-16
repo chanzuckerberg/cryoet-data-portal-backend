@@ -1,0 +1,5 @@
+stack:
+  services:
+    apiv2:
+      image:
+        tag: sha-xxxxxxx
