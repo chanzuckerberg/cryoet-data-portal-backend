@@ -1,0 +1,865 @@
+name: cdp-api
+id: cdp-api
+version: 2.0.0
+description: Schema for CryoET API
+imports:
+- linkml:types
+- ../../core/v2.0.0/common
+prefixes:
+  linkml:
+    prefix_prefix: linkml
+    prefix_reference: https://w3id.org/linkml/
+
+classes:
+  # ============================================================================
+  # Mixins
+  # ============================================================================
+  IDMixin:
+    mixin: true
+    attributes:
+      id:
+        identifier: true
+        exact_mappings:
+          - cdp-common:api_sequential_identifier
+    annotations:
+      auto_increment: true
+  S3PrefixedEntityMixin:
+    description: An entity with s3/https prefixes
+    mixin: true
+    attributes:
+      s3_prefix:
+        exact_mappings:
+          - cdp-common:api_s3_prefix
+      https_prefix:
+        exact_mappings:
+          - cdp-common:api_https_prefix
+  AuthorEntityMixin:
+    description: An entity with author data
+    mixin: true
+    mixins:
+      - AuthorMixin
+    attributes:
+      author_list_order:
+        exact_mappings:
+          - cdp-common:api_author_list_order
+      orcid:
+        exact_mappings:
+          - cdp-common:author_orcid
+  APIDateStampedEntityMixin:
+    description: A set of dates at which a data item was deposited, published and last modified.
+    mixin: true
+    attributes:
+      deposition_date:
+        exact_mappings:
+          - cdp-common:deposition_date
+        range: date
+      release_date:
+        exact_mappings:
+          - cdp-common:release_date
+        range: date
+      last_modified_date:
+        exact_mappings:
+          - cdp-common:last_modified_date
+        range: date
+  # ============================================================================
+
+  # ============================================================================
+  # Entities
+  # ============================================================================
+  Alignment:
+    mixins:
+      - IDMixin
+    description: Tiltseries Alignment
+    attributes:
+      annotation_files:
+        range: AnnotationFile
+        inverse: AnnotationFile.alignment
+        multivalued: true
+      per_section_alignments:
+        range: PerSectionAlignmentParameters
+        inverse: PerSectionAlignmentParameters.alignment
+        multivalued: true
+      deposition:
+        range: Deposition
+        inverse: Deposition.alignments
+      tiltseries:
+        range: Tiltseries
+        inverse: Tiltseries.alignments
+      tomograms:
+        range: Tomogram
+        inverse: Tomogram.alignment
+        multivalued: true
+      run:
+        range: Run
+        inverse: Run.alignments
+      alignment:
+        exact_mappings:
+          - cdp-common:api_alignment
+      alignment_type:
+        exact_mappings:
+          - cdp-common:alignment_alignment_type
+      volume_x_dimension:
+        exact_mappings:
+          - cdp-common:alignment_volume_x_dimension
+      volume_y_dimension:
+        exact_mappings:
+          - cdp-common:alignment_volume_y_dimension
+      volume_z_dimension:
+        exact_mappings:
+          - cdp-common:alignment_volume_z_dimension
+      volume_x_offset:
+        exact_mappings:
+          - cdp-common:alignment_volume_x_offset
+      volume_y_offset:
+        exact_mappings:
+          - cdp-common:alignment_volume_y_offset
+      volume_z_offset:
+        exact_mappings:
+          - cdp-common:alignment_volume_z_offset
+      volume_x_rotation:
+        exact_mappings:
+          - cdp-common:alignment_volume_x_rotation
+      tilt_offset:
+        exact_mappings:
+          - cdp-common:alignment_tilt_offset
+      local_alignment_file:
+        exact_mappings:
+          - cdp-common:alignment_local_alignment_file
+    annotations:
+      plural: Alignments
+  AnnotationAuthor:
+    mixins:
+      - IDMixin
+      - AuthorEntityMixin
+    description: Author of an annotation
+    attributes:
+      annotation:
+        range: Annotation
+        inverse: Annotation.authors
+    annotations:
+      plural: AnnotationAuthors
+  AnnotationFile:
+    mixins:
+      - IDMixin
+    description: Files associated with an annotation
+    attributes:
+      alignment:
+        range: Alignment
+        inverse: Alignment.annotation_files
+      annotation_shape:
+        range: AnnotationShape
+        inverse: AnnotationShape.annotation_files
+      tomogram_voxel_spacing:
+        range: TomogramVoxelSpacing
+        inverse: TomogramVoxelSpacing.annotation_files
+      format:
+        exact_mappings:
+          - cdp-common:api_file_format
+      s3_path:
+        exact_mappings:
+          - cdp-common:api_s3_path
+      https_path:
+        exact_mappings:
+          - cdp-common:api_https_path
+      is_visualization_default:
+        exact_mappings:
+          - cdp-common:annotation_source_file_is_visualization_default
+      source:
+        exact_mappings:
+          - cdp-common:api_annotation_file_source
+    annotations:
+      plural: AnnotationFiles
+  AnnotationShape:
+    mixins:
+      - IDMixin
+    description: Shapes associated with an annotation
+    attributes:
+      annotation:
+        range: Annotation
+        inverse: Annotation.annotation_shapes
+      annotation_files:
+        range: AnnotationFile
+        description: Files associated with an annotation
+        inverse: AnnotationFile.annotation_shape
+        multivalued: true
+      shape_type:
+        range: annotation_file_shape_type_enum
+    annotations:
+      plural: AnnotationShapes
+  Annotation:
+    mixins:
+      - IDMixin
+      - APIDateStampedEntityMixin
+    description: Metadata about an annotation for a run
+    attributes:
+      run:
+        range: Run
+        inverse: Run.annotations
+      annotation_shapes:
+        range: AnnotationShape
+        inverse: AnnotationShape.annotation
+        multivalued: true
+      authors:
+        range: AnnotationAuthor
+        inverse: AnnotationAuthor.annotation
+        multivalued: true
+      deposition:
+        range: Deposition
+        inverse: Deposition.annotations
+      s3_metadata_path:
+        exact_mappings:
+          - cdp-common:api_s3_path
+      https_metadata_path:
+        exact_mappings:
+          - cdp-common:api_https_path
+      annotation_publication:
+        exact_mappings:
+          - cdp-common:annotation_publications
+      annotation_method:
+        exact_mappings:
+          - cdp-common:annotation_method
+      ground_truth_status:
+        exact_mappings:
+          - cdp-common:annotation_ground_truth_status
+      object_id:
+        exact_mappings:
+          - cdp-common:annotation_object_id
+      object_name:
+        exact_mappings:
+          - cdp-common:annotation_object_name
+      object_description:
+        exact_mappings:
+          - cdp-common:annotation_object_description
+      object_state:
+        exact_mappings:
+          - cdp-common:annotation_object_state
+      object_count:
+        exact_mappings:
+          - cdp-common:annotation_object_count
+      confidence_precision:
+        exact_mappings:
+          - cdp-common:annotation_confidence_precision
+      confidence_recall:
+        exact_mappings:
+          - cdp-common:annotation_confidence_recall
+      ground_truth_used:
+        exact_mappings:
+          - cdp-common:annotation_ground_truth_used
+      annotation_software:
+        exact_mappings:
+          - cdp-common:annotation_software
+      is_curator_recommended:
+        exact_mappings:
+          - cdp-common:annotation_is_curator_recommended
+      method_type:
+        exact_mappings:
+          - cdp-common:annotation_method_type
+    annotations:
+      plural: Annotations
+  DatasetAuthor:
+    mixins:
+      - IDMixin
+      - AuthorEntityMixin
+    description: An author of a dataset
+    attributes:
+      dataset:
+        range: Dataset
+        inverse: Dataset.authors
+    annotations:
+      plural: DatasetAuthors
+  DatasetFunding:
+    mixins:
+      - IDMixin
+    description: Information about how a dataset was funded
+    attributes:
+      dataset:
+        range: Dataset
+        inverse: Dataset.funding_sources
+      funding_agency_name:
+        exact_mappings:
+          - cdp-common:funding_agency_name
+      grant_id:
+        exact_mappings:
+          - cdp-common:funding_grant_id
+    annotations:
+      plural: DatasetFunding
+  Dataset:
+    mixins:
+      - IDMixin
+      - APIDateStampedEntityMixin
+      - CrossReferencesMixin
+      - S3PrefixedEntityMixin
+    description: An author of a dataset
+    attributes:
+      deposition:
+        range: Deposition
+        inverse: Deposition.datasets
+      funding_sources:
+        range: DatasetFunding
+        inverse: DatasetFunding.dataset
+        multivalued: true
+      authors:
+        range: DatasetAuthor
+        inverse: DatasetAuthor.dataset
+        multivalued: true
+      runs:
+        range: Run
+        inverse: Run.dataset
+        multivalued: true
+      title:
+        exact_mappings:
+        - cdp-common:dataset_title
+      description:
+        exact_mappings:
+        - cdp-common:dataset_description
+      organism_name:
+        exact_mappings:
+          -  cdp-common:organism_name
+      organism_taxid:
+        exact_mappings:
+          - cdp-common:organism_taxid
+      tissue_name:
+        exact_mappings:
+          - cdp-common:tissue_name
+        # TODO THIS SHOULD BE REQUIRED
+        required: False
+      # NOTE this doesn't expand to an explicit range.
+      tissue_id:
+        exact_mappings:
+          - cdp-common:tissue_id
+      cell_name:
+        exact_mappings:
+          - cdp-common:cell_name
+        # TODO THIS SHOULD BE REQUIRED
+        required: False
+      cell_type_id:
+        exact_mappings:
+          - cdp-common:cell_type_id
+      cell_strain_name:
+        exact_mappings:
+          - cdp-common:cell_strain_name
+        range: string
+        required: False
+      cell_strain_id:
+        exact_mappings:
+          - cdp-common:cell_strain_id
+        range: string
+      sample_type:
+        exact_mappings:
+          - cdp-common:preparation_sample_type
+        required: true
+      sample_preparation:
+        exact_mappings:
+          - cdp-common:sample_preparation
+      grid_preparation:
+        exact_mappings:
+          - cdp-common:grid_preparation
+      other_setup:
+        exact_mappings:
+          - cdp-common:preparation_other_setup
+      key_photo_url:
+        exact_mappings:
+          - cdp-common:dataset_key_photo_url
+      key_photo_thumbnail_url:
+        exact_mappings:
+          - cdp-common:dataset_key_photo_thumbnail_url
+      cell_component_name:
+        exact_mappings:
+          - cdp-common:cell_component_name
+        # TODO THIS SHOULD BE REQUIRED
+        required: False
+      cell_component_id:
+        exact_mappings:
+          - cdp-common:cell_component_id
+    annotations:
+      plural: Datasets
+  DepositionAuthor:
+    mixins:
+      - IDMixin
+      - AuthorEntityMixin
+    description: Author of a deposition
+    attributes:
+      deposition:
+        range: Deposition
+        inverse: Deposition.authors
+    annotations:
+      plural: DepositionAuthors
+
+  Deposition:
+    mixins:
+      - IDMixin
+      - CrossReferencesMixin
+      - APIDateStampedEntityMixin
+    attributes:
+      authors:
+        range: DepositionAuthor
+        inverse: DepositionAuthor.deposition
+        multivalued: true
+      alignments:
+        range: Alignment
+        inverse: Alignment.deposition
+        multivalued: true
+      annotations:
+        range: Annotation
+        inverse: Annotation.deposition
+        multivalued: true
+      datasets:
+        range: Dataset
+        inverse: Dataset.deposition
+        multivalued: true
+      frames:
+        range: Frame
+        inverse: Frame.deposition
+        multivalued: true
+      tiltseries:
+        range: Tiltseries
+        inverse: Tiltseries.deposition
+        multivalued: true
+      tomograms:
+        range: Tomograms
+        inverse: Tomogram.deposition
+        multivalued: true
+      deposition_title:
+        exact_mappings:
+          - cdp-common:deposition_title
+      deposition_description:
+        exact_mappings:
+          - cdp-common:deposition_description
+      deposition_types:
+        range: DepositionType
+        inverse: DepositionType.deposition
+        multivalued: true
+    annotations:
+      plural: Depositions
+  DepositionType:
+    mixins:
+      - IDMixin
+    attributes:
+      deposition:
+        range: Deposition
+        inverse: Deposition.deposition_types
+      type:
+        range: cdp-common:deposition_types_enum
+    annotations:
+      plural: DepositionTypes
+  Frame:
+    mixins:
+      - IDMixin
+      - S3PrefixedEntityMixin
+    attributes:
+      deposition:
+        range: Deposition
+        inverse: Deposition.frames
+      per_section_parameters:
+        inverse: PerSectionParameters.frame
+        range: PerSectionParameters
+        multivalued: true
+      run:
+        range: Run
+        inverse: Run.frames
+      raw_angle:
+        exact_mappings:
+          - cdp-common:api_frame_raw_angle
+      acquisition_order:
+        exact_mappings:
+          - cdp-common:api_frame_acquisition_order
+      dose:
+        exact_mappings:
+          - cdp-common:api_frame_dose
+      is_gain_corrected:
+        exact_mappings:
+          - cdp-common:api_frame_is_gain_corrected
+      s3_gain_file:
+        exact_mappings:
+          - cdp-common:api_frame_s3_gain_file
+      https_gain_file:
+        exact_mappings:
+          - cdp-common:api_frame_https_gain_file
+    annotations:
+      plural: Frames
+  PerSectionParameters:
+    mixins:
+      - IDMixin
+    description: Record how frames get mapped to TiltSeries
+    attributes:
+      frame:
+        range: Frame
+        inverse: Frame.per_section_parameters
+        required: True
+      tiltseries:
+        range: Tiltseries
+        inverse: Tiltseries.per_section_parameters
+        required: True
+      z_index:
+        exact_mappings:
+          - cdp-common:per_section_z_index
+      defocus:
+        exact_mappings:
+          - cdp-common:per_section_defocus
+      astigmatism:
+        exact_mappings:
+          - cdp-common:per_section_astigmatism
+      astigmatic_angle:
+        exact_mappings:
+          - cdp-common:per_section_astigmatic_angle
+    annotations:
+      plural: PerSectionParameters
+
+  PerSectionAlignmentParameters:
+    mixins:
+      - IDMixin
+    description: Map alignment parameters to tilt series frames
+    attributes:
+      alignment:
+        range: Alignment
+        inverse: Alignment.per_section_alignments
+        required: True
+      z_index:
+        exact_mappings:
+          - cdp-common:per_section_z_index
+      x_offset:
+        exact_mappings:
+          - cdp-common:per_section_alignment_x_offset
+      y_offset:
+        exact_mappings:
+          - cdp-common:per_section_alignment_y_offset
+      in_plane_rotation:
+        exact_mappings:
+          - cdp-common:per_section_alignment_in_plane_rotation
+      beam_tilt:
+        exact_mappings:
+          - cdp-common:per_section_alignment_beam_tilt
+      tilt_angle:
+        exact_mappings:
+          - cdp-common:per_section_alignment_tilt_angle
+    annotations:
+      plural: PerSectionAlignmentParameters
+
+  Run:
+    mixins:
+      - IDMixin
+      - S3PrefixedEntityMixin
+    attributes:
+      alignments:
+        range: Alignment
+        inverse: Alignment.run
+        multivalued: true
+      annotations:
+        range: Annotation
+        inverse: Annotation.run
+        multivalued: true
+      dataset:
+        range: Dataset
+        required: true
+        inverse: Dataset.runs
+      frames:
+        range: Frame
+        inverse: Frame.run
+        multivalued: true
+      tiltseries:
+        range: Tiltseries
+        multivalued: true
+        inverse: Tiltseries.run
+      tomogram_voxel_spacings:
+        range: TomogramVoxelSpacing
+        multivalued: true
+        inverse: TomogramVoxelSpacing.run
+      tomograms:
+        range: Tomogram
+        multivalued: true
+        inverse: Tomogram.run
+      name:
+        exact_mappings:
+          - cdp-common:api_run_name
+    annotations:
+      plural: Runs
+  Tiltseries:
+    mixins:
+      - IDMixin
+    attributes:
+      alignments:
+        range: Alignment
+        multivalued: true
+        inverse: Alignment.tiltseries
+      per_section_parameters:
+        range: PerSectionParameters
+        inverse: PerSectionParameters.tiltseries
+        multivalued: true
+      run:
+        range: Run
+        required: true
+        inverse: Run.tiltseries
+      deposition:
+        range: Deposition
+        required: False
+        inverse: Deposition.tiltseries
+      s3_omezarr_dir:
+        exact_mappings:
+          - cdp-common:tiltseries_s3_omezarr_dir
+      s3_mrc_bin1:
+        exact_mappings:
+          - cdp-common:tiltseries_s3_mrc_bin1
+      https_omezarr_dir:
+        exact_mappings:
+          - cdp-common:tiltseries_https_omezarr_dir
+      https_mrc_bin1:
+        exact_mappings:
+          - cdp-common:tiltseries_https_mrc_bin1
+      s3_collection_metadata:
+        exact_mappings:
+          - cdp-common:tiltseries_s3_collection_metadata
+      https_collection_metadata:
+        exact_mappings:
+          - cdp-common:tiltseries_https_collection_metadata
+      s3_angle_list:
+        exact_mappings:
+          - cdp-common:tiltseries_s3_angle_list
+      https_angle_list:
+        exact_mappings:
+          - cdp-common:tiltseries_https_angle_list
+      s3_gain_file:
+        exact_mappings:
+          - cdp-common:tiltseries_s3_gain_file
+      https_gain_file:
+        exact_mappings:
+          - cdp-common:tiltseries_https_gain_file
+      acceleration_voltage:
+        exact_mappings:
+          - cdp-common:tiltseries_acceleration_voltage
+      spherical_abberation_constant:
+        exact_mappings:
+          - cdp-common:tiltseries_spherical_aberration_constant
+      microscope_manufacturer:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_manufacturer
+      microscope_model:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_model
+      microscope_energy_filter:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_energy_filter
+      microscope_phase_plate:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_phase_plate
+      microscope_image_corrector:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_image_corrector
+      microscope_additional_info:
+        exact_mappings:
+          - cdp-common:tiltseries_microscope_additional_info
+      camera_manufacturer:
+        exact_mappings:
+          - cdp-common:tiltseries_camera_manufacturer
+      camera_model:
+        exact_mappings:
+          - cdp-common:tiltseries_camera_model
+      tilt_min:
+        exact_mappings:
+          - cdp-common:tiltseries_tilt_min
+      tilt_max:
+        exact_mappings:
+          - cdp-common:tiltseries_tilt_max
+      tilt_range:
+        exact_mappings:
+          - cdp-common:api_tiltseries_tilt_range
+      tilt_step:
+        exact_mappings:
+          - cdp-common:tiltseries_tilt_step
+      tilting_scheme:
+        exact_mappings:
+          - cdp-common:tiltseries_tilting_scheme
+      tilt_axis:
+        exact_mappings:
+          - cdp-common:tiltseries_tilt_axis
+      total_flux:
+        exact_mappings:
+          - cdp-common:tiltseries_total_flux
+      data_acquisition_software:
+        exact_mappings:
+          - cdp-common:tiltseries_data_acquisition_software
+      related_empiar_entry:
+        exact_mappings:
+          - cdp-common:tiltseries_related_empiar_entry
+      binning_from_frames:
+        exact_mappings:
+          - cdp-common:tiltseries_binning_from_frames
+      tilt_series_quality:
+        exact_mappings:
+          - cdp-common:tiltseries_tilt_series_quality
+      is_aligned:
+        exact_mappings:
+          - cdp-common:tiltseries_is_aligned
+      pixel_spacing:
+        exact_mappings:
+          - cdp-common:tiltseries_pixel_spacing
+      aligned_tiltseries_binning:
+        exact_mappings:
+          - cdp-common:tiltseries_aligned_tiltseries_binning
+      tiltseries_frames_count:
+        exact_mappings:
+          - cdp-common:tiltseries_frames_count
+    annotations:
+      plural: Tiltseries
+  TomogramAuthor:
+    mixins:
+      - IDMixin
+      - AuthorEntityMixin
+    description: Author of a tomogram
+    attributes:
+      tomogram:
+        range: Tomogram
+        inverse: Tomogram.authors
+    annotations:
+      plural: TomogramAuthors
+  TomogramVoxelSpacing:
+    mixins:
+      - IDMixin
+      - S3PrefixedEntityMixin
+    description: Voxel spacings for a run
+    attributes:
+      annotation_files:
+        range: AnnotationFile
+        inverse: AnnotationFile.tomogram_voxel_spacing
+        multivalued: true
+      run:
+        range: Run
+        inverse: run.tomogram_voxel_spacings
+      tomograms:
+        range: Tomogram
+        inverse: Tomogram.tomogram_voxel_spacing
+        multivalued: true
+      voxel_spacing:
+        exact_mappings:
+          - cdp-common:tomogram_voxel_spacing
+    annotations:
+      plural: TomogramVoxelSpacings
+  Tomogram:
+    mixins:
+      - IDMixin
+      - S3PrefixedEntityMixin
+    description: Metadata describing a tomogram.
+    attributes:
+      alignment:
+        range: Alignment
+        inverse: Alignment.tomograms
+      authors:
+        range: TomogramAuthor
+        inverse: TomogramAuthor.tomogram
+        multivalued: true
+      deposition:
+        range: Deposition
+        inverse: Deposition.tomograms
+      run:
+        range: Run
+        inverse: Run.tomograms
+      tomogram_voxel_spacing:
+        range: TomogramVoxelSpacing
+        inverse: tomogram_voxel_spacing.tomograms
+      name:
+        exact_mappings:
+          - cdp-common:tomogram_name
+      size_x:
+        exact_mappings:
+          - cdp-common:api_tomogram_size_x
+      size_y:
+        exact_mappings:
+          - cdp-common:api_tomogram_size_y
+      size_z:
+        exact_mappings:
+          - cdp-common:api_tomogram_size_z
+      voxel_spacing:
+        exact_mappings:
+          - cdp-common:tomogram_voxel_spacing
+      fiducial_alignment_status:
+        exact_mappings:
+          - cdp-common:tomogram_fiducial_alignment_status
+      reconstruction_method:
+        exact_mappings:
+          - cdp-common:tomogram_reconstruction_method
+      processing:
+        exact_mappings:
+          - cdp-common:tomogram_processing
+      tomogram_version:
+        exact_mappings:
+          - cdp-common:tomogram_version
+        required: false
+        range: float
+      processing_software:
+        exact_mappings:
+          - cdp-common:tomogram_processing_software
+      reconstruction_software:
+        exact_mappings:
+          - cdp-common:tomogram_reconstruction_software
+      is_canonical:
+        range: boolean
+        description: whether this tomogram is canonical for the run
+      s3_omezarr_dir:
+        exact_mappings:
+          - cdp-common:tomogram_s3_omezarr_dir
+      https_omezarr_dir:
+        exact_mappings:
+          - cdp-common:tomogram_https_omezarr_dir
+      s3_mrc_scale0:
+        exact_mappings:
+          - cdp-common:tomogram_s3_mrc_scale0
+      https_mrc_scale0:
+        exact_mappings:
+          - cdp-common:tomogram_https_mrc_scale0
+      scale0_dimensions:
+        exact_mappings:
+          - cdp-common:tomogram_scale0_dimensions
+      scale1_dimensions:
+        exact_mappings:
+          - cdp-common:tomogram_scale1_dimensions
+      scale2_dimensions:
+        exact_mappings:
+          - cdp-common:tomogram_scale2_dimensions
+      ctf_corrected:
+        exact_mappings:
+          - cdp-common:tomogram_ctf_corrected
+      offset_x:
+        range: integer
+        required: true
+        description: x offset data relative to the canonical tomogram in pixels
+        unit:
+          descriptive_name: pixels
+          symbol: px
+      offset_y:
+        range: integer
+        required: true
+        description: y offset data relative to the canonical tomogram in pixels
+        unit:
+          descriptive_name: pixels
+          symbol: px
+      offset_z:
+        range: integer
+        required: true
+        description: z offset data relative to the canonical tomogram in pixels
+        unit:
+          descriptive_name: pixels
+          symbol: px
+      affine_transformation_matrix:
+          description: The flip or rotation transformation of this author submitted tomogram is indicated here
+          range: Any
+          array:
+            exact_number_dimensions: 2
+            dimensions:
+              - exact_cardinality: 4
+              - exact_cardinality: 4
+      key_photo_url:
+        exact_mappings:
+          - cdp-common:tomogram_key_photo_url
+      key_photo_thumbnail_url:
+        exact_mappings:
+          - cdp-common:tomogram_key_photo_thumbnail_url
+      neuroglancer_config:
+        exact_mappings:
+          - cdp-common:tomogram_neuroglancer_config
+      tomogram_type:
+        range: tomogram_type_enum
+      is_standardized:
+        exact_mappings:
+          - cdp-common:api_tomogram_is_standardized
+    annotations:
+      plural: Tomograms
+  # ============================================================================
