@@ -19,7 +19,10 @@ MAX_FRAME_SIZE = 250 * 1024 * 1024  # 250 MB
 @pytest.mark.parametrize("run_name", pytest.run_name, scope="session")
 class TestFrame(HelperTestMRCHeader):
     @pytest.fixture(autouse=True)
-    def set_class_variables(self, frames_headers: Dict[str, Union[tifffile.TiffPages, MrcInterpreter]]):
+    def set_helper_test_mrc_header_class_variables(
+        self,
+        frames_headers: Dict[str, Union[tifffile.TiffPages, MrcInterpreter]],
+    ):
         self.spacegroup = 0  # 2D image
         self.mrc_headers = {k: v for k, v in frames_headers.items() if isinstance(v, MrcInterpreter)}
 

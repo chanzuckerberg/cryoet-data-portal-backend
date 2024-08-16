@@ -11,7 +11,7 @@ from tests.helper_mrc import HelperTestMRCHeader
 @pytest.mark.parametrize("run_name", pytest.run_name, scope="session")
 class TestGain(HelperTestMRCHeader):
     @pytest.fixture(autouse=True)
-    def set_class_variables(self, gain_mrc_header: Dict[str, MrcInterpreter]):
+    def set_helper_test_mrc_header_class_variables(self, gain_mrc_header: Dict[str, MrcInterpreter]):
         self.spacegroup = 0  # 2D image
         self.mrc_headers = gain_mrc_header
 

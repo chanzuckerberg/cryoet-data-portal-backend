@@ -14,11 +14,9 @@ ZATTRS_AXIS_ORDER = ["z", "y", "x"]
 class TestSegmentationMask(HelperTestMRCHeader):
 
     @pytest.fixture(autouse=True)
-    def set_class_variables(
+    def set_helper_test_mrc_header_class_variables(
         self,
         seg_mask_annotation_mrc_headers: Dict[str, MrcInterpreter],
-        voxel_spacing: float,
-        canonical_tomogram_metadata: Dict,
     ):
         self.spacegroup = 1  # single 3D volume
         self.mrc_headers = seg_mask_annotation_mrc_headers
