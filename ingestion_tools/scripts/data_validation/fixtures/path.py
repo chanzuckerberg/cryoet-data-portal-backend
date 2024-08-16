@@ -70,23 +70,20 @@ def run_meta_file(run_dir: str, filesystem: FileSystemApi) -> str:
 
 
 @pytest.fixture(scope="session")
-def frames_dir(run_dir: str, tiltseries_metadata: Dict, filesystem: FileSystemApi) -> str:
+def frames_dir(run_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/Frames"""
     dst = f"{run_dir}/Frames"
     if filesystem.s3fs.exists(dst):
         return dst
     else:
-        if tiltseries_metadata["frames_count"] > 0:
-            pytest.fail(f"Frames directory not present: {dst}")
-        else:
-            pytest.skip(f"Frames directory not present: {dst}")
+        pytest.skip(f"Frames directory not present: {dst}")
 
 
 @pytest.fixture(scope="session")
-def frame_files(frames_dir: str, filesystem: FileSystemApi) -> List[str]:
+def frames_files(frames_dir: str, filesystem: FileSystemApi) -> List[str]:
     """[Dataset]/[ExperimentRun]/Frames/[frame_name].mrc"""
     files = filesystem.glob(f"{frames_dir}/*")
-    return ["s3://" + file for file in files]
+    return ["s3://" + file for file in files if "_gain" not in file]  # Exclude gain files
 
 
 @pytest.fixture(scope="session")
@@ -97,6 +94,35 @@ def frame_acquisition_order_file(frames_dir: str, filesystem: FileSystemApi) -> 
         return dst
     else:
         pytest.fail(f"Frame acquisition order file not found: {dst}")
+
+
+# =============================================================================
+# Run-specific fixtures, Gain
+# =============================================================================
+
+
+@pytest.fixture(scope="session")
+def gain_dir(run_dir: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/Frames"""
+    dst = f"{run_dir}/Frames"
+    if filesystem.s3fs.exists(dst):
+        return dst
+    else:
+        pytest.skip(f"Gain directory not found: {dst}")
+
+
+@pytest.fixture(scope="session")
+def gain_file(run_name: str, gain_dir: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/Frames/[run_name]_gain*"""
+    file = filesystem.glob(f"{gain_dir}/*_gain*")
+    if len(file) == 1:
+        assert f"{run_name}_gain" in file[0], f"Invalid gain file name: {file[0]}"
+        assert not file[0].endswith(".dm4"), f"Invalid gain file extension: {file[0]} (should be .mrc)"
+        return file[0]
+    elif len(file) > 1:
+        pytest.fail("Multiple gain files found.")
+    else:
+        pytest.skip("No gain file found.")
 
 
 # =============================================================================

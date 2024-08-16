@@ -1,7 +1,7 @@
 from typing import Dict, List
 
 import pytest
-from helpers_point import contained_in_tomo
+from helper_point import contained_in_tomo
 
 
 @pytest.mark.annotation

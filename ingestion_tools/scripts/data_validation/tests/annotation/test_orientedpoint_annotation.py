@@ -2,7 +2,7 @@ from typing import Dict, List
 
 import numpy as np
 import pytest
-from helpers_point import contained_in_tomo, point_count_consistent
+from helper_point import contained_in_tomo, point_count_consistent
 
 
 @pytest.mark.annotation

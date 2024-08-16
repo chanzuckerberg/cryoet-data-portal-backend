@@ -1,8 +1,8 @@
 from typing import Dict
 
 import pytest
-from helpers_images import check_photo_valid
-from test_deposition import TestDeposition
+from tests.helper_images import check_photo_valid
+from tests.test_deposition import TestDeposition
 
 from common.fs import FileSystemApi
 

@@ -3,12 +3,15 @@ Any fixtures involving loading data from the bucket.
 """
 
 import json
-from typing import Dict, List
+from concurrent.futures import ThreadPoolExecutor
+from typing import Dict, List, Union
 
 import mdocfile
 import ndjson
 import pandas as pd
 import pytest
+import tifffile
+import tifffile.tifffile
 import zarr
 from mrcfile.mrcinterpreter import MrcInterpreter
 from ome_zarr.io import ZarrLocation
@@ -26,8 +29,8 @@ def get_header(mrcfile: str, fs: FileSystemApi) -> MrcInterpreter:
         with fs.open(mrcfile, "rb") as f:
             header = MrcInterpreter(iostream=f, permissive=True, header_only=True)
         return header
-    except Exception as _:
-        pytest.fail(f"Failed to get header for {mrcfile}")
+    except Exception as e:
+        pytest.fail(f"Failed to get header for {mrcfile}: {e}")
 
 
 def get_zarr_headers(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
@@ -63,6 +66,58 @@ def dataset_metadata(dataset_metadata_file: str, filesystem: FileSystemApi) -> D
 
 
 # ==================================================================================================
+# Frame fixtures
+# ==================================================================================================
+
+
+@pytest.fixture(scope="session")
+def frames_filesizes(frames_files: List[str], filesystem: FileSystemApi) -> Dict[str, int]:
+    """Get the file sizes for a list of frame files."""
+    return {frame_file: filesystem.size(frame_file) for frame_file in frames_files}
+
+
+@pytest.fixture(scope="session")
+def frames_headers(
+    frames_files: List[str],
+    filesystem: FileSystemApi,
+) -> Dict[str, Union[tifffile.TiffPages, MrcInterpreter]]:
+    """Get the headers for a list of frame files."""
+
+    def open_frame(frame_file: str):
+        if frame_file.endswith(".mrc"):
+            return (frame_file, get_header(frame_file, filesystem))
+        elif frame_file.endswith(".tif") or frame_file.endswith(".tiff") or frame_file.endswith(".eer"):
+            with filesystem.open(frame_file, "rb") as f:
+                # For some reason, just returning the tifffile.TiffFile object gives issues
+                return (frame_file, tifffile.TiffFile(f).pages)
+        else:
+            return None
+
+    # Open the images in parallel
+    with ThreadPoolExecutor() as executor:
+        headers = list(executor.map(open_frame, frames_files))
+        headers = [header for header in headers if header is not None]
+        if not headers:
+            pytest.skip("No file-format supported frames headers found")
+
+    return dict(headers)
+
+
+# ==================================================================================================
+# Gain fixtures
+# ==================================================================================================
+
+
+@pytest.fixture(scope="session")
+def gain_mrc_header(gain_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
+    """Get the mrc file headers for a gain file."""
+    if not gain_file.endswith(".mrc"):
+        pytest.skip(f"Not an mrc file, skipping mrc checks: {gain_file}")
+
+    return {gain_file: get_header(gain_file, filesystem)}
+
+
+# ==================================================================================================
 # Tiltseries fixtures
 # ==================================================================================================
 
@@ -83,8 +138,7 @@ def tiltseries_metadata(tiltseries_meta_file: str, filesystem: FileSystemApi) ->
 @pytest.fixture(scope="session")
 def tiltseries_mdoc(tiltseries_mdoc_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
     """Load the tiltseries mdoc."""
-    with filesystem.open(tiltseries_mdoc_file, "r") as f:
-        return mdocfile.read_string(f.read())
+    return mdocfile.read(filesystem.localreadable(tiltseries_mdoc_file))
 
 
 @pytest.fixture(scope="session")

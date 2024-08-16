@@ -1,13 +1,9 @@
-import os
-import sys
 from typing import Dict
 
 import pytest
+from tests.test_deposition import TestDeposition
 
 from common.fs import FileSystemApi
-
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-from test_deposition import TestDeposition
 
 
 @pytest.mark.annotation
