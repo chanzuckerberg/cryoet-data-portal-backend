@@ -1,9 +1,10 @@
 import json
 import os
 import os.path
+from abc import abstractmethod
 from collections import defaultdict
 from functools import partial
-from typing import TYPE_CHECKING, Any, TypedDict
+from typing import TYPE_CHECKING, Any
 
 import ndjson
 
@@ -19,30 +20,6 @@ if TYPE_CHECKING:
     from importers.voxel_spacing import VoxelSpacingImporter
 else:
     VoxelSpacingImporter = "VoxelSpacingImporter"
-
-
-class AnnotationObject(TypedDict):
-    name: str
-    id: str
-    description: str
-    state: str
-
-
-class AnnotationSource(TypedDict):
-    columns: str
-    shape: str
-    file_format: str
-    delimiter: str | None
-    binning: int | None
-    order: str | None
-    filter_value: str | None
-    is_visualization_default: bool | None
-    mask_label: int | None
-
-
-class AnnotationMap(TypedDict):
-    metadata: dict[str, Any]
-    sources: list[AnnotationSource]
 
 
 # This class is basically a global var that lets us cache metadata and identifiers for annotations,
@@ -237,15 +214,24 @@ class BaseAnnotationSource(AnnotationImporter):
 
         super().__init__(*args, **kwargs)
 
+    @abstractmethod
     def convert(self, output_prefix: str):
+        # To be overridden by subclasses to handle the import of the annotation.
         pass
 
     def get_object_count(self, output_prefix: str) -> int:
+        # To be overridden by subclasses where necessary to return the number of objects in the annotation.
         return 0
 
     def is_valid(self, *args, **kwargs) -> bool:
-        # To be overridden by subclasses to communicate whether this source contains valid information for this run.
+        # To be overridden by subclasses when additional check needed to validate if a source contains valid information
+        # for this run.
         return True
+
+    @abstractmethod
+    def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
+        # To be overridden by subclasses to return the metadata for the files property of the metadata.
+        pass
 
     def get_output_filename(self, output_prefix: str, extension: str | None = None) -> str:
         filename = f"{output_prefix}_{self.shape.lower()}"
@@ -332,9 +318,7 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
 
 
 class AbstractPointAnnotation(BaseAnnotationSource):
-    shape = "Point"
     map_functions = {}
-    valid_file_formats = []
 
     def __init__(
         self,
@@ -349,6 +333,7 @@ class AbstractPointAnnotation(BaseAnnotationSource):
         super().__init__(*args, **kwargs)
 
     def get_converter_args(self):
+        # To be overridden by subclasses to return the arguments to pass to the point converter function.
         return {}
 
     def load(
@@ -446,7 +431,7 @@ class OrientedPointAnnotation(AbstractPointAnnotation):
 
     binning: int
     order: str | None
-    filter_value: str
+    filter_value: str | None
 
     def __init__(
         self,
