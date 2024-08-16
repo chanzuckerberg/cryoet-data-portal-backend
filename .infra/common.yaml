@@ -1,0 +1,17 @@
+stack:
+  global:
+    replicaCount: 2
+    autoscaling:
+      enabled: false
+    service:
+      port: 9009
+    env:
+      - name: TODO
+        value: TODO
+
+  services:
+    apiv2:
+      image:
+        repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
+      sidecar:
+        # TODO
