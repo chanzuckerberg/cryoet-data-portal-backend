@@ -11,7 +11,12 @@ from tests.helper_images import check_photo_valid
 from common.fs import FileSystemApi
 
 
-class TestDeposition:
+class HelperTestDeposition:
+    """
+    Not an actual pytest class, but a static class that is called by other test classes to validate their corresponding
+    deposition's metadata.
+    """
+
     cached_deposition_valid: Dict[str, bool] = {}
 
     @staticmethod
@@ -32,12 +37,12 @@ class TestDeposition:
         """A deposition metadata sanity check and ensuring that photos are valid."""
         # No need to check the same deposition twice.
         deposition_id = str(deposition_id)
-        if deposition_id in TestDeposition.cached_deposition_valid:
+        if deposition_id in HelperTestDeposition.cached_deposition_valid:
             return
         print(f"Checking deposition: {deposition_id}")
-        TestDeposition.cached_deposition_valid[deposition_id] = False
-        deposition_file = TestDeposition._get_deposition_metadata_file(deposition_id, bucket, filesystem)
-        deposition_metadata = TestDeposition._get_deposition_metadata(deposition_file, filesystem)
+        HelperTestDeposition.cached_deposition_valid[deposition_id] = False
+        deposition_file = HelperTestDeposition._get_deposition_metadata_file(deposition_id, bucket, filesystem)
+        deposition_metadata = HelperTestDeposition._get_deposition_metadata(deposition_file, filesystem)
         assert deposition_metadata["deposition_description"]
         assert deposition_metadata["deposition_title"]
         assert deposition_metadata["deposition_identifier"]
@@ -51,4 +56,4 @@ class TestDeposition:
         if (snapshot := deposition_metadata["key_photos"]["snapshot"]) is not None:
             check_photo_valid(snapshot, bucket, filesystem)
 
-        TestDeposition.cached_deposition_valid[deposition_id] = True
+        HelperTestDeposition.cached_deposition_valid[deposition_id] = True

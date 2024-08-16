@@ -6,6 +6,7 @@ from mrcfile.mrcinterpreter import MrcInterpreter
 from tests.helper_mrc import HelperTestMRCHeader
 
 ZATTRS_AXIS_ORDER = ["z", "y", "x"]
+SPACING_TOLERANCE = 0.001
 
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination
@@ -134,18 +135,9 @@ class TestSegmentationMask(HelperTestMRCHeader):
 
         def check_spacing(_header, interpreter, _mrc_filename, voxel_spacing):
             del _header, _mrc_filename
-            assert voxel_spacing == pytest.approx(
-                interpreter.voxel_size["x"].astype(float),
-                abs=self.spacing_tolerance,
-            )
-            assert voxel_spacing == pytest.approx(
-                interpreter.voxel_size["y"].astype(float),
-                abs=self.spacing_tolerance,
-            )
-            assert voxel_spacing == pytest.approx(
-                interpreter.voxel_size["z"].astype(float),
-                abs=self.spacing_tolerance,
-            )
+            assert interpreter.voxel_size["x"] == pytest.approx(voxel_spacing, abs=SPACING_TOLERANCE)
+            assert interpreter.voxel_size["y"] == pytest.approx(voxel_spacing, abs=SPACING_TOLERANCE)
+            assert interpreter.voxel_size["z"] == pytest.approx(voxel_spacing, abs=SPACING_TOLERANCE)
 
         self.mrc_header_helper(check_spacing, voxel_spacing=voxel_spacing)
 

@@ -48,8 +48,8 @@ class TestFrame(HelperTestMRCHeader):
 
         assert not errors, "\n".join(errors)
 
-    def test_frames_tiff_headers(self, frames_headers: Dict[str, Union[tifffile.TiffPages, MrcInterpreter]]):
-        """Check that the frame headers are valid."""
+    def test_frames_dimensions(self, frames_headers: Dict[str, Union[tifffile.TiffPages, MrcInterpreter]]):
+        """Check that the frame dimensions are consistent."""
         errors = []
         frames_dimensions = None
 
@@ -86,11 +86,8 @@ class TestFrame(HelperTestMRCHeader):
         frames_files: List[str],
         # tiltseries_metadata: Dict,
     ):
-        tilt_angle_to_frame_mapping = {}
+        tilt_angle_to_frame_mapping: Dict[Union[str, float], str] = {}  # only str key for -0.0
         remaining_frames_files = frames_files.copy()
-
-        # TODO: Figure out how to handle bidirectional case with double 0 tilt angle sample
-        # bidirectional = "bidirectional" in tiltseries_metadata["tilting_scheme"].lower() or "bi-directional" in tiltseries_metadata["tilting_scheme"].lower()
 
         for angle in angles:
             # Look for a frame file that contains the tilt angle
@@ -102,7 +99,19 @@ class TestFrame(HelperTestMRCHeader):
                 warnings.warn(f"Missing frame file for tilt angle {angle}", stacklevel=2)
                 continue
             remaining_frames_files.remove(angle_files[0])
+            if angle in tilt_angle_to_frame_mapping:
+                warnings.warn(f"Duplicate / ambiguous frame file for tilt angle {angle}", stacklevel=2)
             tilt_angle_to_frame_mapping[angle] = angle_files[0]
+
+        # special case for -0.0
+        angle_str = "(-0.0|-0.00)"
+        angle_regex = re.compile(f"{frames_dir}.*_{angle_str}.*")
+        angle_files = list(filter(angle_regex.match, remaining_frames_files))
+        assert len(angle_files) <= 1
+        if len(angle_files) == 1:
+            remaining_frames_files.remove(angle_files[0])
+            # usually key is float, but -0.0 is a special case
+            tilt_angle_to_frame_mapping["-0.0"] = angle_files[0]
 
         assert remaining_frames_files == [], f"Frame files not accounted for: {remaining_frames_files}"
 

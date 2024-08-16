@@ -6,7 +6,7 @@ from typing import Dict
 
 import pytest
 from tests.helper_images import check_photo_valid
-from tests.test_deposition import TestDeposition
+from tests.test_deposition import HelperTestDeposition
 
 from common.fs import FileSystemApi
 
@@ -31,4 +31,4 @@ class TestTomogram:
             check_photo_valid(snapshot, bucket, filesystem)
 
     def test_tomogram_deposition(self, canonical_tomogram_metadata: Dict, bucket: str, filesystem: FileSystemApi):
-        TestDeposition.check_deposition_metadata(canonical_tomogram_metadata["deposition_id"], bucket, filesystem)
+        HelperTestDeposition.check_deposition_metadata(canonical_tomogram_metadata["deposition_id"], bucket, filesystem)
