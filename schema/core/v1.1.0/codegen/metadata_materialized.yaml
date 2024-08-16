@@ -1118,6 +1118,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        range: Any
         recommended: true
         inlined: true
         inlined_as_list: true
@@ -1635,9 +1636,10 @@ classes:
         owner: CameraDetails
         domain_of:
         - CameraDetails
+        range: Any
         inlined: true
         inlined_as_list: true
-        pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|(^counting$)|(^superresolution$)|(^linear$)|(^cds$)
+        pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|((^counting$)|(^superresolution$)|(^linear$)|(^cds$))
         any_of:
         - range: StringFormattedString
         - range: tiltseries_camera_acquire_mode_enum
@@ -1700,11 +1702,16 @@ classes:
         - CameraDetails
         - MicroscopeDetails
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         pattern: (^FEI$)|(^TFS$)|(^JEOL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
         any_of:
-        - range: tiltseries_microscope_manufacturer_enum
+        - description: Name of the microscope manufacturer
+          exact_mappings:
+          - cdp-common:tiltseries_microscope_manufacturer
+          range: tiltseries_microscope_manufacturer_enum
+          required: true
         - range: StringFormattedString
       model:
         name: model
@@ -1780,6 +1787,7 @@ classes:
         domain_of:
         - TiltRange
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         minimum_value: -90
@@ -1789,9 +1797,16 @@ classes:
           symbol: °
           descriptive_name: degrees
         any_of:
-        - range: float
+        - description: Minimal tilt angle in degrees
+          exact_mappings:
+          - cdp-common:tiltseries_tilt_min
+          range: float
+          required: true
           minimum_value: -90
           maximum_value: 90
+          unit:
+            symbol: °
+            descriptive_name: degrees
         - range: FloatFormattedString
       max:
         name: max
@@ -1802,6 +1817,7 @@ classes:
         domain_of:
         - TiltRange
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         minimum_value: -90
@@ -1811,9 +1827,16 @@ classes:
           symbol: °
           descriptive_name: degrees
         any_of:
-        - range: float
+        - description: Maximal tilt angle in degrees
+          exact_mappings:
+          - cdp-common:tiltseries_tilt_max
+          range: float
+          required: true
           minimum_value: -90
           maximum_value: 90
+          unit:
+            symbol: °
+            descriptive_name: degrees
         - range: FloatFormattedString
   TiltSeries:
     name: TiltSeries
@@ -1853,7 +1876,10 @@ classes:
         minimum_value: 0
         pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
         any_of:
-        - range: float
+        - description: Binning factor of the aligned tilt series
+          exact_mappings:
+          - cdp-common:tiltseries_aligned_tiltseries_binning
+          range: float
           minimum_value: 0
         - range: FloatFormattedString
       binning_from_frames:
@@ -1871,7 +1897,10 @@ classes:
         minimum_value: 0
         pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
         any_of:
-        - range: float
+        - description: Describes the binning factor from frames to tilt series file
+          exact_mappings:
+          - cdp-common:tiltseries_binning_from_frames
+          range: float
           minimum_value: 0
         - range: FloatFormattedString
       camera:
@@ -1976,6 +2005,7 @@ classes:
         domain_of:
         - TiltSeries
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         minimum_value: 0
@@ -1984,8 +2014,15 @@ classes:
           symbol: mm
           descriptive_name: millimeters
         any_of:
-        - range: float
+        - description: Spherical Aberration Constant of the objective lens in millimeters
+          exact_mappings:
+          - cdp-common:tiltseries_spherical_aberration_constant
+          range: float
+          required: true
           minimum_value: 0
+          unit:
+            symbol: mm
+            descriptive_name: millimeters
         - range: FloatFormattedString
       tilt_alignment_software:
         name: tilt_alignment_software
@@ -2009,6 +2046,7 @@ classes:
         domain_of:
         - TiltSeries
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         minimum_value: -360
@@ -2018,9 +2056,16 @@ classes:
           symbol: °
           descriptive_name: degrees
         any_of:
-        - range: float
+        - description: Rotation angle in degrees
+          exact_mappings:
+          - cdp-common:tiltseries_tilt_axis
+          range: float
+          required: true
           minimum_value: -360
           maximum_value: 360
+          unit:
+            symbol: °
+            descriptive_name: degrees
         - range: FloatFormattedString
       tilt_range:
         name: tilt_range
@@ -2044,13 +2089,19 @@ classes:
         domain_of:
         - TiltSeries
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         minimum_value: 1
         maximum_value: 5
         pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
         any_of:
-        - range: integer
+        - description: Author assessment of tilt series quality within the dataset
+            (1-5, 5 is best)
+          exact_mappings:
+          - cdp-common:tiltseries_tilt_series_quality
+          range: integer
+          required: true
           minimum_value: 1
           maximum_value: 5
         - range: IntegerFormattedString
@@ -2063,6 +2114,7 @@ classes:
         domain_of:
         - TiltSeries
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         minimum_value: 0
@@ -2072,9 +2124,16 @@ classes:
           symbol: °
           descriptive_name: degrees
         any_of:
-        - range: float
+        - description: Tilt step in degrees
+          exact_mappings:
+          - cdp-common:tiltseries_tilt_step
+          range: float
+          required: true
           minimum_value: 0
           maximum_value: 90
+          unit:
+            symbol: °
+            descriptive_name: degrees
         - range: FloatFormattedString
       tilting_scheme:
         name: tilting_scheme
@@ -2100,6 +2159,7 @@ classes:
         domain_of:
         - TiltSeries
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         minimum_value: 0
@@ -2108,8 +2168,16 @@ classes:
           symbol: e^-/Å^2
           descriptive_name: electrons per square Angstrom
         any_of:
-        - range: float
+        - description: Number of Electrons reaching the specimen in a square Angstrom
+            area for the entire tilt series
+          exact_mappings:
+          - cdp-common:tiltseries_total_flux
+          range: float
+          required: true
           minimum_value: 0
+          unit:
+            symbol: e^-/Å^2
+            descriptive_name: electrons per square Angstrom
         - range: FloatFormattedString
       pixel_spacing:
         name: pixel_spacing
@@ -2120,6 +2188,7 @@ classes:
         domain_of:
         - TiltSeries
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         minimum_value: 0.001
@@ -2128,8 +2197,15 @@ classes:
           symbol: Å/px
           descriptive_name: Angstroms per pixel
         any_of:
-        - range: float
+        - description: Pixel spacing for the tilt series
+          exact_mappings:
+          - cdp-common:tiltseries_pixel_spacing
+          range: float
+          required: true
           minimum_value: 0.001
+          unit:
+            symbol: Å/px
+            descriptive_name: Angstroms per pixel
         - range: FloatFormattedString
   TomogramSize:
     name: TomogramSize
@@ -2203,13 +2279,17 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: integer
+        range: Any
         required: true
         inlined: true
         inlined_as_list: true
+        pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
         unit:
           symbol: px
           descriptive_name: pixels
+        any_of:
+        - range: integer
+        - range: IntegerFormattedString
       y:
         name: y
         description: y offset data relative to the canonical tomogram in pixels
@@ -2219,13 +2299,17 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: integer
+        range: Any
         required: true
         inlined: true
         inlined_as_list: true
+        pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
         unit:
           symbol: px
           descriptive_name: pixels
+        any_of:
+        - range: integer
+        - range: IntegerFormattedString
       z:
         name: z
         description: z offset data relative to the canonical tomogram in pixels
@@ -2235,13 +2319,17 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
-        range: integer
+        range: Any
         required: true
         inlined: true
         inlined_as_list: true
+        pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
         unit:
           symbol: px
           descriptive_name: pixels
+        any_of:
+        - range: integer
+        - range: IntegerFormattedString
   Tomogram:
     name: Tomogram
     description: Metadata describing a tomogram.
@@ -2258,6 +2346,7 @@ classes:
         domain_of:
         - Tomogram
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         minimum_value: 0.001
@@ -2266,8 +2355,15 @@ classes:
           symbol: Å/voxel
           descriptive_name: Angstroms per voxel
         any_of:
-        - range: float
+        - description: Voxel spacing equal in all three axes in angstroms
+          exact_mappings:
+          - cdp-common:tomogram_voxel_spacing
+          range: float
+          required: true
           minimum_value: 0.001
+          unit:
+            symbol: Å/voxel
+            descriptive_name: Angstroms per voxel
         - range: FloatFormattedString
       fiducial_alignment_status:
         name: fiducial_alignment_status
@@ -2279,11 +2375,17 @@ classes:
         domain_of:
         - Tomogram
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
         any_of:
-        - range: fiducial_alignment_status_enum
+        - description: Whether the tomographic alignment was computed based on fiducial
+            markers.
+          exact_mappings:
+          - cdp-common:tomogram_fiducial_alignment_status
+          range: fiducial_alignment_status_enum
+          required: true
         - range: StringFormattedString
       ctf_corrected:
         name: ctf_corrected
@@ -2321,12 +2423,17 @@ classes:
         domain_of:
         - Tomogram
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
           ]*$)
         any_of:
-        - range: tomogrom_reconstruction_method_enum
+        - description: Describe reconstruction method (WBP, SART, SIRT)
+          exact_mappings:
+          - cdp-common:tomogram_reconstruction_method
+          range: tomogrom_reconstruction_method_enum
+          required: true
         - range: StringFormattedString
       reconstruction_software:
         name: reconstruction_software

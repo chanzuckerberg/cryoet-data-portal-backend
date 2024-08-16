@@ -16,6 +16,57 @@ def _materialize_classes(schema: SchemaView) -> dict:
             c_def.attributes[attr.name] = attr
 
 
+# =============================================================================
+# Functions to merge slot fields
+# =============================================================================
+
+
+def _merge_field(slot: dict, slot_to_merge: dict, field: str) -> None:
+    """
+    Merge an arbitrary field from slot_to_merge into slot.
+    """
+    if field not in slot_to_merge or slot_to_merge[field] in [None, []]:
+        return
+    if slot[field] not in [None, []] and slot[field] != slot_to_merge[field]:
+        print(
+            f"{field} already set for slot {slot['name']} ({slot[field]}). NOT overwriting with {slot_to_merge[field]}",
+        )
+    else:
+        slot[field] = slot_to_merge[field]
+
+
+def _add_to_slot_minimum_value(slot: dict, minimum_value: Union[int, float, None]) -> Union[int, float, None]:
+    """
+    Add the minimum_value from the common schema to the slot minimum_value.
+    """
+    if minimum_value is None:
+        return slot["minimum_value"]
+
+    if "minimum_value" in slot and slot["minimum_value"] is not None and slot["minimum_value"] != minimum_value:
+        print(
+            f"[WARNING]: Minimum value already set for slot {slot['name']} ({slot['minimum_value']}). NOT overwriting with {minimum_value}",
+        )
+        return slot["minimum_value"]
+
+    return minimum_value
+
+
+def _add_to_slot_maximum_value(slot: dict, maximum_value: Union[int, float, None]) -> Union[int, float, None]:
+    """
+    Add the maximum_value from the common schema to the slot maximum_value.
+    """
+    if maximum_value is None:
+        return slot["maximum_value"]
+
+    if "maximum_value" in slot and slot["maximum_value"] is not None and slot["maximum_value"] != maximum_value:
+        print(
+            f"[WARNING]: Maximum value already set for slot {slot['name']} ({slot['maximum_value']}). NOT overwriting with {maximum_value}",
+        )
+        return slot["maximum_value"]
+
+    return maximum_value
+
+
 def _add_to_slot_pattern(slot: dict, pattern: Union[str, None]) -> str:
     """
     Add the pattern from the common schema to the slot pattern.
@@ -36,121 +87,141 @@ def _add_to_slot_pattern(slot: dict, pattern: Union[str, None]) -> str:
             return f"({slot['pattern']})|({pattern})"
 
 
-def _add_to_slot_minimum_value(slot: dict, minimum_value: Union[int, float]) -> Union[int, float]:
-    """
-    Add the minimum_value from the common schema to the slot minimum_value.
-    """
-    if "minimum_value" in slot and slot["minimum_value"] is not None and slot["minimum_value"] != minimum_value:
-        print(
-            f"[WARNING]: Minimum value already set for slot {slot['name']} ({slot['minimum_value']}). NOT overwriting with {minimum_value}",
-        )
-        return slot["minimum_value"]
-    else:
-        return minimum_value
+# =============================================================================
+# Functions to merge slots
+# =============================================================================
 
 
-def _add_to_slot_maximum_value(slot: dict, maximum_value: Union[int, float]) -> Union[int, float]:
+def _merge_common_into_slot(slot: dict, common_slot: dict) -> None:
     """
-    Add the maximum_value from the common schema to the slot maximum_value.
+    Function that merges common slot fields into the slot.
+    We keep these merges separate from regular merging because we want to overwrite the slot's range or any_of field.
     """
-    if "maximum_value" in slot and slot["maximum_value"] is not None and slot["maximum_value"] != maximum_value:
+    if common_slot["range"] in ["Any", None]:
+        pass
+    elif slot["range"] not in ["Any", None] and slot["range"] != common_slot["range"]:
         print(
-            f"[WARNING]: Maximum value already set for slot {slot['name']} ({slot['maximum_value']}). NOT overwriting with {maximum_value}",
+            f"[WARNING]: Range already set for slot {slot['name']} ({slot['range']}). NOT overwriting with {common_slot['range']}",
         )
-        return slot["maximum_value"]
     else:
-        return maximum_value
+        slot["range"] = common_slot["range"]
+    _merge_field(slot, common_slot, "any_of")
+
+
+def _merge_into_slot(slot: dict, slot_to_merge: dict) -> None:
+    """
+    Merging function that merges slot_to_merge fields into slot. For both common and any_of merging.
+    Doesn't merge the range or any_of fields, or it would prevent further any_of merging.
+    """
+    _merge_field(slot, slot_to_merge, "description")
+    _merge_field(slot, slot_to_merge, "multivalued")
+    _merge_field(slot, slot_to_merge, "unit")
+    _merge_field(slot, slot_to_merge, "recommended")
+    _merge_field(slot, slot_to_merge, "required")
+    _merge_field(slot, slot_to_merge, "ifabsent")
+
+    slot["minimum_value"] = _add_to_slot_minimum_value(slot, slot_to_merge["minimum_value"])
+    slot["maximum_value"] = _add_to_slot_maximum_value(slot, slot_to_merge["maximum_value"])
+    slot["pattern"] = _add_to_slot_pattern(slot, slot_to_merge["pattern"])
+
+
+# =============================================================================
+# Function to copy over common schema slots
+# =============================================================================
+
+
+def _import_common_mapping(slot_expression: dict, common_slots: dict) -> None:
+    """
+    Merge common schema fields into the slot expression.
+    """
+    original_mappings = slot_expression["exact_mappings"]
+    if not original_mappings:
+        return
+
+    if len(original_mappings) > 1:
+        raise ValueError(f"Slot {slot_expression['name']} has multiple mappings to common schema: {original_mappings}.")
+
+    if len(original_mappings) == 0:
+        raise ValueError(f"Slot {slot_expression['name']} has no mappings to common schema.")
+
+    common_slot = common_slots.get(original_mappings[0].replace("cdp-common:", ""))
+
+    if not common_slot:
+        raise ValueError(
+            f"Slot {original_mappings[0]} does not exist in common schema. Check the exact_mappings for {slot_expression['name']}.",
+        )
+
+    _merge_common_into_slot(slot_expression, common_slot)
+    _merge_into_slot(slot_expression, common_slot)
+
+
+# =============================================================================
+# Function to add custom fields to slots
+# =============================================================================
+
+
+def _add_custom_fields(slot_expression: dict, schema: SchemaView) -> None:
+    schema_types = schema.all_types()
+    schema_enums = schema.all_enums()
+
+    # if the slot's multivalued and required, add a minimum_cardinality of 1
+    if slot_expression["multivalued"] and slot_expression["required"]:
+        slot_expression["minimum_cardinality"] = 1
+
+    if slot_expression["range"] is None:
+        return
+
+    slot_expression["range"] = slot_expression["range"].replace("cdp-common:", "")
+    # if the slot's range is a type, add the pattern from the type
+    if slot_expression["range"] in schema_types:
+        slot_expression["pattern"] = _add_to_slot_pattern(
+            slot_expression,
+            schema.get_type(slot_expression["range"]).pattern,
+        )
+    # if the slot's range is an enum, add the pattern from the enum
+    if slot_expression["range"] in schema_enums:
+        for e in schema.get_enum(slot_expression["range"]).permissible_values:
+            slot_expression["pattern"] = _add_to_slot_pattern(slot_expression, f"^{e}$")
+
+
+# =============================================================================
+# Function to handle the slots' any_of attribute
+# =============================================================================
+
+
+def _handle_slot_any_of(slot: dict, common_slots: dict, schema: SchemaView) -> None:
+    # if the slot has an any_of attribute (with possibly multiple ranges and each of those ranges
+    # possibly being a enum / type, add all those patterns
+    # also add any corresponding minimum_value and maximum_value attributes
+    if "any_of" not in slot:
+        return
+
+    for any_of_slot in slot["any_of"]:
+        _import_common_mapping(any_of_slot, common_slots)
+        _add_custom_fields(any_of_slot, schema)
+        _merge_into_slot(slot, any_of_slot)
+        # to make sure equality checks work when merging fields
+        any_of_slot["pattern"] = None
 
 
 def _materialize_schema(schema: SchemaView, common_schema: SchemaView) -> SchemaView:
     """
     Copy range, descriptions and patterns from exact_mappings to common_schema.
     """
-    # Make all slots attributes of their classes
-    _materialize_classes(schema)
-
     # Copy descriptions and ranges from common_schema
     common_slots = common_schema.all_slots()
 
-    # Ensure types are properly implemented in the generated Pydantic
-    schema_types = schema.all_types()
-
-    # Ensure enums are properly implemented in the generated Pydantic
-    schema_enums = schema.all_enums()
+    # Make all slots attributes of their classes
+    _materialize_classes(schema)
 
     # Loop through all classes and their attributes, adding relevant attributes from common schema
     for c in schema.all_classes():
         clz = schema.get_class(c)
         for s in clz.attributes:
             slot = clz.attributes[s]
-            original_mappings = slot["exact_mappings"]
-            if original_mappings:
-                mappings = [m.replace("cdp-common:", "") for m in original_mappings if "cdp-common:" in m]
-
-                if len(mappings) > 1:
-                    raise ValueError(
-                        f"Slot {slot['name']} with mappings {original_mappings} has multiple mappings to common schema",
-                    )
-
-                if len(mappings) == 0:
-                    raise ValueError(
-                        f"Slot {slot['name']} with mappings {original_mappings} does not have a mapping to common schema",
-                    )
-
-                common_slot = common_slots.get(mappings[0])
-
-                if not common_slot:
-                    raise ValueError(
-                        f"Slot {mappings[0]} does not exist in common schema. Check the exact_mappings for {slot['name']}.",
-                    )
-
-                slot["range"] = common_slot["range"]
-                slot["any_of"] = common_slot["any_of"]
-                slot["description"] = common_slot["description"]
-                slot["multivalued"] = common_slot["multivalued"]
-                slot["unit"] = common_slot["unit"]
-                slot["minimum_value"] = common_slot["minimum_value"]
-                slot["maximum_value"] = common_slot["maximum_value"]
-                slot["required"] = common_slot["required"]
-                slot["recommended"] = common_slot["recommended"]
-                slot["pattern"] = _add_to_slot_pattern(slot, common_slot["pattern"])
-                slot["ifabsent"] = common_slot["ifabsent"]
-            # if the slot's multivalued and required, add a minimum_cardinality of 1
-            if slot["multivalued"] and slot["required"]:
-                slot["minimum_cardinality"] = 1
-            # if the slot's range is a type, add the pattern from the type
-            if slot["range"] in schema_types:
-                slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(slot["range"]).pattern)
-            # if the slot's range is an enum, add the pattern from the enum
-            if slot["range"] in schema_enums:
-                for _, e in enumerate(schema.get_enum(slot["range"]).permissible_values):
-                    slot["pattern"] = _add_to_slot_pattern(slot, f"^{e}$")
-            # if the slot has an any_of attribute (with possibly multiple ranges and each of those ranges
-            # possibly being a enum / type, add all those patterns
-            # also add any corresponding minimum_value and maximum_value attributes
-            if "any_of" in slot:
-                for _, a in enumerate(slot["any_of"]):
-                    range_type = None
-                    if "range" in a:
-                        range_type = a["range"].replace("cdp-common:", "")
-                        if range_type in schema_types and "pattern" in schema.get_type(range_type):
-                            a["range"] = range_type
-                            slot["pattern"] = _add_to_slot_pattern(slot, schema.get_type(range_type).pattern)
-                        if common_slot := common_slots.get(range_type):
-                            slot["description"] = common_slot["description"]
-                            slot["unit"] = common_slot["unit"]
-                            a["range"] = common_slot["range"]
-                            # Switch range_type to the field's type so that we can check it for ENUM-ness below.
-                            range_type = a["range"]
-                            a["minimum_value"] = common_slot["minimum_value"]
-                            a["maximum_value"] = common_slot["maximum_value"]
-                        if range_type in schema_enums:
-                            for _, e in enumerate(schema.get_enum(range_type).permissible_values):
-                                slot["pattern"] = _add_to_slot_pattern(slot, f"^{e}$")
-                    if "minimum_value" in a and a["minimum_value"] is not None:
-                        slot["minimum_value"] = _add_to_slot_minimum_value(slot, a["minimum_value"])
-                    if "maximum_value" in a and a["maximum_value"] is not None:
-                        slot["maximum_value"] = _add_to_slot_maximum_value(slot, a["maximum_value"])
+            _import_common_mapping(slot, common_slots)
+            _add_custom_fields(slot, schema)
+            _handle_slot_any_of(slot, common_slots, schema)
 
     # Make sure the descriptions from mixin classes are carried over
     for c in schema.all_classes():
