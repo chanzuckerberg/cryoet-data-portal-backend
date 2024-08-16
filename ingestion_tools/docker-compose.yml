@@ -12,4 +12,5 @@ services:
       - AWS_SECRET_ACCESS_KEY=test
     volumes:
       - ./ingestion_tools:/usr/src/app/ingestion_tools
+      - ./test_infra:/usr/src/app/test_infra # mount test data
     command: ["sleep", "infinity"]

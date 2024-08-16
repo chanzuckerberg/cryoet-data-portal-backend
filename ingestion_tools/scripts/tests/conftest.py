@@ -63,3 +63,8 @@ def s3_client(endpoint_url: str) -> S3Client:
         endpoint_url=endpoint_url,
         config=Config(signature_version="s3v4"),
     )
+
+@pytest.fixture
+def local_test_data_dir() -> str:
+    cd = os.path.dirname(__file__).split("/")[0:-3]
+    return os.path.join("/", *cd, "test_infra/test_files")

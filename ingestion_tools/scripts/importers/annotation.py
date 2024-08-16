@@ -3,11 +3,11 @@ import os
 import os.path
 from collections import defaultdict
 from functools import partial
-from typing import TYPE_CHECKING, Any, TypedDict
+from typing import Any, TYPE_CHECKING, TypedDict
 
 import ndjson
 
-from common import point_converter as pc
+from common import mesh_converter as mc, point_converter as pc
 from common.config import DepositionImportConfig
 from common.finders import BaseFinder, DepositionObjectImporterFactory, SourceGlobFinder, SourceMultiGlobFinder
 from common.fs import FileSystemApi
@@ -149,6 +149,8 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             anno = PointAnnotation(**instance_args)
         if shape == "InstanceSegmentation":
             anno = InstanceSegmentationAnnotation(**instance_args)
+        if shape == "TriangularMesh":
+            anno = TriangularMeshAnnotation(**instance_args)
         if not anno:
             raise NotImplementedError(f"Unknown shape {shape}")
         if anno.is_valid():
@@ -476,3 +478,61 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
     def get_object_count(self, output_prefix) -> int:
         # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
         return len(self.get_distinct_ids(output_prefix))
+
+
+class TriangularMeshAnnotation(BaseAnnotationSource):
+    """Triangular Meshes are converted to glb format"""
+    shape = "TriangularMesh"
+    map_functions = {
+        # TODO: resolve hff
+        # "hff": mc.from_hff,  # this is hdf5 format https://sfftk.readthedocs.io/en/latest/
+        # The hff can support multiple meshes, how does this work with this paradigm? We can either askt eh user to
+        # specify eacgh mesh to extra in the metadata or extract them all here.
+        "obj": mc.from_obj,
+        "stl": mc.from_stl,
+        "vtk": mc.from_vtk,
+    }
+    valid_file_formats = list(map_functions.keys())
+    mesh_label: int
+    output_format: str = "glb"
+
+    def __init__(
+        self,
+        mesh_label: int | None = None,
+        *args,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        if not mesh_label:
+            mesh_label = 1
+        self.mesh_label = mesh_label
+        self.voxel_spacing = self.get_voxel_spacing()
+
+    def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
+        metadata = [
+            {
+                "format": self.output_format,
+                "path": self.get_output_filename(output_prefix),
+                "shape": self.shape,
+                "is_visualization_default": self.is_visualization_default,
+            }
+        ]
+        return metadata
+
+    def convert(self, output_prefix: str):
+        mesh_file = self.config.fs.localreadable(self.path)
+        output_file_name = self.get_output_filename(output_prefix)
+        tmp_path = self.config.fs.localwritable(output_file_name)
+        self.map_functions[self.file_format](mesh_file, tmp_path)
+        self.config.fs.push(tmp_path)
+
+    def get_object_count(self, output_prefix: str) -> int:
+        return 1
+
+    def is_valid(self) -> bool:
+        # TODO this should check that the glb is actually correct
+        return True
+
+    def get_output_filename(self, output_prefix: str) -> str:
+        output_prefix = "-".join([output_prefix, str(self.mesh_label)])
+        return super().get_output_filename(output_prefix, self.output_format)

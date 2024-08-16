@@ -1,20 +1,26 @@
 import json
+import os
 from os.path import basename
 from typing import Any, Dict
 
 import ndjson
 import pytest
-from importers.annotation import InstanceSegmentationAnnotation, OrientedPointAnnotation, PointAnnotation
+import trimesh
+from mypy_boto3_s3 import S3Client
+
+from common.config import DepositionImportConfig
+from common.fs import FileSystemApi
+from importers.annotation import (
+    InstanceSegmentationAnnotation,
+    OrientedPointAnnotation,
+    PointAnnotation,
+    TriangularMeshAnnotation)
 from importers.dataset import DatasetImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
 from importers.voxel_spacing import VoxelSpacingImporter
-from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
 from tests.s3_import.util import list_dir
-
-from common.config import DepositionImportConfig
-from common.fs import FileSystemApi
 
 default_anno_metadata = {
     "annotation_object": {
@@ -46,6 +52,14 @@ def dataset_config(s3_fs: FileSystemApi, test_output_bucket: str) -> DepositionI
     output_path = f"{test_output_bucket}/output"
     input_bucket = "test-public-bucket"
     config = DepositionImportConfig(s3_fs, config_file, output_path, input_bucket, IMPORTERS)
+    return config
+
+
+@pytest.fixture
+def dataset_config_local(local_fs: FileSystemApi, local_test_data_dir, tmp_path) -> DepositionImportConfig:
+    config_file = "tests/fixtures/annotations/anno_config.yaml"
+    output_path = f"/{tmp_path}/output"
+    config = DepositionImportConfig(local_fs, config_file, output_path, local_test_data_dir, IMPORTERS)
     return config
 
 
@@ -937,3 +951,58 @@ def test_ingest_instance_point_data(
 
         # Check id
         assert exp_point["instance_id"] == point["instance_id"], f"Incorrect id for {case['case']}"
+
+
+def test_ingest_triangular_mesh(
+    tomo_importer: TomogramImporter,
+    dataset_config_local: DepositionImportConfig,
+    local_test_data_dir: str):
+
+    # Arrange
+    glob_string = "annotations/Endospore.stl"
+    dataset_config_local._set_object_configs(
+        "annotation", [
+            {
+                "metadata": default_anno_metadata,
+                "sources": [
+                    {
+                        "TriangularMesh": {
+                            "file_format": "stl",
+                            "glob_string": glob_string,
+                            "is_visualization_default": False,
+                        },
+                    },
+                ],
+            },
+        ])
+
+    # Action
+    anno = TriangularMeshAnnotation(
+        config=dataset_config_local,
+        metadata=default_anno_metadata,
+        path=os.path.join(local_test_data_dir, "input_bucket/20002", glob_string),
+        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        file_format='stl',
+        identifier=100
+    )
+    anno.import_item()
+    anno.import_metadata()
+
+    # Assert
+    # verify local_metadata
+    expected_local_metadata = {
+        "object_count": 1,
+        "files": [
+            {
+                "format": "glb",
+                "path": "dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0-1_triangularmesh.glb",
+                "shape": "TriangularMesh",
+                "is_visualization_default": False,
+            },
+        ],
+    }
+    assert anno.local_metadata == expected_local_metadata
+
+    # load the new mesh file
+    anno_file = anno.get_output_filename(anno.get_output_path())
+    assert trimesh.load(anno_file)
