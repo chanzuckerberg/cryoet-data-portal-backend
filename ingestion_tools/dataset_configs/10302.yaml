@@ -79,15 +79,7 @@ datasets:
       value:
       - '10302'
 depositions:
-- metadata:
-    authors: *id001
-    dates: *id002
-    deposition_description: TBA
-    deposition_identifier: 10300
-    deposition_title: TBA
-    deposition_types:
-    - dataset
-  sources:
+- sources:
   - literal:
       value:
       - 10300

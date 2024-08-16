@@ -1,0 +1,53 @@
+name: Validate dataset configs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ingestion_tools/dataset_configs/**
+      - schema/**/*.py
+      - schema/**/*.yaml
+      - schema/**/Makefile
+      - schema/**/*.json # ingestion_config_validation_exclusions.json
+      - schema/.version
+  pull_request:
+    paths:
+      - ingestion_tools/dataset_configs/**
+      - schema/**/*.py
+      - schema/**/*.yaml
+      - schema/**/Makefile
+      - schema/**/*.json # ingestion_config_validation_exclusions.json
+      - schema/.version
+  workflow_dispatch:
+
+jobs:
+  run-validation:
+    name: Validate dataset configs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --no-cache-dir poetry
+          poetry config virtualenvs.create false
+          poetry install
+        working-directory: schema/
+      - name: Build Pydantic models
+        run: make build
+        working-directory: schema/
+      - name: Validate dataset configs
+        run: |
+          make validate-configs-with-network
+        working-directory: schema/
+      - name: Archive validation results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dataset-configs-validation-logs
+          path: schema/ingestion_config/latest/ingestion_config_validate_errors/
