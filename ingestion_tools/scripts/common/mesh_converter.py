@@ -1,4 +1,3 @@
-import base64
 import logging
 import typing
 
@@ -10,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 def convert_mesh_to_glb(convert_func: typing.Callable[[str], trimesh.Trimesh]) -> typing.Callable:
     """
-    A decorator to convert  and scale a mesh by a given factor
+    A decorator to convert and scale a mesh by a given factor
 
     :param convert_func: the function to convert a mesh file to a trimesh object.
     """
@@ -33,11 +32,11 @@ def convert_mesh_to_glb(convert_func: typing.Callable[[str], trimesh.Trimesh]) -
 @convert_mesh_to_glb
 def from_obj(input_file: str) -> trimesh.Trimesh:
     """
-    Convert an obj file to a glb file. More information about this format can be found
+    Load a obj file into a trimesh object. More information about this format can be found
     here: https://en.wikipedia.org/wiki/Wavefront_.obj_file
 
     :param input_file: the path to an obj file.
-    :return: the converted mesh as a trimesh object.
+    :return: the mesh loaded into a trimesh object.
     """
     return trimesh.load(input_file)
 
@@ -45,10 +44,11 @@ def from_obj(input_file: str) -> trimesh.Trimesh:
 @convert_mesh_to_glb
 def from_stl(input_file: str):
     """
-    Convert an stl file to a glb file.
+    Load a stl file into a trimesh object. More information about this format can be found
+    here https://en.wikipedia.org/wiki/STL_(file_format)
 
-    :param input_file: the path to an stl file.
-    :return: the converted mesh as a trimesh object.
+    :param input_file: the path to a stl file.
+    :return: the mesh loaded into a trimesh object.
     """
     return trimesh.load(input_file)
 
@@ -56,23 +56,11 @@ def from_stl(input_file: str):
 @convert_mesh_to_glb
 def from_vtk(input_file: str) -> trimesh.Trimesh:
     """
-    Convert an vtk file to a glb file. More information about this format can be found
-       vtk -(vtk)-> stl -(trimesh)-> glb
-    :param input_file: the path to an vtk file.
-    :return: the converted mesh as a trimesh object.
+    Load a vtk file into a trimesh object.. More information about this format can be found
+    here https://en.wikipedia.org/wiki/VTK
 
-    meshio or vtk?
-    meshio
-    - has a lot of starts and forks on github,
-    - it was last updated 7 months ago
-    - only one primary contributor.
-    - MIT license
-
-    vtk
-    - license BSD License (BSD)
-    - back by and organization Kitware
-    - for activitiy stats https://openhub.net/p/vtk. It still has a lot of activity.
-
+    :param input_file: the path to a vtk file.
+    :return: the mesh loaded into a trimesh object.
     """
     import vtk
 
