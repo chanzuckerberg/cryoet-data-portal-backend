@@ -35,7 +35,7 @@ class FileSystemApi(ABC):
         pass
 
     @abstractmethod
-    def size(self, path: str) -> int:
+    def file_size(self, path: str) -> int:
         pass
 
     @abstractmethod
@@ -90,7 +90,7 @@ class S3Filesystem(FileSystemApi):
     def open(self, path: str, mode: str) -> TextIOBase:
         return self.s3fs.open(path, mode)
 
-    def size(self, path: str) -> int:
+    def file_size(self, path: str) -> int:
         return self.s3fs.size(path)
 
     def localreadable(self, path: str) -> str:
@@ -185,7 +185,7 @@ class LocalFilesystem(FileSystemApi):
     def open(self, path: str, mode: str) -> TextIOBase:
         return open(path, mode)  # noqa
 
-    def size(self, path: str) -> int:
+    def file_size(self, path: str) -> int:
         return os.path.getsize(path)
 
     def localreadable(self, path: str) -> str:

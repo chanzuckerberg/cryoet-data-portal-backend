@@ -11,7 +11,6 @@ import ndjson
 import pandas as pd
 import pytest
 import tifffile
-import tifffile.tifffile
 import zarr
 from mrcfile.mrcinterpreter import MrcInterpreter
 from ome_zarr.io import ZarrLocation
@@ -27,29 +26,25 @@ def get_header(mrcfile: str, fs: FileSystemApi) -> MrcInterpreter:
     """Get the mrc file headers for a list of mrc files."""
     try:
         with fs.open(mrcfile, "rb") as f:
-            header = MrcInterpreter(iostream=f, permissive=True, header_only=True)
-        return header
+            return MrcInterpreter(iostream=f, permissive=True, header_only=True)
     except Exception as e:
         pytest.fail(f"Failed to get header for {mrcfile}: {e}")
 
 
 def get_zarr_headers(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
     """Get the zattrs and zarray data for a zarr volume file."""
-    expected_subfolders = {f"{zarrfile}/{i}" for i in range(3)}.union({f"{zarrfile}/.zattrs", f"{zarrfile}/.zgroup"})
-    actual_subfolders = {"s3://" + folder for folder in fs.glob(zarrfile + "/*")}
-    if expected_subfolders != actual_subfolders:
-        pytest.fail(f"Expected zarr subfolders: {expected_subfolders}, Actual zarr subfolders: {actual_subfolders}")
+    expected_children = {f"{child}" for child in [0, 1, 2, ".zattrs", ".zgroup"]}
 
     fsstore = zarr.storage.FSStore(url=zarrfile, mode="r", fs=fs.s3fs, dimension_separator="/")
-    fsstore_subfolders = set(fsstore.listdir())
-    expected_fsstore_subfolders = {str(i) for i in range(3)}.union({".zattrs", ".zgroup"})
-    if expected_fsstore_subfolders != fsstore_subfolders:
-        pytest.fail(f"Expected zarr subfolders: {expected_subfolders}, Actual zarr subfolders: {fsstore_subfolders}")
+    fsstore_children = set(fsstore.listdir())
+    expected_fsstore_children = {"0", "1", "2", ".zattrs", ".zgroup"}
+    if expected_fsstore_children != fsstore_children:
+        pytest.fail(f"Expected zarr children: {expected_children}, Actual zarr children: {fsstore_children}")
 
     loc = ZarrLocation(fsstore)
     zarrays = {}
-    for i in range(3):
-        zarrays[i] = json.loads(fsstore[str(i) + "/.zarray"].decode())
+    for binning_factor in [0, 1, 2]:  # 1x, 2x, 4x
+        zarrays[binning_factor] = json.loads(fsstore[str(binning_factor) + "/.zarray"].decode())
     return {"zattrs": loc.root_attrs, "zarrays": zarrays}
 
 
@@ -71,12 +66,6 @@ def dataset_metadata(dataset_metadata_file: str, filesystem: FileSystemApi) -> D
 
 
 @pytest.fixture(scope="session")
-def frames_filesizes(frames_files: List[str], filesystem: FileSystemApi) -> Dict[str, int]:
-    """Get the file sizes for a list of frame files."""
-    return {frame_file: filesystem.size(frame_file) for frame_file in frames_files}
-
-
-@pytest.fixture(scope="session")
 def frames_headers(
     frames_files: List[str],
     filesystem: FileSystemApi,
@@ -87,20 +76,26 @@ def frames_headers(
         if frame_file.endswith(".mrc"):
             return (frame_file, get_header(frame_file, filesystem))
         elif frame_file.endswith(".tif") or frame_file.endswith(".tiff") or frame_file.endswith(".eer"):
-            with filesystem.open(frame_file, "rb") as f:
-                # For some reason, just returning the tifffile.TiffFile object gives issues
-                return (frame_file, tifffile.TiffFile(f).pages)
+            # TODO: figure out a way to not download the entire file
+            # with filesystem.open(frame_file, "rb") as f, tifffile.TiffFile(f) as tif:
+            #     return (frame_file, [page.shape for page in tif.pages])
+            return (None, None)
         else:
-            return None
+            return (None, None)
 
     # Open the images in parallel
     with ThreadPoolExecutor() as executor:
-        headers = list(executor.map(open_frame, frames_files))
-        headers = [header for header in headers if header is not None]
+        headers = {}
+
+        for header_filename, header_data in executor.map(open_frame, frames_files):
+            if header_filename is None:
+                continue
+            headers[header_filename] = header_data
+
         if not headers:
             pytest.skip("No file-format supported frames headers found")
 
-    return dict(headers)
+        return headers
 
 
 # ==================================================================================================

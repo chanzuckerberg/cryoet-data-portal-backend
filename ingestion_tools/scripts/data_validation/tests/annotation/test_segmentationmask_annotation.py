@@ -42,8 +42,10 @@ class TestSegmentationMask(HelperTestMRCHeader):
 
         def check_zattrs_path(header_data, _zarr_filename):
             del _zarr_filename
-            for i in range(3):
-                assert header_data["zattrs"]["multiscales"][0]["datasets"][i]["path"] == str(i)
+            for binning_factor in [0, 1, 2]:  # 1x, 2x, 4x
+                assert header_data["zattrs"]["multiscales"][0]["datasets"][binning_factor]["path"] == str(
+                    binning_factor,
+                )
 
         self.zarr_header_helper(seg_mask_annotation_zarr_headers, check_zattrs_path)
 
@@ -56,9 +58,13 @@ class TestSegmentationMask(HelperTestMRCHeader):
 
         def check_zattrs_voxel_spacings(header_data, _zarr_filename, voxel_spacing):
             del _zarr_filename
-            for i in range(3):
-                datasets_entry = header_data["zattrs"]["multiscales"][0]["datasets"][i]
-                assert datasets_entry["coordinateTransformations"][0]["scale"] == [voxel_spacing * (2**i)] * 3
+            for binning_factor in [0, 1, 2]:  # 1x, 2x, 4x
+                datasets_entry = header_data["zattrs"]["multiscales"][0]["datasets"][binning_factor]
+                for axis in [0, 1, 2]:  # x, y, z
+                    assert (
+                        datasets_entry["coordinateTransformations"][0]["scale"][axis]
+                        == voxel_spacing * 2**binning_factor
+                    )
 
         self.zarr_header_helper(
             seg_mask_annotation_zarr_headers,

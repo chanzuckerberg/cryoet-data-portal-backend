@@ -2,6 +2,7 @@ from typing import Dict
 
 import pytest
 from tests.helper_images import check_photo_valid
+from tests.helper_metadata import basic_metadata_check
 from tests.test_deposition import HelperTestDeposition
 
 from common.fs import FileSystemApi
@@ -15,16 +16,14 @@ class TestDataset:
         assert dataset_metadata["dataset_description"]
         assert dataset_metadata["dataset_title"]
         assert dataset_metadata["dataset_identifier"]
-        assert dataset_metadata["deposition_id"]
-        assert isinstance(dataset_metadata["authors"], list)
-        assert isinstance(dataset_metadata["authors"][0], dict)
+        basic_metadata_check(dataset_metadata)
 
     def test_dataset_key_photos(self, dataset_metadata: Dict, bucket: str, filesystem: FileSystemApi):
         """Check that the key_photos in the metadata are valid."""
-        if (thumbnail := dataset_metadata["key_photos"]["thumbnail"]) is not None:
+        if thumbnail := dataset_metadata["key_photos"]["thumbnail"]:
             check_photo_valid(thumbnail, bucket, filesystem)
 
-        if (snapshot := dataset_metadata["key_photos"]["snapshot"]) is not None:
+        if snapshot := dataset_metadata["key_photos"]["snapshot"]:
             check_photo_valid(snapshot, bucket, filesystem)
 
     def test_dataset_deposition(self, dataset_metadata: Dict, bucket: str, filesystem: FileSystemApi):

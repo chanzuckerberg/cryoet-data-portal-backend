@@ -7,6 +7,7 @@ import json
 from typing import Dict, Union
 
 from tests.helper_images import check_photo_valid
+from tests.helper_metadata import basic_metadata_check
 
 from common.fs import FileSystemApi
 
@@ -46,14 +47,12 @@ class HelperTestDeposition:
         assert deposition_metadata["deposition_description"]
         assert deposition_metadata["deposition_title"]
         assert deposition_metadata["deposition_identifier"]
-        assert deposition_metadata["deposition_id"]
-        assert isinstance(deposition_metadata["authors"], list)
-        assert isinstance(deposition_metadata["authors"][0], dict)
+        basic_metadata_check(deposition_metadata)
 
-        if (thumbnail := deposition_metadata["key_photos"]["thumbnail"]) is not None:
+        if thumbnail := deposition_metadata["key_photos"]["thumbnail"]:
             check_photo_valid(thumbnail, bucket, filesystem)
 
-        if (snapshot := deposition_metadata["key_photos"]["snapshot"]) is not None:
+        if snapshot := deposition_metadata["key_photos"]["snapshot"]:
             check_photo_valid(snapshot, bucket, filesystem)
 
         HelperTestDeposition.cached_deposition_valid[deposition_id] = True

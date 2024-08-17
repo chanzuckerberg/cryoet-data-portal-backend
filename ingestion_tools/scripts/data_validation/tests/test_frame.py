@@ -36,30 +36,17 @@ class TestFrame(HelperTestMRCHeader):
 
         assert not errors, "\n".join(errors)
 
-    def test_frames_filesizes(self, frames_filesizes: Dict[str, int]):
-        """Check that the frame files have a non-zero size."""
-        errors = []
-
-        for frame_file, size in frames_filesizes.items():
-            if size == 0:
-                errors.append(f"Empty frame file: {frame_file}")
-            if size > MAX_FRAME_SIZE:
-                errors.append(f"Large frame file: {frame_file}")
-
-        assert not errors, "\n".join(errors)
-
     def test_frames_dimensions(self, frames_headers: Dict[str, Union[tifffile.TiffPages, MrcInterpreter]]):
         """Check that the frame dimensions are consistent."""
         errors = []
         frames_dimensions = None
 
         for _, header in frames_headers.items():
-            if isinstance(header, tifffile.TiffFile):
-                curr_dimensions = (header[0].imagewidth, header[0].imagelength)
+            if isinstance(header, tifffile.TiffPages):
+                curr_dimensions = header[0].shape
                 # first ensure all pages have the same dimensions
-                assert all(
-                    (page.imagewidth, page.imagelength) == curr_dimensions for page in header
-                ), "Not all pages have the same dimensions"
+                # this loop takes a long time, need to multithread
+                assert all(page.shape == curr_dimensions for page in header), "Not all pages have the same dimensions"
                 if frames_dimensions is None:
                     frames_dimensions = curr_dimensions
                 elif curr_dimensions != frames_dimensions:

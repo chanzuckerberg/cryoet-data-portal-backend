@@ -385,7 +385,12 @@ def get_annotation_files_to_metadata_files(
 
 @pytest.fixture(scope="session")
 def point_annotation_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_point.ndjson"""
+    """
+    [Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_point.ndjson
+
+    Note: for files like this, we don't actually want to skip if there's no files found, because we're testing
+    if the metadata and annotation files are consistent. See `get_annotation_files_to_metadata_files` for more info.
+    """
     files = filesystem.glob(f"{annotations_dir}/*_point.ndjson")
     return ["s3://" + file for file in files]
 
@@ -408,7 +413,12 @@ def point_annotation_files_to_metadata_files(
 
 @pytest.fixture(scope="session")
 def oriented_point_annotation_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_orientedpoint.ndjson"""
+    """
+    [Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_orientedpoint.ndjson
+
+    Note: for files like this, we don't actually want to skip if there's no files found, because we're testing
+    if the metadata and annotation files are consistent. See `get_annotation_files_to_metadata_files` for more info.
+    """
     files = filesystem.glob(f"{annotations_dir}/*_orientedpoint.ndjson")
     return ["s3://" + file for file in files]
 
@@ -431,7 +441,12 @@ def oriented_point_annotation_files_to_metadata_files(
 
 @pytest.fixture(scope="session")
 def instance_seg_annotation_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_instancesegmentation.ndjson"""
+    """
+    [Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_instancesegmentation.ndjson
+
+    Note: for files like this, we don't actually want to skip if there's no files found, because we're testing
+    if the metadata and annotation files are consistent. See `get_annotation_files_to_metadata_files` for more info.
+    """
     files = filesystem.glob(f"{annotations_dir}/*_instancesegmentation.ndjson")
     return ["s3://" + file for file in files]
 
@@ -454,7 +469,12 @@ def instance_seg_annotation_files_to_metadata_files(
 
 @pytest.fixture(scope="session")
 def seg_mask_annotation_mrc_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_segmentationmask.mrc"""
+    """
+    [Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_segmentationmask.mrc
+
+    Note: for files like this, we don't actually want to skip if there's no files found, because we're testing
+    if the metadata and annotation files are consistent. See `get_annotation_files_to_metadata_files` for more info.
+    """
     files = filesystem.glob(f"{annotations_dir}/*_segmentationmask.mrc")
     return ["s3://" + file for file in files]
 
@@ -478,7 +498,12 @@ def seg_mask_annotation_mrc_files_to_metadata_files(
 
 @pytest.fixture(scope="session")
 def seg_mask_annotation_zarr_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_segmentationmask.zarr"""
+    """
+    [Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_segmentationmask.zarr
+
+    Note: for files like this, we don't actually want to skip if there's no files found, because we're testing
+    if the metadata and annotation files are consistent. See `get_annotation_files_to_metadata_files` for more info.
+    """
     files = filesystem.glob(f"{annotations_dir}/*_segmentationmask.zarr")
     return ["s3://" + file for file in files]
 
