@@ -625,8 +625,8 @@ slots:
   annotation_object_name:
     range: string
     required: true
-    description: annotation_object_stateName of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)
-  :
+    description: Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)
+  annotation_object_state:
     range: string
     description: Molecule state annotated (e.g. open, closed)
   #release_date (date): Date when annotation data is made public by the Data Portal.

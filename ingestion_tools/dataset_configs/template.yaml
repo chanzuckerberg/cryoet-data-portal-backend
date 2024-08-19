@@ -84,7 +84,7 @@ annotations: OPTIONAL
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
-      parent_filters: see InstanceSegmentation.parent_filters
+    parent_filters: see InstanceSegmentation.parent_filters
 dataset_keyphotos: OPTIONAL
 - sources: REQUIRED
   - literal: REQUIRED
