@@ -392,6 +392,9 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
+      TriangularMesh:
+        text: TriangularMesh
+        description: A mesh of triangles
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -951,7 +954,7 @@ classes:
         range: annotation_file_shape_type_enum
         inlined: true
         inlined_as_list: true
-        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)
+        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^TriangularMesh$)
       format:
         name: format
         description: File format label
