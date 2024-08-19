@@ -223,6 +223,9 @@ classes:
       SemanticSegmentationMask:
         description: The semantic segmentation mask annotation source.
         range: AnnotationSemanticSegmentationMaskFile
+      TriangularMesh:
+        description: The triangular mesh annotation source.
+        range: AnnotationTriangularMeshFile
       parent_filters:
         description: Filters for the parent of a source.
         range: AnnotationParentFilters

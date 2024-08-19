@@ -625,8 +625,8 @@ slots:
   annotation_object_name:
     range: string
     required: true
-    description: Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)
-  annotation_object_state:
+    description: annotation_object_stateName of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)
+  :
     range: string
     description: Molecule state annotated (e.g. open, closed)
   #release_date (date): Date when annotation data is made public by the Data Portal.
@@ -806,6 +806,8 @@ enums:
         description: A series of coordinates
       InstanceSegmentation:
         description: A volume with labels for multiple instances
+      TriangularMesh:
+        description: A mesh of triangles
 
   annotation_method_link_type_enum:
     description: Describes the type of link associated to the annotation method.
