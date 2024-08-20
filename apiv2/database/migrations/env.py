@@ -1,5 +1,6 @@
 from logging.config import fileConfig
 
+import sqlalchemy as sa
 from alembic import context
 from database.models import meta
 from platformics.settings import CLISettings
