@@ -164,6 +164,10 @@ classes:
       # Would also have literal here, but literal schema varies by class, so we have DefaultLiteralEntity instead
       # Would also have parent_filters here, but sometimes parent_filters doesn't apply (e.g., Dataset),
       # so we have individual ParentFiltersEntity instead
+      exclude:
+        description: Exclude files from the source that match (regexes).
+        range: string
+        multivalued: true
 
   DefaultLiteralEntity:
     description: Used as a mixin with root-level classes that contain sources that have literals.
@@ -231,6 +235,7 @@ classes:
         range: string
         multivalued: true
 
+
   AnnotationParentFilters:
     description: Filters for the parent of an annotation source.
     attributes:
@@ -268,6 +273,10 @@ classes:
       parent_filters:
         description: Permitted parent filters for a dataset source.
         range: DatasetParentFilters
+      exclude:
+        description: Exclude files from the source that match (regexes).
+        range: string
+        multivalued: true
 
   DatasetParentFilters:
     description: Types of parent filters for a dataset source.
@@ -291,6 +300,10 @@ classes:
         multivalued: true
         range: DatasetKeyPhotoSource
         required: true
+      exclude:
+        description: Exclude files from the source that match (regexes).
+        range: string
+        multivalued: true
 
   DatasetKeyPhotoSource:
     description: A key photo source.
@@ -351,6 +364,10 @@ classes:
       parent_filters:
         description: Permitted parent filters for a key photo source.
         range: DepositionKeyPhotoParentFilters
+      exclude:
+        description: Exclude files from the source that match (regexes).
+        range: string
+        multivalued: true
 
   DepositionKeyPhotoParentFilters:
     description: Types of parent filters for a key photo source.
@@ -384,6 +401,10 @@ classes:
       parent_filters:
         description: Permitted parent filters for a frame source.
         range: FrameParentFilters
+      exclude:
+        description: Exclude files from the source that match (regexes).
+        range: string
+        multivalued: true
 
   FrameParentFilters:
     description: Types of parent filters for a frame source.
@@ -419,6 +440,10 @@ classes:
       parent_filters:
         description: Permitted parent filters for a gain source.
         range: GainParentFilters
+      exclude:
+        description: Exclude files from the source that match (regexes).
+        range: string
+        multivalued: true
 
   GainParentFilters:
     description: Types of parent filters for a gain source.
@@ -454,6 +479,10 @@ classes:
       parent_filters:
         description: Permitted parent filters for a key image source.
         range: KeyImageParentFilters
+      exclude:
+        description: Exclude files from the source that match (regexes).
+        range: string
+        multivalued: true
 
   KeyImageParentFilters:
     description: Types of parent filters for a key image source.
@@ -491,6 +520,10 @@ classes:
       parent_filters:
         description: Permitted parent filters for a raw tilt source.
         range: RawTiltParentFilters
+      exclude:
+        description: Exclude files from the source that match (regexes).
+        range: string
+        multivalued: true
 
   RawTiltParentFilters:
     description: Types of parent filters for a raw tilt source.
@@ -526,6 +559,10 @@ classes:
       parent_filters:
         description: Permitted parent filters for a run source.
         range: RunParentFilters
+      exclude:
+        description: Exclude files from the source that match (regexes).
+        range: string
+        multivalued: true
 
   RunParentFilters:
     description: Types of parent filters for a run source.
@@ -586,6 +623,10 @@ classes:
       parent_filters:
         description: Permitted parent filters for a tilt series source.
         range: TiltSeriesParentFilters
+      exclude:
+        description: Exclude files from the source that match (regexes).
+        range: string
+        multivalued: true
 
   TiltSeriesParentFilters:
     description: Types of parent filters for a tilt series source.
@@ -623,6 +664,10 @@ classes:
       parent_filters:
         description: Permitted parent filters for a tomogram source.
         range: TomogramParentFilters
+      exclude:
+        description: Exclude files from the source that match (regexes).
+        range: string
+        multivalued: true
 
   TomogramParentFilters:
     description: Types of parent filters for a tomogram source.
@@ -668,6 +713,10 @@ classes:
       parent_filters:
         description: Permitted parent filters for a voxel spacing source.
         range: VoxelSpacingParentFilters
+      exclude:
+        description: Exclude files from the source that match (regexes).
+        range: string
+        multivalued: true
 
   VoxelSpacingParentFilters:
     description: Types of parent filters for a voxel spacing source.
