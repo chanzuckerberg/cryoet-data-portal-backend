@@ -737,7 +737,7 @@ classes:
         owner: AuthorEntityMixin
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
       primary_author_status:
@@ -751,7 +751,7 @@ classes:
         owner: AuthorEntityMixin
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
   APIDateStampedEntityMixin:
@@ -1232,7 +1232,7 @@ classes:
         owner: AnnotationAuthor
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
       primary_author_status:
@@ -1246,7 +1246,7 @@ classes:
         owner: AnnotationAuthor
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
   AnnotationFile:
@@ -1957,7 +1957,7 @@ classes:
         owner: DatasetAuthor
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
       primary_author_status:
@@ -1971,7 +1971,7 @@ classes:
         owner: DatasetAuthor
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
   DatasetFunding:
@@ -2663,7 +2663,7 @@ classes:
         owner: DepositionAuthor
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
       primary_author_status:
@@ -2677,7 +2677,7 @@ classes:
         owner: DepositionAuthor
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
   Deposition:
@@ -4333,7 +4333,7 @@ classes:
         owner: TomogramAuthor
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
       primary_author_status:
@@ -4347,7 +4347,7 @@ classes:
         owner: TomogramAuthor
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
   TomogramVoxelSpacing:
@@ -5036,7 +5036,7 @@ classes:
         domain_of:
         - DateStampedEntityMixin
         - APIDateStampedEntityMixin
-        range: string
+        range: date
         required: true
         inlined: true
         inlined_as_list: true
@@ -5051,7 +5051,7 @@ classes:
         domain_of:
         - DateStampedEntityMixin
         - APIDateStampedEntityMixin
-        range: string
+        range: date
         required: true
         inlined: true
         inlined_as_list: true
@@ -5067,7 +5067,7 @@ classes:
         domain_of:
         - DateStampedEntityMixin
         - APIDateStampedEntityMixin
-        range: string
+        range: date
         required: true
         inlined: true
         inlined_as_list: true
@@ -5212,7 +5212,7 @@ classes:
         owner: AuthorMixin
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
       primary_author_status:
@@ -5226,7 +5226,7 @@ classes:
         owner: AuthorMixin
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
 source_file: api/v2.0.0/api_models.yaml
