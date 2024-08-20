@@ -1,3 +1,4 @@
+import concurrent.futures
 import os.path
 import sys
 from typing import List, Tuple
@@ -35,20 +36,41 @@ def run_names(bucket: str, dataset: str, run_glob: str) -> List[str]:
     return run_names
 
 
-def voxel_spacings(bucket: str, dataset: str, voxelspacing_glob: str) -> List[float]:
-    """All voxel spacings matching the vozel spacing glob pattern in the dataset."""
+def get_voxel_spacing_files(bucket: str, dataset: str, run_names: List[str], voxelspacing_glob: str) -> List[str]:
     fs: S3Filesystem = FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
-    tentatives = fs.glob(f"s3://{bucket}/{dataset}/*/Tomograms/{voxelspacing_glob}")
+
+    tentatives = []
+
+    # Use ThreadPoolExecutor to run glob_task in parallel
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        # Map the run_names to the glob_task function
+        results = executor.map(
+            lambda run_name: fs.glob(f"s3://{bucket}/{dataset}/{run_name}/Tomograms/{voxelspacing_glob}"),
+            run_names,
+        )
+
+        # Combine results
+        for result in results:
+            tentatives += result
 
     exclude = ["Images", "dataset_metadata.json"]
 
     for ex in exclude:
         tentatives = [tent for tent in tentatives if ex not in tent]
 
-    vs_all = [os.path.basename(tent).lstrip("VoxelSpacing") for tent in tentatives]
-    vs = list(set(vs_all))
+    return tentatives
 
-    return vs
+
+def voxel_spacings(voxel_spacing_files: List[str]) -> List[float]:
+    """
+    All voxel spacings matching the voxel spacing glob pattern in the dataset.
+    Because voxel spacings are subfolders of the the runs, we also constrain the glob to be only for the provided runs.
+    """
+
+    voxel_spacings = [
+        os.path.basename(voxel_spacing_file).lstrip("VoxelSpacing") for voxel_spacing_file in voxel_spacing_files
+    ]
+    return list(set(voxel_spacings))
 
 
 def run_spacing_combinations(
@@ -56,14 +78,14 @@ def run_spacing_combinations(
     dataset: str,
     run_names: List[str],
     voxel_spacings: List[float],
+    voxel_spacing_files: List[str],
 ) -> List[Tuple[str, float]]:
     """Not all runs have all voxelspacings. Go through each run and find all the spacings present."""
-    fs = FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
     combos = []
 
     for run in run_names:
         for vs in voxel_spacings:
-            if fs.s3fs.exists(f"s3://{bucket}/{dataset}/{run}/Tomograms/VoxelSpacing{vs}"):
+            if f"{bucket}/{dataset}/{run}/Tomograms/VoxelSpacing{vs}" in voxel_spacing_files:
                 combos.append((run, float(vs)))
 
     return combos
@@ -86,9 +108,16 @@ def pytest_configure(config: pytest.Config) -> None:
     pytest.run_name = run_names(bucket, dataset, run_glob)
 
     voxelspacing_glob = config.getoption("--voxelspacing_glob")
-    pytest.voxel_spacing = voxel_spacings(bucket, dataset, voxelspacing_glob)
+    voxel_spacing_files = get_voxel_spacing_files(bucket, dataset, pytest.run_name, voxelspacing_glob)
+    pytest.voxel_spacing = voxel_spacings(voxel_spacing_files)
 
-    pytest.run_spacing_combinations = run_spacing_combinations(bucket, dataset, pytest.run_name, pytest.voxel_spacing)
+    pytest.run_spacing_combinations = run_spacing_combinations(
+        bucket,
+        dataset,
+        pytest.run_name,
+        pytest.voxel_spacing,
+        voxel_spacing_files,
+    )
     print("Run and VoxelSpacing combinations: %s", pytest.run_spacing_combinations)
 
     # Register markers
@@ -98,6 +127,7 @@ def pytest_configure(config: pytest.Config) -> None:
     config.addinivalue_line("markers", "frame: Tests concerning the frames.")
     config.addinivalue_line("markers", "gain: Tests concerning the gain files.")
     config.addinivalue_line("markers", "run: Tests concerning the runs.")
+    config.addinivalue_line("markers", "tilt: Tests concerning the tilt / rawtilt files.")
     config.addinivalue_line("markers", "tiltseries: Tests concerning the tiltseries.")
     config.addinivalue_line("markers", "tomogram: Tests concerning the tomogram.")
     config.addinivalue_line("markers", "voxelspacing: Tests concerning the voxelspacing.")
