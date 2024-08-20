@@ -4,17 +4,18 @@ import os.path
 from abc import abstractmethod
 from collections import defaultdict
 from functools import partial
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import ndjson
+from importers.base_importer import BaseImporter
 
-from common import mesh_converter as mc, point_converter as pc
+from common import mesh_converter as mc
+from common import point_converter as pc
 from common.config import DepositionImportConfig
 from common.finders import BaseFinder, DepositionObjectImporterFactory, SourceGlobFinder, SourceMultiGlobFinder
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, make_pyramids
 from common.metadata import AnnotationMetadata
-from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
     from importers.voxel_spacing import VoxelSpacingImporter
@@ -474,6 +475,7 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
 
 class TriangularMeshAnnotation(BaseAnnotationSource):
     """Triangular Meshes are converted to glb format"""
+
     shape = "TriangularMesh"
     map_functions = {
         "obj": mc.from_obj,
@@ -503,7 +505,7 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
                 "path": self.get_output_filename(output_prefix),
                 "shape": self.shape,
                 "is_visualization_default": self.is_visualization_default,
-            }
+            },
         ]
         return metadata
 

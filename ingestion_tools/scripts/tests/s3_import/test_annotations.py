@@ -6,22 +6,23 @@ from typing import Any, Dict
 import ndjson
 import pytest
 import trimesh
-from mypy_boto3_s3 import S3Client
-
-from common.config import DepositionImportConfig
-from common.fs import FileSystemApi
 from importers.annotation import (
     InstanceSegmentationAnnotation,
     OrientedPointAnnotation,
     PointAnnotation,
-    TriangularMeshAnnotation)
+    TriangularMeshAnnotation,
+)
 from importers.dataset import DatasetImporter
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
 from importers.voxel_spacing import VoxelSpacingImporter
+from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
 from tests.s3_import.util import list_dir
+
+from common.config import DepositionImportConfig
+from common.fs import FileSystemApi
 
 default_anno_metadata = {
     "annotation_object": {
@@ -967,12 +968,14 @@ def test_ingest_instance_point_data(
 def test_ingest_triangular_mesh(
     tomo_importer: TomogramImporter,
     dataset_config_local: DepositionImportConfig,
-    local_test_data_dir: str):
+    local_test_data_dir: str,
+):
 
     # Arrange
     glob_string = "annotations/Endospore.stl"
     dataset_config_local._set_object_configs(
-        "annotation", [
+        "annotation",
+        [
             {
                 "metadata": default_anno_metadata,
                 "sources": [
@@ -985,7 +988,8 @@ def test_ingest_triangular_mesh(
                     },
                 ],
             },
-        ])
+        ],
+    )
 
     # Action
     anno = TriangularMeshAnnotation(
@@ -993,8 +997,8 @@ def test_ingest_triangular_mesh(
         metadata=default_anno_metadata,
         path=os.path.join(local_test_data_dir, "input_bucket/20002", glob_string),
         parents={"tomogram": tomo_importer, **tomo_importer.parents},
-        file_format='stl',
-        identifier=100
+        file_format="stl",
+        identifier=100,
     )
     anno.import_item()
     anno.import_metadata()

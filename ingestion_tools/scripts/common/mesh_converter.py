@@ -23,7 +23,7 @@ def convert_mesh_to_glb(convert_func: typing.Callable[[str], trimesh.Trimesh]) -
         :param scale: the factor to scale the mesh by.
         """
         mesh: trimesh.Trimesh = convert_func(input_file)
-        mesh.apply_scale(scale) # TODO test
+        mesh.apply_scale(scale)  # TODO test
         mesh.export(output_file)
 
     return wrapper
