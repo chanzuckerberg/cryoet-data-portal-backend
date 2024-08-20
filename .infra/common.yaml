@@ -39,18 +39,24 @@ stack:
     apiv2:
       image:
         repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
+      # TODO how do we refer to the tag that's being deployed right now?
       initContainers:
-        # TODO how do we refer to the tag that's being deployed right now?
+        # Install cerbos policies where the cerbos sidecar can grab them.
         - image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
-          command: ["python3", "/czid-platformics/platformics/scripts/make_private_key_pem.py", "dev"]
+          command: ["cp -r", "./cerbos/", "/var/policies/"]
           volumeMounts:
             - mount_path: /var/policies
               name: cerbos_policies
               readonly: false
+        # Run migrations
         - image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
-          command: ["etc/gen_keys.sh", "/var/keys/"]
+          command: ["alembic", "upgrade", "head"]
+        # Generate random keys for decoding tokens. We don't use these keys so they don't need to be shared secrets.
+        - image:
+            repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
+          command: ["./etc/gen_keys.sh", "/var/keys/"]
           volumeMounts:
             - mount_path: /var/keys
               name: keys
@@ -58,7 +64,7 @@ stack:
       sidecars:
         - image: ghcr.io/cerbos/cerbos:0.29.0
           command: ["server"]
-          args: ["--config", "/platformics/config.yaml"]
+          args: ["--config", "/var/policies/cerbos/config.yaml"]
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3

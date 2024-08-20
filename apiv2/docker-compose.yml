@@ -38,9 +38,9 @@ services:
       - "3692:3692"
       - "3693:3693"
     volumes:
-      - ./cerbos:/platformics
+      - ./cerbos:/var/policies/cerbos/
     command:
-      ["server", "--config", "/platformics/config.yaml"]
+      ["server", "--config", "/var/policies/cerbos/config.yaml"]
   graphql-api:
     image: "graphql-api"
     build:

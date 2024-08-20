@@ -22,5 +22,5 @@ auxData:
 storage:
   driver: "disk"
   disk:
-    directory: "/platformics/policies"
+    directory: "/var/policies/cerbos/policies"
     watchForChanges: true
