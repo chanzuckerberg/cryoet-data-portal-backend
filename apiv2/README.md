@@ -9,6 +9,8 @@ docker compose exec graphql-api pip install cryoet_data_portal
 docker compose exec graphql-api python3 scrape.py
 ```
 
+After the above steps, browse the api at [http://localhost:9009/graphql](http://localhost:9009/graphql)
+
 ## How to make changes to the schema
 
 ```
