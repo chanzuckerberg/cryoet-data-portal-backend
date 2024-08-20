@@ -984,6 +984,42 @@ classes:
         range: SourceMultiGlob
         inlined: true
         inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: DefaultSource
+        domain_of:
+        - DefaultSource
+        - AnnotationSource
+        - AnnotationParentFilters
+        - DatasetSource
+        - DatasetParentFilters
+        - DatasetKeyPhotoEntity
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
+        - DepositionKeyPhotoParentFilters
+        - FrameSource
+        - FrameParentFilters
+        - GainSource
+        - GainParentFilters
+        - KeyImageSource
+        - KeyImageParentFilters
+        - RawTiltSource
+        - RawTiltParentFilters
+        - RunSource
+        - RunParentFilters
+        - TiltSeriesSource
+        - TiltSeriesParentFilters
+        - TomogramSource
+        - TomogramParentFilters
+        - VoxelSpacingSource
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
   DefaultLiteralEntity:
     name: DefaultLiteralEntity
     description: Used as a mixin with root-level classes that contain sources that
@@ -1178,6 +1214,42 @@ classes:
         range: AnnotationParentFilters
         inlined: true
         inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: AnnotationSource
+        domain_of:
+        - DefaultSource
+        - AnnotationSource
+        - AnnotationParentFilters
+        - DatasetSource
+        - DatasetParentFilters
+        - DatasetKeyPhotoEntity
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
+        - DepositionKeyPhotoParentFilters
+        - FrameSource
+        - FrameParentFilters
+        - GainSource
+        - GainParentFilters
+        - KeyImageSource
+        - KeyImageParentFilters
+        - RawTiltSource
+        - RawTiltParentFilters
+        - RunSource
+        - RunParentFilters
+        - TiltSeriesSource
+        - TiltSeriesParentFilters
+        - TomogramSource
+        - TomogramParentFilters
+        - VoxelSpacingSource
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
   AnnotationParentFilters:
     name: AnnotationParentFilters
     description: Filters for the parent of an annotation source.
@@ -1216,17 +1288,30 @@ classes:
         alias: exclude
         owner: AnnotationParentFilters
         domain_of:
+        - DefaultSource
+        - AnnotationSource
         - AnnotationParentFilters
+        - DatasetSource
         - DatasetParentFilters
+        - DatasetKeyPhotoEntity
         - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
         - DepositionKeyPhotoParentFilters
+        - FrameSource
         - FrameParentFilters
+        - GainSource
         - GainParentFilters
+        - KeyImageSource
         - KeyImageParentFilters
+        - RawTiltSource
         - RawTiltParentFilters
+        - RunSource
         - RunParentFilters
+        - TiltSeriesSource
         - TiltSeriesParentFilters
+        - TomogramSource
         - TomogramParentFilters
+        - VoxelSpacingSource
         - VoxelSpacingParentFilters
         range: AnnotationParent
         inlined: true
@@ -1395,6 +1480,42 @@ classes:
         range: DatasetParentFilters
         inlined: true
         inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: DatasetSource
+        domain_of:
+        - DefaultSource
+        - AnnotationSource
+        - AnnotationParentFilters
+        - DatasetSource
+        - DatasetParentFilters
+        - DatasetKeyPhotoEntity
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
+        - DepositionKeyPhotoParentFilters
+        - FrameSource
+        - FrameParentFilters
+        - GainSource
+        - GainParentFilters
+        - KeyImageSource
+        - KeyImageParentFilters
+        - RawTiltSource
+        - RawTiltParentFilters
+        - RunSource
+        - RunParentFilters
+        - TiltSeriesSource
+        - TiltSeriesParentFilters
+        - TomogramSource
+        - TomogramParentFilters
+        - VoxelSpacingSource
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -1483,17 +1604,30 @@ classes:
         alias: exclude
         owner: DatasetParentFilters
         domain_of:
+        - DefaultSource
+        - AnnotationSource
         - AnnotationParentFilters
+        - DatasetSource
         - DatasetParentFilters
+        - DatasetKeyPhotoEntity
         - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
         - DepositionKeyPhotoParentFilters
+        - FrameSource
         - FrameParentFilters
+        - GainSource
         - GainParentFilters
+        - KeyImageSource
         - KeyImageParentFilters
+        - RawTiltSource
         - RawTiltParentFilters
+        - RunSource
         - RunParentFilters
+        - TiltSeriesSource
         - TiltSeriesParentFilters
+        - TomogramSource
         - TomogramParentFilters
+        - VoxelSpacingSource
         - VoxelSpacingParentFilters
         range: DatasetParent
         inlined: true
@@ -1560,6 +1694,42 @@ classes:
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: DatasetKeyPhotoEntity
+        domain_of:
+        - DefaultSource
+        - AnnotationSource
+        - AnnotationParentFilters
+        - DatasetSource
+        - DatasetParentFilters
+        - DatasetKeyPhotoEntity
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
+        - DepositionKeyPhotoParentFilters
+        - FrameSource
+        - FrameParentFilters
+        - GainSource
+        - GainParentFilters
+        - KeyImageSource
+        - KeyImageParentFilters
+        - RawTiltSource
+        - RawTiltParentFilters
+        - RunSource
+        - RunParentFilters
+        - TiltSeriesSource
+        - TiltSeriesParentFilters
+        - TomogramSource
+        - TomogramParentFilters
+        - VoxelSpacingSource
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
   DatasetKeyPhotoSource:
     name: DatasetKeyPhotoSource
     description: A key photo source.
@@ -1639,17 +1809,30 @@ classes:
         alias: exclude
         owner: DatasetKeyPhotoParentFilters
         domain_of:
+        - DefaultSource
+        - AnnotationSource
         - AnnotationParentFilters
+        - DatasetSource
         - DatasetParentFilters
+        - DatasetKeyPhotoEntity
         - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
         - DepositionKeyPhotoParentFilters
+        - FrameSource
         - FrameParentFilters
+        - GainSource
         - GainParentFilters
+        - KeyImageSource
         - KeyImageParentFilters
+        - RawTiltSource
         - RawTiltParentFilters
+        - RunSource
         - RunParentFilters
+        - TiltSeriesSource
         - TiltSeriesParentFilters
+        - TomogramSource
         - TomogramParentFilters
+        - VoxelSpacingSource
         - VoxelSpacingParentFilters
         range: DatasetKeyPhotoParent
         inlined: true
@@ -1775,6 +1958,42 @@ classes:
         range: SourceMultiGlob
         inlined: true
         inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: DepositionSource
+        domain_of:
+        - DefaultSource
+        - AnnotationSource
+        - AnnotationParentFilters
+        - DatasetSource
+        - DatasetParentFilters
+        - DatasetKeyPhotoEntity
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
+        - DepositionKeyPhotoParentFilters
+        - FrameSource
+        - FrameParentFilters
+        - GainSource
+        - GainParentFilters
+        - KeyImageSource
+        - KeyImageParentFilters
+        - RawTiltSource
+        - RawTiltParentFilters
+        - RunSource
+        - RunParentFilters
+        - TiltSeriesSource
+        - TiltSeriesParentFilters
+        - TomogramSource
+        - TomogramParentFilters
+        - VoxelSpacingSource
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
       literal:
         name: literal
         description: A literal class with a value attribute.
@@ -1861,6 +2080,42 @@ classes:
         range: DepositionKeyPhotoParentFilters
         inlined: true
         inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: DepositionKeyPhotoSource
+        domain_of:
+        - DefaultSource
+        - AnnotationSource
+        - AnnotationParentFilters
+        - DatasetSource
+        - DatasetParentFilters
+        - DatasetKeyPhotoEntity
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
+        - DepositionKeyPhotoParentFilters
+        - FrameSource
+        - FrameParentFilters
+        - GainSource
+        - GainParentFilters
+        - KeyImageSource
+        - KeyImageParentFilters
+        - RawTiltSource
+        - RawTiltParentFilters
+        - RunSource
+        - RunParentFilters
+        - TiltSeriesSource
+        - TiltSeriesParentFilters
+        - TomogramSource
+        - TomogramParentFilters
+        - VoxelSpacingSource
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
   DepositionKeyPhotoParentFilters:
     name: DepositionKeyPhotoParentFilters
     description: Types of parent filters for a key photo source.
@@ -1899,17 +2154,30 @@ classes:
         alias: exclude
         owner: DepositionKeyPhotoParentFilters
         domain_of:
+        - DefaultSource
+        - AnnotationSource
         - AnnotationParentFilters
+        - DatasetSource
         - DatasetParentFilters
+        - DatasetKeyPhotoEntity
         - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
         - DepositionKeyPhotoParentFilters
+        - FrameSource
         - FrameParentFilters
+        - GainSource
         - GainParentFilters
+        - KeyImageSource
         - KeyImageParentFilters
+        - RawTiltSource
         - RawTiltParentFilters
+        - RunSource
         - RunParentFilters
+        - TiltSeriesSource
         - TiltSeriesParentFilters
+        - TomogramSource
         - TomogramParentFilters
+        - VoxelSpacingSource
         - VoxelSpacingParentFilters
         range: DepositionKeyPhotoParent
         inlined: true
@@ -2006,6 +2274,42 @@ classes:
         range: FrameParentFilters
         inlined: true
         inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: FrameSource
+        domain_of:
+        - DefaultSource
+        - AnnotationSource
+        - AnnotationParentFilters
+        - DatasetSource
+        - DatasetParentFilters
+        - DatasetKeyPhotoEntity
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
+        - DepositionKeyPhotoParentFilters
+        - FrameSource
+        - FrameParentFilters
+        - GainSource
+        - GainParentFilters
+        - KeyImageSource
+        - KeyImageParentFilters
+        - RawTiltSource
+        - RawTiltParentFilters
+        - RunSource
+        - RunParentFilters
+        - TiltSeriesSource
+        - TiltSeriesParentFilters
+        - TomogramSource
+        - TomogramParentFilters
+        - VoxelSpacingSource
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -2092,17 +2396,30 @@ classes:
         alias: exclude
         owner: FrameParentFilters
         domain_of:
+        - DefaultSource
+        - AnnotationSource
         - AnnotationParentFilters
+        - DatasetSource
         - DatasetParentFilters
+        - DatasetKeyPhotoEntity
         - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
         - DepositionKeyPhotoParentFilters
+        - FrameSource
         - FrameParentFilters
+        - GainSource
         - GainParentFilters
+        - KeyImageSource
         - KeyImageParentFilters
+        - RawTiltSource
         - RawTiltParentFilters
+        - RunSource
         - RunParentFilters
+        - TiltSeriesSource
         - TiltSeriesParentFilters
+        - TomogramSource
         - TomogramParentFilters
+        - VoxelSpacingSource
         - VoxelSpacingParentFilters
         range: FrameParent
         inlined: true
@@ -2240,6 +2557,42 @@ classes:
         range: GainParentFilters
         inlined: true
         inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: GainSource
+        domain_of:
+        - DefaultSource
+        - AnnotationSource
+        - AnnotationParentFilters
+        - DatasetSource
+        - DatasetParentFilters
+        - DatasetKeyPhotoEntity
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
+        - DepositionKeyPhotoParentFilters
+        - FrameSource
+        - FrameParentFilters
+        - GainSource
+        - GainParentFilters
+        - KeyImageSource
+        - KeyImageParentFilters
+        - RawTiltSource
+        - RawTiltParentFilters
+        - RunSource
+        - RunParentFilters
+        - TiltSeriesSource
+        - TiltSeriesParentFilters
+        - TomogramSource
+        - TomogramParentFilters
+        - VoxelSpacingSource
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -2326,17 +2679,30 @@ classes:
         alias: exclude
         owner: GainParentFilters
         domain_of:
+        - DefaultSource
+        - AnnotationSource
         - AnnotationParentFilters
+        - DatasetSource
         - DatasetParentFilters
+        - DatasetKeyPhotoEntity
         - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
         - DepositionKeyPhotoParentFilters
+        - FrameSource
         - FrameParentFilters
+        - GainSource
         - GainParentFilters
+        - KeyImageSource
         - KeyImageParentFilters
+        - RawTiltSource
         - RawTiltParentFilters
+        - RunSource
         - RunParentFilters
+        - TiltSeriesSource
         - TiltSeriesParentFilters
+        - TomogramSource
         - TomogramParentFilters
+        - VoxelSpacingSource
         - VoxelSpacingParentFilters
         range: GainParent
         inlined: true
@@ -2474,6 +2840,42 @@ classes:
         range: KeyImageParentFilters
         inlined: true
         inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: KeyImageSource
+        domain_of:
+        - DefaultSource
+        - AnnotationSource
+        - AnnotationParentFilters
+        - DatasetSource
+        - DatasetParentFilters
+        - DatasetKeyPhotoEntity
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
+        - DepositionKeyPhotoParentFilters
+        - FrameSource
+        - FrameParentFilters
+        - GainSource
+        - GainParentFilters
+        - KeyImageSource
+        - KeyImageParentFilters
+        - RawTiltSource
+        - RawTiltParentFilters
+        - RunSource
+        - RunParentFilters
+        - TiltSeriesSource
+        - TiltSeriesParentFilters
+        - TomogramSource
+        - TomogramParentFilters
+        - VoxelSpacingSource
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -2562,17 +2964,30 @@ classes:
         alias: exclude
         owner: KeyImageParentFilters
         domain_of:
+        - DefaultSource
+        - AnnotationSource
         - AnnotationParentFilters
+        - DatasetSource
         - DatasetParentFilters
+        - DatasetKeyPhotoEntity
         - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
         - DepositionKeyPhotoParentFilters
+        - FrameSource
         - FrameParentFilters
+        - GainSource
         - GainParentFilters
+        - KeyImageSource
         - KeyImageParentFilters
+        - RawTiltSource
         - RawTiltParentFilters
+        - RunSource
         - RunParentFilters
+        - TiltSeriesSource
         - TiltSeriesParentFilters
+        - TomogramSource
         - TomogramParentFilters
+        - VoxelSpacingSource
         - VoxelSpacingParentFilters
         range: KeyImageParent
         inlined: true
@@ -2739,6 +3154,42 @@ classes:
         range: RawTiltParentFilters
         inlined: true
         inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: RawTiltSource
+        domain_of:
+        - DefaultSource
+        - AnnotationSource
+        - AnnotationParentFilters
+        - DatasetSource
+        - DatasetParentFilters
+        - DatasetKeyPhotoEntity
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
+        - DepositionKeyPhotoParentFilters
+        - FrameSource
+        - FrameParentFilters
+        - GainSource
+        - GainParentFilters
+        - KeyImageSource
+        - KeyImageParentFilters
+        - RawTiltSource
+        - RawTiltParentFilters
+        - RunSource
+        - RunParentFilters
+        - TiltSeriesSource
+        - TiltSeriesParentFilters
+        - TomogramSource
+        - TomogramParentFilters
+        - VoxelSpacingSource
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -2827,17 +3278,30 @@ classes:
         alias: exclude
         owner: RawTiltParentFilters
         domain_of:
+        - DefaultSource
+        - AnnotationSource
         - AnnotationParentFilters
+        - DatasetSource
         - DatasetParentFilters
+        - DatasetKeyPhotoEntity
         - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
         - DepositionKeyPhotoParentFilters
+        - FrameSource
         - FrameParentFilters
+        - GainSource
         - GainParentFilters
+        - KeyImageSource
         - KeyImageParentFilters
+        - RawTiltSource
         - RawTiltParentFilters
+        - RunSource
         - RunParentFilters
+        - TiltSeriesSource
         - TiltSeriesParentFilters
+        - TomogramSource
         - TomogramParentFilters
+        - VoxelSpacingSource
         - VoxelSpacingParentFilters
         range: RawTiltParent
         inlined: true
@@ -2975,6 +3439,42 @@ classes:
         range: RunParentFilters
         inlined: true
         inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: RunSource
+        domain_of:
+        - DefaultSource
+        - AnnotationSource
+        - AnnotationParentFilters
+        - DatasetSource
+        - DatasetParentFilters
+        - DatasetKeyPhotoEntity
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
+        - DepositionKeyPhotoParentFilters
+        - FrameSource
+        - FrameParentFilters
+        - GainSource
+        - GainParentFilters
+        - KeyImageSource
+        - KeyImageParentFilters
+        - RawTiltSource
+        - RawTiltParentFilters
+        - RunSource
+        - RunParentFilters
+        - TiltSeriesSource
+        - TiltSeriesParentFilters
+        - TomogramSource
+        - TomogramParentFilters
+        - VoxelSpacingSource
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -3061,17 +3561,30 @@ classes:
         alias: exclude
         owner: RunParentFilters
         domain_of:
+        - DefaultSource
+        - AnnotationSource
         - AnnotationParentFilters
+        - DatasetSource
         - DatasetParentFilters
+        - DatasetKeyPhotoEntity
         - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
         - DepositionKeyPhotoParentFilters
+        - FrameSource
         - FrameParentFilters
+        - GainSource
         - GainParentFilters
+        - KeyImageSource
         - KeyImageParentFilters
+        - RawTiltSource
         - RawTiltParentFilters
+        - RunSource
         - RunParentFilters
+        - TiltSeriesSource
         - TiltSeriesParentFilters
+        - TomogramSource
         - TomogramParentFilters
+        - VoxelSpacingSource
         - VoxelSpacingParentFilters
         range: RunParent
         inlined: true
@@ -3277,6 +3790,42 @@ classes:
         range: TiltSeriesParentFilters
         inlined: true
         inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: TiltSeriesSource
+        domain_of:
+        - DefaultSource
+        - AnnotationSource
+        - AnnotationParentFilters
+        - DatasetSource
+        - DatasetParentFilters
+        - DatasetKeyPhotoEntity
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
+        - DepositionKeyPhotoParentFilters
+        - FrameSource
+        - FrameParentFilters
+        - GainSource
+        - GainParentFilters
+        - KeyImageSource
+        - KeyImageParentFilters
+        - RawTiltSource
+        - RawTiltParentFilters
+        - RunSource
+        - RunParentFilters
+        - TiltSeriesSource
+        - TiltSeriesParentFilters
+        - TomogramSource
+        - TomogramParentFilters
+        - VoxelSpacingSource
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -3365,17 +3914,30 @@ classes:
         alias: exclude
         owner: TiltSeriesParentFilters
         domain_of:
+        - DefaultSource
+        - AnnotationSource
         - AnnotationParentFilters
+        - DatasetSource
         - DatasetParentFilters
+        - DatasetKeyPhotoEntity
         - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
         - DepositionKeyPhotoParentFilters
+        - FrameSource
         - FrameParentFilters
+        - GainSource
         - GainParentFilters
+        - KeyImageSource
         - KeyImageParentFilters
+        - RawTiltSource
         - RawTiltParentFilters
+        - RunSource
         - RunParentFilters
+        - TiltSeriesSource
         - TiltSeriesParentFilters
+        - TomogramSource
         - TomogramParentFilters
+        - VoxelSpacingSource
         - VoxelSpacingParentFilters
         range: TiltSeriesParent
         inlined: true
@@ -3528,6 +4090,42 @@ classes:
         range: TomogramParentFilters
         inlined: true
         inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: TomogramSource
+        domain_of:
+        - DefaultSource
+        - AnnotationSource
+        - AnnotationParentFilters
+        - DatasetSource
+        - DatasetParentFilters
+        - DatasetKeyPhotoEntity
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
+        - DepositionKeyPhotoParentFilters
+        - FrameSource
+        - FrameParentFilters
+        - GainSource
+        - GainParentFilters
+        - KeyImageSource
+        - KeyImageParentFilters
+        - RawTiltSource
+        - RawTiltParentFilters
+        - RunSource
+        - RunParentFilters
+        - TiltSeriesSource
+        - TiltSeriesParentFilters
+        - TomogramSource
+        - TomogramParentFilters
+        - VoxelSpacingSource
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
       destination_glob:
         name: destination_glob
         description: A glob class for finding files in the output / destination directory.
@@ -3616,17 +4214,30 @@ classes:
         alias: exclude
         owner: TomogramParentFilters
         domain_of:
+        - DefaultSource
+        - AnnotationSource
         - AnnotationParentFilters
+        - DatasetSource
         - DatasetParentFilters
+        - DatasetKeyPhotoEntity
         - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
         - DepositionKeyPhotoParentFilters
+        - FrameSource
         - FrameParentFilters
+        - GainSource
         - GainParentFilters
+        - KeyImageSource
         - KeyImageParentFilters
+        - RawTiltSource
         - RawTiltParentFilters
+        - RunSource
         - RunParentFilters
+        - TiltSeriesSource
         - TiltSeriesParentFilters
+        - TomogramSource
         - TomogramParentFilters
+        - VoxelSpacingSource
         - VoxelSpacingParentFilters
         range: TomogramParent
         inlined: true
@@ -3826,6 +4437,42 @@ classes:
         range: VoxelSpacingParentFilters
         inlined: true
         inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: VoxelSpacingSource
+        domain_of:
+        - DefaultSource
+        - AnnotationSource
+        - AnnotationParentFilters
+        - DatasetSource
+        - DatasetParentFilters
+        - DatasetKeyPhotoEntity
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
+        - DepositionKeyPhotoParentFilters
+        - FrameSource
+        - FrameParentFilters
+        - GainSource
+        - GainParentFilters
+        - KeyImageSource
+        - KeyImageParentFilters
+        - RawTiltSource
+        - RawTiltParentFilters
+        - RunSource
+        - RunParentFilters
+        - TiltSeriesSource
+        - TiltSeriesParentFilters
+        - TomogramSource
+        - TomogramParentFilters
+        - VoxelSpacingSource
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
   VoxelSpacingParentFilters:
     name: VoxelSpacingParentFilters
     description: Types of parent filters for a voxel spacing source.
@@ -3864,17 +4511,30 @@ classes:
         alias: exclude
         owner: VoxelSpacingParentFilters
         domain_of:
+        - DefaultSource
+        - AnnotationSource
         - AnnotationParentFilters
+        - DatasetSource
         - DatasetParentFilters
+        - DatasetKeyPhotoEntity
         - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoSource
         - DepositionKeyPhotoParentFilters
+        - FrameSource
         - FrameParentFilters
+        - GainSource
         - GainParentFilters
+        - KeyImageSource
         - KeyImageParentFilters
+        - RawTiltSource
         - RawTiltParentFilters
+        - RunSource
         - RunParentFilters
+        - TiltSeriesSource
         - TiltSeriesParentFilters
+        - TomogramSource
         - TomogramParentFilters
+        - VoxelSpacingSource
         - VoxelSpacingParentFilters
         range: VoxelSpacingParent
         inlined: true

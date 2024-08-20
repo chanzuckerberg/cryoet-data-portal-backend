@@ -44,7 +44,8 @@ def _add_to_slot_minimum_value(slot: dict, minimum_value: Union[int, float, None
 
     if "minimum_value" in slot and slot["minimum_value"] is not None and slot["minimum_value"] != minimum_value:
         print(
-            f"[WARNING]: Minimum value already set for slot {slot['name']} ({slot['minimum_value']}). NOT overwriting with {minimum_value}",
+            f"[WARNING]: Minimum value already set for slot {slot['name']} ({slot['minimum_value']}). NOT overwriting"
+            f" with {minimum_value}",
         )
         return slot["minimum_value"]
 
@@ -60,7 +61,8 @@ def _add_to_slot_maximum_value(slot: dict, maximum_value: Union[int, float, None
 
     if "maximum_value" in slot and slot["maximum_value"] is not None and slot["maximum_value"] != maximum_value:
         print(
-            f"[WARNING]: Maximum value already set for slot {slot['name']} ({slot['maximum_value']}). NOT overwriting with {maximum_value}",
+            f"[WARNING]: Maximum value already set for slot {slot['name']} ({slot['maximum_value']}). NOT overwriting"
+            f" with {maximum_value}",
         )
         return slot["maximum_value"]
 
@@ -101,7 +103,8 @@ def _merge_common_into_slot(slot: dict, common_slot: dict) -> None:
         pass
     elif slot["range"] not in ["Any", None] and slot["range"] != common_slot["range"]:
         print(
-            f"[WARNING]: Range already set for slot {slot['name']} ({slot['range']}). NOT overwriting with {common_slot['range']}",
+            f"[WARNING]: Range already set for slot {slot['name']} ({slot['range']}). NOT overwriting with"
+            f" {common_slot['range']}",
         )
     else:
         slot["range"] = common_slot["range"]
@@ -148,7 +151,8 @@ def _import_common_mapping(slot_expression: dict, common_slots: dict) -> None:
 
     if not common_slot:
         raise ValueError(
-            f"Slot {original_mappings[0]} does not exist in common schema. Check the exact_mappings for {slot_expression['name']}.",
+            f"Slot {original_mappings[0]} does not exist in common schema. Check the exact_mappings for"
+            f" {slot_expression['name']}.",
         )
 
     _merge_common_into_slot(slot_expression, common_slot)
