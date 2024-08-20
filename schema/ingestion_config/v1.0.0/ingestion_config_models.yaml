@@ -226,6 +226,10 @@ classes:
       parent_filters:
         description: Filters for the parent of a source.
         range: AnnotationParentFilters
+      exclude:
+        description: Exclude files from the source that match (regexes).
+        range: string
+        multivalued: true
 
   AnnotationParentFilters:
     description: Filters for the parent of an annotation source.
