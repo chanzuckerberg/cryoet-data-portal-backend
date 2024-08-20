@@ -2,13 +2,12 @@ SHELL := /bin/bash
 
 FOLDER = /app
 APP_CONTAINER=graphql-api
-BUILD_CONTAINER=platformics
 
 ### DATABASE VARIABLES #################################################
-LOCAL_DB_NAME=platformics
-LOCAL_DB_SERVER=localhost:5432
+LOCAL_DB_NAME=cryoetv2
+LOCAL_DB_SERVER=db:5432
 LOCAL_DB_USERNAME=postgres
-LOCAL_DB_PASSWORD=password_postgres
+LOCAL_DB_PASSWORD=postgres
 LOCAL_DB_CONN_STRING = postgresql://$(LOCAL_DB_USERNAME):$(LOCAL_DB_PASSWORD)@$(LOCAL_DB_SERVER)/$(LOCAL_DB_NAME)
 
 ### DOCKER ENV VARS #################################################
@@ -35,17 +34,8 @@ build: ## Build docker containers
 	rm -rf dist/*.whl
 	$(docker_compose) build
 
-.PHONY: init
-init:
-	docker compose up -d
-	$(MAKE) seed-moto
-	$(MAKE) alembic-upgrade-head
-
 .PHONY: update-schema
-update-schema:
-	$(MAKE) codegen
-	$(MAKE) alembic-autogenerate
-	$(MAKE) alembic-upgrade-head
+update-schema: codegen alembic-autogenerate upgrade-head
 	# $(docker_compose_run) $(CONTAINER) ruff check --fix .
 	$(docker_compose_run) $(APP_CONTAINER) sh -c 'strawberry export-schema main:schema > /app/graphql_api/schema.graphql'
 	docker compose up -d
