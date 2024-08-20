@@ -32,13 +32,9 @@ class PerSectionParametersFactory(CommonFactory):
 
     frame = factory.SubFactory(
         FrameFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     tiltseries = factory.SubFactory(
         TiltseriesFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     z_index = fuzzy.FuzzyInteger(1, 1000)
     defocus = fuzzy.FuzzyFloat(1, 100)

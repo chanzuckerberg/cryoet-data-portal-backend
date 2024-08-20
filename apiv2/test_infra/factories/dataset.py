@@ -31,8 +31,6 @@ class DatasetFactory(CommonFactory):
 
     deposition = factory.SubFactory(
         DepositionFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     title = fuzzy.FuzzyText()
     description = fuzzy.FuzzyText()

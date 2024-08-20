@@ -31,8 +31,6 @@ class TomogramVoxelSpacingFactory(CommonFactory):
 
     run = factory.SubFactory(
         RunFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     voxel_spacing = fuzzy.FuzzyFloat(1, 100)
     s3_prefix = fuzzy.FuzzyText()

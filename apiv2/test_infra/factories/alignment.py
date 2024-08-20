@@ -33,18 +33,12 @@ class AlignmentFactory(CommonFactory):
 
     deposition = factory.SubFactory(
         DepositionFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     tiltseries = factory.SubFactory(
         TiltseriesFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     run = factory.SubFactory(
         RunFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     alignment = fuzzy.FuzzyText()
     alignment_type = fuzzy.FuzzyChoice(["LOCAL", "GLOBAL"])

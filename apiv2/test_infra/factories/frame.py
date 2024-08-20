@@ -32,13 +32,9 @@ class FrameFactory(CommonFactory):
 
     deposition = factory.SubFactory(
         DepositionFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     run = factory.SubFactory(
         RunFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     raw_angle = fuzzy.FuzzyFloat(1, 100)
     acquisition_order = fuzzy.FuzzyInteger(1, 1000)

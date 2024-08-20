@@ -31,8 +31,6 @@ class DatasetFundingFactory(CommonFactory):
 
     dataset = factory.SubFactory(
         DatasetFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     funding_agency_name = fuzzy.FuzzyText()
     grant_id = fuzzy.FuzzyText()

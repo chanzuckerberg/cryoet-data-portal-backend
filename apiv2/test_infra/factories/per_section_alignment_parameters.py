@@ -31,8 +31,6 @@ class PerSectionAlignmentParametersFactory(CommonFactory):
 
     alignment = factory.SubFactory(
         AlignmentFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     z_index = fuzzy.FuzzyInteger(1, 1000)
     x_offset = fuzzy.FuzzyFloat(1, 100)

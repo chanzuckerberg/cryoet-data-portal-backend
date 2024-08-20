@@ -31,8 +31,6 @@ class TomogramAuthorFactory(CommonFactory):
 
     tomogram = factory.SubFactory(
         TomogramFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     author_list_order = fuzzy.FuzzyInteger(1, 1000)
     orcid = fuzzy.FuzzyText()

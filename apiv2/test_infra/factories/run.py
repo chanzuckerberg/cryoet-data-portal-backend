@@ -31,8 +31,6 @@ class RunFactory(CommonFactory):
 
     dataset = factory.SubFactory(
         DatasetFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     name = fuzzy.FuzzyText()
     s3_prefix = fuzzy.FuzzyText()

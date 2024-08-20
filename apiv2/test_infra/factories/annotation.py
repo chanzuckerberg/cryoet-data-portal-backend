@@ -32,13 +32,9 @@ class AnnotationFactory(CommonFactory):
 
     run = factory.SubFactory(
         RunFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     deposition = factory.SubFactory(
         DepositionFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     s3_metadata_path = fuzzy.FuzzyText()
     https_metadata_path = fuzzy.FuzzyText()

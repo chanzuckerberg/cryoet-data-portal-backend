@@ -60,8 +60,6 @@ class {{ cls.name }}Factory(CommonFactory):
                 {%- if not field.multivalued and not field.is_virtual_relationship %}
     {{ field.name }} = factory.SubFactory(
         {{ field.related_class.name }}Factory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
                 {%- endif %}
             {%- elif field.type == "File" %}

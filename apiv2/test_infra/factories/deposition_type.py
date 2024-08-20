@@ -31,8 +31,6 @@ class DepositionTypeFactory(CommonFactory):
 
     deposition = factory.SubFactory(
         DepositionFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     type = fuzzy.FuzzyChoice(["annotation", "dataset", "tomogram"])
     id = fuzzy.FuzzyInteger(1, 1000)

@@ -34,23 +34,15 @@ class TomogramFactory(CommonFactory):
 
     alignment = factory.SubFactory(
         AlignmentFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     deposition = factory.SubFactory(
         DepositionFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     run = factory.SubFactory(
         RunFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     tomogram_voxel_spacing = factory.SubFactory(
         TomogramVoxelSpacingFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     name = fuzzy.FuzzyText()
     size_x = fuzzy.FuzzyFloat(1, 100)

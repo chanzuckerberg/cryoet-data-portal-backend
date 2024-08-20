@@ -32,13 +32,9 @@ class TiltseriesFactory(CommonFactory):
 
     run = factory.SubFactory(
         RunFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     deposition = factory.SubFactory(
         DepositionFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     s3_omezarr_dir = fuzzy.FuzzyText()
     s3_mrc_bin1 = fuzzy.FuzzyText()

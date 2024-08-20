@@ -7,8 +7,8 @@ from platformics.database.connect import init_sync_db
 from platformics.settings import CLISettings
 from platformics.test_infra.factories.base import FileFactory, SessionStorage
 
-from test_infra.factories.sample import SampleFactory
-from test_infra.factories.sequencing_read import SequencingReadFactory
+from test_infra.factories.dataset import DatasetFactory
+from test_infra.factories.run import RunFactory
 
 
 def use_factoryboy() -> None:
@@ -21,14 +21,9 @@ def use_factoryboy() -> None:
     SessionStorage.set_session(session)
     factory.random.reseed_random(1234567)
 
-    # create some samples with multiple SequencingReads
-    sa1 = SampleFactory(owner_user_id=222, collection_id=555)
-    sa2 = SampleFactory(owner_user_id=333, collection_id=666)
-    sa3 = SampleFactory(owner_user_id=111, collection_id=444)
-
-    SequencingReadFactory.create_batch(3, sample=sa1, owner_user_id=sa1.owner_user_id, collection_id=sa1.collection_id)
-    SequencingReadFactory.create_batch(2, sample=sa2, owner_user_id=sa2.owner_user_id, collection_id=sa2.collection_id)
-    SequencingReadFactory.create_batch(3, sample=sa3, owner_user_id=sa3.owner_user_id, collection_id=sa3.collection_id)
+    # create some datasets with multiple runs
+    ds1 = DatasetFactory()
+    RunFactory.create_batch(3, dataset=ds1)
 
     FileFactory.update_file_ids()
 

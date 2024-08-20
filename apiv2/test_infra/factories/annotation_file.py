@@ -33,18 +33,12 @@ class AnnotationFileFactory(CommonFactory):
 
     alignment = factory.SubFactory(
         AlignmentFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     annotation_shape = factory.SubFactory(
         AnnotationShapeFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     tomogram_voxel_spacing = factory.SubFactory(
         TomogramVoxelSpacingFactory,
-        owner_user_id=factory.SelfAttribute("..owner_user_id"),
-        collection_id=factory.SelfAttribute("..collection_id"),
     )
     format = fuzzy.FuzzyText()
     s3_path = fuzzy.FuzzyText()
