@@ -2894,6 +2894,25 @@ python-dateutil = ">=2.7"
 dev = ["meson-python (>=0.13.1)", "numpy (>=1.25)", "pybind11 (>=2.6)", "setuptools (>=64)", "setuptools_scm (>=7)"]
 
 [[package]]
+name = "mdocfile"
+version = "0.1.2"
+description = "SerialEM mdoc files as pandas dataframes."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "mdocfile-0.1.2-py3-none-any.whl", hash = "sha256:1d4fbc9caa2e5608fd2dbca5d7c79cd9aeb87ec56b49fff0688c389cc24a74d9"},
+    {file = "mdocfile-0.1.2.tar.gz", hash = "sha256:ea2a408fa7c60f29f080e8a0f548a83752c0eafc485c0773d435b027102d2421"},
+]
+
+[package.dependencies]
+pandas = "*"
+pydantic = ">=2"
+
+[package.extras]
+dev = ["black", "ipython", "mypy", "pdbpp", "pre-commit", "pytest", "pytest-cov", "rich", "ruff"]
+test = ["pytest (>=6.0)", "pytest-cov"]
+
+[[package]]
 name = "mrcfile"
 version = "1.5.1"
 description = "MRC file I/O library"
@@ -5503,4 +5522,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "bbd640396642827ae4e4ffc3ec39f3f5d3701832855e5c297e9262cab153c5e2"
+content-hash = "ad4ff1c3954ad21c72529a797cf953ab06543b42d661d48be14938ff664ca6c8"

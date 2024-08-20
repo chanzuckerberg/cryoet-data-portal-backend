@@ -131,9 +131,11 @@ depositions:
 - metadata:
     authors: *id002
     dates: *id001
-    deposition_description: TBA
+    deposition_description: Cryo-electron tomograms from double-sided attachment Serial Lift-Out experiment of C.
+      elegans, including annotations of ribosomes identified and refined using STOPGAP and RELION.
     deposition_identifier: 10004
-    deposition_title: TBA
+    deposition_title: "C. Elegans from Serial Lift-Out \u2013 Sampling the Molecular\
+      \ Anatomy of Whole Organisms"
     deposition_types:
     - dataset
   sources:

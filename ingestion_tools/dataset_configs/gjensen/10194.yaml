@@ -40,10 +40,13 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1016/j.bbrc.2011.03.062
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 3 sets of data studying Vibrio cholerae collected by Matt
+      Swulius and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10031
-    deposition_title: TBA
+    deposition_title: Vibrio cholerae (tax_id=666) strain:TRH7000 by Matt Swulius
     deposition_types:
     - dataset
   sources:

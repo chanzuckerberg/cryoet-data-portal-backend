@@ -41,9 +41,10 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: Single set of data studying Helicobacter pylori (tax_id=563041)
+      strain:G27 by Yi-Wei Chang and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10024
-    deposition_title: TBA
+    deposition_title: Helicobacter pylori (tax_id=563041) strain:G27 by Yi-Wei Chang
     deposition_types:
     - dataset
   sources:

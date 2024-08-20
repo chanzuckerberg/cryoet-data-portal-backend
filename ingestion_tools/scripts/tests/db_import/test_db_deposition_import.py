@@ -33,8 +33,8 @@ def expected_deposition1(http_prefix: str) -> dict[str, Any]:
         "s3_prefix": f"s3://test-public-bucket/depositions_metadata/{DEPOSITION_ID1}/",
         "https_prefix": f"{http_prefix}/depositions_metadata/{DEPOSITION_ID1}/",
         "deposition_types": "annotation,dataset",
-        "key_photo_url": f"{http_prefix}/depositions_metadata/{DEPOSITION_ID1}/Images/snapshot.png",
-        "key_photo_thumbnail_url": f"{http_prefix}/depositions_metadata/{DEPOSITION_ID1}/Images/thumbnail.png",
+        "key_photo_url": f"{http_prefix}/deposition_metadata/{DEPOSITION_ID1}/Images/snapshot.png",
+        "key_photo_thumbnail_url": f"{http_prefix}/deposition_metadata/{DEPOSITION_ID1}/Images/thumbnail.png",
     }
 
 

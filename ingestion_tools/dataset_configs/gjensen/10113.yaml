@@ -45,9 +45,11 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 6 sets of data studying Sulfolobus solfataricus  collected
+      by Rasika Ramdasi and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10016
-    deposition_title: TBA
+    deposition_title: Sulfolobus solfataricus  (tax_id=273057) strain:P2 by Rasika
+      Ramdasi
     deposition_types:
     - dataset
   sources:

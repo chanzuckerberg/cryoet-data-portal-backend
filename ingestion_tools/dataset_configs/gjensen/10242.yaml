@@ -37,9 +37,10 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 'Single set of data studying Spiroplasma melliferum (tax_id=2134)
+      strain: by Morgan Beeby and is a part of Caltech Jensen lab etdb.'
     deposition_identifier: 10042
-    deposition_title: TBA
+    deposition_title: 'Spiroplasma melliferum (tax_id=2134) strain: by Morgan Beeby'
     deposition_types:
     - dataset
   sources:

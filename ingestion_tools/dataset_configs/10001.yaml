@@ -400,15 +400,7 @@ datasets:
       value:
       - '10001'
 depositions:
-- metadata:
-    authors: *id003
-    dates: *id002
-    deposition_description: TBA
-    deposition_identifier: 10000
-    deposition_title: TBA
-    deposition_types:
-    - dataset
-  sources:
+- sources:
   - literal:
       value:
       - 10000

@@ -38,10 +38,15 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1073/pnas.1518952113
+      related_database_entries: EMD-3157
     dates: *id002
-    deposition_description: TBA
+    deposition_description: 24 sets of data studying Campylobacter jejuni collected
+      by Morgan Beeby and is a part of Caltech Jensen lab etdb.
     deposition_identifier: 10029
-    deposition_title: TBA
+    deposition_title: Campylobacter jejuni (tax_id=407148) strain:subsp. jejuni 81116
+      by Morgan Beeby
     deposition_types:
     - dataset
   sources:
