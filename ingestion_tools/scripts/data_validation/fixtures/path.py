@@ -203,19 +203,19 @@ def tiltseries_mdoc_file(tiltseries_dir: str, filesystem: FileSystemApi) -> str:
 @pytest.fixture(scope="session")
 def tiltseries_tilt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name]*.tlt"""
-    if filesystem.s3fs.exists(f"{tiltseries_basename}*.tlt"):
-        return f"{tiltseries_basename}.tlt"
-    else:
+    tlt_files = filesystem.glob(f"{tiltseries_basename}*.tlt")
+    if len(tlt_files) == 0:
         pytest.skip("No tlt file found.")
+    return tlt_files[0]
 
 
 @pytest.fixture(scope="session")
 def tiltseries_rawtilt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name]*.rawtlt"""
-    if filesystem.s3fs.exists(f"{tiltseries_basename}*.rawtlt"):
-        return f"{tiltseries_basename}.rawtlt"
-    else:
+    rawtlt_files = filesystem.glob(f"{tiltseries_basename}*.rawtlt")
+    if len(rawtlt_files) == 0:
         pytest.skip("No rawtlt file found.")
+    return rawtlt_files[0]
 
 
 # =============================================================================
@@ -329,12 +329,14 @@ def annotation_files(
     instance_seg_annotation_files: List[str],
     seg_mask_annotation_mrc_files: List[str],
 ) -> List[str]:
-    return (
+    all_files = (
         point_annotation_files
         + oriented_point_annotation_files
         + instance_seg_annotation_files
         + seg_mask_annotation_mrc_files
     )
+    assert len(all_files) > 0, "No annotation files found, but folder exists."
+    return all_files
 
 
 @pytest.fixture(scope="session")
