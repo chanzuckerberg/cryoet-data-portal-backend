@@ -2,4 +2,4 @@ stack:
   services:
     apiv2:
       image:
-        tag: sha-4ed4296
+        tag: sha-4c5f034
