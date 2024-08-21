@@ -10,10 +10,9 @@ concurrency:
 
 jobs:
   rdev_argus_builder:
-    runs-on: [ARM64, self-hosted, Linux]
-    if: contains(github.event.pull_request.labels.*.name, 'stack')
-    secrets: inherit
     uses: ./.github/workflows/workflow-argus-docker-build.yaml
+    secrets: inherit
+    if: contains(github.event.pull_request.labels.*.name, 'stack')
     with:
       envs: rdev
       path_filters: 'apiv2/**'
