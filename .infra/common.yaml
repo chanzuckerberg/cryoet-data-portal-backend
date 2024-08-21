@@ -29,13 +29,13 @@ stack:
         value: /var/keys/private_key.pem
     volumeMounts:
       - mountPath: /var/policies
-        name: cerbosPolicies
+        name: cerbos-policies
         readOnly: false
       - mountPath: /var/keys
         name: keys
         readOnly: false
   volumes:
-    - name: cerbosPolicies
+    - name: cerbos-policies
       emptyDir:
         sizeLimit: 50Mi
     - name: keys
@@ -48,20 +48,20 @@ stack:
       # TODO how do we refer to the tag that's being deployed right now?
       initContainers:
         # Install cerbos policies where the cerbos sidecar can grab them.
-        - name: installCerbosPolciies
+        - name: install-cerbos-policies
           image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
           command: ["cp -r", "./cerbos/", "/var/policies/"]
           volumeMounts:
             - mountPath: /var/policies
-              name: cerbos_policies
+              name: cerbos-policies
         # Run migrations
-        - name: runMigrations
+        - name: run-migrations
           image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
           command: ["alembic", "upgrade", "head"]
         # Generate random keys for decoding tokens. We don't use these keys so they don't need to be shared secrets.
-        - name: gen_keypair
+        - name: gen-keypair
           image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
           command: ["./etc/gen_keys.sh", "/var/keys/"]
@@ -85,5 +85,5 @@ stack:
             timeoutSeconds: 10
           volumeMounts:
             - mountPath: /var/policies
-              name: cerbos_policies
+              name: cerbos-policies
               readOnly: false
