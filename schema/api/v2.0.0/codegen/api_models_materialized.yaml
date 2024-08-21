@@ -1592,7 +1592,8 @@ classes:
         inlined_as_list: true
       object_id:
         name: object_id
-        description: Identifier for the annotation object
+        description: Gene Ontology Cellular Component identifier or UniProtKB accession
+          for the annotation object.
         from_schema: cdp-api
         exact_mappings:
         - cdp-common:annotation_object_id

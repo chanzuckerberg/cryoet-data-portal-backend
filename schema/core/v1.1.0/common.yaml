@@ -623,7 +623,7 @@ slots:
       - range: GO_ID
       - range: UNIPROT_ID
     required: true
-    description: Identifier for the annotation object
+    description: Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.
   annotation_object_name:
     range: string
     required: true

@@ -2621,7 +2621,8 @@ classes:
     attributes:
       id:
         name: id
-        description: Identifier for the annotation object
+        description: Gene Ontology Cellular Component identifier or UniProtKB accession
+          for the annotation object.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_object_id
