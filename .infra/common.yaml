@@ -28,10 +28,10 @@ stack:
       - name: JWK_PRIVATE_KEY_FILE
         value: /var/keys/private_key.pem
     volumeMounts:
-      - mount_path: /var/policies
+      - mountPath: /var/policies
         name: cerbos_policies
         readonly: false
-      - mount_path: /var/keys
+      - mountPath: /var/keys
         name: keys
         readonly: false
 
@@ -47,7 +47,7 @@ stack:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
           command: ["cp -r", "./cerbos/", "/var/policies/"]
           volumeMounts:
-            - mount_path: /var/policies
+            - mountPath: /var/policies
               name: cerbos_policies
               readonly: false
         # Run migrations
@@ -61,7 +61,7 @@ stack:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
           command: ["./etc/gen_keys.sh", "/var/keys/"]
           volumeMounts:
-            - mount_path: /var/keys
+            - mountPath: /var/keys
               name: keys
               readonly: false
       sidecars:
@@ -78,6 +78,6 @@ stack:
             successThreshold: 1
             timeoutSeconds: 10
           volumeMounts:
-            - mount_path: /var/policies
+            - mountPath: /var/policies
               name: cerbos_policies
               readonly: false
