@@ -34,13 +34,13 @@ stack:
       - mountPath: /var/keys
         name: keys
         readOnly: false
-  volumes:
-    - name: cerbos-policies
-      emptyDir:
-        sizeLimit: 50Mi
-    - name: keys
-      emptyDir:
-        sizeLimit: 10Mi
+    volumes:
+      - name: cerbos-policies
+        emptyDir:
+          sizeLimit: 50Mi
+      - name: keys
+        emptyDir:
+          sizeLimit: 10Mi
   services:
     apiv2:
       image:
