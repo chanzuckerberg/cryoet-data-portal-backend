@@ -52,6 +52,10 @@ ingestor-test-db:
 ingestor-test-s3:
 	docker compose exec ingestor pytest -vvv -s . -k s3_import
 
+.PHONY: apiv2-test
+apiv2-test:  ## Run apiv2 tests
+	$(docker_compose) exec graphql-api pytest -vvv
+
 .PHONY: push-local-ingestor-build
 push-local-ingestor-build:
 	aws_region=$$(aws configure get region); \
