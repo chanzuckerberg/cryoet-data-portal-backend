@@ -30,10 +30,10 @@ stack:
     volumeMounts:
       - mountPath: /var/policies
         name: cerbos_policies
-        readonly: false
+        readOnly: false
       - mountPath: /var/keys
         name: keys
-        readonly: false
+        readOnly: false
 
   services:
     apiv2:
@@ -49,7 +49,6 @@ stack:
           volumeMounts:
             - mountPath: /var/policies
               name: cerbos_policies
-              readonly: false
         # Run migrations
         - name: run_migrations
           image:
@@ -63,7 +62,7 @@ stack:
           volumeMounts:
             - mountPath: /var/keys
               name: keys
-              readonly: false
+              readOnly: false
       sidecars:
         - name: cerbos
           image: ghcr.io/cerbos/cerbos:0.29.0
@@ -81,4 +80,4 @@ stack:
           volumeMounts:
             - mountPath: /var/policies
               name: cerbos_policies
-              readonly: false
+              readOnly: false
