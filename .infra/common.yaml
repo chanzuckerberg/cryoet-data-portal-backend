@@ -29,12 +29,18 @@ stack:
         value: /var/keys/private_key.pem
     volumeMounts:
       - mountPath: /var/policies
-        name: cerbos_policies
+        name: cerbosPolicies
         readOnly: false
       - mountPath: /var/keys
         name: keys
         readOnly: false
-
+  volumes:
+    - name: cerbosPolicies
+      emptyDir:
+        sizeLimit: 50Mi
+    - name: keys
+      emptyDir:
+        sizeLimit: 10Mi
   services:
     apiv2:
       image:
@@ -42,7 +48,7 @@ stack:
       # TODO how do we refer to the tag that's being deployed right now?
       initContainers:
         # Install cerbos policies where the cerbos sidecar can grab them.
-        - name: cerbos_policy_install
+        - name: installCerbosPolciies
           image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
           command: ["cp -r", "./cerbos/", "/var/policies/"]
@@ -50,7 +56,7 @@ stack:
             - mountPath: /var/policies
               name: cerbos_policies
         # Run migrations
-        - name: run_migrations
+        - name: runMigrations
           image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
           command: ["alembic", "upgrade", "head"]
@@ -81,10 +87,3 @@ stack:
             - mountPath: /var/policies
               name: cerbos_policies
               readOnly: false
-  volumes:
-    - name: cerbos_policies
-      emptyDir:
-        sizeLimit: 50Mi
-    - name: keys
-      emptyDir:
-        sizeLimit: 10Mi
