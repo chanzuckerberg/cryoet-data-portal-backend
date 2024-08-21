@@ -42,7 +42,8 @@ stack:
       # TODO how do we refer to the tag that's being deployed right now?
       initContainers:
         # Install cerbos policies where the cerbos sidecar can grab them.
-        - image:
+        - name: cerbos_policy_install
+          image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
           command: ["cp -r", "./cerbos/", "/var/policies/"]
           volumeMounts:
@@ -50,11 +51,13 @@ stack:
               name: cerbos_policies
               readonly: false
         # Run migrations
-        - image:
+        - name: run_migrations
+          image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
           command: ["alembic", "upgrade", "head"]
         # Generate random keys for decoding tokens. We don't use these keys so they don't need to be shared secrets.
-        - image:
+        - name: gen_keypair
+          image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-apiv2/apiv2
           command: ["./etc/gen_keys.sh", "/var/keys/"]
           volumeMounts:
