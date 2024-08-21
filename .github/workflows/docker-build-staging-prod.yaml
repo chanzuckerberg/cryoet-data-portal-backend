@@ -1,10 +1,13 @@
-name: Docker Image Build
+name: Docker Build Staging/Prod
 
 on:
-  - push
+  push:
+    branches:
+      - main
 
 jobs:
   argus_builder:
+    runs-on: [ARM64, self-hosted, Linux]
     uses: ./.github/workflows/workflow-argus-docker-build.yaml
     secrets: inherit
     with:
