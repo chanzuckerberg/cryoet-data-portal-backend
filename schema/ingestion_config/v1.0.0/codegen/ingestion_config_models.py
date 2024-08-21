@@ -2508,7 +2508,7 @@ class AnnotationObject(ConfiguredBaseModel):
 
     id: str = Field(
         ...,
-        description="""Gene Ontology Cellular Component identifier for the annotation object""",
+        description="""Identifier for the annotation object""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "id",
