@@ -13,9 +13,8 @@ jobs:
     runs-on: [ARM64, self-hosted, Linux]
     if: contains(github.event.pull_request.labels.*.name, 'stack')
     secrets: inherit
-    steps:
-    - uses: ./.github/workflows/workflow-argus-docker-build.yaml
-      with:
-        envs: rdev
-        path_filters: 'apiv2/**'
-        branches_ignore: main,release-please--branches--main
+    uses: ./.github/workflows/workflow-argus-docker-build.yaml
+    with:
+      envs: rdev
+      path_filters: 'apiv2/**'
+      branches_ignore: main,release-please--branches--main
