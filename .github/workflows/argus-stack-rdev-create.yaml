@@ -18,7 +18,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Create Stack in Argus Rdev
+      - name: Create Stack
         id: upsert
         uses: chanzuckerberg/argus-artifacts/ci/packages/create-stack@v0.27.0
         with:

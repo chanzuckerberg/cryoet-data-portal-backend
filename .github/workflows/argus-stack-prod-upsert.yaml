@@ -17,7 +17,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Create Stack in Argus Prod
+      - name: Update Prod Stack
         uses: chanzuckerberg/argus-artifacts/ci/packages/create-stack@v0.27.0
         with:
           appName: cryoet-apiv2

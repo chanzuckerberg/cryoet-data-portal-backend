@@ -14,7 +14,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Delete Stack from Argus Prod
+      - name: Delete Stack
         uses: chanzuckerberg/argus-artifacts/ci/packages/delete-stack@v0.27.0
         with:
           appName: cryoet-apiv2
