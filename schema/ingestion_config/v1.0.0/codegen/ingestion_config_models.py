@@ -164,7 +164,7 @@ linkml_meta = LinkMLMeta(
                 "description": "A UniProt identifier",
                 "from_schema": "cdp-ingestion-config",
                 "name": "UNIPROT_ID",
-                "pattern": "^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}+$",
+                "pattern": "^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$",
             },
             "URLorS3URI": {
                 "base": "str",
@@ -2565,7 +2565,7 @@ class AnnotationObject(ConfiguredBaseModel):
     @field_validator("id")
     def pattern_id(cls, v):
         pattern = re.compile(
-            r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}+$)"
+            r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)"
         )
         if isinstance(v, list):
             for element in v:

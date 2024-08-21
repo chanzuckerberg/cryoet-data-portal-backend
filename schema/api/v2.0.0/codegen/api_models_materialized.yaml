@@ -300,7 +300,7 @@ types:
     description: A UniProt identifier
     from_schema: cdp-api
     base: str
-    pattern: ^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}+$
+    pattern: ^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$
   WORMBASE_ID:
     name: WORMBASE_ID
     description: A WormBase identifier
@@ -1604,7 +1604,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}+$)
+        pattern: (^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)
         any_of:
         - range: GO_ID
         - range: UNIPROT_ID
