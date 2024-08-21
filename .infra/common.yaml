@@ -81,3 +81,10 @@ stack:
             - mountPath: /var/policies
               name: cerbos_policies
               readOnly: false
+  volumes:
+    - name: cerbos_policies
+      emptyDir:
+        sizeLimit: 50Mi
+    - name: keys
+      emptyDir:
+        sizeLimit: 10Mi
