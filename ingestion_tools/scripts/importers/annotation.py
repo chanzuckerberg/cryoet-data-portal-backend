@@ -481,6 +481,7 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         "obj": mc.from_obj,
         "stl": mc.from_stl,
         "vtk": mc.from_vtk,
+        "glb": mc.from_glb,
     }
     valid_file_formats = list(map_functions.keys())
     mesh_label: int
@@ -489,6 +490,7 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
     def __init__(
         self,
         mesh_label: int | None = None,
+        scale_factor: float = 1.0,
         *args,
         **kwargs,
     ) -> None:
@@ -496,7 +498,7 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         if not mesh_label:
             mesh_label = 1
         self.mesh_label = mesh_label
-        self.voxel_spacing = self.get_voxel_spacing()
+        self.scale_factor = scale_factor
 
     def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
         metadata = [
@@ -513,7 +515,7 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         mesh_file = self.config.fs.localreadable(self.path)
         output_file_name = self.get_output_filename(output_prefix)
         tmp_path = self.config.fs.localwritable(output_file_name)
-        self.map_functions[self.file_format](mesh_file, tmp_path)
+        self.map_functions[self.file_format](mesh_file, tmp_path, scale_factor=self.scale_factor)
         self.config.fs.push(tmp_path)
 
     def get_object_count(self, output_prefix: str) -> int:

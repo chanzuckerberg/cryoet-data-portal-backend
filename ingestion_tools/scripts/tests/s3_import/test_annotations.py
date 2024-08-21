@@ -965,7 +965,33 @@ def test_ingest_instance_point_data(
         assert exp_point["instance_id"] == point["instance_id"], f"Incorrect id for {case['case']}"
 
 
+@pytest.mark.parametrize(
+    "case",
+    [
+        {
+            "file_format": "stl",
+            "glob_string": "annotations/triangular_mesh.stl",
+            "is_visualization_default": False,
+        },
+        {
+            "file_format": "glb",
+            "glob_string": "annotations/triangular_mesh.glb",
+            "is_visualization_default": False,
+        },
+        {
+            "file_format": "vtk",
+            "glob_string": "annotations/triangular_mesh.vtk",
+            "is_visualization_default": False,
+        },
+        {
+            "file_format": "obj",
+            "glob_string": "annotations/triangular_mesh.obj",
+            "is_visualization_default": False,
+        },
+    ],
+)
 def test_ingest_triangular_mesh(
+    case,
     tomo_importer: TomogramImporter,
     dataset_config_local: DepositionImportConfig,
     local_test_data_dir: str,
@@ -980,11 +1006,7 @@ def test_ingest_triangular_mesh(
                 "metadata": default_anno_metadata,
                 "sources": [
                     {
-                        "TriangularMesh": {
-                            "file_format": "stl",
-                            "glob_string": glob_string,
-                            "is_visualization_default": False,
-                        },
+                        "TriangularMesh": case,
                     },
                 ],
             },

@@ -14,16 +14,16 @@ def convert_mesh_to_glb(convert_func: typing.Callable[[str], trimesh.Trimesh]) -
     :param convert_func: the function to convert a mesh file to a trimesh object.
     """
 
-    def wrapper(input_file: str, output_file: str, scale: float = 1.0) -> None:
+    def wrapper(input_file: str, output_file: str, scale_factor: float = 1.0) -> None:
         """
         Convert a mesh file to a glb file and scale it by a given factor.
 
         :param input_file: the path to a mesh file to convert.
         :param output_file: the name of the output file.
-        :param scale: the factor to scale the mesh by.
+        :param scale_factor: the factor to scale the mesh by.
         """
         mesh: trimesh.Trimesh = convert_func(input_file)
-        mesh.apply_scale(scale)  # TODO test
+        mesh.apply_scale(scale_factor)
         mesh.export(output_file)
 
     return wrapper
@@ -85,3 +85,22 @@ def from_vtk(input_file: str) -> trimesh.Trimesh:
     vkt_data = read_vtk(input_file)
     mesh = vtk_to_trimesh(vkt_data)
     return mesh
+
+
+def from_glb(input_file: str):
+    """
+    Load a glb file into a trimesh object. More information about this format can be found
+    here https://en.wikipedia.org/wiki/GlTF
+
+    :param input_file: the path to a glb file.
+    :return: the mesh loaded into a trimesh object.
+    """
+    return trimesh.load(input_file)
+
+
+if __name__ == "__main__":
+    from_stl(
+        "/Users/trentsmith/workspace/cryoet/cryoet-data-portal-backend/test_infra/test_files/input_bucket/20002/annotations/Endospore.stl",
+        "/Users/trentsmith/workspace/cryoet/cryoet-data-portal-backend/test_infra/test_files/input_bucket/20002/annotations/Endospore.glb",
+        1.0,
+    )
