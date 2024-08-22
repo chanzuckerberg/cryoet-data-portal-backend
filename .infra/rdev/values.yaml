@@ -2,14 +2,14 @@ stack:
   services:
     apiv2:
       image:
-        tag: sha-1418fdc
+        tag: sha-2135fae
       # TODO how do we refer to the tag that's being deployed right now?
       initContainers:
         # Install cerbos policies where the cerbos sidecar can grab them.
         - name: install-cerbos-policies
           image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2
-            tag: sha-1418fdc
+            tag: sha-2135fae
           command: ["cp -r", "./cerbos/", "/var/policies/"]
           volumeMounts:
             - mountPath: /var/policies
@@ -18,13 +18,13 @@ stack:
         - name: run-migrations
           image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2
-            tag: sha-1418fdc
+            tag: sha-2135fae
           command: ["alembic", "upgrade", "head"]
         # Generate random keys for decoding tokens. We don't use these keys so they don't need to be shared secrets.
         - name: gen-keypair
           image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2
-            tag: sha-1418fdc
+            tag: sha-2135fae
           command: ["./etc/gen_keys.sh", "/var/keys/"]
           volumeMounts:
             - mountPath: /var/keys
