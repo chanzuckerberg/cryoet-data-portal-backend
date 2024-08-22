@@ -9,7 +9,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  filter:
+    runs-on: [ARM64, self-hosted, Linux]
+    permissions:
+      id-token: write
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const prs = await github.rest.pulls.list({
+              owner,
+              repo,
+            });
+            console.log(JSON.stringify(prs.data, null, 2));
   rdev_argus_builder:
+    needs: filter
     uses: ./.github/workflows/workflow-argus-docker-build.yaml
     secrets: inherit
     if: contains(github.event.pull_request.labels.*.name, 'stack')
