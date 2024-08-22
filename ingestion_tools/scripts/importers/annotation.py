@@ -485,8 +485,9 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         "glb": mc.from_generic,
     }
     valid_file_formats = list(map_functions.keys())
-    ontology_id: str
+    ontology_id: typing.Optional[str]
     output_format: str = "glb"
+    scale_factor: float
 
     def __init__(
         self,
