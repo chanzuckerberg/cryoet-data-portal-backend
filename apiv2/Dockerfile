@@ -16,6 +16,7 @@ RUN poetry install
 RUN mkdir -p /app
 WORKDIR /app
 
+COPY . .
 ENV PYTHONPATH=.
 ENTRYPOINT []
 CMD ["/usr/local/bin/supervisord", "-c", "/app/etc/supervisord.conf"]

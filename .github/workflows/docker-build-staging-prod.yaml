@@ -8,6 +8,7 @@ on:
 jobs:
   argus_builder:
     uses: ./.github/workflows/workflow-argus-docker-build.yaml
+    if: github.event.sender.type != 'Bot'
     secrets: inherit
     with:
       envs: staging,prod
