@@ -8,7 +8,7 @@ from trimesh import load as trimesh_load
 logger = logging.getLogger(__name__)
 
 
-def convert_mesh_to_glb(convert_func: typing.Callable[[str], trimesh.Scene]) -> typing.Callable:
+def convert_mesh_to_glb(convert_func: typing.Callable[[str], trimesh.Trimesh]) -> typing.Callable:
     """
     A decorator to convert and scale a mesh by a given factor
 
@@ -23,15 +23,15 @@ def convert_mesh_to_glb(convert_func: typing.Callable[[str], trimesh.Scene]) -> 
         :param output_file: the name of the output file.
         :param scale_factor: the factor to scale the mesh by.
         """
-        mesh: trimesh.Scene = convert_func(input_file)
-        mesh.scaled(scale_factor)
+        mesh: trimesh.Trimesh = convert_func(input_file)
+        mesh.apply_scale(scale_factor)
         mesh.export(output_file)
 
     return wrapper
 
 
 @convert_mesh_to_glb
-def from_generic(input_file: str) -> trimesh.Scene:
+def from_generic(input_file: str) -> trimesh.Trimesh:
     """
     Load a mesh file into a trimesh object.
 
@@ -47,7 +47,7 @@ def from_generic(input_file: str) -> trimesh.Scene:
 
 
 @convert_mesh_to_glb
-def from_vtk(input_file: str) -> trimesh.Scene:
+def from_vtk(input_file: str) -> trimesh.Trimesh:
     """
     Load a vtk file into a trimesh object.. More information about this format can be found
     here https://en.wikipedia.org/wiki/VTK
