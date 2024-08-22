@@ -478,10 +478,10 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
 
     shape = "TriangularMesh"
     map_functions = {
-        "obj": mc.from_obj,
-        "stl": mc.from_stl,
+        "obj": mc.from_generic,
+        "stl": mc.from_generic,
         "vtk": mc.from_vtk,
-        "glb": mc.from_glb,
+        "glb": mc.from_generic,
     }
     valid_file_formats = list(map_functions.keys())
     mesh_label: int

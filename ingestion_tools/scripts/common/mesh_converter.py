@@ -3,6 +3,7 @@ import typing
 
 import numpy as np
 import trimesh
+from trimesh import load as trimesh_load
 
 logger = logging.getLogger(__name__)
 
@@ -30,27 +31,19 @@ def convert_mesh_to_glb(convert_func: typing.Callable[[str], trimesh.Trimesh]) -
 
 
 @convert_mesh_to_glb
-def from_obj(input_file: str) -> trimesh.Trimesh:
+def from_generic(input_file: str) -> trimesh.Trimesh:
     """
-    Load a obj file into a trimesh object. More information about this format can be found
-    here: https://en.wikipedia.org/wiki/Wavefront_.obj_file
+    Load a mesh file into a trimesh object.
 
-    :param input_file: the path to an obj file.
+    Supports the following formats:
+    - obj: https://en.wikipedia.org/wiki/Wavefront_.obj_file
+    - stl: https://en.wikipedia.org/wiki/STL_(file_format)
+    - glb: https://en.wikipedia.org/wiki/GlTF
+
+    :param input_file: the path to a mesh file.
     :return: the mesh loaded into a trimesh object.
     """
-    return trimesh.load(input_file)
-
-
-@convert_mesh_to_glb
-def from_stl(input_file: str):
-    """
-    Load a stl file into a trimesh object. More information about this format can be found
-    here https://en.wikipedia.org/wiki/STL_(file_format)
-
-    :param input_file: the path to a stl file.
-    :return: the mesh loaded into a trimesh object.
-    """
-    return trimesh.load(input_file)
+    return trimesh_load(input_file)
 
 
 @convert_mesh_to_glb
@@ -85,22 +78,3 @@ def from_vtk(input_file: str) -> trimesh.Trimesh:
     vkt_data = read_vtk(input_file)
     mesh = vtk_to_trimesh(vkt_data)
     return mesh
-
-
-def from_glb(input_file: str):
-    """
-    Load a glb file into a trimesh object. More information about this format can be found
-    here https://en.wikipedia.org/wiki/GlTF
-
-    :param input_file: the path to a glb file.
-    :return: the mesh loaded into a trimesh object.
-    """
-    return trimesh.load(input_file)
-
-
-if __name__ == "__main__":
-    from_stl(
-        "/Users/trentsmith/workspace/cryoet/cryoet-data-portal-backend/test_infra/test_files/input_bucket/20002/annotations/Endospore.stl",
-        "/Users/trentsmith/workspace/cryoet/cryoet-data-portal-backend/test_infra/test_files/input_bucket/20002/annotations/Endospore.glb",
-        1.0,
-    )
