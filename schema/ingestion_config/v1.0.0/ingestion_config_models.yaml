@@ -150,7 +150,19 @@ classes:
         required: true
 
   DefaultSource:
-    description: A generalized source class with glob finders.
+    description: A default source class that all source classes inherit from.
+    attributes:
+      # Would also have parent_filters here, but sometimes parent_filters doesn't apply (e.g., Deposition) and
+      # for other cases the permitted entries in parent_filters are different for different source classes
+      # so we have individual ParentFiltersEntity instead
+      exclude:
+        description: Exclude files from the source that match (regexes).
+        range: string
+        multivalued: true
+
+  StandardSource:
+    description: A generalized source class with glob finders. Inherited by a majority of source classes.
+    is_a: DefaultSource
     attributes:
       destination_glob:
         description: The glob object for the destination file.
@@ -161,18 +173,11 @@ classes:
       source_multi_glob:
         description: The glob object for the source file (with multiple globs).
         range: SourceMultiGlob
-      # Would also have literal here, but literal schema varies by class, so we have DefaultLiteralEntity instead
-      # Would also have parent_filters here, but sometimes parent_filters doesn't apply (e.g., Dataset),
-      # so we have individual ParentFiltersEntity instead
-
-  DefaultLiteralEntity:
-    description: Used as a mixin with root-level classes that contain sources that have literals.
-    attributes:
       literal:
         description: A literal class with a value attribute.
-        range: DefaultLiteral
+        range: StandardLiteral
 
-  DefaultLiteral:
+  StandardLiteral:
     description: A literal class with a value attribute.
     attributes:
       value:
@@ -207,6 +212,7 @@ classes:
 
   AnnotationSource:
     description: An annotation source.
+    is_a: DefaultSource
     attributes:
       InstanceSegmentation:
         description: The instance segmentation annotation source.
@@ -260,9 +266,7 @@ classes:
 
   DatasetSource:
     description: A dataset source.
-    mixins:
-      - DefaultSource
-      - DefaultLiteralEntity
+    is_a: StandardSource
     attributes:
       parent_filters:
         description: Permitted parent filters for a dataset source.
@@ -293,6 +297,7 @@ classes:
 
   DatasetKeyPhotoSource:
     description: A key photo source.
+    is_a: StandardSource
     attributes:
       literal:
         description: A literal for a key photo.
@@ -328,9 +333,7 @@ classes:
 
   DepositionSource:
     description: A deposition source.
-    mixins:
-      - DefaultSource
-      - DefaultLiteralEntity
+    is_a: StandardSource
       # No ParentFiltersEntity because parent_filters doesn't apply to Deposition
 
   DepositionKeyPhotoEntity:
@@ -343,6 +346,7 @@ classes:
 
   DepositionKeyPhotoSource:
     description: A key photo source.
+    is_a: StandardSource
     attributes:
       literal:
         description: A literal for a key photo.
@@ -376,9 +380,7 @@ classes:
 
   FrameSource:
     description: A frame source.
-    mixins:
-      - DefaultSource
-      - DefaultLiteralEntity
+    is_a: StandardSource
     attributes:
       parent_filters:
         description: Permitted parent filters for a frame source.
@@ -411,9 +413,7 @@ classes:
 
   GainSource:
     description: A gain source.
-    mixins:
-      - DefaultSource
-      - DefaultLiteralEntity
+    is_a: StandardSource
     attributes:
       parent_filters:
         description: Permitted parent filters for a gain source.
@@ -446,9 +446,7 @@ classes:
 
   KeyImageSource:
     description: A key image source.
-    mixins:
-      - DefaultSource
-      - DefaultLiteralEntity
+    is_a: StandardSource
     attributes:
       parent_filters:
         description: Permitted parent filters for a key image source.
@@ -483,9 +481,7 @@ classes:
 
   RawTiltSource:
     description: A raw tilt source.
-    mixins:
-      - DefaultSource
-      - DefaultLiteralEntity
+    is_a: StandardSource
     attributes:
       parent_filters:
         description: Permitted parent filters for a raw tilt source.
@@ -518,9 +514,7 @@ classes:
 
   RunSource:
     description: A run source.
-    mixins:
-      - DefaultSource
-      - DefaultLiteralEntity
+    is_a: StandardSource
     attributes:
       parent_filters:
         description: Permitted parent filters for a run source.
@@ -578,9 +572,7 @@ classes:
 
   TiltSeriesSource:
     description: A tilt series source.
-    mixins:
-      - DefaultSource
-      - DefaultLiteralEntity
+    is_a: StandardSource
     attributes:
       parent_filters:
         description: Permitted parent filters for a tilt series source.
@@ -615,9 +607,7 @@ classes:
 
   TomogramSource:
     description: A tomogram source.
-    mixins:
-      - DefaultSource
-      - DefaultLiteralEntity
+    is_a: StandardSource
     attributes:
       parent_filters:
         description: Permitted parent filters for a tomogram source.
@@ -649,8 +639,9 @@ classes:
         range: VoxelSpacingSource
         required: true
 
-  # Can't use DefaultSource since it doesn't permit source_multi_glob
+  # Can't use StandardSource since VoxelSpacingImporter doesn't permit source_multi_glob
   VoxelSpacingSource:
+    is_a: DefaultSource
     description: A voxel spacing source.
     attributes:
       destination_glob:

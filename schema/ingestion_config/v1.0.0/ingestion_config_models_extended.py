@@ -487,7 +487,8 @@ def validate_sources(source_list: List[DefaultSource] | List[VoxelSpacingSource]
             # If the finder is not None, add it to the list of finders in the source entry
             if getattr(source_element, finder) is None:
                 continue
-
+            if finder == "exclude":
+                continue
             if finder == "parent_filters":
                 has_parent_filters = True
             else:
@@ -601,7 +602,7 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
             for shape in source_element.model_fields:
                 if getattr(source_element, shape) is None:
                     continue
-                if shape == "parent_filters":
+                if shape in {"parent_filters", "exclude"}:
                     continue
 
                 # If the shape is not None, add it to the list of shapes in the source entry
