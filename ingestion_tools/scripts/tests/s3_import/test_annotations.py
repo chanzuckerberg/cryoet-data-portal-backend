@@ -966,17 +966,19 @@ def test_ingest_instance_point_data(
 
 
 @pytest.mark.parametrize(
-    "glob_string,file_format",
+    "glob_string,file_format,ontology_id",
     [
-        ("annotations/triangular_mesh.stl", "stl"),
-        ("annotations/triangular_mesh.glb", "glb"),
-        ("annotations/triangular_mesh.vtk", "vtk"),
-        ("annotations/triangular_mesh.obj", "obj"),
+        ("annotations/triangular_mesh.stl", "stl", None),
+        ("annotations/triangular_mesh.glb", "glb", None),
+        ("annotations/triangular_mesh.vtk", "vtk", None),
+        ("annotations/triangular_mesh.obj", "obj", None),
+        ("annotations/triangular_mesh.obj", "obj", "EM:1234567"),
     ],
 )
 def test_ingest_triangular_mesh(
     glob_string,
     file_format,
+    ontology_id,
     tomo_importer: TomogramImporter,
     dataset_config_local: DepositionImportConfig,
     local_test_data_dir: str,
@@ -1014,13 +1016,17 @@ def test_ingest_triangular_mesh(
 
     # Assert
     # verify local_metadata
+    path = ["dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0"]
+    if ontology_id:
+        path.append(ontology_id.replace(":", "_"))
+    path.append("triangularmesh.glb")
+    path = "-".join(path)
     expected_local_metadata = {
         "object_count": 1,
         "files": [
             {
                 "format": "glb",
-                "path": "dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0-1_triangularmesh"
-                ".glb",
+                "path": path,
                 "shape": "TriangularMesh",
                 "is_visualization_default": False,
             },

@@ -524,5 +524,7 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         return True
 
     def get_output_filename(self, output_prefix: str) -> str:
-        output_prefix = "-".join([output_prefix, str(self.ontology_id)]) if self.ontology_id else output_prefix
+        if self.ontology_id:
+            ontology_id = self.ontology_id.replace(":", "_")
+            output_prefix = "-".join([output_prefix, ontology_id])
         return super().get_output_filename(output_prefix, self.output_format)
