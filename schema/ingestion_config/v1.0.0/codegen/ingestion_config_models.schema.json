@@ -663,6 +663,16 @@
                     ],
                     "description": "File and sourcing data for a semantic segmentation mask annotation. Annotation that identifies classes of objects."
                 },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "parent_filters": {
                     "anyOf": [
                         {
@@ -1349,6 +1359,27 @@
             "additionalProperties": false,
             "description": "A key photo source.",
             "properties": {
+                "destination_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DestinationGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "literal": {
                     "anyOf": [
                         {
@@ -1370,6 +1401,28 @@
                         }
                     ],
                     "description": "Types of parent filters for a key photo source."
+                },
+                "source_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceMultiGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
                 }
             },
             "title": "DatasetKeyPhotoSource",
@@ -1438,10 +1491,20 @@
                     ],
                     "description": "A glob class for finding files in the output / destination directory."
                 },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "literal": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DefaultLiteral"
+                            "$ref": "#/$defs/StandardLiteral"
                         },
                         {
                             "type": "null"
@@ -1529,80 +1592,19 @@
             "title": "DateStampedEntity",
             "type": "object"
         },
-        "DefaultLiteral": {
-            "additionalProperties": false,
-            "description": "A literal class with a value attribute.",
-            "properties": {
-                "value": {
-                    "description": "The value for the literal.",
-                    "items": {
-                        "$ref": "#/$defs/Any"
-                    },
-                    "minItems": 1,
-                    "type": "array"
-                }
-            },
-            "required": [
-                "value"
-            ],
-            "title": "DefaultLiteral",
-            "type": "object"
-        },
-        "DefaultLiteralEntity": {
-            "additionalProperties": false,
-            "description": "Used as a mixin with root-level classes that contain sources that have literals.",
-            "properties": {
-                "literal": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/DefaultLiteral"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "A literal class with a value attribute."
-                }
-            },
-            "title": "DefaultLiteralEntity",
-            "type": "object"
-        },
         "DefaultSource": {
             "additionalProperties": false,
-            "description": "A generalized source class with glob finders.",
+            "description": "A default source class that all source classes inherit from.",
             "properties": {
-                "destination_glob": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/DestinationGlob"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "A glob class for finding files in the output / destination directory."
-                },
-                "source_glob": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/SourceGlob"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "A glob class for finding files in the source directory."
-                },
-                "source_multi_glob": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/SourceMultiGlob"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
                 }
             },
             "title": "DefaultSource",
@@ -1769,6 +1771,27 @@
             "additionalProperties": false,
             "description": "A key photo source.",
             "properties": {
+                "destination_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DestinationGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "literal": {
                     "anyOf": [
                         {
@@ -1790,6 +1813,28 @@
                         }
                     ],
                     "description": "Types of parent filters for a key photo source."
+                },
+                "source_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceMultiGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
                 }
             },
             "title": "DepositionKeyPhotoSource",
@@ -1810,10 +1855,20 @@
                     ],
                     "description": "A glob class for finding files in the output / destination directory."
                 },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "literal": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DefaultLiteral"
+                            "$ref": "#/$defs/StandardLiteral"
                         },
                         {
                             "type": "null"
@@ -2089,10 +2144,20 @@
                     ],
                     "description": "A glob class for finding files in the output / destination directory."
                 },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "literal": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DefaultLiteral"
+                            "$ref": "#/$defs/StandardLiteral"
                         },
                         {
                             "type": "null"
@@ -2279,10 +2344,20 @@
                     ],
                     "description": "A glob class for finding files in the output / destination directory."
                 },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "literal": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DefaultLiteral"
+                            "$ref": "#/$defs/StandardLiteral"
                         },
                         {
                             "type": "null"
@@ -2449,10 +2524,20 @@
                     ],
                     "description": "A glob class for finding files in the output / destination directory."
                 },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "literal": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DefaultLiteral"
+                            "$ref": "#/$defs/StandardLiteral"
                         },
                         {
                             "type": "null"
@@ -2743,10 +2828,20 @@
                     ],
                     "description": "A glob class for finding files in the output / destination directory."
                 },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "literal": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DefaultLiteral"
+                            "$ref": "#/$defs/StandardLiteral"
                         },
                         {
                             "type": "null"
@@ -2883,10 +2978,20 @@
                     ],
                     "description": "A glob class for finding files in the output / destination directory."
                 },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "literal": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DefaultLiteral"
+                            "$ref": "#/$defs/StandardLiteral"
                         },
                         {
                             "type": "null"
@@ -2992,6 +3097,87 @@
                 "list_globs"
             ],
             "title": "SourceMultiGlob",
+            "type": "object"
+        },
+        "StandardLiteral": {
+            "additionalProperties": false,
+            "description": "A literal class with a value attribute.",
+            "properties": {
+                "value": {
+                    "description": "The value for the literal.",
+                    "items": {
+                        "$ref": "#/$defs/Any"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "value"
+            ],
+            "title": "StandardLiteral",
+            "type": "object"
+        },
+        "StandardSource": {
+            "additionalProperties": false,
+            "description": "A generalized source class with glob finders. Inherited by a majority of source classes.",
+            "properties": {
+                "destination_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DestinationGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "literal": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/StandardLiteral"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A literal class with a value attribute."
+                },
+                "source_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceMultiGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "StandardSource",
             "type": "object"
         },
         "StandardizationConfig": {
@@ -3430,10 +3616,20 @@
                     ],
                     "description": "A glob class for finding files in the output / destination directory."
                 },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "literal": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DefaultLiteral"
+                            "$ref": "#/$defs/StandardLiteral"
                         },
                         {
                             "type": "null"
@@ -3907,10 +4103,20 @@
                     ],
                     "description": "A glob class for finding files in the output / destination directory."
                 },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "literal": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DefaultLiteral"
+                            "$ref": "#/$defs/StandardLiteral"
                         },
                         {
                             "type": "null"
@@ -4095,6 +4301,16 @@
                         }
                     ],
                     "description": "A glob class for finding files in the output / destination directory."
+                },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
                 },
                 "literal": {
                     "anyOf": [

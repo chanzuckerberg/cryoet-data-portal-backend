@@ -48,6 +48,7 @@ annotations: OPTIONAL
       filter_value: OPTIONAL, STRING
       order: OPTIONAL, STRING (DEFAULT xyz)
     parent_filters: SEE runs.sources.parent_filters
+    exclude: SEE runs.sources.exclude
   - OrientedPoint:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
@@ -57,6 +58,7 @@ annotations: OPTIONAL
       filter_value: see InstanceSegmentation.filter_value
       order: see InstanceSegmentation.order
     parent_filters: see InstanceSegmentation.parent_filters
+    exclude: SEE InstanceSegmentation.exclude
   - Point:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
@@ -66,12 +68,14 @@ annotations: OPTIONAL
       columns: OPTIONAL, STRING (DEFAULT xyz)
       delimiter: OPTIONAL, STRING (DEFAULT ',')
     parent_filters: see InstanceSegmentation.parent_filters
+    exclude: SEE InstanceSegmentation.exclude
   - SegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
     parent_filters: see InstanceSegmentation.parent_filters
+    exclude: SEE InstanceSegmentation.exclude
   - SemanticSegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
@@ -79,6 +83,7 @@ annotations: OPTIONAL
       is_visualization_default: see InstanceSegmentation.is_visualization_default
       mask_label: OPTIONAL, INTEGER (DEFAULT 1)
     parent_filters: see InstanceSegmentation.parent_filters
+    exclude: SEE InstanceSegmentation.exclude
 dataset_keyphotos: OPTIONAL
 - sources: REQUIRED
   - literal: REQUIRED
@@ -171,6 +176,8 @@ runs: REQUIRED
     include: OPTIONAL
       dataset: OPTIONAL
         - OPTIONAL, STRING (REGEX)
+  exclude: OPTIONAL
+  - OPTIONAL, STRING (REGEX)
 standardization_config: REQUIRED
   deposition_id: REQUIRED, INTEGER
   run_data_map_file: OPTIONAL, STRING

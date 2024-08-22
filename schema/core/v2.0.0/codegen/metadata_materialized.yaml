@@ -720,7 +720,7 @@ classes:
         owner: Author
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
       primary_author_status:
@@ -734,7 +734,7 @@ classes:
         owner: Author
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
   FundingDetails:
@@ -789,7 +789,7 @@ classes:
         owner: DateStamp
         domain_of:
         - DateStampedEntityMixin
-        range: string
+        range: date
         required: true
         inlined: true
         inlined_as_list: true
@@ -803,7 +803,7 @@ classes:
         owner: DateStamp
         domain_of:
         - DateStampedEntityMixin
-        range: string
+        range: date
         required: true
         inlined: true
         inlined_as_list: true
@@ -818,7 +818,7 @@ classes:
         owner: DateStamp
         domain_of:
         - DateStampedEntityMixin
-        range: string
+        range: date
         required: true
         inlined: true
         inlined_as_list: true
@@ -3302,7 +3302,7 @@ classes:
         owner: DateStampedEntityMixin
         domain_of:
         - DateStampedEntityMixin
-        range: string
+        range: date
         required: true
         inlined: true
         inlined_as_list: true
@@ -3316,7 +3316,7 @@ classes:
         owner: DateStampedEntityMixin
         domain_of:
         - DateStampedEntityMixin
-        range: string
+        range: date
         required: true
         inlined: true
         inlined_as_list: true
@@ -3331,7 +3331,7 @@ classes:
         owner: DateStampedEntityMixin
         domain_of:
         - DateStampedEntityMixin
-        range: string
+        range: date
         required: true
         inlined: true
         inlined_as_list: true
@@ -3480,7 +3480,7 @@ classes:
         owner: AuthorMixin
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
       primary_author_status:
@@ -3494,7 +3494,7 @@ classes:
         owner: AuthorMixin
         domain_of:
         - AuthorMixin
-        range: string
+        range: boolean
         inlined: true
         inlined_as_list: true
 source_file: core/v2.0.0/metadata.yaml

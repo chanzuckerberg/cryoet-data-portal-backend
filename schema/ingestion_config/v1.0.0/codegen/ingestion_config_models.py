@@ -4082,7 +4082,54 @@ class SourceMultiGlob(ConfiguredBaseModel):
 
 class DefaultSource(ConfiguredBaseModel):
     """
-    A generalized source class with glob finders.
+    A default source class that all source classes inherit from.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
+
+    exclude: Optional[List[str]] = Field(
+        None,
+        description="""Exclude files from the source that match (regexes).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
+
+
+class StandardSource(DefaultSource):
+    """
+    A generalized source class with glob finders. Inherited by a majority of source classes.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
@@ -4094,10 +4141,12 @@ class DefaultSource(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "destination_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4116,10 +4165,12 @@ class DefaultSource(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "source_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4138,9 +4189,11 @@ class DefaultSource(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "source_multi_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4152,23 +4205,14 @@ class DefaultSource(ConfiguredBaseModel):
             }
         },
     )
-
-
-class DefaultLiteralEntity(ConfiguredBaseModel):
-    """
-    Used as a mixin with root-level classes that contain sources that have literals.
-    """
-
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
-
-    literal: Optional[DefaultLiteral] = Field(
+    literal: Optional[StandardLiteral] = Field(
         None,
         description="""A literal class with a value attribute.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "literal",
                 "domain_of": [
-                    "DefaultLiteralEntity",
+                    "StandardSource",
                     "DatasetKeyPhotoSource",
                     "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
@@ -4185,9 +4229,47 @@ class DefaultLiteralEntity(ConfiguredBaseModel):
             }
         },
     )
+    exclude: Optional[List[str]] = Field(
+        None,
+        description="""Exclude files from the source that match (regexes).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
 
 
-class DefaultLiteral(ConfiguredBaseModel):
+class StandardLiteral(ConfiguredBaseModel):
     """
     A literal class with a value attribute.
     """
@@ -4199,7 +4281,10 @@ class DefaultLiteral(ConfiguredBaseModel):
         description="""The value for the literal.""",
         min_length=1,
         json_schema_extra={
-            "linkml_meta": {"alias": "value", "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"]}
+            "linkml_meta": {
+                "alias": "value",
+                "domain_of": ["StandardLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"],
+            }
         },
     )
 
@@ -4215,7 +4300,10 @@ class KeyPhotoLiteral(ConfiguredBaseModel):
         ...,
         description="""A set of paths to representative images of a piece of data.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "value", "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"]}
+            "linkml_meta": {
+                "alias": "value",
+                "domain_of": ["StandardLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"],
+            }
         },
     )
 
@@ -4270,7 +4358,7 @@ class AnnotationEntity(ConfiguredBaseModel):
     )
 
 
-class AnnotationSource(ConfiguredBaseModel):
+class AnnotationSource(DefaultSource):
     """
     An annotation source.
     """
@@ -4325,6 +4413,44 @@ class AnnotationSource(ConfiguredBaseModel):
             }
         },
     )
+    exclude: Optional[List[str]] = Field(
+        None,
+        description="""Exclude files from the source that match (regexes).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
 
 
 class AnnotationParentFilters(ConfiguredBaseModel):
@@ -4364,6 +4490,7 @@ class AnnotationParentFilters(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "exclude",
                 "domain_of": [
+                    "DefaultSource",
                     "AnnotationParentFilters",
                     "DatasetParentFilters",
                     "DatasetKeyPhotoParentFilters",
@@ -4376,6 +4503,20 @@ class AnnotationParentFilters(ConfiguredBaseModel):
                     "TiltSeriesParentFilters",
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -4513,14 +4654,12 @@ class DatasetEntity(ConfiguredBaseModel):
     )
 
 
-class DatasetSource(DefaultLiteralEntity, DefaultSource):
+class DatasetSource(StandardSource):
     """
     A dataset source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
-    )
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     parent_filters: Optional[DatasetParentFilters] = Field(
         None,
@@ -4552,10 +4691,12 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "destination_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4574,10 +4715,12 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4596,7 +4739,33 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_multi_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    literal: Optional[StandardLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": [
+                    "StandardSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
                     "FrameSource",
@@ -4610,19 +4779,32 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
             }
         },
     )
-    literal: Optional[DefaultLiteral] = Field(
+    exclude: Optional[List[str]] = Field(
         None,
-        description="""A literal class with a value attribute.""",
+        description="""Exclude files from the source that match (regexes).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "literal",
+                "alias": "exclude",
                 "domain_of": [
-                    "DefaultLiteralEntity",
-                    "DatasetKeyPhotoSource",
-                    "DepositionKeyPhotoSource",
-                    "VoxelSpacingSource",
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4630,6 +4812,7 @@ class DatasetSource(DefaultLiteralEntity, DefaultSource):
                     "RunSource",
                     "TiltSeriesSource",
                     "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -4673,6 +4856,7 @@ class DatasetParentFilters(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "exclude",
                 "domain_of": [
+                    "DefaultSource",
                     "AnnotationParentFilters",
                     "DatasetParentFilters",
                     "DatasetKeyPhotoParentFilters",
@@ -4685,6 +4869,20 @@ class DatasetParentFilters(ConfiguredBaseModel):
                     "TiltSeriesParentFilters",
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -4757,7 +4955,7 @@ class DatasetKeyPhotoEntity(ConfiguredBaseModel):
     )
 
 
-class DatasetKeyPhotoSource(ConfiguredBaseModel):
+class DatasetKeyPhotoSource(StandardSource):
     """
     A key photo source.
     """
@@ -4771,7 +4969,7 @@ class DatasetKeyPhotoSource(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "literal",
                 "domain_of": [
-                    "DefaultLiteralEntity",
+                    "StandardSource",
                     "DatasetKeyPhotoSource",
                     "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
@@ -4798,6 +4996,115 @@ class DatasetKeyPhotoSource(ConfiguredBaseModel):
                     "AnnotationSource",
                     "DatasetSource",
                     "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
+    destination_glob: Optional[DestinationGlob] = Field(
+        None,
+        description="""A glob class for finding files in the output / destination directory.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "destination_glob",
+                "domain_of": [
+                    "StandardSource",
+                    "VoxelSpacingSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    source_glob: Optional[SourceGlob] = Field(
+        None,
+        description="""A glob class for finding files in the source directory.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "source_glob",
+                "domain_of": [
+                    "StandardSource",
+                    "VoxelSpacingSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    source_multi_glob: Optional[SourceMultiGlob] = Field(
+        None,
+        description="""A glob class for finding files in the source directory (with multiple globs).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "source_multi_glob",
+                "domain_of": [
+                    "StandardSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    exclude: Optional[List[str]] = Field(
+        None,
+        description="""Exclude files from the source that match (regexes).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
                     "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
@@ -4850,6 +5157,7 @@ class DatasetKeyPhotoParentFilters(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "exclude",
                 "domain_of": [
+                    "DefaultSource",
                     "AnnotationParentFilters",
                     "DatasetParentFilters",
                     "DatasetKeyPhotoParentFilters",
@@ -4862,6 +5170,20 @@ class DatasetKeyPhotoParentFilters(ConfiguredBaseModel):
                     "TiltSeriesParentFilters",
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -4950,14 +5272,12 @@ class DepositionEntity(ConfiguredBaseModel):
     )
 
 
-class DepositionSource(DefaultLiteralEntity, DefaultSource):
+class DepositionSource(StandardSource):
     """
     A deposition source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
-    )
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     destination_glob: Optional[DestinationGlob] = Field(
         None,
@@ -4966,10 +5286,12 @@ class DepositionSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "destination_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -4988,10 +5310,12 @@ class DepositionSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5010,7 +5334,33 @@ class DepositionSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_multi_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    literal: Optional[StandardLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": [
+                    "StandardSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
                     "FrameSource",
@@ -5024,19 +5374,32 @@ class DepositionSource(DefaultLiteralEntity, DefaultSource):
             }
         },
     )
-    literal: Optional[DefaultLiteral] = Field(
+    exclude: Optional[List[str]] = Field(
         None,
-        description="""A literal class with a value attribute.""",
+        description="""Exclude files from the source that match (regexes).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "literal",
+                "alias": "exclude",
                 "domain_of": [
-                    "DefaultLiteralEntity",
-                    "DatasetKeyPhotoSource",
-                    "DepositionKeyPhotoSource",
-                    "VoxelSpacingSource",
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5044,6 +5407,7 @@ class DepositionSource(DefaultLiteralEntity, DefaultSource):
                     "RunSource",
                     "TiltSeriesSource",
                     "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -5084,7 +5448,7 @@ class DepositionKeyPhotoEntity(ConfiguredBaseModel):
     )
 
 
-class DepositionKeyPhotoSource(ConfiguredBaseModel):
+class DepositionKeyPhotoSource(StandardSource):
     """
     A key photo source.
     """
@@ -5098,7 +5462,7 @@ class DepositionKeyPhotoSource(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "literal",
                 "domain_of": [
-                    "DefaultLiteralEntity",
+                    "StandardSource",
                     "DatasetKeyPhotoSource",
                     "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
@@ -5125,6 +5489,115 @@ class DepositionKeyPhotoSource(ConfiguredBaseModel):
                     "AnnotationSource",
                     "DatasetSource",
                     "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
+    destination_glob: Optional[DestinationGlob] = Field(
+        None,
+        description="""A glob class for finding files in the output / destination directory.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "destination_glob",
+                "domain_of": [
+                    "StandardSource",
+                    "VoxelSpacingSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    source_glob: Optional[SourceGlob] = Field(
+        None,
+        description="""A glob class for finding files in the source directory.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "source_glob",
+                "domain_of": [
+                    "StandardSource",
+                    "VoxelSpacingSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    source_multi_glob: Optional[SourceMultiGlob] = Field(
+        None,
+        description="""A glob class for finding files in the source directory (with multiple globs).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "source_multi_glob",
+                "domain_of": [
+                    "StandardSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    exclude: Optional[List[str]] = Field(
+        None,
+        description="""Exclude files from the source that match (regexes).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
                     "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
@@ -5177,6 +5650,7 @@ class DepositionKeyPhotoParentFilters(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "exclude",
                 "domain_of": [
+                    "DefaultSource",
                     "AnnotationParentFilters",
                     "DatasetParentFilters",
                     "DatasetKeyPhotoParentFilters",
@@ -5189,6 +5663,20 @@ class DepositionKeyPhotoParentFilters(ConfiguredBaseModel):
                     "TiltSeriesParentFilters",
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -5261,14 +5749,12 @@ class FrameEntity(ConfiguredBaseModel):
     )
 
 
-class FrameSource(DefaultLiteralEntity, DefaultSource):
+class FrameSource(StandardSource):
     """
     A frame source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
-    )
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     parent_filters: Optional[FrameParentFilters] = Field(
         None,
@@ -5300,10 +5786,12 @@ class FrameSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "destination_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5322,10 +5810,12 @@ class FrameSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5344,7 +5834,33 @@ class FrameSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_multi_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    literal: Optional[StandardLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": [
+                    "StandardSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
                     "FrameSource",
@@ -5358,19 +5874,32 @@ class FrameSource(DefaultLiteralEntity, DefaultSource):
             }
         },
     )
-    literal: Optional[DefaultLiteral] = Field(
+    exclude: Optional[List[str]] = Field(
         None,
-        description="""A literal class with a value attribute.""",
+        description="""Exclude files from the source that match (regexes).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "literal",
+                "alias": "exclude",
                 "domain_of": [
-                    "DefaultLiteralEntity",
-                    "DatasetKeyPhotoSource",
-                    "DepositionKeyPhotoSource",
-                    "VoxelSpacingSource",
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5378,6 +5907,7 @@ class FrameSource(DefaultLiteralEntity, DefaultSource):
                     "RunSource",
                     "TiltSeriesSource",
                     "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -5421,6 +5951,7 @@ class FrameParentFilters(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "exclude",
                 "domain_of": [
+                    "DefaultSource",
                     "AnnotationParentFilters",
                     "DatasetParentFilters",
                     "DatasetKeyPhotoParentFilters",
@@ -5433,6 +5964,20 @@ class FrameParentFilters(ConfiguredBaseModel):
                     "TiltSeriesParentFilters",
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -5544,14 +6089,12 @@ class GainEntity(ConfiguredBaseModel):
     )
 
 
-class GainSource(DefaultLiteralEntity, DefaultSource):
+class GainSource(StandardSource):
     """
     A gain source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
-    )
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     parent_filters: Optional[GainParentFilters] = Field(
         None,
@@ -5583,10 +6126,12 @@ class GainSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "destination_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5605,10 +6150,12 @@ class GainSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5627,7 +6174,33 @@ class GainSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_multi_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    literal: Optional[StandardLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": [
+                    "StandardSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
                     "FrameSource",
@@ -5641,19 +6214,32 @@ class GainSource(DefaultLiteralEntity, DefaultSource):
             }
         },
     )
-    literal: Optional[DefaultLiteral] = Field(
+    exclude: Optional[List[str]] = Field(
         None,
-        description="""A literal class with a value attribute.""",
+        description="""Exclude files from the source that match (regexes).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "literal",
+                "alias": "exclude",
                 "domain_of": [
-                    "DefaultLiteralEntity",
-                    "DatasetKeyPhotoSource",
-                    "DepositionKeyPhotoSource",
-                    "VoxelSpacingSource",
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5661,6 +6247,7 @@ class GainSource(DefaultLiteralEntity, DefaultSource):
                     "RunSource",
                     "TiltSeriesSource",
                     "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -5704,6 +6291,7 @@ class GainParentFilters(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "exclude",
                 "domain_of": [
+                    "DefaultSource",
                     "AnnotationParentFilters",
                     "DatasetParentFilters",
                     "DatasetKeyPhotoParentFilters",
@@ -5716,6 +6304,20 @@ class GainParentFilters(ConfiguredBaseModel):
                     "TiltSeriesParentFilters",
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -5827,14 +6429,12 @@ class KeyImageEntity(ConfiguredBaseModel):
     )
 
 
-class KeyImageSource(DefaultLiteralEntity, DefaultSource):
+class KeyImageSource(StandardSource):
     """
     A key image source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
-    )
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     parent_filters: Optional[KeyImageParentFilters] = Field(
         None,
@@ -5866,10 +6466,12 @@ class KeyImageSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "destination_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5888,10 +6490,12 @@ class KeyImageSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5910,7 +6514,33 @@ class KeyImageSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_multi_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    literal: Optional[StandardLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": [
+                    "StandardSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
                     "FrameSource",
@@ -5924,19 +6554,32 @@ class KeyImageSource(DefaultLiteralEntity, DefaultSource):
             }
         },
     )
-    literal: Optional[DefaultLiteral] = Field(
+    exclude: Optional[List[str]] = Field(
         None,
-        description="""A literal class with a value attribute.""",
+        description="""Exclude files from the source that match (regexes).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "literal",
+                "alias": "exclude",
                 "domain_of": [
-                    "DefaultLiteralEntity",
-                    "DatasetKeyPhotoSource",
-                    "DepositionKeyPhotoSource",
-                    "VoxelSpacingSource",
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -5944,6 +6587,7 @@ class KeyImageSource(DefaultLiteralEntity, DefaultSource):
                     "RunSource",
                     "TiltSeriesSource",
                     "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -5987,6 +6631,7 @@ class KeyImageParentFilters(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "exclude",
                 "domain_of": [
+                    "DefaultSource",
                     "AnnotationParentFilters",
                     "DatasetParentFilters",
                     "DatasetKeyPhotoParentFilters",
@@ -5999,6 +6644,20 @@ class KeyImageParentFilters(ConfiguredBaseModel):
                     "TiltSeriesParentFilters",
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -6125,14 +6784,12 @@ class RawTiltEntity(ConfiguredBaseModel):
     )
 
 
-class RawTiltSource(DefaultLiteralEntity, DefaultSource):
+class RawTiltSource(StandardSource):
     """
     A raw tilt source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
-    )
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     parent_filters: Optional[RawTiltParentFilters] = Field(
         None,
@@ -6164,10 +6821,12 @@ class RawTiltSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "destination_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -6186,10 +6845,12 @@ class RawTiltSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -6208,7 +6869,33 @@ class RawTiltSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_multi_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    literal: Optional[StandardLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": [
+                    "StandardSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
                     "FrameSource",
@@ -6222,19 +6909,32 @@ class RawTiltSource(DefaultLiteralEntity, DefaultSource):
             }
         },
     )
-    literal: Optional[DefaultLiteral] = Field(
+    exclude: Optional[List[str]] = Field(
         None,
-        description="""A literal class with a value attribute.""",
+        description="""Exclude files from the source that match (regexes).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "literal",
+                "alias": "exclude",
                 "domain_of": [
-                    "DefaultLiteralEntity",
-                    "DatasetKeyPhotoSource",
-                    "DepositionKeyPhotoSource",
-                    "VoxelSpacingSource",
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -6242,6 +6942,7 @@ class RawTiltSource(DefaultLiteralEntity, DefaultSource):
                     "RunSource",
                     "TiltSeriesSource",
                     "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -6285,6 +6986,7 @@ class RawTiltParentFilters(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "exclude",
                 "domain_of": [
+                    "DefaultSource",
                     "AnnotationParentFilters",
                     "DatasetParentFilters",
                     "DatasetKeyPhotoParentFilters",
@@ -6297,6 +6999,20 @@ class RawTiltParentFilters(ConfiguredBaseModel):
                     "TiltSeriesParentFilters",
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -6408,14 +7124,12 @@ class RunEntity(ConfiguredBaseModel):
     )
 
 
-class RunSource(DefaultLiteralEntity, DefaultSource):
+class RunSource(StandardSource):
     """
     A run source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
-    )
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     parent_filters: Optional[RunParentFilters] = Field(
         None,
@@ -6447,10 +7161,12 @@ class RunSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "destination_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -6469,10 +7185,12 @@ class RunSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -6491,7 +7209,33 @@ class RunSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_multi_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    literal: Optional[StandardLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": [
+                    "StandardSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
                     "FrameSource",
@@ -6505,19 +7249,32 @@ class RunSource(DefaultLiteralEntity, DefaultSource):
             }
         },
     )
-    literal: Optional[DefaultLiteral] = Field(
+    exclude: Optional[List[str]] = Field(
         None,
-        description="""A literal class with a value attribute.""",
+        description="""Exclude files from the source that match (regexes).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "literal",
+                "alias": "exclude",
                 "domain_of": [
-                    "DefaultLiteralEntity",
-                    "DatasetKeyPhotoSource",
-                    "DepositionKeyPhotoSource",
-                    "VoxelSpacingSource",
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -6525,6 +7282,7 @@ class RunSource(DefaultLiteralEntity, DefaultSource):
                     "RunSource",
                     "TiltSeriesSource",
                     "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -6568,6 +7326,7 @@ class RunParentFilters(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "exclude",
                 "domain_of": [
+                    "DefaultSource",
                     "AnnotationParentFilters",
                     "DatasetParentFilters",
                     "DatasetKeyPhotoParentFilters",
@@ -6580,6 +7339,20 @@ class RunParentFilters(ConfiguredBaseModel):
                     "TiltSeriesParentFilters",
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -6727,14 +7500,12 @@ class TiltSeriesEntity(ConfiguredBaseModel):
     )
 
 
-class TiltSeriesSource(DefaultLiteralEntity, DefaultSource):
+class TiltSeriesSource(StandardSource):
     """
     A tilt series source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
-    )
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     parent_filters: Optional[TiltSeriesParentFilters] = Field(
         None,
@@ -6766,10 +7537,12 @@ class TiltSeriesSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "destination_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -6788,10 +7561,12 @@ class TiltSeriesSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -6810,7 +7585,33 @@ class TiltSeriesSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_multi_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    literal: Optional[StandardLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": [
+                    "StandardSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
                     "FrameSource",
@@ -6824,19 +7625,32 @@ class TiltSeriesSource(DefaultLiteralEntity, DefaultSource):
             }
         },
     )
-    literal: Optional[DefaultLiteral] = Field(
+    exclude: Optional[List[str]] = Field(
         None,
-        description="""A literal class with a value attribute.""",
+        description="""Exclude files from the source that match (regexes).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "literal",
+                "alias": "exclude",
                 "domain_of": [
-                    "DefaultLiteralEntity",
-                    "DatasetKeyPhotoSource",
-                    "DepositionKeyPhotoSource",
-                    "VoxelSpacingSource",
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -6844,6 +7658,7 @@ class TiltSeriesSource(DefaultLiteralEntity, DefaultSource):
                     "RunSource",
                     "TiltSeriesSource",
                     "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -6887,6 +7702,7 @@ class TiltSeriesParentFilters(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "exclude",
                 "domain_of": [
+                    "DefaultSource",
                     "AnnotationParentFilters",
                     "DatasetParentFilters",
                     "DatasetKeyPhotoParentFilters",
@@ -6899,6 +7715,20 @@ class TiltSeriesParentFilters(ConfiguredBaseModel):
                     "TiltSeriesParentFilters",
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -7026,14 +7856,12 @@ class TomogramEntity(ConfiguredBaseModel):
     )
 
 
-class TomogramSource(DefaultLiteralEntity, DefaultSource):
+class TomogramSource(StandardSource):
     """
     A tomogram source.
     """
 
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "cdp-ingestion-config", "mixins": ["DefaultSource", "DefaultLiteralEntity"]}
-    )
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "cdp-ingestion-config"})
 
     parent_filters: Optional[TomogramParentFilters] = Field(
         None,
@@ -7065,10 +7893,12 @@ class TomogramSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "destination_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -7087,10 +7917,12 @@ class TomogramSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -7109,7 +7941,33 @@ class TomogramSource(DefaultLiteralEntity, DefaultSource):
             "linkml_meta": {
                 "alias": "source_multi_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                ],
+            }
+        },
+    )
+    literal: Optional[StandardLiteral] = Field(
+        None,
+        description="""A literal class with a value attribute.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "literal",
+                "domain_of": [
+                    "StandardSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "VoxelSpacingSource",
                     "DatasetSource",
                     "DepositionSource",
                     "FrameSource",
@@ -7123,19 +7981,32 @@ class TomogramSource(DefaultLiteralEntity, DefaultSource):
             }
         },
     )
-    literal: Optional[DefaultLiteral] = Field(
+    exclude: Optional[List[str]] = Field(
         None,
-        description="""A literal class with a value attribute.""",
+        description="""Exclude files from the source that match (regexes).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "literal",
+                "alias": "exclude",
                 "domain_of": [
-                    "DefaultLiteralEntity",
-                    "DatasetKeyPhotoSource",
-                    "DepositionKeyPhotoSource",
-                    "VoxelSpacingSource",
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -7143,6 +8014,7 @@ class TomogramSource(DefaultLiteralEntity, DefaultSource):
                     "RunSource",
                     "TiltSeriesSource",
                     "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -7186,6 +8058,7 @@ class TomogramParentFilters(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "exclude",
                 "domain_of": [
+                    "DefaultSource",
                     "AnnotationParentFilters",
                     "DatasetParentFilters",
                     "DatasetKeyPhotoParentFilters",
@@ -7198,6 +8071,20 @@ class TomogramParentFilters(ConfiguredBaseModel):
                     "TiltSeriesParentFilters",
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -7319,7 +8206,7 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
     )
 
 
-class VoxelSpacingSource(ConfiguredBaseModel):
+class VoxelSpacingSource(DefaultSource):
     """
     A voxel spacing source.
     """
@@ -7333,10 +8220,12 @@ class VoxelSpacingSource(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "destination_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -7355,10 +8244,12 @@ class VoxelSpacingSource(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "source_glob",
                 "domain_of": [
-                    "DefaultSource",
+                    "StandardSource",
                     "VoxelSpacingSource",
                     "DatasetSource",
+                    "DatasetKeyPhotoSource",
                     "DepositionSource",
+                    "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
                     "KeyImageSource",
@@ -7377,7 +8268,7 @@ class VoxelSpacingSource(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "literal",
                 "domain_of": [
-                    "DefaultLiteralEntity",
+                    "StandardSource",
                     "DatasetKeyPhotoSource",
                     "DepositionKeyPhotoSource",
                     "VoxelSpacingSource",
@@ -7409,6 +8300,44 @@ class VoxelSpacingSource(ConfiguredBaseModel):
                     "AnnotationSource",
                     "DatasetSource",
                     "DatasetKeyPhotoSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
+                ],
+            }
+        },
+    )
+    exclude: Optional[List[str]] = Field(
+        None,
+        description="""Exclude files from the source that match (regexes).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "exclude",
+                "domain_of": [
+                    "DefaultSource",
+                    "AnnotationParentFilters",
+                    "DatasetParentFilters",
+                    "DatasetKeyPhotoParentFilters",
+                    "DepositionKeyPhotoParentFilters",
+                    "FrameParentFilters",
+                    "GainParentFilters",
+                    "KeyImageParentFilters",
+                    "RawTiltParentFilters",
+                    "RunParentFilters",
+                    "TiltSeriesParentFilters",
+                    "TomogramParentFilters",
+                    "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
                     "DepositionKeyPhotoSource",
                     "FrameSource",
                     "GainSource",
@@ -7461,6 +8390,7 @@ class VoxelSpacingParentFilters(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "exclude",
                 "domain_of": [
+                    "DefaultSource",
                     "AnnotationParentFilters",
                     "DatasetParentFilters",
                     "DatasetKeyPhotoParentFilters",
@@ -7473,6 +8403,20 @@ class VoxelSpacingParentFilters(ConfiguredBaseModel):
                     "TiltSeriesParentFilters",
                     "TomogramParentFilters",
                     "VoxelSpacingParentFilters",
+                    "StandardSource",
+                    "AnnotationSource",
+                    "DatasetSource",
+                    "DatasetKeyPhotoSource",
+                    "DepositionSource",
+                    "DepositionKeyPhotoSource",
+                    "FrameSource",
+                    "GainSource",
+                    "KeyImageSource",
+                    "RawTiltSource",
+                    "RunSource",
+                    "TiltSeriesSource",
+                    "TomogramSource",
+                    "VoxelSpacingSource",
                 ],
             }
         },
@@ -7562,7 +8506,10 @@ class VoxelSpacingLiteral(ConfiguredBaseModel):
         description="""The value for the voxel spacing literal.""",
         min_length=1,
         json_schema_extra={
-            "linkml_meta": {"alias": "value", "domain_of": ["DefaultLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"]}
+            "linkml_meta": {
+                "alias": "value",
+                "domain_of": ["StandardLiteral", "KeyPhotoLiteral", "VoxelSpacingLiteral"],
+            }
         },
     )
 
@@ -7651,8 +8598,8 @@ DestinationGlob.model_rebuild()
 SourceGlob.model_rebuild()
 SourceMultiGlob.model_rebuild()
 DefaultSource.model_rebuild()
-DefaultLiteralEntity.model_rebuild()
-DefaultLiteral.model_rebuild()
+StandardSource.model_rebuild()
+StandardLiteral.model_rebuild()
 KeyPhotoLiteral.model_rebuild()
 AnnotationEntity.model_rebuild()
 AnnotationSource.model_rebuild()
