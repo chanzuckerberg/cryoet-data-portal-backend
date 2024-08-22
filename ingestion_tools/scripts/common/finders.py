@@ -38,14 +38,12 @@ class SourceGlobFinder(BaseFinder):
     list_glob: str
     match_regex: re.Pattern[str]
     name_regex: re.Pattern[str]
-    exclude_regexes: list[re.Pattern[str]]
 
     def __init__(
         self,
         list_glob: str,
         match_regex: str | None = None,
         name_regex: str | None = None,
-        exclude_regexes: list[str] = None,
     ):
         self.list_glob = list_glob
         if not match_regex:
@@ -55,8 +53,6 @@ class SourceGlobFinder(BaseFinder):
         if not name_regex:
             name_regex = "(.*)"
         self.name_regex = re.compile(name_regex)
-
-        self.exclude_regexes = [re.compile(regex) for regex in exclude_regexes or []]
 
     def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]) -> dict[str, str]:
         path = os.path.join(config.deposition_root_dir, self.list_glob.format(**glob_vars))
