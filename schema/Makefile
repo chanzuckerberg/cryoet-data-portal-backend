@@ -40,19 +40,25 @@ clean-docs:
 	rm -rf $(METADATA_DOCS)
 
 .PHONY: build
-build: clean
-	python3 schema.py materialize $(METADATA_YAML) $(COMMON_YAML) $(METADATA_MATERIALIZED_YAML)
-	python3 schema.py materialize $(API_MODELS_YAML) $(COMMON_YAML) $(API_MODELS_MATERIALIZED_YAML)
-	python3 schema.py materialize $(INGESTION_CONFIG_MODELS_YAML) $(COMMON_YAML) $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML)
+build: clean build-ingestion-config build-api
 
-	# Hardcoding these while we wait for an upstream LinkML bug to be fixed: https://github.com/linkml/linkml-runtime/pull/330
-	python3 schema.py materialize core/v2.0.0/metadata.yaml core/v2.0.0/common.yaml core/v2.0.0/codegen/metadata_materialized.yaml
-	python3 schema.py materialize api/v2.0.0/api_models.yaml core/v2.0.0/common.yaml api/v2.0.0/codegen/api_models_materialized.yaml
+
+.PHONY: build-ingestion-config
+build-ingestion-config:
+	python3 schema.py materialize $(METADATA_YAML) $(COMMON_YAML) $(METADATA_MATERIALIZED_YAML)
+	python3 schema.py materialize $(INGESTION_CONFIG_MODELS_YAML) $(COMMON_YAML) $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML)
 
 	linkml generate pydantic --black $(METADATA_MATERIALIZED_YAML) > $(METADATA_MODELS_PY)
 	linkml generate pydantic $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_MODELS_PY)
 	linkml generate json-schema $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_JSON_SCHEMA)
 	cd ingestion_config && ln -s $(INGESTION_CONFIG_VERSION) latest && cd ..
+
+.PHONY: build-api
+build-api:
+	# Hardcoding these while we wait for an upstream LinkML bug to be fixed: https://github.com/linkml/linkml-runtime/pull/330
+	python3 schema.py materialize core/$(CORE_VERSION)/metadata.yaml core/$(CORE_VERSION)/common.yaml core/$(CORE_VERSION)/codegen/metadata_materialized.yaml
+	python3 schema.py materialize api/$(API_VERSION)/api_models.yaml core/$(CORE_VERSION)/common.yaml api/$(API_VERSION)/codegen/api_models_materialized.yaml
+	linkml generate erdiagram api/$(API_VERSION)/codegen/api_models_materialized.yaml > api/$(API_VERSION)/codegen/ER_DIAGRAM.md --structural
 
 # `make build` must be run before `make build-docs`
 .PHONY: build-docs
