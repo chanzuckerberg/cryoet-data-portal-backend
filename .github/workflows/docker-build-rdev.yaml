@@ -17,7 +17,7 @@ jobs:
     steps:
     - name: Dump GitHub context
       env:
-        GITHUB_CONTEXT: ${{ toJson(github.event.pull_request.head) }}
+        GITHUB_CONTEXT: ${{ toJson(github.event.pull_request.sender) }}
       run: |
         echo "$GITHUB_CONTEXT"
   rdev_argus_builder:
