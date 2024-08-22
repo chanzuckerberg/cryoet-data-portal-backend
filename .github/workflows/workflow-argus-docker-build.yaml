@@ -24,7 +24,7 @@ on:
 
 jobs:
   argus_builder:
-    uses: chanzuckerberg/github-actions/.github/workflows/argus-docker-build.yaml@c16c1304dd2ad139752511ed3d183a2956bed38b
+    uses: chanzuckerberg/github-actions/.github/workflows/argus-docker-build.yaml@2bfb27c775c0e655d62087a8965cff524bb665c3
     secrets: inherit
     with:
       branches: ${{ inputs.branches }}
