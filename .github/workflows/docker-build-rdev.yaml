@@ -50,7 +50,7 @@ jobs:
 
   rdev_argus_builder:
     needs: filter
-    if: ${{ needs.filter.outputs.should_run == 'true' }}
+    if: needs.filter.outputs.should_run
     uses: ./.github/workflows/workflow-argus-docker-build.yaml
     secrets: inherit
     with:
