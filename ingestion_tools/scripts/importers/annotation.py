@@ -1,6 +1,7 @@
 import json
 import os
 import os.path
+import typing
 from abc import abstractmethod
 from collections import defaultdict
 from functools import partial
@@ -484,20 +485,18 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         "glb": mc.from_generic,
     }
     valid_file_formats = list(map_functions.keys())
-    mesh_label: int
+    ontology_id: str
     output_format: str = "glb"
 
     def __init__(
         self,
-        mesh_label: int | None = None,
+        ontology_id: typing.Optional[str] = None,
         scale_factor: float = 1.0,
         *args,
         **kwargs,
     ) -> None:
         super().__init__(*args, **kwargs)
-        if not mesh_label:
-            mesh_label = 1
-        self.mesh_label = mesh_label
+        self.ontology_id = ontology_id
         self.scale_factor = scale_factor
 
     def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
@@ -525,5 +524,5 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         return True
 
     def get_output_filename(self, output_prefix: str) -> str:
-        output_prefix = "-".join([output_prefix, str(self.mesh_label)])
+        output_prefix = "-".join([output_prefix, str(self.ontology_id)]) if self.ontology_id else output_prefix
         return super().get_output_filename(output_prefix, self.output_format)

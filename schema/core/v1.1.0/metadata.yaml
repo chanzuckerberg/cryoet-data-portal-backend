@@ -637,7 +637,13 @@ classes:
     aliases:
     - TriangularMesh
     description: File and sourcing data for a triangular mesh annotation. Annotation that identifies an object.
-    attributes: # no extended attributes
+    attributes:
+      scale_factor:
+        exact_mappings:
+          - cdp-common:annotation_source_file_scale_factor
+      ontology_id:
+        exact_mappings:
+          - cdp-common:annotation_source_file_ontology_id
   # ============================================================================
 
   # ============================================================================

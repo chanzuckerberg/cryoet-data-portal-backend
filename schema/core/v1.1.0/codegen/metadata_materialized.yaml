@@ -3247,6 +3247,36 @@ classes:
     - TriangularMesh
     is_a: AnnotationSourceFile
     attributes:
+      scale_factor:
+        name: scale_factor
+        description: The scale factor for a mesh annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_scale_factor
+        ifabsent: float(1)
+        alias: scale_factor
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - AnnotationTriangularMeshFile
+        range: float
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+      ontology_id:
+        name: ontology_id
+        description: The ontology ID the cooresponds to a single annotation mesh among
+          multiple meshes.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_ontology_id
+        alias: ontology_id
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - AnnotationTriangularMeshFile
+        range: ONTOLOGY_ID
+        inlined: true
+        inlined_as_list: true
+        pattern: ^[a-zA-Z]+:[0-9]+$
       file_format:
         name: file_format
         description: File format for this file
