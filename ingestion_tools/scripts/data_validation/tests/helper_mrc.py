@@ -64,11 +64,11 @@ class HelperTestMRCHeader:
         self.mrc_header_helper(check_machine_stamp)
 
     def test_mrc_mode(self):
-        """Check that the mrc mode is valid."""
+        """Check that the mrc mode (dtype) is valid."""
 
         def check_mrc_mode(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
-            assert utils.dtype_from_mode(header.mode) == np.int8
+            assert utils.dtype_from_mode(header.mode) in [np.int8, np.float32]
 
         self.mrc_header_helper(check_mrc_mode)
 

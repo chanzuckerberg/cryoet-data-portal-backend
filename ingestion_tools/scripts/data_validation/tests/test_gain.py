@@ -1,4 +1,4 @@
-from typing import Dict, Union
+from typing import Dict, List, Union
 
 import pytest
 import tifffile
@@ -15,13 +15,20 @@ class TestGain(HelperTestMRCHeader):
         self.spacegroup = 0  # 2D image
         self.mrc_headers = gain_mrc_header
 
+    ### DON'T RUN SOME MRC HEADER TESTS ###
+    def test_nlabel(self):
+        pytest.skip("Not applicable for gain files")
+
+    def test_nversion(self):
+        pytest.skip("Not applicable for gain files")
+
     ### BEGIN Self-consistency tests ###
 
     ### END Self-consistency tests ###
 
     ### BEGIN Frame-specific tests ###
 
-    def test_matches_frame_dimensions(self, frames_headers: Dict[str, Union[tifffile.TiffPages, MrcInterpreter]]):
+    def test_matches_frame_dimensions(self, frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
         """Check that the gain dimensions match the frame dimensions."""
 
         def check_matches_frame_dimensions(header, _interpreter, _mrc_filename, frame_dimensions):

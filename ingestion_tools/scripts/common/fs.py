@@ -31,7 +31,7 @@ class FileSystemApi(ABC):
         pass
 
     @abstractmethod
-    def open(self, path: str, mode: str) -> TextIOBase:
+    def open(self, path: str, mode: str, **kwargs) -> TextIOBase:
         pass
 
     @abstractmethod
@@ -87,8 +87,8 @@ class S3Filesystem(FileSystemApi):
     def glob(self, *args: list[str]) -> list[str]:
         return self.s3fs.glob(*args)
 
-    def open(self, path: str, mode: str) -> TextIOBase:
-        return self.s3fs.open(path, mode)
+    def open(self, path: str, mode: str, **kwargs) -> TextIOBase:
+        return self.s3fs.open(path, mode, **kwargs)
 
     def file_size(self, path: str) -> int:
         return self.s3fs.size(path)
@@ -182,8 +182,8 @@ class LocalFilesystem(FileSystemApi):
     def glob(self, *args: list[str]) -> list[str]:
         return glob.glob(*args)
 
-    def open(self, path: str, mode: str) -> TextIOBase:
-        return open(path, mode)  # noqa
+    def open(self, path: str, mode: str, **kwargs) -> TextIOBase:
+        return open(path, mode, **kwargs)  # noqa
 
     def file_size(self, path: str) -> int:
         return os.path.getsize(path)
