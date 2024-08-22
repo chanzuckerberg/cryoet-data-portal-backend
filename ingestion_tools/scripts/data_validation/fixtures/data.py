@@ -23,11 +23,14 @@ from common.fs import FileSystemApi
 # Helper functions
 # ==================================================================================================
 
+# 500KB block size is experimentally tested to be the fastest
+MRC_HEADER_BLOCK_SIZE = 500 * 2**10
+
 
 def get_mrc_header(mrcfile: str, fs: FileSystemApi) -> MrcInterpreter:
     """Get the mrc file headers for a list of mrc files."""
     try:
-        with fs.open(mrcfile, "rb", block_size=4096) as f:
+        with fs.open(mrcfile, "rb", block_size=MRC_HEADER_BLOCK_SIZE) as f:
             return MrcInterpreter(iostream=f, permissive=True, header_only=True)
     except Exception as e:
         pytest.fail(f"Failed to get header for {mrcfile}: {e}")
@@ -36,8 +39,8 @@ def get_mrc_header(mrcfile: str, fs: FileSystemApi) -> MrcInterpreter:
 def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi) -> MrcInterpreter:
     """Get the mrc file headers for a list of mrc files."""
     try:
-        with fs.open(mrcbz2file, "rb", block_size=4096) as f, bz2.BZ2File(f) as mrcbz2:
-            mrcbz2 = mrcbz2.read(4096)
+        with fs.open(mrcbz2file, "rb", block_size=MRC_HEADER_BLOCK_SIZE) as f, bz2.BZ2File(f) as mrcbz2:
+            mrcbz2 = mrcbz2.read(MRC_HEADER_BLOCK_SIZE)
             return MrcInterpreter(iostream=io.BytesIO(mrcbz2), permissive=True, header_only=True)
     except Exception as e:
         pytest.fail(f"Failed to get header for {mrcbz2file}: {e}")
@@ -100,9 +103,7 @@ def frames_headers(
         if frame_file.endswith(".mrc"):
             return (frame_file, get_mrc_header(frame_file, filesystem))
         elif frame_file.endswith(".mrc.bz2"):
-            return (None, None)
-            # TODO FIXME now, skip bz2 files (need to debug why not working)
-            # return (frame_file, get_mrc_bz2_header(frame_file, filesystem))
+            return (frame_file, get_mrc_bz2_header(frame_file, filesystem))
         elif frame_file.endswith(".tif") or frame_file.endswith(".tiff") or frame_file.endswith(".eer"):
             # block size of 100KB is so that only the header of the file is read (and not more than necessary)
             with filesystem.open(frame_file, "rb", block_size=100 * 2**10) as f, tifffile.TiffFile(f) as tif:
@@ -159,9 +160,11 @@ def tiltseries_metadata(tiltseries_meta_file: str, filesystem: FileSystemApi) ->
 
 
 @pytest.fixture(scope="session")
-def tiltseries_mdoc(tiltseries_mdoc_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
-    """Load the tiltseries mdoc."""
-    return mdocfile.read(filesystem.localreadable(tiltseries_mdoc_file))
+def tiltseries_mdoc(tiltseries_mdoc_files: str, filesystem: FileSystemApi) -> pd.DataFrame:
+    """Load the tiltseries mdoc files and return a concatenated DataFrame."""
+    tiltseries_dataframes = [mdocfile.read(filesystem.localreadable(mdoc_file)) for mdoc_file in tiltseries_mdoc_files]
+    tiltseries_merged = pd.concat(tiltseries_dataframes, ignore_index=True)
+    return tiltseries_merged
 
 
 @pytest.fixture(scope="session")

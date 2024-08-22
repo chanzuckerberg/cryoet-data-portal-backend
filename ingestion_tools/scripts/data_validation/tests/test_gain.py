@@ -22,6 +22,9 @@ class TestGain(HelperTestMRCHeader):
     def test_nversion(self):
         pytest.skip("Not applicable for gain files")
 
+    def test_mrc_mode(self):
+        pytest.skip("Not applicable for gain files")
+
     ### BEGIN Self-consistency tests ###
 
     ### END Self-consistency tests ###
