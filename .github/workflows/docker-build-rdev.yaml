@@ -30,7 +30,6 @@ jobs:
               repo,
               head: `chanzuckerberg:${{ steps.refs.outputs.headRef }}`,
             });
-            console.log(JSON.stringify(prs.data, null, 2));
 
             if (prs.data.length === 0) {
               console.log('No PRs found');
@@ -46,6 +45,7 @@ jobs:
             console.log(JSON.stringify(labels.data, null, 2));
 
             const shouldRun = labels.data.some((label) => label.name === 'stack');
+            console.log(`should_run: ${shouldRun}`);
             core.setOutput('should_run', 'shouldRun');
 
   rdev_argus_builder:
