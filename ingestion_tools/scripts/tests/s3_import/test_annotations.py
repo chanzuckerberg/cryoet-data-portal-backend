@@ -973,28 +973,6 @@ def test_ingest_instance_point_data(
         ("annotations/triangular_mesh.vtk", "vtk"),
         ("annotations/triangular_mesh.obj", "obj"),
     ],
-    [
-        {
-            "file_format": "stl",
-            "glob_string": "annotations/triangular_mesh.stl",
-            "is_visualization_default": False,
-        },
-        {
-            "file_format": "glb",
-            "glob_string": "annotations/triangular_mesh.glb",
-            "is_visualization_default": False,
-        },
-        {
-            "file_format": "vtk",
-            "glob_string": "annotations/triangular_mesh.vtk",
-            "is_visualization_default": False,
-        },
-        {
-            "file_format": "obj",
-            "glob_string": "annotations/triangular_mesh.obj",
-            "is_visualization_default": False,
-        },
-    ],
 )
 def test_ingest_triangular_mesh(
     glob_string,
@@ -1028,7 +1006,7 @@ def test_ingest_triangular_mesh(
         metadata=default_anno_metadata,
         path=os.path.join(local_test_data_dir, "input_bucket/20002", glob_string),
         parents={"tomogram": tomo_importer, **tomo_importer.parents},
-        file_format="stl",
+        file_format=file_format,
         identifier=100,
     )
     anno.import_item()
