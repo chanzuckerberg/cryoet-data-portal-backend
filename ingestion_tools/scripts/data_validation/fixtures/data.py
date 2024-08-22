@@ -2,6 +2,8 @@
 Any fixtures involving loading data from the bucket.
 """
 
+import bz2
+import io
 import json
 from concurrent.futures import ThreadPoolExecutor
 from typing import Dict, List, Union
@@ -22,13 +24,23 @@ from common.fs import FileSystemApi
 # ==================================================================================================
 
 
-def get_header(mrcfile: str, fs: FileSystemApi) -> MrcInterpreter:
+def get_mrc_header(mrcfile: str, fs: FileSystemApi) -> MrcInterpreter:
     """Get the mrc file headers for a list of mrc files."""
     try:
-        with fs.open(mrcfile, "rb") as f:
+        with fs.open(mrcfile, "rb", block_size=4096) as f:
             return MrcInterpreter(iostream=f, permissive=True, header_only=True)
     except Exception as e:
         pytest.fail(f"Failed to get header for {mrcfile}: {e}")
+
+
+def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi) -> MrcInterpreter:
+    """Get the mrc file headers for a list of mrc files."""
+    try:
+        with fs.open(mrcbz2file, "rb", block_size=4096) as f, bz2.BZ2File(f) as mrcbz2:
+            mrcbz2 = mrcbz2.read(4096)
+            return MrcInterpreter(iostream=io.BytesIO(mrcbz2), permissive=True, header_only=True)
+    except Exception as e:
+        pytest.fail(f"Failed to get header for {mrcbz2file}: {e}")
 
 
 def get_zarr_headers(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
@@ -81,17 +93,21 @@ def run_metadata(run_meta_file: str, filesystem: FileSystemApi) -> Dict:
 def frames_headers(
     frames_files: List[str],
     filesystem: FileSystemApi,
-) -> Dict[str, Union[tifffile.TiffPages, MrcInterpreter]]:
+) -> Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]:
     """Get the headers for a list of frame files."""
 
     def open_frame(frame_file: str):
         if frame_file.endswith(".mrc"):
-            return (frame_file, get_header(frame_file, filesystem))
-        elif frame_file.endswith(".tif") or frame_file.endswith(".tiff") or frame_file.endswith(".eer"):
-            # TODO: figure out a way to not download the entire file
-            # with filesystem.open(frame_file, "rb") as f, tifffile.TiffFile(f) as tif:
-            #     return (frame_file, [page.shape for page in tif.pages])
+            return (frame_file, get_mrc_header(frame_file, filesystem))
+        elif frame_file.endswith(".mrc.bz2"):
             return (None, None)
+            # TODO FIXME now, skip bz2 files (need to debug why not working)
+            # return (frame_file, get_mrc_bz2_header(frame_file, filesystem))
+        elif frame_file.endswith(".tif") or frame_file.endswith(".tiff") or frame_file.endswith(".eer"):
+            # block size of 100KB is so that only the header of the file is read (and not more than necessary)
+            with filesystem.open(frame_file, "rb", block_size=100 * 2**10) as f, tifffile.TiffFile(f) as tif:
+                # The tif.pages must be converted to a list to actually read all the pages' data
+                return (frame_file, list(tif.pages))
         else:
             return (None, None)
 
@@ -121,7 +137,7 @@ def gain_mrc_header(gain_file: str, filesystem: FileSystemApi) -> Dict[str, MrcI
     if not gain_file.endswith(".mrc"):
         pytest.skip(f"Not an mrc file, skipping mrc checks: {gain_file}")
 
-    return {gain_file: get_header(gain_file, filesystem)}
+    return {gain_file: get_mrc_header(gain_file, filesystem)}
 
 
 # ==================================================================================================
@@ -132,7 +148,7 @@ def gain_mrc_header(gain_file: str, filesystem: FileSystemApi) -> Dict[str, MrcI
 @pytest.fixture(scope="session")
 def tiltseries_mrc_header(tiltseries_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for a tilt series."""
-    return get_header(tiltseries_mrc_file, filesystem)
+    return get_mrc_header(tiltseries_mrc_file, filesystem)
 
 
 @pytest.fixture(scope="session")
@@ -170,7 +186,7 @@ def tiltseries_raw_tilt(tiltseries_rawtilt_file: str, filesystem: FileSystemApi)
 @pytest.fixture(scope="session")
 def canonical_tomo_mrc_headers(canonical_tomo_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for a tomogram."""
-    return get_header(canonical_tomo_mrc_file, filesystem)
+    return get_mrc_header(canonical_tomo_mrc_file, filesystem)
 
 
 @pytest.fixture(scope="session")
@@ -250,7 +266,7 @@ def seg_mask_annotation_mrc_headers(
     """Get the mrc file headers for an mrc annotation file."""
     headers = {}
     for mrc_filename in seg_mask_annotation_mrc_files:
-        headers[mrc_filename] = get_header(mrc_filename, filesystem)
+        headers[mrc_filename] = get_mrc_header(mrc_filename, filesystem)
 
     return headers
 

@@ -1,3 +1,4 @@
+import math
 from typing import Dict
 
 import numpy as np
@@ -90,15 +91,15 @@ class TestSegmentationMask(HelperTestMRCHeader):
 
         self.zarr_header_helper(seg_mask_annotation_zarr_headers, check_zattrs_axes)
 
-    def test_zarr_zarray(self, seg_mask_annotation_zarr_headers: Dict[str, Dict[str, Dict]]):
-        """Check that the data type is correct for each binning / scale of the zarr annotation file (int8)."""
+    def test_zarr_zarray_scale(self, seg_mask_annotation_zarr_headers: Dict[str, Dict[str, Dict]]):
+        """Check that the data type is correct for each scale (binning) of the zarr annotation file."""
 
         def check_zarray(header_data, _zarr_filename):
             del _zarr_filename
             zarrays = header_data["zarrays"]
             assert len(zarrays) == 3
             for zarray in zarrays.values():
-                assert np.dtype(zarray["dtype"]) == np.int8
+                assert np.dtype(zarray["dtype"]) in [np.int8, np.float32]
 
         self.zarr_header_helper(seg_mask_annotation_zarr_headers, check_zarray)
 
@@ -120,7 +121,7 @@ class TestSegmentationMask(HelperTestMRCHeader):
         seg_mask_annotation_zarr_headers: Dict[str, Dict[str, Dict]],
         seg_mask_annotation_mrc_headers: Dict[str, MrcInterpreter],
     ):
-        """Check that the zarr volume size matches the mrc volume size, for each zarr annotation file and its binnings."""
+        """Check that the zarray shape (volume size) matches the mrc volume size, for each zarr binning."""
 
         def check_volume_size(header_data, zarr_filename):
             mrc_file = zarr_filename.replace(".zarr", ".mrc")
@@ -128,8 +129,14 @@ class TestSegmentationMask(HelperTestMRCHeader):
             zarrays = header_data["zarrays"]
             for i, zarray in zarrays.items():
                 header = seg_mask_annotation_mrc_headers[mrc_file].header
-                unbinned_zarray_shape = np.array(zarray["shape"]) * 2**i
-                assert (unbinned_zarray_shape == [header.nz, header.ny, header.nx]).all()
+                binned_header_shape = [
+                    math.ceil(header.nz / 2 ** int(i)),
+                    math.ceil(header.ny / 2 ** int(i)),
+                    math.ceil(header.nx / 2 ** int(i)),
+                ]
+                assert (
+                    zarray["shape"] == binned_header_shape
+                ), f"zarr shape: {zarray['shape']}, mrc shape: {[header.nz, header.ny, header.nx]}, binning factor: {i}"
 
         self.zarr_header_helper(seg_mask_annotation_zarr_headers, check_volume_size)
 

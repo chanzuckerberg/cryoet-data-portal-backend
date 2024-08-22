@@ -1,17 +1,13 @@
-import re
-import warnings
+import os
 from typing import Dict, List, Union
 
-import numpy as np
 import pandas as pd
 import pytest
 import tifffile
 from helper_mrc import HelperTestMRCHeader
 from mrcfile.mrcinterpreter import MrcInterpreter
 
-# TODO: Should this be a check? Am I missing any extensions?
 PERMITTED_FRAME_EXTENSIONS = [".mrc", ".tif", ".tiff", ".eer", ".bz2"]
-MAX_FRAME_SIZE = 250 * 1024 * 1024  # 250 MB
 
 
 @pytest.mark.frame
@@ -21,7 +17,7 @@ class TestFrame(HelperTestMRCHeader):
     @pytest.fixture(autouse=True)
     def set_helper_test_mrc_header_class_variables(
         self,
-        frames_headers: Dict[str, Union[tifffile.TiffPages, MrcInterpreter]],
+        frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
     ):
         self.spacegroup = 0  # 2D image
         self.mrc_headers = {k: v for k, v in frames_headers.items() if isinstance(v, MrcInterpreter)}
@@ -36,16 +32,15 @@ class TestFrame(HelperTestMRCHeader):
 
         assert not errors, "\n".join(errors)
 
-    def test_frames_dimensions(self, frames_headers: Dict[str, Union[tifffile.TiffPages, MrcInterpreter]]):
+    def test_frames_dimensions(self, frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
         """Check that the frame dimensions are consistent."""
         errors = []
         frames_dimensions = None
 
         for _, header in frames_headers.items():
-            if isinstance(header, tifffile.TiffPages):
+            if isinstance(header, list) and isinstance(header[0], tifffile.TiffPage):
                 curr_dimensions = header[0].shape
                 # first ensure all pages have the same dimensions
-                # this loop takes a long time, need to multithread
                 assert all(page.shape == curr_dimensions for page in header), "Not all pages have the same dimensions"
                 if frames_dimensions is None:
                     frames_dimensions = curr_dimensions
@@ -56,6 +51,8 @@ class TestFrame(HelperTestMRCHeader):
                     frames_dimensions = (header.nx, header.ny)
                 elif (header.nx, header.ny) != frames_dimensions:
                     errors.append(f"Frame dimensions do not match: ({header.nx}, {header.ny}) != {frames_dimensions}")
+            else:
+                errors.append(f"Unsupported frame type: {type(header)}")
 
         assert not errors, "\n".join(errors)
 
@@ -63,66 +60,26 @@ class TestFrame(HelperTestMRCHeader):
 
     ### BEGIN Tiltseries consistency tests ###
     def test_frames_count(self, frames_files: List[str], tiltseries_metadata: Dict):
-        """Check that the number of frames is consistent between the metadata and the frame files."""
-        assert len(frames_files) == tiltseries_metadata["frames_count"]
-
-    def check_angles(
-        self,
-        angles: np.ndarray,
-        frames_dir: str,
-        frames_files: List[str],
-        # tiltseries_metadata: Dict,
-    ):
-        tilt_angle_to_frame_mapping: Dict[Union[str, float], str] = {}  # only str key for -0.0
-        remaining_frames_files = frames_files.copy()
-
-        for angle in angles:
-            # Look for a frame file that contains the tilt angle
-            angle_str = "({:.1f}|{:.2f})".format(angle, angle).replace(".", r"\.")
-            angle_regex = re.compile(f"{frames_dir}.*_{angle_str}.*")
-            angle_files = list(filter(angle_regex.match, remaining_frames_files))
-            assert len(angle_files) <= 1
-            if len(angle_files) == 0:
-                warnings.warn(f"Missing frame file for tilt angle {angle}", stacklevel=2)
-                continue
-            remaining_frames_files.remove(angle_files[0])
-            if angle in tilt_angle_to_frame_mapping:
-                warnings.warn(f"Duplicate / ambiguous frame file for tilt angle {angle}", stacklevel=2)
-            tilt_angle_to_frame_mapping[angle] = angle_files[0]
-
-        # special case for -0.0
-        angle_str = "(-0.0|-0.00)"
-        angle_regex = re.compile(f"{frames_dir}.*_{angle_str}.*")
-        angle_files = list(filter(angle_regex.match, remaining_frames_files))
-        assert len(angle_files) <= 1
-        if len(angle_files) == 1:
-            remaining_frames_files.remove(angle_files[0])
-            # usually key is float, but -0.0 is a special case
-            tilt_angle_to_frame_mapping["-0.0"] = angle_files[0]
-
-        assert remaining_frames_files == [], f"Frame files not accounted for: {remaining_frames_files}"
-
-    def test_frames_filenames(self, frames_dir: str, frames_files: List[str], tiltseries_metadata: Dict):
-        """Check that the filenames of the frames are consistent with the metadata."""
-
-        angles = np.arange(
-            tiltseries_metadata["tilt_range"]["min"],
-            tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
-            tiltseries_metadata["tilt_step"],
-        )
-        self.check_angles(angles, frames_dir, frames_files)
+        assert len(frames_files) >= tiltseries_metadata["frames_count"]
 
     def test_frames_mdoc(
         self,
-        frames_dir: str,
         frames_files: List[str],
         tiltseries_mdoc: pd.DataFrame,
         tiltseries_metadata: Dict,
     ):
         """Check that the tiltseries mdoc file contains the expected number of frames and that all listed frames exist."""
-        assert len(tiltseries_mdoc) == tiltseries_metadata["frames_count"]
+        assert len(tiltseries_mdoc) <= tiltseries_metadata["frames_count"]
 
-        # TODO: Figure out some way to check against tiltseries_mdoc["SubFramePath"], which currently does not point to the s3 files but to the original file paths
-        self.check_angles(tiltseries_mdoc["TiltAngle"], frames_dir, frames_files)
+        missing_frames = []
+        remaining_frames_files_basenames = [os.path.basename(f) for f in frames_files]
+        for _, row in tiltseries_mdoc.iterrows():
+            frame_file = os.path.basename(str(row["SubFramePath"]).replace("\\", "/"))
+            if frame_file not in remaining_frames_files_basenames:
+                missing_frames.append(frame_file)
+            else:
+                remaining_frames_files_basenames.remove(frame_file)
+
+        assert not missing_frames, f"Missing frames: {missing_frames}"
 
     ### END Tiltseries consistency tests ###

@@ -688,11 +688,13 @@ classes:
       value:
         description: The value for the voxel spacing literal.
         multivalued: true
-        range: float
         required: true
-        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+        range: float
+        # TODO: uncomment after this is fixed https://github.com/linkml/linkml/pull/2273
         # any_of:
         #   - range: float
+        #     # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+        #     # minimum_value: 0.0
         #   - range: FloatFormattedString
 
   TomogramHeader:

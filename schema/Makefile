@@ -41,9 +41,14 @@ clean-docs:
 
 .PHONY: build
 build: clean
-	python schema.py materialize $(METADATA_YAML) $(COMMON_YAML) $(METADATA_MATERIALIZED_YAML)
-	python schema.py materialize $(API_MODELS_YAML) $(COMMON_YAML) $(API_MODELS_MATERIALIZED_YAML)
-	python schema.py materialize $(INGESTION_CONFIG_MODELS_YAML) $(COMMON_YAML) $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML)
+	python3 schema.py materialize $(METADATA_YAML) $(COMMON_YAML) $(METADATA_MATERIALIZED_YAML)
+	python3 schema.py materialize $(API_MODELS_YAML) $(COMMON_YAML) $(API_MODELS_MATERIALIZED_YAML)
+	python3 schema.py materialize $(INGESTION_CONFIG_MODELS_YAML) $(COMMON_YAML) $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML)
+
+	# Hardcoding these while we wait for an upstream LinkML bug to be fixed: https://github.com/linkml/linkml-runtime/pull/330
+	python3 schema.py materialize core/v2.0.0/metadata.yaml core/v2.0.0/common.yaml core/v2.0.0/codegen/metadata_materialized.yaml
+	python3 schema.py materialize api/v2.0.0/api_models.yaml core/v2.0.0/common.yaml api/v2.0.0/codegen/api_models_materialized.yaml
+
 	linkml generate pydantic --black $(METADATA_MATERIALIZED_YAML) > $(METADATA_MODELS_PY)
 	linkml generate pydantic $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_MODELS_PY)
 	linkml generate json-schema $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_JSON_SCHEMA)
