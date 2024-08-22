@@ -36,6 +36,7 @@ jobs:
           {
             "name": "apiv2",
             "context": "./apiv2",
-            "dockerfile": "apiv2/Dockerfile"
+            "dockerfile": "apiv2/Dockerfile",
+            "platform": "linux/arm64"
           }
         ]
