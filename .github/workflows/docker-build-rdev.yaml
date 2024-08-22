@@ -45,7 +45,8 @@ jobs:
             });
             console.log(JSON.stringify(labels.data, null, 2));
 
-            core.setOutput('should_run', 'false');
+            const shouldRun = labels.data.some((label) => label.name === 'stack');
+            core.setOutput('should_run', 'shouldRun');
 
   rdev_argus_builder:
     needs: filter
