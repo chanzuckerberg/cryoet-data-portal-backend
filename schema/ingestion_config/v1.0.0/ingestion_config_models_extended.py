@@ -346,7 +346,7 @@ def validate_id_name_object(
 
     logger.debug("Valid ID, now checking if name '%s' matches ID: %s", name, id)
 
-    # if the retrieved names is empty, we can assume the name is valid
+    # if retrieved_names is empty, we can assume the name is valid
     valid_name = retrieved_names == [] or any(name == retrieved_name for retrieved_name in retrieved_names)
 
     if not valid_name:
