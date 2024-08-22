@@ -10,7 +10,7 @@ stack:
           image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2
             tag: sha-02b7da6
-          command: ["cp -r", "./cerbos/", "/var/policies/"]
+          command: ["cp", "-r", "./cerbos/", "/var/policies/"]
           volumeMounts:
             - mountPath: /var/policies
               name: cerbos-policies
