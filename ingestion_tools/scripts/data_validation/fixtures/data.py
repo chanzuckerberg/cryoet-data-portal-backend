@@ -88,7 +88,9 @@ def frames_headers(
         if frame_file.endswith(".mrc"):
             return (frame_file, get_mrc_header(frame_file, filesystem))
         elif frame_file.endswith(".mrc.bz2"):
-            return (frame_file, get_mrc_bz2_header(frame_file, filesystem))
+            return (None, None)
+            # TODO FIXME now, skip bz2 files (need to debug why not working)
+            # return (frame_file, get_mrc_bz2_header(frame_file, filesystem))
         elif frame_file.endswith(".tif") or frame_file.endswith(".tiff") or frame_file.endswith(".eer"):
             # block size of 100KB is so that only the header of the file is read (and not more than necessary)
             with filesystem.open(frame_file, "rb", block_size=100 * 2**10) as f, tifffile.TiffFile(f) as tif:

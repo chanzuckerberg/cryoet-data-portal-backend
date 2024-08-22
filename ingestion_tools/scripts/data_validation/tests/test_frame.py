@@ -7,7 +7,6 @@ import tifffile
 from helper_mrc import HelperTestMRCHeader
 from mrcfile.mrcinterpreter import MrcInterpreter
 
-# TODO: Should this be a check? Am I missing any extensions?
 PERMITTED_FRAME_EXTENSIONS = [".mrc", ".tif", ".tiff", ".eer", ".bz2"]
 
 
