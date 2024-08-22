@@ -11,15 +11,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  printJob:    
-    name: Print event
-    runs-on: ubuntu-latest
-    steps:
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github.event.sender) }}
-      run: |
-        echo "$GITHUB_CONTEXT"
   rdev_argus_builder:
     uses: ./.github/workflows/workflow-argus-docker-build.yaml
     secrets: inherit
