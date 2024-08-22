@@ -24,7 +24,6 @@ on:
 
 jobs:
   argus_builder:
-    runs-on: [ARM64, self-hosted, Linux]
     uses: chanzuckerberg/github-actions/.github/workflows/argus-docker-build.yaml@v2.15.2
     secrets: inherit
     with:

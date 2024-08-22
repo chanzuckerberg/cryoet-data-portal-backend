@@ -8,20 +8,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-#jobs:
-#  rdev_argus_builder:
-#    uses: ./.github/workflows/workflow-argus-docker-build.yaml
-#    secrets: inherit
-#    if: contains(github.event.pull_request.labels.*.name, 'stack')
-#    with:
-#      envs: rdev
-#      path_filters: 'apiv2/**'
-#      branches_ignore: main,release-please--branches--main
-
 jobs:
-  argus_builder:
+  rdev_argus_builder:
     uses: ./.github/workflows/workflow-argus-docker-build.yaml
     secrets: inherit
+    if: contains(github.event.pull_request.labels.*.name, 'stack')
     with:
       envs: rdev
       path_filters: 'apiv2/**'

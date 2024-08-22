@@ -7,7 +7,6 @@ on:
 
 jobs:
   argus_builder:
-    runs-on: [ARM64, self-hosted, Linux]
     uses: ./.github/workflows/workflow-argus-docker-build.yaml
     secrets: inherit
     with:
