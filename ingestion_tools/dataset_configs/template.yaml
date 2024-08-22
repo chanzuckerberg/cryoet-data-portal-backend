@@ -8,7 +8,7 @@ annotations: OPTIONAL
     annotation_method: REQUIRED, STRING
     annotation_object: REQUIRED
       description: OPTIONAL, STRING
-      id: REQUIRED, STRING (GO_ID)
+      id: REQUIRED, STRING (GO_ID / UNIPROT_ID)
       name: REQUIRED, STRING
       state: OPTIONAL, STRING
     annotation_publications: OPTIONAL, STRING (DOI / EMPIAR / EMDB / PDB IDs)
