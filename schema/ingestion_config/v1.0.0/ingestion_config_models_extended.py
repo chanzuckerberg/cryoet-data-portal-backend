@@ -270,7 +270,7 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
         if response.status >= 400:
             return [], False
         data = await response.json()
-        if label := data.get("name", {}).get("data", {}).get("label", ""):
+        if label := data["name"]["data"]["label"]:
             names.append(label)
 
     names_url = f"http://rest.wormbase.org/rest/field/strain/{id}/other_names"
@@ -301,11 +301,8 @@ async def validate_uniprot_id(id: str) -> Tuple[List[str], bool]:
         if response.status >= 400:
             return [], False
         data = await response.json()
-        try:
-            name = data["proteinDescription"]["recommendedName"]["fullName"]["value"]
-            return [name], True
-        except KeyError:
-            return [], True
+        name = data["proteinDescription"]["recommendedName"]["fullName"]["value"]
+        return name, True
 
 
 def validate_id_name_object(
@@ -432,7 +429,6 @@ class ExtendedValidationDepositionKeyPhotoSource(DepositionKeyPhotoSource):
 # ==============================================================================
 @alru_cache
 async def lookup_doi(doi: str) -> Tuple[str, bool]:
-    # Remove the doi: prefix if it exists
     doi = doi.replace("doi:", "")
     url = f"https://api.crossref.org/works/{doi}/agency"
     async with aiohttp.ClientSession() as session, session.head(url) as response:
@@ -455,7 +451,6 @@ async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
 
 @alru_cache
 async def lookup_pdb(pdb_id: str) -> Tuple[str, bool]:
-    # Strip the PDB- prefix
     pdb_id = pdb_id.replace("PDB-", "")
     url = f"https://data.rcsb.org/rest/v1/core/entry/{pdb_id}"
     async with aiohttp.ClientSession() as session, session.head(url) as response:
