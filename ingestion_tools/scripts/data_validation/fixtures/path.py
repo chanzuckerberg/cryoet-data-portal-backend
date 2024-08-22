@@ -189,13 +189,11 @@ def tiltseries_basename(
 
 
 @pytest.fixture(scope="session")
-def tiltseries_mdoc_file(tiltseries_dir: str, filesystem: FileSystemApi) -> str:
+def tiltseries_mdoc_files(tiltseries_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/TiltSeries/*.mdoc"""
-    mdoc_file = filesystem.glob(f"{tiltseries_dir}/*.mdoc")
-    if len(mdoc_file) == 1:
-        return mdoc_file[0]
-    elif len(mdoc_file) > 1:
-        pytest.fail("Multiple mdoc files found.")
+    mdoc_files = filesystem.glob(f"{tiltseries_dir}/*.mdoc")
+    if len(mdoc_files) > 0:
+        return mdoc_files
     else:
         pytest.skip("No mdoc file found.")
 

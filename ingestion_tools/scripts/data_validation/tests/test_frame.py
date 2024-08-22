@@ -22,6 +22,16 @@ class TestFrame(HelperTestMRCHeader):
         self.spacegroup = 0  # 2D image
         self.mrc_headers = {k: v for k, v in frames_headers.items() if isinstance(v, MrcInterpreter)}
 
+    ### DON'T RUN SOME MRC HEADER TESTS ###
+    def test_nlabel(self):
+        pytest.skip("Not applicable for gain files")
+
+    def test_nversion(self):
+        pytest.skip("Not applicable for gain files")
+
+    def test_mrc_mode(self):
+        pytest.skip("Not applicable for gain files")
+
     ### BEGIN Self-consistency tests ###
     def test_frames_format(self, frames_files: List[str]):
         errors = []
@@ -37,22 +47,29 @@ class TestFrame(HelperTestMRCHeader):
         errors = []
         frames_dimensions = None
 
-        for _, header in frames_headers.items():
-            if isinstance(header, list) and isinstance(header[0], tifffile.TiffPage):
-                curr_dimensions = header[0].shape
+        for filename, header_entity in frames_headers.items():
+            if isinstance(header_entity, list) and isinstance(header_entity[0], tifffile.TiffPage):
+                curr_dimensions = header_entity[0].shape
                 # first ensure all pages have the same dimensions
-                assert all(page.shape == curr_dimensions for page in header), "Not all pages have the same dimensions"
+                assert all(
+                    page.shape == curr_dimensions for page in header_entity
+                ), "Not all pages have the same dimensions"
                 if frames_dimensions is None:
                     frames_dimensions = curr_dimensions
                 elif curr_dimensions != frames_dimensions:
-                    errors.append(f"Frame dimensions do not match: {curr_dimensions} != {frames_dimensions}")
-            elif isinstance(header, MrcInterpreter):
+                    errors.append(
+                        f"Frame dimensions do not match: {curr_dimensions} != {frames_dimensions}, {filename}",
+                    )
+            elif isinstance(header_entity, MrcInterpreter):
+                header = header_entity.header
                 if frames_dimensions is None:
                     frames_dimensions = (header.nx, header.ny)
                 elif (header.nx, header.ny) != frames_dimensions:
-                    errors.append(f"Frame dimensions do not match: ({header.nx}, {header.ny}) != {frames_dimensions}")
+                    errors.append(
+                        f"Frame dimensions do not match: ({header.nx}, {header.ny}) != {frames_dimensions}, {filename}",
+                    )
             else:
-                errors.append(f"Unsupported frame type: {type(header)}")
+                errors.append(f"Unsupported frame type: {type(header)}, {filename}")
 
         assert not errors, "\n".join(errors)
 
