@@ -56,6 +56,10 @@ class TestTiltAndRawTilt:
         )
         assert len(errors) == 0, "\n".join(errors)
 
+    def test_tilt_frames(self, tiltseries_tilt: pd.DataFrame, frames_files: List[str]):
+        """Ensure that there are at least the same number of frame files as tilt angles."""
+        assert len(frames_files) >= len(tiltseries_tilt)
+
     ### BEGIN Raw Tilt .rawtlt tests ###
     def test_raw_tilt_count(self, tiltseries_raw_tilt: pd.DataFrame):
         """Ensure that there are raw tilt angles."""
@@ -66,11 +70,15 @@ class TestTiltAndRawTilt:
         assert all(-90 <= angle <= 90 for angle in tiltseries_raw_tilt["TiltAngle"])
 
     def test_raw_tilt_tiltseries_mdoc(self, tiltseries_raw_tilt: pd.DataFrame, tiltseries_mdoc: pd.DataFrame):
-        """Ensure that every mdoc angle matches to a raw tilt angle."""
+        """Ensure that every raw tilt angle matches a tilt angle in the mdoc file."""
         errors = self.helper_angles_injection(
-            tiltseries_mdoc["TiltAngle"].to_list(),
             tiltseries_raw_tilt["TiltAngle"].to_list(),
-            "mdoc file",
+            tiltseries_mdoc["TiltAngle"].to_list(),
             "raw tilt file",
+            "mdoc file",
         )
         assert len(errors) == 0, "\n".join(errors)
+
+    def test_raw_tilt_frames(self, tiltseries_raw_tilt: pd.DataFrame, frames_files: List[str]):
+        """Ensure that there are at least the same number of frame files as raw tilt angles."""
+        assert len(frames_files) >= len(tiltseries_raw_tilt)
