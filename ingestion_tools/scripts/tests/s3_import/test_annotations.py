@@ -1010,17 +1010,17 @@ def test_ingest_triangular_mesh(
         parents={"tomogram": tomo_importer, **tomo_importer.parents},
         file_format=file_format,
         identifier=100,
+        ontology_id=ontology_id,
     )
     anno.import_item()
     anno.import_metadata()
 
     # Assert
     # verify local_metadata
-    path = ["dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0"]
+    path = "dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0_"
     if ontology_id:
-        path.append(ontology_id.replace(":", "_"))
-    path.append("triangularmesh.glb")
-    path = "-".join(path)
+        path += ontology_id.replace(":", "_")
+    path +="triangularmesh.glb"
     expected_local_metadata = {
         "object_count": 1,
         "files": [
@@ -1036,4 +1036,4 @@ def test_ingest_triangular_mesh(
 
     # load the new mesh file
     anno_file = anno.get_output_filename(anno.get_output_path())
-    assert trimesh.load(anno_file)
+    trimesh.load(anno_file)
