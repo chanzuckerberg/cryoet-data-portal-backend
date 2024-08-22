@@ -14,11 +14,14 @@ jobs:
       id-token: write
       issues: write
       pull-requests: write
+    outputs:
+      should_run: ${{ steps.filter.outputs.should_run }}
     steps:
       - name: Calculate Branch and Base Names
         id: refs
         uses: chanzuckerberg/github-actions/.github/actions/get-github-ref-names@get-github-ref-names-v1.6.0
       - uses: actions/github-script@v7
+        id: filter
         with:
           script: |
             const [owner, repo] = '${{ github.repository }}'.split('/');
@@ -28,8 +31,25 @@ jobs:
               head: `chanzuckerberg:${{ steps.refs.outputs.headRef }}`,
             });
             console.log(JSON.stringify(prs.data, null, 2));
+
+            if (prs.data.length === 0) {
+              console.log('No PRs found');
+              core.setOutput('should_run', 'false');
+              return;
+            }
+
+            const labels = await github.rest.issues.listLabelsOnIssue({
+              owner,
+              repo,
+              issue_number: prs.data[0].number,
+            });
+            console.log(JSON.stringify(labels.data, null, 2));
+
+            core.setOutput('should_run', 'false');
+
   rdev_argus_builder:
     needs: filter
+    if: ${{ needs.filter.outputs.should_run == 'true' }}
     uses: ./.github/workflows/workflow-argus-docker-build.yaml
     secrets: inherit
     with:
