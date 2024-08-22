@@ -522,7 +522,6 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         return 1
 
     def is_valid(self) -> bool:
-        # TODO this should check that the glb is actually correct
         return True
 
     def get_output_filename(self, output_prefix: str) -> str:

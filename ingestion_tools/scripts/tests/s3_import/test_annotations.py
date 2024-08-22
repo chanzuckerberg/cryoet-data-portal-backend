@@ -966,7 +966,13 @@ def test_ingest_instance_point_data(
 
 
 @pytest.mark.parametrize(
-    "case",
+    "glob_string,file_format",
+    [
+        ("annotations/triangular_mesh.stl", "stl"),
+        ("annotations/triangular_mesh.glb", "glb"),
+        ("annotations/triangular_mesh.vtk", "vtk"),
+        ("annotations/triangular_mesh.obj", "obj"),
+    ],
     [
         {
             "file_format": "stl",
@@ -991,14 +997,13 @@ def test_ingest_instance_point_data(
     ],
 )
 def test_ingest_triangular_mesh(
-    case,
+    glob_string,
+    file_format,
     tomo_importer: TomogramImporter,
     dataset_config_local: DepositionImportConfig,
     local_test_data_dir: str,
 ):
-
     # Arrange
-    glob_string = "annotations/Endospore.stl"
     dataset_config_local._set_object_configs(
         "annotation",
         [
@@ -1006,7 +1011,11 @@ def test_ingest_triangular_mesh(
                 "metadata": default_anno_metadata,
                 "sources": [
                     {
-                        "TriangularMesh": case,
+                        "TriangularMesh": {
+                            "file_format": file_format,
+                            "glob_string": glob_string,
+                            "is_visualization_default": False,
+                        },
                     },
                 ],
             },
@@ -1032,7 +1041,8 @@ def test_ingest_triangular_mesh(
         "files": [
             {
                 "format": "glb",
-                "path": "dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0-1_triangularmesh.glb",
+                "path": "dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0-1_triangularmesh"
+                ".glb",
                 "shape": "TriangularMesh",
                 "is_visualization_default": False,
             },
