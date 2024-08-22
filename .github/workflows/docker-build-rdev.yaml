@@ -11,10 +11,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  printJob:    
+    name: Print event
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github.event.pull_request.head) }}
+      run: |
+        echo "$GITHUB_CONTEXT"
   rdev_argus_builder:
     uses: ./.github/workflows/workflow-argus-docker-build.yaml
     secrets: inherit
-    if: contains(github.event.pull_request.labels.*.name, 'stack') && ( ! contains(github.event.pull_request.head.user.type, 'Bot'))
+    if: contains(github.event.pull_request.labels.*.name, 'stack') && github.event.pull_request.head.user.type != 'Bot'
     with:
       envs: rdev
       path_filters: 'apiv2/**'
