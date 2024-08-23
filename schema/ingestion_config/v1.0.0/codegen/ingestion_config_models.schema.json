@@ -771,14 +771,6 @@
                         "null"
                     ]
                 },
-                "ontology_id": {
-                    "description": "The ontology ID the cooresponds to a single annotation mesh among multiple meshes.",
-                    "pattern": "^[a-zA-Z]+:[0-9]+$",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
                 "scale_factor": {
                     "description": "The scale factor for a mesh annotation file.",
                     "minimum": 0,
