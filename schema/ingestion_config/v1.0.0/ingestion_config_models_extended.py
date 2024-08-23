@@ -69,6 +69,8 @@ logger = logging.getLogger(__name__)
 
 validation_exclusions = {}
 CELLULAR_COMPONENT_GO_ID = "GO:0005575"
+GO_ID_REGEX = r"^GO:[0-9]{7}$"
+UNIPROT_ID_REGEX = r"^UniProtKB:[A-Z0-9]+$"
 STRING_FORMATTED_STRING_REGEX = r"^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$"
 VALID_IMAGE_FORMATS = ("image/png", "image/jpeg", "image/jpg", "image/gif")
 # Note that model namees should all be uppercase or pascal case
@@ -268,19 +270,39 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
         if response.status >= 400:
             return [], False
         data = await response.json()
-        if label := data.get("name", {}).get("data", {}).get("label", ""):
+        if label := data["name"]["data"]["label"]:
             names.append(label)
 
     names_url = f"http://rest.wormbase.org/rest/field/strain/{id}/other_names"
 
     async with aiohttp.ClientSession() as session, session.get(names_url) as response:
         if response.status >= 400:
-            return names, True
+            return [], True
         data = await response.json()
         if other_names := data.get("other_names", {}).get("data", []):
             names += other_names
 
     return names, True
+
+
+@alru_cache
+async def validate_uniprot_id(id: str) -> Tuple[List[str], bool]:
+    """
+    Returns a tuple of the ID names and whether or not it is valid.
+    """
+
+    # Strip the UniProtKB: prefix
+    id = id.replace("UniProtKB:", "")
+    url = f"https://rest.uniprot.org/uniprotkb/{id}"
+
+    logger.debug("Getting ID %s at %s", id, url)
+
+    async with aiohttp.ClientSession() as session, session.get(url) as response:
+        if response.status >= 400:
+            return [], False
+        data = await response.json()
+        name = data["proteinDescription"]["recommendedName"]["fullName"]["value"]
+        return name, True
 
 
 def validate_id_name_object(
@@ -321,7 +343,8 @@ def validate_id_name_object(
 
     logger.debug("Valid ID, now checking if name '%s' matches ID: %s", name, id)
 
-    valid_name = any(name == retrieved_name for retrieved_name in retrieved_names)
+    # if retrieved_names is empty, we can assume the name is valid
+    valid_name = retrieved_names == [] or any(name == retrieved_name for retrieved_name in retrieved_names)
 
     if not valid_name:
         raise ValueError(f"name '{name}' does not match id: {id}")
@@ -406,6 +429,7 @@ class ExtendedValidationDepositionKeyPhotoSource(DepositionKeyPhotoSource):
 # ==============================================================================
 @alru_cache
 async def lookup_doi(doi: str) -> Tuple[str, bool]:
+    doi = doi.replace("doi:", "")
     url = f"https://api.crossref.org/works/{doi}/agency"
     async with aiohttp.ClientSession() as session, session.head(url) as response:
         return doi, response.status == 200
@@ -427,6 +451,7 @@ async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
 
 @alru_cache
 async def lookup_pdb(pdb_id: str) -> Tuple[str, bool]:
+    pdb_id = pdb_id.replace("PDB-", "")
     url = f"https://data.rcsb.org/rest/v1/core/entry/{pdb_id}"
     async with aiohttp.ClientSession() as session, session.head(url) as response:
         return pdb_id, response.status == 200
@@ -436,7 +461,7 @@ PUBLICATION_REGEXES_AND_FUNCTIONS = {
     "doi": (r"^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$", lookup_doi),
     "empiar": (r"^EMPIAR-[0-9]{5}$", lookup_empiar),
     "emdb": (r"^EMD-[0-9]{4,5}$", lookup_emdb),
-    "pdb": (r"^pdb[0-9a-zA-Z]{4,8}$", lookup_pdb),
+    "pdb": (r"^PDB-[0-9a-zA-Z]{4,8}$", lookup_pdb),
 }
 
 
@@ -444,12 +469,10 @@ async def validate_publication_lists(publication_list: List[str]) -> List[str]:
     tasks = []
 
     for publication in publication_list:
-        for publication_type, (regex, validate_function) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
+        for _, (regex, validate_function) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
             if not re.match(regex, publication):
                 continue
-            # edge case for DOI, remove the doi: prefix
-            updated_publication = publication.replace("doi:", "") if publication_type == "doi" else publication
-            tasks.append(validate_function(updated_publication))
+            tasks.append(validate_function(publication))
             break
 
     results = await asyncio.gather(*tasks)
@@ -517,7 +540,10 @@ def validate_sources(source_list: List[DefaultSource] | List[VoxelSpacingSource]
 class ExtendedValidationAnnotationObject(AnnotationObject):
     @model_validator(mode="after")
     def validate_annotation_object(self) -> Self:
-        validate_id_name_object(self, self.id, self.name, ancestor=CELLULAR_COMPONENT_GO_ID)
+        if re.match(GO_ID_REGEX, self.id):
+            validate_id_name_object(self, self.id, self.name, ancestor=CELLULAR_COMPONENT_GO_ID)
+        elif re.match(UNIPROT_ID_REGEX, self.id):
+            validate_id_name_object(self, self.id, self.name, validate_id_function=validate_uniprot_id)
         return self
 
 

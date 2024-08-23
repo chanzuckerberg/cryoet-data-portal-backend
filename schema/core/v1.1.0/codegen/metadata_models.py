@@ -98,14 +98,14 @@ linkml_meta = LinkMLMeta(
                 "description": "A list of EMPIAR, " "EMDB, DOI, and PDB " "identifiers",
                 "from_schema": "metadata",
                 "name": "EMPIAR_EMDB_DOI_PDB_LIST",
-                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$",
+                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8}))*$",
             },
             "EMPIAR_EMDB_PDB_LIST": {
                 "base": "str",
                 "description": "A list of EMPIAR, EMDB, " "and PDB identifiers",
                 "from_schema": "metadata",
                 "name": "EMPIAR_EMDB_PDB_LIST",
-                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$",
+                "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$",
             },
             "EMPIAR_ID": {
                 "base": "str",
@@ -154,7 +154,7 @@ linkml_meta = LinkMLMeta(
                 "description": "A Protein Data Bank identifier",
                 "from_schema": "metadata",
                 "name": "PDB_ID",
-                "pattern": "^pdb[0-9a-zA-Z]{4,8}$",
+                "pattern": "^PDB-[0-9a-zA-Z]{4,8}$",
             },
             "StringFormattedString": {
                 "base": "str",
@@ -162,6 +162,13 @@ linkml_meta = LinkMLMeta(
                 "from_schema": "metadata",
                 "name": "StringFormattedString",
                 "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ " "]*$",
+            },
+            "UNIPROT_ID": {
+                "base": "str",
+                "description": "A UniProt identifier",
+                "from_schema": "metadata",
+                "name": "UNIPROT_ID",
+                "pattern": "^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$",
             },
             "URLorS3URI": {
                 "base": "str",
@@ -589,6 +596,8 @@ class TiltseriesMicroscopeManufacturerEnum(str, Enum):
     TFS = "TFS"
     # JEOL Ltd.
     JEOL = "JEOL"
+    # Simulated data
+    SIMULATED = "SIMULATED"
 
 
 class FiducialAlignmentStatusEnum(str, Enum):
@@ -1560,7 +1569,7 @@ class MicroscopeDetails(ConfiguredBaseModel):
 
     @field_validator("manufacturer")
     def pattern_manufacturer(cls, v):
-        pattern = re.compile(r"(^FEI$)|(^TFS$)|(^JEOL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)")
+        pattern = re.compile(r"(^FEI$)|(^TFS$)|(^JEOL$)|(^SIMULATED$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
@@ -2505,10 +2514,11 @@ class AnnotationObject(ConfiguredBaseModel):
 
     id: str = Field(
         ...,
-        description="""Gene Ontology Cellular Component identifier for the annotation object""",
+        description="""Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "id",
+                "any_of": [{"range": "GO_ID"}, {"range": "UNIPROT_ID"}],
                 "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:annotation_object_id"],
             }
@@ -2560,7 +2570,9 @@ class AnnotationObject(ConfiguredBaseModel):
 
     @field_validator("id")
     def pattern_id(cls, v):
-        pattern = re.compile(r"^GO:[0-9]{7}$")
+        pattern = re.compile(
+            r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)"
+        )
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
@@ -3346,7 +3358,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
     )
     annotation_publications: Optional[str] = Field(
         None,
-        description="""List of publication IDs (EMPIAR, EMDB, DOI) that describe this annotation method. Comma separated.""",
+        description="""List of publication IDs (EMPIAR, EMDB, DOI, PDB) that describe this annotation method. Comma separated.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "annotation_publications",
@@ -3460,7 +3472,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
     @field_validator("annotation_publications")
     def pattern_annotation_publications(cls, v):
         pattern = re.compile(
-            r"^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|pdb[0-9a-zA-Z]{4,8}))*$"
+            r"^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8}))*$"
         )
         if isinstance(v, list):
             for element in v:
@@ -3629,7 +3641,7 @@ class CrossReferencesMixin(ConfiguredBaseModel):
     @field_validator("related_database_entries")
     def pattern_related_database_entries(cls, v):
         pattern = re.compile(
-            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)"
+            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$)"
         )
         if isinstance(v, list):
             for element in v:
@@ -3702,7 +3714,7 @@ class CrossReferences(CrossReferencesMixin):
     @field_validator("related_database_entries")
     def pattern_related_database_entries(cls, v):
         pattern = re.compile(
-            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)"
+            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$)"
         )
         if isinstance(v, list):
             for element in v:
