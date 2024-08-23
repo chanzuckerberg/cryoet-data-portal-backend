@@ -8,6 +8,7 @@ datasets:
           ORCID: 0000-0002-0624-5020
           corresponding_author_status: true
       cross_references:
+        publications: 10.1109/TMI.2024.3398401
         related_database_entries: PDB-6MRD, PDB-1ZEF, PDB-6UPH, PDB-7TM3, PDB-7PKZ, PDB-6NK5
       dataset_description: This dataset is comprised of simulated tiltseries, tomograms and ground truth annotations for
         the purpose of benchmarking and training particle picking algorithms for cryoET. The data was simulated
@@ -35,7 +36,7 @@ annotations:
       annotation_object:
         id: GO:0016020
         name: membrane
-      annotation_publications: null
+      annotation_publications: 10.1109/TMI.2024.3398401
       annotation_software: polnet
       authors: *id001
       dates: *id002
@@ -55,7 +56,7 @@ annotations:
       annotation_object:
         id: GO:1990220
         name: GroEL-GroES complex
-      annotation_publications: PDB-6MRD
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-6MRD
     sources:
       - SemanticSegmentationMask:
           <<: *segmentation_mask_source
@@ -66,7 +67,7 @@ annotations:
       annotation_object:
         id: GO:1990220
         name: GroEL-GroES complex
-      annotation_publications: PDB-6MRD
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-6MRD
     sources:
       - OrientedPoint: &oriented_point_source
           binning: 10
@@ -80,7 +81,7 @@ annotations:
       annotation_object:
         id: UniProtKB:P05187
         name: Alkaline phosphatase, placental type
-      annotation_publications: PDB-1ZEF
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-1ZEF
     sources:
       - SemanticSegmentationMask:
           <<: *segmentation_mask_source
@@ -91,7 +92,7 @@ annotations:
       annotation_object:
         id: UniProtKB:P05187
         name: Alkaline phosphatase, placental type
-      annotation_publications: PDB-1ZEF
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-1ZEF
     sources:
       - OrientedPoint:
           <<: *oriented_point_source
@@ -102,7 +103,7 @@ annotations:
       annotation_object:
         id: GO:0000786
         name: nucleosome
-      annotation_publications: PDB-6UPH
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-6UPH
     sources:
       - SemanticSegmentationMask:
           <<: *segmentation_mask_source
@@ -113,7 +114,7 @@ annotations:
       annotation_object:
         id: GO:0000786
         name: nucleosome
-      annotation_publications: PDB-6UPH
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-6UPH
     sources:
       - OrientedPoint:
           <<: *oriented_point_source
@@ -124,7 +125,7 @@ annotations:
       annotation_object:
         id: GO:0022626
         name: cytosolic ribosome
-      annotation_publications: PDB-7TM3
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-7TM3
     sources:
       - SemanticSegmentationMask:
           <<: *segmentation_mask_source
@@ -135,7 +136,7 @@ annotations:
       annotation_object:
         id: GO:0022626
         name: cytosolic ribosome
-      annotation_publications: PDB-7TM3
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-7TM3
     sources:
       - OrientedPoint:
           <<: *oriented_point_source
@@ -146,7 +147,7 @@ annotations:
       annotation_object:
         id: UniProtKB:Q62667
         name: Major vault protein
-      annotation_publications: PDB-7PKZ
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-7PKZ
     sources:
       - SemanticSegmentationMask:
           <<: *segmentation_mask_source
@@ -157,7 +158,7 @@ annotations:
       annotation_object:
         id: UniProtKB:Q62667
         name: Major vault protein
-      annotation_publications: PDB-7PKZ
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-7PKZ
     sources:
       - OrientedPoint:
           <<: *oriented_point_source
@@ -169,7 +170,7 @@ annotations:
         id: GO:0170047
         name: virus-like capsid
         description: Chikungunya VLP
-      annotation_publications: PDB-6NK5
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-6NK5
     sources:
       - SemanticSegmentationMask:
           <<: *segmentation_mask_source
@@ -181,7 +182,7 @@ annotations:
         id: GO:0170047
         name: virus-like capsid
         description: Chikungunya VLP
-      annotation_publications: PDB-6NK5
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-6NK5
     sources:
       - OrientedPoint:
           <<: *oriented_point_source
