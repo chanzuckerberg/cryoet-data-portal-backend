@@ -2,6 +2,7 @@ datasets:
   - metadata:
       authors: &id001
         - name: Jonathan Schwartz
+          ORCID: 0000-0002-8063-6951
           primary_author_status: true
         - name: Bridget Carragher
           ORCID: 0000-0002-0624-5020
