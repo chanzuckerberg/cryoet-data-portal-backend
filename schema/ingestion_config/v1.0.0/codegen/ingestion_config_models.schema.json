@@ -77,7 +77,7 @@
                 "method_type": {
                     "$ref": "#/$defs/AnnotationMethodTypeEnum",
                     "description": "Classification of the annotation method based on supervision.",
-                    "pattern": "(^manual$)|(^automated$)|(^hybrid$)"
+                    "pattern": "(^manual$)|(^automated$)|(^hybrid$)|(^simulated$)"
                 },
                 "object_count": {
                     "description": "Number of objects identified",
@@ -279,7 +279,8 @@
             "enum": [
                 "manual",
                 "automated",
-                "hybrid"
+                "hybrid",
+                "simulated"
             ],
             "title": "AnnotationMethodTypeEnum",
             "type": "string"
