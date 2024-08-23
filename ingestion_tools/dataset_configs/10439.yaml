@@ -42,7 +42,7 @@ annotations:
       dates: *id002
       ground_truth_status: true
       is_curator_recommended: true
-      method_type: automated
+      method_type: hybrid
       version: 1.0
     sources:
       - SemanticSegmentationMask: &segmentation_mask_source
@@ -80,7 +80,7 @@ annotations:
       <<: *annotation_metadata
       annotation_object:
         id: UniProtKB:P05187
-        name: Alkaline phosphatase, placental type
+        name: "Alkaline phosphatase, placental type"
       annotation_publications: 10.1109/TMI.2024.3398401, PDB-1ZEF
     sources:
       - SemanticSegmentationMask:
@@ -200,7 +200,7 @@ depositions:
       authors: *id001
       dates: *id002
       deposition_description: This deposition includes simulated data for the evaluation of particle picking
-        algorithms. The simulated data was generated using polnet and includes tilt series, tomograms and ground truth 
+        algorithms. The simulated data was generated using polnet and includes tilt series, tomograms and ground truth
         annotations (oriented points, as well as segmentation masks).
       deposition_identifier: 10309
       deposition_title: CZ Imaging Institute simulated data
