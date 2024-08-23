@@ -1034,6 +1034,7 @@ def test_ingest_triangular_mesh(
     # load the new mesh file
     anno_file = anno.get_output_filename(anno.get_output_path())
     actual_mesh = trimesh.load(f"{anno_file}.glb", force="mesh")
+    # TODO compare against another mesh
     # assert actual_mesh.vertices =
     # assert actual_mesh.faces =
     # assert actual_mesh.visual.face_colors =
