@@ -771,9 +771,8 @@
                         "null"
                     ]
                 },
-                "ontology_id": {
-                    "description": "The ontology ID the cooresponds to a single annotation mesh among multiple meshes.",
-                    "pattern": "^[a-zA-Z]+:[0-9]+$",
+                "name": {
+                    "description": "The name that identifies to a single annotation mesh among multiple meshes.",
                     "type": [
                         "string",
                         "null"

@@ -10,7 +10,7 @@ from importers.annotation import (
     InstanceSegmentationAnnotation,
     OrientedPointAnnotation,
     PointAnnotation,
-    TriangularMeshAnnotation,
+    TriangularMeshAnnotation, TriangularMeshAnnotationGroup,
 )
 from importers.dataset import DatasetImporter
 from importers.deposition import DepositionImporter
@@ -964,21 +964,40 @@ def test_ingest_instance_point_data(
         # Check id
         assert exp_point["instance_id"] == point["instance_id"], f"Incorrect id for {case['case']}"
 
+def verify_triangular_mesh(anno):
+    # verify local_metadata
+    path = "dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0_triangularmesh.glb"
+    expected_local_metadata = {
+        "object_count": 1,
+        "files": [
+            {
+                "format": "glb",
+                "path": path,
+                "shape": "TriangularMesh",
+                "is_visualization_default": False,
+            },
+        ],
+    }
+    assert anno.local_metadata == expected_local_metadata
+
+    # load the new mesh file
+    anno_file = anno.get_output_filename(anno.get_output_path())
+    trimesh.load(anno_file)
+
 
 @pytest.mark.parametrize(
-    "glob_string,file_format,name",
+    "glob_string,file_format",
     [
-        ("annotations/triangular_mesh.stl", "stl", None),
-        ("annotations/triangular_mesh.glb", "glb", None),
-        ("annotations/triangular_mesh.vtk", "vtk", None),
-        ("annotations/triangular_mesh.obj", "obj", None),
-        ("annotations/triangular_mesh.obj", "hff", "descriptive_name"),
+        ("annotations/triangular_mesh.stl", "stl"),
+        ("annotations/triangular_mesh.glb", "glb"),
+        ("annotations/triangular_mesh.vtk", "vtk"),
+        ("annotations/triangular_mesh.obj", "obj"),
+        ("annotations/triangular_mesh.obj", "hff"),
     ],
 )
 def test_ingest_triangular_mesh(
     glob_string,
     file_format,
-    name,
     tomo_importer: TomogramImporter,
     dataset_config_local: DepositionImportConfig,
     local_test_data_dir: str,
@@ -1009,6 +1028,54 @@ def test_ingest_triangular_mesh(
         path=os.path.join(local_test_data_dir, "input_bucket/20002", glob_string),
         parents={"tomogram": tomo_importer, **tomo_importer.parents},
         file_format=file_format,
+        identifier=100
+    )
+    anno.import_item()
+    anno.import_metadata()
+
+    # Assert
+    verify_triangular_mesh(anno)
+
+@pytest.mark.parametrize(
+    "glob_string,file_format,name",
+    [
+        ("annotations/triangular_mesh.obj", "hff", "special_name"),
+    ],
+)
+def test_ingest_triangular_mesh_group(
+    glob_string,
+    file_format,
+    name,
+    tomo_importer: TomogramImporter,
+    dataset_config_local: DepositionImportConfig,
+    local_test_data_dir: str,
+):
+    # Arrange
+    dataset_config_local._set_object_configs(
+        "annotation",
+        [
+            {
+                "metadata": default_anno_metadata,
+                "sources": [
+                    {
+                        "TriangularMeshGroup": {
+                            "file_format": file_format,
+                            "glob_string": glob_string,
+                            "is_visualization_default": False,
+                        },
+                    },
+                ],
+            },
+        ],
+    )
+
+    # Action
+    anno = TriangularMeshAnnotationGroup(
+        config=dataset_config_local,
+        metadata=default_anno_metadata,
+        path=os.path.join(local_test_data_dir, "input_bucket/20002", glob_string),
+        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        file_format=file_format,
         identifier=100,
         name=name,
     )
@@ -1016,21 +1083,4 @@ def test_ingest_triangular_mesh(
     anno.import_metadata()
 
     # Assert
-    # verify local_metadata
-    path = "dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0_triangularmesh.glb"
-    expected_local_metadata = {
-        "object_count": 1,
-        "files": [
-            {
-                "format": "glb",
-                "path": path,
-                "shape": "TriangularMesh",
-                "is_visualization_default": False,
-            },
-        ],
-    }
-    assert anno.local_metadata == expected_local_metadata
-
-    # load the new mesh file
-    anno_file = anno.get_output_filename(anno.get_output_path())
-    trimesh.load(anno_file)
+    verify_triangular_mesh(anno)

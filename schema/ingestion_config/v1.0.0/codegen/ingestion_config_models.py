@@ -674,6 +674,7 @@ class OrganismDetails(ConfiguredBaseModel):
                        'CellStrain',
                        'CellComponent',
                        'AnnotationObject',
+                       'AnnotationTriangularMeshFile',
                        'AuthorMixin',
                        'AnnotationMethodLinks',
                        'Author'],
@@ -697,6 +698,7 @@ class TissueDetails(ConfiguredBaseModel):
                        'CellStrain',
                        'CellComponent',
                        'AnnotationObject',
+                       'AnnotationTriangularMeshFile',
                        'AuthorMixin',
                        'AnnotationMethodLinks',
                        'Author'],
@@ -736,6 +738,7 @@ class CellType(ConfiguredBaseModel):
                        'CellStrain',
                        'CellComponent',
                        'AnnotationObject',
+                       'AnnotationTriangularMeshFile',
                        'AuthorMixin',
                        'AnnotationMethodLinks',
                        'Author'],
@@ -775,6 +778,7 @@ class CellStrain(ConfiguredBaseModel):
                        'CellStrain',
                        'CellComponent',
                        'AnnotationObject',
+                       'AnnotationTriangularMeshFile',
                        'AuthorMixin',
                        'AnnotationMethodLinks',
                        'Author'],
@@ -815,6 +819,7 @@ class CellComponent(ConfiguredBaseModel):
                        'CellStrain',
                        'CellComponent',
                        'AnnotationObject',
+                       'AnnotationTriangularMeshFile',
                        'AuthorMixin',
                        'AnnotationMethodLinks',
                        'Author'],
@@ -1586,6 +1591,7 @@ class AnnotationObject(ConfiguredBaseModel):
                        'CellStrain',
                        'CellComponent',
                        'AnnotationObject',
+                       'AnnotationTriangularMeshFile',
                        'AuthorMixin',
                        'AnnotationMethodLinks',
                        'Author'],
@@ -1938,9 +1944,18 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
          'domain_of': ['AnnotationTriangularMeshFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_scale_factor'],
          'ifabsent': 'float(1)'} })
-    ontology_id: Optional[str] = Field(None, description="""The ontology ID the cooresponds to a single annotation mesh among multiple meshes.""", json_schema_extra = { "linkml_meta": {'alias': 'ontology_id',
-         'domain_of': ['AnnotationTriangularMeshFile'],
-         'exact_mappings': ['cdp-common:annotation_source_file_ontology_id']} })
+    name: Optional[str] = Field(None, description="""The name that identifies to a single annotation mesh among multiple meshes.""", json_schema_extra = { "linkml_meta": {'alias': 'name',
+         'domain_of': ['OrganismDetails',
+                       'TissueDetails',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject',
+                       'AnnotationTriangularMeshFile',
+                       'AuthorMixin',
+                       'AnnotationMethodLinks',
+                       'Author'],
+         'exact_mappings': ['cdp-common:annotation_source_file_mesh_name']} })
     file_format: str = Field(..., description="""File format for this file""", json_schema_extra = { "linkml_meta": {'alias': 'file_format',
          'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
@@ -1978,18 +1993,6 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
-
-    @field_validator('ontology_id')
-    def pattern_ontology_id(cls, v):
-        pattern=re.compile(r"^[a-zA-Z]+:[0-9]+$")
-        if isinstance(v,list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid ontology_id format: {element}")
-        elif isinstance(v,str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid ontology_id format: {v}")
-        return v
 
 
 class Annotation(AuthoredEntity, DateStampedEntity):
@@ -2197,7 +2200,8 @@ class AuthorMixin(ConfiguredBaseModel):
                        'CellType',
                        'CellStrain',
                        'CellComponent',
-                       'AnnotationObject'],
+                       'AnnotationObject',
+                       'AnnotationTriangularMeshFile'],
          'exact_mappings': ['cdp-common:author_name']} })
     email: Optional[str] = Field(None, description="""The email address of the author.""", json_schema_extra = { "linkml_meta": {'alias': 'email',
          'domain_of': ['AuthorMixin', 'Author'],
@@ -2241,6 +2245,7 @@ class Author(AuthorMixin):
                        'CellStrain',
                        'CellComponent',
                        'AnnotationObject',
+                       'AnnotationTriangularMeshFile',
                        'Author'],
          'exact_mappings': ['cdp-common:author_name']} })
     email: Optional[str] = Field(None, description="""The email address of the author.""", json_schema_extra = { "linkml_meta": {'alias': 'email',
@@ -2295,7 +2300,8 @@ class AnnotationMethodLinks(ConfiguredBaseModel):
                        'CellType',
                        'CellStrain',
                        'CellComponent',
-                       'AnnotationObject'],
+                       'AnnotationObject',
+                       'AnnotationTriangularMeshFile'],
          'recommended': True} })
 
     @field_validator('link_type')

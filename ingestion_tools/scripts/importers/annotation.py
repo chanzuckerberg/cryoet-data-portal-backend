@@ -1,20 +1,19 @@
 import json
 import os
 import os.path
-import typing
 from abc import abstractmethod
 from collections import defaultdict
 from functools import partial
-from typing import TYPE_CHECKING, Any
+from typing import Any, TYPE_CHECKING
 
 import ndjson
 
-from common import mesh_converter as mc
-from common import point_converter as pc
+from common import mesh_converter as mc, point_converter as pc
 from common.config import DepositionImportConfig
 from common.finders import BaseFinder, DepositionObjectImporterFactory, SourceGlobFinder, SourceMultiGlobFinder
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, make_pyramids
+from common.mesh_converter import check_mesh_name
 from common.metadata import AnnotationMetadata
 from importers.base_importer import BaseImporter
 
@@ -138,6 +137,8 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             anno = InstanceSegmentationAnnotation(**instance_args)
         if shape == "TriangularMesh":
             anno = TriangularMeshAnnotation(**instance_args)
+        if shape == "TriangularMeshGroup":
+            anno = TriangularMeshAnnotationGroup(**instance_args)
         if not anno:
             raise NotImplementedError(f"Unknown shape {shape}")
         if anno.is_valid():
@@ -486,19 +487,16 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         "glb": mc.from_generic,
     }
     valid_file_formats = list(map_functions.keys())
-    name: typing.Optional[str]
     output_format: str = "glb"
     scale_factor: float
 
     def __init__(
         self,
-        name: typing.Optional[str] = None,
         scale_factor: float = 1.0,
         *args,
         **kwargs,
     ) -> None:
         super().__init__(*args, **kwargs)
-        self.name = name
         self.scale_factor = scale_factor
 
     def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
@@ -513,14 +511,40 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         return metadata
 
     def convert(self, output_prefix: str):
-        mesh_file = self.config.fs.localreadable(self.path)
         output_file_name = self.get_output_filename(output_prefix)
         tmp_path = self.config.fs.localwritable(output_file_name)
-        self.map_functions[self.file_format](mesh_file, tmp_path, scale_factor=self.scale_factor)
+
+        self.map_functions[self.file_format](self.mesh_file, tmp_path, scale_factor=self.scale_factor)
+
         self.config.fs.push(tmp_path)
 
     def get_object_count(self, output_prefix: str) -> int:
         return 1
 
+    @property
+    def mesh_file(self) -> str:
+        if not hasattr(self, "_mesh_file"):
+            self._mesh_file = self.config.fs.localreadable(self.path)
+        return self._mesh_file
+
+
+class TriangularMeshAnnotationGroup(TriangularMeshAnnotation):
+    map_functions = {
+        "hff": mc.from_hff,
+    }
+    valid_file_formats = list(map_functions.keys())
+
+    def __init__(self, name: str, *args, **kwargs):
+        self.name = name
+        super().__init__(*args, **kwargs)
+
+    def convert(self, output_prefix: str):
+        output_file_name = self.get_output_filename(output_prefix)
+        tmp_path = self.config.fs.localwritable(output_file_name)
+
+        self.map_functions[self.file_format](self.mesh_file, tmp_path, scale_factor=self.scale_factor, name=self.name)
+
+        self.config.fs.push(tmp_path)
+
     def is_valid(self) -> bool:
-        return True
+        return True if check_mesh_name(self.mesh_file, self.name) else False

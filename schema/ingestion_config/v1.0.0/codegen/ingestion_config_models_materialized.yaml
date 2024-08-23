@@ -4601,6 +4601,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshFile
         range: string
         required: true
         inlined: true
@@ -4739,6 +4740,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshFile
         range: string
         recommended: true
         inlined: true

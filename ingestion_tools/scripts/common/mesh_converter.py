@@ -32,26 +32,21 @@ def convert_mesh_to_glb(convert_func: typing.Callable[[str], trimesh.Trimesh]) -
     return wrapper
 
 
-def hff_output_files(input_file: str) -> typing.List[str]:
-    output_files = []
+def check_mesh_name(input_file: str, name: str) -> str:
     with h5py.File(input_file, 'r') as fp:
-        # All the meshes are stored in the 'segment_list'
-        logger.info(f"Schema version: {fp['version'][()]}")
         for mesh_list in fp['segment_list/'].keys():
             # Mesh name
             mesh_name_raw: bytes = fp[f"segment_list/{mesh_list}/biological_annotation/name"][()]
             if not mesh_name_raw:
-                raise ValueError("No mesh name found at segment_list/{mesh_list} in the hff file")
+                logger.warning("No mesh name found at segment_list/{mesh_list} in the hff file")
             else:
-                output_file: str = mesh_name_raw.decode()
-                if output_file in output_files:
-                    raise ValueError(f"Duplicate mesh name found: {output_file}")
-    return output_files
+                mesh_name: str = mesh_name_raw.decode()
+                if mesh_name == name:
+                    return mesh_list
 
 
-# given an ontology_id return the corresponding mesh from the hff file
 @convert_mesh_to_glb
-def from_hff(input_file: str, ontology_id: str) -> typing.List[str]:
+def from_hff(input_file: str, name: str) -> trimesh.Trimesh:
     """
     Convert an hff file to one or more glb file. More information about this format can be found
     here: https://emdb-empiar.github.io/EMDB-SFF/
@@ -60,6 +55,7 @@ def from_hff(input_file: str, ontology_id: str) -> typing.List[str]:
     annotation name suffixed with '.glb'.
 
     :param input_file: the path to an hff file.
+    :param name: the name of the mesh to extract. The name is the biological annotation name.
     :return: A list of meshes with the file extension .glb
     """
 
@@ -74,44 +70,33 @@ def from_hff(input_file: str, ontology_id: str) -> typing.List[str]:
 
         return np.frombuffer(data, dtype=dtype).reshape(-1, 3)
 
-    output_files = []
-
+    mesh_index = check_mesh_name(input_file, name)
     # Open the HDF5 file
     with h5py.File(input_file, 'r') as fp:
         # All the meshes are stored in the 'segment_list'Explore & Visualize HDF5 Files
         logger.info(f"Schema version: {fp['version'][()]}")
-        for mesh_list in fp['segment_list/'].keys():
-            # Mesh name
-            mesh_name_raw: bytes = fp[f"segment_list/{mesh_list}/biological_annotation/name"][()]
-            if not mesh_name_raw:
-                raise ValueError("No mesh name found at segment_list/{mesh_list} in the hff file")
-            else:
-                mesh_name: str = mesh_name_raw.decode() + '.glb'
-                if mesh_name in output_files:
-                    raise ValueError(f"Duplicate mesh name found: {mesh_name}")
-            logger.info(f"Processing mesh: {mesh_name}")
-            # Color is a 4-tuple of RGBA values, 0-1 range (normalized from 0-255)
-            color = fp[f'segment_list/{mesh_list}/colour'][()]
-            meshes = []
-            for mesh in fp[f'segment_list/{mesh_list}/mesh_list/'].keys():
-                # Create a trimesh object from the vertices and triangles data
-                triangle_path = f'segment_list/{mesh_list}/mesh_list/{mesh}/triangles'
-                triangles = _extract(fp, triangle_path)
+        # Mesh name
+        logger.info(f"Processing mesh: {name}")
+        # Color is a 4-tuple of RGBA values, 0-1 range (normalized from 0-255)
+        color = fp[f'segment_list/{mesh_index}/colour'][()]
+        meshes = []
+        for mesh in fp[f'segment_list/{mesh_index}/mesh_list/'].keys():
+            # Create a trimesh object from the vertices and triangles data
+            triangle_path = f'segment_list/{mesh_index}/mesh_list/{mesh}/triangles'
+            triangles = _extract(fp, triangle_path)
 
-                # Do the same for the vertices
-                vertices_data_path = f'segment_list/{mesh_list}/mesh_list/{mesh}/vertices'
-                vertices = _extract(fp, vertices_data_path)
+            # Do the same for the vertices
+            vertices_data_path = f'segment_list/{mesh_index}/mesh_list/{mesh}/vertices'
+            vertices = _extract(fp, vertices_data_path)
 
-                # Create a trimesh object from the vertices and triangles data
-                mesh = trimesh.Trimesh(vertices=vertices, faces=triangles, face_colors=color)
-                meshes.append(mesh)
+            # Create a trimesh object from the vertices and triangles data
+            mesh = trimesh.Trimesh(vertices=vertices, faces=triangles, face_colors=color)
+            meshes.append(mesh)
 
-            # Combine all the meshes into a single scene and export it as a GLB file
-            concat_meshes = trimesh.util.concatenate(meshes)
-            scene = trimesh.Scene(concat_meshes)
-            output_files.append(mesh_name)
-            scene.export(mesh_name)
-    return output_files
+        # Combine all the meshes into a single mesh
+        concat_meshes = trimesh.util.concatenate(meshes)
+    return concat_meshes
+
 
 @convert_mesh_to_glb
 def from_generic(input_file: str) -> trimesh.Trimesh:
