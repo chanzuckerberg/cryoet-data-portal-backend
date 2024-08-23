@@ -56,7 +56,7 @@ clean-all: clean
 .PHONY: build
 build: build-ingestion-config build-api
 
-# To build-ingestion-config for the non-default version, run `make build-api $INGESTION_CONFIG_VERSION=2.0.0 CORE_VERSION=2.0.0`
+# To build-ingestion-config for the non-default version, run `make build-ingestion-config $INGESTION_CONFIG_VERSION=v2.0.0 CORE_VERSION=v2.0.0`
 .PHONY: build-ingestion-config
 build-ingestion-config: clean-core clean-ingestion-config
 	python3 schema.py materialize $(METADATA_YAML) $(COMMON_YAML) $(METADATA_MATERIALIZED_YAML)
@@ -67,10 +67,9 @@ build-ingestion-config: clean-core clean-ingestion-config
 	linkml generate json-schema $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_JSON_SCHEMA)
 	cd ingestion_config && ln -s $(INGESTION_CONFIG_VERSION) latest && cd ..
 
-# To build-api for the non-default version, run `make build-api API_VERSION=2.0.0 CORE_VERSION=2.0.0`
+# To build-api for the non-default version, run `make build-api API_VERSION=v2.0.0 CORE_VERSION=v2.0.0`
 .PHONY: build-api
 build-api: clean-core clean-api
-	# Hardcoding these while we wait for an upstream LinkML bug to be fixed: https://github.com/linkml/linkml-runtime/pull/330
 	python3 schema.py materialize $(METADATA_YAML) $(COMMON_YAML) $(METADATA_MATERIALIZED_YAML)
 	python3 schema.py materialize $(API_MODELS_YAML) $(COMMON_YAML) $(API_MODELS_MATERIALIZED_YAML)
 	linkml generate erdiagram $(API_MODELS_MATERIALIZED_YAML) > $(API_MODELS_ER_DIAGRAM) --structural
