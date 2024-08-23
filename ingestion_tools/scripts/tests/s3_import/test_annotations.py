@@ -972,7 +972,7 @@ def test_ingest_instance_point_data(
         ("annotations/triangular_mesh.glb", "glb", None),
         ("annotations/triangular_mesh.vtk", "vtk", None),
         ("annotations/triangular_mesh.obj", "obj", None),
-        ("annotations/triangular_mesh.obj", "obj", "descriptive_name"),
+        ("annotations/triangular_mesh.obj", "hff", "descriptive_name"),
     ],
 )
 def test_ingest_triangular_mesh(
