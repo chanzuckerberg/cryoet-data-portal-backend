@@ -486,19 +486,19 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         "glb": mc.from_generic,
     }
     valid_file_formats = list(map_functions.keys())
-    ontology_id: typing.Optional[str]
+    name: typing.Optional[str]
     output_format: str = "glb"
     scale_factor: float
 
     def __init__(
         self,
-        ontology_id: typing.Optional[str] = None,
+        name: typing.Optional[str] = None,
         scale_factor: float = 1.0,
         *args,
         **kwargs,
     ) -> None:
         super().__init__(*args, **kwargs)
-        self.ontology_id = ontology_id
+        self.name = name
         self.scale_factor = scale_factor
 
     def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
@@ -524,9 +524,3 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
 
     def is_valid(self) -> bool:
         return True
-
-    def get_output_filename(self, output_prefix: str) -> str:
-        if self.ontology_id:
-            ontology_id = self.ontology_id.replace(":", "_")
-            output_prefix = "-".join([output_prefix, ontology_id])
-        return super().get_output_filename(output_prefix, self.output_format)
