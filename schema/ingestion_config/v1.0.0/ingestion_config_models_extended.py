@@ -31,7 +31,6 @@ from codegen.ingestion_config_models import (
     DatasetKeyPhotoSource,
     DatasetSource,
     DateStamp,
-    DefaultSource,
     Deposition,
     DepositionEntity,
     DepositionKeyPhotoEntity,
@@ -51,6 +50,7 @@ from codegen.ingestion_config_models import (
     RunEntity,
     RunSource,
     SampleTypeEnum,
+    StandardSource,
     TiltRange,
     TiltSeries,
     TiltSeriesEntity,
@@ -77,6 +77,7 @@ VALID_IMAGE_FORMATS = ("image/png", "image/jpeg", "image/jpg", "image/gif")
 CAMERA_MANUFACTURER_TO_MODEL = {
     ("FEI", "TFS"): ["FALCON IV", "Falcon4i"],
     ("Gatan", "GATAN"): ["K2", "K2 SUMMIT", "K3", "K3 BIOQUANTUM", "UltraCam", "UltraScan"],
+    ("simulated"): ["simulated"],
 }
 
 # Flag to determine if network validation should be run (set by provided Container arg)
@@ -302,7 +303,7 @@ async def validate_uniprot_id(id: str) -> Tuple[List[str], bool]:
             return [], False
         data = await response.json()
         name = data["proteinDescription"]["recommendedName"]["fullName"]["value"]
-        return name, True
+        return [name], True
 
 
 def validate_id_name_object(
@@ -431,6 +432,7 @@ class ExtendedValidationDepositionKeyPhotoSource(DepositionKeyPhotoSource):
 async def lookup_doi(doi: str) -> Tuple[str, bool]:
     doi = doi.replace("doi:", "")
     url = f"https://api.crossref.org/works/{doi}/agency"
+    logger.debug("Checking DOI %s at %s", doi, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
         return doi, response.status == 200
 
@@ -438,6 +440,7 @@ async def lookup_doi(doi: str) -> Tuple[str, bool]:
 @alru_cache
 async def lookup_empiar(empiar_id: str) -> Tuple[str, bool]:
     url = f"https://www.ebi.ac.uk/empiar/api/entry/{empiar_id}/"
+    logger.debug("Checking EMPIAR ID %s at %s", empiar_id, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
         return empiar_id, response.status == 200
 
@@ -445,6 +448,7 @@ async def lookup_empiar(empiar_id: str) -> Tuple[str, bool]:
 @alru_cache
 async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
     url = f"https://www.ebi.ac.uk/emdb/api/entry/{emdb_id}"
+    logger.debug("Checking EMDB ID %s at %s", emdb_id, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
         return emdb_id, response.status == 200
 
@@ -453,7 +457,8 @@ async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
 async def lookup_pdb(pdb_id: str) -> Tuple[str, bool]:
     pdb_id = pdb_id.replace("PDB-", "")
     url = f"https://data.rcsb.org/rest/v1/core/entry/{pdb_id}"
-    async with aiohttp.ClientSession() as session, session.head(url) as response:
+    logger.debug("Checking PDB ID %s at %s", pdb_id, url)
+    async with aiohttp.ClientSession() as session, session.get(url) as response:
         return pdb_id, response.status == 200
 
 
@@ -496,39 +501,46 @@ def validate_publications(publications: Optional[str]) -> Optional[str]:
 # ==============================================================================
 # Sources Validation
 # ==============================================================================
-def validate_sources(source_list: List[DefaultSource] | List[VoxelSpacingSource]) -> None:
+def validate_sources(source_list: List[StandardSource] | List[VoxelSpacingSource]) -> None:
     total_errors = []
 
     # For verifying that all source entries each only have one finder type
     multiple_finders_in_each_source_entries_errors = []
-    standalone_finders_in_each_source_entries_errors = []
+    only_parent_filter_in_source_entry_errors = []
+    only_exclude_in_source_entry_errors = []
 
     for i, source_element in enumerate(source_list):
         finders_in_source_entry = []
         has_parent_filters = False
+        has_exclude = False
         for finder in source_element.model_fields:
             # If the finder is not None, add it to the list of finders in the source entry
             if getattr(source_element, finder) is None:
                 continue
             if finder == "exclude":
-                continue
-            if finder == "parent_filters":
+                has_exclude = True
+            elif finder == "parent_filters":
                 has_parent_filters = True
             else:
                 finders_in_source_entry.append(finder)
         # If there are more than one finder in the source entry, add the source entry index and the finders to the error set
         if len(finders_in_source_entry) > 1:
             multiple_finders_in_each_source_entries_errors.append((i, finders_in_source_entry))
-        elif len(finders_in_source_entry) == 0 and has_parent_filters:
+        if len(finders_in_source_entry) == 0 and has_parent_filters:
             # means there's only a parent_filters entry
-            standalone_finders_in_each_source_entries_errors.append(i)
+            only_parent_filter_in_source_entry_errors.append(i)
+        if len(finders_in_source_entry) == 0 and has_exclude:
+            # means there's only an exclude entry
+            only_exclude_in_source_entry_errors.append(i)
 
     for i, finders in multiple_finders_in_each_source_entries_errors:
         total_errors.append(
             ValueError(f"Source entry {i} cannot have multiple finders (split into multiple entries): {finders}"),
         )
-    for index in standalone_finders_in_each_source_entries_errors:
-        total_errors.append(ValueError(f"Source entry {index} cannot only have a parent_filters entry"))
+    for index in only_parent_filter_in_source_entry_errors:
+        total_errors.append(ValueError(f"Source entry {index} cannot have a parent_filters entry without a finder"))
+    for index in only_exclude_in_source_entry_errors:
+        total_errors.append(ValueError(f"Source entry {index} cannot have an exclude entry without a finder"))
 
     if total_errors:
         raise ValueError(total_errors)
@@ -569,14 +581,6 @@ class ExtendedValidationAnnotation(Annotation):
     annotation_object: ExtendedValidationAnnotationObject = Annotation.model_fields["annotation_object"]
     confidence: Optional[ExtendedValidationAnnotationConfidence] = Annotation.model_fields["confidence"]
     dates: ExtendedValidationDateStamp = Annotation.model_fields["dates"]
-
-    @model_validator(mode="after")
-    def valid_metadata(self) -> Self:
-        if self.method_type == "automated" and self.ground_truth_status:
-            raise ValueError(
-                "Annotation metadata cannot have 'ground_truth_status' as true if 'method_type' is 'automated'",
-            )
-        return self
 
     @field_validator("annotation_publications")
     @classmethod
@@ -651,6 +655,29 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
                 if has_glob_string and has_glob_strings:
                     multiple_glob_strings_errors.append((i, shape))
 
+        # For verifying that all source entries do not only have parent_filters or exclude
+        only_parent_filter_in_source_entry_errors = []
+        only_exclude_in_source_entry_errors = []
+
+        for i, source_element in enumerate(source_list):
+            has_parent_filters = False
+            has_exclude = False
+            has_shape = False
+            for shape in source_element.model_fields:
+                if getattr(source_element, shape) is None:
+                    continue
+                if shape == "exclude":
+                    has_exclude = True
+                elif shape == "parent_filters":
+                    has_parent_filters = True
+                else:
+                    has_shape = True
+
+            if not has_shape and has_parent_filters:
+                only_parent_filter_in_source_entry_errors.append(i)
+            if not has_shape and has_exclude:
+                only_exclude_in_source_entry_errors.append(i)
+
         if shapes_used_multiple_times_errors:
             total_errors.append(
                 ValueError(f"Annotation cannot have multiple same-shape sources: {shapes_used_multiple_times_errors}"),
@@ -663,6 +690,10 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
             total_errors.append(
                 ValueError(f"Source entry {i} shape {shape} must have exactly one of glob_string or glob_strings"),
             )
+        for index in only_parent_filter_in_source_entry_errors:
+            total_errors.append(ValueError(f"Source entry {index} cannot have a parent_filters entry without a shape"))
+        for index in only_exclude_in_source_entry_errors:
+            total_errors.append(ValueError(f"Source entry {index} cannot have an exclude entry without a shape"))
 
         if total_errors:
             raise ValueError(total_errors)

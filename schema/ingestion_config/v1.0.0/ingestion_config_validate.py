@@ -151,6 +151,10 @@ def main(
         logger.error("Provide input files or --input-dir, not both.")
         exit(1)
 
+    # if input files are relative paths, make them absolute
+    if input_files:
+        input_files = [os.path.abspath(file) for file in input_files]
+
     files_to_validate = get_yaml_config_files(
         input_files=input_files,
         include_glob=include_glob,
