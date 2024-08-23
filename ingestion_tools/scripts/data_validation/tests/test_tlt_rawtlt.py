@@ -37,6 +37,18 @@ class TestTiltAndRawTilt:
             )
         return errors
 
+    def helper_angles_one_to_one(
+        self,
+        domain_angles: List[float],
+        codomain_angles: List[float],
+        domain_name: str,
+        codomain_name: str,
+    ) -> List[str]:
+        """Helper function to check if all angles in the domain are in the codomain and vice versa."""
+        injection_errors = self.helper_angles_injection(domain_angles, codomain_angles, domain_name, codomain_name)
+        surjection_errors = self.helper_angles_injection(codomain_angles, domain_angles, codomain_name, domain_name)
+        return injection_errors + surjection_errors
+
     ### BEGIN Tilt .tlt tests ###
     def test_tilt_count(self, tiltseries_tilt: pd.DataFrame):
         """Ensure that there are tilt angles."""
@@ -72,6 +84,20 @@ class TestTiltAndRawTilt:
     def test_raw_tilt_tiltseries_mdoc(self, tiltseries_raw_tilt: pd.DataFrame, tiltseries_mdoc: pd.DataFrame):
         """Ensure that every raw tilt angle matches a tilt angle in the mdoc file."""
         errors = self.helper_angles_injection(
+            tiltseries_raw_tilt["TiltAngle"].to_list(),
+            tiltseries_mdoc["TiltAngle"].to_list(),
+            "raw tilt file",
+            "mdoc file",
+        )
+        assert len(errors) == 0, "\n".join(errors)
+
+    def test_raw_tilt_tiltseries_mdoc_one_to_one(
+        self,
+        tiltseries_raw_tilt: pd.DataFrame,
+        tiltseries_mdoc: pd.DataFrame,
+    ):
+        """Ensure that every raw tilt angle matches a tilt angle in the mdoc file and vice versa."""
+        errors = self.helper_angles_one_to_one(
             tiltseries_raw_tilt["TiltAngle"].to_list(),
             tiltseries_mdoc["TiltAngle"].to_list(),
             "raw tilt file",
