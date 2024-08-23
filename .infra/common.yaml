@@ -5,6 +5,26 @@ stack:
       enabled: false
     service:
       port: 9009
+    livenessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /graphql
+        port: 9009
+        scheme: HTTP
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+      initialDelaySeconds: 10
+    readinessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /graphql
+        port: 9009
+        scheme: HTTP
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+      initialDelaySeconds: 10
     env:
       - name: PYTHONPATH
         value: .
