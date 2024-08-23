@@ -1,3 +1,4 @@
+import base64
 import logging
 import typing
 
@@ -47,8 +48,10 @@ def hff_output_files(input_file: str) -> typing.List[str]:
                     raise ValueError(f"Duplicate mesh name found: {output_file}")
     return output_files
 
+
+# given an ontology_id return the corresponding mesh from the hff file
 @convert_mesh_to_glb
-def from_hff(input_file: str) -> typing.List[str]:
+def from_hff(input_file: str, ontology_id: str) -> typing.List[str]:
     """
     Convert an hff file to one or more glb file. More information about this format can be found
     here: https://emdb-empiar.github.io/EMDB-SFF/
@@ -75,7 +78,7 @@ def from_hff(input_file: str) -> typing.List[str]:
 
     # Open the HDF5 file
     with h5py.File(input_file, 'r') as fp:
-        # All the meshes are stored in the 'segment_list'
+        # All the meshes are stored in the 'segment_list'Explore & Visualize HDF5 Files
         logger.info(f"Schema version: {fp['version'][()]}")
         for mesh_list in fp['segment_list/'].keys():
             # Mesh name
