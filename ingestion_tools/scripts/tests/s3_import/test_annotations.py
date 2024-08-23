@@ -177,14 +177,14 @@ def test_import_annotation_metadata_with_multiple_sources(
             {
                 "SegmentationMask": {
                     "file_format": "mrc",
-                    "glob_string": "annotations/*.mrc",
+                    "glob_string": "annotations/segmask.mrc",
                 },
             },
             {
                 "Point": {
                     "file_format": "csv",
                     "delimiter": ",",
-                    "glob_string": "annotations/*.csv",
+                    "glob_string": "annotations/points.csv",
                     "columns": "xyz",
                 },
             },
