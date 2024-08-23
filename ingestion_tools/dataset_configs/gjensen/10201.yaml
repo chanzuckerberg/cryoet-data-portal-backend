@@ -99,7 +99,7 @@ tiltseries:
     tilt_range:
       max: 64.5
       min: -64.5
-    tilt_series_quality: 4
+    tilt_series_quality: null
     tilt_step: 1.5
     tilting_scheme: starting tilt to max then min
     total_flux: 200.0

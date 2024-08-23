@@ -290,7 +290,7 @@ class TiltSeries(BaseModel):
     data_acquisition_software = CharField()
     related_empiar_entry = CharField(null=True)
     binning_from_frames = FloatField(null=True)
-    tilt_series_quality = IntegerField()
+    tilt_series_quality = IntegerField(null=True)
     is_aligned = BooleanField()
     pixel_spacing = FloatField()
     aligned_tiltseries_binning = IntegerField(null=True)

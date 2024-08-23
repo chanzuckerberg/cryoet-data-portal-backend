@@ -3435,7 +3435,6 @@
                     "description": "The range of tilt angles in the tilt series."
                 },
                 "tilt_series_quality": {
-                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
                             "description": "Author assessment of tilt series quality within the dataset (1-5, 5 is best)",
@@ -3446,6 +3445,9 @@
                         {
                             "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
+                        },
+                        {
+                            "type": "null"
                         }
                     ],
                     "description": "Author assessment of tilt series quality within the dataset (1-5, 5 is best)",
@@ -3504,7 +3506,6 @@
                 "spherical_aberration_constant",
                 "tilt_axis",
                 "tilt_range",
-                "tilt_series_quality",
                 "tilt_step",
                 "tilting_scheme",
                 "total_flux",
