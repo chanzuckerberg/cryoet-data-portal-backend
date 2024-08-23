@@ -966,19 +966,19 @@ def test_ingest_instance_point_data(
 
 
 @pytest.mark.parametrize(
-    "glob_string,file_format,ontology_id",
+    "glob_string,file_format,name",
     [
         ("annotations/triangular_mesh.stl", "stl", None),
         ("annotations/triangular_mesh.glb", "glb", None),
         ("annotations/triangular_mesh.vtk", "vtk", None),
         ("annotations/triangular_mesh.obj", "obj", None),
-        ("annotations/triangular_mesh.obj", "obj", "EM:1234567"),
+        ("annotations/triangular_mesh.obj", "obj", "descriptive_name"),
     ],
 )
 def test_ingest_triangular_mesh(
     glob_string,
     file_format,
-    ontology_id,
+    name,
     tomo_importer: TomogramImporter,
     dataset_config_local: DepositionImportConfig,
     local_test_data_dir: str,
@@ -1010,7 +1010,7 @@ def test_ingest_triangular_mesh(
         parents={"tomogram": tomo_importer, **tomo_importer.parents},
         file_format=file_format,
         identifier=100,
-        ontology_id=ontology_id,
+        name=name,
     )
     anno.import_item()
     anno.import_metadata()
@@ -1018,8 +1018,8 @@ def test_ingest_triangular_mesh(
     # Assert
     # verify local_metadata
     path = "dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0_"
-    if ontology_id:
-        path += ontology_id.replace(":", "_")
+    # if name:
+    #     path += f"{index}"
     path +="triangularmesh.glb"
     expected_local_metadata = {
         "object_count": 1,

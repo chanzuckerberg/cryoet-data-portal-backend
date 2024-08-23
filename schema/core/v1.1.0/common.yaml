@@ -715,9 +715,9 @@ slots:
     description: The scale factor for a mesh annotation file.
     ifabsent: 'float(1)'
     minimum_value: 0
-  annotation_source_file_ontology_id:
-    range: ONTOLOGY_ID
-    description: The ontology ID the cooresponds to a single annotation mesh among multiple meshes.
+  annotation_source_file_mesh_name:
+    range: string
+    description: The name that identifies to a single annotation mesh among multiple meshes.
   # ============================================================================
   # API slots
   # ============================================================================
