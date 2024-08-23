@@ -641,9 +641,6 @@ classes:
       scale_factor:
         exact_mappings:
           - cdp-common:annotation_source_file_scale_factor
-      name:
-        exact_mappings:
-          - cdp-common:annotation_source_file_mesh_name
   # ============================================================================
 
   # ============================================================================

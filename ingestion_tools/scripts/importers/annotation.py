@@ -1,7 +1,6 @@
 import json
 import os
 import os.path
-import typing
 from abc import abstractmethod
 from collections import defaultdict
 from functools import partial
@@ -486,19 +485,16 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         "glb": mc.from_generic,
     }
     valid_file_formats = list(map_functions.keys())
-    name: typing.Optional[str]
     output_format: str = "glb"
     scale_factor: float
 
     def __init__(
         self,
-        name: typing.Optional[str] = None,
         scale_factor: float = 1.0,
         *args,
         **kwargs,
     ) -> None:
         super().__init__(*args, **kwargs)
-        self.name = name
         self.scale_factor = scale_factor
 
     def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
