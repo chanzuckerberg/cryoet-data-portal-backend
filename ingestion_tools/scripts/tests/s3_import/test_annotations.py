@@ -972,7 +972,6 @@ def test_ingest_instance_point_data(
         ("annotations/triangular_mesh.glb", "glb"),
         ("annotations/triangular_mesh.vtk", "vtk"),
         ("annotations/triangular_mesh.obj", "obj"),
-        ("annotations/triangular_mesh.obj", "obj"),
     ],
 )
 def test_ingest_triangular_mesh(
@@ -1034,4 +1033,8 @@ def test_ingest_triangular_mesh(
 
     # load the new mesh file
     anno_file = anno.get_output_filename(anno.get_output_path())
-    trimesh.load(anno_file)
+    actual_mesh = trimesh.load(f"{anno_file}.glb", force="mesh")
+    # assert actual_mesh.vertices =
+    # assert actual_mesh.faces =
+    # assert actual_mesh.visual.face_colors =
+
