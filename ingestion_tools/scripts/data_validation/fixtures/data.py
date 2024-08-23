@@ -23,8 +23,9 @@ from common.fs import FileSystemApi
 # Helper functions
 # ==================================================================================================
 
-# 500KB block size is experimentally tested to be the fastest
+# block sizes are experimentally tested to be the fastest
 MRC_HEADER_BLOCK_SIZE = 500 * 2**10
+TIFF_HEADER_BLOCK_SIZE = 100 * 2**10
 
 
 def get_mrc_header(mrcfile: str, fs: FileSystemApi) -> MrcInterpreter:
@@ -93,8 +94,7 @@ def frames_headers(
         elif frame_file.endswith(".mrc.bz2"):
             return (frame_file, get_mrc_bz2_header(frame_file, filesystem))
         elif frame_file.endswith(".tif") or frame_file.endswith(".tiff") or frame_file.endswith(".eer"):
-            # block size of 100KB is so that only the header of the file is read (and not more than necessary)
-            with filesystem.open(frame_file, "rb", block_size=100 * 2**10) as f, tifffile.TiffFile(f) as tif:
+            with filesystem.open(frame_file, "rb", block_size=TIFF_HEADER_BLOCK_SIZE) as f, tifffile.TiffFile(f) as tif:
                 # The tif.pages must be converted to a list to actually read all the pages' data
                 return (frame_file, list(tif.pages))
         else:
