@@ -25,7 +25,7 @@ stack:
           image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2
             tag: sha-4cc7891
-          command: ["./etc/gen_keys.sh", "/var/keys/"]
+          command: ["bash", "./etc/gen_keys.sh", "/var/keys/"]
           volumeMounts:
             - mountPath: /var/keys
               name: keys
