@@ -582,6 +582,14 @@ class ExtendedValidationAnnotation(Annotation):
     confidence: Optional[ExtendedValidationAnnotationConfidence] = Annotation.model_fields["confidence"]
     dates: ExtendedValidationDateStamp = Annotation.model_fields["dates"]
 
+    @model_validator(mode="after")
+    def valid_metadata(self) -> Self:
+        if self.method_type == "automated" and self.ground_truth_status:
+            raise ValueError(
+                "Annotation metadata cannot have 'ground_truth_status' as true if 'method_type' is 'automated'",
+            )
+        return self
+
     @field_validator("annotation_publications")
     @classmethod
     def validate_annotation_publications(cls, annotation_publications: Optional[str]) -> str:
