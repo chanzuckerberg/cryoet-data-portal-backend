@@ -7,6 +7,7 @@ from functools import partial
 from typing import TYPE_CHECKING, Any
 
 import ndjson
+from importers.base_importer import BaseImporter
 
 from common import point_converter as pc
 from common.config import DepositionImportConfig
@@ -14,7 +15,6 @@ from common.finders import BaseFinder, DepositionObjectImporterFactory, SourceGl
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, make_pyramids
 from common.metadata import AnnotationMetadata
-from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
     from importers.voxel_spacing import VoxelSpacingImporter
