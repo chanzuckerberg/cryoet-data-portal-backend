@@ -19,10 +19,10 @@ from importers.tomogram import TomogramImporter
 from importers.voxel_spacing import VoxelSpacingImporter
 from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
-from tests.s3_import.util import list_dir
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
+from tests.s3_import.util import list_dir
 
 default_anno_metadata = {
     "annotation_object": {
@@ -101,6 +101,7 @@ def tomo_importer_factory(deposition_config: DepositionImportConfig) -> Tomogram
 def tomo_importer_s3(deposition_config_s3: DepositionImportConfig) -> TomogramImporter:
     return tomo_importer_factory(deposition_config_s3)
 
+
 @pytest.fixture
 def tomo_importer_local(deposition_config_local: DepositionImportConfig) -> TomogramImporter:
     return tomo_importer_factory(deposition_config_local)
@@ -176,7 +177,14 @@ def test_import_annotation_metadata(
         ],
     }
 
-    import_annotation_metadata(s3_fs, test_output_bucket, tomo_importer_s3, deposition_config_s3, s3_client, anno_config)
+    import_annotation_metadata(
+        s3_fs,
+        test_output_bucket,
+        tomo_importer_s3,
+        deposition_config_s3,
+        s3_client,
+        anno_config,
+    )
 
 
 def test_import_annotation_metadata_glob_strings(
@@ -200,7 +208,14 @@ def test_import_annotation_metadata_glob_strings(
         ],
     }
 
-    import_annotation_metadata(s3_fs, test_output_bucket, tomo_importer_s3, deposition_config_s3, s3_client, anno_config)
+    import_annotation_metadata(
+        s3_fs,
+        test_output_bucket,
+        tomo_importer_s3,
+        deposition_config_s3,
+        s3_client,
+        anno_config,
+    )
 
 
 ingest_points_test_cases = [
@@ -1038,9 +1053,8 @@ def test_ingest_triangular_mesh(
 
     # load the new mesh file
     anno_file = anno.get_output_filename(anno.get_output_path()) + ".glb"
-    actual_mesh = trimesh.load(anno_file, force="mesh")
+    trimesh.load(anno_file, force="mesh")
     # TODO compare against another mesh
     # assert actual_mesh.vertices =
     # assert actual_mesh.faces =
     # assert actual_mesh.visual.face_colors =
-
