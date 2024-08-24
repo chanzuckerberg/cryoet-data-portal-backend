@@ -24,13 +24,13 @@ class TestFrame(HelperTestMRCHeader):
 
     ### DON'T RUN SOME MRC HEADER TESTS ###
     def test_nlabel(self):
-        pytest.skip("Not applicable for gain files")
+        pytest.skip("Not applicable for frame files")
 
     def test_nversion(self):
-        pytest.skip("Not applicable for gain files")
+        pytest.skip("Not applicable for frame files")
 
     def test_mrc_mode(self):
-        pytest.skip("Not applicable for gain files")
+        pytest.skip("Not applicable for frame files")
 
     ### BEGIN Self-consistency tests ###
     def test_frames_format(self, frames_files: List[str]):
