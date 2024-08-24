@@ -4,8 +4,8 @@ from typing import Dict, List, Union
 import pandas as pd
 import pytest
 import tifffile
-from helper_mrc import HelperTestMRCHeader
 from mrcfile.mrcinterpreter import MrcInterpreter
+from tests.helper_mrc import HelperTestMRCHeader
 
 PERMITTED_FRAME_EXTENSIONS = [".mrc", ".tif", ".tiff", ".eer", ".bz2"]
 
@@ -30,6 +30,9 @@ class TestFrame(HelperTestMRCHeader):
         pytest.skip("Not applicable for frame files")
 
     def test_mrc_mode(self):
+        pytest.skip("Not applicable for frame files")
+
+    def test_mrc_voxel_spacing(self):
         pytest.skip("Not applicable for frame files")
 
     ### BEGIN Self-consistency tests ###

@@ -149,7 +149,14 @@ def gain_mrc_header(gain_file: str, filesystem: FileSystemApi) -> Dict[str, MrcI
 @pytest.fixture(scope="session")
 def tiltseries_mrc_header(tiltseries_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for a tilt series."""
-    return get_mrc_header(tiltseries_mrc_file, filesystem)
+    return {tiltseries_mrc_file: get_mrc_header(tiltseries_mrc_file, filesystem)}
+
+
+@pytest.fixture(scope="session")
+def tiltseries_zarr_header(tiltseries_zarr_file: str, filesystem: FileSystemApi) -> Dict[str, Dict[str, Dict]]:
+    """Get the zattrs and zarray data for a zarr tilt series.
+    Dictionary structure: headers = {tiltseries_a_filename: {"zattrs": Dict, "zarrays": Dict}"""
+    return {tiltseries_zarr_file: get_zarr_headers(tiltseries_zarr_file, filesystem)}
 
 
 @pytest.fixture(scope="session")

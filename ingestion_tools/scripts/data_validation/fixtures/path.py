@@ -200,8 +200,8 @@ def tiltseries_mdoc_files(tiltseries_dir: str, filesystem: FileSystemApi) -> str
 
 @pytest.fixture(scope="session")
 def tiltseries_tilt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name]*.tlt"""
-    tlt_files = filesystem.glob(f"{tiltseries_basename}*.tlt")
+    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].tlt"""
+    tlt_files = filesystem.glob(f"{tiltseries_basename}.tlt")
     if len(tlt_files) == 0:
         pytest.skip("No tlt file found.")
     return tlt_files[0]
@@ -209,8 +209,8 @@ def tiltseries_tilt_file(tiltseries_basename: str, filesystem: FileSystemApi) ->
 
 @pytest.fixture(scope="session")
 def tiltseries_rawtilt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name]*.rawtlt"""
-    rawtlt_files = filesystem.glob(f"{tiltseries_basename}*.rawtlt")
+    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].rawtlt"""
+    rawtlt_files = filesystem.glob(f"{tiltseries_basename}.rawtlt")
     if len(rawtlt_files) == 0:
         pytest.skip("No rawtlt file found.")
     return rawtlt_files[0]
