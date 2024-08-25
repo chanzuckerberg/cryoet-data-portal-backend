@@ -2,7 +2,7 @@ from typing import Dict
 
 
 def basic_metadata_check(metadata: Dict):
-    """Check the basic metadata fields for depositions, datasets, annotations, and tomograms."""
+    """Check the basic metadata fields for depositions, datasets, annotations, and tomograms (not tiltseries)."""
     assert metadata["deposition_id"]
     assert isinstance(metadata["authors"], list)
     assert len(metadata["authors"]) >= 1

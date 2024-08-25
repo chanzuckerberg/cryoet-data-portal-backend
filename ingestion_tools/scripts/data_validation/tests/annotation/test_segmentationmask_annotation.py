@@ -20,7 +20,7 @@ class TestSegmentationMask(HelperTestMRCZarrHeader):
         self.spacegroup = 1  # single 3D volume
         self.mrc_headers = seg_mask_annotation_mrc_headers
         self.zarr_headers = seg_mask_annotation_zarr_headers
-        self.voxel_spacing = voxel_spacing
+        self.spacing = voxel_spacing
 
     ### BEGIN Tomogram-consistency tests ###
     def test_contained_in_tomo(self, canonical_tomogram_metadata: Dict):

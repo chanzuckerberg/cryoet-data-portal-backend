@@ -7,5 +7,6 @@ pytest.register_assert_rewrite(
     "tests.helper_zarr",
     "tests.helper_images",
     "tests.helper_metadata",
+    "tests.helper_functions",
     "tests.annotation.helper_point",
 )

@@ -16,7 +16,7 @@ class HelperTestZarrHeader:
     # Class variables that need to be set by the subclass
     zarr_headers: Dict[str, Dict[str, Dict]] = None
     skip_z_axis_checks: bool = False
-    voxel_spacing: float = None
+    spacing: float = None
 
     ### BEGIN ZARR Self-consistency tests ###
     def zarr_header_helper(
@@ -30,7 +30,7 @@ class HelperTestZarrHeader:
             check_func(header_data, zarr_filename, **kwargs)
 
     def test_zarr_zattrs_path(self):
-        """Check that the path is correct for a zarr annotation file."""
+        """Check that the path metadata is correct for the zarr file."""
 
         def check_zattrs_path(header_data, _zarr_filename):
             del _zarr_filename
@@ -42,7 +42,7 @@ class HelperTestZarrHeader:
         self.zarr_header_helper(check_zattrs_path)
 
     def test_zarr_zattrs_axes(self):
-        """Check that the voxel spacings are correct for a zarr annotation file."""
+        """Check that the axes order is correct for the zarr file."""
 
         def check_zattrs_axes(header_data, _zaar_filename):
             del _zaar_filename
@@ -57,7 +57,7 @@ class HelperTestZarrHeader:
         self.zarr_header_helper(check_zattrs_axes)
 
     def test_zarr_zarray_scale(self):
-        """Check that the data type is correct for each scale (binning) of the zarr annotation file."""
+        """Check that the data type is correct for each scale (binning) of the zarr file."""
 
         def check_zarray(header_data, _zarr_filename):
             del _zarr_filename
@@ -72,7 +72,7 @@ class HelperTestZarrHeader:
 
     ### BEGIN Voxel-spacing tests ###
     def test_zarr_zattrs_voxel_spacings(self):
-        """Check that the voxel spacings are correct for a zarr annotation file."""
+        """Check that the voxel spacings are correct for the zarr file."""
 
         def check_zattrs_voxel_spacings(header_data, _zarr_filename):
             del _zarr_filename
@@ -81,7 +81,7 @@ class HelperTestZarrHeader:
                 axes = [1, 2] if self.skip_z_axis_checks else [0, 1, 2]  # z, y, x
                 for axis in axes:
                     assert datasets_entry["coordinateTransformations"][0]["scale"][axis] == pytest.approx(
-                        self.voxel_spacing * 2**binning_factor,
+                        self.spacing * 2**binning_factor,
                         abs=SPACING_TOLERANCE,
                     )
 

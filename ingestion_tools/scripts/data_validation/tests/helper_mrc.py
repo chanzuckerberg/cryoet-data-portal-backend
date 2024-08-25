@@ -21,7 +21,7 @@ class HelperTestMRCHeader:
     map_id: bytes = b"MAP "
     spacegroup: int = None
     mrc_headers: Dict[str, MrcInterpreter] = None
-    voxel_spacing: float = None
+    spacing: float = None
     skip_z_axis_checks: bool = False
 
     def mrc_header_helper(
@@ -205,9 +205,9 @@ class HelperTestMRCHeader:
 
         def check_spacing(_header, interpreter, _mrc_filename):
             del _header, _mrc_filename
-            assert interpreter.voxel_size["x"] == pytest.approx(self.voxel_spacing, abs=SPACING_TOLERANCE)
-            assert interpreter.voxel_size["y"] == pytest.approx(self.voxel_spacing, abs=SPACING_TOLERANCE)
-            assert interpreter.voxel_size["z"] == pytest.approx(self.voxel_spacing, abs=SPACING_TOLERANCE)
+            assert interpreter.voxel_size["x"] == pytest.approx(self.spacing, abs=SPACING_TOLERANCE)
+            assert interpreter.voxel_size["y"] == pytest.approx(self.spacing, abs=SPACING_TOLERANCE)
+            assert interpreter.voxel_size["z"] == pytest.approx(self.spacing, abs=SPACING_TOLERANCE)
 
         self.mrc_header_helper(check_spacing)
 

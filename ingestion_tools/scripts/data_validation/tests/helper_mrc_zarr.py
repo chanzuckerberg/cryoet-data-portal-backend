@@ -12,7 +12,7 @@ class HelperTestMRCZarrHeader(HelperTestMRCHeader, HelperTestZarrHeader):
 
     ### BEGIN Cross-format consistency tests ###
     def test_zarr_mrc_both_exist(self):
-        """Check that both the zarr and mrc annotation files exist for each annotation file."""
+        """Check that both the zarr and mrc files exist for the entity."""
         zarr_files = set(self.zarr_headers.keys())
         mrc_files = set(self.mrc_headers.keys())
         assert {f.replace(".zarr", ".mrc") for f in zarr_files} == mrc_files
@@ -26,14 +26,17 @@ class HelperTestMRCZarrHeader(HelperTestMRCHeader, HelperTestZarrHeader):
             zarrays = header_data["zarrays"]
             for i, zarray in zarrays.items():
                 header = self.mrc_headers[mrc_file].header
+                zarr_shape = zarray["shape"].copy()
+                if self.skip_z_axis_checks:
+                    zarr_shape[0] = "N/A"
                 binned_header_shape = [
-                    math.ceil(header.nz / 2 ** int(i)),
+                    "N/A" if self.skip_z_axis_checks else math.ceil(header.nz / 2 ** int(i)),
                     math.ceil(header.ny / 2 ** int(i)),
                     math.ceil(header.nx / 2 ** int(i)),
                 ]
                 assert (
-                    zarray["shape"] == binned_header_shape
-                ), f"zarr shape: {zarray['shape']}, mrc shape: {[header.nz, header.ny, header.nx]}, binning factor: {i}"
+                    zarr_shape == binned_header_shape
+                ), f"zarr shape: {zarr_shape}, binned mrc shape: {binned_header_shape}, binning factor: {i}"
 
         self.zarr_header_helper(check_volume_size)
 
