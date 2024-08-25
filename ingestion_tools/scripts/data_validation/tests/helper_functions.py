@@ -3,7 +3,8 @@ from typing import List
 ANGLE_TOLERANCE = 0.01
 
 
-def helper_angles_injection(
+# TODO FIXME account for double 0 sample
+def helper_angles_injection_errors(
     domain_angles: List[float],
     codomain_angles: List[float],
     domain_name: str,
@@ -28,13 +29,13 @@ def helper_angles_injection(
     return errors
 
 
-def helper_angles_one_to_one(
+def helper_angles_one_to_one_errors(
     domain_angles: List[float],
     codomain_angles: List[float],
     domain_name: str,
     codomain_name: str,
 ) -> List[str]:
     """Helper function to check if all angles in the domain are in the codomain and vice versa."""
-    injection_errors = helper_angles_injection(domain_angles, codomain_angles, domain_name, codomain_name)
-    surjection_errors = helper_angles_injection(codomain_angles, domain_angles, codomain_name, domain_name)
+    injection_errors = helper_angles_injection_errors(domain_angles, codomain_angles, domain_name, codomain_name)
+    surjection_errors = helper_angles_injection_errors(codomain_angles, domain_angles, codomain_name, domain_name)
     return injection_errors + surjection_errors

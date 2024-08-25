@@ -2,7 +2,7 @@ from typing import List
 
 import pandas as pd
 import pytest
-from tests.helper_functions import helper_angles_injection
+from tests.helper_functions import helper_angles_injection_errors
 
 ANGLE_TOLERANCE = 0.01
 
@@ -22,7 +22,7 @@ class TestTiltAndRawTilt:
 
     def test_tilt_raw_tilt(self, tiltseries_tilt: pd.DataFrame, tiltseries_raw_tilt: pd.DataFrame):
         """Ensure that every tilt angle matches to a raw tilt angle."""
-        errors = self.helper_angles_injection(
+        errors = self.helper_angles_injection_errors(
             tiltseries_tilt["TiltAngle"].to_list(),
             tiltseries_raw_tilt["TiltAngle"].to_list(),
             "tilt file",
@@ -45,7 +45,7 @@ class TestTiltAndRawTilt:
 
     def test_raw_tilt_tiltseries_mdoc(self, tiltseries_raw_tilt: pd.DataFrame, tiltseries_mdoc: pd.DataFrame):
         """Ensure that every raw tilt angle matches a tilt angle in the mdoc file."""
-        errors = helper_angles_injection(
+        errors = helper_angles_injection_errors(
             tiltseries_raw_tilt["TiltAngle"].to_list(),
             tiltseries_mdoc["TiltAngle"].to_list(),
             "raw tilt file",
@@ -59,7 +59,7 @@ class TestTiltAndRawTilt:
     #     tiltseries_mdoc: pd.DataFrame,
     # ):
     #     """Ensure that every raw tilt angle matches a tilt angle in the mdoc file and vice versa."""
-    #     errors = helper_angles_one_to_one(
+    #     errors = helper_angles_one_to_one_errors(
     #         tiltseries_raw_tilt["TiltAngle"].to_list(),
     #         tiltseries_mdoc["TiltAngle"].to_list(),
     #         "raw tilt file",
