@@ -32,7 +32,7 @@ datasets:
             - '10439'
 annotations:
   - metadata: &annotation_metadata
-      annotation_method: "polnet-simulated ground truth segmentation masks"
+      annotation_method: "polnet-simulated ground truth"
       annotation_object:
         id: GO:0016020
         name: membrane
@@ -58,17 +58,6 @@ annotations:
         name: GroEL-GroES complex
       annotation_publications: 10.1109/TMI.2024.3398401, PDB-6MRD
     sources:
-      - SemanticSegmentationMask:
-          <<: *segmentation_mask_source
-          mask_label: 2
-  - metadata:
-      <<: *annotation_metadata
-      annotation_method: &point_method "polnet-simulated ground truth oriented points"
-      annotation_object:
-        id: GO:1990220
-        name: GroEL-GroES complex
-      annotation_publications: 10.1109/TMI.2024.3398401, PDB-6MRD
-    sources:
       - OrientedPoint: &oriented_point_source
           binning: 10
           file_format: relion3_star
@@ -76,6 +65,9 @@ annotations:
           order: xyz
           glob_strings:
             - "{run_name}/Picks/adp-mitochondrial.star"
+      - SemanticSegmentationMask:
+          <<: *segmentation_mask_source
+          mask_label: 2
   - metadata:
       <<: *annotation_metadata
       annotation_object:
@@ -83,34 +75,15 @@ annotations:
         name: "Alkaline phosphatase, placental type"
       annotation_publications: 10.1109/TMI.2024.3398401, PDB-1ZEF
     sources:
+      - OrientedPoint:
+          <<: *oriented_point_source
+          glob_strings:
+            - "{run_name}/Picks/alkaline-phosphatase.star"
       - SemanticSegmentationMask:
           <<: *segmentation_mask_source
           mask_label: 3
   - metadata:
       <<: *annotation_metadata
-      annotation_method: *point_method
-      annotation_object:
-        id: UniProtKB:P05187
-        name: Alkaline phosphatase, placental type
-      annotation_publications: 10.1109/TMI.2024.3398401, PDB-1ZEF
-    sources:
-      - OrientedPoint:
-          <<: *oriented_point_source
-          glob_strings:
-            - "{run_name}/Picks/alkaline-phosphatase.star"
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0000786
-        name: nucleosome
-      annotation_publications: 10.1109/TMI.2024.3398401, PDB-6UPH
-    sources:
-      - SemanticSegmentationMask:
-          <<: *segmentation_mask_source
-          mask_label: 4
-  - metadata:
-      <<: *annotation_metadata
-      annotation_method: *point_method
       annotation_object:
         id: GO:0000786
         name: nucleosome
@@ -120,19 +93,11 @@ annotations:
           <<: *oriented_point_source
           glob_strings:
             - "{run_name}/Picks/nucleosome.star"
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0022626
-        name: cytosolic ribosome
-      annotation_publications: 10.1109/TMI.2024.3398401, PDB-7TM3
-    sources:
       - SemanticSegmentationMask:
           <<: *segmentation_mask_source
-          mask_label: 5
+          mask_label: 4
   - metadata:
       <<: *annotation_metadata
-      annotation_method: *point_method
       annotation_object:
         id: GO:0022626
         name: cytosolic ribosome
@@ -142,19 +107,11 @@ annotations:
           <<: *oriented_point_source
           glob_strings:
             - "{run_name}/Picks/ribosome.star"
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: UniProtKB:Q62667
-        name: Major vault protein
-      annotation_publications: 10.1109/TMI.2024.3398401, PDB-7PKZ
-    sources:
       - SemanticSegmentationMask:
           <<: *segmentation_mask_source
-          mask_label: 6
+          mask_label: 5
   - metadata:
       <<: *annotation_metadata
-      annotation_method: *point_method
       annotation_object:
         id: UniProtKB:Q62667
         name: Major vault protein
@@ -164,20 +121,11 @@ annotations:
           <<: *oriented_point_source
           glob_strings:
             - "{run_name}/Picks/vault.star"
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0170047
-        name: virus-like capsid
-        description: Chikungunya VLP
-      annotation_publications: 10.1109/TMI.2024.3398401, PDB-6NK5
-    sources:
       - SemanticSegmentationMask:
           <<: *segmentation_mask_source
-          mask_label: 7
+          mask_label: 6
   - metadata:
       <<: *annotation_metadata
-      annotation_method: *point_method
       annotation_object:
         id: GO:0170047
         name: virus-like capsid
@@ -188,6 +136,9 @@ annotations:
           <<: *oriented_point_source
           glob_strings:
             - "{run_name}/Picks/virus-like-particle.star"
+      - SemanticSegmentationMask:
+          <<: *segmentation_mask_source
+          mask_label: 7
 dataset_keyphotos:
 - sources:
   - literal:
