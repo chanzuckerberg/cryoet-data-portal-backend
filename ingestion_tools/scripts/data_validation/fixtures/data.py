@@ -5,6 +5,7 @@ Any fixtures involving loading data from the bucket.
 import bz2
 import io
 import json
+import os
 from concurrent.futures import ThreadPoolExecutor
 from typing import Dict, List, Union
 
@@ -13,9 +14,7 @@ import ndjson
 import pandas as pd
 import pytest
 import tifffile
-import zarr
 from mrcfile.mrcinterpreter import MrcInterpreter
-from ome_zarr.io import ZarrLocation
 
 from common.fs import FileSystemApi
 
@@ -23,8 +22,11 @@ from common.fs import FileSystemApi
 # Helper functions
 # ==================================================================================================
 
+BINNING_SCALES = [0, 1, 2]
+
 # block sizes are experimentally tested to be the fastest
-MRC_HEADER_BLOCK_SIZE = 500 * 2**10
+MRC_HEADER_BLOCK_SIZE = 2 * 2**10
+MRC_BZ2_HEADER_BLOCK_SIZE = 500 * 2**10
 TIFF_HEADER_BLOCK_SIZE = 100 * 2**10
 
 
@@ -40,8 +42,8 @@ def get_mrc_header(mrcfile: str, fs: FileSystemApi) -> MrcInterpreter:
 def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi) -> MrcInterpreter:
     """Get the mrc file headers for a list of mrc files."""
     try:
-        with fs.open(mrcbz2file, "rb", block_size=MRC_HEADER_BLOCK_SIZE) as f, bz2.BZ2File(f) as mrcbz2:
-            mrcbz2 = mrcbz2.read(MRC_HEADER_BLOCK_SIZE)
+        with fs.open(mrcbz2file, "rb", block_size=MRC_BZ2_HEADER_BLOCK_SIZE) as f, bz2.BZ2File(f) as mrcbz2:
+            mrcbz2 = mrcbz2.read(MRC_BZ2_HEADER_BLOCK_SIZE)
             return MrcInterpreter(iostream=io.BytesIO(mrcbz2), permissive=True, header_only=True)
     except Exception as e:
         pytest.fail(f"Failed to get header for {mrcbz2file}: {e}")
@@ -49,19 +51,18 @@ def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi) -> MrcInterpreter:
 
 def get_zarr_headers(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
     """Get the zattrs and zarray data for a zarr volume file."""
-    expected_children = {f"{child}" for child in [0, 1, 2, ".zattrs", ".zgroup"]}
-
-    fsstore = zarr.storage.FSStore(url=zarrfile, mode="r", fs=fs.s3fs, dimension_separator="/")
-    fsstore_children = set(fsstore.listdir())
+    file_paths = fs.glob(os.path.join(zarrfile, "*"))
+    fsstore_children = {os.path.basename(file) for file in file_paths}
     expected_fsstore_children = {"0", "1", "2", ".zattrs", ".zgroup"}
     if expected_fsstore_children != fsstore_children:
-        pytest.fail(f"Expected zarr children: {expected_children}, Actual zarr children: {fsstore_children}")
+        pytest.fail(f"Expected zarr children: {expected_fsstore_children}, Actual zarr children: {fsstore_children}")
 
-    loc = ZarrLocation(fsstore)
     zarrays = {}
-    for binning_factor in [0, 1, 2]:  # 1x, 2x, 4x
-        zarrays[binning_factor] = json.loads(fsstore[str(binning_factor) + "/.zarray"].decode())
-    return {"zattrs": loc.root_attrs, "zarrays": zarrays}
+    for binning in BINNING_SCALES:
+        with fs.open(os.path.join(zarrfile, str(binning), ".zarray"), "r") as f:
+            zarrays[binning] = json.load(f)
+    with fs.open(os.path.join(zarrfile, ".zattrs"), "r") as f:
+        return {"zattrs": json.load(f), "zarrays": zarrays}
 
 
 # ==================================================================================================

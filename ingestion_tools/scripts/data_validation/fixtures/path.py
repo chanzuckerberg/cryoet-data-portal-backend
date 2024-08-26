@@ -33,7 +33,7 @@ def dataset_dir(bucket: str, dataset: str) -> str:
 def dataset_metadata_file(dataset_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/dataset_metadata.json"""
     dst = f"{dataset_dir}/dataset_metadata.json"
-    if filesystem.s3fs.exists(dst):
+    if filesystem.exists(dst):
         return dst
     else:
         pytest.fail(f"Dataset metadata file not found: {dst}")
@@ -48,7 +48,7 @@ def dataset_metadata_file(dataset_dir: str, filesystem: FileSystemApi) -> str:
 def run_dir(dataset_dir: str, run_name: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]"""
     dst = f"{dataset_dir}/{run_name}"
-    if filesystem.s3fs.exists(dst):
+    if filesystem.exists(dst):
         return dst
     else:
         pytest.fail(f"Run directory {dst} does not exist.")
@@ -58,7 +58,7 @@ def run_dir(dataset_dir: str, run_name: str, filesystem: FileSystemApi) -> str:
 def run_meta_file(run_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/run_metadata.json"""
     dst = f"{run_dir}/run_metadata.json"
-    if filesystem.s3fs.exists(dst):
+    if filesystem.exists(dst):
         return dst
     else:
         pytest.fail(f"Run metadata file not found: {dst}")
@@ -73,7 +73,7 @@ def run_meta_file(run_dir: str, filesystem: FileSystemApi) -> str:
 def frames_dir(run_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/Frames"""
     dst = f"{run_dir}/Frames"
-    if filesystem.s3fs.exists(dst):
+    if filesystem.exists(dst):
         return dst
     else:
         pytest.skip(f"Frames directory not present: {dst}")
@@ -90,7 +90,7 @@ def frames_files(frames_dir: str, filesystem: FileSystemApi) -> List[str]:
 def frame_acquisition_order_file(frames_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/Frames/frame_acquisition_order.json"""
     dst = f"{frames_dir}/frame_acquisition_order.json"
-    if filesystem.s3fs.exists(dst):
+    if filesystem.exists(dst):
         return dst
     else:
         pytest.fail(f"Frame acquisition order file not found: {dst}")
@@ -105,7 +105,7 @@ def frame_acquisition_order_file(frames_dir: str, filesystem: FileSystemApi) -> 
 def gain_dir(run_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/Frames"""
     dst = f"{run_dir}/Frames"
-    if filesystem.s3fs.exists(dst):
+    if filesystem.exists(dst):
         return dst
     else:
         pytest.skip(f"Gain directory not found: {dst}")
@@ -134,7 +134,7 @@ def gain_file(run_name: str, gain_dir: str, filesystem: FileSystemApi) -> str:
 def tiltseries_dir(run_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/TiltSeries"""
     dst = f"{run_dir}/TiltSeries"
-    if filesystem.s3fs.exists(dst):
+    if filesystem.exists(dst):
         return dst
     else:
         pytest.skip(f"TiltSeries directory not found: {dst}")
@@ -147,7 +147,7 @@ def tiltseries_meta_file(
 ) -> str:
     """[Dataset]/[ExperimentRun]/TiltSeries/tiltseries_metadata.json"""
     dst = f"{tiltseries_dir}/tiltseries_metadata.json"
-    if filesystem.s3fs.exists(dst):
+    if filesystem.exists(dst):
         return dst
     else:
         pytest.fail(f"Tilt series metadata file not found: {dst}")
@@ -162,7 +162,7 @@ def tiltseries_mrc_file(
     """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].mrc"""
     # TODO FIXME List[str] mrc_files should really just become str mrc_file, and then adjust this fixture accordingly
     file = f"{tiltseries_dir}/{tiltseries_metadata['mrc_files'][0]}"
-    if not filesystem.s3fs.exists(file):
+    if not filesystem.exists(file):
         pytest.fail(f"Tilt series mrc file not found: {file}")
     return file
 
@@ -175,7 +175,7 @@ def tiltseries_zarr_file(
 ) -> str:
     """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].zarr"""
     file = f"{tiltseries_dir}/{tiltseries_metadata['omezarr_dir']}"
-    if not filesystem.s3fs.exists(file):
+    if not filesystem.exists(file):
         pytest.fail(f"Tilt series OME-Zarr file not found: {file}")
     return file
 
@@ -225,7 +225,7 @@ def tiltseries_tlt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> 
 def tomograms_dir(run_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms"""
     dst = f"{run_dir}/Tomograms"
-    if filesystem.s3fs.exists(dst):
+    if filesystem.exists(dst):
         return dst
     else:
         pytest.fail(f"Tomograms directory not found: {dst}")
@@ -241,7 +241,7 @@ def voxel_dir(
 
     dst = f"{tomograms_dir}/VoxelSpacing{voxel_spacing:.3f}"
 
-    if filesystem.s3fs.exists(dst):
+    if filesystem.exists(dst):
         return dst
     else:
         pytest.fail(f"VoxelSpacing directory not found: {dst}")
@@ -251,7 +251,7 @@ def voxel_dir(
 def canonical_tomo_dir(voxel_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram"""
     dst = f"{voxel_dir}/CanonicalTomogram"
-    if filesystem.s3fs.exists(dst):
+    if filesystem.exists(dst):
         return dst
     else:
         pytest.fail(f"CanonicalTomogram directory not found: {dst}")
@@ -264,7 +264,7 @@ def canonical_tomo_meta_file(
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/tomogram_metadata.json"""
     dst = f"{canonical_tomo_dir}/tomogram_metadata.json"
-    if filesystem.s3fs.exists(dst):
+    if filesystem.exists(dst):
         return dst
     else:
         pytest.fail(f"Canonical tomogram metadata file not found: {dst}")
@@ -279,7 +279,7 @@ def canonical_tomo_mrc_file(
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name].mrc"""
     # TODO FIXME List[str] mrc_files should really just become str mrc_file, and then adjust this fixture accordingly
     file = f"{canonical_tomo_dir}/{canonical_tomogram_metadata['mrc_files'][0]}"
-    if not filesystem.s3fs.exists(file):
+    if not filesystem.exists(file):
         pytest.fail(f"Canonical tomogram mrc file not found: {file}")
     return file
 
@@ -292,7 +292,7 @@ def canonical_tomo_zarr_file(
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name].zarr"""
     file = f"{canonical_tomo_dir}/{canonical_tomogram_metadata['omezarr_dir']}"
-    if not filesystem.s3fs.exists(file):
+    if not filesystem.exists(file):
         pytest.fail(f"Canonical tomogram OME-Zarr file not found: {file}")
     return file
 
@@ -314,7 +314,7 @@ def canonical_tomo_basename(
 def annotations_dir(voxel_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations"""
     dst = f"{voxel_dir}/Annotations"
-    if filesystem.s3fs.exists(dst):
+    if filesystem.exists(dst):
         return dst
     else:
         pytest.skip(f"Annotations directory not found: {dst}")
@@ -363,7 +363,7 @@ def get_annotation_files_to_metadata_files(
         for annotation in metadata["files"]:
             if annotation["shape"] == name and (format is None or annotation["format"] == format):
                 file = f"s3://{bucket}/{annotation['path']}"
-                if not filesystem.s3fs.exists(file):
+                if not filesystem.exists(file):
                     pytest.fail(f"{name} annotation file not found: {file}")
 
                 corresponding_annotation_files[file] = metadata_filename
