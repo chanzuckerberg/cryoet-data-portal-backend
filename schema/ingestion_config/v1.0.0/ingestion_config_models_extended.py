@@ -519,7 +519,6 @@ def validate_sources(source_list: List[StandardSource] | List[VoxelSpacingSource
                 ),
             )
         if len(finders_in_source_entry) == 0:
-            # means there's only a parent_filters entry
             for source_child in SOURCE_CHILDREN_NON_FINDERS:
                 if getattr(source_element, source_child) is None:
                     continue
@@ -621,13 +620,9 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
         for i, source_element in enumerate(source_list):
             shapes_in_source_entry = []
             for shape in source_element.model_fields:
-                if getattr(source_element, shape) is None:
-                    continue
-                if shape in {"parent_filters", "exclude"}:
-                    continue
-
-                # If the shape is not None, add it to the list of shapes in the source entry
-                shapes_in_source_entry.append(shape)
+                # If the shape is not None and an actual shape, add it to the list of shapes in the source entry
+                if getattr(source_element, shape) is not None and shape not in SOURCE_CHILDREN_NON_FINDERS:
+                    shapes_in_source_entry.append(shape)
             # If there are more than one shape in the source entry, add the source entry index and the shapes to the error set
             if len(shapes_in_source_entry) > 1:
                 total_errors.append(
@@ -635,6 +630,13 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
                         f"Source entry {i} cannot have multiple shapes (split into multiple entries): {shapes_in_source_entry}",
                     ),
                 )
+            if len(shapes_in_source_entry) == 0:
+                for source_child in SOURCE_CHILDREN_NON_FINDERS:
+                    if getattr(source_element, source_child) is None:
+                        continue
+                    total_errors.append(
+                        ValueError(f"Source entry {i} cannot have a {source_child} entry without a shape"),
+                    )
 
         # For verifying that all source entries have exactly one of glob_string and glob_strings
         for i, source_element in enumerate(source_list):
@@ -651,26 +653,6 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
                             f"Source entry {i} shape {shape} must have exactly one of glob_string or glob_strings",
                         ),
                     )
-
-        # For verifying that all source entries do not only have parent_filters or exclude
-        for i, source_element in enumerate(source_list):
-            has_parent_filters = False
-            has_exclude = False
-            has_shape = False
-            for shape in source_element.model_fields:
-                if getattr(source_element, shape) is None:
-                    continue
-                if shape == "exclude":
-                    has_exclude = True
-                elif shape == "parent_filters":
-                    has_parent_filters = True
-                else:
-                    has_shape = True
-
-            if not has_shape and has_parent_filters:
-                total_errors.append(ValueError(f"Source entry {i} cannot have a parent_filters entry without a shape"))
-            if not has_shape and has_exclude:
-                total_errors.append(ValueError(f"Source entry {i} cannot have an exclude entry without a shape"))
 
         if shapes_used_multiple_times_errors:
             total_errors.append(
