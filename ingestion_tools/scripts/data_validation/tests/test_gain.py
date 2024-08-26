@@ -5,7 +5,7 @@ import pytest
 import tifffile
 from mrcfile.mrcinterpreter import MrcInterpreter
 from tests.helper_mrc import HelperTestMRCHeader
-from tests.test_frame import PERMITTED_FRAME_EXTENSIONS
+from tests.test_frame import PERMITTED_FRAME_EXTENSIONS, helper_tiff_mrc_consistent
 
 PERMITTED_GAIN_EXTENSIONS = PERMITTED_FRAME_EXTENSIONS + [".gain"]
 
@@ -15,9 +15,12 @@ PERMITTED_GAIN_EXTENSIONS = PERMITTED_FRAME_EXTENSIONS + [".gain"]
 @pytest.mark.parametrize("run_name", pytest.run_name, scope="session")
 class TestGain(HelperTestMRCHeader):
     @pytest.fixture(autouse=True)
-    def set_helper_test_mrc_header_class_variables(self, gain_mrc_headers: Dict[str, MrcInterpreter]):
+    def set_helper_test_mrc_header_class_variables(
+        self,
+        gain_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
+    ):
         self.spacegroup = 0  # 2D image
-        self.mrc_headers = gain_mrc_headers
+        self.mrc_headers = {k: v for k, v in gain_headers.items() if isinstance(v, MrcInterpreter)}
 
     ### DON'T RUN SOME MRC HEADER TESTS ###
     def test_nlabel(self):
@@ -40,10 +43,12 @@ class TestGain(HelperTestMRCHeader):
         if errors:
             warnings.warn("\n".join(errors), stacklevel=2)
 
+    def test_gain_consistent(self, gain_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
+        return helper_tiff_mrc_consistent(gain_headers)
+
     ### END Self-consistency tests ###
 
     ### BEGIN Frame-specific tests ###
-
     def test_matches_frame_dimensions(self, frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
         """Check that the gain dimensions match the frame dimensions."""
 
@@ -61,5 +66,29 @@ class TestGain(HelperTestMRCHeader):
             else (first_frame[0].imagewidth, first_frame[0].imagelength)
         )
         self.mrc_header_helper(check_matches_frame_dimensions, frame_dimensions=frame_dimensions)
+
+    def test_gain_tiltseries_pixel_spacing(
+        self,
+        gain_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
+        frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
+    ):
+        """Check that the gain pixel spacing matches the frame pixel spacing. Just need to check first MRC file of each."""
+
+        first_mrc_gain = None
+        for _, gain_header in gain_headers.items():
+            if isinstance(gain_header, MrcInterpreter):
+                first_mrc_gain = gain_header
+                break
+
+        first_mrc_frame = None
+        for _, frame_header in frames_headers.items():
+            if isinstance(frame_header, MrcInterpreter):
+                first_mrc_frame = frame_header
+                break
+
+        if first_mrc_gain and first_mrc_frame:
+            assert first_mrc_gain.voxel_size["x"] == first_mrc_frame.voxel_size["x"]
+        else:
+            pytest.skip("No MRC files found to compare pixel spacing")
 
     ### END Frame-specific tests ###

@@ -114,13 +114,15 @@ def gain_dir(run_dir: str, filesystem: FileSystemApi) -> str:
 @pytest.fixture(scope="session")
 def gain_files(run_name: str, gain_dir: str, filesystem: FileSystemApi) -> List[str]:
     """[Dataset]/[ExperimentRun]/Frames/[run_name]_gain*"""
-    file = filesystem.glob(f"{gain_dir}/*_gain*")
-    if len(file) == 1:
-        assert f"{run_name}_gain" in file[0], f"Invalid gain file name: {file[0]}"
-        assert not file[0].endswith(".dm4"), f"Invalid gain file extension: {file[0]} (should be .mrc)"
-        return file[0]
-    else:
-        pytest.skip("No gain file found.")
+    files = filesystem.glob(f"{gain_dir}/*_gain*")
+    if len(files) == 0:
+        pytest.skip("No gain files found.")
+
+    for file in files:
+        assert f"{run_name}_gain" in file, f"Invalid gain file name: {file}"
+        assert not file.endswith(".dm4"), f"Invalid gain file extension: {file} (should be .mrc)"
+
+    return files
 
 
 # =============================================================================

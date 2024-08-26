@@ -65,6 +65,39 @@ def get_zarr_headers(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
         return {"zattrs": json.load(f), "zarrays": zarrays}
 
 
+def _get_tiff_mrc_header(file: str, filesystem: FileSystemApi):
+    if file.endswith(".mrc"):
+        return (file, get_mrc_header(file, filesystem))
+    elif file.endswith(".mrc.bz2"):
+        return (file, get_mrc_bz2_header(file, filesystem))
+    elif file.endswith(".tif") or file.endswith(".tiff") or file.endswith(".eer"):
+        with filesystem.open(file, "rb", block_size=TIFF_HEADER_BLOCK_SIZE) as f, tifffile.TiffFile(f) as tif:
+            # The tif.pages must be converted to a list to actually read all the pages' data
+            return (file, list(tif.pages))
+    else:
+        return (None, None)
+
+
+def get_tiff_mrc_headers(
+    files: List[str],
+    filesystem: FileSystemApi,
+) -> Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]:
+
+    # Open the images in parallel
+    with ThreadPoolExecutor() as executor:
+        headers = {}
+
+        for header_filename, header_data in executor.map(_get_tiff_mrc_header, files, [filesystem] * len(files)):
+            if header_filename is None:
+                continue
+            headers[header_filename] = header_data
+
+        if not headers:
+            pytest.skip("No file-format supported frames headers found")
+
+        return headers
+
+
 # ==================================================================================================
 # Dataset fixtures
 # ==================================================================================================
@@ -88,32 +121,7 @@ def frames_headers(
     filesystem: FileSystemApi,
 ) -> Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]:
     """Get the headers for a list of frame files."""
-
-    def open_frame(frame_file: str):
-        if frame_file.endswith(".mrc"):
-            return (frame_file, get_mrc_header(frame_file, filesystem))
-        elif frame_file.endswith(".mrc.bz2"):
-            return (frame_file, get_mrc_bz2_header(frame_file, filesystem))
-        elif frame_file.endswith(".tif") or frame_file.endswith(".tiff") or frame_file.endswith(".eer"):
-            with filesystem.open(frame_file, "rb", block_size=TIFF_HEADER_BLOCK_SIZE) as f, tifffile.TiffFile(f) as tif:
-                # The tif.pages must be converted to a list to actually read all the pages' data
-                return (frame_file, list(tif.pages))
-        else:
-            return (None, None)
-
-    # Open the images in parallel
-    with ThreadPoolExecutor() as executor:
-        headers = {}
-
-        for header_filename, header_data in executor.map(open_frame, frames_files):
-            if header_filename is None:
-                continue
-            headers[header_filename] = header_data
-
-        if not headers:
-            pytest.skip("No file-format supported frames headers found")
-
-        return headers
+    return get_tiff_mrc_headers(frames_files, filesystem)
 
 
 # ==================================================================================================
@@ -122,18 +130,12 @@ def frames_headers(
 
 
 @pytest.fixture(scope="session")
-def gain_mrc_headers(gain_files: List[str], filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
+def gain_headers(
+    gain_files: List[str],
+    filesystem: FileSystemApi,
+) -> Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]:
     """Get the mrc file headers for a gain file."""
-    headers = {}
-
-    for gain_file in gain_files:
-        if gain_file.endswith(".mrc"):
-            headers[gain_file] = get_mrc_header(gain_file, filesystem)
-
-    if not headers:
-        pytest.skip("No gain MRC headers found")
-
-    return headers
+    return get_tiff_mrc_headers(gain_files, filesystem)
 
 
 # ==================================================================================================
