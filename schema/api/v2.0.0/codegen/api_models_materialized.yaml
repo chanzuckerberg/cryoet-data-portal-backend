@@ -2527,6 +2527,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+    tree_root: true
   DepositionAuthor:
     name: DepositionAuthor
     annotations:
