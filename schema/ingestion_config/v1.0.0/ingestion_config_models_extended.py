@@ -17,7 +17,6 @@ from codegen.ingestion_config_models import (
     AnnotationEntity,
     AnnotationObject,
     AnnotationSource,
-    AnnotationSourceFile,
     Author,
     CameraDetails,
     CellComponent,
@@ -616,13 +615,25 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
                 else:
                     used_shapes.add(shape)
 
-        # For verifying that all source entries each only have one shape entry
+        # For verifying that all source entries each only have one shape entry and that there is only one of glob_string and glob_strings
         for i, source_element in enumerate(source_list):
             shapes_in_source_entry = []
             for shape in source_element.model_fields:
                 # If the shape is not None and an actual shape, add it to the list of shapes in the source entry
-                if getattr(source_element, shape) is not None and shape not in SOURCE_CHILDREN_NON_FINDERS:
-                    shapes_in_source_entry.append(shape)
+                shape_entry = getattr(source_element, shape)
+                if shape_entry is None or shape in SOURCE_CHILDREN_NON_FINDERS:
+                    continue
+
+                shapes_in_source_entry.append(shape)
+                has_glob_string = getattr(shape_entry, "glob_string", None) is not None
+                has_glob_strings = getattr(shape_entry, "glob_strings", None) is not None and shape_entry.glob_strings
+                if has_glob_string and has_glob_strings:
+                    total_errors.append(
+                        ValueError(
+                            f"Source entry {i} shape {shape} must have exactly one of glob_string or glob_strings",
+                        ),
+                    )
+
             # If there are more than one shape in the source entry, add the source entry index and the shapes to the error set
             if len(shapes_in_source_entry) > 1:
                 total_errors.append(
@@ -636,22 +647,6 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
                         continue
                     total_errors.append(
                         ValueError(f"Source entry {i} cannot have a {source_child} entry without a shape"),
-                    )
-
-        # For verifying that all source entries have exactly one of glob_string and glob_strings
-        for i, source_element in enumerate(source_list):
-            for shape in source_element.model_fields:
-                source_entry: AnnotationSourceFile | None = getattr(source_element, shape)
-                if source_entry is None:
-                    continue
-
-                has_glob_string = getattr(source_entry, "glob_string", None) is not None
-                has_glob_strings = getattr(source_entry, "glob_strings", None) is not None and source_entry.glob_strings
-                if has_glob_string and has_glob_strings:
-                    total_errors.append(
-                        ValueError(
-                            f"Source entry {i} shape {shape} must have exactly one of glob_string or glob_strings",
-                        ),
                     )
 
         if shapes_used_multiple_times_errors:
