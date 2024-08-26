@@ -78,7 +78,7 @@ CAMERA_MANUFACTURER_TO_MODEL = {
     ("Gatan", "GATAN"): ["K2", "K2 SUMMIT", "K3", "K3 BIOQUANTUM", "UltraCam", "UltraScan"],
     ("simulated"): ["simulated"],
 }
-SOURCE_CHILDREN_NON_FINDERS = {"parent_filters", "exclude"}
+SOURCE_FILTER_FIELDS = {"parent_filters", "exclude"}
 
 # Flag to determine if network validation should be run (set by provided Container arg)
 running_network_validation = False
@@ -508,7 +508,7 @@ def validate_sources(source_list: List[StandardSource] | List[VoxelSpacingSource
         finders_in_source_entry = []
         for finder in source_element.model_fields:
             # If the finder is not None and an actual finder, add it to the list of finders in the source entry
-            if getattr(source_element, finder) is not None and finder not in SOURCE_CHILDREN_NON_FINDERS:
+            if getattr(source_element, finder) is not None and finder not in SOURCE_FILTER_FIELDS:
                 finders_in_source_entry.append(finder)
         # If there are more than one finder in the source entry, add the source entry index and the finders to the error set
         if len(finders_in_source_entry) > 1:
@@ -518,7 +518,7 @@ def validate_sources(source_list: List[StandardSource] | List[VoxelSpacingSource
                 ),
             )
         if len(finders_in_source_entry) == 0:
-            for source_child in SOURCE_CHILDREN_NON_FINDERS:
+            for source_child in SOURCE_FILTER_FIELDS:
                 if getattr(source_element, source_child) is None:
                     continue
                 total_errors.append(
@@ -621,7 +621,7 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
             for shape in source_element.model_fields:
                 # If the shape is not None and an actual shape, add it to the list of shapes in the source entry
                 shape_entry = getattr(source_element, shape)
-                if shape_entry is None or shape in SOURCE_CHILDREN_NON_FINDERS:
+                if shape_entry is None or shape in SOURCE_FILTER_FIELDS:
                     continue
 
                 shapes_in_source_entry.append(shape)
@@ -642,7 +642,7 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
                     ),
                 )
             if len(shapes_in_source_entry) == 0:
-                for source_child in SOURCE_CHILDREN_NON_FINDERS:
+                for source_child in SOURCE_FILTER_FIELDS:
                     if getattr(source_element, source_child) is None:
                         continue
                     total_errors.append(
