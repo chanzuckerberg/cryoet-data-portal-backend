@@ -1058,7 +1058,7 @@ def test_ingest_segmentationmask(
     # Strip the bucket name and annotation name from the annotation's output path.
     anno_file = anno.get_output_path() + "_segmentationmask.mrc"
 
-    # Sanity check the ndjson file
+    # Sanity check the mrc file
     with s3_fs.open(anno_file, "rb") as fh:
         mrc = MrcInterpreter(fh)
         data = mrc.data
