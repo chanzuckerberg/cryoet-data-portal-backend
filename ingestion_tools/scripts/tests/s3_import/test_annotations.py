@@ -5,7 +5,12 @@ from typing import Any, Dict
 import ndjson
 import numpy as np
 import pytest
-from importers.annotation import InstanceSegmentationAnnotation, OrientedPointAnnotation, PointAnnotation
+from importers.annotation import (
+    InstanceSegmentationAnnotation,
+    OrientedPointAnnotation,
+    PointAnnotation,
+    SemanticSegmentationMaskAnnotation,
+)
 from importers.dataset import DatasetImporter
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
@@ -18,7 +23,6 @@ from tests.s3_import.util import list_dir
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
-from ingestion_tools.scripts.importers.annotation import SegmentationMaskAnnotation
 
 default_anno_metadata = {
     "annotation_object": {
@@ -1039,7 +1043,7 @@ def test_ingest_segmentationmask(
     }
     deposition_config._set_object_configs("annotation", [anno_config])
 
-    anno = SegmentationMaskAnnotation(
+    anno = SemanticSegmentationMaskAnnotation(
         config=deposition_config,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/"
