@@ -12,6 +12,7 @@ import yaml
 from ingestion_config_models_extended import ExtendedValidationContainer
 from pydantic import ValidationError
 
+ORIGINAL_DIR = os.getcwd()
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = "../../../"
 sys.path.append(ROOT_DIR)  # To import the helper function from common.py
@@ -153,7 +154,7 @@ def main(
 
     # if input files are relative paths, make them absolute
     if input_files:
-        input_files = [os.path.abspath(file) for file in input_files]
+        input_files = [os.path.join(ORIGINAL_DIR, file) if not os.path.isabs(file) else file for file in input_files]
 
     files_to_validate = get_yaml_config_files(
         input_files=input_files,
