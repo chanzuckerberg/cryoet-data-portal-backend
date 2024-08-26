@@ -58,6 +58,9 @@ annotations:
         name: GroEL-GroES complex
       annotation_publications: 10.1109/TMI.2024.3398401, PDB-6MRD
     sources:
+      - SemanticSegmentationMask:
+          <<: *segmentation_mask_source
+          mask_label: 2
       - OrientedPoint: &oriented_point_source
           binning: 10
           file_format: relion3_star
@@ -65,9 +68,6 @@ annotations:
           order: xyz
           glob_strings:
             - "{run_name}/Picks/adp-mitochondrial.star"
-      - SemanticSegmentationMask:
-          <<: *segmentation_mask_source
-          mask_label: 2
   - metadata:
       <<: *annotation_metadata
       annotation_object:
@@ -75,13 +75,13 @@ annotations:
         name: "Alkaline phosphatase, placental type"
       annotation_publications: 10.1109/TMI.2024.3398401, PDB-1ZEF
     sources:
+      - SemanticSegmentationMask:
+          <<: *segmentation_mask_source
+          mask_label: 3
       - OrientedPoint:
           <<: *oriented_point_source
           glob_strings:
             - "{run_name}/Picks/alkaline-phosphatase.star"
-      - SemanticSegmentationMask:
-          <<: *segmentation_mask_source
-          mask_label: 3
   - metadata:
       <<: *annotation_metadata
       annotation_object:
@@ -89,13 +89,13 @@ annotations:
         name: nucleosome
       annotation_publications: 10.1109/TMI.2024.3398401, PDB-6UPH
     sources:
+      - SemanticSegmentationMask:
+          <<: *segmentation_mask_source
+          mask_label: 4
       - OrientedPoint:
           <<: *oriented_point_source
           glob_strings:
             - "{run_name}/Picks/nucleosome.star"
-      - SemanticSegmentationMask:
-          <<: *segmentation_mask_source
-          mask_label: 4
   - metadata:
       <<: *annotation_metadata
       annotation_object:
@@ -103,13 +103,13 @@ annotations:
         name: cytosolic ribosome
       annotation_publications: 10.1109/TMI.2024.3398401, PDB-7TM3
     sources:
+      - SemanticSegmentationMask:
+          <<: *segmentation_mask_source
+          mask_label: 5
       - OrientedPoint:
           <<: *oriented_point_source
           glob_strings:
             - "{run_name}/Picks/ribosome.star"
-      - SemanticSegmentationMask:
-          <<: *segmentation_mask_source
-          mask_label: 5
   - metadata:
       <<: *annotation_metadata
       annotation_object:
@@ -117,13 +117,13 @@ annotations:
         name: Major vault protein
       annotation_publications: 10.1109/TMI.2024.3398401, PDB-7PKZ
     sources:
+      - SemanticSegmentationMask:
+          <<: *segmentation_mask_source
+          mask_label: 6
       - OrientedPoint:
           <<: *oriented_point_source
           glob_strings:
             - "{run_name}/Picks/vault.star"
-      - SemanticSegmentationMask:
-          <<: *segmentation_mask_source
-          mask_label: 6
   - metadata:
       <<: *annotation_metadata
       annotation_object:
@@ -132,13 +132,13 @@ annotations:
         description: Chikungunya VLP
       annotation_publications: 10.1109/TMI.2024.3398401, PDB-6NK5
     sources:
+      - SemanticSegmentationMask:
+          <<: *segmentation_mask_source
+          mask_label: 7
       - OrientedPoint:
           <<: *oriented_point_source
           glob_strings:
             - "{run_name}/Picks/virus-like-particle.star"
-      - SemanticSegmentationMask:
-          <<: *segmentation_mask_source
-          mask_label: 7
 dataset_keyphotos:
 - sources:
   - literal:
