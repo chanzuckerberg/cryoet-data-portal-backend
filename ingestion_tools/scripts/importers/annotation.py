@@ -186,8 +186,15 @@ class AnnotationImporter(BaseImporter):
         for source in anno_files:
             files.extend(source.get_metadata(path))
 
-        self.local_metadata["object_count"] = max([anno.get_object_count(output_dir) for anno in anno_files], default=0)
-        self.local_metadata["files"] = files
+        try:
+            self.local_metadata["object_count"] = max(
+                [anno.get_object_count(output_dir) for anno in anno_files],
+                default=0,
+            )
+            self.local_metadata["files"] = files
+        except FileNotFoundError:
+            print("Skipping metadata write since not all files have been written yet")
+            return
 
         self.written_metadata_files.append(filename)
         self.annotation_metadata.write_metadata(filename, self.local_metadata)
