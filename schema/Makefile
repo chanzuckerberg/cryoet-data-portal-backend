@@ -85,4 +85,4 @@ validate-configs:
 
 .PHONY: validate-configs-with-network
 validate-configs-with-network:
-	python $(VALIDATE_CONFIGS) --network-validation
+	python $(VALIDATE_CONFIGS) --network-validation --verbose
