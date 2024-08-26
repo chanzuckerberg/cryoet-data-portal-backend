@@ -5,6 +5,7 @@ Any fixtures involving loading data from the bucket.
 import bz2
 import io
 import json
+import os
 from concurrent.futures import ThreadPoolExecutor
 from typing import Dict, List, Union
 
@@ -13,9 +14,7 @@ import ndjson
 import pandas as pd
 import pytest
 import tifffile
-import zarr
 from mrcfile.mrcinterpreter import MrcInterpreter
-from ome_zarr.io import ZarrLocation
 
 from common.fs import FileSystemApi
 
@@ -23,8 +22,11 @@ from common.fs import FileSystemApi
 # Helper functions
 # ==================================================================================================
 
+BINNING_SCALES = [0, 1, 2]
+
 # block sizes are experimentally tested to be the fastest
-MRC_HEADER_BLOCK_SIZE = 500 * 2**10
+MRC_HEADER_BLOCK_SIZE = 2 * 2**10
+MRC_BZ2_HEADER_BLOCK_SIZE = 500 * 2**10
 TIFF_HEADER_BLOCK_SIZE = 100 * 2**10
 
 
@@ -40,8 +42,8 @@ def get_mrc_header(mrcfile: str, fs: FileSystemApi) -> MrcInterpreter:
 def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi) -> MrcInterpreter:
     """Get the mrc file headers for a list of mrc files."""
     try:
-        with fs.open(mrcbz2file, "rb", block_size=MRC_HEADER_BLOCK_SIZE) as f, bz2.BZ2File(f) as mrcbz2:
-            mrcbz2 = mrcbz2.read(MRC_HEADER_BLOCK_SIZE)
+        with fs.open(mrcbz2file, "rb", block_size=MRC_BZ2_HEADER_BLOCK_SIZE) as f, bz2.BZ2File(f) as mrcbz2:
+            mrcbz2 = mrcbz2.read(MRC_BZ2_HEADER_BLOCK_SIZE)
             return MrcInterpreter(iostream=io.BytesIO(mrcbz2), permissive=True, header_only=True)
     except Exception as e:
         pytest.fail(f"Failed to get header for {mrcbz2file}: {e}")
@@ -49,19 +51,51 @@ def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi) -> MrcInterpreter:
 
 def get_zarr_headers(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
     """Get the zattrs and zarray data for a zarr volume file."""
-    expected_children = {f"{child}" for child in [0, 1, 2, ".zattrs", ".zgroup"]}
-
-    fsstore = zarr.storage.FSStore(url=zarrfile, mode="r", fs=fs.s3fs, dimension_separator="/")
-    fsstore_children = set(fsstore.listdir())
+    file_paths = fs.glob(os.path.join(zarrfile, "*"))
+    fsstore_children = {os.path.basename(file) for file in file_paths}
     expected_fsstore_children = {"0", "1", "2", ".zattrs", ".zgroup"}
     if expected_fsstore_children != fsstore_children:
-        pytest.fail(f"Expected zarr children: {expected_children}, Actual zarr children: {fsstore_children}")
+        pytest.fail(f"Expected zarr children: {expected_fsstore_children}, Actual zarr children: {fsstore_children}")
 
-    loc = ZarrLocation(fsstore)
     zarrays = {}
-    for binning_factor in [0, 1, 2]:  # 1x, 2x, 4x
-        zarrays[binning_factor] = json.loads(fsstore[str(binning_factor) + "/.zarray"].decode())
-    return {"zattrs": loc.root_attrs, "zarrays": zarrays}
+    for binning in BINNING_SCALES:
+        with fs.open(os.path.join(zarrfile, str(binning), ".zarray"), "r") as f:
+            zarrays[binning] = json.load(f)
+    with fs.open(os.path.join(zarrfile, ".zattrs"), "r") as f:
+        return {"zattrs": json.load(f), "zarrays": zarrays}
+
+
+def _get_tiff_mrc_header(file: str, filesystem: FileSystemApi):
+    if file.endswith(".mrc"):
+        return (file, get_mrc_header(file, filesystem))
+    elif file.endswith(".mrc.bz2"):
+        return (file, get_mrc_bz2_header(file, filesystem))
+    elif file.endswith(".tif") or file.endswith(".tiff") or file.endswith(".eer"):
+        with filesystem.open(file, "rb", block_size=TIFF_HEADER_BLOCK_SIZE) as f, tifffile.TiffFile(f) as tif:
+            # The tif.pages must be converted to a list to actually read all the pages' data
+            return (file, list(tif.pages))
+    else:
+        return (None, None)
+
+
+def get_tiff_mrc_headers(
+    files: List[str],
+    filesystem: FileSystemApi,
+) -> Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]:
+
+    # Open the images in parallel
+    with ThreadPoolExecutor() as executor:
+        headers = {}
+
+        for header_filename, header_data in executor.map(_get_tiff_mrc_header, files, [filesystem] * len(files)):
+            if header_filename is None:
+                continue
+            headers[header_filename] = header_data
+
+        if not headers:
+            pytest.skip("No file-format supported frames headers found")
+
+        return headers
 
 
 # ==================================================================================================
@@ -99,32 +133,7 @@ def frames_headers(
     filesystem: FileSystemApi,
 ) -> Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]:
     """Get the headers for a list of frame files."""
-
-    def open_frame(frame_file: str):
-        if frame_file.endswith(".mrc"):
-            return (frame_file, get_mrc_header(frame_file, filesystem))
-        elif frame_file.endswith(".mrc.bz2"):
-            return (frame_file, get_mrc_bz2_header(frame_file, filesystem))
-        elif frame_file.endswith(".tif") or frame_file.endswith(".tiff") or frame_file.endswith(".eer"):
-            with filesystem.open(frame_file, "rb", block_size=TIFF_HEADER_BLOCK_SIZE) as f, tifffile.TiffFile(f) as tif:
-                # The tif.pages must be converted to a list to actually read all the pages' data
-                return (frame_file, list(tif.pages))
-        else:
-            return (None, None)
-
-    # Open the images in parallel
-    with ThreadPoolExecutor() as executor:
-        headers = {}
-
-        for header_filename, header_data in executor.map(open_frame, frames_files):
-            if header_filename is None:
-                continue
-            headers[header_filename] = header_data
-
-        if not headers:
-            pytest.skip("No file-format supported frames headers found")
-
-        return headers
+    return get_tiff_mrc_headers(frames_files, filesystem)
 
 
 # ==================================================================================================
@@ -133,12 +142,12 @@ def frames_headers(
 
 
 @pytest.fixture(scope="session")
-def gain_mrc_header(gain_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
+def gain_headers(
+    gain_files: List[str],
+    filesystem: FileSystemApi,
+) -> Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]:
     """Get the mrc file headers for a gain file."""
-    if not gain_file.endswith(".mrc"):
-        pytest.skip(f"Not an mrc file, skipping mrc checks: {gain_file}")
-
-    return {gain_file: get_mrc_header(gain_file, filesystem)}
+    return get_tiff_mrc_headers(gain_files, filesystem)
 
 
 # ==================================================================================================

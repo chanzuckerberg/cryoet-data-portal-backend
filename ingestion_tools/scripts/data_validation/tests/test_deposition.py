@@ -23,7 +23,7 @@ class HelperTestDeposition:
     @staticmethod
     def _get_deposition_metadata_file(deposition_id: str, bucket: str, filesystem: FileSystemApi) -> str:
         dst = f"s3://{bucket}/depositions_metadata/{deposition_id}/deposition_metadata.json"
-        assert filesystem.s3fs.exists(dst)
+        assert filesystem.exists(dst)
         return dst
 
     @staticmethod
