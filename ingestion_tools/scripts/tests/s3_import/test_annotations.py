@@ -3,6 +3,7 @@ from os.path import basename
 from typing import Any, Dict
 
 import ndjson
+import numpy as np
 import pytest
 from importers.annotation import InstanceSegmentationAnnotation, OrientedPointAnnotation, PointAnnotation
 from importers.dataset import DatasetImporter
@@ -10,12 +11,14 @@ from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
 from importers.voxel_spacing import VoxelSpacingImporter
+from mrcfile.mrcinterpreter import MrcInterpreter
 from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
 from tests.s3_import.util import list_dir
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
+from ingestion_tools.scripts.importers.annotation import SegmentationMaskAnnotation
 
 default_anno_metadata = {
     "annotation_object": {
@@ -948,3 +951,117 @@ def test_ingest_instance_point_data(
 
         # Check id
         assert exp_point["instance_id"] == point["instance_id"], f"Incorrect id for {case['case']}"
+
+
+ingest_mask_test_cases = [
+    # Mask with 3 labels (1,2,3) and background 0
+    {
+        "case": "SemanticSegmentationMask, mask_label==1, MRC",
+        "source_cfg": {
+            "SemanticSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "mask_label": 1,
+                "glob_string": "annotations/semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]],
+                    [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]],
+                ],
+            },
+        ],
+    },
+    {
+        "case": "SemanticSegmentationMask, mask_label==2, MRC",
+        "source_cfg": {
+            "SemanticSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "mask_label": 2,
+                "glob_string": "annotations/semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[0, 0, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                ],
+            },
+        ],
+    },
+    {
+        "case": "SemanticSegmentationMask, mask_label==3, MRC",
+        "source_cfg": {
+            "SemanticSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "mask_label": 3,
+                "glob_string": "annotations/semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                ],
+            },
+        ],
+    },
+]
+
+
+@pytest.mark.parametrize("case", ingest_mask_test_cases)
+def test_ingest_segmentationmask(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    tomo_importer: TomogramImporter,
+    deposition_config: DepositionImportConfig,
+    s3_client: S3Client,
+    case: Dict[str, Any],
+):
+    # loop through test cases
+    anno_config = {
+        "metadata": default_anno_metadata,
+        "sources": [
+            case["source_cfg"],
+        ],
+    }
+    deposition_config._set_object_configs("annotation", [anno_config])
+
+    anno = SegmentationMaskAnnotation(
+        config=deposition_config,
+        metadata=default_anno_metadata,
+        path="test-public-bucket/input_bucket/20002/"
+        + case["source_cfg"]["SemanticSegmentationMask"].get("glob_string"),
+        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        identifier=100,
+        mask_label=case["source_cfg"]["SemanticSegmentationMask"].get("mask_label"),
+        file_format=anno_config["sources"][0]["SemanticSegmentationMask"]["file_format"],
+    )
+    anno.import_item()
+
+    # Strip the bucket name and annotation name from the annotation's output path.
+    anno_file = anno.get_output_path() + "_segmentationmask.mrc"
+
+    # Sanity check the ndjson file
+    with s3_fs.open(anno_file, "rb") as fh:
+        mrc = MrcInterpreter(fh)
+        data = mrc.data
+
+    exp_data = case["out_data"][0]["volume"]
+
+    # Mask shape
+    assert data.shape == (4, 4, 4), f"Incorrect shape for {case['case']}"
+    # Mask data
+    assert np.all(data == np.array(exp_data, dtype=int)), f"Incorrect data for {case['case']}"
