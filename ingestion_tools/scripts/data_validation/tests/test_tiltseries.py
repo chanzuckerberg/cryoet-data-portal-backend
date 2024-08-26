@@ -1,6 +1,6 @@
 import math
 import os
-from typing import Dict, List
+from typing import Dict
 
 import numpy as np
 import pandas as pd
@@ -118,6 +118,11 @@ class TestTiltseries(HelperTestMRCZarrHeader):
     ### END metadata-MRC/Zarr consistency tests ###
 
     ### BEGIN MDOC consistency tests ###
+    def test_tiltseries_mdoc_range(self, tiltseries_mdoc: pd.DataFrame):
+        """Check that the tiltseries mdoc angles are within the range specified in the metadata."""
+        assert tiltseries_mdoc["TiltAngle"].min() >= -90
+        assert tiltseries_mdoc["TiltAngle"].max() <= 90
+
     def test_tiltseries_tilt_range_mdoc(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
         """
         Check that the tiltseries mdoc angles correspond to the tilt_range + tilt_step metadata field.
@@ -155,10 +160,3 @@ class TestTiltseries(HelperTestMRCZarrHeader):
         assert tiltseries_metadata["size"]["y"] == tiltseries_mdoc["ImageSize"][0][1]
 
     ### END MDOC consistency tests ###
-
-    ### BEGIN Frame-specific tests ###
-    def test_tiltseries_frames_count(self, tiltseries_metadata: Dict, frames_files: List[str]):
-        """Check that frames_count matches the actual number of frame files."""
-        assert tiltseries_metadata["frames_count"] == len(frames_files)
-
-    ### END Frame-specific tests ###

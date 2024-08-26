@@ -83,7 +83,7 @@ def frames_dir(run_dir: str, filesystem: FileSystemApi) -> str:
 def frames_files(frames_dir: str, filesystem: FileSystemApi) -> List[str]:
     """[Dataset]/[ExperimentRun]/Frames/[frame_name].mrc"""
     files = filesystem.glob(f"{frames_dir}/*")
-    return ["s3://" + file for file in files if "_gain" not in file]  # Exclude gain files
+    return ["s3://" + file for file in files if "gain" not in file]  # Exclude gain files
 
 
 @pytest.fixture(scope="session")

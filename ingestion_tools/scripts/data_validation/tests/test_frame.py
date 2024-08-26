@@ -7,7 +7,7 @@ import tifffile
 from mrcfile.mrcinterpreter import MrcInterpreter
 from tests.helper_mrc import HelperTestMRCHeader
 
-PERMITTED_FRAME_EXTENSIONS = [".mrc", ".tif", ".tiff", ".eer", ".bz2"]
+PERMITTED_FRAME_EXTENSIONS = [".mrc", ".tif", ".tiff", ".eer", ".mrc.bz2"]
 
 
 @pytest.mark.frame
