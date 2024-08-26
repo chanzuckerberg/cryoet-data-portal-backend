@@ -122,12 +122,18 @@ def frames_headers(
 
 
 @pytest.fixture(scope="session")
-def gain_mrc_header(gain_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
+def gain_mrc_headers(gain_files: List[str], filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for a gain file."""
-    if not gain_file.endswith(".mrc"):
-        pytest.skip(f"Not an mrc file, skipping mrc checks: {gain_file}")
+    headers = {}
 
-    return {gain_file: get_mrc_header(gain_file, filesystem)}
+    for gain_file in gain_files:
+        if gain_file.endswith(".mrc"):
+            headers[gain_file] = get_mrc_header(gain_file, filesystem)
+
+    if not headers:
+        pytest.skip("No gain MRC headers found")
+
+    return headers
 
 
 # ==================================================================================================

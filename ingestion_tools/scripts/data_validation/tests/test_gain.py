@@ -1,9 +1,13 @@
+import warnings
 from typing import Dict, List, Union
 
 import pytest
 import tifffile
 from mrcfile.mrcinterpreter import MrcInterpreter
 from tests.helper_mrc import HelperTestMRCHeader
+from tests.test_frame import PERMITTED_FRAME_EXTENSIONS
+
+PERMITTED_GAIN_EXTENSIONS = PERMITTED_FRAME_EXTENSIONS + [".gain"]
 
 
 @pytest.mark.gain
@@ -11,9 +15,9 @@ from tests.helper_mrc import HelperTestMRCHeader
 @pytest.mark.parametrize("run_name", pytest.run_name, scope="session")
 class TestGain(HelperTestMRCHeader):
     @pytest.fixture(autouse=True)
-    def set_helper_test_mrc_header_class_variables(self, gain_mrc_header: Dict[str, MrcInterpreter]):
+    def set_helper_test_mrc_header_class_variables(self, gain_mrc_headers: Dict[str, MrcInterpreter]):
         self.spacegroup = 0  # 2D image
-        self.mrc_headers = gain_mrc_header
+        self.mrc_headers = gain_mrc_headers
 
     ### DON'T RUN SOME MRC HEADER TESTS ###
     def test_nlabel(self):
@@ -26,6 +30,15 @@ class TestGain(HelperTestMRCHeader):
         pytest.skip("Not applicable for gain files")
 
     ### BEGIN Self-consistency tests ###
+    def test_gain_format(self, gain_files: List[str]):
+        errors = []
+
+        for gain_file in gain_files:
+            if not any(gain_file.endswith(ext) for ext in PERMITTED_FRAME_EXTENSIONS):
+                errors.append(f"Invalid frame file extension: {gain_file}")
+
+        if errors:
+            warnings.warn("\n".join(errors), stacklevel=2)
 
     ### END Self-consistency tests ###
 
