@@ -201,9 +201,18 @@ def tiltseries_raw_tilt(tiltseries_rawtilt_file: str, filesystem: FileSystemApi)
 
 
 @pytest.fixture(scope="session")
-def canonical_tomo_mrc_headers(canonical_tomo_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
+def canonical_tomo_mrc_header(canonical_tomo_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for a tomogram."""
-    return get_mrc_header(canonical_tomo_mrc_file, filesystem)
+    return {canonical_tomo_mrc_file: get_mrc_header(canonical_tomo_mrc_file, filesystem)}
+
+
+@pytest.fixture(scope="session")
+def canonical_tomo_zarr_header(canonical_tomo_zarr_file: str, filesystem: FileSystemApi) -> Dict[str, Dict[str, Dict]]:
+    """
+    Get the zattrs and zarray data for a tomogram.
+    Dictionary structure: headers = {canonical_tomo_a_filename: {"zattrs": Dict, "zarrays": Dict}}.
+    """
+    return {canonical_tomo_zarr_file: get_zarr_headers(canonical_tomo_zarr_file, filesystem)}
 
 
 @pytest.fixture(scope="session")
