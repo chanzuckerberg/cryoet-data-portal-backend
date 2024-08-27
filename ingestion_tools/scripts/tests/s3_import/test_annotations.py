@@ -1212,12 +1212,13 @@ def test_ingest_triangular_mesh(
             },
         ],
     )
+    fixtures_dir = os.path.join(local_test_data_dir, "fixtures")
 
     # Action
     anno = TriangularMeshAnnotation(
         config=deposition_config_local,
         metadata=default_anno_metadata,
-        path=os.path.join(local_test_data_dir, "fixtures", glob_string),
+        path=os.path.join(fixtures_dir, glob_string),
         parents={"tomogram": tomo_importer_local, **tomo_importer_local.parents},
         file_format=file_format,
         identifier=100,
@@ -1243,8 +1244,11 @@ def test_ingest_triangular_mesh(
 
     # load the new mesh file
     anno_file = anno.get_output_filename(anno.get_output_path()) + ".glb"
-    trimesh.load(anno_file, force="mesh")
+    actual_mesh = trimesh.load(anno_file, force="mesh")
+    # load expected mesh
+    expected_mesh = trimesh.load(os.path.join(fixtures_dir, "annotations/triangular_mesh.glb"), force="mesh")
+
     # TODO compare against another mesh
-    # assert actual_mesh.vertices =
-    # assert actual_mesh.faces =
-    # assert actual_mesh.visual.face_colors =
+    assert actual_mesh.vertices == expected_mesh.vertices
+    assert actual_mesh.faces == expected_mesh.faces
+    assert actual_mesh.visual.face_colors == expected_mesh.visual.face_colors
