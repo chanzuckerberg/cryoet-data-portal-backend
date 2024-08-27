@@ -122,6 +122,26 @@ class TestTiltAngles:
     def test_tilt_tiltseries_metadata(self, tiltseries_tilt: pd.DataFrame, tiltseries_metadata: Dict):
         assert len(tiltseries_tilt) <= tiltseries_metadata["size"]["z"]
 
+    def test_tilt_tiltseries_range(self, tiltseries_tilt: pd.DataFrame, tiltseries_metadata: Dict):
+        """
+        Check that the tiltseries tilt angles correspond to the tilt_range + tilt_step metadata field.
+        Not all angles in the tilt range must be present in the tilt file.
+        """
+        errors = self.helper_angles_injection_errors(
+            tiltseries_tilt["TiltAngle"].to_list(),
+            np.arange(
+                tiltseries_metadata["tilt_range"]["min"],
+                tiltseries_metadata["tilt_range"]["max"],
+                tiltseries_metadata["tilt_step"],
+            ).tolist(),
+            "tilt file",
+            "tiltseries metadata tilt_range",
+        )
+        assert len(errors) == 0, (
+            "\n".join(errors)
+            + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, with step {tiltseries_metadata['tilt_step']}"
+        )
+
     def test_tilt_max_frames_count(self, tiltseries_tilt: pd.DataFrame, max_frames_count: int):
         """Ensure that the tilt angles are consistent with the max frames count."""
         assert len(tiltseries_tilt) <= max_frames_count
@@ -147,6 +167,26 @@ class TestTiltAngles:
 
     def test_raw_tilt_tiltseries_metadata(self, tiltseries_raw_tilt: pd.DataFrame, tiltseries_metadata: Dict):
         assert len(tiltseries_raw_tilt) <= tiltseries_metadata["size"]["z"]
+
+    def test_raw_tilt_tiltseries_range(self, tiltseries_raw_tilt: pd.DataFrame, tiltseries_metadata: Dict):
+        """
+        Check that the tiltseries raw tilt angles correspond to the tilt_range + tilt_step metadata field.
+        Not all angles in the tilt range must be present in the raw tilt file.
+        """
+        errors = self.helper_angles_injection_errors(
+            tiltseries_raw_tilt["TiltAngle"].to_list(),
+            np.arange(
+                tiltseries_metadata["tilt_range"]["min"],
+                tiltseries_metadata["tilt_range"]["max"],
+                tiltseries_metadata["tilt_step"],
+            ).tolist(),
+            "raw tilt file",
+            "tiltseries metadata tilt_range",
+        )
+        assert len(errors) == 0, (
+            "\n".join(errors)
+            + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, with step {tiltseries_metadata['tilt_step']}"
+        )
 
     def test_raw_tilt_max_frames_count(self, tiltseries_raw_tilt: pd.DataFrame, max_frames_count: int):
         """Ensure that the raw tilt angles are consistent with the max frames count."""
@@ -199,7 +239,7 @@ class TestTiltAngles:
 
         assert len(errors) == 0, "\n".join(errors)
 
-    def test_tiltseries_tilt_range_mdoc(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
+    def test_mdoc_tiltseries_range(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
         """
         Check that the tiltseries mdoc angles correspond to the tilt_range + tilt_step metadata field.
         Not all angles in the tilt range must be present in the MDOC file.
