@@ -61,7 +61,7 @@ Annotation {
     EMPIAR_EMDB_DOI_PDB_LIST annotation_publication
     string annotation_method
     boolean ground_truth_status
-    GO_ID object_id
+    string object_id
     string object_name
     string object_description
     string object_state
@@ -87,7 +87,7 @@ Tomograms {
     float size_z
     float voxel_spacing
     fiducial_alignment_status_enum fiducial_alignment_status
-    tomogrom_reconstruction_method_enum reconstruction_method
+    tomogram_reconstruction_method_enum reconstruction_method
     tomogram_processing_enum processing
     boolean is_canonical
     string s3_omezarr_dir

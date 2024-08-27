@@ -523,7 +523,7 @@ slots:
     description: Processing software used to derive the tomogram
     recommended: true
   tomogram_reconstruction_method:
-    range: tomogrom_reconstruction_method_enum
+    range: tomogram_reconstruction_method_enum
     required: true
     description: Describe reconstruction method (WBP, SART, SIRT)
   tomogram_reconstruction_software:
@@ -897,7 +897,7 @@ enums:
       raw:
         description: Tomogram was not processed
 
-  tomogrom_reconstruction_method_enum:
+  tomogram_reconstruction_method_enum:
     description: Tomogram reconstruction method
     permissible_values:
       SART:
