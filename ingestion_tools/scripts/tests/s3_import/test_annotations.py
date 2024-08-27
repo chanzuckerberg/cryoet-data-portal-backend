@@ -194,7 +194,7 @@ def test_import_annotation_metadata(
 def test_import_annotation_metadata_with_multiple_sources(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer: TomogramImporter,
+    tomo_importer_s3: TomogramImporter,
     deposition_config: DepositionImportConfig,
     s3_client: S3Client,
 ) -> None:
@@ -226,7 +226,7 @@ def test_import_annotation_metadata_with_multiple_sources(
         config=deposition_config,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/annotations/segmask.mrc",
-        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
         identifier=100,
         file_format=anno_config["sources"][0]["SegmentationMask"].get("file_format"),
     )
@@ -234,7 +234,7 @@ def test_import_annotation_metadata_with_multiple_sources(
         config=deposition_config,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/annotations/points.csv",
-        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
         identifier=100,
         columns=anno_config["sources"][1]["Point"].get("columns"),
         delimiter=anno_config["sources"][1]["Point"].get("delimiter"),
@@ -1136,7 +1136,7 @@ ingest_mask_test_cases = [
 def test_ingest_segmentationmask(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer: TomogramImporter,
+    tomo_importer_s3: TomogramImporter,
     deposition_config: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
@@ -1155,7 +1155,7 @@ def test_ingest_segmentationmask(
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/"
         + case["source_cfg"]["SemanticSegmentationMask"].get("glob_string"),
-        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
         identifier=100,
         mask_label=case["source_cfg"]["SemanticSegmentationMask"].get("mask_label"),
         file_format=anno_config["sources"][0]["SemanticSegmentationMask"]["file_format"],
