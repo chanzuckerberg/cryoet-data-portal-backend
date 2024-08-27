@@ -28,6 +28,9 @@ class TestTiltseries(HelperTestMRCZarrHeader):
         self.spacing = tiltseries_metadata["pixel_spacing"]
         self.skip_z_axis_checks = True
 
+    def test_mrc_mode(self):
+        pytest.skip("Not applicable for tiltseries files")
+
     ### BEGIN metadata self-consistency tests ###
     def test_tiltseries_metadata(self, tiltseries_metadata: Dict, run_name: str):
         """A tiltseries metadata sanity check."""
