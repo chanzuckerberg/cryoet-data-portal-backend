@@ -200,8 +200,8 @@ class HelperTestMRCHeader:
         self.mrc_header_helper(check_subimage_start)
 
     ### BEGIN Voxel-spacing tests ###
-    def test_mrc_voxel_spacing(self):
-        """Check that the voxel spacing is consistent with the mrc header."""
+    def test_mrc_spacing(self):
+        """Check that the voxel / pixel spacing is consistent with the mrc header."""
 
         def check_spacing(_header, interpreter, _mrc_filename):
             del _header, _mrc_filename

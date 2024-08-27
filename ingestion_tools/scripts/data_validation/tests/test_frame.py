@@ -32,7 +32,7 @@ class TestFrame(HelperTestMRCHeader):
     def test_mrc_mode(self):
         pytest.skip("Not applicable for frame files")
 
-    def test_mrc_voxel_spacing(self):
+    def test_mrc_spacing(self):
         pytest.skip("Not applicable for frame files")
 
     ### BEGIN Self-consistency tests ###

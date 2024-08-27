@@ -3,7 +3,6 @@ import pytest
 # For better assertion errors in the helper functions
 pytest.register_assert_rewrite(
     "tests.annotation.helper_point",
-    "tests.helper_functions",
     "tests.helper_images",
     "tests.helper_metadata",
     "tests.helper_mrc_zarr",
