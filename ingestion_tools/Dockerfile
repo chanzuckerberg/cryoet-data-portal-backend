@@ -4,7 +4,8 @@ WORKDIR /usr/src/app
 RUN mkdir ingestion_tools
 
 # Base utilities
-RUN apt update && apt install -y wget unzip jq
+RUN apt update && apt install -y wget unzip jq libgl1
+# libgl1 is needed for vtk
 
 # Install DB TLS certs
 ADD https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem /usr/local/share/ca-certificates/global-bundle.crt
