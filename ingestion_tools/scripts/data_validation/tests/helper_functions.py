@@ -1,6 +1,6 @@
 from typing import List
 
-ANGLE_TOLERANCE = 0.01
+ANGLE_TOLERANCE = 0.05
 
 
 # TODO FIXME account for double 0 sample

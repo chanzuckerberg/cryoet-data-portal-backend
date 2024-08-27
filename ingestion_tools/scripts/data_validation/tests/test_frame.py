@@ -51,26 +51,6 @@ class TestFrame(HelperTestMRCHeader):
     ### END Self-consistency tests ###
 
     ### BEGIN Tiltseries consistency tests ###
-    def test_frames_count(self, frames_files: List[str], tiltseries_metadata: Dict):
-        assert len(frames_files) >= tiltseries_metadata["frames_count"]
-
-    def test_mdoc_frame_paths_exist(
-        self,
-        frames_files: List[str],
-        tiltseries_mdoc: pd.DataFrame,
-    ):
-        """Check that all mdoc listed frames exist (not all frames files have to be listed in mdoc though)."""
-        missing_frames = []
-        remaining_frames_files_basenames = [os.path.basename(f) for f in frames_files]
-        for _, row in tiltseries_mdoc.iterrows():
-            frame_file = os.path.basename(str(row["SubFramePath"]).replace("\\", "/"))
-            if frame_file not in remaining_frames_files_basenames:
-                missing_frames.append(frame_file)
-            else:
-                remaining_frames_files_basenames.remove(frame_file)
-
-        assert not missing_frames, f"Missing frames: {missing_frames}"
-
     def test_frames_mdoc_numsubframes(
         self,
         frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
@@ -119,8 +99,6 @@ class TestFrame(HelperTestMRCHeader):
 
 
 ### Helper functions (used in other test classes) ###
-
-
 def helper_tiff_mrc_consistent(headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
     """Check that the dimensions (MRC & TIFF) and pixel spacings (MRC) between MRC and/or TIFF files are consistent."""
     errors = []

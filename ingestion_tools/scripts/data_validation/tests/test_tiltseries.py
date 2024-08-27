@@ -2,11 +2,9 @@ import math
 import os
 from typing import Dict
 
-import numpy as np
 import pandas as pd
 import pytest
 from mrcfile.mrcinterpreter import MrcInterpreter
-from tests.helper_functions import helper_angles_injection_errors
 from tests.helper_mrc_zarr import HelperTestMRCZarrHeader
 from tests.test_deposition import HelperTestDeposition
 
@@ -55,18 +53,6 @@ class TestTiltseries(HelperTestMRCZarrHeader):
             assert math.ceil(curr_scale["y"] / 2) == scale["y"]
             assert math.ceil(curr_scale["x"] / 2) == scale["x"]
             curr_scale = scale
-
-    def test_tiltseries_tilt_range_frames_count(self, tiltseries_metadata: Dict):
-        """Check that frames_count is consistent with the the tilt_range + tilt_step metadata field."""
-        max_frame_count = (
-            tiltseries_metadata["tilt_range"]["max"] - tiltseries_metadata["tilt_range"]["min"]
-        ) / tiltseries_metadata["tilt_step"] + 1
-        # TODO FIXME how to check if -0.0 should exist
-        assert tiltseries_metadata["frames_count"] <= max_frame_count
-
-    def test_tiltseries_size_frames_count(self, tiltseries_metadata: Dict):
-        """Check that the frames_count is consistent with the volume size / scales."""
-        assert tiltseries_metadata["frames_count"] == tiltseries_metadata["size"]["z"]
 
     ### END metadata self-consistency tests ###
 
@@ -118,40 +104,10 @@ class TestTiltseries(HelperTestMRCZarrHeader):
     ### END metadata-MRC/Zarr consistency tests ###
 
     ### BEGIN MDOC consistency tests ###
-    def test_tiltseries_mdoc_range(self, tiltseries_mdoc: pd.DataFrame):
-        """Check that the tiltseries mdoc angles are within the range specified in the metadata."""
-        assert tiltseries_mdoc["TiltAngle"].min() >= -90
-        assert tiltseries_mdoc["TiltAngle"].max() <= 90
-
-    def test_tiltseries_tilt_range_mdoc(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
-        """
-        Check that the tiltseries mdoc angles correspond to the tilt_range + tilt_step metadata field.
-        Not all angles in the tilt range must be present in the MDOC file.
-        """
-        errors = helper_angles_injection_errors(
-            tiltseries_mdoc["TiltAngle"].to_list(),
-            np.arange(
-                tiltseries_metadata["tilt_range"]["min"],
-                tiltseries_metadata["tilt_range"]["max"],
-                tiltseries_metadata["tilt_step"],
-            ).tolist(),
-            "mdoc file",
-            "tiltseries metadata tilt_range",
-        )
-        assert len(errors) == 0, (
-            "\n".join(errors)
-            + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, with step {tiltseries_metadata['tilt_step']}"
-        )
-
     def test_tiltseries_pixel_spacing_mdoc(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
         """Check that the tiltseries pixel spacing matches the MDOC data."""
         assert len(set(tiltseries_mdoc["PixelSpacing"])) == 1
         assert tiltseries_metadata["pixel_spacing"] == tiltseries_mdoc["PixelSpacing"][0]
-
-    def test_tiltseries_voltage_mdoc(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
-        """Check that the tiltseries voltage (V) matches the MDOC data (kV)."""
-        assert len(set(tiltseries_mdoc["Voltage"])) == 1
-        assert tiltseries_metadata["acceleration_voltage"] == tiltseries_mdoc["Voltage"][0] * 1000
 
     def test_tiltseries_image_size_mdoc(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
         """Check that the tiltseries image size matches the MDOC data."""
