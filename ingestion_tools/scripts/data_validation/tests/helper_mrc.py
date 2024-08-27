@@ -104,17 +104,11 @@ class HelperTestMRCHeader:
 
         def check_nlabel(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
-            count = 0
-            empty_label = False
-            for label in header.label:
-                if len(label.strip()) > 0:
-                    count += 1
-
-                if len(label) != 0 and len(label.strip()) == 0:
-                    empty_label = True
+            count = sum(1 for label in header.label if label.strip())
+            empty_label = any(len(label) != 0 and not label.strip() for label in header.label)
 
             assert count == header.nlabl
-            assert empty_label is False
+            assert not empty_label
 
         self.mrc_header_helper(check_nlabel)
 
