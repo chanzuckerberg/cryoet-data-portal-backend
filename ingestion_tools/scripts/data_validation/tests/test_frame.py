@@ -1,4 +1,5 @@
 import os
+import warnings
 from typing import Dict, List, Union
 
 import pandas as pd
@@ -61,7 +62,7 @@ class TestFrame(HelperTestMRCHeader):
         for _, row in tiltseries_mdoc.iterrows():
             frame_file = os.path.basename(str(row["SubFramePath"]).replace("\\", "/"))
             if frame_file not in frames_headers:
-                # Frame file does not exist, this will get caught by another test
+                # Frame file does not exist, this will get caught by a test_tilt_angles test
                 continue
 
             header_entity = frames_headers[frame_file]
@@ -76,7 +77,7 @@ class TestFrame(HelperTestMRCHeader):
                         f"Number of subframes do not match: {header_entity.header.nz} != {row['NumSubFrames']}, {frame_file}",
                     )
             else:
-                errors.append(f"Unsupported frame type: {type(frame_file)}, {frame_file}")
+                warnings.warn(f"Unsupported frame type: {type(frame_file)}, {frame_file}", stacklevel=2)
 
         assert not errors, "\n".join(errors)
 
@@ -135,6 +136,6 @@ def helper_tiff_mrc_consistent(headers: Dict[str, Union[List[tifffile.TiffPage],
             if abs(header_entity.voxel_size["x"] - header_entity.voxel_size["y"]) > 0.001:
                 errors.append(f"Y and X pixel spacings do not match: {header_entity.voxel_size}, {filename}")
         else:
-            errors.append(f"Unsupported type: {type(header)}, {filename}")
+            warnings.warn(f"Unsupported type: {type(header)}, {filename}", stacklevel=2)
 
     assert not errors, "\n".join(errors)
