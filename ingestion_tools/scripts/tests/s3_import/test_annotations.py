@@ -4,12 +4,15 @@ from os.path import basename
 from typing import Any, Dict
 
 import ndjson
+import numpy as np
 import pytest
 import trimesh
 from importers.annotation import (
     InstanceSegmentationAnnotation,
     OrientedPointAnnotation,
     PointAnnotation,
+    SegmentationMaskAnnotation,
+    SemanticSegmentationMaskAnnotation,
     TriangularMeshAnnotation,
 )
 from importers.dataset import DatasetImporter
@@ -17,6 +20,7 @@ from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
 from importers.voxel_spacing import VoxelSpacingImporter
+from mrcfile.mrcinterpreter import MrcInterpreter
 from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
 
@@ -185,6 +189,78 @@ def test_import_annotation_metadata(
         s3_client,
         anno_config,
     )
+
+
+def test_import_annotation_metadata_with_multiple_sources(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    tomo_importer: TomogramImporter,
+    deposition_config: DepositionImportConfig,
+    s3_client: S3Client,
+) -> None:
+    """Make sure that we can import multiple shape types for a single annotation.
+    Specifically make sure we can support importing points files defined *AFTER*
+    non-points sources."""
+    anno_config = {
+        "metadata": default_anno_metadata,
+        "sources": [
+            {
+                "SegmentationMask": {
+                    "file_format": "mrc",
+                    "glob_string": "annotations/segmask.mrc",
+                },
+            },
+            {
+                "Point": {
+                    "file_format": "csv",
+                    "delimiter": ",",
+                    "glob_string": "annotations/points.csv",
+                    "columns": "xyz",
+                },
+            },
+        ],
+    }
+
+    deposition_config._set_object_configs("annotation", [anno_config])
+    anno1 = SegmentationMaskAnnotation(
+        config=deposition_config,
+        metadata=default_anno_metadata,
+        path="test-public-bucket/input_bucket/20002/annotations/segmask.mrc",
+        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        identifier=100,
+        file_format=anno_config["sources"][0]["SegmentationMask"].get("file_format"),
+    )
+    anno2 = PointAnnotation(
+        config=deposition_config,
+        metadata=default_anno_metadata,
+        path="test-public-bucket/input_bucket/20002/annotations/points.csv",
+        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        identifier=100,
+        columns=anno_config["sources"][1]["Point"].get("columns"),
+        delimiter=anno_config["sources"][1]["Point"].get("delimiter"),
+        file_format=anno_config["sources"][1]["Point"].get("file_format"),
+    )
+    for anno in [anno1, anno2]:
+        anno.import_item()
+        anno.import_metadata()
+
+    # Strip the bucket name and annotation name from the annotation's output path.
+    prefix = anno1.get_output_path().rsplit("/", 1)[0].split("/", 1)[1]
+    metadata_file = anno1.get_output_path() + ".json"
+    # Make sure we have a ndjson data file and a metadata file
+    anno_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
+    assert "100-some_protein-1.0.json" in anno_files
+    assert "100-some_protein-1.0_point.ndjson" in anno_files
+
+    # Sanity check the metadata
+    with s3_fs.open(metadata_file, "r") as fh:
+        metadata = json.load(fh)
+    assert metadata["object_count"] == 3
+    fileinfo = metadata["files"]
+    assert {item["format"] for item in fileinfo} == {"zarr", "ndjson", "mrc"}
+    assert {item["shape"] for item in fileinfo} == {"Point", "SegmentationMask"}
+    print(fileinfo)
+    assert len(fileinfo) == 3  # We should have ndjson, mrc and zarr files
 
 
 def test_import_annotation_metadata_glob_strings(
@@ -986,6 +1062,120 @@ def test_ingest_instance_point_data(
 
         # Check id
         assert exp_point["instance_id"] == point["instance_id"], f"Incorrect id for {case['case']}"
+
+
+ingest_mask_test_cases = [
+    # Mask with 3 labels (1,2,3) and background 0
+    {
+        "case": "SemanticSegmentationMask, mask_label==1, MRC",
+        "source_cfg": {
+            "SemanticSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "mask_label": 1,
+                "glob_string": "annotations/semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]],
+                    [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]],
+                ],
+            },
+        ],
+    },
+    {
+        "case": "SemanticSegmentationMask, mask_label==2, MRC",
+        "source_cfg": {
+            "SemanticSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "mask_label": 2,
+                "glob_string": "annotations/semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[0, 0, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                ],
+            },
+        ],
+    },
+    {
+        "case": "SemanticSegmentationMask, mask_label==3, MRC",
+        "source_cfg": {
+            "SemanticSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "mask_label": 3,
+                "glob_string": "annotations/semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                ],
+            },
+        ],
+    },
+]
+
+
+@pytest.mark.parametrize("case", ingest_mask_test_cases)
+def test_ingest_segmentationmask(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    tomo_importer: TomogramImporter,
+    deposition_config: DepositionImportConfig,
+    s3_client: S3Client,
+    case: Dict[str, Any],
+):
+    # loop through test cases
+    anno_config = {
+        "metadata": default_anno_metadata,
+        "sources": [
+            case["source_cfg"],
+        ],
+    }
+    deposition_config._set_object_configs("annotation", [anno_config])
+
+    anno = SemanticSegmentationMaskAnnotation(
+        config=deposition_config,
+        metadata=default_anno_metadata,
+        path="test-public-bucket/input_bucket/20002/"
+        + case["source_cfg"]["SemanticSegmentationMask"].get("glob_string"),
+        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        identifier=100,
+        mask_label=case["source_cfg"]["SemanticSegmentationMask"].get("mask_label"),
+        file_format=anno_config["sources"][0]["SemanticSegmentationMask"]["file_format"],
+    )
+    anno.import_item()
+
+    # Strip the bucket name and annotation name from the annotation's output path.
+    anno_file = anno.get_output_path() + "_segmentationmask.mrc"
+
+    # Sanity check the mrc file
+    with s3_fs.open(anno_file, "rb") as fh:
+        mrc = MrcInterpreter(fh)
+        data = mrc.data
+
+    exp_data = case["out_data"][0]["volume"]
+
+    # Mask shape
+    assert data.shape == (4, 4, 4), f"Incorrect shape for {case['case']}"
+    # Mask data
+    assert np.all(data == np.array(exp_data, dtype=int)), f"Incorrect data for {case['case']}"
 
 
 @pytest.mark.parametrize(
