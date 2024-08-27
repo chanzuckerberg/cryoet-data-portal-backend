@@ -157,11 +157,9 @@ def tiltseries_metadata(tiltseries_meta_file: str, filesystem: FileSystemApi) ->
 
 
 @pytest.fixture(scope="session")
-def tiltseries_mdoc(tiltseries_mdoc_files: str, filesystem: FileSystemApi) -> pd.DataFrame:
+def tiltseries_mdoc(tiltseries_mdoc_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
     """Load the tiltseries mdoc files and return a concatenated DataFrame."""
-    tiltseries_dataframes = [mdocfile.read(filesystem.localreadable(mdoc_file)) for mdoc_file in tiltseries_mdoc_files]
-    tiltseries_merged = pd.concat(tiltseries_dataframes, ignore_index=True)
-    return tiltseries_merged
+    return mdocfile.read(filesystem.localreadable(tiltseries_mdoc_file))
 
 
 @pytest.fixture(scope="session")
