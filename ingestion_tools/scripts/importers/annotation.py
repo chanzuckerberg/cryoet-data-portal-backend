@@ -191,8 +191,15 @@ class AnnotationImporter(BaseImporter):
         for source in anno_files:
             files.extend(source.get_metadata(path))
 
-        self.local_metadata["object_count"] = max([anno.get_object_count(output_dir) for anno in anno_files], default=0)
-        self.local_metadata["files"] = files
+        try:
+            self.local_metadata["object_count"] = max(
+                [anno.get_object_count(output_dir) for anno in anno_files],
+                default=0,
+            )
+            self.local_metadata["files"] = files
+        except FileNotFoundError:
+            print("Skipping metadata write since not all files have been written yet")
+            return
 
         self.written_metadata_files.append(filename)
         self.annotation_metadata.write_metadata(filename, self.local_metadata)
@@ -503,7 +510,7 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         metadata = [
             {
                 "format": self.output_format,
-                "path": self.get_output_filename(output_prefix),
+                "path": self.get_output_filename(output_prefix, self.output_format),
                 "shape": self.shape,
                 "is_visualization_default": self.is_visualization_default,
             },
@@ -511,10 +518,11 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         return metadata
 
     def convert(self, output_prefix: str):
-        output_file_name = self.get_output_filename(output_prefix)
+        mesh_file = self.config.fs.localreadable(self.path)
+        output_file_name = self.get_output_filename(output_prefix, self.output_format)
         tmp_path = self.config.fs.localwritable(output_file_name)
 
-        self.map_functions[self.file_format](self.mesh_file, tmp_path, scale_factor=self.scale_factor)
+        self.map_functions[self.file_format](mesh_file, tmp_path, scale_factor=self.scale_factor)
 
         self.config.fs.push(tmp_path)
 

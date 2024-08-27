@@ -8,7 +8,7 @@ annotations: OPTIONAL
     annotation_method: REQUIRED, STRING
     annotation_object: REQUIRED
       description: OPTIONAL, STRING
-      id: REQUIRED, STRING (GO_ID)
+      id: REQUIRED, STRING (GO_ID / UNIPROT_ID)
       name: REQUIRED, STRING
       state: OPTIONAL, STRING
     annotation_publications: OPTIONAL, STRING (DOI / EMPIAR / EMDB / PDB IDs)
@@ -89,7 +89,6 @@ annotations: OPTIONAL
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
-      ontology_id: OPTIONAL, STRING (ONTOLOGY ID)
       scale_factor: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
     parent_filters: see InstanceSegmentation.parent_filters
     exclude: SEE InstanceSegmentation.exclude

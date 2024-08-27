@@ -17,7 +17,6 @@ from codegen.ingestion_config_models import (
     AnnotationEntity,
     AnnotationObject,
     AnnotationSource,
-    AnnotationSourceFile,
     Author,
     CameraDetails,
     CellComponent,
@@ -31,7 +30,6 @@ from codegen.ingestion_config_models import (
     DatasetKeyPhotoSource,
     DatasetSource,
     DateStamp,
-    DefaultSource,
     Deposition,
     DepositionEntity,
     DepositionKeyPhotoEntity,
@@ -51,6 +49,7 @@ from codegen.ingestion_config_models import (
     RunEntity,
     RunSource,
     SampleTypeEnum,
+    StandardSource,
     TiltRange,
     TiltSeries,
     TiltSeriesEntity,
@@ -69,13 +68,17 @@ logger = logging.getLogger(__name__)
 
 validation_exclusions = {}
 CELLULAR_COMPONENT_GO_ID = "GO:0005575"
+GO_ID_REGEX = r"^GO:[0-9]{7}$"
+UNIPROT_ID_REGEX = r"^UniProtKB:[A-Z0-9]+$"
 STRING_FORMATTED_STRING_REGEX = r"^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$"
 VALID_IMAGE_FORMATS = ("image/png", "image/jpeg", "image/jpg", "image/gif")
 # Note that model namees should all be uppercase or pascal case
 CAMERA_MANUFACTURER_TO_MODEL = {
     ("FEI", "TFS"): ["FALCON IV", "Falcon4i"],
     ("Gatan", "GATAN"): ["K2", "K2 SUMMIT", "K3", "K3 BIOQUANTUM", "UltraCam", "UltraScan"],
+    ("simulated"): ["simulated"],
 }
+SOURCE_FILTER_FIELDS = {"parent_filters", "exclude"}
 
 # Flag to determine if network validation should be run (set by provided Container arg)
 running_network_validation = False
@@ -268,19 +271,39 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
         if response.status >= 400:
             return [], False
         data = await response.json()
-        if label := data.get("name", {}).get("data", {}).get("label", ""):
+        if label := data["name"]["data"]["label"]:
             names.append(label)
 
     names_url = f"http://rest.wormbase.org/rest/field/strain/{id}/other_names"
 
     async with aiohttp.ClientSession() as session, session.get(names_url) as response:
         if response.status >= 400:
-            return names, True
+            return [], True
         data = await response.json()
         if other_names := data.get("other_names", {}).get("data", []):
             names += other_names
 
     return names, True
+
+
+@alru_cache
+async def validate_uniprot_id(id: str) -> Tuple[List[str], bool]:
+    """
+    Returns a tuple of the ID names and whether or not it is valid.
+    """
+
+    # Strip the UniProtKB: prefix
+    id = id.replace("UniProtKB:", "")
+    url = f"https://rest.uniprot.org/uniprotkb/{id}"
+
+    logger.debug("Getting ID %s at %s", id, url)
+
+    async with aiohttp.ClientSession() as session, session.get(url) as response:
+        if response.status >= 400:
+            return [], False
+        data = await response.json()
+        name = data["proteinDescription"]["recommendedName"]["fullName"]["value"]
+        return [name], True
 
 
 def validate_id_name_object(
@@ -321,7 +344,8 @@ def validate_id_name_object(
 
     logger.debug("Valid ID, now checking if name '%s' matches ID: %s", name, id)
 
-    valid_name = any(name == retrieved_name for retrieved_name in retrieved_names)
+    # if retrieved_names is empty, we can assume the name is valid
+    valid_name = retrieved_names == [] or any(name == retrieved_name for retrieved_name in retrieved_names)
 
     if not valid_name:
         raise ValueError(f"name '{name}' does not match id: {id}")
@@ -406,7 +430,9 @@ class ExtendedValidationDepositionKeyPhotoSource(DepositionKeyPhotoSource):
 # ==============================================================================
 @alru_cache
 async def lookup_doi(doi: str) -> Tuple[str, bool]:
+    doi = doi.replace("doi:", "")
     url = f"https://api.crossref.org/works/{doi}/agency"
+    logger.debug("Checking DOI %s at %s", doi, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
         return doi, response.status == 200
 
@@ -414,6 +440,7 @@ async def lookup_doi(doi: str) -> Tuple[str, bool]:
 @alru_cache
 async def lookup_empiar(empiar_id: str) -> Tuple[str, bool]:
     url = f"https://www.ebi.ac.uk/empiar/api/entry/{empiar_id}/"
+    logger.debug("Checking EMPIAR ID %s at %s", empiar_id, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
         return empiar_id, response.status == 200
 
@@ -421,14 +448,17 @@ async def lookup_empiar(empiar_id: str) -> Tuple[str, bool]:
 @alru_cache
 async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
     url = f"https://www.ebi.ac.uk/emdb/api/entry/{emdb_id}"
+    logger.debug("Checking EMDB ID %s at %s", emdb_id, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
         return emdb_id, response.status == 200
 
 
 @alru_cache
 async def lookup_pdb(pdb_id: str) -> Tuple[str, bool]:
+    pdb_id = pdb_id.replace("PDB-", "")
     url = f"https://data.rcsb.org/rest/v1/core/entry/{pdb_id}"
-    async with aiohttp.ClientSession() as session, session.head(url) as response:
+    logger.debug("Checking PDB ID %s at %s", pdb_id, url)
+    async with aiohttp.ClientSession() as session, session.get(url) as response:
         return pdb_id, response.status == 200
 
 
@@ -436,7 +466,7 @@ PUBLICATION_REGEXES_AND_FUNCTIONS = {
     "doi": (r"^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$", lookup_doi),
     "empiar": (r"^EMPIAR-[0-9]{5}$", lookup_empiar),
     "emdb": (r"^EMD-[0-9]{4,5}$", lookup_emdb),
-    "pdb": (r"^pdb[0-9a-zA-Z]{4,8}$", lookup_pdb),
+    "pdb": (r"^PDB-[0-9a-zA-Z]{4,8}$", lookup_pdb),
 }
 
 
@@ -444,12 +474,10 @@ async def validate_publication_lists(publication_list: List[str]) -> List[str]:
     tasks = []
 
     for publication in publication_list:
-        for publication_type, (regex, validate_function) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
+        for _, (regex, validate_function) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
             if not re.match(regex, publication):
                 continue
-            # edge case for DOI, remove the doi: prefix
-            updated_publication = publication.replace("doi:", "") if publication_type == "doi" else publication
-            tasks.append(validate_function(updated_publication))
+            tasks.append(validate_function(publication))
             break
 
     results = await asyncio.gather(*tasks)
@@ -473,39 +501,29 @@ def validate_publications(publications: Optional[str]) -> Optional[str]:
 # ==============================================================================
 # Sources Validation
 # ==============================================================================
-def validate_sources(source_list: List[DefaultSource] | List[VoxelSpacingSource]) -> None:
+def validate_sources(source_list: List[StandardSource] | List[VoxelSpacingSource]) -> None:
     total_errors = []
 
-    # For verifying that all source entries each only have one finder type
-    multiple_finders_in_each_source_entries_errors = []
-    standalone_finders_in_each_source_entries_errors = []
-
-    for i, source_element in enumerate(source_list):
+    for index, source_element in enumerate(source_list):
         finders_in_source_entry = []
-        has_parent_filters = False
         for finder in source_element.model_fields:
-            # If the finder is not None, add it to the list of finders in the source entry
-            if getattr(source_element, finder) is None:
-                continue
-            if finder == "exclude":
-                continue
-            if finder == "parent_filters":
-                has_parent_filters = True
-            else:
+            # If the finder is not None and an actual finder, add it to the list of finders in the source entry
+            if getattr(source_element, finder) is not None and finder not in SOURCE_FILTER_FIELDS:
                 finders_in_source_entry.append(finder)
         # If there are more than one finder in the source entry, add the source entry index and the finders to the error set
         if len(finders_in_source_entry) > 1:
-            multiple_finders_in_each_source_entries_errors.append((i, finders_in_source_entry))
-        elif len(finders_in_source_entry) == 0 and has_parent_filters:
-            # means there's only a parent_filters entry
-            standalone_finders_in_each_source_entries_errors.append(i)
-
-    for i, finders in multiple_finders_in_each_source_entries_errors:
-        total_errors.append(
-            ValueError(f"Source entry {i} cannot have multiple finders (split into multiple entries): {finders}"),
-        )
-    for index in standalone_finders_in_each_source_entries_errors:
-        total_errors.append(ValueError(f"Source entry {index} cannot only have a parent_filters entry"))
+            total_errors.append(
+                ValueError(
+                    f"Source entry {index} cannot have multiple finders (split into multiple entries): {finders_in_source_entry}",
+                ),
+            )
+        if len(finders_in_source_entry) == 0:
+            for source_child in SOURCE_FILTER_FIELDS:
+                if getattr(source_element, source_child) is None:
+                    continue
+                total_errors.append(
+                    ValueError(f"Source entry {index} cannot have a {source_child} entry without a finder"),
+                )
 
     if total_errors:
         raise ValueError(total_errors)
@@ -517,7 +535,10 @@ def validate_sources(source_list: List[DefaultSource] | List[VoxelSpacingSource]
 class ExtendedValidationAnnotationObject(AnnotationObject):
     @model_validator(mode="after")
     def validate_annotation_object(self) -> Self:
-        validate_id_name_object(self, self.id, self.name, ancestor=CELLULAR_COMPONENT_GO_ID)
+        if re.match(GO_ID_REGEX, self.id):
+            validate_id_name_object(self, self.id, self.name, ancestor=CELLULAR_COMPONENT_GO_ID)
+        elif re.match(UNIPROT_ID_REGEX, self.id):
+            validate_id_name_object(self, self.id, self.name, validate_id_function=validate_uniprot_id)
         return self
 
 
@@ -594,48 +615,43 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
                 else:
                     used_shapes.add(shape)
 
-        # For verifying that all source entries each only have one shape entry
-        multiple_shapes_in_each_source_entries_errors = []
-
+        # For verifying that all source entries each only have one shape entry and that there is only one of glob_string and glob_strings
         for i, source_element in enumerate(source_list):
             shapes_in_source_entry = []
             for shape in source_element.model_fields:
-                if getattr(source_element, shape) is None:
-                    continue
-                if shape in {"parent_filters", "exclude"}:
+                # If the shape is not None and an actual shape, add it to the list of shapes in the source entry
+                shape_entry = getattr(source_element, shape)
+                if shape_entry is None or shape in SOURCE_FILTER_FIELDS:
                     continue
 
-                # If the shape is not None, add it to the list of shapes in the source entry
                 shapes_in_source_entry.append(shape)
+                has_glob_string = getattr(shape_entry, "glob_string", None) is not None
+                has_glob_strings = getattr(shape_entry, "glob_strings", None) is not None and shape_entry.glob_strings
+                if has_glob_string and has_glob_strings:
+                    total_errors.append(
+                        ValueError(
+                            f"Source entry {i} shape {shape} must have exactly one of glob_string or glob_strings",
+                        ),
+                    )
+
             # If there are more than one shape in the source entry, add the source entry index and the shapes to the error set
             if len(shapes_in_source_entry) > 1:
-                multiple_shapes_in_each_source_entries_errors.append((i, shapes_in_source_entry))
-
-        # For verifying that all source entries have exactly one of glob_string and glob_strings
-        multiple_glob_strings_errors = []
-
-        for i, source_element in enumerate(source_list):
-            for shape in source_element.model_fields:
-                source_entry: AnnotationSourceFile | None = getattr(source_element, shape)
-                if source_entry is None:
-                    continue
-
-                has_glob_string = getattr(source_entry, "glob_string", None) is not None
-                has_glob_strings = getattr(source_entry, "glob_strings", None) is not None and source_entry.glob_strings
-                if has_glob_string and has_glob_strings:
-                    multiple_glob_strings_errors.append((i, shape))
+                total_errors.append(
+                    ValueError(
+                        f"Source entry {i} cannot have multiple shapes (split into multiple entries): {shapes_in_source_entry}",
+                    ),
+                )
+            if len(shapes_in_source_entry) == 0:
+                for source_child in SOURCE_FILTER_FIELDS:
+                    if getattr(source_element, source_child) is None:
+                        continue
+                    total_errors.append(
+                        ValueError(f"Source entry {i} cannot have a {source_child} entry without a shape"),
+                    )
 
         if shapes_used_multiple_times_errors:
             total_errors.append(
                 ValueError(f"Annotation cannot have multiple same-shape sources: {shapes_used_multiple_times_errors}"),
-            )
-        for i, shapes in multiple_shapes_in_each_source_entries_errors:
-            total_errors.append(
-                ValueError(f"Source entry {i} cannot have multiple shapes (split into multiple entries): {shapes}"),
-            )
-        for i, shape in multiple_glob_strings_errors:
-            total_errors.append(
-                ValueError(f"Source entry {i} shape {shape} must have exactly one of glob_string or glob_strings"),
             )
 
         if total_errors:

@@ -6,10 +6,10 @@ from importers.deposition import DepositionImporter
 from importers.deposition_key_photo import DepositionKeyPhotoImporter
 from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
-from tests.s3_import.util import list_dir
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
+from tests.s3_import.util import list_dir
 
 
 @pytest.fixture
