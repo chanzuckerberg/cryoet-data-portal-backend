@@ -51,8 +51,10 @@ default_anno_metadata = {
 
 NUMERICAL_PRECISION = 1e-8
 
+
 def generate_anno_config_file(tmp_path, source_prefix: str) -> str:
     import yaml
+
     config_file = "tests/fixtures/annotations/anno_config.yaml"
     output_file = tmp_path / "anno_config.yaml"
     with open(config_file, "r") as fh, open(output_file, "w") as out_fh:
@@ -79,7 +81,9 @@ def deposition_config_local(local_fs: FileSystemApi, local_test_data_dir, tmp_pa
 
 
 def tomo_importer_factory(deposition_config_s3: DepositionImportConfig) -> TomogramImporter:
-    deposition = DepositionImporter(config=deposition_config_s3, metadata={}, name="20302", path="deposition1", parents={})
+    deposition = DepositionImporter(
+        config=deposition_config_s3, metadata={}, name="20302", path="deposition1", parents={},
+    )
     dataset = DatasetImporter(
         config=deposition_config_s3,
         metadata={},
