@@ -22,7 +22,7 @@ from common.fs import FileSystemApi
 # Helper functions
 # ==================================================================================================
 
-BINNING_SCALES = [0, 1, 2]
+BINNING_FACTORS = [0, 1, 2]
 
 # block sizes are experimentally tested to be the fastest
 MRC_HEADER_BLOCK_SIZE = 2 * 2**10
@@ -58,7 +58,7 @@ def get_zarr_headers(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
         pytest.fail(f"Expected zarr children: {expected_fsstore_children}, Actual zarr children: {fsstore_children}")
 
     zarrays = {}
-    for binning in BINNING_SCALES:
+    for binning in BINNING_FACTORS:
         with fs.open(os.path.join(zarrfile, str(binning), ".zarray"), "r") as f:
             zarrays[binning] = json.load(f)
     with fs.open(os.path.join(zarrfile, ".zattrs"), "r") as f:

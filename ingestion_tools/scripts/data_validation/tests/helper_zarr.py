@@ -2,6 +2,7 @@ from typing import Dict
 
 import numpy as np
 import pytest
+from fixtures.data import BINNING_FACTORS
 
 ZATTRS_AXIS_ORDER = ["z", "y", "x"]
 SPACING_TOLERANCE = 0.001
@@ -34,7 +35,7 @@ class HelperTestZarrHeader:
 
         def check_zattrs_path(header_data, _zarr_filename):
             del _zarr_filename
-            for binning_factor in [0, 1, 2]:  # 1x, 2x, 4x
+            for binning_factor in BINNING_FACTORS:  # 1x, 2x, 4x
                 assert header_data["zattrs"]["multiscales"][0]["datasets"][binning_factor]["path"] == str(
                     binning_factor,
                 )
@@ -76,7 +77,7 @@ class HelperTestZarrHeader:
 
         def check_zattrs_voxel_spacings(header_data, _zarr_filename):
             del _zarr_filename
-            for binning_factor in [0, 1, 2]:  # 1x, 2x, 4x
+            for binning_factor in BINNING_FACTORS:  # 1x, 2x, 4x
                 datasets_entry = header_data["zattrs"]["multiscales"][0]["datasets"][binning_factor]
                 axes = [1, 2] if self.skip_z_axis_checks else [0, 1, 2]  # z, y, x
                 for axis in axes:

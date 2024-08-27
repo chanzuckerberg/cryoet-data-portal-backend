@@ -4,6 +4,7 @@ from typing import Dict
 
 import pandas as pd
 import pytest
+from fixtures.data import BINNING_FACTORS
 from mrcfile.mrcinterpreter import MrcInterpreter
 from tests.helper_mrc_zarr import HelperTestMRCZarrHeader
 from tests.test_deposition import HelperTestDeposition
@@ -73,7 +74,7 @@ class TestTiltseries(HelperTestMRCZarrHeader):
 
         def check_size_in_zarr(header_data, _zarr_filename, tiltseries_metadata):
             del _zarr_filename
-            for binning_factor in [0, 1, 2]:  # Check all binning factors
+            for binning_factor in BINNING_FACTORS:  # Check all binning factors
                 assert header_data["zarrays"][binning_factor]["shape"] == [
                     tiltseries_metadata["scales"][binning_factor]["z"],
                     tiltseries_metadata["scales"][binning_factor]["y"],
