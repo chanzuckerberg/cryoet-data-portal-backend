@@ -63,7 +63,7 @@ class DepositionDBImporter(BaseDBImporter):
         return extra_data
 
     @classmethod
-    def get_items(cls, config: DBImportConfig, deposition_id: int) -> Iterable["DepositionDBImporter"]:
+    def get_items(cls, config: DBImportConfig, deposition_id: int | str) -> Iterable["DepositionDBImporter"]:
         return [
             cls(deposition_id, config)
             for deposition_id in config.find_subdirs_with_files(
