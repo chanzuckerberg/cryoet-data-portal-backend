@@ -80,33 +80,33 @@ def deposition_config_local(local_fs: FileSystemApi, local_test_data_dir, tmp_pa
     return config
 
 
-def tomo_importer_factory(deposition_config_s3: DepositionImportConfig) -> TomogramImporter:
+def tomo_importer_factory(deposition_config: DepositionImportConfig) -> TomogramImporter:
     deposition = DepositionImporter(
-        config=deposition_config_s3, metadata={}, name="20302", path="deposition1", parents={},
+        config=deposition_config, metadata={}, name="20302", path="deposition1", parents={},
     )
     dataset = DatasetImporter(
-        config=deposition_config_s3,
+        config=deposition_config,
         metadata={},
         name="dataset1",
         path="dataset1",
         parents={"deposition": deposition},
     )
     run = RunImporter(
-        config=deposition_config_s3,
+        config=deposition_config,
         metadata={},
         name="run1",
         path="run1",
         parents={**dataset.parents, **{"dataset": dataset}},
     )
     vs = VoxelSpacingImporter(
-        config=deposition_config_s3,
+        config=deposition_config,
         metadata={},
         name="10.0",
         path="vs1",
         parents={**run.parents, **{"run": run}},
     )
     tomo = TomogramImporter(
-        config=deposition_config_s3,
+        config=deposition_config,
         metadata={},
         name="tomo1",
         path="run1",
