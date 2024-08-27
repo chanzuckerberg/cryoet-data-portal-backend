@@ -1243,12 +1243,10 @@ def test_ingest_triangular_mesh(
     assert anno.local_metadata == expected_local_metadata
 
     # load the new mesh file
-    anno_file = anno.get_output_filename(anno.get_output_path()) + ".glb"
-    actual_mesh = trimesh.load(anno_file, force="mesh")
+    actual_mesh = trimesh.load(anno.get_output_filename(anno.get_output_path()) + ".glb", force="mesh")
+    actual_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(actual_mesh))
     # load expected mesh
     expected_mesh = trimesh.load(os.path.join(fixtures_dir, "annotations/triangular_mesh.glb"), force="mesh")
+    expected_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(expected_mesh))
 
-    # TODO compare against another mesh
-    assert actual_mesh.vertices == expected_mesh.vertices
-    assert actual_mesh.faces == expected_mesh.faces
-    assert actual_mesh.visual.face_colors == expected_mesh.visual.face_colors
+    assert actual_hash == expected_hash
