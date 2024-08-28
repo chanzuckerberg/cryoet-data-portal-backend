@@ -88,3 +88,10 @@ stack:
             - mountPath: /var/policies
               name: cerbos-policies
               readOnly: false
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
