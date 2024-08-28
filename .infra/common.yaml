@@ -64,6 +64,13 @@ stack:
     apiv2:
       image:
         repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2
+      resources:
+        limits:
+          cpu: "3"
+          memory: "3Gi"
+        requests:
+          cpu: "500m"
+          memory: "512Mi"
       sidecars:
         - name: cerbos
           image: ghcr.io/cerbos/cerbos:0.29.0
