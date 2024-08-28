@@ -82,7 +82,11 @@ def deposition_config_local(local_fs: FileSystemApi, local_test_data_dir, tmp_pa
 
 def tomo_importer_factory(deposition_config: DepositionImportConfig) -> TomogramImporter:
     deposition = DepositionImporter(
-        config=deposition_config, metadata={}, name="20302", path="deposition1", parents={},
+        config=deposition_config,
+        metadata={},
+        name="20302",
+        path="deposition1",
+        parents={},
     )
     dataset = DatasetImporter(
         config=deposition_config,
