@@ -642,6 +642,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshFile
         range: string
         required: true
         inlined: true
@@ -982,6 +983,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshFile
         - AuthorMixin
         - AnnotationMethodLinks
         range: string
@@ -1024,6 +1026,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshFile
         - AuthorMixin
         - AnnotationMethodLinks
         range: string
@@ -1070,6 +1073,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshFile
         - AuthorMixin
         - AnnotationMethodLinks
         range: string
@@ -1115,6 +1119,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshFile
         - AuthorMixin
         - AnnotationMethodLinks
         range: string
@@ -1163,6 +1168,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshFile
         - AuthorMixin
         - AnnotationMethodLinks
         range: string
@@ -2666,6 +2672,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshFile
         - AuthorMixin
         - AnnotationMethodLinks
         range: string
@@ -3280,6 +3287,28 @@ classes:
         inlined: true
         inlined_as_list: true
         minimum_value: 0
+      name:
+        name: name
+        description: The name that identifies to a single annotation mesh among multiple
+          meshes.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_mesh_name
+        alias: name
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - OrganismDetails
+        - TissueDetails
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        - AnnotationTriangularMeshFile
+        - AuthorMixin
+        - AnnotationMethodLinks
+        range: string
+        inlined: true
+        inlined_as_list: true
       file_format:
         name: file_format
         description: File format for this file
@@ -3660,6 +3689,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshFile
         range: string
         required: true
         inlined: true
@@ -3791,6 +3821,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshFile
         range: string
         recommended: true
         inlined: true

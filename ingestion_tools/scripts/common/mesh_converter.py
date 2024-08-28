@@ -33,8 +33,8 @@ def convert_mesh_to_glb(convert_func: typing.Callable[[str], trimesh.Trimesh]) -
 
 
 def check_mesh_name(input_file: str, name: str) -> str:
-    with h5py.File(input_file, 'r') as fp:
-        for mesh_list in fp['segment_list/'].keys():
+    with h5py.File(input_file, "r") as fp:
+        for mesh_list in fp["segment_list/"].keys():
             # Mesh name
             mesh_name_raw: bytes = fp[f"segment_list/{mesh_list}/biological_annotation/name"][()]
             if not mesh_name_raw:
@@ -60,33 +60,33 @@ def from_hff(input_file: str, name: str) -> trimesh.Trimesh:
     """
 
     def _extract(_f, path) -> np.ndarray:
-        data_path = f'{path}/data'
+        data_path = f"{path}/data"
         # The data is stored as a string of base64 encoded bytes, so we need to decode them
         data = base64.b64decode(fp[data_path][()])
 
-        mode_path = f'{path}/mode'
-        mode = fp[mode_path][()].decode('utf-8')
+        mode_path = f"{path}/mode"
+        mode = fp[mode_path][()].decode("utf-8")
         dtype = getattr(np, mode)
 
         return np.frombuffer(data, dtype=dtype).reshape(-1, 3)
 
     mesh_index = check_mesh_name(input_file, name)
     # Open the HDF5 file
-    with h5py.File(input_file, 'r') as fp:
+    with h5py.File(input_file, "r") as fp:
         # All the meshes are stored in the 'segment_list'Explore & Visualize HDF5 Files
         logger.info(f"Schema version: {fp['version'][()]}")
         # Mesh name
         logger.info(f"Processing mesh: {name}")
         # Color is a 4-tuple of RGBA values, 0-1 range (normalized from 0-255)
-        color = fp[f'segment_list/{mesh_index}/colour'][()]
+        color = fp[f"segment_list/{mesh_index}/colour"][()]
         meshes = []
-        for mesh in fp[f'segment_list/{mesh_index}/mesh_list/'].keys():
+        for mesh in fp[f"segment_list/{mesh_index}/mesh_list/"].keys():
             # Create a trimesh object from the vertices and triangles data
-            triangle_path = f'segment_list/{mesh_index}/mesh_list/{mesh}/triangles'
+            triangle_path = f"segment_list/{mesh_index}/mesh_list/{mesh}/triangles"
             triangles = _extract(fp, triangle_path)
 
             # Do the same for the vertices
-            vertices_data_path = f'segment_list/{mesh_index}/mesh_list/{mesh}/vertices'
+            vertices_data_path = f"segment_list/{mesh_index}/mesh_list/{mesh}/vertices"
             vertices = _extract(fp, vertices_data_path)
 
             # Create a trimesh object from the vertices and triangles data

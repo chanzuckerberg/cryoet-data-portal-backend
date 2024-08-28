@@ -14,7 +14,7 @@ def generate_hff_mesh(input_file: str, output_file: str) -> None:
     :param output_file: the path to the output hff file that will be created
     :return:
     """
-    mesh = trimesh.load(input_file, force='mesh')
+    mesh = trimesh.load(input_file, force="mesh")
     with h5py.File(output_file, "w") as fp:
         # Add the version
         fp.create_dataset("version", data="0.8.0.dev1")

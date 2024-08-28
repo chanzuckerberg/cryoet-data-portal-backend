@@ -782,6 +782,13 @@
                         "null"
                     ]
                 },
+                "name": {
+                    "description": "The name that identifies to a single annotation mesh among multiple meshes.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "scale_factor": {
                     "description": "The scale factor for a mesh annotation file.",
                     "minimum": 0,

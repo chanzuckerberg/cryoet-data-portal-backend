@@ -14,7 +14,7 @@ from importers.annotation import (
     SegmentationMaskAnnotation,
     SemanticSegmentationMaskAnnotation,
     TriangularMeshAnnotation,
-    TriangularMeshAnnotationGroup
+    TriangularMeshAnnotationGroup,
 )
 from importers.dataset import DatasetImporter
 from importers.deposition import DepositionImporter
@@ -83,7 +83,11 @@ def deposition_config_local(local_fs: FileSystemApi, local_test_data_dir, tmp_pa
 
 def tomo_importer_factory(deposition_config: DepositionImportConfig) -> TomogramImporter:
     deposition = DepositionImporter(
-        config=deposition_config, metadata={}, name="20302", path="deposition1", parents={},
+        config=deposition_config,
+        metadata={},
+        name="20302",
+        path="deposition1",
+        parents={},
     )
     dataset = DatasetImporter(
         config=deposition_config,
@@ -1236,7 +1240,7 @@ def test_ingest_triangular_mesh(
         path=os.path.join(fixtures_dir, glob_string),
         parents={"tomogram": tomo_importer_local, **tomo_importer_local.parents},
         file_format=file_format,
-        identifier=100
+        identifier=100,
     )
     anno.import_item()
     anno.import_metadata()
@@ -1265,6 +1269,7 @@ def test_ingest_triangular_mesh(
     expected_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(expected_mesh))
 
     assert actual_hash == expected_hash
+
 
 @pytest.mark.parametrize(
     "glob_string,file_format,name",
@@ -1311,8 +1316,3 @@ def test_ingest_triangular_mesh_group(
     )
     anno.import_item()
     anno.import_metadata()
-
-
-
-
-

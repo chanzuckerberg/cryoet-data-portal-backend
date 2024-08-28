@@ -849,6 +849,7 @@ class OrganismDetails(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationTriangularMeshFile",
                     "AuthorMixin",
                     "AnnotationMethodLinks",
                     "Author",
@@ -892,6 +893,7 @@ class TissueDetails(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationTriangularMeshFile",
                     "AuthorMixin",
                     "AnnotationMethodLinks",
                     "Author",
@@ -946,6 +948,7 @@ class CellType(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationTriangularMeshFile",
                     "AuthorMixin",
                     "AnnotationMethodLinks",
                     "Author",
@@ -1000,6 +1003,7 @@ class CellStrain(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationTriangularMeshFile",
                     "AuthorMixin",
                     "AnnotationMethodLinks",
                     "Author",
@@ -1055,6 +1059,7 @@ class CellComponent(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationTriangularMeshFile",
                     "AuthorMixin",
                     "AnnotationMethodLinks",
                     "Author",
@@ -2535,6 +2540,7 @@ class AnnotationObject(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationTriangularMeshFile",
                     "AuthorMixin",
                     "AnnotationMethodLinks",
                     "Author",
@@ -3250,6 +3256,28 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
             }
         },
     )
+    name: Optional[str] = Field(
+        None,
+        description="""The name that identifies to a single annotation mesh among multiple meshes.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "name",
+                "domain_of": [
+                    "OrganismDetails",
+                    "TissueDetails",
+                    "CellType",
+                    "CellStrain",
+                    "CellComponent",
+                    "AnnotationObject",
+                    "AnnotationTriangularMeshFile",
+                    "AuthorMixin",
+                    "AnnotationMethodLinks",
+                    "Author",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_mesh_name"],
+            }
+        },
+    )
     file_format: str = Field(
         ...,
         description="""File format for this file""",
@@ -3747,6 +3775,7 @@ class AuthorMixin(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationTriangularMeshFile",
                 ],
                 "exact_mappings": ["cdp-common:author_name"],
             }
@@ -3857,6 +3886,7 @@ class Author(AuthorMixin):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationTriangularMeshFile",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:author_name"],
@@ -3979,6 +4009,7 @@ class AnnotationMethodLinks(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
+                    "AnnotationTriangularMeshFile",
                 ],
                 "recommended": True,
             }

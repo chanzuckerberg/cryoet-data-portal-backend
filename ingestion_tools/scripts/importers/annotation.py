@@ -4,11 +4,12 @@ import os.path
 from abc import abstractmethod
 from collections import defaultdict
 from functools import partial
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import ndjson
 
-from common import mesh_converter as mc, point_converter as pc
+from common import mesh_converter as mc
+from common import point_converter as pc
 from common.config import DepositionImportConfig
 from common.finders import BaseFinder, DepositionObjectImporterFactory, SourceGlobFinder, SourceMultiGlobFinder
 from common.fs import FileSystemApi
