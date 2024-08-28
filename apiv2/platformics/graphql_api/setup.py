@@ -6,6 +6,10 @@ import typing
 
 import strawberry
 from fastapi import Depends, FastAPI
+from strawberry.fastapi import GraphQLRouter
+from strawberry.schema.config import StrawberryConfig
+from strawberry.schema.name_converter import HasGraphQLName, NameConverter
+
 from platformics.database.connect import AsyncDB
 from platformics.graphql_api.core.deps import (
     get_auth_principal,
@@ -15,9 +19,6 @@ from platformics.graphql_api.core.deps import (
 from platformics.graphql_api.core.gql_loaders import EntityLoader
 from platformics.security.authorization import AuthzClient, Principal
 from platformics.settings import APISettings
-from strawberry.fastapi import GraphQLRouter
-from strawberry.schema.config import StrawberryConfig
-from strawberry.schema.name_converter import HasGraphQLName, NameConverter
 
 # ------------------------------------------------------------------------------
 # Utilities for setting up the app

@@ -1,6 +1,7 @@
-from platformics.database.models.base import Base
 from sqlalchemy.orm import ColumnProperty
 from sqlalchemy_utils import get_primary_keys
+
+from platformics.database.models.base import Base
 
 
 def get_primary_key(model) -> tuple[str, ColumnProperty]:

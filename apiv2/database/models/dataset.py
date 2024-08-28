@@ -8,17 +8,19 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 import datetime
 from typing import TYPE_CHECKING
 
-from platformics.database.models.base import Base
-from platformics.database.models.file import File
 from sqlalchemy import DateTime, Enum, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import sample_type_enum
+
+from platformics.database.models.base import Base
+from platformics.database.models.file import File
 
 if TYPE_CHECKING:
     from database.models.dataset_author import DatasetAuthor
     from database.models.dataset_funding import DatasetFunding
     from database.models.deposition import Deposition
     from database.models.run import Run
+
     from platformics.database.models.file import File
 
     ...

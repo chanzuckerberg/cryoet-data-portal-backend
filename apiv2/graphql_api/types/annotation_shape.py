@@ -18,6 +18,16 @@ import strawberry
 from fastapi import Depends
 from graphql_api.helpers.annotation_shape import AnnotationShapeGroupByOptions, build_annotation_shape_groupby_output
 from graphql_api.types.annotation_file import AnnotationFileAggregate, format_annotation_file_aggregate_output
+from sqlalchemy import inspect
+from sqlalchemy.engine.row import RowMapping
+from sqlalchemy.ext.asyncio import AsyncSession
+from strawberry import relay
+from strawberry.types import Info
+from support.enums import annotation_file_shape_type_enum
+from support.limit_offset import LimitOffsetClause
+from typing_extensions import TypedDict
+from validators.annotation_shape import AnnotationShapeCreateInputValidator, AnnotationShapeUpdateInputValidator
+
 from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
 from platformics.graphql_api.core.errors import PlatformicsError
 from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
@@ -30,15 +40,6 @@ from platformics.graphql_api.core.query_input_types import (
 from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
-from sqlalchemy import inspect
-from sqlalchemy.engine.row import RowMapping
-from sqlalchemy.ext.asyncio import AsyncSession
-from strawberry import relay
-from strawberry.types import Info
-from support.enums import annotation_file_shape_type_enum
-from support.limit_offset import LimitOffsetClause
-from typing_extensions import TypedDict
-from validators.annotation_shape import AnnotationShapeCreateInputValidator, AnnotationShapeUpdateInputValidator
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")

@@ -6,8 +6,8 @@ import datetime
 
 import pytest
 from conftest import GQLTestClient, SessionStorage
-from platformics.database.connect import SyncDB
 
+from platformics.database.connect import SyncDB
 from test_infra.factories.dataset import DatasetFactory
 
 date_now = datetime.datetime.now()

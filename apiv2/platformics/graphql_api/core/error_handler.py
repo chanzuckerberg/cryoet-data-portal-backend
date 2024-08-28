@@ -2,9 +2,10 @@ from abc import ABC, abstractmethod
 from typing import Any, Iterator, List
 
 from graphql.error import GraphQLError
-from platformics.graphql_api.core.errors import PlatformicsError
 from pydantic import ValidationError
 from strawberry.extensions.base_extension import SchemaExtension
+
+from platformics.graphql_api.core.errors import PlatformicsError
 
 
 class ExceptionHandler(ABC):

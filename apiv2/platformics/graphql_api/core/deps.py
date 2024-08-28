@@ -5,12 +5,13 @@ from botocore.client import Config
 from fastapi import Depends
 from mypy_boto3_s3.client import S3Client
 from mypy_boto3_sts.client import STSClient
+from sqlalchemy.ext.asyncio import AsyncSession
+from starlette.requests import Request
+
 from platformics.database.connect import AsyncDB, init_async_db
 from platformics.graphql_api.core.error_handler import PlatformicsError
 from platformics.security.authorization import AuthzClient, Principal, hydrate_auth_principal
 from platformics.settings import APISettings
-from sqlalchemy.ext.asyncio import AsyncSession
-from starlette.requests import Request
 
 
 def get_settings(request: Request) -> APISettings:

@@ -6,6 +6,7 @@ repos:
     # These files are codegen'd and non-compliant :'(
     exclude: |
       (?x)(
+          ^apiv2/.*|
           ^schema/.*/metadata_models.py|
           ^schema/.*/ingestion_config_models.py
       )
@@ -13,6 +14,21 @@ repos:
     - --fix
     - --config
     - ingestion_tools/pyproject.toml
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.6.2
+  hooks:
+  - id: ruff
+    # These files are codegen'd and non-compliant :'(
+    exclude: |
+      (?x)(
+          ^schema/.*/metadata_models.py|
+          ^schema/.*/ingestion_config_models.py
+      )
+    args:
+    - --fix
+    - --config
+    - apiv2/pyproject.toml
+    files: '^apiv2/.*'
 - repo: https://github.com/mpalmer/action-validator
   rev: v0.6.0
   hooks:

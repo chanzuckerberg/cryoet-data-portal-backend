@@ -1,15 +1,15 @@
 import typing
 from enum import Enum
 
-import platformics.database.models as db
-from platformics.security.token_auth import get_token_claims
-from platformics.settings import APISettings
-from platformics.thirdparty.cerbos_sqlalchemy.query import get_query
 from sqlalchemy.sql import Select
 
+import platformics.database.models as db
 from cerbos.sdk.client import CerbosClient
 from cerbos.sdk.model import Principal as CerbosPrincipal
 from cerbos.sdk.model import Resource, ResourceDesc
+from platformics.security.token_auth import get_token_claims
+from platformics.settings import APISettings
+from platformics.thirdparty.cerbos_sqlalchemy.query import get_query
 
 
 class AuthzAction(str, Enum):

@@ -6,6 +6,7 @@ import datetime
 import enum
 
 import strawberry
+
 from platformics.graphql_api.core.gql_loaders import get_input_hash
 
 

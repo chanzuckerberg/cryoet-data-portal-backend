@@ -7,16 +7,18 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from platformics.database.models.base import Base
-from platformics.database.models.file import File
 from sqlalchemy import Boolean, Enum, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import annotation_file_source_enum
+
+from platformics.database.models.base import Base
+from platformics.database.models.file import File
 
 if TYPE_CHECKING:
     from database.models.alignment import Alignment
     from database.models.annotation_shape import AnnotationShape
     from database.models.tomogram_voxel_spacing import TomogramVoxelSpacing
+
     from platformics.database.models.file import File
 
     ...

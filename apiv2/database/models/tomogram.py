@@ -7,8 +7,6 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from platformics.database.models.base import Base
-from platformics.database.models.file import File
 from sqlalchemy import Boolean, Enum, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import (
@@ -18,12 +16,16 @@ from support.enums import (
     tomogram_type_enum,
 )
 
+from platformics.database.models.base import Base
+from platformics.database.models.file import File
+
 if TYPE_CHECKING:
     from database.models.alignment import Alignment
     from database.models.deposition import Deposition
     from database.models.run import Run
     from database.models.tomogram_author import TomogramAuthor
     from database.models.tomogram_voxel_spacing import TomogramVoxelSpacing
+
     from platformics.database.models.file import File
 
     ...

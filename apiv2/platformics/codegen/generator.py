@@ -10,6 +10,7 @@ import re
 import jinja2.ext
 from jinja2 import Environment, FileSystemLoader
 from linkml_runtime.utils.schemaview import SchemaView
+
 from platformics.codegen.lib.linkml_wrappers import ViewWrapper
 
 DIR_CODEGEN = [

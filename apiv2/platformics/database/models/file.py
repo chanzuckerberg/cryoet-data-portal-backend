@@ -4,15 +4,16 @@ from typing import ClassVar
 
 import uuid6
 from mypy_boto3_s3.client import S3Client
-from platformics.database.models.base import Base
-from platformics.settings import APISettings
-from platformics.support import sqlalchemy_helpers
-from platformics.support.file_enums import FileAccessProtocol, FileStatus, FileUploadClient
 from sqlalchemy import Column, DateTime, Enum, Integer, String, cast, event
 from sqlalchemy.dialects.postgresql import UUID, VARCHAR
 from sqlalchemy.engine import Connection
 from sqlalchemy.orm import Mapped, Mapper, mapped_column
 from sqlalchemy.sql import func
+
+from platformics.database.models.base import Base
+from platformics.settings import APISettings
+from platformics.support import sqlalchemy_helpers
+from platformics.support.file_enums import FileAccessProtocol, FileStatus, FileUploadClient
 
 
 class File(Base):

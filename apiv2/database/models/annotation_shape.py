@@ -7,15 +7,17 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from platformics.database.models.base import Base
-from platformics.database.models.file import File
 from sqlalchemy import Enum, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import annotation_file_shape_type_enum
 
+from platformics.database.models.base import Base
+from platformics.database.models.file import File
+
 if TYPE_CHECKING:
     from database.models.annotation import Annotation
     from database.models.annotation_file import AnnotationFile
+
     from platformics.database.models.file import File
 
     ...
