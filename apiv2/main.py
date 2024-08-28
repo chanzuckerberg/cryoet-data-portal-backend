@@ -4,13 +4,14 @@ Launch the GraphQL server.
 
 import strawberry
 import uvicorn
-from cerbos.sdk.model import Principal
 from graphql_api.mutations import Mutation
 from graphql_api.queries import Query
 from platformics.graphql_api.core.deps import get_auth_principal
 from platformics.graphql_api.core.error_handler import HandleErrors
 from platformics.graphql_api.setup import get_app, get_strawberry_config
 from platformics.settings import APISettings
+
+from cerbos.sdk.model import Principal
 
 settings = APISettings.model_validate({})  # Workaround for https://github.com/pydantic/pydantic/issues/3753
 schema = strawberry.Schema(query=Query, mutation=Mutation, config=get_strawberry_config(), extensions=[HandleErrors()])

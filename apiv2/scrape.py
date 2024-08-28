@@ -3,7 +3,6 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import click
 import cryoet_data_portal as cdp
-
 from database import models
 from platformics.database.connect import init_sync_db
 from support.enums import tomogram_reconstruction_method_enum as reconstruction_enum

@@ -78,9 +78,7 @@ def require_auth_principal(
 
 
 def is_system_user(principal: Principal = Depends(require_auth_principal)) -> bool:
-    if principal.attr.get("service_identity"):
-        return True
-    return False
+    return bool(principal.attr.get("service_identity"))
 
 
 def require_system_user(principal: Principal = Depends(require_auth_principal)) -> None:

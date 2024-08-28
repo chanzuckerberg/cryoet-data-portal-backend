@@ -8,49 +8,41 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+import datetime
+import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
+from typing import TYPE_CHECKING, Annotated, Optional, Sequence
 
-import platformics.database.models as base_db
 import database.models as db
 import strawberry
-import datetime
-from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
-from validators.deposition_type import DepositionTypeCreateInputValidator
-from validators.deposition_type import DepositionTypeUpdateInputValidator
-from graphql_api.helpers.deposition_type import DepositionTypeGroupByOptions, build_deposition_type_groupby_output
-from platformics.graphql_api.core.relay_interface import EntityInterface
 from fastapi import Depends
+from graphql_api.helpers.deposition_type import DepositionTypeGroupByOptions, build_deposition_type_groupby_output
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
 from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
+from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
 from platformics.graphql_api.core.query_input_types import (
+    EnumComparators,
+    IntComparators,
     aggregator_map,
     orderBy,
-    EnumComparators,
-    DatetimeComparators,
-    IntComparators,
-    FloatComparators,
-    StrComparators,
-    UUIDComparators,
-    BoolComparators,
 )
+from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
-from strawberry import relay
 from strawberry.types import Info
+from support.enums import deposition_types_enum
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-import enum
-from support.enums import deposition_types_enum
+from validators.deposition_type import DepositionTypeCreateInputValidator, DepositionTypeUpdateInputValidator
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.deposition import DepositionOrderByClause, DepositionWhereClause, Deposition
+    from graphql_api.types.deposition import Deposition, DepositionOrderByClause, DepositionWhereClause
 
     pass
 else:
@@ -194,7 +186,9 @@ class DepositionTypeAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[DepositionTypeCountColumns] = None
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[DepositionTypeCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -273,7 +267,7 @@ def format_deposition_type_aggregate_output(
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if not type(query_results) is list:
+    if type(query_results) is not list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_deposition_type_aggregate_row(row))
@@ -292,10 +286,10 @@ def format_deposition_type_aggregate_row(row: RowMapping) -> DepositionTypeAggre
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not getattr(output, "groupBy"):
-                setattr(output, "groupBy", DepositionTypeGroupByOptions())
-            group = build_deposition_type_groupby_output(getattr(output, "groupBy"), group_keys, value)
-            setattr(output, "groupBy", group)
+            if not output.groupBy:
+                output.groupBy = DepositionTypeGroupByOptions()
+            group = build_deposition_type_groupby_output(output.groupBy, group_keys, value)
+            output.groupBy = group
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -326,8 +320,8 @@ async def resolve_deposition_types_aggregate(
     # Get the selected aggregate functions and columns to operate on, and groupby options if any were provided.
     # TODO: not sure why selected_fields is a list
     selections = info.selected_fields[0].selections[0].selections
-    aggregate_selections = [selection for selection in selections if getattr(selection, "name") != "groupBy"]
-    groupby_selections = [selection for selection in selections if getattr(selection, "name") == "groupBy"]
+    aggregate_selections = [selection for selection in selections if selection.name != "groupBy"]
+    groupby_selections = [selection for selection in selections if selection.name == "groupBy"]
     groupby_selections = groupby_selections[0].selections if groupby_selections else []
 
     if not aggregate_selections:

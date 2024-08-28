@@ -519,12 +519,12 @@ async def concatenate_files(
 
     # Concatenate files (tmp files are automatically deleted when closed)
     with tempfile.NamedTemporaryFile() as file_concatenated:
-        with open(file_concatenated.name, "ab") as fp_concat:  # noqa: ASYNC101
+        with open(file_concatenated.name, "ab") as fp_concat:  # noqa: ASYNC101, ASYNC230
             for file in files:
                 # Download file locally and append it
                 with tempfile.NamedTemporaryFile() as file_temp:
                     s3_client.download_file(file.namespace, file.path, file_temp.name)
-                    with open(file_temp.name, "rb") as fp_temp:  # noqa: ASYNC101
+                    with open(file_temp.name, "rb") as fp_temp:  # noqa: ASYNC101, ASYNC230
                         fp_concat.write(fp_temp.read())
         # Upload to S3
         path = f"{FILE_CONCATENATION_PREFIX}/{uuid6.uuid7()}"

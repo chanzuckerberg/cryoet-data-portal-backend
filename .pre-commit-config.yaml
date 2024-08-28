@@ -36,7 +36,6 @@ repos:
       #        pydantic-settings,
       #        click,
       #      ]
-repos:
 - repo: https://github.com/mpalmer/action-validator
   rev: v0.6.0
   hooks:

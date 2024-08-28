@@ -2,13 +2,14 @@ import typing
 from enum import Enum
 
 import platformics.database.models as db
-from cerbos.sdk.client import CerbosClient
-from cerbos.sdk.model import Principal as CerbosPrincipal
-from cerbos.sdk.model import Resource, ResourceDesc
 from platformics.security.token_auth import get_token_claims
 from platformics.settings import APISettings
 from platformics.thirdparty.cerbos_sqlalchemy.query import get_query
 from sqlalchemy.sql import Select
+
+from cerbos.sdk.client import CerbosClient
+from cerbos.sdk.model import Principal as CerbosPrincipal
+from cerbos.sdk.model import Resource, ResourceDesc
 
 
 class AuthzAction(str, Enum):
@@ -97,9 +98,7 @@ class AuthzClient:
         resource_type = type(resource).__tablename__
         attr = self._obj_to_dict(resource)
         resource = Resource(id="NEW_ID", kind=resource_type, attr=attr)
-        if self.client.is_allowed(AuthzAction.CREATE, principal, resource):
-            return True
-        return False
+        return bool(self.client.is_allowed(AuthzAction.CREATE, principal, resource))
 
     def can_update(self, resource, principal: Principal) -> bool:
         resource_type = type(resource).__tablename__
@@ -109,9 +108,7 @@ class AuthzClient:
         # so they cannot be sent in cerbos perms checks, and we need to find/use the table's
         # primary key instead of a hardcoded column name.
         resource = Resource(id="resource_id", kind=resource_type, attr=attr)
-        if self.client.is_allowed(AuthzAction.UPDATE, principal, resource):
-            return True
-        return False
+        return bool(self.client.is_allowed(AuthzAction.UPDATE, principal, resource))
 
     # Get a SQLAlchemy model with authz filters already applied
     def get_resource_query(

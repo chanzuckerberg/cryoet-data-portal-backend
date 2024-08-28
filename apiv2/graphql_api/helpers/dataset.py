@@ -5,12 +5,12 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import Any, Optional, TYPE_CHECKING
-import strawberry
 import datetime
-import uuid
-from support.enums import sample_type_enum
+from typing import TYPE_CHECKING, Any, Optional
+
+import strawberry
 from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
+from support.enums import sample_type_enum
 
 if TYPE_CHECKING:
     from api.types.deposition import Deposition
