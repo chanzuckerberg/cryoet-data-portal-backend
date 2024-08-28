@@ -182,17 +182,10 @@ def tiltseries_mdoc(tiltseries_mdoc_file: str, filesystem: FileSystemApi) -> pd.
 
 
 @pytest.fixture(scope="session")
-def tiltseries_tilt(tiltseries_tilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
-    """Load the tiltseries tilt."""
-    with filesystem.open(tiltseries_tilt_file, "r") as f:
-        return pd.read_csv(f, sep=r"\s+", header=None, names=["TiltAngle"])
-
-
-@pytest.fixture(scope="session")
-def tiltseries_raw_tilt(tiltseries_rawtilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
-    """Load the tiltseries raw tilt."""
-    with filesystem.open(tiltseries_rawtilt_file, "r") as f:
-        return pd.read_csv(f, sep=r"\s+", header=None, names=["TiltAngle"])
+def tiltseries_tlt(tiltseries_tlt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
+    """Load the tiltseries tlt."""
+    with filesystem.open(tiltseries_tlt_file, "r") as f:
+        return pd.read_csv(f, sep=r"\s+", header=None, names=["tilt_angle"])
 
 
 # ==================================================================================================
