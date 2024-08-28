@@ -3,6 +3,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import click
 import cryoet_data_portal as cdp
+
 from database import models
 from platformics.database.connect import init_sync_db
 from support.enums import tomogram_reconstruction_method_enum as reconstruction_enum
@@ -134,8 +135,6 @@ def add(session, model, item, parents):
             "last_modified_date": remote_item["last_modified_date"],
             "publications": remote_item["dataset_publications"],  # Field name change
             "related_database_entries": remote_item["related_database_entries"],
-            "related_database_links": remote_item["related_database_links"],
-            "dataset_citations": remote_item["dataset_citations"],
             "s3_prefix": remote_item["s3_prefix"],
             "https_prefix": remote_item["https_prefix"],
         }
@@ -170,9 +169,9 @@ def add(session, model, item, parents):
             "run_id": parents["run_id"],
             # "deposition_id": remote_item["deposition_id"], # We don't have deposition id's yet
             "s3_omezarr_dir": remote_item["s3_omezarr_dir"],
-            "s3_mrc_bin1": remote_item["s3_mrc_bin1"],
+            "s3_mrc_file": remote_item["s3_mrc_file"],
             "https_omezarr_dir": remote_item["https_omezarr_dir"],
-            "https_mrc_bin1": remote_item["https_mrc_bin1"],
+            "https_mrc_file": remote_item["https_mrc_file"],
             "s3_collection_metadata": remote_item["s3_collection_metadata"],
             "https_collection_metadata": remote_item["https_collection_metadata"],
             "s3_angle_list": remote_item["s3_angle_list"],
@@ -239,8 +238,8 @@ def add(session, model, item, parents):
             "is_canonical": remote_item["is_canonical"],
             "s3_omezarr_dir": remote_item["s3_omezarr_dir"],
             "https_omezarr_dir": remote_item["https_omezarr_dir"],
-            "s3_mrc_scale0": remote_item["s3_mrc_scale0"],
-            "https_mrc_scale0": remote_item["https_mrc_scale0"],
+            "s3_mrc_file": remote_item["s3_mrc_file"],
+            "https_mrc_file": remote_item["https_mrc_file"],
             "scale0_dimensions": remote_item["scale0_dimensions"],
             "scale1_dimensions": remote_item["scale1_dimensions"],
             "scale2_dimensions": remote_item["scale2_dimensions"],

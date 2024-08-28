@@ -35,7 +35,7 @@ build: ## Build docker containers
 	$(docker_compose) build
 
 .PHONY: update-schema
-update-schema: codegen alembic-autogenerate upgrade-head
+update-schema: codegen alembic-autogenerate alembic-upgrade-head
 	# $(docker_compose_run) $(CONTAINER) ruff check --fix .
 	$(docker_compose_run) $(APP_CONTAINER) sh -c 'strawberry export-schema main:schema > /app/graphql_api/schema.graphql'
 	docker compose up -d
@@ -82,7 +82,7 @@ seed: ## Seed the dev db with a reasonable set of starting data.
 
 .PHONY: pgconsole
 pgconsole: ## Connect to the local postgres database.
-	$(docker_compose) exec platformics-db psql "$(LOCAL_DB_CONN_STRING)"
+	$(docker_compose) exec db psql "$(LOCAL_DB_CONN_STRING)"
 
 .PHONY: logs
 logs: ## Tail the logs of the dev env containers. ex: make logs CONTAINER=graphql-api

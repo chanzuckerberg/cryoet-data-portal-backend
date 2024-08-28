@@ -1,10 +1,11 @@
 from logging.config import fileConfig
 
-import sqlalchemy as sa
 from alembic import context
+from sqlalchemy import create_engine
+import sqlalchemy as sa
+
 from database.models import meta
 from platformics.settings import CLISettings
-from sqlalchemy import create_engine
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
