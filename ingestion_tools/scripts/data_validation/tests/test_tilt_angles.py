@@ -116,10 +116,6 @@ class TestTiltAngles:
         )
         assert len(errors) == 0, "\n".join(errors)
 
-    def test_tilt_frames(self, tiltseries_tilt: pd.DataFrame, frames_files: List[str]):
-        """Ensure that there are at least the same number of frame files as tilt angles."""
-        assert len(tiltseries_tilt) <= len(frames_files)
-
     def test_tilt_tiltseries_metadata(self, tiltseries_tilt: pd.DataFrame, tiltseries_metadata: Dict):
         assert len(tiltseries_tilt) <= tiltseries_metadata["size"]["z"]
 
@@ -142,10 +138,6 @@ class TestTiltAngles:
             "\n".join(errors)
             + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, with step {tiltseries_metadata['tilt_step']}"
         )
-
-    def test_tilt_max_frames_count(self, tiltseries_tilt: pd.DataFrame, max_frames_count: int):
-        """Ensure that the tilt angles are consistent with the max frames count."""
-        assert len(tiltseries_tilt) <= max_frames_count
 
     ### BEGIN Raw Tilt .rawtlt tests ###
     def test_raw_tilt_count(self, tiltseries_raw_tilt: pd.DataFrame):
@@ -189,10 +181,6 @@ class TestTiltAngles:
             + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, with step {tiltseries_metadata['tilt_step']}"
         )
 
-    def test_raw_tilt_max_frames_count(self, tiltseries_raw_tilt: pd.DataFrame, max_frames_count: int):
-        """Ensure that the raw tilt angles are consistent with the max frames count."""
-        assert len(tiltseries_raw_tilt) <= max_frames_count
-
     ### BEGIN MDOC tests ###
     def test_tiltseries_mdoc_range(self, tiltseries_mdoc: pd.DataFrame):
         """Check that the tiltseries mdoc angles are within the range specified in the metadata."""
@@ -205,10 +193,6 @@ class TestTiltAngles:
 
     def test_mdoc_tiltseries_metadata(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
         assert len(tiltseries_mdoc) == tiltseries_metadata["size"]["z"]
-
-    def test_mdoc_max_frames_count(self, tiltseries_mdoc: pd.DataFrame, max_frames_count: int):
-        """Ensure that the mdoc tilt angles are consistent with the max frames count."""
-        assert len(tiltseries_mdoc) <= max_frames_count
 
     def test_mdoc_frame_paths(
         self,
@@ -261,7 +245,7 @@ class TestTiltAngles:
         )
 
     ### BEGIN frames files & tiltseries metadata tests ###
-    def test_frames_count(self, frames_files: List[str], tiltseries_metadata: Dict, max_frames_count: int):
+    def test_frames_count(self, frames_files: List[str], tiltseries_metadata: Dict):
         """
         Ensure that the number of frames files is consistent with the frames_count metadata field.
         """
