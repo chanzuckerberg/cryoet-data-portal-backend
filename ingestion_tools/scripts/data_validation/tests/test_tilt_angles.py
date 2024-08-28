@@ -13,7 +13,8 @@ ANGLE_TOLERANCE = 0.05
 @pytest.mark.parametrize("run_name", pytest.run_name, scope="session")
 class TestTiltAngles:
     """
-    A class to test tilt angle data (only ordering, other data validation tests are done in respective classes).
+    A class to test tilt angle data. Only checking that the # of angles in these files are consistent with other files /
+    data and that they properly map to other files / data. Other data validation tests is done in respective classes.
     Spans .tlt, .rawtlt, .mdoc, tiltseries_metadata.json, frames files.
     Ordering:
         - .tlt (<=) maps to .rawtlt (not necessarily 1:1)
