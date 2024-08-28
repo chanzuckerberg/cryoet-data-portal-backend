@@ -50,7 +50,7 @@ def test_invalid_deposition_metadata_import(
     config = create_config("tests/fixtures/depositions/deposition2.yaml")
     deposition = list(DepositionImporter.finder(config))[0]
     deposition.import_metadata()
-    assert [] == s3_fs.glob(f"{output_path}/depositions_metadata/10302/deposition_metadata.json")
+    assert s3_fs.glob(f"{output_path}/depositions_metadata/10302/deposition_metadata.json") == []
 
 
 def test_key_photo_import_http(

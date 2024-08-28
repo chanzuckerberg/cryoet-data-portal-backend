@@ -160,3 +160,4 @@ cython_debug/
 .idea/
 
 **/local_data
+**.DS_Store

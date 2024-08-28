@@ -97,6 +97,7 @@ def primitive_data_check(
         return False
 
     if keep_unique_values and original_value != new_value:
+        print(f"Warning: Data value conflict: {original_value} | {new_value}")
         return False
 
     return True

@@ -86,10 +86,11 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
     def __init__(self, source: dict[str, Any]):
         super().__init__(source)
         # flatten self.source additional layer that specifies the type of annotation file it is
-        if not (len(self.source.keys()) == 1):
+        clean_source = {k: v for k, v in self.source.items() if k not in {"parent_filters", "exclude"}}
+        if not (len(clean_source.keys()) == 1):
             raise ValueError("Incorrect annotation source format")
-        source_file = list(self.source.values())[0]
-        source_file["shape"] = list(self.source.keys())[0]
+        source_file = list(clean_source.values())[0]
+        source_file["shape"] = list(clean_source.keys())[0]
         self.source = source_file
 
     def load(
@@ -111,7 +112,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
         path: str,
         parents: dict[str, Any] | None,
     ):
-        source_args = {k: v for k, v in self.source.items() if k not in ["shape", "glob_string", "glob_strings"]}
+        source_args = {k: v for k, v in self.source.items() if k not in {"shape", "glob_string", "glob_strings"}}
         instance_args = {
             "identifier": AnnotationIdentifierHelper.get_identifier(config, metadata, parents),
             "config": config,
@@ -185,8 +186,15 @@ class AnnotationImporter(BaseImporter):
         for source in anno_files:
             files.extend(source.get_metadata(path))
 
-        self.local_metadata["object_count"] = max([anno.get_object_count(output_dir) for anno in anno_files], default=0)
-        self.local_metadata["files"] = files
+        try:
+            self.local_metadata["object_count"] = max(
+                [anno.get_object_count(output_dir) for anno in anno_files],
+                default=0,
+            )
+            self.local_metadata["files"] = files
+        except FileNotFoundError:
+            print("Skipping metadata write since not all files have been written yet")
+            return
 
         self.written_metadata_files.append(filename)
         self.annotation_metadata.write_metadata(filename, self.local_metadata)
