@@ -7,10 +7,10 @@ import uvicorn
 from graphql_api.mutations import Mutation
 from graphql_api.queries import Query
 
-from cerbos.sdk.model import Principal
 from platformics.graphql_api.core.deps import get_auth_principal
 from platformics.graphql_api.core.error_handler import HandleErrors
 from platformics.graphql_api.setup import get_app, get_strawberry_config
+from platformics.security.authorization import Principal
 from platformics.settings import APISettings
 
 settings = APISettings.model_validate({})  # Workaround for https://github.com/pydantic/pydantic/issues/3753
