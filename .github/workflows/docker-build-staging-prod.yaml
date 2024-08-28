@@ -12,5 +12,5 @@ jobs:
     secrets: inherit
     with:
       envs: staging,prod
-      path_filters: '!.infra/**'
+      path_filters: '!.infra/**,apiv2/**'
       branches: release-please--branches--main
