@@ -42,7 +42,6 @@ stack:
         value: test
       - name: AWS_SECRET_ACCESS_KEY
         value: test
-      # TODO - these are keypairs for testing only! Do not use in prod!!
       - name: JWK_PUBLIC_KEY_FILE
         value: /var/keys/public_key.pem
       - name: JWK_PRIVATE_KEY_FILE
