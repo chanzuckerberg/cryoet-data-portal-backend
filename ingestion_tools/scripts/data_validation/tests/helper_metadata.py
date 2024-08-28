@@ -9,7 +9,5 @@ def basic_metadata_check(metadata: Dict):
     assert all(isinstance(author, dict) for author in metadata["authors"])
     assert all(author["name"] for author in metadata["authors"])
     assert any(author.get("corresponding_author_status", False) for author in metadata["authors"])
-    assert any(
-        author.get("primary_author_status", False) or author.get("primary_annotator_status", False)
-        for author in metadata["authors"]
-    )
+    assert any(author.get("primary_author_status", False) for author in metadata["authors"])
+    assert all(author.get("primary_annotator_status") is None for author in metadata["authors"])

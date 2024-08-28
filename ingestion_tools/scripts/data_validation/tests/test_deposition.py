@@ -36,7 +36,7 @@ class HelperTestDeposition:
     @staticmethod
     def check_deposition_metadata(deposition_id: Union[str, int], bucket: str, filesystem: FileSystemApi) -> Dict:
         """A deposition metadata sanity check and ensuring that photos are valid."""
-        # No need to check the same deposition twice.
+        # No need to check the same deposition twice. if it's supposed to fail, it will fail the first time.
         deposition_id = str(deposition_id)
         if deposition_id in HelperTestDeposition.cached_deposition_valid:
             return

@@ -10,7 +10,8 @@ from tests.test_deposition import HelperTestDeposition
 
 from common.fs import FileSystemApi
 
-# values are based on ingestion_tools/scripts/importers/key_image.py
+# values are based on ingestion_tools/scripts/importers/key_image.py (134 pixels is the min height)
+# and frontend aspect ratio (4:3 is used for image display)
 PHOTO_ASPECT_RATIO = 4 / 3
 MIN_THUMBNAIL_WIDTH = 100
 MIN_SNAPSHOT_WIDTH = 512 * 3 / 4  # account for 4:3 aspect ratio
@@ -24,7 +25,7 @@ class TestTomogram:
         """A tomogram metadata sanity check."""
         assert canonical_tomogram_metadata["deposition_id"]
         assert isinstance(canonical_tomogram_metadata["authors"], list)
-        assert isinstance(canonical_tomogram_metadata["authors"][0], dict)
+        assert all(isinstance(authors, dict) for authors in canonical_tomogram_metadata["authors"])
 
     # The key_photo attribute is where the key_images data is stored and can be validated
     def test_tomogram_key_photos(self, canonical_tomogram_metadata: Dict, bucket: str, filesystem: FileSystemApi):
