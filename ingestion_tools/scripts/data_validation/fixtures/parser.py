@@ -41,7 +41,7 @@ def pytest_addoption(parser: Parser) -> None:
 
     # Voxelspacing
     parser.addoption(
-        "--voxelspacing_glob",
+        "--voxel_spacing_glob",
         action="store",
         default="*",
     )

@@ -8,7 +8,6 @@ from common.fs import FileSystemApi
 
 
 @pytest.mark.annotation
-@pytest.mark.metadata
 @pytest.mark.parametrize("run_name, voxel_spacing", pytest.run_spacing_combinations, scope="session")
 class TestAnnotationMetadata:
     """A class dedicated to the general testing of all annotation metadata."""
