@@ -5,12 +5,13 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import TYPE_CHECKING, Any, Optional
-
+from typing import Any, Optional, TYPE_CHECKING
 import strawberry
-from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
-from graphql_api.helpers.run import RunGroupByOptions, build_run_groupby_output
+import datetime
+import uuid
 from support.enums import tiltseries_microscope_manufacturer_enum
+from graphql_api.helpers.run import RunGroupByOptions, build_run_groupby_output
+from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
 
 if TYPE_CHECKING:
     from api.types.run import Run
@@ -33,9 +34,9 @@ class TiltseriesGroupByOptions:
     run: Optional[RunGroupByOptions] = None
     deposition: Optional[DepositionGroupByOptions] = None
     s3_omezarr_dir: Optional[str] = None
-    s3_mrc_bin1: Optional[str] = None
+    s3_mrc_file: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
-    https_mrc_bin1: Optional[str] = None
+    https_mrc_file: Optional[str] = None
     s3_collection_metadata: Optional[str] = None
     https_collection_metadata: Optional[str] = None
     s3_angle_list: Optional[str] = None

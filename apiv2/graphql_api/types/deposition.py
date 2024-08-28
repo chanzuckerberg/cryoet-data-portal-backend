@@ -8,34 +8,40 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
-import datetime
-import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Optional, Sequence
+from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
 
+import platformics.database.models as base_db
 import database.models as db
 import strawberry
-from fastapi import Depends
+import datetime
+from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
+from validators.deposition import DepositionCreateInputValidator
+from validators.deposition import DepositionUpdateInputValidator
 from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
+from platformics.graphql_api.core.relay_interface import EntityInterface
+from graphql_api.types.deposition_author import DepositionAuthorAggregate, format_deposition_author_aggregate_output
 from graphql_api.types.alignment import AlignmentAggregate, format_alignment_aggregate_output
 from graphql_api.types.annotation import AnnotationAggregate, format_annotation_aggregate_output
 from graphql_api.types.dataset import DatasetAggregate, format_dataset_aggregate_output
-from graphql_api.types.deposition_author import DepositionAuthorAggregate, format_deposition_author_aggregate_output
-from graphql_api.types.deposition_type import DepositionTypeAggregate, format_deposition_type_aggregate_output
 from graphql_api.types.frame import FrameAggregate, format_frame_aggregate_output
 from graphql_api.types.tiltseries import TiltseriesAggregate, format_tiltseries_aggregate_output
 from graphql_api.types.tomogram import TomogramAggregate, format_tomogram_aggregate_output
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
+from graphql_api.types.deposition_type import DepositionTypeAggregate, format_deposition_type_aggregate_output
+from fastapi import Depends
 from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
 from platformics.graphql_api.core.query_input_types import (
-    DatetimeComparators,
-    IntComparators,
-    StrComparators,
     aggregator_map,
     orderBy,
+    EnumComparators,
+    DatetimeComparators,
+    IntComparators,
+    FloatComparators,
+    StrComparators,
+    UUIDComparators,
+    BoolComparators,
 )
-from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
@@ -45,24 +51,24 @@ from strawberry import relay
 from strawberry.types import Info
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-from validators.deposition import DepositionCreateInputValidator, DepositionUpdateInputValidator
+import enum
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.alignment import Alignment, AlignmentOrderByClause, AlignmentWhereClause
-    from graphql_api.types.annotation import Annotation, AnnotationOrderByClause, AnnotationWhereClause
-    from graphql_api.types.dataset import Dataset, DatasetOrderByClause, DatasetWhereClause
     from graphql_api.types.deposition_author import (
-        DepositionAuthor,
         DepositionAuthorOrderByClause,
         DepositionAuthorWhereClause,
+        DepositionAuthor,
     )
-    from graphql_api.types.deposition_type import DepositionType, DepositionTypeOrderByClause, DepositionTypeWhereClause
-    from graphql_api.types.frame import Frame, FrameOrderByClause, FrameWhereClause
-    from graphql_api.types.tiltseries import Tiltseries, TiltseriesOrderByClause, TiltseriesWhereClause
-    from graphql_api.types.tomogram import Tomogram, TomogramOrderByClause, TomogramWhereClause
+    from graphql_api.types.alignment import AlignmentOrderByClause, AlignmentWhereClause, Alignment
+    from graphql_api.types.annotation import AnnotationOrderByClause, AnnotationWhereClause, Annotation
+    from graphql_api.types.dataset import DatasetOrderByClause, DatasetWhereClause, Dataset
+    from graphql_api.types.frame import FrameOrderByClause, FrameWhereClause, Frame
+    from graphql_api.types.tiltseries import TiltseriesOrderByClause, TiltseriesWhereClause, Tiltseries
+    from graphql_api.types.tomogram import TomogramOrderByClause, TomogramWhereClause, Tomogram
+    from graphql_api.types.deposition_type import DepositionTypeOrderByClause, DepositionTypeWhereClause, DepositionType
 
     pass
 else:
@@ -104,7 +110,7 @@ These are batching functions for loading related objects to avoid N+1 queries.
 @relay.connection(
     relay.ListConnection[
         Annotated["DepositionAuthor", strawberry.lazy("graphql_api.types.deposition_author")]
-    ],  # type:ignore
+    ]  # type:ignore
 )
 async def load_deposition_author_rows(
     root: "Deposition",
@@ -140,7 +146,7 @@ async def load_deposition_author_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]],  # type:ignore
+    relay.ListConnection[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]]  # type:ignore
 )
 async def load_alignment_rows(
     root: "Deposition",
@@ -170,7 +176,7 @@ async def load_alignment_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]],  # type:ignore
+    relay.ListConnection[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]]  # type:ignore
 )
 async def load_annotation_rows(
     root: "Deposition",
@@ -202,7 +208,7 @@ async def load_annotation_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]],  # type:ignore
+    relay.ListConnection[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]]  # type:ignore
 )
 async def load_dataset_rows(
     root: "Deposition",
@@ -232,7 +238,7 @@ async def load_dataset_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]],  # type:ignore
+    relay.ListConnection[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]]  # type:ignore
 )
 async def load_frame_rows(
     root: "Deposition",
@@ -262,7 +268,7 @@ async def load_frame_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]],  # type:ignore
+    relay.ListConnection[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]]  # type:ignore
 )
 async def load_tiltseries_rows(
     root: "Deposition",
@@ -294,7 +300,7 @@ async def load_tiltseries_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]],  # type:ignore
+    relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]]  # type:ignore
 )
 async def load_tomogram_rows(
     root: "Deposition",
@@ -326,7 +332,7 @@ async def load_tomogram_aggregate_rows(
 @relay.connection(
     relay.ListConnection[
         Annotated["DepositionType", strawberry.lazy("graphql_api.types.deposition_type")]
-    ],  # type:ignore
+    ]  # type:ignore
 )
 async def load_deposition_type_rows(
     root: "Deposition",
@@ -399,8 +405,6 @@ class DepositionWhereClause(TypedDict):
     )
     publications: Optional[StrComparators] | None
     related_database_entries: Optional[StrComparators] | None
-    related_database_links: Optional[StrComparators] | None
-    dataset_citations: Optional[StrComparators] | None
     deposition_date: Optional[DatetimeComparators] | None
     release_date: Optional[DatetimeComparators] | None
     last_modified_date: Optional[DatetimeComparators] | None
@@ -418,8 +422,6 @@ class DepositionOrderByClause(TypedDict):
     deposition_description: Optional[orderBy] | None
     publications: Optional[orderBy] | None
     related_database_entries: Optional[orderBy] | None
-    related_database_links: Optional[orderBy] | None
-    dataset_citations: Optional[orderBy] | None
     deposition_date: Optional[orderBy] | None
     release_date: Optional[orderBy] | None
     last_modified_date: Optional[orderBy] | None
@@ -475,7 +477,7 @@ class Deposition(EntityInterface):
     )  # type:ignore
     deposition_title: str = strawberry.field(description="Title of a CryoET deposition.")
     deposition_description: str = strawberry.field(
-        description="A short description of the deposition, similar to an abstract for a journal article or dataset.",
+        description="A short description of the deposition, similar to an abstract for a journal article or dataset."
     )
     deposition_types: Sequence[Annotated["DepositionType", strawberry.lazy("graphql_api.types.deposition_type")]] = (
         load_deposition_type_rows
@@ -484,29 +486,19 @@ class Deposition(EntityInterface):
         Annotated["DepositionTypeAggregate", strawberry.lazy("graphql_api.types.deposition_type")]
     ] = load_deposition_type_aggregate_rows  # type:ignore
     publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.",
-        default=None,
+        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database entries for the dataset.",
-        default=None,
-    )
-    related_database_links: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database links for the dataset.",
-        default=None,
-    )
-    dataset_citations: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications citing the dataset.",
-        default=None,
+        description="Comma-separated list of related database entries for the dataset.", default=None
     )
     deposition_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+        description="The date a data item was received by the cryoET data portal."
     )
     release_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+        description="The date a data item was received by the cryoET data portal."
     )
     last_modified_date: datetime.datetime = strawberry.field(
-        description="The date a piece of data was last modified on the cryoET data portal.",
+        description="The date a piece of data was last modified on the cryoET data portal."
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -545,8 +537,6 @@ class DepositionMinMaxColumns:
     deposition_description: Optional[str] = None
     publications: Optional[str] = None
     related_database_entries: Optional[str] = None
-    related_database_links: Optional[str] = None
-    dataset_citations: Optional[str] = None
     deposition_date: Optional[datetime.datetime] = None
     release_date: Optional[datetime.datetime] = None
     last_modified_date: Optional[datetime.datetime] = None
@@ -572,8 +562,6 @@ class DepositionCountColumns(enum.Enum):
     depositionTypes = "deposition_types"
     publications = "publications"
     relatedDatabaseEntries = "related_database_entries"
-    relatedDatabaseLinks = "related_database_links"
-    datasetCitations = "dataset_citations"
     depositionDate = "deposition_date"
     releaseDate = "release_date"
     lastModifiedDate = "last_modified_date"
@@ -590,9 +578,7 @@ class DepositionAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self,
-        distinct: Optional[bool] = False,
-        columns: Optional[DepositionCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[DepositionCountColumns] = None
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -627,32 +613,22 @@ Mutation types
 class DepositionCreateInput:
     deposition_title: str = strawberry.field(description="Title of a CryoET deposition.")
     deposition_description: str = strawberry.field(
-        description="A short description of the deposition, similar to an abstract for a journal article or dataset.",
+        description="A short description of the deposition, similar to an abstract for a journal article or dataset."
     )
     publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.",
-        default=None,
+        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database entries for the dataset.",
-        default=None,
-    )
-    related_database_links: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database links for the dataset.",
-        default=None,
-    )
-    dataset_citations: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications citing the dataset.",
-        default=None,
+        description="Comma-separated list of related database entries for the dataset.", default=None
     )
     deposition_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+        description="The date a data item was received by the cryoET data portal."
     )
     release_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+        description="The date a data item was received by the cryoET data portal."
     )
     last_modified_date: datetime.datetime = strawberry.field(
-        description="The date a piece of data was last modified on the cryoET data portal.",
+        description="The date a piece of data was last modified on the cryoET data portal."
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -661,32 +637,22 @@ class DepositionCreateInput:
 class DepositionUpdateInput:
     deposition_title: Optional[str] = strawberry.field(description="Title of a CryoET deposition.")
     deposition_description: Optional[str] = strawberry.field(
-        description="A short description of the deposition, similar to an abstract for a journal article or dataset.",
+        description="A short description of the deposition, similar to an abstract for a journal article or dataset."
     )
     publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.",
-        default=None,
+        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database entries for the dataset.",
-        default=None,
-    )
-    related_database_links: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database links for the dataset.",
-        default=None,
-    )
-    dataset_citations: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications citing the dataset.",
-        default=None,
+        description="Comma-separated list of related database entries for the dataset.", default=None
     )
     deposition_date: Optional[datetime.datetime] = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+        description="The date a data item was received by the cryoET data portal."
     )
     release_date: Optional[datetime.datetime] = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+        description="The date a data item was received by the cryoET data portal."
     )
     last_modified_date: Optional[datetime.datetime] = strawberry.field(
-        description="The date a piece of data was last modified on the cryoET data portal.",
+        description="The date a piece of data was last modified on the cryoET data portal."
     )
     id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -723,7 +689,7 @@ def format_deposition_aggregate_output(query_results: Sequence[RowMapping] | Row
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if type(query_results) is not list:
+    if not type(query_results) is list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_deposition_aggregate_row(row))
@@ -742,10 +708,10 @@ def format_deposition_aggregate_row(row: RowMapping) -> DepositionAggregateFunct
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not output.groupBy:
-                output.groupBy = DepositionGroupByOptions()
-            group = build_deposition_groupby_output(output.groupBy, group_keys, value)
-            output.groupBy = group
+            if not getattr(output, "groupBy"):
+                setattr(output, "groupBy", DepositionGroupByOptions())
+            group = build_deposition_groupby_output(getattr(output, "groupBy"), group_keys, value)
+            setattr(output, "groupBy", group)
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -776,8 +742,8 @@ async def resolve_depositions_aggregate(
     # Get the selected aggregate functions and columns to operate on, and groupby options if any were provided.
     # TODO: not sure why selected_fields is a list
     selections = info.selected_fields[0].selections[0].selections
-    aggregate_selections = [selection for selection in selections if selection.name != "groupBy"]
-    groupby_selections = [selection for selection in selections if selection.name == "groupBy"]
+    aggregate_selections = [selection for selection in selections if getattr(selection, "name") != "groupBy"]
+    groupby_selections = [selection for selection in selections if getattr(selection, "name") == "groupBy"]
     groupby_selections = groupby_selections[0].selections if groupby_selections else []
 
     if not aggregate_selections:

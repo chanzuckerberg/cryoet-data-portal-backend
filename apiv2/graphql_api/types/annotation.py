@@ -8,31 +8,34 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
-import datetime
-import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Optional, Sequence
+from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
 
+import platformics.database.models as base_db
 import database.models as db
 import strawberry
-from fastapi import Depends
+import datetime
+from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
+from validators.annotation import AnnotationCreateInputValidator
+from validators.annotation import AnnotationUpdateInputValidator
 from graphql_api.helpers.annotation import AnnotationGroupByOptions, build_annotation_groupby_output
-from graphql_api.types.annotation_author import AnnotationAuthorAggregate, format_annotation_author_aggregate_output
+from platformics.graphql_api.core.relay_interface import EntityInterface
 from graphql_api.types.annotation_shape import AnnotationShapeAggregate, format_annotation_shape_aggregate_output
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
+from graphql_api.types.annotation_author import AnnotationAuthorAggregate, format_annotation_author_aggregate_output
+from fastapi import Depends
 from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
 from platformics.graphql_api.core.query_input_types import (
-    BoolComparators,
-    DatetimeComparators,
-    EnumComparators,
-    FloatComparators,
-    IntComparators,
-    StrComparators,
     aggregator_map,
     orderBy,
+    EnumComparators,
+    DatetimeComparators,
+    IntComparators,
+    FloatComparators,
+    StrComparators,
+    UUIDComparators,
+    BoolComparators,
 )
-from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
@@ -40,27 +43,27 @@ from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
 from strawberry import relay
 from strawberry.types import Info
-from support.enums import annotation_method_type_enum
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-from validators.annotation import AnnotationCreateInputValidator, AnnotationUpdateInputValidator
+import enum
+from support.enums import annotation_method_type_enum
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.annotation_author import (
-        AnnotationAuthor,
-        AnnotationAuthorOrderByClause,
-        AnnotationAuthorWhereClause,
-    )
+    from graphql_api.types.run import RunOrderByClause, RunWhereClause, Run
     from graphql_api.types.annotation_shape import (
-        AnnotationShape,
         AnnotationShapeOrderByClause,
         AnnotationShapeWhereClause,
+        AnnotationShape,
     )
-    from graphql_api.types.deposition import Deposition, DepositionOrderByClause, DepositionWhereClause
-    from graphql_api.types.run import Run, RunOrderByClause, RunWhereClause
+    from graphql_api.types.annotation_author import (
+        AnnotationAuthorOrderByClause,
+        AnnotationAuthorWhereClause,
+        AnnotationAuthor,
+    )
+    from graphql_api.types.deposition import DepositionOrderByClause, DepositionWhereClause, Deposition
 
     pass
 else:
@@ -103,7 +106,7 @@ async def load_run_rows(
 @relay.connection(
     relay.ListConnection[
         Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]
-    ],  # type:ignore
+    ]  # type:ignore
 )
 async def load_annotation_shape_rows(
     root: "Annotation",
@@ -137,7 +140,7 @@ async def load_annotation_shape_aggregate_rows(
 @relay.connection(
     relay.ListConnection[
         Annotated["AnnotationAuthor", strawberry.lazy("graphql_api.types.annotation_author")]
-    ],  # type:ignore
+    ]  # type:ignore
 )
 async def load_annotation_author_rows(
     root: "Annotation",
@@ -304,25 +307,23 @@ class Annotation(EntityInterface):
         default=None,
     )
     annotation_method: str = strawberry.field(
-        description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
+        description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)"
     )
     ground_truth_status: Optional[bool] = strawberry.field(
-        description="Whether an annotation is considered ground truth, as determined by the annotator.",
-        default=None,
+        description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None
     )
     object_id: str = strawberry.field(
-        description="Gene Ontology Cellular Component identifier for the annotation object",
+        description="Gene Ontology Cellular Component identifier for the annotation object"
     )
     object_name: str = strawberry.field(
-        description="Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
+        description="Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)"
     )
     object_description: Optional[str] = strawberry.field(
         description="A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.",
         default=None,
     )
     object_state: Optional[str] = strawberry.field(
-        description="Molecule state annotated (e.g. open, closed)",
-        default=None,
+        description="Molecule state annotated (e.g. open, closed)", default=None
     )
     object_count: Optional[int] = strawberry.field(description="Number of objects identified", default=None)
     confidence_precision: Optional[float] = strawberry.field(
@@ -334,28 +335,25 @@ class Annotation(EntityInterface):
         default=None,
     )
     ground_truth_used: Optional[str] = strawberry.field(
-        description="Annotation filename used as ground truth for precision and recall",
-        default=None,
+        description="Annotation filename used as ground truth for precision and recall", default=None
     )
     annotation_software: Optional[str] = strawberry.field(
-        description="Software used for generating this annotation",
-        default=None,
+        description="Software used for generating this annotation", default=None
     )
     is_curator_recommended: Optional[bool] = strawberry.field(
-        description="This annotation is recommended by the curator to be preferred for this object type.",
-        default=None,
+        description="This annotation is recommended by the curator to be preferred for this object type.", default=None
     )
     method_type: annotation_method_type_enum = strawberry.field(
-        description="Classification of the annotation method based on supervision.",
+        description="Classification of the annotation method based on supervision."
     )
     deposition_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+        description="The date a data item was received by the cryoET data portal."
     )
     release_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+        description="The date a data item was received by the cryoET data portal."
     )
     last_modified_date: datetime.datetime = strawberry.field(
-        description="The date a piece of data was last modified on the cryoET data portal.",
+        description="The date a piece of data was last modified on the cryoET data portal."
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -455,9 +453,7 @@ class AnnotationAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self,
-        distinct: Optional[bool] = False,
-        columns: Optional[AnnotationCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[AnnotationCountColumns] = None
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -499,25 +495,23 @@ class AnnotationCreateInput:
         default=None,
     )
     annotation_method: str = strawberry.field(
-        description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
+        description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)"
     )
     ground_truth_status: Optional[bool] = strawberry.field(
-        description="Whether an annotation is considered ground truth, as determined by the annotator.",
-        default=None,
+        description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None
     )
     object_id: str = strawberry.field(
-        description="Gene Ontology Cellular Component identifier for the annotation object",
+        description="Gene Ontology Cellular Component identifier for the annotation object"
     )
     object_name: str = strawberry.field(
-        description="Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
+        description="Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)"
     )
     object_description: Optional[str] = strawberry.field(
         description="A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.",
         default=None,
     )
     object_state: Optional[str] = strawberry.field(
-        description="Molecule state annotated (e.g. open, closed)",
-        default=None,
+        description="Molecule state annotated (e.g. open, closed)", default=None
     )
     object_count: Optional[int] = strawberry.field(description="Number of objects identified", default=None)
     confidence_precision: Optional[float] = strawberry.field(
@@ -529,28 +523,25 @@ class AnnotationCreateInput:
         default=None,
     )
     ground_truth_used: Optional[str] = strawberry.field(
-        description="Annotation filename used as ground truth for precision and recall",
-        default=None,
+        description="Annotation filename used as ground truth for precision and recall", default=None
     )
     annotation_software: Optional[str] = strawberry.field(
-        description="Software used for generating this annotation",
-        default=None,
+        description="Software used for generating this annotation", default=None
     )
     is_curator_recommended: Optional[bool] = strawberry.field(
-        description="This annotation is recommended by the curator to be preferred for this object type.",
-        default=None,
+        description="This annotation is recommended by the curator to be preferred for this object type.", default=None
     )
     method_type: annotation_method_type_enum = strawberry.field(
-        description="Classification of the annotation method based on supervision.",
+        description="Classification of the annotation method based on supervision."
     )
     deposition_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+        description="The date a data item was received by the cryoET data portal."
     )
     release_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+        description="The date a data item was received by the cryoET data portal."
     )
     last_modified_date: datetime.datetime = strawberry.field(
-        description="The date a piece of data was last modified on the cryoET data portal.",
+        description="The date a piece of data was last modified on the cryoET data portal."
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -566,25 +557,23 @@ class AnnotationUpdateInput:
         default=None,
     )
     annotation_method: Optional[str] = strawberry.field(
-        description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
+        description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)"
     )
     ground_truth_status: Optional[bool] = strawberry.field(
-        description="Whether an annotation is considered ground truth, as determined by the annotator.",
-        default=None,
+        description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None
     )
     object_id: Optional[str] = strawberry.field(
-        description="Gene Ontology Cellular Component identifier for the annotation object",
+        description="Gene Ontology Cellular Component identifier for the annotation object"
     )
     object_name: Optional[str] = strawberry.field(
-        description="Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
+        description="Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)"
     )
     object_description: Optional[str] = strawberry.field(
         description="A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.",
         default=None,
     )
     object_state: Optional[str] = strawberry.field(
-        description="Molecule state annotated (e.g. open, closed)",
-        default=None,
+        description="Molecule state annotated (e.g. open, closed)", default=None
     )
     object_count: Optional[int] = strawberry.field(description="Number of objects identified", default=None)
     confidence_precision: Optional[float] = strawberry.field(
@@ -596,28 +585,25 @@ class AnnotationUpdateInput:
         default=None,
     )
     ground_truth_used: Optional[str] = strawberry.field(
-        description="Annotation filename used as ground truth for precision and recall",
-        default=None,
+        description="Annotation filename used as ground truth for precision and recall", default=None
     )
     annotation_software: Optional[str] = strawberry.field(
-        description="Software used for generating this annotation",
-        default=None,
+        description="Software used for generating this annotation", default=None
     )
     is_curator_recommended: Optional[bool] = strawberry.field(
-        description="This annotation is recommended by the curator to be preferred for this object type.",
-        default=None,
+        description="This annotation is recommended by the curator to be preferred for this object type.", default=None
     )
     method_type: Optional[annotation_method_type_enum] = strawberry.field(
-        description="Classification of the annotation method based on supervision.",
+        description="Classification of the annotation method based on supervision."
     )
     deposition_date: Optional[datetime.datetime] = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+        description="The date a data item was received by the cryoET data portal."
     )
     release_date: Optional[datetime.datetime] = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+        description="The date a data item was received by the cryoET data portal."
     )
     last_modified_date: Optional[datetime.datetime] = strawberry.field(
-        description="The date a piece of data was last modified on the cryoET data portal.",
+        description="The date a piece of data was last modified on the cryoET data portal."
     )
     id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -654,7 +640,7 @@ def format_annotation_aggregate_output(query_results: Sequence[RowMapping] | Row
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if type(query_results) is not list:
+    if not type(query_results) is list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_annotation_aggregate_row(row))
@@ -673,10 +659,10 @@ def format_annotation_aggregate_row(row: RowMapping) -> AnnotationAggregateFunct
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not output.groupBy:
-                output.groupBy = AnnotationGroupByOptions()
-            group = build_annotation_groupby_output(output.groupBy, group_keys, value)
-            output.groupBy = group
+            if not getattr(output, "groupBy"):
+                setattr(output, "groupBy", AnnotationGroupByOptions())
+            group = build_annotation_groupby_output(getattr(output, "groupBy"), group_keys, value)
+            setattr(output, "groupBy", group)
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -707,8 +693,8 @@ async def resolve_annotations_aggregate(
     # Get the selected aggregate functions and columns to operate on, and groupby options if any were provided.
     # TODO: not sure why selected_fields is a list
     selections = info.selected_fields[0].selections[0].selections
-    aggregate_selections = [selection for selection in selections if selection.name != "groupBy"]
-    groupby_selections = [selection for selection in selections if selection.name == "groupBy"]
+    aggregate_selections = [selection for selection in selections if getattr(selection, "name") != "groupBy"]
+    groupby_selections = [selection for selection in selections if getattr(selection, "name") == "groupBy"]
     groupby_selections = groupby_selections[0].selections if groupby_selections else []
 
     if not aggregate_selections:
@@ -739,13 +725,7 @@ async def create_annotation(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.run_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -800,13 +780,7 @@ async def update_annotation(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.run_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")

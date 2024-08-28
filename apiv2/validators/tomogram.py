@@ -8,15 +8,18 @@ Make changes to the template codegen/templates/validators/class_name.py.j2 inste
 # ruff: noqa: E501 Line too long
 
 
+from support.enums import (
+    fiducial_alignment_status_enum,
+    tomogram_reconstruction_method_enum,
+    tomogram_processing_enum,
+    tomogram_type_enum,
+)
+
+import typing
+import datetime
 import uuid
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
-from support.enums import (
-    fiducial_alignment_status_enum,
-    tomogram_processing_enum,
-    tomogram_reconstruction_method_enum,
-    tomogram_type_enum,
-)
 from typing_extensions import Annotated
 
 
@@ -86,13 +89,13 @@ class TomogramCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    s3_mrc_scale0: Annotated[
+    s3_mrc_file: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
         ),
     ]
-    https_mrc_scale0: Annotated[
+    https_mrc_file: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
@@ -215,13 +218,13 @@ class TomogramUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    s3_mrc_scale0: Annotated[
+    s3_mrc_file: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
         ),
     ]
-    https_mrc_scale0: Annotated[
+    https_mrc_file: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,

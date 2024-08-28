@@ -8,11 +8,13 @@ Make changes to the template codegen/templates/validators/class_name.py.j2 inste
 # ruff: noqa: E501 Line too long
 
 
+from support.enums import sample_type_enum
+
+import typing
 import datetime
 import uuid
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
-from support.enums import sample_type_enum
 from typing_extensions import Annotated
 
 
@@ -142,18 +144,6 @@ class DatasetCreateInputValidator(BaseModel):
         StringConstraints(
             strip_whitespace=True,
             pattern=r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)",
-        ),
-    ]
-    related_database_links: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    dataset_citations: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
         ),
     ]
     s3_prefix: Annotated[
@@ -297,18 +287,6 @@ class DatasetUpdateInputValidator(BaseModel):
         StringConstraints(
             strip_whitespace=True,
             pattern=r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)",
-        ),
-    ]
-    related_database_links: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    dataset_citations: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
         ),
     ]
     s3_prefix: Annotated[

@@ -8,34 +8,41 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
-import datetime
-import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Optional, Sequence
+from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
 
+import platformics.database.models as base_db
 import database.models as db
 import strawberry
-from fastapi import Depends
+import datetime
+from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
+from validators.run import RunCreateInputValidator
+from validators.run import RunUpdateInputValidator
 from graphql_api.helpers.run import RunGroupByOptions, build_run_groupby_output
+from platformics.graphql_api.core.relay_interface import EntityInterface
 from graphql_api.types.alignment import AlignmentAggregate, format_alignment_aggregate_output
 from graphql_api.types.annotation import AnnotationAggregate, format_annotation_aggregate_output
 from graphql_api.types.frame import FrameAggregate, format_frame_aggregate_output
 from graphql_api.types.tiltseries import TiltseriesAggregate, format_tiltseries_aggregate_output
-from graphql_api.types.tomogram import TomogramAggregate, format_tomogram_aggregate_output
 from graphql_api.types.tomogram_voxel_spacing import (
     TomogramVoxelSpacingAggregate,
     format_tomogram_voxel_spacing_aggregate_output,
 )
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
+from graphql_api.types.tomogram import TomogramAggregate, format_tomogram_aggregate_output
+from fastapi import Depends
 from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
 from platformics.graphql_api.core.query_input_types import (
-    IntComparators,
-    StrComparators,
     aggregator_map,
     orderBy,
+    EnumComparators,
+    DatetimeComparators,
+    IntComparators,
+    FloatComparators,
+    StrComparators,
+    UUIDComparators,
+    BoolComparators,
 )
-from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
@@ -45,23 +52,23 @@ from strawberry import relay
 from strawberry.types import Info
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-from validators.run import RunCreateInputValidator, RunUpdateInputValidator
+import enum
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.alignment import Alignment, AlignmentOrderByClause, AlignmentWhereClause
-    from graphql_api.types.annotation import Annotation, AnnotationOrderByClause, AnnotationWhereClause
-    from graphql_api.types.dataset import Dataset, DatasetOrderByClause, DatasetWhereClause
-    from graphql_api.types.frame import Frame, FrameOrderByClause, FrameWhereClause
-    from graphql_api.types.tiltseries import Tiltseries, TiltseriesOrderByClause, TiltseriesWhereClause
-    from graphql_api.types.tomogram import Tomogram, TomogramOrderByClause, TomogramWhereClause
+    from graphql_api.types.alignment import AlignmentOrderByClause, AlignmentWhereClause, Alignment
+    from graphql_api.types.annotation import AnnotationOrderByClause, AnnotationWhereClause, Annotation
+    from graphql_api.types.dataset import DatasetOrderByClause, DatasetWhereClause, Dataset
+    from graphql_api.types.frame import FrameOrderByClause, FrameWhereClause, Frame
+    from graphql_api.types.tiltseries import TiltseriesOrderByClause, TiltseriesWhereClause, Tiltseries
     from graphql_api.types.tomogram_voxel_spacing import (
-        TomogramVoxelSpacing,
         TomogramVoxelSpacingOrderByClause,
         TomogramVoxelSpacingWhereClause,
+        TomogramVoxelSpacing,
     )
+    from graphql_api.types.tomogram import TomogramOrderByClause, TomogramWhereClause, Tomogram
 
     pass
 else:
@@ -98,7 +105,7 @@ These are batching functions for loading related objects to avoid N+1 queries.
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]],  # type:ignore
+    relay.ListConnection[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]]  # type:ignore
 )
 async def load_alignment_rows(
     root: "Run",
@@ -128,7 +135,7 @@ async def load_alignment_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]],  # type:ignore
+    relay.ListConnection[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]]  # type:ignore
 )
 async def load_annotation_rows(
     root: "Run",
@@ -173,7 +180,7 @@ async def load_dataset_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]],  # type:ignore
+    relay.ListConnection[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]]  # type:ignore
 )
 async def load_frame_rows(
     root: "Run",
@@ -203,7 +210,7 @@ async def load_frame_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]],  # type:ignore
+    relay.ListConnection[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]]  # type:ignore
 )
 async def load_tiltseries_rows(
     root: "Run",
@@ -237,7 +244,7 @@ async def load_tiltseries_aggregate_rows(
 @relay.connection(
     relay.ListConnection[
         Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
-    ],  # type:ignore
+    ]  # type:ignore
 )
 async def load_tomogram_voxel_spacing_rows(
     root: "Run",
@@ -275,7 +282,7 @@ async def load_tomogram_voxel_spacing_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]],  # type:ignore
+    relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]]  # type:ignore
 )
 async def load_tomogram_rows(
     root: "Run",
@@ -408,7 +415,7 @@ class Run(EntityInterface):
     name: str = strawberry.field(description="Name of a run")
     s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
     https_prefix: str = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
+        description="Path to a directory containing data for this entity as an HTTPS url"
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -512,7 +519,7 @@ class RunCreateInput:
     name: str = strawberry.field(description="Name of a run")
     s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
     https_prefix: str = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
+        description="Path to a directory containing data for this entity as an HTTPS url"
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -522,10 +529,10 @@ class RunUpdateInput:
     dataset_id: Optional[strawberry.ID] = strawberry.field(description="An author of a dataset")
     name: Optional[str] = strawberry.field(description="Name of a run")
     s3_prefix: Optional[str] = strawberry.field(
-        description="Path to a directory containing data for this entity as an S3 url",
+        description="Path to a directory containing data for this entity as an S3 url"
     )
     https_prefix: Optional[str] = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
+        description="Path to a directory containing data for this entity as an HTTPS url"
     )
     id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -562,7 +569,7 @@ def format_run_aggregate_output(query_results: Sequence[RowMapping] | RowMapping
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if type(query_results) is not list:
+    if not type(query_results) is list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_run_aggregate_row(row))
@@ -581,10 +588,10 @@ def format_run_aggregate_row(row: RowMapping) -> RunAggregateFunctions:
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not output.groupBy:
-                output.groupBy = RunGroupByOptions()
-            group = build_run_groupby_output(output.groupBy, group_keys, value)
-            output.groupBy = group
+            if not getattr(output, "groupBy"):
+                setattr(output, "groupBy", RunGroupByOptions())
+            group = build_run_groupby_output(getattr(output, "groupBy"), group_keys, value)
+            setattr(output, "groupBy", group)
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -615,8 +622,8 @@ async def resolve_runs_aggregate(
     # Get the selected aggregate functions and columns to operate on, and groupby options if any were provided.
     # TODO: not sure why selected_fields is a list
     selections = info.selected_fields[0].selections[0].selections
-    aggregate_selections = [selection for selection in selections if selection.name != "groupBy"]
-    groupby_selections = [selection for selection in selections if selection.name == "groupBy"]
+    aggregate_selections = [selection for selection in selections if getattr(selection, "name") != "groupBy"]
+    groupby_selections = [selection for selection in selections if getattr(selection, "name") == "groupBy"]
     groupby_selections = groupby_selections[0].selections if groupby_selections else []
 
     if not aggregate_selections:
@@ -647,13 +654,7 @@ async def create_run(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.dataset_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")
@@ -695,13 +696,7 @@ async def update_run(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.dataset_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")

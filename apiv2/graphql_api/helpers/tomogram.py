@@ -5,21 +5,22 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import TYPE_CHECKING, Any, Optional
-
+from typing import Any, Optional, TYPE_CHECKING
 import strawberry
+import datetime
+import uuid
+from support.enums import (
+    fiducial_alignment_status_enum,
+    tomogram_reconstruction_method_enum,
+    tomogram_processing_enum,
+    tomogram_type_enum,
+)
 from graphql_api.helpers.alignment import AlignmentGroupByOptions, build_alignment_groupby_output
 from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
 from graphql_api.helpers.run import RunGroupByOptions, build_run_groupby_output
 from graphql_api.helpers.tomogram_voxel_spacing import (
     TomogramVoxelSpacingGroupByOptions,
     build_tomogram_voxel_spacing_groupby_output,
-)
-from support.enums import (
-    fiducial_alignment_status_enum,
-    tomogram_processing_enum,
-    tomogram_reconstruction_method_enum,
-    tomogram_type_enum,
 )
 
 if TYPE_CHECKING:
@@ -66,8 +67,8 @@ class TomogramGroupByOptions:
     is_canonical: Optional[bool] = None
     s3_omezarr_dir: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
-    s3_mrc_scale0: Optional[str] = None
-    https_mrc_scale0: Optional[str] = None
+    s3_mrc_file: Optional[str] = None
+    https_mrc_file: Optional[str] = None
     scale0_dimensions: Optional[str] = None
     scale1_dimensions: Optional[str] = None
     scale2_dimensions: Optional[str] = None

@@ -7,15 +7,16 @@ Make changes to the template codegen/templates/test_infra/factories/class_name.p
 
 # ruff: noqa: E501 Line too long
 
+import random
 import factory
+import uuid6
 from database.models import Dataset
+from platformics.test_infra.factories.base import FileFactory, CommonFactory
+from test_infra.factories.deposition import DepositionFactory
 from factory import Faker, fuzzy
 from faker_biology.bioseq import Bioseq
 from faker_biology.physiology import Organ
 from faker_enum import EnumProvider
-from platformics.test_infra.factories.base import CommonFactory
-
-from test_infra.factories.deposition import DepositionFactory
 
 Faker.add_provider(Bioseq)
 Faker.add_provider(Organ)
@@ -43,7 +44,7 @@ class DatasetFactory(CommonFactory):
     cell_strain_name = fuzzy.FuzzyText()
     cell_strain_id = fuzzy.FuzzyText()
     sample_type = fuzzy.FuzzyChoice(
-        ["cell", "tissue", "organism", "organelle", "virus", "in_vitro", "in_silico", "other"],
+        ["cell", "tissue", "organism", "organelle", "virus", "in_vitro", "in_silico", "other"]
     )
     sample_preparation = fuzzy.FuzzyText()
     grid_preparation = fuzzy.FuzzyText()
@@ -57,8 +58,6 @@ class DatasetFactory(CommonFactory):
     last_modified_date = factory.Faker("date")
     publications = fuzzy.FuzzyText()
     related_database_entries = fuzzy.FuzzyText()
-    related_database_links = fuzzy.FuzzyText()
-    dataset_citations = fuzzy.FuzzyText()
     s3_prefix = fuzzy.FuzzyText()
     https_prefix = fuzzy.FuzzyText()
     id = fuzzy.FuzzyInteger(1, 1000)

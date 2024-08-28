@@ -8,31 +8,36 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
-import datetime
-import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Optional, Sequence
+from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
 
+import platformics.database.models as base_db
 import database.models as db
 import strawberry
-from fastapi import Depends
+import datetime
+from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
+from validators.frame import FrameCreateInputValidator
+from validators.frame import FrameUpdateInputValidator
 from graphql_api.helpers.frame import FrameGroupByOptions, build_frame_groupby_output
+from platformics.graphql_api.core.relay_interface import EntityInterface
 from graphql_api.types.per_section_parameters import (
     PerSectionParametersAggregate,
     format_per_section_parameters_aggregate_output,
 )
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
+from fastapi import Depends
 from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
 from platformics.graphql_api.core.query_input_types import (
-    BoolComparators,
-    FloatComparators,
-    IntComparators,
-    StrComparators,
     aggregator_map,
     orderBy,
+    EnumComparators,
+    DatetimeComparators,
+    IntComparators,
+    FloatComparators,
+    StrComparators,
+    UUIDComparators,
+    BoolComparators,
 )
-from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
@@ -42,19 +47,19 @@ from strawberry import relay
 from strawberry.types import Info
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-from validators.frame import FrameCreateInputValidator, FrameUpdateInputValidator
+import enum
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.deposition import Deposition, DepositionOrderByClause, DepositionWhereClause
+    from graphql_api.types.deposition import DepositionOrderByClause, DepositionWhereClause, Deposition
     from graphql_api.types.per_section_parameters import (
-        PerSectionParameters,
         PerSectionParametersOrderByClause,
         PerSectionParametersWhereClause,
+        PerSectionParameters,
     )
-    from graphql_api.types.run import Run, RunOrderByClause, RunWhereClause
+    from graphql_api.types.run import RunOrderByClause, RunWhereClause, Run
 
     pass
 else:
@@ -96,7 +101,7 @@ async def load_deposition_rows(
 @relay.connection(
     relay.ListConnection[
         Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
-    ],  # type:ignore
+    ]  # type:ignore
 )
 async def load_per_section_parameters_rows(
     root: "Frame",
@@ -229,22 +234,19 @@ class Frame(EntityInterface):
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     raw_angle: float = strawberry.field(description="Camera angle for a frame")
     acquisition_order: Optional[int] = strawberry.field(
-        description="Frame's acquistion order within a tilt experiment",
-        default=None,
+        description="Frame's acquistion order within a tilt experiment", default=None
     )
     dose: float = strawberry.field(description="The raw camera angle for a frame")
     is_gain_corrected: Optional[bool] = strawberry.field(
-        description="Whether this frame has been gain corrected",
-        default=None,
+        description="Whether this frame has been gain corrected", default=None
     )
     s3_gain_file: Optional[str] = strawberry.field(description="S3 path to the gain file for this frame", default=None)
     https_gain_file: Optional[str] = strawberry.field(
-        description="HTTPS path to the gain file for this frame",
-        default=None,
+        description="HTTPS path to the gain file for this frame", default=None
     )
     s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
     https_prefix: str = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
+        description="Path to a directory containing data for this entity as an HTTPS url"
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -358,22 +360,19 @@ class FrameCreateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     raw_angle: float = strawberry.field(description="Camera angle for a frame")
     acquisition_order: Optional[int] = strawberry.field(
-        description="Frame's acquistion order within a tilt experiment",
-        default=None,
+        description="Frame's acquistion order within a tilt experiment", default=None
     )
     dose: float = strawberry.field(description="The raw camera angle for a frame")
     is_gain_corrected: Optional[bool] = strawberry.field(
-        description="Whether this frame has been gain corrected",
-        default=None,
+        description="Whether this frame has been gain corrected", default=None
     )
     s3_gain_file: Optional[str] = strawberry.field(description="S3 path to the gain file for this frame", default=None)
     https_gain_file: Optional[str] = strawberry.field(
-        description="HTTPS path to the gain file for this frame",
-        default=None,
+        description="HTTPS path to the gain file for this frame", default=None
     )
     s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
     https_prefix: str = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
+        description="Path to a directory containing data for this entity as an HTTPS url"
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -384,24 +383,21 @@ class FrameUpdateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     raw_angle: Optional[float] = strawberry.field(description="Camera angle for a frame")
     acquisition_order: Optional[int] = strawberry.field(
-        description="Frame's acquistion order within a tilt experiment",
-        default=None,
+        description="Frame's acquistion order within a tilt experiment", default=None
     )
     dose: Optional[float] = strawberry.field(description="The raw camera angle for a frame")
     is_gain_corrected: Optional[bool] = strawberry.field(
-        description="Whether this frame has been gain corrected",
-        default=None,
+        description="Whether this frame has been gain corrected", default=None
     )
     s3_gain_file: Optional[str] = strawberry.field(description="S3 path to the gain file for this frame", default=None)
     https_gain_file: Optional[str] = strawberry.field(
-        description="HTTPS path to the gain file for this frame",
-        default=None,
+        description="HTTPS path to the gain file for this frame", default=None
     )
     s3_prefix: Optional[str] = strawberry.field(
-        description="Path to a directory containing data for this entity as an S3 url",
+        description="Path to a directory containing data for this entity as an S3 url"
     )
     https_prefix: Optional[str] = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
+        description="Path to a directory containing data for this entity as an HTTPS url"
     )
     id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -438,7 +434,7 @@ def format_frame_aggregate_output(query_results: Sequence[RowMapping] | RowMappi
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if type(query_results) is not list:
+    if not type(query_results) is list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_frame_aggregate_row(row))
@@ -457,10 +453,10 @@ def format_frame_aggregate_row(row: RowMapping) -> FrameAggregateFunctions:
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not output.groupBy:
-                output.groupBy = FrameGroupByOptions()
-            group = build_frame_groupby_output(output.groupBy, group_keys, value)
-            output.groupBy = group
+            if not getattr(output, "groupBy"):
+                setattr(output, "groupBy", FrameGroupByOptions())
+            group = build_frame_groupby_output(getattr(output, "groupBy"), group_keys, value)
+            setattr(output, "groupBy", group)
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -491,8 +487,8 @@ async def resolve_frames_aggregate(
     # Get the selected aggregate functions and columns to operate on, and groupby options if any were provided.
     # TODO: not sure why selected_fields is a list
     selections = info.selected_fields[0].selections[0].selections
-    aggregate_selections = [selection for selection in selections if selection.name != "groupBy"]
-    groupby_selections = [selection for selection in selections if selection.name == "groupBy"]
+    aggregate_selections = [selection for selection in selections if getattr(selection, "name") != "groupBy"]
+    groupby_selections = [selection for selection in selections if getattr(selection, "name") == "groupBy"]
     groupby_selections = groupby_selections[0].selections if groupby_selections else []
 
     if not aggregate_selections:
@@ -536,13 +532,7 @@ async def create_frame(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.run_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -599,13 +589,7 @@ async def update_frame(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.run_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")

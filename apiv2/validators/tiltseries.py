@@ -8,10 +8,13 @@ Make changes to the template codegen/templates/validators/class_name.py.j2 inste
 # ruff: noqa: E501 Line too long
 
 
+from support.enums import tiltseries_microscope_manufacturer_enum
+
+import typing
+import datetime
 import uuid
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
-from support.enums import tiltseries_microscope_manufacturer_enum
 from typing_extensions import Annotated
 
 
@@ -26,7 +29,7 @@ class TiltseriesCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    s3_mrc_bin1: Annotated[
+    s3_mrc_file: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
@@ -38,7 +41,7 @@ class TiltseriesCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    https_mrc_bin1: Annotated[
+    https_mrc_file: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
@@ -236,7 +239,7 @@ class TiltseriesUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    s3_mrc_bin1: Annotated[
+    s3_mrc_file: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
@@ -248,7 +251,7 @@ class TiltseriesUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    https_mrc_bin1: Annotated[
+    https_mrc_file: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,

@@ -5,10 +5,11 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-import datetime
-from typing import Any, Optional
-
+from typing import Any, Optional, TYPE_CHECKING
 import strawberry
+import datetime
+import uuid
+
 
 """
 Define groupby options for Deposition type.
@@ -22,8 +23,6 @@ class DepositionGroupByOptions:
     deposition_description: Optional[str] = None
     publications: Optional[str] = None
     related_database_entries: Optional[str] = None
-    related_database_links: Optional[str] = None
-    dataset_citations: Optional[str] = None
     deposition_date: Optional[datetime.datetime] = None
     release_date: Optional[datetime.datetime] = None
     last_modified_date: Optional[datetime.datetime] = None

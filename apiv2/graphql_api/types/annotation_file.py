@@ -8,52 +8,58 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
-import datetime
-import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Optional, Sequence
+from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
 
+import platformics.database.models as base_db
 import database.models as db
 import strawberry
-from fastapi import Depends
+import datetime
+from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
+from validators.annotation_file import AnnotationFileCreateInputValidator
+from validators.annotation_file import AnnotationFileUpdateInputValidator
 from graphql_api.helpers.annotation_file import AnnotationFileGroupByOptions, build_annotation_file_groupby_output
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
+from platformics.graphql_api.core.relay_interface import EntityInterface
+from fastapi import Depends
 from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
 from platformics.graphql_api.core.query_input_types import (
-    BoolComparators,
-    EnumComparators,
-    IntComparators,
-    StrComparators,
     aggregator_map,
     orderBy,
+    EnumComparators,
+    DatetimeComparators,
+    IntComparators,
+    FloatComparators,
+    StrComparators,
+    UUIDComparators,
+    BoolComparators,
 )
-from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
+from strawberry import relay
 from strawberry.types import Info
-from support.enums import annotation_file_source_enum
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-from validators.annotation_file import AnnotationFileCreateInputValidator, AnnotationFileUpdateInputValidator
+import enum
+from support.enums import annotation_file_source_enum
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.alignment import Alignment, AlignmentOrderByClause, AlignmentWhereClause
+    from graphql_api.types.alignment import AlignmentOrderByClause, AlignmentWhereClause, Alignment
     from graphql_api.types.annotation_shape import (
-        AnnotationShape,
         AnnotationShapeOrderByClause,
         AnnotationShapeWhereClause,
+        AnnotationShape,
     )
     from graphql_api.types.tomogram_voxel_spacing import (
-        TomogramVoxelSpacing,
         TomogramVoxelSpacingOrderByClause,
         TomogramVoxelSpacingWhereClause,
+        TomogramVoxelSpacing,
     )
 
     pass
@@ -123,7 +129,7 @@ async def load_tomogram_voxel_spacing_rows(
     mapper = inspect(db.AnnotationFile)
     relationship = mapper.relationships["tomogram_voxel_spacing"]
     return await dataloader.loader_for(relationship, where, order_by).load(
-        root.tomogram_voxel_spacing_id,
+        root.tomogram_voxel_spacing_id
     )  # type:ignore
 
 
@@ -216,12 +222,10 @@ class AnnotationFile(EntityInterface):
     s3_path: str = strawberry.field(description="Path to the file in s3")
     https_path: str = strawberry.field(description="Path to the file as an https url")
     is_visualization_default: Optional[bool] = strawberry.field(
-        description="This annotation will be rendered in neuroglancer by default.",
-        default=None,
+        description="This annotation will be rendered in neuroglancer by default.", default=None
     )
     source: Optional[annotation_file_source_enum] = strawberry.field(
-        description="The source type for the annotation file",
-        default=None,
+        description="The source type for the annotation file", default=None
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -290,9 +294,7 @@ class AnnotationFileAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self,
-        distinct: Optional[bool] = False,
-        columns: Optional[AnnotationFileCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[AnnotationFileCountColumns] = None
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -327,23 +329,19 @@ Mutation types
 class AnnotationFileCreateInput:
     alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment", default=None)
     annotation_shape_id: Optional[strawberry.ID] = strawberry.field(
-        description="Shapes associated with an annotation",
-        default=None,
+        description="Shapes associated with an annotation", default=None
     )
     tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
-        description="Voxel spacings for a run",
-        default=None,
+        description="Voxel spacings for a run", default=None
     )
     format: str = strawberry.field(description="File format label")
     s3_path: str = strawberry.field(description="Path to the file in s3")
     https_path: str = strawberry.field(description="Path to the file as an https url")
     is_visualization_default: Optional[bool] = strawberry.field(
-        description="This annotation will be rendered in neuroglancer by default.",
-        default=None,
+        description="This annotation will be rendered in neuroglancer by default.", default=None
     )
     source: Optional[annotation_file_source_enum] = strawberry.field(
-        description="The source type for the annotation file",
-        default=None,
+        description="The source type for the annotation file", default=None
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -352,23 +350,19 @@ class AnnotationFileCreateInput:
 class AnnotationFileUpdateInput:
     alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment", default=None)
     annotation_shape_id: Optional[strawberry.ID] = strawberry.field(
-        description="Shapes associated with an annotation",
-        default=None,
+        description="Shapes associated with an annotation", default=None
     )
     tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
-        description="Voxel spacings for a run",
-        default=None,
+        description="Voxel spacings for a run", default=None
     )
     format: Optional[str] = strawberry.field(description="File format label")
     s3_path: Optional[str] = strawberry.field(description="Path to the file in s3")
     https_path: Optional[str] = strawberry.field(description="Path to the file as an https url")
     is_visualization_default: Optional[bool] = strawberry.field(
-        description="This annotation will be rendered in neuroglancer by default.",
-        default=None,
+        description="This annotation will be rendered in neuroglancer by default.", default=None
     )
     source: Optional[annotation_file_source_enum] = strawberry.field(
-        description="The source type for the annotation file",
-        default=None,
+        description="The source type for the annotation file", default=None
     )
     id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -407,7 +401,7 @@ def format_annotation_file_aggregate_output(
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if type(query_results) is not list:
+    if not type(query_results) is list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_annotation_file_aggregate_row(row))
@@ -426,10 +420,10 @@ def format_annotation_file_aggregate_row(row: RowMapping) -> AnnotationFileAggre
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not output.groupBy:
-                output.groupBy = AnnotationFileGroupByOptions()
-            group = build_annotation_file_groupby_output(output.groupBy, group_keys, value)
-            output.groupBy = group
+            if not getattr(output, "groupBy"):
+                setattr(output, "groupBy", AnnotationFileGroupByOptions())
+            group = build_annotation_file_groupby_output(getattr(output, "groupBy"), group_keys, value)
+            setattr(output, "groupBy", group)
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -460,8 +454,8 @@ async def resolve_annotation_files_aggregate(
     # Get the selected aggregate functions and columns to operate on, and groupby options if any were provided.
     # TODO: not sure why selected_fields is a list
     selections = info.selected_fields[0].selections[0].selections
-    aggregate_selections = [selection for selection in selections if selection.name != "groupBy"]
-    groupby_selections = [selection for selection in selections if selection.name == "groupBy"]
+    aggregate_selections = [selection for selection in selections if getattr(selection, "name") != "groupBy"]
+    groupby_selections = [selection for selection in selections if getattr(selection, "name") == "groupBy"]
     groupby_selections = groupby_selections[0].selections if groupby_selections else []
 
     if not aggregate_selections:
