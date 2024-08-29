@@ -1,0 +1,116 @@
+# ruff: noqa
+from types import MappingProxyType
+from typing import Any, Callable
+
+from cerbos.sdk.model import PlanResourcesFilterKind, PlanResourcesResponse
+
+from sqlalchemy import Column, Table, and_, not_, or_, select
+from sqlalchemy.orm import DeclarativeMeta, InstrumentedAttribute
+from sqlalchemy.sql import Select
+from sqlalchemy.sql.expression import BinaryExpression, ColumnOperators
+
+GenericTable = Table | DeclarativeMeta
+GenericColumn = Column | InstrumentedAttribute
+GenericExpression = BinaryExpression | ColumnOperators
+OperatorFnMap = dict[str, Callable[[GenericColumn, Any], GenericExpression]]
+
+
+# We want to make the base dict "immutable", and enforce explicit (optional) overrides on
+# each call to `get_query` (rather than allowing keys in this dict to be overridden, which
+# could wreak havoc if different calls from the same memory space weren't aware of each other's
+# overrides)
+__operator_fns: OperatorFnMap = {
+    "eq": lambda c, v: c == v,  # c, v denotes column, value respectively
+    "ne": lambda c, v: c != v,
+    "lt": lambda c, v: c < v,
+    "gt": lambda c, v: c > v,
+    "le": lambda c, v: c <= v,
+    "ge": lambda c, v: c >= v,
+    "in": lambda c, v: c.in_([v]) if not isinstance(v, list) else c.in_(v),
+}
+OPERATOR_FNS = MappingProxyType(__operator_fns)
+
+
+def _get_table_name(t: GenericTable) -> str:
+    try:
+        # `DeclarativeMeta` type
+        return t.__table__.name
+    except AttributeError:
+        # `Table` type
+        return t.name
+
+
+def get_query(
+    query_plan: PlanResourcesResponse,
+    table: GenericTable,
+    attr_map: dict[str, GenericColumn],
+    table_mapping: list[tuple[GenericTable, GenericExpression]] | None = None,
+    operator_override_fns: OperatorFnMap | None = None,
+) -> Select:
+    if query_plan.filter is None or query_plan.filter.kind == PlanResourcesFilterKind.ALWAYS_DENIED:
+        return select(table).where(False)
+    if query_plan.filter.kind == PlanResourcesFilterKind.ALWAYS_ALLOWED:
+        return select(table)
+
+    # Inspect passed columns. If > 1 origin table, assert that the mapping has been defined
+    required_tables = set()
+    for c in attr_map.values():
+        # c is of type Column | InstrumentedAttribute - both have a `table` attribute returning a `Table` type
+        if (n := c.table.name) != _get_table_name(table):
+            required_tables.add(n)
+
+    if len(required_tables):
+        if table_mapping is None:
+            raise TypeError("get_query() missing 1 required positional argument: 'table_mapping'")
+        for t, _ in table_mapping:
+            required_tables.discard(_get_table_name(t))
+
+    def get_operator_fn(op: str, c: GenericColumn, v: Any) -> GenericExpression:
+        # Check to see if the client has overridden the function
+        if operator_override_fns and (override_fn := operator_override_fns.get(op)) is not None:
+            return override_fn(c, v)
+
+        # Otherwise, fall back to default handlers
+        if (default_fn := OPERATOR_FNS.get(op)) is not None:
+            return default_fn(c, v)
+
+        raise ValueError(f"Unrecognised operator: {op}")
+
+    def traverse_and_map_operands(operand: dict):
+        if exp := operand.get("expression"):
+            return traverse_and_map_operands(exp)
+
+        operator = operand["operator"]
+        child_operands = operand["operands"]
+
+        # if `operator` in ["and", "or"], `child_operands` is a nested list of `expression` dicts (handled at the
+        # beginning of this closure)
+        if operator == "and":
+            return and_(*[traverse_and_map_operands(o) for o in child_operands])
+        if operator == "or":
+            return or_(*[traverse_and_map_operands(o) for o in child_operands])
+        if operator == "not":
+            return not_(*[traverse_and_map_operands(o) for o in child_operands])
+
+        # otherwise, they are a list[dict] (len==2), in the form: `[{'variable': 'foo'}, {'value': 'bar'}]`
+        # The order of the keys `variable` and `value` is not guaranteed.
+        d = {k: v for o in child_operands for k, v in o.items()}
+        variable = d["variable"]
+        value = d["value"]
+
+        try:
+            column = attr_map[variable]
+        except KeyError:
+            raise KeyError(f"Attribute does not exist in the attribute column map: {variable}")
+
+        # the operator handlers here are the leaf nodes of the recursion
+        return get_operator_fn(operator, column, value)
+
+    q = select(table).where(traverse_and_map_operands(query_plan.filter.condition.to_dict()))
+
+    if table_mapping:
+        q = q.select_from(table)
+        for join_table, predicate in table_mapping:
+            q = q.join(join_table, predicate)
+
+    return q

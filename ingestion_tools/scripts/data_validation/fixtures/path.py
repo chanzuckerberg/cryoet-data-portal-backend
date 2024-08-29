@@ -12,14 +12,15 @@ import pytest
 
 from common.fs import FileSystemApi
 
-# =============================================================================
-# FS & Dataset fixtures
-# =============================================================================
-
 
 @pytest.fixture(scope="session")
 def filesystem() -> FileSystemApi:
     return FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
+
+
+# =============================================================================
+# Dataset fixtures
+# =============================================================================
 
 
 @pytest.fixture(scope="session")
@@ -29,10 +30,10 @@ def dataset_dir(bucket: str, dataset: str) -> str:
 
 
 @pytest.fixture(scope="session")
-def dataset_meta_file(dataset_dir: str, filesystem: FileSystemApi) -> str:
+def dataset_metadata_file(dataset_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/dataset_metadata.json"""
     dst = f"{dataset_dir}/dataset_metadata.json"
-    if filesystem.s3fs.exists(dst):
+    if filesystem.exists(dst):
         return dst
     else:
         pytest.fail(f"Dataset metadata file not found: {dst}")

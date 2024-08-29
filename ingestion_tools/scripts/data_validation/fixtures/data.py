@@ -39,6 +39,18 @@ def get_headers(mrcfiles: List[str]) -> Dict[str, MrcInterpreter]:
 
 
 # ==================================================================================================
+# Dataset fixtures
+# ==================================================================================================
+
+
+@pytest.fixture(scope="session")
+def dataset_metadata(dataset_metadata_file: str, filesystem: FileSystemApi) -> Dict:
+    """Load the dataset metadata."""
+    with filesystem.open(dataset_metadata_file, "r") as f:
+        return json.load(f)
+
+
+# ==================================================================================================
 # Tiltseries fixtures
 # ==================================================================================================
 

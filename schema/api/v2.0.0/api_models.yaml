@@ -597,15 +597,15 @@ classes:
       s3_omezarr_dir:
         exact_mappings:
           - cdp-common:tiltseries_s3_omezarr_dir
-      s3_mrc_bin1:
+      s3_mrc_file:
         exact_mappings:
-          - cdp-common:tiltseries_s3_mrc_bin1
+          - cdp-common:tiltseries_s3_mrc_file
       https_omezarr_dir:
         exact_mappings:
           - cdp-common:tiltseries_https_omezarr_dir
-      https_mrc_bin1:
+      https_mrc_file:
         exact_mappings:
-          - cdp-common:tiltseries_https_mrc_bin1
+          - cdp-common:tiltseries_https_mrc_file
       s3_collection_metadata:
         exact_mappings:
           - cdp-common:tiltseries_s3_collection_metadata
@@ -800,12 +800,12 @@ classes:
       https_omezarr_dir:
         exact_mappings:
           - cdp-common:tomogram_https_omezarr_dir
-      s3_mrc_scale0:
+      s3_mrc_file:
         exact_mappings:
-          - cdp-common:tomogram_s3_mrc_scale0
-      https_mrc_scale0:
+          - cdp-common:tomogram_s3_mrc_file
+      https_mrc_file:
         exact_mappings:
-          - cdp-common:tomogram_https_mrc_scale0
+          - cdp-common:tomogram_https_mrc_file
       scale0_dimensions:
         exact_mappings:
           - cdp-common:tomogram_scale0_dimensions
