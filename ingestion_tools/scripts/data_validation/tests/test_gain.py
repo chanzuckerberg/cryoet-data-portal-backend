@@ -1,6 +1,7 @@
 import warnings
 from typing import Dict, List, Union
 
+import allure
 import pytest
 import tifffile
 from mrcfile.mrcinterpreter import MrcInterpreter
@@ -35,6 +36,7 @@ class TestGain(HelperTestMRCHeader):
         pytest.skip("Not applicable for gain files")
 
     ### BEGIN Self-consistency tests ###
+    @allure.title("Gain files have valid extensions.")
     def test_gain_format(self, gain_files: List[str]):
         errors = []
 
@@ -51,9 +53,8 @@ class TestGain(HelperTestMRCHeader):
     ### END Self-consistency tests ###
 
     ### BEGIN Frame-specific tests ###
+    @allure.title("Gain files have the same dimensions as the frames.")
     def test_matches_frame_dimensions(self, frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
-        """Check that the gain dimensions match the frame dimensions."""
-
         def check_matches_frame_dimensions(header, _interpreter, _mrc_filename, frame_dimensions):
             del _interpreter, _mrc_filename
             assert header.nx == frame_dimensions[0]
@@ -69,13 +70,12 @@ class TestGain(HelperTestMRCHeader):
         )
         self.mrc_header_helper(check_matches_frame_dimensions, frame_dimensions=frame_dimensions)
 
+    @allure.title("Gain files have the same pixel spacing as the frames.")
     def test_gain_tiltseries_pixel_spacing(
         self,
         gain_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
         frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
     ):
-        """Check that the gain pixel spacing matches the frame pixel spacing. Just need to check first MRC file of each."""
-
         first_mrc_gain = None
         for _, gain_header in gain_headers.items():
             if isinstance(gain_header, MrcInterpreter):

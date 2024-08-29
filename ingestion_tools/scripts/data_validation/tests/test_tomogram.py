@@ -1,11 +1,8 @@
-"""
-key_images testing is also done here (since key_images are part of the tomogram metadata)
-"""
-
 import math
 import os
 from typing import Dict
 
+import allure
 import pytest
 from mrcfile.mrcinterpreter import MrcInterpreter
 from tests.helper_images import check_photo_valid
@@ -30,20 +27,20 @@ class TestTomogram(HelperTestMRCZarrHeader):
         self,
         canonical_tomo_mrc_header: Dict[str, MrcInterpreter],
         canonical_tomo_zarr_header: Dict[str, Dict[str, Dict]],
-        voxel_spacing: float,
+        voxel_spacing: str,
     ):
         self.spacegroup = 1  # single 3D volume
         self.mrc_headers = canonical_tomo_mrc_header
         self.zarr_headers = canonical_tomo_zarr_header
-        self.spacing = voxel_spacing
+        self.spacing = float(voxel_spacing)
 
+    @allure.title("Sanity check tomogram metadata.")
     def test_tomogram_metadata(self, canonical_tomogram_metadata: Dict):
-        """A tomogram metadata sanity check."""
         basic_metadata_check(canonical_tomogram_metadata)
 
+    @allure.title("Tomogram metadata has valid key photos.")
     # The key_photo attribute is where the key_images data is stored and can be validated
     def test_tomogram_key_photos(self, canonical_tomogram_metadata: Dict, bucket: str, filesystem: FileSystemApi):
-        """Check that the key_photos in the metadata are valid."""
         check_photo_valid(
             canonical_tomogram_metadata["key_photo"]["thumbnail"],
             bucket,
@@ -59,15 +56,16 @@ class TestTomogram(HelperTestMRCZarrHeader):
             PHOTO_ASPECT_RATIO,
         )
 
+    @allure.title("Valid corresponding deposition metadata.")
     def test_tomogram_deposition(self, canonical_tomogram_metadata: Dict, bucket: str, filesystem: FileSystemApi):
         HelperTestDeposition.check_deposition_metadata(canonical_tomogram_metadata["deposition_id"], bucket, filesystem)
 
+    @allure.title("Tomogram metadata size is consistent with scales.")
     def test_tomogram_size_scales(self, canonical_tomogram_metadata: Dict):
-        """Check that the tomogram size is equal to first scale entry (0 binning factor)."""
         assert canonical_tomogram_metadata["size"] == canonical_tomogram_metadata["scales"][0]
 
+    @allure.title("Tomogram metadata scales is self-consistent.")
     def test_tomogram_scales(self, canonical_tomogram_metadata: Dict):
-        """Check that the tomogram scales data is consistent."""
         curr_scale = canonical_tomogram_metadata["scales"][0]
         for scale in canonical_tomogram_metadata["scales"][1:]:
             assert math.ceil(curr_scale["z"] / 2) == scale["z"]
@@ -75,9 +73,8 @@ class TestTomogram(HelperTestMRCZarrHeader):
             assert math.ceil(curr_scale["x"] / 2) == scale["x"]
             curr_scale = scale
 
+    @allure.title("Tomogram metadata volume size is consistent with MRC header.")
     def test_tomogram_size_mrc(self, canonical_tomogram_metadata: Dict):
-        """Check that the tomogram volume size matches the metadata size."""
-
         def check_size_mrc(header, _interpreter, _mrc_filename, canonical_tomogram_metadata):
             del _interpreter, _mrc_filename
             assert header.nx == canonical_tomogram_metadata["size"]["x"]
@@ -86,27 +83,27 @@ class TestTomogram(HelperTestMRCZarrHeader):
 
         self.mrc_header_helper(check_size_mrc, canonical_tomogram_metadata=canonical_tomogram_metadata)
 
-    def test_tomogram_voxel_spacing(self, canonical_tomogram_metadata: Dict, voxel_spacing: float):
-        """Check that the voxel spacing in the metadata matches the voxel spacing used in the run."""
-        assert canonical_tomogram_metadata["voxel_spacing"] == voxel_spacing
+    @allure.title("Tomogram metadata voxel spacing matches run voxel spacing.")
+    def test_tomogram_voxel_spacing(self, canonical_tomogram_metadata: Dict):
+        assert canonical_tomogram_metadata["voxel_spacing"] == self.spacing
 
+    @allure.title("Tomogram metadata zarr file matches the actual file.")
     def test_tomogram_zarr_matches(
         self,
         canonical_tomogram_metadata: Dict,
         canonical_tomo_zarr_header: Dict[str, Dict[str, Dict]],
     ):
-        """Check that the metadata-listed zarr file matches the actual file."""
         assert len(canonical_tomo_zarr_header) == 1
         assert canonical_tomogram_metadata["omezarr_dir"] == os.path.basename(
             list(canonical_tomo_zarr_header.keys())[0],
         )
 
+    @allure.title("Tomogram metadata mrc file matches the actual file.")
     def test_tomogram_mrc_matches(
         self,
         canonical_tomogram_metadata: Dict,
         canonical_tomo_mrc_header: Dict[str, MrcInterpreter],
     ):
-        """Check that the metadata-listed mrc file matches the actual file."""
         assert len(canonical_tomogram_metadata["mrc_files"]) == 1
         assert len(canonical_tomo_mrc_header) == 1
         assert canonical_tomogram_metadata["mrc_files"][0] == os.path.basename(

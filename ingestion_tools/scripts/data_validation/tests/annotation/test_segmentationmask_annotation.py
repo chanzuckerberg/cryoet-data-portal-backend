@@ -1,5 +1,6 @@
 from typing import Dict
 
+import allure
 import pytest
 from mrcfile.mrcinterpreter import MrcInterpreter
 from tests.helper_mrc_zarr import HelperTestMRCZarrHeader
@@ -15,17 +16,16 @@ class TestSegmentationMask(HelperTestMRCZarrHeader):
         self,
         seg_mask_annotation_mrc_headers: Dict[str, MrcInterpreter],
         seg_mask_annotation_zarr_headers: Dict[str, Dict[str, Dict]],
-        voxel_spacing: float,
+        voxel_spacing: str,
     ):
         self.spacegroup = 1  # single 3D volume
         self.mrc_headers = seg_mask_annotation_mrc_headers
         self.zarr_headers = seg_mask_annotation_zarr_headers
-        self.spacing = voxel_spacing
+        self.spacing = float(voxel_spacing)
 
     ### BEGIN Tomogram-consistency tests ###
+    @allure.title("Annotation volumes are contained within the tomogram dimensions.")
     def test_contained_in_tomo(self, canonical_tomogram_metadata: Dict):
-        """Check that the annotation volume is contained within the canonical tomogram dimensions."""
-
         def check_contained_in_tomo(header, _interpreter, _mrc_filename, tomogram_metadata):
             del _interpreter, _mrc_filename
             assert header.nx == tomogram_metadata["size"]["x"]

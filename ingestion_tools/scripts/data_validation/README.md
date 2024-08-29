@@ -1,5 +1,7 @@
 ## S3 Data Validation Test Scripts
 
+### Pytest
+
 To run (from this directory):
 
 ```
@@ -64,4 +66,14 @@ Run data validation for run "17072022_BrnoKrios_Arctis_p3ar_grid_Position_76" in
 
 ```
 pytest --dataset 10301 --run_glob "17072022_BrnoKrios_Arctis_p3ar_grid_Position_76" -s -v -k "not TestGain"
+```
+
+### Allure + Pytest
+
+Ensure you have the allure command line tool installed (e.g. `brew install allure`). See: https://allurereport.org/docs/install/
+
+To run (from this directory):
+
+```
+python run_tests.py
 ```

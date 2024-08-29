@@ -1,5 +1,6 @@
 from typing import Dict
 
+import allure
 import numpy as np
 import pytest
 from fixtures.data import BINNING_FACTORS
@@ -10,7 +11,7 @@ SPACING_TOLERANCE = 0.001
 
 class HelperTestZarrHeader:
     """
-    This is a helper class that containts pytests for checking the header of a zarr file.
+    This is a helper class that contains pytests for checking the header of a zarr file.
     See helper_mrc.py for more information (quite similar).
     """
 
@@ -30,9 +31,8 @@ class HelperTestZarrHeader:
             print(f"Checking {zarr_filename}")
             check_func(header_data, zarr_filename, **kwargs)
 
+    @allure.title("Zattrs path metadata is correct")
     def test_zarr_zattrs_path(self):
-        """Check that the path metadata is correct for the zarr file."""
-
         def check_zattrs_path(header_data, _zarr_filename):
             del _zarr_filename
             for binning_factor in BINNING_FACTORS:  # 1x, 2x, 4x
@@ -42,9 +42,8 @@ class HelperTestZarrHeader:
 
         self.zarr_header_helper(check_zattrs_path)
 
+    @allure.title("Zattrs axes order is correct")
     def test_zarr_zattrs_axes(self):
-        """Check that the axes order is correct for the zarr file."""
-
         def check_zattrs_axes(header_data, _zaar_filename):
             del _zaar_filename
             assert len(header_data["zattrs"]["multiscales"][0]["axes"]) == 3
@@ -57,9 +56,8 @@ class HelperTestZarrHeader:
 
         self.zarr_header_helper(check_zattrs_axes)
 
+    @allure.title("Zarray data type is correct")
     def test_zarr_zarray_scale(self):
-        """Check that the data type is correct for each scale (binning) of the zarr file."""
-
         def check_zarray(header_data, _zarr_filename):
             del _zarr_filename
             zarrays = header_data["zarrays"]
@@ -72,9 +70,8 @@ class HelperTestZarrHeader:
     ### END ZARR Self-consistency tests ###
 
     ### BEGIN Voxel-spacing tests ###
+    @allure.title("Zattrs voxel spacings are correct")
     def test_zarr_zattrs_voxel_spacings(self):
-        """Check that the voxel spacings are correct for the zarr file."""
-
         def check_zattrs_voxel_spacings(header_data, _zarr_filename):
             del _zarr_filename
             for binning_factor in BINNING_FACTORS:  # 1x, 2x, 4x

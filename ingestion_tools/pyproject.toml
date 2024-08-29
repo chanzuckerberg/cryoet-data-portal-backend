@@ -50,6 +50,7 @@ imodmodel = "0.0.12"
 mdocfile = "^0.1.2"
 tifffile = "^2024.8.10"
 pytest-xdist = "^3.6.1"
+allure-pytest = "^2.13.5"
 
 [tool.black]
 line-length = 120

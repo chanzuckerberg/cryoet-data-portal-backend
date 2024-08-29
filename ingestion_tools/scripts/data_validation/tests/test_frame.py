@@ -2,6 +2,7 @@ import os
 import warnings
 from typing import Dict, List, Union
 
+import allure
 import pandas as pd
 import pytest
 import tifffile
@@ -36,6 +37,7 @@ class TestFrame(HelperTestMRCHeader):
         pytest.skip("Not applicable for frame files")
 
     ### BEGIN Self-consistency tests ###
+    @allure.title("Frames have valid extensions.")
     def test_frames_format(self, frames_files: List[str]):
         errors = []
 
@@ -45,18 +47,19 @@ class TestFrame(HelperTestMRCHeader):
 
         assert not errors, "\n".join(errors)
 
+    @allure.title("Frames have consistent dimensions and pixel spacings (MRC & TIFF).")
     def test_frames_consistent(self, frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
         return helper_tiff_mrc_consistent(frames_headers)
 
     ### END Self-consistency tests ###
 
     ### BEGIN Tiltseries consistency tests ###
+    @allure.title("Number of subframes in mdoc matches the number of subframes in the frame file.")
     def test_frames_mdoc_numsubframes(
         self,
         frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
         tiltseries_mdoc: pd.DataFrame,
     ):
-        """Check that all mdoc listed frames have the correct number of subframes (corresponds to the header info in the frame file)."""
         errors = []
         for _, row in tiltseries_mdoc.iterrows():
             frame_file = os.path.basename(str(row["SubFramePath"]).replace("\\", "/"))
@@ -80,12 +83,12 @@ class TestFrame(HelperTestMRCHeader):
 
         assert not errors, "\n".join(errors)
 
+    @allure.title("Tiltseries pixel spacing is an integer multiple of the frame pixel spacing.")
     def test_frames_tiltseries_pixel_spacing(
         self,
         frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
         tiltseries_metadata: Dict,
     ):
-        """Check that the tiltseries pixel spacing is an integer multiple of the frame pixel spacing."""
         for frame_file, frame_header in frames_headers.items():
             if isinstance(frame_header, MrcInterpreter):
                 # only need to check the first frame, since we check that all frames have the same pixel spacing

@@ -236,12 +236,12 @@ def tomograms_dir(run_dir: str, filesystem: FileSystemApi) -> str:
 @pytest.fixture(scope="session")
 def voxel_dir(
     tomograms_dir: str,
-    voxel_spacing: float,
+    voxel_spacing: str,
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]"""
 
-    dst = f"{tomograms_dir}/VoxelSpacing{voxel_spacing:.3f}"
+    dst = f"{tomograms_dir}/VoxelSpacing{voxel_spacing}"
 
     if filesystem.exists(dst):
         return dst

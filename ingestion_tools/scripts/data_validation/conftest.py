@@ -3,13 +3,9 @@ import os.path
 import sys
 from typing import List, Tuple
 
+import allure
 import pytest
 
-# from allure_commons.model2 import Label
-# from allure_commons.types import LabelType
-# from allure_commons._core import plugin_manager
-# from allure_pytest.utils import ALLURE_LABEL_MARK
-# from pytest import MarkDecorator
 # Local fixtures and common functions
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(CURRENT_DIR)
@@ -53,15 +49,10 @@ def get_voxel_spacing_files(bucket: str, dataset: str, run_names: List[str], vox
         for result in results:
             tentatives += result
 
-    exclude = ["Images", "dataset_metadata.json"]
-
-    for ex in exclude:
-        tentatives = [tent for tent in tentatives if ex not in tent]
-
     return tentatives
 
 
-def voxel_spacings(voxel_spacing_files: List[str]) -> List[float]:
+def voxel_spacings(voxel_spacing_files: List[str]) -> List[str]:
     """
     All voxel spacings matching the voxel spacing glob pattern in the dataset.
     Because voxel spacings are subfolders of the the runs, we also constrain the glob to be only for the provided runs.
@@ -86,7 +77,7 @@ def run_spacing_combinations(
     for run in run_names:
         for vs in voxel_spacings:
             if f"{bucket}/{dataset}/{run}/Tomograms/VoxelSpacing{vs}" in voxel_spacing_files:
-                combos.append((run, float(vs)))
+                combos.append((run, vs))
 
     return combos
 
@@ -136,58 +127,12 @@ def pytest_configure(config: pytest.Config) -> None:
     config.addinivalue_line("markers", "voxel_spacing: Tests concerning voxel spacings.")
 
 
-# @pytest.hookimpl(hookwrapper=True)
-# def pytest_runtest_makereport(item, call):
-#     # pytest.set_trace()
-#     # yield
-#     has_epic = False
-#     has_feature = False
-#     has_story = False
-
-#     paramnames = []
-#     params = {}
-
-#     epic = None
-#     feature = None
-#     story = None
-
-#     for m in item.iter_markers():
-#         if m.name == ALLURE_LABEL_MARK:
-#             if m.kwargs.get("label_type") == LabelType.EPIC:
-#                 has_epic = True
-#                 epic = m
-#             if m.kwargs.get("label_type") == LabelType.FEATURE:
-#                 has_feature = True
-#                 feature = m
-#             if m.kwargs.get("label_type") == LabelType.STORY:
-#                 has_story = True
-#                 story = m
-
-#         # if m.name == "parametrize":
-#         #     paramnames = m.args[0].strip().split(",")
-#         #     ptup = m.args[1][0]
-#         #
-#         #     if len(paramnames) == 1:
-#         #         params[paramnames[0].strip()] = ptup
-#         #     else:
-#         #         params = {pn.strip(): p for pn, p in zip(paramnames, ptup)}
-
-#     if "dataset" in item.fixturenames:
-#         dataset = pytest.dataset
-#         epic_name = f"Dataset {dataset}"
-#         mark = getattr(pytest.mark, ALLURE_LABEL_MARK)(epic_name, label_type=LabelType.EPIC)
-#         item.add_marker(mark)
-
-#     if "run_name" in item.fixturenames:
-#         run_name = item.callspec.params["run_name"]
-#         feature_name = f"Run {run_name}"
-#         mark = getattr(pytest.mark, ALLURE_LABEL_MARK)(feature_name, label_type=LabelType.FEATURE)
-#         item.add_marker(mark)
-
-#     if "voxel_spacing" in item.fixturenames:
-#         voxel_spacing = item.callspec.params["voxel_spacing"]
-#         story_name = f"Voxel spacing {voxel_spacing}"
-#         mark = getattr(pytest.mark, ALLURE_LABEL_MARK)(story_name, label_type=LabelType.STORY)
-#         item.add_marker(mark)
-
-#     yield
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item: pytest.Item):
+    if "voxel_spacing" in item.fixturenames:
+        allure.dynamic.story(f"VoxelSpacing {item.callspec.params['voxel_spacing']}")
+    if "run_name" in item.fixturenames:
+        allure.dynamic.feature(f"Run {item.callspec.params['run_name']}")
+    if "dataset" in item.fixturenames:
+        allure.dynamic.epic(f"Dataset {pytest.dataset}")
+    yield
