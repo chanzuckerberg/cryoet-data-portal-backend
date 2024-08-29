@@ -3808,7 +3808,7 @@
                     "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/TomogromReconstructionMethodEnum",
+                            "$ref": "#/$defs/TomogramReconstructionMethodEnum",
                             "description": "Describe reconstruction method (WBP, SART, SIRT)"
                         },
                         {
@@ -4072,6 +4072,18 @@
             "title": "TomogramProcessingEnum",
             "type": "string"
         },
+        "TomogramReconstructionMethodEnum": {
+            "description": "Tomogram reconstruction method",
+            "enum": [
+                "SART",
+                "Fourier Space",
+                "SIRT",
+                "WBP",
+                "Unknown"
+            ],
+            "title": "TomogramReconstructionMethodEnum",
+            "type": "string"
+        },
         "TomogramSize": {
             "additionalProperties": false,
             "description": "The size of a tomogram in voxels in each dimension.",
@@ -4179,18 +4191,6 @@
                 "CANONICAL"
             ],
             "title": "TomogramTypeEnum",
-            "type": "string"
-        },
-        "TomogromReconstructionMethodEnum": {
-            "description": "Tomogram reconstruction method",
-            "enum": [
-                "SART",
-                "Fourier Space",
-                "SIRT",
-                "WBP",
-                "Unknown"
-            ],
-            "title": "TomogromReconstructionMethodEnum",
             "type": "string"
         },
         "VoxelSpacingEntity": {
