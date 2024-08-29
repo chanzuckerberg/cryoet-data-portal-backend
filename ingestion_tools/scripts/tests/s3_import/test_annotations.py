@@ -7,6 +7,11 @@ import ndjson
 import numpy as np
 import pytest
 import trimesh
+from mrcfile.mrcinterpreter import MrcInterpreter
+from mypy_boto3_s3 import S3Client
+
+from common.config import DepositionImportConfig
+from common.fs import FileSystemApi
 from importers.annotation import (
     InstanceSegmentationAnnotation,
     OrientedPointAnnotation,
@@ -21,12 +26,7 @@ from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
 from importers.voxel_spacing import VoxelSpacingImporter
-from mrcfile.mrcinterpreter import MrcInterpreter
-from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
-
-from common.config import DepositionImportConfig
-from common.fs import FileSystemApi
 from tests.s3_import.util import list_dir
 
 default_anno_metadata = {
@@ -1173,7 +1173,7 @@ def test_ingest_segmentationmask(
         config=deposition_config_s3,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/"
-        + case["source_cfg"]["SemanticSegmentationMask"].get("glob_string"),
+             + case["source_cfg"]["SemanticSegmentationMask"].get("glob_string"),
         parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
         identifier=100,
         mask_label=case["source_cfg"]["SemanticSegmentationMask"].get("mask_label"),
@@ -1272,21 +1272,22 @@ def test_ingest_triangular_mesh(
 
 
 @pytest.mark.parametrize(
-    "glob_string,file_format,name",
+    "glob_string,file_format,mesh_name",
     [
-        ("annotations/triangular_mesh.obj", "hff", "special_name"),
+        # ("annotations/TE10.hff", "hff", "TE10_mito_1_IMM"),
+        ("annotations/triangular_mesh.hff", "hff", "special_name"),
     ],
 )
-def test_ingest_triangular_mesh_group(
+def test_ingest_triangular_mesh_group_exists(
     glob_string,
     file_format,
-    name,
-    tomo_importer: TomogramImporter,
-    dataset_config_local: DepositionImportConfig,
+    mesh_name,
+    tomo_importer_local: TomogramImporter,
+    deposition_config_local: DepositionImportConfig,
     local_test_data_dir: str,
 ):
     # Arrange
-    dataset_config_local._set_object_configs(
+    deposition_config_local._set_object_configs(
         "annotation",
         [
             {
@@ -1297,22 +1298,100 @@ def test_ingest_triangular_mesh_group(
                             "file_format": file_format,
                             "glob_string": glob_string,
                             "is_visualization_default": False,
+                            "mesh_name": mesh_name,
                         },
                     },
                 ],
             },
         ],
     )
+    fixtures_dir = os.path.join(local_test_data_dir, "fixtures")
 
     # Action
     anno = TriangularMeshAnnotationGroup(
-        config=dataset_config_local,
+        config=deposition_config_local,
         metadata=default_anno_metadata,
-        path=os.path.join(local_test_data_dir, "input_bucket/20002", glob_string),
-        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        path=os.path.join(fixtures_dir, glob_string),
+        parents={"tomogram": tomo_importer_local, **tomo_importer_local.parents},
+        file_format=file_format,
+        identifier=100,
+        mesh_name=mesh_name,
+    )
+    anno.import_item()
+    anno.import_metadata()
+
+    # Assert
+    # verify local_metadata
+    path = "dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0_triangularmesh.glb"
+    expected_local_metadata = {
+        "object_count": 1,
+        "files": [
+            {
+                "format": "glb",
+                "path": path,
+                "shape": "TriangularMesh",
+                "is_visualization_default": False,
+            },
+        ],
+    }
+    assert anno.local_metadata == expected_local_metadata
+
+    # load the new mesh file
+    actual_mesh = trimesh.load(anno.get_output_filename(anno.get_output_path()) + ".glb", force="mesh")
+    actual_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(actual_mesh))
+    # load expected mesh
+    expected_mesh = trimesh.load(os.path.join(fixtures_dir, "annotations/triangular_mesh.glb"), force="mesh")
+    expected_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(expected_mesh))
+
+    assert actual_hash == expected_hash # TODO fix the heshes, they are not matching
+
+
+@pytest.mark.parametrize(
+    "glob_string,file_format,name",
+    [
+        ("annotations/triangular_mesh.hff", "hff", "missing_name"),
+    ],
+)
+def test_ingest_triangular_mesh_group_missing(
+    glob_string,
+    file_format,
+    name,
+    tomo_importer_local: TomogramImporter,
+    deposition_config_local: DepositionImportConfig,
+    local_test_data_dir: str,
+):
+    # Arrange
+    deposition_config_local._set_object_configs(
+        "annotation",
+        [
+            {
+                "metadata": default_anno_metadata,
+                "sources": [
+                    {
+                        "TriangularMeshGroup": {
+                            "file_format": file_format,
+                            "glob_string": glob_string,
+                            "is_visualization_default": False,
+                            "name": name,
+                        },
+                    },
+                ],
+            },
+        ],
+    )
+    fixtures_dir = os.path.join(local_test_data_dir, "fixtures")
+
+    # Action
+    anno = TriangularMeshAnnotationGroup(
+        config=deposition_config_local,
+        metadata=default_anno_metadata,
+        path=os.path.join(fixtures_dir, glob_string),
+        parents={"tomogram": tomo_importer_local, **tomo_importer_local.parents},
         file_format=file_format,
         identifier=100,
         name=name,
     )
-    anno.import_item()
-    anno.import_metadata()
+
+    # Assert
+    with pytest.raises(ValueError):
+        anno.import_item()

@@ -17,7 +17,7 @@ def convert_mesh_to_glb(convert_func: typing.Callable[[str], trimesh.Trimesh]) -
     :param convert_func: the function to convert a mesh file to a trimesh object.
     """
 
-    def wrapper(input_file: str, output_file: str, scale_factor: float = 1.0) -> None:
+    def wrapper(input_file: str, output_file: str, scale_factor: float = 1.0, *args, **kwargs) -> None:
         """
         Convert a mesh file to a glb file and scale it by a given factor.
 
@@ -25,7 +25,7 @@ def convert_mesh_to_glb(convert_func: typing.Callable[[str], trimesh.Trimesh]) -
         :param output_file: the name of the output file.
         :param scale_factor: the factor to scale the mesh by.
         """
-        mesh: trimesh.Trimesh = convert_func(input_file)
+        mesh: trimesh.Trimesh = convert_func(input_file, *args, **kwargs)
         mesh.apply_scale(scale_factor)
         mesh.export(output_file)
 
@@ -43,6 +43,7 @@ def check_mesh_name(input_file: str, name: str) -> str:
                 mesh_name: str = mesh_name_raw.decode()
                 if mesh_name == name:
                     return mesh_list
+        raise ValueError(f"Mesh name {name} not found in the hff file")
 
 
 @convert_mesh_to_glb
@@ -94,7 +95,7 @@ def from_hff(input_file: str, name: str) -> trimesh.Trimesh:
             meshes.append(mesh)
 
         # Combine all the meshes into a single mesh
-        concat_meshes = trimesh.util.concatenate(meshes)
+        concat_meshes = trimesh.util.concatenate(meshes) # hff color is cause an issue
     return concat_meshes
 
 

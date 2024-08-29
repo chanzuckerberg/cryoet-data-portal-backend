@@ -1,6 +1,7 @@
 """
 The module contains functions that can be used to generate mesh files for testing purposes.
 """
+import base64
 
 import h5py
 import trimesh
@@ -23,28 +24,29 @@ def generate_hff_mesh(input_file: str, output_file: str) -> None:
         fp.create_group("segment_list/1/biological_annotation")
         fp["segment_list/1/biological_annotation"].create_dataset("name", data="special_name")
 
-        # Add the mesh
-        fp.create_group("segmentation_list/1/mesh_list/1")
-
         # Add the vertices
-        fp["segmentation_list/1/mesh_list/1"].create_dataset("vertices", data=mesh.vertices)
+        fp.create_group("segment_list/1/mesh_list/1/vertices")
+        fp["segment_list/1/mesh_list/1/vertices"].create_dataset("data", data=base64.b64encode(mesh.vertices))
+        fp["segment_list/1/mesh_list/1/vertices"].create_dataset("mode", data=mesh.vertices.dtype.name)
 
         # Add the triangles
-        fp["segmentation_list/1/mesh_list/1"].create_dataset("triangles", data=mesh.triangles)
+        fp.create_group("segment_list/1/mesh_list/1/triangles")
+        fp["segment_list/1/mesh_list/1/triangles"].create_dataset("data", data=base64.b64encode(mesh.triangles))
+        fp["segment_list/1/mesh_list/1/triangles"].create_dataset("mode", data=mesh.triangles.dtype.name)
 
         # Add the colour
-        fp["segmentation_list/1"].create_dataset("colour", data=mesh.visual.face_colors)
+        fp["segment_list/1"].create_dataset("colour", data=mesh.visual.face_colors[0])
 
 
 if __name__ == "__main__":
     import os
 
     # get test data location
-    cd = os.path.dirname(__file__).split("/")[0:-4]
-    test_data_location = os.path.join("/", *cd, "test_infra/test_files")
+    cd = os.path.dirname(__file__).split("/")[0:-1]
+    test_data_location = os.path.join("/", *cd, "fixtures/annotations")
 
     # create the input and output file paths
-    file_prefix = os.path.join(test_data_location, "input_bucket/20002/annotations/triangular_mesh")
+    file_prefix = os.path.join(test_data_location, "triangular_mesh")
     input_file = f"{file_prefix}.glb"
     output_file = f"{file_prefix}.hff"
 
