@@ -247,7 +247,7 @@ class TestTiltAngles:
     ### BEGIN frames files & tiltseries metadata tests ###
     def test_frames_count(self, frames_files: List[str], tiltseries_metadata: Dict):
         """
-        Ensure that the number of frames files is consistent with the frames_count metadata field.
+        Ensure that the number of frames files is consistent with the tiltseries metadata size["z"] and frames_count field.
         """
         assert len(frames_files) == tiltseries_metadata["frames_count"]
         assert len(frames_files) == tiltseries_metadata["size"]["z"]
