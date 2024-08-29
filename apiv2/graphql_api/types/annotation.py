@@ -308,8 +308,7 @@ class Annotation(EntityInterface):
         description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
     )
     ground_truth_status: Optional[bool] = strawberry.field(
-        description="Whether an annotation is considered ground truth, as determined by the annotator.",
-        default=None,
+        description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
     )
     object_id: str = strawberry.field(
         description="Gene Ontology Cellular Component identifier for the annotation object",
@@ -322,8 +321,7 @@ class Annotation(EntityInterface):
         default=None,
     )
     object_state: Optional[str] = strawberry.field(
-        description="Molecule state annotated (e.g. open, closed)",
-        default=None,
+        description="Molecule state annotated (e.g. open, closed)", default=None,
     )
     object_count: Optional[int] = strawberry.field(description="Number of objects identified", default=None)
     confidence_precision: Optional[float] = strawberry.field(
@@ -335,16 +333,13 @@ class Annotation(EntityInterface):
         default=None,
     )
     ground_truth_used: Optional[str] = strawberry.field(
-        description="Annotation filename used as ground truth for precision and recall",
-        default=None,
+        description="Annotation filename used as ground truth for precision and recall", default=None,
     )
     annotation_software: Optional[str] = strawberry.field(
-        description="Software used for generating this annotation",
-        default=None,
+        description="Software used for generating this annotation", default=None,
     )
     is_curator_recommended: Optional[bool] = strawberry.field(
-        description="This annotation is recommended by the curator to be preferred for this object type.",
-        default=None,
+        description="This annotation is recommended by the curator to be preferred for this object type.", default=None,
     )
     method_type: annotation_method_type_enum = strawberry.field(
         description="Classification of the annotation method based on supervision.",
@@ -456,9 +451,7 @@ class AnnotationAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self,
-        distinct: Optional[bool] = False,
-        columns: Optional[AnnotationCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[AnnotationCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -503,8 +496,7 @@ class AnnotationCreateInput:
         description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
     )
     ground_truth_status: Optional[bool] = strawberry.field(
-        description="Whether an annotation is considered ground truth, as determined by the annotator.",
-        default=None,
+        description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
     )
     object_id: str = strawberry.field(
         description="Gene Ontology Cellular Component identifier for the annotation object",
@@ -517,8 +509,7 @@ class AnnotationCreateInput:
         default=None,
     )
     object_state: Optional[str] = strawberry.field(
-        description="Molecule state annotated (e.g. open, closed)",
-        default=None,
+        description="Molecule state annotated (e.g. open, closed)", default=None,
     )
     object_count: Optional[int] = strawberry.field(description="Number of objects identified", default=None)
     confidence_precision: Optional[float] = strawberry.field(
@@ -530,16 +521,13 @@ class AnnotationCreateInput:
         default=None,
     )
     ground_truth_used: Optional[str] = strawberry.field(
-        description="Annotation filename used as ground truth for precision and recall",
-        default=None,
+        description="Annotation filename used as ground truth for precision and recall", default=None,
     )
     annotation_software: Optional[str] = strawberry.field(
-        description="Software used for generating this annotation",
-        default=None,
+        description="Software used for generating this annotation", default=None,
     )
     is_curator_recommended: Optional[bool] = strawberry.field(
-        description="This annotation is recommended by the curator to be preferred for this object type.",
-        default=None,
+        description="This annotation is recommended by the curator to be preferred for this object type.", default=None,
     )
     method_type: annotation_method_type_enum = strawberry.field(
         description="Classification of the annotation method based on supervision.",
@@ -570,8 +558,7 @@ class AnnotationUpdateInput:
         description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
     )
     ground_truth_status: Optional[bool] = strawberry.field(
-        description="Whether an annotation is considered ground truth, as determined by the annotator.",
-        default=None,
+        description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
     )
     object_id: Optional[str] = strawberry.field(
         description="Gene Ontology Cellular Component identifier for the annotation object",
@@ -584,8 +571,7 @@ class AnnotationUpdateInput:
         default=None,
     )
     object_state: Optional[str] = strawberry.field(
-        description="Molecule state annotated (e.g. open, closed)",
-        default=None,
+        description="Molecule state annotated (e.g. open, closed)", default=None,
     )
     object_count: Optional[int] = strawberry.field(description="Number of objects identified", default=None)
     confidence_precision: Optional[float] = strawberry.field(
@@ -597,16 +583,13 @@ class AnnotationUpdateInput:
         default=None,
     )
     ground_truth_used: Optional[str] = strawberry.field(
-        description="Annotation filename used as ground truth for precision and recall",
-        default=None,
+        description="Annotation filename used as ground truth for precision and recall", default=None,
     )
     annotation_software: Optional[str] = strawberry.field(
-        description="Software used for generating this annotation",
-        default=None,
+        description="Software used for generating this annotation", default=None,
     )
     is_curator_recommended: Optional[bool] = strawberry.field(
-        description="This annotation is recommended by the curator to be preferred for this object type.",
-        default=None,
+        description="This annotation is recommended by the curator to be preferred for this object type.", default=None,
     )
     method_type: Optional[annotation_method_type_enum] = strawberry.field(
         description="Classification of the annotation method based on supervision.",
@@ -740,13 +723,7 @@ async def create_annotation(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.run_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -801,13 +778,7 @@ async def update_annotation(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.run_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")

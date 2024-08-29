@@ -11,12 +11,6 @@ import strawberry
 
 
 @strawberry.enum
-class tomogram_type_enum(enum.Enum):
-    CANONICAL = "CANONICAL"
-    UNKNOWN = "UNKNOWN"
-
-
-@strawberry.enum
 class annotation_file_source_enum(enum.Enum):
     dataset_author = "dataset_author"
     community = "community"

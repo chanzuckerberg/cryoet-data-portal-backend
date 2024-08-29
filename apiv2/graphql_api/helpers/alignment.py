@@ -38,7 +38,6 @@ class AlignmentGroupByOptions:
     deposition: Optional[DepositionGroupByOptions] = None
     tiltseries: Optional[TiltseriesGroupByOptions] = None
     run: Optional[RunGroupByOptions] = None
-    alignment: Optional[str] = None
     alignment_type: Optional[alignment_type_enum] = None
     volume_x_dimension: Optional[float] = None
     volume_y_dimension: Optional[float] = None
@@ -46,9 +45,10 @@ class AlignmentGroupByOptions:
     volume_x_offset: Optional[float] = None
     volume_y_offset: Optional[float] = None
     volume_z_offset: Optional[float] = None
-    volume_x_rotation: Optional[float] = None
+    x_rotation_offset: Optional[float] = None
     tilt_offset: Optional[float] = None
     local_alignment_file: Optional[str] = None
+    affine_transformation_matrix: Optional[str] = None
     id: Optional[int] = None
 
 

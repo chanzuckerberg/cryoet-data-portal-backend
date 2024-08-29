@@ -40,7 +40,6 @@ class AlignmentFactory(CommonFactory):
     run = factory.SubFactory(
         RunFactory,
     )
-    alignment = fuzzy.FuzzyText()
     alignment_type = fuzzy.FuzzyChoice(["LOCAL", "GLOBAL"])
     volume_x_dimension = fuzzy.FuzzyFloat(1, 100)
     volume_y_dimension = fuzzy.FuzzyFloat(1, 100)
@@ -48,7 +47,8 @@ class AlignmentFactory(CommonFactory):
     volume_x_offset = fuzzy.FuzzyFloat(1, 100)
     volume_y_offset = fuzzy.FuzzyFloat(1, 100)
     volume_z_offset = fuzzy.FuzzyFloat(1, 100)
-    volume_x_rotation = fuzzy.FuzzyFloat(1, 100)
+    x_rotation_offset = fuzzy.FuzzyFloat(1, 100)
     tilt_offset = fuzzy.FuzzyFloat(1, 100)
     local_alignment_file = fuzzy.FuzzyText()
+    affine_transformation_matrix = fuzzy.FuzzyText()
     id = fuzzy.FuzzyInteger(1, 1000)

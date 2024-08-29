@@ -151,24 +151,19 @@ class AnnotationAuthor(EntityInterface):
     name: str = strawberry.field(description="The full name of the author.")
     email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="The name of the author's affiliation.",
-        default=None,
+        description="The name of the author's affiliation.", default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="The address of the author's affiliation.",
-        default=None,
+        description="The address of the author's affiliation.", default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
-        description="A Research Organization Registry (ROR) identifier.",
-        default=None,
+        description="A Research Organization Registry (ROR) identifier.", default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a corresponding author.",
-        default=None,
+        description="Whether the author is a corresponding author.", default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a primary author.",
-        default=None,
+        description="Whether the author is a primary author.", default=None,
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -244,9 +239,7 @@ class AnnotationAuthorAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self,
-        distinct: Optional[bool] = False,
-        columns: Optional[AnnotationAuthorCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[AnnotationAuthorCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -280,8 +273,7 @@ Mutation types
 @strawberry.input()
 class AnnotationAuthorCreateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Metadata about an annotation for a run",
-        default=None,
+        description="Metadata about an annotation for a run", default=None,
     )
     author_list_order: int = strawberry.field(
         description="The order that the author is listed as in the associated publication",
@@ -290,24 +282,19 @@ class AnnotationAuthorCreateInput:
     name: str = strawberry.field(description="The full name of the author.")
     email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="The name of the author's affiliation.",
-        default=None,
+        description="The name of the author's affiliation.", default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="The address of the author's affiliation.",
-        default=None,
+        description="The address of the author's affiliation.", default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
-        description="A Research Organization Registry (ROR) identifier.",
-        default=None,
+        description="A Research Organization Registry (ROR) identifier.", default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a corresponding author.",
-        default=None,
+        description="Whether the author is a corresponding author.", default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a primary author.",
-        default=None,
+        description="Whether the author is a primary author.", default=None,
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -315,8 +302,7 @@ class AnnotationAuthorCreateInput:
 @strawberry.input()
 class AnnotationAuthorUpdateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Metadata about an annotation for a run",
-        default=None,
+        description="Metadata about an annotation for a run", default=None,
     )
     author_list_order: Optional[int] = strawberry.field(
         description="The order that the author is listed as in the associated publication",
@@ -325,24 +311,19 @@ class AnnotationAuthorUpdateInput:
     name: Optional[str] = strawberry.field(description="The full name of the author.")
     email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="The name of the author's affiliation.",
-        default=None,
+        description="The name of the author's affiliation.", default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="The address of the author's affiliation.",
-        default=None,
+        description="The address of the author's affiliation.", default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
-        description="A Research Organization Registry (ROR) identifier.",
-        default=None,
+        description="A Research Organization Registry (ROR) identifier.", default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a corresponding author.",
-        default=None,
+        description="Whether the author is a corresponding author.", default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a primary author.",
-        default=None,
+        description="Whether the author is a primary author.", default=None,
     )
     id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 

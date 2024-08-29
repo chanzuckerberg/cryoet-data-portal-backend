@@ -143,16 +143,13 @@ class PerSectionAlignmentParameters(EntityInterface):
     )  # type:ignore
     z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
     x_offset: Optional[float] = strawberry.field(
-        description="In-plane X-shift of the projection in angstrom",
-        default=None,
+        description="In-plane X-shift of the projection in angstrom", default=None,
     )
     y_offset: Optional[float] = strawberry.field(
-        description="In-plane Y-shift of the projection in angstrom",
-        default=None,
+        description="In-plane Y-shift of the projection in angstrom", default=None,
     )
     in_plane_rotation: Optional[float] = strawberry.field(
-        description="In-plane rotation of the projection in degrees",
-        default=None,
+        description="In-plane rotation of the projection in degrees", default=None,
     )
     beam_tilt: Optional[float] = strawberry.field(description="Beam tilt during projection in degrees", default=None)
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
@@ -231,9 +228,7 @@ class PerSectionAlignmentParametersAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self,
-        distinct: Optional[bool] = False,
-        columns: Optional[PerSectionAlignmentParametersCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[PerSectionAlignmentParametersCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -269,16 +264,13 @@ class PerSectionAlignmentParametersCreateInput:
     alignment_id: strawberry.ID = strawberry.field(description="Tiltseries Alignment")
     z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
     x_offset: Optional[float] = strawberry.field(
-        description="In-plane X-shift of the projection in angstrom",
-        default=None,
+        description="In-plane X-shift of the projection in angstrom", default=None,
     )
     y_offset: Optional[float] = strawberry.field(
-        description="In-plane Y-shift of the projection in angstrom",
-        default=None,
+        description="In-plane Y-shift of the projection in angstrom", default=None,
     )
     in_plane_rotation: Optional[float] = strawberry.field(
-        description="In-plane rotation of the projection in degrees",
-        default=None,
+        description="In-plane rotation of the projection in degrees", default=None,
     )
     beam_tilt: Optional[float] = strawberry.field(description="Beam tilt during projection in degrees", default=None)
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
@@ -290,16 +282,13 @@ class PerSectionAlignmentParametersUpdateInput:
     alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment")
     z_index: Optional[int] = strawberry.field(description="z-index of the frame in the tiltseries")
     x_offset: Optional[float] = strawberry.field(
-        description="In-plane X-shift of the projection in angstrom",
-        default=None,
+        description="In-plane X-shift of the projection in angstrom", default=None,
     )
     y_offset: Optional[float] = strawberry.field(
-        description="In-plane Y-shift of the projection in angstrom",
-        default=None,
+        description="In-plane Y-shift of the projection in angstrom", default=None,
     )
     in_plane_rotation: Optional[float] = strawberry.field(
-        description="In-plane rotation of the projection in degrees",
-        default=None,
+        description="In-plane rotation of the projection in degrees", default=None,
     )
     beam_tilt: Optional[float] = strawberry.field(description="Beam tilt during projection in degrees", default=None)
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
@@ -490,13 +479,7 @@ async def update_per_section_alignment_parameters(
 
     # Fetch entities for update, if we have access to them
     entities = await get_db_rows(
-        db.PerSectionAlignmentParameters,
-        session,
-        authz_client,
-        principal,
-        where,
-        [],
-        AuthzAction.UPDATE,
+        db.PerSectionAlignmentParameters, session, authz_client, principal, where, [], AuthzAction.UPDATE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
@@ -528,13 +511,7 @@ async def delete_per_section_alignment_parameters(
     """
     # Fetch entities for deletion, if we have access to them
     entities = await get_db_rows(
-        db.PerSectionAlignmentParameters,
-        session,
-        authz_client,
-        principal,
-        where,
-        [],
-        AuthzAction.DELETE,
+        db.PerSectionAlignmentParameters, session, authz_client, principal, where, [], AuthzAction.DELETE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")

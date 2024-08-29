@@ -77,8 +77,7 @@ class Annotation(Base):
     annotation_software: Mapped[str] = mapped_column(String, nullable=True)
     is_curator_recommended: Mapped[bool] = mapped_column(Boolean, nullable=True)
     method_type: Mapped[annotation_method_type_enum] = mapped_column(
-        Enum(annotation_method_type_enum, native_enum=False),
-        nullable=False,
+        Enum(annotation_method_type_enum, native_enum=False), nullable=False,
     )
     deposition_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     release_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)

@@ -21,12 +21,6 @@ class AlignmentCreateInputValidator(BaseModel):
     deposition_id: Annotated[uuid.UUID | None, Field()]
     tiltseries_id: Annotated[uuid.UUID | None, Field()]
     run_id: Annotated[uuid.UUID | None, Field()]
-    alignment: Annotated[
-        str,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
     alignment_type: Annotated[alignment_type_enum | None, Field()]
     volume_x_dimension: Annotated[float | None, Field()]
     volume_y_dimension: Annotated[float | None, Field()]
@@ -34,9 +28,15 @@ class AlignmentCreateInputValidator(BaseModel):
     volume_x_offset: Annotated[float | None, Field()]
     volume_y_offset: Annotated[float | None, Field()]
     volume_z_offset: Annotated[float | None, Field()]
-    volume_x_rotation: Annotated[float | None, Field()]
+    x_rotation_offset: Annotated[float | None, Field()]
     tilt_offset: Annotated[float | None, Field()]
     local_alignment_file: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    affine_transformation_matrix: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
@@ -51,12 +51,6 @@ class AlignmentUpdateInputValidator(BaseModel):
     deposition_id: Annotated[uuid.UUID | None, Field()]
     tiltseries_id: Annotated[uuid.UUID | None, Field()]
     run_id: Annotated[uuid.UUID | None, Field()]
-    alignment: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
     alignment_type: Annotated[alignment_type_enum | None, Field()]
     volume_x_dimension: Annotated[float | None, Field()]
     volume_y_dimension: Annotated[float | None, Field()]
@@ -64,9 +58,15 @@ class AlignmentUpdateInputValidator(BaseModel):
     volume_x_offset: Annotated[float | None, Field()]
     volume_y_offset: Annotated[float | None, Field()]
     volume_z_offset: Annotated[float | None, Field()]
-    volume_x_rotation: Annotated[float | None, Field()]
+    x_rotation_offset: Annotated[float | None, Field()]
     tilt_offset: Annotated[float | None, Field()]
     local_alignment_file: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    affine_transformation_matrix: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,

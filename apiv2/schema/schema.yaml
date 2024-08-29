@@ -215,16 +215,6 @@ types:
     uri: xsd:string
     repr: string
 enums:
-  tomogram_type_enum:
-    description: Describes a tomogram's usage
-    from_schema: cdp-dataset-config
-    permissible_values:
-      CANONICAL:
-        text: CANONICAL
-        description: This tomogram was submitted by the dataset author
-      UNKNOWN:
-        text: UNKNOWN
-        description: Tomogram's was not submitted by the dataset author
   annotation_file_source_enum:
     name: annotation_file_source_enum
     description: How the annotation file was acquired
@@ -589,14 +579,6 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Run.alignments
         range: Run
-      alignment:
-        name: alignment
-        description: Describe a tiltseries alignment
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - api_alignment
-        range: string
-        required: true
       alignment_type:
         name: alignment_type
         description: Type of alignment included, i.e. is a non-rigid alignment included?
@@ -665,12 +647,12 @@ classes:
         unit:
           symbol: Å
           descriptive_name: Angstrom
-      volume_x_rotation:
-        name: volume_x_rotation
+      x_rotation_offset:
+        name: x_rotation_offset
         description: Additional X rotation of the reconstruction volume in degrees
         from_schema: cdp-dataset-config
         exact_mappings:
-        - alignment_volume_x_rotation
+        - alignment_x_rotation_offset
         range: float
         unit:
           symbol: °
@@ -691,6 +673,16 @@ classes:
         from_schema: cdp-dataset-config
         exact_mappings:
         - alignment_local_alignment_file
+        range: string
+      affine_transformation_matrix:
+        name: affine_transformation_matrix
+        description: A placeholder for the affine transformation matrix.
+        from_schema: cdp-dataset-config
+        array:
+          exact_number_dimensions: 2
+          dimensions:
+          - exact_cardinality: 4
+          - exact_cardinality: 4
         range: string
   AnnotationAuthor:
     name: AnnotationAuthor
@@ -876,7 +868,7 @@ classes:
         name: shape_type
         from_schema: cdp-dataset-config
         range: annotation_file_shape_type_enum
-        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)
+        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^Mesh$)
   Annotation:
     name: Annotation
     annotations:
@@ -2691,16 +2683,6 @@ classes:
         unit:
           symbol: px
           descriptive_name: pixels
-      affine_transformation_matrix:
-        name: affine_transformation_matrix
-        description: A placeholder for any type of data.
-        from_schema: cdp-dataset-config
-        array:
-          exact_number_dimensions: 2
-          dimensions:
-          - exact_cardinality: 4
-          - exact_cardinality: 4
-        range: string
       key_photo_url:
         name: key_photo_url
         description: URL for the key photo
@@ -2722,8 +2704,6 @@ classes:
         exact_mappings:
         - tomogram_neuroglancer_config
         range: string
-      tomogram_type:
-        range: tomogram_type_enum
       is_standardized:
         description: Whether this tomogram was generated per the portal's standards
         range: boolean

@@ -76,10 +76,8 @@ class Alignment(Base):
         foreign_keys=run_id,
         back_populates="alignments",
     )
-    alignment: Mapped[str] = mapped_column(String, nullable=False)
     alignment_type: Mapped[alignment_type_enum] = mapped_column(
-        Enum(alignment_type_enum, native_enum=False),
-        nullable=True,
+        Enum(alignment_type_enum, native_enum=False), nullable=True,
     )
     volume_x_dimension: Mapped[float] = mapped_column(Float, nullable=True)
     volume_y_dimension: Mapped[float] = mapped_column(Float, nullable=True)
@@ -87,7 +85,8 @@ class Alignment(Base):
     volume_x_offset: Mapped[float] = mapped_column(Float, nullable=True)
     volume_y_offset: Mapped[float] = mapped_column(Float, nullable=True)
     volume_z_offset: Mapped[float] = mapped_column(Float, nullable=True)
-    volume_x_rotation: Mapped[float] = mapped_column(Float, nullable=True)
+    x_rotation_offset: Mapped[float] = mapped_column(Float, nullable=True)
     tilt_offset: Mapped[float] = mapped_column(Float, nullable=True)
     local_alignment_file: Mapped[str] = mapped_column(String, nullable=True)
+    affine_transformation_matrix: Mapped[str] = mapped_column(String, nullable=True)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

@@ -230,18 +230,15 @@ class Frame(EntityInterface):
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     raw_angle: float = strawberry.field(description="Camera angle for a frame")
     acquisition_order: Optional[int] = strawberry.field(
-        description="Frame's acquistion order within a tilt experiment",
-        default=None,
+        description="Frame's acquistion order within a tilt experiment", default=None,
     )
     dose: float = strawberry.field(description="The raw camera angle for a frame")
     is_gain_corrected: Optional[bool] = strawberry.field(
-        description="Whether this frame has been gain corrected",
-        default=None,
+        description="Whether this frame has been gain corrected", default=None,
     )
     s3_gain_file: Optional[str] = strawberry.field(description="S3 path to the gain file for this frame", default=None)
     https_gain_file: Optional[str] = strawberry.field(
-        description="HTTPS path to the gain file for this frame",
-        default=None,
+        description="HTTPS path to the gain file for this frame", default=None,
     )
     s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
     https_prefix: str = strawberry.field(
@@ -359,18 +356,15 @@ class FrameCreateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     raw_angle: float = strawberry.field(description="Camera angle for a frame")
     acquisition_order: Optional[int] = strawberry.field(
-        description="Frame's acquistion order within a tilt experiment",
-        default=None,
+        description="Frame's acquistion order within a tilt experiment", default=None,
     )
     dose: float = strawberry.field(description="The raw camera angle for a frame")
     is_gain_corrected: Optional[bool] = strawberry.field(
-        description="Whether this frame has been gain corrected",
-        default=None,
+        description="Whether this frame has been gain corrected", default=None,
     )
     s3_gain_file: Optional[str] = strawberry.field(description="S3 path to the gain file for this frame", default=None)
     https_gain_file: Optional[str] = strawberry.field(
-        description="HTTPS path to the gain file for this frame",
-        default=None,
+        description="HTTPS path to the gain file for this frame", default=None,
     )
     s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
     https_prefix: str = strawberry.field(
@@ -385,18 +379,15 @@ class FrameUpdateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     raw_angle: Optional[float] = strawberry.field(description="Camera angle for a frame")
     acquisition_order: Optional[int] = strawberry.field(
-        description="Frame's acquistion order within a tilt experiment",
-        default=None,
+        description="Frame's acquistion order within a tilt experiment", default=None,
     )
     dose: Optional[float] = strawberry.field(description="The raw camera angle for a frame")
     is_gain_corrected: Optional[bool] = strawberry.field(
-        description="Whether this frame has been gain corrected",
-        default=None,
+        description="Whether this frame has been gain corrected", default=None,
     )
     s3_gain_file: Optional[str] = strawberry.field(description="S3 path to the gain file for this frame", default=None)
     https_gain_file: Optional[str] = strawberry.field(
-        description="HTTPS path to the gain file for this frame",
-        default=None,
+        description="HTTPS path to the gain file for this frame", default=None,
     )
     s3_prefix: Optional[str] = strawberry.field(
         description="Path to a directory containing data for this entity as an S3 url",
@@ -537,13 +528,7 @@ async def create_frame(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.run_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -600,13 +585,7 @@ async def update_frame(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.run_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")

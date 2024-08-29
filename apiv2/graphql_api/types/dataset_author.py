@@ -148,24 +148,19 @@ class DatasetAuthor(EntityInterface):
     name: str = strawberry.field(description="The full name of the author.")
     email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="The name of the author's affiliation.",
-        default=None,
+        description="The name of the author's affiliation.", default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="The address of the author's affiliation.",
-        default=None,
+        description="The address of the author's affiliation.", default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
-        description="A Research Organization Registry (ROR) identifier.",
-        default=None,
+        description="A Research Organization Registry (ROR) identifier.", default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a corresponding author.",
-        default=None,
+        description="Whether the author is a corresponding author.", default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a primary author.",
-        default=None,
+        description="Whether the author is a primary author.", default=None,
     )
     orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
@@ -242,9 +237,7 @@ class DatasetAuthorAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self,
-        distinct: Optional[bool] = False,
-        columns: Optional[DatasetAuthorCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[DatasetAuthorCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -284,24 +277,19 @@ class DatasetAuthorCreateInput:
     name: str = strawberry.field(description="The full name of the author.")
     email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="The name of the author's affiliation.",
-        default=None,
+        description="The name of the author's affiliation.", default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="The address of the author's affiliation.",
-        default=None,
+        description="The address of the author's affiliation.", default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
-        description="A Research Organization Registry (ROR) identifier.",
-        default=None,
+        description="A Research Organization Registry (ROR) identifier.", default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a corresponding author.",
-        default=None,
+        description="Whether the author is a corresponding author.", default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a primary author.",
-        default=None,
+        description="Whether the author is a primary author.", default=None,
     )
     orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
@@ -316,24 +304,19 @@ class DatasetAuthorUpdateInput:
     name: Optional[str] = strawberry.field(description="The full name of the author.")
     email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="The name of the author's affiliation.",
-        default=None,
+        description="The name of the author's affiliation.", default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="The address of the author's affiliation.",
-        default=None,
+        description="The address of the author's affiliation.", default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
-        description="A Research Organization Registry (ROR) identifier.",
-        default=None,
+        description="A Research Organization Registry (ROR) identifier.", default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a corresponding author.",
-        default=None,
+        description="Whether the author is a corresponding author.", default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a primary author.",
-        default=None,
+        description="Whether the author is a primary author.", default=None,
     )
     orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
     id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
@@ -456,13 +439,7 @@ async def create_dataset_author(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.dataset_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")
@@ -504,13 +481,7 @@ async def update_dataset_author(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.dataset_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")

@@ -648,13 +648,7 @@ async def create_run(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.dataset_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")
@@ -696,13 +690,7 @@ async def update_run(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.dataset_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")

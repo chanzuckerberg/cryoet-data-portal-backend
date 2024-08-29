@@ -131,8 +131,7 @@ async def load_annotation_file_aggregate_rows(
 @relay.connection(
     relay.ListConnection[
         Annotated[
-            "PerSectionAlignmentParameters",
-            strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
+            "PerSectionAlignmentParameters", strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
         ]
     ],  # type:ignore
 )
@@ -176,8 +175,7 @@ async def load_per_section_alignment_parameters_aggregate_rows(
     ) = None,
 ) -> Optional[
     Annotated[
-        "PerSectionAlignmentParametersAggregate",
-        strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
+        "PerSectionAlignmentParametersAggregate", strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
     ]
 ]:
     selections = info.selected_fields[0].selections[0].selections
@@ -303,7 +301,6 @@ class AlignmentWhereClause(TypedDict):
     tiltseries: Optional[Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
     tomograms: Optional[Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
-    alignment: Optional[StrComparators] | None
     alignment_type: Optional[EnumComparators[alignment_type_enum]] | None
     volume_x_dimension: Optional[FloatComparators] | None
     volume_y_dimension: Optional[FloatComparators] | None
@@ -311,9 +308,10 @@ class AlignmentWhereClause(TypedDict):
     volume_x_offset: Optional[FloatComparators] | None
     volume_y_offset: Optional[FloatComparators] | None
     volume_z_offset: Optional[FloatComparators] | None
-    volume_x_rotation: Optional[FloatComparators] | None
+    x_rotation_offset: Optional[FloatComparators] | None
     tilt_offset: Optional[FloatComparators] | None
     local_alignment_file: Optional[StrComparators] | None
+    affine_transformation_matrix: Optional[StrComparators] | None
     id: Optional[IntComparators] | None
 
 
@@ -327,7 +325,6 @@ class AlignmentOrderByClause(TypedDict):
     deposition: Optional[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]] | None
     tiltseries: Optional[Annotated["TiltseriesOrderByClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
     run: Optional[Annotated["RunOrderByClause", strawberry.lazy("graphql_api.types.run")]] | None
-    alignment: Optional[orderBy] | None
     alignment_type: Optional[orderBy] | None
     volume_x_dimension: Optional[orderBy] | None
     volume_y_dimension: Optional[orderBy] | None
@@ -335,9 +332,10 @@ class AlignmentOrderByClause(TypedDict):
     volume_x_offset: Optional[orderBy] | None
     volume_y_offset: Optional[orderBy] | None
     volume_z_offset: Optional[orderBy] | None
-    volume_x_rotation: Optional[orderBy] | None
+    x_rotation_offset: Optional[orderBy] | None
     tilt_offset: Optional[orderBy] | None
     local_alignment_file: Optional[orderBy] | None
+    affine_transformation_matrix: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
 
@@ -356,8 +354,7 @@ class Alignment(EntityInterface):
     ] = load_annotation_file_aggregate_rows  # type:ignore
     per_section_alignments: Sequence[
         Annotated[
-            "PerSectionAlignmentParameters",
-            strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
+            "PerSectionAlignmentParameters", strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
         ]
     ] = load_per_section_alignment_parameters_rows  # type:ignore
     per_section_alignments_aggregate: Optional[
@@ -379,41 +376,35 @@ class Alignment(EntityInterface):
         load_tomogram_aggregate_rows
     )  # type:ignore
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
-    alignment: str = strawberry.field(description="Describe a tiltseries alignment")
     alignment_type: Optional[alignment_type_enum] = strawberry.field(
-        description="Type of alignment included, i.e. is a non-rigid alignment included?",
-        default=None,
+        description="Type of alignment included, i.e. is a non-rigid alignment included?", default=None,
     )
     volume_x_dimension: Optional[float] = strawberry.field(
-        description="X dimension of the reconstruction volume in angstrom",
-        default=None,
+        description="X dimension of the reconstruction volume in angstrom", default=None,
     )
     volume_y_dimension: Optional[float] = strawberry.field(
-        description="Y dimension of the reconstruction volume in angstrom",
-        default=None,
+        description="Y dimension of the reconstruction volume in angstrom", default=None,
     )
     volume_z_dimension: Optional[float] = strawberry.field(
-        description="Z dimension of the reconstruction volume in angstrom",
-        default=None,
+        description="Z dimension of the reconstruction volume in angstrom", default=None,
     )
     volume_x_offset: Optional[float] = strawberry.field(
-        description="X shift of the reconstruction volume in angstrom",
-        default=None,
+        description="X shift of the reconstruction volume in angstrom", default=None,
     )
     volume_y_offset: Optional[float] = strawberry.field(
-        description="Y shift of the reconstruction volume in angstrom",
-        default=None,
+        description="Y shift of the reconstruction volume in angstrom", default=None,
     )
     volume_z_offset: Optional[float] = strawberry.field(
-        description="Z shift of the reconstruction volume in angstrom",
-        default=None,
+        description="Z shift of the reconstruction volume in angstrom", default=None,
     )
-    volume_x_rotation: Optional[float] = strawberry.field(
-        description="Additional X rotation of the reconstruction volume in degrees",
-        default=None,
+    x_rotation_offset: Optional[float] = strawberry.field(
+        description="Additional X rotation of the reconstruction volume in degrees", default=None,
     )
     tilt_offset: Optional[float] = strawberry.field(description="Additional tilt offset in degrees", default=None)
     local_alignment_file: Optional[str] = strawberry.field(description="Path to the local alignment file", default=None)
+    affine_transformation_matrix: Optional[str] = strawberry.field(
+        description="A placeholder for the affine transformation matrix.", default=None,
+    )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
@@ -443,7 +434,7 @@ class AlignmentNumericalColumns:
     volume_x_offset: Optional[float] = None
     volume_y_offset: Optional[float] = None
     volume_z_offset: Optional[float] = None
-    volume_x_rotation: Optional[float] = None
+    x_rotation_offset: Optional[float] = None
     tilt_offset: Optional[float] = None
     id: Optional[int] = None
 
@@ -455,16 +446,16 @@ Define columns that support min/max aggregations
 
 @strawberry.type
 class AlignmentMinMaxColumns:
-    alignment: Optional[str] = None
     volume_x_dimension: Optional[float] = None
     volume_y_dimension: Optional[float] = None
     volume_z_dimension: Optional[float] = None
     volume_x_offset: Optional[float] = None
     volume_y_offset: Optional[float] = None
     volume_z_offset: Optional[float] = None
-    volume_x_rotation: Optional[float] = None
+    x_rotation_offset: Optional[float] = None
     tilt_offset: Optional[float] = None
     local_alignment_file: Optional[str] = None
+    affine_transformation_matrix: Optional[str] = None
     id: Optional[int] = None
 
 
@@ -481,7 +472,6 @@ class AlignmentCountColumns(enum.Enum):
     tiltseries = "tiltseries"
     tomograms = "tomograms"
     run = "run"
-    alignment = "alignment"
     alignmentType = "alignment_type"
     volumeXDimension = "volume_x_dimension"
     volumeYDimension = "volume_y_dimension"
@@ -489,9 +479,10 @@ class AlignmentCountColumns(enum.Enum):
     volumeXOffset = "volume_x_offset"
     volumeYOffset = "volume_y_offset"
     volumeZOffset = "volume_z_offset"
-    volumeXRotation = "volume_x_rotation"
+    xRotationOffset = "x_rotation_offset"
     tiltOffset = "tilt_offset"
     localAlignmentFile = "local_alignment_file"
+    affineTransformationMatrix = "affine_transformation_matrix"
     id = "id"
 
 
@@ -539,41 +530,35 @@ class AlignmentCreateInput:
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     tiltseries_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    alignment: str = strawberry.field(description="Describe a tiltseries alignment")
     alignment_type: Optional[alignment_type_enum] = strawberry.field(
-        description="Type of alignment included, i.e. is a non-rigid alignment included?",
-        default=None,
+        description="Type of alignment included, i.e. is a non-rigid alignment included?", default=None,
     )
     volume_x_dimension: Optional[float] = strawberry.field(
-        description="X dimension of the reconstruction volume in angstrom",
-        default=None,
+        description="X dimension of the reconstruction volume in angstrom", default=None,
     )
     volume_y_dimension: Optional[float] = strawberry.field(
-        description="Y dimension of the reconstruction volume in angstrom",
-        default=None,
+        description="Y dimension of the reconstruction volume in angstrom", default=None,
     )
     volume_z_dimension: Optional[float] = strawberry.field(
-        description="Z dimension of the reconstruction volume in angstrom",
-        default=None,
+        description="Z dimension of the reconstruction volume in angstrom", default=None,
     )
     volume_x_offset: Optional[float] = strawberry.field(
-        description="X shift of the reconstruction volume in angstrom",
-        default=None,
+        description="X shift of the reconstruction volume in angstrom", default=None,
     )
     volume_y_offset: Optional[float] = strawberry.field(
-        description="Y shift of the reconstruction volume in angstrom",
-        default=None,
+        description="Y shift of the reconstruction volume in angstrom", default=None,
     )
     volume_z_offset: Optional[float] = strawberry.field(
-        description="Z shift of the reconstruction volume in angstrom",
-        default=None,
+        description="Z shift of the reconstruction volume in angstrom", default=None,
     )
-    volume_x_rotation: Optional[float] = strawberry.field(
-        description="Additional X rotation of the reconstruction volume in degrees",
-        default=None,
+    x_rotation_offset: Optional[float] = strawberry.field(
+        description="Additional X rotation of the reconstruction volume in degrees", default=None,
     )
     tilt_offset: Optional[float] = strawberry.field(description="Additional tilt offset in degrees", default=None)
     local_alignment_file: Optional[str] = strawberry.field(description="Path to the local alignment file", default=None)
+    affine_transformation_matrix: Optional[str] = strawberry.field(
+        description="A placeholder for the affine transformation matrix.", default=None,
+    )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
@@ -582,41 +567,35 @@ class AlignmentUpdateInput:
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     tiltseries_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    alignment: Optional[str] = strawberry.field(description="Describe a tiltseries alignment")
     alignment_type: Optional[alignment_type_enum] = strawberry.field(
-        description="Type of alignment included, i.e. is a non-rigid alignment included?",
-        default=None,
+        description="Type of alignment included, i.e. is a non-rigid alignment included?", default=None,
     )
     volume_x_dimension: Optional[float] = strawberry.field(
-        description="X dimension of the reconstruction volume in angstrom",
-        default=None,
+        description="X dimension of the reconstruction volume in angstrom", default=None,
     )
     volume_y_dimension: Optional[float] = strawberry.field(
-        description="Y dimension of the reconstruction volume in angstrom",
-        default=None,
+        description="Y dimension of the reconstruction volume in angstrom", default=None,
     )
     volume_z_dimension: Optional[float] = strawberry.field(
-        description="Z dimension of the reconstruction volume in angstrom",
-        default=None,
+        description="Z dimension of the reconstruction volume in angstrom", default=None,
     )
     volume_x_offset: Optional[float] = strawberry.field(
-        description="X shift of the reconstruction volume in angstrom",
-        default=None,
+        description="X shift of the reconstruction volume in angstrom", default=None,
     )
     volume_y_offset: Optional[float] = strawberry.field(
-        description="Y shift of the reconstruction volume in angstrom",
-        default=None,
+        description="Y shift of the reconstruction volume in angstrom", default=None,
     )
     volume_z_offset: Optional[float] = strawberry.field(
-        description="Z shift of the reconstruction volume in angstrom",
-        default=None,
+        description="Z shift of the reconstruction volume in angstrom", default=None,
     )
-    volume_x_rotation: Optional[float] = strawberry.field(
-        description="Additional X rotation of the reconstruction volume in degrees",
-        default=None,
+    x_rotation_offset: Optional[float] = strawberry.field(
+        description="Additional X rotation of the reconstruction volume in degrees", default=None,
     )
     tilt_offset: Optional[float] = strawberry.field(description="Additional tilt offset in degrees", default=None)
     local_alignment_file: Optional[str] = strawberry.field(description="Path to the local alignment file", default=None)
+    affine_transformation_matrix: Optional[str] = strawberry.field(
+        description="A placeholder for the affine transformation matrix.", default=None,
+    )
     id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
@@ -763,13 +742,7 @@ async def create_alignment(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.run_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -841,13 +814,7 @@ async def update_alignment(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.run_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
