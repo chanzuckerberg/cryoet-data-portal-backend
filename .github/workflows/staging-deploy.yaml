@@ -5,7 +5,8 @@ on:
     branches:
       - main
     paths:
-      - "apiv2/**"
+      - ".happy/**"
+      - "api_server/**"
       - ".github/workflows/staging-deploy.yaml"
 
 # https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
