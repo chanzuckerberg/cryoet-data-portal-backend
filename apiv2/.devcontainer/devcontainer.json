@@ -1,0 +1,20 @@
+{
+    "name": "GraphQL API",
+    "dockerComposeFile": ["../docker-compose.yml"],
+    "service": "graphql-api",
+    "workspaceFolder": "/app",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                 "extensions.verifySignature": false
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-python.black-formatter",
+                "matangover.mypy",
+                "GitHub.copilot"
+            ]
+        }
+    }
+}

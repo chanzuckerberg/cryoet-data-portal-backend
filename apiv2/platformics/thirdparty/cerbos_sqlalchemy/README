@@ -1,0 +1,15 @@
+This folder contains modified code from the [cerbos-sqlalchemy](https://github.com/cerbos/query-plan-adapters/tree/815ab0cd16f8e9d1eb16b2a14d34fea2b46d70df/sqlalchemy/src/cerbos_sqlalchemy) package.
+
+The code was modified to support our use of SQLAlchemy's table polymorphism feature. For example, `Sample` inherits `Entity`'s fields, and sqlalchemy handles joining between those tables, but the package tries to join an additional time, which causes errors.
+
+This is the diff:
+
+```diff
+71,76d70
+<         if len(required_tables):
+<             raise TypeError(
+<                 "positional argument 'table_mapping' missing mapping for table(s): '{0}'".format(
+<                     "', '".join(required_tables)
+<                 )
+<             )
+```
