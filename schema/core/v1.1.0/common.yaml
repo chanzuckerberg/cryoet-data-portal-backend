@@ -819,6 +819,8 @@ enums:
         description: A volume with labels for multiple instances
       TriangularMesh:
         description: A mesh of triangles
+      TriangularMeshGroup:
+        description: A group of triangular meshes
 
   annotation_method_link_type_enum:
     description: Describes the type of link associated to the annotation method.

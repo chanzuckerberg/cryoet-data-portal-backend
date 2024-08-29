@@ -641,6 +641,15 @@ classes:
       scale_factor:
         exact_mappings:
           - cdp-common:annotation_source_file_scale_factor
+  AnnotationTriangularMeshGroupFile:
+    is_a: AnnotationSourceFile
+    aliases:
+      - TriangularMeshGroup
+    description: File and sourcing data for a triangular mesh annotation. Annotation that identifies an object.
+    attributes:
+      scale_factor:
+        exact_mappings:
+          - cdp-common:annotation_source_file_scale_factor
       name:
         exact_mappings:
           - cdp-common:annotation_source_file_mesh_name
