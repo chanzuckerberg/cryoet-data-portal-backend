@@ -524,6 +524,3 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
 
     def get_object_count(self, output_prefix: str) -> int:
         return 1
-
-    def is_valid(self) -> bool:
-        return True
