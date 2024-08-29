@@ -219,6 +219,7 @@ class TomogramVoxelSpacing(EntityInterface):
         Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]
     ] = load_annotation_file_aggregate_rows  # type:ignore
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
+    run_id: Optional[int]
     tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
         load_tomogram_rows
     )  # type:ignore

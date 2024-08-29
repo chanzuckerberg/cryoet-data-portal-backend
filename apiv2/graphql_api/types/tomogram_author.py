@@ -142,6 +142,7 @@ class TomogramAuthor(EntityInterface):
     tomogram: Optional[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
         load_tomogram_rows
     )  # type:ignore
+    tomogram_id: Optional[int]
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
     author_list_order: int = strawberry.field(
         description="The order that the author is listed as in the associated publication",

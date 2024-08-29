@@ -366,9 +366,11 @@ class Alignment(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
+    deposition_id: Optional[int]
     tiltseries: Optional[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
         load_tiltseries_rows
     )  # type:ignore
+    tiltseries_id: Optional[int]
     tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
         load_tomogram_rows
     )  # type:ignore
@@ -376,6 +378,7 @@ class Alignment(EntityInterface):
         load_tomogram_aggregate_rows
     )  # type:ignore
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
+    run_id: Optional[int]
     alignment_type: Optional[alignment_type_enum] = strawberry.field(
         description="Type of alignment included, i.e. is a non-rigid alignment included?", default=None,
     )

@@ -207,12 +207,15 @@ class AnnotationFile(EntityInterface):
     alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
         load_alignment_rows
     )  # type:ignore
+    alignment_id: Optional[int]
     annotation_shape: Optional[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]] = (
         load_annotation_shape_rows
     )  # type:ignore
+    annotation_shape_id: Optional[int]
     tomogram_voxel_spacing: Optional[
         Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
     ] = load_tomogram_voxel_spacing_rows  # type:ignore
+    tomogram_voxel_spacing_id: Optional[int]
     format: str = strawberry.field(description="File format label")
     s3_path: str = strawberry.field(description="Path to the file in s3")
     https_path: str = strawberry.field(description="Path to the file as an https url")
