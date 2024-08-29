@@ -14,7 +14,6 @@ from common.config import DepositionImportConfig
 from common.finders import BaseFinder, DepositionObjectImporterFactory, SourceGlobFinder, SourceMultiGlobFinder
 from common.fs import FileSystemApi
 from common.image import check_mask_for_label, make_pyramids
-from common.mesh_converter import check_mesh_name
 from common.metadata import AnnotationMetadata
 from importers.base_importer import BaseImporter
 
@@ -567,4 +566,4 @@ class TriangularMeshAnnotationGroup(AbstractTriangularMeshAnnotation):
         self.config.fs.push(output_file)
 
     def is_valid(self) -> bool:
-        return bool(check_mesh_name(self.mesh_file, self.mesh_name))
+        return bool(mc.check_mesh_name(self.mesh_file, self.mesh_name))
