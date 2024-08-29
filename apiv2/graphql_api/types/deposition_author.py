@@ -102,6 +102,7 @@ Supported WHERE clause attributes
 @strawberry.input
 class DepositionAuthorWhereClause(TypedDict):
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
+    id: Optional[IntComparators] | None
     author_list_order: Optional[IntComparators] | None
     orcid: Optional[StrComparators] | None
     name: Optional[StrComparators] | None
@@ -111,7 +112,6 @@ class DepositionAuthorWhereClause(TypedDict):
     affiliation_identifier: Optional[StrComparators] | None
     corresponding_author_status: Optional[BoolComparators] | None
     primary_author_status: Optional[BoolComparators] | None
-    id: Optional[IntComparators] | None
 
 
 """
@@ -122,6 +122,7 @@ Supported ORDER BY clause attributes
 @strawberry.input
 class DepositionAuthorOrderByClause(TypedDict):
     deposition: Optional[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]] | None
+    id: Optional[orderBy] | None
     author_list_order: Optional[orderBy] | None
     orcid: Optional[orderBy] | None
     name: Optional[orderBy] | None
@@ -131,7 +132,6 @@ class DepositionAuthorOrderByClause(TypedDict):
     affiliation_identifier: Optional[orderBy] | None
     corresponding_author_status: Optional[orderBy] | None
     primary_author_status: Optional[orderBy] | None
-    id: Optional[orderBy] | None
 
 
 """
@@ -144,6 +144,7 @@ class DepositionAuthor(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
     author_list_order: int = strawberry.field(
         description="The order that the author is listed as in the associated publication",
     )
@@ -165,7 +166,6 @@ class DepositionAuthor(EntityInterface):
     primary_author_status: Optional[bool] = strawberry.field(
         description="Whether the author is a primary author.", default=None,
     )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -188,8 +188,8 @@ Define columns that support numerical aggregations
 
 @strawberry.type
 class DepositionAuthorNumericalColumns:
-    author_list_order: Optional[int] = None
     id: Optional[int] = None
+    author_list_order: Optional[int] = None
 
 
 """
@@ -199,6 +199,7 @@ Define columns that support min/max aggregations
 
 @strawberry.type
 class DepositionAuthorMinMaxColumns:
+    id: Optional[int] = None
     author_list_order: Optional[int] = None
     orcid: Optional[str] = None
     name: Optional[str] = None
@@ -206,7 +207,6 @@ class DepositionAuthorMinMaxColumns:
     affiliation_name: Optional[str] = None
     affiliation_address: Optional[str] = None
     affiliation_identifier: Optional[str] = None
-    id: Optional[int] = None
 
 
 """
@@ -217,6 +217,7 @@ Define enum of all columns to support count and count(distinct) aggregations
 @strawberry.enum
 class DepositionAuthorCountColumns(enum.Enum):
     deposition = "deposition"
+    id = "id"
     authorListOrder = "author_list_order"
     orcid = "orcid"
     name = "name"
@@ -226,7 +227,6 @@ class DepositionAuthorCountColumns(enum.Enum):
     affiliationIdentifier = "affiliation_identifier"
     correspondingAuthorStatus = "corresponding_author_status"
     primaryAuthorStatus = "primary_author_status"
-    id = "id"
 
 
 """
@@ -273,6 +273,7 @@ Mutation types
 @strawberry.input()
 class DepositionAuthorCreateInput:
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
     author_list_order: int = strawberry.field(
         description="The order that the author is listed as in the associated publication",
     )
@@ -294,12 +295,12 @@ class DepositionAuthorCreateInput:
     primary_author_status: Optional[bool] = strawberry.field(
         description="Whether the author is a primary author.", default=None,
     )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
 class DepositionAuthorUpdateInput:
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
     author_list_order: Optional[int] = strawberry.field(
         description="The order that the author is listed as in the associated publication",
     )
@@ -321,7 +322,6 @@ class DepositionAuthorUpdateInput:
     primary_author_status: Optional[bool] = strawberry.field(
         description="Whether the author is a primary author.", default=None,
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

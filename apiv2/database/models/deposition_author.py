@@ -35,6 +35,7 @@ class DepositionAuthor(Base):
         foreign_keys=deposition_id,
         back_populates="authors",
     )
+    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
     author_list_order: Mapped[int] = mapped_column(Integer, nullable=False)
     orcid: Mapped[str] = mapped_column(String, nullable=True)
     name: Mapped[str] = mapped_column(String, nullable=False)
@@ -44,4 +45,3 @@ class DepositionAuthor(Base):
     affiliation_identifier: Mapped[str] = mapped_column(String, nullable=True)
     corresponding_author_status: Mapped[bool] = mapped_column(Boolean, nullable=True)
     primary_author_status: Mapped[bool] = mapped_column(Boolean, nullable=True)
-    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

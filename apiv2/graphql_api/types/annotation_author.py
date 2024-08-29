@@ -102,6 +102,7 @@ Supported WHERE clause attributes
 @strawberry.input
 class AnnotationAuthorWhereClause(TypedDict):
     annotation: Optional[Annotated["AnnotationWhereClause", strawberry.lazy("graphql_api.types.annotation")]] | None
+    id: Optional[IntComparators] | None
     author_list_order: Optional[IntComparators] | None
     orcid: Optional[StrComparators] | None
     name: Optional[StrComparators] | None
@@ -111,7 +112,6 @@ class AnnotationAuthorWhereClause(TypedDict):
     affiliation_identifier: Optional[StrComparators] | None
     corresponding_author_status: Optional[BoolComparators] | None
     primary_author_status: Optional[BoolComparators] | None
-    id: Optional[IntComparators] | None
 
 
 """
@@ -122,6 +122,7 @@ Supported ORDER BY clause attributes
 @strawberry.input
 class AnnotationAuthorOrderByClause(TypedDict):
     annotation: Optional[Annotated["AnnotationOrderByClause", strawberry.lazy("graphql_api.types.annotation")]] | None
+    id: Optional[orderBy] | None
     author_list_order: Optional[orderBy] | None
     orcid: Optional[orderBy] | None
     name: Optional[orderBy] | None
@@ -131,7 +132,6 @@ class AnnotationAuthorOrderByClause(TypedDict):
     affiliation_identifier: Optional[orderBy] | None
     corresponding_author_status: Optional[orderBy] | None
     primary_author_status: Optional[orderBy] | None
-    id: Optional[orderBy] | None
 
 
 """
@@ -144,6 +144,7 @@ class AnnotationAuthor(EntityInterface):
     annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
         load_annotation_rows
     )  # type:ignore
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
     author_list_order: int = strawberry.field(
         description="The order that the author is listed as in the associated publication",
     )
@@ -165,7 +166,6 @@ class AnnotationAuthor(EntityInterface):
     primary_author_status: Optional[bool] = strawberry.field(
         description="Whether the author is a primary author.", default=None,
     )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -188,8 +188,8 @@ Define columns that support numerical aggregations
 
 @strawberry.type
 class AnnotationAuthorNumericalColumns:
-    author_list_order: Optional[int] = None
     id: Optional[int] = None
+    author_list_order: Optional[int] = None
 
 
 """
@@ -199,6 +199,7 @@ Define columns that support min/max aggregations
 
 @strawberry.type
 class AnnotationAuthorMinMaxColumns:
+    id: Optional[int] = None
     author_list_order: Optional[int] = None
     orcid: Optional[str] = None
     name: Optional[str] = None
@@ -206,7 +207,6 @@ class AnnotationAuthorMinMaxColumns:
     affiliation_name: Optional[str] = None
     affiliation_address: Optional[str] = None
     affiliation_identifier: Optional[str] = None
-    id: Optional[int] = None
 
 
 """
@@ -217,6 +217,7 @@ Define enum of all columns to support count and count(distinct) aggregations
 @strawberry.enum
 class AnnotationAuthorCountColumns(enum.Enum):
     annotation = "annotation"
+    id = "id"
     authorListOrder = "author_list_order"
     orcid = "orcid"
     name = "name"
@@ -226,7 +227,6 @@ class AnnotationAuthorCountColumns(enum.Enum):
     affiliationIdentifier = "affiliation_identifier"
     correspondingAuthorStatus = "corresponding_author_status"
     primaryAuthorStatus = "primary_author_status"
-    id = "id"
 
 
 """
@@ -275,6 +275,7 @@ class AnnotationAuthorCreateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
         description="Metadata about an annotation for a run", default=None,
     )
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
     author_list_order: int = strawberry.field(
         description="The order that the author is listed as in the associated publication",
     )
@@ -296,7 +297,6 @@ class AnnotationAuthorCreateInput:
     primary_author_status: Optional[bool] = strawberry.field(
         description="Whether the author is a primary author.", default=None,
     )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
@@ -304,6 +304,7 @@ class AnnotationAuthorUpdateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
         description="Metadata about an annotation for a run", default=None,
     )
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
     author_list_order: Optional[int] = strawberry.field(
         description="The order that the author is listed as in the associated publication",
     )
@@ -325,7 +326,6 @@ class AnnotationAuthorUpdateInput:
     primary_author_status: Optional[bool] = strawberry.field(
         description="Whether the author is a primary author.", default=None,
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

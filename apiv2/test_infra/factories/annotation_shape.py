@@ -32,5 +32,5 @@ class AnnotationShapeFactory(CommonFactory):
     annotation = factory.SubFactory(
         AnnotationFactory,
     )
-    shape_type = fuzzy.FuzzyChoice(["SegmentationMask", "OrientedPoint", "Point", "InstanceSegmentation"])
+    shape_type = fuzzy.FuzzyChoice(["SegmentationMask", "OrientedPoint", "Point", "InstanceSegmentation", "Mesh"])
     id = fuzzy.FuzzyInteger(1, 1000)

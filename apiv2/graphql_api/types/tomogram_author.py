@@ -100,6 +100,7 @@ Supported WHERE clause attributes
 @strawberry.input
 class TomogramAuthorWhereClause(TypedDict):
     tomogram: Optional[Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
+    id: Optional[IntComparators] | None
     author_list_order: Optional[IntComparators] | None
     orcid: Optional[StrComparators] | None
     name: Optional[StrComparators] | None
@@ -109,7 +110,6 @@ class TomogramAuthorWhereClause(TypedDict):
     affiliation_identifier: Optional[StrComparators] | None
     corresponding_author_status: Optional[BoolComparators] | None
     primary_author_status: Optional[BoolComparators] | None
-    id: Optional[IntComparators] | None
 
 
 """
@@ -120,6 +120,7 @@ Supported ORDER BY clause attributes
 @strawberry.input
 class TomogramAuthorOrderByClause(TypedDict):
     tomogram: Optional[Annotated["TomogramOrderByClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
+    id: Optional[orderBy] | None
     author_list_order: Optional[orderBy] | None
     orcid: Optional[orderBy] | None
     name: Optional[orderBy] | None
@@ -129,7 +130,6 @@ class TomogramAuthorOrderByClause(TypedDict):
     affiliation_identifier: Optional[orderBy] | None
     corresponding_author_status: Optional[orderBy] | None
     primary_author_status: Optional[orderBy] | None
-    id: Optional[orderBy] | None
 
 
 """
@@ -142,6 +142,7 @@ class TomogramAuthor(EntityInterface):
     tomogram: Optional[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
         load_tomogram_rows
     )  # type:ignore
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
     author_list_order: int = strawberry.field(
         description="The order that the author is listed as in the associated publication",
     )
@@ -163,7 +164,6 @@ class TomogramAuthor(EntityInterface):
     primary_author_status: Optional[bool] = strawberry.field(
         description="Whether the author is a primary author.", default=None,
     )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -186,8 +186,8 @@ Define columns that support numerical aggregations
 
 @strawberry.type
 class TomogramAuthorNumericalColumns:
-    author_list_order: Optional[int] = None
     id: Optional[int] = None
+    author_list_order: Optional[int] = None
 
 
 """
@@ -197,6 +197,7 @@ Define columns that support min/max aggregations
 
 @strawberry.type
 class TomogramAuthorMinMaxColumns:
+    id: Optional[int] = None
     author_list_order: Optional[int] = None
     orcid: Optional[str] = None
     name: Optional[str] = None
@@ -204,7 +205,6 @@ class TomogramAuthorMinMaxColumns:
     affiliation_name: Optional[str] = None
     affiliation_address: Optional[str] = None
     affiliation_identifier: Optional[str] = None
-    id: Optional[int] = None
 
 
 """
@@ -215,6 +215,7 @@ Define enum of all columns to support count and count(distinct) aggregations
 @strawberry.enum
 class TomogramAuthorCountColumns(enum.Enum):
     tomogram = "tomogram"
+    id = "id"
     authorListOrder = "author_list_order"
     orcid = "orcid"
     name = "name"
@@ -224,7 +225,6 @@ class TomogramAuthorCountColumns(enum.Enum):
     affiliationIdentifier = "affiliation_identifier"
     correspondingAuthorStatus = "corresponding_author_status"
     primaryAuthorStatus = "primary_author_status"
-    id = "id"
 
 
 """
@@ -271,6 +271,7 @@ Mutation types
 @strawberry.input()
 class TomogramAuthorCreateInput:
     tomogram_id: Optional[strawberry.ID] = strawberry.field(description="Metadata describing a tomogram.", default=None)
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
     author_list_order: int = strawberry.field(
         description="The order that the author is listed as in the associated publication",
     )
@@ -292,12 +293,12 @@ class TomogramAuthorCreateInput:
     primary_author_status: Optional[bool] = strawberry.field(
         description="Whether the author is a primary author.", default=None,
     )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
 class TomogramAuthorUpdateInput:
     tomogram_id: Optional[strawberry.ID] = strawberry.field(description="Metadata describing a tomogram.", default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
     author_list_order: Optional[int] = strawberry.field(
         description="The order that the author is listed as in the associated publication",
     )
@@ -319,7 +320,6 @@ class TomogramAuthorUpdateInput:
     primary_author_status: Optional[bool] = strawberry.field(
         description="Whether the author is a primary author.", default=None,
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """

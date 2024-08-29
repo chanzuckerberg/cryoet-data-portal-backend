@@ -260,6 +260,9 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
+      Mesh:
+        text: Mesh
+        description: A surface mesh volumes
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -702,76 +705,6 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Annotation.authors
         range: Annotation
-      author_list_order:
-        name: author_list_order
-        description: The order that the author is listed as in the associated publication
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - api_author_list_order
-        range: integer
-        required: true
-      orcid:
-        name: orcid
-        description: The ORCID identifier for the author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_orcid
-        range: string
-        recommended: true
-        pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
-      name:
-        name: name
-        description: The full name of the author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_name
-        range: string
-        required: true
-      email:
-        name: email
-        description: The email address of the author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_email
-        range: string
-      affiliation_name:
-        name: affiliation_name
-        description: The name of the author's affiliation.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_affiliation_name
-        range: string
-      affiliation_address:
-        name: affiliation_address
-        description: The address of the author's affiliation.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_affiliation_address
-        range: string
-      affiliation_identifier:
-        name: affiliation_identifier
-        description: A Research Organization Registry (ROR) identifier.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_affiliation_identifier
-        range: string
-        recommended: true
-      corresponding_author_status:
-        name: corresponding_author_status
-        description: Whether the author is a corresponding author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_corresponding_author_status
-        ifabsent: false
-        range: boolean
-      primary_author_status:
-        name: primary_author_status
-        description: Whether the author is a primary author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_primary_author_status
-        ifabsent: false
-        range: boolean
   AnnotationFile:
     name: AnnotationFile
     annotations:
@@ -1085,6 +1018,7 @@ classes:
     from_schema: cdp-dataset-config
     mixins:
     - IDMixin
+    - AuthorEntityMixin
     attributes:
       dataset:
         name: dataset
@@ -1092,72 +1026,6 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Dataset.authors
         range: Dataset
-      author_list_order:
-        name: author_list_order
-        description: The order that the author is listed as in the associated publication
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - api_author_list_order
-        range: integer
-        required: true
-      name:
-        name: name
-        description: The full name of the author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_name
-        range: string
-        required: true
-      email:
-        name: email
-        description: The email address of the author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_email
-        range: string
-      affiliation_name:
-        name: affiliation_name
-        description: The name of the author's affiliation.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_affiliation_name
-        range: string
-      affiliation_address:
-        name: affiliation_address
-        description: The address of the author's affiliation.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_affiliation_address
-        range: string
-      affiliation_identifier:
-        name: affiliation_identifier
-        description: A Research Organization Registry (ROR) identifier.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_affiliation_identifier
-        range: string
-        recommended: true
-      corresponding_author_status:
-        name: corresponding_author_status
-        description: Whether the author is a corresponding author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_corresponding_author_status
-        ifabsent: false
-        range: boolean
-      primary_author_status:
-        name: primary_author_status
-        description: Whether the author is a primary author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_primary_author_status
-        ifabsent: false
-        range: boolean
-      orcid:
-        description: The ORCID identifier for the author.
-        range: string
-        recommended: true
-        pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
   DatasetFunding:
     name: DatasetFunding
     annotations:
@@ -1441,76 +1309,6 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.authors
         range: Deposition
-      author_list_order:
-        name: author_list_order
-        description: The order that the author is listed as in the associated publication
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - api_author_list_order
-        range: integer
-        required: true
-      orcid:
-        name: orcid
-        description: The ORCID identifier for the author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_orcid
-        range: string
-        recommended: true
-        pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
-      name:
-        name: name
-        description: The full name of the author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_name
-        range: string
-        required: true
-      email:
-        name: email
-        description: The email address of the author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_email
-        range: string
-      affiliation_name:
-        name: affiliation_name
-        description: The name of the author's affiliation.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_affiliation_name
-        range: string
-      affiliation_address:
-        name: affiliation_address
-        description: The address of the author's affiliation.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_affiliation_address
-        range: string
-      affiliation_identifier:
-        name: affiliation_identifier
-        description: A Research Organization Registry (ROR) identifier.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_affiliation_identifier
-        range: string
-        recommended: true
-      corresponding_author_status:
-        name: corresponding_author_status
-        description: Whether the author is a corresponding author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_corresponding_author_status
-        ifabsent: false
-        range: boolean
-      primary_author_status:
-        name: primary_author_status
-        description: Whether the author is a primary author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_primary_author_status
-        ifabsent: false
-        range: boolean
   Deposition:
     name: Deposition
     annotations:
@@ -2334,76 +2132,6 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Tomogram.authors
         range: Tomogram
-      author_list_order:
-        name: author_list_order
-        description: The order that the author is listed as in the associated publication
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - api_author_list_order
-        range: integer
-        required: true
-      orcid:
-        name: orcid
-        description: The ORCID identifier for the author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_orcid
-        range: string
-        recommended: true
-        pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
-      name:
-        name: name
-        description: The full name of the author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_name
-        range: string
-        required: true
-      email:
-        name: email
-        description: The email address of the author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_email
-        range: string
-      affiliation_name:
-        name: affiliation_name
-        description: The name of the author's affiliation.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_affiliation_name
-        range: string
-      affiliation_address:
-        name: affiliation_address
-        description: The address of the author's affiliation.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_affiliation_address
-        range: string
-      affiliation_identifier:
-        name: affiliation_identifier
-        description: A Research Organization Registry (ROR) identifier.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_affiliation_identifier
-        range: string
-        recommended: true
-      corresponding_author_status:
-        name: corresponding_author_status
-        description: Whether the author is a corresponding author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_corresponding_author_status
-        ifabsent: false
-        range: boolean
-      primary_author_status:
-        name: primary_author_status
-        description: Whether the author is a primary author.
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - author_primary_author_status
-        ifabsent: false
-        range: boolean
   TomogramVoxelSpacing:
     name: TomogramVoxelSpacing
     annotations:

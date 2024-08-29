@@ -30,6 +30,7 @@ class annotation_file_shape_type_enum(enum.Enum):
     OrientedPoint = "OrientedPoint"
     Point = "Point"
     InstanceSegmentation = "InstanceSegmentation"
+    Mesh = "Mesh"
 
 
 @strawberry.enum

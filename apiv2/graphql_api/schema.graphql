@@ -527,6 +527,7 @@ type AnnotationAuthorConnection {
 
 enum AnnotationAuthorCountColumns {
   annotation
+  id
   authorListOrder
   orcid
   name
@@ -536,12 +537,14 @@ enum AnnotationAuthorCountColumns {
   affiliationIdentifier
   correspondingAuthorStatus
   primaryAuthorStatus
-  id
 }
 
 input AnnotationAuthorCreateInput {
   """Metadata about an annotation for a run"""
   annotationId: ID = null
+
+  """An identifier to refer to a specific instance of this type"""
+  id: Int!
 
   """The order that the author is listed as in the associated publication"""
   authorListOrder: Int!
@@ -569,9 +572,6 @@ input AnnotationAuthorCreateInput {
 
   """Whether the author is a primary author."""
   primaryAuthorStatus: Boolean = null
-
-  """An identifier to refer to a specific instance of this type"""
-  id: Int!
 }
 
 """An edge in a connection."""
@@ -585,6 +585,7 @@ type AnnotationAuthorEdge {
 
 type AnnotationAuthorGroupByOptions {
   annotation: AnnotationGroupByOptions
+  id: Int
   authorListOrder: Int
   orcid: String
   name: String
@@ -594,10 +595,10 @@ type AnnotationAuthorGroupByOptions {
   affiliationIdentifier: String
   correspondingAuthorStatus: Boolean
   primaryAuthorStatus: Boolean
-  id: Int
 }
 
 type AnnotationAuthorMinMaxColumns {
+  id: Int
   authorListOrder: Int
   orcid: String
   name: String
@@ -605,16 +606,16 @@ type AnnotationAuthorMinMaxColumns {
   affiliationName: String
   affiliationAddress: String
   affiliationIdentifier: String
-  id: Int
 }
 
 type AnnotationAuthorNumericalColumns {
-  authorListOrder: Int
   id: Int
+  authorListOrder: Int
 }
 
 input AnnotationAuthorOrderByClause {
   annotation: AnnotationOrderByClause
+  id: orderBy
   authorListOrder: orderBy
   orcid: orderBy
   name: orderBy
@@ -624,12 +625,14 @@ input AnnotationAuthorOrderByClause {
   affiliationIdentifier: orderBy
   correspondingAuthorStatus: orderBy
   primaryAuthorStatus: orderBy
-  id: orderBy
 }
 
 input AnnotationAuthorUpdateInput {
   """Metadata about an annotation for a run"""
   annotationId: ID = null
+
+  """An identifier to refer to a specific instance of this type"""
+  id: Int
 
   """The order that the author is listed as in the associated publication"""
   authorListOrder: Int
@@ -657,13 +660,11 @@ input AnnotationAuthorUpdateInput {
 
   """Whether the author is a primary author."""
   primaryAuthorStatus: Boolean = null
-
-  """An identifier to refer to a specific instance of this type"""
-  id: Int
 }
 
 input AnnotationAuthorWhereClause {
   annotation: AnnotationWhereClause
+  id: IntComparators
   authorListOrder: IntComparators
   orcid: StrComparators
   name: StrComparators
@@ -673,7 +674,6 @@ input AnnotationAuthorWhereClause {
   affiliationIdentifier: StrComparators
   correspondingAuthorStatus: BoolComparators
   primaryAuthorStatus: BoolComparators
-  id: IntComparators
 }
 
 input AnnotationAuthorWhereClauseMutations {
@@ -1516,6 +1516,9 @@ type DatasetAuthor implements EntityInterface & Node {
   """The order that the author is listed as in the associated publication"""
   authorListOrder: Int!
 
+  """The ORCID identifier for the author."""
+  orcid: String
+
   """The full name of the author."""
   name: String!
 
@@ -1536,9 +1539,6 @@ type DatasetAuthor implements EntityInterface & Node {
 
   """Whether the author is a primary author."""
   primaryAuthorStatus: Boolean
-
-  """The ORCID identifier for the author."""
-  orcid: String
 }
 
 type DatasetAuthorAggregate {
@@ -1567,7 +1567,9 @@ type DatasetAuthorConnection {
 
 enum DatasetAuthorCountColumns {
   dataset
+  id
   authorListOrder
+  orcid
   name
   email
   affiliationName
@@ -1575,16 +1577,20 @@ enum DatasetAuthorCountColumns {
   affiliationIdentifier
   correspondingAuthorStatus
   primaryAuthorStatus
-  orcid
-  id
 }
 
 input DatasetAuthorCreateInput {
   """An author of a dataset"""
   datasetId: ID = null
 
+  """An identifier to refer to a specific instance of this type"""
+  id: Int!
+
   """The order that the author is listed as in the associated publication"""
   authorListOrder: Int!
+
+  """The ORCID identifier for the author."""
+  orcid: String = null
 
   """The full name of the author."""
   name: String!
@@ -1606,12 +1612,6 @@ input DatasetAuthorCreateInput {
 
   """Whether the author is a primary author."""
   primaryAuthorStatus: Boolean = null
-
-  """The ORCID identifier for the author."""
-  orcid: String = null
-
-  """An identifier to refer to a specific instance of this type"""
-  id: Int!
 }
 
 """An edge in a connection."""
@@ -1625,7 +1625,9 @@ type DatasetAuthorEdge {
 
 type DatasetAuthorGroupByOptions {
   dataset: DatasetGroupByOptions
+  id: Int
   authorListOrder: Int
+  orcid: String
   name: String
   email: String
   affiliationName: String
@@ -1633,29 +1635,29 @@ type DatasetAuthorGroupByOptions {
   affiliationIdentifier: String
   correspondingAuthorStatus: Boolean
   primaryAuthorStatus: Boolean
-  orcid: String
-  id: Int
 }
 
 type DatasetAuthorMinMaxColumns {
+  id: Int
   authorListOrder: Int
+  orcid: String
   name: String
   email: String
   affiliationName: String
   affiliationAddress: String
   affiliationIdentifier: String
-  orcid: String
-  id: Int
 }
 
 type DatasetAuthorNumericalColumns {
-  authorListOrder: Int
   id: Int
+  authorListOrder: Int
 }
 
 input DatasetAuthorOrderByClause {
   dataset: DatasetOrderByClause
+  id: orderBy
   authorListOrder: orderBy
+  orcid: orderBy
   name: orderBy
   email: orderBy
   affiliationName: orderBy
@@ -1663,16 +1665,20 @@ input DatasetAuthorOrderByClause {
   affiliationIdentifier: orderBy
   correspondingAuthorStatus: orderBy
   primaryAuthorStatus: orderBy
-  orcid: orderBy
-  id: orderBy
 }
 
 input DatasetAuthorUpdateInput {
   """An author of a dataset"""
   datasetId: ID = null
 
+  """An identifier to refer to a specific instance of this type"""
+  id: Int
+
   """The order that the author is listed as in the associated publication"""
   authorListOrder: Int
+
+  """The ORCID identifier for the author."""
+  orcid: String = null
 
   """The full name of the author."""
   name: String
@@ -1694,17 +1700,13 @@ input DatasetAuthorUpdateInput {
 
   """Whether the author is a primary author."""
   primaryAuthorStatus: Boolean = null
-
-  """The ORCID identifier for the author."""
-  orcid: String = null
-
-  """An identifier to refer to a specific instance of this type"""
-  id: Int
 }
 
 input DatasetAuthorWhereClause {
   dataset: DatasetWhereClause
+  id: IntComparators
   authorListOrder: IntComparators
+  orcid: StrComparators
   name: StrComparators
   email: StrComparators
   affiliationName: StrComparators
@@ -1712,8 +1714,6 @@ input DatasetAuthorWhereClause {
   affiliationIdentifier: StrComparators
   correspondingAuthorStatus: BoolComparators
   primaryAuthorStatus: BoolComparators
-  orcid: StrComparators
-  id: IntComparators
 }
 
 input DatasetAuthorWhereClauseMutations {
@@ -2470,6 +2470,7 @@ type DepositionAuthorConnection {
 
 enum DepositionAuthorCountColumns {
   deposition
+  id
   authorListOrder
   orcid
   name
@@ -2479,11 +2480,13 @@ enum DepositionAuthorCountColumns {
   affiliationIdentifier
   correspondingAuthorStatus
   primaryAuthorStatus
-  id
 }
 
 input DepositionAuthorCreateInput {
   depositionId: ID = null
+
+  """An identifier to refer to a specific instance of this type"""
+  id: Int!
 
   """The order that the author is listed as in the associated publication"""
   authorListOrder: Int!
@@ -2511,9 +2514,6 @@ input DepositionAuthorCreateInput {
 
   """Whether the author is a primary author."""
   primaryAuthorStatus: Boolean = null
-
-  """An identifier to refer to a specific instance of this type"""
-  id: Int!
 }
 
 """An edge in a connection."""
@@ -2527,6 +2527,7 @@ type DepositionAuthorEdge {
 
 type DepositionAuthorGroupByOptions {
   deposition: DepositionGroupByOptions
+  id: Int
   authorListOrder: Int
   orcid: String
   name: String
@@ -2536,10 +2537,10 @@ type DepositionAuthorGroupByOptions {
   affiliationIdentifier: String
   correspondingAuthorStatus: Boolean
   primaryAuthorStatus: Boolean
-  id: Int
 }
 
 type DepositionAuthorMinMaxColumns {
+  id: Int
   authorListOrder: Int
   orcid: String
   name: String
@@ -2547,16 +2548,16 @@ type DepositionAuthorMinMaxColumns {
   affiliationName: String
   affiliationAddress: String
   affiliationIdentifier: String
-  id: Int
 }
 
 type DepositionAuthorNumericalColumns {
-  authorListOrder: Int
   id: Int
+  authorListOrder: Int
 }
 
 input DepositionAuthorOrderByClause {
   deposition: DepositionOrderByClause
+  id: orderBy
   authorListOrder: orderBy
   orcid: orderBy
   name: orderBy
@@ -2566,11 +2567,13 @@ input DepositionAuthorOrderByClause {
   affiliationIdentifier: orderBy
   correspondingAuthorStatus: orderBy
   primaryAuthorStatus: orderBy
-  id: orderBy
 }
 
 input DepositionAuthorUpdateInput {
   depositionId: ID = null
+
+  """An identifier to refer to a specific instance of this type"""
+  id: Int
 
   """The order that the author is listed as in the associated publication"""
   authorListOrder: Int
@@ -2598,13 +2601,11 @@ input DepositionAuthorUpdateInput {
 
   """Whether the author is a primary author."""
   primaryAuthorStatus: Boolean = null
-
-  """An identifier to refer to a specific instance of this type"""
-  id: Int
 }
 
 input DepositionAuthorWhereClause {
   deposition: DepositionWhereClause
+  id: IntComparators
   authorListOrder: IntComparators
   orcid: StrComparators
   name: StrComparators
@@ -2614,7 +2615,6 @@ input DepositionAuthorWhereClause {
   affiliationIdentifier: StrComparators
   correspondingAuthorStatus: BoolComparators
   primaryAuthorStatus: BoolComparators
-  id: IntComparators
 }
 
 input DepositionAuthorWhereClauseMutations {
@@ -4744,6 +4744,7 @@ type TomogramAuthorConnection {
 
 enum TomogramAuthorCountColumns {
   tomogram
+  id
   authorListOrder
   orcid
   name
@@ -4753,12 +4754,14 @@ enum TomogramAuthorCountColumns {
   affiliationIdentifier
   correspondingAuthorStatus
   primaryAuthorStatus
-  id
 }
 
 input TomogramAuthorCreateInput {
   """Metadata describing a tomogram."""
   tomogramId: ID = null
+
+  """An identifier to refer to a specific instance of this type"""
+  id: Int!
 
   """The order that the author is listed as in the associated publication"""
   authorListOrder: Int!
@@ -4786,9 +4789,6 @@ input TomogramAuthorCreateInput {
 
   """Whether the author is a primary author."""
   primaryAuthorStatus: Boolean = null
-
-  """An identifier to refer to a specific instance of this type"""
-  id: Int!
 }
 
 """An edge in a connection."""
@@ -4802,6 +4802,7 @@ type TomogramAuthorEdge {
 
 type TomogramAuthorGroupByOptions {
   tomogram: TomogramGroupByOptions
+  id: Int
   authorListOrder: Int
   orcid: String
   name: String
@@ -4811,10 +4812,10 @@ type TomogramAuthorGroupByOptions {
   affiliationIdentifier: String
   correspondingAuthorStatus: Boolean
   primaryAuthorStatus: Boolean
-  id: Int
 }
 
 type TomogramAuthorMinMaxColumns {
+  id: Int
   authorListOrder: Int
   orcid: String
   name: String
@@ -4822,16 +4823,16 @@ type TomogramAuthorMinMaxColumns {
   affiliationName: String
   affiliationAddress: String
   affiliationIdentifier: String
-  id: Int
 }
 
 type TomogramAuthorNumericalColumns {
-  authorListOrder: Int
   id: Int
+  authorListOrder: Int
 }
 
 input TomogramAuthorOrderByClause {
   tomogram: TomogramOrderByClause
+  id: orderBy
   authorListOrder: orderBy
   orcid: orderBy
   name: orderBy
@@ -4841,12 +4842,14 @@ input TomogramAuthorOrderByClause {
   affiliationIdentifier: orderBy
   correspondingAuthorStatus: orderBy
   primaryAuthorStatus: orderBy
-  id: orderBy
 }
 
 input TomogramAuthorUpdateInput {
   """Metadata describing a tomogram."""
   tomogramId: ID = null
+
+  """An identifier to refer to a specific instance of this type"""
+  id: Int
 
   """The order that the author is listed as in the associated publication"""
   authorListOrder: Int
@@ -4874,13 +4877,11 @@ input TomogramAuthorUpdateInput {
 
   """Whether the author is a primary author."""
   primaryAuthorStatus: Boolean = null
-
-  """An identifier to refer to a specific instance of this type"""
-  id: Int
 }
 
 input TomogramAuthorWhereClause {
   tomogram: TomogramWhereClause
+  id: IntComparators
   authorListOrder: IntComparators
   orcid: StrComparators
   name: StrComparators
@@ -4890,7 +4891,6 @@ input TomogramAuthorWhereClause {
   affiliationIdentifier: StrComparators
   correspondingAuthorStatus: BoolComparators
   primaryAuthorStatus: BoolComparators
-  id: IntComparators
 }
 
 input TomogramAuthorWhereClauseMutations {
@@ -5494,6 +5494,7 @@ enum annotation_file_shape_type_enum {
   OrientedPoint
   Point
   InstanceSegmentation
+  Mesh
 }
 
 enum annotation_file_source_enum {

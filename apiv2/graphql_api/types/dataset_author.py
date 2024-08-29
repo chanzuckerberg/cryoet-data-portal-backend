@@ -100,7 +100,9 @@ Supported WHERE clause attributes
 @strawberry.input
 class DatasetAuthorWhereClause(TypedDict):
     dataset: Optional[Annotated["DatasetWhereClause", strawberry.lazy("graphql_api.types.dataset")]] | None
+    id: Optional[IntComparators] | None
     author_list_order: Optional[IntComparators] | None
+    orcid: Optional[StrComparators] | None
     name: Optional[StrComparators] | None
     email: Optional[StrComparators] | None
     affiliation_name: Optional[StrComparators] | None
@@ -108,8 +110,6 @@ class DatasetAuthorWhereClause(TypedDict):
     affiliation_identifier: Optional[StrComparators] | None
     corresponding_author_status: Optional[BoolComparators] | None
     primary_author_status: Optional[BoolComparators] | None
-    orcid: Optional[StrComparators] | None
-    id: Optional[IntComparators] | None
 
 
 """
@@ -120,7 +120,9 @@ Supported ORDER BY clause attributes
 @strawberry.input
 class DatasetAuthorOrderByClause(TypedDict):
     dataset: Optional[Annotated["DatasetOrderByClause", strawberry.lazy("graphql_api.types.dataset")]] | None
+    id: Optional[orderBy] | None
     author_list_order: Optional[orderBy] | None
+    orcid: Optional[orderBy] | None
     name: Optional[orderBy] | None
     email: Optional[orderBy] | None
     affiliation_name: Optional[orderBy] | None
@@ -128,8 +130,6 @@ class DatasetAuthorOrderByClause(TypedDict):
     affiliation_identifier: Optional[orderBy] | None
     corresponding_author_status: Optional[orderBy] | None
     primary_author_status: Optional[orderBy] | None
-    orcid: Optional[orderBy] | None
-    id: Optional[orderBy] | None
 
 
 """
@@ -142,9 +142,11 @@ class DatasetAuthor(EntityInterface):
     dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
         load_dataset_rows
     )  # type:ignore
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
     author_list_order: int = strawberry.field(
         description="The order that the author is listed as in the associated publication",
     )
+    orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
     name: str = strawberry.field(description="The full name of the author.")
     email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
     affiliation_name: Optional[str] = strawberry.field(
@@ -162,8 +164,6 @@ class DatasetAuthor(EntityInterface):
     primary_author_status: Optional[bool] = strawberry.field(
         description="Whether the author is a primary author.", default=None,
     )
-    orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
@@ -186,8 +186,8 @@ Define columns that support numerical aggregations
 
 @strawberry.type
 class DatasetAuthorNumericalColumns:
-    author_list_order: Optional[int] = None
     id: Optional[int] = None
+    author_list_order: Optional[int] = None
 
 
 """
@@ -197,14 +197,14 @@ Define columns that support min/max aggregations
 
 @strawberry.type
 class DatasetAuthorMinMaxColumns:
+    id: Optional[int] = None
     author_list_order: Optional[int] = None
+    orcid: Optional[str] = None
     name: Optional[str] = None
     email: Optional[str] = None
     affiliation_name: Optional[str] = None
     affiliation_address: Optional[str] = None
     affiliation_identifier: Optional[str] = None
-    orcid: Optional[str] = None
-    id: Optional[int] = None
 
 
 """
@@ -215,7 +215,9 @@ Define enum of all columns to support count and count(distinct) aggregations
 @strawberry.enum
 class DatasetAuthorCountColumns(enum.Enum):
     dataset = "dataset"
+    id = "id"
     authorListOrder = "author_list_order"
+    orcid = "orcid"
     name = "name"
     email = "email"
     affiliationName = "affiliation_name"
@@ -223,8 +225,6 @@ class DatasetAuthorCountColumns(enum.Enum):
     affiliationIdentifier = "affiliation_identifier"
     correspondingAuthorStatus = "corresponding_author_status"
     primaryAuthorStatus = "primary_author_status"
-    orcid = "orcid"
-    id = "id"
 
 
 """
@@ -271,9 +271,11 @@ Mutation types
 @strawberry.input()
 class DatasetAuthorCreateInput:
     dataset_id: Optional[strawberry.ID] = strawberry.field(description="An author of a dataset", default=None)
+    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
     author_list_order: int = strawberry.field(
         description="The order that the author is listed as in the associated publication",
     )
+    orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
     name: str = strawberry.field(description="The full name of the author.")
     email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
     affiliation_name: Optional[str] = strawberry.field(
@@ -291,16 +293,16 @@ class DatasetAuthorCreateInput:
     primary_author_status: Optional[bool] = strawberry.field(
         description="Whether the author is a primary author.", default=None,
     )
-    orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 @strawberry.input()
 class DatasetAuthorUpdateInput:
     dataset_id: Optional[strawberry.ID] = strawberry.field(description="An author of a dataset", default=None)
+    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
     author_list_order: Optional[int] = strawberry.field(
         description="The order that the author is listed as in the associated publication",
     )
+    orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
     name: Optional[str] = strawberry.field(description="The full name of the author.")
     email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
     affiliation_name: Optional[str] = strawberry.field(
@@ -318,8 +320,6 @@ class DatasetAuthorUpdateInput:
     primary_author_status: Optional[bool] = strawberry.field(
         description="Whether the author is a primary author.", default=None,
     )
-    orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
 
 """
