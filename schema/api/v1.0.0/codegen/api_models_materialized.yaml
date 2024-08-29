@@ -531,8 +531,8 @@ enums:
       raw:
         text: raw
         description: Tomogram was not processed
-  tomogrom_reconstruction_method_enum:
-    name: tomogrom_reconstruction_method_enum
+  tomogram_reconstruction_method_enum:
+    name: tomogram_reconstruction_method_enum
     description: Tomogram reconstruction method
     from_schema: cdp-api-models
     permissible_values:
@@ -3321,7 +3321,7 @@ classes:
         owner: Tomograms
         domain_of:
         - Tomograms
-        range: tomogrom_reconstruction_method_enum
+        range: tomogram_reconstruction_method_enum
         required: true
         inlined: true
         inlined_as_list: true

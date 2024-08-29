@@ -1,0 +1,11 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+        "user_id": {"type": "integer"},
+        "admin_projects": { "type": "array", "items": { "type": "integer" } },
+        "member_projects": { "type": "array", "items": { "type": "integer" } }
+    },
+    "additionalProperties": false,
+    "required": ["user_id", "admin_projects", "member_projects"]
+}

@@ -622,7 +622,7 @@ class TomogramProcessingEnum(str, Enum):
     raw = "raw"
 
 
-class TomogromReconstructionMethodEnum(str, Enum):
+class TomogramReconstructionMethodEnum(str, Enum):
     """
     Tomogram reconstruction method
     """
@@ -2303,7 +2303,7 @@ class Tomogram(AuthoredEntity):
             }
         },
     )
-    reconstruction_method: Union[TomogromReconstructionMethodEnum, str] = Field(
+    reconstruction_method: Union[TomogramReconstructionMethodEnum, str] = Field(
         ...,
         description="""Describe reconstruction method (WBP, SART, SIRT)""",
         json_schema_extra={
@@ -2313,7 +2313,7 @@ class Tomogram(AuthoredEntity):
                     {
                         "description": "Describe reconstruction method (WBP, SART, SIRT)",
                         "exact_mappings": ["cdp-common:tomogram_reconstruction_method"],
-                        "range": "tomogrom_reconstruction_method_enum",
+                        "range": "tomogram_reconstruction_method_enum",
                         "required": True,
                     },
                     {"range": "StringFormattedString"},

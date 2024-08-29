@@ -87,7 +87,7 @@ Tomograms {
     float size_z
     float voxel_spacing
     fiducial_alignment_status_enum fiducial_alignment_status
-    tomogrom_reconstruction_method_enum reconstruction_method
+    tomogram_reconstruction_method_enum reconstruction_method
     tomogram_processing_enum processing
     boolean is_canonical
     string s3_omezarr_dir

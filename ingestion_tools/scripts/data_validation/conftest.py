@@ -94,6 +94,7 @@ def pytest_configure(config: pytest.Config) -> None:
     # Register markers
     config.addinivalue_line("markers", "annotation: Tests concerning the annotation data.")
     config.addinivalue_line("markers", "dataset: Tests concerning the dataset.")
+    config.addinivalue_line("markers", "deposition: Tests concerning the deposition data.")
     config.addinivalue_line("markers", "run: Tests concerning the runs.")
     config.addinivalue_line("markers", "tiltseries: Tests concerning the tiltseries.")
     config.addinivalue_line("markers", "tomogram: Tests concerning the tomogram.")
