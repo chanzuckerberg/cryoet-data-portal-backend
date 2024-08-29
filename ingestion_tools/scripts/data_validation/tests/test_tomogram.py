@@ -10,10 +10,10 @@ from tests.test_deposition import HelperTestDeposition
 
 from common.fs import FileSystemApi
 
-# values are based on ingestion_tools/scripts/importers/key_image.py (134 pixels is the min height)
+# values are based on ingestion_tools/scripts/importers/key_image.py (134 pixels is the min width)
 # and frontend aspect ratio (4:3 is used for image display)
 PHOTO_ASPECT_RATIO = 4 / 3
-MIN_THUMBNAIL_WIDTH = 100
+MIN_THUMBNAIL_WIDTH = 134
 MIN_SNAPSHOT_WIDTH = 512 * 3 / 4  # account for 4:3 aspect ratio
 
 
