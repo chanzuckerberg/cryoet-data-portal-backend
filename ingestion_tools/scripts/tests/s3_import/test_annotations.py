@@ -7,11 +7,6 @@ import ndjson
 import numpy as np
 import pytest
 import trimesh
-from mrcfile.mrcinterpreter import MrcInterpreter
-from mypy_boto3_s3 import S3Client
-
-from common.config import DepositionImportConfig
-from common.fs import FileSystemApi
 from importers.annotation import (
     InstanceSegmentationAnnotation,
     OrientedPointAnnotation,
@@ -26,7 +21,12 @@ from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
 from importers.voxel_spacing import VoxelSpacingImporter
+from mrcfile.mrcinterpreter import MrcInterpreter
+from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
+
+from common.config import DepositionImportConfig
+from common.fs import FileSystemApi
 from tests.s3_import.util import list_dir
 
 default_anno_metadata = {
@@ -1173,7 +1173,7 @@ def test_ingest_segmentationmask(
         config=deposition_config_s3,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/"
-             + case["source_cfg"]["SemanticSegmentationMask"].get("glob_string"),
+        + case["source_cfg"]["SemanticSegmentationMask"].get("glob_string"),
         parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
         identifier=100,
         mask_label=case["source_cfg"]["SemanticSegmentationMask"].get("mask_label"),
@@ -1343,7 +1343,7 @@ def test_ingest_triangular_mesh_group_exists(
     expected_mesh = trimesh.load(os.path.join(fixtures_dir, "annotations/triangular_mesh.glb"), force="mesh")
     expected_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(expected_mesh))
 
-    assert actual_hash == expected_hash # TODO fix the heshes, they are not matching
+    assert actual_hash == expected_hash  # TODO fix the heshes, they are not matching
 
 
 @pytest.mark.parametrize(

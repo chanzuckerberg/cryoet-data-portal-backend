@@ -34,7 +34,7 @@ def convert_mesh_to_glb(convert_func: typing.Callable[[str], trimesh.Trimesh]) -
 
 def check_mesh_name(input_file: str, name: str) -> str:
     with h5py.File(input_file, "r") as fp:
-        for mesh_list in fp["segment_list/"].keys():
+        for mesh_list in fp["segment_list/"].key:
             # Mesh name
             mesh_name_raw: bytes = fp[f"segment_list/{mesh_list}/biological_annotation/name"][()]
             if not mesh_name_raw:
@@ -75,13 +75,13 @@ def from_hff(input_file: str, name: str) -> trimesh.Trimesh:
     # Open the HDF5 file
     with h5py.File(input_file, "r") as fp:
         # All the meshes are stored in the 'segment_list'Explore & Visualize HDF5 Files
-        logger.info(f"Schema version: {fp['version'][()]}")
+        logger.info(f"Schema version: {fp['version'][()]}")  # noqa
         # Mesh name
-        logger.info(f"Processing mesh: {name}")
+        logger.info(f"Processing mesh: {name}")  # noqa
         # Color is a 4-tuple of RGBA values, 0-1 range (normalized from 0-255)
         color = fp[f"segment_list/{mesh_index}/colour"][()]
         meshes = []
-        for mesh in fp[f"segment_list/{mesh_index}/mesh_list/"].keys():
+        for mesh in fp[f"segment_list/{mesh_index}/mesh_list/"].key:
             # Create a trimesh object from the vertices and triangles data
             triangle_path = f"segment_list/{mesh_index}/mesh_list/{mesh}/triangles"
             triangles = _extract(fp, triangle_path)
@@ -95,7 +95,7 @@ def from_hff(input_file: str, name: str) -> trimesh.Trimesh:
             meshes.append(mesh)
 
         # Combine all the meshes into a single mesh
-        concat_meshes = trimesh.util.concatenate(meshes) # hff color is cause an issue
+        concat_meshes = trimesh.util.concatenate(meshes)  # hff color is cause an issue
     return concat_meshes
 
 

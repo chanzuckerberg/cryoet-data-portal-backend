@@ -4,11 +4,12 @@ import os.path
 from abc import abstractmethod
 from collections import defaultdict
 from functools import partial
-from typing import Any, Callable, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Callable
 
 import ndjson
 
-from common import mesh_converter as mc, point_converter as pc
+from common import mesh_converter as mc
+from common import point_converter as pc
 from common.config import DepositionImportConfig
 from common.finders import BaseFinder, DepositionObjectImporterFactory, SourceGlobFinder, SourceMultiGlobFinder
 from common.fs import FileSystemApi
@@ -527,6 +528,7 @@ class AbstractTriangularMeshAnnotation(BaseAnnotationSource):
 
 class TriangularMeshAnnotation(AbstractTriangularMeshAnnotation):
     """Triangular Meshes are converted to glb format"""
+
     map_functions = {
         "obj": mc.from_generic,
         "stl": mc.from_generic,
@@ -560,8 +562,9 @@ class TriangularMeshAnnotationGroup(AbstractTriangularMeshAnnotation):
             self.mesh_file,
             output_file,
             scale_factor=self.scale_factor,
-            name=self.mesh_name)
+            name=self.mesh_name,
+        )
         self.config.fs.push(output_file)
 
     def is_valid(self) -> bool:
-        return True if check_mesh_name(self.mesh_file, self.mesh_name) else False
+        return bool(check_mesh_name(self.mesh_file, self.mesh_name))
