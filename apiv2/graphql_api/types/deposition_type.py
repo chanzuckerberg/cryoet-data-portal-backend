@@ -187,9 +187,7 @@ class DepositionTypeAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self,
-        distinct: Optional[bool] = False,
-        columns: Optional[DepositionTypeCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[DepositionTypeCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore

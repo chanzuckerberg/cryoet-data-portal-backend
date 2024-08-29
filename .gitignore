@@ -161,3 +161,5 @@ cython_debug/
 
 **/local_data
 **.DS_Store
+
+.moto_recording

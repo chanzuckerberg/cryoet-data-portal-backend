@@ -296,9 +296,7 @@ class TomogramVoxelSpacingAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self,
-        distinct: Optional[bool] = False,
-        columns: Optional[TomogramVoxelSpacingCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[TomogramVoxelSpacingCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -472,13 +470,7 @@ async def create_tomogram_voxel_spacing(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.run_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -520,13 +512,7 @@ async def update_tomogram_voxel_spacing(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.run_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -535,13 +521,7 @@ async def update_tomogram_voxel_spacing(
 
     # Fetch entities for update, if we have access to them
     entities = await get_db_rows(
-        db.TomogramVoxelSpacing,
-        session,
-        authz_client,
-        principal,
-        where,
-        [],
-        AuthzAction.UPDATE,
+        db.TomogramVoxelSpacing, session, authz_client, principal, where, [], AuthzAction.UPDATE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
@@ -573,13 +553,7 @@ async def delete_tomogram_voxel_spacing(
     """
     # Fetch entities for deletion, if we have access to them
     entities = await get_db_rows(
-        db.TomogramVoxelSpacing,
-        session,
-        authz_client,
-        principal,
-        where,
-        [],
-        AuthzAction.DELETE,
+        db.TomogramVoxelSpacing, session, authz_client, principal, where, [], AuthzAction.DELETE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")

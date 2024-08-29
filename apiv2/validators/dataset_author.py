@@ -18,7 +18,15 @@ class DatasetAuthorCreateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
     dataset_id: Annotated[uuid.UUID | None, Field()]
+    id: Annotated[int, Field()]
     author_list_order: Annotated[int, Field()]
+    orcid: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+            pattern=r"[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
+        ),
+    ]
     name: Annotated[
         str,
         StringConstraints(
@@ -51,6 +59,14 @@ class DatasetAuthorCreateInputValidator(BaseModel):
     ]
     corresponding_author_status: Annotated[bool | None, Field()]
     primary_author_status: Annotated[bool | None, Field()]
+
+
+class DatasetAuthorUpdateInputValidator(BaseModel):
+    # Pydantic stuff
+    model_config = ConfigDict(from_attributes=True)
+    dataset_id: Annotated[uuid.UUID | None, Field()]
+    id: Annotated[int | None, Field()]
+    author_list_order: Annotated[int | None, Field()]
     orcid: Annotated[
         str | None,
         StringConstraints(
@@ -58,14 +74,6 @@ class DatasetAuthorCreateInputValidator(BaseModel):
             pattern=r"[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
         ),
     ]
-    id: Annotated[int, Field()]
-
-
-class DatasetAuthorUpdateInputValidator(BaseModel):
-    # Pydantic stuff
-    model_config = ConfigDict(from_attributes=True)
-    dataset_id: Annotated[uuid.UUID | None, Field()]
-    author_list_order: Annotated[int | None, Field()]
     name: Annotated[
         str | None,
         StringConstraints(
@@ -98,11 +106,3 @@ class DatasetAuthorUpdateInputValidator(BaseModel):
     ]
     corresponding_author_status: Annotated[bool | None, Field()]
     primary_author_status: Annotated[bool | None, Field()]
-    orcid: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-            pattern=r"[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
-        ),
-    ]
-    id: Annotated[int | None, Field()]

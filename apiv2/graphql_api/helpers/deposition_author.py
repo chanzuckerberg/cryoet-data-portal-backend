@@ -25,6 +25,7 @@ These are only used in aggregate queries.
 @strawberry.type
 class DepositionAuthorGroupByOptions:
     deposition: Optional[DepositionGroupByOptions] = None
+    id: Optional[int] = None
     author_list_order: Optional[int] = None
     orcid: Optional[str] = None
     name: Optional[str] = None
@@ -34,7 +35,6 @@ class DepositionAuthorGroupByOptions:
     affiliation_identifier: Optional[str] = None
     corresponding_author_status: Optional[bool] = None
     primary_author_status: Optional[bool] = None
-    id: Optional[int] = None
 
 
 def build_deposition_author_groupby_output(

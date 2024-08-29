@@ -237,9 +237,7 @@ class AnnotationShapeAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self,
-        distinct: Optional[bool] = False,
-        columns: Optional[AnnotationShapeCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[AnnotationShapeCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -273,8 +271,7 @@ Mutation types
 @strawberry.input()
 class AnnotationShapeCreateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Metadata about an annotation for a run",
-        default=None,
+        description="Metadata about an annotation for a run", default=None,
     )
     shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(description=None, default=None)
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
@@ -283,8 +280,7 @@ class AnnotationShapeCreateInput:
 @strawberry.input()
 class AnnotationShapeUpdateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Metadata about an annotation for a run",
-        default=None,
+        description="Metadata about an annotation for a run", default=None,
     )
     shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(description=None, default=None)
     id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")

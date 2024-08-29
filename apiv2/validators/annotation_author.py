@@ -18,6 +18,7 @@ class AnnotationAuthorCreateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
     annotation_id: Annotated[uuid.UUID | None, Field()]
+    id: Annotated[int, Field()]
     author_list_order: Annotated[int, Field()]
     orcid: Annotated[
         str | None,
@@ -58,13 +59,13 @@ class AnnotationAuthorCreateInputValidator(BaseModel):
     ]
     corresponding_author_status: Annotated[bool | None, Field()]
     primary_author_status: Annotated[bool | None, Field()]
-    id: Annotated[int, Field()]
 
 
 class AnnotationAuthorUpdateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
     annotation_id: Annotated[uuid.UUID | None, Field()]
+    id: Annotated[int | None, Field()]
     author_list_order: Annotated[int | None, Field()]
     orcid: Annotated[
         str | None,
@@ -105,4 +106,3 @@ class AnnotationAuthorUpdateInputValidator(BaseModel):
     ]
     corresponding_author_status: Annotated[bool | None, Field()]
     primary_author_status: Annotated[bool | None, Field()]
-    id: Annotated[int | None, Field()]

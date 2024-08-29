@@ -15,12 +15,7 @@ from graphql_api.helpers.tomogram_voxel_spacing import (
     TomogramVoxelSpacingGroupByOptions,
     build_tomogram_voxel_spacing_groupby_output,
 )
-from support.enums import (
-    fiducial_alignment_status_enum,
-    tomogram_processing_enum,
-    tomogram_reconstruction_method_enum,
-    tomogram_type_enum,
-)
+from support.enums import fiducial_alignment_status_enum, tomogram_processing_enum, tomogram_reconstruction_method_enum
 
 if TYPE_CHECKING:
     from api.types.alignment import Alignment
@@ -75,11 +70,9 @@ class TomogramGroupByOptions:
     offset_x: Optional[int] = None
     offset_y: Optional[int] = None
     offset_z: Optional[int] = None
-    affine_transformation_matrix: Optional[str] = None
     key_photo_url: Optional[str] = None
     key_photo_thumbnail_url: Optional[str] = None
     neuroglancer_config: Optional[str] = None
-    tomogram_type: Optional[tomogram_type_enum] = None
     is_standardized: Optional[bool] = None
     id: Optional[int] = None
 

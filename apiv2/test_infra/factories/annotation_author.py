@@ -32,6 +32,7 @@ class AnnotationAuthorFactory(CommonFactory):
     annotation = factory.SubFactory(
         AnnotationFactory,
     )
+    id = fuzzy.FuzzyInteger(1, 1000)
     author_list_order = fuzzy.FuzzyInteger(1, 1000)
     orcid = fuzzy.FuzzyText()
     name = fuzzy.FuzzyText()
@@ -41,4 +42,3 @@ class AnnotationAuthorFactory(CommonFactory):
     affiliation_identifier = fuzzy.FuzzyText()
     corresponding_author_status = factory.Faker("boolean")
     primary_author_status = factory.Faker("boolean")
-    id = fuzzy.FuzzyInteger(1, 1000)

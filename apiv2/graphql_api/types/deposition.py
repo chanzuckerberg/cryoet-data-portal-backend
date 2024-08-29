@@ -481,12 +481,10 @@ class Deposition(EntityInterface):
         Annotated["DepositionTypeAggregate", strawberry.lazy("graphql_api.types.deposition_type")]
     ] = load_deposition_type_aggregate_rows  # type:ignore
     publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.",
-        default=None,
+        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database entries for the dataset.",
-        default=None,
+        description="Comma-separated list of related database entries for the dataset.", default=None,
     )
     deposition_date: datetime.datetime = strawberry.field(
         description="The date a data item was received by the cryoET data portal.",
@@ -575,9 +573,7 @@ class DepositionAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self,
-        distinct: Optional[bool] = False,
-        columns: Optional[DepositionCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[DepositionCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -615,12 +611,10 @@ class DepositionCreateInput:
         description="A short description of the deposition, similar to an abstract for a journal article or dataset.",
     )
     publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.",
-        default=None,
+        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database entries for the dataset.",
-        default=None,
+        description="Comma-separated list of related database entries for the dataset.", default=None,
     )
     deposition_date: datetime.datetime = strawberry.field(
         description="The date a data item was received by the cryoET data portal.",
@@ -641,12 +635,10 @@ class DepositionUpdateInput:
         description="A short description of the deposition, similar to an abstract for a journal article or dataset.",
     )
     publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.",
-        default=None,
+        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database entries for the dataset.",
-        default=None,
+        description="Comma-separated list of related database entries for the dataset.", default=None,
     )
     deposition_date: Optional[datetime.datetime] = strawberry.field(
         description="The date a data item was received by the cryoET data portal.",

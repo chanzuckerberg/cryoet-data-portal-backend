@@ -129,9 +129,7 @@ async def load_dataset_funding_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[
-        Annotated["DatasetAuthor", strawberry.lazy("graphql_api.types.dataset_author")]
-    ],  # type:ignore
+    relay.ListConnection[Annotated["DatasetAuthor", strawberry.lazy("graphql_api.types.dataset_author")]],  # type:ignore
 )
 async def load_dataset_author_rows(
     root: "Dataset",
@@ -321,8 +319,7 @@ class Dataset(EntityInterface):
         description="Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens.",
     )
     organism_taxid: Optional[int] = strawberry.field(
-        description="NCBI taxonomy identifier for the organism, e.g. 9606",
-        default=None,
+        description="NCBI taxonomy identifier for the organism, e.g. 9606", default=None,
     )
     tissue_name: Optional[str] = strawberry.field(
         description="Name of the tissue from which a biological sample used in a CryoET study is derived from.",
@@ -334,21 +331,17 @@ class Dataset(EntityInterface):
         default=None,
     )
     cell_type_id: Optional[str] = strawberry.field(
-        description="Cell Ontology identifier for the cell type",
-        default=None,
+        description="Cell Ontology identifier for the cell type", default=None,
     )
     cell_strain_name: Optional[str] = strawberry.field(description="Cell line or strain for the sample.", default=None)
     cell_strain_id: Optional[str] = strawberry.field(
-        description="Link to more information about the cell strain.",
-        default=None,
+        description="Link to more information about the cell strain.", default=None,
     )
     sample_type: Optional[sample_type_enum] = strawberry.field(
-        description="Type of sample imaged in a CryoET study",
-        default=None,
+        description="Type of sample imaged in a CryoET study", default=None,
     )
     sample_preparation: Optional[str] = strawberry.field(
-        description="Describes how the sample was prepared.",
-        default=None,
+        description="Describes how the sample was prepared.", default=None,
     )
     grid_preparation: Optional[str] = strawberry.field(description="Describes Cryo-ET grid preparation.", default=None)
     other_setup: Optional[str] = strawberry.field(
@@ -357,13 +350,11 @@ class Dataset(EntityInterface):
     )
     key_photo_url: Optional[str] = strawberry.field(description="URL for the dataset preview image.", default=None)
     key_photo_thumbnail_url: Optional[str] = strawberry.field(
-        description="URL for the thumbnail of preview image.",
-        default=None,
+        description="URL for the thumbnail of preview image.", default=None,
     )
     cell_component_name: Optional[str] = strawberry.field(description="Name of the cellular component.", default=None)
     cell_component_id: Optional[str] = strawberry.field(
-        description="The GO identifier for the cellular component.",
-        default=None,
+        description="The GO identifier for the cellular component.", default=None,
     )
     deposition_date: datetime.datetime = strawberry.field(
         description="The date a data item was received by the cryoET data portal.",
@@ -375,12 +366,10 @@ class Dataset(EntityInterface):
         description="The date a piece of data was last modified on the cryoET data portal.",
     )
     publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.",
-        default=None,
+        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database entries for the dataset.",
-        default=None,
+        description="Comma-separated list of related database entries for the dataset.", default=None,
     )
     s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
     https_prefix: str = strawberry.field(
@@ -536,8 +525,7 @@ class DatasetCreateInput:
         description="Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens.",
     )
     organism_taxid: Optional[int] = strawberry.field(
-        description="NCBI taxonomy identifier for the organism, e.g. 9606",
-        default=None,
+        description="NCBI taxonomy identifier for the organism, e.g. 9606", default=None,
     )
     tissue_name: Optional[str] = strawberry.field(
         description="Name of the tissue from which a biological sample used in a CryoET study is derived from.",
@@ -549,21 +537,17 @@ class DatasetCreateInput:
         default=None,
     )
     cell_type_id: Optional[str] = strawberry.field(
-        description="Cell Ontology identifier for the cell type",
-        default=None,
+        description="Cell Ontology identifier for the cell type", default=None,
     )
     cell_strain_name: Optional[str] = strawberry.field(description="Cell line or strain for the sample.", default=None)
     cell_strain_id: Optional[str] = strawberry.field(
-        description="Link to more information about the cell strain.",
-        default=None,
+        description="Link to more information about the cell strain.", default=None,
     )
     sample_type: Optional[sample_type_enum] = strawberry.field(
-        description="Type of sample imaged in a CryoET study",
-        default=None,
+        description="Type of sample imaged in a CryoET study", default=None,
     )
     sample_preparation: Optional[str] = strawberry.field(
-        description="Describes how the sample was prepared.",
-        default=None,
+        description="Describes how the sample was prepared.", default=None,
     )
     grid_preparation: Optional[str] = strawberry.field(description="Describes Cryo-ET grid preparation.", default=None)
     other_setup: Optional[str] = strawberry.field(
@@ -572,13 +556,11 @@ class DatasetCreateInput:
     )
     key_photo_url: Optional[str] = strawberry.field(description="URL for the dataset preview image.", default=None)
     key_photo_thumbnail_url: Optional[str] = strawberry.field(
-        description="URL for the thumbnail of preview image.",
-        default=None,
+        description="URL for the thumbnail of preview image.", default=None,
     )
     cell_component_name: Optional[str] = strawberry.field(description="Name of the cellular component.", default=None)
     cell_component_id: Optional[str] = strawberry.field(
-        description="The GO identifier for the cellular component.",
-        default=None,
+        description="The GO identifier for the cellular component.", default=None,
     )
     deposition_date: datetime.datetime = strawberry.field(
         description="The date a data item was received by the cryoET data portal.",
@@ -590,12 +572,10 @@ class DatasetCreateInput:
         description="The date a piece of data was last modified on the cryoET data portal.",
     )
     publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.",
-        default=None,
+        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database entries for the dataset.",
-        default=None,
+        description="Comma-separated list of related database entries for the dataset.", default=None,
     )
     s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
     https_prefix: str = strawberry.field(
@@ -615,8 +595,7 @@ class DatasetUpdateInput:
         description="Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens.",
     )
     organism_taxid: Optional[int] = strawberry.field(
-        description="NCBI taxonomy identifier for the organism, e.g. 9606",
-        default=None,
+        description="NCBI taxonomy identifier for the organism, e.g. 9606", default=None,
     )
     tissue_name: Optional[str] = strawberry.field(
         description="Name of the tissue from which a biological sample used in a CryoET study is derived from.",
@@ -628,21 +607,17 @@ class DatasetUpdateInput:
         default=None,
     )
     cell_type_id: Optional[str] = strawberry.field(
-        description="Cell Ontology identifier for the cell type",
-        default=None,
+        description="Cell Ontology identifier for the cell type", default=None,
     )
     cell_strain_name: Optional[str] = strawberry.field(description="Cell line or strain for the sample.", default=None)
     cell_strain_id: Optional[str] = strawberry.field(
-        description="Link to more information about the cell strain.",
-        default=None,
+        description="Link to more information about the cell strain.", default=None,
     )
     sample_type: Optional[sample_type_enum] = strawberry.field(
-        description="Type of sample imaged in a CryoET study",
-        default=None,
+        description="Type of sample imaged in a CryoET study", default=None,
     )
     sample_preparation: Optional[str] = strawberry.field(
-        description="Describes how the sample was prepared.",
-        default=None,
+        description="Describes how the sample was prepared.", default=None,
     )
     grid_preparation: Optional[str] = strawberry.field(description="Describes Cryo-ET grid preparation.", default=None)
     other_setup: Optional[str] = strawberry.field(
@@ -651,13 +626,11 @@ class DatasetUpdateInput:
     )
     key_photo_url: Optional[str] = strawberry.field(description="URL for the dataset preview image.", default=None)
     key_photo_thumbnail_url: Optional[str] = strawberry.field(
-        description="URL for the thumbnail of preview image.",
-        default=None,
+        description="URL for the thumbnail of preview image.", default=None,
     )
     cell_component_name: Optional[str] = strawberry.field(description="Name of the cellular component.", default=None)
     cell_component_id: Optional[str] = strawberry.field(
-        description="The GO identifier for the cellular component.",
-        default=None,
+        description="The GO identifier for the cellular component.", default=None,
     )
     deposition_date: Optional[datetime.datetime] = strawberry.field(
         description="The date a data item was received by the cryoET data portal.",
@@ -669,12 +642,10 @@ class DatasetUpdateInput:
         description="The date a piece of data was last modified on the cryoET data portal.",
     )
     publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.",
-        default=None,
+        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database entries for the dataset.",
-        default=None,
+        description="Comma-separated list of related database entries for the dataset.", default=None,
     )
     s3_prefix: Optional[str] = strawberry.field(
         description="Path to a directory containing data for this entity as an S3 url",

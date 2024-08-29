@@ -25,7 +25,9 @@ These are only used in aggregate queries.
 @strawberry.type
 class DatasetAuthorGroupByOptions:
     dataset: Optional[DatasetGroupByOptions] = None
+    id: Optional[int] = None
     author_list_order: Optional[int] = None
+    orcid: Optional[str] = None
     name: Optional[str] = None
     email: Optional[str] = None
     affiliation_name: Optional[str] = None
@@ -33,8 +35,6 @@ class DatasetAuthorGroupByOptions:
     affiliation_identifier: Optional[str] = None
     corresponding_author_status: Optional[bool] = None
     primary_author_status: Optional[bool] = None
-    orcid: Optional[str] = None
-    id: Optional[int] = None
 
 
 def build_dataset_author_groupby_output(

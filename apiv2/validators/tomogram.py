@@ -11,12 +11,7 @@ Make changes to the template codegen/templates/validators/class_name.py.j2 inste
 import uuid
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
-from support.enums import (
-    fiducial_alignment_status_enum,
-    tomogram_processing_enum,
-    tomogram_reconstruction_method_enum,
-    tomogram_type_enum,
-)
+from support.enums import fiducial_alignment_status_enum, tomogram_processing_enum, tomogram_reconstruction_method_enum
 from typing_extensions import Annotated
 
 
@@ -120,12 +115,6 @@ class TomogramCreateInputValidator(BaseModel):
     offset_x: Annotated[int, Field()]
     offset_y: Annotated[int, Field()]
     offset_z: Annotated[int, Field()]
-    affine_transformation_matrix: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
     key_photo_url: Annotated[
         str | None,
         StringConstraints(
@@ -144,7 +133,6 @@ class TomogramCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    tomogram_type: Annotated[tomogram_type_enum | None, Field()]
     is_standardized: Annotated[bool, Field()]
     id: Annotated[int, Field()]
 
@@ -249,12 +237,6 @@ class TomogramUpdateInputValidator(BaseModel):
     offset_x: Annotated[int | None, Field()]
     offset_y: Annotated[int | None, Field()]
     offset_z: Annotated[int | None, Field()]
-    affine_transformation_matrix: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
     key_photo_url: Annotated[
         str | None,
         StringConstraints(
@@ -273,6 +255,5 @@ class TomogramUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    tomogram_type: Annotated[tomogram_type_enum | None, Field()]
     is_standardized: Annotated[bool | None, Field()]
     id: Annotated[int | None, Field()]

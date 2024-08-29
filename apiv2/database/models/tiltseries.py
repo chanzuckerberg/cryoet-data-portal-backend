@@ -73,8 +73,7 @@ class Tiltseries(Base):
     acceleration_voltage: Mapped[float] = mapped_column(Float, nullable=False)
     spherical_aberration_constant: Mapped[float] = mapped_column(Float, nullable=False)
     microscope_manufacturer: Mapped[tiltseries_microscope_manufacturer_enum] = mapped_column(
-        Enum(tiltseries_microscope_manufacturer_enum, native_enum=False),
-        nullable=False,
+        Enum(tiltseries_microscope_manufacturer_enum, native_enum=False), nullable=False,
     )
     microscope_model: Mapped[str] = mapped_column(String, nullable=False)
     microscope_energy_filter: Mapped[str] = mapped_column(String, nullable=False)

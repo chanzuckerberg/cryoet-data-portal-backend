@@ -9,12 +9,7 @@ from typing import TYPE_CHECKING
 
 from sqlalchemy import Boolean, Enum, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from support.enums import (
-    fiducial_alignment_status_enum,
-    tomogram_processing_enum,
-    tomogram_reconstruction_method_enum,
-    tomogram_type_enum,
-)
+from support.enums import fiducial_alignment_status_enum, tomogram_processing_enum, tomogram_reconstruction_method_enum
 
 from platformics.database.models.base import Base
 from platformics.database.models.file import File
@@ -68,10 +63,7 @@ class Tomogram(Base):
         back_populates="tomograms",
     )
     tomogram_voxel_spacing_id: Mapped[int] = mapped_column(
-        Integer,
-        ForeignKey("tomogram_voxel_spacing.id"),
-        nullable=True,
-        index=True,
+        Integer, ForeignKey("tomogram_voxel_spacing.id"), nullable=True, index=True,
     )
     tomogram_voxel_spacing: Mapped["TomogramVoxelSpacing"] = relationship(
         "TomogramVoxelSpacing",
@@ -84,16 +76,13 @@ class Tomogram(Base):
     size_z: Mapped[float] = mapped_column(Float, nullable=False)
     voxel_spacing: Mapped[float] = mapped_column(Float, nullable=False)
     fiducial_alignment_status: Mapped[fiducial_alignment_status_enum] = mapped_column(
-        Enum(fiducial_alignment_status_enum, native_enum=False),
-        nullable=False,
+        Enum(fiducial_alignment_status_enum, native_enum=False), nullable=False,
     )
     reconstruction_method: Mapped[tomogram_reconstruction_method_enum] = mapped_column(
-        Enum(tomogram_reconstruction_method_enum, native_enum=False),
-        nullable=False,
+        Enum(tomogram_reconstruction_method_enum, native_enum=False), nullable=False,
     )
     processing: Mapped[tomogram_processing_enum] = mapped_column(
-        Enum(tomogram_processing_enum, native_enum=False),
-        nullable=False,
+        Enum(tomogram_processing_enum, native_enum=False), nullable=False,
     )
     tomogram_version: Mapped[float] = mapped_column(Float, nullable=True)
     processing_software: Mapped[str] = mapped_column(String, nullable=True)
@@ -110,13 +99,8 @@ class Tomogram(Base):
     offset_x: Mapped[int] = mapped_column(Integer, nullable=False)
     offset_y: Mapped[int] = mapped_column(Integer, nullable=False)
     offset_z: Mapped[int] = mapped_column(Integer, nullable=False)
-    affine_transformation_matrix: Mapped[str] = mapped_column(String, nullable=True)
     key_photo_url: Mapped[str] = mapped_column(String, nullable=True)
     key_photo_thumbnail_url: Mapped[str] = mapped_column(String, nullable=True)
     neuroglancer_config: Mapped[str] = mapped_column(String, nullable=True)
-    tomogram_type: Mapped[tomogram_type_enum] = mapped_column(
-        Enum(tomogram_type_enum, native_enum=False),
-        nullable=True,
-    )
     is_standardized: Mapped[bool] = mapped_column(Boolean, nullable=False)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

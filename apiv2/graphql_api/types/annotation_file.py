@@ -217,12 +217,10 @@ class AnnotationFile(EntityInterface):
     s3_path: str = strawberry.field(description="Path to the file in s3")
     https_path: str = strawberry.field(description="Path to the file as an https url")
     is_visualization_default: Optional[bool] = strawberry.field(
-        description="This annotation will be rendered in neuroglancer by default.",
-        default=None,
+        description="This annotation will be rendered in neuroglancer by default.", default=None,
     )
     source: Optional[annotation_file_source_enum] = strawberry.field(
-        description="The source type for the annotation file",
-        default=None,
+        description="The source type for the annotation file", default=None,
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -291,9 +289,7 @@ class AnnotationFileAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self,
-        distinct: Optional[bool] = False,
-        columns: Optional[AnnotationFileCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[AnnotationFileCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -328,23 +324,19 @@ Mutation types
 class AnnotationFileCreateInput:
     alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment", default=None)
     annotation_shape_id: Optional[strawberry.ID] = strawberry.field(
-        description="Shapes associated with an annotation",
-        default=None,
+        description="Shapes associated with an annotation", default=None,
     )
     tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
-        description="Voxel spacings for a run",
-        default=None,
+        description="Voxel spacings for a run", default=None,
     )
     format: str = strawberry.field(description="File format label")
     s3_path: str = strawberry.field(description="Path to the file in s3")
     https_path: str = strawberry.field(description="Path to the file as an https url")
     is_visualization_default: Optional[bool] = strawberry.field(
-        description="This annotation will be rendered in neuroglancer by default.",
-        default=None,
+        description="This annotation will be rendered in neuroglancer by default.", default=None,
     )
     source: Optional[annotation_file_source_enum] = strawberry.field(
-        description="The source type for the annotation file",
-        default=None,
+        description="The source type for the annotation file", default=None,
     )
     id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
@@ -353,23 +345,19 @@ class AnnotationFileCreateInput:
 class AnnotationFileUpdateInput:
     alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment", default=None)
     annotation_shape_id: Optional[strawberry.ID] = strawberry.field(
-        description="Shapes associated with an annotation",
-        default=None,
+        description="Shapes associated with an annotation", default=None,
     )
     tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
-        description="Voxel spacings for a run",
-        default=None,
+        description="Voxel spacings for a run", default=None,
     )
     format: Optional[str] = strawberry.field(description="File format label")
     s3_path: Optional[str] = strawberry.field(description="Path to the file in s3")
     https_path: Optional[str] = strawberry.field(description="Path to the file as an https url")
     is_visualization_default: Optional[bool] = strawberry.field(
-        description="This annotation will be rendered in neuroglancer by default.",
-        default=None,
+        description="This annotation will be rendered in neuroglancer by default.", default=None,
     )
     source: Optional[annotation_file_source_enum] = strawberry.field(
-        description="The source type for the annotation file",
-        default=None,
+        description="The source type for the annotation file", default=None,
     )
     id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
 
