@@ -5,6 +5,7 @@ The module contains functions that can be used to generate mesh files for testin
 import base64
 
 import h5py
+import numpy as np
 import trimesh
 
 
@@ -27,13 +28,17 @@ def generate_hff_mesh(input_file: str, output_file: str) -> None:
 
         # Add the vertices
         fp.create_group("segment_list/1/mesh_list/1/vertices")
-        fp["segment_list/1/mesh_list/1/vertices"].create_dataset("data", data=base64.b64encode(mesh.vertices))
-        fp["segment_list/1/mesh_list/1/vertices"].create_dataset("mode", data=mesh.vertices.dtype.name)
+        vertices = mesh.vertices.view(np.ndarray)
+        vertices_b64 = base64.b64encode(vertices)
+        fp["segment_list/1/mesh_list/1/vertices"].create_dataset("data", data=vertices_b64)
+        fp["segment_list/1/mesh_list/1/vertices"].create_dataset("mode", data=vertices.dtype.name)
 
         # Add the triangles
         fp.create_group("segment_list/1/mesh_list/1/triangles")
-        fp["segment_list/1/mesh_list/1/triangles"].create_dataset("data", data=base64.b64encode(mesh.triangles))
-        fp["segment_list/1/mesh_list/1/triangles"].create_dataset("mode", data=mesh.triangles.dtype.name)
+        faces = mesh.faces.view(np.ndarray)
+        faces_b64 = base64.b64encode(faces)
+        fp["segment_list/1/mesh_list/1/triangles"].create_dataset("data", data=faces_b64)
+        fp["segment_list/1/mesh_list/1/triangles"].create_dataset("mode", data=faces.dtype.name)
 
         # Add the colour
         fp["segment_list/1"].create_dataset("colour", data=mesh.visual.face_colors[0])

@@ -1271,22 +1271,15 @@ def test_ingest_triangular_mesh(
     assert actual_hash == expected_hash
 
 
-@pytest.mark.parametrize(
-    "glob_string,file_format,mesh_name",
-    [
-        # ("annotations/TE10.hff", "hff", "TE10_mito_1_IMM"),
-        ("annotations/triangular_mesh.hff", "hff", "special_name"),
-    ],
-)
 def test_ingest_triangular_mesh_group_exists(
-    glob_string,
-    file_format,
-    mesh_name,
     tomo_importer_local: TomogramImporter,
     deposition_config_local: DepositionImportConfig,
     local_test_data_dir: str,
 ):
     # Arrange
+    glob_string = "annotations/triangular_mesh.hff"
+    file_format = "hff"
+    mesh_name = "special_name"
     deposition_config_local._set_object_configs(
         "annotation",
         [
@@ -1343,24 +1336,18 @@ def test_ingest_triangular_mesh_group_exists(
     expected_mesh = trimesh.load(os.path.join(fixtures_dir, "annotations/triangular_mesh.glb"), force="mesh")
     expected_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(expected_mesh))
 
-    assert actual_hash == expected_hash  # TODO fix the heshes, they are not matching
+    assert actual_hash == expected_hash
 
 
-@pytest.mark.parametrize(
-    "glob_string,file_format,name",
-    [
-        ("annotations/triangular_mesh.hff", "hff", "missing_name"),
-    ],
-)
 def test_ingest_triangular_mesh_group_missing(
-    glob_string,
-    file_format,
-    name,
     tomo_importer_local: TomogramImporter,
     deposition_config_local: DepositionImportConfig,
     local_test_data_dir: str,
 ):
     # Arrange
+    glob_string = "annotations/triangular_mesh.hff"
+    file_format = "hff"
+    mesh_name = "missing_name"
     deposition_config_local._set_object_configs(
         "annotation",
         [
@@ -1372,7 +1359,7 @@ def test_ingest_triangular_mesh_group_missing(
                             "file_format": file_format,
                             "glob_string": glob_string,
                             "is_visualization_default": False,
-                            "name": name,
+                            "name": mesh_name,
                         },
                     },
                 ],
@@ -1389,7 +1376,7 @@ def test_ingest_triangular_mesh_group_missing(
         parents={"tomogram": tomo_importer_local, **tomo_importer_local.parents},
         file_format=file_format,
         identifier=100,
-        name=name,
+        mesh_name=mesh_name,
     )
 
     # Assert
