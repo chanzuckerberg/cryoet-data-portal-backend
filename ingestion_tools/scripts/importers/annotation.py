@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, Any
 
 import ndjson
 
+from common import mesh_converter as mc
 from common import point_converter as pc
 from common.config import DepositionImportConfig
 from common.finders import BaseFinder, DepositionObjectImporterFactory, SourceGlobFinder, SourceMultiGlobFinder
@@ -134,6 +135,8 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             anno = PointAnnotation(**instance_args)
         if shape == "InstanceSegmentation":
             anno = InstanceSegmentationAnnotation(**instance_args)
+        if shape == "TriangularMesh":
+            anno = TriangularMeshAnnotation(**instance_args)
         if not anno:
             raise NotImplementedError(f"Unknown shape {shape}")
         if anno.is_valid():
@@ -476,3 +479,48 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
     def get_object_count(self, output_prefix) -> int:
         # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
         return len(self.get_distinct_ids(output_prefix))
+
+
+class TriangularMeshAnnotation(BaseAnnotationSource):
+    """Triangular Meshes are converted to glb format"""
+
+    shape = "TriangularMesh"
+    map_functions = {
+        "obj": mc.from_generic,
+        "stl": mc.from_generic,
+        "vtk": mc.from_vtk,
+        "glb": mc.from_generic,
+    }
+    valid_file_formats = list(map_functions.keys())
+    output_format: str = "glb"
+    scale_factor: float
+
+    def __init__(
+        self,
+        scale_factor: float = 1.0,
+        *args,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        self.scale_factor = scale_factor
+
+    def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
+        metadata = [
+            {
+                "format": self.output_format,
+                "path": self.get_output_filename(output_prefix, self.output_format),
+                "shape": self.shape,
+                "is_visualization_default": self.is_visualization_default,
+            },
+        ]
+        return metadata
+
+    def convert(self, output_prefix: str):
+        mesh_file = self.config.fs.localreadable(self.path)
+        output_file_name = self.get_output_filename(output_prefix, self.output_format)
+        tmp_path = self.config.fs.localwritable(output_file_name)
+        self.map_functions[self.file_format](mesh_file, tmp_path, scale_factor=self.scale_factor)
+        self.config.fs.push(tmp_path)
+
+    def get_object_count(self, output_prefix: str) -> int:
+        return 1

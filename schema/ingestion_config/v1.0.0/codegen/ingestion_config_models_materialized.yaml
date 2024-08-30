@@ -393,6 +393,9 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
+      TriangularMesh:
+        text: TriangularMesh
+        description: A mesh of triangles
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -1218,6 +1221,18 @@ classes:
         domain_of:
         - AnnotationSource
         range: AnnotationSemanticSegmentationMaskFile
+        inlined: true
+        inlined_as_list: true
+      TriangularMesh:
+        name: TriangularMesh
+        description: File and sourcing data for a triangular mesh annotation. Annotation
+          that identifies an object.
+        from_schema: cdp-ingestion-config
+        alias: TriangularMesh
+        owner: AnnotationSource
+        domain_of:
+        - AnnotationSource
+        range: AnnotationTriangularMeshFile
         inlined: true
         inlined_as_list: true
       parent_filters:

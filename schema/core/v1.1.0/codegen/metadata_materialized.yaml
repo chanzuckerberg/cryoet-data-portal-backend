@@ -409,6 +409,9 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
+      TriangularMesh:
+        text: TriangularMesh
+        description: A mesh of triangles
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -3248,6 +3251,89 @@ classes:
         ifabsent: 'False'
         alias: is_visualization_default
         owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+  AnnotationTriangularMeshFile:
+    name: AnnotationTriangularMeshFile
+    description: File and sourcing data for a triangular mesh annotation. Annotation
+      that identifies an object.
+    from_schema: metadata
+    aliases:
+    - TriangularMesh
+    is_a: AnnotationSourceFile
+    attributes:
+      scale_factor:
+        name: scale_factor
+        description: The scale factor for a mesh annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_scale_factor
+        ifabsent: float(1)
+        alias: scale_factor
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - AnnotationTriangularMeshFile
+        range: float
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+      file_format:
+        name: file_format
+        description: File format for this file
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_format
+        alias: file_format
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_string
+        alias: glob_string
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        description: This annotation will be rendered in neuroglancer by default.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_visualization_default
+        ifabsent: 'False'
+        alias: is_visualization_default
+        owner: AnnotationTriangularMeshFile
         domain_of:
         - AnnotationSourceFile
         range: boolean

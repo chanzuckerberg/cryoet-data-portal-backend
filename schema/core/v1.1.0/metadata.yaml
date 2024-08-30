@@ -632,6 +632,15 @@ classes:
         exact_mappings:
           - cdp-common:annotation_source_file_mask_label
 
+  AnnotationTriangularMeshFile:
+    is_a: AnnotationSourceFile
+    aliases:
+    - TriangularMesh
+    description: File and sourcing data for a triangular mesh annotation. Annotation that identifies an object.
+    attributes:
+      scale_factor:
+        exact_mappings:
+          - cdp-common:annotation_source_file_scale_factor
   # ============================================================================
 
   # ============================================================================
