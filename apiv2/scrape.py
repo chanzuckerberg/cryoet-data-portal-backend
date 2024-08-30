@@ -1,4 +1,5 @@
 import json
+import os
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import click
@@ -36,12 +37,40 @@ def add(session, model, item, parents):
     remote_item = item.to_dict()
 
     local_item_data = {}
+    if model == models.DepositionAuthor:
+        local_item_data = {
+            "deposition_id": remote_item["deposition_id"],
+            "author_list_order": remote_item["author_list_order"],
+            "name": remote_item["name"],
+            "email": remote_item["email"],
+            "affiliation_name": remote_item["affiliation_name"],
+            "affiliation_address": remote_item["affiliation_address"],
+            "affiliation_identifier": remote_item["affiliation_identifier"],
+            "corresponding_author_status": remote_item["corresponding_author_status"],
+            "primary_author_status": remote_item["primary_author_status"],
+            "orcid": remote_item["orcid"],
+        }
+    if model == models.DepositionType:
+        local_item_data = {
+            "deposition_id": parents["deposition_id"],
+            "type": remote_item["deposition_types"],
+        }
+    if model == models.Deposition:
+        local_item_data = {
+            "deposition_title": remote_item["title"],
+            "deposition_description": remote_item["description"],
+            "publications": remote_item["deposition_publications"],
+            "related_database_entries": remote_item["related_database_entries"],
+            "deposition_date": remote_item["deposition_date"],
+            "release_date": remote_item["release_date"],
+            "last_modified_date": remote_item["last_modified_date"],
+        }
     if model == models.Annotation:
         local_item_data = {
             # "primary_author_status": remote_item.get["primary_annotator_status"],
             # "corresponding_author_status": remote_item.get("corresponding_annotator_status"),
             "run_id": parents["run_id"],
-            # "deposition_id": remote_item["deposition_id"], # Doesn't exist in the old api.
+            "deposition_id": parents["deposition_id"],  # Doesn't exist in the old api.
             "s3_metadata_path": remote_item["s3_metadata_path"],
             "https_metadata_path": remote_item["https_metadata_path"],
             "annotation_publication": remote_item["annotation_publication"],
@@ -100,7 +129,7 @@ def add(session, model, item, parents):
         session.add(shape)
 
         local_item_data = {
-            # "alignment_id": remote_item["alignment_id"], # Doesn't exist in the old API
+            "alignment_id": parents["alignment_id"],  # Doesn't exist in the old API
             "annotation_shape_id": shape.id,
             "tomogram_voxel_spacing_id": parents["tomogram_voxel_spacing_id"],
             "format": remote_item["format"],
@@ -112,6 +141,7 @@ def add(session, model, item, parents):
 
     if model == models.Dataset:
         local_item_data = {
+            "deposition_id": remote_item["deposition_id"],
             "title": remote_item["title"],
             "description": remote_item["description"],
             "organism_name": remote_item["organism_name"],
@@ -167,11 +197,11 @@ def add(session, model, item, parents):
     if model == models.Tiltseries:
         local_item_data = {
             "run_id": parents["run_id"],
-            # "deposition_id": remote_item["deposition_id"], # We don't have deposition id's yet
+            "deposition_id": parents["deposition_id"],  # We don't have deposition id's yet
             "s3_omezarr_dir": remote_item["s3_omezarr_dir"],
-            "s3_mrc_file": remote_item["s3_mrc_file"],
+            "s3_mrc_file": remote_item["s3_mrc_bin1"],
             "https_omezarr_dir": remote_item["https_omezarr_dir"],
-            "https_mrc_file": remote_item["https_mrc_file"],
+            "https_mrc_file": remote_item["https_mrc_bin1"],
             "s3_collection_metadata": remote_item["s3_collection_metadata"],
             "https_collection_metadata": remote_item["https_collection_metadata"],
             "s3_angle_list": remote_item["s3_angle_list"],
@@ -217,12 +247,20 @@ def add(session, model, item, parents):
             "corresponding_author_status": remote_item["corresponding_author_status"],
             "primary_author_status": remote_item["primary_author_status"],
         }
-    if model == models.Tomogram:
+    if model == models.Alignment:
+        if not remote_item.get("affine_transformation_matrix"):
+            remote_item["affine_transformation_matrix"] = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
         local_item_data = {
             "affine_transformation_matrix": json.dumps(remote_item["affine_transformation_matrix"]),  # Json handling
-            "tomogram_type": remote_item["type"],  # Key name change
-            # "alignment_id": remote_item["alignment_id"],  # Doesn't exist in the old api
-            # "deposition_id": remote_item["deposition_id"], # Doesn't exist in old api
+            "volume_x_dimension": remote_item["size_x"] * parents["voxel_spacing"],  # Key name change
+            "volume_y_dimension": remote_item["size_y"] * parents["voxel_spacing"],  # Key name change
+            "volume_z_dimension": remote_item["size_z"] * parents["voxel_spacing"],  # Key name change
+            "tiltseries_id": parents.get("tiltseries_id"),  # Key name change
+        }
+    if model == models.Tomogram:
+        local_item_data = {
+            "alignment_id": parents["alignment_id"],
+            "deposition_id": parents["deposition_id"],
             "tomogram_voxel_spacing_id": parents["tomogram_voxel_spacing_id"],
             "run_id": parents["run_id"],
             "name": remote_item["name"],
@@ -238,8 +276,8 @@ def add(session, model, item, parents):
             "is_canonical": remote_item["is_canonical"],
             "s3_omezarr_dir": remote_item["s3_omezarr_dir"],
             "https_omezarr_dir": remote_item["https_omezarr_dir"],
-            "s3_mrc_file": remote_item["s3_mrc_file"],
-            "https_mrc_file": remote_item["https_mrc_file"],
+            "s3_mrc_file": remote_item["s3_mrc_scale0"],
+            "https_mrc_file": remote_item["https_mrc_scale0"],
             "scale0_dimensions": remote_item["scale0_dimensions"],
             "scale1_dimensions": remote_item["scale1_dimensions"],
             "scale2_dimensions": remote_item["scale2_dimensions"],
@@ -283,41 +321,67 @@ def add(session, model, item, parents):
     return item
 
 
+def import_deposition(deposition_id: int):
+    db = init_sync_db(
+        f"postgresql+psycopg://{os.environ['PLATFORMICS_DATABASE_USER']}:{os.environ['PLATFORMICS_DATABASE_PASSWORD']}@{os.environ['PLATFORMICS_DATABASE_HOST']}:{os.environ['PLATFORMICS_DATABASE_PORT']}/{os.environ['PLATFORMICS_DATABASE_NAME']}",
+    )
+    client = cdp.Client()
+    dep = cdp.Deposition.get_by_id(client, deposition_id)
+    with db.session() as session:
+        print(f"processing {dep.id}")
+        d = add(session, models.Deposition, dep, {})
+        # TODO this is assuming only a single deposition type per deposition in the old db!
+        add(session, models.DepositionType, dep, {"deposition_id": dep.id})
+        for author in cdp.DepositionAuthor.find(client, [cdp.DepositionAuthor.deposition_id == d.id]):
+            add(session, models.DepositionAuthor, author, {"deposition_id": d.id})
+        print(f"deposition {dep.id} done")
+        session.commit()
+
+
 def import_dataset(dataset_id: int):
-    db = init_sync_db("postgresql+psycopg://postgres:password_postgres@platformics-db:5432/platformics")
+    db = init_sync_db(
+        f"postgresql+psycopg://{os.environ['PLATFORMICS_DATABASE_USER']}:{os.environ['PLATFORMICS_DATABASE_PASSWORD']}@{os.environ['PLATFORMICS_DATABASE_HOST']}:{os.environ['PLATFORMICS_DATABASE_PORT']}/{os.environ['PLATFORMICS_DATABASE_NAME']}",
+    )
     client = cdp.Client()
     dataset = cdp.Dataset.get_by_id(client, dataset_id)
     with db.session() as session:
-        print(f"processing {dataset.id}")
+        print(f"processing {dataset_id}")
         ds = add(session, models.Dataset, dataset, {})
+        parents = {"deposition_id": ds.deposition_id, "dataset_id": ds.id}
         for dsauthor in cdp.DatasetAuthor.find(client, [cdp.DatasetAuthor.dataset_id == dataset.id]):
-            add(session, models.DatasetAuthor, dsauthor, {"dataset_id": ds.id})
+            add(session, models.DatasetAuthor, dsauthor, parents)
         for dsfunding in cdp.DatasetFunding.find(client, [cdp.DatasetFunding.dataset_id == dataset.id]):
-            add(session, models.DatasetFunding, dsfunding, {"dataset_id": ds.id})
+            add(session, models.DatasetFunding, dsfunding, parents)
         for run in cdp.Run.find(client, [cdp.Run.dataset_id == dataset.id]):
-            r = add(session, models.Run, run, {"dataset_id": ds.id})
+            r = add(session, models.Run, run, parents)
+            parents["run_id"] = r.id
+            for tiltseries in cdp.TiltSeries.find(client, [cdp.TiltSeries.run_id == run.id]):
+                ts = add(session, models.Tiltseries, tiltseries, parents)
+                parents["tiltseries_id"] = ts.id
             for vs in cdp.TomogramVoxelSpacing.find(client, [cdp.TomogramVoxelSpacing.run_id == run.id]):
-                v = add(session, models.TomogramVoxelSpacing, vs, {"run_id": r.id})
+                v = add(session, models.TomogramVoxelSpacing, vs, parents)
+                parents["tomogram_voxel_spacing_id"] = v.id
+                parents["voxel_spacing"] = v.voxel_spacing
                 for tomo in cdp.Tomogram.find(client, [cdp.Tomogram.tomogram_voxel_spacing_id == vs.id]):
-                    t = add(session, models.Tomogram, tomo, {"run_id": r.id, "tomogram_voxel_spacing_id": v.id})
+                    aln = add(session, models.Alignment, tomo, parents)
+                    parents["alignment_id"] = aln.id
+                    t = add(session, models.Tomogram, tomo, parents)
+                    parents["tomogram_id"] = t.id
                     for tomoauthor in cdp.TomogramAuthor.find(client, [cdp.TomogramAuthor.tomogram_id == tomo.id]):
-                        add(session, models.TomogramAuthor, tomoauthor, {"tomogram_id": t.id})
+                        add(session, models.TomogramAuthor, tomoauthor, parents)
                 for anno in cdp.Annotation.find(client, [cdp.Annotation.tomogram_voxel_spacing_id == vs.id]):
-                    a = add(session, models.Annotation, anno, {"run_id": r.id, "tomogram_voxel_spacing_id": v.id})
+                    a = add(session, models.Annotation, anno, parents)
+                    parents["annotation_id"] = a.id
                     for annofile in cdp.AnnotationFile.find(client, [cdp.AnnotationFile.annotation_id == anno.id]):
-                        add(
-                            session,
-                            models.AnnotationFile,
-                            annofile,
-                            {"annotation_id": a.id, "tomogram_voxel_spacing_id": v.id},
-                        )
+                        add(session, models.AnnotationFile, annofile, parents)
                     for annoauthor in cdp.AnnotationAuthor.find(
                         client,
                         [cdp.AnnotationAuthor.annotation_id == anno.id],
                     ):
-                        add(session, models.AnnotationAuthor, annoauthor, {"annotation_id": a.id})
-            for tiltseries in cdp.TiltSeries.find(client, [cdp.TiltSeries.run_id == run.id]):
-                add(session, models.Tiltseries, tiltseries, {"run_id": r.id})
+                        add(session, models.AnnotationAuthor, annoauthor, parents)
+            # Reset parents so ID's don't spill over from one run to the next.
+            parents = {k: parents[k] for k in ["deposition_id", "dataset_id", "run_id"]}
+
             print(f"run {dataset.id}/{run.name} done")
             session.commit()
         print(f"dataset {dataset.id} done")
@@ -334,6 +398,15 @@ def do_import(skip_until, parallelism):
     client = cdp.Client()
     futures = []
     with ProcessPoolExecutor(max_workers=parallelism) as workerpool:
+        depositions = cdp.Deposition.find(client)
+        depositions.sort(key=lambda a: a.id)  # Sort datasets by id
+        for dep in depositions:
+            futures.append(
+                workerpool.submit(
+                    import_deposition,
+                    dep.id,
+                ),
+            )
         datasets = cdp.Dataset.find(client)
         datasets.sort(key=lambda a: a.id)  # Sort datasets by id
         for dataset in datasets:
