@@ -384,6 +384,7 @@ class Run(EntityInterface):
     dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
         load_dataset_rows
     )  # type:ignore
+    dataset_id: int
     frames: Sequence[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]] = load_frame_rows  # type:ignore
     frames_aggregate: Optional[Annotated["FrameAggregate", strawberry.lazy("graphql_api.types.frame")]] = (
         load_frame_aggregate_rows

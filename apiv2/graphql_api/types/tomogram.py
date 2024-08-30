@@ -305,6 +305,7 @@ class Tomogram(EntityInterface):
     alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
         load_alignment_rows
     )  # type:ignore
+    alignment_id: Optional[int]
     authors: Sequence[Annotated["TomogramAuthor", strawberry.lazy("graphql_api.types.tomogram_author")]] = (
         load_tomogram_author_rows
     )  # type:ignore
@@ -314,10 +315,13 @@ class Tomogram(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
+    deposition_id: Optional[int]
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
+    run_id: Optional[int]
     tomogram_voxel_spacing: Optional[
         Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
     ] = load_tomogram_voxel_spacing_rows  # type:ignore
+    tomogram_voxel_spacing_id: Optional[int]
     name: Optional[str] = strawberry.field(description="Short name for this tomogram", default=None)
     size_x: float = strawberry.field(description="Tomogram voxels in the x dimension")
     size_y: float = strawberry.field(description="Tomogram voxels in the y dimension")

@@ -141,6 +141,7 @@ class PerSectionAlignmentParameters(EntityInterface):
     alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
         load_alignment_rows
     )  # type:ignore
+    alignment_id: int
     z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
     x_offset: Optional[float] = strawberry.field(
         description="In-plane X-shift of the projection in angstrom", default=None,

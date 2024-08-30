@@ -127,6 +127,7 @@ class DatasetFunding(EntityInterface):
     dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
         load_dataset_rows
     )  # type:ignore
+    dataset_id: Optional[int]
     funding_agency_name: Optional[str] = strawberry.field(description="The name of the funding source.", default=None)
     grant_id: Optional[str] = strawberry.field(
         description="Grant identifier provided by the funding agency", default=None,
