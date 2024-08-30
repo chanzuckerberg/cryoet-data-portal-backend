@@ -2552,7 +2552,7 @@ classes:
         range: boolean
   AnnotationMethodLinks:
     name: AnnotationMethodLinks
-    description: A set of links to models, sourcecode, documentation, etc referenced
+    description: A set of links to models, source code, documentation, etc referenced
       by annotation the method
     mixin: true
     from_schema: cdp-dataset-config
@@ -2565,7 +2565,7 @@ classes:
         required: true
       link_type:
         name: link_type
-        description: Type of link (e.g. model, sourcecode, documentation)
+        description: Type of link (e.g. model, source code, documentation)
         from_schema: cdp-dataset-config
         range: annotation_method_link_type_enum
         required: true

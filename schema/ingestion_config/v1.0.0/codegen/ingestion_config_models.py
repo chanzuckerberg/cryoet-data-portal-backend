@@ -1614,6 +1614,36 @@ class AnnotationObject(ConfiguredBaseModel):
         return v
 
 
+class AnnotationMethodLinks(ConfiguredBaseModel):
+    """
+    A set of links to models, source code, documentation, etc referenced by annotation the method
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    link: str = Field(..., description="""URL to the annotation method reference""", json_schema_extra = { "linkml_meta": {'alias': 'link',
+         'domain_of': ['AnnotationMethodLinks'],
+         'exact_mappings': ['cdp-common:annotation_method_link']} })
+    link_type: AnnotationMethodLinkTypeEnum = Field(..., description="""Type of link (e.g. model, source code, documentation)""", json_schema_extra = { "linkml_meta": {'alias': 'link_type',
+         'domain_of': ['AnnotationMethodLinks'],
+         'exact_mappings': ['cdp-common:annotation_method_link_type']} })
+    custom_name: Optional[str] = Field(None, description="""user readable name of the resource""", json_schema_extra = { "linkml_meta": {'alias': 'custom_name',
+         'domain_of': ['AnnotationMethodLinks'],
+         'exact_mappings': ['cdp-common:annotation_method_link_custom_name'],
+         'recommended': True} })
+
+    @field_validator('link_type')
+    def pattern_link_type(cls, v):
+        pattern=re.compile(r"(^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid link_type format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid link_type format: {v}")
+        return v
+
+
 class AnnotationSourceFile(ConfiguredBaseModel):
     """
     File and sourcing data for an annotation. Represents an entry in annotation.sources.
@@ -2012,6 +2042,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
     method_type: AnnotationMethodTypeEnum = Field(..., description="""Classification of the annotation method based on supervision.""", json_schema_extra = { "linkml_meta": {'alias': 'method_type',
          'domain_of': ['Annotation'],
          'exact_mappings': ['cdp-common:annotation_method_type']} })
+    method_links: Optional[List[AnnotationMethodLinks]] = Field(None, description="""A set of links to models, source code, documentation, etc referenced by annotation the method""", json_schema_extra = { "linkml_meta": {'alias': 'method_links', 'domain_of': ['Annotation']} })
     object_count: Optional[int] = Field(None, description="""Number of objects identified""", json_schema_extra = { "linkml_meta": {'alias': 'object_count',
          'domain_of': ['Annotation'],
          'exact_mappings': ['cdp-common:annotation_object_count']} })
@@ -2262,31 +2293,6 @@ class Author(AuthorMixin):
         elif isinstance(v,str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid ORCID format: {v}")
-        return v
-
-
-class AnnotationMethodLinks(ConfiguredBaseModel):
-    """
-    A set of links to models, sourcecode, documentation, etc referenced by annotation the method
-    """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
-
-    link: str = Field(..., description="""URL to the resource""", json_schema_extra = { "linkml_meta": {'alias': 'link', 'domain_of': ['AnnotationMethodLinks']} })
-    link_type: AnnotationMethodLinkTypeEnum = Field(..., description="""Type of link (e.g. model, sourcecode, documentation)""", json_schema_extra = { "linkml_meta": {'alias': 'link_type', 'domain_of': ['AnnotationMethodLinks']} })
-    custom_name: Optional[str] = Field(None, description="""user readable name of the resource""", json_schema_extra = { "linkml_meta": {'alias': 'custom_name',
-         'domain_of': ['AnnotationMethodLinks'],
-         'recommended': True} })
-
-    @field_validator('link_type')
-    def pattern_link_type(cls, v):
-        pattern=re.compile(r"(^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)")
-        if isinstance(v,list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid link_type format: {element}")
-        elif isinstance(v,str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid link_type format: {v}")
         return v
 
 
@@ -5219,6 +5225,7 @@ TomogramOffset.model_rebuild()
 Tomogram.model_rebuild()
 AnnotationConfidence.model_rebuild()
 AnnotationObject.model_rebuild()
+AnnotationMethodLinks.model_rebuild()
 AnnotationSourceFile.model_rebuild()
 AnnotationOrientedPointFile.model_rebuild()
 AnnotationInstanceSegmentationFile.model_rebuild()
@@ -5233,7 +5240,6 @@ CrossReferencesMixin.model_rebuild()
 CrossReferences.model_rebuild()
 AuthorMixin.model_rebuild()
 Author.model_rebuild()
-AnnotationMethodLinks.model_rebuild()
 Container.model_rebuild()
 GeneralGlob.model_rebuild()
 DestinationGlob.model_rebuild()

@@ -1766,7 +1766,7 @@ classes:
         pattern: (^manual$)|(^automated$)|(^hybrid$)|(^simulated$)
       method_links:
         name: method_links
-        description: A set of links to models, sourcecode, documentation, etc referenced
+        description: A set of links to models, source code, documentation, etc referenced
           by annotation the method as json
         from_schema: cdp-api
         exact_mappings:
@@ -5262,49 +5262,6 @@ classes:
         domain_of:
         - AuthorMixin
         range: boolean
-        inlined: true
-        inlined_as_list: true
-  AnnotationMethodLinks:
-    name: AnnotationMethodLinks
-    description: A set of links to models, sourcecode, documentation, etc referenced
-      by annotation the method
-    from_schema: cdp-api
-    attributes:
-      link:
-        name: link
-        description: URL to the resource
-        from_schema: cdp-api
-        alias: link
-        owner: AnnotationMethodLinks
-        domain_of:
-        - AnnotationMethodLinks
-        range: string
-        required: true
-        inlined: true
-        inlined_as_list: true
-      link_type:
-        name: link_type
-        description: Type of link (e.g. model, sourcecode, documentation)
-        from_schema: cdp-api
-        alias: link_type
-        owner: AnnotationMethodLinks
-        domain_of:
-        - AnnotationMethodLinks
-        range: annotation_method_link_type_enum
-        required: true
-        inlined: true
-        inlined_as_list: true
-        pattern: (^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)
-      custom_name:
-        name: custom_name
-        description: user readable name of the resource
-        from_schema: cdp-api
-        alias: custom_name
-        owner: AnnotationMethodLinks
-        domain_of:
-        - AnnotationMethodLinks
-        range: string
-        recommended: true
         inlined: true
         inlined_as_list: true
 source_file: api/v2.0.0/api_models.yaml

@@ -67,7 +67,7 @@ classes:
   DateStamp:
     description: A set of dates at which a data item was deposited, published and last modified.
     mixins:
-    - DateStampedEntityMixin
+      - DateStampedEntityMixin
 
   # ============================================================================
   # Meta-Mixins
@@ -131,7 +131,7 @@ classes:
     attributes:
       name:
         exact_mappings:
-          -  cdp-common:organism_name
+          - cdp-common:organism_name
       taxonomy_id:
         exact_mappings:
           - cdp-common:organism_taxid
@@ -224,13 +224,13 @@ classes:
     attributes:
       dataset_identifier:
         exact_mappings:
-        - cdp-common:dataset_identifier
+          - cdp-common:dataset_identifier
       dataset_title:
         exact_mappings:
-        - cdp-common:dataset_title
+          - cdp-common:dataset_title
       dataset_description:
         exact_mappings:
-        - cdp-common:dataset_description
+          - cdp-common:dataset_description
 
   # ============================================================================
 
@@ -330,12 +330,12 @@ classes:
         any_of:
           - range: cdp-common:tiltseries_aligned_tiltseries_binning
           - range: cdp-common:FloatFormattedString
-        ifabsent: 'float(1)'
+        ifabsent: "float(1)"
       binning_from_frames:
         any_of:
           - range: cdp-common:tiltseries_binning_from_frames
           - range: cdp-common:FloatFormattedString
-        ifabsent: 'float(1)'
+        ifabsent: "float(1)"
       camera:
         description: *desc_camera
         range: CameraDetails
@@ -518,13 +518,13 @@ classes:
         exact_mappings:
           - cdp-common:tomogram_version
       affine_transformation_matrix:
-          description: The flip or rotation transformation of this author submitted tomogram is indicated here
-          range: float
-          array:
-            exact_number_dimensions: 2
-            dimensions:
-              - exact_cardinality: 4
-              - exact_cardinality: 4
+        description: The flip or rotation transformation of this author submitted tomogram is indicated here
+        range: float
+        array:
+          exact_number_dimensions: 2
+          dimensions:
+            - exact_cardinality: 4
+            - exact_cardinality: 4
       size:
         description: *desc_tomogram_size
         range: TomogramSize
@@ -566,6 +566,19 @@ classes:
         exact_mappings:
           - cdp-common:annotation_object_state
 
+  AnnotationMethodLinks:
+    description: A set of links to models, source code, documentation, etc referenced by annotation the method
+    attributes:
+      link:
+        exact_mappings:
+          - cdp-common:annotation_method_link
+      link_type:
+        exact_mappings:
+          - cdp-common:annotation_method_link_type
+      custom_name:
+        exact_mappings:
+          - cdp-common:annotation_method_link_custom_name
+
   AnnotationSourceFile:
     description: &desc_annotation_source_file File and sourcing data for an annotation. Represents an entry in annotation.sources.
     attributes:
@@ -585,7 +598,7 @@ classes:
   AnnotationOrientedPointFile:
     is_a: AnnotationSourceFile
     aliases:
-    - OrientedPoint
+      - OrientedPoint
     description: File and sourcing data for an oriented point annotation. Annotation that identifies points along with orientation in the volume.
     attributes:
       binning:
@@ -601,14 +614,14 @@ classes:
   AnnotationInstanceSegmentationFile:
     is_a: AnnotationOrientedPointFile
     aliases:
-    - InstanceSegmentation
+      - InstanceSegmentation
     description: File and sourcing data for an instance segmentation annotation. Annotation that identifies individual instances of object shapes.
     attributes: # no extended attributes
 
   AnnotationPointFile:
     is_a: AnnotationSourceFile
     aliases:
-    - Point
+      - Point
     description: File and sourcing data for a point annotation. Annotation that identifies points in the volume.
     attributes:
       binning:
@@ -624,14 +637,14 @@ classes:
   AnnotationSegmentationMaskFile:
     is_a: AnnotationSourceFile
     aliases:
-    - SegmentationMask
+      - SegmentationMask
     description: File and sourcing data for a segmentation mask annotation. Annotation that identifies an object.
     attributes: # no extended attributes
 
   AnnotationSemanticSegmentationMaskFile:
     is_a: AnnotationSourceFile
     aliases:
-    - SemanticSegmentationMask
+      - SemanticSegmentationMask
     description: File and sourcing data for a semantic segmentation mask annotation. Annotation that identifies classes of objects.
     attributes:
       mask_label:
@@ -646,8 +659,8 @@ classes:
   Annotation:
     description: Metadata describing an annotation.
     mixins:
-    - DateStampedEntity
-    - AuthoredEntity
+      - DateStampedEntity
+      - AuthoredEntity
 
     attributes:
       annotation_method:
@@ -681,6 +694,9 @@ classes:
       method_type:
         exact_mappings:
           - cdp-common:annotation_method_type
+      method_links:
+        range: AnnotationMethodLinks
+        multivalued: true
       object_count:
         exact_mappings:
           - cdp-common:annotation_object_count
