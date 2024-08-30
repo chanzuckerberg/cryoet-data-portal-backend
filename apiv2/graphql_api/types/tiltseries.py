@@ -323,9 +323,11 @@ class Tiltseries(EntityInterface):
         Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]
     ] = load_per_section_parameters_aggregate_rows  # type:ignore
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
+    run_id: int
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
+    deposition_id: Optional[int]
     s3_omezarr_dir: Optional[str] = strawberry.field(
         description="S3 path to this tiltseries in multiscale OME-Zarr format", default=None,
     )

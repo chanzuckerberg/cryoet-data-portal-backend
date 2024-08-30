@@ -295,6 +295,7 @@ class Dataset(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
+    deposition_id: Optional[int]
     funding_sources: Sequence[Annotated["DatasetFunding", strawberry.lazy("graphql_api.types.dataset_funding")]] = (
         load_dataset_funding_rows
     )  # type:ignore

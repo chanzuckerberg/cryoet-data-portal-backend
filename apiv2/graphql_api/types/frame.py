@@ -221,6 +221,7 @@ class Frame(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
+    deposition_id: Optional[int]
     per_section_parameters: Sequence[
         Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
     ] = load_per_section_parameters_rows  # type:ignore
@@ -228,6 +229,7 @@ class Frame(EntityInterface):
         Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]
     ] = load_per_section_parameters_aggregate_rows  # type:ignore
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
+    run_id: Optional[int]
     raw_angle: float = strawberry.field(description="Camera angle for a frame")
     acquisition_order: Optional[int] = strawberry.field(
         description="Frame's acquistion order within a tilt experiment", default=None,

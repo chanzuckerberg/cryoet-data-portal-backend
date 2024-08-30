@@ -156,9 +156,11 @@ Define PerSectionParameters type
 @strawberry.type(description="Record how frames get mapped to TiltSeries")
 class PerSectionParameters(EntityInterface):
     frame: Optional[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]] = load_frame_rows  # type:ignore
+    frame_id: int
     tiltseries: Optional[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
         load_tiltseries_rows
     )  # type:ignore
+    tiltseries_id: int
     z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
     defocus: Optional[float] = strawberry.field(description="defocus amount", default=None)
     astigmatism: Optional[float] = strawberry.field(description="Astigmatism amount for this frame", default=None)
