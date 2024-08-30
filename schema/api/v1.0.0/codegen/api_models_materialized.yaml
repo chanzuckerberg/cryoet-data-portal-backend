@@ -664,7 +664,6 @@ classes:
         owner: AuthorEntityMixin
         domain_of:
         - AuthorMixin
-        - AnnotationMethodLinks
         - DatasetAuthor
         - Run
         - Tomograms
@@ -839,7 +838,6 @@ classes:
         owner: AnnotationAuthor
         domain_of:
         - AuthorMixin
-        - AnnotationMethodLinks
         - DatasetAuthor
         - Run
         - Tomograms
@@ -1348,6 +1346,20 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: (^manual$)|(^automated$)|(^hybrid$)|(^simulated$)
+      method_links:
+        name: method_links
+        description: A set of links to models, sourcecode, documentation, etc referenced
+          by annotation the method as json
+        from_schema: cdp-api-models
+        exact_mappings:
+        - cdp-common:annotation_method_links_json
+        alias: method_links
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: string
+        inlined: true
+        inlined_as_list: true
       id:
         name: id
         description: An identifier to refer to a specific instance of this type
@@ -1455,7 +1467,6 @@ classes:
         owner: DatasetAuthor
         domain_of:
         - AuthorMixin
-        - AnnotationMethodLinks
         - DatasetAuthor
         - Run
         - Tomograms
@@ -2250,7 +2261,6 @@ classes:
         owner: Run
         domain_of:
         - AuthorMixin
-        - AnnotationMethodLinks
         - DatasetAuthor
         - Run
         - Tomograms
@@ -2943,7 +2953,6 @@ classes:
         owner: TomogramAuthor
         domain_of:
         - AuthorMixin
-        - AnnotationMethodLinks
         - DatasetAuthor
         - Run
         - Tomograms
@@ -3215,7 +3224,6 @@ classes:
         owner: Tomograms
         domain_of:
         - AuthorMixin
-        - AnnotationMethodLinks
         - DatasetAuthor
         - Run
         - Tomograms
@@ -3741,7 +3749,6 @@ classes:
         owner: AuthorMixin
         domain_of:
         - AuthorMixin
-        - AnnotationMethodLinks
         - DatasetAuthor
         - Run
         - Tomograms
@@ -3867,18 +3874,14 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: (^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)
-      name:
-        name: name
+      custom_name:
+        name: custom_name
         description: user readable name of the resource
         from_schema: cdp-api-models
-        alias: name
+        alias: custom_name
         owner: AnnotationMethodLinks
         domain_of:
-        - AuthorMixin
         - AnnotationMethodLinks
-        - DatasetAuthor
-        - Run
-        - Tomograms
         range: string
         recommended: true
         inlined: true

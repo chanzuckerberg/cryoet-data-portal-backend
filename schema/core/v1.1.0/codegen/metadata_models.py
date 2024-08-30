@@ -854,7 +854,6 @@ class OrganismDetails(ConfiguredBaseModel):
                     "CellComponent",
                     "AnnotationObject",
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:organism_name"],
@@ -897,7 +896,6 @@ class TissueDetails(ConfiguredBaseModel):
                     "CellComponent",
                     "AnnotationObject",
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:tissue_name"],
@@ -951,7 +949,6 @@ class CellType(ConfiguredBaseModel):
                     "CellComponent",
                     "AnnotationObject",
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:cell_name"],
@@ -1005,7 +1002,6 @@ class CellStrain(ConfiguredBaseModel):
                     "CellComponent",
                     "AnnotationObject",
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:cell_strain_name"],
@@ -1060,7 +1056,6 @@ class CellComponent(ConfiguredBaseModel):
                     "CellComponent",
                     "AnnotationObject",
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:cell_component_name"],
@@ -2540,7 +2535,6 @@ class AnnotationObject(ConfiguredBaseModel):
                     "CellComponent",
                     "AnnotationObject",
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:annotation_object_name"],
@@ -3743,7 +3737,6 @@ class AuthorMixin(ConfiguredBaseModel):
                 "alias": "name",
                 "domain_of": [
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "OrganismDetails",
                     "TissueDetails",
                     "CellType",
@@ -3854,7 +3847,6 @@ class Author(AuthorMixin):
                 "alias": "name",
                 "domain_of": [
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "OrganismDetails",
                     "TissueDetails",
                     "CellType",
@@ -3967,25 +3959,11 @@ class AnnotationMethodLinks(ConfiguredBaseModel):
         description="""Type of link (e.g. model, sourcecode, documentation)""",
         json_schema_extra={"linkml_meta": {"alias": "link_type", "domain_of": ["AnnotationMethodLinks"]}},
     )
-    name: Optional[str] = Field(
+    custom_name: Optional[str] = Field(
         None,
         description="""user readable name of the resource""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "name",
-                "domain_of": [
-                    "AuthorMixin",
-                    "AnnotationMethodLinks",
-                    "OrganismDetails",
-                    "TissueDetails",
-                    "CellType",
-                    "CellStrain",
-                    "CellComponent",
-                    "AnnotationObject",
-                    "Author",
-                ],
-                "recommended": True,
-            }
+            "linkml_meta": {"alias": "custom_name", "domain_of": ["AnnotationMethodLinks"], "recommended": True}
         },
     )
 

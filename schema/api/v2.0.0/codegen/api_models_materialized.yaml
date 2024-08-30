@@ -1764,6 +1764,20 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: (^manual$)|(^automated$)|(^hybrid$)|(^simulated$)
+      method_links:
+        name: method_links
+        description: A set of links to models, sourcecode, documentation, etc referenced
+          by annotation the method as json
+        from_schema: cdp-api
+        exact_mappings:
+        - cdp-common:annotation_method_links_json
+        alias: method_links
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: string
+        inlined: true
+        inlined_as_list: true
       id:
         name: id
         description: An identifier to refer to a specific instance of this type
@@ -3675,16 +3689,17 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
-      s3_mrc_bin1:
-        name: s3_mrc_bin1
+      s3_mrc_file:
+        name: s3_mrc_file
         description: S3 path to this tiltseries in MRC format (no scaling)
         from_schema: cdp-api
         exact_mappings:
-        - cdp-common:tiltseries_s3_mrc_bin1
-        alias: s3_mrc_bin1
+        - cdp-common:tiltseries_s3_mrc_file
+        alias: s3_mrc_file
         owner: Tiltseries
         domain_of:
         - Tiltseries
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -3702,16 +3717,17 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
-      https_mrc_bin1:
-        name: https_mrc_bin1
+      https_mrc_file:
+        name: https_mrc_file
         description: HTTPS path to this tiltseries in MRC format (no scaling)
         from_schema: cdp-api
         exact_mappings:
-        - cdp-common:tiltseries_https_mrc_bin1
-        alias: https_mrc_bin1
+        - cdp-common:tiltseries_https_mrc_file
+        alias: https_mrc_file
         owner: Tiltseries
         domain_of:
         - Tiltseries
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -4779,28 +4795,30 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
-      s3_mrc_scale0:
-        name: s3_mrc_scale0
+      s3_mrc_file:
+        name: s3_mrc_file
         description: S3 path to this tomogram in MRC format (no scaling)
         from_schema: cdp-api
         exact_mappings:
-        - cdp-common:tomogram_s3_mrc_scale0
-        alias: s3_mrc_scale0
+        - cdp-common:tomogram_s3_mrc_file
+        alias: s3_mrc_file
         owner: Tomogram
         domain_of:
+        - Tiltseries
         - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
-      https_mrc_scale0:
-        name: https_mrc_scale0
+      https_mrc_file:
+        name: https_mrc_file
         description: HTTPS path to this tomogram in MRC format (no scaling)
         from_schema: cdp-api
         exact_mappings:
-        - cdp-common:tomogram_https_mrc_scale0
-        alias: https_mrc_scale0
+        - cdp-common:tomogram_https_mrc_file
+        alias: https_mrc_file
         owner: Tomogram
         domain_of:
+        - Tiltseries
         - Tomogram
         range: string
         inlined: true
@@ -5244,6 +5262,49 @@ classes:
         domain_of:
         - AuthorMixin
         range: boolean
+        inlined: true
+        inlined_as_list: true
+  AnnotationMethodLinks:
+    name: AnnotationMethodLinks
+    description: A set of links to models, sourcecode, documentation, etc referenced
+      by annotation the method
+    from_schema: cdp-api
+    attributes:
+      link:
+        name: link
+        description: URL to the resource
+        from_schema: cdp-api
+        alias: link
+        owner: AnnotationMethodLinks
+        domain_of:
+        - AnnotationMethodLinks
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      link_type:
+        name: link_type
+        description: Type of link (e.g. model, sourcecode, documentation)
+        from_schema: cdp-api
+        alias: link_type
+        owner: AnnotationMethodLinks
+        domain_of:
+        - AnnotationMethodLinks
+        range: annotation_method_link_type_enum
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)
+      custom_name:
+        name: custom_name
+        description: user readable name of the resource
+        from_schema: cdp-api
+        alias: custom_name
+        owner: AnnotationMethodLinks
+        domain_of:
+        - AnnotationMethodLinks
+        range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
 source_file: api/v2.0.0/api_models.yaml

@@ -646,6 +646,9 @@ slots:
   annotation_method_links:
     range: AnnotationMethodLinks
     description: A set of links to models, sourcecode, documentation, etc referenced by annotation the method
+  annotation_method_links_json:
+    range: string
+    description: A set of links to models, sourcecode, documentation, etc referenced by annotation the method as json
   annotation_version:
     range: VersionString
     description: Version of annotation.
@@ -1103,7 +1106,7 @@ classes:
         range: annotation_method_link_type_enum
         description: Type of link (e.g. model, sourcecode, documentation)
         required: true
-      name:
+      custom_name:
         range: string
         description: user readable name of the resource
         recommended: true

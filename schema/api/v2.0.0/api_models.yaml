@@ -254,6 +254,9 @@ classes:
       method_type:
         exact_mappings:
           - cdp-common:annotation_method_type
+      method_links:
+        exact_mappings:
+          - cdp-common:annotation_method_links_json
     annotations:
       plural: Annotations
   DatasetAuthor:

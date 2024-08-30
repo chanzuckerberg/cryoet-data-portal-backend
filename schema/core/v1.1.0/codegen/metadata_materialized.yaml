@@ -635,7 +635,6 @@ classes:
         owner: Author
         domain_of:
         - AuthorMixin
-        - AnnotationMethodLinks
         - OrganismDetails
         - TissueDetails
         - CellType
@@ -983,7 +982,6 @@ classes:
         - CellComponent
         - AnnotationObject
         - AuthorMixin
-        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -1025,7 +1023,6 @@ classes:
         - CellComponent
         - AnnotationObject
         - AuthorMixin
-        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -1071,7 +1068,6 @@ classes:
         - CellComponent
         - AnnotationObject
         - AuthorMixin
-        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -1116,7 +1112,6 @@ classes:
         - CellComponent
         - AnnotationObject
         - AuthorMixin
-        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -1164,7 +1159,6 @@ classes:
         - CellComponent
         - AnnotationObject
         - AuthorMixin
-        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -2667,7 +2661,6 @@ classes:
         - CellComponent
         - AnnotationObject
         - AuthorMixin
-        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -3653,7 +3646,6 @@ classes:
         owner: AuthorMixin
         domain_of:
         - AuthorMixin
-        - AnnotationMethodLinks
         - OrganismDetails
         - TissueDetails
         - CellType
@@ -3776,21 +3768,14 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: (^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)
-      name:
-        name: name
+      custom_name:
+        name: custom_name
         description: user readable name of the resource
         from_schema: metadata
-        alias: name
+        alias: custom_name
         owner: AnnotationMethodLinks
         domain_of:
-        - AuthorMixin
         - AnnotationMethodLinks
-        - OrganismDetails
-        - TissueDetails
-        - CellType
-        - CellStrain
-        - CellComponent
-        - AnnotationObject
         range: string
         recommended: true
         inlined: true

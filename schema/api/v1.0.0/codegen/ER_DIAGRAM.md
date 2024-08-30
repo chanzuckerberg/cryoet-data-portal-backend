@@ -72,6 +72,7 @@ Annotation {
     string annotation_software
     boolean is_curator_recommended
     annotation_method_type_enum method_type
+    string method_links
     integer id
     date deposition_date
     date release_date

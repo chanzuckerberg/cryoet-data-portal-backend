@@ -4607,7 +4607,6 @@ classes:
         owner: AuthorMixin
         domain_of:
         - AuthorMixin
-        - AnnotationMethodLinks
         - Author
         - OrganismDetails
         - TissueDetails
@@ -4737,22 +4736,14 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: (^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)
-      name:
-        name: name
+      custom_name:
+        name: custom_name
         description: user readable name of the resource
         from_schema: cdp-ingestion-config
-        alias: name
+        alias: custom_name
         owner: AnnotationMethodLinks
         domain_of:
-        - AuthorMixin
         - AnnotationMethodLinks
-        - Author
-        - OrganismDetails
-        - TissueDetails
-        - CellType
-        - CellStrain
-        - CellComponent
-        - AnnotationObject
         range: string
         recommended: true
         inlined: true

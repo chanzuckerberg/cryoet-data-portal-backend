@@ -32,7 +32,7 @@ annotations: OPTIONAL
     method_links: OPTIONAL
     - link: REQUIRED, STRING
       link_type: REQUIRED, STRING (ENUM [documentation, model_weights, other, source_code, website])
-      name: OPTIONAL, STRING
+      custom_name: OPTIONAL, STRING
     version: OPTIONAL, FLOAT (NON-NEGATIVE)
   sources: REQUIRED
   # The following are permissible source types (multiple, but different types can exist per annotation,

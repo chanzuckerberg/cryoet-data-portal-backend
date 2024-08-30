@@ -356,7 +356,7 @@ slots:
   tiltseries_https_collection_metadata:
     range: string
     description: HTTPS path to the collection metadata file for this tiltseries
-  tiltseries_https_mrc_bin1:
+  tiltseries_https_mrc_file:
     range: string
     description: HTTPS path to this tiltseries in MRC format (no scaling)
   tiltseries_https_omezarr_dir:
@@ -403,7 +403,7 @@ slots:
   tiltseries_s3_collection_metadata:
     range: string
     description: S3 path to the collection metadata file for this tiltseries
-  tiltseries_s3_mrc_bin1:
+  tiltseries_s3_mrc_file:
     range: string
     description: S3 path to this tiltseries in MRC format (no scaling)
   tiltseries_s3_omezarr_dir:
@@ -493,7 +493,7 @@ slots:
     range: fiducial_alignment_status_enum
     required: true
     description: Whether the tomographic alignment was computed based on fiducial markers.
-  tomogram_https_mrc_scale0:
+  tomogram_https_mrc_file:
     range: string
     description: HTTPS path to this tomogram in MRC format (no scaling)
   tomogram_https_omezarr_dir:
@@ -530,7 +530,7 @@ slots:
     range: string
     required: true
     description: Name of software used for reconstruction
-  tomogram_s3_mrc_scale0:
+  tomogram_s3_mrc_file:
     range: string
     description: S3 path to this tomogram in MRC format (no scaling)
   tomogram_s3_omezarr_dir:
@@ -646,6 +646,12 @@ slots:
     range: boolean
     description: This annotation is recommended by the curator to be preferred for this object type.
     ifabsent: false
+  annotation_method_links:
+    range: AnnotationMethodLinks
+    description: A set of links to models, sourcecode, documentation, etc referenced by annotation the method
+  annotation_method_links_json:
+    range: string
+    description: A set of links to models, sourcecode, documentation, etc referenced by annotation the method as json
   annotation_version:
     range: VersionString
     description: Version of annotation.
@@ -1272,3 +1278,22 @@ classes:
       primary_author_status:
         exact_mappings:
           - cdp-common:author_primary_author_status
+
+  # ============================================================================
+  # Annotation Method Links
+  # ============================================================================
+  AnnotationMethodLinks:
+    description: A set of links to models, sourcecode, documentation, etc referenced by annotation the method
+    attributes:
+      link:
+        range: string
+        description: URL to the resource
+        required: true
+      link_type:
+        range: annotation_method_link_type_enum
+        description: Type of link (e.g. model, sourcecode, documentation)
+        required: true
+      custom_name:
+        range: string
+        description: user readable name of the resource
+        recommended: true

@@ -251,6 +251,13 @@
             "additionalProperties": false,
             "description": "A set of links to models, sourcecode, documentation, etc referenced by annotation the method",
             "properties": {
+                "custom_name": {
+                    "description": "user readable name of the resource",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "link": {
                     "description": "URL to the resource",
                     "type": "string"
@@ -259,13 +266,6 @@
                     "$ref": "#/$defs/AnnotationMethodLinkTypeEnum",
                     "description": "Type of link (e.g. model, sourcecode, documentation)",
                     "pattern": "(^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)"
-                },
-                "name": {
-                    "description": "user readable name of the resource",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
                 }
             },
             "required": [
