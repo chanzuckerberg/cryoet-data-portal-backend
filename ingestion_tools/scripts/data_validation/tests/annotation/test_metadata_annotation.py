@@ -13,8 +13,8 @@ from common.fs import FileSystemApi
 class TestAnnotationMetadata:
     """A class dedicated to the general testing of all annotation metadata."""
 
-    @allure.title("Sanity check annotation metadata.")
-    def test_annotation_metadata(
+    @allure.title("Annotation metadata: sanity check annotation metadata.")
+    def test_metadata(
         self,
         annotation_metadata: Dict[str, Dict],
     ):
@@ -26,8 +26,8 @@ class TestAnnotationMetadata:
             assert len(metadata["files"]) >= 0
             basic_metadata_check(metadata)
 
-    @allure.title("Valid corresponding deposition metadata.")
-    def test_annotation_deposition(
+    @allure.title("Annotation metadata: valid corresponding deposition metadata.")
+    def test_deposition_id(
         self,
         annotation_metadata: Dict[str, Dict],
         bucket: str,

@@ -49,17 +49,15 @@ def all(
 
     now = datetime.datetime.now().isoformat(sep="_", timespec="seconds").replace(":", "-")
 
-    local_dst = f"{local_dst}/data_validation_{now}"
-
     remote_report_dir = f"s3://{OUTPUT_BUCKET}/{remote_dst}/data_validation" if remote_dst else None
     if remote_report_dir:
         fs.makedirs(remote_report_dir)
 
     for dataset in datasets:
         # Accumulate test results here
-        localdir_raw = f"{local_dst}/{dataset}_raw"
+        localdir_raw = f"{local_dst}/{dataset}_raw/data_validation_{now}"
         # Generate report here
-        localdir_rep = f"{local_dst}/{dataset}"
+        localdir_rep = f"{local_dst}/{dataset}/data_validation_{now}"
         # Zip for upload to S3
         # report_tar = f"{localdir_rep}/{dataset}.tar.gz"
         # Locations on S3

@@ -11,7 +11,7 @@ from tests.annotation.helper_point import contained_in_tomo, point_count_consist
 class TestOrientedPointAnnotations:
     ### BEGIN Self-consistency tests ###
 
-    @allure.title("Number of annotations is consistent between metadata and ndjson file.")
+    @allure.title("Oriented point: number of annotations is consistent between metadata and ndjson file.")
     def test_point_count_consistent(
         self,
         oriented_point_annotations: Dict[str, List[Dict]],
@@ -36,7 +36,7 @@ class TestOrientedPointAnnotations:
         # If all rows are orthogonal, then the dot product of the matrix and its transpose should be the identity matrix.
         assert np.allclose(np.dot(np_matrix, np_matrix.T), np.eye(3))
 
-    @allure.title("Valid rotation matrix.")
+    @allure.title("Oriented point: valid rotation matrix.")
     @allure.description(
         "The rotation matrix should be 3x3, have a determinant of 1, and have row orthogonal unit vectors.",
     )
@@ -49,12 +49,12 @@ class TestOrientedPointAnnotations:
     ### END Self-consistency tests ###
 
     ### BEGIN Tomogram-consistency tests ###
-    @allure.title("All points are contained within the tomogram dimensions.")
+    @allure.title("Oriented point: contained within the tomogram dimensions.")
     def test_contained_in_tomo(
         self,
         oriented_point_annotations: Dict[str, List[Dict]],
-        canonical_tomogram_metadata: Dict,
+        tomogram_metadata: Dict,
     ):
-        contained_in_tomo(oriented_point_annotations, canonical_tomogram_metadata)
+        contained_in_tomo(oriented_point_annotations, tomogram_metadata)
 
     ### END Tomogram-consistency tests ###

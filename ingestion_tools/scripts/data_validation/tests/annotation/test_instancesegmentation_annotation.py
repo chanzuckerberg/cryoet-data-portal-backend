@@ -10,7 +10,7 @@ from tests.annotation.helper_point import contained_in_tomo
 class TestInstanceSegmentationAnnotations:
     ### BEGIN Self-consistency tests ###
 
-    @allure.title("Number of unique annotations is consistent between metadata and ndjson file.")
+    @allure.title("Instance segmentation: number of unique annotations is consistent between metadata and ndjson file.")
     def test_instance_count_consistent(
         self,
         instance_seg_annotations: Dict[str, List[Dict]],
@@ -29,12 +29,12 @@ class TestInstanceSegmentationAnnotations:
     ### END Self-consistency tests ###
 
     ### BEGIN Tomogram-consistency tests ###
-    @allure.title("All points are contained within the tomogram dimensions.")
+    @allure.title("Instance segmentation: annotations are contained within the tomogram dimensions.")
     def test_contained_in_tomo(
         self,
         instance_seg_annotations: Dict[str, List[Dict]],
-        canonical_tomogram_metadata: Dict,
+        tomogram_metadata: Dict,
     ):
-        contained_in_tomo(instance_seg_annotations, canonical_tomogram_metadata)
+        contained_in_tomo(instance_seg_annotations, tomogram_metadata)
 
     ### END Tomogram-consistency tests ###

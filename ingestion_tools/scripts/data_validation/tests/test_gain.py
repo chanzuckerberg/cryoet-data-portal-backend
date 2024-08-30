@@ -5,7 +5,7 @@ import allure
 import pytest
 import tifffile
 from mrcfile.mrcinterpreter import MrcInterpreter
-from tests.helper_mrc import HelperTestMRCHeader
+from tests.helper_mrc import HelperTestMRCHeader, mrc_allure_title
 from tests.test_frame import PERMITTED_FRAME_EXTENSIONS, helper_tiff_mrc_consistent
 
 PERMITTED_GAIN_EXTENSIONS = PERMITTED_FRAME_EXTENSIONS + [".gain"]
@@ -23,21 +23,25 @@ class TestGain(HelperTestMRCHeader):
         self.mrc_headers = {k: v for k, v in gain_headers.items() if isinstance(v, MrcInterpreter)}
 
     ### DON'T RUN SOME MRC HEADER TESTS ###
+    @mrc_allure_title
     def test_nlabel(self):
         pytest.skip("Not applicable for gain files")
 
+    @mrc_allure_title
     def test_nversion(self):
         pytest.skip("Not applicable for gain files")
 
-    def test_mrc_mode(self):
+    @mrc_allure_title
+    def test_datatype(self):
         pytest.skip("Not applicable for gain files")
 
+    @mrc_allure_title
     def test_mrc_spacing(self):
         pytest.skip("Not applicable for gain files")
 
     ### BEGIN Self-consistency tests ###
-    @allure.title("Gain files have valid extensions.")
-    def test_gain_format(self, gain_files: List[str]):
+    @allure.title("Gain: files have valid extensions.")
+    def test_extensions(self, gain_files: List[str]):
         errors = []
 
         for gain_file in gain_files:
@@ -47,13 +51,14 @@ class TestGain(HelperTestMRCHeader):
         if errors:
             warnings.warn("\n".join(errors), stacklevel=2)
 
-    def test_gain_consistent(self, gain_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
+    @allure.title("Gain: consistent dimensions and pixel spacings (MRC & TIFF).")
+    def test_consistent(self, gain_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
         return helper_tiff_mrc_consistent(gain_headers)
 
     ### END Self-consistency tests ###
 
     ### BEGIN Frame-specific tests ###
-    @allure.title("Gain files have the same dimensions as the frames.")
+    @allure.title("Gain: same dimensions as the frames.")
     def test_matches_frame_dimensions(self, frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
         def check_matches_frame_dimensions(header, _interpreter, _mrc_filename, frame_dimensions):
             del _interpreter, _mrc_filename
@@ -70,8 +75,8 @@ class TestGain(HelperTestMRCHeader):
         )
         self.mrc_header_helper(check_matches_frame_dimensions, frame_dimensions=frame_dimensions)
 
-    @allure.title("Gain files have the same pixel spacing as the frames.")
-    def test_gain_tiltseries_pixel_spacing(
+    @allure.title("Gain: same pixel spacing as the frames.")
+    def test_tiltseries_pixel_spacing(
         self,
         gain_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
         frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],

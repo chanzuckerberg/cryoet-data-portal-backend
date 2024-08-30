@@ -70,10 +70,15 @@ pytest --dataset 10301 --run_glob "17072022_BrnoKrios_Arctis_p3ar_grid_Position_
 
 ### Allure + Pytest
 
+For large validation runs, it may be helpful to generate an Allure report to view the results. `run_tests.py` is a wrapper script that runs the pytest tests and generates an Allure report, with ability to upload the report to S3.
+
 Ensure you have the allure command line tool installed (e.g. `brew install allure`). See: https://allurereport.org/docs/install/
 
 To run (from this directory):
 
 ```
-python run_tests.py
+python run_tests.py all --datasets [DATASET_ID] --bucket [BUCKET_NAME]
+
+bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
+datasets: A comma-separated list of dataset IDs to validate. Required.
 ```

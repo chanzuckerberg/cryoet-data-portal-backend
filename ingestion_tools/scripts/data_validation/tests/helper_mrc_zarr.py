@@ -12,13 +12,13 @@ class HelperTestMRCZarrHeader(HelperTestMRCHeader, HelperTestZarrHeader):
     """
 
     ### BEGIN Cross-format consistency tests ###
-    @allure.title("Zarr and MRC files exist for each entity.")
+    @allure.title("Zarr and MRC: files exist for each entity.")
     def test_zarr_mrc_both_exist(self):
         zarr_files = set(self.zarr_headers.keys())
         mrc_files = set(self.mrc_headers.keys())
         assert {f.replace(".zarr", ".mrc") for f in zarr_files} == mrc_files
 
-    @allure.title("Zarr and MRC headers are consistent.")
+    @allure.title("Zarr and MRC: headers are consistent.")
     @allure.description(
         "Zarray shape (volume size) should match the MRC volume size, re-scaled to account for binning.",
     )

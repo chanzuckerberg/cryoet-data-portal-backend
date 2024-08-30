@@ -8,6 +8,30 @@ from mrcfile.mrcinterpreter import MrcInterpreter
 
 SPACING_TOLERANCE = 0.001
 
+# Used so that other classes that skip the pytest still have a title in the allure report
+# Without repeating the allure title text in every skipped test
+MRC_ALLURE_TITLES = {
+    "test_is_volume": "MRC: spacegroup (volume type) is correct.",
+    "test_map_id_string": "MRC: filetype (MAP ID) is correct.",
+    "test_machine_stamp": "MRC: machine stamp is valid.",
+    "test_datatype": "MRC: mode (datatype) is valid.",
+    "test_map_dimension_fields": "MRC: map dimension fields are non-negative.",
+    "test_cell_dimensions": "MRC: cell dimensions are non-negative and match the voxel size.",
+    "test_nlabel": "MRC: labels are non-empty and match the nlabl field.",
+    "test_nversion": "MRC: nversion is correct.",
+    "test_exttyp": "MRC: extended header is valid.",
+    "test_axis_mapping": "MRC: has valid axis mapping.",
+    "test_unit_cell_valid_for_3d_volume": "MRC: unit cell is valid for a volume.",
+    "test_origin_is_zero": "MRC: origin is zero.",
+    "test_subimage_start_is_zero": "MRC: subimage start is zero.",
+    "test_mrc_spacing": "MRC: voxel spacing is non-negative and matches spacing.",
+}
+
+
+def mrc_allure_title(func):
+    """Decorator to automatically set the allure title to the function name."""
+    return allure.title(MRC_ALLURE_TITLES.get(func.__name__, func.__name__))(func)
+
 
 class HelperTestMRCHeader:
     """
@@ -38,7 +62,7 @@ class HelperTestMRCHeader:
             print(f"Checking {mrc_filename}")
             check_func(interpreter.header, interpreter, mrc_filename, **kwargs)
 
-    @allure.title("MRC spacegroup is correct for a volume / image / stack.")
+    @mrc_allure_title
     def test_is_volume(self):
         def check_is_volume(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
@@ -46,7 +70,7 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_is_volume)
 
-    @allure.title("Filetype (MAP ID) is correct.")
+    @mrc_allure_title
     def test_map_id_string(self):
         def check_map_id(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
@@ -54,7 +78,7 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_map_id)
 
-    @allure.title("Machine stamp is valid.")
+    @mrc_allure_title
     def test_machine_stamp(self):
         def check_machine_stamp(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
@@ -65,15 +89,15 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_machine_stamp)
 
-    @allure.title("MRC mode (datatype) is valid.")
-    def test_mrc_mode(self):
-        def check_mrc_mode(header, _interpreter, _mrc_filename):
+    @mrc_allure_title
+    def test_datatype(self):
+        def check_datatype(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             assert utils.dtype_from_mode(header.mode) in [np.int8, np.float32]
 
-        self.mrc_header_helper(check_mrc_mode)
+        self.mrc_header_helper(check_datatype)
 
-    @allure.title("Map dimension fields are non-negative.")
+    @mrc_allure_title
     def test_map_dimension_fields(self):
         def check_map_dimension_fields(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
@@ -82,7 +106,7 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_map_dimension_fields)
 
-    @allure.title("Cell dimensions are non-negative and match the voxel size.")
+    @mrc_allure_title
     def test_cell_dimensions(self):
         def check_cell_dimensions(header, interpreter, _mrc_filename):
             del _mrc_filename
@@ -98,7 +122,7 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_cell_dimensions)
 
-    @allure.title("Labels are non-empty and match the nlabl field.")
+    @mrc_allure_title
     def test_nlabel(self):
         def check_nlabel(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
@@ -110,7 +134,7 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_nlabel)
 
-    @allure.title("Nversion is correct.")
+    @mrc_allure_title
     def test_nversion(self):
         def check_nversion(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
@@ -118,7 +142,7 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_nversion)
 
-    @allure.title("Extended header is valid.")
+    @mrc_allure_title
     def test_exttyp(self):
         def check_exttyp(header, interpreter, _mrc_filename):
             del _mrc_filename
@@ -132,7 +156,7 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_exttyp)
 
-    @allure.title("Valid axis mapping.")
+    @mrc_allure_title
     def test_axis_mapping(self):
         def check_axis_mapping(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
@@ -143,7 +167,7 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_axis_mapping)
 
-    @allure.title("Unit cell is valid for a volume.")
+    @mrc_allure_title
     def test_unit_cell_valid_for_3d_volume(self):
         def check_unit_cell(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
@@ -159,7 +183,7 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_unit_cell)
 
-    @allure.title("Origin is zero.")
+    @mrc_allure_title
     def test_origin_is_zero(self):
         def check_origin(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
@@ -170,7 +194,7 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_origin)
 
-    @allure.title("Subimage start is zero.")
+    @mrc_allure_title
     def test_subimage_start_is_zero(self):
         def check_subimage_start(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
@@ -182,7 +206,7 @@ class HelperTestMRCHeader:
         self.mrc_header_helper(check_subimage_start)
 
     ### BEGIN Voxel-spacing tests ###
-    @allure.title("Voxel spacing is non-negative and matches spacing.")
+    @mrc_allure_title
     def test_mrc_spacing(self):
         def check_spacing(_header, interpreter, _mrc_filename):
             del _header, _mrc_filename

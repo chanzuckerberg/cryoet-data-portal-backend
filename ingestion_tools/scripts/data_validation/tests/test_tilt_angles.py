@@ -87,15 +87,15 @@ class TestTiltAngles:
         return injection_errors + surjection_errors
 
     ### BEGIN Tilt .tlt tests ###
-    @allure.title("Tilt angles exist.")
+    @allure.title("Tilt: angles exist.")
     def test_tilt_count(self, tiltseries_tilt: pd.DataFrame):
         assert len(tiltseries_tilt) > 0
 
-    @allure.title("Tilt angles are within the expected range [-90, 90].")
+    @allure.title("Tilt: angles are within the expected range [-90, 90].")
     def test_tilt_angle_range(self, tiltseries_tilt: pd.DataFrame):
         assert all(-90 <= angle <= 90 for angle in tiltseries_tilt["TiltAngle"])
 
-    @allure.title("Every tilt angle matches a raw tilt angle.")
+    @allure.title("Tilt: every tilt angle maps to a raw tilt angle.")
     def test_tilt_raw_tilt(self, tiltseries_tilt: pd.DataFrame, tiltseries_raw_tilt: pd.DataFrame):
         errors = self.helper_angles_injection_errors(
             tiltseries_tilt["TiltAngle"].to_list(),
@@ -105,7 +105,7 @@ class TestTiltAngles:
         )
         assert len(errors) == 0, "\n".join(errors)
 
-    @allure.title("Every tilt angle matches a mdoc tilt angle.")
+    @allure.title("Tilt: every tilt angle maps to a mdoc tilt angle.")
     def test_tilt_mdoc(self, tiltseries_tilt: pd.DataFrame, tiltseries_mdoc: pd.DataFrame):
         errors = self.helper_angles_injection_errors(
             tiltseries_tilt["TiltAngle"].to_list(),
@@ -115,15 +115,15 @@ class TestTiltAngles:
         )
         assert len(errors) == 0, "\n".join(errors)
 
-    @allure.title("Number of tilt angles are less than or equal to number of frames files.")
+    @allure.title("Tilt: number of tilt angles are less than or equal to number of frames files.")
     def test_tilt_frames(self, tiltseries_tilt: pd.DataFrame, frames_files: List[str]):
         assert len(tiltseries_tilt) <= len(frames_files)
 
-    @allure.title("Number of tilt angles are less or equal to tiltseries size['z'].")
+    @allure.title("Tilt: number of tilt angles are less or equal to tiltseries size['z'].")
     def test_tilt_tiltseries_metadata(self, tiltseries_tilt: pd.DataFrame, tiltseries_metadata: Dict):
         assert len(tiltseries_tilt) <= tiltseries_metadata["size"]["z"]
 
-    @allure.title("Tilt angles correspond to the tilt_range + tilt_step metadata field.")
+    @allure.title("Tilt: angles correspond to the tilt_range + tilt_step metadata field.")
     @allure.description("Not all angles in the tilt range must be present in the tilt file.")
     def test_tilt_tiltseries_range(self, tiltseries_tilt: pd.DataFrame, tiltseries_metadata: Dict):
         errors = self.helper_angles_injection_errors(
@@ -141,20 +141,20 @@ class TestTiltAngles:
             + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, with step {tiltseries_metadata['tilt_step']}"
         )
 
-    @allure.title("Tilt angles are consistent with the max frames count.")
+    @allure.title("Tilt: angles are consistent with the max frames count.")
     def test_tilt_max_frames_count(self, tiltseries_tilt: pd.DataFrame, max_frames_count: int):
         assert len(tiltseries_tilt) <= max_frames_count
 
     ### BEGIN Raw Tilt .rawtlt tests ###
-    @allure.title("Raw tilt angles exist.")
+    @allure.title("Raw tilt: angles exist.")
     def test_raw_tilt_count(self, tiltseries_raw_tilt: pd.DataFrame):
         assert len(tiltseries_raw_tilt) > 0
 
-    @allure.title("Raw tilt angles are within the expected range [-90, 90].")
+    @allure.title("Raw tilt: angles are within the expected range [-90, 90].")
     def test_raw_tilt_angle_range(self, tiltseries_raw_tilt: pd.DataFrame):
         assert all(-90 <= angle <= 90 for angle in tiltseries_raw_tilt["TiltAngle"])
 
-    @allure.title("Every raw tilt angle matches a mdoc tilt angle.")
+    @allure.title("Raw tilt: every raw tilt angle matches a mdoc tilt angle.")
     def test_raw_tilt_mdoc(self, tiltseries_raw_tilt: pd.DataFrame, tiltseries_mdoc: pd.DataFrame):
         errors = self.helper_angles_injection_errors(
             tiltseries_raw_tilt["TiltAngle"].to_list(),
@@ -164,11 +164,11 @@ class TestTiltAngles:
         )
         assert len(errors) == 0, "\n".join(errors)
 
-    @allure.title("Number of raw tilt angles are less than or equal to number of frames files.")
+    @allure.title("Raw tilt: number of raw tilt angles are less than or equal to number of frames files.")
     def test_raw_tilt_tiltseries_metadata(self, tiltseries_raw_tilt: pd.DataFrame, tiltseries_metadata: Dict):
         assert len(tiltseries_raw_tilt) <= tiltseries_metadata["size"]["z"]
 
-    @allure.title("Raw tilt angles correspond to the tilt_range + tilt_step metadata field.")
+    @allure.title("Raw tilt: angles correspond to the tilt_range + tilt_step metadata field.")
     @allure.description("Not all angles in the tilt range must be present in the raw tilt file.")
     def test_raw_tilt_tiltseries_range(self, tiltseries_raw_tilt: pd.DataFrame, tiltseries_metadata: Dict):
         errors = self.helper_angles_injection_errors(
@@ -186,29 +186,29 @@ class TestTiltAngles:
             + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, with step {tiltseries_metadata['tilt_step']}"
         )
 
-    @allure.title("Raw tilt angles are consistent with the max frames count.")
+    @allure.title("Raw tilt: angles are consistent with the max frames count.")
     def test_raw_tilt_max_frames_count(self, tiltseries_raw_tilt: pd.DataFrame, max_frames_count: int):
         assert len(tiltseries_raw_tilt) <= max_frames_count
 
     ### BEGIN MDOC tests ###
-    @allure.title("mdoc tilt angles are within the expected range [-90, 90].")
+    @allure.title("Mdoc: tilt angles are within the expected range [-90, 90].")
     def test_tiltseries_mdoc_range(self, tiltseries_mdoc: pd.DataFrame):
         assert tiltseries_mdoc["TiltAngle"].min() >= -90
         assert tiltseries_mdoc["TiltAngle"].max() <= 90
 
-    @allure.title("Number of mdoc tilt angles equals number of frames files.")
+    @allure.title("Mdoc: number of mdoc tilt angles equals number of frames files.")
     def test_mdoc_frames(self, tiltseries_mdoc: pd.DataFrame, frames_files: List[str]):
         assert len(tiltseries_mdoc) == len(frames_files)
 
-    @allure.title("Number of mdoc tilt angles equals tiltseries size['z'].")
+    @allure.title("Mdoc: number of mdoc tilt angles equals tiltseries size['z'].")
     def test_mdoc_tiltseries_metadata(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
         assert len(tiltseries_mdoc) == tiltseries_metadata["size"]["z"]
 
-    @allure.title("mdoc tilt angles are consistent with the max frames count.")
+    @allure.title("Mdoc: tilt angles are consistent with the max frames count.")
     def test_mdoc_max_frames_count(self, tiltseries_mdoc: pd.DataFrame, max_frames_count: int):
         assert len(tiltseries_mdoc) <= max_frames_count
 
-    @allure.title("Every mdoc tilt angle matches a frames file (one-to-one).")
+    @allure.title("Mdoc: Every mdoc tilt angle matches a frames file (one-to-one).")
     def test_mdoc_frame_paths(
         self,
         frames_files: List[str],
@@ -238,7 +238,7 @@ class TestTiltAngles:
 
         assert len(errors) == 0, "\n".join(errors)
 
-    @allure.title("Every mdoc tilt angle corresponds to the tilt_range + tilt_step metadata field.")
+    @allure.title("Mdoc: every mdoc tilt angle corresponds to the tilt_range + tilt_step metadata field.")
     @allure.description("Not all angles in the tilt range must be present in the MDOC file.")
     def test_mdoc_tiltseries_range(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
         errors = self.helper_angles_injection_errors(
@@ -257,11 +257,11 @@ class TestTiltAngles:
         )
 
     ### BEGIN frames files & tiltseries metadata tests ###
-    @allure.title("Frames files is consistent with tiltseries metadata frames_count and size['z'].")
+    @allure.title("Frames: files is consistent with tiltseries metadata frames_count and size['z'].")
     def test_frames_count(self, frames_files: List[str], tiltseries_metadata: Dict):
         assert len(frames_files) == tiltseries_metadata["frames_count"]
         assert len(frames_files) == tiltseries_metadata["size"]["z"]
 
-    @allure.title("Frames files are consistent with the max frames count.")
+    @allure.title("Frames: files are consistent with the max frames count.")
     def test_tiltseries_metadata_frames_count(self, tiltseries_metadata: Dict, max_frames_count: int):
         assert tiltseries_metadata["size"]["z"] <= max_frames_count
