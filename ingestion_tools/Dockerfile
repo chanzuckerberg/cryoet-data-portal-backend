@@ -31,6 +31,7 @@ RUN python3 -m pip install --no-cache-dir poetry==$POETRY_VERSION
 COPY pyproject.toml poetry.lock ./
 RUN poetry config virtualenvs.create false
 ENV PYTHONPATH=.
+RUN poetry update cryoet-data-portal-neuroglancer
 RUN poetry install
 
 COPY . ./ingestion_tools/
