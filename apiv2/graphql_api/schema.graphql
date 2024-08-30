@@ -40,7 +40,9 @@ type Alignment implements EntityInterface & Node {
   ): PerSectionAlignmentParametersConnection!
   perSectionAlignmentsAggregate(where: PerSectionAlignmentParametersWhereClause = null): PerSectionAlignmentParametersAggregate
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
+  depositionId: Int
   tiltseries(where: TiltseriesWhereClause = null, orderBy: [TiltseriesOrderByClause!] = []): Tiltseries
+  tiltseriesId: Int
   tomograms(
     where: TomogramWhereClause = null
     orderBy: [TomogramOrderByClause!] = []
@@ -59,6 +61,7 @@ type Alignment implements EntityInterface & Node {
   ): TomogramConnection!
   tomogramsAggregate(where: TomogramWhereClause = null): TomogramAggregate
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
+  runId: Int
 
   """Type of alignment included, i.e. is a non-rigid alignment included?"""
   alignmentType: alignment_type_enum
@@ -339,6 +342,7 @@ type Annotation implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
+  runId: Int
   annotationShapes(
     where: AnnotationShapeWhereClause = null
     orderBy: [AnnotationShapeOrderByClause!] = []
@@ -374,6 +378,7 @@ type Annotation implements EntityInterface & Node {
   ): AnnotationAuthorConnection!
   authorsAggregate(where: AnnotationAuthorWhereClause = null): AnnotationAuthorAggregate
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
+  depositionId: Int
 
   """Path to the file in s3"""
   s3MetadataPath: String!
@@ -472,6 +477,7 @@ type AnnotationAuthor implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   annotation(where: AnnotationWhereClause = null, orderBy: [AnnotationOrderByClause!] = []): Annotation
+  annotationId: Int
 
   """The order that the author is listed as in the associated publication"""
   authorListOrder: Int!
@@ -814,8 +820,11 @@ type AnnotationFile implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   alignment(where: AlignmentWhereClause = null, orderBy: [AlignmentOrderByClause!] = []): Alignment
+  alignmentId: Int
   annotationShape(where: AnnotationShapeWhereClause = null, orderBy: [AnnotationShapeOrderByClause!] = []): AnnotationShape
+  annotationShapeId: Int
   tomogramVoxelSpacing(where: TomogramVoxelSpacingWhereClause = null, orderBy: [TomogramVoxelSpacingOrderByClause!] = []): TomogramVoxelSpacing
+  tomogramVoxelSpacingId: Int
 
   """File format label"""
   format: String!
@@ -1072,6 +1081,7 @@ type AnnotationShape implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   annotation(where: AnnotationWhereClause = null, orderBy: [AnnotationOrderByClause!] = []): Annotation
+  annotationId: Int
   annotationFiles(
     where: AnnotationFileWhereClause = null
     orderBy: [AnnotationFileOrderByClause!] = []
@@ -1349,6 +1359,7 @@ type Dataset implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
+  depositionId: Int
   fundingSources(
     where: DatasetFundingWhereClause = null
     orderBy: [DatasetFundingOrderByClause!] = []
@@ -1512,6 +1523,7 @@ type DatasetAuthor implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   dataset(where: DatasetWhereClause = null, orderBy: [DatasetOrderByClause!] = []): Dataset
+  datasetId: Int
 
   """The order that the author is listed as in the associated publication"""
   authorListOrder: Int!
@@ -1873,6 +1885,7 @@ type DatasetFunding implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   dataset(where: DatasetWhereClause = null, orderBy: [DatasetOrderByClause!] = []): Dataset
+  datasetId: Int
 
   """The name of the funding source."""
   fundingAgencyName: String
@@ -2415,6 +2428,7 @@ type DepositionAuthor implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
+  depositionId: Int
 
   """The order that the author is listed as in the associated publication"""
   authorListOrder: Int!
@@ -2714,6 +2728,7 @@ type DepositionType implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
+  depositionId: Int
   type: deposition_types_enum
 }
 
@@ -2903,6 +2918,7 @@ type Frame implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
+  depositionId: Int
   perSectionParameters(
     where: PerSectionParametersWhereClause = null
     orderBy: [PerSectionParametersOrderByClause!] = []
@@ -2921,6 +2937,7 @@ type Frame implements EntityInterface & Node {
   ): PerSectionParametersConnection!
   perSectionParametersAggregate(where: PerSectionParametersWhereClause = null): PerSectionParametersAggregate
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
+  runId: Int
 
   """Camera angle for a frame"""
   rawAngle: Float!
@@ -3235,6 +3252,7 @@ type PerSectionAlignmentParameters implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   alignment(where: AlignmentWhereClause = null, orderBy: [AlignmentOrderByClause!] = []): Alignment
+  alignmentId: Int!
 
   """z-index of the frame in the tiltseries"""
   zIndex: Int!
@@ -3416,7 +3434,9 @@ type PerSectionParameters implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   frame(where: FrameWhereClause = null, orderBy: [FrameOrderByClause!] = []): Frame
+  frameId: Int!
   tiltseries(where: TiltseriesWhereClause = null, orderBy: [TiltseriesOrderByClause!] = []): Tiltseries
+  tiltseriesId: Int!
 
   """z-index of the frame in the tiltseries"""
   zIndex: Int!
@@ -3646,6 +3666,7 @@ type Run implements EntityInterface & Node {
   ): AnnotationConnection!
   annotationsAggregate(where: AnnotationWhereClause = null): AnnotationAggregate
   dataset(where: DatasetWhereClause = null, orderBy: [DatasetOrderByClause!] = []): Dataset
+  datasetId: Int!
   frames(
     where: FrameWhereClause = null
     orderBy: [FrameOrderByClause!] = []
@@ -3924,7 +3945,9 @@ type Tiltseries implements EntityInterface & Node {
   ): PerSectionParametersConnection!
   perSectionParametersAggregate(where: PerSectionParametersWhereClause = null): PerSectionParametersAggregate
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
+  runId: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
+  depositionId: Int
 
   """S3 path to this tiltseries in multiscale OME-Zarr format"""
   s3OmezarrDir: String
@@ -4561,6 +4584,7 @@ type Tomogram implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   alignment(where: AlignmentWhereClause = null, orderBy: [AlignmentOrderByClause!] = []): Alignment
+  alignmentId: Int
   authors(
     where: TomogramAuthorWhereClause = null
     orderBy: [TomogramAuthorOrderByClause!] = []
@@ -4579,8 +4603,11 @@ type Tomogram implements EntityInterface & Node {
   ): TomogramAuthorConnection!
   authorsAggregate(where: TomogramAuthorWhereClause = null): TomogramAuthorAggregate
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
+  depositionId: Int
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
+  runId: Int
   tomogramVoxelSpacing(where: TomogramVoxelSpacingWhereClause = null, orderBy: [TomogramVoxelSpacingOrderByClause!] = []): TomogramVoxelSpacing
+  tomogramVoxelSpacingId: Int
 
   """Short name for this tomogram"""
   name: String
@@ -4689,6 +4716,7 @@ type TomogramAuthor implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   tomogram(where: TomogramWhereClause = null, orderBy: [TomogramOrderByClause!] = []): Tomogram
+  tomogramId: Int
 
   """The order that the author is listed as in the associated publication"""
   authorListOrder: Int!
@@ -5275,6 +5303,7 @@ type TomogramVoxelSpacing implements EntityInterface & Node {
   ): AnnotationFileConnection!
   annotationFilesAggregate(where: AnnotationFileWhereClause = null): AnnotationFileAggregate
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
+  runId: Int
   tomograms(
     where: TomogramWhereClause = null
     orderBy: [TomogramOrderByClause!] = []
