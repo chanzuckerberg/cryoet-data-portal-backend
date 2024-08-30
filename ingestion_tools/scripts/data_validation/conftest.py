@@ -95,10 +95,10 @@ def pytest_configure(config: pytest.Config) -> None:
     # re-use of the per-run fixtures.
     bucket = config.getoption("--bucket")
     dataset = config.getoption("--dataset")
-    run_glob = config.getoption("--run_glob")
+    run_glob = config.getoption("--run-glob")
     pytest.run_name = run_names(bucket, dataset, run_glob)
 
-    voxel_spacing_glob = config.getoption("--voxel_spacing_glob")
+    voxel_spacing_glob = config.getoption("--voxel-spacing-glob")
     voxel_spacing_files = get_voxel_spacing_files(bucket, dataset, pytest.run_name, voxel_spacing_glob)
     pytest.voxel_spacing = voxel_spacings(voxel_spacing_files)
 
@@ -109,7 +109,7 @@ def pytest_configure(config: pytest.Config) -> None:
         pytest.voxel_spacing,
         voxel_spacing_files,
     )
-    print("Run and VoxelSpacing combinations: %s", pytest.run_spacing_combinations)
+    print("Dataset %s run and voxel spacing combinations: %s" % (dataset, pytest.run_spacing_combinations))
 
     # Register markers
     config.addinivalue_line("markers", "annotation: Tests concerning the annotation data.")

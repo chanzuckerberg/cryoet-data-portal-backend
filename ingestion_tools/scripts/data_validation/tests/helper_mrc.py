@@ -48,6 +48,7 @@ class HelperTestMRCHeader:
     mrc_headers: Dict[str, MrcInterpreter] = None
     spacing: float = None
     skip_z_axis_checks: bool = False
+    permitted_mrc_datatypes: list = [np.int8, np.float32]
 
     def mrc_header_helper(
         self,
@@ -93,7 +94,7 @@ class HelperTestMRCHeader:
     def test_datatype(self):
         def check_datatype(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
-            assert utils.dtype_from_mode(header.mode) in [np.int8, np.float32]
+            assert utils.dtype_from_mode(header.mode) in self.permitted_mrc_datatypes
 
         self.mrc_header_helper(check_datatype)
 

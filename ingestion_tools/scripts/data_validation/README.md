@@ -5,7 +5,7 @@
 To run (from this directory):
 
 ```
-pytest --bucket [BUCKET_NAME] --dataset [DATASET_ID] --run_glob [RUN_GLOB] --voxel_spacing_glob [VOXEL_SPACING_GLOB]
+pytest --bucket [BUCKET_NAME] --dataset [DATASET_ID] --run-glob [RUN_GLOB] --voxel-spacing-glob [VOXEL_SPACING_GLOB]
 
 bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
 dataset: The dataset ID to validate. Required.
@@ -59,13 +59,13 @@ pytest --dataset 10200 -s -v -n auto --dist loadscope
 Run tiltseries and tomogram validation for run "TS_026" in dataset 10000.
 
 ```
-pytest --dataset 10000 --run_glob "TS_026" -s -v -m tiltseries -m tomogram
+pytest --dataset 10000 --run-glob "TS_026" -s -v -m tiltseries -m tomogram
 ```
 
 Run data validation for run "17072022_BrnoKrios_Arctis_p3ar_grid_Position_76" in dataset 10301, skipping TestGain validation.
 
 ```
-pytest --dataset 10301 --run_glob "17072022_BrnoKrios_Arctis_p3ar_grid_Position_76" -s -v -k "not TestGain"
+pytest --dataset 10301 --run-glob "17072022_BrnoKrios_Arctis_p3ar_grid_Position_76" -s -v -k "not TestGain"
 ```
 
 ### Allure + Pytest
@@ -77,8 +77,11 @@ Ensure you have the allure command line tool installed (e.g. `brew install allur
 To run (from this directory):
 
 ```
-python run_tests.py all --datasets [DATASET_ID] --bucket [BUCKET_NAME]
+python run_tests.py --bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --datasets [DATASET_ID] --save-history/--no-save-history
 
 bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
-datasets: A comma-separated list of dataset IDs to validate. Required.
+output-bucket: The S3 bucket where the Allure report will be uploaded. Default: `cryoetportal-rawdatasets-dev`
+datasets: A comma-separated list of dataset IDs to validate. If not provided, all datasets will be validated.
+save-history/no-save-history: Save the test results to S3 for historical tracking. Default: `--save-history`
+extra_args: Additional arguments to pass to pytest. See pytest arguments above.
 ```

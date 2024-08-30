@@ -19,6 +19,7 @@ class HelperTestZarrHeader:
     zarr_headers: Dict[str, Dict[str, Dict]] = None
     skip_z_axis_checks: bool = False
     spacing: float = None
+    permitted_zarr_datatypes: list = [np.int8, np.float32]
 
     ### BEGIN ZARR Self-consistency tests ###
     def zarr_header_helper(
@@ -57,13 +58,13 @@ class HelperTestZarrHeader:
         self.zarr_header_helper(check_zattrs_axes)
 
     @allure.title("Zarr: zarray data type is correct")
-    def test_zarray_scale(self):
+    def test_zarray_datatype(self):
         def check_zarray(header_data, _zarr_filename):
             del _zarr_filename
             zarrays = header_data["zarrays"]
             assert len(zarrays) == 3
             for zarray in zarrays.values():
-                assert np.dtype(zarray["dtype"]) in [np.int8, np.float32]
+                assert np.dtype(zarray["dtype"]) in self.permitted_zarr_datatypes
 
         self.zarr_header_helper(check_zarray)
 

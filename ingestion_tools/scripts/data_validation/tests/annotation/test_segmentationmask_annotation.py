@@ -1,6 +1,7 @@
 from typing import Dict
 
 import allure
+import numpy as np
 import pytest
 from mrcfile.mrcinterpreter import MrcInterpreter
 from tests.helper_mrc_zarr import HelperTestMRCZarrHeader
@@ -22,6 +23,7 @@ class TestSegmentationMask(HelperTestMRCZarrHeader):
         self.mrc_headers = seg_mask_annotation_mrc_headers
         self.zarr_headers = seg_mask_annotation_zarr_headers
         self.spacing = float(voxel_spacing)
+        self.permitted_zarr_datatypes = [np.int8]
 
     ### BEGIN Tomogram-consistency tests ###
     @allure.title("Segmentation mask: volumes are contained within the tomogram dimensions.")

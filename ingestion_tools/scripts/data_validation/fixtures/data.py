@@ -162,9 +162,9 @@ def tiltseries_mrc_header(tiltseries_mrc_file: str, filesystem: FileSystemApi) -
 
 
 @pytest.fixture(scope="session")
-def tiltseries_zarr_header(tiltseries_zarr_file: str, filesystem: FileSystemApi) -> Dict[str, Dict[str, Dict]]:
+def tiltseries_zarr_metadata(tiltseries_zarr_file: str, filesystem: FileSystemApi) -> Dict[str, Dict[str, Dict]]:
     """Get the zattrs and zarray data for a zarr tilt series.
-    Dictionary structure: headers = {tiltseries_a_filename: {"zattrs": Dict, "zarrays": Dict}"""
+    Dictionary structure: metadata = {tiltseries_a_filename: {"zattrs": Dict, "zarrays": Dict}"""
     return {tiltseries_zarr_file: get_zarr_metadata(tiltseries_zarr_file, filesystem)}
 
 

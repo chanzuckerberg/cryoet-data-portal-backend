@@ -21,12 +21,12 @@ class TestTiltseries(HelperTestMRCZarrHeader):
     def set_helper_test_mrc_zarr_header_class_variables(
         self,
         tiltseries_mrc_header: Dict[str, MrcInterpreter],
-        tiltseries_zarr_header: Dict[str, Dict[str, Dict]],
+        tiltseries_zarr_metadata: Dict[str, Dict[str, Dict]],
         tiltseries_metadata: Dict,
     ):
         self.spacegroup = 0  # 2D image
         self.mrc_headers = tiltseries_mrc_header
-        self.zarr_headers = tiltseries_zarr_header
+        self.zarr_headers = tiltseries_zarr_metadata
         self.spacing = tiltseries_metadata["pixel_spacing"]
         self.skip_z_axis_checks = True
 
@@ -92,10 +92,10 @@ class TestTiltseries(HelperTestMRCZarrHeader):
     def test_zarr_matches(
         self,
         tiltseries_metadata: Dict,
-        tiltseries_zarr_header: Dict[str, Dict[str, Dict]],
+        tiltseries_zarr_metadata: Dict[str, Dict[str, Dict]],
     ):
-        assert len(tiltseries_zarr_header) == 1
-        assert tiltseries_metadata["omezarr_dir"] == os.path.basename(list(tiltseries_zarr_header.keys())[0])
+        assert len(tiltseries_zarr_metadata) == 1
+        assert tiltseries_metadata["omezarr_dir"] == os.path.basename(list(tiltseries_zarr_metadata.keys())[0])
 
     @allure.title("Tiltseries: metadata MRC file matches the actual file.")
     def test_mrc_matches(
