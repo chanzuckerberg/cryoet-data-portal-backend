@@ -37,6 +37,11 @@ repos:
     exclude: "launch.json"
   - id: check-merge-conflict
   - id: end-of-file-fixer
+    exclude: |
+      (?x)(
+          ^.release-please-manifest.json|
+          ^release-please-config.json
+      )
   - id: trailing-whitespace
 - repo: local
   hooks:
