@@ -26,6 +26,11 @@ def get_history(tar_report: str, destination: str, fs: FileSystemApi):
 @click.option("--bucket", default=STAGING_BUCKET, type=str, help="S3 bucket to search for datasets.")
 @click.option("--output-bucket", default=OUTPUT_BUCKET, type=str, help="S3 bucket to store the report.")
 @click.option("--datasets", required=False, type=str, default=None, help="Comma separated list of dataset IDs.")
+@click.option(
+    "--multiprocessing/--no-multiprocessing",
+    is_flag=True,
+    help="Run tests simultaneously with multiple workers (pytest-xdist).",
+)
 @click.option("--save-history/--no-save-history", default=True, help="Save the history of the report.")
 @click.option(
     "--extra-args",
@@ -39,6 +44,7 @@ def main(
     bucket: str,
     output_bucket: str,
     datasets: str | None,
+    multiprocessing: bool,
     save_history: bool,
     extra_args: str | None,
 ):
@@ -65,7 +71,9 @@ def main(
         os.makedirs(localdir_rep, exist_ok=True)
 
         # Run tests and generate results
-        os.system(f"pytest -n auto --dist worksteal --dataset {dataset} --alluredir {localdir_raw} {extra_args}")
+        os.system(
+            f"pytest {'--dist worksteal -n auto' if multiprocessing else '--dist no'} --dataset {dataset} --alluredir {localdir_raw} {extra_args}",
+        )
 
         # Get the history from S3 (Must do this before generating the report)
         remote_dataset_dir = f"{output_bucket}/data_validation/{dataset}"

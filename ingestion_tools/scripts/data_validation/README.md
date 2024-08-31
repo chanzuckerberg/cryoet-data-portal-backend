@@ -34,7 +34,7 @@ Additional pytest helpful parameters:
 ```
 -n [NUM]: Run tests in parallel with [NUM] workers (pytest-xdist plugin)
     - Use `auto` to automatically determine the number of workers based on the number of CPU cores.
-    - Recommended for validating large / multiple datasets
+    - Recommended for validating large / multiple datasets. Note: for smaller datasets, this is likely slower because of the worker setup overhead.
     - Use this with `--dist loadscope` to prevent fixtures from being reloaded for each worker
 -v: Verbose output
 -s: Print stdout to console
@@ -77,13 +77,14 @@ Ensure you have the allure command line tool installed (e.g. `brew install allur
 To run (from this directory):
 
 ```
-python run_tests.py --bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --datasets [DATASET_ID] --save-history/--no-save-history
+python run_tests.py --bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --datasets [DATASET_ID] --multiprocessing/--no-multiprocessing --save-history/--no-save-history
 
-bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
-output-bucket: The S3 bucket where the Allure report will be uploaded. Default: `cryoetportal-rawdatasets-dev`
-datasets: A comma-separated list of dataset IDs to validate. If not provided, all datasets will be validated.
-save-history/no-save-history: Save the test results to S3 for historical tracking. Default: `--save-history`
-extra_args: Additional arguments to pass to pytest. See pytest arguments above.
+--bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
+--output-bucket: The S3 bucket where the Allure report will be uploaded. Default: `cryoetportal-rawdatasets-dev`
+--datasets: A comma-separated list of dataset IDs to validate. If not provided, all datasets will be validated.
+--multiprocessing/--no-multiprocessing: Run tests in parallel with multiple workers (pytest-xdist). Default: `--multiprocessing`
+--save-history/--no-save-history: Save the test results to S3 for historical tracking. Default: `--save-history`
+--extra_args: Additional arguments to pass to pytest. See pytest arguments above.
 ```
 
 Example:
@@ -98,6 +99,12 @@ Run only tiltseries validation for all datasets, and save the test results to S3
 
 ```
 python run_tests.py --extra-args "-k TestTiltseries"
+```
+
+Run on a smaller dataset, so no need for multiprocessing (multiprocessing worker setup overhead makes it slower than no multiprocessing).
+
+```
+python run_tests.py --datasets 10031 --no-multiprocessing
 ```
 
 Run all data validation for everything, and save the test results to S3 (not recommended, can take awhile).
