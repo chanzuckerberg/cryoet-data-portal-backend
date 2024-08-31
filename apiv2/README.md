@@ -19,4 +19,5 @@ make update-schema
 cd ..
 pre-commit run --all-files
 # Then commit all changed files, *including* any new migrations!
+git commit -am "Updating schema to do X feature"
 ```

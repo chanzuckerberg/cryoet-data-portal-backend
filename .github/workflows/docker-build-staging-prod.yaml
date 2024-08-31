@@ -13,4 +13,4 @@ jobs:
     with:
       envs: staging,prod
       path_filters: '!.infra/**,apiv2/**'
-      branches_include: release-please--branches--main
+      branches_include: release-please--branches--main--components--apiv2
