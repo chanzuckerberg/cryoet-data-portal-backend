@@ -2,6 +2,7 @@ name: Update staging
 
 on:
   pull_request:
+    types: [ opened, synchronize ]
     paths:
       - '.infra/common.yaml'
       - '.infra/staging/values.yaml'
@@ -12,7 +13,7 @@ concurrency:
 
 jobs:
   run_if:
-    if: github.head_ref == 'release-please--branches--main'
+    if: github.head_ref == 'release-please--branches--main--components--apiv2'
     runs-on: [ARM64, self-hosted, Linux]
     steps:
       - run: echo "The head branch of this PR is the release please branch"
