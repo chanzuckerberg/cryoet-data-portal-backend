@@ -305,12 +305,28 @@ def tomo_zarr_file(
     return file
 
 
+# =============================================================================
+# Run and voxel-specific fixtures, Neuroglancer
+# =============================================================================
+
+
 @pytest.fixture(scope="session")
-def tomo_basename(
-    tomo_zarr_file: str,
+def neuroglancer_dir(tomo_dir: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/"""
+    return tomo_dir
+
+
+@pytest.fixture(scope="session")
+def neuroglancer_config_file(
+    neuroglancer_dir: str,
+    filesystem: FileSystemApi,
 ) -> str:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name]"""
-    return os.path.splitext(tomo_zarr_file)[0]
+    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/neuroglancer_config.json"""
+    dst = f"{neuroglancer_dir}/neuroglancer_config.json"
+    if filesystem.exists(dst):
+        return dst
+    else:
+        pytest.fail(f"Neuroglancer config file not found: {dst}")
 
 
 # =============================================================================

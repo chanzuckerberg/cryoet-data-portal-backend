@@ -223,6 +223,18 @@ def tomogram_metadata(tomo_meta_file: str, filesystem: FileSystemApi) -> Dict:
 
 
 # ==================================================================================================
+# Neuroglancer fixtures
+# ==================================================================================================
+
+
+@pytest.fixture(scope="session")
+def neuroglancer_config(neuroglancer_config_file: str, filesystem: FileSystemApi) -> Dict:
+    """Load the neuroglancer config."""
+    with filesystem.open(neuroglancer_config_file, "r") as f:
+        return json.load(f)
+
+
+# ==================================================================================================
 # Annotation fixtures
 # ==================================================================================================
 
