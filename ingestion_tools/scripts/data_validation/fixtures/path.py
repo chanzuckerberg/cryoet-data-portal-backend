@@ -81,7 +81,7 @@ def frames_dir(run_dir: str, filesystem: FileSystemApi) -> str:
 
 @pytest.fixture(scope="session")
 def frames_files(frames_dir: str, filesystem: FileSystemApi) -> List[str]:
-    """[Dataset]/[ExperimentRun]/Frames/[frame_name].mrc"""
+    """[Dataset]/[ExperimentRun]/Frames/*"""
     files = filesystem.glob(f"{frames_dir}/*")
     # Exclude gain files, add s3 prefix
     refined_files = ["s3://" + file for file in files if "_gain" not in file]
@@ -119,7 +119,7 @@ def gain_dir(run_dir: str, filesystem: FileSystemApi) -> str:
 
 @pytest.fixture(scope="session")
 def gain_files(run_name: str, gain_dir: str, filesystem: FileSystemApi) -> List[str]:
-    """[Dataset]/[ExperimentRun]/Frames/[run_name]_gain*"""
+    """[Dataset]/[ExperimentRun]/Frames/[run_name]*_gain*"""
     files = filesystem.glob(f"{gain_dir}/*_gain*")
     if len(files) == 0:
         pytest.skip("No gain files found.")

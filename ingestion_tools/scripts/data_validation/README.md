@@ -85,3 +85,23 @@ datasets: A comma-separated list of dataset IDs to validate. If not provided, al
 save-history/no-save-history: Save the test results to S3 for historical tracking. Default: `--save-history`
 extra_args: Additional arguments to pass to pytest. See pytest arguments above.
 ```
+
+Example:
+
+Run all data validation for datasets 10027 and 10200, and save the test results to S3.
+
+```
+python run_tests.py --datasets 10027,10200
+```
+
+Run only tiltseries validation for all datasets, and save the test results to S3.
+
+```
+python run_tests.py --extra-args "-k TestTiltseries"
+```
+
+Run all data validation for everything, and save the test results to S3 (not recommended, can take awhile).
+
+```
+python run_tests.py
+```

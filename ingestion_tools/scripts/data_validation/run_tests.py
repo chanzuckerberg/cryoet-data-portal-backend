@@ -47,7 +47,7 @@ def main(
 
     if datasets is None:
         datasets = fs.glob(f"s3://{bucket}/*")
-        datasets = [os.path.basename(dataset) for dataset in datasets if datasets.isdigit()]
+        datasets = [os.path.basename(dataset) for dataset in datasets if os.path.basename(dataset).isdigit()]
     else:
         datasets = datasets.split(",")
 
@@ -64,7 +64,7 @@ def main(
         os.makedirs(localdir_raw, exist_ok=True)
         os.makedirs(localdir_rep, exist_ok=True)
 
-        # Test and report generation
+        # Run tests and generate results
         os.system(f"pytest -n auto --dist worksteal --dataset {dataset} --alluredir {localdir_raw} {extra_args}")
 
         # Get the history from S3 (Must do this before generating the report)

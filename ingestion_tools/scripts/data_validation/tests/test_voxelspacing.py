@@ -1,3 +1,5 @@
+import re
+
 import allure
 import pytest
 
@@ -9,6 +11,7 @@ class TestVoxelSpacing:
     def test_voxel_spacing(self, voxel_spacing: str, run_name: str, dataset: str):
         # both not used, but to ensure allure is properly generated (with this test being under the dataset tab in the "Behaviors" tab)
         del run_name, dataset
+        assert re.match(r"^\d+.\d{3}$", voxel_spacing)
         voxel_spacing = float(voxel_spacing)
         assert voxel_spacing > 1
         assert voxel_spacing < 30
