@@ -1,9 +1,7 @@
 name: Docker Build Staging/Prod
 
 on:
-  push:
-    branches:
-      - main
+  - push
 
 jobs:
   argus_builder:
