@@ -25,18 +25,22 @@ def get_history(tar_report: str, destination: str, fs: FileSystemApi):
 @click.argument("local-dst", default="./results", type=str)  # Local directory to store results.
 @click.option("--bucket", default=STAGING_BUCKET, type=str, help="S3 bucket to search for datasets.")
 @click.option("--output-bucket", default=OUTPUT_BUCKET, type=str, help="S3 bucket to store the report.")
-@click.option("--datasets", required=False, type=str, default=None, help="Comma separated list of dataset IDs.")
+@click.option("--datasets", default="*", type=str, help="Comma separated list of dataset IDs.")
 @click.option(
     "--multiprocessing/--no-multiprocessing",
     is_flag=True,
     help="Run tests simultaneously with multiple workers (pytest-xdist).",
 )
-@click.option("--save-history/--no-save-history", default=True, help="Save the history of the report.")
+@click.option(
+    "--history/--no-history",
+    default=True,
+    help="Save the history to S3 and retrieve the history of the report. If testing multiple datasets, \
+    saving history will result in longer execution time (each dataset has to be an individual `pytest` call).",
+)
 @click.option(
     "--extra-args",
-    required=False,
-    type=str,
     default=None,
+    type=str,
     help="Extra arguments to pass to pytest (in one string).",
 )
 def main(
@@ -45,7 +49,7 @@ def main(
     output_bucket: str,
     datasets: str | None,
     multiprocessing: bool,
-    save_history: bool,
+    history: bool,
     extra_args: str | None,
 ):
     fs: S3Filesystem = FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
@@ -57,6 +61,12 @@ def main(
     else:
         datasets = datasets.split(",")
 
+    datasets = sorted(datasets, key=lambda x: int(x))
+
+    # If we are not saving history, we can run all datasets in one go (individual dataset runs don't need to be tracked)
+    if not history:
+        datasets = [",".join(datasets)]
+
     extra_args = extra_args if extra_args else ""
 
     for dataset in datasets:
@@ -67,13 +77,17 @@ def main(
         # Archive location
         local_tar = f"{local_dst}/{dataset}/{dataset}_{now}.tar.gz"
 
+        # Run tests and generate results
+        exit_code = os.system(
+            f"pytest {'--dist worksteal -n auto' if multiprocessing else '--dist no'} --datasets {dataset} --alluredir {localdir_raw} {extra_args}",
+        )
+
+        if exit_code != 0:
+            print(f"Failed to run tests for dataset {dataset}. Skipping...")
+            continue
+
         os.makedirs(localdir_raw, exist_ok=True)
         os.makedirs(localdir_rep, exist_ok=True)
-
-        # Run tests and generate results
-        os.system(
-            f"pytest {'--dist worksteal -n auto' if multiprocessing else '--dist no'} --dataset {dataset} --alluredir {localdir_raw} {extra_args}",
-        )
 
         # Get the history from S3 (Must do this before generating the report)
         remote_dataset_dir = f"{output_bucket}/data_validation/{dataset}"
@@ -87,10 +101,9 @@ def main(
         os.system(f"allure generate --output {localdir_rep} {localdir_raw}")
 
         # Upload the new report
-        if save_history:
-            os.system(f"tar -czf {local_tar} -C {localdir_rep} .")
-            fs.s3fs.put(local_tar, remote_dataset_tar)
-            os.system(f"rm -rf {local_tar}")
+        os.system(f"tar -czf {local_tar} -C {localdir_rep} .")
+        fs.s3fs.put(local_tar, remote_dataset_tar)
+        os.system(f"rm -rf {local_tar}")
 
 
 if __name__ == "__main__":

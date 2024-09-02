@@ -5,10 +5,10 @@
 To run (from this directory):
 
 ```
-pytest --bucket [BUCKET_NAME] --dataset [DATASET_ID] --run-glob [RUN_GLOB] --voxel-spacing-glob [VOXEL_SPACING_GLOB]
+pytest --bucket [BUCKET_NAME] --datasets [DATASET_ID] --run-glob [RUN_GLOB] --voxel-spacing-glob [VOXEL_SPACING_GLOB]
 
 bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
-dataset: The dataset ID to validate. Required.
+datasets: A comma-separated list of dataset IDs to validate. If not provided, all datasets will be validated.
 run_glob: A glob pattern to match the run directories to validate. Default: `*`
 voxel_spacing_glob: A glob pattern to match the voxel spacing directories to validate. Default: `*`
 ```
@@ -31,6 +31,7 @@ Available marks:
 - voxel_spacing
 
 Additional pytest helpful parameters:
+
 ```
 -n [NUM]: Run tests in parallel with [NUM] workers (pytest-xdist plugin)
     - Use `auto` to automatically determine the number of workers based on the number of CPU cores.
@@ -47,25 +48,31 @@ Example:
 Run all data validation for dataset 10027.
 
 ```
-pytest --dataset 10027 -s -v
+pytest --datasets 10027 -s -v
+```
+
+Run all data validation for datasets 10040 and 10041.
+
+```
+pytest --datasets 10040,10041 -s -v
 ```
 
 Run all data validation, with multiple workers, for dataset 10200.
 
 ```
-pytest --dataset 10200 -s -v -n auto --dist loadscope
+pytest --datasets 10200 -s -v -n auto --dist loadscope
 ```
 
 Run tiltseries and tomogram validation for run "TS_026" in dataset 10000.
 
 ```
-pytest --dataset 10000 --run-glob "TS_026" -s -v -m tiltseries -m tomogram
+pytest --datasets 10000 --run-glob "TS_026" -s -v -m tiltseries -m tomogram
 ```
 
 Run data validation for run "17072022_BrnoKrios_Arctis_p3ar_grid_Position_76" in dataset 10301, skipping TestGain validation.
 
 ```
-pytest --dataset 10301 --run-glob "17072022_BrnoKrios_Arctis_p3ar_grid_Position_76" -s -v -k "not TestGain"
+pytest --datasets 10301 --run-glob "17072022_BrnoKrios_Arctis_p3ar_grid_Position_76" -s -v -k "not TestGain"
 ```
 
 ### Allure + Pytest
@@ -83,7 +90,7 @@ python run_tests.py --bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] 
 --output-bucket: The S3 bucket where the Allure report will be uploaded. Default: `cryoetportal-rawdatasets-dev`
 --datasets: A comma-separated list of dataset IDs to validate. If not provided, all datasets will be validated.
 --multiprocessing/--no-multiprocessing: Run tests in parallel with multiple workers (pytest-xdist). Default: `--multiprocessing`
---save-history/--no-save-history: Save the test results to S3 for historical tracking. Default: `--save-history`
+--history/--no-history: Save the history to S3 and retrieve the history of the report. If testing multiple datasets, saving history will result in longer execution time (each dataset has to be an individual `pytest` call). Default: `--history`
 --extra_args: Additional arguments to pass to pytest. See pytest arguments above.
 ```
 
@@ -107,7 +114,7 @@ Run on a smaller dataset, so no need for multiprocessing (multiprocessing worker
 python run_tests.py --datasets 10031 --no-multiprocessing
 ```
 
-Run all data validation for everything, and save the test results to S3 (not recommended, can take awhile).
+Run all data validation for everything, and save the test results to S3 (not recommended, can take very long, on the scale of a day possibly).
 
 ```
 python run_tests.py

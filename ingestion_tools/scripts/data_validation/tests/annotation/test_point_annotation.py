@@ -6,7 +6,7 @@ from tests.annotation.helper_point import contained_in_tomo, point_count_consist
 
 
 @pytest.mark.annotation
-@pytest.mark.parametrize("run_name, voxel_spacing", pytest.run_spacing_combinations, scope="session")
+@pytest.mark.parametrize("dataset, run_name, voxel_spacing", pytest.dataset_run_spacing_combinations, scope="session")
 class TestPointAnnotations:
     ### BEGIN Self-consistency tests ###
     @allure.title("Point: number of annotations is consistent between metadata and ndjson file.")

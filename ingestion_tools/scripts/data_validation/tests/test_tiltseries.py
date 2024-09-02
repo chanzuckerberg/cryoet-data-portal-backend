@@ -14,7 +14,7 @@ from tests.test_deposition import HelperTestDeposition
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination
 @pytest.mark.tiltseries
-@pytest.mark.parametrize("run_name", pytest.run_name, scope="session")
+@pytest.mark.parametrize("dataset, run_name", pytest.dataset_run_combinations, scope="session")
 class TestTiltseries(HelperTestMRCZarrHeader):
 
     @pytest.fixture(autouse=True)

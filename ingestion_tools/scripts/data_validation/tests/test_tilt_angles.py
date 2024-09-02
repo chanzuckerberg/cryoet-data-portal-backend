@@ -10,7 +10,7 @@ ANGLE_TOLERANCE = 0.05
 
 
 @pytest.mark.tilt_angles
-@pytest.mark.parametrize("run_name", pytest.run_name, scope="session")
+@pytest.mark.parametrize("dataset, run_name", pytest.dataset_run_combinations, scope="session")
 class TestTiltAngles:
     """
     A class to test tilt angle data (only ordering, other data validation tests are done in respective classes).

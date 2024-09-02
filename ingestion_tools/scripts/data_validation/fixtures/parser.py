@@ -13,9 +13,8 @@ def pytest_addoption(parser: Parser) -> None:
 
     # Dataset ID
     parser.addoption(
-        "--dataset",
+        "--datasets",
         action="store",
-        required=True,
     )
 
     # Run Name and ID

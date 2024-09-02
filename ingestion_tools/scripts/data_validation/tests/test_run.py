@@ -8,7 +8,7 @@ from common.fs import FileSystemApi
 
 
 @pytest.mark.run
-@pytest.mark.parametrize("run_name", pytest.run_name, scope="session")
+@pytest.mark.parametrize("dataset, run_name", pytest.dataset_run_combinations, scope="session")
 class TestRun:
     @allure.title("Run: sanity check run metadata.")
     def test_metadata(self, run_name: str, run_metadata: Dict):
@@ -18,7 +18,7 @@ class TestRun:
 
     @allure.title("Run: valid corresponding deposition metadata.")
     def test_deposition_id(self, run_name, dataset_metadata: Dict, bucket: str, filesystem: FileSystemApi):
-        # need run_name as parameter to prevent pytest error (expects run_name as a parameterized argument)
+        # need run_name as parameter to prevent pytest error (expects run_name as a parametrized argument)
         del run_name
         # TODO: Change this to failing instead of skipping when all run_metadata.json has deposition id?
         if dataset_metadata["deposition_id"] is None:
