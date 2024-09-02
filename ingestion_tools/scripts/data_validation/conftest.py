@@ -26,8 +26,10 @@ def get_run_folders(fs: S3Filesystem, bucket: str, datasets: List[str], run_glob
     A helper function to retrieve all valid run folders across all datasets.
     """
     with concurrent.futures.ThreadPoolExecutor() as executor:
+        run_folder_template = f"s3://{bucket}/{{}}/{run_glob}"
+
         run_folders_lists = executor.map(
-            lambda dataset: fs.glob(f"s3://{bucket}/{dataset}/{run_glob}"),
+            lambda dataset: fs.glob(run_folder_template.format(dataset)),
             datasets,
         )
         # Flatten the list of lists
@@ -71,9 +73,11 @@ def get_voxel_spacing_files(
     A helper function to retrieve all valid voxel spacing files across all dataset + runs.
     """
     with concurrent.futures.ThreadPoolExecutor() as executor:
+        voxel_spacing_file_template = f"s3://{bucket}/{{}}/{{}}/Tomograms/{voxel_spacing_glob}"
+
         voxel_spacing_files_lists = executor.map(
             lambda dataset_run_tuple: fs.glob(
-                f"s3://{bucket}/{dataset_run_tuple[0]}/{dataset_run_tuple[1]}/Tomograms/{voxel_spacing_glob}",
+                voxel_spacing_file_template.format(dataset_run_tuple[0], dataset_run_tuple[1]),
             ),
             dataset_run_combinations,
         )
