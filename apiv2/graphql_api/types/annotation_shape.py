@@ -171,6 +171,7 @@ class AnnotationShape(EntityInterface):
     annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
         load_annotation_rows
     )  # type:ignore
+    annotation_id: Optional[int]
     annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = (
         load_annotation_file_rows
     )  # type:ignore

@@ -712,7 +712,11 @@ slots:
     range: integer
     description: The mask label for a semantic segmentation mask annotation file.
     ifabsent: 'int(1)'
-
+  annotation_source_file_scale_factor:
+    range: float
+    description: The scale factor for a mesh annotation file.
+    ifabsent: 'float(1)'
+    minimum_value: 0
   # ============================================================================
   # API slots
   # ============================================================================
@@ -810,6 +814,8 @@ enums:
         description: A series of coordinates
       InstanceSegmentation:
         description: A volume with labels for multiple instances
+      TriangularMesh:
+        description: A mesh of triangles
 
   annotation_method_link_type_enum:
     description: Describes the type of link associated to the annotation method.

@@ -283,6 +283,7 @@ Define Annotation type
 @strawberry.type(description="Metadata about an annotation for a run")
 class Annotation(EntityInterface):
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
+    run_id: Optional[int]
     annotation_shapes: Sequence[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]] = (
         load_annotation_shape_rows
     )  # type:ignore
@@ -298,6 +299,7 @@ class Annotation(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
+    deposition_id: Optional[int]
     s3_metadata_path: str = strawberry.field(description="Path to the file in s3")
     https_metadata_path: str = strawberry.field(description="Path to the file as an https url")
     annotation_publication: Optional[str] = strawberry.field(
