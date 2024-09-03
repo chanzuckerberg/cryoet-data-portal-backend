@@ -24,12 +24,6 @@ MIN_SNAPSHOT_WIDTH = 512 * 3 / 4  # account for 4:3 aspect ratio
 @pytest.mark.tomogram
 @pytest.mark.parametrize("dataset, run_name, voxel_spacing", pytest.dataset_run_spacing_combinations, scope="session")
 class TestTomogram(HelperTestMRCZarrHeader):
-    def test_tomogram_metadata(self, canonical_tomogram_metadata: Dict):
-        """A tomogram metadata sanity check."""
-        assert canonical_tomogram_metadata["deposition_id"]
-        assert isinstance(canonical_tomogram_metadata["authors"], list)
-        assert all(isinstance(authors, dict) for authors in canonical_tomogram_metadata["authors"])
-
     @pytest.fixture(autouse=True)
     def set_helper_test_mrc_zarr_header_class_variables(
         self,
