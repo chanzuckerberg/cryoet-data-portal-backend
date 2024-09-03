@@ -227,6 +227,7 @@ classes:
       - CrossReferencesMixin
       - S3PrefixedEntityMixin
     description: An author of a dataset
+    tree_root: true
     attributes:
       deposition:
         range: Deposition

@@ -246,6 +246,9 @@ class TomoConverter:
         else:
             self.volume_reader = MRCReader(fs, filename, header_only)
 
+    def get_pyramid_base_data(self) -> np.ndarray:
+        return self.volume_reader.get_pyramid_base_data()
+
     @classmethod
     def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:
         return data
@@ -270,7 +273,7 @@ class TomoConverter:
         # Ensure voxel spacing rounded to 3rd digit
         voxel_spacing = round(voxel_spacing, 3)
 
-        pyramid = [self.scaled_data_transformation(self.volume_reader.get_pyramid_base_data())]
+        pyramid = [self.scaled_data_transformation(self.get_pyramid_base_data())]
         pyramid_voxel_spacing = [(voxel_spacing, voxel_spacing, voxel_spacing)]
         z_scale = 2 if scale_z_axis else 1
         # Then make a pyramid of 100/50/25 percent scale volumes
@@ -375,7 +378,7 @@ class MaskConverter(TomoConverter):
         self.label = label
 
     def get_pyramid_base_data(self) -> np.ndarray:
-        return (self.volume_reader.data == self.label).astype(np.int8)
+        return (self.volume_reader.get_pyramid_base_data() == self.label).astype(np.int8)
 
     @classmethod
     def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:

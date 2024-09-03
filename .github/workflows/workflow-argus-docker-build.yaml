@@ -1,0 +1,41 @@
+name: Docker Image Build
+
+on:
+  workflow_call:
+    inputs:
+      envs:
+        description: 'Env names, comma delimited'
+        required: true
+        type: string
+      path_filters:
+        description: 'Glob patterns to match against changed files in the repository, comma delimited'
+        required: true
+        type: string
+      branches_include:
+        description: 'Branches to build on, comma delimited'
+        required: false
+        type: string
+        default: '*'
+      branches_ignore:
+        description: 'Branches to skip build on, comma delimited'
+        required: false
+        type: string
+        default: ''
+
+jobs:
+  argus_builder:
+    uses: chanzuckerberg/github-actions/.github/workflows/argus-docker-build.yaml@v3.1.0
+    secrets: inherit
+    with:
+      branches_include: ${{ inputs.branches_include }}
+      branches_ignore: ${{ inputs.branches_ignore }}
+      path_filters: ${{ inputs.path_filters }}
+      envs: ${{ inputs.envs }}
+      images: |
+        { "apiv2": {
+            "name": "apiv2",
+            "context": "apiv2",
+            "dockerfile": "apiv2/Dockerfile",
+            "platform": "linux/arm64"
+          }
+        }

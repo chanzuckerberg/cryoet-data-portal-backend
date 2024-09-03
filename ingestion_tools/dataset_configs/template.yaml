@@ -8,7 +8,7 @@ annotations: OPTIONAL
     annotation_method: REQUIRED, STRING
     annotation_object: REQUIRED
       description: OPTIONAL, STRING
-      id: REQUIRED, STRING (GO_ID)
+      id: REQUIRED, STRING (GO_ID / UNIPROT_ID)
       name: REQUIRED, STRING
       state: OPTIONAL, STRING
     annotation_publications: OPTIONAL, STRING (DOI / EMPIAR / EMDB / PDB IDs)
@@ -47,7 +47,8 @@ annotations: OPTIONAL
       binning: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
       filter_value: OPTIONAL, STRING
       order: OPTIONAL, STRING (DEFAULT xyz)
-      parent_filters: SEE runs.sources.parent_filters
+    parent_filters: SEE runs.sources.parent_filters
+    exclude: SEE runs.sources.exclude
   - OrientedPoint:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
@@ -56,7 +57,8 @@ annotations: OPTIONAL
       binning: see InstanceSegmentation.binning
       filter_value: see InstanceSegmentation.filter_value
       order: see InstanceSegmentation.order
-      parent_filters: see InstanceSegmentation.parent_filters
+    parent_filters: see InstanceSegmentation.parent_filters
+    exclude: SEE InstanceSegmentation.exclude
   - Point:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
@@ -65,20 +67,31 @@ annotations: OPTIONAL
       binning: see InstanceSegmentation.binning
       columns: OPTIONAL, STRING (DEFAULT xyz)
       delimiter: OPTIONAL, STRING (DEFAULT ',')
-      parent_filters: see InstanceSegmentation.parent_filters
+    parent_filters: see InstanceSegmentation.parent_filters
+    exclude: SEE InstanceSegmentation.exclude
   - SegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
-      parent_filters: see InstanceSegmentation.parent_filters
+    parent_filters: see InstanceSegmentation.parent_filters
+    exclude: SEE InstanceSegmentation.exclude
   - SemanticSegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
       mask_label: OPTIONAL, INTEGER (DEFAULT 1)
-      parent_filters: see InstanceSegmentation.parent_filters
+    parent_filters: see InstanceSegmentation.parent_filters
+    exclude: SEE InstanceSegmentation.exclude
+  - TriangularMesh:
+      file_format: see InstanceSegmentation.file_format
+      glob_string: see InstanceSegmentation.glob_string
+      glob_strings: see InstanceSegmentation.glob_strings
+      is_visualization_default: see InstanceSegmentation.is_visualization_default
+      scale_factor: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
+    parent_filters: see InstanceSegmentation.parent_filters
+    exclude: SEE InstanceSegmentation.exclude
 dataset_keyphotos: OPTIONAL
 - sources: REQUIRED
   - literal: REQUIRED
@@ -160,17 +173,19 @@ rawtilts: OPTIONAL
 - sources: SEE datasets.sources and runs.sources.parent_filters
 runs: REQUIRED
 - sources: SEE datasets.sources (source_glob) and below
-    # parent filters must be paired with a finder type (source_glob, source_multi_glob, ...) as one list entry
-    # can only exclude / include parent types (see IMPORTER_DEP_TREE)
-    # in this case of being in the runs attribute, only dataset can be excluded / included
-    # in dataset level, nothing can be excluded / included
-    parent_filters: OPTIONAL
-      exclude: OPTIONAL
-        dataset: OPTIONAL
-          - OPTIONAL, STRING (REGEX)
-      include: OPTIONAL
-        dataset: OPTIONAL
-          - OPTIONAL, STRING (REGEX)
+  # parent filters must be paired with a finder type (source_glob, source_multi_glob, ...) as one list entry
+  # can only exclude / include parent types (see IMPORTER_DEP_TREE)
+  # in this case of being in the runs attribute, only dataset can be excluded / included
+  # in dataset level, nothing can be excluded / included
+  parent_filters: OPTIONAL
+    exclude: OPTIONAL
+      dataset: OPTIONAL
+        - OPTIONAL, STRING (REGEX)
+    include: OPTIONAL
+      dataset: OPTIONAL
+        - OPTIONAL, STRING (REGEX)
+  exclude: OPTIONAL
+  - OPTIONAL, STRING (REGEX)
 standardization_config: REQUIRED
   deposition_id: REQUIRED, INTEGER
   run_data_map_file: OPTIONAL, STRING

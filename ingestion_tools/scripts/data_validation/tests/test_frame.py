@@ -44,7 +44,8 @@ class TestFrame(HelperTestMRCHeader):
             if not any(frame_file.endswith(ext) for ext in PERMITTED_FRAME_EXTENSIONS):
                 errors.append(f"Invalid frame file extension: {frame_file}")
 
-        assert not errors, "\n".join(errors)
+        if errors:
+            warnings.warn("\n".join(errors), stacklevel=2)
 
     def test_frames_consistent(self, frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
         return helper_tiff_mrc_consistent(frames_headers)

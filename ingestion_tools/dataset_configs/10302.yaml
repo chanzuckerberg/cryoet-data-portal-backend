@@ -102,6 +102,25 @@ runs:
       list_glob: chlamy_visual_proteomics/*
       match_regex: /(\d{8}_.*)$
       name_regex: (.*)
+    exclude:
+    - ^01122021_BrnoKrios_arctis_lam1_pos4$
+    - ^01122021_BrnoKrios_arctis_lam1_pos5$
+    - ^01122021_BrnoKrios_arctis_lam2_pos13$
+    - ^01122021_BrnoKrios_arctis_lam3_pos27$
+    - ^06042022_BrnoKrios_Arctis_grid7_Position_29$
+    - ^08042022_BrnoKrios_Arctis_grid5_gistest_Position_4$
+    - ^12052022_BrnoKrios_Arctis_grid_newGISc_Position_38$
+    - ^14042022_BrnoKrios_Arctis_grid5_Position_1$
+    - ^15042022_BrnoKrios_Arctis_grid9_Position_32$
+    - ^15042022_BrnoKrios_Arctis_grid9_Position_65$
+    - ^17072022_BrnoKrios_Arctis_p3ar_grid_Position_101$
+    - ^17072022_BrnoKrios_Arctis_p3ar_grid_Position_35$
+    - ^17072022_BrnoKrios_Arctis_p3ar_grid_Position_68$
+    - ^17072022_BrnoKrios_Arctis_p3ar_grid_Position_76$
+    - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_13$
+    - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_33$
+    - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_44$
+    - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_7$
 standardization_config:
   deposition_id: 10300
   run_data_map_file: chlamy_visual_proteomics/run_to_data_map.tsv
