@@ -5,7 +5,7 @@ on:
     paths:
     - 'apiv2/**'
     branches:
-    - release-please--branches--main--components--apiv2
+    - jgadling-test
 
 jobs:
   argus_builder:
@@ -14,4 +14,4 @@ jobs:
     with:
       envs: staging,prod
       path_filters: '!.infra/**,apiv2/**'
-      branches_include: release-please--branches--main--components--apiv2
+      branches_include: jgadling-test
