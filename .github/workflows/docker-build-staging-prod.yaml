@@ -1,12 +1,13 @@
 name: Docker Build Staging/Prod
 
 on:
-  - push
+  push:
+    paths:
+    - 'apiv2/**'
 
 jobs:
   argus_builder:
     uses: ./.github/workflows/workflow-argus-docker-build.yaml
-    if: github.event.sender.type != 'Bot'
     secrets: inherit
     with:
       envs: staging,prod
