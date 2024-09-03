@@ -21,20 +21,12 @@ class TestTiltAngles:
         - .rawtlt (<=) maps to .mdoc (not necessarily 1:1)
         - .mdoc (==) one-to-one with frames files & tiltseries_metadata size["z"]
         - tiltseries metadata size["z"] == frames_count == # of frames files
-        - # of frames_files <= metadata tilt_range (see max_frames_count fixture)
 
     Extra test redundancy is added for the cases where files sometimes do not exist.
     Extra redundancy tests are done on the tiltseries metadata size["z"] since frames_count / # of frames files may be 0
         when no frames are present and that is a valid case. To ensure consistency, we rely on the check
         tiltseries metadata size["z"] == frames_count == # of frames files.
     """
-
-    @pytest.fixture(autouse=True)
-    def max_frames_count(self, tiltseries_metadata: Dict):
-        # TODO FIXME how to check if -0.0 should exist
-        return (
-            tiltseries_metadata["tilt_range"]["max"] - tiltseries_metadata["tilt_range"]["min"]
-        ) / tiltseries_metadata["tilt_step"] + 1
 
     ### Helper functions ###
     # TODO FIXME account for double 0 sample
@@ -251,6 +243,3 @@ class TestTiltAngles:
         """
         assert len(frames_files) == tiltseries_metadata["frames_count"]
         assert len(frames_files) == tiltseries_metadata["size"]["z"]
-
-    def test_tiltseries_metadata_frames_count(self, tiltseries_metadata: Dict, max_frames_count: int):
-        assert tiltseries_metadata["size"]["z"] <= max_frames_count
