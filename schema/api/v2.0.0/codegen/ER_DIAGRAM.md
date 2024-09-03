@@ -51,8 +51,8 @@ Tomogram {
     boolean is_canonical
     string s3_omezarr_dir
     string https_omezarr_dir
-    string s3_mrc_scale0
-    string https_mrc_scale0
+    string s3_mrc_file
+    string https_mrc_file
     string scale0_dimensions
     string scale1_dimensions
     string scale2_dimensions
@@ -96,7 +96,7 @@ Annotation {
     EMPIAR_EMDB_DOI_PDB_LIST annotation_publication
     string annotation_method
     boolean ground_truth_status
-    GO_ID object_id
+    string object_id
     string object_name
     string object_description
     string object_state
@@ -107,6 +107,7 @@ Annotation {
     string annotation_software
     boolean is_curator_recommended
     annotation_method_type_enum method_type
+    string method_links
     integer id
     date deposition_date
     date release_date
@@ -131,9 +132,9 @@ DepositionType {
 }
 Tiltseries {
     string s3_omezarr_dir
-    string s3_mrc_bin1
+    string s3_mrc_file
     string https_omezarr_dir
-    string https_mrc_bin1
+    string https_mrc_file
     string s3_collection_metadata
     string https_collection_metadata
     string s3_angle_list
@@ -217,8 +218,8 @@ DepositionAuthor {
     string affiliation_name
     string affiliation_address
     string affiliation_identifier
-    string corresponding_author_status
-    string primary_author_status
+    boolean corresponding_author_status
+    boolean primary_author_status
 }
 AnnotationAuthor {
     integer id
@@ -229,8 +230,8 @@ AnnotationAuthor {
     string affiliation_name
     string affiliation_address
     string affiliation_identifier
-    string corresponding_author_status
-    string primary_author_status
+    boolean corresponding_author_status
+    boolean primary_author_status
 }
 TomogramAuthor {
     integer id
@@ -241,8 +242,8 @@ TomogramAuthor {
     string affiliation_name
     string affiliation_address
     string affiliation_identifier
-    string corresponding_author_status
-    string primary_author_status
+    boolean corresponding_author_status
+    boolean primary_author_status
 }
 DatasetAuthor {
     integer id
@@ -253,8 +254,8 @@ DatasetAuthor {
     string affiliation_name
     string affiliation_address
     string affiliation_identifier
-    string corresponding_author_status
-    string primary_author_status
+    boolean corresponding_author_status
+    boolean primary_author_status
 }
 DatasetFunding {
     string funding_agency_name
