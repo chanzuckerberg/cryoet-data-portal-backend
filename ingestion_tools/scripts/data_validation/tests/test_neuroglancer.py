@@ -12,7 +12,7 @@ from common.fs import FileSystemApi
 class TestNeuroglancer:
     @allure.title("Neuroglancer: sanity check neuroglancer config file.")
     def test_metadata(self, neuroglancer_config: Dict):
-        assert len(neuroglancer_config) > 0
+        assert "layers" in  neuroglancer_config and  len(neuroglancer_config["layers"]) > 0
 
     @allure.title("Neuroglancer: valid corresponding deposition metadata.")
     def test_deposition_id(self, neuroglancer_config: Dict, bucket: str, filesystem: FileSystemApi):
