@@ -119,3 +119,14 @@ Run all data validation for everything, and save the test results to S3 (not rec
 ```
 python run_tests.py
 ```
+
+#### Viewing Allure Report
+
+After running `run_tests.py`, a folder with the results (default `./results`) will be created. To view the Allure report:
+
+```
+cd results
+python -m http.server
+```
+
+Then navigate to `http://localhost:8000` in your browser.

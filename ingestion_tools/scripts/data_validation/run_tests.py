@@ -29,10 +29,12 @@ def get_history(tar_report: str, destination: str, fs: FileSystemApi):
 @click.option(
     "--multiprocessing/--no-multiprocessing",
     is_flag=True,
+    default=True,
     help="Run tests simultaneously with multiple workers (pytest-xdist).",
 )
 @click.option(
     "--history/--no-history",
+    is_flag=True,
     default=True,
     help="Save the history to S3 and retrieve the history of the report. If testing multiple datasets, \
     saving history will result in longer execution time (each dataset has to be an individual `pytest` call).",
@@ -78,13 +80,9 @@ def main(
         local_tar = f"{local_dst}/{dataset}/{dataset}_{now}.tar.gz"
 
         # Run tests and generate results
-        exit_code = os.system(
+        os.system(
             f"pytest {'--dist worksteal -n auto' if multiprocessing else '--dist no'} --datasets {dataset} --alluredir {localdir_raw} {extra_args}",
         )
-
-        if exit_code != 0:
-            print(f"Failed to run tests for dataset {dataset}. Skipping...")
-            continue
 
         os.makedirs(localdir_raw, exist_ok=True)
         os.makedirs(localdir_rep, exist_ok=True)
