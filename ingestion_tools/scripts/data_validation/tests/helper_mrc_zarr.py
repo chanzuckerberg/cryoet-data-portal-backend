@@ -22,10 +22,10 @@ class HelperTestMRCZarrHeader(HelperTestMRCHeader, HelperTestZarrHeader):
 
         def check_volume_size(header_data, zarr_filename):
             mrc_file = zarr_filename.replace(".zarr", ".mrc")
+            header = self.mrc_headers[mrc_file].header
 
             zarrays = header_data["zarrays"]
             for i, zarray in zarrays.items():
-                header = self.mrc_headers[mrc_file].header
                 zarr_shape = zarray["shape"].copy()
                 if self.skip_z_axis_checks:
                     zarr_shape[0] = "N/A"
