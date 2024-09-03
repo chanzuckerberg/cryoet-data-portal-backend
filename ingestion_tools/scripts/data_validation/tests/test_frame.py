@@ -5,8 +5,8 @@ from typing import Dict, List, Union
 import pandas as pd
 import pytest
 import tifffile
+from data_validation.tests.helper_mrc import HelperTestMRCHeader
 from mrcfile.mrcinterpreter import MrcInterpreter
-from tests.helper_mrc import HelperTestMRCHeader
 
 PERMITTED_FRAME_EXTENSIONS = [".mrc", ".tif", ".tiff", ".eer", ".mrc.bz2"]
 

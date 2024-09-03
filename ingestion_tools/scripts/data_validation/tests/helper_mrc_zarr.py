@@ -1,7 +1,7 @@
 import math
 
-from tests.helper_mrc import HelperTestMRCHeader
-from tests.helper_zarr import HelperTestZarrHeader
+from data_validation.tests.helper_mrc import HelperTestMRCHeader
+from data_validation.tests.helper_zarr import HelperTestZarrHeader
 
 
 class HelperTestMRCZarrHeader(HelperTestMRCHeader, HelperTestZarrHeader):

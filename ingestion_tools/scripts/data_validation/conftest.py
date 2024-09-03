@@ -1,6 +1,5 @@
 import concurrent.futures
 import os.path
-import sys
 from typing import List, Tuple
 
 import pytest
@@ -11,9 +10,6 @@ import pytest
 # from allure_pytest.utils import ALLURE_LABEL_MARK
 # from pytest import MarkDecorator
 # Local fixtures and common functions
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(CURRENT_DIR)
-sys.path.append(os.path.join(CURRENT_DIR, ".."))
 from fixtures.data import *  # noqa: E402, F403
 from fixtures.parser import *  # noqa: E402, F403
 from fixtures.path import *  # noqa: E402, F403

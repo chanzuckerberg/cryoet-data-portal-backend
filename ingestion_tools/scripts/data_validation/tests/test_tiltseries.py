@@ -3,10 +3,10 @@ import os
 from typing import Dict
 
 import pytest
+from data_validation.tests.helper_mrc_zarr import HelperTestMRCZarrHeader
+from data_validation.tests.test_deposition import HelperTestDeposition
 from fixtures.data import BINNING_FACTORS
 from mrcfile.mrcinterpreter import MrcInterpreter
-from tests.helper_mrc_zarr import HelperTestMRCZarrHeader
-from tests.test_deposition import HelperTestDeposition
 
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination

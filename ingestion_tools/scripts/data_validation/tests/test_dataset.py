@@ -1,9 +1,9 @@
 from typing import Dict
 
 import pytest
-from tests.helper_images import check_photo_valid
-from tests.helper_metadata import basic_metadata_check
-from tests.test_deposition import HelperTestDeposition
+from data_validation.tests.helper_images import check_photo_valid
+from data_validation.tests.helper_metadata import basic_metadata_check
+from data_validation.tests.test_deposition import HelperTestDeposition
 
 from common.fs import FileSystemApi
 

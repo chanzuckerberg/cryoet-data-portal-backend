@@ -1,8 +1,8 @@
 from typing import Dict
 
 import pytest
+from data_validation.tests.helper_mrc_zarr import HelperTestMRCZarrHeader
 from mrcfile.mrcinterpreter import MrcInterpreter
-from tests.helper_mrc_zarr import HelperTestMRCZarrHeader
 
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination

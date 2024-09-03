@@ -3,9 +3,9 @@ from typing import Dict, List, Union
 
 import pytest
 import tifffile
+from data_validation.tests.helper_mrc import HelperTestMRCHeader
+from data_validation.tests.test_frame import PERMITTED_FRAME_EXTENSIONS, helper_tiff_mrc_consistent
 from mrcfile.mrcinterpreter import MrcInterpreter
-from tests.helper_mrc import HelperTestMRCHeader
-from tests.test_frame import PERMITTED_FRAME_EXTENSIONS, helper_tiff_mrc_consistent
 
 PERMITTED_GAIN_EXTENSIONS = PERMITTED_FRAME_EXTENSIONS + [".gain"]
 

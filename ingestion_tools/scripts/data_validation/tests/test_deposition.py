@@ -6,8 +6,8 @@ by other test classes to validate their corresponding deposition's metadata.
 import json
 from typing import Dict, Union
 
-from tests.helper_images import check_photo_valid
-from tests.helper_metadata import basic_metadata_check
+from data_validation.tests.helper_images import check_photo_valid
+from data_validation.tests.helper_metadata import basic_metadata_check
 
 from common.fs import FileSystemApi
 
