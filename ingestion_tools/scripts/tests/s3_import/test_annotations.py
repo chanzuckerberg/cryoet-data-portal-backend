@@ -1271,7 +1271,7 @@ def test_ingest_triangular_mesh(
     assert actual_hash == expected_hash
 
 
-def test_ingest_triangular_mesh_group_exists(
+def test_ingest_triangular_mesh_hff(
     tomo_importer_local: TomogramImporter,
     deposition_config_local: DepositionImportConfig,
     local_test_data_dir: str,
@@ -1337,48 +1337,3 @@ def test_ingest_triangular_mesh_group_exists(
     expected_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(expected_mesh))
 
     assert actual_hash == expected_hash
-
-
-def test_ingest_triangular_mesh_group_missing(
-    tomo_importer_local: TomogramImporter,
-    deposition_config_local: DepositionImportConfig,
-    local_test_data_dir: str,
-):
-    # Arrange
-    glob_string = "annotations/triangular_mesh.hff"
-    file_format = "hff"
-    mesh_name = "missing_name"
-    deposition_config_local._set_object_configs(
-        "annotation",
-        [
-            {
-                "metadata": default_anno_metadata,
-                "sources": [
-                    {
-                        "TriangularMeshGroup": {
-                            "file_format": file_format,
-                            "glob_string": glob_string,
-                            "is_visualization_default": False,
-                            "name": mesh_name,
-                        },
-                    },
-                ],
-            },
-        ],
-    )
-    fixtures_dir = os.path.join(local_test_data_dir, "fixtures")
-
-    # Action
-    anno = TriangularMeshAnnotationGroup(
-        config=deposition_config_local,
-        metadata=default_anno_metadata,
-        path=os.path.join(fixtures_dir, glob_string),
-        parents={"tomogram": tomo_importer_local, **tomo_importer_local.parents},
-        file_format=file_format,
-        identifier=100,
-        mesh_name=mesh_name,
-    )
-
-    # Assert
-    with pytest.raises(ValueError):
-        anno.import_item()

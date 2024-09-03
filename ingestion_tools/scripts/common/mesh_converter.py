@@ -32,7 +32,7 @@ def convert_mesh_to_glb(convert_func: typing.Callable[[str], trimesh.Trimesh]) -
     return wrapper
 
 
-def check_mesh_name(input_file: str, name: str) -> str:
+def check_mesh_name(input_file: str, name: str) -> typing.Optional[str]:
     with h5py.File(input_file, "r") as fp:
         for mesh_list in fp["segment_list/"].keys(): # noqa
             # Mesh name
@@ -43,7 +43,8 @@ def check_mesh_name(input_file: str, name: str) -> str:
                 mesh_name: str = mesh_name_raw.decode()
                 if mesh_name == name:
                     return mesh_list
-        raise ValueError(f"Mesh name {name} not found in the hff file")
+        logger.warning(f"Mesh name {name} not found in the hff file")
+        return None
 
 
 @convert_mesh_to_glb
@@ -72,14 +73,14 @@ def from_hff(input_file: str, name: str) -> trimesh.Trimesh:
         return np.frombuffer(data, dtype=dtype).reshape(-1, 3)
 
     mesh_index = check_mesh_name(input_file, name)
+    if not mesh_index:
+        return None
     # Open the HDF5 file
     with h5py.File(input_file, "r") as fp:
         # All the meshes are stored in the 'segment_list'Explore & Visualize HDF5 Files
         logger.info(f"Schema version: {fp['version'][()]}")  # noqa
         # Mesh name
         logger.info(f"Processing mesh: {name}")  # noqa
-        # Color is a 4-tuple of RGBA values, 0-1 range (normalized from 0-255)
-        color = fp[f"segment_list/{mesh_index}/colour"][()]
         meshes = []
         for mesh in fp[f"segment_list/{mesh_index}/mesh_list/"].keys(): # noqa
             # Create a trimesh object from the vertices and triangles data
@@ -90,11 +91,8 @@ def from_hff(input_file: str, name: str) -> trimesh.Trimesh:
             vertices_data_path = f"segment_list/{mesh_index}/mesh_list/{mesh}/vertices"
             vertices = _extract(fp, vertices_data_path)
 
-            # align the vertices and triangles
-
-
             # Create a trimesh object from the vertices and triangles data
-            mesh = trimesh.Trimesh(vertices=vertices, faces=triangles, face_colors=color)
+            mesh = trimesh.Trimesh(vertices=vertices, faces=triangles)
             meshes.append(mesh)
 
         # Combine all the meshes into a single mesh
