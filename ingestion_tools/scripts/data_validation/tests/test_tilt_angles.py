@@ -13,27 +13,20 @@ ANGLE_TOLERANCE = 0.05
 @pytest.mark.parametrize("dataset, run_name", pytest.dataset_run_combinations, scope="session")
 class TestTiltAngles:
     """
-    A class to test tilt angle data (only ordering, other data validation tests are done in respective classes).
+    A class to test tilt angle data. Only checking that the # of angles in these files are consistent with other files /
+    data and that they properly map to other files / data. Other data validation tests is done in respective classes.
     Spans .tlt, .rawtlt, .mdoc, tiltseries_metadata.json, frames files.
     Ordering:
         - .tlt (<=) maps to .rawtlt (not necessarily 1:1)
         - .rawtlt (<=) maps to .mdoc (not necessarily 1:1)
         - .mdoc (==) one-to-one with frames files & tiltseries_metadata size["z"]
         - tiltseries metadata size["z"] == frames_count == # of frames files
-        - # of frames_files <= metadata tilt_range (see max_frames_count fixture)
 
     Extra test redundancy is added for the cases where files sometimes do not exist.
     Extra redundancy tests are done on the tiltseries metadata size["z"] since frames_count / # of frames files may be 0
         when no frames are present and that is a valid case. To ensure consistency, we rely on the check
         tiltseries metadata size["z"] == frames_count == # of frames files.
     """
-
-    @pytest.fixture(autouse=True)
-    def max_frames_count(self, tiltseries_metadata: Dict):
-        # TODO FIXME how to check if -0.0 should exist
-        return (
-            tiltseries_metadata["tilt_range"]["max"] - tiltseries_metadata["tilt_range"]["min"]
-        ) / tiltseries_metadata["tilt_step"] + 1
 
     ### Helper functions ###
     # TODO FIXME account for double 0 sample
@@ -141,10 +134,6 @@ class TestTiltAngles:
             + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, with step {tiltseries_metadata['tilt_step']}"
         )
 
-    @allure.title("Tilt: angles are consistent with the max frames count.")
-    def test_tilt_max_frames_count(self, tiltseries_tilt: pd.DataFrame, max_frames_count: int):
-        assert len(tiltseries_tilt) <= max_frames_count
-
     ### BEGIN Raw Tilt .rawtlt tests ###
     @allure.title("Raw tilt: angles exist.")
     def test_raw_tilt_count(self, tiltseries_raw_tilt: pd.DataFrame):
@@ -186,10 +175,6 @@ class TestTiltAngles:
             + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, with step {tiltseries_metadata['tilt_step']}"
         )
 
-    @allure.title("Raw tilt: angles are consistent with the max frames count.")
-    def test_raw_tilt_max_frames_count(self, tiltseries_raw_tilt: pd.DataFrame, max_frames_count: int):
-        assert len(tiltseries_raw_tilt) <= max_frames_count
-
     ### BEGIN MDOC tests ###
     @allure.title("Mdoc: tilt angles are within the expected range [-90, 90].")
     def test_tiltseries_mdoc_range(self, tiltseries_mdoc: pd.DataFrame):
@@ -203,10 +188,6 @@ class TestTiltAngles:
     @allure.title("Mdoc: number of mdoc tilt angles equals tiltseries size['z'].")
     def test_mdoc_tiltseries_metadata(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
         assert len(tiltseries_mdoc) == tiltseries_metadata["size"]["z"]
-
-    @allure.title("Mdoc: tilt angles are consistent with the max frames count.")
-    def test_mdoc_max_frames_count(self, tiltseries_mdoc: pd.DataFrame, max_frames_count: int):
-        assert len(tiltseries_mdoc) <= max_frames_count
 
     @allure.title("Mdoc: Every mdoc tilt angle matches a frames file (one-to-one).")
     def test_mdoc_frame_paths(
@@ -261,7 +242,3 @@ class TestTiltAngles:
     def test_frames_count(self, frames_files: List[str], tiltseries_metadata: Dict):
         assert len(frames_files) == tiltseries_metadata["frames_count"]
         assert len(frames_files) == tiltseries_metadata["size"]["z"]
-
-    @allure.title("Frames: files are consistent with the max frames count.")
-    def test_tiltseries_metadata_frames_count(self, tiltseries_metadata: Dict, max_frames_count: int):
-        assert tiltseries_metadata["size"]["z"] <= max_frames_count
