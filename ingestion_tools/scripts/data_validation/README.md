@@ -9,8 +9,8 @@ pytest --bucket [BUCKET_NAME] --datasets [DATASET_ID] --run-glob [RUN_GLOB] --vo
 
 bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
 datasets: A comma-separated list of dataset IDs to validate. If not provided, all datasets will be validated.
-run_glob: A glob pattern to match the run directories to validate. Default: `*`
-voxel_spacing_glob: A glob pattern to match the voxel spacing directories to validate. Default: `*`
+run-glob: A glob pattern to match the run directories to validate. Default: `*`
+voxel-spacing-glob: A glob pattern to match the voxel spacing directories to validate. Default: `*`
 ```
 
 Custom Marks:
@@ -84,14 +84,14 @@ Ensure you have the allure command line tool installed (e.g. `brew install allur
 To run (from this directory):
 
 ```
-python run_tests.py --bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --datasets [DATASET_ID] --multiprocessing/--no-multiprocessing --save-history/--no-save-history
+python run_tests.py --bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --datasets [DATASET_ID] --multiprocessing/--no-multiprocessing --save-history/--no-save-history --extra-args [EXTRA_ARGS]
 
 --bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
 --output-bucket: The S3 bucket where the Allure report will be uploaded. Default: `cryoetportal-rawdatasets-dev`
 --datasets: A comma-separated list of dataset IDs to validate. If not provided, all datasets will be validated.
 --multiprocessing/--no-multiprocessing: Run tests in parallel with multiple workers (pytest-xdist). Default: `--multiprocessing`
 --history/--no-history: Save the history to S3 and retrieve the history of the report. If testing multiple datasets, saving history will result in longer execution time (each dataset has to be an individual `pytest` call). Default: `--history`
---extra_args: Additional arguments to pass to pytest. See pytest arguments above.
+--extra-args: Additional arguments to pass to pytest. See pytest arguments above.
 ```
 
 Example:
