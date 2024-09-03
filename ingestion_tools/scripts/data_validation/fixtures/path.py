@@ -86,16 +86,6 @@ def frames_files(frames_dir: str, filesystem: FileSystemApi) -> List[str]:
     return ["s3://" + file for file in files if "_gain" not in file]  # Exclude gain files
 
 
-@pytest.fixture(scope="session")
-def frame_acquisition_order_file(frames_dir: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/Frames/frame_acquisition_order.json"""
-    dst = f"{frames_dir}/frame_acquisition_order.json"
-    if filesystem.exists(dst):
-        return dst
-    else:
-        pytest.fail(f"Frame acquisition order file not found: {dst}")
-
-
 # =============================================================================
 # Run-specific fixtures, Gain
 # =============================================================================
