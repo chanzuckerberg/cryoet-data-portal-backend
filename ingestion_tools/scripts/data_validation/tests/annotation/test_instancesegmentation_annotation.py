@@ -2,7 +2,7 @@ from typing import Dict, List
 
 import allure
 import pytest
-from tests.annotation.helper_point import contained_in_tomo
+from data_validation.tests.annotation.helper_point import contained_in_tomo
 
 
 @pytest.mark.annotation

@@ -1,0 +1,23 @@
+name: APIv2 tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apiv2/**"
+  pull_request:
+    paths:
+      - "apiv2/**"
+
+jobs:
+  py-test:
+    runs-on: [ARM64, self-hosted, Linux]
+    name: "Run tests"
+    steps:
+      - uses: actions/checkout@v3
+      # Set up a local test env and run tests
+      - name: Run tests
+        run: |
+          make apiv2-init
+          make apiv2-test

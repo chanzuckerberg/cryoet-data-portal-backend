@@ -1,8 +1,8 @@
 import math
 
 import allure
-from tests.helper_mrc import HelperTestMRCHeader
-from tests.helper_zarr import HelperTestZarrHeader
+from data_validation.tests.helper_mrc import HelperTestMRCHeader
+from data_validation.tests.helper_zarr import HelperTestZarrHeader
 
 
 class HelperTestMRCZarrHeader(HelperTestMRCHeader, HelperTestZarrHeader):
@@ -25,10 +25,10 @@ class HelperTestMRCZarrHeader(HelperTestMRCHeader, HelperTestZarrHeader):
     def test_zarr_mrc_volume_size(self):
         def check_volume_size(header_data, zarr_filename):
             mrc_file = zarr_filename.replace(".zarr", ".mrc")
+            header = self.mrc_headers[mrc_file].header
 
             zarrays = header_data["zarrays"]
             for i, zarray in zarrays.items():
-                header = self.mrc_headers[mrc_file].header
                 zarr_shape = zarray["shape"].copy()
                 if self.skip_z_axis_checks:
                     zarr_shape[0] = "N/A"

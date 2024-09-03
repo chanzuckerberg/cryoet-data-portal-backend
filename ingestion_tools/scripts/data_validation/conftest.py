@@ -1,15 +1,11 @@
 import concurrent.futures
 import os.path
-import sys
 from typing import List, Tuple
 
 import allure
 import pytest
 
 # Local fixtures and common functions
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(CURRENT_DIR)
-sys.path.append(os.path.join(CURRENT_DIR, ".."))
 from fixtures.data import *  # noqa: E402, F403
 from fixtures.parser import *  # noqa: E402, F403
 from fixtures.path import *  # noqa: E402, F403
@@ -167,10 +163,6 @@ def pytest_configure(config: pytest.Config) -> None:
     config.addinivalue_line("markers", "gain: Tests concerning the gain files.")
     config.addinivalue_line("markers", "run: Tests concerning the runs.")
     config.addinivalue_line("markers", "tiltseries: Tests concerning the tiltseries.")
-    config.addinivalue_line(
-        "markers",
-        "tilt_angles: Tests concerning the tilt angle (spans multiple entities: .tlt, .rawtlt, .mdoc, tiltseries_metadata.json, frames).",
-    )
     config.addinivalue_line("markers", "tomogram: Tests concerning the tomogram.")
     config.addinivalue_line("markers", "voxel_spacing: Tests concerning voxel spacings.")
 

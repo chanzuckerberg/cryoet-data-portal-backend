@@ -207,21 +207,21 @@ def tiltseries_mdoc_file(tiltseries_dir: str, filesystem: FileSystemApi) -> str:
 
 
 @pytest.fixture(scope="session")
-def tiltseries_tilt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].tlt"""
-    tlt_files = filesystem.glob(f"{tiltseries_basename}.tlt")
-    if len(tlt_files) == 0:
-        pytest.skip("No tlt file found.")
-    return tlt_files[0]
+def tiltseries_rawtlt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].rawtlt"""
+    if filesystem.s3fs.exists(f"{tiltseries_basename}.rawtlt"):
+        return f"{tiltseries_basename}.rawtlt"
+    else:
+        pytest.skip("No rawtlt file found.")
 
 
 @pytest.fixture(scope="session")
-def tiltseries_rawtilt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].rawtlt"""
-    rawtlt_files = filesystem.glob(f"{tiltseries_basename}.rawtlt")
-    if len(rawtlt_files) == 0:
-        pytest.skip("No rawtlt file found.")
-    return rawtlt_files[0]
+def tiltseries_tlt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].tlt"""
+    if filesystem.s3fs.exists(f"{tiltseries_basename}.tlt"):
+        return f"{tiltseries_basename}.tlt"
+    else:
+        pytest.skip("No tlt file found.")
 
 
 # =============================================================================

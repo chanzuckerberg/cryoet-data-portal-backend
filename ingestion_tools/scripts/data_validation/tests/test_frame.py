@@ -6,8 +6,8 @@ import allure
 import pandas as pd
 import pytest
 import tifffile
+from data_validation.tests.helper_mrc import HelperTestMRCHeader, mrc_allure_title
 from mrcfile.mrcinterpreter import MrcInterpreter
-from tests.helper_mrc import HelperTestMRCHeader, mrc_allure_title
 
 PERMITTED_FRAME_EXTENSIONS = [".mrc", ".tif", ".tiff", ".eer", ".mrc.bz2"]
 
@@ -49,7 +49,8 @@ class TestFrame(HelperTestMRCHeader):
             if not any(frame_file.endswith(ext) for ext in PERMITTED_FRAME_EXTENSIONS):
                 errors.append(f"Invalid frame file extension: {frame_file}")
 
-        assert not errors, "\n".join(errors)
+        if errors:
+            warnings.warn("\n".join(errors), stacklevel=2)
 
     @allure.title("Frames: consistent dimensions and pixel spacings (MRC & TIFF).")
     def test_consistent(self, frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):

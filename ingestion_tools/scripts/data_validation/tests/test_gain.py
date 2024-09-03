@@ -4,9 +4,9 @@ from typing import Dict, List, Union
 import allure
 import pytest
 import tifffile
+from data_validation.tests.helper_mrc import HelperTestMRCHeader, mrc_allure_title
+from data_validation.tests.test_frame import PERMITTED_FRAME_EXTENSIONS, helper_tiff_mrc_consistent
 from mrcfile.mrcinterpreter import MrcInterpreter
-from tests.helper_mrc import HelperTestMRCHeader, mrc_allure_title
-from tests.test_frame import PERMITTED_FRAME_EXTENSIONS, helper_tiff_mrc_consistent
 
 PERMITTED_GAIN_EXTENSIONS = PERMITTED_FRAME_EXTENSIONS + [".gain"]
 
@@ -55,32 +55,23 @@ class TestGain(HelperTestMRCHeader):
     def test_consistent(self, gain_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
         return helper_tiff_mrc_consistent(gain_headers)
 
+    def test_gain_nz(self):
+        def check_nz(header, _interpreter, _mrc_filename):
+            del _interpreter, _mrc_filename
+            assert header.nz == 1  # 2D image
+
+        self.mrc_header_helper(check_nz)
+
     ### END Self-consistency tests ###
 
     ### BEGIN Frame-specific tests ###
-    @allure.title("Gain: same dimensions as the frames.")
-    def test_matches_frame_dimensions(self, frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
-        def check_matches_frame_dimensions(header, _interpreter, _mrc_filename, frame_dimensions):
-            del _interpreter, _mrc_filename
-            assert header.nx == frame_dimensions[0]
-            assert header.ny == frame_dimensions[1]
-            assert header.nz == 1  # 2D image
-
-        # We only need to check the first frame, since we check that all frames have the same dimensions
-        first_frame = list(frames_headers.values())[0]
-        frame_dimensions = (
-            (first_frame.nx, first_frame.ny)
-            if isinstance(first_frame, MrcInterpreter)
-            else (first_frame[0].imagewidth, first_frame[0].imagelength)
-        )
-        self.mrc_header_helper(check_matches_frame_dimensions, frame_dimensions=frame_dimensions)
-
-    @allure.title("Gain: same pixel spacing as the frames.")
-    def test_tiltseries_pixel_spacing(
+    def test_gain_frames(
         self,
         gain_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
         frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
     ):
+        """Check that the gain pixel spacing & dimensions matches the frame pixel spacing. Just need to check first MRC file of each."""
+
         first_mrc_gain = None
         for _, gain_header in gain_headers.items():
             if isinstance(gain_header, MrcInterpreter):
@@ -95,6 +86,9 @@ class TestGain(HelperTestMRCHeader):
 
         if first_mrc_gain and first_mrc_frame:
             assert first_mrc_gain.voxel_size["x"] == first_mrc_frame.voxel_size["x"]
+            assert first_mrc_gain.voxel_size["y"] == first_mrc_frame.voxel_size["y"]
+            assert first_mrc_gain.header.nx == first_mrc_frame.header.nx
+            assert first_mrc_gain.header.ny == first_mrc_frame.header.ny
         else:
             pytest.skip("No MRC files found to compare pixel spacing")
 

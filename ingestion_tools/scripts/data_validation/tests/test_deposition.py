@@ -6,8 +6,8 @@ by other test classes to validate their corresponding deposition's metadata.
 import json
 from typing import Dict, Union
 
-from tests.helper_images import check_photo_valid
-from tests.helper_metadata import basic_metadata_check
+from data_validation.tests.helper_images import check_photo_valid
+from data_validation.tests.helper_metadata import basic_metadata_check
 
 from common.fs import FileSystemApi
 
@@ -36,11 +36,11 @@ class HelperTestDeposition:
     @staticmethod
     def check_deposition_metadata(deposition_id: Union[str, int], bucket: str, filesystem: FileSystemApi) -> Dict:
         """A deposition metadata sanity check and ensuring that photos are valid."""
-        # No need to check the same deposition twice.
         deposition_id = str(deposition_id)
-        if deposition_id in HelperTestDeposition.cached_deposition_valid:
-            return
         print(f"Checking deposition: {deposition_id}")
+        if deposition_id in HelperTestDeposition.cached_deposition_valid:
+            assert HelperTestDeposition.cached_deposition_valid[deposition_id]
+            return
         HelperTestDeposition.cached_deposition_valid[deposition_id] = False
         deposition_file = HelperTestDeposition._get_deposition_metadata_file(deposition_id, bucket, filesystem)
         deposition_metadata = HelperTestDeposition._get_deposition_metadata(deposition_file, filesystem)

@@ -51,6 +51,9 @@ mdocfile = "^0.1.2"
 tifffile = "^2024.8.10"
 pytest-xdist = "^3.6.1"
 allure-pytest = "^2.13.5"
+trimesh = "^4.4.4"
+vtk = "^9.3.1"
+numpy = "^1.22.0"
 
 [tool.black]
 line-length = 120
@@ -87,6 +90,8 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 # Ignore `SIM115` (not using open() in a context manager) since all calls to this method *do* use a context manager.
 "scripts/common/fs.py" = ["SIM115"]
+"**/graphql_api/**" = ["B008", "N815", "B006", "N801", "E721", "SIM118", "B904", "DTZ001", "E722"]
+"**/support/enums.py" = ["N801"]
 
 [tool.ruff.lint.isort]
 known-first-party =["common"]

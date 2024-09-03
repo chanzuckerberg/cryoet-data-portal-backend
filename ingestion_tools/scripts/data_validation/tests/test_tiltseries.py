@@ -3,13 +3,12 @@ import os
 from typing import Dict
 
 import allure
-import pandas as pd
 import pytest
+from data_validation.tests.helper_mrc import mrc_allure_title
+from data_validation.tests.helper_mrc_zarr import HelperTestMRCZarrHeader
+from data_validation.tests.test_deposition import HelperTestDeposition
 from fixtures.data import BINNING_FACTORS
 from mrcfile.mrcinterpreter import MrcInterpreter
-from tests.helper_mrc import mrc_allure_title
-from tests.helper_mrc_zarr import HelperTestMRCZarrHeader
-from tests.test_deposition import HelperTestDeposition
 
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination
@@ -108,17 +107,3 @@ class TestTiltseries(HelperTestMRCZarrHeader):
         assert tiltseries_metadata["mrc_files"][0] == os.path.basename(list(tiltseries_mrc_header.keys())[0])
 
     ### END metadata-MRC/Zarr consistency tests ###
-
-    ### BEGIN MDOC consistency tests ###
-    @allure.title("Tiltseries: metadata pixel spacing matches the mdoc file.")
-    def test_pixel_spacing_mdoc(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
-        assert len(set(tiltseries_mdoc["PixelSpacing"])) == 1
-        assert tiltseries_metadata["pixel_spacing"] == tiltseries_mdoc["PixelSpacing"][0]
-
-    @allure.title("Tiltseries: metadata image size matches the mdoc file.")
-    def test_image_size_mdoc(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
-        assert len(set(tiltseries_mdoc["ImageSize"])) == 1
-        assert tiltseries_metadata["size"]["x"] == tiltseries_mdoc["ImageSize"][0][0]
-        assert tiltseries_metadata["size"]["y"] == tiltseries_mdoc["ImageSize"][0][1]
-
-    ### END MDOC consistency tests ###

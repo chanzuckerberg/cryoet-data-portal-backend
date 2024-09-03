@@ -35,7 +35,7 @@ services:
       - '5432:5432'
   cryoet-api:
     platform: linux/arm64
-    profiles: ["api"]
+    profiles: ["api", "apiv1"]
     image: hasura-graphql
     build:
       context: ./api_server
@@ -57,7 +57,7 @@ services:
       - '8080:8080'
   hasura-console:
     platform: linux/arm64
-    profiles: ["api"]
+    profiles: ["api", "apiv1"]
     image: hasura-graphql
     build:
       context: ./api_server
@@ -83,3 +83,50 @@ services:
         condition: service_healthy
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@db:5432/cryoet
+  cerbos:
+    image: ghcr.io/cerbos/cerbos:0.29.0
+    profiles: ["api", "apiv2"]
+    ports:
+      - "3692:3692"
+      - "3693:3693"
+    volumes:
+      - ./apiv2/cerbos:/var/policies/cerbos/
+    command:
+      ["server", "--config", "/var/policies/cerbos/config.yaml"]
+  graphql-api:
+    image: "graphql-api"
+    profiles: ["api", "apiv2"]
+    build:
+      context: "apiv2"
+      dockerfile: "Dockerfile"
+      args:
+        - BUILDKIT_INLINE_CACHE=1
+    restart: always
+    ports:
+      - "9008:9008"
+      - "9009:9009"
+    environment:
+      - PYTHONPATH=.
+      - CERBOS_URL=http://cerbos:3692
+      - PLATFORMICS_DATABASE_HOST=db
+      - PLATFORMICS_DATABASE_PORT=5432
+      - PLATFORMICS_DATABASE_USER=postgres
+      - PLATFORMICS_DATABASE_PASSWORD=postgres
+      - PLATFORMICS_DATABASE_NAME=cryoetv2
+      - DEFAULT_UPLOAD_BUCKET=local-bucket
+      - DEFAULT_UPLOAD_PROTOCOL=s3
+      - OUTPUT_S3_PREFIX=platformics
+      - BOTO_ENDPOINT_URL=http://motoserver:5566
+      - AWS_REGION=us-west-2
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - DB_ECHO=true
+      # TODO - these are keypairs for testing only! Do not use in prod!!
+      - JWK_PUBLIC_KEY_FILE=/app/etc/public_key.pem
+      - JWK_PRIVATE_KEY_FILE=/app/etc/private_key.pem
+    volumes:
+      - ./apiv2:/app
+    command: ["/usr/local/bin/supervisord", "-c", "/app/etc/supervisord.conf"]
+    depends_on:
+      db:
+        condition: service_healthy

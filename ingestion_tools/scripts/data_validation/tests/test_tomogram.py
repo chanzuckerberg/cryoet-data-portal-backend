@@ -4,16 +4,18 @@ from typing import Dict
 
 import allure
 import pytest
+from data_validation.tests.helper_images import check_photo_valid
+from data_validation.tests.helper_metadata import basic_metadata_check
+from data_validation.tests.helper_mrc import mrc_allure_title
+from data_validation.tests.helper_mrc_zarr import HelperTestMRCZarrHeader
+from data_validation.tests.test_deposition import HelperTestDeposition
 from mrcfile.mrcinterpreter import MrcInterpreter
-from tests.helper_images import check_photo_valid
-from tests.helper_metadata import basic_metadata_check
-from tests.helper_mrc import mrc_allure_title
-from tests.helper_mrc_zarr import HelperTestMRCZarrHeader
-from tests.test_deposition import HelperTestDeposition
 
 from common.fs import FileSystemApi
 
 # values are based on ingestion_tools/scripts/importers/key_image.py
+# (100 pixels is the min width, if it's 4:3 then rotated by key_image.py)
+# and frontend aspect ratio (4:3 is used for image display)
 PHOTO_ASPECT_RATIO = 4 / 3
 MIN_THUMBNAIL_WIDTH = 100
 MIN_SNAPSHOT_WIDTH = 512 * 3 / 4  # account for 4:3 aspect ratio
@@ -22,6 +24,11 @@ MIN_SNAPSHOT_WIDTH = 512 * 3 / 4  # account for 4:3 aspect ratio
 @pytest.mark.tomogram
 @pytest.mark.parametrize("dataset, run_name, voxel_spacing", pytest.dataset_run_spacing_combinations, scope="session")
 class TestTomogram(HelperTestMRCZarrHeader):
+    def test_tomogram_metadata(self, canonical_tomogram_metadata: Dict):
+        """A tomogram metadata sanity check."""
+        assert canonical_tomogram_metadata["deposition_id"]
+        assert isinstance(canonical_tomogram_metadata["authors"], list)
+        assert all(isinstance(authors, dict) for authors in canonical_tomogram_metadata["authors"])
 
     @pytest.fixture(autouse=True)
     def set_helper_test_mrc_zarr_header_class_variables(

@@ -1,12 +1,14 @@
 import json
 import os
 import os.path
+from abc import abstractmethod
 from collections import defaultdict
 from functools import partial
-from typing import TYPE_CHECKING, Any, TypedDict
+from typing import TYPE_CHECKING, Any
 
 import ndjson
 
+from common import mesh_converter as mc
 from common import point_converter as pc
 from common.config import DepositionImportConfig
 from common.finders import BaseFinder, DepositionObjectImporterFactory, SourceGlobFinder, SourceMultiGlobFinder
@@ -19,30 +21,6 @@ if TYPE_CHECKING:
     from importers.voxel_spacing import VoxelSpacingImporter
 else:
     VoxelSpacingImporter = "VoxelSpacingImporter"
-
-
-class AnnotationObject(TypedDict):
-    name: str
-    id: str
-    description: str
-    state: str
-
-
-class AnnotationSource(TypedDict):
-    columns: str
-    shape: str
-    file_format: str
-    delimiter: str | None
-    binning: int | None
-    order: str | None
-    filter_value: str | None
-    is_visualization_default: bool | None
-    mask_label: int | None
-
-
-class AnnotationMap(TypedDict):
-    metadata: dict[str, Any]
-    sources: list[AnnotationSource]
 
 
 # This class is basically a global var that lets us cache metadata and identifiers for annotations,
@@ -109,10 +87,11 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
     def __init__(self, source: dict[str, Any]):
         super().__init__(source)
         # flatten self.source additional layer that specifies the type of annotation file it is
-        if not (len(self.source.keys()) == 1):
+        clean_source = {k: v for k, v in self.source.items() if k not in {"parent_filters", "exclude"}}
+        if not (len(clean_source.keys()) == 1):
             raise ValueError("Incorrect annotation source format")
-        source_file = list(self.source.values())[0]
-        source_file["shape"] = list(self.source.keys())[0]
+        source_file = list(clean_source.values())[0]
+        source_file["shape"] = list(clean_source.keys())[0]
         self.source = source_file
 
     def load(
@@ -134,7 +113,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
         path: str,
         parents: dict[str, Any] | None,
     ):
-        source_args = {k: v for k, v in self.source.items() if k not in ["shape", "glob_string", "glob_strings"]}
+        source_args = {k: v for k, v in self.source.items() if k not in {"shape", "glob_string", "glob_strings"}}
         instance_args = {
             "identifier": AnnotationIdentifierHelper.get_identifier(config, metadata, parents),
             "config": config,
@@ -156,6 +135,8 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             anno = PointAnnotation(**instance_args)
         if shape == "InstanceSegmentation":
             anno = InstanceSegmentationAnnotation(**instance_args)
+        if shape == "TriangularMesh":
+            anno = TriangularMeshAnnotation(**instance_args)
         if not anno:
             raise NotImplementedError(f"Unknown shape {shape}")
         if anno.is_valid():
@@ -208,8 +189,15 @@ class AnnotationImporter(BaseImporter):
         for source in anno_files:
             files.extend(source.get_metadata(path))
 
-        self.local_metadata["object_count"] = max([anno.get_object_count(output_dir) for anno in anno_files], default=0)
-        self.local_metadata["files"] = files
+        try:
+            self.local_metadata["object_count"] = max(
+                [anno.get_object_count(output_dir) for anno in anno_files],
+                default=0,
+            )
+            self.local_metadata["files"] = files
+        except FileNotFoundError:
+            print("Skipping metadata write since not all files have been written yet")
+            return
 
         self.written_metadata_files.append(filename)
         self.annotation_metadata.write_metadata(filename, self.local_metadata)
@@ -237,15 +225,24 @@ class BaseAnnotationSource(AnnotationImporter):
 
         super().__init__(*args, **kwargs)
 
+    @abstractmethod
     def convert(self, output_prefix: str):
+        # To be overridden by subclasses to handle the import of the annotation.
         pass
 
     def get_object_count(self, output_prefix: str) -> int:
+        # To be overridden by subclasses where necessary to return the number of objects in the annotation.
         return 0
 
     def is_valid(self, *args, **kwargs) -> bool:
-        # To be overridden by subclasses to communicate whether this source contains valid information for this run.
+        # To be overridden by subclasses when additional check needed to validate if a source contains valid information
+        # for this run.
         return True
+
+    @abstractmethod
+    def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
+        # To be overridden by subclasses to return the metadata for the files property of the metadata.
+        pass
 
     def get_output_filename(self, output_prefix: str, extension: str | None = None) -> str:
         filename = f"{output_prefix}_{self.shape.lower()}"
@@ -332,9 +329,7 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
 
 
 class AbstractPointAnnotation(BaseAnnotationSource):
-    shape = "Point"
     map_functions = {}
-    valid_file_formats = []
 
     def __init__(
         self,
@@ -349,6 +344,7 @@ class AbstractPointAnnotation(BaseAnnotationSource):
         super().__init__(*args, **kwargs)
 
     def get_converter_args(self):
+        # To be overridden by subclasses to return the arguments to pass to the point converter function.
         return {}
 
     def load(
@@ -446,7 +442,7 @@ class OrientedPointAnnotation(AbstractPointAnnotation):
 
     binning: int
     order: str | None
-    filter_value: str
+    filter_value: str | None
 
     def __init__(
         self,
@@ -483,3 +479,48 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
     def get_object_count(self, output_prefix) -> int:
         # In case of instance segmentation, we need to count the unique IDs (i.e. number of instances)
         return len(self.get_distinct_ids(output_prefix))
+
+
+class TriangularMeshAnnotation(BaseAnnotationSource):
+    """Triangular Meshes are converted to glb format"""
+
+    shape = "TriangularMesh"
+    map_functions = {
+        "obj": mc.from_generic,
+        "stl": mc.from_generic,
+        "vtk": mc.from_vtk,
+        "glb": mc.from_generic,
+    }
+    valid_file_formats = list(map_functions.keys())
+    output_format: str = "glb"
+    scale_factor: float
+
+    def __init__(
+        self,
+        scale_factor: float = 1.0,
+        *args,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        self.scale_factor = scale_factor
+
+    def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
+        metadata = [
+            {
+                "format": self.output_format,
+                "path": self.get_output_filename(output_prefix, self.output_format),
+                "shape": self.shape,
+                "is_visualization_default": self.is_visualization_default,
+            },
+        ]
+        return metadata
+
+    def convert(self, output_prefix: str):
+        mesh_file = self.config.fs.localreadable(self.path)
+        output_file_name = self.get_output_filename(output_prefix, self.output_format)
+        tmp_path = self.config.fs.localwritable(output_file_name)
+        self.map_functions[self.file_format](mesh_file, tmp_path, scale_factor=self.scale_factor)
+        self.config.fs.push(tmp_path)
+
+    def get_object_count(self, output_prefix: str) -> int:
+        return 1
