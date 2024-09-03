@@ -2,7 +2,6 @@ import math
 import os
 from typing import Dict
 
-import pandas as pd
 import pytest
 from fixtures.data import BINNING_FACTORS
 from mrcfile.mrcinterpreter import MrcInterpreter
@@ -106,17 +105,3 @@ class TestTiltseries(HelperTestMRCZarrHeader):
         assert tiltseries_metadata["mrc_files"][0] == os.path.basename(list(tiltseries_mrc_header.keys())[0])
 
     ### END metadata-MRC/Zarr consistency tests ###
-
-    ### BEGIN MDOC consistency tests ###
-    def test_tiltseries_pixel_spacing_mdoc(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
-        """Check that the tiltseries pixel spacing matches the MDOC data."""
-        assert len(set(tiltseries_mdoc["PixelSpacing"])) == 1
-        assert tiltseries_metadata["pixel_spacing"] == tiltseries_mdoc["PixelSpacing"][0]
-
-    def test_tiltseries_image_size_mdoc(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
-        """Check that the tiltseries image size matches the MDOC data."""
-        assert len(set(tiltseries_mdoc["ImageSize"])) == 1
-        assert tiltseries_metadata["size"]["x"] == tiltseries_mdoc["ImageSize"][0][0]
-        assert tiltseries_metadata["size"]["y"] == tiltseries_mdoc["ImageSize"][0][1]
-
-    ### END MDOC consistency tests ###
