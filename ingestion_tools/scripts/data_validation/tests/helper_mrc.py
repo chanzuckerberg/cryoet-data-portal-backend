@@ -5,6 +5,8 @@ import pytest
 from mrcfile import utils
 from mrcfile.mrcinterpreter import MrcInterpreter
 
+SPACING_TOLERANCE = 0.001
+
 
 class HelperTestMRCHeader:
     """
@@ -19,6 +21,8 @@ class HelperTestMRCHeader:
     map_id: bytes = b"MAP "
     spacegroup: int = None
     mrc_headers: Dict[str, MrcInterpreter] = None
+    spacing: float = None
+    skip_z_axis_checks: bool = False
 
     def mrc_header_helper(
         self,
@@ -156,7 +160,7 @@ class HelperTestMRCHeader:
             # Unit cell z-size is 1
             assert header.mx == header.nx
             assert header.my == header.ny
-            assert header.mz == header.nz
+            assert header.mz == 1 if self.skip_z_axis_checks else header.mz == header.nz
 
             # Check that the unit cell angles specify cartesian system
             assert header.cellb.alpha == 90
@@ -188,3 +192,17 @@ class HelperTestMRCHeader:
             assert header.nzstart == 0
 
         self.mrc_header_helper(check_subimage_start)
+
+    ### BEGIN Voxel-spacing tests ###
+    def test_mrc_spacing(self):
+        """Check that the voxel / pixel spacing is consistent with the mrc header."""
+
+        def check_spacing(_header, interpreter, _mrc_filename):
+            del _header, _mrc_filename
+            assert interpreter.voxel_size["x"] == pytest.approx(self.spacing, abs=SPACING_TOLERANCE)
+            assert interpreter.voxel_size["y"] == pytest.approx(self.spacing, abs=SPACING_TOLERANCE)
+            assert interpreter.voxel_size["z"] == pytest.approx(self.spacing, abs=SPACING_TOLERANCE)
+
+        self.mrc_header_helper(check_spacing)
+
+    ### END Voxel-spacing tests ###

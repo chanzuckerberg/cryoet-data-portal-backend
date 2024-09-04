@@ -5,15 +5,16 @@ key_images testing is also done here (since key_images are part of the tomogram 
 from typing import Dict
 
 import pytest
-from tests.helper_images import check_photo_valid
-from tests.test_deposition import HelperTestDeposition
+from data_validation.tests.helper_images import check_photo_valid
+from data_validation.tests.test_deposition import HelperTestDeposition
 
 from common.fs import FileSystemApi
 
-# values are based on ingestion_tools/scripts/importers/key_image.py (134 pixels is the min width)
+# values are based on ingestion_tools/scripts/importers/key_image.py
+# (100 pixels is the min width, if it's 4:3 then rotated by key_image.py)
 # and frontend aspect ratio (4:3 is used for image display)
 PHOTO_ASPECT_RATIO = 4 / 3
-MIN_THUMBNAIL_WIDTH = 134
+MIN_THUMBNAIL_WIDTH = 100
 MIN_SNAPSHOT_WIDTH = 512 * 3 / 4  # account for 4:3 aspect ratio
 
 

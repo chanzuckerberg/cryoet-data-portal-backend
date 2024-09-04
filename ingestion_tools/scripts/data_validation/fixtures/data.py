@@ -22,7 +22,7 @@ from common.fs import FileSystemApi
 # Helper functions
 # ==================================================================================================
 
-BINNING_SCALES = [0, 1, 2]
+BINNING_FACTORS = [0, 1, 2]
 
 # block sizes are experimentally tested to be the fastest
 MRC_HEADER_BLOCK_SIZE = 2 * 2**10
@@ -58,7 +58,7 @@ def get_zarr_headers(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
         pytest.fail(f"Expected zarr children: {expected_fsstore_children}, Actual zarr children: {fsstore_children}")
 
     zarrays = {}
-    for binning in BINNING_SCALES:
+    for binning in BINNING_FACTORS:
         with fs.open(os.path.join(zarrfile, str(binning), ".zarray"), "r") as f:
             zarrays[binning] = json.load(f)
     with fs.open(os.path.join(zarrfile, ".zattrs"), "r") as f:
@@ -111,6 +111,18 @@ def dataset_metadata(dataset_metadata_file: str, filesystem: FileSystemApi) -> D
 
 
 # ==================================================================================================
+# Run fixtures
+# ==================================================================================================
+
+
+@pytest.fixture(scope="session")
+def run_metadata(run_meta_file: str, filesystem: FileSystemApi) -> Dict:
+    """Load the run metadata."""
+    with filesystem.open(run_meta_file, "r") as f:
+        return json.load(f)
+
+
+# ==================================================================================================
 # Frame fixtures
 # ==================================================================================================
 
@@ -139,14 +151,21 @@ def gain_headers(
 
 
 # ==================================================================================================
-# Tiltseries fixtures
+# Tiltseries & RawTilt / Tilt fixtures
 # ==================================================================================================
 
 
 @pytest.fixture(scope="session")
 def tiltseries_mrc_header(tiltseries_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for a tilt series."""
-    return get_mrc_header(tiltseries_mrc_file, filesystem)
+    return {tiltseries_mrc_file: get_mrc_header(tiltseries_mrc_file, filesystem)}
+
+
+@pytest.fixture(scope="session")
+def tiltseries_zarr_header(tiltseries_zarr_file: str, filesystem: FileSystemApi) -> Dict[str, Dict[str, Dict]]:
+    """Get the zattrs and zarray data for a zarr tilt series.
+    Dictionary structure: headers = {tiltseries_a_filename: {"zattrs": Dict, "zarrays": Dict}"""
+    return {tiltseries_zarr_file: get_zarr_headers(tiltseries_zarr_file, filesystem)}
 
 
 @pytest.fixture(scope="session")
