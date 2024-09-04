@@ -84,10 +84,12 @@ Ensure you have the allure command line tool installed (e.g. `brew install allur
 To run (from this directory):
 
 ```
-python run_tests.py --bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --datasets [DATASET_ID] --multiprocessing/--no-multiprocessing --save-history/--no-save-history --extra-args [EXTRA_ARGS]
+python run_tests.py --local-dir [LOCAL_DIR] --input-bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --datasets [DATASET_ID] --multiprocessing/--no-multiprocessing --save-history/--no-save-history --extra-args [EXTRA_ARGS]
 
---bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
---output-bucket: The S3 bucket where the Allure report will be uploaded. Default: `cryoetportal-rawdatasets-dev`
+--local-dir: The local directory to store the results. Default: `./results`
+--input-bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
+--output-bucket: The S3 bucket where the Allure report will be uploaded. Default: `cryoetportal-output-test`
+--output-dir: The remote s3 directory to store the results. Default: `data_validation`
 --datasets: A comma-separated list of dataset IDs to validate. If not provided, all datasets will be validated.
 --multiprocessing/--no-multiprocessing: Run tests in parallel with multiple workers (pytest-xdist). Default: `--multiprocessing`
 --history/--no-history: Save the history to S3 and retrieve the history of the report. If testing multiple datasets, saving history will result in longer execution time (each dataset has to be an individual `pytest` call). Default: `--history`
