@@ -254,6 +254,7 @@ depositions:
       cryo-plasmaFIB milling
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:

@@ -145,6 +145,7 @@ depositions:
     deposition_title: Membrane-anchored Hydrogen-dependent CO2 reductase nanowires in T. kivui
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:

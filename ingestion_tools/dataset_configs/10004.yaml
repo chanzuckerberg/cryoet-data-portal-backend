@@ -138,6 +138,7 @@ depositions:
       \ Anatomy of Whole Organisms"
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:

@@ -415,6 +415,7 @@ depositions:
     deposition_title: DeePiCt Training and Evaluation Datasets
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:

@@ -157,6 +157,7 @@ depositions:
       deposition_title: CZ Imaging Institute simulated data
       deposition_types:
         - dataset
+        - annotation
     sources:
       - literal:
           value:

@@ -129,6 +129,7 @@ depositions:
     deposition_title: Surface morphometrics of organellar membranes
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:
