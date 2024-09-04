@@ -14,6 +14,7 @@ from importers.annotation import (
     SegmentationMaskAnnotation,
     SemanticSegmentationMaskAnnotation,
     TriangularMeshAnnotation,
+    TriangularMeshAnnotationGroup,
 )
 from importers.dataset import DatasetImporter
 from importers.deposition import DepositionImporter
@@ -1240,6 +1241,74 @@ def test_ingest_triangular_mesh(
         parents={"tomogram": tomo_importer_local, **tomo_importer_local.parents},
         file_format=file_format,
         identifier=100,
+    )
+    anno.import_item()
+    anno.import_metadata()
+
+    # Assert
+    # verify local_metadata
+    path = "dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0_triangularmesh.glb"
+    expected_local_metadata = {
+        "object_count": 1,
+        "files": [
+            {
+                "format": "glb",
+                "path": path,
+                "shape": "TriangularMesh",
+                "is_visualization_default": False,
+            },
+        ],
+    }
+    assert anno.local_metadata == expected_local_metadata
+
+    # load the new mesh file
+    actual_mesh = trimesh.load(anno.get_output_filename(anno.get_output_path()) + ".glb", force="mesh")
+    actual_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(actual_mesh))
+    # load expected mesh
+    expected_mesh = trimesh.load(os.path.join(fixtures_dir, "annotations/triangular_mesh.glb"), force="mesh")
+    expected_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(expected_mesh))
+
+    assert actual_hash == expected_hash
+
+
+def test_ingest_triangular_mesh_hff(
+    tomo_importer_local: TomogramImporter,
+    deposition_config_local: DepositionImportConfig,
+    local_test_data_dir: str,
+):
+    # Arrange
+    glob_string = "annotations/triangular_mesh.hff"
+    file_format = "hff"
+    mesh_name = "special_name"
+    deposition_config_local._set_object_configs(
+        "annotation",
+        [
+            {
+                "metadata": default_anno_metadata,
+                "sources": [
+                    {
+                        "TriangularMeshGroup": {
+                            "file_format": file_format,
+                            "glob_string": glob_string,
+                            "is_visualization_default": False,
+                            "mesh_name": mesh_name,
+                        },
+                    },
+                ],
+            },
+        ],
+    )
+    fixtures_dir = os.path.join(local_test_data_dir, "fixtures")
+
+    # Action
+    anno = TriangularMeshAnnotationGroup(
+        config=deposition_config_local,
+        metadata=default_anno_metadata,
+        path=os.path.join(fixtures_dir, glob_string),
+        parents={"tomogram": tomo_importer_local, **tomo_importer_local.parents},
+        file_format=file_format,
+        identifier=100,
+        mesh_name=mesh_name,
     )
     anno.import_item()
     anno.import_metadata()

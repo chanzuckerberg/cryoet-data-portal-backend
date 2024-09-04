@@ -52,6 +52,7 @@ tifffile = "^2024.8.10"
 trimesh = "^4.4.4"
 vtk = "^9.3.1"
 numpy = "^1.22.0"
+h5py = "^3.11.0"
 
 [tool.black]
 line-length = 120
