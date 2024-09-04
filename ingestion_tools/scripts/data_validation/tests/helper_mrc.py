@@ -220,7 +220,9 @@ class HelperTestMRCHeader:
 
             # volume size + extended header size + header size (1024 bytes)
             expected_bytes = (
-                header.nx * header.ny * header.nz * utils.dtype_from_mode(header.mode).itemsize + header.nsymbt + 1024
+                int(header.nx) * int(header.ny) * int(header.nz) * utils.dtype_from_mode(header.mode).itemsize
+                + int(header.nsymbt)
+                + 1024
             )
             actual_bytes = filesystem.s3fs.size(mrc_filename)
             if actual_bytes != expected_bytes:

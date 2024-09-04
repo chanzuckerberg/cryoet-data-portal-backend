@@ -2,7 +2,7 @@ from typing import Dict
 
 import allure
 import pytest
-from tests.test_deposition import HelperTestDeposition
+from data_validation.tests.test_deposition import HelperTestDeposition
 
 from common.fs import FileSystemApi
 
