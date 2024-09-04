@@ -129,7 +129,7 @@ def pytest_configure(config: pytest.Config) -> None:
         "tilt_angles: Tests concerning the tilt angle (spans multiple entities: .tlt, .rawtlt, .mdoc, tiltseries_metadata.json, frames).",
     )
     config.addinivalue_line("markers", "tomogram: Tests concerning the tomogram.")
-    config.addinivalue_line("markers", "voxelspacing: Tests concerning the voxelspacing.")
+    config.addinivalue_line("markers", "voxel_spacing: Tests concerning voxel spacings.")
     config.addinivalue_line("markers", "metadata: Tests concerning any metadata.")
 
 
