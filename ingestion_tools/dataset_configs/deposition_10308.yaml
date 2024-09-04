@@ -6,6 +6,16 @@ annotations:
       id: GO:0033172
       name: gas vesicle shell
     annotation_publications: 10.1101/2024.01.05.574336
+    method_links:
+      - link: https://github.com/teamtomo/membrain-seg
+        link_type: source_code
+        custom_name: membrain-seg on GitHub
+      - link: https://pypi.org/project/membrain-seg/
+        link_type: other
+        custom_name: membrain-seg on PyPI
+      - link: https://github.com/uermel/remotebrain
+        link_type: source_code
+        custom_name: remotebrain on GitHub
     annotation_software: membrain-seg 0.0.1
     authors: &id001
     - ORCID: 0000-0003-4685-037X

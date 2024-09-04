@@ -6,6 +6,14 @@ annotations:
       id: GO:0016020
       name: membrane
     annotation_software: TARDIS
+    annotation_publications: 10.1093/micmic/ozad067.485
+    method_links:
+      - link: https://github.com/SMLC-NYSBC/TARDIS
+        link_type: source_code
+        custom_name: TARDIS on GitHub
+      - link: https://smlc-nysbc.github.io/TARDIS/
+        link_type: documentation
+        custom_name: TARDIS documentation
     authors: &id001
     - name: Robert Kiewisz
       primary_author_status: true
