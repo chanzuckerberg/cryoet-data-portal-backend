@@ -645,7 +645,7 @@ classes:
     is_a: AnnotationSourceFile
     aliases:
       - TriangularMeshGroup
-    description: File and sourcing data for a triangular mesh annotation. Annotation that identifies an object.
+    description: File and sourcing data containing one or more triangular mesh annotations.
     attributes:
       scale_factor:
         exact_mappings:
