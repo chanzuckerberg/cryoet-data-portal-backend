@@ -10,7 +10,7 @@ sys.path.append(os.path.join(CURRENT_DIR, ".."))
 from common.fs import FileSystemApi, S3Filesystem  # noqa: E402
 
 STAGING_BUCKET = "cryoet-data-portal-staging"
-OUTPUT_BUCKET = "cryoetportal-rawdatasets-dev"
+OUTPUT_BUCKET = "cryoetportal-output-test"
 
 
 def get_history(tar_report: str, destination: str, fs: FileSystemApi):
@@ -22,7 +22,8 @@ def get_history(tar_report: str, destination: str, fs: FileSystemApi):
 
 
 @click.command()
-@click.argument("local-dst", default="./results", type=str)  # Local directory to store results.
+@click.option("--local-dst", default="./results", type=str, help="Local directory to store the results.")
+@click.option("--output-dst", default="data_validation", type=str, help="Output directory in the S3 bucket.")
 @click.option("--bucket", default=STAGING_BUCKET, type=str, help="S3 bucket to search for datasets.")
 @click.option("--output-bucket", default=OUTPUT_BUCKET, type=str, help="S3 bucket to store the report.")
 @click.option("--datasets", default="*", type=str, help="Comma separated list of dataset IDs.")
@@ -47,6 +48,7 @@ def get_history(tar_report: str, destination: str, fs: FileSystemApi):
 )
 def main(
     local_dst: str,
+    output_dst: str,
     bucket: str,
     output_bucket: str,
     datasets: str | None,
@@ -88,7 +90,7 @@ def main(
         os.makedirs(localdir_rep, exist_ok=True)
 
         # Get the history from S3 (Must do this before generating the report)
-        remote_dataset_dir = f"{output_bucket}/data_validation/{dataset}"
+        remote_dataset_dir = f"{output_bucket}/{output_dst}/{dataset}"
         remote_dataset_tar = f"{remote_dataset_dir}/{dataset}.tar.gz"
         fs.makedirs(remote_dataset_dir)
 
