@@ -84,7 +84,7 @@ datasets:
     cell_type:
       id: CL:0000019
       name: sperm
-    cross_references:
+    cross_references: &dataset_cross_references
       publications: doi:10.1101/2022.09.28.510016
     dataset_description: Cryo-electron tomograms of mouse sperm flagella from FIB-SEM
       lamella.
@@ -119,6 +119,7 @@ depositions:
       lamella, including annotations of microtubule doublets (48 nm and 96 nm repeat).
     deposition_identifier: 10005
     deposition_title: Microtubule doublet from mouse sperm
+    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
   sources:

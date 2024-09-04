@@ -234,7 +234,7 @@ datasets:
       name: cilium
     cell_strain:
       name: CC-3994
-    cross_references:
+    cross_references: &dataset_cross_references
       publications: doi:10.1126/science.abm6704
       related_database_entries: EMPIAR-11078
     dataset_description: Cryo-electron tomograms of Chlamydomonas from FIB-SEM lamella.
@@ -274,6 +274,7 @@ depositions:
       including annotations of the intraflagellar transport machinery, refined using STOPGAP.
     deposition_identifier: 10009
     deposition_title: Architecture of the Chlamydomonas reinhardtii ciliary base
+    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
   sources:
