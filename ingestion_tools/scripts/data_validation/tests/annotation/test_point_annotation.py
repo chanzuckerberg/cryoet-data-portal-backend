@@ -5,7 +5,6 @@ from data_validation.tests.annotation.helper_point import contained_in_tomo, poi
 
 
 @pytest.mark.annotation
-@pytest.mark.metadata
 @pytest.mark.parametrize("run_name, voxel_spacing", pytest.run_spacing_combinations, scope="session")
 class TestPointAnnotations:
     ### BEGIN Self-consistency tests ###

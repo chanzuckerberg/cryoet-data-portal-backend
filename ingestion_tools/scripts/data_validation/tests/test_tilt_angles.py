@@ -9,7 +9,6 @@ ANGLE_TOLERANCE = 0.05
 
 
 @pytest.mark.tilt_angles
-@pytest.mark.metadata
 @pytest.mark.parametrize("run_name", pytest.run_name, scope="session")
 class TestTiltAngles:
     """

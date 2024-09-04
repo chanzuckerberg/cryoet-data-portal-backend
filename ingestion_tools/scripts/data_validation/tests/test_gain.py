@@ -11,7 +11,6 @@ PERMITTED_GAIN_EXTENSIONS = PERMITTED_FRAME_EXTENSIONS + [".gain"]
 
 
 @pytest.mark.gain
-@pytest.mark.metadata
 @pytest.mark.parametrize("run_name", pytest.run_name, scope="session")
 class TestGain(HelperTestMRCHeader):
     @pytest.fixture(autouse=True)
