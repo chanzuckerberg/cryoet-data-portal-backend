@@ -392,7 +392,7 @@ datasets:
     cell_strain:
       id: NCBITaxon:284812
       name: Schizosaccharomyces pombe 972h-
-    cross_references:
+    cross_references: &dataset_cross_references
       publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
       related_database_entries: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420
@@ -431,6 +431,7 @@ depositions:
       acquisition conditions."
     deposition_identifier: 10000
     deposition_title: DeePiCt Training and Evaluation Datasets
+    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
   sources:
