@@ -86,7 +86,7 @@ To run (from this directory):
 ```
 python run_tests.py --local-dir [LOCAL_DIR] --input-bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --datasets [DATASET_ID] --multiprocessing/--no-multiprocessing --save-history/--no-save-history --extra-args [EXTRA_ARGS]
 
---local-dir: The local directory to store the results. Default: `./results`
+--local-dir: Local directory to store the results. Note that if this folder is in the data_validation folder (as is the default value), it should be added to the pytest call via `--ignore=[FOLDER_NAME]` to prevent pytest from wasting time trying to discover tests (we default ignore ./results in `pytest.ini`.) Default: `./results`
 --input-bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
 --output-bucket: The S3 bucket where the Allure report will be uploaded. Default: `cryoetportal-output-test`
 --output-dir: The remote s3 directory to store the results. Default: `data_validation`

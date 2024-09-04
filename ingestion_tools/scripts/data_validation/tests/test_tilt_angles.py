@@ -126,9 +126,10 @@ class TestTiltAngles:
     def test_tilt_tiltseries_range(self, tiltseries_tilt: pd.DataFrame, tiltseries_metadata: Dict):
         errors = self.helper_angles_injection_errors(
             tiltseries_tilt["TiltAngle"].to_list(),
+            # add tilt_step to max because arange is end value exclusive
             np.arange(
                 tiltseries_metadata["tilt_range"]["min"],
-                tiltseries_metadata["tilt_range"]["max"],
+                tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
                 tiltseries_metadata["tilt_step"],
             ).tolist(),
             "tilt file",
@@ -173,9 +174,10 @@ class TestTiltAngles:
     def test_raw_tilt_tiltseries_range(self, tiltseries_raw_tilt: pd.DataFrame, tiltseries_metadata: Dict):
         errors = self.helper_angles_injection_errors(
             tiltseries_raw_tilt["TiltAngle"].to_list(),
+            # add tilt_step to max because arange is end value exclusive
             np.arange(
                 tiltseries_metadata["tilt_range"]["min"],
-                tiltseries_metadata["tilt_range"]["max"],
+                tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
                 tiltseries_metadata["tilt_step"],
             ).tolist(),
             "raw tilt file",
@@ -243,9 +245,10 @@ class TestTiltAngles:
     def test_mdoc_tiltseries_range(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
         errors = self.helper_angles_injection_errors(
             tiltseries_mdoc["TiltAngle"].to_list(),
+            # add tilt_step to max because arange is end value exclusive
             np.arange(
                 tiltseries_metadata["tilt_range"]["min"],
-                tiltseries_metadata["tilt_range"]["max"],
+                tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
                 tiltseries_metadata["tilt_step"],
             ).tolist(),
             "mdoc file",

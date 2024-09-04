@@ -17,7 +17,14 @@ def get_history(s3_report: str, destination: str, fs: S3Filesystem):
 
 
 @click.command()
-@click.option("--local-dir", default="./results", type=str, help="Local directory to store the results.")
+@click.option(
+    "--local-dir",
+    default="./results",
+    type=str,
+    help="Local directory to store the results. Note that if this folder is in the data_validation folder (as \
+      is the default value), it should be added to the pytest call via `--ignore=[FOLDER_NAME]` to prevent pytest from \
+      wasting time trying to discover tests (we default ignore ./results in `pytest.ini`.)",
+)
 @click.option("--input-bucket", default=STAGING_BUCKET, type=str, help="S3 bucket to search for datasets.")
 @click.option("--output-bucket", default=OUTPUT_BUCKET, type=str, help="S3 bucket to store the report.")
 @click.option("--output-dir", default="data_validation", type=str, help="Output directory in the S3 bucket.")
@@ -52,7 +59,6 @@ def main(
     extra_args: str | None,
 ):
     fs: S3Filesystem = FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
-    now = datetime.datetime.now().isoformat(sep="_", timespec="seconds").replace(":", "-")
 
     if datasets is None:
         datasets = fs.glob(f"s3://{input_bucket}/*")
@@ -69,6 +75,8 @@ def main(
     extra_args = extra_args if extra_args else ""
 
     for dataset in datasets:
+        now = datetime.datetime.now().isoformat(sep="_", timespec="seconds").replace(":", "-")
+
         # Accumulate test results here
         localdir_raw = f"{local_dir}/{dataset}_raw/{now}"
         # Generate report here
