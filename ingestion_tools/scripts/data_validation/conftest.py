@@ -124,6 +124,10 @@ def pytest_configure(config: pytest.Config) -> None:
     config.addinivalue_line("markers", "gain: Tests concerning the gain files.")
     config.addinivalue_line("markers", "run: Tests concerning the runs.")
     config.addinivalue_line("markers", "tiltseries: Tests concerning the tiltseries.")
+    config.addinivalue_line(
+        "markers",
+        "tilt_angles: Tests concerning the tilt angle (spans multiple entities: .tlt, .rawtlt, .mdoc, tiltseries_metadata.json, frames).",
+    )
     config.addinivalue_line("markers", "tomogram: Tests concerning the tomogram.")
     config.addinivalue_line("markers", "voxelspacing: Tests concerning the voxelspacing.")
     config.addinivalue_line("markers", "metadata: Tests concerning any metadata.")
