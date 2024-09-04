@@ -1,7 +1,9 @@
 import re
+from collections import defaultdict
 from typing import Any, Optional
 
 import click
+from importers.alignment import AlignmentImporter
 from importers.annotation import AnnotationImporter
 from importers.collection_metadata import CollectionMetadataImporter
 from importers.dataset import DatasetImporter
@@ -23,7 +25,9 @@ from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
 
 IMPORTERS = [
+    AlignmentImporter,
     AnnotationImporter,
+    AnnotationVisualizationImporter,
     CollectionMetadataImporter,
     DatasetKeyPhotoImporter,
     DatasetImporter,
@@ -39,7 +43,6 @@ IMPORTERS = [
     TiltSeriesImporter,
     TomogramImporter,
     VoxelSpacingImporter,
-    AnnotationVisualizationImporter,
 ]
 IMPORTER_DICT = {cls.type_key: cls for cls in IMPORTERS}
 # NOTE - ordering of keys is important here, the importer will respect it!
@@ -47,7 +50,13 @@ IMPORTER_DEP_TREE = {
     DepositionImporter: {
         DatasetImporter: {
             RunImporter: {
+                GainImporter: {},
+                FrameImporter: {},
+                CollectionMetadataImporter: {},
+                RawTiltImporter: {},
+                TiltSeriesImporter: {},
                 VoxelSpacingImporter: {
+                    AlignmentImporter: {},
                     AnnotationImporter: {
                         AnnotationVisualizationImporter: {},
                     },
@@ -56,11 +65,6 @@ IMPORTER_DEP_TREE = {
                         VisualizationConfigImporter: {},
                     },
                 },
-                GainImporter: {},
-                FrameImporter: {},
-                TiltSeriesImporter: {},
-                RawTiltImporter: {},
-                CollectionMetadataImporter: {},
             },
             DatasetKeyPhotoImporter: {},
         },
@@ -101,8 +105,17 @@ def flatten_dependency_tree(tree) -> dict[type, set[type]]:
     return treedict
 
 
-def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, parents: Optional[dict[str, Any]] = None):
+def do_import(
+    config,
+    tree,
+    to_import,
+    metadata_import,
+    to_iterate,
+    kwargs,
+    parents: Optional[dict[str, Any]] = None,
+):
     parents = dict(parents) if parents else {}
+    siblings = defaultdict(list)
     for import_class, child_import_classes in tree.items():
         if import_class not in to_iterate:
             continue
@@ -123,13 +136,26 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
             if filter_patterns and not list(filter(lambda x: x.match(item.name), filter_patterns)):
                 print(f"Skipping {item.name}..")
                 continue
+            print(
+                f"Importing {import_class.type_key} {item.name} parents: {parents.keys()} siblings: {siblings.keys()}",
+            )
             if import_class in to_import:
                 print(f"Importing {import_class.type_key} {item.name}")
                 item.import_item()
+
+            siblings[import_class.type_key].append(item)
             if child_import_classes:
                 sub_parents = {import_class.type_key: item}
                 sub_parents.update(parents)
-                do_import(config, child_import_classes, to_import, metadata_import, to_iterate, kwargs, sub_parents)
+                do_import(
+                    config,
+                    child_import_classes,
+                    to_import,
+                    metadata_import,
+                    to_iterate,
+                    kwargs,
+                    sub_parents,
+                )
             # Not all importers have metadata, but we don't expose the option for it unless it's supported
             if import_class in metadata_import and item.has_metadata:
                 print(f"Importing {import_class.type_key} metadata")
