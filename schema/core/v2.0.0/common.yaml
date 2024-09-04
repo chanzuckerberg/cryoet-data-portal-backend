@@ -451,7 +451,6 @@ slots:
     range: integer
     minimum_value: 1
     maximum_value: 5
-    required: true
     description: Author assessment of tilt series quality within the dataset (1-5, 5 is best)
   tiltseries_tilt_step:
     range: float

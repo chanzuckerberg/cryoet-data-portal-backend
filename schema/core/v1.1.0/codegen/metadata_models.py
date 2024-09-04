@@ -1887,8 +1887,8 @@ class TiltSeries(ConfiguredBaseModel):
         description="""The range of tilt angles in the tilt series.""",
         json_schema_extra={"linkml_meta": {"alias": "tilt_range", "domain_of": ["TiltSeries"]}},
     )
-    tilt_series_quality: Union[int, str] = Field(
-        ...,
+    tilt_series_quality: Optional[Union[int, str]] = Field(
+        None,
         description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""",
         ge=1,
         le=5,
@@ -1903,7 +1903,6 @@ class TiltSeries(ConfiguredBaseModel):
                         "maximum_value": 5,
                         "minimum_value": 1,
                         "range": "integer",
-                        "required": True,
                     },
                     {"range": "IntegerFormattedString"},
                 ],

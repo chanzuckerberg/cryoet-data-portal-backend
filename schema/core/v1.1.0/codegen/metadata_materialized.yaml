@@ -2101,7 +2101,6 @@ classes:
         domain_of:
         - TiltSeries
         range: Any
-        required: true
         inlined: true
         inlined_as_list: true
         minimum_value: 1
@@ -2113,7 +2112,6 @@ classes:
           exact_mappings:
           - cdp-common:tiltseries_tilt_series_quality
           range: integer
-          required: true
           minimum_value: 1
           maximum_value: 5
         - range: IntegerFormattedString

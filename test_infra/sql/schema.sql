@@ -492,7 +492,7 @@ CREATE TABLE public.tiltseries (
     data_acquisition_software character varying NOT NULL,
     related_empiar_entry character varying,
     binning_from_frames numeric,
-    tilt_series_quality integer NOT NULL,
+    tilt_series_quality integer,
     is_aligned boolean DEFAULT false NOT NULL,
     pixel_spacing numeric,
     aligned_tiltseries_binning integer,
