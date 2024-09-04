@@ -3352,8 +3352,7 @@ classes:
         inlined_as_list: true
   AnnotationTriangularMeshGroupFile:
     name: AnnotationTriangularMeshGroupFile
-    description: File and sourcing data for a triangular mesh annotation. Annotation
-      that identifies an object.
+    description: File and sourcing data containing one or more triangular mesh annotations.
     from_schema: metadata
     aliases:
     - TriangularMeshGroup

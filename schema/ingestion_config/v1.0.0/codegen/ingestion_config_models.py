@@ -2026,7 +2026,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
 
 class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
     """
-    File and sourcing data for a triangular mesh annotation. Annotation that identifies an object.
+    File and sourcing data containing one or more triangular mesh annotations.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'aliases': ['TriangularMeshGroup'], 'from_schema': 'metadata'})
 
@@ -2696,7 +2696,7 @@ class AnnotationSource(DefaultSource):
     SegmentationMask: Optional[AnnotationSegmentationMaskFile] = Field(None, description="""File and sourcing data for a segmentation mask annotation. Annotation that identifies an object.""", json_schema_extra = { "linkml_meta": {'alias': 'SegmentationMask', 'domain_of': ['AnnotationSource']} })
     SemanticSegmentationMask: Optional[AnnotationSemanticSegmentationMaskFile] = Field(None, description="""File and sourcing data for a semantic segmentation mask annotation. Annotation that identifies classes of objects.""", json_schema_extra = { "linkml_meta": {'alias': 'SemanticSegmentationMask', 'domain_of': ['AnnotationSource']} })
     TriangularMesh: Optional[AnnotationTriangularMeshFile] = Field(None, description="""File and sourcing data for a triangular mesh annotation. Annotation that identifies an object.""", json_schema_extra = { "linkml_meta": {'alias': 'TriangularMesh', 'domain_of': ['AnnotationSource']} })
-    TriangularMeshGroup: Optional[AnnotationTriangularMeshGroupFile] = Field(None, description="""File and sourcing data for a triangular mesh annotation. Annotation that identifies an object.""", json_schema_extra = { "linkml_meta": {'alias': 'TriangularMeshGroup', 'domain_of': ['AnnotationSource']} })
+    TriangularMeshGroup: Optional[AnnotationTriangularMeshGroupFile] = Field(None, description="""File and sourcing data containing one or more triangular mesh annotations.""", json_schema_extra = { "linkml_meta": {'alias': 'TriangularMeshGroup', 'domain_of': ['AnnotationSource']} })
     parent_filters: Optional[AnnotationParentFilters] = Field(None, description="""Filters for the parent of an annotation source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
          'domain_of': ['AnnotationSource',
                        'DatasetSource',

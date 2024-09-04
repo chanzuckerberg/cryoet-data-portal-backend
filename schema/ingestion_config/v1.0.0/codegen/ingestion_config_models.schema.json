@@ -696,7 +696,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "File and sourcing data for a triangular mesh annotation. Annotation that identifies an object."
+                    "description": "File and sourcing data containing one or more triangular mesh annotations."
                 },
                 "exclude": {
                     "description": "Exclude files from the source that match (regexes).",
@@ -811,7 +811,7 @@
         },
         "AnnotationTriangularMeshGroupFile": {
             "additionalProperties": false,
-            "description": "File and sourcing data for a triangular mesh annotation. Annotation that identifies an object.",
+            "description": "File and sourcing data containing one or more triangular mesh annotations.",
             "properties": {
                 "file_format": {
                     "description": "File format for this file",

@@ -43,7 +43,8 @@ def check_mesh_name(input_file: str, name: str) -> typing.Optional[str]:
                 mesh_name: str = mesh_name_raw.decode()
                 if mesh_name == name:
                     return mesh_list
-        logger.warning(f"Mesh name {name} not found in the hff file")
+        log_message = f"Mesh name {name} not found in the hff file"
+        logger.warning(log_message)
         return None
 
 

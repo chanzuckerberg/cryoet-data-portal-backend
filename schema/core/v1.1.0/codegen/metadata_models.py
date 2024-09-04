@@ -3371,7 +3371,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
 
 class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
     """
-    File and sourcing data for a triangular mesh annotation. Annotation that identifies an object.
+    File and sourcing data containing one or more triangular mesh annotations.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["TriangularMeshGroup"], "from_schema": "metadata"})
