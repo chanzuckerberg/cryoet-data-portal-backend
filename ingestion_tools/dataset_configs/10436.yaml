@@ -24,7 +24,7 @@ datasets:
       cell_type:
         name: fungal spore
         id: CL:0002369
-      cross_references:
+      cross_references: &dataset_cross_references
         publications: 10.1101/2024.07.13.603322
         #TODO: Add EMPIAR-12176 once available
         related_database_entries: EMD-45674, EMD-45671, EMD-45672, EMD-45673
@@ -221,6 +221,7 @@ depositions:
         of runs contains manual and manually curated annotations of spore organelles.
       deposition_identifier: 10307
       deposition_title: In situ architecture of the polar tube invasion apparatus from microsporidian parasites
+      cross_references: *dataset_cross_references
       deposition_types:
         - dataset
     sources:

@@ -225,7 +225,7 @@ datasets:
       primary_author_status: false
     cell_type:
       name: Chlamydomonas reinhardtii
-    cross_references:
+    cross_references: &dataset_cross_references
       publications: 10.1093/micmic/ozad067.480
       related_database_entries: EMPIAR-11756
     dataset_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
@@ -252,6 +252,7 @@ depositions:
     deposition_identifier: 10300
     deposition_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
       cryo-plasmaFIB milling
+    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
   sources:

@@ -64,6 +64,8 @@ depositions:
       MemBrain_seg_v10_alpha.ckpt
     deposition_identifier: 10303
     deposition_title: membrain-seg membrane predictions
+    cross_references:
+      publications: 10.1101/2024.01.05.574336
     deposition_types:
     - annotation
   sources:
