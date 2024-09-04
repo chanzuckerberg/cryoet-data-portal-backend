@@ -396,9 +396,6 @@ enums:
       TriangularMesh:
         text: TriangularMesh
         description: A mesh of triangles
-      TriangularMeshGroup:
-        text: TriangularMeshGroup
-        description: A group of triangular meshes
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -1236,18 +1233,6 @@ classes:
         domain_of:
         - AnnotationSource
         range: AnnotationTriangularMeshFile
-        inlined: true
-        inlined_as_list: true
-      TriangularMeshGroup:
-        name: TriangularMeshGroup
-        description: File and sourcing data containing one or more triangular mesh
-          annotations.
-        from_schema: cdp-ingestion-config
-        alias: TriangularMeshGroup
-        owner: AnnotationSource
-        domain_of:
-        - AnnotationSource
-        range: AnnotationTriangularMeshGroupFile
         inlined: true
         inlined_as_list: true
       parent_filters:
@@ -4622,7 +4607,6 @@ classes:
         owner: AuthorMixin
         domain_of:
         - AuthorMixin
-        - AnnotationMethodLinks
         - Author
         - OrganismDetails
         - TissueDetails
@@ -4630,7 +4614,6 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
-        - AnnotationTriangularMeshGroupFile
         range: string
         required: true
         inlined: true
@@ -4720,58 +4703,6 @@ classes:
         - AuthorMixin
         - Author
         range: boolean
-        inlined: true
-        inlined_as_list: true
-  AnnotationMethodLinks:
-    name: AnnotationMethodLinks
-    description: A set of links to models, sourcecode, documentation, etc referenced
-      by annotation the method
-    from_schema: cdp-ingestion-config
-    attributes:
-      link:
-        name: link
-        description: URL to the resource
-        from_schema: cdp-ingestion-config
-        alias: link
-        owner: AnnotationMethodLinks
-        domain_of:
-        - AnnotationMethodLinks
-        range: string
-        required: true
-        inlined: true
-        inlined_as_list: true
-      link_type:
-        name: link_type
-        description: Type of link (e.g. model, sourcecode, documentation)
-        from_schema: cdp-ingestion-config
-        alias: link_type
-        owner: AnnotationMethodLinks
-        domain_of:
-        - AnnotationMethodLinks
-        range: annotation_method_link_type_enum
-        required: true
-        inlined: true
-        inlined_as_list: true
-        pattern: (^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)
-      name:
-        name: name
-        description: user readable name of the resource
-        from_schema: cdp-ingestion-config
-        alias: name
-        owner: AnnotationMethodLinks
-        domain_of:
-        - AuthorMixin
-        - AnnotationMethodLinks
-        - Author
-        - OrganismDetails
-        - TissueDetails
-        - CellType
-        - CellStrain
-        - CellComponent
-        - AnnotationObject
-        - AnnotationTriangularMeshGroupFile
-        range: string
-        recommended: true
         inlined: true
         inlined_as_list: true
 source_file: ingestion_config/v1.0.0/ingestion_config_models.yaml

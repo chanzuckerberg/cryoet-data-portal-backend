@@ -1,336 +1,308 @@
-# Schema Configuration
+```mermaid
+erDiagram
+Tomogram {
+    string name
+    float size_x
+    float size_y
+    float size_z
+    float voxel_spacing
+    fiducial_alignment_status_enum fiducial_alignment_status
+    tomogram_reconstruction_method_enum reconstruction_method
+    tomogram_processing_enum processing
+    float tomogram_version
+    string processing_software
+    string reconstruction_software
+    boolean is_canonical
+    string s3_omezarr_dir
+    string https_omezarr_dir
+    string s3_mrc_file
+    string https_mrc_file
+    string scale0_dimensions
+    string scale1_dimensions
+    string scale2_dimensions
+    boolean ctf_corrected
+    integer offset_x
+    integer offset_y
+    integer offset_z
+    string key_photo_url
+    string key_photo_thumbnail_url
+    string neuroglancer_config
+    boolean is_standardized
+    integer id
+}
+TomogramVoxelSpacing {
+    float voxel_spacing
+    string s3_prefix
+    string https_prefix
+    integer id
+}
+TomogramAuthor {
+    integer id
+    integer author_list_order
+    string orcid
+    string name
+    string email
+    string affiliation_name
+    string affiliation_address
+    string affiliation_identifier
+    boolean corresponding_author_status
+    boolean primary_author_status
+}
+Tiltseries {
+    string s3_omezarr_dir
+    string s3_mrc_file
+    string https_omezarr_dir
+    string https_mrc_file
+    string s3_collection_metadata
+    string https_collection_metadata
+    string s3_angle_list
+    string https_angle_list
+    string s3_gain_file
+    string https_gain_file
+    float acceleration_voltage
+    float spherical_aberration_constant
+    tiltseries_microscope_manufacturer_enum microscope_manufacturer
+    string microscope_model
+    string microscope_energy_filter
+    string microscope_phase_plate
+    string microscope_image_corrector
+    string microscope_additional_info
+    string camera_manufacturer
+    string camera_model
+    float tilt_min
+    float tilt_max
+    float tilt_range
+    float tilt_step
+    string tilting_scheme
+    float tilt_axis
+    float total_flux
+    string data_acquisition_software
+    string related_empiar_entry
+    float binning_from_frames
+    integer tilt_series_quality
+    boolean is_aligned
+    float pixel_spacing
+    float aligned_tiltseries_binning
+    integer tiltseries_frames_count
+    integer id
+}
+Run {
+    string name
+    string s3_prefix
+    string https_prefix
+    integer id
+}
+PerSectionParameters {
+    integer z_index
+    float defocus
+    float astigmatism
+    float astigmatic_angle
+    integer id
+}
+PerSectionAlignmentParameters {
+    integer z_index
+    float x_offset
+    float y_offset
+    float in_plane_rotation
+    float beam_tilt
+    float tilt_angle
+    integer id
+}
+Frame {
+    float raw_angle
+    integer acquisition_order
+    float dose
+    boolean is_gain_corrected
+    string s3_gain_file
+    string https_gain_file
+    string s3_prefix
+    string https_prefix
+    integer id
+}
+Deposition {
+    string deposition_title
+    string deposition_description
+    string publications
+    string related_database_entries
+    date deposition_date
+    date release_date
+    date last_modified_date
+    integer id
+}
+DepositionAuthor {
+    integer id
+    integer author_list_order
+    string orcid
+    string name
+    string email
+    string affiliation_name
+    string affiliation_address
+    string affiliation_identifier
+    boolean corresponding_author_status
+    boolean primary_author_status
+}
+Dataset {
+    string title
+    string description
+    string organism_name
+    integer organism_taxid
+    string tissue_name
+    string tissue_id
+    string cell_name
+    string cell_type_id
+    string cell_strain_name
+    string cell_strain_id
+    sample_type_enum sample_type
+    string sample_preparation
+    string grid_preparation
+    string other_setup
+    string key_photo_url
+    string key_photo_thumbnail_url
+    string cell_component_name
+    string cell_component_id
+    date deposition_date
+    date release_date
+    date last_modified_date
+    string publications
+    string related_database_entries
+    string s3_prefix
+    string https_prefix
+    integer id
+}
+DatasetFunding {
+    string funding_agency_name
+    string grant_id
+    integer id
+}
+DatasetAuthor {
+    integer id
+    integer author_list_order
+    string orcid
+    string name
+    string email
+    string affiliation_name
+    string affiliation_address
+    string affiliation_identifier
+    boolean corresponding_author_status
+    boolean primary_author_status
+}
+Annotation {
+    string s3_metadata_path
+    string https_metadata_path
+    string annotation_publication
+    string annotation_method
+    boolean ground_truth_status
+    string object_id
+    string object_name
+    string object_description
+    string object_state
+    integer object_count
+    float confidence_precision
+    float confidence_recall
+    string ground_truth_used
+    string annotation_software
+    boolean is_curator_recommended
+    annotation_method_type_enum method_type
+    date deposition_date
+    date release_date
+    date last_modified_date
+    integer id
+}
+AnnotationShape {
+    annotation_file_shape_type_enum shape_type
+    integer id
+}
+AnnotationFile {
+    string format
+    string s3_path
+    string https_path
+    boolean is_visualization_default
+    annotation_file_source_enum source
+    integer id
+}
+AnnotationAuthor {
+    integer id
+    integer author_list_order
+    string orcid
+    string name
+    string email
+    string affiliation_name
+    string affiliation_address
+    string affiliation_identifier
+    boolean corresponding_author_status
+    boolean primary_author_status
+}
+Alignment {
+    alignment_type_enum alignment_type
+    float volume_x_dimension
+    float volume_y_dimension
+    float volume_z_dimension
+    float volume_x_offset
+    float volume_y_offset
+    float volume_z_offset
+    float x_rotation_offset
+    float tilt_offset
+    string local_alignment_file
+    string affine_transformation_matrix
+    integer id
+}
+
+Tomogram ||--|o Alignment : "alignment"
+Tomogram ||--}o TomogramAuthor : "authors"
+Tomogram ||--|o Deposition : "deposition"
+Tomogram ||--|o Run : "run"
+Tomogram ||--|o TomogramVoxelSpacing : "tomogram_voxel_spacing"
+TomogramVoxelSpacing ||--}o AnnotationFile : "annotation_files"
+TomogramVoxelSpacing ||--|o Run : "run"
+TomogramVoxelSpacing ||--}o Tomogram : "tomograms"
+TomogramAuthor ||--|o Tomogram : "tomogram"
+Tiltseries ||--}o Alignment : "alignments"
+Tiltseries ||--}o PerSectionParameters : "per_section_parameters"
+Tiltseries ||--|| Run : "run"
+Tiltseries ||--|o Deposition : "deposition"
+Run ||--}o Alignment : "alignments"
+Run ||--}o Annotation : "annotations"
+Run ||--|| Dataset : "dataset"
+Run ||--}o Frame : "frames"
+Run ||--}o Tiltseries : "tiltseries"
+Run ||--}o TomogramVoxelSpacing : "tomogram_voxel_spacings"
+Run ||--}o Tomogram : "tomograms"
+PerSectionParameters ||--|| Frame : "frame"
+PerSectionParameters ||--|| Tiltseries : "tiltseries"
+PerSectionAlignmentParameters ||--|| Alignment : "alignment"
+Frame ||--|o Deposition : "deposition"
+Frame ||--}o PerSectionParameters : "per_section_parameters"
+Frame ||--|o Run : "run"
+Deposition ||--}o DepositionAuthor : "authors"
+Deposition ||--}o Alignment : "alignments"
+Deposition ||--}o Annotation : "annotations"
+Deposition ||--}o Dataset : "datasets"
+Deposition ||--}o Frame : "frames"
+Deposition ||--}o Tiltseries : "tiltseries"
+Deposition ||--}o Tomogram : "tomograms"
+Deposition ||--}o DepositionType : "deposition_types"
+DepositionAuthor ||--|o Deposition : "deposition"
+Dataset ||--|o Deposition : "deposition"
+Dataset ||--}o DatasetFunding : "funding_sources"
+Dataset ||--}o DatasetAuthor : "authors"
+Dataset ||--}o Run : "runs"
+DatasetFunding ||--|o Dataset : "dataset"
+DatasetAuthor ||--|o Dataset : "dataset"
+Annotation ||--|o Run : "run"
+Annotation ||--}o AnnotationShape : "annotation_shapes"
+Annotation ||--}o AnnotationAuthor : "authors"
+Annotation ||--|o Deposition : "deposition"
+AnnotationShape ||--|o Annotation : "annotation"
+AnnotationShape ||--}o AnnotationFile : "annotation_files"
+AnnotationFile ||--|o Alignment : "alignment"
+AnnotationFile ||--|o AnnotationShape : "annotation_shape"
+AnnotationFile ||--|o TomogramVoxelSpacing : "tomogram_voxel_spacing"
+AnnotationAuthor ||--|o Annotation : "annotation"
+Alignment ||--}o AnnotationFile : "annotation_files"
+Alignment ||--}o PerSectionAlignmentParameters : "per_section_alignments"
+Alignment ||--|o Deposition : "deposition"
+Alignment ||--|o Tiltseries : "tiltseries"
+Alignment ||--}o Tomogram : "tomograms"
+Alignment ||--|o Run : "run"
 
-Platformics supports defining a schema as a human-readable YAML file using the [LinkML](https://linkml.io/linkml/) language, and also supports some additional functionality on top of LinkML's features.
-
-For a list of commands to run when making changes to the schema, see also [Iterating on your schema](https://github.com/chanzuckerberg/platformics/tree/main?tab=readme-ov-file#iterating-on-your-schema).
-
-## Writing your own schema
-
-### Types
-
-> See also LinkML's [documentation on types](https://linkml.io/linkml/schemas/models.html#types).
-
-Types are scalar data values such as strings, integers, and floats. LinkML defines some types by default which can be extended, and you can also define your own types.
-
-These are typically used to define the `range` of a `class`'s [attribute](#attributes).
-
-```yaml
-types:
-    string:
-        uri: xsd:string
-        base: str
-        description: A character string
-
-    integer:
-        uri: xsd:integer
-        base: int
-        description: An integer
-
-    uuid:
-        uri: xsd:string
-        typeof: str
-        base: str
-        description: A UUID
-```
-
-### Enums
-
-> See also LinkML's [documentation on enums](https://linkml.io/linkml/schemas/models.html#enums).
-
-Enums can be used to define a set of allowed string attributes. You may optionally include a description of the enum's options.
-
-```yaml
-enums:
-    Month:
-        permissible_values:
-            January:
-            February:
-            March:
-            April:
-            May:
-            June:
-            July:
-            August:
-            September:
-            October:
-            November:
-            December:
-
-    Status:
-        permissible_values:
-            SUCCESS:
-                description: The file finished processing successfully.
-            FAILED:
-                description: The file encountered an error and failed to process.
-            PENDING:
-                description: The file is currently being uploaded and has not started processing yet.
-```
-
-### Classes
-
-> See also LinkML's [documentation on classes](https://linkml.io/linkml/schemas/models.html#classes).
-
-Classes equate to the models in the schema (i.e. tables in the database).
-
-They are defined in a `classes` block, with the class name as the key.
-
-```yaml
-classes:
-    Book:
-        ...
-```
-
-#### Attributes
-
-> See also LinkML's [documentation on attributes](https://linkml.io/linkml/schemas/models.html#the-attributes-slot).
-
-An attribute equates to a field on the model (i.e. a column on the database table).
-
-There are a few properities on attributes that are used in Platformics:
-
-* [range](https://linkml.io/linkml/schemas/slots.html#ranges) (required): Defines the type of a field. This can be a type, enum, or another class.
-* [multivalued](https://linkml.io/linkml/schemas/slots.html#multivalued): Boolean indicating if the attribute is a list; `false` by default.
-* [required](https://linkml.io/linkml/schemas/slots.html#required): Boolean indicating if the attribute is required for this class; `false` by default.
-* [inverse](https://linkml.io/linkml/schemas/slots.html#inverse): String indicating the inverse relationship. This typically should only be used if `range` is another class, which has a corresponding attribute.
-  * In base LinkML, this is typically just used as documentation. However, in Platformics, this field is used to establish relationships between classes, and additional code will be generated appropriately.
-* [identifier](https://linkml.io/linkml/schemas/slots.html#identifiers): Boolean indicating that the field is a unique key for members of the class; `false` by default.
-* `readonly`: Boolean indicating whether field can only be written by the API internals; `false` by default. This is implemented by Platformics and is not a part of base LinkML functionality.
-* `minimum_length` / `maximum_length`: Used to set lower/upper bounds on the length for values in a `string` column.
-* `minimum_value` / `maximum_value`: Used to set lower/upper bounds on the values in a numerical column.
-
-```yaml
-classes:
-    Author:
-        attributes:
-            name:
-                range: string
-                required: true
-                minimum_length: 4
-                maximum_length: 128
-            published_works:
-                range: Book
-                multivalued: true
-                inverse: Book.author
-            id:
-                identifier: true
-                range: integer
-                readonly: true
-                minimum_value: 0
-                maximum_value: 10000
-
-    Book:
-        attributes:
-            title:
-                range: string
-                required: true
-            author:
-                range: Author
-                inverse: Author.published_works
-```
-
-#### Annotations
-
-> See also the LinkML [documentation on annotations](https://linkml.io/linkml/schemas/annotations.html).
-
-Annotations are used to provide additional information on a class or its attributes.
-
-##### Class Annotations
-
-* `plural` (required): String indicating the plural form of the class's name; used for human-readability and parts of codegen. This is implemented by Platformics and is not a part of base LinkML functionality.
-
-```yaml
-classes:
-    Author:
-        annotations:
-            plural: Authors
-
-    Book:
-        annotations:
-            plural: Books
-
-    Entity:
-        annotations:
-            plural: Entities
-```
-
-##### Attribute Annotations
-
-The follow annotations are related to setting permissions; they are implemented by Platformics and are not a part of base LinkML functionality:
-* `hidden`: Boolean indicating whether field will be exposed in the GQL API; `false` by default.
-* `system_writable_only`: Boolean indicating whether field can only be modified by a system user; `false` by default.
-* `mutable`: Boolean indicating whether field is available to be modified via an `Update` mutation. If the field is **not** marked as `readonly`, `mutable` is `true` by default.
-
-```yaml
-classes:
-    Author:
-        attributes:
-            name:
-                range: string
-                required: true
-            published_works:
-                range: Book
-                multivalued: true
-                inverse: Book.author
-            address:
-                range: string
-                annotations:
-                    hidden: true
-            id:
-                identifier: true
-                range: integer
-                readonly: true
-
-    Book:
-        attributes:
-            title:
-                range: string
-                required: true
-            author:
-                range: Author
-                inverse: Author.published_works
-            ISBN: # International Standard Book Number
-                identifier: true
-                range: integer
-                annotations:
-                    mutable: false
-                    system_writable_only: true
-
-```
-
-Other annotations; these are implemented by Platformics and are not a part of base LinkML functionality:
-* `indexed`: Boolean indicating whether to create an index for this column; `false` by default.
-* `cascade_delete`: Boolean indicating if the child object should be deleted along with the parent object; `false` by default.
-* `factory_type`: Used in testing and for generating default seed data. We use [Faker](https://factoryboy.readthedocs.io/en/stable/reference.html#faker) from `factory` to generate data, so `factory_type` must be a type supported by `Faker`.
-
-```yaml
-classes:
-    Author:
-        attributes:
-            name:
-                range: string
-                required: true
-                annotations:
-                    factory_type: name
-            published_works:
-                range: Book
-                multivalued: true
-                inverse: Book.author
-                annotations:
-                    # If the author is deleted, delete the associated books as well
-                    cascade_delete: true
-
-    Book:
-        attributes:
-            title:
-                range: string
-                required: true
-            author:
-                range: Author
-                inverse: Author.published_works
-            ISBN: # International Standard Book Number
-                identifier: true
-                range: integer
-                annotations:
-                    indexed: true
-```
-
-#### Inheritance
-
-> See also LinkML's [documentation on inheritance](https://linkml.io/linkml/schemas/inheritance.html).
-
-##### Type designators
-
-> See also LinkML's [documentation on type designators](https://linkml.io/linkml/schemas/type-designators.html).
-
-To enforce that object instances have the `type` of its `class`, you can set the `designates_type` slot on the `class` to `true`.
-
-In this example, any instance of "Organization" (or any instance of a subclass that inherits from "Organization") must have the `type` "Organization."
-
-```yaml
-classes:
-    Organization:
-        attributes:
-        name:
-        type:
-            designates_type: true
-            range: string
-    Business:
-        is_a: Organization
-    EducationalOrganization:
-        is_a: Organization
-    ...
-```
-
-
-##### `is_a`
-
-A class can inherit from another class, including its inheritable attributes, using the `is_a` slot.
-
-```yaml
-classes:
-    Literature:
-        attributes:
-            title:
-                range: string
-                required: true
-            author:
-                range: string
-                required: true
-            ...
-
-    Book:
-        # Book will inherit the attributes of Literature
-        is_a: Literature
-        attributes:
-            ...
-
-    Article:
-        # Article will inherit the attributes of Literature
-        is_a: Literature
-        attributes:
-            ...
-```
-
-
-##### Mixins
-
-> See also LinkML's [documentation on mixins](https://linkml.io/linkml/schemas/inheritance.html#mixin-classes-and-slots).
-
-Mixins can be used to define a set of shared attributes among classes that don't necessarily inherit from each other.
-
-Use the `mixin` boolean slot to indicate that a class is a mixin, and the `mixins` multivalued slot to indicate which mixins a class inherits from.
-
-
-```yaml
-classes:
-    Author:
-        # Specify mixin parent(s)
-        mixins:
-            - Alias
-        published_works:
-            range: Book
-            multivalued: true
-            inverse: Book.author
-
-
-    Book:
-        # Specify mixin parent(s)
-        mixins:
-            - Alias
-        attributes:
-            author:
-                range: Author
-                inverse: Author.published_works
-
-    Alias:
-        # Declare the class as a mixin
-        mixin: true
-        attributes:
-            name:
-                range: string
-                required: true
-            nickname:
-                range: string
-            description:
-                range: string
 ```

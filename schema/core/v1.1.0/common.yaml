@@ -575,6 +575,21 @@ slots:
     range: annotation_method_type_enum
     required: true
     description: Classification of the annotation method based on supervision.
+  annotation_method_link:
+    range: string
+    description: URL to the annotation method reference
+    required: true
+  annotation_method_link_type:
+    range: annotation_method_link_type_enum
+    description: Type of link (e.g. model, source code, documentation)
+    required: true
+  annotation_method_link_custom_name:
+    range: string
+    description: user readable name of the resource
+    recommended: true
+  annotation_method_links_json:
+    range: string
+    description: A set of links to models, source code, documentation, etc referenced by annotation the method as json
   annotation_publications:
     range: EMPIAR_EMDB_DOI_PDB_LIST
     description: List of publication IDs (EMPIAR, EMDB, DOI, PDB) that describe this annotation method. Comma separated.
@@ -643,9 +658,6 @@ slots:
     range: boolean
     description: This annotation is recommended by the curator to be preferred for this object type.
     ifabsent: false
-  annotation_method_links:
-    range: AnnotationMethodLinks
-    description: A set of links to models, sourcecode, documentation, etc referenced by annotation the method
   annotation_version:
     range: VersionString
     description: Version of annotation.
@@ -1093,22 +1105,3 @@ classes:
       primary_author_status:
         exact_mappings:
           - cdp-common:author_primary_author_status
-
-  # ============================================================================
-  # Annotation Method Links
-  # ============================================================================
-  AnnotationMethodLinks:
-    description: A set of links to models, sourcecode, documentation, etc referenced by annotation the method
-    attributes:
-      link:
-        range: string
-        description: URL to the resource
-        required: true
-      link_type:
-        range: annotation_method_link_type_enum
-        description: Type of link (e.g. model, sourcecode, documentation)
-        required: true
-      name:
-        range: string
-        description: user readable name of the resource
-        recommended: true

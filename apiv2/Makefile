@@ -38,6 +38,7 @@ build: ## Build docker containers
 update-schema: codegen alembic-autogenerate alembic-upgrade-head
 	# $(docker_compose_run) $(CONTAINER) ruff check --fix .
 	$(docker_compose_run) $(APP_CONTAINER) sh -c 'strawberry export-schema main:schema > /app/graphql_api/schema.graphql'
+	linkml generate erdiagram --structural --classes Alignment --classes AnnotationAuthor --classes AnnotationFile --classes AnnotationShape --classes Annotation --classes DatasetAuthor --classes DatasetFunding --classes Dataset --classes DepositionAuthor --classes Deposition --classes Frame --classes PerSectionAlignmentParameters --classes PerSectionParameters --classes Run --classes Tiltseries --classes TomogramAuthor --classes TomogramVoxelSpacing --classes Tomogram schema/schema.yaml> schema/README.md
 	docker compose up -d
 	sleep 5 # wait for the app to reload after having files updated.
 	docker compose exec $(APP_CONTAINER) python3 -m sgqlc.introspection --exclude-deprecated --exclude-description http://localhost:9009/graphql graphql_api/schema.json

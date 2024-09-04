@@ -412,9 +412,6 @@ enums:
       TriangularMesh:
         text: TriangularMesh
         description: A mesh of triangles
-      TriangularMeshGroup:
-        text: TriangularMeshGroup
-        description: A group of triangular meshes
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -638,14 +635,12 @@ classes:
         owner: Author
         domain_of:
         - AuthorMixin
-        - AnnotationMethodLinks
         - OrganismDetails
         - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
         - AnnotationObject
-        - AnnotationTriangularMeshGroupFile
         range: string
         required: true
         inlined: true
@@ -986,9 +981,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
-        - AnnotationTriangularMeshGroupFile
         - AuthorMixin
-        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -1029,9 +1022,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
-        - AnnotationTriangularMeshGroupFile
         - AuthorMixin
-        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -1076,9 +1067,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
-        - AnnotationTriangularMeshGroupFile
         - AuthorMixin
-        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -1122,9 +1111,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
-        - AnnotationTriangularMeshGroupFile
         - AuthorMixin
-        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -1171,9 +1158,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
-        - AnnotationTriangularMeshGroupFile
         - AuthorMixin
-        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -2675,9 +2660,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
-        - AnnotationTriangularMeshGroupFile
         - AuthorMixin
-        - AnnotationMethodLinks
         range: string
         required: true
         inlined: true
@@ -2708,6 +2691,55 @@ classes:
         domain_of:
         - AnnotationObject
         range: string
+        inlined: true
+        inlined_as_list: true
+  AnnotationMethodLinks:
+    name: AnnotationMethodLinks
+    description: A set of links to models, source code, documentation, etc referenced
+      by annotation the method
+    from_schema: metadata
+    attributes:
+      link:
+        name: link
+        description: URL to the annotation method reference
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_method_link
+        alias: link
+        owner: AnnotationMethodLinks
+        domain_of:
+        - AnnotationMethodLinks
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      link_type:
+        name: link_type
+        description: Type of link (e.g. model, source code, documentation)
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_method_link_type
+        alias: link_type
+        owner: AnnotationMethodLinks
+        domain_of:
+        - AnnotationMethodLinks
+        range: annotation_method_link_type_enum
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)
+      custom_name:
+        name: custom_name
+        description: user readable name of the resource
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_method_link_custom_name
+        alias: custom_name
+        owner: AnnotationMethodLinks
+        domain_of:
+        - AnnotationMethodLinks
+        range: string
+        recommended: true
         inlined: true
         inlined_as_list: true
   AnnotationSourceFile:
@@ -3286,7 +3318,6 @@ classes:
         owner: AnnotationTriangularMeshFile
         domain_of:
         - AnnotationTriangularMeshFile
-        - AnnotationTriangularMeshGroupFile
         range: float
         inlined: true
         inlined_as_list: true
@@ -3345,111 +3376,6 @@ classes:
         ifabsent: 'False'
         alias: is_visualization_default
         owner: AnnotationTriangularMeshFile
-        domain_of:
-        - AnnotationSourceFile
-        range: boolean
-        inlined: true
-        inlined_as_list: true
-  AnnotationTriangularMeshGroupFile:
-    name: AnnotationTriangularMeshGroupFile
-    description: File and sourcing data containing one or more triangular mesh annotations.
-    from_schema: metadata
-    aliases:
-    - TriangularMeshGroup
-    is_a: AnnotationSourceFile
-    attributes:
-      scale_factor:
-        name: scale_factor
-        description: The scale factor for a mesh annotation file.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_source_file_scale_factor
-        ifabsent: float(1)
-        alias: scale_factor
-        owner: AnnotationTriangularMeshGroupFile
-        domain_of:
-        - AnnotationTriangularMeshFile
-        - AnnotationTriangularMeshGroupFile
-        range: float
-        inlined: true
-        inlined_as_list: true
-        minimum_value: 0
-      name:
-        name: name
-        description: The name that identifies to a single annotation mesh among multiple
-          meshes.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_source_file_mesh_name
-        alias: name
-        owner: AnnotationTriangularMeshGroupFile
-        domain_of:
-        - OrganismDetails
-        - TissueDetails
-        - CellType
-        - CellStrain
-        - CellComponent
-        - AnnotationObject
-        - AnnotationTriangularMeshGroupFile
-        - AuthorMixin
-        - AnnotationMethodLinks
-        range: string
-        inlined: true
-        inlined_as_list: true
-      file_format:
-        name: file_format
-        description: File format for this file
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_source_file_format
-        alias: file_format
-        owner: AnnotationTriangularMeshGroupFile
-        domain_of:
-        - AnnotationSourceFile
-        range: string
-        required: true
-        inlined: true
-        inlined_as_list: true
-      glob_string:
-        name: glob_string
-        description: Glob string to match annotation files in the dataset. Required
-          if annotation_source_file_glob_strings is not provided.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_source_file_glob_string
-        alias: glob_string
-        owner: AnnotationTriangularMeshGroupFile
-        domain_of:
-        - AnnotationSourceFile
-        range: string
-        required: false
-        inlined: true
-        inlined_as_list: true
-      glob_strings:
-        name: glob_strings
-        description: Glob strings to match annotation files in the dataset. Required
-          if annotation_source_file_glob_string is not provided.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_source_file_glob_strings
-        alias: glob_strings
-        owner: AnnotationTriangularMeshGroupFile
-        domain_of:
-        - AnnotationSourceFile
-        range: string
-        required: false
-        multivalued: true
-        inlined: true
-        inlined_as_list: true
-      is_visualization_default:
-        name: is_visualization_default
-        description: This annotation will be rendered in neuroglancer by default.
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_source_file_is_visualization_default
-        ifabsent: 'False'
-        alias: is_visualization_default
-        owner: AnnotationTriangularMeshGroupFile
         domain_of:
         - AnnotationSourceFile
         range: boolean
@@ -3590,6 +3516,19 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: (^manual$)|(^automated$)|(^hybrid$)|(^simulated$)
+      method_links:
+        name: method_links
+        description: A set of links to models, source code, documentation, etc referenced
+          by annotation the method
+        from_schema: metadata
+        alias: method_links
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: AnnotationMethodLinks
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
       object_count:
         name: object_count
         description: Number of objects identified
@@ -3769,14 +3708,12 @@ classes:
         owner: AuthorMixin
         domain_of:
         - AuthorMixin
-        - AnnotationMethodLinks
         - OrganismDetails
         - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
         - AnnotationObject
-        - AnnotationTriangularMeshGroupFile
         range: string
         required: true
         inlined: true
@@ -3860,57 +3797,6 @@ classes:
         domain_of:
         - AuthorMixin
         range: boolean
-        inlined: true
-        inlined_as_list: true
-  AnnotationMethodLinks:
-    name: AnnotationMethodLinks
-    description: A set of links to models, sourcecode, documentation, etc referenced
-      by annotation the method
-    from_schema: metadata
-    attributes:
-      link:
-        name: link
-        description: URL to the resource
-        from_schema: metadata
-        alias: link
-        owner: AnnotationMethodLinks
-        domain_of:
-        - AnnotationMethodLinks
-        range: string
-        required: true
-        inlined: true
-        inlined_as_list: true
-      link_type:
-        name: link_type
-        description: Type of link (e.g. model, sourcecode, documentation)
-        from_schema: metadata
-        alias: link_type
-        owner: AnnotationMethodLinks
-        domain_of:
-        - AnnotationMethodLinks
-        range: annotation_method_link_type_enum
-        required: true
-        inlined: true
-        inlined_as_list: true
-        pattern: (^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)
-      name:
-        name: name
-        description: user readable name of the resource
-        from_schema: metadata
-        alias: name
-        owner: AnnotationMethodLinks
-        domain_of:
-        - AuthorMixin
-        - AnnotationMethodLinks
-        - OrganismDetails
-        - TissueDetails
-        - CellType
-        - CellStrain
-        - CellComponent
-        - AnnotationObject
-        - AnnotationTriangularMeshGroupFile
-        range: string
-        recommended: true
         inlined: true
         inlined_as_list: true
 source_file: core/v1.1.0/metadata.yaml

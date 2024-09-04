@@ -1884,6 +1884,15 @@
               }
             },
             {
+              "args": [],
+              "name": "depositionId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
               "args": [
                 {
                   "defaultValue": "null",
@@ -1916,6 +1925,15 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "Tiltseries",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tiltseriesId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -2047,6 +2065,15 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "Run",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "runId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -2647,6 +2674,15 @@
               }
             },
             {
+              "args": [],
+              "name": "alignmentId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
               "args": [
                 {
                   "defaultValue": "null",
@@ -2683,6 +2719,15 @@
               }
             },
             {
+              "args": [],
+              "name": "annotationShapeId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
               "args": [
                 {
                   "defaultValue": "null",
@@ -2715,6 +2760,15 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "TomogramVoxelSpacing",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tomogramVoxelSpacingId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -8300,6 +8354,15 @@
               }
             },
             {
+              "args": [],
+              "name": "annotationId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
               "args": [
                 {
                   "defaultValue": "null",
@@ -8483,6 +8546,15 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "Run",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "runId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -8709,6 +8781,15 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "Deposition",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "depositionId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -9190,6 +9271,19 @@
                 "kind": "OBJECT",
                 "name": "Dataset",
                 "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "datasetId",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
               }
             },
             {
@@ -11969,6 +12063,15 @@
               }
             },
             {
+              "args": [],
+              "name": "depositionId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
               "args": [
                 {
                   "defaultValue": "null",
@@ -13565,6 +13668,15 @@
             },
             {
               "args": [],
+              "name": "depositionId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "authorListOrder",
               "type": {
                 "kind": "NON_NULL",
@@ -14886,6 +14998,15 @@
               }
             },
             {
+              "args": [],
+              "name": "depositionId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
               "args": [
                 {
                   "defaultValue": "null",
@@ -15013,6 +15134,15 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "Run",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "runId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -15268,6 +15398,19 @@
               }
             },
             {
+              "args": [],
+              "name": "frameId",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              }
+            },
+            {
               "args": [
                 {
                   "defaultValue": "null",
@@ -15301,6 +15444,19 @@
                 "kind": "OBJECT",
                 "name": "Tiltseries",
                 "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tiltseriesId",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
               }
             },
             {
@@ -15726,6 +15882,19 @@
               }
             },
             {
+              "args": [],
+              "name": "runId",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              }
+            },
+            {
               "args": [
                 {
                   "defaultValue": "null",
@@ -15758,6 +15927,15 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "Deposition",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "depositionId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -17928,6 +18106,15 @@
               }
             },
             {
+              "args": [],
+              "name": "alignmentId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
               "args": [
                 {
                   "defaultValue": "null",
@@ -18059,6 +18246,15 @@
               }
             },
             {
+              "args": [],
+              "name": "depositionId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
               "args": [
                 {
                   "defaultValue": "null",
@@ -18095,6 +18291,15 @@
               }
             },
             {
+              "args": [],
+              "name": "runId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
               "args": [
                 {
                   "defaultValue": "null",
@@ -18127,6 +18332,15 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "TomogramVoxelSpacing",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tomogramVoxelSpacingId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -18581,6 +18795,15 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "Tomogram",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tomogramId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -20057,6 +20280,15 @@
               }
             },
             {
+              "args": [],
+              "name": "runId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
               "args": [
                 {
                   "defaultValue": "null",
@@ -21377,6 +21609,15 @@
             },
             {
               "args": [],
+              "name": "depositionId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "type",
               "type": {
                 "kind": "ENUM",
@@ -21803,6 +22044,15 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "Dataset",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "datasetId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -22282,6 +22532,15 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "Dataset",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "datasetId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -23935,6 +24194,15 @@
             },
             {
               "args": [],
+              "name": "annotationId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "authorListOrder",
               "type": {
                 "kind": "NON_NULL",
@@ -24682,6 +24950,19 @@
                 "kind": "OBJECT",
                 "name": "Alignment",
                 "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "alignmentId",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
               }
             },
             {

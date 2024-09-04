@@ -26,7 +26,7 @@ class TestAnnotationMetadata:
             assert len(metadata["files"]) >= 0
             basic_metadata_check(metadata)
 
-    def test_annotation_metadata_has_deposition_id(
+    def test_deposition_id(
         self,
         annotation_metadata: Dict[str, Dict],
         bucket: str,

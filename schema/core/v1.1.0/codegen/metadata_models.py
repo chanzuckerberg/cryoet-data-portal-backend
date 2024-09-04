@@ -517,8 +517,6 @@ class AnnotationFileShapeTypeEnum(str, Enum):
     InstanceSegmentation = "InstanceSegmentation"
     # A mesh of triangles
     TriangularMesh = "TriangularMesh"
-    # A group of triangular meshes
-    TriangularMeshGroup = "TriangularMeshGroup"
 
 
 class AnnotationMethodLinkTypeEnum(str, Enum):
@@ -855,9 +853,7 @@ class OrganismDetails(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
-                    "AnnotationTriangularMeshGroupFile",
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:organism_name"],
@@ -899,9 +895,7 @@ class TissueDetails(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
-                    "AnnotationTriangularMeshGroupFile",
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:tissue_name"],
@@ -954,9 +948,7 @@ class CellType(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
-                    "AnnotationTriangularMeshGroupFile",
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:cell_name"],
@@ -1009,9 +1001,7 @@ class CellStrain(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
-                    "AnnotationTriangularMeshGroupFile",
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:cell_strain_name"],
@@ -1065,9 +1055,7 @@ class CellComponent(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
-                    "AnnotationTriangularMeshGroupFile",
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:cell_component_name"],
@@ -2546,9 +2534,7 @@ class AnnotationObject(ConfiguredBaseModel):
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
-                    "AnnotationTriangularMeshGroupFile",
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:annotation_object_name"],
@@ -2593,6 +2579,61 @@ class AnnotationObject(ConfiguredBaseModel):
         return v
 
 
+class AnnotationMethodLinks(ConfiguredBaseModel):
+    """
+    A set of links to models, source code, documentation, etc referenced by annotation the method
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    link: str = Field(
+        ...,
+        description="""URL to the annotation method reference""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "link",
+                "domain_of": ["AnnotationMethodLinks"],
+                "exact_mappings": ["cdp-common:annotation_method_link"],
+            }
+        },
+    )
+    link_type: AnnotationMethodLinkTypeEnum = Field(
+        ...,
+        description="""Type of link (e.g. model, source code, documentation)""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "link_type",
+                "domain_of": ["AnnotationMethodLinks"],
+                "exact_mappings": ["cdp-common:annotation_method_link_type"],
+            }
+        },
+    )
+    custom_name: Optional[str] = Field(
+        None,
+        description="""user readable name of the resource""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "custom_name",
+                "domain_of": ["AnnotationMethodLinks"],
+                "exact_mappings": ["cdp-common:annotation_method_link_custom_name"],
+                "recommended": True,
+            }
+        },
+    )
+
+    @field_validator("link_type")
+    def pattern_link_type(cls, v):
+        pattern = re.compile(r"(^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid link_type format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid link_type format: {v}")
+        return v
+
+
 class AnnotationSourceFile(ConfiguredBaseModel):
     """
     File and sourcing data for an annotation. Represents an entry in annotation.sources.
@@ -2614,7 +2655,6 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
             }
@@ -2634,7 +2674,6 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
             }
@@ -2654,7 +2693,6 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
@@ -2674,7 +2712,6 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
@@ -2744,7 +2781,6 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
             }
@@ -2764,7 +2800,6 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
             }
@@ -2784,7 +2819,6 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
@@ -2804,7 +2838,6 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
@@ -2874,7 +2907,6 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
             }
@@ -2894,7 +2926,6 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
             }
@@ -2914,7 +2945,6 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
@@ -2934,7 +2964,6 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
@@ -3005,7 +3034,6 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
             }
@@ -3025,7 +3053,6 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
             }
@@ -3045,7 +3072,6 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
@@ -3065,7 +3091,6 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
@@ -3095,7 +3120,6 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
             }
@@ -3115,7 +3139,6 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
             }
@@ -3135,7 +3158,6 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
@@ -3155,7 +3177,6 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
@@ -3197,7 +3218,6 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
             }
@@ -3217,7 +3237,6 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
             }
@@ -3237,7 +3256,6 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
@@ -3257,7 +3275,6 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
@@ -3280,7 +3297,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "scale_factor",
-                "domain_of": ["AnnotationTriangularMeshFile", "AnnotationTriangularMeshGroupFile"],
+                "domain_of": ["AnnotationTriangularMeshFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_scale_factor"],
                 "ifabsent": "float(1)",
             }
@@ -3300,7 +3317,6 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
             }
@@ -3320,7 +3336,6 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
             }
@@ -3340,7 +3355,6 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
             }
@@ -3360,132 +3374,6 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
-                ],
-                "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
-                "ifabsent": "False",
-            }
-        },
-    )
-
-
-class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
-    """
-    File and sourcing data containing one or more triangular mesh annotations.
-    """
-
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["TriangularMeshGroup"], "from_schema": "metadata"})
-
-    scale_factor: Optional[float] = Field(
-        1.0,
-        description="""The scale factor for a mesh annotation file.""",
-        ge=0,
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "scale_factor",
-                "domain_of": ["AnnotationTriangularMeshFile", "AnnotationTriangularMeshGroupFile"],
-                "exact_mappings": ["cdp-common:annotation_source_file_scale_factor"],
-                "ifabsent": "float(1)",
-            }
-        },
-    )
-    name: Optional[str] = Field(
-        None,
-        description="""The name that identifies to a single annotation mesh among multiple meshes.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "name",
-                "domain_of": [
-                    "OrganismDetails",
-                    "TissueDetails",
-                    "CellType",
-                    "CellStrain",
-                    "CellComponent",
-                    "AnnotationObject",
-                    "AnnotationTriangularMeshGroupFile",
-                    "AuthorMixin",
-                    "AnnotationMethodLinks",
-                    "Author",
-                ],
-                "exact_mappings": ["cdp-common:annotation_source_file_mesh_name"],
-            }
-        },
-    )
-    file_format: str = Field(
-        ...,
-        description="""File format for this file""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "file_format",
-                "domain_of": [
-                    "AnnotationSourceFile",
-                    "AnnotationOrientedPointFile",
-                    "AnnotationInstanceSegmentationFile",
-                    "AnnotationPointFile",
-                    "AnnotationSegmentationMaskFile",
-                    "AnnotationSemanticSegmentationMaskFile",
-                    "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
-                ],
-                "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            }
-        },
-    )
-    glob_string: Optional[str] = Field(
-        None,
-        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "glob_string",
-                "domain_of": [
-                    "AnnotationSourceFile",
-                    "AnnotationOrientedPointFile",
-                    "AnnotationInstanceSegmentationFile",
-                    "AnnotationPointFile",
-                    "AnnotationSegmentationMaskFile",
-                    "AnnotationSemanticSegmentationMaskFile",
-                    "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
-                ],
-                "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            }
-        },
-    )
-    glob_strings: Optional[List[str]] = Field(
-        None,
-        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "glob_strings",
-                "domain_of": [
-                    "AnnotationSourceFile",
-                    "AnnotationOrientedPointFile",
-                    "AnnotationInstanceSegmentationFile",
-                    "AnnotationPointFile",
-                    "AnnotationSegmentationMaskFile",
-                    "AnnotationSemanticSegmentationMaskFile",
-                    "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
-                ],
-                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            }
-        },
-    )
-    is_visualization_default: Optional[bool] = Field(
-        False,
-        description="""This annotation will be rendered in neuroglancer by default.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "is_visualization_default",
-                "domain_of": [
-                    "AnnotationSourceFile",
-                    "AnnotationOrientedPointFile",
-                    "AnnotationInstanceSegmentationFile",
-                    "AnnotationPointFile",
-                    "AnnotationSegmentationMaskFile",
-                    "AnnotationSemanticSegmentationMaskFile",
-                    "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
@@ -3589,6 +3477,11 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "exact_mappings": ["cdp-common:annotation_method_type"],
             }
         },
+    )
+    method_links: Optional[List[AnnotationMethodLinks]] = Field(
+        None,
+        description="""A set of links to models, source code, documentation, etc referenced by annotation the method""",
+        json_schema_extra={"linkml_meta": {"alias": "method_links", "domain_of": ["Annotation"]}},
     )
     object_count: Optional[int] = Field(
         None,
@@ -3904,14 +3797,12 @@ class AuthorMixin(ConfiguredBaseModel):
                 "alias": "name",
                 "domain_of": [
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "OrganismDetails",
                     "TissueDetails",
                     "CellType",
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
-                    "AnnotationTriangularMeshGroupFile",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:author_name"],
@@ -4016,14 +3907,12 @@ class Author(AuthorMixin):
                 "alias": "name",
                 "domain_of": [
                     "AuthorMixin",
-                    "AnnotationMethodLinks",
                     "OrganismDetails",
                     "TissueDetails",
                     "CellType",
                     "CellStrain",
                     "CellComponent",
                     "AnnotationObject",
-                    "AnnotationTriangularMeshGroupFile",
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:author_name"],
@@ -4113,59 +4002,6 @@ class Author(AuthorMixin):
         return v
 
 
-class AnnotationMethodLinks(ConfiguredBaseModel):
-    """
-    A set of links to models, sourcecode, documentation, etc referenced by annotation the method
-    """
-
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
-
-    link: str = Field(
-        ...,
-        description="""URL to the resource""",
-        json_schema_extra={"linkml_meta": {"alias": "link", "domain_of": ["AnnotationMethodLinks"]}},
-    )
-    link_type: AnnotationMethodLinkTypeEnum = Field(
-        ...,
-        description="""Type of link (e.g. model, sourcecode, documentation)""",
-        json_schema_extra={"linkml_meta": {"alias": "link_type", "domain_of": ["AnnotationMethodLinks"]}},
-    )
-    name: Optional[str] = Field(
-        None,
-        description="""user readable name of the resource""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "name",
-                "domain_of": [
-                    "AuthorMixin",
-                    "AnnotationMethodLinks",
-                    "OrganismDetails",
-                    "TissueDetails",
-                    "CellType",
-                    "CellStrain",
-                    "CellComponent",
-                    "AnnotationObject",
-                    "AnnotationTriangularMeshGroupFile",
-                    "Author",
-                ],
-                "recommended": True,
-            }
-        },
-    )
-
-    @field_validator("link_type")
-    def pattern_link_type(cls, v):
-        pattern = re.compile(r"(^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)")
-        if isinstance(v, list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid link_type format: {element}")
-        elif isinstance(v, str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid link_type format: {v}")
-        return v
-
-
 # Model rebuild
 # see https://pydantic-docs.helpmanual.io/usage/models/#rebuilding-a-model
 PicturePath.model_rebuild()
@@ -4193,6 +4029,7 @@ TomogramOffset.model_rebuild()
 Tomogram.model_rebuild()
 AnnotationConfidence.model_rebuild()
 AnnotationObject.model_rebuild()
+AnnotationMethodLinks.model_rebuild()
 AnnotationSourceFile.model_rebuild()
 AnnotationOrientedPointFile.model_rebuild()
 AnnotationInstanceSegmentationFile.model_rebuild()
@@ -4200,7 +4037,6 @@ AnnotationPointFile.model_rebuild()
 AnnotationSegmentationMaskFile.model_rebuild()
 AnnotationSemanticSegmentationMaskFile.model_rebuild()
 AnnotationTriangularMeshFile.model_rebuild()
-AnnotationTriangularMeshGroupFile.model_rebuild()
 Annotation.model_rebuild()
 DateStampedEntityMixin.model_rebuild()
 DateStamp.model_rebuild()
@@ -4208,4 +4044,3 @@ CrossReferencesMixin.model_rebuild()
 CrossReferences.model_rebuild()
 AuthorMixin.model_rebuild()
 Author.model_rebuild()
-AnnotationMethodLinks.model_rebuild()

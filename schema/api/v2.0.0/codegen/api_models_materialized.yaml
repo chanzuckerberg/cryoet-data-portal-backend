@@ -1764,6 +1764,20 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: (^manual$)|(^automated$)|(^hybrid$)|(^simulated$)
+      method_links:
+        name: method_links
+        description: A set of links to models, source code, documentation, etc referenced
+          by annotation the method as json
+        from_schema: cdp-api
+        exact_mappings:
+        - cdp-common:annotation_method_links_json
+        alias: method_links
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: string
+        inlined: true
+        inlined_as_list: true
       id:
         name: id
         description: An identifier to refer to a specific instance of this type
@@ -3675,16 +3689,17 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
-      s3_mrc_bin1:
-        name: s3_mrc_bin1
+      s3_mrc_file:
+        name: s3_mrc_file
         description: S3 path to this tiltseries in MRC format (no scaling)
         from_schema: cdp-api
         exact_mappings:
-        - cdp-common:tiltseries_s3_mrc_bin1
-        alias: s3_mrc_bin1
+        - cdp-common:tiltseries_s3_mrc_file
+        alias: s3_mrc_file
         owner: Tiltseries
         domain_of:
         - Tiltseries
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -3702,16 +3717,17 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
-      https_mrc_bin1:
-        name: https_mrc_bin1
+      https_mrc_file:
+        name: https_mrc_file
         description: HTTPS path to this tiltseries in MRC format (no scaling)
         from_schema: cdp-api
         exact_mappings:
-        - cdp-common:tiltseries_https_mrc_bin1
-        alias: https_mrc_bin1
+        - cdp-common:tiltseries_https_mrc_file
+        alias: https_mrc_file
         owner: Tiltseries
         domain_of:
         - Tiltseries
+        - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
@@ -4779,28 +4795,30 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
-      s3_mrc_scale0:
-        name: s3_mrc_scale0
+      s3_mrc_file:
+        name: s3_mrc_file
         description: S3 path to this tomogram in MRC format (no scaling)
         from_schema: cdp-api
         exact_mappings:
-        - cdp-common:tomogram_s3_mrc_scale0
-        alias: s3_mrc_scale0
+        - cdp-common:tomogram_s3_mrc_file
+        alias: s3_mrc_file
         owner: Tomogram
         domain_of:
+        - Tiltseries
         - Tomogram
         range: string
         inlined: true
         inlined_as_list: true
-      https_mrc_scale0:
-        name: https_mrc_scale0
+      https_mrc_file:
+        name: https_mrc_file
         description: HTTPS path to this tomogram in MRC format (no scaling)
         from_schema: cdp-api
         exact_mappings:
-        - cdp-common:tomogram_https_mrc_scale0
-        alias: https_mrc_scale0
+        - cdp-common:tomogram_https_mrc_file
+        alias: https_mrc_file
         owner: Tomogram
         domain_of:
+        - Tiltseries
         - Tomogram
         range: string
         inlined: true

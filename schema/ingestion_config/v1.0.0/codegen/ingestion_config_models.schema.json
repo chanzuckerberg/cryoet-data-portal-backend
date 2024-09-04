@@ -74,6 +74,16 @@
                         "null"
                     ]
                 },
+                "method_links": {
+                    "description": "A set of links to models, source code, documentation, etc referenced by annotation the method",
+                    "items": {
+                        "$ref": "#/$defs/AnnotationMethodLinks"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "method_type": {
                     "$ref": "#/$defs/AnnotationMethodTypeEnum",
                     "description": "Classification of the annotation method based on supervision.",
@@ -250,23 +260,23 @@
         },
         "AnnotationMethodLinks": {
             "additionalProperties": false,
-            "description": "A set of links to models, sourcecode, documentation, etc referenced by annotation the method",
+            "description": "A set of links to models, source code, documentation, etc referenced by annotation the method",
             "properties": {
-                "link": {
-                    "description": "URL to the resource",
-                    "type": "string"
-                },
-                "link_type": {
-                    "$ref": "#/$defs/AnnotationMethodLinkTypeEnum",
-                    "description": "Type of link (e.g. model, sourcecode, documentation)",
-                    "pattern": "(^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)"
-                },
-                "name": {
+                "custom_name": {
                     "description": "user readable name of the resource",
                     "type": [
                         "string",
                         "null"
                     ]
+                },
+                "link": {
+                    "description": "URL to the annotation method reference",
+                    "type": "string"
+                },
+                "link_type": {
+                    "$ref": "#/$defs/AnnotationMethodLinkTypeEnum",
+                    "description": "Type of link (e.g. model, source code, documentation)",
+                    "pattern": "(^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)"
                 }
             },
             "required": [
