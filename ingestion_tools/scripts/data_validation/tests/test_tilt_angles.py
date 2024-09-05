@@ -28,6 +28,16 @@ class TestTiltAngles:
         tiltseries metadata size["z"] == frames_count == # of frames files.
     """
 
+    ### BEGIN Fixtures ###
+    @pytest.fixture
+    def tiltseries_metadata_range(self, tiltseries_metadata: Dict) -> List[float]:
+        # add tilt_step to max because arange is end value exclusive
+        return np.arange(
+            tiltseries_metadata["tilt_range"]["min"],
+            tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
+            tiltseries_metadata["tilt_step"],
+        ).tolist()
+
     ### Helper functions ###
     # TODO FIXME account for double 0 sample
     def helper_angles_injection_errors(
@@ -116,15 +126,12 @@ class TestTiltAngles:
 
     @allure.title("Tilt: angles correspond to the tilt_range + tilt_step metadata field.")
     @allure.description("Not all angles in the tilt range must be present in the tilt file.")
-    def test_tilt_tiltseries_range(self, tiltseries_tilt: pd.DataFrame, tiltseries_metadata: Dict):
+    def test_tilt_tiltseries_range(
+        self, tiltseries_tilt: pd.DataFrame, tiltseries_metadata: Dict, tiltseries_metadata_range: List[float],
+    ):
         errors = self.helper_angles_injection_errors(
             tiltseries_tilt["TiltAngle"].to_list(),
-            # add tilt_step to max because arange is end value exclusive
-            np.arange(
-                tiltseries_metadata["tilt_range"]["min"],
-                tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
-                tiltseries_metadata["tilt_step"],
-            ).tolist(),
+            tiltseries_metadata_range,
             "tilt file",
             "tiltseries metadata tilt_range",
         )
@@ -160,15 +167,12 @@ class TestTiltAngles:
 
     @allure.title("Raw tilt: angles correspond to the tilt_range + tilt_step metadata field.")
     @allure.description("Not all angles in the tilt range must be present in the raw tilt file.")
-    def test_raw_tilt_tiltseries_range(self, tiltseries_raw_tilt: pd.DataFrame, tiltseries_metadata: Dict):
+    def test_raw_tilt_tiltseries_range(
+        self, tiltseries_raw_tilt: pd.DataFrame, tiltseries_metadata: Dict, tiltseries_metadata_range: List[float],
+    ):
         errors = self.helper_angles_injection_errors(
             tiltseries_raw_tilt["TiltAngle"].to_list(),
-            # add tilt_step to max because arange is end value exclusive
-            np.arange(
-                tiltseries_metadata["tilt_range"]["min"],
-                tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
-                tiltseries_metadata["tilt_step"],
-            ).tolist(),
+            tiltseries_metadata_range,
             "raw tilt file",
             "tiltseries metadata tilt_range",
         )
@@ -223,15 +227,12 @@ class TestTiltAngles:
 
     @allure.title("Mdoc: every mdoc tilt angle corresponds to the tilt_range + tilt_step metadata field.")
     @allure.description("Not all angles in the tilt range must be present in the MDOC file.")
-    def test_mdoc_tiltseries_range(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
+    def test_mdoc_tiltseries_range(
+        self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame, tiltseries_metadata_range: List[float],
+    ):
         errors = self.helper_angles_injection_errors(
             tiltseries_mdoc["TiltAngle"].to_list(),
-            # add tilt_step to max because arange is end value exclusive
-            np.arange(
-                tiltseries_metadata["tilt_range"]["min"],
-                tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
-                tiltseries_metadata["tilt_step"],
-            ).tolist(),
+            tiltseries_metadata_range,
             "mdoc file",
             "tiltseries metadata tilt_range",
         )
