@@ -1,4 +1,9 @@
 annotations: []
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - chlamy_visual_proteomics/{run_name}/{run_name}.mdoc
 dataset_keyphotos:
 - sources:
   - literal:
@@ -64,7 +69,7 @@ datasets:
     dataset_identifier: 10302
     dataset_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
       cryo-plasmaFIB milling - Full Dataset
-    dates: &id002
+    dates:
       deposition_date: '2024-04-10'
       last_modified_date: '2024-04-10'
       release_date: '2024-04-10'
@@ -92,17 +97,12 @@ rawtilts:
   - source_multi_glob:
       list_globs:
       - chlamy_visual_proteomics/{run_name}/{run_name}.rawtlt
-      - chlamy_visual_proteomics/{run_name}/{run_name}.mdoc
       - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.tlt
       - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.xf
       - chlamy_visual_proteomics/{run_name}/ctffind4/ctfphaseflip_ctffind4.txt
 runs:
 - sources:
-  - source_glob:
-      list_glob: chlamy_visual_proteomics/*
-      match_regex: /(\d{8}_.*)$
-      name_regex: (.*)
-    exclude:
+  - exclude:
     - ^01122021_BrnoKrios_arctis_lam1_pos4$
     - ^01122021_BrnoKrios_arctis_lam1_pos5$
     - ^01122021_BrnoKrios_arctis_lam2_pos13$
@@ -121,6 +121,10 @@ runs:
     - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_33$
     - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_44$
     - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_7$
+    source_glob:
+      list_glob: chlamy_visual_proteomics/*
+      match_regex: /(\d{8}_.*)$
+      name_regex: (.*)
 standardization_config:
   deposition_id: 10300
   run_data_map_file: chlamy_visual_proteomics/run_to_data_map.tsv

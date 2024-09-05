@@ -333,6 +333,11 @@ annotations:
       glob_string: labels/{run_name}_membranes.mrc
       is_visualization_default: false
       mask_label: 1
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/mdocs_modified/{run_name}.mdoc
 dataset_keyphotos:
 - sources:
   - literal:
@@ -403,14 +408,15 @@ depositions:
 - metadata:
     authors: *id003
     dates: *id002
-    deposition_description:
-      "Datasets comprising 20 annotated Schizosaccharomyces pombe cryo-electron tomograms, with 10 tomograms acquired
-      using a Volta phase plate (VPP) for enhanced contrast and 10 using conventional defocus. The dataset includes
-      comprehensive annotations of ribosomes, fatty acid synthases, membranes, organelles, and cytosol. Additionally,
-      3 tomograms of RPE-1 cells used to train networks for actin segmentation are included. These datasets enabled the
-      development and validation of DeePiCt, a deep learning framework combining 2D and 3D convolutional neural networks
-      for cellular structure segmentation and macromolecular complex localization across different species and
-      acquisition conditions."
+    deposition_description: Datasets comprising 20 annotated Schizosaccharomyces pombe
+      cryo-electron tomograms, with 10 tomograms acquired using a Volta phase plate
+      (VPP) for enhanced contrast and 10 using conventional defocus. The dataset includes
+      comprehensive annotations of ribosomes, fatty acid synthases, membranes, organelles,
+      and cytosol. Additionally, 3 tomograms of RPE-1 cells used to train networks
+      for actin segmentation are included. These datasets enabled the development
+      and validation of DeePiCt, a deep learning framework combining 2D and 3D convolutional
+      neural networks for cellular structure segmentation and macromolecular complex
+      localization across different species and acquisition conditions.
     deposition_identifier: 10000
     deposition_title: DeePiCt Training and Evaluation Datasets
     deposition_types:
@@ -438,7 +444,6 @@ rawtilts:
       list_globs:
       - metadata/{run_name}.rawtlt
       - metadata/{run_name}.xf
-      - metadata/mdocs_modified/{run_name}.mdoc
 runs:
 - sources:
   - source_glob:

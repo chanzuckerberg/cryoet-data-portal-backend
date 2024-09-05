@@ -29,6 +29,11 @@ annotations:
     file_format: csv
     glob_string: aaaa/bbb/{ts_name}.csv
     shape: REQUIRED
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/mdocs_modified/{run_name}.mdoc
 dataset_keyphotos:
 - sources:
   - literal:
@@ -98,7 +103,6 @@ rawtilts:
       list_globs:
       - metadata/{run_name}.rawtlt
       - metadata/{run_name}.xf
-      - metadata/mdocs_modified/{run_name}.mdoc
 runs:
 - sources:
   - source_glob:

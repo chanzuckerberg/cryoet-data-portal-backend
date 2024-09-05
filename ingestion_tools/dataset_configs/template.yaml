@@ -92,6 +92,8 @@ annotations: OPTIONAL
       scale_factor: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
     parent_filters: see InstanceSegmentation.parent_filters
     exclude: SEE InstanceSegmentation.exclude
+collection_metadata: OPTIONAL
+- sources: SEE datasets.sources and runs.sources.parent_filters
 dataset_keyphotos: OPTIONAL
 - sources: REQUIRED
   - literal: REQUIRED
