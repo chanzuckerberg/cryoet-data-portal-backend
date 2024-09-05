@@ -5,7 +5,7 @@ import pytest
 
 
 @pytest.mark.voxel_spacing
-@pytest.mark.parametrize("run_name, voxel_spacing", pytest.run_spacing_combinations, scope="session")
+@pytest.mark.parametrize("dataset, run_name, voxel_spacing", pytest.dataset_run_spacing_combinations, scope="session")
 class TestVoxelSpacing:
     @allure.title("Voxel spacing: Sanity check voxel spacing values.")
     def test_voxel_spacing(self, voxel_spacing: str, run_name: str, dataset: str):

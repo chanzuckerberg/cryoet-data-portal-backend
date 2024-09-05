@@ -13,7 +13,7 @@ PERMITTED_FRAME_EXTENSIONS = [".mrc", ".tif", ".tiff", ".eer", ".mrc.bz2"]
 
 
 @pytest.mark.frame
-@pytest.mark.parametrize("run_name", pytest.run_name, scope="session")
+@pytest.mark.parametrize("dataset, run_name", pytest.dataset_run_combinations, scope="session")
 class TestFrame(HelperTestMRCHeader):
     @pytest.fixture(autouse=True)
     def set_helper_test_mrc_header_class_variables(

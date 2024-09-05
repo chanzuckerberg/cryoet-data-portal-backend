@@ -22,7 +22,7 @@ MIN_SNAPSHOT_WIDTH = 512 * 3 / 4  # account for 4:3 aspect ratio
 
 
 @pytest.mark.tomogram
-@pytest.mark.parametrize("run_name, voxel_spacing", pytest.run_spacing_combinations, scope="session")
+@pytest.mark.parametrize("dataset, run_name, voxel_spacing", pytest.dataset_run_spacing_combinations, scope="session")
 class TestTomogram(HelperTestMRCZarrHeader):
 
     @pytest.fixture(autouse=True)
