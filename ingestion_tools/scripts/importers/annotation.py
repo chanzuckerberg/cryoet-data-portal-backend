@@ -4,7 +4,7 @@ import os.path
 from abc import abstractmethod
 from collections import defaultdict
 from functools import partial
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Callable
 
 import ndjson
 
@@ -137,6 +137,8 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             anno = InstanceSegmentationAnnotation(**instance_args)
         if shape == "TriangularMesh":
             anno = TriangularMeshAnnotation(**instance_args)
+        if shape == "TriangularMeshGroup":
+            anno = TriangularMeshAnnotationGroup(**instance_args)
         if not anno:
             raise NotImplementedError(f"Unknown shape {shape}")
         if anno.is_valid():
@@ -481,17 +483,10 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
         return len(self.get_distinct_ids(output_prefix))
 
 
-class TriangularMeshAnnotation(BaseAnnotationSource):
-    """Triangular Meshes are converted to glb format"""
-
+class AbstractTriangularMeshAnnotation(BaseAnnotationSource):
     shape = "TriangularMesh"
-    map_functions = {
-        "obj": mc.from_generic,
-        "stl": mc.from_generic,
-        "vtk": mc.from_vtk,
-        "glb": mc.from_generic,
-    }
-    valid_file_formats = list(map_functions.keys())
+    map_functions: dict[str, Callable]
+    valid_file_formats: list[str]
     output_format: str = "glb"
     scale_factor: float
 
@@ -515,12 +510,60 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         ]
         return metadata
 
-    def convert(self, output_prefix: str):
-        mesh_file = self.config.fs.localreadable(self.path)
-        output_file_name = self.get_output_filename(output_prefix, self.output_format)
-        tmp_path = self.config.fs.localwritable(output_file_name)
-        self.map_functions[self.file_format](mesh_file, tmp_path, scale_factor=self.scale_factor)
-        self.config.fs.push(tmp_path)
-
     def get_object_count(self, output_prefix: str) -> int:
         return 1
+
+    @property
+    def mesh_file(self) -> str:
+        if not hasattr(self, "_mesh_file"):
+            self._mesh_file = self.config.fs.localreadable(self.path)
+        return self._mesh_file
+
+    @abstractmethod
+    def convert(self, output_prefix: str):
+        """convert the mesh and write it to the output directory"""
+        pass
+
+
+class TriangularMeshAnnotation(AbstractTriangularMeshAnnotation):
+    """Triangular Meshes are converted to glb format"""
+
+    map_functions = {
+        "obj": mc.from_generic,
+        "stl": mc.from_generic,
+        "vtk": mc.from_vtk,
+        "glb": mc.from_generic,
+    }
+    valid_file_formats = list(map_functions.keys())
+
+    def convert(self, output_prefix: str):
+        output_file_name = self.get_output_filename(output_prefix, self.output_format)
+        output_file = self.config.fs.localwritable(output_file_name)
+        self.map_functions[self.file_format](self.mesh_file, output_file, scale_factor=self.scale_factor)
+        self.config.fs.push(output_file)
+
+
+class TriangularMeshAnnotationGroup(AbstractTriangularMeshAnnotation):
+    map_functions = {
+        "hff": mc.from_hff,
+    }
+    valid_file_formats = list(map_functions.keys())
+    mesh_name: str
+
+    def __init__(self, mesh_name: str, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.mesh_name = mesh_name
+
+    def convert(self, output_prefix: str):
+        output_file_name = self.get_output_filename(output_prefix, self.output_format)
+        output_file = self.config.fs.localwritable(output_file_name)
+        self.map_functions[self.file_format](
+            self.mesh_file,
+            output_file,
+            scale_factor=self.scale_factor,
+            name=self.mesh_name,
+        )
+        self.config.fs.push(output_file)
+
+    def is_valid(self) -> bool:
+        return bool(mc.check_mesh_name(self.mesh_file, self.mesh_name))
