@@ -81,9 +81,15 @@ def frames_dir(run_dir: str, filesystem: FileSystemApi) -> str:
 
 @pytest.fixture(scope="session")
 def frames_files(frames_dir: str, filesystem: FileSystemApi) -> List[str]:
-    """[Dataset]/[ExperimentRun]/Frames/[frame_name].mrc"""
+    """[Dataset]/[ExperimentRun]/Frames/*"""
     files = filesystem.glob(f"{frames_dir}/*")
-    return ["s3://" + file for file in files if "_gain" not in file]  # Exclude gain files
+    # Exclude gain files, add s3 prefix
+    refined_files = ["s3://" + file for file in files if "_gain" not in file]
+    # gain files are in the folder, but just no frames
+    if len(refined_files) == 0 and len(files) != 0:
+        pytest.skip(f"No frame files in frames directory: {frames_dir}")
+
+    return refined_files
 
 
 # =============================================================================
@@ -103,7 +109,7 @@ def gain_dir(run_dir: str, filesystem: FileSystemApi) -> str:
 
 @pytest.fixture(scope="session")
 def gain_files(run_name: str, gain_dir: str, filesystem: FileSystemApi) -> List[str]:
-    """[Dataset]/[ExperimentRun]/Frames/[run_name]_gain*"""
+    """[Dataset]/[ExperimentRun]/Frames/[run_name]*_gain*"""
     files = filesystem.glob(f"{gain_dir}/*_gain*")
     if len(files) == 0:
         pytest.skip("No gain files found.")
@@ -166,7 +172,7 @@ def tiltseries_zarr_file(
     """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].zarr"""
     file = f"{tiltseries_dir}/{tiltseries_metadata['omezarr_dir']}"
     if not filesystem.exists(file):
-        pytest.fail(f"Tilt series OME-Zarr file not found: {file}")
+        pytest.fail(f"Tilt series Zarr file not found: {file}")
     return file
 
 
@@ -226,12 +232,12 @@ def tomograms_dir(run_dir: str, filesystem: FileSystemApi) -> str:
 @pytest.fixture(scope="session")
 def voxel_dir(
     tomograms_dir: str,
-    voxel_spacing: float,
+    voxel_spacing: str,
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]"""
 
-    dst = f"{tomograms_dir}/VoxelSpacing{voxel_spacing:.3f}"
+    dst = f"{tomograms_dir}/VoxelSpacing{voxel_spacing}"
 
     if filesystem.exists(dst):
         return dst
@@ -240,61 +246,61 @@ def voxel_dir(
 
 
 @pytest.fixture(scope="session")
-def canonical_tomo_dir(voxel_dir: str, filesystem: FileSystemApi) -> str:
+def tomo_dir(voxel_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram"""
     dst = f"{voxel_dir}/CanonicalTomogram"
     if filesystem.exists(dst):
         return dst
     else:
-        pytest.fail(f"CanonicalTomogram directory not found: {dst}")
+        pytest.fail(f"Tomogram directory not found: {dst}")
 
 
 @pytest.fixture(scope="session")
-def canonical_tomo_meta_file(
-    canonical_tomo_dir: str,
+def tomo_meta_file(
+    tomo_dir: str,
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/tomogram_metadata.json"""
-    dst = f"{canonical_tomo_dir}/tomogram_metadata.json"
+    dst = f"{tomo_dir}/tomogram_metadata.json"
     if filesystem.exists(dst):
         return dst
     else:
-        pytest.fail(f"Canonical tomogram metadata file not found: {dst}")
+        pytest.fail(f"Tomogram metadata file not found: {dst}")
 
 
 @pytest.fixture(scope="session")
-def canonical_tomo_mrc_file(
-    canonical_tomo_dir: str,
-    canonical_tomogram_metadata: Dict,
+def tomo_mrc_file(
+    tomo_dir: str,
+    tomogram_metadata: Dict,
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name].mrc"""
     # TODO FIXME List[str] mrc_files should really just become str mrc_file, and then adjust this fixture accordingly
-    file = f"{canonical_tomo_dir}/{canonical_tomogram_metadata['mrc_files'][0]}"
+    file = f"{tomo_dir}/{tomogram_metadata['mrc_files'][0]}"
     if not filesystem.exists(file):
-        pytest.fail(f"Canonical tomogram mrc file not found: {file}")
+        pytest.fail(f"Tomogram mrc file not found: {file}")
     return file
 
 
 @pytest.fixture(scope="session")
-def canonical_tomo_zarr_file(
-    canonical_tomo_dir: str,
-    canonical_tomogram_metadata: Dict,
+def tomo_zarr_file(
+    tomo_dir: str,
+    tomogram_metadata: Dict,
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name].zarr"""
-    file = f"{canonical_tomo_dir}/{canonical_tomogram_metadata['omezarr_dir']}"
+    file = f"{tomo_dir}/{tomogram_metadata['omezarr_dir']}"
     if not filesystem.exists(file):
-        pytest.fail(f"Canonical tomogram OME-Zarr file not found: {file}")
+        pytest.fail(f"Tomogram Zarr file not found: {file}")
     return file
 
 
 @pytest.fixture(scope="session")
-def canonical_tomo_basename(
-    canonical_tomo_zarr_file: str,
+def tomo_basename(
+    tomo_zarr_file: str,
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name]"""
-    return os.path.splitext(canonical_tomo_zarr_file)[0]
+    return os.path.splitext(tomo_zarr_file)[0]
 
 
 # =============================================================================

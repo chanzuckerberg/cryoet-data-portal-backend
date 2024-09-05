@@ -1,9 +1,11 @@
 ## S3 Data Validation Test Scripts
 
+### Pytest
+
 To run (from this directory):
 
 ```
-pytest --bucket [BUCKET_NAME] --dataset [DATASET_ID] --run_glob [RUN_GLOB] --voxel_spacing_glob [VOXEL_SPACING_GLOB]
+pytest --bucket [BUCKET_NAME] --dataset [DATASET_ID] --run-glob [RUN_GLOB] --voxel-spacing-glob [VOXEL_SPACING_GLOB]
 
 bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
 dataset: The dataset ID to validate. Required.
@@ -32,7 +34,7 @@ Additional pytest helpful parameters:
 ```
 -n [NUM]: Run tests in parallel with [NUM] workers (pytest-xdist plugin)
     - Use `auto` to automatically determine the number of workers based on the number of CPU cores.
-    - Recommended for validating large / multiple datasets
+    - Recommended for validating large / multiple datasets. Note: for smaller datasets, this is likely slower because of the worker setup overhead.
     - Use this with `--dist loadscope` to prevent fixtures from being reloaded for each worker
 -v: Verbose output
 -s: Print stdout to console
@@ -57,11 +59,56 @@ pytest --dataset 10200 -s -v -n auto --dist loadscope
 Run tiltseries and tomogram validation for run "TS_026" in dataset 10000.
 
 ```
-pytest --dataset 10000 --run_glob "TS_026" -s -v -m tiltseries -m tomogram
+pytest --dataset 10000 --run-glob "TS_026" -s -v -m tiltseries -m tomogram
 ```
 
 Run data validation for run "17072022_BrnoKrios_Arctis_p3ar_grid_Position_76" in dataset 10301, skipping TestGain validation.
 
 ```
-pytest --dataset 10301 --run_glob "17072022_BrnoKrios_Arctis_p3ar_grid_Position_76" -s -v -k "not TestGain"
+pytest --dataset 10301 --run-glob "17072022_BrnoKrios_Arctis_p3ar_grid_Position_76" -s -v -k "not TestGain"
+```
+
+### Allure + Pytest
+
+For large validation runs, it may be helpful to generate an Allure report to view the results. `run_tests.py` is a wrapper script that runs the pytest tests and generates an Allure report, with ability to upload the report to S3.
+
+Ensure you have the allure command line tool installed (e.g. `brew install allure`). See: https://allurereport.org/docs/install/
+
+To run (from this directory):
+
+```
+python run_tests.py --bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --datasets [DATASET_ID] --multiprocessing/--no-multiprocessing --save-history/--no-save-history
+
+--bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
+--output-bucket: The S3 bucket where the Allure report will be uploaded. Default: `cryoetportal-rawdatasets-dev`
+--datasets: A comma-separated list of dataset IDs to validate. If not provided, all datasets will be validated.
+--multiprocessing/--no-multiprocessing: Run tests in parallel with multiple workers (pytest-xdist). Default: `--multiprocessing`
+--save-history/--no-save-history: Save the test results to S3 for historical tracking. Default: `--save-history`
+--extra_args: Additional arguments to pass to pytest. See pytest arguments above.
+```
+
+Example:
+
+Run all data validation for datasets 10027 and 10200, and save the test results to S3.
+
+```
+python run_tests.py --datasets 10027,10200
+```
+
+Run only tiltseries validation for all datasets, and save the test results to S3.
+
+```
+python run_tests.py --extra-args "-k TestTiltseries"
+```
+
+Run on a smaller dataset, so no need for multiprocessing (multiprocessing worker setup overhead makes it slower than no multiprocessing).
+
+```
+python run_tests.py --datasets 10031 --no-multiprocessing
+```
+
+Run all data validation for everything, and save the test results to S3 (not recommended, can take awhile).
+
+```
+python run_tests.py
 ```
