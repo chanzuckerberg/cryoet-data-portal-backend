@@ -10,7 +10,7 @@ ANGLE_TOLERANCE = 0.05
 
 
 @pytest.mark.tilt_angles
-@pytest.mark.parametrize("run_name", pytest.run_name, scope="session")
+@pytest.mark.parametrize("dataset, run_name", pytest.dataset_run_combinations, scope="session")
 class TestTiltAngles:
     """
     A class to test tilt angle data. Only checking that the # of angles in these files are consistent with other files /
@@ -108,11 +108,9 @@ class TestTiltAngles:
         )
         assert len(errors) == 0, "\n".join(errors)
 
-    @allure.title("Tilt: number of tilt angles are less than or equal to number of frames files.")
-    def test_tilt_frames(self, tiltseries_tilt: pd.DataFrame, frames_files: List[str]):
-        assert len(tiltseries_tilt) <= len(frames_files)
-
-    @allure.title("Tilt: number of tilt angles are less or equal to tiltseries size['z'].")
+    @allure.title(
+        "Raw tilt: number of raw tilt angles are less than or equal to tiltseries size['z'] (implied to be the number of frames files).",
+    )
     def test_tilt_tiltseries_metadata(self, tiltseries_tilt: pd.DataFrame, tiltseries_metadata: Dict):
         assert len(tiltseries_tilt) <= tiltseries_metadata["size"]["z"]
 
@@ -121,9 +119,10 @@ class TestTiltAngles:
     def test_tilt_tiltseries_range(self, tiltseries_tilt: pd.DataFrame, tiltseries_metadata: Dict):
         errors = self.helper_angles_injection_errors(
             tiltseries_tilt["TiltAngle"].to_list(),
+            # add tilt_step to max because arange is end value exclusive
             np.arange(
                 tiltseries_metadata["tilt_range"]["min"],
-                tiltseries_metadata["tilt_range"]["max"],
+                tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
                 tiltseries_metadata["tilt_step"],
             ).tolist(),
             "tilt file",
@@ -153,7 +152,9 @@ class TestTiltAngles:
         )
         assert len(errors) == 0, "\n".join(errors)
 
-    @allure.title("Raw tilt: number of raw tilt angles are less than or equal to number of frames files.")
+    @allure.title(
+        "Raw tilt: number of raw tilt angles are less than or equal to tiltseries size['z'] (implied to be the number of frames files).",
+    )
     def test_raw_tilt_tiltseries_metadata(self, tiltseries_raw_tilt: pd.DataFrame, tiltseries_metadata: Dict):
         assert len(tiltseries_raw_tilt) <= tiltseries_metadata["size"]["z"]
 
@@ -162,9 +163,10 @@ class TestTiltAngles:
     def test_raw_tilt_tiltseries_range(self, tiltseries_raw_tilt: pd.DataFrame, tiltseries_metadata: Dict):
         errors = self.helper_angles_injection_errors(
             tiltseries_raw_tilt["TiltAngle"].to_list(),
+            # add tilt_step to max because arange is end value exclusive
             np.arange(
                 tiltseries_metadata["tilt_range"]["min"],
-                tiltseries_metadata["tilt_range"]["max"],
+                tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
                 tiltseries_metadata["tilt_step"],
             ).tolist(),
             "raw tilt file",
@@ -224,9 +226,10 @@ class TestTiltAngles:
     def test_mdoc_tiltseries_range(self, tiltseries_metadata: Dict, tiltseries_mdoc: pd.DataFrame):
         errors = self.helper_angles_injection_errors(
             tiltseries_mdoc["TiltAngle"].to_list(),
+            # add tilt_step to max because arange is end value exclusive
             np.arange(
                 tiltseries_metadata["tilt_range"]["min"],
-                tiltseries_metadata["tilt_range"]["max"],
+                tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
                 tiltseries_metadata["tilt_step"],
             ).tolist(),
             "mdoc file",

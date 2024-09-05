@@ -1,7 +1,7 @@
 """
 Fixtures for files and directories on the s3 bucket.
 Paths returned as strings (singular fixture name) or lists of strings (plural fixture name).
-Note that some of these fixtures, although session-scoped, can be re-initialized for every parameterized
+Note that some of these fixtures, although session-scoped, can be re-initialized for every parametrized
 run_name and voxel_spacing combination.
 """
 

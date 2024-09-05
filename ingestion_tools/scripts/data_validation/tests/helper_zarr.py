@@ -19,7 +19,7 @@ class HelperTestZarrHeader:
     zarr_headers: Dict[str, Dict[str, Dict]] = None
     skip_z_axis_checks: bool = False
     spacing: float = None
-    permitted_zarr_datatypes: list = [np.int8, np.float32]
+    permitted_zarr_datatypes: list = [np.int8, np.int16, np.float32, np.float64]
 
     ### BEGIN ZARR Self-consistency tests ###
     def zarr_header_helper(
