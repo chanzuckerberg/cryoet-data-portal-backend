@@ -113,6 +113,9 @@ def helper_tiff_mrc_consistent(headers: Dict[str, Union[List[tifffile.TiffPage],
     dimensions = None
     pixel_spacing = None
 
+    if not headers:
+        pytest.skip("No headers to check")
+
     for filename, header_entity in headers.items():
         if isinstance(header_entity, list) and isinstance(header_entity[0], tifffile.TiffPage):
             curr_dimensions = header_entity[0].shape
