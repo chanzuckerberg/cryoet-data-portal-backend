@@ -58,6 +58,7 @@ IMPORTER_DEP_TREE = {
                 FrameImporter: {},
                 TiltSeriesImporter: {},
                 RawTiltImporter: {},
+                CollectionMetadataImporter: {},
             },
             DatasetKeyPhotoImporter: {},
         },
