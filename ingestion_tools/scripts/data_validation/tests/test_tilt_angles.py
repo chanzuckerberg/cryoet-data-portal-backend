@@ -240,3 +240,9 @@ class TestTiltAngles:
             "\n".join(errors)
             + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, with step {tiltseries_metadata['tilt_step']}"
         )
+
+    ### BEGIN frames files & tiltseries metadata tests ###
+    @allure.title("Frames: files is consistent with tiltseries metadata frames_count and size['z'].")
+    def test_frames_count(self, frames_files: List[str], tiltseries_metadata: Dict):
+        assert len(frames_files) == tiltseries_metadata["frames_count"]
+        assert len(frames_files) == tiltseries_metadata["size"]["z"]
