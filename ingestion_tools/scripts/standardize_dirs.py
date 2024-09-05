@@ -15,6 +15,7 @@ from importers.gain import GainImporter
 from importers.key_image import KeyImageImporter
 from importers.rawtilt import RawTiltImporter
 from importers.run import RunImporter
+from importers.tilt import TiltImporter
 from importers.tiltseries import TiltSeriesImporter
 from importers.tomogram import TomogramImporter
 from importers.visualization_config import VisualizationConfigImporter
@@ -40,6 +41,7 @@ IMPORTERS = [
     KeyImageImporter,
     RawTiltImporter,
     RunImporter,
+    TiltImporter,
     TiltSeriesImporter,
     TomogramImporter,
     VoxelSpacingImporter,
@@ -55,8 +57,9 @@ IMPORTER_DEP_TREE = {
                 CollectionMetadataImporter: {},
                 RawTiltImporter: {},
                 TiltSeriesImporter: {},
+                TiltImporter: {},
+                AlignmentImporter: {},
                 VoxelSpacingImporter: {
-                    AlignmentImporter: {},
                     AnnotationImporter: {
                         AnnotationVisualizationImporter: {},
                     },

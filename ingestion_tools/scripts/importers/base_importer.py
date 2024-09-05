@@ -166,11 +166,13 @@ class VolumeImporter(BaseImporter):
 
 
 class BaseFileImporter(BaseImporter):
+    def get_dest_filename(self) -> str:
+        output_dir = self.get_output_path()
+        return os.path.join(output_dir, os.path.basename(self.path))
+
     def import_item(self, write: bool = True):
         fs = self.config.fs
-        output_dir = self.get_output_path()
-        dest_filename = os.path.join(output_dir, os.path.basename(self.path))
-        fs.copy(self.path, dest_filename)
+        fs.copy(self.path, self.get_dest_filename())
 
 
 class BaseKeyPhotoImporter(BaseImporter):
