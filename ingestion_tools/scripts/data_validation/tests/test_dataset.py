@@ -9,7 +9,6 @@ from common.fs import FileSystemApi
 
 
 @pytest.mark.dataset
-@pytest.mark.metadata
 class TestDataset:
     def test_dataset_metadata(self, dataset_metadata: Dict):
         """A dataset metadata sanity check."""

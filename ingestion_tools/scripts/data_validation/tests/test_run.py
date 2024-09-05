@@ -4,7 +4,6 @@ import pytest
 
 
 @pytest.mark.run
-@pytest.mark.metadata
 @pytest.mark.parametrize("run_name", pytest.run_name, scope="session")
 class TestRun:
     def test_run_metadata(self, run_name: str, run_metadata: Dict):

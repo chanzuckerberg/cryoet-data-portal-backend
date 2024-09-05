@@ -32,7 +32,7 @@ def run_names(bucket: str, dataset: str, run_glob: str) -> List[str]:
     return run_names
 
 
-def get_voxel_spacing_files(bucket: str, dataset: str, run_names: List[str], voxelspacing_glob: str) -> List[str]:
+def get_voxel_spacing_files(bucket: str, dataset: str, run_names: List[str], voxel_spacing_glob: str) -> List[str]:
     fs: S3Filesystem = FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
 
     tentatives = []
@@ -41,7 +41,7 @@ def get_voxel_spacing_files(bucket: str, dataset: str, run_names: List[str], vox
     with concurrent.futures.ThreadPoolExecutor() as executor:
         # Map the run_names to the glob_task function
         results = executor.map(
-            lambda run_name: fs.glob(f"s3://{bucket}/{dataset}/{run_name}/Tomograms/{voxelspacing_glob}"),
+            lambda run_name: fs.glob(f"s3://{bucket}/{dataset}/{run_name}/Tomograms/{voxel_spacing_glob}"),
             run_names,
         )
 
@@ -76,7 +76,7 @@ def run_spacing_combinations(
     voxel_spacings: List[float],
     voxel_spacing_files: List[str],
 ) -> List[Tuple[str, float]]:
-    """Not all runs have all voxelspacings. Go through each run and find all the spacings present."""
+    """Not all runs have all voxel spacings. Go through each run and find all the spacings present."""
     combos = []
 
     for run in run_names:
@@ -103,8 +103,8 @@ def pytest_configure(config: pytest.Config) -> None:
     run_glob = config.getoption("--run_glob")
     pytest.run_name = run_names(bucket, dataset, run_glob)
 
-    voxelspacing_glob = config.getoption("--voxelspacing_glob")
-    voxel_spacing_files = get_voxel_spacing_files(bucket, dataset, pytest.run_name, voxelspacing_glob)
+    voxel_spacing_glob = config.getoption("--voxel_spacing_glob")
+    voxel_spacing_files = get_voxel_spacing_files(bucket, dataset, pytest.run_name, voxel_spacing_glob)
     pytest.voxel_spacing = voxel_spacings(voxel_spacing_files)
 
     pytest.run_spacing_combinations = run_spacing_combinations(
@@ -130,7 +130,6 @@ def pytest_configure(config: pytest.Config) -> None:
     )
     config.addinivalue_line("markers", "tomogram: Tests concerning the tomogram.")
     config.addinivalue_line("markers", "voxel_spacing: Tests concerning voxel spacings.")
-    config.addinivalue_line("markers", "metadata: Tests concerning any metadata.")
 
 
 # @pytest.hookimpl(hookwrapper=True)
@@ -182,8 +181,8 @@ def pytest_configure(config: pytest.Config) -> None:
 #         item.add_marker(mark)
 
 #     if "voxel_spacing" in item.fixturenames:
-#         voxelspacing = item.callspec.params["voxel_spacing"]
-#         story_name = f"Voxel spacing {voxelspacing}"
+#         voxel_spacing = item.callspec.params["voxel_spacing"]
+#         story_name = f"Voxel spacing {voxel_spacing}"
 #         mark = getattr(pytest.mark, ALLURE_LABEL_MARK)(story_name, label_type=LabelType.STORY)
 #         item.add_marker(mark)
 
