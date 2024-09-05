@@ -2,10 +2,11 @@ import os
 import warnings
 from typing import Dict, List, Union
 
+import allure
 import pandas as pd
 import pytest
 import tifffile
-from data_validation.tests.helper_mrc import HelperTestMRCHeader
+from data_validation.tests.helper_mrc import HelperTestMRCHeader, mrc_allure_title
 from mrcfile.mrcinterpreter import MrcInterpreter
 
 PERMITTED_FRAME_EXTENSIONS = [".mrc", ".tif", ".tiff", ".eer", ".mrc.bz2"]
@@ -23,20 +24,25 @@ class TestFrame(HelperTestMRCHeader):
         self.mrc_headers = {k: v for k, v in frames_headers.items() if isinstance(v, MrcInterpreter)}
 
     ### DON'T RUN SOME MRC HEADER TESTS ###
+    @mrc_allure_title
     def test_nlabel(self):
         pytest.skip("Not applicable for frame files")
 
+    @mrc_allure_title
     def test_nversion(self):
         pytest.skip("Not applicable for frame files")
 
-    def test_mrc_mode(self):
+    @mrc_allure_title
+    def test_datatype(self):
         pytest.skip("Not applicable for frame files")
 
+    @mrc_allure_title
     def test_mrc_spacing(self):
         pytest.skip("Not applicable for frame files")
 
     ### BEGIN Self-consistency tests ###
-    def test_frames_format(self, frames_files: List[str]):
+    @allure.title("Frames: valid extensions.")
+    def test_extensions(self, frames_files: List[str]):
         errors = []
 
         for frame_file in frames_files:
@@ -46,18 +52,19 @@ class TestFrame(HelperTestMRCHeader):
         if errors:
             warnings.warn("\n".join(errors), stacklevel=2)
 
-    def test_frames_consistent(self, frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
+    @allure.title("Frames: consistent dimensions and pixel spacings (MRC & TIFF).")
+    def test_consistent(self, frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
         return helper_tiff_mrc_consistent(frames_headers)
 
     ### END Self-consistency tests ###
 
     ### BEGIN Tiltseries consistency tests ###
-    def test_frames_mdoc_numsubframes(
+    @allure.title("Frames: number of subframes in mdoc matches the number of subframes in the frame file.")
+    def test_mdoc_numsubframes(
         self,
         frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
         tiltseries_mdoc: pd.DataFrame,
     ):
-        """Check that all mdoc listed frames have the correct number of subframes (corresponds to the header info in the frame file)."""
         errors = []
         for _, row in tiltseries_mdoc.iterrows():
             frame_file = os.path.basename(str(row["SubFramePath"]).replace("\\", "/"))
@@ -81,12 +88,12 @@ class TestFrame(HelperTestMRCHeader):
 
         assert not errors, "\n".join(errors)
 
-    def test_frames_tiltseries_pixel_spacing(
+    @allure.title("Frames: tiltseries pixel spacing is an integer multiple of the frame pixel spacing.")
+    def test_tiltseries_pixel_spacing(
         self,
         frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
         tiltseries_metadata: Dict,
     ):
-        """Check that the tiltseries pixel spacing is an integer multiple of the frame pixel spacing."""
         for frame_file, frame_header in frames_headers.items():
             if isinstance(frame_header, MrcInterpreter):
                 # only need to check the first frame, since we check that all frames have the same pixel spacing

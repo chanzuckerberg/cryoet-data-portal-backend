@@ -4,20 +4,6 @@ from pytest import Parser, fixture
 def pytest_addoption(parser: Parser) -> None:
     """Common options for all tests."""
 
-    # Logging level
-    parser.addoption(
-        "--verbose-logs",
-        action="store_true",
-        default=False,
-    )
-
-    # Report destination
-    parser.addoption(
-        "--report_dst",
-        action="store",
-        default=".",
-    )
-
     # S3 or local
     parser.addoption(
         "--bucket",
@@ -34,14 +20,14 @@ def pytest_addoption(parser: Parser) -> None:
 
     # Run Name and ID
     parser.addoption(
-        "--run_glob",
+        "--run-glob",
         action="store",
         default="*",
     )
 
     # Voxelspacing
     parser.addoption(
-        "--voxel_spacing_glob",
+        "--voxel-spacing-glob",
         action="store",
         default="*",
     )
@@ -59,9 +45,9 @@ def dataset(request):
 
 @fixture(scope="session")
 def voxel_spacing_glob(request):
-    return request.config.getoption("--voxel_spacing_glob")
+    return request.config.getoption("--voxel-spacing-glob")
 
 
 @fixture(scope="session")
 def run_glob(request):
-    return request.config.getoption("--run_glob")
+    return request.config.getoption("--run-glob")

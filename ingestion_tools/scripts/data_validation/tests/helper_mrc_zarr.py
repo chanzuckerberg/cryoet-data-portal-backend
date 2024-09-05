@@ -1,5 +1,6 @@
 import math
 
+import allure
 from data_validation.tests.helper_mrc import HelperTestMRCHeader
 from data_validation.tests.helper_zarr import HelperTestZarrHeader
 
@@ -11,15 +12,17 @@ class HelperTestMRCZarrHeader(HelperTestMRCHeader, HelperTestZarrHeader):
     """
 
     ### BEGIN Cross-format consistency tests ###
+    @allure.title("Zarr and MRC: files exist for each entity.")
     def test_zarr_mrc_both_exist(self):
-        """Check that both the zarr and mrc files exist for the entity."""
         zarr_files = set(self.zarr_headers.keys())
         mrc_files = set(self.mrc_headers.keys())
         assert {f.replace(".zarr", ".mrc") for f in zarr_files} == mrc_files
 
+    @allure.title("Zarr and MRC: headers are consistent.")
+    @allure.description(
+        "Zarray shape (volume size) should match the MRC volume size, re-scaled to account for binning.",
+    )
     def test_zarr_mrc_volume_size(self):
-        """Check that the zarray shape (volume size) matches the mrc volume size, for each zarr binning."""
-
         def check_volume_size(header_data, zarr_filename):
             mrc_file = zarr_filename.replace(".zarr", ".mrc")
             header = self.mrc_headers[mrc_file].header
