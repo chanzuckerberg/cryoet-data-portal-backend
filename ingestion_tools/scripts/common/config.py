@@ -266,6 +266,8 @@ class DepositionImportConfig:
             "deposition_metadata": "depositions_metadata/{deposition_name}/deposition_metadata.json",
             "deposition_keyphoto": "depositions_metadata/{deposition_name}/Images",
         }
+        paths["collection_metadata"] = paths["rawtilt"]
+
         output_prefix = self.output_prefix
         glob_vars = obj.get_glob_vars()
         path = os.path.join(output_prefix, paths[key].format(**glob_vars))
