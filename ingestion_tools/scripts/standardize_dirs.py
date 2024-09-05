@@ -3,6 +3,7 @@ from typing import Any, Optional
 
 import click
 from importers.annotation import AnnotationImporter
+from importers.collection_metadata import CollectionMetadataImporter
 from importers.dataset import DatasetImporter
 from importers.dataset_key_photo import DatasetKeyPhotoImporter
 from importers.deposition import DepositionImporter
