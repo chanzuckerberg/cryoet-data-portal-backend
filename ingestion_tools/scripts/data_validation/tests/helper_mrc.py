@@ -1,3 +1,4 @@
+import warnings
 from typing import Dict
 
 import allure
@@ -6,7 +7,11 @@ import pytest
 from mrcfile import utils
 from mrcfile.mrcinterpreter import MrcInterpreter
 
+from common.fs import S3Filesystem
+
 SPACING_TOLERANCE = 0.001
+# 1 MB
+DISK_STORAGE_TOLERANCE = 2**20
 
 # Used so that other classes that skip the pytest still have a title in the allure report
 # Without repeating the allure title text in every skipped test
@@ -205,6 +210,24 @@ class HelperTestMRCHeader:
             assert header.nzstart == 0
 
         self.mrc_header_helper(check_subimage_start)
+
+    @mrc_allure_title
+    def test_disk_storage(self, filesystem: S3Filesystem):
+        def check_disk_storage(header, _interpreter, mrc_filename, filesystem: S3Filesystem):
+            del _interpreter
+            if not mrc_filename.endswith(".mrc"):
+                pytest.skip("Only checking disk storage for .mrc files (not compressed files)")
+
+            # volume size + extended header size + header size (1024 bytes)
+            expected_bytes = (
+                header.nx * header.ny * header.nz * utils.dtype_from_mode(header.mode).itemsize + header.nsymbt + 1024
+            )
+            actual_bytes = filesystem.s3fs.size(mrc_filename)
+            if actual_bytes != expected_bytes:
+                warnings.warn(f"Expected {expected_bytes} bytes, got {actual_bytes} bytes", stacklevel=2)
+            assert abs(expected_bytes - filesystem.s3fs.size(mrc_filename)) < DISK_STORAGE_TOLERANCE
+
+        self.mrc_header_helper(check_disk_storage, filesystem=filesystem)
 
     ### BEGIN Voxel-spacing tests ###
     @mrc_allure_title
