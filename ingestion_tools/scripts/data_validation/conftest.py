@@ -2,13 +2,9 @@ import concurrent.futures
 import os.path
 from typing import List, Tuple
 
+import allure
 import pytest
 
-# from allure_commons.model2 import Label
-# from allure_commons.types import LabelType
-# from allure_commons._core import plugin_manager
-# from allure_pytest.utils import ALLURE_LABEL_MARK
-# from pytest import MarkDecorator
 # Local fixtures and common functions
 from fixtures.data import *  # noqa: E402, F403
 from fixtures.parser import *  # noqa: E402, F403
@@ -16,51 +12,83 @@ from fixtures.path import *  # noqa: E402, F403
 
 from common.fs import FileSystemApi, S3Filesystem  # noqa: E402, F403
 
-
 # ============================================================================
-# Pytest parameterized fixtures
+# Pytest parametrized fixtures
 # ============================================================================
-def run_names(bucket: str, dataset: str, run_glob: str) -> List[str]:
-    """All runs matching the run glob pattern in the dataset."""
-    fs: S3Filesystem = FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
-    runs = fs.glob(f"s3://{bucket}/{dataset}/{run_glob}")
-
-    exclude = ["Images", "dataset_metadata.json"]
-
-    run_names = [os.path.basename(run) for run in runs if os.path.basename(run) not in exclude]
-
-    return run_names
 
 
-def get_voxel_spacing_files(bucket: str, dataset: str, run_names: List[str], voxelspacing_glob: str) -> List[str]:
-    fs: S3Filesystem = FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
-
-    tentatives = []
-
-    # Use ThreadPoolExecutor to run glob_task in parallel
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        # Map the run_names to the glob_task function
-        results = executor.map(
-            lambda run_name: fs.glob(f"s3://{bucket}/{dataset}/{run_name}/Tomograms/{voxelspacing_glob}"),
-            run_names,
-        )
-
-        # Combine results
-        for result in results:
-            tentatives += result
-
-    exclude = ["Images", "dataset_metadata.json"]
-
-    for ex in exclude:
-        tentatives = [tent for tent in tentatives if ex not in tent]
-
-    return tentatives
-
-
-def voxel_spacings(voxel_spacing_files: List[str]) -> List[float]:
+def get_run_folders(fs: S3Filesystem, bucket: str, datasets: List[str], run_glob: str) -> List[str]:
     """
-    All voxel spacings matching the voxel spacing glob pattern in the dataset.
-    Because voxel spacings are subfolders of the the runs, we also constrain the glob to be only for the provided runs.
+    A helper function to retrieve all valid run folders across all datasets.
+    """
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        run_folder_template = f"s3://{bucket}/{{}}/{run_glob}"
+
+        run_folders_lists = executor.map(
+            lambda dataset: fs.glob(run_folder_template.format(dataset)),
+            datasets,
+        )
+        # Flatten the list of lists
+        run_folders = [run_folder for run_folders_list in run_folders_lists for run_folder in run_folders_list]
+
+        exclude = ["Images", "dataset_metadata.json"]
+        run_folders = [run_folder for run_folder in run_folders if os.path.basename(run_folder) not in exclude]
+
+        return run_folders
+
+
+def get_runs_set(run_folders: List[str]) -> List[str]:
+    """All runs that occur over all datasets."""
+    return [os.path.basename(run_folder) for run_folder in run_folders]
+
+
+def dataset_run_combinations(
+    bucket: str,
+    datasets: List[str],
+    runs: List[str],
+    run_folders: List[str],
+) -> List[Tuple[str, str]]:
+    """All valid dataset and run combinations matching the run glob pattern across all datasets."""
+    combos = []
+
+    for dataset in datasets:
+        for run in runs:
+            if f"{bucket}/{dataset}/{run}" in run_folders:
+                combos.append((dataset, run))
+
+    return combos
+
+
+def get_voxel_spacing_files(
+    fs: S3Filesystem,
+    bucket: str,
+    dataset_run_combinations: List[Tuple[str, str]],
+    voxel_spacing_glob: str,
+) -> List[str]:
+    """
+    A helper function to retrieve all valid voxel spacing files across all dataset + runs.
+    """
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        voxel_spacing_file_template = f"s3://{bucket}/{{}}/{{}}/Tomograms/{voxel_spacing_glob}"
+
+        voxel_spacing_files_lists = executor.map(
+            lambda dataset_run_tuple: fs.glob(
+                voxel_spacing_file_template.format(dataset_run_tuple[0], dataset_run_tuple[1]),
+            ),
+            dataset_run_combinations,
+        )
+        voxel_spacing_files = [
+            voxel_spacing_file
+            for voxel_spacing_file_list in voxel_spacing_files_lists
+            for voxel_spacing_file in voxel_spacing_file_list
+        ]
+
+        return voxel_spacing_files
+
+
+def get_voxel_spacings_set(voxel_spacing_files: List[str]) -> List[str]:
+    """
+    All voxel spacings that occur over all datasets and runs.
     """
 
     voxel_spacings = [
@@ -69,21 +97,25 @@ def voxel_spacings(voxel_spacing_files: List[str]) -> List[float]:
     return list(set(voxel_spacings))
 
 
-def run_spacing_combinations(
+def dataset_run_spacing_combinations(
     bucket: str,
-    dataset: str,
-    run_names: List[str],
+    dataset_run_combinations: List[Tuple[str, str]],
     voxel_spacings: List[float],
     voxel_spacing_files: List[str],
-) -> List[Tuple[str, float]]:
-    """Not all runs have all voxelspacings. Go through each run and find all the spacings present."""
+) -> List[Tuple[str, str, float]]:
+    """
+    All valid dataset, run, and voxel spacing combinations. Returns a list of combinations in the form of
+    (dataset, run_name, voxel_spacing).
+    """
     combos = []
 
-    for run in run_names:
+    for dataset_run_tuple in dataset_run_combinations:
         for vs in voxel_spacings:
-            if f"{bucket}/{dataset}/{run}/Tomograms/VoxelSpacing{vs}" in voxel_spacing_files:
-                combos.append((run, float(vs)))
-
+            if (
+                f"{bucket}/{dataset_run_tuple[0]}/{dataset_run_tuple[1]}/Tomograms/VoxelSpacing{vs}"
+                in voxel_spacing_files
+            ):
+                combos.append(dataset_run_tuple + (vs,))
     return combos
 
 
@@ -92,29 +124,36 @@ def run_spacing_combinations(
 
 @pytest.hookimpl(tryfirst=True)
 def pytest_configure(config: pytest.Config) -> None:
-    # Dataset label for report title
-    pytest.dataset = config.getoption("--dataset")
+    fs: S3Filesystem = FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
 
-    # Using pytest_generate_tests to parametrize the run_name fixture causes the per-run-fixtures to be run multiple times,
-    # but setting the runnames as a label and parametrizing the class with that label leads to desired outcome, i.e.
+    # Using pytest_generate_tests to parametrize the fixtures causes the per-run-fixtures to be run multiple times,
+    # but setting the parameterizations as labels and parametrizing the class with that label leads to desired outcome, i.e.
     # re-use of the per-run fixtures.
+    if not config.getoption("--datasets"):
+        dataset_raw = [os.path.basename(dataset) for dataset in fs.glob(f"s3://{config.getoption('--bucket')}/*")]
+        pytest.dataset = [dataset for dataset in dataset_raw if dataset.isdigit()]
+    else:
+        pytest.dataset = [dataset for dataset in config.getoption("--datasets").split(",") if dataset.isdigit()]
     bucket = config.getoption("--bucket")
-    dataset = config.getoption("--dataset")
-    run_glob = config.getoption("--run_glob")
-    pytest.run_name = run_names(bucket, dataset, run_glob)
+    run_glob = config.getoption("--run-glob")
+    voxel_spacing_glob = config.getoption("--voxel-spacing-glob")
+    print("Datasets: %s", pytest.dataset)
 
-    voxelspacing_glob = config.getoption("--voxelspacing_glob")
-    voxel_spacing_files = get_voxel_spacing_files(bucket, dataset, pytest.run_name, voxelspacing_glob)
-    pytest.voxel_spacing = voxel_spacings(voxel_spacing_files)
+    run_folders = get_run_folders(fs, bucket, pytest.dataset, run_glob)
+    pytest.run_name = get_runs_set(run_folders)
+    pytest.dataset_run_combinations = dataset_run_combinations(bucket, pytest.dataset, pytest.run_name, run_folders)
+    print("Dataset and run combinations: %s", pytest.dataset_run_combinations)
 
-    pytest.run_spacing_combinations = run_spacing_combinations(
+    voxel_spacing_files = get_voxel_spacing_files(fs, bucket, pytest.dataset_run_combinations, voxel_spacing_glob)
+    pytest.voxel_spacing = get_voxel_spacings_set(voxel_spacing_files)
+    pytest.dataset_run_spacing_combinations = dataset_run_spacing_combinations(
         bucket,
-        dataset,
-        pytest.run_name,
+        pytest.dataset_run_combinations,
         pytest.voxel_spacing,
         voxel_spacing_files,
     )
-    print("Run and VoxelSpacing combinations: %s", pytest.run_spacing_combinations)
+
+    print("Dataset, run, and voxel spacing combinations: %s", pytest.dataset_run_spacing_combinations)
 
     # Register markers
     config.addinivalue_line("markers", "annotation: Tests concerning the annotation data.")
@@ -130,61 +169,14 @@ def pytest_configure(config: pytest.Config) -> None:
     )
     config.addinivalue_line("markers", "tomogram: Tests concerning the tomogram.")
     config.addinivalue_line("markers", "voxel_spacing: Tests concerning voxel spacings.")
-    config.addinivalue_line("markers", "metadata: Tests concerning any metadata.")
 
 
-# @pytest.hookimpl(hookwrapper=True)
-# def pytest_runtest_makereport(item, call):
-#     # pytest.set_trace()
-#     # yield
-#     has_epic = False
-#     has_feature = False
-#     has_story = False
-
-#     paramnames = []
-#     params = {}
-
-#     epic = None
-#     feature = None
-#     story = None
-
-#     for m in item.iter_markers():
-#         if m.name == ALLURE_LABEL_MARK:
-#             if m.kwargs.get("label_type") == LabelType.EPIC:
-#                 has_epic = True
-#                 epic = m
-#             if m.kwargs.get("label_type") == LabelType.FEATURE:
-#                 has_feature = True
-#                 feature = m
-#             if m.kwargs.get("label_type") == LabelType.STORY:
-#                 has_story = True
-#                 story = m
-
-#         # if m.name == "parametrize":
-#         #     paramnames = m.args[0].strip().split(",")
-#         #     ptup = m.args[1][0]
-#         #
-#         #     if len(paramnames) == 1:
-#         #         params[paramnames[0].strip()] = ptup
-#         #     else:
-#         #         params = {pn.strip(): p for pn, p in zip(paramnames, ptup)}
-
-#     if "dataset" in item.fixturenames:
-#         dataset = pytest.dataset
-#         epic_name = f"Dataset {dataset}"
-#         mark = getattr(pytest.mark, ALLURE_LABEL_MARK)(epic_name, label_type=LabelType.EPIC)
-#         item.add_marker(mark)
-
-#     if "run_name" in item.fixturenames:
-#         run_name = item.callspec.params["run_name"]
-#         feature_name = f"Run {run_name}"
-#         mark = getattr(pytest.mark, ALLURE_LABEL_MARK)(feature_name, label_type=LabelType.FEATURE)
-#         item.add_marker(mark)
-
-#     if "voxel_spacing" in item.fixturenames:
-#         voxelspacing = item.callspec.params["voxel_spacing"]
-#         story_name = f"Voxel spacing {voxelspacing}"
-#         mark = getattr(pytest.mark, ALLURE_LABEL_MARK)(story_name, label_type=LabelType.STORY)
-#         item.add_marker(mark)
-
-#     yield
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item: pytest.Item):
+    if "voxel_spacing" in item.fixturenames:
+        allure.dynamic.story(f"VoxelSpacing {item.callspec.params['voxel_spacing']}")
+    if "run_name" in item.fixturenames:
+        allure.dynamic.feature(f"Run {item.callspec.params['run_name']}")
+    if "dataset" in item.fixturenames:
+        allure.dynamic.epic(f"Dataset {pytest.dataset}")
+    yield

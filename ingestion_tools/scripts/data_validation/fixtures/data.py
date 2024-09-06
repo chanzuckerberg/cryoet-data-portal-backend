@@ -49,7 +49,7 @@ def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi) -> MrcInterpreter:
         pytest.fail(f"Failed to get header for {mrcbz2file}: {e}")
 
 
-def get_zarr_headers(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
+def get_zarr_metadata(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
     """Get the zattrs and zarray data for a zarr volume file."""
     file_paths = fs.glob(os.path.join(zarrfile, "*"))
     fsstore_children = {os.path.basename(file) for file in file_paths}
@@ -70,7 +70,7 @@ def _get_tiff_mrc_header(file: str, filesystem: FileSystemApi):
         return (file, get_mrc_header(file, filesystem))
     elif file.endswith(".mrc.bz2"):
         return (file, get_mrc_bz2_header(file, filesystem))
-    elif file.endswith(".tif") or file.endswith(".tiff") or file.endswith(".eer"):
+    elif file.endswith((".tif", ".tiff", ".eer", ".gain")):
         with filesystem.open(file, "rb", block_size=TIFF_HEADER_BLOCK_SIZE) as f, tifffile.TiffFile(f) as tif:
             # The tif.pages must be converted to a list to actually read all the pages' data
             return (file, list(tif.pages))
@@ -91,9 +91,6 @@ def get_tiff_mrc_headers(
             if header_filename is None:
                 continue
             headers[header_filename] = header_data
-
-        if not headers:
-            pytest.skip("No file-format supported frames headers found")
 
         return headers
 
@@ -162,10 +159,10 @@ def tiltseries_mrc_header(tiltseries_mrc_file: str, filesystem: FileSystemApi) -
 
 
 @pytest.fixture(scope="session")
-def tiltseries_zarr_header(tiltseries_zarr_file: str, filesystem: FileSystemApi) -> Dict[str, Dict[str, Dict]]:
+def tiltseries_zarr_metadata(tiltseries_zarr_file: str, filesystem: FileSystemApi) -> Dict[str, Dict[str, Dict]]:
     """Get the zattrs and zarray data for a zarr tilt series.
-    Dictionary structure: headers = {tiltseries_a_filename: {"zattrs": Dict, "zarrays": Dict}"""
-    return {tiltseries_zarr_file: get_zarr_headers(tiltseries_zarr_file, filesystem)}
+    Dictionary structure: metadata = {tiltseries_a_filename: {"zattrs": Dict, "zarrays": Dict}"""
+    return {tiltseries_zarr_file: get_zarr_metadata(tiltseries_zarr_file, filesystem)}
 
 
 @pytest.fixture(scope="session")
@@ -201,24 +198,36 @@ def tiltseries_raw_tilt(tiltseries_rawtilt_file: str, filesystem: FileSystemApi)
 
 
 @pytest.fixture(scope="session")
-def canonical_tomo_mrc_header(canonical_tomo_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
+def tomo_mrc_header(tomo_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for a tomogram."""
-    return {canonical_tomo_mrc_file: get_mrc_header(canonical_tomo_mrc_file, filesystem)}
+    return {tomo_mrc_file: get_mrc_header(tomo_mrc_file, filesystem)}
 
 
 @pytest.fixture(scope="session")
-def canonical_tomo_zarr_header(canonical_tomo_zarr_file: str, filesystem: FileSystemApi) -> Dict[str, Dict[str, Dict]]:
+def tomo_zarr_header(tomo_zarr_file: str, filesystem: FileSystemApi) -> Dict[str, Dict[str, Dict]]:
     """
     Get the zattrs and zarray data for a tomogram.
-    Dictionary structure: headers = {canonical_tomo_a_filename: {"zattrs": Dict, "zarrays": Dict}}.
+    Dictionary structure: headers = {tomo_a_filename: {"zattrs": Dict, "zarrays": Dict}}.
     """
-    return {canonical_tomo_zarr_file: get_zarr_headers(canonical_tomo_zarr_file, filesystem)}
+    return {tomo_zarr_file: get_zarr_metadata(tomo_zarr_file, filesystem)}
 
 
 @pytest.fixture(scope="session")
-def canonical_tomogram_metadata(canonical_tomo_meta_file: str, filesystem: FileSystemApi) -> Dict:
-    """Load the canonical tomogram metadata."""
-    with filesystem.open(canonical_tomo_meta_file, "r") as f:
+def tomogram_metadata(tomo_meta_file: str, filesystem: FileSystemApi) -> Dict:
+    """Load the tomogram metadata."""
+    with filesystem.open(tomo_meta_file, "r") as f:
+        return json.load(f)
+
+
+# ==================================================================================================
+# Neuroglancer fixtures
+# ==================================================================================================
+
+
+@pytest.fixture(scope="session")
+def neuroglancer_config(neuroglancer_config_file: str, filesystem: FileSystemApi) -> Dict:
+    """Load the neuroglancer config."""
+    with filesystem.open(neuroglancer_config_file, "r") as f:
         return json.load(f)
 
 
@@ -308,6 +317,6 @@ def seg_mask_annotation_zarr_headers(
     """
     headers = {}
     for zarr_filename in seg_mask_annotation_zarr_files:
-        headers[zarr_filename] = get_zarr_headers(zarr_filename, filesystem)
+        headers[zarr_filename] = get_zarr_metadata(zarr_filename, filesystem)
 
     return headers

@@ -24,6 +24,7 @@ repos:
     - apiv2/pyproject.toml
     files: '^apiv2/.*'
 - repo: https://github.com/mpalmer/action-validator
+  # requires installing `npm install -g @action-validator/core @action-validator/cli --save-dev`
   rev: v0.6.0
   hooks:
     - id: action-validator

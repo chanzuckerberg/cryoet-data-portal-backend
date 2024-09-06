@@ -396,6 +396,9 @@ enums:
       TriangularMesh:
         text: TriangularMesh
         description: A mesh of triangles
+      TriangularMeshGroup:
+        text: TriangularMeshGroup
+        description: A group of triangular meshes
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -1251,6 +1254,18 @@ classes:
         domain_of:
         - AnnotationSource
         range: AnnotationTriangularMeshFile
+        inlined: true
+        inlined_as_list: true
+      TriangularMeshGroup:
+        name: TriangularMeshGroup
+        description: File and sourcing data containing one or more triangular mesh
+          annotations.
+        from_schema: cdp-ingestion-config
+        alias: TriangularMeshGroup
+        owner: AnnotationSource
+        domain_of:
+        - AnnotationSource
+        range: AnnotationTriangularMeshGroupFile
         inlined: true
         inlined_as_list: true
       parent_filters:
@@ -4990,6 +5005,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshGroupFile
         range: string
         required: true
         inlined: true

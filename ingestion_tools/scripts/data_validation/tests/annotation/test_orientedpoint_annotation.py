@@ -1,22 +1,23 @@
 from typing import Dict, List
 
+import allure
 import numpy as np
 import pytest
 from data_validation.tests.annotation.helper_point import contained_in_tomo, point_count_consistent
 
 
 @pytest.mark.annotation
-@pytest.mark.metadata
-@pytest.mark.parametrize("run_name, voxel_spacing", pytest.run_spacing_combinations, scope="session")
+@pytest.mark.parametrize("dataset, run_name, voxel_spacing", pytest.dataset_run_spacing_combinations, scope="session")
 class TestOrientedPointAnnotations:
     ### BEGIN Self-consistency tests ###
+
+    @allure.title("Oriented point: number of annotations is consistent between metadata and ndjson file.")
     def test_point_count_consistent(
         self,
         oriented_point_annotations: Dict[str, List[Dict]],
         annotation_metadata: Dict[str, Dict],
         oriented_point_annotation_files_to_metadata_files: Dict[str, str],
     ):
-        """Check that the number of annotations is consistent between the metadata and the ndjson file."""
         point_count_consistent(
             oriented_point_annotations,
             annotation_metadata,
@@ -35,6 +36,10 @@ class TestOrientedPointAnnotations:
         # If all rows are orthogonal, then the dot product of the matrix and its transpose should be the identity matrix.
         assert np.allclose(np.dot(np_matrix, np_matrix.T), np.eye(3))
 
+    @allure.title("Oriented point: valid rotation matrix.")
+    @allure.description(
+        "The rotation matrix should be 3x3, have a determinant of 1, and have row orthogonal unit vectors.",
+    )
     def test_rotation_matrix(self, oriented_point_annotations: Dict[str, List[Dict]]):
         for annotation_filename, points in oriented_point_annotations.items():
             print(f"\tFile: {annotation_filename}")
@@ -44,12 +49,12 @@ class TestOrientedPointAnnotations:
     ### END Self-consistency tests ###
 
     ### BEGIN Tomogram-consistency tests ###
+    @allure.title("Oriented point: contained within the tomogram dimensions.")
     def test_contained_in_tomo(
         self,
         oriented_point_annotations: Dict[str, List[Dict]],
-        canonical_tomogram_metadata: Dict,
+        tomogram_metadata: Dict,
     ):
-        """Check that all oriented points are contained within the tomogram dimensions."""
-        contained_in_tomo(oriented_point_annotations, canonical_tomogram_metadata)
+        contained_in_tomo(oriented_point_annotations, tomogram_metadata)
 
     ### END Tomogram-consistency tests ###

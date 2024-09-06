@@ -2,6 +2,7 @@ import math
 import os
 from typing import Dict
 
+import allure
 import pytest
 from data_validation.tests.helper_mrc_zarr import HelperTestMRCZarrHeader
 from data_validation.tests.test_deposition import HelperTestDeposition
@@ -11,43 +12,41 @@ from mrcfile.mrcinterpreter import MrcInterpreter
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination
 @pytest.mark.tiltseries
-@pytest.mark.parametrize("run_name", pytest.run_name, scope="session")
+@pytest.mark.parametrize("dataset, run_name", pytest.dataset_run_combinations, scope="session")
 class TestTiltseries(HelperTestMRCZarrHeader):
 
     @pytest.fixture(autouse=True)
     def set_helper_test_mrc_zarr_header_class_variables(
         self,
         tiltseries_mrc_header: Dict[str, MrcInterpreter],
-        tiltseries_zarr_header: Dict[str, Dict[str, Dict]],
+        tiltseries_zarr_metadata: Dict[str, Dict[str, Dict]],
         tiltseries_metadata: Dict,
     ):
         self.spacegroup = 0  # 2D image
         self.mrc_headers = tiltseries_mrc_header
-        self.zarr_headers = tiltseries_zarr_header
+        self.zarr_headers = tiltseries_zarr_metadata
         self.spacing = tiltseries_metadata["pixel_spacing"]
         self.skip_z_axis_checks = True
 
-    def test_mrc_mode(self):
-        pytest.skip("Not applicable for tiltseries files")
-
     ### BEGIN metadata self-consistency tests ###
-    def test_tiltseries_metadata(self, tiltseries_metadata: Dict, run_name: str):
-        """A tiltseries metadata sanity check."""
+    @allure.title("Tiltseries: sanity check tiltseries metadata.")
+    def test_metadata(self, tiltseries_metadata: Dict, run_name: str):
         assert tiltseries_metadata["acceleration_voltage"] > 0
         assert tiltseries_metadata["spherical_aberration_constant"] > 0
         assert tiltseries_metadata["tilting_scheme"]
         assert tiltseries_metadata["total_flux"] > 0
         assert tiltseries_metadata["run_name"] == run_name
 
-    def test_tiltseries_deposition(self, tiltseries_metadata: Dict, bucket, filesystem):
+    @allure.title("Tiltseries: valid corresponding deposition metadata.")
+    def test_deposition_id(self, tiltseries_metadata: Dict, bucket, filesystem):
         HelperTestDeposition.check_deposition_metadata(tiltseries_metadata["deposition_id"], bucket, filesystem)
 
-    def test_tiltseries_size_scales(self, tiltseries_metadata: Dict):
-        """Check that the tiltseries size is equal to first scale entry (0 binning factor)."""
+    @allure.title("Tiltseries: metadata size is consistent with scales.")
+    def test_size_scales(self, tiltseries_metadata: Dict):
         assert tiltseries_metadata["size"] == tiltseries_metadata["scales"][0]
 
-    def test_tiltseries_scales(self, tiltseries_metadata: Dict):
-        """Check that the tiltseries scales data is consistent."""
+    @allure.title("Tiltseries: metadata scales is self-consistent.")
+    def test_scales(self, tiltseries_metadata: Dict):
         # z size is not scaled, stays consistent
         assert len({scale["z"] for scale in tiltseries_metadata["scales"]}) == 1
 
@@ -60,9 +59,8 @@ class TestTiltseries(HelperTestMRCZarrHeader):
     ### END metadata self-consistency tests ###
 
     ### BEGIN metadata-MRC/Zarr consistency tests ###
-    def test_tiltseries_size_in_mrc(self, tiltseries_metadata: Dict):
-        """Check that the tiltseries volume size matches the MRC header volume size."""
-
+    @allure.title("Tiltseries: metadata volume size is consistent with MRC header.")
+    def test_size_in_mrc(self, tiltseries_metadata: Dict):
         def check_size_in_mrc(header, _interpreter, _mrc_filename, tiltseries_metadata):
             del _interpreter, _mrc_filename
             assert header.nx == tiltseries_metadata["size"]["x"]
@@ -71,9 +69,8 @@ class TestTiltseries(HelperTestMRCZarrHeader):
 
         self.mrc_header_helper(check_size_in_mrc, tiltseries_metadata=tiltseries_metadata)
 
-    def test_tiltseries_scales_in_zarr(self, tiltseries_metadata: Dict):
-        """Check that the tiltseries binning factor scales matches the Zarr header volume size."""
-
+    @allure.title("Tiltseries: metadata scaled volume sizes is consistent with Zarr header.")
+    def test_scales_in_zarr(self, tiltseries_metadata: Dict):
         def check_size_in_zarr(header_data, _zarr_filename, tiltseries_metadata):
             del _zarr_filename
             for binning_factor in BINNING_FACTORS:  # Check all binning factors
@@ -85,21 +82,21 @@ class TestTiltseries(HelperTestMRCZarrHeader):
 
         self.zarr_header_helper(check_size_in_zarr, tiltseries_metadata=tiltseries_metadata)
 
-    def test_tiltseries_zarr_matches(
+    @allure.title("Tiltseries: metadata Zarr file matches the actual file.")
+    def test_zarr_matches(
         self,
         tiltseries_metadata: Dict,
-        tiltseries_zarr_header: Dict[str, Dict[str, Dict]],
+        tiltseries_zarr_metadata: Dict[str, Dict[str, Dict]],
     ):
-        """Check that the metadata-listed zarr file matches the actual file."""
-        assert len(tiltseries_zarr_header) == 1
-        assert tiltseries_metadata["omezarr_dir"] == os.path.basename(list(tiltseries_zarr_header.keys())[0])
+        assert len(tiltseries_zarr_metadata) == 1
+        assert tiltseries_metadata["omezarr_dir"] == os.path.basename(list(tiltseries_zarr_metadata.keys())[0])
 
-    def test_tiltseries_mrc_matches(
+    @allure.title("Tiltseries: metadata MRC file matches the actual file.")
+    def test_mrc_matches(
         self,
         tiltseries_metadata: Dict,
         tiltseries_mrc_header: Dict[str, MrcInterpreter],
     ):
-        """Check that the metadata-listed mrc file matches the actual file."""
         assert len(tiltseries_metadata["mrc_files"]) == 1
         assert len(tiltseries_mrc_header) == 1
         assert tiltseries_metadata["mrc_files"][0] == os.path.basename(list(tiltseries_mrc_header.keys())[0])

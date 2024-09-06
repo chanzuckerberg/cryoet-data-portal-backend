@@ -236,6 +236,9 @@ classes:
       TriangularMesh:
         description: The triangular mesh annotation source.
         range: AnnotationTriangularMeshFile
+      TriangularMeshGroup:
+        description: The triangular mesh group annotation source.
+        range: AnnotationTriangularMeshGroupFile
       parent_filters:
         description: Filters for the parent of a source.
         range: AnnotationParentFilters
