@@ -615,7 +615,10 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
                 else:
                     used_shapes.add(shape)
 
-        # For verifying that all source entries each only have one shape entry and that there is only one of glob_string and glob_strings
+        # For verifying that all source entries:
+        # - each only have one shape entry
+        # - that there is only one of glob_string and glob_strings
+        # - cannot have only a filter entry without a shape
         for i, source_element in enumerate(source_list):
             shapes_in_source_entry = []
             for shape in source_element.model_fields:

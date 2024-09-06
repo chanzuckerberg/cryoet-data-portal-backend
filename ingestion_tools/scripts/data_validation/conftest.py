@@ -91,6 +91,7 @@ def get_voxel_spacings_set(voxel_spacing_files: List[str]) -> List[str]:
     All voxel spacings that occur over all datasets and runs.
     """
 
+    # Get only the voxel spacing value, remove the "VoxelSpacing" folder prefix
     voxel_spacings = [
         os.path.basename(voxel_spacing_file).lstrip("VoxelSpacing") for voxel_spacing_file in voxel_spacing_files
     ]
@@ -124,6 +125,13 @@ def dataset_run_spacing_combinations(
 
 @pytest.hookimpl(tryfirst=True)
 def pytest_configure(config: pytest.Config) -> None:
+    """
+    This hook sets up the necessary parameters for the tests by:
+    - Retrieving datasets and run folders from the S3 bucket.
+    - Generating dataset and run combinations.
+    - Fetching voxel spacing files and generating dataset-run-spacing combinations.
+    - Registering test markers to categorize tests based on different aspects such as dataset, runs, and voxel spacings.
+    """
     fs: S3Filesystem = FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
 
     # Using pytest_generate_tests to parametrize the fixtures causes the per-run-fixtures to be run multiple times,
@@ -173,6 +181,10 @@ def pytest_configure(config: pytest.Config) -> None:
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item: pytest.Item):
+    """
+    This hook integrates allure to dynamically annotate the test reports with
+    details such as the dataset, run, and voxel spacing being tested.
+    """
     if "voxel_spacing" in item.fixturenames:
         allure.dynamic.story(f"VoxelSpacing {item.callspec.params['voxel_spacing']}")
     if "run_name" in item.fixturenames:
