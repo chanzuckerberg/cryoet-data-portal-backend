@@ -84,7 +84,7 @@ def main(
 
         # Run tests and generate results
         os.system(
-            f"pytest {'--dist worksteal -n auto' if multiprocessing else '--dist no'} --datasets {dataset} --alluredir {localdir_raw} {extra_args}",
+            f"pytest {'--dist loadscope -n auto' if multiprocessing else '--dist no'} --datasets {dataset} --alluredir {localdir_raw} {extra_args}",
         )
 
         # Get the history from S3 (Must do this before generating the report)
