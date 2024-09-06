@@ -149,9 +149,9 @@ key_images:
       value:
       - from_tomogram
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs: []
+# - sources:
+#   - source_multi_glob:
+#       list_globs:
 runs:
 - sources:
   - source_glob:
