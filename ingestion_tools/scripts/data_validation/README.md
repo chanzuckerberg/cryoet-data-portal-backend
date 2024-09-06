@@ -77,14 +77,14 @@ pytest --datasets 10301 --run-glob "17072022_BrnoKrios_Arctis_p3ar_grid_Position
 
 ### Allure + Pytest
 
-For large validation runs, it may be helpful to generate an Allure report to view the results. `run_tests.py` is a wrapper script that runs the pytest tests and generates an Allure report, with ability to upload the report to S3.
+For large validation runs, it may be helpful to generate an Allure report to view the results. `allure_tests.py` is a wrapper script that runs the pytest tests and generates an Allure report, with ability to upload the report to S3.
 
 Ensure you have the allure command line tool installed (e.g. `brew install allure`). See: https://allurereport.org/docs/install/
 
 To run (from this directory):
 
 ```
-python run_tests.py --local-dir [LOCAL_DIR] --input-bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --datasets [DATASET_ID] --multiprocessing/--no-multiprocessing --save-history/--no-save-history --extra-args [EXTRA_ARGS]
+python allure_tests.py --local-dir [LOCAL_DIR] --input-bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --datasets [DATASET_ID] --multiprocessing/--no-multiprocessing --save-history/--no-save-history --extra-args [EXTRA_ARGS]
 
 --local-dir: Local directory to store the results. Note that if this folder is in the data_validation folder (as is the default value), it should be added to the pytest call via `--ignore=[FOLDER_NAME]` to prevent pytest from wasting time trying to discover tests (we default ignore ./results in `pytest.ini`.) Default: `./results`
 --input-bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
@@ -101,34 +101,51 @@ Example:
 Run all data validation for datasets 10027 and 10200, and save the test results to S3.
 
 ```
-python run_tests.py --datasets 10027,10200
+python allure_tests.py --datasets 10027,10200
 ```
 
 Run only tiltseries validation for all datasets, and save the test results to S3.
 
 ```
-python run_tests.py --extra-args "-k TestTiltseries"
+python allure_tests.py --extra-args "-k TestTiltseries"
 ```
 
 Run on a smaller dataset, so no need for multiprocessing (multiprocessing worker setup overhead makes it slower than no multiprocessing).
 
 ```
-python run_tests.py --datasets 10031 --no-multiprocessing
+python allure_tests.py --datasets 10031 --no-multiprocessing
 ```
 
 Run all data validation for everything, and save the test results to S3 (not recommended, can take very long, on the scale of a day possibly).
 
 ```
-python run_tests.py
+python allure_tests.py
 ```
 
 #### Viewing Allure Report
 
-After running `run_tests.py`, a folder with the results (default `./results`) will be created. To view the Allure report:
+After running `allure_tests.py`, a folder with the results (default `./results`) will be created. To view the Allure report:
 
 ```
 cd results
-python -m http.server
+python -m http.server [OPTIONAL_PORT]
 ```
 
-Then navigate to `http://localhost:8000` in your browser.
+Then navigate to `http://localhost:8000` in your browser (or the port you specified).
+
+#### Viewing Allure Reports Stored in S3
+
+First, download the tar.gz file of the report from S3. Then extract the contents:
+
+```
+tar -xvf [TAR_FILE]
+```
+
+Then navigate to the extracted folder and run the Python HTTP server:
+
+```
+cd [EXTRACTED_FOLDER]
+python -m http.server [OPTIONAL_PORT]
+```
+
+Then navigate to `http://localhost:8000` in your browser (or the port you specified).
