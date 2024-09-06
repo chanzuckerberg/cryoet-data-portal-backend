@@ -148,10 +148,6 @@ key_images:
   - literal:
       value:
       - from_tomogram
-rawtilts:
-# - sources:
-#   - source_multi_glob:
-#       list_globs:
 runs:
 - sources:
   - source_glob:
