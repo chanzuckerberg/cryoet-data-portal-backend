@@ -33,10 +33,6 @@ class TestFrame(HelperTestMRCHeader):
         pytest.skip("Not applicable for frame files")
 
     @mrc_allure_title
-    def test_datatype(self):
-        pytest.skip("Not applicable for frame files")
-
-    @mrc_allure_title
     def test_mrc_spacing(self):
         pytest.skip("Not applicable for frame files")
 
