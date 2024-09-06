@@ -24,6 +24,7 @@ from common.fs import FileSystemApi
 
 IMPORTERS = [
     AnnotationImporter,
+    CollectionMetadataImporter,
     DatasetKeyPhotoImporter,
     DatasetImporter,
     DepositionImporter,
