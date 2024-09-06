@@ -70,7 +70,7 @@ def _get_tiff_mrc_header(file: str, filesystem: FileSystemApi):
         return (file, get_mrc_header(file, filesystem))
     elif file.endswith(".mrc.bz2"):
         return (file, get_mrc_bz2_header(file, filesystem))
-    elif file.endswith(".tif") or file.endswith(".tiff") or file.endswith(".eer"):
+    elif file.endswith((".tif", ".tiff", ".eer", ".gain")):
         with filesystem.open(file, "rb", block_size=TIFF_HEADER_BLOCK_SIZE) as f, tifffile.TiffFile(f) as tif:
             # The tif.pages must be converted to a list to actually read all the pages' data
             return (file, list(tif.pages))
@@ -91,9 +91,6 @@ def get_tiff_mrc_headers(
             if header_filename is None:
                 continue
             headers[header_filename] = header_data
-
-        if not headers:
-            pytest.skip("No file-format supported frames headers found")
 
         return headers
 

@@ -32,10 +32,6 @@ class TestGain(HelperTestMRCHeader):
         pytest.skip("Not applicable for gain files")
 
     @mrc_allure_title
-    def test_datatype(self):
-        pytest.skip("Not applicable for gain files")
-
-    @mrc_allure_title
     def test_mrc_spacing(self):
         pytest.skip("Not applicable for gain files")
 

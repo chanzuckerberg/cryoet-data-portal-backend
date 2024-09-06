@@ -1,6 +1,7 @@
 import datetime
 import os
 import sys
+import tarfile
 
 import click
 
@@ -12,8 +13,12 @@ STAGING_BUCKET = "cryoet-data-portal-staging"
 OUTPUT_BUCKET = "cryoetportal-output-test"
 
 
-def get_history(s3_report: str, destination: str, fs: S3Filesystem):
-    fs.s3fs.get(f"{s3_report}/history/", f"{destination}/history", recursive=True)
+def get_history(tar_report: str, destination: str, fs: FileSystemApi):
+    with fs.open(tar_report, "rb") as f, tarfile.open(fileobj=f, mode="r:gz") as t:
+        for file in t.getmembers():
+            if "/history/" in file.name and file.isfile():
+                file.name = os.path.basename(file.name)
+                t.extract(file, path=f"{destination}/history")
 
 
 @click.command()
@@ -84,20 +89,23 @@ def main(
 
         # Run tests and generate results
         os.system(
-            f"pytest {'--dist worksteal -n auto' if multiprocessing else '--dist no'} --datasets {dataset} --alluredir {localdir_raw} {extra_args}",
+            f"pytest {'--dist loadscope -n auto' if multiprocessing else '--dist no'} --datasets {dataset} --alluredir {localdir_raw} {extra_args}",
         )
 
         # Get the history from S3 (Must do this before generating the report)
-        remote_dataset_dir = f"{output_bucket}/{output_dir}/{dataset}"
-        if fs.exists(remote_dataset_dir):
-            get_history(remote_dataset_dir, localdir_raw, fs)
-            fs.s3fs.rm(remote_dataset_dir, recursive=True)
+        remote_tar_report = f"{output_bucket}/{output_dir}/{dataset}.tar.gz"
+        tar_report = f"{localdir_rep}.tar.gz"
+        if fs.exists(remote_tar_report):
+            get_history(remote_tar_report, localdir_raw, fs)
+            fs.s3fs.rm(remote_tar_report, recursive=True)
 
         # Generate the report
         os.system(f"allure generate --output {localdir_rep} {localdir_raw}")
 
-        # Upload the new report
-        fs.s3fs.put(localdir_rep, remote_dataset_dir, recursive=True)
+        # Compress and upload the new report
+        os.system(f"tar -czf {tar_report} {localdir_rep}")
+        fs.s3fs.put(tar_report, remote_tar_report, recursive=True)
+        os.remove(tar_report)
 
 
 if __name__ == "__main__":

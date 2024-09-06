@@ -6,7 +6,6 @@ import allure
 import pytest
 from data_validation.tests.helper_images import check_photo_valid
 from data_validation.tests.helper_metadata import basic_metadata_check
-from data_validation.tests.helper_mrc import mrc_allure_title
 from data_validation.tests.helper_mrc_zarr import HelperTestMRCZarrHeader
 from data_validation.tests.test_deposition import HelperTestDeposition
 from mrcfile.mrcinterpreter import MrcInterpreter
@@ -36,11 +35,6 @@ class TestTomogram(HelperTestMRCZarrHeader):
         self.mrc_headers = tomo_mrc_header
         self.zarr_headers = tomo_zarr_header
         self.spacing = float(voxel_spacing)
-
-    ### DON'T RUN SOME MRC HEADER TESTS ###
-    @mrc_allure_title
-    def test_datatype(self):
-        pytest.skip("Not applicable for tomogram files")
 
     @allure.title("Tomogram: sanity check tomogram metadata.")
     def test_metadata(self, tomogram_metadata: Dict):

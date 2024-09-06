@@ -4,7 +4,6 @@ from typing import Dict
 
 import allure
 import pytest
-from data_validation.tests.helper_mrc import mrc_allure_title
 from data_validation.tests.helper_mrc_zarr import HelperTestMRCZarrHeader
 from data_validation.tests.test_deposition import HelperTestDeposition
 from fixtures.data import BINNING_FACTORS
@@ -28,10 +27,6 @@ class TestTiltseries(HelperTestMRCZarrHeader):
         self.zarr_headers = tiltseries_zarr_metadata
         self.spacing = tiltseries_metadata["pixel_spacing"]
         self.skip_z_axis_checks = True
-
-    @mrc_allure_title
-    def test_datatype(self):
-        pytest.skip("Not applicable for tiltseries files")
 
     ### BEGIN metadata self-consistency tests ###
     @allure.title("Tiltseries: sanity check tiltseries metadata.")
