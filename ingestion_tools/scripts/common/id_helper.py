@@ -37,7 +37,12 @@ class IdentifierHelper:
 
     @classmethod
     def _load_ids_for_container(
-        cls, container_key: str, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs,
+        cls,
+        container_key: str,
+        config: DepositionImportConfig,
+        parents: dict[str, Any],
+        *args,
+        **kwargs,
     ):
         if container_key in cls.loaded_containers:
             return
@@ -53,7 +58,12 @@ class IdentifierHelper:
 
     @classmethod
     def _generate_hash_key(
-        cls, container_key: str, metadata: dict[str, Any], parents: dict[str, Any], *args, **kwargs,
+        cls,
+        container_key: str,
+        metadata: dict[str, Any],
+        parents: dict[str, Any],
+        *args,
+        **kwargs,
     ) -> str:
         # Select specific values from metadata for hash generation
         # This needs to be adjusted based on the structure of each metadata
@@ -65,13 +75,6 @@ class IdentifierHelper:
         raise NotImplementedError("_get_metadata_glob must be implemented in subclass")
 
     @classmethod
-    def _get_container_key(
-        cls,
-        config: DepositionImportConfig,
-        metadata: dict[str, Any],
-        parents: dict[str, Any],
-        *args,
-        **kwargs,
-    ):
+    def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs):
         # This is value will be used to ensure we don't _load_current_ids for a folder multiple times
         raise NotImplementedError("_get_container_key must be implemented in subclass")

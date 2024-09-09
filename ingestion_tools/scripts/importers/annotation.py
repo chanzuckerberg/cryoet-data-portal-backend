@@ -20,14 +20,7 @@ from importers.base_importer import BaseImporter
 # so we can generate non-conflicting sequential identifiers for annotations as they're imported.
 class AnnotationIdentifierHelper(IdentifierHelper):
     @classmethod
-    def _get_container_key(
-        cls,
-        config: DepositionImportConfig,
-        metadata: dict[str, Any],
-        parents: dict[str, Any],
-        *args,
-        **kwargs,
-    ):
+    def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs):
         return parents["voxel_spacing"].get_output_path()
 
     @classmethod

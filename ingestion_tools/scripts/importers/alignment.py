@@ -1,9 +1,11 @@
 import os.path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import pandas as pd
 
+from common.config import DepositionImportConfig
 from common.finders import DefaultImporterFactory
+from common.id_helper import IdentifierHelper
 from common.metadata import AlignmentMetadata
 from importers.base_importer import BaseFileImporter, BaseImporter
 from importers.tilt import TiltImporter
@@ -14,11 +16,38 @@ else:
     from importers.tomogram import TomogramImporter
 
 
+class AlignmentIdentifierHelper(IdentifierHelper):
+    @classmethod
+    def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs):
+        return parents["run"].get_output_path()
+
+    @classmethod
+    def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
+        run = parents["run"]
+        alignment_dir_path = config.resolve_output_path("alignment", run)
+        return os.path.join(alignment_dir_path, "*alignment_metadata.json")
+
+    @classmethod
+    def _generate_hash_key(cls, container_key: str, metadata: dict[str, Any], parents: dict[str, Any], *args, **kwargs):
+        return "-".join(
+            [
+                container_key,
+                str(metadata.get("deposition_id", int(parents["deposition"].name))),
+            ],
+        )
+
+
 class AlignmentImporter(BaseFileImporter):
     type_key = "alignment"
     plural_key = "alignments"
     finder_factory = DefaultImporterFactory
     has_metadata = True
+
+    def __init__(
+        self, config: DepositionImportConfig, metadata: dict[str, Any], name: str, path: str, parents: dict[str, Any],
+    ):
+        super().__init__(config, metadata, name, path, parents)
+        self.identifier = AlignmentIdentifierHelper.get_identifier(config, metadata, parents)
 
     def get_dest_filename(self) -> str:
         output_dir = self.get_output_path()
@@ -59,7 +88,9 @@ class AlignmentImporter(BaseFileImporter):
         return {"x": None, "y": None, "z": None}
 
     def get_per_section_alignment_parameters(
-        self, tlt_importer: BaseFileImporter, tltx_importer: BaseFileImporter,
+        self,
+        tlt_importer: BaseFileImporter,
+        tltx_importer: BaseFileImporter,
     ) -> list:
         result = []
         if self.is_default_alignment():
