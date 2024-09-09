@@ -22,5 +22,5 @@ cd ..
 pre-commit run --all-files
 
 # Then commit all changed files, *including* any new migrations!
-git commit -am "Updating schema to do X feature"
+git commit -am "chore: Updating schema to add X feature"
 ```
