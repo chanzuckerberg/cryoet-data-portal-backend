@@ -81,7 +81,7 @@ class DepositionImportConfig:
                 if config.get(item.plural_key):
                     self.object_configs[item.type_key] = config.pop(item.plural_key)
                 elif item_default_config := item.get_default_config():
-                    config[item.type_key] = item_default_config
+                    self.object_configs[item.type_key] = item_default_config
 
             # Copy the remaining standardization config keys over to this object.
             for k, v in config.get("standardization_config", {}).items():

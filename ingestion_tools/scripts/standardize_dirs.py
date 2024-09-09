@@ -203,8 +203,6 @@ def convert(
         metadata_import = {k for k in IMPORTERS if kwargs.get(f"import_{k.type_key}_metadata")}
         needs_iteration = to_import.union(metadata_import)
         to_iterate = needs_iteration.union({k for k, v in iteration_deps if needs_iteration.intersection(v)})
-    print(to_iterate)
-    print(metadata_import)
     do_import(config, IMPORTER_DEP_TREE, to_import, metadata_import, to_iterate, kwargs)
 
 

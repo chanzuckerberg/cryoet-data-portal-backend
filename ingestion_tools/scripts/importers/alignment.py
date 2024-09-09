@@ -55,6 +55,8 @@ class AlignmentImporter(BaseFileImporter):
         self.identifier = AlignmentIdentifierHelper.get_identifier(config, metadata, parents)
 
     def get_dest_filename(self) -> str:
+        if not self.path:
+            return None
         output_dir = self.get_output_path()
         return f"{output_dir}{os.path.basename(self.path)}"
 
@@ -149,4 +151,21 @@ class AlignmentImporter(BaseFileImporter):
 
     @classmethod
     def get_default_config(cls) -> list[dict] | None:
-        return [{"sources": [{"literal": {"value": ["default"]}}]}]
+        return [
+            {
+                "metadata": {
+                    "affine_transformation_matrix": [
+                        [1, 0, 0, 0],
+                        [0, 1, 0, 0],
+                        [0, 0, 1, 0],
+                        [0, 0, 0, 1],
+                    ],
+                    "alignment_type": "GLOBAL",
+                    "is_canonical": False,
+                    "volume_offset": {"x": 0, "y": 0, "z": 0},
+                    "tilt_offset": 0,
+                    "x_rotation_offset": 0,
+                },
+                "sources": [{"literal": {"value": ["default"]}}],
+            },
+        ]

@@ -34,8 +34,10 @@ class MergedMetadata(BaseMetadata):
     def write_metadata(self, filename: str, merge_data: dict[str, Any]) -> None:
         metadata = deep_merge(self.metadata, merge_data)
         metadata = self.add_defaults(metadata)
-        with self.fs.open(filename, "w") as fh:
-            fh.write(tojson(metadata))
+        # with self.fs.open(filename, "w") as fh:
+        #     fh.write(tojson(metadata))
+        print(filename)
+        print(tojson(metadata))
 
 
 class TiltSeriesMetadata(MergedMetadata):
