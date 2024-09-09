@@ -1,3 +1,9 @@
+alignment:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.tlt
+      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.xf
 annotations:
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
@@ -168,9 +174,7 @@ key_images:
 rawtilts:
 - sources:
   - source_multi_glob:
-      list_globs:
-      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.tlt
-      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.xf
+      list_globs: []
 runs:
 - sources:
   - source_glob:

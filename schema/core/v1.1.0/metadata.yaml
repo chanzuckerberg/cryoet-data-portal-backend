@@ -671,6 +671,7 @@ classes:
   # ============================================================================
   # annotation_metadata.json
   # ============================================================================
+
   Annotation:
     description: Metadata describing an annotation.
     mixins:
@@ -724,34 +725,56 @@ classes:
   # ============================================================================
   # Alignment metadata
   # ============================================================================
+
+  AlignmentOffset:
+    description: &desc_alignment_offset The offset of a alignment in voxels in each dimension relative to the canonical tomogram.
+    attributes:
+      x:
+        any_of:
+          - range: integer
+          - range: cdp-common:IntegerFormattedString
+        required: true
+        description: x offset relative to the canonical tomogram in pixels
+        unit:
+          descriptive_name: pixels
+          symbol: px
+      y:
+        any_of:
+          - range: integer
+          - range: cdp-common:IntegerFormattedString
+        required: true
+        description: y offset relative to the canonical tomogram in pixels
+        unit:
+          descriptive_name: pixels
+          symbol: px
+      z:
+        any_of:
+          - range: integer
+          - range: cdp-common:IntegerFormattedString
+        required: true
+        description: z offset relative to the canonical tomogram in pixels
+        unit:
+          descriptive_name: pixels
+          symbol: px
+
+
   Alignment:
     attributes:
       alignment_type:
         description: The type of alignment.
         range: string
         required: true
-      offset_x:
-        description: The x offset.
-        range: integer
+      offset:
+        description: *desc_alignment_offset
+        range: AlignmentOffset
         required: true
-        ifabsent: 0
-      offset_y:
-        description: The y offset.
-        range: integer
-        required: true
-        ifabsent: 0
-      offset_z:
-        description: The z offset.
-        range: integer
-        required: true
-        ifabsent: 0
       x_rotation_offset:
-        description: The x rotation offset.
+        description: The x rotation offset relative to the tomogram.
         range: integer
         required: true
         ifabsent: 0
       tilt_offset:
-        description: The tilt offset.
+        description: The tilt offset relative to the tomogram.
         range: float
         required: true
         ifabsent: 0.0

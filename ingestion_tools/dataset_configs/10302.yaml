@@ -1,3 +1,9 @@
+alignment:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.tlt
+      - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.xf
 annotations: []
 collection_metadata:
 - sources:
@@ -97,8 +103,6 @@ rawtilts:
   - source_multi_glob:
       list_globs:
       - chlamy_visual_proteomics/{run_name}/{run_name}.rawtlt
-      - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.tlt
-      - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.xf
       - chlamy_visual_proteomics/{run_name}/ctffind4/ctfphaseflip_ctffind4.txt
 runs:
 - sources:
