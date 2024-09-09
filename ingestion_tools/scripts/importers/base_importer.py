@@ -113,6 +113,10 @@ class BaseImporter:
                 for item in source_finder_factory.find(cls, config, metadata, **parents):
                     yield item
 
+    @classmethod
+    def get_default_config(cls) -> list[dict] | None:
+        return None
+
 
 class VolumeImporter(BaseImporter):
     def __init__(

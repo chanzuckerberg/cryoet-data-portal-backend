@@ -1,5 +1,4 @@
 import re
-from collections import defaultdict
 from typing import Any, Optional
 
 import click
@@ -118,7 +117,6 @@ def do_import(
     parents: Optional[dict[str, Any]] = None,
 ):
     parents = dict(parents) if parents else {}
-    siblings = defaultdict(list)
     for import_class, child_import_classes in tree.items():
         if import_class not in to_iterate:
             continue
@@ -143,7 +141,6 @@ def do_import(
                 print(f"Importing {import_class.type_key} {item.name}")
                 item.import_item()
 
-            siblings[import_class.type_key].append(item)
             if child_import_classes:
                 sub_parents = {import_class.type_key: item}
                 sub_parents.update(parents)

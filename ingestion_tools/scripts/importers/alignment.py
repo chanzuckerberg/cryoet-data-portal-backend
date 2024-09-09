@@ -146,3 +146,7 @@ class AlignmentImporter(BaseFileImporter):
             elif source_filename.endswith(".tltx"):
                 tltx_importer = importer
         return tlt_importer, tltx_importer
+
+    @classmethod
+    def get_default_config(cls) -> list[dict] | None:
+        return [{"sources": [{"literal": {"value": ["default"]}}]}]
