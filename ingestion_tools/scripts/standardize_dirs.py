@@ -139,9 +139,6 @@ def do_import(
             if filter_patterns and not list(filter(lambda x: x.match(item.name), filter_patterns)):
                 print(f"Skipping {item.name}..")
                 continue
-            print(
-                f"Importing {import_class.type_key} {item.name} parents: {parents.keys()} siblings: {siblings.keys()}",
-            )
             if import_class in to_import:
                 print(f"Importing {import_class.type_key} {item.name}")
                 item.import_item()

@@ -12,7 +12,7 @@ from common.config import DepositionImportConfig
 class IdentifierHelper:
     next_identifier: dict[str, int] = defaultdict(partial(int, 100))
     cached_identifiers: dict[str, int] = {}
-    loaded_containers: set[str] = {}
+    loaded_containers: set[str] = set()
 
     @classmethod
     def get_identifier(
@@ -23,7 +23,7 @@ class IdentifierHelper:
         *args,
         **kwargs,
     ):
-        container_key = cls._get_container_key(config, metadata, parents, *args, **kwargs)
+        container_key = cls._get_container_key(config, parents, *args, **kwargs)
         cls._load_ids_for_container(container_key, config, parents, *args, **kwargs)
 
         current_ids_key = cls._generate_hash_key(container_key, metadata, parents, *args, **kwargs)
@@ -52,7 +52,7 @@ class IdentifierHelper:
             if identifier >= cls.next_identifier[container_key]:
                 cls.next_identifier[container_key] = identifier + 1
             metadata = json.loads(config.fs.open(file, "r").read())
-            current_ids_key = cls._generate_hash_key(container_key, metadata, *args, **kwargs)
+            current_ids_key = cls._generate_hash_key(container_key, metadata, parents, *args, **kwargs)
             cls.cached_identifiers[current_ids_key] = identifier
         cls.loaded_containers.add(container_key)
 

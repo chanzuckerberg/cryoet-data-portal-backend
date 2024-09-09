@@ -44,7 +44,12 @@ class AlignmentImporter(BaseFileImporter):
     has_metadata = True
 
     def __init__(
-        self, config: DepositionImportConfig, metadata: dict[str, Any], name: str, path: str, parents: dict[str, Any],
+        self,
+        config: DepositionImportConfig,
+        metadata: dict[str, Any],
+        name: str,
+        path: str,
+        parents: dict[str, Any],
     ):
         super().__init__(config, metadata, name, path, parents)
         self.identifier = AlignmentIdentifierHelper.get_identifier(config, metadata, parents)
@@ -62,7 +67,7 @@ class AlignmentImporter(BaseFileImporter):
 
     def get_output_path(self) -> str:
         output_directory = super().get_output_path()
-        return os.path.join(output_directory, "id-")
+        return os.path.join(output_directory, f"{self.identifier}-")
 
     def get_metadata_path(self) -> str:
         return self.get_output_path() + "alignment_metadata.json"
