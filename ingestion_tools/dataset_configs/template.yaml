@@ -7,9 +7,10 @@ alignment: OPTIONAL
       - ... (4 ELEMENTS)
     alignment_type: REQUIRED, STRING
     is_canonical: REQUIRED, BOOLEAN (DEFAULT TRUE)
-    offset_x: REQUIRED, INTEGER (DEFAULT 0)
-    offset_y: REQUIRED, INTEGER (DEFAULT 0)
-    offset_z: REQUIRED, INTEGER (DEFAULT 0)
+    offset: REQUIRED
+      x: REQUIRED, INTEGER
+      y: REQUIRED, INTEGER
+      z: REQUIRED, INTEGER
     tilt_offset: REQUIRED, FLOAT (DEFAULT 0.0)
     x_rotation_offset: REQUIRED, INTEGER (DEFAULT 0)
 - sources: SEE datasets.sources and runs.sources.parent_filters
@@ -254,6 +255,10 @@ tiltseries: OPTIONAL
   - source_glob: SEE dataset.sources.source_glob
 tomograms: OPTIONAL
 - metadata: OPTIONAL
+    affine_transformation_matrix: OPTIONAL 4x4 FLOAT MATRIX (DEFAULT 4x4 identity matrix)
+      - - REQUIRED, FLOAT
+        - ... (4 ELEMENTS)
+      - ... (4 ELEMENTS)
     align_software: OPTIONAL, STRING # CURRENTLY NOT USED
     authors: SEE annotations.authors
     ctf_corrected: RECOMMENDED, BOOLEAN
