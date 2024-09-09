@@ -8,7 +8,6 @@ from common.finders import DefaultImporterFactory
 from common.id_helper import IdentifierHelper
 from common.metadata import AlignmentMetadata
 from importers.base_importer import BaseFileImporter, BaseImporter
-from importers.tilt import TiltImporter
 
 if TYPE_CHECKING:
     TomogramImporter = "TomogramImporter"
@@ -67,6 +66,12 @@ class AlignmentImporter(BaseFileImporter):
         except IOError:
             print("Skipping creating metadata for default alignment with no source tomogram")
 
+    def import_item(self) -> None:
+        if self.is_default_alignment():
+            print(f"Skipping importing alignment with path {self.path} as it is a default alignment")
+            return
+        super().import_item()
+
     def get_output_path(self) -> str:
         output_directory = super().get_output_path()
         return os.path.join(output_directory, f"{self.identifier}-")
@@ -88,6 +93,8 @@ class AlignmentImporter(BaseFileImporter):
         for tomogram in TomogramImporter.finder(self.config, **self.parents):
             return tomogram.get_source_volume_info().get_dimensions()
 
+        # If no source tomogram is found don't create a default alignment metadata file. But, if alignment files are
+        # available, create metadata file with default volume dimension
         if self.is_default_alignment():
             raise IOError("No source tomogram found for creating default alignment")
 
@@ -140,6 +147,8 @@ class AlignmentImporter(BaseFileImporter):
         return pd.read_csv(local_path, sep=r"\s+", header=None, names=names)
 
     def get_tlt_importers(self) -> [BaseFileImporter, BaseFileImporter]:
+        from importers.tilt import TiltImporter
+
         tlt_importer = tltx_importer = None
         for importer in TiltImporter.finder(self.config, **self.parents):
             source_filename = os.path.basename(importer.path)

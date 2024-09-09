@@ -107,15 +107,7 @@ def flatten_dependency_tree(tree) -> dict[type, set[type]]:
     return treedict
 
 
-def do_import(
-    config,
-    tree,
-    to_import,
-    metadata_import,
-    to_iterate,
-    kwargs,
-    parents: Optional[dict[str, Any]] = None,
-):
+def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, parents: Optional[dict[str, Any]] = None):
     parents = dict(parents) if parents else {}
     for import_class, child_import_classes in tree.items():
         if import_class not in to_iterate:
@@ -144,15 +136,7 @@ def do_import(
             if child_import_classes:
                 sub_parents = {import_class.type_key: item}
                 sub_parents.update(parents)
-                do_import(
-                    config,
-                    child_import_classes,
-                    to_import,
-                    metadata_import,
-                    to_iterate,
-                    kwargs,
-                    sub_parents,
-                )
+                do_import(config, child_import_classes, to_import, metadata_import, to_iterate, kwargs, sub_parents)
             # Not all importers have metadata, but we don't expose the option for it unless it's supported
             if import_class in metadata_import and item.has_metadata:
                 print(f"Importing {import_class.type_key} metadata")

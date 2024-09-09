@@ -65,8 +65,7 @@ class IdentifierHelper:
         *args,
         **kwargs,
     ) -> str:
-        # Select specific values from metadata for hash generation
-        # This needs to be adjusted based on the structure of each metadata
+        # Generate a unique hash for the entity based on its metadata and parents
         raise NotImplementedError("_generate_hash_key must be implemented in subclass")
 
     @classmethod

@@ -34,9 +34,9 @@ class MergedMetadata(BaseMetadata):
     def write_metadata(self, filename: str, merge_data: dict[str, Any]) -> None:
         metadata = deep_merge(self.metadata, merge_data)
         metadata = self.add_defaults(metadata)
-        # with self.fs.open(filename, "w") as fh:
-        #     fh.write(tojson(metadata))
-        print(filename)
+        with self.fs.open(filename, "w") as fh:
+            fh.write(tojson(metadata))
+        print(f"Metadata written to {filename}")
         print(tojson(metadata))
 
 
