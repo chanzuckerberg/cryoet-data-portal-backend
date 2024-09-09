@@ -565,6 +565,7 @@ slots:
     from_schema: cdp-ingestion-config
     domain_of:
     - AnnotationParent
+    - CollectionMetadataParent
     - FrameParent
     - GainParent
     - KeyImageParent
@@ -581,6 +582,7 @@ slots:
     from_schema: cdp-ingestion-config
     domain_of:
     - AnnotationParent
+    - CollectionMetadataParent
     - DatasetParent
     - DatasetKeyPhotoParent
     - DepositionKeyPhotoParent
@@ -600,6 +602,7 @@ slots:
     from_schema: cdp-ingestion-config
     domain_of:
     - AnnotationParent
+    - CollectionMetadataParent
     - FrameParent
     - GainParent
     - KeyImageParent
@@ -643,6 +646,18 @@ classes:
         domain_of:
         - Container
         range: AnnotationEntity
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      collection_metadata:
+        name: collection_metadata
+        description: A collection_metadata entity.
+        from_schema: cdp-ingestion-config
+        alias: collection_metadata
+        owner: Container
+        domain_of:
+        - Container
+        range: CollectionMetadataEntity
         multivalued: true
         inlined: true
         inlined_as_list: true
@@ -977,6 +992,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -1058,6 +1074,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -1142,6 +1159,7 @@ classes:
         owner: AnnotationEntity
         domain_of:
         - AnnotationEntity
+        - CollectionMetadataEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
         - DepositionEntity
@@ -1258,6 +1276,7 @@ classes:
         owner: AnnotationSource
         domain_of:
         - AnnotationSource
+        - CollectionMetadataSource
         - DatasetSource
         - DatasetKeyPhotoSource
         - DepositionKeyPhotoSource
@@ -1281,6 +1300,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -1311,6 +1331,7 @@ classes:
         owner: AnnotationParentFilters
         domain_of:
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -1336,6 +1357,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -1369,6 +1391,7 @@ classes:
         owner: AnnotationParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -1389,6 +1412,7 @@ classes:
         owner: AnnotationParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - DatasetParent
         - DatasetKeyPhotoParent
         - DepositionKeyPhotoParent
@@ -1412,6 +1436,7 @@ classes:
         owner: AnnotationParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -1434,6 +1459,274 @@ classes:
         - AnnotationParent
         - KeyImageParent
         - TomogramParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  CollectionMetadataEntity:
+    name: CollectionMetadataEntity
+    description: A collection_metadata entity.
+    from_schema: cdp-ingestion-config
+    attributes:
+      sources:
+        name: sources
+        description: A collection_metadata source.
+        from_schema: cdp-ingestion-config
+        alias: sources
+        owner: CollectionMetadataEntity
+        domain_of:
+        - AnnotationEntity
+        - CollectionMetadataEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - DepositionEntity
+        - DepositionKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: CollectionMetadataSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+  CollectionMetadataSource:
+    name: CollectionMetadataSource
+    description: A collection_metadata source.
+    from_schema: cdp-ingestion-config
+    is_a: StandardSource
+    attributes:
+      parent_filters:
+        name: parent_filters
+        description: Types of parent filters for a collection_metadata source.
+        from_schema: cdp-ingestion-config
+        alias: parent_filters
+        owner: CollectionMetadataSource
+        domain_of:
+        - AnnotationSource
+        - CollectionMetadataSource
+        - DatasetSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - FrameSource
+        - GainSource
+        - KeyImageSource
+        - RawTiltSource
+        - RunSource
+        - TiltSeriesSource
+        - TomogramSource
+        - VoxelSpacingSource
+        range: CollectionMetadataParentFilters
+        inlined: true
+        inlined_as_list: true
+      destination_glob:
+        name: destination_glob
+        description: A glob class for finding files in the output / destination directory.
+        from_schema: cdp-ingestion-config
+        alias: destination_glob
+        owner: CollectionMetadataSource
+        domain_of:
+        - StandardSource
+        - VoxelSpacingSource
+        range: DestinationGlob
+        inlined: true
+        inlined_as_list: true
+      source_glob:
+        name: source_glob
+        description: A glob class for finding files in the source directory.
+        from_schema: cdp-ingestion-config
+        alias: source_glob
+        owner: CollectionMetadataSource
+        domain_of:
+        - StandardSource
+        - VoxelSpacingSource
+        range: SourceGlob
+        inlined: true
+        inlined_as_list: true
+      source_multi_glob:
+        name: source_multi_glob
+        description: A glob class for finding files in the source directory (with
+          multiple globs).
+        from_schema: cdp-ingestion-config
+        alias: source_multi_glob
+        owner: CollectionMetadataSource
+        domain_of:
+        - StandardSource
+        range: SourceMultiGlob
+        inlined: true
+        inlined_as_list: true
+      literal:
+        name: literal
+        description: A literal class with a value attribute.
+        from_schema: cdp-ingestion-config
+        alias: literal
+        owner: CollectionMetadataSource
+        domain_of:
+        - StandardSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - VoxelSpacingSource
+        range: StandardLiteral
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: CollectionMetadataSource
+        domain_of:
+        - DefaultSource
+        - AnnotationParentFilters
+        - CollectionMetadataParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  CollectionMetadataParentFilters:
+    name: CollectionMetadataParentFilters
+    description: Types of parent filters for a collection_metadata source.
+    from_schema: cdp-ingestion-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of a collection_metadata source.
+          For a given attribute, it can only be used if the current class is a subclass
+          of the attribute.
+        from_schema: cdp-ingestion-config
+        alias: include
+        owner: CollectionMetadataParentFilters
+        domain_of:
+        - AnnotationParentFilters
+        - CollectionMetadataParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: CollectionMetadataParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of a collection_metadata source.
+          For a given attribute, it can only be used if the current class is a subclass
+          of the attribute.
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: CollectionMetadataParentFilters
+        domain_of:
+        - DefaultSource
+        - AnnotationParentFilters
+        - CollectionMetadataParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: CollectionMetadataParent
+        inlined: true
+        inlined_as_list: true
+  CollectionMetadataParent:
+    name: CollectionMetadataParent
+    description: A filter for a parent class of a collection_metadata source. For
+      a given attribute, it can only be used if the current class is a subclass of
+      the attribute.
+    from_schema: cdp-ingestion-config
+    slots:
+    - dataset
+    - deposition
+    - run
+    attributes:
+      dataset:
+        name: dataset
+        description: Include or exclude datasets for a source.
+        from_schema: cdp-ingestion-config
+        alias: dataset
+        owner: CollectionMetadataParent
+        domain_of:
+        - AnnotationParent
+        - CollectionMetadataParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      deposition:
+        name: deposition
+        description: Include or exclude depositions for a source.
+        from_schema: cdp-ingestion-config
+        alias: deposition
+        owner: CollectionMetadataParent
+        domain_of:
+        - AnnotationParent
+        - CollectionMetadataParent
+        - DatasetParent
+        - DatasetKeyPhotoParent
+        - DepositionKeyPhotoParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      run:
+        name: run
+        description: Include or exclude runs for a source.
+        from_schema: cdp-ingestion-config
+        alias: run
+        owner: CollectionMetadataParent
+        domain_of:
+        - AnnotationParent
+        - CollectionMetadataParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
         range: string
         multivalued: true
         inlined: true
@@ -1466,6 +1759,7 @@ classes:
         owner: DatasetEntity
         domain_of:
         - AnnotationEntity
+        - CollectionMetadataEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
         - DepositionEntity
@@ -1498,6 +1792,7 @@ classes:
         owner: DatasetSource
         domain_of:
         - AnnotationSource
+        - CollectionMetadataSource
         - DatasetSource
         - DatasetKeyPhotoSource
         - DepositionKeyPhotoSource
@@ -1571,6 +1866,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -1601,6 +1897,7 @@ classes:
         owner: DatasetParentFilters
         domain_of:
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -1626,6 +1923,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -1656,6 +1954,7 @@ classes:
         owner: DatasetParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - DatasetParent
         - DatasetKeyPhotoParent
         - DepositionKeyPhotoParent
@@ -1684,6 +1983,7 @@ classes:
         owner: DatasetKeyPhotoEntity
         domain_of:
         - AnnotationEntity
+        - CollectionMetadataEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
         - DepositionEntity
@@ -1730,6 +2030,7 @@ classes:
         owner: DatasetKeyPhotoSource
         domain_of:
         - AnnotationSource
+        - CollectionMetadataSource
         - DatasetSource
         - DatasetKeyPhotoSource
         - DepositionKeyPhotoSource
@@ -1789,6 +2090,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -1819,6 +2121,7 @@ classes:
         owner: DatasetKeyPhotoParentFilters
         domain_of:
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -1844,6 +2147,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -1874,6 +2178,7 @@ classes:
         owner: DatasetKeyPhotoParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - DatasetParent
         - DatasetKeyPhotoParent
         - DepositionKeyPhotoParent
@@ -1917,6 +2222,7 @@ classes:
         owner: DepositionEntity
         domain_of:
         - AnnotationEntity
+        - CollectionMetadataEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
         - DepositionEntity
@@ -2000,6 +2306,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -2028,6 +2335,7 @@ classes:
         owner: DepositionKeyPhotoEntity
         domain_of:
         - AnnotationEntity
+        - CollectionMetadataEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
         - DepositionEntity
@@ -2074,6 +2382,7 @@ classes:
         owner: DepositionKeyPhotoSource
         domain_of:
         - AnnotationSource
+        - CollectionMetadataSource
         - DatasetSource
         - DatasetKeyPhotoSource
         - DepositionKeyPhotoSource
@@ -2133,6 +2442,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -2163,6 +2473,7 @@ classes:
         owner: DepositionKeyPhotoParentFilters
         domain_of:
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -2188,6 +2499,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -2218,6 +2530,7 @@ classes:
         owner: DepositionKeyPhotoParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - DatasetParent
         - DatasetKeyPhotoParent
         - DepositionKeyPhotoParent
@@ -2246,6 +2559,7 @@ classes:
         owner: FrameEntity
         domain_of:
         - AnnotationEntity
+        - CollectionMetadataEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
         - DepositionEntity
@@ -2278,6 +2592,7 @@ classes:
         owner: FrameSource
         domain_of:
         - AnnotationSource
+        - CollectionMetadataSource
         - DatasetSource
         - DatasetKeyPhotoSource
         - DepositionKeyPhotoSource
@@ -2351,6 +2666,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -2380,6 +2696,7 @@ classes:
         owner: FrameParentFilters
         domain_of:
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -2404,6 +2721,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -2436,6 +2754,7 @@ classes:
         owner: FrameParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -2456,6 +2775,7 @@ classes:
         owner: FrameParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - DatasetParent
         - DatasetKeyPhotoParent
         - DepositionKeyPhotoParent
@@ -2479,6 +2799,7 @@ classes:
         owner: FrameParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -2503,6 +2824,7 @@ classes:
         owner: GainEntity
         domain_of:
         - AnnotationEntity
+        - CollectionMetadataEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
         - DepositionEntity
@@ -2535,6 +2857,7 @@ classes:
         owner: GainSource
         domain_of:
         - AnnotationSource
+        - CollectionMetadataSource
         - DatasetSource
         - DatasetKeyPhotoSource
         - DepositionKeyPhotoSource
@@ -2608,6 +2931,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -2637,6 +2961,7 @@ classes:
         owner: GainParentFilters
         domain_of:
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -2661,6 +2986,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -2693,6 +3019,7 @@ classes:
         owner: GainParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -2713,6 +3040,7 @@ classes:
         owner: GainParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - DatasetParent
         - DatasetKeyPhotoParent
         - DepositionKeyPhotoParent
@@ -2736,6 +3064,7 @@ classes:
         owner: GainParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -2760,6 +3089,7 @@ classes:
         owner: KeyImageEntity
         domain_of:
         - AnnotationEntity
+        - CollectionMetadataEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
         - DepositionEntity
@@ -2792,6 +3122,7 @@ classes:
         owner: KeyImageSource
         domain_of:
         - AnnotationSource
+        - CollectionMetadataSource
         - DatasetSource
         - DatasetKeyPhotoSource
         - DepositionKeyPhotoSource
@@ -2865,6 +3196,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -2895,6 +3227,7 @@ classes:
         owner: KeyImageParentFilters
         domain_of:
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -2920,6 +3253,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -2954,6 +3288,7 @@ classes:
         owner: KeyImageParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -2974,6 +3309,7 @@ classes:
         owner: KeyImageParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - DatasetParent
         - DatasetKeyPhotoParent
         - DepositionKeyPhotoParent
@@ -2997,6 +3333,7 @@ classes:
         owner: KeyImageParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -3048,6 +3385,7 @@ classes:
         owner: RawTiltEntity
         domain_of:
         - AnnotationEntity
+        - CollectionMetadataEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
         - DepositionEntity
@@ -3080,6 +3418,7 @@ classes:
         owner: RawTiltSource
         domain_of:
         - AnnotationSource
+        - CollectionMetadataSource
         - DatasetSource
         - DatasetKeyPhotoSource
         - DepositionKeyPhotoSource
@@ -3153,6 +3492,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -3183,6 +3523,7 @@ classes:
         owner: RawTiltParentFilters
         domain_of:
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -3208,6 +3549,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -3240,6 +3582,7 @@ classes:
         owner: RawTiltParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -3260,6 +3603,7 @@ classes:
         owner: RawTiltParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - DatasetParent
         - DatasetKeyPhotoParent
         - DepositionKeyPhotoParent
@@ -3283,6 +3627,7 @@ classes:
         owner: RawTiltParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -3307,6 +3652,7 @@ classes:
         owner: RunEntity
         domain_of:
         - AnnotationEntity
+        - CollectionMetadataEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
         - DepositionEntity
@@ -3339,6 +3685,7 @@ classes:
         owner: RunSource
         domain_of:
         - AnnotationSource
+        - CollectionMetadataSource
         - DatasetSource
         - DatasetKeyPhotoSource
         - DepositionKeyPhotoSource
@@ -3412,6 +3759,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -3441,6 +3789,7 @@ classes:
         owner: RunParentFilters
         domain_of:
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -3465,6 +3814,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -3496,6 +3846,7 @@ classes:
         owner: RunParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -3516,6 +3867,7 @@ classes:
         owner: RunParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - DatasetParent
         - DatasetKeyPhotoParent
         - DepositionKeyPhotoParent
@@ -3632,6 +3984,7 @@ classes:
         owner: TiltSeriesEntity
         domain_of:
         - AnnotationEntity
+        - CollectionMetadataEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
         - DepositionEntity
@@ -3664,6 +4017,7 @@ classes:
         owner: TiltSeriesSource
         domain_of:
         - AnnotationSource
+        - CollectionMetadataSource
         - DatasetSource
         - DatasetKeyPhotoSource
         - DepositionKeyPhotoSource
@@ -3737,6 +4091,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -3767,6 +4122,7 @@ classes:
         owner: TiltSeriesParentFilters
         domain_of:
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -3792,6 +4148,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -3824,6 +4181,7 @@ classes:
         owner: TiltSeriesParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -3844,6 +4202,7 @@ classes:
         owner: TiltSeriesParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - DatasetParent
         - DatasetKeyPhotoParent
         - DepositionKeyPhotoParent
@@ -3867,6 +4226,7 @@ classes:
         owner: TiltSeriesParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -3906,6 +4266,7 @@ classes:
         owner: TomogramEntity
         domain_of:
         - AnnotationEntity
+        - CollectionMetadataEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
         - DepositionEntity
@@ -3938,6 +4299,7 @@ classes:
         owner: TomogramSource
         domain_of:
         - AnnotationSource
+        - CollectionMetadataSource
         - DatasetSource
         - DatasetKeyPhotoSource
         - DepositionKeyPhotoSource
@@ -4011,6 +4373,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -4041,6 +4404,7 @@ classes:
         owner: TomogramParentFilters
         domain_of:
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -4066,6 +4430,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -4099,6 +4464,7 @@ classes:
         owner: TomogramParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -4119,6 +4485,7 @@ classes:
         owner: TomogramParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - DatasetParent
         - DatasetKeyPhotoParent
         - DepositionKeyPhotoParent
@@ -4142,6 +4509,7 @@ classes:
         owner: TomogramParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -4181,6 +4549,7 @@ classes:
         owner: VoxelSpacingEntity
         domain_of:
         - AnnotationEntity
+        - CollectionMetadataEntity
         - DatasetEntity
         - DatasetKeyPhotoEntity
         - DepositionEntity
@@ -4262,6 +4631,7 @@ classes:
         owner: VoxelSpacingSource
         domain_of:
         - AnnotationSource
+        - CollectionMetadataSource
         - DatasetSource
         - DatasetKeyPhotoSource
         - DepositionKeyPhotoSource
@@ -4285,6 +4655,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -4315,6 +4686,7 @@ classes:
         owner: VoxelSpacingParentFilters
         domain_of:
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -4340,6 +4712,7 @@ classes:
         domain_of:
         - DefaultSource
         - AnnotationParentFilters
+        - CollectionMetadataParentFilters
         - DatasetParentFilters
         - DatasetKeyPhotoParentFilters
         - DepositionKeyPhotoParentFilters
@@ -4372,6 +4745,7 @@ classes:
         owner: VoxelSpacingParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent
@@ -4392,6 +4766,7 @@ classes:
         owner: VoxelSpacingParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - DatasetParent
         - DatasetKeyPhotoParent
         - DepositionKeyPhotoParent
@@ -4415,6 +4790,7 @@ classes:
         owner: VoxelSpacingParent
         domain_of:
         - AnnotationParent
+        - CollectionMetadataParent
         - FrameParent
         - GainParent
         - KeyImageParent

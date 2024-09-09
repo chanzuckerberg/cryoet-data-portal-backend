@@ -69,6 +69,11 @@ annotations:
       glob_string: subtomo/ribo/ribo_tm_bin1_motl_12.star
       is_visualization_default: true
       order: xyz
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - tomo/raw_stacks/{mapped_ts_name}/SerialEM/{mapped_frame_name}.st.mdoc
 dataset_keyphotos:
 - sources:
   - literal:
@@ -139,10 +144,12 @@ depositions:
 - metadata:
     authors: *id003
     dates: *id002
-    deposition_description: Cryo-electron tomograms of T. kivui FIB-SEM lamellas, including annotations of
-      membrane-anchored hydrogen-dependent CO2 reductase filaments and ribosomes, refined using STOPGAP.
+    deposition_description: Cryo-electron tomograms of T. kivui FIB-SEM lamellas,
+      including annotations of membrane-anchored hydrogen-dependent CO2 reductase
+      filaments and ribosomes, refined using STOPGAP.
     deposition_identifier: 10008
-    deposition_title: Membrane-anchored Hydrogen-dependent CO2 reductase nanowires in T. kivui
+    deposition_title: Membrane-anchored Hydrogen-dependent CO2 reductase nanowires
+      in T. kivui
     deposition_types:
     - dataset
   sources:
@@ -164,7 +171,6 @@ rawtilts:
       list_globs:
       - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.tlt
       - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.xf
-      - tomo/raw_stacks/{mapped_ts_name}/SerialEM/{mapped_frame_name}.st.mdoc
 runs:
 - sources:
   - source_glob:

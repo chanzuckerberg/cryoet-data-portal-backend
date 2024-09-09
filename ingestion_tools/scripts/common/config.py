@@ -249,6 +249,7 @@ class DepositionImportConfig:
             "gain": "{dataset_name}/{run_name}/Frames/{run_name}_gain",
             "frame": "{dataset_name}/{run_name}/Frames",
             "rawtilt": "{dataset_name}/{run_name}/TiltSeries",
+            "collection_metadata": "{dataset_name}/{run_name}/TiltSeries",
             "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
             "annotation_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
             "run_metadata": "{dataset_name}/{run_name}/run_metadata.json",
@@ -266,6 +267,7 @@ class DepositionImportConfig:
             "deposition_metadata": "depositions_metadata/{deposition_name}/deposition_metadata.json",
             "deposition_keyphoto": "depositions_metadata/{deposition_name}/Images",
         }
+
         output_prefix = self.output_prefix
         glob_vars = obj.get_glob_vars()
         path = os.path.join(output_prefix, paths[key].format(**glob_vars))
