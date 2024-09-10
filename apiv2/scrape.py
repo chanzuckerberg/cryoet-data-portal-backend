@@ -325,6 +325,7 @@ def import_deposition(deposition_id: int):
     db = init_sync_db(
         f"postgresql+psycopg://{os.environ['PLATFORMICS_DATABASE_USER']}:{os.environ['PLATFORMICS_DATABASE_PASSWORD']}@{os.environ['PLATFORMICS_DATABASE_HOST']}:{os.environ['PLATFORMICS_DATABASE_PORT']}/{os.environ['PLATFORMICS_DATABASE_NAME']}",
     )
+    # client = cdp.Client("https://graphql-cryoet-api.cryoet.staging.si.czi.technology/v1/graphql")
     client = cdp.Client()
     dep = cdp.Deposition.get_by_id(client, deposition_id)
     with db.session() as session:
