@@ -1,8 +1,8 @@
 import os
 import os.path
 from abc import abstractmethod
+from typing import Any, Callable
 
-from typing import Any
 import ndjson
 
 from common import mesh_converter as mc

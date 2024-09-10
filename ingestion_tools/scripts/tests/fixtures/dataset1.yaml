@@ -23,6 +23,11 @@ annotations:
     file_format: csv
     glob_string: particle_lists/{run_name}_fas.csv
     shape: Point
+alignments:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - alignment/{run_name}.xf
 dataset_keyphotos:
 - sources:
   - literal:
@@ -98,7 +103,7 @@ key_images:
 rawtilts:
 - sources:
   - source_multi_glob:
-      list_glob:
+      list_globs:
       - metadata/{run_name}.rawtlt
       - metadata/{run_name}.xf
       - metadata/mdocs_modified/{run_name}.mdoc
@@ -112,6 +117,12 @@ standardization_config:
   deposition_id: 10001
   run_to_tomo_map_csv: null
   source_prefix: input_bucket/10001_input
+tilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - alignment/{run_name}.tlt
+      - alignment/{run_name}.xtilt
 tiltseries:
 - metadata:
     acceleration_voltage: 300000

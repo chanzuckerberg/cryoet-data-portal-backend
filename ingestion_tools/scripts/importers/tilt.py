@@ -26,7 +26,7 @@ class TiltImporter(BaseFileImporter):
         parents: dict[str, Any],
     ):
         super().__init__(config, metadata, name, path, parents)
-        self.identifier = AlignmentIdentifierHelper.get_identifier(config, {}, parents)
+        self.identifier = AlignmentIdentifierHelper.get_identifier(config, metadata, parents)
 
     def get_dest_filename(self) -> str:
         output_dir = self.get_output_path()
