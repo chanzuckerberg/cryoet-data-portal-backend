@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.0.0...apiv2-v1.1.0) (2024-09-10)
+
+
+### Features
+
+* add docs for release ([#265](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/265)) ([cb4af79](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/cb4af7956737e225a9429684ca6202ac24f60781))
+
 ## 1.0.0 (2024-09-06)
 
 
