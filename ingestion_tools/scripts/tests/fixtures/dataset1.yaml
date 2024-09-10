@@ -24,10 +24,20 @@ annotations:
     glob_string: particle_lists/{run_name}_fas.csv
     shape: Point
 alignments:
-- sources:
+- metadata:
+    affine_transformation_matrix: [[2, 0, 0, 0], [0, 3, 0, 0], [0, 4, 1, 0], [0, 0, 0, 5]]
+    alignment_type: LOCAL
+    is_canonical: true
+    tilt_offset: -0.3
+    volume_offset:
+      x: -1
+      y: 2
+      z: -3
+    x_rotation_offset: -2.3
+  sources:
   - source_multi_glob:
       list_globs:
-      - alignment/{run_name}.xf
+      - alignments/{run_name}.xf
 dataset_keyphotos:
 - sources:
   - literal:
@@ -121,8 +131,8 @@ tilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - alignment/{run_name}.tlt
-      - alignment/{run_name}.xtilt
+      - alignments/{run_name}.tlt
+      - alignments/{run_name}.xtilt
 tiltseries:
 - metadata:
     acceleration_voltage: 300000

@@ -154,7 +154,7 @@ class AlignmentImporter(BaseFileImporter):
             source_filename = os.path.basename(importer.path)
             if source_filename.endswith(".tlt"):
                 tlt_importer = importer
-            elif source_filename.endswith(".tltx"):
+            elif source_filename.endswith((".tltx", ".xtilt")):
                 tltx_importer = importer
         return tlt_importer, tltx_importer
 

@@ -2,11 +2,15 @@ import json
 from datetime import date, datetime
 from typing import Any
 
+import numpy
+
 
 def json_serial(obj: Any) -> str:
     """JSON serializer for objects not serializable by default json code"""
     if isinstance(obj, (datetime, date)):
         return obj.isoformat()
+    if isinstance(obj, (numpy.int64)):
+        return int(obj)
     raise TypeError("Type %s not serializable" % type(obj))
 
 
