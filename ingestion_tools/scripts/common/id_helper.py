@@ -75,20 +75,21 @@ class IdentifierHelper:
         **kwargs,
     ) -> str:
         """
-        Generate a unique hash for the entity based on its metadata and parents
+        Generates an unique hash for the entity based on its metadata and parents
         """
         raise NotImplementedError("_generate_hash_key must be implemented in subclass")
 
     @classmethod
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         """
-        This method returns a str glob for fetching relevant metadata files
+        Returns a str glob for fetching relevant metadata files within a container
         """
         raise NotImplementedError("_get_metadata_glob must be implemented in subclass")
 
     @classmethod
     def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         """
-        This is value will be used to ensure we don't _load_current_ids for a folder multiple times
+        Returns value that uniquely identifies a container for this entity within the current run's context.
+        The value will be used to ensure we don't _load_current_ids for a folder multiple times
         """
         raise NotImplementedError("_get_container_key must be implemented in subclass")

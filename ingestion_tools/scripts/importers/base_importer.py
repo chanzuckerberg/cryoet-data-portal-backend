@@ -115,6 +115,15 @@ class BaseImporter:
 
     @classmethod
     def get_default_config(cls) -> list[dict] | None:
+        """
+        Returns a default configuration for the importer. This value is set as default configuration for the importer
+        if no entry exists for it in the configuration.
+        Override this method in subclasses where a default configuration is required even when a user does not provide
+        a configuration.
+
+        Returns:
+        list[dict] | None: The default configuration for the importer. If no entry exists, returns None.
+        """
         return None
 
 
@@ -171,6 +180,12 @@ class VolumeImporter(BaseImporter):
 
 class BaseFileImporter(BaseImporter):
     def get_dest_filename(self) -> str:
+        """
+        This method constructs the destination filename for the imported item.
+
+        Returns:
+            str: The absolute path of the destination file.
+        """
         output_dir = self.get_output_path()
         return os.path.join(output_dir, os.path.basename(self.path))
 

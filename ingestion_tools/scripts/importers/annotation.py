@@ -16,8 +16,6 @@ from common.metadata import AnnotationMetadata
 from importers.base_importer import BaseImporter
 
 
-# This class is basically a global var that lets us cache metadata and identifiers for annotations,
-# so we can generate non-conflicting sequential identifiers for annotations as they're imported.
 class AnnotationIdentifierHelper(IdentifierHelper):
     @classmethod
     def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs):

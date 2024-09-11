@@ -16,7 +16,7 @@ else:
 
 class AlignmentIdentifierHelper(IdentifierHelper):
     @classmethod
-    def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs):
+    def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         return parents["run"].get_output_path()
 
     @classmethod
@@ -26,7 +26,9 @@ class AlignmentIdentifierHelper(IdentifierHelper):
         return os.path.join(alignment_dir_path, "*alignment_metadata.json")
 
     @classmethod
-    def _generate_hash_key(cls, container_key: str, metadata: dict[str, Any], parents: dict[str, Any], *args, **kwargs):
+    def _generate_hash_key(
+        cls, container_key: str, metadata: dict[str, Any], parents: dict[str, Any], *args, **kwargs,
+    ) -> str:
         return "-".join(
             [
                 container_key,
