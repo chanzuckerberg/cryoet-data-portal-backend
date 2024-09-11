@@ -51,20 +51,14 @@ class XfAlignmentConverter(BaseAlignmentConverter):
         tlt_data = self._get_dataframe(tlt_importer.path if tlt_importer else None, ["tilt_angle"])
         tltx_data = self._get_dataframe(tltx_importer.path if tltx_importer else None, ["volume_x_rotation"])
         xf_data = self._get_xf_data()
-        for index, entry in xf_data.iterrows():
+        rows = len(xf_data.index)
+        for index in range(0, rows):
             item = {
                 "z_index": index,
-                "in_plane_rotation": (
-                    entry["rotation_0"],
-                    entry["rotation_1"],
-                    entry["rotation_2"],
-                    entry["rotation_3"],
-                ),
-                "x_offset": entry["x_offset"],
-                "y_offset": entry["y_offset"],
                 "tilt_angle": None if tlt_data.empty else tlt_data["tilt_angle"][index],
                 "volume_x_rotation": 0 if tltx_data.empty else tltx_data["volume_x_rotation"][index],
             }
+            item = {**item, **self.get_xf_data(xf_data, index)}
             result.append(item)
         return result
 
@@ -99,8 +93,26 @@ class XfAlignmentConverter(BaseAlignmentConverter):
     def _get_tltx_importer(self):
         return self._get_importer([".tltx", ".xtilt"])
 
-    def _get_xf_importer(self):
+    def _get_xf_importer(self) -> BaseImporter | None:
         return self._get_importer([".xf"])
+
+    def get_xf_data(self, xf_data: pd.DataFrame, index: int) -> dict:
+        if xf_data.empty:
+            return {
+                "in_plane_rotation": (0, 0, 0, 0),
+                "x_offset": 0,
+                "y_offset": 0,
+            }
+        return {
+            "in_plane_rotation": (
+                xf_data["rotation_0"][index],
+                xf_data["rotation_1"][index],
+                xf_data["rotation_2"][index],
+                xf_data["rotation_3"][index],
+            ),
+            "x_offset": xf_data["x_offset"][index],
+            "y_offset": xf_data["y_offset"][index],
+        }
 
 
 def alignment_converter_factory(
