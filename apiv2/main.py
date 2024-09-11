@@ -2,10 +2,13 @@
 Launch the GraphQL server.
 """
 
+import os
+
 import strawberry
 import uvicorn
 from graphql_api.mutations import Mutation
 from graphql_api.queries import Query
+from starlette.middleware.cors import CORSMiddleware
 
 from platformics.graphql_api.core.deps import get_auth_principal
 from platformics.graphql_api.core.error_handler import HandleErrors
@@ -19,6 +22,31 @@ schema = strawberry.Schema(query=Query, mutation=Mutation, config=get_strawberry
 
 # Create and run app
 app = get_app(settings, schema)
+
+
+def get_allowed_origins() -> list[str] | None:
+    if origins := os.getenv("CRYOET_CORS_ALLOWED_ORIGINS"):
+        return [item.strip() for item in origins.split(",")]
+    return []
+
+
+def get_allowed_origin_regex() -> str | None:
+    if os.getenv("CRYOET_CORS_ALLOWED_ORIGINS"):
+        return None
+    # Use env var by default but fall back to localhost
+    return os.getenv("CRYOET_CORS_ALLOWED_REGEXES", r"http://localhost:\d+")
+
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=get_allowed_origins(),
+    allow_origin_regex=get_allowed_origin_regex(),
+    allow_headers=["Content-Type"],
+    allow_credentials=True,
+    max_age=600,
+    allow_methods=["*"],
+)
 
 
 def override_auth_principal():
