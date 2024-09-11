@@ -228,7 +228,7 @@ class DepositionImportConfig:
             "tiltseries": "{dataset_name}/{run_name}/TiltSeries",
             "gain": "{dataset_name}/{run_name}/Frames/{run_name}_gain",
             "frame": "{dataset_name}/{run_name}/Frames",
-            "rawtilt": "{dataset_name}/{run_name}/Frames",
+            "rawtilt": "{dataset_name}/{run_name}/TiltSeries",
             "collection_metadata": "{dataset_name}/{run_name}/TiltSeries",
             "alignment": "{dataset_name}/{run_name}/Alignments",
             "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",

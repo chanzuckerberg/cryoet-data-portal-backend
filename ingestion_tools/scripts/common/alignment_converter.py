@@ -1,5 +1,3 @@
-import abc
-from abc import ABC
 from typing import Any
 
 import pandas as pd
@@ -8,31 +6,21 @@ from importers.base_importer import BaseImporter
 from common.config import DepositionImportConfig
 
 
-class BaseAlignmentConverter(ABC):
-    @abc.abstractmethod
+class BaseAlignmentConverter:
+    def get_alignment_path(self) -> str | None:
+        """Return a str path to the alignment file if exists else None"""
+        return None
+
     def get_tilt_path(self) -> str | None:
         """Return a str path to the tilt file if exists else None"""
-        pass
+        return None
 
-    @abc.abstractmethod
     def get_tiltx_path(self) -> str | None:
         """Return a str path to the tiltx file if exists else None"""
-        pass
+        return None
 
-    @abc.abstractmethod
     def get_per_section_alignment_parameters(self) -> list[dict]:
         """Generates the per section alignment parameters"""
-        return []
-
-
-class DefaultAlignmentConverter(BaseAlignmentConverter):
-    def get_tilt_path(self) -> str | None:
-        return None
-
-    def get_tiltx_path(self) -> str | None:
-        return None
-
-    def get_per_section_alignment_parameters(self) -> list[dict]:
         return []
 
 
@@ -43,24 +31,26 @@ class XfAlignmentConverter(BaseAlignmentConverter):
         self.parents = parents
         self.importers = None
 
+    def get_alignment_path(self) -> str | None:
+        importer = self._get_xf_importer()
+        return importer.get_dest_filename() if importer else None
+
     def get_tilt_path(self) -> str | None:
-        """Return a str path to the tilt file if exists else None"""
         importer = self._get_tlt_importer()
         return importer.get_dest_filename() if importer else None
 
     def get_tiltx_path(self) -> str | None:
-        """Return a str path to the tiltx file if exists else None"""
         importer = self._get_tltx_importer()
         return importer.get_dest_filename() if importer else None
 
     def get_per_section_alignment_parameters(self) -> list[dict]:
         """Generates the per section alignment parameters"""
         result = []
-        xf_data = self._get_xf_data()
         tlt_importer = self._get_tlt_importer()
         tltx_importer = self._get_tltx_importer()
         tlt_data = self._get_dataframe(tlt_importer.path if tlt_importer else None, ["tilt_angle"])
         tltx_data = self._get_dataframe(tltx_importer.path if tltx_importer else None, ["volume_x_rotation"])
+        xf_data = self._get_xf_data()
         for index, entry in xf_data.iterrows():
             item = {
                 "z_index": index,
@@ -79,8 +69,9 @@ class XfAlignmentConverter(BaseAlignmentConverter):
         return result
 
     def _get_xf_data(self) -> pd.DataFrame:
+        xf_importer = self._get_xf_importer()
         column_names = ["rotation_0", "rotation_1", "rotation_2", "rotation_3", "x_offset", "y_offset"]
-        return self._get_dataframe(self.path, column_names)
+        return self._get_dataframe(xf_importer.path if xf_importer else None, column_names)
 
     def _get_dataframe(self, path: str, names: list[str]) -> pd.DataFrame:
         if not path:
@@ -95,19 +86,21 @@ class XfAlignmentConverter(BaseAlignmentConverter):
 
         self.importers = {item.path: item for item in AlignmentImporter.finder(self.config, **self.parents)}
 
-    def _get_tlt_importer(self):
+    def _get_importer(self, valid_suffix: list[str]) -> BaseImporter | None:
         self._load_files()
         for key, val in self.importers.items():
-            if key.endswith(".tlt"):
+            if key.endswith(tuple(valid_suffix)):
                 return val
         return None
 
+    def _get_tlt_importer(self) -> BaseImporter | None:
+        return self._get_importer([".tlt"])
+
     def _get_tltx_importer(self):
-        self._load_files()
-        for key, val in self.importers.items():
-            if key.endswith((".tltx", ".xtilt")):
-                return val
-        return None
+        return self._get_importer([".tltx", ".xtilt"])
+
+    def _get_xf_importer(self):
+        return self._get_importer([".xf"])
 
 
 def alignment_converter_factory(
@@ -120,4 +113,4 @@ def alignment_converter_factory(
     if alignment_format == "xf":
         return XfAlignmentConverter(path, config, parents)
 
-    return DefaultAlignmentConverter()
+    return BaseAlignmentConverter()

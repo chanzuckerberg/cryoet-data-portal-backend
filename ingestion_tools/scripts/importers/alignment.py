@@ -27,7 +27,12 @@ class AlignmentIdentifierHelper(IdentifierHelper):
 
     @classmethod
     def _generate_hash_key(
-        cls, container_key: str, metadata: dict[str, Any], parents: dict[str, Any], *args, **kwargs,
+        cls,
+        container_key: str,
+        metadata: dict[str, Any],
+        parents: dict[str, Any],
+        *args,
+        **kwargs,
     ) -> str:
         return "-".join(
             [
@@ -93,7 +98,7 @@ class AlignmentImporter(BaseFileImporter):
     def get_extra_metadata(self) -> dict:
         extra_metadata = {
             "per_section_alignment_parameters": self.converter.get_per_section_alignment_parameters(),
-            "alignment_path": self.get_dest_filename(),
+            "alignment_path": self.converter.get_alignment_path(),
             "tilt_path": self.converter.get_tilt_path(),
             "tiltx_path": self.converter.get_tiltx_path(),
         }
