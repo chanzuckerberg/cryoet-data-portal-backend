@@ -134,8 +134,6 @@ rawtilts:
   - source_multi_glob:
       list_globs:
       - metadata/{run_name}.rawtlt
-      - metadata/{run_name}.xf
-      - metadata/mdocs_modified/{run_name}.mdoc
 runs:
 - sources:
   - source_glob:

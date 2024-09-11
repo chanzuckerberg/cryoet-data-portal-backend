@@ -17,6 +17,11 @@ def endpoint_url() -> str:
 
 
 @pytest.fixture
+def region_name() -> str:
+    return os.getenv("AWS_REGION", "us-west-2")
+
+
+@pytest.fixture
 def http_prefix() -> str:
     return "https://foo.com"
 
@@ -42,9 +47,9 @@ def random_bucket_name() -> str:
 
 
 @pytest.fixture
-def test_output_bucket(s3_client: S3Client, random_bucket_name: str) -> Generator[str, Any, Any]:
+def test_output_bucket(s3_client: S3Client, random_bucket_name: str, region_name: str) -> Generator[str, Any, Any]:
     bucket_name = random_bucket_name
-    s3_client.create_bucket(Bucket=bucket_name)
+    s3_client.create_bucket(Bucket=bucket_name, CreateBucketConfiguration={"LocationConstraint": region_name})
     yield bucket_name
     try:
         objects = s3_client.list_objects_v2(Bucket=bucket_name)["Contents"]

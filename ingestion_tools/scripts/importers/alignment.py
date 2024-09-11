@@ -61,12 +61,6 @@ class AlignmentImporter(BaseFileImporter):
         self.identifier = AlignmentIdentifierHelper.get_identifier(config, metadata, parents)
         self.converter = alignment_converter_factory(config, metadata, path, parents)
 
-    def get_dest_filename(self) -> str | None:
-        if not self.path:
-            return None
-        output_dir = self.get_output_path()
-        return f"{output_dir}{os.path.basename(self.path)}"
-
     def import_metadata(self) -> None:
         metadata_path = self.get_metadata_path()
         if metadata_path in self.written_metadata_files:
@@ -91,6 +85,12 @@ class AlignmentImporter(BaseFileImporter):
     def get_output_path(self) -> str:
         output_directory = super().get_output_path()
         return os.path.join(output_directory, f"{self.identifier}-")
+
+    def get_dest_filename(self) -> str | None:
+        if not self.path:
+            return None
+        output_dir = self.get_output_path()
+        return f"{output_dir}{os.path.basename(self.path)}"
 
     def get_metadata_path(self) -> str:
         return self.get_output_path() + "alignment_metadata.json"
