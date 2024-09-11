@@ -7,9 +7,12 @@ from typing import Any
 from common.config import DepositionImportConfig
 
 
-# This class is a global var that caches metadata and identifiers for entities,
-# so we can generate non-conflicting sequential identifiers for entities as they're imported.
 class IdentifierHelper:
+    """
+    This class is a global var that caches metadata and identifiers for entities,
+    so we can generate non-conflicting sequential identifiers for entities as they're imported.
+    """
+
     next_identifier: dict[str, int] = defaultdict(partial(int, 100))
     cached_identifiers: dict[str, int] = {}
     loaded_containers: set[str] = set()
@@ -22,7 +25,10 @@ class IdentifierHelper:
         parents: dict[str, Any],
         *args,
         **kwargs,
-    ):
+    ) -> int:
+        """
+        Get a unique identifier for an entity based on its metadata and parents.
+        """
         container_key = cls._get_container_key(config, parents, *args, **kwargs)
         cls._load_ids_for_container(container_key, config, parents, *args, **kwargs)
 
@@ -44,6 +50,9 @@ class IdentifierHelper:
         *args,
         **kwargs,
     ):
+        """
+        Loads all the entries and associated identifiers for a given container.
+        """
         if container_key in cls.loaded_containers:
             return
         metadata_glob = cls._get_metadata_glob(config, parents, *args, **kwargs)
@@ -65,15 +74,21 @@ class IdentifierHelper:
         *args,
         **kwargs,
     ) -> str:
-        # Generate a unique hash for the entity based on its metadata and parents
+        """
+        Generate a unique hash for the entity based on its metadata and parents
+        """
         raise NotImplementedError("_generate_hash_key must be implemented in subclass")
 
     @classmethod
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
-        # Glob for fetching relevant metadata files
+        """
+        This method returns a str glob for fetching relevant metadata files
+        """
         raise NotImplementedError("_get_metadata_glob must be implemented in subclass")
 
     @classmethod
-    def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs):
-        # This is value will be used to ensure we don't _load_current_ids for a folder multiple times
+    def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
+        """
+        This is value will be used to ensure we don't _load_current_ids for a folder multiple times
+        """
         raise NotImplementedError("_get_container_key must be implemented in subclass")

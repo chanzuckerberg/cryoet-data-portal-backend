@@ -67,8 +67,11 @@ class AlignmentImporter(BaseFileImporter):
             print("Skipping creating metadata for default alignment with no source tomogram")
 
     def import_item(self) -> None:
-        if self.is_default_alignment():
-            print(f"Skipping importing alignment with path {self.path} as it is a default alignment")
+        if self.is_default_alignment() or not self.is_valid():
+            print(
+                f"Skipping importing alignment with path {self.path} as it is either a default alignment or doesn't"
+                " have dimension data",
+            )
             return
         super().import_item()
 
@@ -81,25 +84,22 @@ class AlignmentImporter(BaseFileImporter):
 
     def get_extra_metadata(self) -> dict:
         tlt_importer, tltx_importer = self.get_tlt_importers()
-        return {
-            "volume_dimension": self.get_tomogram_volume_dimension(),
+        extra_metadata = {
             "per_section_alignment_parameters": self.get_per_section_alignment_parameters(tlt_importer, tltx_importer),
             "alignment_path": self.get_dest_filename(),
             "tilt_path": tlt_importer.get_dest_filename() if tlt_importer else None,
             "tiltx_path": tltx_importer.get_dest_filename() if tltx_importer else None,
         }
+        if "volume_dimension" not in self.metadata:
+            extra_metadata["volume_dimension"] = self.get_tomogram_volume_dimension()
+        return extra_metadata
 
     def get_tomogram_volume_dimension(self) -> dict:
         for tomogram in TomogramImporter.finder(self.config, **self.parents):
             return tomogram.get_source_volume_info().get_dimensions()
 
-        # If no source tomogram is found don't create a default alignment metadata file. But, if alignment files are
-        # available, create metadata file with default volume dimension
-        if self.is_default_alignment():
-            raise IOError("No source tomogram found for creating default alignment")
-
-        print("No source tomogram found for alignment, setting volume dimension to default")
-        return {"x": None, "y": None, "z": None}
+        # If no source tomogram is found don't create a default alignment metadata file.
+        raise IOError("No source tomogram found for creating default alignment")
 
     def get_per_section_alignment_parameters(
         self,
@@ -131,6 +131,12 @@ class AlignmentImporter(BaseFileImporter):
 
     def is_default_alignment(self) -> bool:
         return self.name.lower() == "default"
+
+    def is_valid(self) -> bool:
+        volume_dim = self.metadata.get("volume_dimension", {})
+        return all(volume_dim.get(dim) for dim in "xyz") or next(
+            TomogramImporter.finder(self.config, **self.parents), None,
+        )
 
     def get_xf_data(self) -> pd.DataFrame:
         file_type = os.path.splitext(self.path)

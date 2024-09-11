@@ -25,7 +25,23 @@ annotations:
     shape: Point
 alignments:
 - metadata:
-    affine_transformation_matrix: [[2, 0, 0, 0], [0, 3, 0, 0], [0, 4, 1, 0], [0, 0, 0, 5]]
+    affine_transformation_matrix:
+    - - 2
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 3
+      - 0
+      - 0
+    - - 0
+      - 4
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 5
     alignment_type: LOCAL
     is_canonical: true
     tilt_offset: -0.3

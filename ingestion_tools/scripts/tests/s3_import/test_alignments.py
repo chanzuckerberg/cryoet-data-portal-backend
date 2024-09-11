@@ -44,7 +44,9 @@ def add_alignment_metadata(s3_client: S3Client, test_output_bucket: str) -> Call
 
 @pytest.fixture
 def validate_dataframe(
-    input_bucket: str, test_output_bucket: str, s3_client: S3Client,
+    input_bucket: str,
+    test_output_bucket: str,
+    s3_client: S3Client,
 ) -> Callable[[str, str, int], None]:
     def get_data_frame(bucket_name: str, path: str) -> pd.DataFrame:
         body = s3_client.get_object(Bucket=bucket_name, Key=path)["Body"]
@@ -73,7 +75,9 @@ def validate_metadata(s3_client: S3Client, test_output_bucket: str) -> Callable[
 
 @pytest.fixture
 def create_config(
-    s3_fs: FileSystemApi, test_output_bucket: str, input_bucket: str,
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    input_bucket: str,
 ) -> Callable[[str], DepositionImportConfig]:
     def _create(path: str) -> DepositionImportConfig:
         output_path = f"{test_output_bucket}/output"
@@ -229,7 +233,9 @@ def test_default_alignment_import_with_tomograms(
 
 
 def test_default_alignment_import_without_tomograms(
-    create_config: Callable[[str], DepositionImportConfig], s3_client: S3Client, test_output_bucket: str,
+    create_config: Callable[[str], DepositionImportConfig],
+    s3_client: S3Client,
+    test_output_bucket: str,
 ) -> None:
     config = create_config("alignments/alignment2.yaml")
     parents = get_parents(config)
@@ -244,3 +250,87 @@ def test_default_alignment_import_without_tomograms(
     prefix = f"output/{dataset_name}/{run_name}/Alignments/"
     alignment_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
     assert alignment_files == []
+
+
+def test_custom_alignment_import_without_tomograms(
+    create_config: Callable[[str], DepositionImportConfig],
+    s3_client: S3Client,
+    test_output_bucket: str,
+    validate_dataframe: Callable[[str, str, int], None],
+    validate_metadata: Callable[[dict, str, int], None],
+) -> None:
+    config = create_config("alignments/alignment3.yaml")
+    parents = get_parents(config)
+
+    alignments = list(AlignmentImporter.finder(config, **parents))
+    for alignment in alignments:
+        alignment.import_item()
+        alignment.import_metadata()
+
+    dataset_name = parents.get("dataset").name
+    run_name = parents.get("run").name
+    prefix = f"output/{dataset_name}/{run_name}/Alignments/"
+    alignment_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
+    assert alignment_files == []
+
+
+def test_custom_alignment_with_dimensions_import_without_tomograms(
+    create_config: Callable[[str], DepositionImportConfig],
+    test_output_bucket: str,
+    validate_dataframe: Callable[[str, str, int], None],
+    validate_metadata: Callable[[dict, str, int], None],
+) -> None:
+    config = create_config("alignments/alignment4.yaml")
+    parents = get_parents(config)
+
+    alignments = list(AlignmentImporter.finder(config, **parents))
+    for alignment in alignments:
+        alignment.import_item()
+        alignment.import_metadata()
+
+    dataset_name = parents.get("dataset").name
+    run_name = parents.get("run").name
+    prefix = f"output/{dataset_name}/{run_name}/Alignments/"
+    id_prefix = 100
+
+    validate_dataframe(prefix, "TS_run1.xf", id_prefix)
+    expected = {
+        "affine_transformation_matrix": [[2, 0, 0, 0], [0, 3, 0, 0], [0, 4, 1, 0], [0, 0, 0, 5]],
+        "alignment_path": f"{test_output_bucket}/{prefix}{id_prefix}-TS_run1.xf",
+        "alignment_type": "LOCAL",
+        "deposition_id": "10301",
+        "is_canonical": True,
+        "per_section_alignment_parameters": [
+            {
+                "z_index": 0,
+                "in_plane_rotation": [0.029, 1.0, -1.0, 0.029],
+                "x_offset": 55.43,
+                "y_offset": 25.56,
+                "tilt_angle": None,
+                "volume_x_rotation": 0,
+            },
+            {
+                "z_index": 1,
+                "in_plane_rotation": [0.029, 1.0, -1.0, 0.029],
+                "x_offset": -75.84,
+                "y_offset": 55.1,
+                "tilt_angle": None,
+                "volume_x_rotation": 0,
+            },
+            {
+                "z_index": 2,
+                "in_plane_rotation": [0.029, 1.0, -1.0, 0.029],
+                "x_offset": -93.8,
+                "y_offset": 77.79,
+                "tilt_angle": None,
+                "volume_x_rotation": 0,
+            },
+        ],
+        "tilt_offset": -0.3,
+        "tilt_path": None,
+        "tiltx_path": None,
+        "volume_dimension": {"x": 6, "y": 8, "z": 10},
+        "volume_offset": {"x": -1, "y": 2, "z": -3},
+        "x_rotation_offset": -2.3,
+    }
+    validate_metadata(expected, prefix, id_prefix)

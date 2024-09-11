@@ -1,0 +1,51 @@
+alignments:
+- metadata:
+    affine_transformation_matrix:
+    - - 2
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 3
+      - 0
+      - 0
+    - - 0
+      - 4
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 5
+    alignment_type: LOCAL
+    is_canonical: true
+    tilt_offset: -0.3
+    volume_offset:
+      x: -1
+      y: 2
+      z: -3
+    x_rotation_offset: -2.3
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - alignments/{run_name}.xf
+datasets:
+- sources:
+  - literal:
+      value:
+      - '10001'
+depositions:
+- sources:
+  - literal:
+      value:
+      - '10301'
+runs:
+- sources:
+  - source_glob:
+      list_glob: tomograms/TS_*.rec
+      match_regex: .*
+      name_regex: (.*).rec
+standardization_config:
+  deposition_id: 10001
+  run_to_tomo_map_csv: null
+  source_prefix: input_bucket/10001_input
