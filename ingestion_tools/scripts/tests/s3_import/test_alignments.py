@@ -95,39 +95,6 @@ def create_config(
         (10301, 100),  # alignment metadata exists for the same deposition as test
     ],
 )
-def test_tlt_import_item(
-    create_config: Callable[[str], DepositionImportConfig],
-    add_alignment_metadata: Callable[[str, int], None],
-    validate_dataframe: Callable[[str, str, int], None],
-    deposition_id: int,
-    id_prefix: int,
-) -> None:
-    config = create_config("dataset1.yaml")
-    parents = get_parents(config)
-    dataset_name = parents.get("dataset").name
-    run_name = parents.get("run").name
-    prefix = f"output/{dataset_name}/{run_name}/Alignments/"
-    if deposition_id:
-        add_alignment_metadata(prefix, deposition_id)
-
-    from importers.tilt import TiltImporter
-
-    tilts = list(TiltImporter.finder(config, **parents))
-    for tilt in tilts:
-        tilt.import_item()
-
-    validate_dataframe(prefix, "TS_run1.tlt", id_prefix)
-    validate_dataframe(prefix, "TS_run1.xtilt", id_prefix)
-
-
-@pytest.mark.parametrize(
-    "deposition_id, id_prefix",
-    [
-        (None, 100),  # No alignment metadata exists
-        (100001, 101),  # alignment metadata exists for a different deposition
-        (10301, 100),  # alignment metadata exists for the same deposition as test
-    ],
-)
 def test_alignment_import_item(
     create_config: Callable[[str], DepositionImportConfig],
     add_alignment_metadata: Callable[[str, int], None],
@@ -151,6 +118,8 @@ def test_alignment_import_item(
         alignment.import_metadata()
 
     validate_dataframe(prefix, "TS_run1.xf", id_prefix)
+    validate_dataframe(prefix, "TS_run1.tlt", id_prefix)
+    validate_dataframe(prefix, "TS_run1.xtilt", id_prefix)
 
     expected = {
         "affine_transformation_matrix": [[2, 0, 0, 0], [0, 3, 0, 0], [0, 4, 1, 0], [0, 0, 0, 5]],

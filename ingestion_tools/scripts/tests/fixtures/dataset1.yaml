@@ -55,6 +55,8 @@ alignments:
   - source_multi_glob:
       list_globs:
       - alignments/{run_name}.xf
+      - alignments/{run_name}.tlt
+      - alignments/{run_name}.xtilt
 dataset_keyphotos:
 - sources:
   - literal:
@@ -144,12 +146,6 @@ standardization_config:
   deposition_id: 10001
   run_to_tomo_map_csv: null
   source_prefix: input_bucket/10001_input
-tilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - alignments/{run_name}.tlt
-      - alignments/{run_name}.xtilt
 tiltseries:
 - metadata:
     acceleration_voltage: 300000

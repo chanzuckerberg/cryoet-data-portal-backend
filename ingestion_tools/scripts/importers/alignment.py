@@ -40,6 +40,7 @@ class AlignmentImporter(BaseFileImporter):
     plural_key = "alignments"
     finder_factory = DefaultImporterFactory
     has_metadata = True
+    written_metadata_files = set()
 
     def __init__(
         self,
@@ -53,16 +54,21 @@ class AlignmentImporter(BaseFileImporter):
         self.identifier = AlignmentIdentifierHelper.get_identifier(config, metadata, parents)
         self.converter = alignment_converter_factory(config, metadata, path, parents)
 
-    def get_dest_filename(self) -> str:
+    def get_dest_filename(self) -> str | None:
         if not self.path:
             return None
         output_dir = self.get_output_path()
         return f"{output_dir}{os.path.basename(self.path)}"
 
     def import_metadata(self) -> None:
+        metadata_path = self.get_metadata_path()
+        if metadata_path in self.written_metadata_files:
+            print(f"Skipping rewriting metadata for alignment {self.path}")
+            return
         try:
             meta = AlignmentMetadata(self.config.fs, self.get_deposition().name, self.get_base_metadata())
-            meta.write_metadata(self.get_metadata_path(), self.get_extra_metadata())
+            meta.write_metadata(metadata_path, self.get_extra_metadata())
+            self.written_metadata_files.add(metadata_path)
         except IOError:
             print("Skipping creating metadata for default alignment with no source tomogram")
 
