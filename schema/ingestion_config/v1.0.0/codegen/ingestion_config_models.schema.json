@@ -1,5 +1,317 @@
 {
     "$defs": {
+        "Alignment": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "affine_transformation_matrix": {
+                    "items": {
+                        "additionalProperties": true,
+                        "type": [
+                            "null",
+                            "boolean",
+                            "object",
+                            "number",
+                            "string",
+                            "array"
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "alignment_type": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "The type of alignment.",
+                    "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "is_canonical": {
+                    "description": "Whether the alignment is canonical.",
+                    "type": "boolean"
+                },
+                "offset": {
+                    "$ref": "#/$defs/AlignmentOffset",
+                    "description": "The offset of a alignment in voxels in each dimension relative to the canonical tomogram."
+                },
+                "tilt_offset": {
+                    "description": "The tilt offset relative to the tomogram.",
+                    "type": "number"
+                },
+                "x_rotation_offset": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "The x rotation offset relative to the tomogram.",
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                }
+            },
+            "required": [
+                "alignment_type",
+                "offset",
+                "x_rotation_offset",
+                "tilt_offset",
+                "is_canonical"
+            ],
+            "title": "Alignment",
+            "type": "object"
+        },
+        "AlignmentEntity": {
+            "additionalProperties": false,
+            "description": "An alignment entity.",
+            "properties": {
+                "metadata": {
+                    "$ref": "#/$defs/Alignment",
+                    "description": "The metadata for the alignment."
+                },
+                "sources": {
+                    "description": "An alignment source.",
+                    "items": {
+                        "$ref": "#/$defs/AlignmentSource"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "metadata",
+                "sources"
+            ],
+            "title": "AlignmentEntity",
+            "type": "object"
+        },
+        "AlignmentOffset": {
+            "additionalProperties": false,
+            "description": "The offset of a alignment in voxels in each dimension relative to the canonical tomogram.",
+            "properties": {
+                "x": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "x offset relative to the canonical tomogram in pixels",
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "y": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "y offset relative to the canonical tomogram in pixels",
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "z": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "z offset relative to the canonical tomogram in pixels",
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "z"
+            ],
+            "title": "AlignmentOffset",
+            "type": "object"
+        },
+        "AlignmentParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of an alignment source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "dataset": {
+                    "description": "Include or exclude datasets for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "run": {
+                    "description": "Include or exclude runs for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "tomogram": {
+                    "description": "Include or exclude tomograms for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "voxel_spacing": {
+                    "description": "Include or exclude voxel spacings for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "AlignmentParent",
+            "type": "object"
+        },
+        "AlignmentParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for an alignment source.",
+            "properties": {
+                "exclude": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AlignmentParent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A filter for a parent class of an alignment source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AlignmentParent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A filter for a parent class of an alignment source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "AlignmentParentFilters",
+            "type": "object"
+        },
+        "AlignmentSource": {
+            "additionalProperties": false,
+            "description": "An alignment source.",
+            "properties": {
+                "destination_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DestinationGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "literal": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/StandardLiteral"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A literal class with a value attribute."
+                },
+                "parent_filters": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AlignmentParentFilters"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Types of parent filters for an alignment source."
+                },
+                "source_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceMultiGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "AlignmentSource",
+            "type": "object"
+        },
         "Annotation": {
             "additionalProperties": false,
             "description": "Metadata describing an annotation.",
@@ -1247,6 +1559,16 @@
             "additionalProperties": false,
             "description": "Class that models the ingestion config file.",
             "properties": {
+                "alignments": {
+                    "description": "An alignment entity.",
+                    "items": {
+                        "$ref": "#/$defs/AlignmentEntity"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "annotations": {
                     "description": "An annotation entity.",
                     "items": {
@@ -4039,23 +4361,6 @@
             "additionalProperties": false,
             "description": "Metadata describing a tomogram.",
             "properties": {
-                "affine_transformation_matrix": {
-                    "items": {
-                        "additionalProperties": true,
-                        "type": [
-                            "null",
-                            "boolean",
-                            "object",
-                            "number",
-                            "string",
-                            "array"
-                        ]
-                    },
-                    "type": [
-                        "array",
-                        "null"
-                    ]
-                },
                 "align_software": {
                     "description": "Software used for alignment",
                     "type": [
@@ -4684,6 +4989,16 @@
     "description": "Class that models the ingestion config file.",
     "metamodel_version": "1.7.0",
     "properties": {
+        "alignments": {
+            "description": "An alignment entity.",
+            "items": {
+                "$ref": "#/$defs/AlignmentEntity"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
         "annotations": {
             "description": "An annotation entity.",
             "items": {

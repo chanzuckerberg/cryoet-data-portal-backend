@@ -2242,6 +2242,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentOffset
         range: integer
         required: true
         inlined: true
@@ -2259,6 +2260,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentOffset
         range: integer
         required: true
         inlined: true
@@ -2277,6 +2279,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentOffset
         range: integer
         required: true
         inlined: true
@@ -2300,6 +2303,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentOffset
         range: Any
         required: true
         inlined: true
@@ -2320,6 +2324,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentOffset
         range: Any
         required: true
         inlined: true
@@ -2340,6 +2345,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentOffset
         range: Any
         required: true
         inlined: true
@@ -2513,23 +2519,6 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-      affine_transformation_matrix:
-        name: affine_transformation_matrix
-        description: The flip or rotation transformation of this author submitted
-          tomogram is indicated here
-        from_schema: metadata
-        array:
-          exact_number_dimensions: 2
-          dimensions:
-          - exact_cardinality: 4
-          - exact_cardinality: 4
-        alias: affine_transformation_matrix
-        owner: Tomogram
-        domain_of:
-        - Tomogram
-        range: float
-        inlined: true
-        inlined_as_list: true
       size:
         name: size
         description: The size of a tomogram in voxels in each dimension.
@@ -2550,6 +2539,7 @@ classes:
         owner: Tomogram
         domain_of:
         - Tomogram
+        - Alignment
         range: TomogramOffset
         required: true
         inlined: true
@@ -3698,6 +3688,173 @@ classes:
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
+  AlignmentOffset:
+    name: AlignmentOffset
+    description: The offset of a alignment in voxels in each dimension relative to
+      the canonical tomogram.
+    from_schema: metadata
+    attributes:
+      x:
+        name: x
+        description: x offset relative to the canonical tomogram in pixels
+        from_schema: metadata
+        ifabsent: int(0)
+        alias: x
+        owner: AlignmentOffset
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentOffset
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: px
+          descriptive_name: pixels
+        any_of:
+        - range: integer
+        - range: IntegerFormattedString
+      y:
+        name: y
+        description: y offset relative to the canonical tomogram in pixels
+        from_schema: metadata
+        ifabsent: int(0)
+        alias: y
+        owner: AlignmentOffset
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentOffset
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: px
+          descriptive_name: pixels
+        any_of:
+        - range: integer
+        - range: IntegerFormattedString
+      z:
+        name: z
+        description: z offset relative to the canonical tomogram in pixels
+        from_schema: metadata
+        ifabsent: int(0)
+        alias: z
+        owner: AlignmentOffset
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentOffset
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: px
+          descriptive_name: pixels
+        any_of:
+        - range: integer
+        - range: IntegerFormattedString
+  Alignment:
+    name: Alignment
+    from_schema: metadata
+    attributes:
+      alignment_type:
+        name: alignment_type
+        description: The type of alignment.
+        from_schema: metadata
+        alias: alignment_type
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        any_of:
+        - range: string
+        - range: StringFormattedString
+      offset:
+        name: offset
+        description: The offset of a alignment in voxels in each dimension relative
+          to the canonical tomogram.
+        from_schema: metadata
+        alias: offset
+        owner: Alignment
+        domain_of:
+        - Tomogram
+        - Alignment
+        range: AlignmentOffset
+        required: true
+        inlined: true
+        inlined_as_list: true
+      x_rotation_offset:
+        name: x_rotation_offset
+        description: The x rotation offset relative to the tomogram.
+        from_schema: metadata
+        ifabsent: int(0)
+        alias: x_rotation_offset
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        any_of:
+        - range: integer
+        - range: IntegerFormattedString
+      tilt_offset:
+        name: tilt_offset
+        description: The tilt offset relative to the tomogram.
+        from_schema: metadata
+        ifabsent: float(0.0)
+        alias: tilt_offset
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: float
+        required: true
+        inlined: true
+        inlined_as_list: true
+      affine_transformation_matrix:
+        name: affine_transformation_matrix
+        description: The flip or rotation transformation of this author submitted
+          tomogram is indicated here. The default value if not present, is an identity
+          matrix.
+        from_schema: metadata
+        array:
+          exact_number_dimensions: 2
+          dimensions:
+          - exact_cardinality: 4
+          - exact_cardinality: 4
+        alias: affine_transformation_matrix
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: float
+        inlined: true
+        inlined_as_list: true
+      is_canonical:
+        name: is_canonical
+        description: Whether the alignment is canonical.
+        from_schema: metadata
+        ifabsent: 'True'
+        alias: is_canonical
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: boolean
+        required: true
+        inlined: true
+        inlined_as_list: true
   Any:
     name: Any
     from_schema: metadata
