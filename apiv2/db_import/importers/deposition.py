@@ -2,8 +2,8 @@ from datetime import datetime, timezone
 from typing import Any, Iterable
 
 from database import models
+from db_import.importers.base_importer import AuthorsStaleDeletionDBImporter, BaseDBImporter, DBImportConfig
 from platformics.database.models import Base
-from idb_import.importers.base_importer import AuthorsStaleDeletionDBImporter, BaseDBImporter, DBImportConfig
 
 
 def to_datetime(ts: int | None) -> datetime:
@@ -121,7 +121,7 @@ def get_deposition(config: DBImportConfig, deposition_id: str | int) -> models.D
         raise ValueError(f"invalid deposition_id provided {deposition_id}")
 
     deposition_id = int(deposition_id)
-    deposition = models.Deposition.get_or_none(deposition_id)
+    deposition = config.get_db_session().query(models.Deposition).where(models.Deposition.id == deposition_id).first()
     if deposition:
         return deposition
 

@@ -1,10 +1,16 @@
 import logging
+import os
 
 import boto3
 import click
 from botocore import UNSIGNED
 from botocore.config import Config
-from db_import.importers.annotation import AnnotationAuthorDBImporter, AnnotationDBImporter, StaleAnnotationDeletionDBImporter
+
+from db_import.importers.annotation import (
+    AnnotationAuthorDBImporter,
+    AnnotationDBImporter,
+    StaleAnnotationDeletionDBImporter,
+)
 from db_import.importers.base_importer import DBImportConfig
 from db_import.importers.dataset import DatasetAuthorDBImporter, DatasetDBImporter, DatasetFundingDBImporter
 from db_import.importers.deposition import DepositionAuthorDBImporter, DepositionDBImporter
@@ -12,8 +18,7 @@ from db_import.importers.run import RunDBImporter, StaleRunDeletionDBImporter
 from db_import.importers.tiltseries import StaleTiltSeriesDeletionDBImporter, TiltSeriesDBImporter
 from db_import.importers.tomogram import StaleTomogramDeletionDBImporter, TomogramAuthorDBImporter, TomogramDBImporter
 from db_import.importers.voxel_spacing import StaleVoxelSpacingDeletionDBImporter, TomogramVoxelSpacingDBImporter
-
-from common import db_models
+from platformics.database.connect import init_sync_db
 
 logger = logging.getLogger("db_import")
 logging.basicConfig(level=logging.INFO)
@@ -56,18 +61,10 @@ def db_import_options(func):
 @cli.command()
 @click.argument("s3_bucket", required=True, type=str)
 @click.argument("https_prefix", required=True, type=str)
-@click.argument("postgres_url", required=True, type=str)
+@click.option("--postgres_url", required=False, type=str)
 @click.option("--filter-dataset", type=str, default=None, multiple=True)
 @click.option("--s3-prefix", required=True, default="", type=str)
 @click.option("--endpoint-url", type=str, default=None)
-@click.option(
-    "--debug/--no-debug",
-    is_flag=True,
-    required=True,
-    default=False,
-    type=bool,
-    help="Print DB Queries",
-)
 @db_import_options
 def load(
     s3_bucket: str,
@@ -75,7 +72,6 @@ def load(
     postgres_url: str,
     s3_prefix: str,
     anonymous: bool,
-    debug: bool,
     filter_dataset: list[str],
     import_annotations: bool,
     import_annotation_authors: bool,
@@ -91,12 +87,10 @@ def load(
     deposition_id: list[str],
     endpoint_url: str,
 ):
-    db_models.db.init(postgres_url)
-    if debug:
-        peewee_logger = logging.getLogger("peewee")
-        peewee_logger.addHandler(logging.StreamHandler())
-        peewee_logger.setLevel(logging.DEBUG)
-        logger.setLevel(logging.DEBUG)
+    if not postgres_url:
+        postgres_url = f"postgresql+psycopg://{os.environ['PLATFORMICS_DATABASE_USER']}:{os.environ['PLATFORMICS_DATABASE_PASSWORD']}@{os.environ['PLATFORMICS_DATABASE_HOST']}:{os.environ['PLATFORMICS_DATABASE_PORT']}/{os.environ['PLATFORMICS_DATABASE_NAME']}"
+    db = init_sync_db(postgres_url)
+    session = db.session()
 
     if import_everything:
         import_annotations = True
@@ -117,7 +111,7 @@ def load(
 
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     s3_client = boto3.client("s3", endpoint_url=endpoint_url, config=s3_config)
-    config = DBImportConfig(s3_client, s3_bucket, https_prefix)
+    config = DBImportConfig(s3_client, s3_bucket, https_prefix, session)
 
     if import_depositions and deposition_id:
         for dep_id in deposition_id:

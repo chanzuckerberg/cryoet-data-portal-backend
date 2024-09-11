@@ -1,14 +1,16 @@
 import json
+from turtle import st
+from sqlalchemy.exc import NoResultFound
 import logging
 import os
 from datetime import datetime
 from pathlib import PurePath
 from typing import TYPE_CHECKING, Any, Optional
 
-import peewee
 from botocore.exceptions import ClientError
 
 from platformics.database.models.base import Base
+from sqlalchemy.orm import Session
 
 if TYPE_CHECKING:
     from mypy_boto3_s3 import S3Client
@@ -23,17 +25,23 @@ class DBImportConfig:
     bucket_name: str
     s3_prefix: str
     https_prefix: str
+    session: Session
 
     def __init__(
         self,
         s3_client: S3Client,
         bucket_name: str,
         https_prefix: str,
+        session: Session,
     ):
         self.s3_client = s3_client
         self.bucket_name = bucket_name
         self.s3_prefix = f"s3://{bucket_name}"
         self.https_prefix = https_prefix if https_prefix else "https://files.cryoetdataportal.cziscience.com"
+        self.session = session
+
+    def get_db_session(self) -> Session:
+        return self.session
 
     def find_subdirs_with_files(self, prefix: str, target_filename: str) -> list[str]:
         paginator = self.s3_client.get_paginator("list_objects_v2")
@@ -134,17 +142,18 @@ class BaseDBImporter:
         data_map = self.get_data_map()
         identifiers = {id_field: map_to_value(id_field, data_map, self.metadata) for id_field in self.get_id_fields()}
         klass = self.get_db_model_class()
-        force_insert = False
+        session = self.config.get_db_session()
         try:
-            db_obj = klass.get(*[getattr(klass, k) == v for k, v in identifiers.items()])
-        except peewee.DoesNotExist:
+            db_obj = session.query(klass).filter(*[getattr(klass, k) == v for k, v in identifiers.items()]).one()
+        except NoResultFound:
             db_obj = klass()
-            force_insert = True
 
         for db_key, _data_path in data_map.items():
+            print(f"setting {db_obj}.{db_key} = {map_to_value(db_key, data_map, self.metadata)}")
             setattr(db_obj, db_key, map_to_value(db_key, data_map, self.metadata))
 
-        db_obj.save(force_insert=force_insert)
+        session.add(db_obj)
+        session.flush()
         return db_obj
 
 
@@ -197,6 +206,7 @@ class StaleDeletionDBImporter(BaseDBImporter):
         data_map = self.get_data_map()
         existing_objs = self.get_existing_objects()
         metadata_list = self.metadata if isinstance(self.metadata, list) else [self.metadata]
+        session = self.config.get_db_session()
 
         for index, entry in enumerate(metadata_list):
             entry_data_map = self.update_data_map(data_map, entry, index)
@@ -209,11 +219,12 @@ class StaleDeletionDBImporter(BaseDBImporter):
 
             for db_key, _data_path in entry_data_map.items():
                 setattr(db_obj, db_key, map_to_value(db_key, entry_data_map, entry))
-            db_obj.save(force_insert=force_insert)
+            session.add(db_obj)
 
         for key, stale_obj in existing_objs.items():
             logger.info("Deleting record of %s with id=%d and key=%s", klass, stale_obj.id, key)
-            stale_obj.delete_instance()
+            session.delete(stale_obj)
+        session.flush()
 
 
 class AuthorsStaleDeletionDBImporter(StaleDeletionDBImporter):
@@ -276,6 +287,7 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
         Deletes all stale objects by deleting the records that have the foreign key references first, and then deletes
         the stale object.
         """
+        session = self.config.get_db_session()
         for key, stale_obj in self.existing_objects.items():
             for child_rel, deletion_helper in self.children_tables_references().items():
                 for entry in getattr(stale_obj, child_rel):
@@ -287,7 +299,7 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
                             entry.__data__,
                             type(stale_obj),
                         )
-                        entry.delete_instance()
+                        session.delete(entry)
                     else:
                         # Using stale_obj.id as all the use cases currently are satisfied by this.
                         klass = deletion_helper(stale_obj.id, self.config)
@@ -298,4 +310,5 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
                 stale_obj.id,
                 key,
             )
-            stale_obj.delete_instance()
+            session.delete(stale_obj)
+        session.flush()
