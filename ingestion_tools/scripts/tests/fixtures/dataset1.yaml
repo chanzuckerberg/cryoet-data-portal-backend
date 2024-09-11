@@ -43,6 +43,7 @@ alignments:
       - 0
       - 5
     alignment_type: LOCAL
+    format: xf
     is_canonical: true
     tilt_offset: -0.3
     volume_offset:

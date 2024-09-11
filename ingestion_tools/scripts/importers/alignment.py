@@ -1,13 +1,12 @@
 import os.path
 from typing import TYPE_CHECKING, Any
 
-import pandas as pd
-
+from common.alignment_converter import alignment_converter_factory
 from common.config import DepositionImportConfig
 from common.finders import DefaultImporterFactory
 from common.id_helper import IdentifierHelper
 from common.metadata import AlignmentMetadata
-from importers.base_importer import BaseFileImporter, BaseImporter
+from importers.base_importer import BaseFileImporter
 
 if TYPE_CHECKING:
     TomogramImporter = "TomogramImporter"
@@ -52,6 +51,7 @@ class AlignmentImporter(BaseFileImporter):
     ):
         super().__init__(config, metadata, name, path, parents)
         self.identifier = AlignmentIdentifierHelper.get_identifier(config, metadata, parents)
+        self.converter = alignment_converter_factory(config, metadata, path, parents)
 
     def get_dest_filename(self) -> str:
         if not self.path:
@@ -83,12 +83,11 @@ class AlignmentImporter(BaseFileImporter):
         return self.get_output_path() + "alignment_metadata.json"
 
     def get_extra_metadata(self) -> dict:
-        tlt_importer, tltx_importer = self.get_tlt_importers()
         extra_metadata = {
-            "per_section_alignment_parameters": self.get_per_section_alignment_parameters(tlt_importer, tltx_importer),
+            "per_section_alignment_parameters": self.converter.get_per_section_alignment_parameters(),
             "alignment_path": self.get_dest_filename(),
-            "tilt_path": tlt_importer.get_dest_filename() if tlt_importer else None,
-            "tiltx_path": tltx_importer.get_dest_filename() if tltx_importer else None,
+            "tilt_path": self.converter.get_tilt_path(),
+            "tiltx_path": self.converter.get_tiltx_path(),
         }
         if "volume_dimension" not in self.metadata:
             extra_metadata["volume_dimension"] = self.get_tomogram_volume_dimension()
@@ -101,68 +100,15 @@ class AlignmentImporter(BaseFileImporter):
         # If no source tomogram is found don't create a default alignment metadata file.
         raise IOError("No source tomogram found for creating default alignment")
 
-    def get_per_section_alignment_parameters(
-        self,
-        tlt_importer: BaseFileImporter,
-        tltx_importer: BaseFileImporter,
-    ) -> list:
-        result = []
-        if self.is_default_alignment():
-            return result
-        xf_data = self.get_xf_data()
-        tlt_data = self.get_dataframe(tlt_importer, ["tilt_angle"])
-        tltx_data = self.get_dataframe(tltx_importer, ["volume_x_rotation"])
-        for index, entry in xf_data.iterrows():
-            item = {
-                "z_index": index,
-                "in_plane_rotation": (
-                    entry["rotation_0"],
-                    entry["rotation_1"],
-                    entry["rotation_2"],
-                    entry["rotation_3"],
-                ),
-                "x_offset": entry["x_offset"],
-                "y_offset": entry["y_offset"],
-                "tilt_angle": None if tlt_data.empty else tlt_data["tilt_angle"][index],
-                "volume_x_rotation": 0 if tltx_data.empty else tltx_data["volume_x_rotation"][index],
-            }
-            result.append(item)
-        return result
-
     def is_default_alignment(self) -> bool:
         return self.name.lower() == "default"
 
     def is_valid(self) -> bool:
         volume_dim = self.metadata.get("volume_dimension", {})
         return all(volume_dim.get(dim) for dim in "xyz") or next(
-            TomogramImporter.finder(self.config, **self.parents), None,
+            TomogramImporter.finder(self.config, **self.parents),
+            None,
         )
-
-    def get_xf_data(self) -> pd.DataFrame:
-        file_type = os.path.splitext(self.path)
-        if file_type[1] == ".xf":
-            column_names = ["rotation_0", "rotation_1", "rotation_2", "rotation_3", "x_offset", "y_offset"]
-            return self.get_dataframe(self, column_names)
-        print(f"Alignment file of {file_type} not supported")
-        return pd.DataFrame()
-
-    def get_dataframe(self, importer: BaseImporter, names: list[str]) -> pd.DataFrame:
-        if not importer:
-            return pd.DataFrame()
-        local_path = self.config.fs.localreadable(importer.path)
-        return pd.read_csv(local_path, sep=r"\s+", header=None, names=names)
-
-    def get_tlt_importers(self) -> [BaseFileImporter, BaseFileImporter]:
-        from importers.tilt import TiltImporter
-
-        tlt_importer = tltx_importer = None
-        for importer in TiltImporter.finder(self.config, **self.parents):
-            source_filename = os.path.basename(importer.path)
-            if source_filename.endswith(".tlt"):
-                tlt_importer = importer
-            elif source_filename.endswith((".tltx", ".xtilt")):
-                tltx_importer = importer
-        return tlt_importer, tltx_importer
 
     @classmethod
     def get_default_config(cls) -> list[dict] | None:

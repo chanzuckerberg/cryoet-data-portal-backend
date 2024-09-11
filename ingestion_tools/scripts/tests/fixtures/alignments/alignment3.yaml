@@ -20,6 +20,7 @@ alignments:
     alignment_type: LOCAL
     is_canonical: true
     tilt_offset: -0.3
+    format: xf
     volume_offset:
       x: -1
       y: 2
