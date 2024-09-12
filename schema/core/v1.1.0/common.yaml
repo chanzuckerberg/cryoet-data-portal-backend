@@ -818,9 +818,10 @@ enums:
     description: Used to determine what alignment alogrithm to use.
     permissible_values:
       IMOD:
-        description: formats xf, tlt, xtlt, rawtlt
+        description: formats (xf, tlt)
       ARETOMO3:
-        description: formats aln, _TLT.txt, rawtlt
+        description: formats (aln)
+
   annotation_method_type_enum:
     description: Describes how the annotations were generated.
     permissible_values:
