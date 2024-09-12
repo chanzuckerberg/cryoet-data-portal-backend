@@ -24,7 +24,7 @@ class BaseAlignmentConverter:
         return []
 
 
-class XfAlignmentConverter(BaseAlignmentConverter):
+class IMODAlignmentConverter(BaseAlignmentConverter):
     def __init__(self, path: str, config: DepositionImportConfig, parents: dict[str, BaseImporter]):
         self.path = path
         self.config = config
@@ -54,11 +54,11 @@ class XfAlignmentConverter(BaseAlignmentConverter):
         rows = len(xf_data.index)
         for index in range(0, rows):
             item = {
+                **self.get_xf_data(xf_data, index),
                 "z_index": index,
                 "tilt_angle": None if tlt_data.empty else tlt_data["tilt_angle"][index],
                 "volume_x_rotation": 0 if tltx_data.empty else tltx_data["volume_x_rotation"][index],
             }
-            item = {**item, **self.get_xf_data(xf_data, index)}
             result.append(item)
         return result
 
@@ -122,7 +122,7 @@ def alignment_converter_factory(
     parents: dict[str, Any],
 ) -> BaseAlignmentConverter:
     alignment_format = metadata.get("format")
-    if alignment_format == "xf":
-        return XfAlignmentConverter(path, config, parents)
+    if alignment_format == "IMOD":
+        return IMODAlignmentConverter(path, config, parents)
 
     return BaseAlignmentConverter()
