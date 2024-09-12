@@ -5,7 +5,6 @@ import boto3
 import click
 from botocore import UNSIGNED
 from botocore.config import Config
-
 from db_import.importers.annotation import (
     AnnotationAuthorDBImporter,
     AnnotationDBImporter,
@@ -13,11 +12,12 @@ from db_import.importers.annotation import (
 )
 from db_import.importers.base_importer import DBImportConfig
 from db_import.importers.dataset import DatasetAuthorDBImporter, DatasetDBImporter, DatasetFundingDBImporter
-from db_import.importers.deposition import DepositionAuthorDBImporter, DepositionDBImporter
+from db_import.importers.deposition import DepositionAuthorDBImporter, DepositionDBImporter, DepositionTypeDBImporter
 from db_import.importers.run import RunDBImporter, StaleRunDeletionDBImporter
 from db_import.importers.tiltseries import StaleTiltSeriesDeletionDBImporter, TiltSeriesDBImporter
 from db_import.importers.tomogram import StaleTomogramDeletionDBImporter, TomogramAuthorDBImporter, TomogramDBImporter
 from db_import.importers.voxel_spacing import StaleVoxelSpacingDeletionDBImporter, TomogramVoxelSpacingDBImporter
+
 from platformics.database.connect import init_sync_db
 
 logger = logging.getLogger("db_import")
@@ -117,8 +117,10 @@ def load(
         for dep_id in deposition_id:
             for deposition_importer in DepositionDBImporter.get_items(config, dep_id):
                 deposition_obj = deposition_importer.import_to_db()
-                deposition_authors = DepositionAuthorDBImporter.get_item(deposition_obj, deposition_importer, config)
+                deposition_authors = DepositionAuthorDBImporter.get_item(deposition_obj.id, deposition_importer, config)
                 deposition_authors.import_to_db()
+                deposition_types = DepositionTypeDBImporter.get_item(deposition_obj.id, deposition_importer, config)
+                deposition_types.import_to_db()
 
     for dataset in DatasetDBImporter.get_items(config, s3_prefix):
         if filter_dataset and dataset.dir_prefix not in filter_dataset:
@@ -163,7 +165,7 @@ def load(
 
                 if import_tomograms:
                     tomogram_cleaner = StaleTomogramDeletionDBImporter(voxel_spacing_obj.id, config)
-                    for tomogram in TomogramDBImporter.get_item(voxel_spacing_obj.id, voxel_spacing, config):
+                    for tomogram in TomogramDBImporter.get_item(voxel_spacing_obj.id, run_id, voxel_spacing, config):
                         tomogram_obj = tomogram.import_to_db()
                         tomogram_cleaner.mark_as_active(tomogram_obj)
 
@@ -173,7 +175,7 @@ def load(
                     tomogram_cleaner.remove_stale_objects()
 
                 if import_annotations:
-                    annotation_cleaner = StaleAnnotationDeletionDBImporter(voxel_spacing_obj.id, config)
+                    annotation_cleaner = StaleAnnotationDeletionDBImporter(run_id, config)
                     for annotation in AnnotationDBImporter.get_item(voxel_spacing_obj.id, voxel_spacing, config):
                         annotation_obj = annotation.import_to_db()
                         annotation_cleaner.mark_as_active(annotation_obj)
@@ -192,6 +194,7 @@ def load(
             voxel_spacing_cleaner.remove_stale_objects()
 
         run_cleaner.remove_stale_objects()
+        session.commit()
 
 
 if __name__ == "__main__":

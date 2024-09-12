@@ -1,16 +1,16 @@
 import json
-from turtle import st
-from sqlalchemy.exc import NoResultFound
 import logging
 import os
 from datetime import datetime
 from pathlib import PurePath
 from typing import TYPE_CHECKING, Any, Optional
 
+import sqlalchemy as sa
 from botocore.exceptions import ClientError
+from sqlalchemy.exc import NoResultFound
+from sqlalchemy.orm import Session
 
 from platformics.database.models.base import Base
-from sqlalchemy.orm import Session
 
 if TYPE_CHECKING:
     from mypy_boto3_s3 import S3Client
@@ -144,12 +144,12 @@ class BaseDBImporter:
         klass = self.get_db_model_class()
         session = self.config.get_db_session()
         try:
-            db_obj = session.query(klass).filter(*[getattr(klass, k) == v for k, v in identifiers.items()]).one()
+            query = sa.select(klass).where(sa.and_(*[getattr(klass, k) == v for k, v in identifiers.items()]))
+            db_obj = session.scalars(query).one()
         except NoResultFound:
             db_obj = klass()
 
         for db_key, _data_path in data_map.items():
-            print(f"setting {db_obj}.{db_key} = {map_to_value(db_key, data_map, self.metadata)}")
             setattr(db_obj, db_key, map_to_value(db_key, data_map, self.metadata))
 
         session.add(db_obj)
@@ -177,17 +177,22 @@ class StaleDeletionDBImporter(BaseDBImporter):
         """
         return "-".join([f"{getattr(record, attr)}" for attr in cls.get_id_fields()])
 
-    def get_existing_objects(self) -> dict[str, Base]:
+    def get_existing_objects(self) -> tuple[list[Base], dict[str, Base]]:
         """
         Creates a map of existing items by querying using the filter criteria. The map is keyed on hash value of the
         record.
         """
-        result = {}
+        hashed_records = {}
         klass = self.get_db_model_class()
-        query = klass.select().where(*[getattr(klass, k) == v for k, v in self.get_filters().items()])
+        session = self.config.get_db_session()
+        query = session.scalars(
+            sa.select(klass).where(sa.and_(*[getattr(klass, k) == v for k, v in self.get_filters().items()])),
+        ).all()
+        all_records = []
         for record in query:
-            result[self.get_hash_value(record)] = record
-        return result
+            all_records.append(record)
+            hashed_records[self.get_hash_value(record)] = record
+        return all_records, hashed_records
 
     def update_data_map(self, data_map: dict[str, Any], metadata: dict[str, Any], index: int) -> dict[str, Any]:
         """
@@ -196,7 +201,7 @@ class StaleDeletionDBImporter(BaseDBImporter):
         """
         return data_map
 
-    def import_to_db(self) -> None:
+    def import_to_db(self) -> Base:
         """
         Gets all the existing objects as a map for the current filter criteria. It creates/updates the records iterating
         over the metadata list, and popping any existing value from the map. After the iteration, the map only contains
@@ -204,27 +209,31 @@ class StaleDeletionDBImporter(BaseDBImporter):
         """
         klass = self.get_db_model_class()
         data_map = self.get_data_map()
-        existing_objs = self.get_existing_objects()
+        records_to_delete, hashed_records = self.get_existing_objects()
         metadata_list = self.metadata if isinstance(self.metadata, list) else [self.metadata]
         session = self.config.get_db_session()
 
+        db_obj = None
         for index, entry in enumerate(metadata_list):
             entry_data_map = self.update_data_map(data_map, entry, index)
             hash_values = [str(map_to_value(id_field, entry_data_map, entry)) for id_field in self.get_id_fields()]
-            force_insert = False
-            db_obj = existing_objs.pop("-".join(hash_values), None)
+            print(f"Lookup key {"-".join(hash_values)}")
+            db_obj = hashed_records.get("-".join(hash_values))
+            print(f"db obj is {db_obj}")
             if not db_obj:
                 db_obj = klass()
-                force_insert = True
+            if db_obj in records_to_delete:
+                records_to_delete.remove(db_obj)
 
             for db_key, _data_path in entry_data_map.items():
                 setattr(db_obj, db_key, map_to_value(db_key, entry_data_map, entry))
             session.add(db_obj)
 
-        for key, stale_obj in existing_objs.items():
-            logger.info("Deleting record of %s with id=%d and key=%s", klass, stale_obj.id, key)
+        for stale_obj in records_to_delete:
+            logger.info("Deleting record of %s with id=%d and key=%s", klass, stale_obj.id, self.get_hash_value(stale_obj))
             session.delete(stale_obj)
         session.flush()
+        return db_obj
 
 
 class AuthorsStaleDeletionDBImporter(StaleDeletionDBImporter):
@@ -254,6 +263,7 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
         self.parent_id = parent_id
         self.config = config
         self.existing_objects = self.get_existing_objects()
+        self.records_to_delete, self.hashed_records = self.get_existing_objects()
 
     @classmethod
     def get_id_fields(cls) -> list[str]:
@@ -263,16 +273,6 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
     def get_db_model_class(cls) -> type:
         return cls.ref_klass.get_db_model_class()
 
-    @classmethod
-    def children_tables_references(cls) -> dict[str, "type[StaleParentDeletionDBImporter]"]:
-        """
-        Specifies the deletion helper for the tables that could reference have a foreign key relationship with this
-        record.
-        The deletion helper could either be None if the table is not referenced anywhere or an object of type
-        StaleParentDeletionDBImporter if it is also in turn referenced in other places.
-        """
-        pass
-
     def mark_as_active(self, record: Base):
         """Mark a record as active by removing it from existing objects when encountered."""
         logger.info(
@@ -280,7 +280,9 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
             self.ref_klass.get_db_model_class(),
             self.get_hash_value(record),
         )
-        self.existing_objects.pop(self.get_hash_value(record), None)
+        matched_record = self.hashed_records.get(self.get_hash_value(record))
+        if matched_record and matched_record in self.records_to_delete:
+            self.records_to_delete.remove(matched_record)
 
     def remove_stale_objects(self):
         """
@@ -288,27 +290,12 @@ class StaleParentDeletionDBImporter(StaleDeletionDBImporter):
         the stale object.
         """
         session = self.config.get_db_session()
-        for key, stale_obj in self.existing_objects.items():
-            for child_rel, deletion_helper in self.children_tables_references().items():
-                for entry in getattr(stale_obj, child_rel):
-                    if deletion_helper is None:
-                        logger.info(
-                            "Deleting record of %s with id=%d data=%s to delete parent: %s",
-                            type(entry),
-                            entry.id,
-                            entry.__data__,
-                            type(stale_obj),
-                        )
-                        session.delete(entry)
-                    else:
-                        # Using stale_obj.id as all the use cases currently are satisfied by this.
-                        klass = deletion_helper(stale_obj.id, self.config)
-                        klass.remove_stale_objects()
+        for stale_obj in self.records_to_delete:
             logger.info(
                 "Deleting record of %s with id=%d and key=%s",
                 self.ref_klass.get_db_model_class(),
                 stale_obj.id,
-                key,
+                self.get_hash_value(stale_obj),
             )
             session.delete(stale_obj)
         session.flush()

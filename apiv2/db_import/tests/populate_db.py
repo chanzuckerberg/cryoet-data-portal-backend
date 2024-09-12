@@ -1,12 +1,8 @@
 from datetime import datetime
 
-from playhouse.shortcuts import model_to_dict
-
-from platformics.database.models import Base
 from database.models import (
     Annotation,
     AnnotationAuthor,
-    AnnotationFile,
     Dataset,
     DatasetAuthor,
     DatasetFunding,
@@ -18,6 +14,9 @@ from database.models import (
     TomogramAuthor,
     TomogramVoxelSpacing,
 )
+from playhouse.shortcuts import model_to_dict
+
+from platformics.database.models import Base
 
 DATASET_ID = 30001
 DATASET_AUTHOR_ID = 301

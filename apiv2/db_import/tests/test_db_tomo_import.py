@@ -1,7 +1,7 @@
 from typing import Any, Callable
-from platformics.database.models import Base
 
 import pytest as pytest
+from database import models
 from tests.db_import.populate_db import (
     DATASET_ID,
     RUN1_ID,
@@ -16,7 +16,7 @@ from tests.db_import.populate_db import (
     populate_tomograms,
 )
 
-from database import models
+from platformics.database.models import Base
 
 
 @pytest.fixture

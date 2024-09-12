@@ -4,12 +4,6 @@ from typing import Any, Callable, Generator
 
 import pytest
 from click.testing import CliRunner
-from db_import import load
-from mypy_boto3_s3 import S3Client
-from peewee import PostgresqlDatabase, SqliteDatabase
-from tests.db_import.populate_db import DATASET_ID, clean_all_mock_data
-from platformics.database.models import Base
-
 from database.models import (
     Annotation,
     AnnotationAuthor,
@@ -25,6 +19,12 @@ from database.models import (
     TomogramAuthor,
     TomogramVoxelSpacing,
 )
+from db_import import load
+from mypy_boto3_s3 import S3Client
+from peewee import PostgresqlDatabase, SqliteDatabase
+from tests.db_import.populate_db import DATASET_ID, clean_all_mock_data
+
+from platformics.database.models import Base
 
 
 @pytest.fixture

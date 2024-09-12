@@ -1,8 +1,8 @@
 from datetime import date
 from typing import Any, Callable
-from platformics.database.models import Base
 
 import pytest
+from database import models
 from tests.db_import.populate_db import (
     DEPOSITION_AUTHOR_ID,
     DEPOSITION_ID1,
@@ -13,7 +13,7 @@ from tests.db_import.populate_db import (
     stale_deposition_metadata,
 )
 
-from database import models
+from platformics.database.models import Base
 
 
 @pytest.fixture

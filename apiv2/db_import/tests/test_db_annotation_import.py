@@ -1,8 +1,8 @@
 import datetime
 from typing import Any, Callable
-from platformics.database.models import Base
 
 import pytest as pytest
+from database import models
 from tests.db_import.populate_db import (
     ANNOTATION_AUTHOR_ID,
     ANNOTATION_FILE_ID,
@@ -15,7 +15,7 @@ from tests.db_import.populate_db import (
     populate_stale_annotation_files,
 )
 
-from database import models
+from platformics.database.models import Base
 
 
 @pytest.fixture

@@ -1,6 +1,5 @@
 from typing import Any, Iterator
 
-from platformics.database.models import Base
 from database.models import Run
 from db_import.importers.base_importer import (
     BaseDBImporter,
@@ -9,6 +8,8 @@ from db_import.importers.base_importer import (
     StaleParentDeletionDBImporter,
 )
 from db_import.importers.dataset import DatasetDBImporter
+
+from platformics.database.models import Base
 
 
 class RunDBImporter(BaseDBImporter):

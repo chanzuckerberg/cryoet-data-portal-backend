@@ -1,7 +1,7 @@
 from typing import Any, Callable
-from platformics.database.models import Base
 
 import pytest as pytest
+from database import models
 from tests.db_import.populate_db import (
     DATASET_ID,
     RUN1_ID,
@@ -11,7 +11,7 @@ from tests.db_import.populate_db import (
     populate_tiltseries,
 )
 
-from database import models
+from platformics.database.models import Base
 
 
 @pytest.fixture
@@ -66,7 +66,7 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "https_angle_list": f"{http_prefix}/{DATASET_ID}/RUN3/TiltSeries/bar.tlt",
             "acceleration_voltage": 10000,
             "spherical_aberration_constant": 2.7,
-            "microscope_manufacturer": "DC",
+            "microscope_manufacturer": "FEI",
             "microscope_model": "Phantom",
             "microscope_energy_filter": "TFS",
             "camera_manufacturer": "FEI",

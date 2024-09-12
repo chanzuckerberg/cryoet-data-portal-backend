@@ -1,7 +1,5 @@
 from typing import Any, Iterable
 
-from db_import.importers.deposition import get_deposition
-from platformics.database.models import Base
 from database import models
 from db_import.importers.base_importer import (
     AuthorsStaleDeletionDBImporter,
@@ -9,6 +7,9 @@ from db_import.importers.base_importer import (
     DBImportConfig,
     StaleDeletionDBImporter,
 )
+from db_import.importers.deposition import get_deposition
+
+from platformics.database.models import Base
 
 
 class DatasetDBImporter(BaseDBImporter):

@@ -1,10 +1,11 @@
 from typing import Any
 
-from db_import.importers.deposition import get_deposition
 from database import models
-from platformics.database.models.base import Base
 from db_import.importers.base_importer import BaseDBImporter, DBImportConfig, StaleParentDeletionDBImporter
+from db_import.importers.deposition import get_deposition
 from db_import.importers.run import RunDBImporter
+
+from platformics.database.models.base import Base
 
 
 class TiltSeriesDBImporter(BaseDBImporter):
@@ -27,7 +28,7 @@ class TiltSeriesDBImporter(BaseDBImporter):
 
     @classmethod
     def get_db_model_class(cls) -> type[Base]:
-        return models.Tilteries
+        return models.Tiltseries
 
     @classmethod
     def get_direct_mapped_fields(cls) -> dict[str, Any]:
