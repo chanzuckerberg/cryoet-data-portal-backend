@@ -1,3 +1,8 @@
+alignment:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/{run_name}_sq_df_sorted_fid.xf
 annotations:
 - metadata:
     annotation_method: manual segmentation
@@ -165,8 +170,7 @@ key_images:
 rawtilts:
 - sources:
   - source_multi_glob:
-      list_globs:
-      - metadata/{run_name}_sq_df_sorted_fid.xf
+      list_globs: []
 runs:
 - sources:
   - source_glob:

@@ -663,6 +663,7 @@ classes:
   # ============================================================================
   # annotation_metadata.json
   # ============================================================================
+
   Annotation:
     description: Metadata describing an annotation.
     mixins:

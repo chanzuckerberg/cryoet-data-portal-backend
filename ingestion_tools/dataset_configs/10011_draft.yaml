@@ -1,3 +1,8 @@
+alignment:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/{run_name}.xf
 annotations:
 - metadata:
     annotation_method: REQUIRED
@@ -102,7 +107,6 @@ rawtilts:
   - source_multi_glob:
       list_globs:
       - metadata/{run_name}.rawtlt
-      - metadata/{run_name}.xf
 runs:
 - sources:
   - source_glob:

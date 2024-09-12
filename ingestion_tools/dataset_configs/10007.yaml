@@ -1,3 +1,8 @@
+alignment:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/AreTomo/*_dose-filt.xf'
 annotations:
 - metadata:
     annotation_method: crYOLO picking
@@ -128,7 +133,6 @@ rawtilts:
   - source_multi_glob:
       list_globs:
       - '{run_name}/*_dose-filt.rawtlt'
-      - '{run_name}/AreTomo/*_dose-filt.xf'
 runs:
 - sources:
   - source_glob:
