@@ -2,7 +2,7 @@ from typing import Any, Callable
 
 import pytest as pytest
 from database import models
-from tests.db_import.populate_db import (
+from db_import.tests.populate_db import (
     DATASET_ID,
     RUN1_ID,
     TILTSERIES_ID,

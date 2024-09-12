@@ -3,7 +3,7 @@ from typing import Any, Callable
 
 import pytest as pytest
 from database import models
-from tests.db_import.populate_db import (
+from db_import.tests.populate_db import (
     ANNOTATION_AUTHOR_ID,
     ANNOTATION_FILE_ID,
     ANNOTATION_ID,
@@ -14,6 +14,7 @@ from tests.db_import.populate_db import (
     populate_stale_annotation_authors,
     populate_stale_annotation_files,
 )
+from sqlalchemy.orm import Session
 
 from platformics.database.models import Base
 
@@ -123,12 +124,16 @@ def expected_annotation_authors() -> list[dict[str, Any]]:
 
 # Tests addition and update  of annotations and annotation files
 def test_import_annotations(
+    sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[Base, dict[str, Any]], None],
     expected_annotations: list[dict[str, Any]],
     expected_annotation_files: list[dict[str, Any]],
 ) -> None:
-    populate_annotation_files()
+    # Create mock data
+    populate_annotation_files(sync_db_session)
+    sync_db_session.flush()
+
     verify_dataset_import(["--import-annotations"])
     expected_annotations_iter = iter(expected_annotations)
     expected_annotations_files_iter = iter(expected_annotation_files)
@@ -143,13 +148,14 @@ def test_import_annotations(
 
 # Tests state annotation and files are removed
 def test_import_annotations_files_removes_stale(
+    sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[Base, dict[str, Any]], None],
     expected_annotations: list[dict[str, Any]],
     expected_annotation_files: list[dict[str, Any]],
 ) -> None:
-    populate_annotation_files()
-    populate_stale_annotation_files()
+    populate_annotation_files(sync_db_session)
+    populate_stale_annotation_files(sync_db_session)
     verify_dataset_import(["--import-annotations"])
     expected_annotations_iter = iter(expected_annotations)
     expected_annotations_files_iter = iter(expected_annotation_files)
@@ -164,12 +170,13 @@ def test_import_annotations_files_removes_stale(
 
 # Tests update of existing annotation authors, addition of new authors
 def test_import_annotation_authors(
+    sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[Base, dict[str, Any]], None],
     expected_annotations: list[dict[str, Any]],
     expected_annotation_authors: list[dict[str, Any]],
 ) -> None:
-    populate_annotation_authors()
+    populate_annotation_authors(sync_db_session)
     verify_dataset_import(["--import-annotation-authors"])
     expected_annotations_authors_iter = iter(expected_annotation_authors)
     actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID1)
@@ -181,13 +188,14 @@ def test_import_annotation_authors(
 
 # Tests deletion of stale annotation and annotation authors
 def test_import_annotation_authors_removes_stale(
+    sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[Base, dict[str, Any]], None],
     expected_annotations: list[dict[str, Any]],
     expected_annotation_authors: list[dict[str, Any]],
 ) -> None:
-    populate_annotation_authors()
-    populate_stale_annotation_authors()
+    populate_annotation_authors(sync_db_session)
+    populate_stale_annotation_authors(sync_db_session)
     verify_dataset_import(["--import-annotation-authors"])
     expected_annotations_authors_iter = iter(expected_annotation_authors)
     actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID1)

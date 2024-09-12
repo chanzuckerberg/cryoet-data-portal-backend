@@ -1,8 +1,8 @@
 import json
 from typing import Any, Iterator
 
-from common.normalize_fields import normalize_fiducial_alignment
 from database import models
+from db_import.common.normalize_fields import normalize_fiducial_alignment
 from db_import.importers.base_importer import (
     AuthorsStaleDeletionDBImporter,
     BaseDBImporter,

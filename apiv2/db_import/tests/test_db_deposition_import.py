@@ -3,7 +3,7 @@ from typing import Any, Callable
 
 import pytest
 from database import models
-from tests.db_import.populate_db import (
+from db_import.tests.populate_db import (
     DEPOSITION_AUTHOR_ID,
     DEPOSITION_ID1,
     DEPOSITION_ID2,

@@ -2,65 +2,48 @@ import os
 from datetime import date
 from typing import Any, Callable, Generator
 
+import boto3
 import pytest
+import sqlalchemy
+from botocore.client import Config
 from click.testing import CliRunner
 from database.models import (
-    Annotation,
-    AnnotationAuthor,
-    AnnotationFile,
     Dataset,
-    DatasetAuthor,
-    DatasetFunding,
-    Deposition,
-    DepositionAuthor,
-    Run,
-    Tiltseries,
-    Tomogram,
-    TomogramAuthor,
-    TomogramVoxelSpacing,
 )
-from db_import import load
+from db_import.importer import load
+from db_import.tests.populate_db import DATASET_ID
 from mypy_boto3_s3 import S3Client
-from peewee import PostgresqlDatabase, SqliteDatabase
-from tests.db_import.populate_db import DATASET_ID, clean_all_mock_data
 
+from platformics.database.connect import SyncDB
 from platformics.database.models import Base
 
 
 @pytest.fixture
-def db_connection() -> str:
-    return os.getenv("DB_CONNECTION", "postgresql://postgres:postgres@db:5432/cryoet")
+def http_prefix() -> str:
+    return "https://foo.com"
 
-
-@pytest.fixture
-def default_inputs(endpoint_url: str, http_prefix: str, db_connection: str) -> list[str]:
-    return ["test-public-bucket", http_prefix, db_connection, "--endpoint-url", endpoint_url]
 
 
 @pytest.fixture
-def mock_db(db_connection: str) -> [list[Base], Generator[SqliteDatabase, Any, None]]:
-    mock_db = PostgresqlDatabase(db_connection)
-    mock_db.connect()
-    models = [
-        Dataset,
-        DatasetAuthor,
-        DatasetFunding,
-        Deposition,
-        DepositionAuthor,
-        Run,
-        Tiltseries,
-        TomogramVoxelSpacing,
-        Tomogram,
-        TomogramAuthor,
-        Annotation,
-        AnnotationFile,
-        AnnotationAuthor,
-    ]
-    mock_db.bind(models, bind_refs=False, bind_backrefs=False)
-    clean_all_mock_data()
-    yield mock_db
-    mock_db.close()
+def default_inputs(aws_endpoint_url: str, http_prefix: str, test_db_uri: str) -> list[str]:
+    return ["test-public-bucket", http_prefix, f"postgresql://{test_db_uri}", "--endpoint-url", aws_endpoint_url]
 
+@pytest.fixture
+def aws_endpoint_url() -> str:
+    return os.getenv("BOTO_ENDPOINT_URL", "http://motoserver:5566")
+
+@pytest.fixture
+def s3_client(aws_endpoint_url: str) -> S3Client:
+    return boto3.client(
+        "s3",
+        endpoint_url=aws_endpoint_url,
+        config=Config(signature_version="s3v4"),
+    )
+
+@pytest.fixture
+def sync_db_session(sync_db: SyncDB) -> Generator[sqlalchemy.orm.Session, None, None]:
+    with sync_db.session() as session:
+        yield session
 
 @pytest.fixture
 def verify_model():
@@ -80,7 +63,7 @@ def verify_model():
 
 @pytest.fixture
 def verify_dataset_import(
-    mock_db: Generator[SqliteDatabase, Any, None],
+    sync_db: Generator[SyncDB, Any, None],
     s3_client: S3Client,
     default_inputs: list[str],
     verify_model: Callable[[Base, dict[str, Any]], None],
