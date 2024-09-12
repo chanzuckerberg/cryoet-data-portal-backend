@@ -717,6 +717,37 @@ classes:
   # Alignment metadata
   # ============================================================================
 
+  AlignmentSize:
+    description: &desc_alignment_size The size of an alignment in voxels in each dimension.
+    attributes:
+      x:
+        any_of:
+          - range: integer
+          - range: IntegerFormattedString
+        required: true
+        description: Number of pixels in the 3D data fast axis
+        unit:
+          descriptive_name: pixels
+          symbol: px
+      y:
+        any_of:
+          - range: integer
+          - range: IntegerFormattedString
+        required: true
+        description: Number of pixels in the 3D data medium axis
+        unit:
+          descriptive_name: pixels
+          symbol: px
+      z:
+        any_of:
+          - range: integer
+          - range: IntegerFormattedString
+        required: true
+        description: Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
+        unit:
+          descriptive_name: pixels
+          symbol: px
+
   AlignmentOffset:
     description: &desc_alignment_offset The offset of a alignment in voxels in each dimension relative to the canonical tomogram.
     attributes:
@@ -756,14 +787,15 @@ classes:
     attributes:
       alignment_type:
         description: The type of alignment.
-        any_of:
-          - range: string
-          - range: cdp-common:StringFormattedString
+        range: alignment_type_enum
         required: true
       offset:
         description: *desc_alignment_offset
         range: AlignmentOffset
         required: true
+      volume_dimesion:
+        description: *desc_alignment_size
+        range: AlignmentSize
       x_rotation_offset:
         description: The x rotation offset relative to the tomogram.
         any_of:
@@ -790,3 +822,7 @@ classes:
         range: boolean
         required: true
         ifabsent: true
+      format:
+        description: The format of the alignment.
+        range: alignment_format_enum
+        required: true

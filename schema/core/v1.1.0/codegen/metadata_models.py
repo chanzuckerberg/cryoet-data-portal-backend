@@ -487,6 +487,28 @@ linkml_meta = LinkMLMeta(
 )
 
 
+class AlignmentTypeEnum(str, Enum):
+    """
+    Type of alignment
+    """
+
+    # Local alignment
+    LOCAL = "LOCAL"
+    # Global alignment
+    GLOBAL = "GLOBAL"
+
+
+class AlignmentFormatEnum(str, Enum):
+    """
+    Used to determine what alignment alogrithm to use.
+    """
+
+    # formats xf, tlt, xtlt, rawtlt
+    IMOD = "IMOD"
+    # formats aln, _TLT.txt, rawtlt
+    ARETOMO3 = "ARETOMO3"
+
+
 class AnnotationMethodTypeEnum(str, Enum):
     """
     Describes how the annotations were generated.
@@ -2125,7 +2147,7 @@ class TomogramSize(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "x",
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2137,7 +2159,7 @@ class TomogramSize(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "y",
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2149,7 +2171,7 @@ class TomogramSize(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "z",
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2170,7 +2192,7 @@ class TomogramOffset(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "x",
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2182,7 +2204,7 @@ class TomogramOffset(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "y",
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2194,7 +2216,7 @@ class TomogramOffset(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "z",
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -3696,6 +3718,87 @@ class Annotation(AuthoredEntity, DateStampedEntity):
         return v
 
 
+class AlignmentSize(ConfiguredBaseModel):
+    """
+    The size of an alignment in voxels in each dimension.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    x: Union[int, str] = Field(
+        ...,
+        description="""Number of pixels in the 3D data fast axis""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "x",
+                "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "unit": {"descriptive_name": "pixels", "symbol": "px"},
+            }
+        },
+    )
+    y: Union[int, str] = Field(
+        ...,
+        description="""Number of pixels in the 3D data medium axis""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "y",
+                "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "unit": {"descriptive_name": "pixels", "symbol": "px"},
+            }
+        },
+    )
+    z: Union[int, str] = Field(
+        ...,
+        description="""Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "z",
+                "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "unit": {"descriptive_name": "pixels", "symbol": "px"},
+            }
+        },
+    )
+
+    @field_validator("x")
+    def pattern_x(cls, v):
+        pattern = re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid x format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid x format: {v}")
+        return v
+
+    @field_validator("y")
+    def pattern_y(cls, v):
+        pattern = re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid y format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid y format: {v}")
+        return v
+
+    @field_validator("z")
+    def pattern_z(cls, v):
+        pattern = re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid z format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid z format: {v}")
+        return v
+
+
 class AlignmentOffset(ConfiguredBaseModel):
     """
     The offset of a alignment in voxels in each dimension relative to the canonical tomogram.
@@ -3703,40 +3806,40 @@ class AlignmentOffset(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    x: Union[int, str] = Field(
+    x: Optional[Union[int, str]] = Field(
         0,
         description="""x offset relative to the canonical tomogram in pixels""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "x",
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "ifabsent": "int(0)",
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
     )
-    y: Union[int, str] = Field(
+    y: Optional[Union[int, str]] = Field(
         0,
         description="""y offset relative to the canonical tomogram in pixels""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "y",
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "ifabsent": "int(0)",
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
     )
-    z: Union[int, str] = Field(
+    z: Optional[Union[int, str]] = Field(
         0,
         description="""z offset relative to the canonical tomogram in pixels""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "z",
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "ifabsent": "int(0)",
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
@@ -3783,21 +3886,20 @@ class AlignmentOffset(ConfiguredBaseModel):
 class Alignment(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    alignment_type: str = Field(
-        ...,
+    alignment_type: Optional[AlignmentTypeEnum] = Field(
+        None,
         description="""The type of alignment.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "alignment_type",
-                "any_of": [{"range": "string"}, {"range": "StringFormattedString"}],
-                "domain_of": ["Alignment"],
-            }
-        },
+        json_schema_extra={"linkml_meta": {"alias": "alignment_type", "domain_of": ["Alignment"]}},
     )
     offset: AlignmentOffset = Field(
         ...,
         description="""The offset of a alignment in voxels in each dimension relative to the canonical tomogram.""",
         json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram", "Alignment"]}},
+    )
+    volume_dimesion: Optional[AlignmentSize] = Field(
+        None,
+        description="""The size of an alignment in voxels in each dimension.""",
+        json_schema_extra={"linkml_meta": {"alias": "volume_dimesion", "domain_of": ["Alignment"]}},
     )
     x_rotation_offset: Union[int, str] = Field(
         0,
@@ -3839,10 +3941,15 @@ class Alignment(ConfiguredBaseModel):
         description="""Whether the alignment is canonical.""",
         json_schema_extra={"linkml_meta": {"alias": "is_canonical", "domain_of": ["Alignment"], "ifabsent": "True"}},
     )
+    format: AlignmentFormatEnum = Field(
+        ...,
+        description="""The format of the alignment.""",
+        json_schema_extra={"linkml_meta": {"alias": "format", "domain_of": ["Alignment"]}},
+    )
 
     @field_validator("alignment_type")
     def pattern_alignment_type(cls, v):
-        pattern = re.compile(r"^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        pattern = re.compile(r"(^LOCAL$)|(^GLOBAL$)")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
@@ -3862,6 +3969,18 @@ class Alignment(ConfiguredBaseModel):
         elif isinstance(v, str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid x_rotation_offset format: {v}")
+        return v
+
+    @field_validator("format")
+    def pattern_format(cls, v):
+        pattern = re.compile(r"(^IMOD$)|(^ARETOMO3$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid format format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid format format: {v}")
         return v
 
 
@@ -4354,6 +4473,7 @@ AnnotationSemanticSegmentationMaskFile.model_rebuild()
 AnnotationTriangularMeshFile.model_rebuild()
 AnnotationTriangularMeshGroupFile.model_rebuild()
 Annotation.model_rebuild()
+AlignmentSize.model_rebuild()
 AlignmentOffset.model_rebuild()
 Alignment.model_rebuild()
 DateStampedEntityMixin.model_rebuild()

@@ -806,6 +806,21 @@ enums:
   # ============================================================================
   # Controlled vocabularies
   # ============================================================================
+  alignment_type_enum:
+    description: Type of alignment
+    permissible_values:
+      LOCAL:
+        description: Local alignment
+      GLOBAL:
+        description: Global alignment
+
+  alignment_format_enum:
+    description: Used to determine what alignment alogrithm to use.
+    permissible_values:
+      IMOD:
+        description: formats xf, tlt, xtlt, rawtlt
+      ARETOMO3:
+        description: formats aln, _TLT.txt, rawtlt
   annotation_method_type_enum:
     description: Describes how the annotations were generated.
     permissible_values:

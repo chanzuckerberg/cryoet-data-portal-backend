@@ -373,6 +373,28 @@ types:
     base: str
     pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8}))*$
 enums:
+  alignment_type_enum:
+    name: alignment_type_enum
+    description: Type of alignment
+    from_schema: metadata
+    permissible_values:
+      LOCAL:
+        text: LOCAL
+        description: Local alignment
+      GLOBAL:
+        text: GLOBAL
+        description: Global alignment
+  alignment_format_enum:
+    name: alignment_format_enum
+    description: Used to determine what alignment alogrithm to use.
+    from_schema: metadata
+    permissible_values:
+      IMOD:
+        text: IMOD
+        description: formats xf, tlt, xtlt, rawtlt
+      ARETOMO3:
+        text: ARETOMO3
+        description: formats aln, _TLT.txt, rawtlt
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.
@@ -2242,6 +2264,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
         - AlignmentOffset
         range: integer
         required: true
@@ -2260,6 +2283,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
         - AlignmentOffset
         range: integer
         required: true
@@ -2279,6 +2303,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
         - AlignmentOffset
         range: integer
         required: true
@@ -2303,6 +2328,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
         - AlignmentOffset
         range: Any
         required: true
@@ -2324,6 +2350,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
         - AlignmentOffset
         range: Any
         required: true
@@ -2345,6 +2372,7 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
         - AlignmentOffset
         range: Any
         required: true
@@ -3688,6 +3716,78 @@ classes:
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
+  AlignmentSize:
+    name: AlignmentSize
+    description: The size of an alignment in voxels in each dimension.
+    from_schema: metadata
+    attributes:
+      x:
+        name: x
+        description: Number of pixels in the 3D data fast axis
+        from_schema: metadata
+        alias: x
+        owner: AlignmentSize
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: px
+          descriptive_name: pixels
+        any_of:
+        - range: integer
+        - range: IntegerFormattedString
+      y:
+        name: y
+        description: Number of pixels in the 3D data medium axis
+        from_schema: metadata
+        alias: y
+        owner: AlignmentSize
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: px
+          descriptive_name: pixels
+        any_of:
+        - range: integer
+        - range: IntegerFormattedString
+      z:
+        name: z
+        description: Number of pixels in the 3D data slow axis.  This is the image
+          projection direction at zero stage tilt
+        from_schema: metadata
+        alias: z
+        owner: AlignmentSize
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: px
+          descriptive_name: pixels
+        any_of:
+        - range: integer
+        - range: IntegerFormattedString
   AlignmentOffset:
     name: AlignmentOffset
     description: The offset of a alignment in voxels in each dimension relative to
@@ -3704,9 +3804,9 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
         - AlignmentOffset
         range: Any
-        required: true
         inlined: true
         inlined_as_list: true
         pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
@@ -3726,9 +3826,9 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
         - AlignmentOffset
         range: Any
-        required: true
         inlined: true
         inlined_as_list: true
         pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
@@ -3748,9 +3848,9 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
         - AlignmentOffset
         range: Any
-        required: true
         inlined: true
         inlined_as_list: true
         pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
@@ -3772,14 +3872,10 @@ classes:
         owner: Alignment
         domain_of:
         - Alignment
-        range: Any
-        required: true
+        range: alignment_type_enum
         inlined: true
         inlined_as_list: true
-        pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
-        any_of:
-        - range: string
-        - range: StringFormattedString
+        pattern: (^LOCAL$)|(^GLOBAL$)
       offset:
         name: offset
         description: The offset of a alignment in voxels in each dimension relative
@@ -3792,6 +3888,17 @@ classes:
         - Alignment
         range: AlignmentOffset
         required: true
+        inlined: true
+        inlined_as_list: true
+      volume_dimesion:
+        name: volume_dimesion
+        description: The size of an alignment in voxels in each dimension.
+        from_schema: metadata
+        alias: volume_dimesion
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: AlignmentSize
         inlined: true
         inlined_as_list: true
       x_rotation_offset:
@@ -3855,6 +3962,19 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+      format:
+        name: format
+        description: The format of the alignment.
+        from_schema: metadata
+        alias: format
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: alignment_format_enum
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^IMOD$)|(^ARETOMO3$)
   Any:
     name: Any
     from_schema: metadata

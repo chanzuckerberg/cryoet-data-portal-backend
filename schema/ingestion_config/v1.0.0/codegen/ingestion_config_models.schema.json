@@ -22,18 +22,14 @@
                     ]
                 },
                 "alignment_type": {
-                    "$ref": "#/$defs/Any",
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
-                            "type": "string"
-                        }
-                    ],
+                    "$ref": "#/$defs/AlignmentTypeEnum",
                     "description": "The type of alignment.",
-                    "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                    "pattern": "(^LOCAL$)|(^GLOBAL$)"
+                },
+                "format": {
+                    "$ref": "#/$defs/AlignmentFormatEnum",
+                    "description": "The format of the alignment.",
+                    "pattern": "(^IMOD$)|(^ARETOMO3$)"
                 },
                 "is_canonical": {
                     "description": "Whether the alignment is canonical.",
@@ -46,6 +42,17 @@
                 "tilt_offset": {
                     "description": "The tilt offset relative to the tomogram.",
                     "type": "number"
+                },
+                "volume_dimesion": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AlignmentSize"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The size of an alignment in voxels in each dimension."
                 },
                 "x_rotation_offset": {
                     "$ref": "#/$defs/Any",
@@ -63,11 +70,11 @@
                 }
             },
             "required": [
-                "alignment_type",
                 "offset",
                 "x_rotation_offset",
                 "tilt_offset",
-                "is_canonical"
+                "is_canonical",
+                "format"
             ],
             "title": "Alignment",
             "type": "object"
@@ -96,12 +103,20 @@
             "title": "AlignmentEntity",
             "type": "object"
         },
+        "AlignmentFormatEnum": {
+            "description": "Used to determine what alignment alogrithm to use.",
+            "enum": [
+                "IMOD",
+                "ARETOMO3"
+            ],
+            "title": "AlignmentFormatEnum",
+            "type": "string"
+        },
         "AlignmentOffset": {
             "additionalProperties": false,
             "description": "The offset of a alignment in voxels in each dimension relative to the canonical tomogram.",
             "properties": {
                 "x": {
-                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
                             "type": "integer"
@@ -109,13 +124,15 @@
                         {
                             "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
+                        },
+                        {
+                            "type": "null"
                         }
                     ],
                     "description": "x offset relative to the canonical tomogram in pixels",
                     "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "y": {
-                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
                             "type": "integer"
@@ -123,13 +140,15 @@
                         {
                             "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
+                        },
+                        {
+                            "type": "null"
                         }
                     ],
                     "description": "y offset relative to the canonical tomogram in pixels",
                     "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "z": {
-                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
                             "type": "integer"
@@ -137,17 +156,15 @@
                         {
                             "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
+                        },
+                        {
+                            "type": "null"
                         }
                     ],
                     "description": "z offset relative to the canonical tomogram in pixels",
                     "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
             },
-            "required": [
-                "x",
-                "y",
-                "z"
-            ],
             "title": "AlignmentOffset",
             "type": "object"
         },
@@ -239,6 +256,61 @@
             "title": "AlignmentParentFilters",
             "type": "object"
         },
+        "AlignmentSize": {
+            "additionalProperties": false,
+            "description": "The size of an alignment in voxels in each dimension.",
+            "properties": {
+                "x": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Number of pixels in the 3D data fast axis",
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "y": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Number of pixels in the 3D data medium axis",
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "z": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt",
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "z"
+            ],
+            "title": "AlignmentSize",
+            "type": "object"
+        },
         "AlignmentSource": {
             "additionalProperties": false,
             "description": "An alignment source.",
@@ -311,6 +383,15 @@
             },
             "title": "AlignmentSource",
             "type": "object"
+        },
+        "AlignmentTypeEnum": {
+            "description": "Type of alignment",
+            "enum": [
+                "LOCAL",
+                "GLOBAL"
+            ],
+            "title": "AlignmentTypeEnum",
+            "type": "string"
         },
         "Annotation": {
             "additionalProperties": false,
