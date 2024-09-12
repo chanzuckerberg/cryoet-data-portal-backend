@@ -553,6 +553,8 @@ classes:
         multivalued: true
         inverse: AnnotationFile.alignment
         range: AnnotationFile
+        annotations:
+          cascade_delete: true
       per_section_alignments:
         name: per_section_alignments
         description: Map alignment parameters to tilt series frames
@@ -560,6 +562,8 @@ classes:
         multivalued: true
         inverse: PerSectionAlignmentParameters.alignment
         range: PerSectionAlignmentParameters
+        annotations:
+          cascade_delete: true
       deposition:
         name: deposition
         from_schema: cdp-dataset-config
@@ -577,6 +581,8 @@ classes:
         multivalued: true
         inverse: Tomogram.alignment
         range: Tomogram
+        annotations:
+          cascade_delete: true
       run:
         name: run
         from_schema: cdp-dataset-config
@@ -797,6 +803,8 @@ classes:
         multivalued: true
         inverse: AnnotationFile.annotation_shape
         range: AnnotationFile
+        annotations:
+          cascade_delete: true
       shape_type:
         name: shape_type
         from_schema: cdp-dataset-config
@@ -826,6 +834,8 @@ classes:
         multivalued: true
         inverse: AnnotationShape.annotation
         range: AnnotationShape
+        annotations:
+          cascade_delete: true
       authors:
         name: authors
         description: Author of an annotation
@@ -833,6 +843,8 @@ classes:
         multivalued: true
         inverse: AnnotationAuthor.annotation
         range: AnnotationAuthor
+        annotations:
+          cascade_delete: true
       deposition:
         name: deposition
         from_schema: cdp-dataset-config
@@ -1085,6 +1097,8 @@ classes:
         multivalued: true
         inverse: DatasetFunding.dataset
         range: DatasetFunding
+        annotations:
+          cascade_delete: true
       authors:
         name: authors
         description: An author of a dataset
@@ -1092,12 +1106,16 @@ classes:
         multivalued: true
         inverse: DatasetAuthor.dataset
         range: DatasetAuthor
+        annotations:
+          cascade_delete: true
       runs:
         name: runs
         from_schema: cdp-dataset-config
         multivalued: true
         inverse: Run.dataset
         range: Run
+        annotations:
+          cascade_delete: true
       title:
         name: title
         description: Title of a CryoET dataset.
@@ -1328,6 +1346,8 @@ classes:
         multivalued: true
         inverse: DepositionAuthor.deposition
         range: DepositionAuthor
+        annotations:
+          cascade_delete: true
       alignments:
         name: alignments
         description: Tiltseries Alignment
@@ -1335,6 +1355,8 @@ classes:
         multivalued: true
         inverse: Alignment.deposition
         range: Alignment
+        annotations:
+          cascade_delete: true
       annotations:
         name: annotations
         description: Metadata about an annotation for a run
@@ -1342,6 +1364,8 @@ classes:
         multivalued: true
         inverse: Annotation.deposition
         range: Annotation
+        annotations:
+          cascade_delete: true
       datasets:
         name: datasets
         description: An author of a dataset
@@ -1349,24 +1373,32 @@ classes:
         multivalued: true
         inverse: Dataset.deposition
         range: Dataset
+        annotations:
+          cascade_delete: true
       frames:
         name: frames
         from_schema: cdp-dataset-config
         multivalued: true
         inverse: Frame.deposition
         range: Frame
+        annotations:
+          cascade_delete: true
       tiltseries:
         name: tiltseries
         from_schema: cdp-dataset-config
         multivalued: true
         inverse: Tiltseries.deposition
         range: Tiltseries
+        annotations:
+          cascade_delete: true
       tomograms:
         name: tomograms
         from_schema: cdp-dataset-config
         multivalued: true
         inverse: Tomogram.deposition
         range: Tomogram
+        annotations:
+          cascade_delete: true
       deposition_title:
         name: deposition_title
         description: Title of a CryoET deposition.
@@ -1390,6 +1422,8 @@ classes:
         multivalued: true
         inverse: DepositionType.deposition
         range: DepositionType
+        annotations:
+          cascade_delete: true
       publications:
         name: publications
         description: Comma-separated list of DOIs for publications associated with
@@ -1472,6 +1506,8 @@ classes:
         multivalued: true
         inverse: PerSectionParameters.frame
         range: PerSectionParameters
+        annotations:
+          cascade_delete: true
       run:
         name: run
         from_schema: cdp-dataset-config
@@ -1703,6 +1739,8 @@ classes:
         multivalued: true
         inverse: Alignment.run
         range: Alignment
+        annotations:
+          cascade_delete: true
       annotations:
         name: annotations
         description: Metadata about an annotation for a run
@@ -1710,6 +1748,8 @@ classes:
         multivalued: true
         inverse: Annotation.run
         range: Annotation
+        annotations:
+          cascade_delete: true
       dataset:
         name: dataset
         description: An author of a dataset
@@ -1723,12 +1763,16 @@ classes:
         multivalued: true
         inverse: Frame.run
         range: Frame
+        annotations:
+          cascade_delete: true
       tiltseries:
         name: tiltseries
         from_schema: cdp-dataset-config
         multivalued: true
         inverse: Tiltseries.run
         range: Tiltseries
+        annotations:
+          cascade_delete: true
       tomogram_voxel_spacings:
         name: tomogram_voxel_spacings
         description: Voxel spacings for a run
@@ -1736,6 +1780,8 @@ classes:
         multivalued: true
         inverse: TomogramVoxelSpacing.run
         range: TomogramVoxelSpacing
+        annotations:
+          cascade_delete: true
       tomograms:
         name: tomograms
         description: Metadata describing a tomogram.
@@ -1743,6 +1789,8 @@ classes:
         multivalued: true
         inverse: Tomogram.run
         range: Tomogram
+        annotations:
+          cascade_delete: true
       name:
         name: name
         description: Name of a run
@@ -1785,6 +1833,8 @@ classes:
         inverse: Alignment.tiltseries
         range: Alignment
         multivalued: true
+        annotations:
+          cascade_delete: true
       per_section_parameters:
         name: per_section_parameters
         description: Record how frames get mapped to TiltSeries
@@ -1792,6 +1842,8 @@ classes:
         multivalued: true
         inverse: PerSectionParameters.tiltseries
         range: PerSectionParameters
+        annotations:
+          cascade_delete: true
       run:
         name: run
         from_schema: cdp-dataset-config
@@ -2163,6 +2215,8 @@ classes:
         multivalued: true
         inverse: Tomogram.tomogram_voxel_spacing
         range: Tomogram
+        annotations:
+          cascade_delete: true
       voxel_spacing:
         name: voxel_spacing
         description: Voxel spacing equal in all three axes in angstroms
@@ -2217,6 +2271,8 @@ classes:
         multivalued: true
         inverse: TomogramAuthor.tomogram
         range: TomogramAuthor
+        annotations:
+          cascade_delete: true
       deposition:
         name: deposition
         from_schema: cdp-dataset-config

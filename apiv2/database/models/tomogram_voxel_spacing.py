@@ -50,6 +50,7 @@ class TomogramVoxelSpacing(Base):
         back_populates="tomogram_voxel_spacing",
         uselist=True,
         foreign_keys="Tomogram.tomogram_voxel_spacing_id",
+        cascade="all, delete-orphan",
     )
     voxel_spacing: Mapped[float] = mapped_column(Float, nullable=False)
     s3_prefix: Mapped[str] = mapped_column(String, nullable=False)

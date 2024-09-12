@@ -49,42 +49,49 @@ class Deposition(Base):
         back_populates="deposition",
         uselist=True,
         foreign_keys="DepositionAuthor.deposition_id",
+        cascade="all, delete-orphan",
     )
     alignments: Mapped[list[Alignment]] = relationship(
         "Alignment",
         back_populates="deposition",
         uselist=True,
         foreign_keys="Alignment.deposition_id",
+        cascade="all, delete-orphan",
     )
     annotations: Mapped[list[Annotation]] = relationship(
         "Annotation",
         back_populates="deposition",
         uselist=True,
         foreign_keys="Annotation.deposition_id",
+        cascade="all, delete-orphan",
     )
     datasets: Mapped[list[Dataset]] = relationship(
         "Dataset",
         back_populates="deposition",
         uselist=True,
         foreign_keys="Dataset.deposition_id",
+        cascade="all, delete-orphan",
     )
     frames: Mapped[list[Frame]] = relationship(
         "Frame",
         back_populates="deposition",
         uselist=True,
         foreign_keys="Frame.deposition_id",
+        cascade="all, delete-orphan",
     )
     tiltseries: Mapped[list[Tiltseries]] = relationship(
         "Tiltseries",
         back_populates="deposition",
         uselist=True,
         foreign_keys="Tiltseries.deposition_id",
+        cascade="all, delete-orphan",
     )
     tomograms: Mapped[list[Tomogram]] = relationship(
         "Tomogram",
         back_populates="deposition",
         uselist=True,
         foreign_keys="Tomogram.deposition_id",
+        cascade="all, delete-orphan",
     )
     deposition_title: Mapped[str] = mapped_column(String, nullable=False)
     deposition_description: Mapped[str] = mapped_column(String, nullable=False)
@@ -93,6 +100,7 @@ class Deposition(Base):
         back_populates="deposition",
         uselist=True,
         foreign_keys="DepositionType.deposition_id",
+        cascade="all, delete-orphan",
     )
     publications: Mapped[str] = mapped_column(String, nullable=True)
     related_database_entries: Mapped[str] = mapped_column(String, nullable=True)

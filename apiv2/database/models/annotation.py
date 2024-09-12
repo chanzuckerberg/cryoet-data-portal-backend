@@ -48,12 +48,14 @@ class Annotation(Base):
         back_populates="annotation",
         uselist=True,
         foreign_keys="AnnotationShape.annotation_id",
+        cascade="all, delete-orphan",
     )
     authors: Mapped[list[AnnotationAuthor]] = relationship(
         "AnnotationAuthor",
         back_populates="annotation",
         uselist=True,
         foreign_keys="AnnotationAuthor.annotation_id",
+        cascade="all, delete-orphan",
     )
     deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=True, index=True)
     deposition: Mapped["Deposition"] = relationship(

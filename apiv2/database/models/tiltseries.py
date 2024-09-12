@@ -41,12 +41,14 @@ class Tiltseries(Base):
         back_populates="tiltseries",
         uselist=True,
         foreign_keys="Alignment.tiltseries_id",
+        cascade="all, delete-orphan",
     )
     per_section_parameters: Mapped[list[PerSectionParameters]] = relationship(
         "PerSectionParameters",
         back_populates="tiltseries",
         uselist=True,
         foreign_keys="PerSectionParameters.tiltseries_id",
+        cascade="all, delete-orphan",
     )
     run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=False, index=True)
     run: Mapped["Run"] = relationship(
