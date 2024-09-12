@@ -8,19 +8,28 @@ from common.config import DepositionImportConfig
 
 class BaseAlignmentConverter:
     def get_alignment_path(self) -> str | None:
-        """Return a str path to the alignment file if exists else None"""
+        """
+        :return: A str path to the alignment file if exists else None
+        """
         return None
 
     def get_tilt_path(self) -> str | None:
-        """Return a str path to the tilt file if exists else None"""
+        """
+        :return: A str path to the tilt file if exists else None
+        """
         return None
 
     def get_tiltx_path(self) -> str | None:
-        """Return a str path to the tiltx file if exists else None"""
+        """
+        :return: A str path to the tiltx file if exists else None
+        """
         return None
 
     def get_per_section_alignment_parameters(self) -> list[dict]:
-        """Generates the per section alignment parameters"""
+        """
+        Generates the per section alignment parameters from the files
+        :return: A list of dictionaries containing the per section alignment parameters
+        """
         return []
 
 
@@ -44,7 +53,6 @@ class IMODAlignmentConverter(BaseAlignmentConverter):
         return importer.get_dest_filename() if importer else None
 
     def get_per_section_alignment_parameters(self) -> list[dict]:
-        """Generates the per section alignment parameters"""
         result = []
         tlt_importer = self._get_tlt_importer()
         tltx_importer = self._get_tltx_importer()
@@ -54,7 +62,7 @@ class IMODAlignmentConverter(BaseAlignmentConverter):
         rows = len(xf_data.index)
         for index in range(0, rows):
             item = {
-                **self.get_xf_data(xf_data, index),
+                **self._get_xf_psap(xf_data, index),
                 "z_index": index,
                 "tilt_angle": None if tlt_data.empty else tlt_data["tilt_angle"][index],
                 "volume_x_rotation": 0 if tltx_data.empty else tltx_data["volume_x_rotation"][index],
@@ -96,7 +104,7 @@ class IMODAlignmentConverter(BaseAlignmentConverter):
     def _get_xf_importer(self) -> BaseImporter | None:
         return self._get_importer([".xf"])
 
-    def get_xf_data(self, xf_data: pd.DataFrame, index: int) -> dict:
+    def _get_xf_psap(self, xf_data: pd.DataFrame, index: int) -> dict:
         if xf_data.empty:
             return {
                 "in_plane_rotation": (0, 0, 0, 0),

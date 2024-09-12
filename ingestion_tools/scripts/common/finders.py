@@ -96,7 +96,7 @@ class DestinationGlobFinder(BaseFinder):
         return responses
 
 
-class BaseLiteralValueFinder:
+class BaseLiteralValueFinder(BaseFinder):
     literal_value: list[str] | dict[str, str | None]
 
     def __init__(self, value: dict[str, str | None] | list[str]):

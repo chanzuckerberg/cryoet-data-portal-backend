@@ -27,7 +27,13 @@ class IdentifierHelper:
         **kwargs,
     ) -> int:
         """
-        Get a unique identifier for an entity based on its metadata and parents.
+        Returns a unique identifier for the entity based on its metadata and parents
+        :param config: Deposition config for the ingestion
+        :param metadata: Metadata for the entity being ingested
+        :param parents: All the parent entities of the entity being ingested
+        :param args: Additional args specific to the entity
+        :param kwargs: Additional kwargs specific to the entity
+        :return: unique identifier for the entity for the container
         """
         container_key = cls._get_container_key(config, parents, *args, **kwargs)
         cls._load_ids_for_container(container_key, config, parents, *args, **kwargs)
@@ -49,10 +55,16 @@ class IdentifierHelper:
         parents: dict[str, Any],
         *args,
         **kwargs,
-    ):
+    ) -> None:
         """
         Loads all the entries and associated identifiers for a given container.
+        :param container_key: Key that uniquely identifies the container for the entity
+        :param config: Deposition config for the ingestion
+        :param parents: All the parent entities of the entity being ingested
+        :param args: Additional args specific to the entity
+        :param kwargs: Additional kwargs specific to the entity
         """
+
         if container_key in cls.loaded_containers:
             return
         metadata_glob = cls._get_metadata_glob(config, parents, *args, **kwargs)
@@ -75,7 +87,13 @@ class IdentifierHelper:
         **kwargs,
     ) -> str:
         """
-        Generates an unique hash for the entity based on its metadata and parents
+        Returns a unique hash for the entity based on its metadata and parents
+        :param container_key: Key that uniquely identifies the container for the entity
+        :param metadata: Metadata for the entity being ingested
+        :param parents: All the parent entities of the entity being ingested
+        :param args: Additional args specific to the entity
+        :param kwargs: Additional kwargs specific to the entity
+        :return: unique hash for the entity for the container
         """
         raise NotImplementedError("_generate_hash_key must be implemented in subclass")
 
@@ -83,13 +101,23 @@ class IdentifierHelper:
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         """
         Returns a str glob for fetching relevant metadata files within a container
+        :param config: Deposition config for the ingestion
+        :param parents: All the parent entities of the entity being ingested
+        :param args: Additional args specific to the entity
+        :param kwargs: Additional kwargs specific to the entity
+        :return: str glob for fetching relevant metadata files within a container
         """
         raise NotImplementedError("_get_metadata_glob must be implemented in subclass")
 
     @classmethod
     def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         """
-        Returns value that uniquely identifies a container for this entity within the current run's context.
+        Returns value that uniquely identifies a container for this entity within the current context.
         The value will be used to ensure we don't _load_current_ids for a folder multiple times
+        :param config: Deposition config for the ingestion
+        :param parents: All the parent entities of the entity being ingested
+        :param args: Additional args specific to the entity
+        :param kwargs: Additional kwargs specific to the entity
+        :return: str key that uniquely identifies a container for this entity
         """
         raise NotImplementedError("_get_container_key must be implemented in subclass")
