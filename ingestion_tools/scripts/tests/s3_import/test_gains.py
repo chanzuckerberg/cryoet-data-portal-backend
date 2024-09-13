@@ -41,9 +41,9 @@ def test_non_dm4_gains_import(
 
     dataset_name = datasets[0].name
     run_name = runs[0].name
-    prefix = f"output/{dataset_name}/{run_name}/Frames"
+    prefix = f"output/{dataset_name}/{run_name}/Gains"
     gain_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
-    assert f"{run_name}_gain.gain" in gain_files
+    assert f"CountRef_{run_name}.gain" in gain_files
 
 
 def test_dm4_gains_import(
@@ -63,6 +63,6 @@ def test_dm4_gains_import(
 
     dataset_name = datasets[0].name
     run_name = runs[1].name
-    prefix = f"output/{dataset_name}/{run_name}/Frames"
+    prefix = f"output/{dataset_name}/{run_name}/Gains"
     gain_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
-    assert f"{run_name}_gain.mrc" in gain_files
+    assert f"CountRef_{run_name}.mrc" in gain_files
