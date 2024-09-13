@@ -2418,7 +2418,21 @@ class Tomogram(AuthoredEntity):
         False,
         description="""Whether the tomogram is a portal standard.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "is_portal_standard", "domain_of": ["Tomogram"], "ifabsent": "False"}
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "ifabsent": "False",
+            }
         },
     )
     is_visualization_default: bool = Field(
@@ -2794,6 +2808,28 @@ class AnnotationSourceFile(ConfiguredBaseModel):
             }
         },
     )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
+                "ifabsent": "False",
+            }
+        },
+    )
 
 
 class AnnotationOrientedPointFile(AnnotationSourceFile):
@@ -2925,6 +2961,28 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
             }
         },
     )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
+                "ifabsent": "False",
+            }
+        },
+    )
 
 
 class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
@@ -3052,6 +3110,28 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
             }
         },
@@ -3188,6 +3268,28 @@ class AnnotationPointFile(AnnotationSourceFile):
             }
         },
     )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
+                "ifabsent": "False",
+            }
+        },
+    )
 
 
 class AnnotationSegmentationMaskFile(AnnotationSourceFile):
@@ -3275,6 +3377,28 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
             }
         },
@@ -3382,6 +3506,28 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
             }
         },
     )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
+                "ifabsent": "False",
+            }
+        },
+    )
 
 
 class AnnotationTriangularMeshFile(AnnotationSourceFile):
@@ -3482,6 +3628,28 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
             }
         },
@@ -3607,6 +3775,28 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
             }
         },

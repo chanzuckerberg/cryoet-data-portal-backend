@@ -695,6 +695,11 @@ slots:
     range: boolean
     description: This annotation will be rendered in neuroglancer by default.
     ifabsent: false
+  annotation_source_file_is_portal_standard:
+    description: Whether the annotation source is a portal standard.
+    range: boolean
+    required: false
+    ifabsent: false
   #Annotation (Annotation): The annotation this file is a part of
 
   # ============================================================================

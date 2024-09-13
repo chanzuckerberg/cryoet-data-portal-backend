@@ -629,6 +629,13 @@
                         "null"
                     ]
                 },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "is_visualization_default": {
                     "description": "This annotation will be rendered in neuroglancer by default.",
                     "type": [
@@ -786,6 +793,13 @@
                         "null"
                     ]
                 },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "is_visualization_default": {
                     "description": "This annotation will be rendered in neuroglancer by default.",
                     "type": [
@@ -932,6 +946,13 @@
                         "null"
                     ]
                 },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "is_visualization_default": {
                     "description": "This annotation will be rendered in neuroglancer by default.",
                     "type": [
@@ -971,6 +992,13 @@
                         "null"
                     ]
                 },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "is_visualization_default": {
                     "description": "This annotation will be rendered in neuroglancer by default.",
                     "type": [
@@ -1007,6 +1035,13 @@
                     },
                     "type": [
                         "array",
+                        "null"
+                    ]
+                },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
                         "null"
                     ]
                 },
@@ -1162,6 +1197,13 @@
                         "null"
                     ]
                 },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "is_visualization_default": {
                     "description": "This annotation will be rendered in neuroglancer by default.",
                     "type": [
@@ -1198,6 +1240,13 @@
                     },
                     "type": [
                         "array",
+                        "null"
+                    ]
+                },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
                         "null"
                     ]
                 },
@@ -1245,6 +1294,13 @@
                     },
                     "type": [
                         "array",
+                        "null"
+                    ]
+                },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
                         "null"
                     ]
                 },

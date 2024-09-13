@@ -598,6 +598,9 @@ classes:
       is_visualization_default:
         exact_mappings:
           - cdp-common:annotation_source_file_is_visualization_default
+      is_portal_standard:
+        exact_mappings:
+          - cdp-common:annotation_source_file_is_portal_standard
 
   AnnotationOrientedPointFile:
     is_a: AnnotationSourceFile

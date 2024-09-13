@@ -2587,6 +2587,7 @@ classes:
         owner: Tomogram
         domain_of:
         - Tomogram
+        - AnnotationSourceFile
         range: boolean
         required: false
         inlined: true
@@ -2896,6 +2897,22 @@ classes:
         range: boolean
         inlined: true
         inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationSourceFile
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        required: false
+        inlined: true
+        inlined_as_list: true
   AnnotationOrientedPointFile:
     name: AnnotationOrientedPointFile
     description: File and sourcing data for an oriented point annotation. Annotation
@@ -3009,6 +3026,22 @@ classes:
         - Tomogram
         - AnnotationSourceFile
         range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
   AnnotationInstanceSegmentationFile:
@@ -3126,6 +3159,22 @@ classes:
         range: boolean
         inlined: true
         inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        required: false
+        inlined: true
+        inlined_as_list: true
   AnnotationPointFile:
     name: AnnotationPointFile
     description: File and sourcing data for a point annotation. Annotation that identifies
@@ -3240,6 +3289,22 @@ classes:
         range: boolean
         inlined: true
         inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationPointFile
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        required: false
+        inlined: true
+        inlined_as_list: true
   AnnotationSegmentationMaskFile:
     name: AnnotationSegmentationMaskFile
     description: File and sourcing data for a segmentation mask annotation. Annotation
@@ -3307,6 +3372,22 @@ classes:
         - Tomogram
         - AnnotationSourceFile
         range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationSegmentationMaskFile
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
   AnnotationSemanticSegmentationMaskFile:
@@ -3392,6 +3473,22 @@ classes:
         range: boolean
         inlined: true
         inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        required: false
+        inlined: true
+        inlined_as_list: true
   AnnotationTriangularMeshFile:
     name: AnnotationTriangularMeshFile
     description: File and sourcing data for a triangular mesh annotation. Annotation
@@ -3475,6 +3572,22 @@ classes:
         - Tomogram
         - AnnotationSourceFile
         range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
   AnnotationTriangularMeshGroupFile:
@@ -3580,6 +3693,22 @@ classes:
         - Tomogram
         - AnnotationSourceFile
         range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationTriangularMeshGroupFile
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
   Annotation:
