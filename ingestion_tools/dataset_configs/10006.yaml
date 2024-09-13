@@ -138,10 +138,11 @@ depositions:
 - metadata:
     authors: *id002
     dates: *id001
-    deposition_description: Cryo-electron tomograms of SARS-CoV-2 spike proteins on intact
-      virions with annotations of spike proteins, refined using RELION.
+    deposition_description: Cryo-electron tomograms of SARS-CoV-2 spike proteins on
+      intact virions with annotations of spike proteins, refined using RELION.
     deposition_identifier: 10006
-    deposition_title: Structures and distributions of severe acute respiratory syndrome coronavirus 2 spike proteins
+    deposition_title: Structures and distributions of severe acute respiratory syndrome
+      coronavirus 2 spike proteins
     deposition_types:
     - dataset
   sources:
@@ -201,7 +202,9 @@ tomograms:
 - metadata:
     authors: *id002
     ctf_corrected: true
+    dates: *id001
     fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

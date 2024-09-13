@@ -114,7 +114,6 @@ datasets:
     dataset_identifier: 10010
     dataset_title: Organellar membranes
     dates: *id002
-    funding: []
     organism:
       name: Mus musculus
       taxonomy_id: 10090
@@ -187,26 +186,11 @@ tiltseries:
       match_regex: .*
 tomograms:
 - metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
     authors: *id003
     ctf_corrected: false
+    dates: *id002
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

@@ -4074,7 +4074,6 @@ classes:
         domain_of:
         - Alignment
         range: alignment_type_enum
-        required: true
         inlined: true
         inlined_as_list: true
         pattern: (^LOCAL$)|(^GLOBAL$)

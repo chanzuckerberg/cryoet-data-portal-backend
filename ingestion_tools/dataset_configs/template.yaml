@@ -6,7 +6,7 @@ alignments: OPTIONAL
       - ... (4 FLOAT ELEMENTS)
       - ... (4 FLOAT ELEMENTS)
       - ... (4 FLOAT ELEMENTS)
-    alignment_type: REQUIRED, ENUM(LOCAL,GLOBAL)
+    alignment_type: REQUIRED, ENUM(LOCAL,GLOBAL), (DEFAULT, GLOBAL)
     is_canonical: REQUIRED, BOOLEAN (DEFAULT TRUE)
     offset: OPTIONAL
       x: REQUIRED, INTEGER, DEFAULT 0

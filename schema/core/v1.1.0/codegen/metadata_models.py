@@ -4144,8 +4144,8 @@ class AlignmentOffset(ConfiguredBaseModel):
 class Alignment(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    alignment_type: AlignmentTypeEnum = Field(
-        ...,
+    alignment_type: Optional[AlignmentTypeEnum] = Field(
+        None,
         description="""The type of alignment.""",
         json_schema_extra={"linkml_meta": {"alias": "alignment_type", "domain_of": ["Alignment"]}},
     )

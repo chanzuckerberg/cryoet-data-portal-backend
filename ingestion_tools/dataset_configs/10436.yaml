@@ -434,7 +434,9 @@ tomograms:
       corresponding_author_status: true
       name: Gira Bhabha
     ctf_corrected: false
+    dates: *id002
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

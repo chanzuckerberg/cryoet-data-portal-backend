@@ -1,440 +1,574 @@
-datasets:
-  - metadata:
-      authors: &id001
-        - name: Kotaro Kelley
-          primary_author_status: true
-        - name: Gira Bhabha
-          ORCID: 0000-0003-0624-6178
-          primary_author_status: true
-          corresponding_author_status: true
-        - name: Clinton S. Potter
-          corresponding_author_status: true
-        - name: Bridget Carragher
-          ORCID: 0000-0002-0624-5020
-          corresponding_author_status: true
-        - name: Alex J. Noble
-          ORCID: 0000-0001-8634-2279
-          primary_author_status: true
-          corresponding_author_status: true
-      cell_strain:
-        name: ATCC-50504
-      cell_type:
-        name: fungal spore
-        id: CL:0002369
-      cross_references:
-        publications: 10.1101/2024.07.13.603322
-        #TODO: Add EMPIAR-12175 once available
-        related_database_entries: EMD-45674, EMD-45671, EMD-45672, EMD-45673
-      dataset_description: This dataset contains tilt series, and tomogram reconstructions and segmentations from
-        Encephalitozoon hellem microsporidian spores. Samples were cryo-FIB milled.
-      dataset_identifier: 10438
-      dataset_title: Cryo-ET dataset of dormant microporidian spores from Encephalitozoon hellem
-      dates: &id002
-        deposition_date: '2024-07-09'
-        last_modified_date: '2024-07-24'
-        release_date: '2024-07-29'
-      funding:
-        - funding_agency_name: NIH/NIGMS
-          grant_id: 'F32GM128303'
-        - funding_agency_name: AHA
-          grant_id: '19POST34430065'
-        - funding_agency_name: Pew Biomedical Scholars
-          grant_id: 'PEW-00033055'
-        - funding_agency_name: Searle Scholars Program
-          grant_id: 'SSP-2018-2737'
-        - funding_agency_name: NIH/NIAID
-          grant_id: 'R01AI147131'
-        - funding_agency_name: Simons Foundation
-          grant_id: "SF349247"
-        - funding_agency_name: NIH/NIGMS
-          grant_id: "GM103310"
-        - funding_agency_name: NIH
-          grant_id: "U24GM139171"
-      grid_preparation: quantifoil 2/2 200mesh, ~25nm evaporated carbon, prepared using waffle method
-      organism:
-        name: Encephalitozoon hellem
-        taxonomy_id: 27973
-      other_setup: Cryo-FIB milling
-      sample_preparation: "E. hellem spores were purified from infected vero cells. (see methods in
-        https://doi.org/10.1038/s41467-022-29501-3)"
-      sample_type: cell
-    sources:
-      - literal:
-          value:
-            - '10438'
 annotations:
-  - metadata: &annotation_metadata
-      annotation_method: Each organelle was segmented as a separate region of interest in 8X binned tomogram by tracing
-        + A 3-D reconstruction of each organelle was generated + Reconstructions were converted to contour meshes
-        which were smoothed.
-      annotation_object:
-        id: GO:0090642
-        name: microsporidian-type exospore
-      annotation_publications: 10.1101/2024.07.13.603322
-      annotation_software: Dragonfly
-      authors:
-        - name: Mahrukh Usmani
-          ORCID: 0000-0002-9479-3800
-          primary_author_status: true
-          corresponding_author_status: true
-        - name: Harshita Ramchandani
-        - name: Damian C. Ekiert
-          ORCID: 0000-0002-2570-0404
-          corresponding_author_status: true
-        - name: Gira Bhabha
-          ORCID: 0000-0003-0624-6178
-          corresponding_author_status: true
-      dates: *id002
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_type: hybrid
-      version: 1.0
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Exospore.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-          id: GO:0090641
-          name: microsporidian-type endospore
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Endospore.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0005886
-        name: plasma membrane
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Plasma_Membrane.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0160201
-        name: polaroplast
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Polaroplast.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0160201
-        name: polaroplast
-        description: vesicles in polaroplast
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Vesicles_in_Polaroplast.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0005635
-        name: nuclear envelope
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Nuclear_Envelope.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0031981
-        name: nuclear lumen
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Nuclear_Fill.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        #TODO: Once peer reviewed, request new GO term instead of using state
-        id: GO:0044099
-        name: polar tube
-        state: M-Layer
-        description: polar tube M-Layer
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        #TODO: Once peer reviewed, request new GO term instead of using state
-        id: GO:0044099
-        name: polar tube
-        state: M-Layer
-        description: polar tube M-Layer, multiple coils
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer_multiple_coils.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        #TODO: Once peer reviewed, request new GO term instead of using state
-        id: GO:0044099
-        name: polar tube
-        state: M-Layer
-        description: polar tube M-Layer, single coil
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer_single_coil.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        #TODO: Once peer reviewed, request new GO term instead of using state
-        id: GO:0044099
-        name: polar tube
-        state: M-Layer
-        description: polar tube M-Layer, circular coils
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer_Circular_Coils.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        #TODO: Once peer reviewed, request new GO term instead of using state
-        id: GO:0044099
-        name: polar tube
-        state: M-Layer
-        description: polar tube M-Layer, long
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer_long.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        #TODO: Once peer reviewed, request new GO term instead of using state
-        id: GO:0044099
-        name: polar tube
-        state: OF-Layer
-        description: polar tube OF-Layer
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_OF-Layer.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        #TODO: Once peer reviewed, request new GO term instead of using state
-        id: GO:0044099
-        name: polar tube
-        state: IF-Layer
-        description: polar tube IF-Layer
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_IF-Layer.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        #TODO: Once peer reviewed, request new GO term instead of using state
-        id: GO:0044099
-        name: polar tube
-        state: OF-Layer
-        description: polar tube OF-Layer, circular coils
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_OF-Layer_Circular_Coils.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        #TODO: Once peer reviewed, request new GO term instead of using state
-        id: GO:0044099
-        name: polar tube
-        state: OF-Layer
-        description: polar tube OF-Layer, long
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_OF-Layer_long.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0031982
-        name: vesicle
-        description: extra-membranous vesicle
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_4/{run_name}/segmentation_masks/Vesicles.mrc"
-          is_visualization_default: true
-          mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      id: GO:0090642
+      name: microsporidian-type exospore
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: &id001
+    - ORCID: 0000-0002-9479-3800
+      corresponding_author_status: true
+      name: Mahrukh Usmani
+      primary_author_status: true
+    - name: Harshita Ramchandani
+    - ORCID: 0000-0002-2570-0404
+      corresponding_author_status: true
+      name: Damian C. Ekiert
+    - ORCID: 0000-0003-0624-6178
+      corresponding_author_status: true
+      name: Gira Bhabha
+    dates: &id002
+      deposition_date: '2024-07-09'
+      last_modified_date: '2024-07-24'
+      release_date: '2024-07-29'
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Exospore.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      id: GO:0090641
+      name: microsporidian-type endospore
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Endospore.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      id: GO:0005886
+      name: plasma membrane
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Plasma_Membrane.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      id: GO:0160201
+      name: polaroplast
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Polaroplast.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      description: vesicles in polaroplast
+      id: GO:0160201
+      name: polaroplast
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Vesicles_in_Polaroplast.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      id: GO:0005635
+      name: nuclear envelope
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Nuclear_Envelope.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      id: GO:0031981
+      name: nuclear lumen
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Nuclear_Fill.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      description: polar tube M-Layer
+      id: GO:0044099
+      name: polar tube
+      state: M-Layer
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      description: polar tube M-Layer, multiple coils
+      id: GO:0044099
+      name: polar tube
+      state: M-Layer
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer_multiple_coils.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      description: polar tube M-Layer, single coil
+      id: GO:0044099
+      name: polar tube
+      state: M-Layer
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer_single_coil.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      description: polar tube M-Layer, circular coils
+      id: GO:0044099
+      name: polar tube
+      state: M-Layer
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer_Circular_Coils.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      description: polar tube M-Layer, long
+      id: GO:0044099
+      name: polar tube
+      state: M-Layer
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer_long.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      description: polar tube OF-Layer
+      id: GO:0044099
+      name: polar tube
+      state: OF-Layer
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_OF-Layer.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      description: polar tube IF-Layer
+      id: GO:0044099
+      name: polar tube
+      state: IF-Layer
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_IF-Layer.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      description: polar tube OF-Layer, circular coils
+      id: GO:0044099
+      name: polar tube
+      state: OF-Layer
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_OF-Layer_Circular_Coils.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      description: polar tube OF-Layer, long
+      id: GO:0044099
+      name: polar tube
+      state: OF-Layer
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_OF-Layer_long.mrc
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Each organelle was segmented as a separate region of interest
+      in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
+      generated + Reconstructions were converted to contour meshes which were smoothed.
+    annotation_object:
+      description: extra-membranous vesicle
+      id: GO:0031982
+      name: vesicle
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_4/{run_name}/segmentation_masks/Vesicles.mrc
+      is_visualization_default: true
+      mask_label: 1
 dataset_keyphotos:
-  - sources:
-      - literal:
-          value:
-            snapshot: 'cryoetportal-rawdatasets-dev/mahrukh_usmani_06_2024/Data_Set_4/snapshot.png'
-            thumbnail: 'cryoetportal-rawdatasets-dev/mahrukh_usmani_06_2024/Data_Set_4/thumbnail.png'
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/mahrukh_usmani_06_2024/Data_Set_4/snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/mahrukh_usmani_06_2024/Data_Set_4/thumbnail.png
+datasets:
+- metadata:
+    authors: &id003
+    - name: Kotaro Kelley
+      primary_author_status: true
+    - ORCID: 0000-0003-0624-6178
+      corresponding_author_status: true
+      name: Gira Bhabha
+      primary_author_status: true
+    - corresponding_author_status: true
+      name: Clinton S. Potter
+    - ORCID: 0000-0002-0624-5020
+      corresponding_author_status: true
+      name: Bridget Carragher
+    - ORCID: 0000-0001-8634-2279
+      corresponding_author_status: true
+      name: Alex J. Noble
+      primary_author_status: true
+    cell_strain:
+      name: ATCC-50504
+    cell_type:
+      id: CL:0002369
+      name: fungal spore
+    cross_references:
+      publications: 10.1101/2024.07.13.603322
+      related_database_entries: EMD-45674, EMD-45671, EMD-45672, EMD-45673
+    dataset_description: This dataset contains tilt series, and tomogram reconstructions
+      and segmentations from Encephalitozoon hellem microsporidian spores. Samples
+      were cryo-FIB milled.
+    dataset_identifier: 10438
+    dataset_title: Cryo-ET dataset of dormant microporidian spores from Encephalitozoon
+      hellem
+    dates: *id002
+    funding:
+    - funding_agency_name: NIH/NIGMS
+      grant_id: F32GM128303
+    - funding_agency_name: AHA
+      grant_id: 19POST34430065
+    - funding_agency_name: Pew Biomedical Scholars
+      grant_id: PEW-00033055
+    - funding_agency_name: Searle Scholars Program
+      grant_id: SSP-2018-2737
+    - funding_agency_name: NIH/NIAID
+      grant_id: R01AI147131
+    - funding_agency_name: Simons Foundation
+      grant_id: SF349247
+    - funding_agency_name: NIH/NIGMS
+      grant_id: GM103310
+    - funding_agency_name: NIH
+      grant_id: U24GM139171
+    grid_preparation: quantifoil 2/2 200mesh, ~25nm evaporated carbon, prepared using
+      waffle method
+    organism:
+      name: Encephalitozoon hellem
+      taxonomy_id: 27973
+    other_setup: Cryo-FIB milling
+    sample_preparation: E. hellem spores were purified from infected vero cells. (see
+      methods in https://doi.org/10.1038/s41467-022-29501-3)
+    sample_type: cell
+  sources:
+  - literal:
+      value:
+      - '10438'
 depositions:
-  - sources:
-    - literal:
-        value:
-          - 10307
-
-frames: []
-
+- sources:
+  - literal:
+      value:
+      - 10307
 key_images:
-  - sources:
-      - source_glob:
-          list_glob: .*\.jpg
+- sources:
+  - source_glob:
+      list_glob: .*\.jpg
 rawtilts:
-  - sources:
-      - source_multi_glob:
-          list_globs:
-              - Data_Set_4/{run_name}/tilt_series/*.txt
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - Data_Set_4/{run_name}/tilt_series/*.txt
 runs:
-  - sources:
-      - source_glob:
-          list_glob: Data_Set_4/tomo_*
-          match_regex: tomo_\d{4}$
-          name_regex: (tomo_\d{4})$
+- sources:
+  - source_glob:
+      list_glob: Data_Set_4/tomo_*
+      match_regex: tomo_\d{4}$
+      name_regex: (tomo_\d{4})$
 standardization_config:
   deposition_id: 10307
   run_data_map_file: Data_Set_4/run_to_data_map.tsv
   source_prefix: mahrukh_usmani_06_2024
 tiltseries:
-  - metadata:
-      acceleration_voltage: 300000
-      binning_from_frames: 1
-      aligned_tiltseries_binning: 1
-      camera:
-        manufacturer: GATAN
-        model: K2
-      data_acquisition_software: Leginon
-      is_aligned: true
-      microscope:
-        manufacturer: FEI
-        model: TITAN KRIOS
-      microscope_optical_setup:
-        energy_filter: Gatan BioQuantum
-      pixel_spacing: 3.298
-      spherical_aberration_constant: 2.7
-      tilt_axis: 0.0
-      tilt_range:
-        max: 50
-        min: -50
-      tilt_series_quality: int {tilt_series_quality}
-      tilt_step: 2.0
-      tilting_scheme: bi-directional
-      total_flux: 68
-    sources:
-      - source_glob:
-          list_glob: Data_Set_4/{run_name}/tilt_series/*.mrcs
-          match_regex: ^.*pxlsz3\.29787\.mrcs$
+- metadata:
+    acceleration_voltage: 300000
+    aligned_tiltseries_binning: 1
+    binning_from_frames: 1
+    camera:
+      manufacturer: GATAN
+      model: K2
+    data_acquisition_software: Leginon
+    is_aligned: true
+    microscope:
+      manufacturer: FEI
+      model: TITAN KRIOS
+    microscope_optical_setup:
+      energy_filter: Gatan BioQuantum
+    pixel_spacing: 3.298
+    spherical_aberration_constant: 2.7
+    tilt_axis: 0.0
+    tilt_range:
+      max: 50
+      min: -50
+    tilt_series_quality: int {tilt_series_quality}
+    tilt_step: 2.0
+    tilting_scheme: bi-directional
+    total_flux: 68
+  sources:
+  - source_glob:
+      list_glob: Data_Set_4/{run_name}/tilt_series/*.mrcs
+      match_regex: ^.*pxlsz3\.29787\.mrcs$
 tomograms:
-  - metadata:
-      affine_transformation_matrix:
-        - - 1
-          - 0
-          - 0
-          - 0
-        - - 0
-          - 1
-          - 0
-          - 0
-        - - 0
-          - 0
-          - 1
-          - 0
-        - - 0
-          - 0
-          - 0
-          - 1
-      authors: *id001
-      ctf_corrected: false
-      fiducial_alignment_status: NON_FIDUCIAL
-      offset:
-        x: 0
-        y: 0
-        z: 0
-      processing: raw
-      reconstruction_method: SIRT
-      reconstruction_software: Protomo
-      tomogram_version: 1
-      voxel_spacing: float {tomograms_voxel_spacing}
-    sources:
-      - source_glob:
-          list_glob: Data_Set_4/{run_name}/tomo_rec/*.mrc
-          match_regex: (.*)\.mrc
-        parent_filters:
-          exclude:
-            run:
-              - '^tomo_0109$'
-              - '^tomo_0110$'
-              - '^tomo_0112$'
-      - source_glob:
-          list_glob: Data_Set_4/{run_name}/Segmentation_Volumes/*.mrc
-          match_regex: (.*)\.mrc
-        parent_filters:
-          include:
-            run:
-              - '^tomo_0109$'
-              - '^tomo_0110$'
-              - '^tomo_0112$'
+- metadata:
+    authors: *id003
+    ctf_corrected: false
+    dates:
+      deposition_date: '1970-01-01'
+      last_modified_date: '1970-01-01'
+      release_date: '1970-01-01'
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: SIRT
+    reconstruction_software: Protomo
+    tomogram_version: 1
+    voxel_spacing: float {tomograms_voxel_spacing}
+  sources:
+  - parent_filters:
+      exclude:
+        run:
+        - ^tomo_0109$
+        - ^tomo_0110$
+        - ^tomo_0112$
+    source_glob:
+      list_glob: Data_Set_4/{run_name}/tomo_rec/*.mrc
+      match_regex: (.*)\.mrc
+  - parent_filters:
+      include:
+        run:
+        - ^tomo_0109$
+        - ^tomo_0110$
+        - ^tomo_0112$
+    source_glob:
+      list_glob: Data_Set_4/{run_name}/Segmentation_Volumes/*.mrc
+      match_regex: (.*)\.mrc
 voxel_spacings:
-  - sources:
-      - literal:
-          value:
-            - float {tomograms_voxel_spacing}
-gains: []
-
-#TODO: Ingest full set of gains when import of multiple files is supported
-#(see https://github.com/chanzuckerberg/cryoet-data-portal/issues/947)
+- sources:
+  - literal:
+      value:
+      - float {tomograms_voxel_spacing}

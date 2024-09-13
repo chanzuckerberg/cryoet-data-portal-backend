@@ -810,7 +810,6 @@ classes:
       alignment_type:
         description: The type of alignment.
         range: alignment_type_enum
-        required: true
       offset:
         description: *desc_alignment_offset
         range: AlignmentOffset

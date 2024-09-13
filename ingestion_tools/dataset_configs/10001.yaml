@@ -494,7 +494,12 @@ tomograms:
 - metadata:
     authors: *id003
     ctf_corrected: false
+    dates:
+      deposition_date: '1970-01-01'
+      last_modified_date: '1970-01-01'
+      release_date: '1970-01-01'
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

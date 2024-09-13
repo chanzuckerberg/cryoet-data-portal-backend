@@ -234,7 +234,9 @@ tomograms:
 - metadata:
     authors: *id003
     ctf_corrected: false
+    dates: *id002
     fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

@@ -67,8 +67,9 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: Cryo-electron tomography datasets used in the development and evaluation of the unroofing
-      method for preparation of plasma membranes and associated proteins.
+    deposition_description: Cryo-electron tomography datasets used in the development
+      and evaluation of the unroofing method for preparation of plasma membranes and
+      associated proteins.
     deposition_identifier: 10306
     deposition_title: Unroofed eukaryotic cells.
     deposition_types:
@@ -129,26 +130,11 @@ tiltseries:
       list_glob: validation_placeholder/for_unavailable_ts.st
 tomograms:
 - metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
     authors: *id001
     ctf_corrected: false
+    dates: *id002
     fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0
