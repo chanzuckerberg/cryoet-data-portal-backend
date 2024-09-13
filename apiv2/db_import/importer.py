@@ -87,6 +87,29 @@ def load(
     deposition_id: list[str],
     endpoint_url: str,
 ):
+    load_func( s3_bucket, https_prefix, postgres_url, s3_prefix, anonymous, filter_dataset, import_annotations, import_annotation_authors, import_dataset_authors, import_dataset_funding, import_depositions, import_runs, import_tiltseries, import_tomograms, import_tomogram_authors, import_tomogram_voxel_spacing, import_everything, deposition_id, endpoint_url)
+
+def load_func(
+    s3_bucket: str,
+    https_prefix: str,
+    postgres_url: str | None = None,
+    s3_prefix: str | None = None,
+    anonymous: bool = False,
+    filter_dataset: list[str] | None = None,
+    import_annotations: bool = False,
+    import_annotation_authors: bool = False,
+    import_dataset_authors: bool = False,
+    import_dataset_funding: bool = False,
+    import_depositions: bool = False,
+    import_runs: bool = False,
+    import_tiltseries: bool = False,
+    import_tomograms: bool = False,
+    import_tomogram_authors: bool = False,
+    import_tomogram_voxel_spacing: bool = False,
+    import_everything: bool = False,
+    deposition_id: list[str] | None = None,
+    endpoint_url: str | None = None,
+):
     if not postgres_url:
         postgres_url = f"postgresql+psycopg://{os.environ['PLATFORMICS_DATABASE_USER']}:{os.environ['PLATFORMICS_DATABASE_PASSWORD']}@{os.environ['PLATFORMICS_DATABASE_HOST']}:{os.environ['PLATFORMICS_DATABASE_PORT']}/{os.environ['PLATFORMICS_DATABASE_NAME']}"
     db = init_sync_db(postgres_url)
@@ -195,6 +218,7 @@ def load(
 
         run_cleaner.remove_stale_objects()
         session.commit()
+    session.commit()
 
 
 if __name__ == "__main__":

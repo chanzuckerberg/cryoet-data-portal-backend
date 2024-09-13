@@ -73,8 +73,8 @@ class TiltSeriesDBImporter(BaseDBImporter):
             "is_aligned": self.metadata.get("is_aligned") or False,
         }
         if mrc_path := self.metadata.get("mrc_files", [None])[0]:
-            extra_data["s3_mrc_bin1"] = self.join_path(s3_prefix, self.dir_prefix, mrc_path)
-            extra_data["https_mrc_bin1"] = self.join_path(https_prefix, self.dir_prefix, mrc_path)
+            extra_data["s3_mrc_file"] = self.join_path(s3_prefix, self.dir_prefix, mrc_path)
+            extra_data["https_mrc_file"] = self.join_path(https_prefix, self.dir_prefix, mrc_path)
 
         if omezarr_path := self.metadata.get("omezarr_dir"):
             extra_data["s3_omezarr_dir"] = self.join_path(s3_prefix, self.dir_prefix, omezarr_path)

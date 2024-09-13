@@ -48,20 +48,13 @@ def model_to_dict(sa_object):
 def stale_deposition_metadata() -> dict:
     return {
         "id": DEPOSITION_ID1,
-        "title": "Test Deposition",
-        "description": "Test Description",
+        "deposition_title": "Test Deposition",
+        "deposition_description": "Test Description",
         "deposition_date": datetime.now().date(),
         "release_date": datetime.now().date(),
         "last_modified_date": datetime.now().date(),
-        "deposition_types": "annotation",
-        "s3_prefix": "s3://invalid_bucket/dep1",
-        "https_prefix": "https://invalid-site.com/1234",
+        "publications": "Publications",
     }
-
-
-def populate_deposition(session: sa.orm.Session) -> None:
-    dep = Deposition(**stale_deposition_metadata())
-    session.add(dep)
 
 
 def stale_deposition_author() -> dict:
@@ -75,13 +68,17 @@ def stale_deposition_author() -> dict:
     }
 
 def write_data(function):
-    def wrapper(session: sa.orm.Session):
-        obj = function(session)
+    def wrapper(session: sa.orm.Session, *args, **kwargs):
+        obj = function(session, *args, **kwargs)
         if obj:
             session.add(obj)
         session.flush()
     return wrapper
 
+
+@write_data
+def populate_deposition(session: sa.orm.Session) -> Deposition:
+    return Deposition(**stale_deposition_metadata())
 
 @write_data
 def populate_deposition_authors(session: sa.orm.Session) -> DepositionAuthor:
@@ -99,7 +96,7 @@ def populate_dataset(session: sa.orm.Session) -> Dataset:
         release_date=today,
         organism_name="bacteria x",
         last_modified_date=today,
-        sample_type="test",
+        sample_type="cell",
         s3_prefix="s3://invalid_bucket/",
         https_prefix="https://invalid-site.com/1234",
     )
@@ -162,7 +159,7 @@ def populate_stale_run(session: sa.orm.Session) -> None:
     )
     session.add(obj)
     session.flush()
-    populate_stale_tomogram_voxel_spacing(STALE_RUN_ID)
+    populate_stale_tomogram_voxel_spacing(session, STALE_RUN_ID)
 
 
 @write_data
@@ -206,35 +203,35 @@ def populate_stale_tomogram_voxel_spacing(session: sa.orm.Session, run_id: int =
         voxel_spacing=10.345,
         s3_omezarr_dir="s3://stale.zarr",
         https_omezarr_dir="http://test.com/stale.zarr",
-        s3_mrc_scale0="s3://stale.mrc",
-        https_mrc_scale0="http://test.com/stale.mrc",
+        s3_mrc_file="s3://stale.mrc",
+        https_mrc_file="http://test.com/stale.mrc",
         size_x=2,
         size_y=2,
         size_z=2,
-        fiducial_alignment_status="foo",
-        reconstruction_method="",
+        fiducial_alignment_status="FIDUCIAL",
+        reconstruction_method="SART",
         reconstruction_software="",
         tomogram_version="0.5",
         scale0_dimensions="",
         scale1_dimensions="",
         scale2_dimensions="",
-        processing="",
+        processing="denoised",
         offset_x=0,
         offset_y=0,
         offset_z=0,
+        is_standardized=True,
     )
     session.add(stale_tomogram)
     session.add(TomogramAuthor(tomogram=stale_tomogram, name="Jane Smith", author_list_order=1))
     session.add(TomogramAuthor(tomogram=stale_tomogram, name="John John", author_list_order=2))
     stale_annotation = Annotation(
-        tomogram_voxel_spacing_id=stale_voxel_spacing.id,
         s3_metadata_path="foo",
         https_metadata_path="foo",
         deposition_date="2025-04-01",
         release_date="2025-06-01",
         last_modified_date="2025-06-01",
-        annotation_method="",
-        method_type="",
+        annotation_method="manual",
+        method_type="manual",
         ground_truth_status=False,
         object_name="bar",
         object_id="invalid-id",
@@ -256,22 +253,23 @@ def populate_tomograms(session: sa.orm.Session) -> Tomogram:
         voxel_spacing=12.3,
         s3_omezarr_dir="s3://RUN1.zarr",
         https_omezarr_dir="http://test.com/RUN1.zarr",
-        s3_mrc_scale0="s3://RUN1.mrc",
-        https_mrc_scale0="http://test.com/RUN1.mrc",
+        s3_mrc_file="s3://RUN1.mrc",
+        https_mrc_file="http://test.com/RUN1.mrc",
         size_x=25,
         size_y=25,
         size_z=25,
-        fiducial_alignment_status="foo",
-        reconstruction_method="",
+        fiducial_alignment_status="FIDUCIAL",
+        reconstruction_method="SART",
         reconstruction_software="",
         tomogram_version="0.5",
         scale0_dimensions="",
         scale1_dimensions="",
         scale2_dimensions="",
-        processing="",
+        processing="denoised",
         offset_x=0,
         offset_y=0,
         offset_z=0,
+        is_standardized=True,
     )
 
 
@@ -284,22 +282,23 @@ def populate_stale_tomograms(session: sa.orm.Session) -> Tomogram:
         voxel_spacing=12.3,
         s3_omezarr_dir="s3://stale.zarr",
         https_omezarr_dir="http://test.com/stale.zarr",
-        s3_mrc_scale0="s3://stale.mrc",
-        https_mrc_scale0="http://test.com/stale.mrc",
+        s3_mrc_file="s3://stale.mrc",
+        https_mrc_file="http://test.com/stale.mrc",
         size_x=2,
         size_y=2,
         size_z=2,
-        fiducial_alignment_status="foo",
-        reconstruction_method="",
+        fiducial_alignment_status="FIDUCIAL",
+        reconstruction_method="SART",
         reconstruction_software="",
         tomogram_version="0.5",
         scale0_dimensions="",
         scale1_dimensions="",
         scale2_dimensions="",
-        processing="",
+        processing="denoised",
         offset_x=0,
         offset_y=0,
         offset_z=0,
+        is_standardized=True,
     )
 
 
@@ -333,13 +332,13 @@ def populate_tiltseries(session: sa.orm.Session) -> Tiltseries:
     return Tiltseries(
         id=TILTSERIES_ID,
         run_id=RUN1_ID,
-        s3_mrc_bin1="ts_foo.mrc",
-        https_mrc_bin1="ts_foo.mrc",
+        s3_mrc_file="ts_foo.mrc",
+        https_mrc_file="ts_foo.mrc",
         s3_omezarr_dir="ts_foo.zarr",
         https_omezarr_dir="ts_foo.zarr",
         acceleration_voltage=100,
         spherical_aberration_constant=1.0,
-        microscope_manufacturer="unknown",
+        microscope_manufacturer="FEI",
         microscope_model="unknown",
         microscope_energy_filter="unknown",
         camera_manufacturer="unknown",
@@ -360,13 +359,13 @@ def populate_tiltseries(session: sa.orm.Session) -> Tiltseries:
 @write_data
 def populate_stale_tiltseries(session: sa.orm.Session) -> None:
     default_kwargs = {
-        "s3_mrc_bin1": "ts_foo.mrc",
-        "https_mrc_bin1": "ts_foo.mrc",
+        "s3_mrc_file": "ts_foo.mrc",
+        "https_mrc_file": "ts_foo.mrc",
         "s3_omezarr_dir": "ts_foo.zarr",
         "https_omezarr_dir": "ts_foo.zarr",
         "acceleration_voltage": 100,
         "spherical_aberration_constant": 1.0,
-        "microscope_manufacturer": "unknown",
+        "microscope_manufacturer": "FEI",
         "microscope_model": "unknown",
         "microscope_energy_filter": "unknown",
         "camera_manufacturer": "unknown",
@@ -398,13 +397,14 @@ def populate_annotations(session: sa.orm.Session) -> Annotation:
     populate_tomogram_voxel_spacing(session)
     return Annotation(
         id=ANNOTATION_ID,
+        run_id=RUN1_ID,
         s3_metadata_path="s3://test-public-bucket/30001/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0.json",
         https_metadata_path="foo",
         deposition_date="2025-04-01",
         release_date="2025-06-01",
         last_modified_date="2025-06-01",
-        annotation_method="",
-        method_type="",
+        annotation_method="manual",
+        method_type="manual",
         ground_truth_status=False,
         object_name="bar",
         object_count=0,
@@ -417,13 +417,14 @@ def populate_annotations(session: sa.orm.Session) -> Annotation:
 def populate_stale_annotations(session: sa.orm.Session) -> Annotation:
     return Annotation(
         id=STALE_ANNOTATION_ID,
+        run_id=RUN1_ID,
         s3_metadata_path="foo",
         https_metadata_path="foo",
         deposition_date="2025-04-01",
         release_date="2025-06-01",
         last_modified_date="2025-06-01",
-        annotation_method="",
-        method_type="",
+        annotation_method="manual",
+        method_type="manual",
         ground_truth_status=False,
         object_name="bar",
         object_id="invalid-id",
@@ -464,16 +465,15 @@ def populate_annotation_files(session: sa.orm.Session) -> None:
 def populate_stale_annotation_files(session: sa.orm.Session) -> None:
     populate_stale_annotations(session)
     default_kwargs = {
-        "annotation_id":STALE_ANNOTATION_ID,
         "s3_path": "s3://foo-stale-annotation/point",
         "https_path": "https://foo-stale-annotation/point",
     }
     pointshape = AnnotationShape(
-        annotation_id = ANNOTATION_ID,
+        annotation_id = STALE_ANNOTATION_ID,
         shape_type="Point",
     )
     segmaskshape = AnnotationShape(
-        annotation_id = ANNOTATION_ID,
+        annotation_id = STALE_ANNOTATION_ID,
         shape_type="SegmentationMask",
     )
     file = AnnotationFile(

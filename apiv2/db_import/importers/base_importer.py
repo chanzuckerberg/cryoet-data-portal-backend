@@ -217,9 +217,7 @@ class StaleDeletionDBImporter(BaseDBImporter):
         for index, entry in enumerate(metadata_list):
             entry_data_map = self.update_data_map(data_map, entry, index)
             hash_values = [str(map_to_value(id_field, entry_data_map, entry)) for id_field in self.get_id_fields()]
-            print(f"Lookup key {"-".join(hash_values)}")
             db_obj = hashed_records.get("-".join(hash_values))
-            print(f"db obj is {db_obj}")
             if not db_obj:
                 db_obj = klass()
             if db_obj in records_to_delete:

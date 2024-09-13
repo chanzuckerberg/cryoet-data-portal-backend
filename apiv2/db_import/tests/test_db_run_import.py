@@ -10,6 +10,7 @@ from db_import.tests.populate_db import (
     populate_stale_run,
     populate_stale_tiltseries,
 )
+from sqlalchemy.orm import Session
 
 from platformics.database.models import Base
 
@@ -48,13 +49,15 @@ def expected_runs(http_prefix: str) -> list[dict[str, Any]]:
 
 # Tests addition of new runs, and updating entries already existing in db
 def test_import_run(
+    sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[Base, dict[str, Any]], None],
     expected_runs: list[dict[str, Any]],
 ) -> None:
-    populate_run()
-    actual = verify_dataset_import(["--import-runs"])
-    actual_runs = list(actual.runs.order_by(models.Run.name))
+    populate_run(sync_db_session)
+    sync_db_session.commit()
+    actual = verify_dataset_import(import_runs=True)
+    actual_runs = sorted(actual.runs, key=lambda x: x.name)
     assert len(expected_runs) == len(actual_runs)
     for i, run in enumerate(actual_runs):
         verify_model(run, expected_runs[i])
@@ -62,15 +65,17 @@ def test_import_run(
 
 # Tests deletion of stale runs existing in db
 def test_import_run_stale_deletion(
+    sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[Base, dict[str, Any]], None],
     expected_runs: list[dict[str, Any]],
 ) -> None:
-    populate_run()
-    populate_stale_run()
-    populate_stale_tiltseries()
-    actual = verify_dataset_import(["--import-runs"])
-    actual_runs = list(actual.runs.order_by(models.Run.name))
+    populate_run(sync_db_session)
+    populate_stale_run(sync_db_session)
+    populate_stale_tiltseries(sync_db_session)
+    sync_db_session.commit()
+    actual = verify_dataset_import(import_runs=True)
+    actual_runs = sorted(actual.runs, key=lambda x: x.name)
     assert len(expected_runs) == len(actual_runs)
     for i, run in enumerate(actual_runs):
         verify_model(run, expected_runs[i])

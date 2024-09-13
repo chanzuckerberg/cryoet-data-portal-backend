@@ -45,7 +45,7 @@ class DepositionDBImporter(BaseDBImporter):
             "release_date": ["dates", "release_date"],
             "last_modified_date": ["dates", "last_modified_date"],
             "related_database_entries": ["cross_references", "related_database_entries"],
-            "deposition_publications": ["cross_references", "publications"],
+            "publications": ["cross_references", "publications"],
         }
 
     def get_computed_fields(self) -> dict[str, Any]:

@@ -8,6 +8,7 @@ from db_import.tests.populate_db import (
     ANNOTATION_FILE_ID,
     ANNOTATION_ID,
     DATASET_ID,
+    RUN1_ID,
     TOMOGRAM_VOXEL_ID1,
     populate_annotation_authors,
     populate_annotation_files,
@@ -132,17 +133,17 @@ def test_import_annotations(
 ) -> None:
     # Create mock data
     populate_annotation_files(sync_db_session)
-    sync_db_session.flush()
-
-    verify_dataset_import(["--import-annotations"])
+    sync_db_session.commit()
+    verify_dataset_import(import_annotations=True)
     expected_annotations_iter = iter(expected_annotations)
     expected_annotations_files_iter = iter(expected_annotation_files)
-    actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID1)
-    for annotation in actual_voxel_spacing.annotations.order_by(models.Annotation.s3_metadata_path):
+    actual_runs = sync_db_session.get(models.Run, RUN1_ID)
+    for annotation in sorted(actual_runs.annotations, key=lambda x: x.s3_metadata_path):
         verify_model(annotation, next(expected_annotations_iter))
         assert len(annotation.files) == len(expected_annotation_files)
-        for file in annotation.files.order_by(models.AnnotationFile.shape_type, models.AnnotationFile.format):
-            verify_model(file, next(expected_annotations_files_iter))
+        for shape in sorted(annotation.shapes, key=lambda x: x.shape):
+            for file in sorted(shape.files, key=lambda x: x.format):
+                verify_model(file, next(expected_annotations_files_iter))
         assert len(annotation.authors) == 0
 
 
@@ -156,11 +157,12 @@ def test_import_annotations_files_removes_stale(
 ) -> None:
     populate_annotation_files(sync_db_session)
     populate_stale_annotation_files(sync_db_session)
-    verify_dataset_import(["--import-annotations"])
+    sync_db_session.commit()
+    verify_dataset_import(import_annotations=True)
     expected_annotations_iter = iter(expected_annotations)
     expected_annotations_files_iter = iter(expected_annotation_files)
-    actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID1)
-    for annotation in actual_voxel_spacing.annotations.order_by(models.Annotation.s3_metadata_path):
+    actual_runs = sync_db_session.get(models.Run, RUN1_ID)
+    for annotation in sorted(actual_runs.annotations, key=lambda x: x.s3_metadata_path):
         verify_model(annotation, next(expected_annotations_iter))
         assert len(annotation.files) == len(expected_annotation_files)
         for file in annotation.files.order_by(models.AnnotationFile.shape_type, models.AnnotationFile.format):
@@ -177,10 +179,11 @@ def test_import_annotation_authors(
     expected_annotation_authors: list[dict[str, Any]],
 ) -> None:
     populate_annotation_authors(sync_db_session)
-    verify_dataset_import(["--import-annotation-authors"])
+    sync_db_session.commit()
+    verify_dataset_import(import_annotation_authors=True)
     expected_annotations_authors_iter = iter(expected_annotation_authors)
-    actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID1)
-    for annotation in actual_voxel_spacing.annotations.order_by(models.Annotation.s3_metadata_path):
+    actual_runs = sync_db_session.get(models.Run, RUN1_ID)
+    for annotation in sorted(actual_runs.annotations, key=lambda x: x.s3_metadata_path):
         assert len(annotation.authors) == len(expected_annotation_authors)
         for author in annotation.authors.order_by(models.AnnotationAuthor.author_list_order):
             verify_model(author, next(expected_annotations_authors_iter))
@@ -196,10 +199,11 @@ def test_import_annotation_authors_removes_stale(
 ) -> None:
     populate_annotation_authors(sync_db_session)
     populate_stale_annotation_authors(sync_db_session)
-    verify_dataset_import(["--import-annotation-authors"])
+    sync_db_session.commit()
+    verify_dataset_import(import_annotation_authors=True)
     expected_annotations_authors_iter = iter(expected_annotation_authors)
-    actual_voxel_spacing = models.TomogramVoxelSpacing.get(id=TOMOGRAM_VOXEL_ID1)
-    for annotation in actual_voxel_spacing.annotations.order_by(models.Annotation.s3_metadata_path):
+    actual_runs = sync_db_session.get(models.Run, RUN1_ID)
+    for annotation in sorted(actual_runs.annotations, key=lambda x: x.s3_metadata_path):
         assert len(annotation.authors) == len(expected_annotation_authors)
         for author in annotation.authors.order_by(models.AnnotationAuthor.author_list_order):
             verify_model(author, next(expected_annotations_authors_iter))
