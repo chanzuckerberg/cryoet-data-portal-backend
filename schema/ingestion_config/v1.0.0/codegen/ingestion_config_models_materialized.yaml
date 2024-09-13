@@ -375,10 +375,10 @@ enums:
     permissible_values:
       IMOD:
         text: IMOD
-        description: formats xf, tlt, xtlt, rawtlt
+        description: formats (xf, tlt, com)
       ARETOMO3:
         text: ARETOMO3
-        description: formats aln, _TLT.txt, rawtlt
+        description: formats (aln)
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.
@@ -1187,6 +1187,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DepositionEntity
+        - FrameEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Alignment
@@ -1510,6 +1511,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DepositionEntity
+        - FrameEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Annotation
@@ -2129,6 +2131,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DepositionEntity
+        - FrameEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Dataset
@@ -2605,6 +2608,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DepositionEntity
+        - FrameEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Deposition
@@ -2983,6 +2987,23 @@ classes:
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
+      metadata:
+        name: metadata
+        description: A frame entity.
+        from_schema: cdp-ingestion-config
+        alias: metadata
+        owner: FrameEntity
+        domain_of:
+        - AlignmentEntity
+        - AnnotationEntity
+        - DatasetEntity
+        - DepositionEntity
+        - FrameEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        range: Frame
+        inlined: true
+        inlined_as_list: true
   FrameSource:
     name: FrameSource
     description: A frame source.
@@ -4417,6 +4438,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DepositionEntity
+        - FrameEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: TiltSeries
@@ -4708,6 +4730,7 @@ classes:
         - AnnotationEntity
         - DatasetEntity
         - DepositionEntity
+        - FrameEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Tomogram

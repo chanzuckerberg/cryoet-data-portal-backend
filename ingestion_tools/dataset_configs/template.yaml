@@ -196,7 +196,12 @@ depositions: REQUIRED
       - STRING (ENUM [annotation, dataset, tomogram])
     sources: REQUIRED (source_glob, source_multi_glob, destination_glob, literal)
 frames: OPTIONAL
-- sources: SEE datasets.sources and runs.sources.parent_filters
+- metadata: OPTIONAL
+    dose: REQUIRED, FLOAT
+    defocus: REQUIRED, FLOAT
+    astigmatism: REQUIRED, FLOAT
+    astigmatic_angle: REQUIRED, FLOAT
+  sources: SEE datasets.sources and runs.sources.parent_filters
 gains: OPTIONAL
 - sources: SEE datasets.sources and runs.sources.parent_filters
 key_images: OPTIONAL
@@ -284,6 +289,10 @@ tomograms: OPTIONAL
     tomogram_type: OPTIONAL, STRING (ENUM [CANONICAL])
     tomogram_version: REQUIRED, FLOAT
     voxel_spacing: REQUIRED, FLOAT (POSITIVE)
+    is_visualization_default: OPTIONAL, BOOLEAN (DEFAULT TRUE)
+    is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
+    cross_references: SEE datasets.cross_references
+    dates: SEE annotations.dates
   sources: SEE tiltseries.sources
 voxel_spacings: REQUIRED
 - sources: REQUIRED

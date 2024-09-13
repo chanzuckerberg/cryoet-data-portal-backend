@@ -33,15 +33,28 @@
                 },
                 "is_canonical": {
                     "description": "Whether the alignment is canonical.",
-                    "type": "boolean"
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
                 },
                 "offset": {
-                    "$ref": "#/$defs/AlignmentOffset",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AlignmentOffset"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "The offset of a alignment in voxels in each dimension relative to the canonical tomogram."
                 },
                 "tilt_offset": {
                     "description": "The tilt offset relative to the tomogram.",
-                    "type": "number"
+                    "type": [
+                        "number",
+                        "null"
+                    ]
                 },
                 "volume_dimesion": {
                     "anyOf": [
@@ -55,7 +68,6 @@
                     "description": "The size of an alignment in voxels in each dimension."
                 },
                 "x_rotation_offset": {
-                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
                             "type": "integer"
@@ -63,6 +75,9 @@
                         {
                             "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
+                        },
+                        {
+                            "type": "null"
                         }
                     ],
                     "description": "The x rotation offset relative to the tomogram.",
@@ -70,10 +85,7 @@
                 }
             },
             "required": [
-                "offset",
-                "x_rotation_offset",
-                "tilt_offset",
-                "is_canonical",
+                "alignment_type",
                 "format"
             ],
             "title": "Alignment",
@@ -117,6 +129,7 @@
             "description": "The offset of a alignment in voxels in each dimension relative to the canonical tomogram.",
             "properties": {
                 "x": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
                             "type": "integer"
@@ -124,15 +137,13 @@
                         {
                             "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "x offset relative to the canonical tomogram in pixels",
                     "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "y": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
                             "type": "integer"
@@ -140,15 +151,13 @@
                         {
                             "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "y offset relative to the canonical tomogram in pixels",
                     "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "z": {
+                    "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
                             "type": "integer"
@@ -156,15 +165,17 @@
                         {
                             "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
-                        },
-                        {
-                            "type": "null"
                         }
                     ],
                     "description": "z offset relative to the canonical tomogram in pixels",
                     "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
             },
+            "required": [
+                "x",
+                "y",
+                "z"
+            ],
             "title": "AlignmentOffset",
             "type": "object"
         },
@@ -2761,10 +2772,51 @@
             "title": "FiducialAlignmentStatusEnum",
             "type": "string"
         },
+        "Frame": {
+            "additionalProperties": false,
+            "description": "A frame entity.",
+            "properties": {
+                "astigmatic_angle": {
+                    "description": "The astigmatic angle.",
+                    "type": "number"
+                },
+                "astigmatism": {
+                    "description": "The astigmatism.",
+                    "type": "number"
+                },
+                "defocus": {
+                    "description": "The defocus.",
+                    "type": "number"
+                },
+                "dose": {
+                    "description": "The dose.",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "dose",
+                "defocus",
+                "astigmatism",
+                "astigmatic_angle"
+            ],
+            "title": "Frame",
+            "type": "object"
+        },
         "FrameEntity": {
             "additionalProperties": false,
             "description": "A frame entity.",
             "properties": {
+                "metadata": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Frame"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A frame entity."
+                },
                 "sources": {
                     "description": "A frame source.",
                     "items": {
@@ -4457,12 +4509,27 @@
                     "minItems": 1,
                     "type": "array"
                 },
+                "cross_references": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CrossReferences"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A set of cross-references to other databases and publications."
+                },
                 "ctf_corrected": {
                     "description": "Whether this tomogram is CTF corrected",
                     "type": [
                         "boolean",
                         "null"
                     ]
+                },
+                "dates": {
+                    "$ref": "#/$defs/DateStamp",
+                    "description": "A set of dates at which a data item was deposited, published and last modified."
                 },
                 "fiducial_alignment_status": {
                     "$ref": "#/$defs/Any",
@@ -4478,6 +4545,17 @@
                     ],
                     "description": "Whether the tomographic alignment was computed based on fiducial markers.",
                     "pattern": "(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)"
+                },
+                "is_portal_standard": {
+                    "description": "Whether the tomogram is a portal standard.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "is_visualization_default": {
+                    "description": "Whether the tomogram is the default for visualization.",
+                    "type": "boolean"
                 },
                 "offset": {
                     "$ref": "#/$defs/TomogramOffset",
@@ -4556,6 +4634,8 @@
                 "processing",
                 "tomogram_version",
                 "offset",
+                "is_visualization_default",
+                "dates",
                 "authors"
             ],
             "title": "Tomogram",

@@ -391,10 +391,10 @@ enums:
     permissible_values:
       IMOD:
         text: IMOD
-        description: formats xf, tlt, xtlt, rawtlt
+        description: formats (xf, tlt, com)
       ARETOMO3:
         text: ARETOMO3
-        description: formats aln, _TLT.txt, rawtlt
+        description: formats (aln)
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.
@@ -851,6 +851,7 @@ classes:
         owner: DateStampedEntity
         domain_of:
         - DateStampedEntity
+        - Tomogram
         range: DateStamp
         required: true
         inlined: true
@@ -966,6 +967,7 @@ classes:
         owner: CrossReferencedEntity
         domain_of:
         - CrossReferencedEntity
+        - Tomogram
         range: CrossReferences
         inlined: true
         inlined_as_list: true
@@ -1396,6 +1398,7 @@ classes:
         owner: Dataset
         domain_of:
         - DateStampedEntity
+        - Tomogram
         range: DateStamp
         required: true
         inlined: true
@@ -1438,6 +1441,7 @@ classes:
         owner: Dataset
         domain_of:
         - CrossReferencedEntity
+        - Tomogram
         range: CrossReferences
         inlined: true
         inlined_as_list: true
@@ -1633,6 +1637,7 @@ classes:
         owner: Deposition
         domain_of:
         - DateStampedEntity
+        - Tomogram
         range: DateStamp
         required: true
         inlined: true
@@ -1660,6 +1665,7 @@ classes:
         owner: Deposition
         domain_of:
         - CrossReferencedEntity
+        - Tomogram
         range: CrossReferences
         inlined: true
         inlined_as_list: true
@@ -2572,6 +2578,60 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the tomogram is a portal standard.
+        from_schema: metadata
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        range: boolean
+        required: false
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        description: Whether the tomogram is the default for visualization.
+        from_schema: metadata
+        ifabsent: 'True'
+        alias: is_visualization_default
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        required: true
+        inlined: true
+        inlined_as_list: true
+      cross_references:
+        name: cross_references
+        description: A set of cross-references to other databases and publications.
+        from_schema: metadata
+        alias: cross_references
+        owner: Tomogram
+        domain_of:
+        - CrossReferencedEntity
+        - Tomogram
+        range: CrossReferences
+        required: false
+        inlined: true
+        inlined_as_list: true
+      dates:
+        name: dates
+        description: A set of dates at which a data item was deposited, published
+          and last modified.
+        from_schema: metadata
+        alias: dates
+        owner: Tomogram
+        domain_of:
+        - DateStampedEntity
+        - Tomogram
+        range: DateStamp
+        required: true
+        inlined: true
+        inlined_as_list: true
       authors:
         name: authors
         description: Author of a scientific data entity.
@@ -2831,6 +2891,7 @@ classes:
         alias: is_visualization_default
         owner: AnnotationSourceFile
         domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
         inlined: true
@@ -2945,6 +3006,7 @@ classes:
         alias: is_visualization_default
         owner: AnnotationOrientedPointFile
         domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
         inlined: true
@@ -3059,6 +3121,7 @@ classes:
         alias: is_visualization_default
         owner: AnnotationInstanceSegmentationFile
         domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
         inlined: true
@@ -3172,6 +3235,7 @@ classes:
         alias: is_visualization_default
         owner: AnnotationPointFile
         domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
         inlined: true
@@ -3240,6 +3304,7 @@ classes:
         alias: is_visualization_default
         owner: AnnotationSegmentationMaskFile
         domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
         inlined: true
@@ -3322,6 +3387,7 @@ classes:
         alias: is_visualization_default
         owner: AnnotationSemanticSegmentationMaskFile
         domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
         inlined: true
@@ -3406,6 +3472,7 @@ classes:
         alias: is_visualization_default
         owner: AnnotationTriangularMeshFile
         domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
         inlined: true
@@ -3510,6 +3577,7 @@ classes:
         alias: is_visualization_default
         owner: AnnotationTriangularMeshGroupFile
         domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
         inlined: true
@@ -3697,6 +3765,7 @@ classes:
         owner: Annotation
         domain_of:
         - DateStampedEntity
+        - Tomogram
         range: DateStamp
         required: true
         inlined: true
@@ -3807,6 +3876,7 @@ classes:
         - AlignmentSize
         - AlignmentOffset
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
@@ -3829,6 +3899,7 @@ classes:
         - AlignmentSize
         - AlignmentOffset
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
@@ -3851,6 +3922,7 @@ classes:
         - AlignmentSize
         - AlignmentOffset
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
         pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
@@ -3873,6 +3945,7 @@ classes:
         domain_of:
         - Alignment
         range: alignment_type_enum
+        required: true
         inlined: true
         inlined_as_list: true
         pattern: (^LOCAL$)|(^GLOBAL$)
@@ -3887,7 +3960,6 @@ classes:
         - Tomogram
         - Alignment
         range: AlignmentOffset
-        required: true
         inlined: true
         inlined_as_list: true
       volume_dimesion:
@@ -3911,7 +3983,6 @@ classes:
         domain_of:
         - Alignment
         range: Any
-        required: true
         inlined: true
         inlined_as_list: true
         pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
@@ -3928,7 +3999,6 @@ classes:
         domain_of:
         - Alignment
         range: float
-        required: true
         inlined: true
         inlined_as_list: true
       affine_transformation_matrix:
@@ -3959,7 +4029,6 @@ classes:
         domain_of:
         - Alignment
         range: boolean
-        required: true
         inlined: true
         inlined_as_list: true
       format:
@@ -3975,6 +4044,59 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: (^IMOD$)|(^ARETOMO3$)
+  Frame:
+    name: Frame
+    description: A frame entity.
+    from_schema: metadata
+    attributes:
+      dose:
+        name: dose
+        description: The dose.
+        from_schema: metadata
+        alias: dose
+        owner: Frame
+        domain_of:
+        - Frame
+        range: float
+        required: true
+        inlined: true
+        inlined_as_list: true
+      defocus:
+        name: defocus
+        description: The defocus.
+        from_schema: metadata
+        alias: defocus
+        owner: Frame
+        domain_of:
+        - Frame
+        range: float
+        required: true
+        inlined: true
+        inlined_as_list: true
+      astigmatism:
+        name: astigmatism
+        description: The astigmatism.
+        from_schema: metadata
+        alias: astigmatism
+        owner: Frame
+        domain_of:
+        - Frame
+        range: float
+        required: true
+        inlined: true
+        inlined_as_list: true
+      astigmatic_angle:
+        name: astigmatic_angle
+        description: The astigmatic angle.
+        from_schema: metadata
+        alias: astigmatic_angle
+        owner: Frame
+        domain_of:
+        - Frame
+        range: float
+        required: true
+        inlined: true
+        inlined_as_list: true
   Any:
     name: Any
     from_schema: metadata

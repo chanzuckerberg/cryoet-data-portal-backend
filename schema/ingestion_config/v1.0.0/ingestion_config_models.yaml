@@ -461,6 +461,8 @@ classes:
         multivalued: true
         range: FrameSource
         required: true
+      metadata:
+        range: Frame
 
   FrameSource:
     description: A frame source.

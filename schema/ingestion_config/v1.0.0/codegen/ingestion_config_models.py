@@ -417,9 +417,9 @@ class AlignmentFormatEnum(str, Enum):
     """
     Used to determine what alignment alogrithm to use.
     """
-    # formats xf, tlt, xtlt, rawtlt
+    # formats (xf, tlt, com)
     IMOD = "IMOD"
-    # formats aln, _TLT.txt, rawtlt
+    # formats (aln)
     ARETOMO3 = "ARETOMO3"
 
 
@@ -643,7 +643,11 @@ class DateStampedEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates',
-         'domain_of': ['DateStampedEntity', 'Dataset', 'Deposition', 'Annotation']} })
+         'domain_of': ['DateStampedEntity',
+                       'Tomogram',
+                       'Dataset',
+                       'Deposition',
+                       'Annotation']} })
 
 
 class AuthoredEntity(ConfiguredBaseModel):
@@ -680,7 +684,7 @@ class CrossReferencedEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata', 'mixin': True})
 
     cross_references: Optional[CrossReferences] = Field(None, description="""A set of cross-references to other databases and publications.""", json_schema_extra = { "linkml_meta": {'alias': 'cross_references',
-         'domain_of': ['CrossReferencedEntity', 'Dataset', 'Deposition']} })
+         'domain_of': ['CrossReferencedEntity', 'Tomogram', 'Dataset', 'Deposition']} })
 
 
 class PicturedEntity(ConfiguredBaseModel):
@@ -933,7 +937,11 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
          'domain_of': ['Dataset'],
          'exact_mappings': ['cdp-common:dataset_description']} })
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates',
-         'domain_of': ['DateStampedEntity', 'Dataset', 'Deposition', 'Annotation']} })
+         'domain_of': ['DateStampedEntity',
+                       'Tomogram',
+                       'Dataset',
+                       'Deposition',
+                       'Annotation']} })
     authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity',
                        'Dataset',
@@ -946,7 +954,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
          'list_elements_ordered': True,
          'recommended': True} })
     cross_references: Optional[CrossReferences] = Field(None, description="""A set of cross-references to other databases and publications.""", json_schema_extra = { "linkml_meta": {'alias': 'cross_references',
-         'domain_of': ['CrossReferencedEntity', 'Dataset', 'Deposition']} })
+         'domain_of': ['CrossReferencedEntity', 'Tomogram', 'Dataset', 'Deposition']} })
     sample_type: SampleTypeEnum = Field(..., description="""Type of sample imaged in a CryoET study.""", json_schema_extra = { "linkml_meta": {'alias': 'sample_type',
          'domain_of': ['ExperimentMetadata', 'Dataset'],
          'exact_mappings': ['cdp-common:preparation_sample_type']} })
@@ -1001,7 +1009,11 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
          'domain_of': ['Deposition'],
          'exact_mappings': ['cdp-common:deposition_types']} })
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates',
-         'domain_of': ['DateStampedEntity', 'Dataset', 'Deposition', 'Annotation']} })
+         'domain_of': ['DateStampedEntity',
+                       'Tomogram',
+                       'Dataset',
+                       'Deposition',
+                       'Annotation']} })
     authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity',
                        'Dataset',
@@ -1010,7 +1022,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
                        'Annotation'],
          'list_elements_ordered': True} })
     cross_references: Optional[CrossReferences] = Field(None, description="""A set of cross-references to other databases and publications.""", json_schema_extra = { "linkml_meta": {'alias': 'cross_references',
-         'domain_of': ['CrossReferencedEntity', 'Dataset', 'Deposition']} })
+         'domain_of': ['CrossReferencedEntity', 'Tomogram', 'Dataset', 'Deposition']} })
 
     @field_validator('deposition_types')
     def pattern_deposition_types(cls, v):
@@ -1536,6 +1548,26 @@ class Tomogram(AuthoredEntity):
          'exact_mappings': ['cdp-common:tomogram_version']} })
     size: Optional[TomogramSize] = Field(None, description="""The size of a tomogram in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'size', 'domain_of': ['Tomogram']} })
     offset: TomogramOffset = Field(..., description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram', 'Alignment']} })
+    is_portal_standard: Optional[bool] = Field(False, description="""Whether the tomogram is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard', 'domain_of': ['Tomogram'], 'ifabsent': 'False'} })
+    is_visualization_default: bool = Field(True, description="""Whether the tomogram is the default for visualization.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile'],
+         'ifabsent': 'True'} })
+    cross_references: Optional[CrossReferences] = Field(None, description="""A set of cross-references to other databases and publications.""", json_schema_extra = { "linkml_meta": {'alias': 'cross_references',
+         'domain_of': ['CrossReferencedEntity', 'Tomogram', 'Dataset', 'Deposition']} })
+    dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates',
+         'domain_of': ['DateStampedEntity',
+                       'Tomogram',
+                       'Dataset',
+                       'Deposition',
+                       'Annotation']} })
     authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity',
                        'Dataset',
@@ -1724,7 +1756,8 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1788,7 +1821,8 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1852,7 +1886,8 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1915,7 +1950,8 @@ class AnnotationPointFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1964,7 +2000,8 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2017,7 +2054,8 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2071,7 +2109,8 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2136,7 +2175,8 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2187,7 +2227,11 @@ class Annotation(AuthoredEntity, DateStampedEntity):
          'domain_of': ['Annotation'],
          'exact_mappings': ['cdp-common:annotation_version']} })
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates',
-         'domain_of': ['DateStampedEntity', 'Dataset', 'Deposition', 'Annotation']} })
+         'domain_of': ['DateStampedEntity',
+                       'Tomogram',
+                       'Dataset',
+                       'Deposition',
+                       'Annotation']} })
     authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity',
                        'Dataset',
@@ -2292,7 +2336,7 @@ class AlignmentOffset(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    x: Optional[Union[int, str]] = Field(0, description="""x offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'x',
+    x: Union[int, str] = Field(0, description="""x offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'x',
          'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
@@ -2300,7 +2344,7 @@ class AlignmentOffset(ConfiguredBaseModel):
                        'AlignmentOffset'],
          'ifabsent': 'int(0)',
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-    y: Optional[Union[int, str]] = Field(0, description="""y offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'y',
+    y: Union[int, str] = Field(0, description="""y offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'y',
          'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
@@ -2308,7 +2352,7 @@ class AlignmentOffset(ConfiguredBaseModel):
                        'AlignmentOffset'],
          'ifabsent': 'int(0)',
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-    z: Optional[Union[int, str]] = Field(0, description="""z offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'z',
+    z: Union[int, str] = Field(0, description="""z offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'z',
          'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
@@ -2357,19 +2401,19 @@ class AlignmentOffset(ConfiguredBaseModel):
 class Alignment(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    alignment_type: Optional[AlignmentTypeEnum] = Field(None, description="""The type of alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'alignment_type', 'domain_of': ['Alignment']} })
-    offset: AlignmentOffset = Field(..., description="""The offset of a alignment in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram', 'Alignment']} })
+    alignment_type: AlignmentTypeEnum = Field(..., description="""The type of alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'alignment_type', 'domain_of': ['Alignment']} })
+    offset: Optional[AlignmentOffset] = Field(None, description="""The offset of a alignment in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram', 'Alignment']} })
     volume_dimesion: Optional[AlignmentSize] = Field(None, description="""The size of an alignment in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'volume_dimesion', 'domain_of': ['Alignment']} })
-    x_rotation_offset: Union[int, str] = Field(0, description="""The x rotation offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'x_rotation_offset',
+    x_rotation_offset: Optional[Union[int, str]] = Field(0, description="""The x rotation offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'x_rotation_offset',
          'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
          'domain_of': ['Alignment'],
          'ifabsent': 'int(0)'} })
-    tilt_offset: float = Field(0.0, description="""The tilt offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_offset', 'domain_of': ['Alignment'], 'ifabsent': 'float(0.0)'} })
+    tilt_offset: Optional[float] = Field(0.0, description="""The tilt offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_offset', 'domain_of': ['Alignment'], 'ifabsent': 'float(0.0)'} })
     affine_transformation_matrix: Optional[conlist(min_length=4, max_length=4, item_type=conlist(min_length=4, max_length=4, item_type=float))] = Field(None, description="""The flip or rotation transformation of this author submitted tomogram is indicated here. The default value if not present, is an identity matrix.""", json_schema_extra = { "linkml_meta": {'alias': 'affine_transformation_matrix',
          'array': {'dimensions': [{'exact_cardinality': 4}, {'exact_cardinality': 4}],
                    'exact_number_dimensions': 2},
          'domain_of': ['Alignment']} })
-    is_canonical: bool = Field(True, description="""Whether the alignment is canonical.""", json_schema_extra = { "linkml_meta": {'alias': 'is_canonical', 'domain_of': ['Alignment'], 'ifabsent': 'True'} })
+    is_canonical: Optional[bool] = Field(True, description="""Whether the alignment is canonical.""", json_schema_extra = { "linkml_meta": {'alias': 'is_canonical', 'domain_of': ['Alignment'], 'ifabsent': 'True'} })
     format: AlignmentFormatEnum = Field(..., description="""The format of the alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'format', 'domain_of': ['Alignment']} })
 
     @field_validator('alignment_type')
@@ -2407,6 +2451,18 @@ class Alignment(ConfiguredBaseModel):
             if not pattern.match(v):
                 raise ValueError(f"Invalid format format: {v}")
         return v
+
+
+class Frame(ConfiguredBaseModel):
+    """
+    A frame entity.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    dose: float = Field(..., description="""The dose.""", json_schema_extra = { "linkml_meta": {'alias': 'dose', 'domain_of': ['Frame']} })
+    defocus: float = Field(..., description="""The defocus.""", json_schema_extra = { "linkml_meta": {'alias': 'defocus', 'domain_of': ['Frame']} })
+    astigmatism: float = Field(..., description="""The astigmatism.""", json_schema_extra = { "linkml_meta": {'alias': 'astigmatism', 'domain_of': ['Frame']} })
+    astigmatic_angle: float = Field(..., description="""The astigmatic angle.""", json_schema_extra = { "linkml_meta": {'alias': 'astigmatic_angle', 'domain_of': ['Frame']} })
 
 
 class DateStampedEntityMixin(ConfiguredBaseModel):
@@ -2896,6 +2952,7 @@ class AlignmentEntity(ConfiguredBaseModel):
                        'AnnotationEntity',
                        'DatasetEntity',
                        'DepositionEntity',
+                       'FrameEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[AlignmentSource] = Field(..., description="""An alignment source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -3153,6 +3210,7 @@ class AnnotationEntity(ConfiguredBaseModel):
                        'AnnotationEntity',
                        'DatasetEntity',
                        'DepositionEntity',
+                       'FrameEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[AnnotationSource] = Field(..., description="""An annotation source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -3596,6 +3654,7 @@ class DatasetEntity(ConfiguredBaseModel):
                        'AnnotationEntity',
                        'DatasetEntity',
                        'DepositionEntity',
+                       'FrameEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[DatasetSource] = Field(..., description="""A dataset source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -4043,6 +4102,7 @@ class DepositionEntity(ConfiguredBaseModel):
                        'AnnotationEntity',
                        'DatasetEntity',
                        'DepositionEntity',
+                       'FrameEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[DepositionSource] = Field(..., description="""A deposition source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -4408,6 +4468,14 @@ class FrameEntity(ConfiguredBaseModel):
                        'TiltSeriesEntity',
                        'TomogramEntity',
                        'VoxelSpacingEntity']} })
+    metadata: Optional[Frame] = Field(None, description="""A frame entity.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
+                       'DatasetEntity',
+                       'DepositionEntity',
+                       'FrameEntity',
+                       'TiltSeriesEntity',
+                       'TomogramEntity']} })
 
 
 class FrameSource(StandardSource):
@@ -5622,6 +5690,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
                        'AnnotationEntity',
                        'DatasetEntity',
                        'DepositionEntity',
+                       'FrameEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[TiltSeriesSource] = Field(..., description="""A tilt series source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -5872,6 +5941,7 @@ class TomogramEntity(ConfiguredBaseModel):
                        'AnnotationEntity',
                        'DatasetEntity',
                        'DepositionEntity',
+                       'FrameEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[TomogramSource] = Field(..., description="""A tomogram source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -6418,6 +6488,7 @@ Annotation.model_rebuild()
 AlignmentSize.model_rebuild()
 AlignmentOffset.model_rebuild()
 Alignment.model_rebuild()
+Frame.model_rebuild()
 DateStampedEntityMixin.model_rebuild()
 DateStamp.model_rebuild()
 CrossReferencesMixin.model_rebuild()
