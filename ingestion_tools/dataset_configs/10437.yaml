@@ -1,5 +1,24 @@
-alignment:
-- sources:
+alignments:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    format: IMOD
+  sources:
   - source_multi_glob:
       list_globs:
       - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.xf
@@ -575,23 +594,6 @@ tiltseries:
       match_regex: ^.*\.st$
 tomograms:
 - metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
     authors:
     - ORCID: 0000-0002-9479-3800
       corresponding_author_status: true

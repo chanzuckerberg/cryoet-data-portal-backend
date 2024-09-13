@@ -1,5 +1,24 @@
-alignment:
-- sources:
+alignments:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    format: IMOD
+  sources:
   - source_multi_glob:
       list_globs:
       - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.tlt
@@ -171,10 +190,6 @@ key_images:
   - literal:
       value:
       - from_tomogram
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs: []
 runs:
 - sources:
   - source_glob:
@@ -217,23 +232,6 @@ tiltseries:
       match_regex: .*
 tomograms:
 - metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
     authors: *id003
     ctf_corrected: false
     fiducial_alignment_status: FIDUCIAL

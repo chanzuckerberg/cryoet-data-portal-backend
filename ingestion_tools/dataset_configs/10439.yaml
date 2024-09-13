@@ -1,5 +1,24 @@
-alignment:
-- sources:
+alignments:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    format: IMOD
+  sources:
   - source_multi_glob:
       list_globs:
       - '{run_name}/TiltSeries/*.tlt'
@@ -237,16 +256,10 @@ depositions:
   - literal:
       value:
       - 10309
-frames: []
-gains: []
 key_images:
 - sources:
   - source_glob:
       list_glob: .*\.jpg
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs: []
 runs:
 - sources:
   - source_glob:
@@ -286,23 +299,6 @@ tiltseries:
       list_glob: '{run_name}/TiltSeries/tilt_series.mrc'
 tomograms:
 - metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
     authors: *id001
     ctf_corrected: true
     fiducial_alignment_status: NON_FIDUCIAL

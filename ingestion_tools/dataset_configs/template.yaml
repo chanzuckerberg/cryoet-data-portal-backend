@@ -261,6 +261,10 @@ tiltseries: OPTIONAL
   - source_glob: SEE dataset.sources.source_glob
 tomograms: OPTIONAL
 - metadata: OPTIONAL
+    affine_transformation_matrix: OPTIONAL 4x4 FLOAT MATRIX (DEFAULT 4x4 identity matrix)
+      - - REQUIRED, FLOAT
+        - ... (4 ELEMENTS)
+      - ... (4 ELEMENTS)
     align_software: OPTIONAL, STRING # CURRENTLY NOT USED
     authors: SEE annotations.authors
     ctf_corrected: RECOMMENDED, BOOLEAN

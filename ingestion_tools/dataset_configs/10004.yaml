@@ -1,5 +1,24 @@
-alignment:
-- sources:
+alignments:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    format: IMOD
+  sources:
   - source_multi_glob:
       list_globs:
       - '{run_name}/{run_name}.mdoc-dose_filt.tlt'
@@ -167,10 +186,6 @@ key_images:
   - literal:
       value:
       - from_tomogram
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs: []
 runs:
 - sources:
   - source_glob:
@@ -210,23 +225,6 @@ tiltseries:
       match_regex: .*
 tomograms:
 - metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
     authors: *id002
     ctf_corrected: true
     fiducial_alignment_status: NON_FIDUCIAL

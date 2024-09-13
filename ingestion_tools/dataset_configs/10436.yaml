@@ -1,11 +1,35 @@
-alignment:
-- sources:
+alignments:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    format: IMOD
+  sources:
   - source_multi_glob:
       list_globs:
-      - Data_Set_2/{run_name}/aligned_tilt_series/*.st.aln
       - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.xf
       - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.tlt
       - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.com
+- metadata:
+    format: ARETOMO3
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - Data_Set_2/{run_name}/aligned_tilt_series/*.st.aln
 annotations:
 - metadata:
     annotation_method: Each organelle was segmented as a separate region of interest
@@ -394,23 +418,6 @@ tiltseries:
       match_regex: ^.*\.st$
 tomograms:
 - metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
     authors:
     - ORCID: 0000-0002-9479-3800
       corresponding_author_status: true
