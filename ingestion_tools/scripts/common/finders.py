@@ -248,8 +248,13 @@ class MultiSourceFileGlobFinder(DefaultImporterFactory):
         if not filtered_results:
             return []
 
-        names = ",".join([os.path.basename(path) for path in filtered_results.values()])
+        names = ",".join([os.path.basename(path) for path in filtered_results])
         item = cls(
-            config=config, metadata=metadata, name=names, path=None, parents=parents, file_paths=filtered_results,
+            config=config,
+            metadata=metadata,
+            name=names,
+            path=None,
+            parents=parents,
+            file_paths=filtered_results,
         )
         return [item] if item else []
