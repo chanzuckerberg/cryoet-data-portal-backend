@@ -2,7 +2,6 @@ import re
 from typing import Any, Optional
 
 import click
-from importers.aligment import AlignmentImporter
 from importers.annotation import AnnotationImporter
 from importers.collection_metadata import CollectionMetadataImporter
 from importers.dataset import DatasetImporter
@@ -25,7 +24,6 @@ from common.fs import FileSystemApi
 
 IMPORTERS = [
     AnnotationImporter,
-    AlignmentImporter,
     CollectionMetadataImporter,
     DatasetKeyPhotoImporter,
     DatasetImporter,
@@ -63,7 +61,6 @@ IMPORTER_DEP_TREE = {
                 TiltSeriesImporter: {},
                 RawTiltImporter: {},
                 CollectionMetadataImporter: {},
-                AlignmentImporter: {},
             },
             DatasetKeyPhotoImporter: {},
         },

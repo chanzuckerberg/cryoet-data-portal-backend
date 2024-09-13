@@ -409,7 +409,6 @@ enums:
     name: alignment_type_enum
     description: Type of alignment
     from_schema: cdp-dataset-config
-    ifabsent: "GLOBAL"
     permissible_values:
       LOCAL:
         text: LOCAL

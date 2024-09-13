@@ -250,7 +250,6 @@ class DepositionImportConfig:
             "frame": "{dataset_name}/{run_name}/Frames",
             "rawtilt": "{dataset_name}/{run_name}/TiltSeries",
             "collection_metadata": "{dataset_name}/{run_name}/TiltSeries",
-            "alignment": "{dataset_name}/{run_name}/TiltSeries",
             "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
             "annotation_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
             "run_metadata": "{dataset_name}/{run_name}/run_metadata.json",
