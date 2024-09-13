@@ -17,11 +17,13 @@ def rawtilts_to_collection_metadata(config: dict) -> bool:
             if "sources" not in i:
                 continue
             old_source = i["sources"][0]["source_multi_glob"]["list_globs"]
-            list_globs.extend(s for s in old_source if s.endswith('.mdoc'))
+            list_globs.extend(s for s in old_source if s.endswith('.mdoc') or "{mdoc_name}" in s)
             for source in list_globs:
                 old_source.remove(source)
         if list_globs:
-            config["collection_metadata"] = [{"sources": [{"source_multi_glob": {"list_globs": list_globs}}]}]
+            if 'collection_metadata' not in config:
+                config['collection_metadata'] = [{"sources": [{"source_multi_glob": {"list_globs": []}}]}]
+            config["collection_metadata"][0]["sources"][0]["source_multi_glob"]["list_globs"].extend(list_globs)
 
     return bool(list_globs)
 

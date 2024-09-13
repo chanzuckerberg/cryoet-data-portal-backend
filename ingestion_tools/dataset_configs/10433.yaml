@@ -1,4 +1,9 @@
 annotations: []
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - mdocs/{mdoc_name}
 dataset_keyphotos:
 - sources:
   - literal:
@@ -80,11 +85,6 @@ key_images:
 - sources:
   - source_glob:
       list_glob: .*\.jpg
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - mdocs/{mdoc_name}
 runs:
 - sources:
   - source_glob:
