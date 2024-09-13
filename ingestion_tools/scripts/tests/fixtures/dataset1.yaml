@@ -23,6 +23,11 @@ annotations:
     file_format: csv
     glob_string: particle_lists/{run_name}_fas.csv
     shape: Point
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/mdocs_modified/foo-{run_name}.mdoc
 dataset_keyphotos:
 - sources:
   - literal:
@@ -101,7 +106,6 @@ rawtilts:
       list_glob:
       - metadata/{run_name}.rawtlt
       - metadata/{run_name}.xf
-      - metadata/mdocs_modified/{run_name}.mdoc
 runs:
 - sources:
   - source_glob:

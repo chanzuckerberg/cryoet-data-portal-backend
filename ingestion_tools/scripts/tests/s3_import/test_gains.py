@@ -3,15 +3,13 @@ from os.path import basename
 from unittest.mock import Mock
 
 import pytest
-from importers.dataset import DatasetImporter
 from importers.gain import GainImporter
-from importers.run import RunImporter
 from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
-from tests.s3_import.util import list_dir
+from tests.s3_import.util import create_config, get_dataset_and_run, list_dir
 
 
 def create_file_locally(*args, **kwargs):
@@ -29,25 +27,23 @@ def config(s3_fs: FileSystemApi, test_output_bucket: str) -> DepositionImportCon
 
 
 def test_non_dm4_gains_import(
-    config: DepositionImportConfig,
+    s3_fs: FileSystemApi,
     test_output_bucket: str,
     s3_client: S3Client,
 ) -> None:
-    datasets = list(DatasetImporter.finder(config))
-    runs = list(RunImporter.finder(config, dataset=datasets[0]))
-    gains = list(GainImporter.finder(config, dataset=datasets[0], run=runs[0]))
+    config = create_config(s3_fs, test_output_bucket)
+    dataset, run = get_dataset_and_run(config)
+    gains = list(GainImporter.finder(config, dataset=dataset, run=run))
     for gain in gains:
         gain.import_item()
-
-    dataset_name = datasets[0].name
-    run_name = runs[0].name
-    prefix = f"output/{dataset_name}/{run_name}/Gains"
+    run_name = run.name
+    prefix = f"output/{dataset.name}/{run_name}/Gains"
     gain_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
     assert f"CountRef_{run_name}.gain" in gain_files
 
 
 def test_dm4_gains_import(
-    config: DepositionImportConfig,
+    s3_fs: FileSystemApi,
     test_output_bucket: str,
     s3_client: S3Client,
     monkeypatch: pytest.MonkeyPatch,
@@ -55,14 +51,12 @@ def test_dm4_gains_import(
     subprocess_mock = Mock(spec="subprocess.check_output", side_effect=create_file_locally)
     monkeypatch.setattr(subprocess, "check_output", subprocess_mock)
 
-    datasets = list(DatasetImporter.finder(config))
-    runs = list(RunImporter.finder(config, dataset=datasets[0]))
-    gains = list(GainImporter.finder(config, dataset=datasets[0], run=runs[1]))
+    config = create_config(s3_fs, test_output_bucket)
+    dataset, run = get_dataset_and_run(config, run_index=1)
+    gains = list(GainImporter.finder(config, dataset=dataset, run=run))
     for gain in gains:
         gain.import_item()
-
-    dataset_name = datasets[0].name
-    run_name = runs[1].name
-    prefix = f"output/{dataset_name}/{run_name}/Gains"
+    run_name = run.name
+    prefix = f"output/{dataset.name}/{run_name}/Gains"
     gain_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
     assert f"CountRef_{run_name}.mrc" in gain_files
