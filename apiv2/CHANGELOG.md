@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.1.0...apiv2-v1.2.0) (2024-09-11)
+
+
+### Features
+
+* add CORS middleware to apiv2 ([#267](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/267)) ([db08a59](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/db08a590476ea532c69e2a757425173f3b3b6941))
+
 ## [1.1.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.0.0...apiv2-v1.1.0) (2024-09-10)
 
 
