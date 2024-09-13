@@ -1,3 +1,7 @@
+"""
+This script migrates the ingest config files to a new schema based on the changes outlines in
+https://github.com/chanzuckerberg/cryoet-data-portal/issues/997
+"""
 import glob
 from typing import Union
 
