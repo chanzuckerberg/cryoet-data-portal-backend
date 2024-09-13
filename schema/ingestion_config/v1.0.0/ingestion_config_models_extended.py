@@ -12,7 +12,8 @@ import aiohttp
 import numpy
 from async_lru import alru_cache
 from codegen.ingestion_config_models import (
-    Alignment, AlignmentEntity,
+    Alignment,
+    AlignmentEntity,
     AlignmentSource,
     Annotation,
     AnnotationConfidence,

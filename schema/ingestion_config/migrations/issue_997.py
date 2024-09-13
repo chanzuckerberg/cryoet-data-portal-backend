@@ -3,9 +3,9 @@ This script migrates the ingest config files to a new schema based on the change
 https://github.com/chanzuckerberg/cryoet-data-portal/issues/997
 """
 import glob
+import itertools
 from typing import Union
 
-import itertools
 import numpy as np
 import yaml
 
@@ -30,7 +30,7 @@ def rawtilts_to_alignments(config: dict) -> bool:
     list_globs = []
     format_dict = {
         "IMOD": [],
-        "ARETOMO3": []
+        "ARETOMO3": [],
     }
 
     def valid_file(file):
@@ -89,11 +89,11 @@ def update_tomogram_metadata(config: dict) -> bool:
                         "last_modified_date": '1970-01-01',
                         "release_date": '1970-01-01'}
                 metadata["dates"] = dates
-                if affine_transformation_matrix := metadata.pop("affine_transformation_matrix", None):
-                    # check if afine_transformation_matrix is an identity matrix
-                    if not np.allclose(affine_transformation_matrix, np.eye(4)):
-                        ValueError("affine_transformation_matrix is not an identity matrix")
+                affine_transformation_matrix = metadata.pop("affine_transformation_matrix", None)
+                if affine_transformation_matrix and not np.allclose(affine_transformation_matrix, np.eye(4)):
+                    ValueError("affine_transformation_matrix is not an identity matrix")
     return changed
+
 
 def update_annotation_sources(config: dict) -> bool:
     changed = False
@@ -105,6 +105,7 @@ def update_annotation_sources(config: dict) -> bool:
                     for value in source.values():
                         value["is_portal_standard"] = False
     return changed
+
 
 def remove_empty_fields(config: Union[list, dict]) -> bool:
     changed = False
