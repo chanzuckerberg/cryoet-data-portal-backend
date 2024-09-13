@@ -179,19 +179,9 @@ class VolumeImporter(BaseImporter):
 
 
 class BaseFileImporter(BaseImporter):
-    def get_dest_filename(self) -> str:
-        """
-        This method constructs the destination filename for the imported item.
-
-        Returns:
-            str: The absolute path of the destination file.
-        """
-        output_dir = self.get_output_path()
-        return os.path.join(output_dir, os.path.basename(self.path))
-
-    def import_item(self, write: bool = True):
-        fs = self.config.fs
-        fs.copy(self.path, self.get_dest_filename())
+    def import_item(self) -> None:
+        dest_filename = os.path.join(self.get_output_path(), os.path.basename(self.path))
+        self.config.fs.copy(self.path, dest_filename)
 
 
 class BaseKeyPhotoImporter(BaseImporter):

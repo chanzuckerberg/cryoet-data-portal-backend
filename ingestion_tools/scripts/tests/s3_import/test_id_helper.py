@@ -66,7 +66,7 @@ def reset_trackers():
         (1, 100),  # entry exists for a same key as test
     ],
 )
-def test_alignment_import_item(
+def test_identifier_generation(
     config: DepositionImportConfig,
     add_foo_metadata: Callable[[str, int], None],
     existing_foo_id: int,

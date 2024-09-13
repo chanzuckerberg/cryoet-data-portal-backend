@@ -34,9 +34,7 @@ def local_fs() -> FileSystemApi:
 @pytest.fixture
 def s3_fs(endpoint_url: str) -> FileSystemApi:
     return FileSystemApi.get_fs_api(
-        mode="s3",
-        force_overwrite=False,
-        client_kwargs={"endpoint_url": endpoint_url},
+        mode="s3", force_overwrite=False, client_kwargs={"endpoint_url": endpoint_url}, listings_expiry_time=0,
     )
 
 

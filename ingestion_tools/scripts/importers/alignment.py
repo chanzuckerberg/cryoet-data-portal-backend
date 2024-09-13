@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Any
 
 from common.alignment_converter import alignment_converter_factory
 from common.config import DepositionImportConfig
-from common.finders import DefaultImporterFactory
+from common.finders import MultiSourceFileGlobFinder
 from common.id_helper import IdentifierHelper
 from common.metadata import AlignmentMetadata
 from importers.base_importer import BaseFileImporter
@@ -45,7 +45,7 @@ class AlignmentIdentifierHelper(IdentifierHelper):
 class AlignmentImporter(BaseFileImporter):
     type_key = "alignment"
     plural_key = "alignments"
-    finder_factory = DefaultImporterFactory
+    finder_factory = MultiSourceFileGlobFinder
     has_metadata = True
     written_metadata_files = set()
 
@@ -56,16 +56,21 @@ class AlignmentImporter(BaseFileImporter):
         name: str,
         path: str,
         parents: dict[str, Any],
+        file_paths: dict[str, str],
     ):
         super().__init__(config, metadata, name, path, parents)
         self.identifier = AlignmentIdentifierHelper.get_identifier(config, metadata, parents)
-        self.converter = alignment_converter_factory(config, metadata, path, parents)
+        self.file_paths = file_paths
+        self.converter = alignment_converter_factory(
+            config,
+            metadata,
+            list(file_paths.keys()),
+            parents,
+            self.get_output_path(),
+        )
 
     def import_metadata(self) -> None:
         metadata_path = self.get_metadata_path()
-        if metadata_path in self.written_metadata_files:
-            print(f"Skipping rewriting metadata for alignment {self.path}")
-            return
         try:
             meta = AlignmentMetadata(self.config.fs, self.get_deposition().name, self.get_base_metadata())
             meta.write_metadata(metadata_path, self.get_extra_metadata())
@@ -76,21 +81,23 @@ class AlignmentImporter(BaseFileImporter):
     def import_item(self) -> None:
         if self.is_default_alignment() or not self.is_valid():
             print(
-                f"Skipping importing alignment with path {self.path} as it is either a default alignment or doesn't"
-                " have dimension data",
+                f"Skipping importing alignment with path {self.file_paths} as it is either a default alignment or "
+                "doesn't have dimension data",
             )
             return
-        super().import_item()
+        for path in self.file_paths.values():
+            dest_filename = self.get_dest_filename(path)
+            self.config.fs.copy(path, dest_filename)
 
     def get_output_path(self) -> str:
         output_directory = super().get_output_path()
         return os.path.join(output_directory, f"{self.identifier}-")
 
-    def get_dest_filename(self) -> str | None:
-        if not self.path:
+    def get_dest_filename(self, path: str) -> str | None:
+        if not path:
             return None
         output_dir = self.get_output_path()
-        return f"{output_dir}{os.path.basename(self.path)}"
+        return f"{output_dir}{os.path.basename(path)}"
 
     def get_metadata_path(self) -> str:
         return self.get_output_path() + "alignment_metadata.json"
@@ -104,6 +111,9 @@ class AlignmentImporter(BaseFileImporter):
         }
         if "volume_dimension" not in self.metadata:
             extra_metadata["volume_dimension"] = self.get_tomogram_volume_dimension()
+        for key, value in self.get_default_metadata().items():
+            if key not in self.metadata:
+                extra_metadata[key] = value
         return extra_metadata
 
     def get_tomogram_volume_dimension(self) -> dict:
@@ -114,32 +124,31 @@ class AlignmentImporter(BaseFileImporter):
         raise IOError("No source tomogram found for creating default alignment")
 
     def is_default_alignment(self) -> bool:
-        return self.name.lower() == "default"
+        return "default" in self.file_paths
 
     def is_valid(self) -> bool:
         volume_dim = self.metadata.get("volume_dimension", {})
-        return all(volume_dim.get(dim) for dim in "xyz") or next(
-            TomogramImporter.finder(self.config, **self.parents),
-            None,
+        return (
+            all(volume_dim.get(dim) for dim in "xyz")
+            or next(TomogramImporter.finder(self.config, **self.parents), None) is not None
         )
 
     @classmethod
-    def get_default_config(cls) -> list[dict] | None:
-        return [
-            {
-                "metadata": {
-                    "affine_transformation_matrix": [
-                        [1, 0, 0, 0],
-                        [0, 1, 0, 0],
-                        [0, 0, 1, 0],
-                        [0, 0, 0, 1],
-                    ],
-                    "alignment_type": "GLOBAL",
-                    "is_canonical": False,
-                    "volume_offset": {"x": 0, "y": 0, "z": 0},
-                    "tilt_offset": 0,
-                    "x_rotation_offset": 0,
-                },
-                "sources": [{"literal": {"value": ["default"]}}],
-            },
-        ]
+    def get_default_config(cls) -> list[dict]:
+        return [{"metadata": cls.get_default_metadata(), "sources": [{"literal": {"value": ["default"]}}]}]
+
+    @classmethod
+    def get_default_metadata(cls) -> dict[str, Any]:
+        return {
+            "affine_transformation_matrix": [
+                [1, 0, 0, 0],
+                [0, 1, 0, 0],
+                [0, 0, 1, 0],
+                [0, 0, 0, 1],
+            ],
+            "alignment_type": "GLOBAL",
+            "is_canonical": False,
+            "volume_offset": {"x": 0, "y": 0, "z": 0},
+            "tilt_offset": 0,
+            "x_rotation_offset": 0,
+        }

@@ -1,3 +1,4 @@
+import os.path
 from typing import Any
 
 import pandas as pd
@@ -34,31 +35,34 @@ class BaseAlignmentConverter:
 
 
 class IMODAlignmentConverter(BaseAlignmentConverter):
-    def __init__(self, path: str, config: DepositionImportConfig, parents: dict[str, BaseImporter]):
-        self.path = path
+    def __init__(
+        self,
+        paths: list[str],
+        config: DepositionImportConfig,
+        parents: dict[str, BaseImporter],
+        output_prefix: str,
+    ):
+        self.paths = paths
         self.config = config
         self.parents = parents
-        self.importers = None
+        self.output_prefix = output_prefix
 
     def get_alignment_path(self) -> str | None:
-        importer = self._get_xf_importer()
-        return importer.get_dest_filename() if importer else None
+        return self._get_files_with_suffix([".xf"])
 
     def get_tilt_path(self) -> str | None:
-        importer = self._get_tlt_importer()
-        return importer.get_dest_filename() if importer else None
+        return self._get_files_with_suffix([".tlt"])
 
     def get_tiltx_path(self) -> str | None:
-        importer = self._get_tltx_importer()
-        return importer.get_dest_filename() if importer else None
+        return self._get_files_with_suffix([".tltx", ".xtilt"])
 
     def get_per_section_alignment_parameters(self) -> list[dict]:
+        tlt_data = self._get_dataframe(self.get_tilt_path(), ["tilt_angle"])
+        tltx_data = self._get_dataframe(self.get_tiltx_path(), ["volume_x_rotation"])
+        xf_column_names = ["rotation_0", "rotation_1", "rotation_2", "rotation_3", "x_offset", "y_offset"]
+        xf_data = self._get_dataframe(self.get_alignment_path(), xf_column_names)
+
         result = []
-        tlt_importer = self._get_tlt_importer()
-        tltx_importer = self._get_tltx_importer()
-        tlt_data = self._get_dataframe(tlt_importer.path if tlt_importer else None, ["tilt_angle"])
-        tltx_data = self._get_dataframe(tltx_importer.path if tltx_importer else None, ["volume_x_rotation"])
-        xf_data = self._get_xf_data()
         rows = len(xf_data.index)
         for index in range(0, rows):
             item = {
@@ -70,41 +74,23 @@ class IMODAlignmentConverter(BaseAlignmentConverter):
             result.append(item)
         return result
 
-    def _get_xf_data(self) -> pd.DataFrame:
-        xf_importer = self._get_xf_importer()
-        column_names = ["rotation_0", "rotation_1", "rotation_2", "rotation_3", "x_offset", "y_offset"]
-        return self._get_dataframe(xf_importer.path if xf_importer else None, column_names)
-
     def _get_dataframe(self, path: str, names: list[str]) -> pd.DataFrame:
         if not path:
             return pd.DataFrame()
         local_path = self.config.fs.localreadable(path)
         return pd.read_csv(local_path, sep=r"\s+", header=None, names=names)
 
-    def _load_files(self) -> None:
-        if self.importers is not None:
-            return
-        from importers.alignment import AlignmentImporter
-
-        self.importers = {item.path: item for item in AlignmentImporter.finder(self.config, **self.parents)}
-
-    def _get_importer(self, valid_suffix: list[str]) -> BaseImporter | None:
-        self._load_files()
-        for key, val in self.importers.items():
-            if key.endswith(tuple(valid_suffix)):
-                return val
+    def _get_files_with_suffix(self, valid_suffix: list[str]) -> str | None:
+        for path in self.paths:
+            if path.endswith(tuple(valid_suffix)):
+                file_name = os.path.basename(path)
+                dest_filepath = f"{self.output_prefix}{file_name}"
+                if self.config.fs.exists(dest_filepath):
+                    return dest_filepath
         return None
 
-    def _get_tlt_importer(self) -> BaseImporter | None:
-        return self._get_importer([".tlt"])
-
-    def _get_tltx_importer(self):
-        return self._get_importer([".tltx", ".xtilt"])
-
-    def _get_xf_importer(self) -> BaseImporter | None:
-        return self._get_importer([".xf"])
-
-    def _get_xf_psap(self, xf_data: pd.DataFrame, index: int) -> dict:
+    @classmethod
+    def _get_xf_psap(cls, xf_data: pd.DataFrame, index: int) -> dict:
         if xf_data.empty:
             return {
                 "in_plane_rotation": (0, 0, 0, 0),
@@ -126,11 +112,12 @@ class IMODAlignmentConverter(BaseAlignmentConverter):
 def alignment_converter_factory(
     config: DepositionImportConfig,
     metadata: dict[str, Any],
-    path: str,
+    paths: list[str],
     parents: dict[str, Any],
+    output_prefix: str,
 ) -> BaseAlignmentConverter:
     alignment_format = metadata.get("format")
     if alignment_format == "IMOD":
-        return IMODAlignmentConverter(path, config, parents)
+        return IMODAlignmentConverter(paths, config, parents, output_prefix)
 
     return BaseAlignmentConverter()
