@@ -36,12 +36,12 @@ def rawtilts_to_alignments(config: dict) -> bool:
     }
 
     def valid_file(file):
-        return any(file.endswith(ext) for ext in ['.tlt', ".xf", ".aln", ".com"])
+        return any(file.endswith(ext) for ext in ['.tlt', ".xf", ".aln", ".com", ".txt", ".csv"])
 
     def get_format(file):
         if any(file.endswith(ext) for ext in ['.tlt', ".xf", ".com"]):
             format_dict["IMOD"].append(file)
-        elif any(file.endswith(ext) for ext in ['.aln']):
+        elif any(file.endswith(ext) for ext in ['.aln', ".txt", ".csv"]):
             format_dict["ARETOMO3"].append(file)
 
     if len(config.get('tomograms', [])) > 1 or len(config.get("rawtilts", [])) > 1:
@@ -61,9 +61,14 @@ def rawtilts_to_alignments(config: dict) -> bool:
                 config['alignments'] = []
             for key, files in format_dict.items():
                 if files:
-                    alignment = {
-                        "metadata": {"format": key},
-                        "sources": [{"source_multi_glob": {"list_globs": files}}]}
+                    # check if there is an alignment with the key in the metadata.format
+                    alignment = [a for a in config.get("alignments", []) if a["metadata"]["format"] == key]
+                    if alignment:
+                       alignment = alignment.pop()
+                    else:
+                        alignment = {
+                            "metadata": {"format": key},
+                            "sources": [{"source_multi_glob": {"list_globs": files}}]}
 
                     if 'tomograms' in config:
                         for i in config['tomograms']:

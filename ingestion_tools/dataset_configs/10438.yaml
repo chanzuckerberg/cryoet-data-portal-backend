@@ -1,3 +1,10 @@
+alignments:
+- metadata:
+    format: ARETOMO3
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - Data_Set_4/{run_name}/tilt_series/*.txt
 annotations:
 - metadata:
     annotation_method: Each organelle was segmented as a separate region of interest
@@ -485,11 +492,6 @@ key_images:
 - sources:
   - source_glob:
       list_glob: .*\.jpg
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - Data_Set_4/{run_name}/tilt_series/*.txt
 runs:
 - sources:
   - source_glob:
