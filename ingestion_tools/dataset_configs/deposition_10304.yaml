@@ -42,7 +42,8 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: Membrane segmentations using membrain-seg of tomograms denoised using a custom algorithm.
+    deposition_description: Membrane segmentations using membrain-seg of tomograms
+      denoised using a custom algorithm.
     deposition_identifier: 10304
     deposition_title: Membrane segmentations of denoised tomograms
     deposition_types:

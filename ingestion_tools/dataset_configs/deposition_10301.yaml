@@ -40,7 +40,8 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: "Voxel-based and instance segmentations of membranes predicted using TARDIS."
+    deposition_description: Voxel-based and instance segmentations of membranes predicted
+      using TARDIS.
     deposition_identifier: 10301
     deposition_title: TARDIS membrane predictions
     deposition_types:

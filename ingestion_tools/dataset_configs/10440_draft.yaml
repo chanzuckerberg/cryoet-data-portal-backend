@@ -1,17 +1,16 @@
 datasets:
-  - metadata:
-      dataset_identifier: 10440
-    sources:
-      - literal:
-          value:
-            - '10440'
-
+- metadata:
+    dataset_identifier: 10440
+  sources:
+  - literal:
+      value:
+      - '10440'
 depositions:
-  - metadata:
-      deposition_identifier: 10310
-      deposition_types:
-        - dataset
-    sources:
-      - literal:
-          value:
-            - 10310
+- metadata:
+    deposition_identifier: 10310
+    deposition_types:
+    - dataset
+  sources:
+  - literal:
+      value:
+      - 10310

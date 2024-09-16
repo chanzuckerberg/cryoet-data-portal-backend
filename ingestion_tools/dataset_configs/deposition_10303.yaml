@@ -29,16 +29,16 @@ annotations:
   - SegmentationMask:
       file_format: zarr
       glob_strings:
-        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*LM52Ga.zarr'
-        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*55ar5k.zarr'
-        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*wO13zA.zarr'
-        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*z59Mxz.zarr'
-        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*F5XUXp.zarr'
-        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*kpDyZk.zarr'
-        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*AM1K9r.zarr'
-        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*PgU0Bz.zarr'
-        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*4h1eIH.zarr'
-        - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*gBcgAd.zarr'
+      - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*LM52Ga.zarr'
+      - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*55ar5k.zarr'
+      - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*wO13zA.zarr'
+      - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*z59Mxz.zarr'
+      - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*F5XUXp.zarr'
+      - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*kpDyZk.zarr'
+      - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*AM1K9r.zarr'
+      - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*PgU0Bz.zarr'
+      - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*4h1eIH.zarr'
+      - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*gBcgAd.zarr'
       is_visualization_default: true
 datasets:
 - sources:
@@ -50,8 +50,8 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: Membrane segmentations predicted using membrain-seg without rescaling and weights
-      MemBrain_seg_v10_alpha.ckpt
+    deposition_description: Membrane segmentations predicted using membrain-seg without
+      rescaling and weights MemBrain_seg_v10_alpha.ckpt
     deposition_identifier: 10303
     deposition_title: membrain-seg membrane predictions
     deposition_types:

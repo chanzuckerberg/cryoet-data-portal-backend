@@ -34,7 +34,8 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: Manual annotations of type IV pili, created and pre-oriented using IMOD.
+    deposition_description: Manual annotations of type IV pili, created and pre-oriented
+      using IMOD.
     deposition_identifier: 10305
     deposition_title: Manual annotations of Type IV pilus
     deposition_types:

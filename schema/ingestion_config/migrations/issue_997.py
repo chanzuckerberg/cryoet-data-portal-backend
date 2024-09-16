@@ -88,14 +88,15 @@ def update_tomogram_metadata(config: dict) -> bool:
             if metadata := tomogram.get("metadata"):
                 changed = True
                 metadata["is_visualization_default"] = True
-                try:
-                    dates = config["depositions"][0]["metadata"]["dates"]
-                except (KeyError, IndexError):
-                    dates = {
-                        "deposition_date": '1970-01-01',
-                        "last_modified_date": '1970-01-01',
-                        "release_date": '1970-01-01'}
-                metadata["dates"] = dates
+                if not metadata["dates"]:
+                    try:
+                        dates = config["depositions"][0]["metadata"]["dates"]
+                    except (KeyError, IndexError) as ex:
+                        dates = {
+                            "deposition_date": '1970-01-01',
+                            "last_modified_date": '1970-01-01',
+                            "release_date": '1970-01-01'}
+                    metadata["dates"] = dates
                 affine_transformation_matrix = metadata.pop("affine_transformation_matrix", None)
                 if affine_transformation_matrix and not np.allclose(affine_transformation_matrix, np.eye(4)):
                     ValueError("affine_transformation_matrix is not an identity matrix")
@@ -142,6 +143,10 @@ def remove_empty_fields(config: Union[list, dict]) -> bool:
                 config.pop(key)
     return changed
 
+def check_deposition(config: dict) -> bool:
+    if "depositions" in config:
+        return True
+    raise ValueError("depositions is not in the config")
 
 def migrate_config(file_path):
     with open(file_path, 'r') as file:
@@ -152,14 +157,15 @@ def migrate_config(file_path):
         changes.append(rawtilts_to_collection_metadata(config))
         changes.append(rawtilts_to_alignments(config))
         changes.append(update_tomogram_metadata(config))
+        changes.append(check_deposition(config))
     except Exception as e:
-        print(f"Error in {get_relative_path(file_path)}: {e}")
+        print(f"Error in {get_relative_path(file_path)}: missing {e}")
         return
 
     if any(changes):
         remove_empty_fields(config)
         relative_path = file_path[file_path.find("cryoet-data-portal-backend"):]
-        print(f"modified: {relative_path}")
+        # print(f"modified: {relative_path}")
         with open(file_path, 'w') as file:
             yaml.safe_dump(config, file)
 
