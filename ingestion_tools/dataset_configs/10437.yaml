@@ -66,6 +66,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Exospore.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -91,6 +92,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Endospore.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -116,6 +118,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Plasma_Membrane.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -142,6 +145,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Anchoring_Disk_Fill.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -168,6 +172,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Anchoring_Disk_Outline.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -193,6 +198,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Polaroplast.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -219,6 +225,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Vesicles_in_Polaroplast.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -244,6 +251,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Nuclear_Envelope.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -269,6 +277,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Nuclear_Fill.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -296,6 +305,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_M-Layer.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -323,6 +333,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_M-Layer_TopCoilsOnly.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -350,6 +361,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_OF-Layer.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -377,6 +389,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_Straight_Portion.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -403,6 +416,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_Unknown_Cluster.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -429,6 +443,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Unknown_Structure.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -455,6 +470,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_3/{run_name}/segmentation_masks/Extra_Membranous_Vesicles.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 dataset_keyphotos:

@@ -22,6 +22,7 @@ annotations:
       binning: 1
       file_format: mod
       glob_string: '{dataset_name}/{run_name}_T4P.mod'
+      is_portal_standard: false
       is_visualization_default: true
       order: xyz
 datasets:

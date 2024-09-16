@@ -86,6 +86,7 @@ annotations:
       columns: xyz
       file_format: csv_with_header
       glob_string: '{run_name}/annoRibosome_bin4.txt'
+      is_portal_standard: false
       is_visualization_default: true
 collection_metadata:
 - sources:

@@ -25,6 +25,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -44,6 +45,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 2
 - metadata:
@@ -63,6 +65,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 3
 collection_metadata:

@@ -86,6 +86,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{annotation_micrograph_name}'
       glob_string: '{run_name}/metadata/particles/f1atpase_bin*.star'
+      is_portal_standard: false
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -108,6 +109,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{annotation_micrograph_name}'
       glob_string: '{run_name}/metadata/particles/f1atpase_mito_*.star'
+      is_portal_standard: false
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -130,6 +132,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{annotation_micrograph_name}'
       glob_string: '{run_name}/metadata/particles/ribosome_*.star'
+      is_portal_standard: false
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -151,6 +154,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{annotation_micrograph_name}'
       glob_string: '{run_name}/metadata/particles/nucleosome_*.star'
+      is_portal_standard: false
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -173,6 +177,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{annotation_micrograph_name}'
       glob_string: '{run_name}/metadata/particles/rubisco_*.star'
+      is_portal_standard: false
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -194,6 +199,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{annotation_micrograph_name}'
       glob_string: '{run_name}/metadata/particles/microtubule_*.star'
+      is_portal_standard: false
       is_visualization_default: true
       order: xyz
 collection_metadata:

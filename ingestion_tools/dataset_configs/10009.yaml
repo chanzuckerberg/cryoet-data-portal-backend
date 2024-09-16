@@ -81,6 +81,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{run_name}'
       glob_string: motivelists/allmotl_S_newbin2_3.star
+      is_portal_standard: false
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -102,6 +103,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{run_name}'
       glob_string: motivelists/allmotl_Y_newbin2_3.star
+      is_portal_standard: false
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -123,6 +125,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{run_name}'
       glob_string: motivelists/allmotl_H_cleanbin2.star
+      is_portal_standard: false
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -145,6 +148,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{run_name}'
       glob_string: motivelists/MTD_MIP_bin2_recentered_shiftedorg_9.star
+      is_portal_standard: false
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -166,6 +170,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{run_name}'
       glob_string: motivelists/allmotl_B2_newbin2_3.star
+      is_portal_standard: false
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -187,6 +192,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{run_name}'
       glob_string: motivelists/allmotl_A2_newbin2_3.star
+      is_portal_standard: false
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -208,6 +214,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{run_name}'
       glob_string: motivelists/allmotl_D_newbin2_3.star
+      is_portal_standard: false
       is_visualization_default: true
       order: xyz
 collection_metadata:

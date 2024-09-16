@@ -4,13 +4,14 @@ https://github.com/chanzuckerberg/cryoet-data-portal/issues/997
 """
 import glob
 import itertools
+import json
 from typing import Union
 
 import numpy as np
 import yaml
 
 
-def rawtilts_to_collection_metadata(config: dict) -> bool:
+def rawtilts_to_collection_metadata(config: dict) -> None:
     list_globs = []
     if 'rawtilts' in config:
         for i in config['rawtilts']:
@@ -25,10 +26,9 @@ def rawtilts_to_collection_metadata(config: dict) -> bool:
                 config['collection_metadata'] = [{"sources": [{"source_multi_glob": {"list_globs": []}}]}]
             config["collection_metadata"][0]["sources"][0]["source_multi_glob"]["list_globs"].extend(list_globs)
 
-    return bool(list_globs)
 
 
-def rawtilts_to_alignments(config: dict) -> bool:
+def rawtilts_to_alignments(config: dict) -> None:
     list_globs = []
     format_dict = {
         "IMOD": [],
@@ -78,11 +78,9 @@ def rawtilts_to_alignments(config: dict) -> bool:
                             if affine_transformation_matrix:
                                 alignment["metadata"]["affine_transformation_matrix"] = affine_transformation_matrix
                     config["alignments"].append(alignment)
-    return bool(list_globs)
 
 
-def update_tomogram_metadata(config: dict) -> bool:
-    changed = False
+def update_tomogram_metadata(config: dict) -> None:
     if tomograms := config.get("tomograms"):
         for tomogram in tomograms:
             if metadata := tomogram.get("metadata"):
@@ -100,72 +98,71 @@ def update_tomogram_metadata(config: dict) -> bool:
                 affine_transformation_matrix = metadata.pop("affine_transformation_matrix", None)
                 if affine_transformation_matrix and not np.allclose(affine_transformation_matrix, np.eye(4)):
                     ValueError("affine_transformation_matrix is not an identity matrix")
-    return changed
 
 
-def update_annotation_sources(config: dict) -> bool:
-    changed = False
+def update_annotation_sources(config: dict) -> None:
     if annotations := config.get('annotations'):
         for annotation in annotations:
             if sources := annotation.get("sources"):
-                changed = True
                 for source in sources:
                     for value in source.values():
                         value["is_portal_standard"] = False
-    return changed
 
 
-def remove_empty_fields(config: Union[list, dict]) -> bool:
-    changed = False
+def remove_empty_fields(config: Union[list, dict]) -> None:
     remove_key = []
     exclude_keys = ['annotations']
     if isinstance(config, list):
         for i in config:
             if isinstance(i, (list, dict)):
-                changed = remove_empty_fields(i)
+                remove_empty_fields(i)
                 if len(i) == 0:
                     remove_key.append(i)
         if remove_key:
-            changed = True
             for key in remove_key:
                 config.remove(key)
     elif isinstance(config, dict):
         for key, value in config.items():
             if isinstance(value, (list, dict)):
-                changed = remove_empty_fields(value)
+                remove_empty_fields(value)
                 if len(value) == 0:
                     remove_key.append(key)
         if remove_key:
-            changed = True
             for key in remove_key:
                 if key in exclude_keys:
                     continue
                 config.pop(key)
-    return changed
 
 def check_deposition(config: dict) -> bool:
     if "depositions" in config:
         return True
     raise ValueError("depositions is not in the config")
 
+
+def has_changes(file, config):
+    with open(file, 'r') as file:
+        old_config = yaml.safe_load(file)
+    return json.dumps(old_config) != json.dumps(config)
+
+
 def migrate_config(file_path):
     with open(file_path, 'r') as file:
         config = yaml.safe_load(file)
 
-    changes: list[bool] = []
     try:
-        changes.append(rawtilts_to_collection_metadata(config))
-        changes.append(rawtilts_to_alignments(config))
-        changes.append(update_tomogram_metadata(config))
-        changes.append(check_deposition(config))
+        rawtilts_to_collection_metadata(config)
+        rawtilts_to_alignments(config)
+        update_tomogram_metadata(config)
+        check_deposition(config)
+        update_annotation_sources(config)
+        remove_empty_fields(config)
     except Exception as e:
         print(f"Error in {get_relative_path(file_path)}: missing {e}")
         return
 
-    if any(changes):
-        remove_empty_fields(config)
+    if has_changes(file_path, config):
         relative_path = file_path[file_path.find("cryoet-data-portal-backend"):]
-        # print(f"modified: {relative_path}")
+        print(f"modified: {relative_path}")
         with open(file_path, 'w') as file:
             yaml.safe_dump(config, file)
 
