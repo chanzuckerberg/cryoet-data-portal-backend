@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Any
 
 from common.alignment_converter import alignment_converter_factory
 from common.config import DepositionImportConfig
-from common.finders import MultiSourceFileGlobFinder
+from common.finders import MultiSourceFileFinder
 from common.id_helper import IdentifierHelper
 from common.metadata import AlignmentMetadata
 from importers.base_importer import BaseFileImporter
@@ -43,11 +43,15 @@ class AlignmentIdentifierHelper(IdentifierHelper):
 
 
 class AlignmentImporter(BaseFileImporter):
+    """
+    The finder factory is a temp fix to allow multiple file paths to be passed to the importer. This behaviour should
+    be refactored in the future. (https://github.com/chanzuckerberg/cryoet-data-portal/issues/1142)
+    """
+
     type_key = "alignment"
     plural_key = "alignments"
-    finder_factory = MultiSourceFileGlobFinder
+    finder_factory = MultiSourceFileFinder
     has_metadata = True
-    written_metadata_files = set()
 
     def __init__(
         self,
@@ -74,7 +78,6 @@ class AlignmentImporter(BaseFileImporter):
         try:
             meta = AlignmentMetadata(self.config.fs, self.get_deposition().name, self.get_base_metadata())
             meta.write_metadata(metadata_path, self.get_extra_metadata())
-            self.written_metadata_files.add(metadata_path)
         except IOError:
             print("Skipping creating metadata for default alignment with no source tomogram")
 

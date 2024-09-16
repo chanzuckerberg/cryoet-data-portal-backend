@@ -236,7 +236,17 @@ class DefaultImporterFactory(DepositionObjectImporterFactory):
         raise Exception("Invalid source type")
 
 
-class MultiSourceFileGlobFinder(DefaultImporterFactory):
+class MultiSourceFileFinder(DefaultImporterFactory):
+    """
+    This is a special case of the DefaultImporterFactory which has a different behaviour than other ImporterFactories.
+    It is used when we have multiple files that need to be fetched for a single entity, ie all the files retrieved in a
+    single source entry are grouped together.
+    This is used for the alignment importer, where we have multiple different files that need to be fetched for a single
+    alignment.
+    This is a bit of a hacky solution, and should be refactored to be a finder.
+    (https://github.com/chanzuckerberg/cryoet-data-portal/issues/1142)
+    """
+
     def _get_instantiated_results(
         self,
         cls,
