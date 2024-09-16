@@ -16,28 +16,6 @@ else:
     BaseImporter = "BaseImporter"
 
 
-APPEND_STATIC_CONFIG: str = """
-viz_config:
-  - sources:
-      - literal:
-          value:
-            - neuroglancer
-annotation_viz:
-  - sources:
-      - literal:
-          value:
-            - neuroglancer
-key_images:
-  - sources:
-      - literal:
-          value:
-            - original
-            - snapshot
-            - thumbnail
-            - expanded
-"""
-
-
 class RunOverride:
     run_regex: re.Pattern[str]
     tiltseries: dict[str, Any] | None
@@ -95,13 +73,15 @@ class DepositionImportConfig:
         self.write_zarr: bool = True
 
         with open(config_path, "r") as conffile:
-            confdata = conffile.read() + APPEND_STATIC_CONFIG
+            confdata = conffile.read()
             config = yaml.safe_load(confdata)
 
             self.object_configs = {}
             for item in object_classes:
                 if config.get(item.plural_key):
                     self.object_configs[item.type_key] = config.pop(item.plural_key)
+                elif item_default_config := item.get_default_config():
+                    self.object_configs[item.type_key] = item_default_config
 
             # Copy the remaining standardization config keys over to this object.
             for k, v in config.get("standardization_config", {}).items():
@@ -250,6 +230,7 @@ class DepositionImportConfig:
             "frame": "{dataset_name}/{run_name}/Frames",
             "rawtilt": "{dataset_name}/{run_name}/TiltSeries",
             "collection_metadata": "{dataset_name}/{run_name}/TiltSeries",
+            "alignment": "{dataset_name}/{run_name}/Alignments",
             "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
             "annotation_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
             "run_metadata": "{dataset_name}/{run_name}/run_metadata.json",

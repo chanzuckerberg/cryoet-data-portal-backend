@@ -113,6 +113,19 @@ class BaseImporter:
                 for item in source_finder_factory.find(cls, config, metadata, **parents):
                     yield item
 
+    @classmethod
+    def get_default_config(cls) -> list[dict] | None:
+        """
+        Returns a default configuration for the importer. This value is set as default configuration for the importer
+        if no entry exists for it in the configuration.
+        Override this method in subclasses where a default configuration is required even when a user does not provide
+        a configuration.
+
+        Returns:
+        list[dict] | None: The default configuration for the importer. If no entry exists, returns None.
+        """
+        return None
+
 
 class VolumeImporter(BaseImporter):
     def __init__(
@@ -166,11 +179,9 @@ class VolumeImporter(BaseImporter):
 
 
 class BaseFileImporter(BaseImporter):
-    def import_item(self, write: bool = True):
-        fs = self.config.fs
-        output_dir = self.get_output_path()
-        dest_filename = os.path.join(output_dir, os.path.basename(self.path))
-        fs.copy(self.path, dest_filename)
+    def import_item(self) -> None:
+        dest_filename = os.path.join(self.get_output_path(), os.path.basename(self.path))
+        self.config.fs.copy(self.path, dest_filename)
 
 
 class BaseKeyPhotoImporter(BaseImporter):
