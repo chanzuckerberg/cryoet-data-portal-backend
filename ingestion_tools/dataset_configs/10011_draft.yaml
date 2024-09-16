@@ -1,22 +1,5 @@
 alignments:
 - metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
     format: IMOD
   sources:
   - source_multi_glob:
@@ -167,11 +150,24 @@ tiltseries:
       match_regex: .*
 tomograms:
 - metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
     ctf_corrected: REQUIRED
-    dates:
-      deposition_date: '1970-01-01'
-      last_modified_date: '1970-01-01'
-      release_date: '1970-01-01'
     fiducial_alignment_status: null
     is_visualization_default: true
     offset:

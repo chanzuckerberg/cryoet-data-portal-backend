@@ -5,6 +5,7 @@ https://github.com/chanzuckerberg/cryoet-data-portal/issues/997
 import glob
 import itertools
 import json
+import traceback
 from typing import Union
 
 import numpy as np
@@ -25,7 +26,6 @@ def rawtilts_to_collection_metadata(config: dict) -> None:
             if 'collection_metadata' not in config:
                 config['collection_metadata'] = [{"sources": [{"source_multi_glob": {"list_globs": []}}]}]
             config["collection_metadata"][0]["sources"][0]["source_multi_glob"]["list_globs"].extend(list_globs)
-
 
 
 def rawtilts_to_alignments(config: dict) -> None:
@@ -64,7 +64,7 @@ def rawtilts_to_alignments(config: dict) -> None:
                     # check if there is an alignment with the key in the metadata.format
                     alignment = [a for a in config.get("alignments", []) if a["metadata"]["format"] == key]
                     if alignment:
-                       alignment = alignment.pop()
+                        alignment = alignment.pop()
                     else:
                         alignment = {
                             "metadata": {"format": key},
@@ -74,7 +74,10 @@ def rawtilts_to_alignments(config: dict) -> None:
                         for i in config['tomograms']:
                             if "metadata" not in i:
                                 continue
-                            affine_transformation_matrix = i["metadata"].pop("affine_transformation_matrix", None)
+                            affine_transformation_matrix = i["metadata"].get("affine_transformation_matrix", None)
+                            if affine_transformation_matrix and np.allclose(affine_transformation_matrix,np.eye(4)):
+                                # skip if is an idenity matrix
+                                continue
                             if affine_transformation_matrix:
                                 alignment["metadata"]["affine_transformation_matrix"] = affine_transformation_matrix
                     config["alignments"].append(alignment)
@@ -84,9 +87,8 @@ def update_tomogram_metadata(config: dict) -> None:
     if tomograms := config.get("tomograms"):
         for tomogram in tomograms:
             if metadata := tomogram.get("metadata"):
-                changed = True
                 metadata["is_visualization_default"] = True
-                if not metadata["dates"]:
+                if not metadata.get("dates"):
                     try:
                         dates = config["depositions"][0]["metadata"]["dates"]
                     except (KeyError, IndexError) as ex:
@@ -95,9 +97,9 @@ def update_tomogram_metadata(config: dict) -> None:
                             "last_modified_date": '1970-01-01',
                             "release_date": '1970-01-01'}
                     metadata["dates"] = dates
-                affine_transformation_matrix = metadata.pop("affine_transformation_matrix", None)
-                if affine_transformation_matrix and not np.allclose(affine_transformation_matrix, np.eye(4)):
-                    ValueError("affine_transformation_matrix is not an identity matrix")
+                affine_transformation_matrix = metadata.get("affine_transformation_matrix", None)
+                if affine_transformation_matrix and np.allclose(affine_transformation_matrix, np.eye(4)):
+                    metadata.pop("affine_transformation_matrix")
 
 
 def update_annotation_sources(config: dict) -> None:
@@ -107,7 +109,6 @@ def update_annotation_sources(config: dict) -> None:
                 for source in sources:
                     for value in source.values():
                         value["is_portal_standard"] = False
-
 
 def remove_empty_fields(config: Union[list, dict]) -> None:
     remove_key = []
@@ -138,12 +139,10 @@ def check_deposition(config: dict) -> bool:
         return True
     raise ValueError("depositions is not in the config")
 
-
 def has_changes(file, config):
     with open(file, 'r') as file:
         old_config = yaml.safe_load(file)
     return json.dumps(old_config) != json.dumps(config)
-
 
 def migrate_config(file_path):
     with open(file_path, 'r') as file:
@@ -158,6 +157,7 @@ def migrate_config(file_path):
         remove_empty_fields(config)
     except Exception as e:
         print(f"Error in {get_relative_path(file_path)}: missing {e}")
+        print(traceback.format_exc())
         return
 
     if has_changes(file_path, config):
@@ -166,20 +166,20 @@ def migrate_config(file_path):
         with open(file_path, 'w') as file:
             yaml.safe_dump(config, file)
 
-
 def get_relative_path(file_path):
     return file_path[file_path.find("cryoet-data-portal-backend"):]
 
 
-# Update all config files
-config_files = glob.glob(
-    '/Users/trentsmith/workspace/cryoet/cryoet-data-portal-backend/ingestion_tools/dataset_configs/**/*.yaml',
-    recursive=True)
-test_config_files = glob.glob(
-    '/Users/trentsmith/workspace/cryoet/cryoet-data-portal-backend/ingestion_tools/dataset_configs/tests/**/*.yaml',
-    recursive=True)
-configs = itertools.chain(config_files, test_config_files)
-for config_file in configs:
-    if "template" in config_file:
-        continue
-    migrate_config(config_file)
+if __name__ == "__main__":
+    # Update all config files
+    config_files = glob.glob(
+        '/Users/trentsmith/workspace/cryoet/cryoet-data-portal-backend/ingestion_tools/dataset_configs/**/*.yaml',
+        recursive=True)
+    test_config_files = glob.glob(
+        '/Users/trentsmith/workspace/cryoet/cryoet-data-portal-backend/ingestion_tools/dataset_configs/tests/**/*.yaml',
+        recursive=True)
+    configs = itertools.chain(config_files, test_config_files)
+    for config_file in configs:
+        if "template" in config_file:
+            continue
+        migrate_config(config_file)

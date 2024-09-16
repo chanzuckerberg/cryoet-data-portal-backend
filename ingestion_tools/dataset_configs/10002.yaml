@@ -1,6 +1,6 @@
 alignments:
 - metadata:
-    affine_transformation_matrix:
+    affine_transformation_matrix: &id003
     - - 1
       - 0
       - 0
@@ -110,7 +110,7 @@ dataset_keyphotos:
         thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10989.gif
 datasets:
 - metadata:
-    authors: &id003
+    authors: &id004
     - ORCID: 0000-0002-4691-9501
       name: Irene de Teresa Trueba
       primary_author_status: true
@@ -230,7 +230,8 @@ tiltseries:
       match_regex: .*
 tomograms:
 - metadata:
-    authors: *id003
+    affine_transformation_matrix: *id003
+    authors: *id004
     ctf_corrected: false
     dates:
       deposition_date: '2023-04-01'

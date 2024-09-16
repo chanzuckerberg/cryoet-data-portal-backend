@@ -1,25 +1,4 @@
 # Future TODO: Create example_config.yaml file to show how to use this template.
-alignments: OPTIONAL
-- metadata:
-    affine_transformation_matrix: OPTIONAL 4x4 FLOAT MATRIX (DEFAULT 4x4 identity matrix)
-      - ... (4 FLOAT ELEMENTS)
-      - ... (4 FLOAT ELEMENTS)
-      - ... (4 FLOAT ELEMENTS)
-      - ... (4 FLOAT ELEMENTS)
-    alignment_type: REQUIRED, ENUM(LOCAL,GLOBAL), (DEFAULT, GLOBAL)
-    is_canonical: REQUIRED, BOOLEAN (DEFAULT TRUE)
-    offset: OPTIONAL
-      x: REQUIRED, INTEGER,(DEFAULT 0)
-      y: REQUIRED, INTEGER, (DEFAULT 0)
-      z: REQUIRED, INTEGER, (DEFAULT 0)
-    tilt_offset: REQUIRED, FLOAT (DEFAULT 0.0)
-    x_rotation_offset: REQUIRED, INTEGER (DEFAULT 0)
-    format: REQUIRED, ENUM(IMOD, ARETOMO3)
-    volume_dimension: OPTIONAL
-      x: REQUIRED, INTEGER
-      y: REQUIRED, INTEGER
-      z: REQUIRED, INTEGER
-  sources: SEE datasets.sources and runs.sources.parent_filters
 annotations: OPTIONAL
 - metadata: REQUIRED
     confidence: OPTIONAL
