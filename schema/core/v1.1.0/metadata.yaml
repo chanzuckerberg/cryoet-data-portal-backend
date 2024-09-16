@@ -827,7 +827,6 @@ classes:
         range: float
         ifabsent: "float(0.0)"
       affine_transformation_matrix:
-        # use the value in tomogram.affine_transformation_matrix if tomogram.afine_transformation_matrix is defined
         description: The flip or rotation transformation of this author submitted tomogram is indicated here. The default value if not present, is an identity matrix.
         range: float
         array:
