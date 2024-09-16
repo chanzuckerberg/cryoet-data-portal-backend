@@ -91,7 +91,7 @@ def update_tomogram_metadata(config: dict) -> None:
                 if not metadata.get("dates"):
                     try:
                         dates = config["depositions"][0]["metadata"]["dates"]
-                    except (KeyError, IndexError) as ex:
+                    except (KeyError, IndexError):
                         dates = {
                             "deposition_date": '1970-01-01',
                             "last_modified_date": '1970-01-01',
