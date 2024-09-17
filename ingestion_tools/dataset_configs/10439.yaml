@@ -7,7 +7,7 @@ datasets:
         - name: Bridget Carragher
           ORCID: 0000-0002-0624-5020
           corresponding_author_status: true
-      cross_references:
+      cross_references: &dataset_cross_references
         publications: 10.1109/TMI.2024.3398401
         related_database_entries: PDB-6MRD, PDB-1ZEF, PDB-6UPH, PDB-7TM3, PDB-7PKZ, PDB-6NK5
       dataset_description: This dataset is comprised of simulated tiltseries, tomograms and ground truth annotations for
@@ -37,6 +37,10 @@ annotations:
         id: GO:0016020
         name: membrane
       annotation_publications: 10.1109/TMI.2024.3398401
+      method_links: &method_links
+        - link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+          custom_name: polnet on GitHub
       annotation_software: polnet
       authors: *id001
       dates: *id002
@@ -155,6 +159,7 @@ depositions:
         annotations (oriented points, as well as segmentation masks).
       deposition_identifier: 10309
       deposition_title: CZ Imaging Institute simulated data
+      cross_references: *dataset_cross_references
       deposition_types:
         - dataset
         - annotation

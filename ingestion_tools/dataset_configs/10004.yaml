@@ -115,7 +115,7 @@ datasets:
     cell_strain:
       id: WBStrain00050783
       name: NK2476
-    cross_references:
+    cross_references: &dataset_cross_references
       publications: doi:10.1101/2023.04.28.538734
       related_database_entries: EMD-17241, EMD-17242, EMD-17243, EMD-17244, EMD-17245
     dataset_description: Partial dataset used in the ribosome subtomogram reconstruction
@@ -142,6 +142,7 @@ depositions:
     deposition_identifier: 10004
     deposition_title: "C. Elegans from Serial Lift-Out \u2013 Sampling the Molecular\
       \ Anatomy of Whole Organisms"
+    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
     - annotation
