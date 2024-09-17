@@ -2,13 +2,13 @@ stack:
   services:
     apiv2:
       image:
-        tag: sha-4cc7891
+        tag: sha-a7dd42a
       initContainers:
         # Install cerbos policies where the cerbos sidecar can grab them.
         - name: install-cerbos-policies
           image:
-            repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2
-            tag: sha-4cc7891
+            repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2/apiv2
+            tag: sha-a7dd42a
           command: ["cp", "-r", "./cerbos/", "/var/policies/"]
           volumeMounts:
             - mountPath: /var/policies
@@ -23,8 +23,8 @@ stack:
         # Run migrations
         - name: run-migrations
           image:
-            repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2
-            tag: sha-4cc7891
+            repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2/apiv2
+            tag: sha-a7dd42a
           command: ["alembic", "upgrade", "head"]
           resources:
             limits:
@@ -36,8 +36,8 @@ stack:
         # Generate random keys for decoding tokens. We don't use these keys so they don't need to be shared secrets.
         - name: gen-keypair
           image:
-            repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2
-            tag: sha-4cc7891
+            repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2/apiv2
+            tag: sha-a7dd42a
           command: ["bash", "./etc/gen_keys.sh", "/var/keys/"]
           volumeMounts:
             - mountPath: /var/keys

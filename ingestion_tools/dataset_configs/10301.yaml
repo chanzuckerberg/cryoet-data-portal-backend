@@ -177,6 +177,11 @@ annotations:
       glob_string: '{run_name}/metadata/particles/microtubule_*.star'
       is_visualization_default: true
       order: xyz
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/{run_name}.mdoc'
 dataset_keyphotos:
 - sources:
   - literal:
@@ -259,14 +264,16 @@ depositions:
     authors: *id003
     dates: *id002
     deposition_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
-      lamella of Chlamydomonas reinhardtii. Contained tomograms are partially annotated, including annotations for
-      ribosomes, nucleosomes, F1F0-ATPase, RubisCO, and microtubules.
+      lamella of Chlamydomonas reinhardtii. Contained tomograms are partially annotated,
+      including annotations for ribosomes, nucleosomes, F1F0-ATPase, RubisCO, and
+      microtubules.
     deposition_identifier: 10300
-    deposition_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
-      cryo-plasmaFIB milling
+    deposition_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared
+      using cryo-plasmaFIB milling
     cross_references: *dataset_cross_references
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:
@@ -288,7 +295,6 @@ rawtilts:
   - source_multi_glob:
       list_globs:
       - '{run_name}/{run_name}.rawtlt'
-      - '{run_name}/{run_name}.mdoc'
       - '{run_name}/AreTomo/{run_name}_dose-filt.tlt'
       - '{run_name}/AreTomo/{run_name}_dose-filt.xf'
       - '{run_name}/ctffind4/ctfphaseflip_ctffind4.txt'

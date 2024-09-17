@@ -103,9 +103,9 @@ annotations:
 - metadata:
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
+      description: MTD stellate
       id: GO:0097537
       name: Y-shaped link
-      description: MTD stellate
     annotation_publications: doi:10.1126/science.abm6704
     annotation_software: 3dmod, STOPGAP
     authors: *id001
@@ -185,6 +185,11 @@ annotations:
       glob_string: motivelists/allmotl_D_newbin2_3.star
       is_visualization_default: true
       order: xyz
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - Tomo{run_name}/raw_data/mdocs/*.mdoc
 dataset_keyphotos:
 - sources:
   - literal:
@@ -270,13 +275,15 @@ depositions:
 - metadata:
     authors: *id003
     dates: *id002
-    deposition_description: Cryo-electron tomograms of FIB-SEM lamellas of the Chlamydomonas reinhardtii ciliary base,
-      including annotations of the intraflagellar transport machinery, refined using STOPGAP.
+    deposition_description: Cryo-electron tomograms of FIB-SEM lamellas of the Chlamydomonas
+      reinhardtii ciliary base, including annotations of the intraflagellar transport
+      machinery, refined using STOPGAP.
     deposition_identifier: 10009
     deposition_title: Architecture of the Chlamydomonas reinhardtii ciliary base
     cross_references: *dataset_cross_references
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:
@@ -296,7 +303,6 @@ rawtilts:
       list_globs:
       - Tomo{run_name}/raw_data/imod_metadata/*.tlt
       - Tomo{run_name}/raw_data/imod_metadata/*.xf
-      - Tomo{run_name}/raw_data/mdocs/*.mdoc
 runs:
 - sources:
   - source_glob:
@@ -322,6 +328,7 @@ tiltseries:
     pixel_spacing: 3.42
     related_empiar_entry: EMPIAR-11078
     spherical_aberration_constant: 2.7
+    tilt_axis: 0.0
     tilt_range: &id007
       max: 60
       min: -60
@@ -329,7 +336,6 @@ tiltseries:
     tilt_step: 2.0
     tilting_scheme: Dose-symmetric
     total_flux: 100
-    tilt_axis: 0.0
   sources:
   - parent_filters:
       exclude:
@@ -349,12 +355,12 @@ tiltseries:
     pixel_spacing: 3.42
     related_empiar_entry: EMPIAR-11078
     spherical_aberration_constant: 2.7
+    tilt_axis: 0.0
     tilt_range: *id007
     tilt_series_quality: 5
     tilt_step: 2.0
     tilting_scheme: bi-directional
     total_flux: 100
-    tilt_axis: 0.0
   sources:
   - parent_filters:
       include:
@@ -371,12 +377,12 @@ tiltseries:
     pixel_spacing: 13.68
     related_empiar_entry: EMPIAR-11078
     spherical_aberration_constant: 2.7
+    tilt_axis: 0.0
     tilt_range: *id007
     tilt_series_quality: 5
     tilt_step: 2.0
     tilting_scheme: Dose-symmetric
     total_flux: 100
-    tilt_axis: 0.0
   sources:
   - parent_filters:
       include:

@@ -1,7 +1,7 @@
 """
 Fixtures for files and directories on the s3 bucket.
 Paths returned as strings (singular fixture name) or lists of strings (plural fixture name).
-Note that some of these fixtures, although session-scoped, can be re-initialized for every parameterized
+Note that some of these fixtures, although session-scoped, can be re-initialized for every parametrized
 run_name and voxel_spacing combination.
 """
 
@@ -81,19 +81,15 @@ def frames_dir(run_dir: str, filesystem: FileSystemApi) -> str:
 
 @pytest.fixture(scope="session")
 def frames_files(frames_dir: str, filesystem: FileSystemApi) -> List[str]:
-    """[Dataset]/[ExperimentRun]/Frames/[frame_name].mrc"""
+    """[Dataset]/[ExperimentRun]/Frames/*"""
     files = filesystem.glob(f"{frames_dir}/*")
-    return ["s3://" + file for file in files if "_gain" not in file]  # Exclude gain files
+    # Exclude gain files, add s3 prefix
+    refined_files = ["s3://" + file for file in files if "_gain" not in file]
+    # gain files are in the folder, but just no frames
+    if len(refined_files) == 0 and len(files) != 0:
+        pytest.skip(f"No frame files in frames directory: {frames_dir}")
 
-
-@pytest.fixture(scope="session")
-def frame_acquisition_order_file(frames_dir: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/Frames/frame_acquisition_order.json"""
-    dst = f"{frames_dir}/frame_acquisition_order.json"
-    if filesystem.exists(dst):
-        return dst
-    else:
-        pytest.fail(f"Frame acquisition order file not found: {dst}")
+    return refined_files
 
 
 # =============================================================================
@@ -113,7 +109,7 @@ def gain_dir(run_dir: str, filesystem: FileSystemApi) -> str:
 
 @pytest.fixture(scope="session")
 def gain_files(run_name: str, gain_dir: str, filesystem: FileSystemApi) -> List[str]:
-    """[Dataset]/[ExperimentRun]/Frames/[run_name]_gain*"""
+    """[Dataset]/[ExperimentRun]/Frames/[run_name]*_gain*"""
     files = filesystem.glob(f"{gain_dir}/*_gain*")
     if len(files) == 0:
         pytest.skip("No gain files found.")
@@ -176,7 +172,7 @@ def tiltseries_zarr_file(
     """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].zarr"""
     file = f"{tiltseries_dir}/{tiltseries_metadata['omezarr_dir']}"
     if not filesystem.exists(file):
-        pytest.fail(f"Tilt series OME-Zarr file not found: {file}")
+        pytest.fail(f"Tilt series Zarr file not found: {file}")
     return file
 
 
@@ -201,21 +197,21 @@ def tiltseries_mdoc_file(tiltseries_dir: str, filesystem: FileSystemApi) -> str:
 
 
 @pytest.fixture(scope="session")
-def tiltseries_rawtlt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].rawtlt"""
-    if filesystem.s3fs.exists(f"{tiltseries_basename}.rawtlt"):
-        return f"{tiltseries_basename}.rawtlt"
-    else:
-        pytest.skip("No rawtlt file found.")
+def tiltseries_tilt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].tlt"""
+    tlt_files = filesystem.glob(f"{tiltseries_basename}.tlt")
+    if len(tlt_files) == 0:
+        pytest.skip("No tlt file found.")
+    return tlt_files[0]
 
 
 @pytest.fixture(scope="session")
-def tiltseries_tlt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].tlt"""
-    if filesystem.s3fs.exists(f"{tiltseries_basename}.tlt"):
-        return f"{tiltseries_basename}.tlt"
-    else:
-        pytest.skip("No tlt file found.")
+def tiltseries_rawtilt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].rawtlt"""
+    rawtlt_files = filesystem.glob(f"{tiltseries_basename}.rawtlt")
+    if len(rawtlt_files) == 0:
+        pytest.skip("No rawtlt file found.")
+    return rawtlt_files[0]
 
 
 # =============================================================================
@@ -236,12 +232,12 @@ def tomograms_dir(run_dir: str, filesystem: FileSystemApi) -> str:
 @pytest.fixture(scope="session")
 def voxel_dir(
     tomograms_dir: str,
-    voxel_spacing: float,
+    voxel_spacing: str,
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]"""
 
-    dst = f"{tomograms_dir}/VoxelSpacing{voxel_spacing:.3f}"
+    dst = f"{tomograms_dir}/VoxelSpacing{voxel_spacing}"
 
     if filesystem.exists(dst):
         return dst
@@ -250,61 +246,77 @@ def voxel_dir(
 
 
 @pytest.fixture(scope="session")
-def canonical_tomo_dir(voxel_dir: str, filesystem: FileSystemApi) -> str:
+def tomo_dir(voxel_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram"""
     dst = f"{voxel_dir}/CanonicalTomogram"
     if filesystem.exists(dst):
         return dst
     else:
-        pytest.fail(f"CanonicalTomogram directory not found: {dst}")
+        pytest.fail(f"Tomogram directory not found: {dst}")
 
 
 @pytest.fixture(scope="session")
-def canonical_tomo_meta_file(
-    canonical_tomo_dir: str,
+def tomo_meta_file(
+    tomo_dir: str,
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/tomogram_metadata.json"""
-    dst = f"{canonical_tomo_dir}/tomogram_metadata.json"
+    dst = f"{tomo_dir}/tomogram_metadata.json"
     if filesystem.exists(dst):
         return dst
     else:
-        pytest.fail(f"Canonical tomogram metadata file not found: {dst}")
+        pytest.fail(f"Tomogram metadata file not found: {dst}")
 
 
 @pytest.fixture(scope="session")
-def canonical_tomo_mrc_file(
-    canonical_tomo_dir: str,
-    canonical_tomogram_metadata: Dict,
+def tomo_mrc_file(
+    tomo_dir: str,
+    tomogram_metadata: Dict,
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name].mrc"""
     # TODO FIXME List[str] mrc_files should really just become str mrc_file, and then adjust this fixture accordingly
-    file = f"{canonical_tomo_dir}/{canonical_tomogram_metadata['mrc_files'][0]}"
+    file = f"{tomo_dir}/{tomogram_metadata['mrc_files'][0]}"
     if not filesystem.exists(file):
-        pytest.fail(f"Canonical tomogram mrc file not found: {file}")
+        pytest.fail(f"Tomogram mrc file not found: {file}")
     return file
 
 
 @pytest.fixture(scope="session")
-def canonical_tomo_zarr_file(
-    canonical_tomo_dir: str,
-    canonical_tomogram_metadata: Dict,
+def tomo_zarr_file(
+    tomo_dir: str,
+    tomogram_metadata: Dict,
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name].zarr"""
-    file = f"{canonical_tomo_dir}/{canonical_tomogram_metadata['omezarr_dir']}"
+    file = f"{tomo_dir}/{tomogram_metadata['omezarr_dir']}"
     if not filesystem.exists(file):
-        pytest.fail(f"Canonical tomogram OME-Zarr file not found: {file}")
+        pytest.fail(f"Tomogram Zarr file not found: {file}")
     return file
 
 
+# =============================================================================
+# Run and voxel-specific fixtures, Neuroglancer
+# =============================================================================
+
+
 @pytest.fixture(scope="session")
-def canonical_tomo_basename(
-    canonical_tomo_zarr_file: str,
+def neuroglancer_dir(tomo_dir: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/"""
+    return tomo_dir
+
+
+@pytest.fixture(scope="session")
+def neuroglancer_config_file(
+    neuroglancer_dir: str,
+    filesystem: FileSystemApi,
 ) -> str:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name]"""
-    return os.path.splitext(canonical_tomo_zarr_file)[0]
+    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/neuroglancer_config.json"""
+    dst = f"{neuroglancer_dir}/neuroglancer_config.json"
+    if filesystem.exists(dst):
+        return dst
+    else:
+        pytest.fail(f"Neuroglancer config file not found: {dst}")
 
 
 # =============================================================================
@@ -329,12 +341,14 @@ def annotation_files(
     instance_seg_annotation_files: List[str],
     seg_mask_annotation_mrc_files: List[str],
 ) -> List[str]:
-    return (
+    all_files = (
         point_annotation_files
         + oriented_point_annotation_files
         + instance_seg_annotation_files
         + seg_mask_annotation_mrc_files
     )
+    assert len(all_files) > 0, "No annotation files found, but folder exists."
+    return all_files
 
 
 @pytest.fixture(scope="session")

@@ -22,6 +22,8 @@ from codegen.ingestion_config_models import (
     CellComponent,
     CellStrain,
     CellType,
+    CollectionMetadataEntity,
+    CollectionMetadataSource,
     Container,
     CrossReferences,
     Dataset,
@@ -661,6 +663,18 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
 
 
 # ==============================================================================
+# Collection Metadata Validation
+# ==============================================================================
+
+
+class ExtendedValidationCollectionMetadataEntity(CollectionMetadataEntity):
+    @field_validator("sources")
+    @classmethod
+    def valid_sources(cls: Self, source_list: List[CollectionMetadataSource]) -> List[CollectionMetadataSource]:
+        return validate_sources(source_list)
+
+
+# ==============================================================================
 # Dataset Key Photo Validation
 # ==============================================================================
 
@@ -974,6 +988,9 @@ class ExtendedValidationContainer(Container):
         super().__init__(**data)
 
     annotations: Optional[List[ExtendedValidationAnnotationEntity]] = Container.model_fields["annotations"]
+    collection_metadata: Optional[List[ExtendedValidationCollectionMetadataEntity]] = Container.model_fields[
+        "collection_metadata"
+    ]
     dataset_keyphotos: Optional[List[ExtendedValidationDatasetKeyPhotoEntity]] = Container.model_fields[
         "dataset_keyphotos"
     ]

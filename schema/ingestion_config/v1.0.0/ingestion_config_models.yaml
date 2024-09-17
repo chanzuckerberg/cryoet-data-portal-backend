@@ -54,6 +54,10 @@ classes:
         description: Annotations for the dataset.
         multivalued: true
         range: AnnotationEntity
+      collection_metadata:
+        description: Metadata for the collection.
+        range: CollectionMetadataEntity
+        multivalued: true
       dataset_keyphotos:
         description: Key photos for the dataset.
         multivalued: true
@@ -232,6 +236,9 @@ classes:
       TriangularMesh:
         description: The triangular mesh annotation source.
         range: AnnotationTriangularMeshFile
+      TriangularMeshGroup:
+        description: The triangular mesh group annotation source.
+        range: AnnotationTriangularMeshGroupFile
       parent_filters:
         description: Filters for the parent of a source.
         range: AnnotationParentFilters
@@ -253,6 +260,39 @@ classes:
       - deposition
       - run
       - voxel_spacing
+
+  CollectionMetadataEntity:
+    description: A collection_metadata entity.
+    attributes:
+      sources:
+        multivalued: true
+        range: CollectionMetadataSource
+        required: true
+
+  CollectionMetadataSource:
+    description: A collection_metadata source.
+    is_a: StandardSource
+    attributes:
+      parent_filters:
+        description: Permitted parent filters for a collection_metadata source.
+        range: CollectionMetadataParentFilters
+
+  CollectionMetadataParentFilters:
+    description: Types of parent filters for a collection_metadata source.
+    attributes:
+      include:
+        description: Include files for the parent of a collection_metadata source (regexes).
+        range: CollectionMetadataParent
+      exclude:
+        description: Exclude files for the parent of a collection_metadata source (regexes).
+        range: CollectionMetadataParent
+
+  CollectionMetadataParent:
+    description: A filter for a parent class of a collection_metadata source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - dataset
+      - deposition
+      - run
 
   DatasetEntity:
     description: A dataset entity.

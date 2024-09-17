@@ -56,7 +56,7 @@ clean-all: clean
 .PHONY: build
 build: build-ingestion-config build-api
 
-# To build-ingestion-config for the non-default version, run `make build-ingestion-config $INGESTION_CONFIG_VERSION=v2.0.0 CORE_VERSION=v2.0.0`
+# To build-ingestion-config for the non-default version, run `make build-ingestion-config INGESTION_CONFIG_VERSION=v2.0.0 CORE_VERSION=v2.0.0`
 .PHONY: build-ingestion-config
 build-ingestion-config: clean-core clean-ingestion-config
 	python3 schema.py materialize $(METADATA_YAML) $(COMMON_YAML) $(METADATA_MATERIALIZED_YAML)

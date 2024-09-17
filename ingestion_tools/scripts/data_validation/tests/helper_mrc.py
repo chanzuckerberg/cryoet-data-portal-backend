@@ -1,9 +1,41 @@
+import warnings
 from typing import Dict
 
+import allure
 import numpy as np
 import pytest
 from mrcfile import utils
 from mrcfile.mrcinterpreter import MrcInterpreter
+
+from common.fs import S3Filesystem
+
+SPACING_TOLERANCE = 0.001
+# 1 MB
+DISK_STORAGE_TOLERANCE = 2**20
+
+# Used so that other classes that skip the pytest still have a title in the allure report
+# Without repeating the allure title text in every skipped test
+MRC_ALLURE_TITLES = {
+    "test_is_volume": "MRC: spacegroup (volume type) is correct.",
+    "test_map_id_string": "MRC: filetype (MAP ID) is correct.",
+    "test_machine_stamp": "MRC: machine stamp is valid.",
+    "test_datatype": "MRC: mode (datatype) is valid.",
+    "test_map_dimension_fields": "MRC: map dimension fields are non-negative.",
+    "test_cell_dimensions": "MRC: cell dimensions are non-negative and match the voxel size.",
+    "test_nlabel": "MRC: labels are non-empty and match the nlabl field.",
+    "test_nversion": "MRC: nversion is correct.",
+    "test_exttyp": "MRC: extended header is valid.",
+    "test_axis_mapping": "MRC: has valid axis mapping.",
+    "test_unit_cell_valid_for_3d_volume": "MRC: unit cell is valid for a volume.",
+    "test_origin_is_zero": "MRC: origin is zero.",
+    "test_subimage_start_is_zero": "MRC: subimage start is zero.",
+    "test_mrc_spacing": "MRC: voxel spacing is non-negative and matches spacing.",
+}
+
+
+def mrc_allure_title(func):
+    """Decorator to automatically set the allure title to the function name."""
+    return allure.title(MRC_ALLURE_TITLES.get(func.__name__, func.__name__))(func)
 
 
 class HelperTestMRCHeader:
@@ -19,6 +51,9 @@ class HelperTestMRCHeader:
     map_id: bytes = b"MAP "
     spacegroup: int = None
     mrc_headers: Dict[str, MrcInterpreter] = None
+    spacing: float = None
+    skip_z_axis_checks: bool = False
+    permitted_mrc_datatypes: list = [np.int8, np.int16, np.float32, np.float64]
 
     def mrc_header_helper(
         self,
@@ -33,27 +68,24 @@ class HelperTestMRCHeader:
             print(f"Checking {mrc_filename}")
             check_func(interpreter.header, interpreter, mrc_filename, **kwargs)
 
+    @mrc_allure_title
     def test_is_volume(self):
-        """Check that the mrc file is a volume."""
-
         def check_is_volume(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             assert header.ispg == self.spacegroup
 
         self.mrc_header_helper(check_is_volume)
 
+    @mrc_allure_title
     def test_map_id_string(self):
-        """Check that the MAP ID is correct."""
-
         def check_map_id(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             assert header.map == self.map_id
 
         self.mrc_header_helper(check_map_id)
 
+    @mrc_allure_title
     def test_machine_stamp(self):
-        """Check that the machine stamp is valid."""
-
         def check_machine_stamp(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             try:
@@ -63,18 +95,16 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_machine_stamp)
 
-    def test_mrc_mode(self):
-        """Check that the mrc mode (dtype) is valid."""
-
-        def check_mrc_mode(header, _interpreter, _mrc_filename):
+    @mrc_allure_title
+    def test_datatype(self):
+        def check_datatype(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
-            assert utils.dtype_from_mode(header.mode) in [np.int8, np.float32]
+            assert utils.dtype_from_mode(header.mode) in self.permitted_mrc_datatypes
 
-        self.mrc_header_helper(check_mrc_mode)
+        self.mrc_header_helper(check_datatype)
 
+    @mrc_allure_title
     def test_map_dimension_fields(self):
-        """Check that the map dimension fields are non-negative."""
-
         def check_map_dimension_fields(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             for field in ["nx", "ny", "nz", "mx", "my", "mz", "ispg", "nlabl"]:
@@ -82,9 +112,8 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_map_dimension_fields)
 
+    @mrc_allure_title
     def test_cell_dimensions(self):
-        """Check that the cell dimensions are non-negative and match the voxel size."""
-
         def check_cell_dimensions(header, interpreter, _mrc_filename):
             del _mrc_filename
             assert header.cella.x >= 0 and header.cella.x == pytest.approx(
@@ -99,9 +128,8 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_cell_dimensions)
 
+    @mrc_allure_title
     def test_nlabel(self):
-        """Check that the nlabel is correct."""
-
         def check_nlabel(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             count = sum(1 for label in header.label if label.strip())
@@ -112,18 +140,16 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_nlabel)
 
+    @mrc_allure_title
     def test_nversion(self):
-        """Check that the nversion is correct."""
-
         def check_nversion(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             assert header.nversion in [20140, 20141]
 
         self.mrc_header_helper(check_nversion)
 
+    @mrc_allure_title
     def test_exttyp(self):
-        """Check that the exttyp is correct."""
-
         def check_exttyp(header, interpreter, _mrc_filename):
             del _mrc_filename
             if header.nsymbt > 0:
@@ -136,9 +162,8 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_exttyp)
 
+    @mrc_allure_title
     def test_axis_mapping(self):
-        """Check that the axis mapping is x == col, y == row, z == sec."""
-
         def check_axis_mapping(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             # Standard axis mapping
@@ -148,15 +173,14 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_axis_mapping)
 
+    @mrc_allure_title
     def test_unit_cell_valid_for_3d_volume(self):
-        """Check that the unit cell is valid for a volume."""
-
         def check_unit_cell(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             # Unit cell z-size is 1
             assert header.mx == header.nx
             assert header.my == header.ny
-            assert header.mz == header.nz
+            assert header.mz == 1 if self.skip_z_axis_checks else header.mz == header.nz
 
             # Check that the unit cell angles specify cartesian system
             assert header.cellb.alpha == 90
@@ -165,9 +189,8 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_unit_cell)
 
+    @mrc_allure_title
     def test_origin_is_zero(self):
-        """Check that the origin is zero."""
-
         def check_origin(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             # Origin is zero
@@ -177,9 +200,8 @@ class HelperTestMRCHeader:
 
         self.mrc_header_helper(check_origin)
 
+    @mrc_allure_title
     def test_subimage_start_is_zero(self):
-        """Check that the subimage start is zero for a volume."""
-
         def check_subimage_start(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             # Subimage start is zero
@@ -188,3 +210,36 @@ class HelperTestMRCHeader:
             assert header.nzstart == 0
 
         self.mrc_header_helper(check_subimage_start)
+
+    @mrc_allure_title
+    def test_disk_storage(self, filesystem: S3Filesystem):
+        def check_disk_storage(header, _interpreter, mrc_filename, filesystem: S3Filesystem):
+            del _interpreter
+            if not mrc_filename.endswith(".mrc"):
+                pytest.skip("Only checking disk storage for .mrc files (not compressed files)")
+
+            # volume size + extended header size + header size (1024 bytes)
+            expected_bytes = (
+                int(header.nx) * int(header.ny) * int(header.nz) * utils.dtype_from_mode(header.mode).itemsize
+                + int(header.nsymbt)
+                + 1024
+            )
+            actual_bytes = filesystem.s3fs.size(mrc_filename)
+            if actual_bytes != expected_bytes:
+                warnings.warn(f"Expected {expected_bytes} bytes, got {actual_bytes} bytes", stacklevel=2)
+            assert abs(expected_bytes - filesystem.s3fs.size(mrc_filename)) < DISK_STORAGE_TOLERANCE
+
+        self.mrc_header_helper(check_disk_storage, filesystem=filesystem)
+
+    ### BEGIN Voxel-spacing tests ###
+    @mrc_allure_title
+    def test_mrc_spacing(self):
+        def check_spacing(_header, interpreter, _mrc_filename):
+            del _header, _mrc_filename
+            assert interpreter.voxel_size["x"] == pytest.approx(self.spacing, abs=SPACING_TOLERANCE)
+            assert interpreter.voxel_size["y"] == pytest.approx(self.spacing, abs=SPACING_TOLERANCE)
+            assert interpreter.voxel_size["z"] == pytest.approx(self.spacing, abs=SPACING_TOLERANCE)
+
+        self.mrc_header_helper(check_spacing)
+
+    ### END Voxel-spacing tests ###

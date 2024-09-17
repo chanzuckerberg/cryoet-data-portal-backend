@@ -1,10 +1,7 @@
-import json
 import os
 import os.path
 from abc import abstractmethod
-from collections import defaultdict
-from functools import partial
-from typing import TYPE_CHECKING, Any
+from typing import Any, Callable
 
 import ndjson
 
@@ -13,74 +10,34 @@ from common import point_converter as pc
 from common.config import DepositionImportConfig
 from common.finders import BaseFinder, DepositionObjectImporterFactory, SourceGlobFinder, SourceMultiGlobFinder
 from common.fs import FileSystemApi
+from common.id_helper import IdentifierHelper
 from common.image import check_mask_for_label, make_pyramids
 from common.metadata import AnnotationMetadata
 from importers.base_importer import BaseImporter
 
-if TYPE_CHECKING:
-    from importers.voxel_spacing import VoxelSpacingImporter
-else:
-    VoxelSpacingImporter = "VoxelSpacingImporter"
 
-
-# This class is basically a global var that lets us cache metadata and identifiers for annotations,
-# so we can generate non-conflicting sequential identifiers for annotations as they're imported.
-class AnnotationIdentifierHelper:
-    next_identifier: dict[str, int] = defaultdict(partial(int, 100))
-    cached_identifiers: dict[str, int] = {}
-    loaded_vs_metadatas: dict[str, bool] = {}
+class AnnotationIdentifierHelper(IdentifierHelper):
+    @classmethod
+    def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs):
+        return parents["voxel_spacing"].get_output_path()
 
     @classmethod
-    def load_current_ids(
-        cls,
-        next_id_key: str,
-        config: DepositionImportConfig,
-        vs: VoxelSpacingImporter,
-        deposition_id: int,
-    ):
-        if next_id_key in cls.loaded_vs_metadatas:
-            return
-        metadatas = {}
-        vs_path = config.resolve_output_path("annotation", vs)
-        metadata_glob = f"{vs_path}/*.json"
-        for file in config.fs.glob(metadata_glob):
-            identifier = int(os.path.basename(file).split("-")[0])
-            if identifier >= cls.next_identifier[next_id_key]:
-                cls.next_identifier[next_id_key] = identifier + 1
-            metadata = json.loads(config.fs.open(file, "r").read())
-            metadatas[identifier] = metadata
-            current_ids_key = cls.get_ids_key(next_id_key, metadata, deposition_id)
-            cls.cached_identifiers[current_ids_key] = identifier
-        cls.loaded_vs_metadatas[next_id_key] = True
+    def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
+        vs = parents["voxel_spacing"]
+        anno_dir_path = config.resolve_output_path("annotation", vs)
+        return os.path.join(anno_dir_path, "*.json")
 
     @classmethod
-    def get_ids_key(cls, next_id_key, metadata, deposition_id):
+    def _generate_hash_key(cls, container_key: str, metadata: dict[str, Any], parents: dict[str, Any], *args, **kwargs):
         return "-".join(
             [
-                next_id_key,
-                str(metadata.get("deposition_id", deposition_id)),
+                container_key,
+                str(metadata.get("deposition_id", int(parents["deposition"].name))),
                 metadata["annotation_object"].get("description") or "",
                 metadata["annotation_object"]["name"],
                 metadata["annotation_method"],
             ],
         )
-
-    @classmethod
-    def get_identifier(cls, config: DepositionImportConfig, metadata: dict[str, Any], parents: dict[str, Any]):
-        vs = parents["voxel_spacing"]
-        next_id_key = vs.get_output_path()
-        deposition_id = int(parents["deposition"].name)
-
-        current_ids_key = cls.get_ids_key(next_id_key, metadata, deposition_id)
-        cls.load_current_ids(next_id_key, config, vs, deposition_id)
-
-        if cached_id := cls.cached_identifiers.get(current_ids_key):
-            return cached_id
-
-        return_value = cls.next_identifier[next_id_key]
-        cls.cached_identifiers[current_ids_key] = return_value
-        cls.next_identifier[next_id_key] += 1
-        return return_value
 
 
 class AnnotationImporterFactory(DepositionObjectImporterFactory):
@@ -137,6 +94,8 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             anno = InstanceSegmentationAnnotation(**instance_args)
         if shape == "TriangularMesh":
             anno = TriangularMeshAnnotation(**instance_args)
+        if shape == "TriangularMeshGroup":
+            anno = TriangularMeshAnnotationGroup(**instance_args)
         if not anno:
             raise NotImplementedError(f"Unknown shape {shape}")
         if anno.is_valid():
@@ -481,17 +440,10 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
         return len(self.get_distinct_ids(output_prefix))
 
 
-class TriangularMeshAnnotation(BaseAnnotationSource):
-    """Triangular Meshes are converted to glb format"""
-
+class AbstractTriangularMeshAnnotation(BaseAnnotationSource):
     shape = "TriangularMesh"
-    map_functions = {
-        "obj": mc.from_generic,
-        "stl": mc.from_generic,
-        "vtk": mc.from_vtk,
-        "glb": mc.from_generic,
-    }
-    valid_file_formats = list(map_functions.keys())
+    map_functions: dict[str, Callable]
+    valid_file_formats: list[str]
     output_format: str = "glb"
     scale_factor: float
 
@@ -515,12 +467,60 @@ class TriangularMeshAnnotation(BaseAnnotationSource):
         ]
         return metadata
 
-    def convert(self, output_prefix: str):
-        mesh_file = self.config.fs.localreadable(self.path)
-        output_file_name = self.get_output_filename(output_prefix, self.output_format)
-        tmp_path = self.config.fs.localwritable(output_file_name)
-        self.map_functions[self.file_format](mesh_file, tmp_path, scale_factor=self.scale_factor)
-        self.config.fs.push(tmp_path)
-
     def get_object_count(self, output_prefix: str) -> int:
         return 1
+
+    @property
+    def mesh_file(self) -> str:
+        if not hasattr(self, "_mesh_file"):
+            self._mesh_file = self.config.fs.localreadable(self.path)
+        return self._mesh_file
+
+    @abstractmethod
+    def convert(self, output_prefix: str):
+        """convert the mesh and write it to the output directory"""
+        pass
+
+
+class TriangularMeshAnnotation(AbstractTriangularMeshAnnotation):
+    """Triangular Meshes are converted to glb format"""
+
+    map_functions = {
+        "obj": mc.from_generic,
+        "stl": mc.from_generic,
+        "vtk": mc.from_vtk,
+        "glb": mc.from_generic,
+    }
+    valid_file_formats = list(map_functions.keys())
+
+    def convert(self, output_prefix: str):
+        output_file_name = self.get_output_filename(output_prefix, self.output_format)
+        output_file = self.config.fs.localwritable(output_file_name)
+        self.map_functions[self.file_format](self.mesh_file, output_file, scale_factor=self.scale_factor)
+        self.config.fs.push(output_file)
+
+
+class TriangularMeshAnnotationGroup(AbstractTriangularMeshAnnotation):
+    map_functions = {
+        "hff": mc.from_hff,
+    }
+    valid_file_formats = list(map_functions.keys())
+    mesh_name: str
+
+    def __init__(self, mesh_name: str, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.mesh_name = mesh_name
+
+    def convert(self, output_prefix: str):
+        output_file_name = self.get_output_filename(output_prefix, self.output_format)
+        output_file = self.config.fs.localwritable(output_file_name)
+        self.map_functions[self.file_format](
+            self.mesh_file,
+            output_file,
+            scale_factor=self.scale_factor,
+            name=self.mesh_name,
+        )
+        self.config.fs.push(output_file)
+
+    def is_valid(self) -> bool:
+        return bool(mc.check_mesh_name(self.mesh_file, self.mesh_name))

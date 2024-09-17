@@ -22,7 +22,7 @@ from common.fs import FileSystemApi
 # Helper functions
 # ==================================================================================================
 
-BINNING_SCALES = [0, 1, 2]
+BINNING_FACTORS = [0, 1, 2]
 
 # block sizes are experimentally tested to be the fastest
 MRC_HEADER_BLOCK_SIZE = 2 * 2**10
@@ -49,7 +49,7 @@ def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi) -> MrcInterpreter:
         pytest.fail(f"Failed to get header for {mrcbz2file}: {e}")
 
 
-def get_zarr_headers(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
+def get_zarr_metadata(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
     """Get the zattrs and zarray data for a zarr volume file."""
     file_paths = fs.glob(os.path.join(zarrfile, "*"))
     fsstore_children = {os.path.basename(file) for file in file_paths}
@@ -58,7 +58,7 @@ def get_zarr_headers(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
         pytest.fail(f"Expected zarr children: {expected_fsstore_children}, Actual zarr children: {fsstore_children}")
 
     zarrays = {}
-    for binning in BINNING_SCALES:
+    for binning in BINNING_FACTORS:
         with fs.open(os.path.join(zarrfile, str(binning), ".zarray"), "r") as f:
             zarrays[binning] = json.load(f)
     with fs.open(os.path.join(zarrfile, ".zattrs"), "r") as f:
@@ -70,7 +70,7 @@ def _get_tiff_mrc_header(file: str, filesystem: FileSystemApi):
         return (file, get_mrc_header(file, filesystem))
     elif file.endswith(".mrc.bz2"):
         return (file, get_mrc_bz2_header(file, filesystem))
-    elif file.endswith(".tif") or file.endswith(".tiff") or file.endswith(".eer"):
+    elif file.endswith((".tif", ".tiff", ".eer", ".gain")):
         with filesystem.open(file, "rb", block_size=TIFF_HEADER_BLOCK_SIZE) as f, tifffile.TiffFile(f) as tif:
             # The tif.pages must be converted to a list to actually read all the pages' data
             return (file, list(tif.pages))
@@ -92,9 +92,6 @@ def get_tiff_mrc_headers(
                 continue
             headers[header_filename] = header_data
 
-        if not headers:
-            pytest.skip("No file-format supported frames headers found")
-
         return headers
 
 
@@ -107,6 +104,18 @@ def get_tiff_mrc_headers(
 def dataset_metadata(dataset_metadata_file: str, filesystem: FileSystemApi) -> Dict:
     """Load the dataset metadata."""
     with filesystem.open(dataset_metadata_file, "r") as f:
+        return json.load(f)
+
+
+# ==================================================================================================
+# Run fixtures
+# ==================================================================================================
+
+
+@pytest.fixture(scope="session")
+def run_metadata(run_meta_file: str, filesystem: FileSystemApi) -> Dict:
+    """Load the run metadata."""
+    with filesystem.open(run_meta_file, "r") as f:
         return json.load(f)
 
 
@@ -139,14 +148,21 @@ def gain_headers(
 
 
 # ==================================================================================================
-# Tiltseries fixtures
+# Tiltseries & RawTilt / Tilt fixtures
 # ==================================================================================================
 
 
 @pytest.fixture(scope="session")
 def tiltseries_mrc_header(tiltseries_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for a tilt series."""
-    return get_mrc_header(tiltseries_mrc_file, filesystem)
+    return {tiltseries_mrc_file: get_mrc_header(tiltseries_mrc_file, filesystem)}
+
+
+@pytest.fixture(scope="session")
+def tiltseries_zarr_metadata(tiltseries_zarr_file: str, filesystem: FileSystemApi) -> Dict[str, Dict[str, Dict]]:
+    """Get the zattrs and zarray data for a zarr tilt series.
+    Dictionary structure: metadata = {tiltseries_a_filename: {"zattrs": Dict, "zarrays": Dict}"""
+    return {tiltseries_zarr_file: get_zarr_metadata(tiltseries_zarr_file, filesystem)}
 
 
 @pytest.fixture(scope="session")
@@ -163,10 +179,17 @@ def tiltseries_mdoc(tiltseries_mdoc_file: str, filesystem: FileSystemApi) -> pd.
 
 
 @pytest.fixture(scope="session")
-def tiltseries_tlt(tiltseries_tlt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
-    """Load the tiltseries tlt."""
-    with filesystem.open(tiltseries_tlt_file, "r") as f:
-        return pd.read_csv(f, sep=r"\s+", header=None, names=["tilt_angle"])
+def tiltseries_tilt(tiltseries_tilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
+    """Load the tiltseries tilt."""
+    with filesystem.open(tiltseries_tilt_file, "r") as f:
+        return pd.read_csv(f, sep=r"\s+", header=None, names=["TiltAngle"])
+
+
+@pytest.fixture(scope="session")
+def tiltseries_raw_tilt(tiltseries_rawtilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
+    """Load the tiltseries raw tilt."""
+    with filesystem.open(tiltseries_rawtilt_file, "r") as f:
+        return pd.read_csv(f, sep=r"\s+", header=None, names=["TiltAngle"])
 
 
 # ==================================================================================================
@@ -175,15 +198,36 @@ def tiltseries_tlt(tiltseries_tlt_file: str, filesystem: FileSystemApi) -> pd.Da
 
 
 @pytest.fixture(scope="session")
-def canonical_tomo_mrc_headers(canonical_tomo_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
+def tomo_mrc_header(tomo_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for a tomogram."""
-    return get_mrc_header(canonical_tomo_mrc_file, filesystem)
+    return {tomo_mrc_file: get_mrc_header(tomo_mrc_file, filesystem)}
 
 
 @pytest.fixture(scope="session")
-def canonical_tomogram_metadata(canonical_tomo_meta_file: str, filesystem: FileSystemApi) -> Dict:
-    """Load the canonical tomogram metadata."""
-    with filesystem.open(canonical_tomo_meta_file, "r") as f:
+def tomo_zarr_header(tomo_zarr_file: str, filesystem: FileSystemApi) -> Dict[str, Dict[str, Dict]]:
+    """
+    Get the zattrs and zarray data for a tomogram.
+    Dictionary structure: headers = {tomo_a_filename: {"zattrs": Dict, "zarrays": Dict}}.
+    """
+    return {tomo_zarr_file: get_zarr_metadata(tomo_zarr_file, filesystem)}
+
+
+@pytest.fixture(scope="session")
+def tomogram_metadata(tomo_meta_file: str, filesystem: FileSystemApi) -> Dict:
+    """Load the tomogram metadata."""
+    with filesystem.open(tomo_meta_file, "r") as f:
+        return json.load(f)
+
+
+# ==================================================================================================
+# Neuroglancer fixtures
+# ==================================================================================================
+
+
+@pytest.fixture(scope="session")
+def neuroglancer_config(neuroglancer_config_file: str, filesystem: FileSystemApi) -> Dict:
+    """Load the neuroglancer config."""
+    with filesystem.open(neuroglancer_config_file, "r") as f:
         return json.load(f)
 
 
@@ -273,6 +317,6 @@ def seg_mask_annotation_zarr_headers(
     """
     headers = {}
     for zarr_filename in seg_mask_annotation_zarr_files:
-        headers[zarr_filename] = get_zarr_headers(zarr_filename, filesystem)
+        headers[zarr_filename] = get_zarr_metadata(zarr_filename, filesystem)
 
     return headers

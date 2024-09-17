@@ -179,7 +179,8 @@
                 "OrientedPoint",
                 "Point",
                 "InstanceSegmentation",
-                "TriangularMesh"
+                "TriangularMesh",
+                "TriangularMeshGroup"
             ],
             "title": "AnnotationFileShapeTypeEnum",
             "type": "string"
@@ -696,6 +697,17 @@
                     ],
                     "description": "File and sourcing data for a triangular mesh annotation. Annotation that identifies an object."
                 },
+                "TriangularMeshGroup": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AnnotationTriangularMeshGroupFile"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "File and sourcing data containing one or more triangular mesh annotations."
+                },
                 "exclude": {
                     "description": "Exclude files from the source that match (regexes).",
                     "items": {
@@ -805,6 +817,60 @@
                 "file_format"
             ],
             "title": "AnnotationTriangularMeshFile",
+            "type": "object"
+        },
+        "AnnotationTriangularMeshGroupFile": {
+            "additionalProperties": false,
+            "description": "File and sourcing data containing one or more triangular mesh annotations.",
+            "properties": {
+                "file_format": {
+                    "description": "File format for this file",
+                    "type": "string"
+                },
+                "glob_string": {
+                    "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "glob_strings": {
+                    "description": "Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "is_visualization_default": {
+                    "description": "This annotation will be rendered in neuroglancer by default.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "description": "The name that identifies to a single annotation mesh among multiple meshes.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "scale_factor": {
+                    "description": "The scale factor for a mesh annotation file.",
+                    "minimum": 0,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "file_format"
+            ],
+            "title": "AnnotationTriangularMeshGroupFile",
             "type": "object"
         },
         "Any": {
@@ -1017,6 +1083,166 @@
             "title": "CellType",
             "type": "object"
         },
+        "CollectionMetadataEntity": {
+            "additionalProperties": false,
+            "description": "A collection_metadata entity.",
+            "properties": {
+                "sources": {
+                    "description": "A collection_metadata source.",
+                    "items": {
+                        "$ref": "#/$defs/CollectionMetadataSource"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "sources"
+            ],
+            "title": "CollectionMetadataEntity",
+            "type": "object"
+        },
+        "CollectionMetadataParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of a collection_metadata source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "dataset": {
+                    "description": "Include or exclude datasets for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "run": {
+                    "description": "Include or exclude runs for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "CollectionMetadataParent",
+            "type": "object"
+        },
+        "CollectionMetadataParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for a collection_metadata source.",
+            "properties": {
+                "exclude": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CollectionMetadataParent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A filter for a parent class of a collection_metadata source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CollectionMetadataParent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A filter for a parent class of a collection_metadata source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "CollectionMetadataParentFilters",
+            "type": "object"
+        },
+        "CollectionMetadataSource": {
+            "additionalProperties": false,
+            "description": "A collection_metadata source.",
+            "properties": {
+                "destination_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DestinationGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "literal": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/StandardLiteral"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A literal class with a value attribute."
+                },
+                "parent_filters": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CollectionMetadataParentFilters"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Types of parent filters for a collection_metadata source."
+                },
+                "source_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceMultiGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "CollectionMetadataSource",
+            "type": "object"
+        },
         "Container": {
             "additionalProperties": false,
             "description": "Class that models the ingestion config file.",
@@ -1025,6 +1251,16 @@
                     "description": "An annotation entity.",
                     "items": {
                         "$ref": "#/$defs/AnnotationEntity"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "collection_metadata": {
+                    "description": "A collection_metadata entity.",
+                    "items": {
+                        "$ref": "#/$defs/CollectionMetadataEntity"
                     },
                     "type": [
                         "array",
@@ -4452,6 +4688,16 @@
             "description": "An annotation entity.",
             "items": {
                 "$ref": "#/$defs/AnnotationEntity"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "collection_metadata": {
+            "description": "A collection_metadata entity.",
+            "items": {
+                "$ref": "#/$defs/CollectionMetadataEntity"
             },
             "type": [
                 "array",

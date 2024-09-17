@@ -224,6 +224,7 @@ depositions:
       cross_references: *dataset_cross_references
       deposition_types:
         - dataset
+        - annotation
     sources:
       - literal:
           value:

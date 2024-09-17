@@ -1,0 +1,20 @@
+datasets:
+- sources:
+  - literal:
+      value:
+      - '10001'
+depositions:
+- sources:
+  - literal:
+      value:
+      - '10301'
+runs:
+- sources:
+  - source_glob:
+      list_glob: tomograms/TS_*.rec
+      match_regex: .*
+      name_regex: (.*).rec
+standardization_config:
+  deposition_id: 10001
+  run_to_tomo_map_csv: null
+  source_prefix: input_bucket/10001_input

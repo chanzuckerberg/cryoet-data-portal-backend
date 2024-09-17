@@ -18,13 +18,13 @@ def point_count_consistent(
 
 def contained_in_tomo(
     annotations: Dict[str, List[Dict]],
-    canonical_tomogram_metadata: Dict,
+    tomogram_metadata: Dict,
 ):
     """Check that all points are contained within the tomogram dimensions."""
 
     for annotation_filename, points in annotations.items():
         print(f"\tFile: {annotation_filename}")
         for point in points:
-            assert 0 <= point["location"]["x"] <= canonical_tomogram_metadata["size"]["x"] - 1
-            assert 0 <= point["location"]["y"] <= canonical_tomogram_metadata["size"]["y"] - 1
-            assert 0 <= point["location"]["z"] <= canonical_tomogram_metadata["size"]["z"] - 1
+            assert 0 <= point["location"]["x"] <= tomogram_metadata["size"]["x"] - 1
+            assert 0 <= point["location"]["y"] <= tomogram_metadata["size"]["y"] - 1
+            assert 0 <= point["location"]["z"] <= tomogram_metadata["size"]["z"] - 1
