@@ -152,6 +152,7 @@ depositions:
       in T. kivui
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:

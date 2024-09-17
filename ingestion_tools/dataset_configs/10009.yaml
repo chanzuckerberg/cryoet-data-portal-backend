@@ -282,6 +282,7 @@ depositions:
     deposition_title: Architecture of the Chlamydomonas reinhardtii ciliary base
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:

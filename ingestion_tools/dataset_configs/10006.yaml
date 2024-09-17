@@ -144,6 +144,7 @@ depositions:
     deposition_title: Structures and distributions of severe acute respiratory syndrome coronavirus 2 spike proteins
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:

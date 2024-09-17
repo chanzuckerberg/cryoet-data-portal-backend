@@ -106,6 +106,7 @@ depositions:
     deposition_title: Saccharomyces cerevisiae cryo-FIB lamella tomograms
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:

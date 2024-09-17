@@ -121,6 +121,7 @@ depositions:
     deposition_title: Microtubule doublet from mouse sperm
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:
