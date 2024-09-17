@@ -14,7 +14,7 @@ from standardize_dirs import IMPORTERS
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
-from tests.s3_import.util import list_dir
+from tests.s3_import.util import get_data_from_s3, list_dir
 
 
 def get_parents(config: DepositionImportConfig) -> dict[str, BaseImporter]:
@@ -49,7 +49,7 @@ def validate_dataframe(
     s3_client: S3Client,
 ) -> Callable[[str, str, int], None]:
     def get_data_frame(bucket_name: str, path: str) -> pd.DataFrame:
-        body = s3_client.get_object(Bucket=bucket_name, Key=path)["Body"]
+        body = get_data_from_s3(s3_client, bucket_name, path)
         return pd.read_csv(body, sep=r"\s+")
 
     def validate(prefix: str, filename: str, id_prefix: int) -> None:

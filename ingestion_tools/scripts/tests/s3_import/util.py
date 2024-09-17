@@ -1,5 +1,6 @@
 from typing import List
 
+from botocore.response import StreamingBody
 from importers.dataset import DatasetImporter
 from importers.run import RunImporter
 from mypy_boto3_s3 import S3Client
@@ -27,8 +28,14 @@ def create_config(s3_fs: FileSystemApi, test_output_bucket: str, config_path: st
 
 
 def get_dataset_and_run(
-    config: DepositionImportConfig, dataset_index: int = 0, run_index: int = 0,
+    config: DepositionImportConfig,
+    dataset_index: int = 0,
+    run_index: int = 0,
 ) -> tuple[DatasetImporter, RunImporter]:
     dataset = list(DatasetImporter.finder(config))[dataset_index]
     run = list(RunImporter.finder(config, dataset=dataset))[run_index]
     return dataset, run
+
+
+def get_data_from_s3(s3_client: S3Client, bucket_name: str, path: str) -> StreamingBody:
+    return s3_client.get_object(Bucket=bucket_name, Key=path)["Body"]
