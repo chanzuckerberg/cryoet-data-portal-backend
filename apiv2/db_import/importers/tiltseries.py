@@ -1,10 +1,11 @@
 from typing import Any
 
-import importers.db.deposition
-from common import db_models
-from common.db_models import BaseModel
-from importers.db.base_importer import BaseDBImporter, DBImportConfig, StaleParentDeletionDBImporter
-from importers.db.run import RunDBImporter
+from database import models
+from db_import.importers.base_importer import BaseDBImporter, DBImportConfig, StaleParentDeletionDBImporter
+from db_import.importers.deposition import get_deposition
+from db_import.importers.run import RunDBImporter
+
+from platformics.database.models.base import Base
 
 
 class TiltSeriesDBImporter(BaseDBImporter):
@@ -26,8 +27,8 @@ class TiltSeriesDBImporter(BaseDBImporter):
         return ["run_id"]
 
     @classmethod
-    def get_db_model_class(cls) -> type[BaseModel]:
-        return db_models.TiltSeries
+    def get_db_model_class(cls) -> type[Base]:
+        return models.Tiltseries
 
     @classmethod
     def get_direct_mapped_fields(cls) -> dict[str, Any]:
@@ -72,8 +73,8 @@ class TiltSeriesDBImporter(BaseDBImporter):
             "is_aligned": self.metadata.get("is_aligned") or False,
         }
         if mrc_path := self.metadata.get("mrc_files", [None])[0]:
-            extra_data["s3_mrc_bin1"] = self.join_path(s3_prefix, self.dir_prefix, mrc_path)
-            extra_data["https_mrc_bin1"] = self.join_path(https_prefix, self.dir_prefix, mrc_path)
+            extra_data["s3_mrc_file"] = self.join_path(s3_prefix, self.dir_prefix, mrc_path)
+            extra_data["https_mrc_file"] = self.join_path(https_prefix, self.dir_prefix, mrc_path)
 
         if omezarr_path := self.metadata.get("omezarr_dir"):
             extra_data["s3_omezarr_dir"] = self.join_path(s3_prefix, self.dir_prefix, omezarr_path)
@@ -91,7 +92,7 @@ class TiltSeriesDBImporter(BaseDBImporter):
             extra_data["s3_alignment_file"] = self.join_path(s3_prefix, alignment_file_path)
             extra_data["https_alignment_file"] = self.join_path(https_prefix, alignment_file_path)
 
-        deposition = importers.db.deposition.get_deposition(self.config, self.metadata.get("deposition_id"))
+        deposition = get_deposition(self.config, self.metadata.get("deposition_id"))
         extra_data["deposition_id"] = deposition.id
 
         return extra_data

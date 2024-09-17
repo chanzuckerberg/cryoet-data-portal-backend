@@ -1,7 +1,8 @@
 from typing import Any, Callable
 
 import pytest as pytest
-from tests.db_import.populate_db import (
+from database import models
+from db_import.tests.populate_db import (
     DATASET_ID,
     RUN1_ID,
     TOMOGRAM_AUTHOR_ID,
@@ -14,8 +15,9 @@ from tests.db_import.populate_db import (
     populate_tomogram_authors,
     populate_tomograms,
 )
+from sqlalchemy.orm import Session
 
-import common.db_models as models
+from platformics.database.models import Base
 
 
 @pytest.fixture
@@ -66,12 +68,12 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "reconstruction_software": "IMOD",
         "processing": "raw",
         "processing_software": "tomo3D",
-        "tomogram_version": "1",
+        "tomogram_version": 1.0,
         "is_canonical": True,
         "s3_omezarr_dir": f"s3://test-public-bucket/{run1_vs_path}CanonicalTomogram/RUN1.zarr",
         "https_omezarr_dir": f"{http_prefix}/{run1_vs_path}CanonicalTomogram/RUN1.zarr",
-        "s3_mrc_scale0": f"s3://test-public-bucket/{run1_vs_path}CanonicalTomogram/RUN1.mrc",
-        "https_mrc_scale0": f"{http_prefix}/{run1_vs_path}CanonicalTomogram/RUN1.mrc",
+        "s3_mrc_file": f"s3://test-public-bucket/{run1_vs_path}CanonicalTomogram/RUN1.mrc",
+        "https_mrc_file": f"{http_prefix}/{run1_vs_path}CanonicalTomogram/RUN1.mrc",
         "scale0_dimensions": "980,1016,500",
         "scale1_dimensions": "490,508,250",
         "scale2_dimensions": "245,254,125",
@@ -79,17 +81,11 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "offset_x": 10,
         "offset_y": 32,
         "offset_z": 43,
-        "affine_transformation_matrix": [
-            [1, 0, 0, 0],
-            [0, 1, 0, 0],
-            [0, 0, 1, 0],
-            [0, 0, 0, 1],
-        ],
         "key_photo_url": f"{http_prefix}/{run1_vs_path}KeyPhotos/key-photo-snapshot.png",
         "key_photo_thumbnail_url": f"{http_prefix}/{run1_vs_path}KeyPhotos/key-photo-thumbnail.png",
         "neuroglancer_config": '{"foo":"bar","baz":"test"}',
-        "type": "CANONICAL",
         "deposition_id": 301,
+        "is_standardized": False,
     }
     run2_tomo = {
         "name": "RUN2",
@@ -98,15 +94,15 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "size_z": 400,
         "voxel_spacing": 3.456,
         "fiducial_alignment_status": "NON_FIDUCIAL",
-        "reconstruction_method": "Unknown",
+        "reconstruction_method": "SART",
         "reconstruction_software": "Unknown",
         "processing": "filtered",
-        "tomogram_version": "1",
+        "tomogram_version": 1.0,
         "is_canonical": True,
         "s3_omezarr_dir": f"s3://test-public-bucket/{run2_vs_path}CanonicalTomogram/RUN2.zarr",
         "https_omezarr_dir": f"{http_prefix}/{run2_vs_path}CanonicalTomogram/RUN2.zarr",
-        "s3_mrc_scale0": f"s3://test-public-bucket/{run2_vs_path}CanonicalTomogram/RUN2.mrc",
-        "https_mrc_scale0": f"{http_prefix}/{run2_vs_path}CanonicalTomogram/RUN2.mrc",
+        "s3_mrc_file": f"s3://test-public-bucket/{run2_vs_path}CanonicalTomogram/RUN2.mrc",
+        "https_mrc_file": f"{http_prefix}/{run2_vs_path}CanonicalTomogram/RUN2.mrc",
         "scale0_dimensions": "800,800,400",
         "scale1_dimensions": "400,400,200",
         "scale2_dimensions": "200,200,100",
@@ -115,8 +111,8 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "offset_y": 0,
         "offset_z": 0,
         "neuroglancer_config": "{}",
-        "type": "CANONICAL",
         "deposition_id": 300,
+        "is_standardized": False,
     }
     return {
         "RUN1": {
@@ -160,15 +156,17 @@ def expected_tomograms_authors_by_run() -> dict[str, dict[float, list[dict[str, 
 
 # Tests addition of new voxel_spacings, and updating entries already existing in db
 def test_import_voxel_spacings_and_tomograms(
+    sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
-    verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
+    verify_model: Callable[[Base, dict[str, Any]], None],
     expected_voxel_spacings_by_run: dict[str, list[dict[str, Any]]],
     expected_tomograms_by_run: dict[str, dict[float, list[dict[str, Any]]]],
 ) -> None:
-    populate_tomograms()
-    actual = verify_dataset_import(["--import-tomograms"])
-    for run in actual.runs.order_by(models.Run.name):
-        tomogram_voxel_spacings = run.tomogram_voxel_spacings.order_by(models.TomogramVoxelSpacing.voxel_spacing)
+    populate_tomograms(sync_db_session)
+    sync_db_session.commit()
+    actual = verify_dataset_import(import_tomograms=True)
+    for run in sorted(actual.runs, key=lambda x: x.name):
+        tomogram_voxel_spacings = sorted(run.tomogram_voxel_spacings, key=lambda x: x.voxel_spacing)
         expected_voxel_spacings = expected_voxel_spacings_by_run.get(run.name, [])
         assert len(tomogram_voxel_spacings) == len(expected_voxel_spacings)
 
@@ -192,14 +190,16 @@ def test_import_voxel_spacings_and_tomograms(
 
 # Tests addition of new, and update of existing tomogram authors
 def test_import_tomograms_authors(
+    sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
-    verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
+    verify_model: Callable[[Base, dict[str, Any]], None],
     expected_tomograms_authors_by_run: dict[str, dict[float, list[dict[str, Any]]]],
 ) -> None:
-    populate_tomogram_authors()
-    actual = verify_dataset_import(["--import-tomogram-authors"])
-    for run in actual.runs.order_by(models.Run.name):
-        for tomogram_voxel_spacing in run.tomogram_voxel_spacings.order_by(models.TomogramVoxelSpacing.voxel_spacing):
+    populate_tomogram_authors(sync_db_session)
+    sync_db_session.commit()
+    actual = verify_dataset_import(import_tomogram_authors=True)
+    for run in sorted(actual.runs, key=lambda x: x.name):
+        for tomogram_voxel_spacing in sorted(run.tomogram_voxel_spacings, key=lambda x: x.voxel_spacing):
             for tomogram in tomogram_voxel_spacing.tomograms:
                 expected_tomogram_authors = expected_tomograms_authors_by_run.get(run.name, {}).get(
                     tomogram_voxel_spacing.voxel_spacing,
@@ -207,26 +207,28 @@ def test_import_tomograms_authors(
                 )
                 assert len(tomogram.authors) == len(expected_tomogram_authors)
                 tomogram_authors_iter = iter(expected_tomogram_authors)
-                for author in tomogram.authors.order_by(models.TomogramAuthor.author_list_order):
+                for author in sorted(tomogram.authors, key=lambda x: x.author_list_order):
                     verify_model(author, next(tomogram_authors_iter))
 
 
 # Tests deletion of stale voxel spacing, tomograms and tomogram authors
 def test_import_voxel_spacings_tomograms_and_authors_removes_stale(
+    sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
-    verify_model: Callable[[models.BaseModel, dict[str, Any]], None],
+    verify_model: Callable[[Base, dict[str, Any]], None],
     expected_voxel_spacings_by_run: dict[str, list[dict[str, Any]]],
     expected_tomograms_by_run: dict[str, dict[float, list[dict[str, Any]]]],
     expected_tomograms_authors_by_run: dict[str, dict[float, list[dict[str, Any]]]],
 ) -> None:
-    populate_tomogram_authors()
-    populate_stale_tomogram_voxel_spacing()
-    populate_stale_tomograms()
-    populate_stale_tomogram_authors()
-    actual = verify_dataset_import(["--import-tomogram-authors"])
+    populate_tomogram_authors(sync_db_session)
+    populate_stale_tomogram_voxel_spacing(sync_db_session)
+    populate_stale_tomograms(sync_db_session)
+    populate_stale_tomogram_authors(sync_db_session)
+    sync_db_session.commit()
+    actual = verify_dataset_import(import_tomogram_authors=True)
 
-    for run in actual.runs.order_by(models.Run.name):
-        tomogram_voxel_spacings = run.tomogram_voxel_spacings.order_by(models.TomogramVoxelSpacing.voxel_spacing)
+    for run in sorted(actual.runs, key=lambda x: x.name):
+        tomogram_voxel_spacings = sorted(run.tomogram_voxel_spacings, key=lambda x: x.voxel_spacing)
         expected_voxel_spacings = expected_voxel_spacings_by_run.get(run.name, [])
         assert len(tomogram_voxel_spacings) == len(expected_voxel_spacings)
 
@@ -252,5 +254,5 @@ def test_import_voxel_spacings_tomograms_and_authors_removes_stale(
                 )
                 assert len(tomogram.authors) == len(expected_tomogram_authors)
                 tomogram_authors_iter = iter(expected_tomogram_authors)
-                for author in tomogram.authors.order_by(models.TomogramAuthor.author_list_order):
+                for author in sorted(tomogram.authors, key=lambda x: x.author_list_order):
                     verify_model(author, next(tomogram_authors_iter))

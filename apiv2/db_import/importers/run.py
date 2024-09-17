@@ -1,14 +1,15 @@
 from typing import Any, Iterator
 
-from common import db_models
-from common.db_models import BaseModel
-from importers.db.base_importer import (
+from database.models import Run
+from db_import.importers.base_importer import (
     BaseDBImporter,
     DBImportConfig,
     StaleDeletionDBImporter,
     StaleParentDeletionDBImporter,
 )
-from importers.db.dataset import DatasetDBImporter
+from db_import.importers.dataset import DatasetDBImporter
+
+from platformics.database.models import Base
 
 
 class RunDBImporter(BaseDBImporter):
@@ -35,8 +36,8 @@ class RunDBImporter(BaseDBImporter):
         return ["dataset_id", "name"]
 
     @classmethod
-    def get_db_model_class(cls) -> type[BaseModel]:
-        return db_models.Run
+    def get_db_model_class(cls) -> type[Base]:
+        return Run
 
     @classmethod
     def get_item(cls, dataset_id: int, dataset: DatasetDBImporter, config: DBImportConfig) -> "Iterator[RunDBImporter]":
@@ -53,8 +54,8 @@ class StaleRunDeletionDBImporter(StaleParentDeletionDBImporter):
         return {"dataset_id": self.parent_id}
 
     def children_tables_references(self) -> dict[str, type[StaleDeletionDBImporter]]:
-        from importers.db.tiltseries import StaleTiltSeriesDeletionDBImporter
-        from importers.db.voxel_spacing import StaleVoxelSpacingDeletionDBImporter
+        from db_import.importers.tiltseries import StaleTiltSeriesDeletionDBImporter
+        from db_import.importers.voxel_spacing import StaleVoxelSpacingDeletionDBImporter
 
         return {
             "tomogram_voxel_spacings": StaleVoxelSpacingDeletionDBImporter,

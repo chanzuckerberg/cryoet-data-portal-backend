@@ -1,14 +1,15 @@
 from typing import Any, Iterable
 
-import importers.db.deposition
-from common import db_models
-from common.db_models import BaseModel
-from importers.db.base_importer import (
+from database import models
+from db_import.importers.base_importer import (
     AuthorsStaleDeletionDBImporter,
     BaseDBImporter,
     DBImportConfig,
     StaleDeletionDBImporter,
 )
+from db_import.importers.deposition import get_deposition
+
+from platformics.database.models import Base
 
 
 class DatasetDBImporter(BaseDBImporter):
@@ -29,36 +30,34 @@ class DatasetDBImporter(BaseDBImporter):
         return ["id"]
 
     @classmethod
-    def get_db_model_class(cls) -> type[BaseModel]:
-        return db_models.Dataset
+    def get_db_model_class(cls) -> type[Base]:
+        return models.Dataset
 
     @classmethod
     def get_direct_mapped_fields(cls) -> dict[str, Any]:
         return {
-            "id": ["dataset_identifier"],
-            "title": ["dataset_title"],
-            "description": ["dataset_description"],
+            "cell_component_id": ["cell_component", "id"],
+            "cell_component_name": ["cell_component", "name"],
+            "cell_name": ["cell_type", "name"],
+            "cell_strain_id": ["cell_strain", "id"],
+            "cell_strain_name": ["cell_strain", "name"],
+            "cell_type_id": ["cell_type", "id"],
             "deposition_date": ["dates", "deposition_date"],
-            "release_date": ["dates", "release_date"],
+            "description": ["dataset_description"],
+            "grid_preparation": ["grid_preparation"],
+            "id": ["dataset_identifier"],
             "last_modified_date": ["dates", "last_modified_date"],
-            "related_database_entries": ["cross_references", "related_database_entries"],
-            "related_database_links": ["cross_references", "related_database_links"],
-            "dataset_publications": ["cross_references", "publications"],
-            "dataset_citations": ["cross_references", "dataset_citations"],
-            "sample_type": ["sample_type"],
             "organism_name": ["organism", "name"],
             "organism_taxid": ["organism", "taxonomy_id"],
-            "tissue_name": ["tissue", "name"],
-            "tissue_id": ["tissue", "id"],
-            "cell_name": ["cell_type", "name"],
-            "cell_type_id": ["cell_type", "id"],
-            "cell_strain_name": ["cell_strain", "name"],
-            "cell_strain_id": ["cell_strain", "id"],
-            "cell_component_name": ["cell_component", "name"],
-            "cell_component_id": ["cell_component", "id"],
-            "sample_preparation": ["sample_preparation"],
-            "grid_preparation": ["grid_preparation"],
             "other_setup": ["other_setup"],
+            "publications": ["cross_references", "publications"],
+            "related_database_entries": ["cross_references", "related_database_entries"],
+            "release_date": ["dates", "release_date"],
+            "sample_preparation": ["sample_preparation"],
+            "sample_type": ["sample_type"],
+            "tissue_id": ["tissue", "id"],
+            "tissue_name": ["tissue", "name"],
+            "title": ["dataset_title"],
         }
 
     def get_computed_fields(self) -> dict[str, Any]:
@@ -78,7 +77,7 @@ class DatasetDBImporter(BaseDBImporter):
         if thumbnail_path := key_photos.get("thumbnail"):
             extra_data["key_photo_thumbnail_url"] = self.join_path(https_prefix, thumbnail_path)
 
-        deposition = importers.db.deposition.get_deposition(self.config, self.metadata.get("deposition_id"))
+        deposition = get_deposition(self.config, self.metadata.get("deposition_id"))
         extra_data["deposition_id"] = deposition.id
         return extra_data
 
@@ -115,8 +114,8 @@ class DatasetAuthorDBImporter(AuthorsStaleDeletionDBImporter):
         return ["dataset_id", "name"]
 
     @classmethod
-    def get_db_model_class(cls) -> type[BaseModel]:
-        return db_models.DatasetAuthor
+    def get_db_model_class(cls) -> type[Base]:
+        return models.DatasetAuthor
 
     def get_filters(self) -> dict[str, Any]:
         return {"dataset_id": self.dataset_id}
@@ -145,8 +144,8 @@ class DatasetFundingDBImporter(StaleDeletionDBImporter):
         return ["dataset_id", "funding_agency_name"]
 
     @classmethod
-    def get_db_model_class(cls) -> type[BaseModel]:
-        return db_models.DatasetFunding
+    def get_db_model_class(cls) -> type[Base]:
+        return models.DatasetFunding
 
     def get_filters(self) -> dict[str, Any]:
         return {"dataset_id": self.dataset_id}

@@ -1,14 +1,14 @@
 import os
 from typing import Any, Iterator
 
-from common import db_models
-from importers.db.base_importer import (
+from database import models
+from db_import.importers.base_importer import (
     BaseDBImporter,
     DBImportConfig,
     StaleDeletionDBImporter,
     StaleParentDeletionDBImporter,
 )
-from importers.db.run import RunDBImporter
+from db_import.importers.run import RunDBImporter
 
 
 class TomogramVoxelSpacingDBImporter(BaseDBImporter):
@@ -33,7 +33,7 @@ class TomogramVoxelSpacingDBImporter(BaseDBImporter):
 
     @classmethod
     def get_db_model_class(cls) -> type:
-        return db_models.TomogramVoxelSpacing
+        return models.TomogramVoxelSpacing
 
     @classmethod
     def get_items(
@@ -56,8 +56,8 @@ class StaleVoxelSpacingDeletionDBImporter(StaleParentDeletionDBImporter):
         return {"run_id": self.parent_id}
 
     def children_tables_references(self) -> dict[str, type[StaleDeletionDBImporter]]:
-        from importers.db.annotation import StaleAnnotationDeletionDBImporter
-        from importers.db.tomogram import StaleTomogramDeletionDBImporter
+        from db_import.importers.annotation import StaleAnnotationDeletionDBImporter
+        from db_import.importers.tomogram import StaleTomogramDeletionDBImporter
 
         return {
             "tomograms": StaleTomogramDeletionDBImporter,
