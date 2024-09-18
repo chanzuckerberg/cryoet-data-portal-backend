@@ -711,17 +711,17 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Annotation.authors
         range: Annotation
-      slot_usage:
-        affiliation_address:
-          description: Address of the institution an annotator is affiliated with.
-        affiliation_name:
-          description: Name of the institution an annotator is affiliated with. Sometimes, one annotator may have multiple affiliations.
-        primary_author_status:
-          description:: Indicating whether an author is the main person executing the annotation, especially on manual annotation
-        name:
-          description: Full name of an annotation author (e.g. Jane Doe).
-        corresponding_author_status:
-          description: Indicating whether an annotator is the corresponding author
+    slot_usage:
+      primary_author_status:
+        description: Indicating whether an author is the main person executing the annotation, especially on manual annotation
+      affiliation_address:
+        description: Address of the institution an annotator is affiliated with.
+      affiliation_name:
+        description: Name of the institution an annotator is affiliated with. Sometimes, one annotator may have multiple affiliations.
+      name:
+        description: Full name of an annotation author (e.g. Jane Doe).
+      corresponding_author_status:
+        description: Indicating whether an annotator is the corresponding author
   AnnotationFile:
     name: AnnotationFile
     annotations:
