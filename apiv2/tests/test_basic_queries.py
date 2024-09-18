@@ -16,7 +16,7 @@ date_now = datetime.datetime.now()
 @pytest.mark.asyncio
 async def test_graphql_query(
     sync_db: SyncDB,
-    gql_client: "GQLTestClient",
+    gql_client,
 ) -> None:
     """
     Test that we can only fetch datasets from the database that we have access to
