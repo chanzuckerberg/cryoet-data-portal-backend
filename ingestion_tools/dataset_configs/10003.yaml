@@ -64,7 +64,7 @@ datasets:
     cell_strain:
       id: NCBITaxon:272634
       name: Mycoplasmoides pneumoniae M129
-    cross_references:
+    cross_references: &dataset_cross_references
       publications: doi:10.1038/s41586-022-05255-2, doi:10.1038/s41592-020-01054-7
       related_database_entries: EMPIAR-10731, EMPIAR-10499
     dataset_description: Cryo-electron tomograms of native M. pneumoniae cells. Cells
@@ -99,8 +99,10 @@ depositions:
       treated with chloramphenicol. Annotations of 70S ribosome refined using RELION and M.
     deposition_identifier: 10003
     deposition_title: Warp/M evaluation dataset - Mycoplasma pneumoniae treated with chloramphenicol
+    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:

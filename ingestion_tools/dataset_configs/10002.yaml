@@ -54,6 +54,10 @@ annotations:
       is_visualization_default: true
 - metadata:
     annotation_method: 2D CNN + 3D CNN hyperparameter tuning
+    method_links: &annotation_method_links
+      - link: https://github.com/ZauggGroup/DeePiCt
+        link_type: source_code
+        custom_name: DeePiCt on GitHub
     annotation_object:
       description: Actin DeePiCt training prediction
       id: GO:0005884

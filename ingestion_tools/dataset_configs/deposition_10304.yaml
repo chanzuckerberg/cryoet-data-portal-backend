@@ -2,6 +2,13 @@ annotations:
 - metadata:
     annotation_method: Tomogram Denoising + 3D-U-Net Based Membrane Segmentation +
       Manual Post-Processing
+    method_links:
+      - link: https://github.com/teamtomo/membrain-seg
+        link_type: source_code
+        custom_name: membrain-seg on GitHub
+      - link: https://pypi.org/project/membrain-seg/
+        link_type: other
+        custom_name: membrain-seg on PyPI
     annotation_object:
       id: GO:0016020
       name: membrane
@@ -45,6 +52,8 @@ depositions:
     deposition_description: Membrane segmentations using membrain-seg of tomograms denoised using a custom algorithm.
     deposition_identifier: 10304
     deposition_title: Membrane segmentations of denoised tomograms
+    cross_references:
+      publications: 10.1101/2024.01.05.574336
     deposition_types:
     - annotation
   sources:

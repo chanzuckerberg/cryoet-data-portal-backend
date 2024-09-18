@@ -8,6 +8,10 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: pyTOM + Keras
+    method_links: &annotation_method_links
+      - link: https://github.com/ZauggGroup/DeePiCt
+        link_type: source_code
+        custom_name: DeePiCt on GitHub
     authors: &id001
     - ORCID: 0000-0002-9903-3667
       name: Sara Goetz
@@ -61,6 +65,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: pyTOM + Keras
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -81,6 +86,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -101,6 +107,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -121,6 +128,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -141,6 +149,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -161,6 +170,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -181,6 +191,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -201,6 +212,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -221,6 +233,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -241,6 +254,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -261,6 +275,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -281,6 +296,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -301,6 +317,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -321,6 +338,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -379,7 +397,7 @@ datasets:
     cell_strain:
       id: NCBITaxon:284812
       name: Schizosaccharomyces pombe 972h-
-    cross_references:
+    cross_references: &dataset_cross_references
       publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
       related_database_entries: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420
@@ -419,8 +437,10 @@ depositions:
       localization across different species and acquisition conditions.
     deposition_identifier: 10000
     deposition_title: DeePiCt Training and Evaluation Datasets
+    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:
