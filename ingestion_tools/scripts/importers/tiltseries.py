@@ -16,6 +16,8 @@ class TiltSeriesImporter(VolumeImporter):
     plural_key = "tiltseries"
     finder_factory = DefaultImporterFactory
     has_metadata = True
+    dir_path = "{dataset_name}/{run_name}/TiltSeries"
+    metadata_path = "{dataset_name}/{run_name}/TiltSeries/tiltseries_metadata.json"
 
     def import_item(self) -> None:
         _ = self.scale_mrcfile(

@@ -14,6 +14,10 @@ class TomogramImporter(VolumeImporter):
     finder_factory = DefaultImporterFactory
     cached_find_results: dict[str, Any] = {}
     has_metadata = True
+    dir_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram"
+    metadata_path = (
+        "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/tomogram_metadata.json"
+    )
 
     def import_item(self) -> None:
         self.scale_mrcfile(

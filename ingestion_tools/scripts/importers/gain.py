@@ -10,6 +10,7 @@ class GainImporter(BaseImporter):
     plural_key = "gains"
     finder_factory = DefaultImporterFactory
     has_metadata = False
+    dir_path = "{dataset_name}/{run_name}/Gains"
 
     def import_item(self) -> None:
         fs = self.config.fs

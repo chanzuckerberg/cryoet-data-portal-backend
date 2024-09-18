@@ -9,6 +9,8 @@ class DatasetImporter(BaseImporter):
     plural_key = "datasets"
     finder_factory = DefaultImporterFactory
     has_metadata = True
+    dir_path = "{dataset_name}"
+    metadata_path = "{dataset_name}/dataset_metadata.json"
 
     def import_item(self) -> None:
         pass

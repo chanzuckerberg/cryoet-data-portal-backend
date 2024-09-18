@@ -11,6 +11,8 @@ class DepositionImporter(BaseImporter):
     plural_key = "depositions"
     finder_factory = DefaultImporterFactory
     has_metadata = True
+    dir_path = "depositions_metadata/{deposition_name}"
+    metadata_path = "depositions_metadata/{deposition_name}/deposition_metadata.json"
 
     def import_item(self) -> None:
         pass

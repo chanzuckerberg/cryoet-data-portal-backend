@@ -15,7 +15,7 @@ from importers.base_importer import BaseImporter
 
 
 class VoxelSpacingLiteralValueFinder(BaseLiteralValueFinder):
-    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any], *args, **kwargs) -> dict[float, None]:
         values = {}
         for item in self.literal_value:
             # Do we have a template to expand?
@@ -36,7 +36,7 @@ class TomogramHeaderFinder(BaseFinder):
             match_regex = ".*"
         self.match_regex = re.compile(match_regex)
 
-    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]):
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any], *args, **kwargs) -> dict[float, str]:
         # Expand voxel spacing based on tomogram metadata. This is for reverse compatibility with certain configs with run overrides.
         path = os.path.join(config.deposition_root_dir, self.list_glob.format(**glob_vars))
         responses = {}
@@ -76,6 +76,7 @@ class VoxelSpacingImporter(BaseImporter):
     plural_key = "voxel_spacings"
     finder_factory = VSImporterFactory
     has_metadata = False
+    dir_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}"
 
     def __init__(
         self,

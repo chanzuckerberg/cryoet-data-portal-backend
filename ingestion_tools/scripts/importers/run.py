@@ -11,6 +11,8 @@ class RunImporter(BaseImporter):
     plural_key = "runs"
     finder_factory = DefaultImporterFactory
     has_metadata = True
+    dir_path = "{dataset_name}/{run_name}"
+    metadata_path = "{dataset_name}/{run_name}/run_metadata.json"
 
     def __init__(
         self,

@@ -10,7 +10,9 @@ from importers.base_importer import BaseFileImporter
 
 if TYPE_CHECKING:
     TomogramImporter = "TomogramImporter"
+    TiltSeriesImporter = "TiltSeriesImporter"
 else:
+    from importers.tiltseries import TiltSeriesImporter
     from importers.tomogram import TomogramImporter
 
 
@@ -50,8 +52,10 @@ class AlignmentImporter(BaseFileImporter):
 
     type_key = "alignment"
     plural_key = "alignments"
+
     finder_factory = MultiSourceFileFinder
     has_metadata = True
+    dir_path = "{dataset_name}/{run_name}/Alignments"
 
     def __init__(
         self,
@@ -111,12 +115,14 @@ class AlignmentImporter(BaseFileImporter):
             "alignment_path": self.converter.get_alignment_path(),
             "tilt_path": self.converter.get_tilt_path(),
             "tiltx_path": self.converter.get_tiltx_path(),
+            "tiltseries_path": self.get_tiltseries_path(),
         }
         if "volume_dimension" not in self.metadata:
             extra_metadata["volume_dimension"] = self.get_tomogram_volume_dimension()
         for key, value in self.get_default_metadata().items():
             if key not in self.metadata:
                 extra_metadata[key] = value
+        print("Extra metadata: ", extra_metadata.get("tiltseries_path"))
         return extra_metadata
 
     def get_tomogram_volume_dimension(self) -> dict:
@@ -155,3 +161,9 @@ class AlignmentImporter(BaseFileImporter):
             "tilt_offset": 0,
             "x_rotation_offset": 0,
         }
+
+    def get_tiltseries_path(self) -> str | None:
+        # TODO: Clean this up to a component that can handles edge cases like where all required parents are not available
+        for ts in TiltSeriesImporter.finder(self.config, **self.parents):
+            return ts.get_metadata_path()
+        return None

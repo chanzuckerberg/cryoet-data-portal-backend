@@ -9,8 +9,8 @@ from importers.base_importer import BaseImporter
 from importers.dataset import DatasetImporter
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
+from importers.utils import IMPORTERS
 from mypy_boto3_s3 import S3Client
-from standardize_dirs import IMPORTERS
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi

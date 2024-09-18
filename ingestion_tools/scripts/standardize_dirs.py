@@ -2,74 +2,10 @@ import re
 from typing import Any, Optional
 
 import click
-from importers.alignment import AlignmentImporter
-from importers.annotation import AnnotationImporter
-from importers.collection_metadata import CollectionMetadataImporter
-from importers.dataset import DatasetImporter
-from importers.dataset_key_photo import DatasetKeyPhotoImporter
-from importers.deposition import DepositionImporter
-from importers.deposition_key_photo import DepositionKeyPhotoImporter
-from importers.frame import FrameImporter
-from importers.gain import GainImporter
-from importers.key_image import KeyImageImporter
-from importers.rawtilt import RawTiltImporter
-from importers.run import RunImporter
-from importers.tiltseries import TiltSeriesImporter
-from importers.tomogram import TomogramImporter
-from importers.visualization_config import VisualizationConfigImporter
-from importers.visualization_precompute import AnnotationVisualizationImporter
-from importers.voxel_spacing import VoxelSpacingImporter
+from importers.utils import IMPORTER_DEP_TREE, IMPORTERS
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
-
-IMPORTERS = [
-    AlignmentImporter,
-    AnnotationImporter,
-    AnnotationVisualizationImporter,
-    CollectionMetadataImporter,
-    DatasetKeyPhotoImporter,
-    DatasetImporter,
-    DepositionImporter,
-    DepositionKeyPhotoImporter,
-    FrameImporter,
-    VisualizationConfigImporter,
-    TomogramImporter,
-    GainImporter,
-    KeyImageImporter,
-    RawTiltImporter,
-    RunImporter,
-    TiltSeriesImporter,
-    TomogramImporter,
-    VoxelSpacingImporter,
-]
-IMPORTER_DICT = {cls.type_key: cls for cls in IMPORTERS}
-# NOTE - ordering of keys is important here, the importer will respect it!
-IMPORTER_DEP_TREE = {
-    DepositionImporter: {
-        DatasetImporter: {
-            RunImporter: {
-                GainImporter: {},
-                FrameImporter: {},
-                CollectionMetadataImporter: {},
-                RawTiltImporter: {},
-                TiltSeriesImporter: {},
-                AlignmentImporter: {},
-                VoxelSpacingImporter: {
-                    AnnotationImporter: {
-                        AnnotationVisualizationImporter: {},
-                    },
-                    TomogramImporter: {
-                        KeyImageImporter: {},
-                        VisualizationConfigImporter: {},
-                    },
-                },
-            },
-            DatasetKeyPhotoImporter: {},
-        },
-        DepositionKeyPhotoImporter: {},
-    },
-}
 
 
 @click.group()

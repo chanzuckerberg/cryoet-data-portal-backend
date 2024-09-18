@@ -7,6 +7,7 @@ class DepositionKeyPhotoImporter(BaseKeyPhotoImporter):
     plural_key = "deposition_keyphotos"
     finder_factory = DefaultImporterFactory
     has_metadata = False
+    dir_path = "depositions_metadata/{deposition_name}/Images"
 
     def get_image_src_path(self) -> str | None:
         return self.path

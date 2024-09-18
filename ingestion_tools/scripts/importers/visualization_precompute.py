@@ -21,6 +21,7 @@ class AnnotationVisualizationImporter(BaseImporter):
     plural_key = "annotation_viz"
     finder_factory = DefaultImporterFactory
     has_metadata = False
+    dir_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute"
 
     def import_item(self) -> None:
         precompute_importer = AnnotationPrecomputeFactory.load(self.get_annotation(), self.config)
