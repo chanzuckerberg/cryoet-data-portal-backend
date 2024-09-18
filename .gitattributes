@@ -7,4 +7,3 @@ apiv2/validators/** linguist-generated
 schema/**/*materialized*.yaml linguist-generated
 **/poetry.lock linguist-generated
 **/codegen/* linguist-generated
-
