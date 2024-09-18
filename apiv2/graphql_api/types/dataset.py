@@ -247,7 +247,6 @@ class DatasetWhereClause(TypedDict):
     s3_prefix: Optional[StrComparators] | None
     https_prefix: Optional[StrComparators] | None
     id: Optional[IntComparators] | None
-    publications: Optional[StrComparators] | None
 
 
 """
@@ -284,7 +283,6 @@ class DatasetOrderByClause(TypedDict):
     s3_prefix: Optional[orderBy] | None
     https_prefix: Optional[orderBy] | None
     id: Optional[orderBy] | None
-    publications: Optional[orderBy] | None
 
 
 """
@@ -381,9 +379,6 @@ class Dataset(EntityInterface):
     id: int = strawberry.field(
         description="An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree",
     )
-    publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
-    )
 
 
 """
@@ -442,7 +437,6 @@ class DatasetMinMaxColumns:
     s3_prefix: Optional[str] = None
     https_prefix: Optional[str] = None
     id: Optional[int] = None
-    publications: Optional[str] = None
 
 
 """
@@ -482,7 +476,6 @@ class DatasetCountColumns(enum.Enum):
     s3Prefix = "s3_prefix"
     httpsPrefix = "https_prefix"
     id = "id"
-    publications = "publications"
 
 
 """
@@ -596,9 +589,6 @@ class DatasetCreateInput:
     id: int = strawberry.field(
         description="An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree",
     )
-    publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
-    )
 
 
 @strawberry.input()
@@ -674,9 +664,6 @@ class DatasetUpdateInput:
     )
     id: Optional[int] = strawberry.field(
         description="An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree",
-    )
-    publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
     )
 
 

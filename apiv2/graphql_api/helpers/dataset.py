@@ -53,7 +53,6 @@ class DatasetGroupByOptions:
     s3_prefix: Optional[str] = None
     https_prefix: Optional[str] = None
     id: Optional[int] = None
-    publications: Optional[str] = None
 
 
 def build_dataset_groupby_output(

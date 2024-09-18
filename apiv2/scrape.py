@@ -59,11 +59,13 @@ def add(session, model, item, parents):
         local_item_data = {
             "deposition_title": remote_item["title"],
             "deposition_description": remote_item["description"],
-            "publications": remote_item["deposition_publications"],
+            "deposition_publications": remote_item["deposition_publications"],
             "related_database_entries": remote_item["related_database_entries"],
             "deposition_date": remote_item["deposition_date"],
             "release_date": remote_item["release_date"],
             "last_modified_date": remote_item["last_modified_date"],
+            "key_photo_url": remote_item["key_photo_url"],
+            "key_photo_thumbnail_url": remote_item["key_photo_thumbnail_url"],
         }
     if model == models.Annotation:
         local_item_data = {
@@ -163,7 +165,7 @@ def add(session, model, item, parents):
             "deposition_date": remote_item["deposition_date"],
             "release_date": remote_item["release_date"],
             "last_modified_date": remote_item["last_modified_date"],
-            "publications": remote_item["dataset_publications"],  # Field name change
+            "dataset_publications": remote_item["dataset_publications"],  # Field name change
             "related_database_entries": remote_item["related_database_entries"],
             "s3_prefix": remote_item["s3_prefix"],
             "https_prefix": remote_item["https_prefix"],

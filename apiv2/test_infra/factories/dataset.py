@@ -60,4 +60,3 @@ class DatasetFactory(CommonFactory):
     s3_prefix = fuzzy.FuzzyText()
     https_prefix = fuzzy.FuzzyText()
     id = fuzzy.FuzzyInteger(1, 1000)
-    publications = fuzzy.FuzzyText()

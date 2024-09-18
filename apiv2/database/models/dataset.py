@@ -86,4 +86,3 @@ class Dataset(Base):
     s3_prefix: Mapped[str] = mapped_column(String, nullable=False)
     https_prefix: Mapped[str] = mapped_column(String, nullable=False)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, primary_key=True)
-    publications: Mapped[str] = mapped_column(String, nullable=True)

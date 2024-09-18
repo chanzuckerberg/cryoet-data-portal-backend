@@ -157,13 +157,6 @@ class DatasetCreateInputValidator(BaseModel):
         ),
     ]
     id: Annotated[int, Field()]
-    publications: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-            pattern=r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)",
-        ),
-    ]
 
 
 class DatasetUpdateInputValidator(BaseModel):
@@ -307,10 +300,3 @@ class DatasetUpdateInputValidator(BaseModel):
         ),
     ]
     id: Annotated[int | None, Field()]
-    publications: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-            pattern=r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)",
-        ),
-    ]
