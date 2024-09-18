@@ -861,7 +861,6 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.annotations
         range: Deposition
-        description: If the annotation is part of a deposition, the related deposition's id
       s3_metadata_path:
         name: s3_metadata_path
         description: S3 path for the metadata json file for this annotation
@@ -1942,7 +1941,7 @@ classes:
         from_schema: cdp-dataset-config
         exact_mappings:
         - tiltseries_acceleration_voltage
-        range: int
+        range: integer
         required: true
         minimum_value: 20000
         unit:
@@ -2167,7 +2166,7 @@ classes:
         from_schema: cdp-dataset-config
         exact_mappings:
         - tiltseries_aligned_tiltseries_binning
-        range: int
+        range: integer
         minimum_value: 0
       tiltseries_frames_count:
         name: tiltseries_frames_count
