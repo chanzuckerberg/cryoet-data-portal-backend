@@ -4,10 +4,10 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import click
 import cryoet_data_portal as cdp
-from database import models
-from support.enums import tomogram_reconstruction_method_enum as reconstruction_enum
 
+from database import models
 from platformics.database.connect import init_sync_db
+from support.enums import tomogram_reconstruction_method_enum as reconstruction_enum
 
 # cleanup:
 # delete from deposition_type; delete from annotation_author; delete from dataset_author; delete from deposition_author; delete from annotation_file ; delete from annotation_shape ; delete from dataset_funding; delete from tomogram_author; delete from tomogram; delete from annotation; delete from annotation; delete from tomogram_voxel_spacing; delete from per_section_alignment_parameters; delete from per_section_parameters; delete from alignment; delete from frame; delete from tiltseries; delete from run; delete from run; delete from dataset; delete from deposition;
@@ -234,7 +234,7 @@ def add(session, model, item, parents):
             "is_aligned": remote_item["is_aligned"],
             "pixel_spacing": remote_item["pixel_spacing"],
             "aligned_tiltseries_binning": remote_item["aligned_tiltseries_binning"],
-            # "tiltseries_frames_count": remote_item["tiltseries_frames_count"], # This doesn't exist in the old api
+            "frames_count": remote_item["frames_count"],  # This doesn't exist in the old api
         }
     if model == models.TomogramAuthor:
         local_item_data = {

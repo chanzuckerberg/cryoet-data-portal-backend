@@ -1560,11 +1560,6 @@ type Dataset implements EntityInterface & Node {
 
   """The https directory path where this dataset is contained"""
   httpsPrefix: String!
-
-  """
-  Comma-separated list of DOIs for publications associated with the dataset.
-  """
-  publications: String
 }
 
 type DatasetAggregate {
@@ -1851,7 +1846,6 @@ enum DatasetCountColumns {
   s3Prefix
   httpsPrefix
   id
-  publications
 }
 
 input DatasetCreateInput {
@@ -1955,11 +1949,6 @@ input DatasetCreateInput {
   An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree
   """
   id: Int!
-
-  """
-  Comma-separated list of DOIs for publications associated with the dataset.
-  """
-  publications: String = null
 }
 
 """An edge in a connection."""
@@ -2119,7 +2108,6 @@ type DatasetGroupByOptions {
   s3Prefix: String
   httpsPrefix: String
   id: Int
-  publications: String
 }
 
 type DatasetMinMaxColumns {
@@ -2148,7 +2136,6 @@ type DatasetMinMaxColumns {
   s3Prefix: String
   httpsPrefix: String
   id: Int
-  publications: String
 }
 
 type DatasetNumericalColumns {
@@ -2184,7 +2171,6 @@ input DatasetOrderByClause {
   s3Prefix: orderBy
   httpsPrefix: orderBy
   id: orderBy
-  publications: orderBy
 }
 
 input DatasetUpdateInput {
@@ -2288,11 +2274,6 @@ input DatasetUpdateInput {
   An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree
   """
   id: Int
-
-  """
-  Comma-separated list of DOIs for publications associated with the dataset.
-  """
-  publications: String = null
 }
 
 input DatasetWhereClause {
@@ -2326,7 +2307,6 @@ input DatasetWhereClause {
   s3Prefix: StrComparators
   httpsPrefix: StrComparators
   id: IntComparators
-  publications: StrComparators
 }
 
 input DatasetWhereClauseMutations {
@@ -4207,7 +4187,7 @@ type Tiltseries implements EntityInterface & Node {
   alignedTiltseriesBinning: Int
 
   """Number of frames associated with this tiltseries"""
-  tiltseriesFramesCount: Int
+  framesCount: Int
 }
 
 type TiltseriesAggregate {
@@ -4273,7 +4253,7 @@ enum TiltseriesCountColumns {
   isAligned
   pixelSpacing
   alignedTiltseriesBinning
-  tiltseriesFramesCount
+  framesCount
   id
 }
 
@@ -4392,7 +4372,7 @@ input TiltseriesCreateInput {
   alignedTiltseriesBinning: Int = null
 
   """Number of frames associated with this tiltseries"""
-  tiltseriesFramesCount: Int = null
+  framesCount: Int = null
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -4444,7 +4424,7 @@ type TiltseriesGroupByOptions {
   isAligned: Boolean
   pixelSpacing: Float
   alignedTiltseriesBinning: Int
-  tiltseriesFramesCount: Int
+  framesCount: Int
   id: Int
 }
 
@@ -4481,7 +4461,7 @@ type TiltseriesMinMaxColumns {
   tiltSeriesQuality: Int
   pixelSpacing: Float
   alignedTiltseriesBinning: Int
-  tiltseriesFramesCount: Int
+  framesCount: Int
   id: Int
 }
 
@@ -4498,7 +4478,7 @@ type TiltseriesNumericalColumns {
   tiltSeriesQuality: Int
   pixelSpacing: Float
   alignedTiltseriesBinning: Int
-  tiltseriesFramesCount: Int
+  framesCount: Int
   id: Int
 }
 
@@ -4539,7 +4519,7 @@ input TiltseriesOrderByClause {
   isAligned: orderBy
   pixelSpacing: orderBy
   alignedTiltseriesBinning: orderBy
-  tiltseriesFramesCount: orderBy
+  framesCount: orderBy
   id: orderBy
 }
 
@@ -4658,7 +4638,7 @@ input TiltseriesUpdateInput {
   alignedTiltseriesBinning: Int = null
 
   """Number of frames associated with this tiltseries"""
-  tiltseriesFramesCount: Int = null
+  framesCount: Int = null
 
   """Numeric identifier (May change!)"""
   id: Int
@@ -4703,7 +4683,7 @@ input TiltseriesWhereClause {
   isAligned: BoolComparators
   pixelSpacing: FloatComparators
   alignedTiltseriesBinning: IntComparators
-  tiltseriesFramesCount: IntComparators
+  framesCount: IntComparators
   id: IntComparators
 }
 

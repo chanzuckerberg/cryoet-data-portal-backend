@@ -83,7 +83,7 @@ Tiltseries {
     boolean is_aligned
     float pixel_spacing
     integer aligned_tiltseries_binning
-    integer tiltseries_frames_count
+    integer frames_count
     integer id
 }
 Run {
@@ -170,7 +170,6 @@ Dataset {
     string s3_prefix
     string https_prefix
     integer id
-    string publications
 }
 DatasetFunding {
     string funding_agency_name

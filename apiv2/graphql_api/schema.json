@@ -3764,15 +3764,6 @@
                 "name": "IntComparators",
                 "ofType": null
               }
-            },
-            {
-              "defaultValue": null,
-              "name": "publications",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "StrComparators",
-                "ofType": null
-              }
             }
           ],
           "interfaces": null,
@@ -4993,7 +4984,7 @@
             },
             {
               "defaultValue": null,
-              "name": "tiltseriesFramesCount",
+              "name": "framesCount",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "IntComparators",
@@ -8003,7 +7994,7 @@
             },
             {
               "defaultValue": null,
-              "name": "tiltseriesFramesCount",
+              "name": "framesCount",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -8321,15 +8312,6 @@
             {
               "defaultValue": null,
               "name": "id",
-              "type": {
-                "kind": "ENUM",
-                "name": "orderBy",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "name": "publications",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -10759,7 +10741,7 @@
             },
             {
               "args": [],
-              "name": "tiltseriesFramesCount",
+              "name": "framesCount",
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",
@@ -11080,15 +11062,6 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "publications",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
                 "ofType": null
               }
             }
@@ -12692,15 +12665,6 @@
                   "name": "String",
                   "ofType": null
                 }
-              }
-            },
-            {
-              "args": [],
-              "name": "publications",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
               }
             }
           ],
@@ -14852,15 +14816,6 @@
                 "name": "Int",
                 "ofType": null
               }
-            },
-            {
-              "args": [],
-              "name": "publications",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
             }
           ],
           "inputFields": null,
@@ -14960,9 +14915,6 @@
             },
             {
               "name": "id"
-            },
-            {
-              "name": "publications"
             }
           ],
           "fields": null,
@@ -16439,7 +16391,7 @@
             },
             {
               "args": [],
-              "name": "tiltseriesFramesCount",
+              "name": "framesCount",
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",
@@ -17611,7 +17563,7 @@
             },
             {
               "args": [],
-              "name": "tiltseriesFramesCount",
+              "name": "framesCount",
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",
@@ -17927,7 +17879,7 @@
             },
             {
               "args": [],
-              "name": "tiltseriesFramesCount",
+              "name": "framesCount",
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",
@@ -18067,7 +18019,7 @@
               "name": "alignedTiltseriesBinning"
             },
             {
-              "name": "tiltseriesFramesCount"
+              "name": "framesCount"
             },
             {
               "name": "id"
@@ -30078,15 +30030,6 @@
                   "ofType": null
                 }
               }
-            },
-            {
-              "defaultValue": "null",
-              "name": "publications",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
             }
           ],
           "interfaces": null,
@@ -30338,15 +30281,6 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": "null",
-              "name": "publications",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
                 "ofType": null
               }
             }
@@ -32152,7 +32086,7 @@
             },
             {
               "defaultValue": "null",
-              "name": "tiltseriesFramesCount",
+              "name": "framesCount",
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",
@@ -32508,7 +32442,7 @@
             },
             {
               "defaultValue": "null",
-              "name": "tiltseriesFramesCount",
+              "name": "framesCount",
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",

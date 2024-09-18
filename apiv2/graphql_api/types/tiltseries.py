@@ -252,7 +252,7 @@ class TiltseriesWhereClause(TypedDict):
     is_aligned: Optional[BoolComparators] | None
     pixel_spacing: Optional[FloatComparators] | None
     aligned_tiltseries_binning: Optional[IntComparators] | None
-    tiltseries_frames_count: Optional[IntComparators] | None
+    frames_count: Optional[IntComparators] | None
     id: Optional[IntComparators] | None
 
 
@@ -299,7 +299,7 @@ class TiltseriesOrderByClause(TypedDict):
     is_aligned: Optional[orderBy] | None
     pixel_spacing: Optional[orderBy] | None
     aligned_tiltseries_binning: Optional[orderBy] | None
-    tiltseries_frames_count: Optional[orderBy] | None
+    frames_count: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
 
@@ -399,7 +399,7 @@ class Tiltseries(EntityInterface):
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
     )
-    tiltseries_frames_count: Optional[int] = strawberry.field(
+    frames_count: Optional[int] = strawberry.field(
         description="Number of frames associated with this tiltseries", default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
@@ -437,7 +437,7 @@ class TiltseriesNumericalColumns:
     tilt_series_quality: Optional[int] = None
     pixel_spacing: Optional[float] = None
     aligned_tiltseries_binning: Optional[int] = None
-    tiltseries_frames_count: Optional[int] = None
+    frames_count: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -480,7 +480,7 @@ class TiltseriesMinMaxColumns:
     tilt_series_quality: Optional[int] = None
     pixel_spacing: Optional[float] = None
     aligned_tiltseries_binning: Optional[int] = None
-    tiltseries_frames_count: Optional[int] = None
+    frames_count: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -529,7 +529,7 @@ class TiltseriesCountColumns(enum.Enum):
     isAligned = "is_aligned"
     pixelSpacing = "pixel_spacing"
     alignedTiltseriesBinning = "aligned_tiltseries_binning"
-    tiltseriesFramesCount = "tiltseries_frames_count"
+    framesCount = "frames_count"
     id = "id"
 
 
@@ -649,7 +649,7 @@ class TiltseriesCreateInput:
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
     )
-    tiltseries_frames_count: Optional[int] = strawberry.field(
+    frames_count: Optional[int] = strawberry.field(
         description="Number of frames associated with this tiltseries", default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
@@ -734,7 +734,7 @@ class TiltseriesUpdateInput:
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
     )
-    tiltseries_frames_count: Optional[int] = strawberry.field(
+    frames_count: Optional[int] = strawberry.field(
         description="Number of frames associated with this tiltseries", default=None,
     )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")

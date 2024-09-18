@@ -221,7 +221,7 @@ class TiltseriesCreateInputValidator(BaseModel):
             ge=0,
         ),
     ]
-    tiltseries_frames_count: Annotated[int | None, Field()]
+    frames_count: Annotated[int | None, Field()]
     id: Annotated[int, Field()]
 
 
@@ -431,5 +431,5 @@ class TiltseriesUpdateInputValidator(BaseModel):
             ge=0,
         ),
     ]
-    tiltseries_frames_count: Annotated[int | None, Field()]
+    frames_count: Annotated[int | None, Field()]
     id: Annotated[int | None, Field()]

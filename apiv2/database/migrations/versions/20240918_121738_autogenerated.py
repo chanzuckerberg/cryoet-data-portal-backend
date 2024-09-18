@@ -20,6 +20,7 @@ def upgrade() -> None:
     op.alter_column("deposition", "deposition_title", new_column_name="title")
     op.alter_column("deposition", "publications", new_column_name="deposition_publications")
     op.alter_column("dataset", "publications", new_column_name="dataset_publications")
+    op.alter_column("tiltseries", "tiltseries_frames_count", new_column_name="frames_count")
     op.add_column("deposition", sa.Column("key_photo_url", sa.String(), nullable=True))
     op.add_column("deposition", sa.Column("key_photo_thumbnail_url", sa.String(), nullable=True))
     op.alter_column(
@@ -58,6 +59,7 @@ def downgrade() -> None:
     op.alter_column("deposition", "description", new_column_name="deposition_description")
     op.alter_column("deposition", "title", new_column_name="deposition_title")
     op.alter_column("deposition", "deposition_publications", new_column_name="publications")
+    op.alter_column("tiltseries", "frames_count", new_column_name="tiltseries_frames_count")
     op.alter_column("dataset", "dataset_publications", new_column_name="publications")
     op.drop_column("deposition", "key_photo_thumbnail_url")
     op.drop_column("deposition", "key_photo_url")

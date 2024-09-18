@@ -70,5 +70,5 @@ class TiltseriesFactory(CommonFactory):
     is_aligned = factory.Faker("boolean")
     pixel_spacing = fuzzy.FuzzyFloat(1, 100)
     aligned_tiltseries_binning = fuzzy.FuzzyInteger(1, 1000)
-    tiltseries_frames_count = fuzzy.FuzzyInteger(1, 1000)
+    frames_count = fuzzy.FuzzyInteger(1, 1000)
     id = fuzzy.FuzzyInteger(1, 1000)

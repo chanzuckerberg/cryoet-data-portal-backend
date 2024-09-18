@@ -98,5 +98,5 @@ class Tiltseries(Base):
     is_aligned: Mapped[bool] = mapped_column(Boolean, nullable=False)
     pixel_spacing: Mapped[float] = mapped_column(Float, nullable=False)
     aligned_tiltseries_binning: Mapped[int] = mapped_column(Integer, nullable=True)
-    tiltseries_frames_count: Mapped[int] = mapped_column(Integer, nullable=True)
+    frames_count: Mapped[int] = mapped_column(Integer, nullable=True)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

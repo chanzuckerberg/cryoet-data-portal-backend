@@ -66,7 +66,7 @@ class TiltseriesGroupByOptions:
     is_aligned: Optional[bool] = None
     pixel_spacing: Optional[float] = None
     aligned_tiltseries_binning: Optional[int] = None
-    tiltseries_frames_count: Optional[int] = None
+    frames_count: Optional[int] = None
     id: Optional[int] = None
 
 
