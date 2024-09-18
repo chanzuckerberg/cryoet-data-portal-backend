@@ -66,12 +66,12 @@ IMPORTER_DEP_TREE = {
 }
 
 
-def get_importer_output_paths() -> dict[str, str]:
-    return {
-        **{importer.type_key: importer.dir_path for importer in IMPORTERS if importer.dir_path},
-        **{
-            f"{importer.type_key}_metadata": importer.metadata_path
-            for importer in IMPORTERS
-            if importer.has_metadata and hasattr(importer, "metadata_path") and importer.metadata_path
-        },
-    }
+def get_importer_output_path(key: str) -> str | None:
+    if key in IMPORTER_DICT:
+        return IMPORTER_DICT[key].dir_path
+    key_without_metadata = key.removesuffix("_metadata")
+    if key_without_metadata in IMPORTER_DICT:
+        importer = IMPORTER_DICT.get(key_without_metadata)
+        if importer.has_metadata and importer.metadata_path:
+            return importer.metadata_path
+    return None

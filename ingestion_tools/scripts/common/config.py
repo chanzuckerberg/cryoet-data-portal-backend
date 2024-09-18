@@ -221,11 +221,11 @@ class DepositionImportConfig:
         return self.resolve_output_path(key, obj)
 
     def resolve_output_path(self, key: str, obj: BaseImporter) -> str:
-        from importers.utils import get_importer_output_paths
+        from importers.utils import get_importer_output_path
 
         output_prefix = self.output_prefix
         glob_vars = obj.get_glob_vars()
-        path = os.path.join(output_prefix, get_importer_output_paths()[key].format(**glob_vars))
+        path = os.path.join(output_prefix, get_importer_output_path(key).format(**glob_vars))
         if ".json" in path or ".mrc" in path or ".zarr" in path:
             self.fs.makedirs(os.path.dirname(path))
         else:

@@ -30,6 +30,9 @@ class BaseImporter:
     cached_find_results: dict[str, "BaseImporter"] = {}
     finder_factory: DepositionObjectImporterFactory | None = None
     parents: dict[str, "BaseImporter"]
+    has_metadata: bool = False
+    dir_path: str = None
+    metadata_path: str = None
 
     def __init__(
         self,
