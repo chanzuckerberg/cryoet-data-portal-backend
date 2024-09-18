@@ -130,7 +130,7 @@ class DatasetCreateInputValidator(BaseModel):
     deposition_date: Annotated[datetime.datetime, Field()]
     release_date: Annotated[datetime.datetime, Field()]
     last_modified_date: Annotated[datetime.datetime, Field()]
-    publications: Annotated[
+    dataset_publications: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
@@ -157,6 +157,13 @@ class DatasetCreateInputValidator(BaseModel):
         ),
     ]
     id: Annotated[int, Field()]
+    publications: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+            pattern=r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)",
+        ),
+    ]
 
 
 class DatasetUpdateInputValidator(BaseModel):
@@ -273,7 +280,7 @@ class DatasetUpdateInputValidator(BaseModel):
     deposition_date: Annotated[datetime.datetime | None, Field()]
     release_date: Annotated[datetime.datetime | None, Field()]
     last_modified_date: Annotated[datetime.datetime | None, Field()]
-    publications: Annotated[
+    dataset_publications: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
@@ -300,3 +307,10 @@ class DatasetUpdateInputValidator(BaseModel):
         ),
     ]
     id: Annotated[int | None, Field()]
+    publications: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+            pattern=r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)",
+        ),
+    ]

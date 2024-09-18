@@ -59,7 +59,7 @@ Tiltseries {
     string https_angle_list
     string s3_gain_file
     string https_gain_file
-    float acceleration_voltage
+    integer acceleration_voltage
     float spherical_aberration_constant
     tiltseries_microscope_manufacturer_enum microscope_manufacturer
     string microscope_model
@@ -82,7 +82,7 @@ Tiltseries {
     integer tilt_series_quality
     boolean is_aligned
     float pixel_spacing
-    float aligned_tiltseries_binning
+    integer aligned_tiltseries_binning
     integer tiltseries_frames_count
     integer id
 }
@@ -120,13 +120,15 @@ Frame {
     integer id
 }
 Deposition {
-    string deposition_title
-    string deposition_description
-    string publications
+    string title
+    string description
+    string deposition_publications
     string related_database_entries
     date deposition_date
     date release_date
     date last_modified_date
+    string key_photo_url
+    string key_photo_thumbnail_url
     integer id
 }
 DepositionAuthor {
@@ -163,11 +165,12 @@ Dataset {
     date deposition_date
     date release_date
     date last_modified_date
-    string publications
+    string dataset_publications
     string related_database_entries
     string s3_prefix
     string https_prefix
     integer id
+    string publications
 }
 DatasetFunding {
     string funding_agency_name

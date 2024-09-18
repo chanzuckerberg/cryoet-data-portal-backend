@@ -39,8 +39,8 @@ class DepositionDBImporter(BaseDBImporter):
     def get_direct_mapped_fields(cls) -> dict[str, Any]:
         return {
             "id": ["deposition_identifier"],
-            "deposition_title": ["deposition_title"],
-            "deposition_description": ["deposition_description"],
+            "title": ["title"],
+            "description": ["description"],
             "deposition_date": ["dates", "deposition_date"],
             "release_date": ["dates", "release_date"],
             "last_modified_date": ["dates", "last_modified_date"],

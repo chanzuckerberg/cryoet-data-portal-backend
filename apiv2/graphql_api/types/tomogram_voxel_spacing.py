@@ -226,12 +226,14 @@ class TomogramVoxelSpacing(EntityInterface):
     tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
         load_tomogram_aggregate_rows
     )  # type:ignore
-    voxel_spacing: float = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
-    s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
-    https_prefix: str = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
+    voxel_spacing: float = strawberry.field(description="The voxel spacing for the tomograms in this set in angstroms")
+    s3_prefix: str = strawberry.field(
+        description="The S3 public bucket path where this tomogram voxel spacing is contained",
     )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    https_prefix: str = strawberry.field(
+        description="The HTTPS directory path where this tomogram voxel spacing is contained",
+    )
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """
@@ -330,26 +332,34 @@ Mutation types
 
 @strawberry.input()
 class TomogramVoxelSpacingCreateInput:
-    run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    voxel_spacing: float = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
-    s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
-    https_prefix: str = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
+    run_id: Optional[strawberry.ID] = strawberry.field(
+        description="The the run this tomogram voxel spacing is a part of", default=None,
     )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    voxel_spacing: float = strawberry.field(description="The voxel spacing for the tomograms in this set in angstroms")
+    s3_prefix: str = strawberry.field(
+        description="The S3 public bucket path where this tomogram voxel spacing is contained",
+    )
+    https_prefix: str = strawberry.field(
+        description="The HTTPS directory path where this tomogram voxel spacing is contained",
+    )
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 @strawberry.input()
 class TomogramVoxelSpacingUpdateInput:
-    run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    voxel_spacing: Optional[float] = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
+    run_id: Optional[strawberry.ID] = strawberry.field(
+        description="The the run this tomogram voxel spacing is a part of", default=None,
+    )
+    voxel_spacing: Optional[float] = strawberry.field(
+        description="The voxel spacing for the tomograms in this set in angstroms",
+    )
     s3_prefix: Optional[str] = strawberry.field(
-        description="Path to a directory containing data for this entity as an S3 url",
+        description="The S3 public bucket path where this tomogram voxel spacing is contained",
     )
     https_prefix: Optional[str] = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
+        description="The HTTPS directory path where this tomogram voxel spacing is contained",
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """

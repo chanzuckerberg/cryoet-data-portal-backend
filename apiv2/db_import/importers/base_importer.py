@@ -228,7 +228,12 @@ class StaleDeletionDBImporter(BaseDBImporter):
             session.add(db_obj)
 
         for stale_obj in records_to_delete:
-            logger.info("Deleting record of %s with id=%d and key=%s", klass, stale_obj.id, self.get_hash_value(stale_obj))
+            logger.info(
+                "Deleting record of %s with id=%d and key=%s",
+                klass,
+                stale_obj.id,
+                self.get_hash_value(stale_obj),
+            )
             session.delete(stale_obj)
         session.flush()
         return db_obj

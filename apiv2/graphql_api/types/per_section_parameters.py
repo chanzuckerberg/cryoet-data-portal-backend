@@ -153,7 +153,7 @@ Define PerSectionParameters type
 """
 
 
-@strawberry.type(description="Record how frames get mapped to TiltSeries")
+@strawberry.type(description="Record how frames get mapped to Tiltseries")
 class PerSectionParameters(EntityInterface):
     frame: Optional[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]] = load_frame_rows  # type:ignore
     frame_id: int
@@ -165,7 +165,7 @@ class PerSectionParameters(EntityInterface):
     defocus: Optional[float] = strawberry.field(description="defocus amount", default=None)
     astigmatism: Optional[float] = strawberry.field(description="Astigmatism amount for this frame", default=None)
     astigmatic_angle: Optional[float] = strawberry.field(description="Angle of ast", default=None)
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """
@@ -274,7 +274,7 @@ class PerSectionParametersCreateInput:
     defocus: Optional[float] = strawberry.field(description="defocus amount", default=None)
     astigmatism: Optional[float] = strawberry.field(description="Astigmatism amount for this frame", default=None)
     astigmatic_angle: Optional[float] = strawberry.field(description="Angle of ast", default=None)
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 @strawberry.input()
@@ -285,7 +285,7 @@ class PerSectionParametersUpdateInput:
     defocus: Optional[float] = strawberry.field(description="defocus amount", default=None)
     astigmatism: Optional[float] = strawberry.field(description="Astigmatism amount for this frame", default=None)
     astigmatic_angle: Optional[float] = strawberry.field(description="Angle of ast", default=None)
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """

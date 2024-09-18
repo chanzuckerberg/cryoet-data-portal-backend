@@ -407,12 +407,10 @@ class Run(EntityInterface):
     tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
         load_tomogram_aggregate_rows
     )  # type:ignore
-    name: str = strawberry.field(description="Name of a run")
-    s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
-    https_prefix: str = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
-    )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    name: str = strawberry.field(description="Short name for this experiment run")
+    s3_prefix: str = strawberry.field(description="The S3 public bucket path where this run is contained")
+    https_prefix: str = strawberry.field(description="The HTTPS directory path where this run is contained url")
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """
@@ -510,26 +508,22 @@ Mutation types
 
 @strawberry.input()
 class RunCreateInput:
-    dataset_id: strawberry.ID = strawberry.field(description="An author of a dataset")
-    name: str = strawberry.field(description="Name of a run")
-    s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
-    https_prefix: str = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
-    )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    dataset_id: strawberry.ID = strawberry.field(description="Dataset that this run is a part of")
+    name: str = strawberry.field(description="Short name for this experiment run")
+    s3_prefix: str = strawberry.field(description="The S3 public bucket path where this run is contained")
+    https_prefix: str = strawberry.field(description="The HTTPS directory path where this run is contained url")
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 @strawberry.input()
 class RunUpdateInput:
-    dataset_id: Optional[strawberry.ID] = strawberry.field(description="An author of a dataset")
-    name: Optional[str] = strawberry.field(description="Name of a run")
-    s3_prefix: Optional[str] = strawberry.field(
-        description="Path to a directory containing data for this entity as an S3 url",
-    )
+    dataset_id: Optional[strawberry.ID] = strawberry.field(description="Dataset that this run is a part of")
+    name: Optional[str] = strawberry.field(description="Short name for this experiment run")
+    s3_prefix: Optional[str] = strawberry.field(description="The S3 public bucket path where this run is contained")
     https_prefix: Optional[str] = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
+        description="The HTTPS directory path where this run is contained url",
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """

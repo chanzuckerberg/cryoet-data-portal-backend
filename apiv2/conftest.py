@@ -66,6 +66,7 @@ def get_db_uri(
     db_uri = f"{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
     return db_uri
 
+
 @pytest.fixture()
 def test_db_uri(test_db: NoopExecutor) -> str:
 

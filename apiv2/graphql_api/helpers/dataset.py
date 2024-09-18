@@ -48,11 +48,12 @@ class DatasetGroupByOptions:
     deposition_date: Optional[datetime.datetime] = None
     release_date: Optional[datetime.datetime] = None
     last_modified_date: Optional[datetime.datetime] = None
-    publications: Optional[str] = None
+    dataset_publications: Optional[str] = None
     related_database_entries: Optional[str] = None
     s3_prefix: Optional[str] = None
     https_prefix: Optional[str] = None
     id: Optional[int] = None
+    publications: Optional[str] = None
 
 
 def build_dataset_groupby_output(

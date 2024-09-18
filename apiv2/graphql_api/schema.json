@@ -481,7 +481,7 @@
                   }
                 }
               ],
-              "name": "datasetFunding",
+              "name": "datasetFundedByThisSource",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -1334,7 +1334,7 @@
                   }
                 }
               ],
-              "name": "datasetFundingAggregate",
+              "name": "datasetFundedByThisSourceAggregate",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -3722,7 +3722,7 @@
             },
             {
               "defaultValue": null,
-              "name": "publications",
+              "name": "datasetPublications",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "StrComparators",
@@ -3762,6 +3762,15 @@
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "IntComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "publications",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "StrComparators",
                 "ofType": null
               }
             }
@@ -3840,7 +3849,7 @@
             },
             {
               "defaultValue": null,
-              "name": "depositionTitle",
+              "name": "title",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "StrComparators",
@@ -3849,7 +3858,7 @@
             },
             {
               "defaultValue": null,
-              "name": "depositionDescription",
+              "name": "description",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "StrComparators",
@@ -3867,7 +3876,7 @@
             },
             {
               "defaultValue": null,
-              "name": "publications",
+              "name": "depositionPublications",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "StrComparators",
@@ -3907,6 +3916,24 @@
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "DatetimeComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "keyPhotoUrl",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "StrComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "keyPhotoThumbnailUrl",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "StrComparators",
                 "ofType": null
               }
             },
@@ -4753,7 +4780,7 @@
               "name": "accelerationVoltage",
               "type": {
                 "kind": "INPUT_OBJECT",
-                "name": "FloatComparators",
+                "name": "IntComparators",
                 "ofType": null
               }
             },
@@ -4960,7 +4987,7 @@
               "name": "alignedTiltseriesBinning",
               "type": {
                 "kind": "INPUT_OBJECT",
-                "name": "FloatComparators",
+                "name": "IntComparators",
                 "ofType": null
               }
             },
@@ -7524,7 +7551,7 @@
           "inputFields": [
             {
               "defaultValue": null,
-              "name": "depositionTitle",
+              "name": "title",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -7533,7 +7560,7 @@
             },
             {
               "defaultValue": null,
-              "name": "depositionDescription",
+              "name": "description",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -7542,7 +7569,7 @@
             },
             {
               "defaultValue": null,
-              "name": "publications",
+              "name": "depositionPublications",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -7579,6 +7606,24 @@
             {
               "defaultValue": null,
               "name": "lastModifiedDate",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "keyPhotoUrl",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "keyPhotoThumbnailUrl",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -8239,7 +8284,7 @@
             },
             {
               "defaultValue": null,
-              "name": "publications",
+              "name": "datasetPublications",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -8276,6 +8321,15 @@
             {
               "defaultValue": null,
               "name": "id",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "publications",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -10281,7 +10335,7 @@
           "fields": [
             {
               "args": [],
-              "name": "depositionTitle",
+              "name": "title",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -10290,7 +10344,7 @@
             },
             {
               "args": [],
-              "name": "depositionDescription",
+              "name": "description",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -10299,7 +10353,7 @@
             },
             {
               "args": [],
-              "name": "publications",
+              "name": "depositionPublications",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -10339,6 +10393,24 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "DateTime",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "keyPhotoUrl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "keyPhotoThumbnailUrl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -10474,7 +10546,7 @@
               "name": "accelerationVoltage",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -10681,7 +10753,7 @@
               "name": "alignedTiltseriesBinning",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -10968,7 +11040,7 @@
             },
             {
               "args": [],
-              "name": "publications",
+              "name": "datasetPublications",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -11008,6 +11080,15 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "publications",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             }
@@ -12571,7 +12652,7 @@
             },
             {
               "args": [],
-              "name": "publications",
+              "name": "datasetPublications",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -12611,6 +12692,15 @@
                   "name": "String",
                   "ofType": null
                 }
+              }
+            },
+            {
+              "args": [],
+              "name": "publications",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               }
             }
           ],
@@ -13327,7 +13417,7 @@
             },
             {
               "args": [],
-              "name": "depositionTitle",
+              "name": "title",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -13340,7 +13430,7 @@
             },
             {
               "args": [],
-              "name": "depositionDescription",
+              "name": "description",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -13448,7 +13538,7 @@
             },
             {
               "args": [],
-              "name": "publications",
+              "name": "depositionPublications",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -13501,6 +13591,24 @@
                   "name": "DateTime",
                   "ofType": null
                 }
+              }
+            },
+            {
+              "args": [],
+              "name": "keyPhotoUrl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "keyPhotoThumbnailUrl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               }
             }
           ],
@@ -14702,7 +14810,7 @@
             },
             {
               "args": [],
-              "name": "publications",
+              "name": "datasetPublications",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -14742,6 +14850,15 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "publications",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             }
@@ -14830,7 +14947,7 @@
               "name": "lastModifiedDate"
             },
             {
-              "name": "publications"
+              "name": "datasetPublications"
             },
             {
               "name": "relatedDatabaseEntries"
@@ -14843,6 +14960,9 @@
             },
             {
               "name": "id"
+            },
+            {
+              "name": "publications"
             }
           ],
           "fields": null,
@@ -16037,7 +16157,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "SCALAR",
-                  "name": "Float",
+                  "name": "Int",
                   "ofType": null
                 }
               }
@@ -16313,7 +16433,7 @@
               "name": "alignedTiltseriesBinning",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -17386,7 +17506,7 @@
               "name": "accelerationVoltage",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -17485,7 +17605,7 @@
               "name": "alignedTiltseriesBinning",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -17612,7 +17732,7 @@
               "name": "accelerationVoltage",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -17801,7 +17921,7 @@
               "name": "alignedTiltseriesBinning",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -25693,7 +25813,7 @@
           "fields": [
             {
               "args": [],
-              "name": "depositionTitle",
+              "name": "title",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -25702,7 +25822,7 @@
             },
             {
               "args": [],
-              "name": "depositionDescription",
+              "name": "description",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -25711,7 +25831,7 @@
             },
             {
               "args": [],
-              "name": "publications",
+              "name": "depositionPublications",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -25756,6 +25876,24 @@
             },
             {
               "args": [],
+              "name": "keyPhotoUrl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "keyPhotoThumbnailUrl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "id",
               "type": {
                 "kind": "SCALAR",
@@ -25794,16 +25932,16 @@
               "name": "tomograms"
             },
             {
-              "name": "depositionTitle"
+              "name": "title"
             },
             {
-              "name": "depositionDescription"
+              "name": "description"
             },
             {
               "name": "depositionTypes"
             },
             {
-              "name": "publications"
+              "name": "depositionPublications"
             },
             {
               "name": "relatedDatabaseEntries"
@@ -25816,6 +25954,12 @@
             },
             {
               "name": "lastModifiedDate"
+            },
+            {
+              "name": "keyPhotoUrl"
+            },
+            {
+              "name": "keyPhotoThumbnailUrl"
             },
             {
               "name": "id"
@@ -29880,7 +30024,7 @@
             },
             {
               "defaultValue": "null",
-              "name": "publications",
+              "name": "datasetPublications",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -29933,6 +30077,15 @@
                   "name": "Int",
                   "ofType": null
                 }
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "publications",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               }
             }
           ],
@@ -30145,7 +30298,7 @@
             },
             {
               "defaultValue": "null",
-              "name": "publications",
+              "name": "datasetPublications",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -30185,6 +30338,15 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "publications",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             }
@@ -30468,7 +30630,7 @@
           "inputFields": [
             {
               "defaultValue": null,
-              "name": "depositionTitle",
+              "name": "title",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -30481,7 +30643,7 @@
             },
             {
               "defaultValue": null,
-              "name": "depositionDescription",
+              "name": "description",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -30494,7 +30656,7 @@
             },
             {
               "defaultValue": "null",
-              "name": "publications",
+              "name": "depositionPublications",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -30547,6 +30709,24 @@
                   "name": "DateTime",
                   "ofType": null
                 }
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "keyPhotoUrl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "keyPhotoThumbnailUrl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               }
             },
             {
@@ -30574,7 +30754,7 @@
           "inputFields": [
             {
               "defaultValue": null,
-              "name": "depositionTitle",
+              "name": "title",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -30583,7 +30763,7 @@
             },
             {
               "defaultValue": null,
-              "name": "depositionDescription",
+              "name": "description",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -30592,7 +30772,7 @@
             },
             {
               "defaultValue": "null",
-              "name": "publications",
+              "name": "depositionPublications",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -30632,6 +30812,24 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "DateTime",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "keyPhotoUrl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "keyPhotoThumbnailUrl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -31672,7 +31870,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "SCALAR",
-                  "name": "Float",
+                  "name": "Int",
                   "ofType": null
                 }
               }
@@ -31948,7 +32146,7 @@
               "name": "alignedTiltseriesBinning",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -32097,7 +32295,7 @@
               "name": "accelerationVoltage",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -32304,7 +32502,7 @@
               "name": "alignedTiltseriesBinning",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },

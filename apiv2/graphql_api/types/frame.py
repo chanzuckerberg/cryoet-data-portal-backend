@@ -246,7 +246,7 @@ class Frame(EntityInterface):
     https_prefix: str = strawberry.field(
         description="Path to a directory containing data for this entity as an HTTPS url",
     )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """
@@ -372,7 +372,7 @@ class FrameCreateInput:
     https_prefix: str = strawberry.field(
         description="Path to a directory containing data for this entity as an HTTPS url",
     )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 @strawberry.input()
@@ -397,7 +397,7 @@ class FrameUpdateInput:
     https_prefix: Optional[str] = strawberry.field(
         description="Path to a directory containing data for this entity as an HTTPS url",
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """
