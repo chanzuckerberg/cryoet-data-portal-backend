@@ -234,11 +234,7 @@ class DepositionObjectImporterFactory(ABC):
     ) -> list[BaseImporter]:
         results = []
         for name, path in filtered_results.items():
-            if path and path.endswith("metadata.json"):
-                local_filename = config.fs.localreadable(path)
-                with open(local_filename, "r") as metadata_file:
-                    metadata = json.load(metadata_file)
-                name, path = cls.get_name_and_path(metadata, name, path)
+            name, path, metadata = self.handle_for_metadata_file(cls, config, name, path, metadata)
             item = self._instantiate(cls, config, metadata, name, path, allow_imports, parents)
             if item:
                 results.append(item)
@@ -255,6 +251,17 @@ class DepositionObjectImporterFactory(ABC):
         if not self._should_search(**parent_objects):
             return []
         return self._get_results(cls, config, metadata, **parent_objects)
+
+    @classmethod
+    def handle_for_metadata_file(
+        cls, klass, config: DepositionImportConfig, name: str, path: str, metadata: dict,
+    ) -> tuple[str, str, dict]:
+        if path and path.endswith("metadata.json"):
+            local_filename = config.fs.localreadable(path)
+            with open(local_filename, "r") as metadata_file:
+                metadata = json.load(metadata_file)
+            name, path = klass.get_name_and_path(metadata, name, path)
+        return name, path, metadata
 
 
 class DefaultImporterFactory(DepositionObjectImporterFactory):
@@ -299,7 +306,7 @@ class MultiSourceFileFinder(DefaultImporterFactory):
     ):
         if not filtered_results:
             return []
-
+        # TODO: Handle case where metadata is the path file
         names = ",".join([os.path.basename(path) for path in filtered_results])
         item = cls(
             config=config,

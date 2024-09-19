@@ -42,6 +42,8 @@ class BaseImporter:
         path: Optional[str] = None,
         allow_imports: bool = True,
         parents: Optional[dict[str, "BaseImporter"]] = None,
+        *args,
+        **kwargs,
     ):
         self.config = config
         self.metadata = metadata

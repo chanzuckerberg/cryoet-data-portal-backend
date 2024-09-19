@@ -57,24 +57,12 @@ class AlignmentImporter(BaseFileImporter):
     has_metadata = True
     dir_path = "{dataset_name}/{run_name}/Alignments"
 
-    def __init__(
-        self,
-        config: DepositionImportConfig,
-        metadata: dict[str, Any],
-        name: str,
-        path: str,
-        parents: dict[str, Any],
-        file_paths: dict[str, str],
-    ):
-        super().__init__(config, metadata, name, path, parents)
-        self.identifier = AlignmentIdentifierHelper.get_identifier(config, metadata, parents)
-        self.file_paths = file_paths
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.file_paths = kwargs.get("file_paths")
+        self.identifier = AlignmentIdentifierHelper.get_identifier(self.config, self.metadata, self.parents)
         self.converter = alignment_converter_factory(
-            config,
-            metadata,
-            list(file_paths.keys()),
-            parents,
-            self.get_output_path(),
+            self.config, self.metadata, list(self.file_paths.values()), self.parents, self.get_output_path(),
         )
 
     def import_metadata(self) -> None:
@@ -122,7 +110,6 @@ class AlignmentImporter(BaseFileImporter):
         for key, value in self.get_default_metadata().items():
             if key not in self.metadata:
                 extra_metadata[key] = value
-        print("Extra metadata: ", extra_metadata.get("tiltseries_path"))
         return extra_metadata
 
     def get_tomogram_volume_dimension(self) -> dict:
