@@ -17,6 +17,8 @@ else:
 ### Base Finders
 ###
 class BaseFinder(ABC):
+    allow_imports: bool = True
+
     @abstractmethod
     def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any], *args, **kwargs) -> dict[str, str]:
         pass
@@ -74,6 +76,7 @@ class SourceGlobFinder(BaseFinder):
 # output directories, but for the moment we have a deposition that doesn't encode voxel spacings in it,
 # so this is about the best we can do.
 class DestinationGlobFinder(BaseFinder):
+    allow_imports: bool = False
     list_glob: str
     match_regex: re.Pattern[str]
     name_regex: re.Pattern[str]
@@ -113,6 +116,8 @@ class BaseLiteralValueFinder(BaseFinder):
 
 
 class DestinationFilteredMetadataFinder(BaseFinder):
+    allow_imports: bool = False
+
     def __init__(self, filters: list[dict[str, Any]]):
         self.filters = {f.get("key"): f.get("value") for f in filters}
 
@@ -186,9 +191,10 @@ class DepositionObjectImporterFactory(ABC):
         metadata: dict[str, Any],
         name: str,
         path: str,
+        allow_imports: bool,
         parents: dict[str, Any] | None,
     ):
-        return cls(config=config, metadata=metadata, name=name, path=path, parents=parents)
+        return cls(config=config, metadata=metadata, name=name, path=path, parents=parents, allow_imports=allow_imports)
 
     def _get_results(
         self,
@@ -207,7 +213,9 @@ class DepositionObjectImporterFactory(ABC):
                 print(f"Excluding {cls.type_key} {name}...")
                 continue
             filtered_results[name] = path
-        return self._get_instantiated_results(cls, config, metadata, filtered_results, parent_objects)
+        return self._get_instantiated_results(
+            cls, config, metadata, filtered_results, loader.allow_imports, parent_objects,
+        )
 
     def _get_instantiated_results(
         self,
@@ -215,16 +223,16 @@ class DepositionObjectImporterFactory(ABC):
         config: DepositionImportConfig,
         metadata: dict[str, Any],
         filtered_results: dict[str, str],
+        allow_imports: bool,
         parents: dict[str, Any] | None,
     ) -> list[BaseImporter]:
-        # TODO: add a flag for not allowing import of items when the related finders are sourcing data from destination
         results = []
         for name, path in filtered_results.items():
             if path and path.endswith("metadata.json"):
                 local_filename = config.fs.localreadable(path)
                 with open(local_filename, "r") as metadata_file:
                     metadata = json.load(metadata_file)
-            item = self._instantiate(cls, config, metadata, name, path, parents)
+            item = self._instantiate(cls, config, metadata, name, path, allow_imports, parents)
             if item:
                 results.append(item)
         return results
@@ -279,6 +287,7 @@ class MultiSourceFileFinder(DefaultImporterFactory):
         config: DepositionImportConfig,
         metadata: dict[str, Any],
         filtered_results: dict[str, str],
+        allow_imports: bool,
         parents: dict[str, Any] | None,
     ):
         if not filtered_results:
@@ -291,6 +300,7 @@ class MultiSourceFileFinder(DefaultImporterFactory):
             name=names,
             path=None,
             parents=parents,
+            allow_imports=allow_imports,
             file_paths=filtered_results,
         )
         return [item] if item else []

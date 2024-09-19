@@ -68,6 +68,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
         metadata: dict[str, Any],
         name: str,
         path: str,
+        allow_imports: bool,
         parents: dict[str, Any] | None,
     ):
         source_args = {k: v for k, v in self.source.items() if k not in {"shape", "glob_string", "glob_strings"}}
@@ -78,6 +79,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             "name": name,
             "path": path,
             "parents": parents,
+            "allow_imports": allow_imports,
             **source_args,
         }
         shape = self.source["shape"]

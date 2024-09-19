@@ -63,8 +63,11 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
                 print(f"Skipping {item.name}..")
                 continue
             if import_class in to_import:
-                print(f"Importing {import_class.type_key} {item.name}")
-                item.import_item()
+                if item.allow_imports:
+                    print(f"Importing {import_class.type_key} {item.name}")
+                    item.import_item()
+                else:
+                    print(f"Skipping import {item.name} as is not allowed to be imported..")
 
             if child_import_classes:
                 sub_parents = {import_class.type_key: item}
@@ -72,8 +75,11 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
                 do_import(config, child_import_classes, to_import, metadata_import, to_iterate, kwargs, sub_parents)
             # Not all importers have metadata, but we don't expose the option for it unless it's supported
             if import_class in metadata_import and item.has_metadata:
-                print(f"Importing {import_class.type_key} metadata")
-                item.import_metadata()
+                if item.allow_imports:
+                    print(f"Importing {import_class.type_key} metadata")
+                    item.import_metadata()
+                else:
+                    print(f"Skipping import {item.name} metadata as is not allowed to be imported..")
 
 
 @cli.command()

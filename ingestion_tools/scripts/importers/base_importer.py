@@ -40,12 +40,14 @@ class BaseImporter:
         metadata: dict[str, Any],
         name: Optional[str] = None,
         path: Optional[str] = None,
+        allow_imports: bool = True,
         parents: Optional[dict[str, "BaseImporter"]] = None,
     ):
         self.config = config
         self.metadata = metadata
         self.name = name
         self.path = path
+        self.allow_imports = allow_imports
 
         if parents is None:
             parents = {}
