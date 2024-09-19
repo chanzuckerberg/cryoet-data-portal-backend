@@ -39,11 +39,10 @@ STALE_RUN_ID = 902
 STALE_TOMOGRAM_ID = 903
 STALE_ANNOTATION_ID = 904
 
+
 def model_to_dict(sa_object):
-    return {
-        item.key: getattr(sa_object, item.key)
-        for item in sa.inspect(sa_object).mapper.column_attrs
-    }
+    return {item.key: getattr(sa_object, item.key) for item in sa.inspect(sa_object).mapper.column_attrs}
+
 
 def stale_deposition_metadata() -> dict:
     return {
@@ -67,18 +66,21 @@ def stale_deposition_author() -> dict:
         "primary_author_status": False,
     }
 
+
 def write_data(function):
     def wrapper(session: sa.orm.Session, *args, **kwargs):
         obj = function(session, *args, **kwargs)
         if obj:
             session.add(obj)
         session.flush()
+
     return wrapper
 
 
 @write_data
 def populate_deposition(session: sa.orm.Session) -> Deposition:
     return Deposition(**stale_deposition_metadata())
+
 
 @write_data
 def populate_deposition_authors(session: sa.orm.Session) -> DepositionAuthor:
@@ -100,6 +102,7 @@ def populate_dataset(session: sa.orm.Session) -> Dataset:
         s3_prefix="s3://invalid_bucket/",
         https_prefix="https://invalid-site.com/1234",
     )
+
 
 @write_data
 def populate_dataset_authors(session: sa.orm.Session) -> DatasetAuthor:
@@ -130,9 +133,9 @@ def populate_stale_dataset_funding(session: sa.orm.Session) -> DatasetFunding:
 def populate_run(session: sa.orm.Session) -> None:
     populate_dataset(session)
     default_args = {
-        "dataset_id":DATASET_ID,
-        "s3_prefix":"s3://test-bucket/RUN1",
-        "https_prefix":"http://test.com/RUN1",
+        "dataset_id": DATASET_ID,
+        "s3_prefix": "s3://test-bucket/RUN1",
+        "https_prefix": "http://test.com/RUN1",
     }
     obj1 = Run(
         id=RUN1_ID,
@@ -166,26 +169,32 @@ def populate_stale_run(session: sa.orm.Session) -> None:
 def populate_tomogram_voxel_spacing(session: sa.orm.Session) -> None:
     populate_run(session)
     https_prefix = "http://test.com/RUN1/VoxelSpacing{vs}"
-    session.add(TomogramVoxelSpacing(
-        run_id=RUN1_ID,
-        voxel_spacing=3.456,
-        s3_prefix="s3://test-public-bucket/VoxelSpacing3.456/",
-        https_prefix=https_prefix.format(vs=3.456),
-    ))
-    session.add(TomogramVoxelSpacing(
-        id=TOMOGRAM_VOXEL_ID1,
-        run_id=RUN1_ID,
-        voxel_spacing=12.3,
-        s3_prefix="s3://test-public-bucket/VoxelSpacing12.3/",
-        https_prefix=https_prefix.format(vs=12.3),
-    ))
-    session.add(TomogramVoxelSpacing(
-        id=TOMOGRAM_VOXEL_ID2,
-        run_id=RUN1_ID,
-        voxel_spacing=9.876,
-        s3_prefix="s3://test-public-bucket/VoxelSpacing9.876/",
-        https_prefix=https_prefix.format(vs=9.876),
-    ))
+    session.add(
+        TomogramVoxelSpacing(
+            run_id=RUN1_ID,
+            voxel_spacing=3.456,
+            s3_prefix="s3://test-public-bucket/VoxelSpacing3.456/",
+            https_prefix=https_prefix.format(vs=3.456),
+        ),
+    )
+    session.add(
+        TomogramVoxelSpacing(
+            id=TOMOGRAM_VOXEL_ID1,
+            run_id=RUN1_ID,
+            voxel_spacing=12.3,
+            s3_prefix="s3://test-public-bucket/VoxelSpacing12.3/",
+            https_prefix=https_prefix.format(vs=12.3),
+        ),
+    )
+    session.add(
+        TomogramVoxelSpacing(
+            id=TOMOGRAM_VOXEL_ID2,
+            run_id=RUN1_ID,
+            voxel_spacing=9.876,
+            s3_prefix="s3://test-public-bucket/VoxelSpacing9.876/",
+            https_prefix=https_prefix.format(vs=9.876),
+        ),
+    )
 
 
 @write_data
@@ -356,6 +365,7 @@ def populate_tiltseries(session: sa.orm.Session) -> Tiltseries:
         data_acquisition_software="unknown",
     )
 
+
 @write_data
 def populate_stale_tiltseries(session: sa.orm.Session) -> None:
     default_kwargs = {
@@ -382,14 +392,18 @@ def populate_stale_tiltseries(session: sa.orm.Session) -> None:
         "tilting_scheme": "unknown",
         "data_acquisition_software": "unknown",
     }
-    session.add(Tiltseries(
-        run_id=RUN4_ID,
-        **default_kwargs,
-    ))
-    session.add(Tiltseries(
-        run_id=STALE_RUN_ID,
-        **default_kwargs,
-    ))
+    session.add(
+        Tiltseries(
+            run_id=RUN4_ID,
+            **default_kwargs,
+        ),
+    )
+    session.add(
+        Tiltseries(
+            run_id=STALE_RUN_ID,
+            **default_kwargs,
+        ),
+    )
 
 
 @write_data
@@ -441,19 +455,19 @@ def populate_annotation_files(session: sa.orm.Session) -> None:
         "https_path": "https://foo",
     }
     shape = AnnotationShape(
-        annotation_id = ANNOTATION_ID,
+        annotation_id=ANNOTATION_ID,
         shape_type="Point",
     )
     file = AnnotationFile(
         id=ANNOTATION_FILE_ID,
         tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
-        annotation_shape = shape,
+        annotation_shape=shape,
         format="ndjson",
         **default_kwargs,
     )
     file2 = AnnotationFile(
         tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
-        annotation_shape = shape,
+        annotation_shape=shape,
         format="ndjson",
         **default_kwargs,
     )
@@ -469,11 +483,11 @@ def populate_stale_annotation_files(session: sa.orm.Session) -> None:
         "https_path": "https://foo-stale-annotation/point",
     }
     pointshape = AnnotationShape(
-        annotation_id = STALE_ANNOTATION_ID,
+        annotation_id=STALE_ANNOTATION_ID,
         shape_type="Point",
     )
     segmaskshape = AnnotationShape(
-        annotation_id = STALE_ANNOTATION_ID,
+        annotation_id=STALE_ANNOTATION_ID,
         shape_type="SegmentationMask",
     )
     file = AnnotationFile(
@@ -508,8 +522,16 @@ def populate_annotation_authors(session: sa.orm.Session) -> None:
     )
     session.add(author2)
 
+
 @write_data
 def populate_stale_annotation_authors(session: sa.orm.Session) -> None:
     populate_stale_annotations(session)
     session.add(AnnotationAuthor(annotation_id=STALE_ANNOTATION_ID, name="Jane Smith", author_list_order=1))
-    session.add(AnnotationAuthor(annotation_id=STALE_ANNOTATION_ID, name="Stale Author", corresponding_author_status=True, author_list_order=3))
+    session.add(
+        AnnotationAuthor(
+            annotation_id=STALE_ANNOTATION_ID,
+            name="Stale Author",
+            corresponding_author_status=True,
+            author_list_order=3,
+        ),
+    )

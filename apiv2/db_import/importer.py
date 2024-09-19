@@ -87,7 +87,28 @@ def load(
     deposition_id: list[str],
     endpoint_url: str,
 ):
-    load_func( s3_bucket, https_prefix, postgres_url, s3_prefix, anonymous, filter_dataset, import_annotations, import_annotation_authors, import_dataset_authors, import_dataset_funding, import_depositions, import_runs, import_tiltseries, import_tomograms, import_tomogram_authors, import_tomogram_voxel_spacing, import_everything, deposition_id, endpoint_url)
+    load_func(
+        s3_bucket,
+        https_prefix,
+        postgres_url,
+        s3_prefix,
+        anonymous,
+        filter_dataset,
+        import_annotations,
+        import_annotation_authors,
+        import_dataset_authors,
+        import_dataset_funding,
+        import_depositions,
+        import_runs,
+        import_tiltseries,
+        import_tomograms,
+        import_tomogram_authors,
+        import_tomogram_voxel_spacing,
+        import_everything,
+        deposition_id,
+        endpoint_url,
+    )
+
 
 def load_func(
     s3_bucket: str,

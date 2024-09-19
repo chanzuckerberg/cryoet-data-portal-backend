@@ -22,19 +22,25 @@ from platformics.database.models import Base
 def http_prefix() -> str:
     return "https://foo.com"
 
+
 def model_to_dict(sa_object: Base) -> dict[str, Any]:
-    return {
-        item.key: getattr(sa_object, item.key)
-        for item in sa.inspect(sa_object).mapper.column_attrs
-    }
+    return {item.key: getattr(sa_object, item.key) for item in sa.inspect(sa_object).mapper.column_attrs}
+
 
 @pytest.fixture
 def default_inputs(aws_endpoint_url: str, http_prefix: str, test_db_uri: str) -> dict[str, Any]:
-    return {"s3_bucket": "test-public-bucket", "https_prefix": http_prefix, "postgres_url": f"postgresql+psycopg://{test_db_uri}", "endpoint_url": aws_endpoint_url}
+    return {
+        "s3_bucket": "test-public-bucket",
+        "https_prefix": http_prefix,
+        "postgres_url": f"postgresql+psycopg://{test_db_uri}",
+        "endpoint_url": aws_endpoint_url,
+    }
+
 
 @pytest.fixture
 def aws_endpoint_url() -> str:
     return os.getenv("BOTO_ENDPOINT_URL", "http://motoserver:5566")
+
 
 @pytest.fixture
 def s3_client(aws_endpoint_url: str) -> S3Client:
@@ -44,10 +50,12 @@ def s3_client(aws_endpoint_url: str) -> S3Client:
         config=Config(signature_version="s3v4"),
     )
 
+
 @pytest.fixture
 def sync_db_session(sync_db: SyncDB) -> Generator[sa.orm.Session, None, None]:
     with sync_db.session() as session:
         yield session
+
 
 @pytest.fixture
 def verify_model():
