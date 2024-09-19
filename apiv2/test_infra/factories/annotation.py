@@ -51,7 +51,7 @@ class AnnotationFactory(CommonFactory):
     ground_truth_used = fuzzy.FuzzyText()
     annotation_software = fuzzy.FuzzyText()
     is_curator_recommended = factory.Faker("boolean")
-    method_type = fuzzy.FuzzyChoice(["manual", "automated", "hybrid"])
+    method_type = fuzzy.FuzzyChoice(["manual", "automated", "hybrid", "simulated"])
     deposition_date = factory.Faker("date")
     release_date = factory.Faker("date")
     last_modified_date = factory.Faker("date")

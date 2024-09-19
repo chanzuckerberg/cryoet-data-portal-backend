@@ -22,6 +22,7 @@ class annotation_method_type_enum(enum.StrEnum):
     manual = "manual"
     automated = "automated"
     hybrid = "hybrid"
+    simulated = "simulated"
 
 
 @strawberry.enum

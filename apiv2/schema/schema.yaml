@@ -243,6 +243,9 @@ enums:
       hybrid:
         text: hybrid
         description: Annotations were generated semi-automatically.
+      simulated:
+        text: simulated
+        description: Annotations were simulated
   annotation_file_shape_type_enum:
     name: annotation_file_shape_type_enum
     description: Describes the shape of the annotation
