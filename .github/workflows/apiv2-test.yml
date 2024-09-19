@@ -16,6 +16,18 @@ jobs:
     name: "Run tests"
     steps:
       - uses: actions/checkout@v3
+      - name: Install AWS CLI v2
+        shell: bash
+        run: |
+          set -ue
+          set -o pipefail
+          URL="https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip"
+          curl $URL -o /tmp/awscliv2.zip -v
+          unzip -q /tmp/awscliv2.zip -d /tmp
+          rm /tmp/awscliv2.zip
+          sudo /tmp/aws/install --update
+          rm -rf /tmp/aws/
+
       # Set up a local test env and run tests
       - name: Run tests
         run: |
