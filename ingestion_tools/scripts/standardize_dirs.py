@@ -62,24 +62,20 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
             if filter_patterns and not list(filter(lambda x: x.match(item.name), filter_patterns)):
                 print(f"Skipping {item.name}..")
                 continue
-            if import_class in to_import:
-                if item.allow_imports:
-                    print(f"Importing {import_class.type_key} {item.name}")
-                    item.import_item()
-                else:
-                    print(f"Skipping import {item.name} as is not allowed to be imported..")
+            # If item is to be imported, only import it if the source data allows import
+            if import_class in to_import and item.allow_imports:
+                print(f"Importing {import_class.type_key} {item.name}")
+                item.import_item()
 
             if child_import_classes:
                 sub_parents = {import_class.type_key: item}
                 sub_parents.update(parents)
                 do_import(config, child_import_classes, to_import, metadata_import, to_iterate, kwargs, sub_parents)
             # Not all importers have metadata, but we don't expose the option for it unless it's supported
-            if import_class in metadata_import and item.has_metadata:
-                if item.allow_imports:
-                    print(f"Importing {import_class.type_key} metadata")
-                    item.import_metadata()
-                else:
-                    print(f"Skipping import {item.name} metadata as is not allowed to be imported..")
+            # Even for importers that support metadata, only import it if the source data allows import
+            if import_class in metadata_import and item.has_metadata and item.allow_imports:
+                print(f"Importing {import_class.type_key} metadata")
+                item.import_metadata()
 
 
 @cli.command()

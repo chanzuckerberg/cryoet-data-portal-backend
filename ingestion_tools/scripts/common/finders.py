@@ -17,6 +17,7 @@ else:
 ### Base Finders
 ###
 class BaseFinder(ABC):
+    # If this is set to False, the importer will not be able to import the files found by this finder
     allow_imports: bool = True
 
     @abstractmethod
@@ -72,10 +73,8 @@ class SourceGlobFinder(BaseFinder):
         return responses
 
 
-# TODO this thing probably shouldn't exist, since it relies on a particular existing state of our
-# output directories, but for the moment we have a deposition that doesn't encode voxel spacings in it,
-# so this is about the best we can do.
 class DestinationGlobFinder(BaseFinder):
+    # Don't allow reimport the destination files that have already been imported
     allow_imports: bool = False
     list_glob: str
     match_regex: re.Pattern[str]
@@ -116,6 +115,7 @@ class BaseLiteralValueFinder(BaseFinder):
 
 
 class DestinationFilteredMetadataFinder(BaseFinder):
+    # Don't allow reimport the destination files that have already been imported
     allow_imports: bool = False
 
     def __init__(self, filters: list[dict[str, Any]]):
@@ -129,6 +129,7 @@ class DestinationFilteredMetadataFinder(BaseFinder):
             local_filename = config.fs.localreadable(file_path)
             with open(local_filename, "r") as metadata_file:
                 metadata = json.load(metadata_file)
+            # TODO: Update filtering to handle nested keys
             if all(metadata.get(key) == value for key, value in self.filters.items()):
                 responses[file_path] = file_path
 
@@ -214,7 +215,12 @@ class DepositionObjectImporterFactory(ABC):
                 continue
             filtered_results[name] = path
         return self._get_instantiated_results(
-            cls, config, metadata, filtered_results, loader.allow_imports, parent_objects,
+            cls,
+            config,
+            metadata,
+            filtered_results,
+            loader.allow_imports,
+            parent_objects,
         )
 
     def _get_instantiated_results(
