@@ -68,14 +68,10 @@ class EnumComparators(TypedDict, Generic[T]):
 
 @strawberry.input
 class BoolComparators(TypedDict):
-    _eq: Optional[int]
-    _neq: Optional[int]
-    _in: Optional[list[int]]
-    _nin: Optional[list[int]]
-    _gt: Optional[int]
-    _gte: Optional[int]
-    _lt: Optional[int]
-    _lte: Optional[int]
+    _eq: Optional[bool]
+    _neq: Optional[bool]
+    _in: Optional[list[bool]]
+    _nin: Optional[list[bool]]
     _is_null: Optional[bool]
 
 
