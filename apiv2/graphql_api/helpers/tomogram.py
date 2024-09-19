@@ -48,9 +48,9 @@ class TomogramGroupByOptions:
     run: Optional[RunGroupByOptions] = None
     tomogram_voxel_spacing: Optional[TomogramVoxelSpacingGroupByOptions] = None
     name: Optional[str] = None
-    size_x: Optional[float] = None
-    size_y: Optional[float] = None
-    size_z: Optional[float] = None
+    size_x: Optional[int] = None
+    size_y: Optional[int] = None
+    size_z: Optional[int] = None
     voxel_spacing: Optional[float] = None
     fiducial_alignment_status: Optional[fiducial_alignment_status_enum] = None
     reconstruction_method: Optional[tomogram_reconstruction_method_enum] = None

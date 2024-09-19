@@ -2304,7 +2304,7 @@ classes:
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_tomogram_size_x
-        range: float
+        range: integer
         required: true
         minimum_value: 0
         unit:
@@ -2316,7 +2316,7 @@ classes:
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_tomogram_size_y
-        range: float
+        range: integer
         required: true
         minimum_value: 0
         unit:
@@ -2328,7 +2328,7 @@ classes:
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_tomogram_size_z
-        range: float
+        range: integer
         required: true
         minimum_value: 0
         unit:

@@ -220,9 +220,9 @@ class TomogramWhereClause(TypedDict):
         | None
     )
     name: Optional[StrComparators] | None
-    size_x: Optional[FloatComparators] | None
-    size_y: Optional[FloatComparators] | None
-    size_z: Optional[FloatComparators] | None
+    size_x: Optional[IntComparators] | None
+    size_y: Optional[IntComparators] | None
+    size_z: Optional[IntComparators] | None
     voxel_spacing: Optional[FloatComparators] | None
     fiducial_alignment_status: Optional[EnumComparators[fiducial_alignment_status_enum]] | None
     reconstruction_method: Optional[EnumComparators[tomogram_reconstruction_method_enum]] | None
@@ -323,9 +323,9 @@ class Tomogram(EntityInterface):
     ] = load_tomogram_voxel_spacing_rows  # type:ignore
     tomogram_voxel_spacing_id: Optional[int]
     name: Optional[str] = strawberry.field(description="Short name for this tomogram", default=None)
-    size_x: float = strawberry.field(description="Number of pixels in the 3D data fast axis")
-    size_y: float = strawberry.field(description="Number of pixels in the 3D data medium axis")
-    size_z: float = strawberry.field(
+    size_x: int = strawberry.field(description="Number of pixels in the 3D data fast axis")
+    size_y: int = strawberry.field(description="Number of pixels in the 3D data medium axis")
+    size_z: int = strawberry.field(
         description="Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt",
     )
     voxel_spacing: float = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
@@ -404,9 +404,9 @@ Define columns that support numerical aggregations
 
 @strawberry.type
 class TomogramNumericalColumns:
-    size_x: Optional[float] = None
-    size_y: Optional[float] = None
-    size_z: Optional[float] = None
+    size_x: Optional[int] = None
+    size_y: Optional[int] = None
+    size_z: Optional[int] = None
     voxel_spacing: Optional[float] = None
     tomogram_version: Optional[float] = None
     offset_x: Optional[int] = None
@@ -423,9 +423,9 @@ Define columns that support min/max aggregations
 @strawberry.type
 class TomogramMinMaxColumns:
     name: Optional[str] = None
-    size_x: Optional[float] = None
-    size_y: Optional[float] = None
-    size_z: Optional[float] = None
+    size_x: Optional[int] = None
+    size_y: Optional[int] = None
+    size_z: Optional[int] = None
     voxel_spacing: Optional[float] = None
     tomogram_version: Optional[float] = None
     processing_software: Optional[str] = None
@@ -538,9 +538,9 @@ class TomogramCreateInput:
         description="Voxel spacings for a run", default=None,
     )
     name: Optional[str] = strawberry.field(description="Short name for this tomogram", default=None)
-    size_x: float = strawberry.field(description="Number of pixels in the 3D data fast axis")
-    size_y: float = strawberry.field(description="Number of pixels in the 3D data medium axis")
-    size_z: float = strawberry.field(
+    size_x: int = strawberry.field(description="Number of pixels in the 3D data fast axis")
+    size_y: int = strawberry.field(description="Number of pixels in the 3D data medium axis")
+    size_z: int = strawberry.field(
         description="Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt",
     )
     voxel_spacing: float = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")
@@ -610,9 +610,9 @@ class TomogramUpdateInput:
         description="Voxel spacings for a run", default=None,
     )
     name: Optional[str] = strawberry.field(description="Short name for this tomogram", default=None)
-    size_x: Optional[float] = strawberry.field(description="Number of pixels in the 3D data fast axis")
-    size_y: Optional[float] = strawberry.field(description="Number of pixels in the 3D data medium axis")
-    size_z: Optional[float] = strawberry.field(
+    size_x: Optional[int] = strawberry.field(description="Number of pixels in the 3D data fast axis")
+    size_y: Optional[int] = strawberry.field(description="Number of pixels in the 3D data medium axis")
+    size_z: Optional[int] = strawberry.field(
         description="Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt",
     )
     voxel_spacing: Optional[float] = strawberry.field(description="Voxel spacing equal in all three axes in angstroms")

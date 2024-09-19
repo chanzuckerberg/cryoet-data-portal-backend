@@ -37,6 +37,27 @@ def upgrade() -> None:
         type_=sa.Integer(),
         existing_nullable=True,
     )
+    op.alter_column(
+        "tomogram",
+        "size_x",
+        existing_type=sa.DOUBLE_PRECISION(precision=53),
+        type_=sa.Integer(),
+        existing_nullable=False,
+    )
+    op.alter_column(
+        "tomogram",
+        "size_y",
+        existing_type=sa.DOUBLE_PRECISION(precision=53),
+        type_=sa.Integer(),
+        existing_nullable=False,
+    )
+    op.alter_column(
+        "tomogram",
+        "size_z",
+        existing_type=sa.DOUBLE_PRECISION(precision=53),
+        type_=sa.Integer(),
+        existing_nullable=False,
+    )
     # ### end Alembic commands ###
 
 
@@ -63,4 +84,25 @@ def downgrade() -> None:
     op.alter_column("dataset", "dataset_publications", new_column_name="publications")
     op.drop_column("deposition", "key_photo_thumbnail_url")
     op.drop_column("deposition", "key_photo_url")
+    op.alter_column(
+        "tomogram",
+        "size_z",
+        existing_type=sa.Integer(),
+        type_=sa.DOUBLE_PRECISION(precision=53),
+        existing_nullable=False,
+    )
+    op.alter_column(
+        "tomogram",
+        "size_y",
+        existing_type=sa.Integer(),
+        type_=sa.DOUBLE_PRECISION(precision=53),
+        existing_nullable=False,
+    )
+    op.alter_column(
+        "tomogram",
+        "size_x",
+        existing_type=sa.Integer(),
+        type_=sa.DOUBLE_PRECISION(precision=53),
+        existing_nullable=False,
+    )
     # ### end Alembic commands ###

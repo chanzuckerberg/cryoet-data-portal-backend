@@ -4,10 +4,10 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import click
 import cryoet_data_portal as cdp
-
 from database import models
-from platformics.database.connect import init_sync_db
 from support.enums import tomogram_reconstruction_method_enum as reconstruction_enum
+
+from platformics.database.connect import init_sync_db
 
 # cleanup:
 # delete from deposition_type; delete from annotation_author; delete from dataset_author; delete from deposition_author; delete from annotation_file ; delete from annotation_shape ; delete from dataset_funding; delete from tomogram_author; delete from tomogram; delete from annotation; delete from annotation; delete from tomogram_voxel_spacing; delete from per_section_alignment_parameters; delete from per_section_parameters; delete from alignment; delete from frame; delete from tiltseries; delete from run; delete from run; delete from dataset; delete from deposition;

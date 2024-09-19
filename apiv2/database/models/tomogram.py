@@ -72,9 +72,9 @@ class Tomogram(Base):
         back_populates="tomograms",
     )
     name: Mapped[str] = mapped_column(String, nullable=True)
-    size_x: Mapped[float] = mapped_column(Float, nullable=False)
-    size_y: Mapped[float] = mapped_column(Float, nullable=False)
-    size_z: Mapped[float] = mapped_column(Float, nullable=False)
+    size_x: Mapped[int] = mapped_column(Integer, nullable=False)
+    size_y: Mapped[int] = mapped_column(Integer, nullable=False)
+    size_z: Mapped[int] = mapped_column(Integer, nullable=False)
     voxel_spacing: Mapped[float] = mapped_column(Float, nullable=False)
     fiducial_alignment_status: Mapped[fiducial_alignment_status_enum] = mapped_column(
         Enum(fiducial_alignment_status_enum, native_enum=False), nullable=False,
