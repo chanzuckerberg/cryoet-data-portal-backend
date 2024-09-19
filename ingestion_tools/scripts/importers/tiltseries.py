@@ -1,3 +1,4 @@
+import os.path
 from typing import TYPE_CHECKING
 
 from common.finders import DefaultImporterFactory
@@ -54,3 +55,8 @@ class TiltSeriesImporter(VolumeImporter):
         header.ispg = 0
         header.mz = 1
         header.cella.z = 1 * self.get_pixel_spacing()
+
+    @classmethod
+    def get_name_and_path(cls, metadata: dict, name: str, path: str) -> [str, str]:
+        filename = metadata.get("omezarr_dir")
+        return filename, os.path.join(os.path.dirname(path), filename)

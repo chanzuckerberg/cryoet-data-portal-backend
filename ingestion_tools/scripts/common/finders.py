@@ -238,6 +238,7 @@ class DepositionObjectImporterFactory(ABC):
                 local_filename = config.fs.localreadable(path)
                 with open(local_filename, "r") as metadata_file:
                     metadata = json.load(metadata_file)
+                name, path = cls.get_name_and_path(metadata, name, path)
             item = self._instantiate(cls, config, metadata, name, path, allow_imports, parents)
             if item:
                 results.append(item)
