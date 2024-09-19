@@ -2205,6 +2205,8 @@ classes:
         multivalued: true
         inverse: AnnotationFile.tomogram_voxel_spacing
         range: AnnotationFile
+        annotations:
+          cascade_delete: true
       run:
         name: run
         from_schema: cdp-dataset-config

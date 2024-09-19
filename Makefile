@@ -30,7 +30,7 @@ api-init:
 apiv2-init:
 	docker compose --profile apiv2 up -d
 	docker compose exec db sh -c 'echo create database cryoetv2 | psql postgres://postgres:postgres@127.0.0.1:5432/cryoet' || true
-	$(MAKE) -C apiv2 seed-moto
+	cd ./test_infra/; ./seed_moto.sh
 	$(MAKE) -C apiv2 alembic-upgrade-head
 
 .PHONY: clean
