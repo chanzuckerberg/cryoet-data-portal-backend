@@ -3,8 +3,8 @@ import os
 
 import click
 import sqlalchemy as sa
-
 from database import models
+
 from platformics.database.connect import init_sync_db
 
 
@@ -53,7 +53,7 @@ def check_table(model_cls):
         # print(f"processing {model_cls}")
         for col, col_type in model_class_cols(model_cls).items():
             rows = session.scalars(
-                sa.select(sa.func.count(model_cls.id)).where(getattr(model_cls, col.key) != None),
+                sa.select(sa.func.count(model_cls.id)).where(getattr(model_cls, col.key) != None),  # noqa
             ).one()
             if not rows and str(col) not in expected_to_be_empty:
                 print(f"column {col} has all null values!")
