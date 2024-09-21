@@ -2553,6 +2553,24 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+      affine_transformation_matrix:
+        name: affine_transformation_matrix
+        description: The flip or rotation transformation of this author submitted
+          tomogram is indicated here
+        from_schema: metadata
+        array:
+          exact_number_dimensions: 2
+          dimensions:
+          - exact_cardinality: 4
+          - exact_cardinality: 4
+        alias: affine_transformation_matrix
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        - Alignment
+        range: float
+        inlined: true
+        inlined_as_list: true
       size:
         name: size
         description: The size of a tomogram in voxels in each dimension.
@@ -4143,6 +4161,7 @@ classes:
         alias: affine_transformation_matrix
         owner: Alignment
         domain_of:
+        - Tomogram
         - Alignment
         range: float
         inlined: true
