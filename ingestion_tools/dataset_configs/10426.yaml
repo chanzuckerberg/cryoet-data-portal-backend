@@ -130,6 +130,23 @@ tiltseries:
       list_glob: validation_placeholder/for_unavailable_ts.st
 tomograms:
 - metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
     authors: *id001
     ctf_corrected: false
     dates: *id002

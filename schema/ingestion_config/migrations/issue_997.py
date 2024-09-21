@@ -98,8 +98,8 @@ def update_tomogram_metadata(config: dict) -> None:
                             "release_date": '1970-01-01'}
                     metadata["dates"] = dates
                 affine_transformation_matrix = metadata.get("affine_transformation_matrix", None)
-                if affine_transformation_matrix and np.allclose(affine_transformation_matrix, np.eye(4)):
-                    metadata.pop("affine_transformation_matrix")
+                if not affine_transformation_matrix:
+                    metadata["affine_transformation_matrix"] = np.eye(4, dtype=int).tolist()
 
 
 def update_annotation_sources(config: dict) -> None:

@@ -110,6 +110,23 @@ tiltseries:
       match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
 - metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
     align_software: '{tomo-align_software}'
     authors: *id001
     ctf_corrected: null

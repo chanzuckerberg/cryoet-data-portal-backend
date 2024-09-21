@@ -295,6 +295,23 @@ tiltseries:
       list_glob: '{run_name}/TiltSeries/tilt_series.mrc'
 tomograms:
 - metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
     authors: *id001
     ctf_corrected: true
     dates: *id002

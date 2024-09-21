@@ -550,6 +550,23 @@ tiltseries:
       match_regex: ^.*pxlsz3\.29787\.mrcs$
 tomograms:
 - metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
     authors: *id003
     ctf_corrected: false
     dates:

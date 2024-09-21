@@ -171,6 +171,23 @@ tiltseries:
       match_regex: .*
 tomograms:
 - metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
     authors: *id003
     ctf_corrected: true
     dates: *id002
