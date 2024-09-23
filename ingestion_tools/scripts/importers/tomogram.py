@@ -20,6 +20,9 @@ class TomogramImporter(VolumeImporter):
     )
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         self.scale_mrcfile(
             write_mrc=self.config.write_mrc,
             write_zarr=self.config.write_zarr,
@@ -27,6 +30,9 @@ class TomogramImporter(VolumeImporter):
         )
 
     def import_metadata(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dest_tomo_metadata = self.get_metadata_path()
         merge_data = self.load_extra_metadata()
         parent_args = dict(self.parents)

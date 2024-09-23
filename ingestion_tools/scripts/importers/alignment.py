@@ -70,6 +70,9 @@ class AlignmentImporter(BaseFileImporter):
         )
 
     def import_metadata(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         metadata_path = self.get_metadata_path()
         try:
             meta = AlignmentMetadata(self.config.fs, self.get_deposition().name, self.get_base_metadata())
@@ -78,6 +81,10 @@ class AlignmentImporter(BaseFileImporter):
             print("Skipping creating metadata for default alignment with no source tomogram")
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
+
         if self.is_default_alignment() or not self.is_valid():
             print(
                 f"Skipping importing alignment with path {self.file_paths} as it is either a default alignment or "

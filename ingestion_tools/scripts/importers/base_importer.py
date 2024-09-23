@@ -109,6 +109,9 @@ class BaseImporter:
     def get_metadata_path(self) -> str:
         return self.config.get_metadata_path(self)
 
+    def is_import_allowed(self):
+        return self.allow_imports
+
     @classmethod
     def finder(cls, config: DepositionImportConfig, **parents: dict[str, "BaseImporter"]) -> list["BaseImporter"]:
         finder_configs = config.get_object_configs(cls.type_key)
@@ -200,6 +203,9 @@ class VolumeImporter(BaseImporter):
 
 class BaseFileImporter(BaseImporter):
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dest_filename = os.path.join(self.get_output_path(), os.path.basename(self.path))
         self.config.fs.copy(self.path, dest_filename)
 
@@ -208,6 +214,9 @@ class BaseKeyPhotoImporter(BaseImporter):
     image_keys = ["snapshot", "thumbnail"]
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dest_path = self.config.get_output_path(self)
         self.save_image(self.name, dest_path)
 

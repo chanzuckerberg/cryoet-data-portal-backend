@@ -126,6 +126,9 @@ class AnnotationImporter(BaseImporter):
 
     # Functions to support writing annotation data
     def import_item(self):
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dest_prefix = self.get_output_path()
         self.convert(dest_prefix)
 
@@ -135,6 +138,9 @@ class AnnotationImporter(BaseImporter):
         return self.annotation_metadata.get_filename_prefix(output_dir, self.identifier)
 
     def import_metadata(self):
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dest_prefix = self.get_output_path()
         filename = f"{dest_prefix}.json"
         if filename in self.written_metadata_files:

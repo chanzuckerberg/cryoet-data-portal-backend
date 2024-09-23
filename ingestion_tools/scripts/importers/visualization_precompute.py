@@ -24,6 +24,9 @@ class AnnotationVisualizationImporter(BaseImporter):
     dir_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute"
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         precompute_importer = AnnotationPrecomputeFactory.load(self.get_annotation(), self.config)
         if precompute_importer:
             voxel_spacing = self.get_voxel_spacing().as_float()

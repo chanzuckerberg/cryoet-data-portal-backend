@@ -21,6 +21,9 @@ class TiltSeriesImporter(VolumeImporter):
     metadata_path = "{dataset_name}/{run_name}/TiltSeries/tiltseries_metadata.json"
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         _ = self.scale_mrcfile(
             scale_z_axis=False,
             write_mrc=self.config.write_mrc,
@@ -37,6 +40,9 @@ class TiltSeriesImporter(VolumeImporter):
         return num_frames
 
     def import_metadata(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dest_ts_metadata = self.get_metadata_path()
         merge_data = self.load_extra_metadata()
         merge_data["frames_count"] = self.get_frames_count()

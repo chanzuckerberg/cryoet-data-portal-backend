@@ -36,6 +36,9 @@ class KeyImageImporter(BaseImporter):
         return os.path.relpath(image_path, self.config.output_prefix)
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dir = self.get_output_path()
         preview, tomo_width = None, None
         if self.path:

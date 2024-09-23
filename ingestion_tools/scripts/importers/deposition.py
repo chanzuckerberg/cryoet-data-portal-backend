@@ -18,6 +18,9 @@ class DepositionImporter(BaseImporter):
         pass
 
     def import_metadata(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         meta = DepositionMetadata(self.config.fs, self.name, self.get_base_metadata())
         extra_data = self.load_extra_metadata()
         if not self.get_base_metadata():

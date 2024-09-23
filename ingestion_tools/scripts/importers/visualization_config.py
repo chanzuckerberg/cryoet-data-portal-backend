@@ -29,6 +29,9 @@ class VisualizationConfigImporter(BaseImporter):
     )
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         ng_contents = self._create_config()
         meta = NeuroglancerMetadata(self.config.fs, self.get_deposition().name, ng_contents)
         dest_file = self.get_output_path()
