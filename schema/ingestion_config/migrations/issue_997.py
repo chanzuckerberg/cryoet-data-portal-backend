@@ -28,7 +28,7 @@ def rawtilts_to_collection_metadata(config: dict) -> None:
             config["collection_metadata"][0]["sources"][0]["source_multi_glob"]["list_globs"].extend(list_globs)
 
 
-def rawtilts_to_alignments(config: dict) -> None:
+def rawtilts_to_alignments(data: dict) -> None:
     list_globs = []
     format_dict = {
         "IMOD": [],
@@ -36,19 +36,19 @@ def rawtilts_to_alignments(config: dict) -> None:
     }
 
     def valid_file(file):
-        return any(file.endswith(ext) for ext in ['.tlt', ".xf", ".aln", ".com", ".txt", ".csv"])
+        return any(file.endswith(ext) for ext in ['.tlt', ".xf", ".aln", ".com", ".txt", ".csv", ".tiltx"])
 
     def get_format(file):
-        if any(file.endswith(ext) for ext in ['.tlt', ".xf", ".com"]):
+        if any(file.endswith(ext) for ext in ['.tlt', ".xf", ".com", ".xtlt"]):
             format_dict["IMOD"].append(file)
         elif any(file.endswith(ext) for ext in ['.aln', ".txt", ".csv"]):
             format_dict["ARETOMO3"].append(file)
 
-    if len(config.get('tomograms', [])) > 1 or len(config.get("rawtilts", [])) > 1:
+    if len(data.get('tomograms', [])) > 1 or len(data.get("rawtilts", [])) > 1:
         raise ValueError("More than one tomogram or rawtilt")
 
-    if 'rawtilts' in config:
-        for i in config['rawtilts']:
+    if 'rawtilts' in data:
+        for i in data['rawtilts']:
             if "sources" not in i:
                 continue
             old_source = i["sources"][0]["source_multi_glob"]["list_globs"]
@@ -57,12 +57,12 @@ def rawtilts_to_alignments(config: dict) -> None:
                 old_source.remove(source)
                 get_format(source)
         if list_globs:
-            if 'alignments' not in config:
-                config['alignments'] = []
+            if 'alignments' not in data:
+                data['alignments'] = []
             for key, files in format_dict.items():
                 if files:
                     # check if there is an alignment with the key in the metadata.format
-                    alignment = [a for a in config.get("alignments", []) if a["metadata"]["format"] == key]
+                    alignment = [a for a in data.get("alignments", []) if a["metadata"]["format"] == key]
                     if alignment:
                         alignment = alignment.pop()
                     else:
@@ -70,8 +70,8 @@ def rawtilts_to_alignments(config: dict) -> None:
                             "metadata": {"format": key},
                             "sources": [{"source_multi_glob": {"list_globs": files}}]}
 
-                    if 'tomograms' in config:
-                        for i in config['tomograms']:
+                    if 'tomograms' in data:
+                        for i in data['tomograms']:
                             if "metadata" not in i:
                                 continue
                             affine_transformation_matrix = i["metadata"].get("affine_transformation_matrix", None)
@@ -80,7 +80,7 @@ def rawtilts_to_alignments(config: dict) -> None:
                                 continue
                             if affine_transformation_matrix:
                                 alignment["metadata"]["affine_transformation_matrix"] = affine_transformation_matrix
-                    config["alignments"].append(alignment)
+                    data["alignments"].append(alignment)
 
 
 def update_tomogram_metadata(config: dict) -> None:
