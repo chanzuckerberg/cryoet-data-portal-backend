@@ -62,7 +62,11 @@ class AlignmentImporter(BaseFileImporter):
         self.file_paths = kwargs.get("file_paths")
         self.identifier = AlignmentIdentifierHelper.get_identifier(self.config, self.metadata, self.parents)
         self.converter = alignment_converter_factory(
-            self.config, self.metadata, list(self.file_paths.values()), self.parents, self.get_output_path(),
+            self.config,
+            self.metadata,
+            list(self.file_paths.values()),
+            self.parents,
+            self.get_output_path(),
         )
 
     def import_metadata(self) -> None:
@@ -150,7 +154,6 @@ class AlignmentImporter(BaseFileImporter):
         }
 
     def get_tiltseries_path(self) -> str | None:
-        # TODO: Clean this up to a component that can handles edge cases like where all required parents are not available
         for ts in TiltSeriesImporter.finder(self.config, **self.parents):
             return ts.get_metadata_path()
         return None
