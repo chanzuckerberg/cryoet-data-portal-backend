@@ -63,7 +63,7 @@ class Dataset(Base):
     )
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)
-    organism_name: Mapped[str] = mapped_column(String, nullable=False)
+    organism_name: Mapped[str] = mapped_column(String, nullable=True)
     organism_taxid: Mapped[int] = mapped_column(Integer, nullable=True)
     tissue_name: Mapped[str] = mapped_column(String, nullable=True)
     tissue_id: Mapped[str] = mapped_column(String, nullable=True)

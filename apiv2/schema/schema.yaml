@@ -360,6 +360,9 @@ enums:
       JEOL:
         text: JEOL
         description: JEOL Ltd.
+      SIMULATED:
+        text: SIMULATED
+        description: JEOL Ltd.
   fiducial_alignment_status_enum:
     name: fiducial_alignment_status_enum
     description: Fiducial Alignment method
@@ -1123,7 +1126,8 @@ classes:
         exact_mappings:
         - organism_name
         range: string
-        required: true
+        recommended: true
+        required: false
       organism_taxid:
         name: organism_taxid
         description: NCBI taxonomy identifier for the organism, e.g. 9606
