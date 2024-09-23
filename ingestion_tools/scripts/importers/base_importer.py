@@ -134,16 +134,17 @@ class BaseImporter:
         return None
 
     @classmethod
-    def get_name_and_path(cls, metadata: dict, name: str, path: str) -> [str, str]:
+    def get_name_and_path(cls, metadata: dict, name: str, path: str, results: dict[str, str]) -> [str, str, dict]:
         """
-        Returns the name and path for the importer. This method is used to override the name and path for the importer
-        when the destination metadata is provided.
+        Returns the name, path and a dictionary of name and paths for the importer. This method is used to override the
+        name and path for the importer when the destination metadata is provided.
         :param metadata: the metadata associated to the relevant importer entity
         :param name: the name identified for the importer entity
         :param path: the path for the importer entity
+        :param results: a dict of the filename and path for the importer entity
         :return:
         """
-        return name, path
+        NotImplemented("Subclasses must implement this method")
 
 
 class VolumeImporter(BaseImporter):

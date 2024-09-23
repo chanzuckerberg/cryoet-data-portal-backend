@@ -121,6 +121,20 @@ class DestinationFilteredMetadataFinder(BaseFinder):
     def __init__(self, filters: list[dict[str, Any]]):
         self.filters = {f.get("key"): f.get("value") for f in filters}
 
+    @classmethod
+    def _is_match(cls, metadata: dict[str, Any], key: str | list[str], expected_value: Any) -> bool:
+        key = [key]
+        value = metadata
+        for path_part in key:
+            if isinstance(value, dict):
+                value = value.get(path_part)
+            else:
+                value = {v.get(path_part) for v in value if isinstance(v, dict)}
+            if not value:
+                break
+
+        return expected_value in value if isinstance(value, set) else value == expected_value
+
     def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any], *args, **kwargs) -> dict[str, str | None]:
         cls = kwargs.get("cls")
         output_path = os.path.join(config.output_prefix, cls.dir_path.format(**glob_vars))
@@ -129,8 +143,7 @@ class DestinationFilteredMetadataFinder(BaseFinder):
             local_filename = config.fs.localreadable(file_path)
             with open(local_filename, "r") as metadata_file:
                 metadata = json.load(metadata_file)
-            # TODO: Update filtering to handle nested keys
-            if all(metadata.get(key) == value for key, value in self.filters.items()):
+            if all(self._is_match(metadata, key, value) for key, value in self.filters.items()):
                 responses[file_path] = file_path
 
         return responses
@@ -254,13 +267,18 @@ class DepositionObjectImporterFactory(ABC):
 
     @classmethod
     def handle_for_metadata_file(
-        cls, klass, config: DepositionImportConfig, name: str, path: str, metadata: dict,
+        cls,
+        klass,
+        config: DepositionImportConfig,
+        name: str,
+        path: str,
+        metadata: dict,
     ) -> tuple[str, str, dict]:
         if path and path.endswith("metadata.json"):
             local_filename = config.fs.localreadable(path)
             with open(local_filename, "r") as metadata_file:
                 metadata = json.load(metadata_file)
-            name, path = klass.get_name_and_path(metadata, name, path)
+            name, path, paths = klass.get_name_and_path(metadata, name, path, None)
         return name, path, metadata
 
 
@@ -308,6 +326,8 @@ class MultiSourceFileFinder(DefaultImporterFactory):
             return []
         # TODO: Handle case where metadata is the path file
         names = ",".join([os.path.basename(path) for path in filtered_results])
+        if any(path and path.endswith("metadata.json") for path in filtered_results.values()):
+            name, path, filtered_results = cls.get_name_and_path(metadata, None, None, filtered_results)
         item = cls(
             config=config,
             metadata=metadata,

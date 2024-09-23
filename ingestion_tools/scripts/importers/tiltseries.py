@@ -57,6 +57,7 @@ class TiltSeriesImporter(VolumeImporter):
         header.cella.z = 1 * self.get_pixel_spacing()
 
     @classmethod
-    def get_name_and_path(cls, metadata: dict, name: str, path: str) -> [str, str]:
+    def get_name_and_path(cls, metadata: dict, name: str, path: str, results: dict[str, str]) -> [str, str, dict]:
         filename = metadata.get("omezarr_dir")
-        return filename, os.path.join(os.path.dirname(path), filename)
+        complete_path = os.path.join(os.path.dirname(path), filename)
+        return filename, complete_path, {filename: complete_path}
