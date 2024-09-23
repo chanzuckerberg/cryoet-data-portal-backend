@@ -1,10 +1,10 @@
-from __future__ import annotations 
+from __future__ import annotations
 from datetime import (
     datetime,
     date
 )
-from decimal import Decimal 
-from enum import Enum 
+from decimal import Decimal
+from enum import Enum
 import re
 import sys
 from typing import (
@@ -6665,4 +6665,3 @@ VoxelSpacingParentFilters.model_rebuild()
 VoxelSpacingParent.model_rebuild()
 VoxelSpacingLiteral.model_rebuild()
 TomogramHeader.model_rebuild()
-
