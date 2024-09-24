@@ -1,7 +1,7 @@
 import os
 import os.path
 from abc import abstractmethod
-from typing import Any, Callable
+from typing import Any, Callable, Type
 
 import ndjson
 
@@ -41,8 +41,8 @@ class AnnotationIdentifierHelper(IdentifierHelper):
 
 
 class AnnotationImporterFactory(DepositionObjectImporterFactory):
-    def __init__(self, source: dict[str, Any]):
-        super().__init__(source)
+    def __init__(self, source: dict[str, Any], importer_cls: Type[BaseImporter]):
+        super().__init__(source, importer_cls)
         # flatten self.source additional layer that specifies the type of annotation file it is
         clean_source = {k: v for k, v in self.source.items() if k not in {"parent_filters", "exclude"}}
         if not (len(clean_source.keys()) == 1):
