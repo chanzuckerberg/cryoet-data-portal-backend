@@ -303,3 +303,24 @@ def test_custom_alignment_with_dimensions_import_without_tomograms(
         "x_rotation_offset": -2.3,
     }
     validate_metadata(expected, prefix, id_prefix)
+
+
+def test_allow_import_is_false(
+    create_config: Callable[[str], DepositionImportConfig],
+    test_output_bucket: str,
+    s3_client: S3Client,
+) -> None:
+    config = create_config("alignments/alignment4.yaml")
+    parents = get_parents(config)
+
+    alignments = list(AlignmentImporter.finder(config, **parents))
+    for alignment in alignments:
+        alignment.allow_imports = False
+        alignment.import_item()
+        alignment.import_metadata()
+
+    dataset_name = parents.get("dataset").name
+    run_name = parents.get("run").name
+    prefix = f"output/{dataset_name}/{run_name}/Alignments/"
+    alignment_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
+    assert alignment_files == []
