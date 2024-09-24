@@ -29,6 +29,10 @@ class AnnotationVisualizationImporter(BaseImporter):
             precompute_path = self.get_output_path()
             precompute_importer.neuroglancer_precompute(precompute_path, voxel_spacing)
 
+    @classmethod
+    def get_default_config(cls) -> list[dict] | None:
+        return [{"sources": [{"literal": {"value": ["neuroglancer"]}}]}]
+
 
 class BaseAnnotationPrecompute:
     config: DepositionImportConfig

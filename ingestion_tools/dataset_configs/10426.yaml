@@ -35,7 +35,7 @@ datasets:
     cell_type:
       id: CL:0000010
       name: cultured cell
-    cross_references:
+    cross_references: &dataset_cross_references
       publications: 10.1101/2024.06.27.600657
     dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
       contains 10 grids. This is grid 1 of 10 and contains basal membranes of HSC3
@@ -77,6 +77,7 @@ depositions:
       associated proteins.
     deposition_identifier: 10306
     deposition_title: Unroofed eukaryotic cells.
+    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
   sources:

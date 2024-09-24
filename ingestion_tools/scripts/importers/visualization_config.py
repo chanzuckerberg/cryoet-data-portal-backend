@@ -142,3 +142,7 @@ class VisualizationConfigImporter(BaseImporter):
         name = metadata.get("annotation_object", {}).get("name", "Annotation")
         anno_identifier = int(stemmed_metadata_path.split("-")[0])
         return f"{anno_identifier} {name}"
+
+    @classmethod
+    def get_default_config(cls) -> list[dict] | None:
+        return [{"sources": [{"literal": {"value": ["neuroglancer"]}}]}]

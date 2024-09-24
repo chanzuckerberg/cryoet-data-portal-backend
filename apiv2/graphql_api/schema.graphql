@@ -1340,14 +1340,10 @@ input Annotation_method_type_enumEnumComparators {
 }
 
 input BoolComparators {
-  _eq: Int
-  _neq: Int
-  _in: [Int!]
-  _nin: [Int!]
-  _gt: Int
-  _gte: Int
-  _lt: Int
-  _lte: Int
+  _eq: Boolean
+  _neq: Boolean
+  _in: [Boolean!]
+  _nin: [Boolean!]
   _is_null: Boolean
 }
 
@@ -1423,7 +1419,7 @@ type Dataset implements EntityInterface & Node {
   """
   Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens.
   """
-  organismName: String!
+  organismName: String
 
   """NCBI taxonomy identifier for the organism, e.g. 9606"""
   organismTaxid: Int
@@ -1788,7 +1784,7 @@ input DatasetCreateInput {
   """
   Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens.
   """
-  organismName: String!
+  organismName: String = null
 
   """NCBI taxonomy identifier for the organism, e.g. 9606"""
   organismTaxid: Int = null
@@ -2104,7 +2100,7 @@ input DatasetUpdateInput {
   """
   Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens.
   """
-  organismName: String
+  organismName: String = null
 
   """NCBI taxonomy identifier for the organism, e.g. 9606"""
   organismTaxid: Int = null
@@ -5573,6 +5569,7 @@ enum tiltseries_microscope_manufacturer_enum {
   FEI
   TFS
   JEOL
+  SIMULATED
 }
 
 enum tomogram_processing_enum {
