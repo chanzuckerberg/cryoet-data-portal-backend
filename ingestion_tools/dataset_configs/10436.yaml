@@ -7,6 +7,7 @@ alignments:
       - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.xf
       - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.tlt
       - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.com
+      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.xtilt
 - metadata:
     format: ARETOMO3
   sources:
@@ -354,7 +355,6 @@ rawtilts:
   - source_multi_glob:
       list_globs:
       - Data_Set_2/{run_name}/tilt_series/*.st.rawtlt
-      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.xtilt
   - source_multi_glob:
       list_globs:
       - Data_Set_1/{run_name}/tilt_series/*.mrc.tlt

@@ -68,11 +68,12 @@ def rawtilts_to_alignments(data: dict) -> None:
                     alignment = [a for a in data.get("alignments", []) if a["metadata"]["format"] == key]
                     if alignment:
                         alignment = alignment.pop()
+                        alignment["sources"][0]["source_multi_glob"]["list_globs"].extend(files)
                     else:
                         alignment = {
                             "metadata": {"format": key},
                             "sources": [{"source_multi_glob": {"list_globs": files}}]}
-
+                        data["alignments"].append(alignment)
                     if 'tomograms' in data:
                         for i in data['tomograms']:
                             if "metadata" not in i:
@@ -83,7 +84,6 @@ def rawtilts_to_alignments(data: dict) -> None:
                                 continue
                             if affine_transformation_matrix:
                                 alignment["metadata"]["affine_transformation_matrix"] = affine_transformation_matrix
-                    data["alignments"].append(alignment)
 
 
 def update_tomogram_metadata(config: dict) -> None:
