@@ -102,5 +102,4 @@ class Tomogram(Base):
     key_photo_thumbnail_url: Mapped[str] = mapped_column(String, nullable=True)
     neuroglancer_config: Mapped[str] = mapped_column(String, nullable=True)
     is_standardized: Mapped[bool] = mapped_column(Boolean, nullable=False)
-    is_author_submitted: Mapped[bool] = mapped_column(Boolean, nullable=False)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

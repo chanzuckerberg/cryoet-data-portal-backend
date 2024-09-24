@@ -133,7 +133,6 @@ class TomogramCreateInputValidator(BaseModel):
         ),
     ]
     is_standardized: Annotated[bool, Field()]
-    is_author_submitted: Annotated[bool, Field()]
     id: Annotated[int, Field()]
 
 
@@ -255,5 +254,4 @@ class TomogramUpdateInputValidator(BaseModel):
         ),
     ]
     is_standardized: Annotated[bool | None, Field()]
-    is_author_submitted: Annotated[bool | None, Field()]
     id: Annotated[int | None, Field()]

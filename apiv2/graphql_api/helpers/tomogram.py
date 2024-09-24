@@ -73,7 +73,6 @@ class TomogramGroupByOptions:
     key_photo_thumbnail_url: Optional[str] = None
     neuroglancer_config: Optional[str] = None
     is_standardized: Optional[bool] = None
-    is_author_submitted: Optional[bool] = None
     id: Optional[int] = None
 
 

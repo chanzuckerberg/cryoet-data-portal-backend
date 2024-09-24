@@ -70,5 +70,4 @@ class TomogramFactory(CommonFactory):
     key_photo_thumbnail_url = fuzzy.FuzzyText()
     neuroglancer_config = fuzzy.FuzzyText()
     is_standardized = factory.Faker("boolean")
-    is_author_submitted = factory.Faker("boolean")
     id = fuzzy.FuzzyInteger(1, 1000)
