@@ -74,7 +74,7 @@ class SourceGlobFinder(BaseFinder):
 
 
 class DestinationGlobFinder(BaseFinder):
-    # Don't allow reimport the destination files that have already been imported
+    # Don't allow reimport of destination files that have already been imported
     allow_imports: bool = False
     list_glob: str
     match_regex: re.Pattern[str]
@@ -205,7 +205,12 @@ class DepositionObjectImporterFactory(ABC):
         parents: dict[str, Any] | None,
     ):
         return self.importer_cls(
-            config=config, metadata=metadata, name=name, path=path, parents=parents, allow_imports=allow_imports,
+            config=config,
+            metadata=metadata,
+            name=name,
+            path=path,
+            parents=parents,
+            allow_imports=allow_imports,
         )
 
     def _get_results(
@@ -224,13 +229,7 @@ class DepositionObjectImporterFactory(ABC):
                 print(f"Excluding {self.importer_cls.type_key} {name}...")
                 continue
             filtered_results[name] = path
-        return self._get_instantiated_results(
-            config,
-            metadata,
-            filtered_results,
-            loader.allow_imports,
-            parent_objects,
-        )
+        return self._get_instantiated_results(config, metadata, filtered_results, loader.allow_imports, parent_objects)
 
     def _get_instantiated_results(
         self,
