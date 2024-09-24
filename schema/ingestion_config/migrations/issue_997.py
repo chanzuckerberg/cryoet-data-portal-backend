@@ -27,7 +27,6 @@ def rawtilts_to_collection_metadata(config: dict) -> None:
                 config['collection_metadata'] = [{"sources": [{"source_multi_glob": {"list_globs": []}}]}]
             config["collection_metadata"][0]["sources"][0]["source_multi_glob"]["list_globs"].extend(list_globs)
 
-
 def rawtilts_to_alignments(data: dict) -> None:
     list_globs = []
     format_dict = {
@@ -35,13 +34,17 @@ def rawtilts_to_alignments(data: dict) -> None:
         "ARETOMO3": [],
     }
 
+    IMOD_ext = ['.tlt', ".xf", "tilt.com", "news.com", ".xtilt"]
+    AreTomo3_ext = ['.aln', ".txt", ".csv"]
+    extensions = IMOD_ext + AreTomo3_ext
+
     def valid_file(file):
-        return any(file.endswith(ext) for ext in ['.tlt', ".xf", ".aln", ".com", ".txt", ".csv", ".tiltx"])
+        return any(file.endswith(ext) for ext in extensions)
 
     def get_format(file):
-        if any(file.endswith(ext) for ext in ['.tlt', ".xf", ".com", ".xtlt"]):
+        if any(file.endswith(ext) for ext in IMOD_ext):
             format_dict["IMOD"].append(file)
-        elif any(file.endswith(ext) for ext in ['.aln', ".txt", ".csv"]):
+        elif any(file.endswith(ext) for ext in AreTomo3_ext):
             format_dict["ARETOMO3"].append(file)
 
     if len(data.get('tomograms', [])) > 1 or len(data.get("rawtilts", [])) > 1:

@@ -43,13 +43,17 @@ def rawtilts_to_alignments(data: dict) -> None:
         "ARETOMO3": [],
     }
 
+    IMOD_ext = ['.tlt', ".xf", "tilt.com", "news.com", ".xtilt"]
+    AreTomo3_ext = ['.aln', ".txt", ".csv"]
+    extensions = IMOD_ext + AreTomo3_ext
+
     def valid_file(file):
-        return any(file.endswith(ext) for ext in ['.tlt', ".xf", ".aln", ".com", ".txt", ".csv", ".tiltx"])
+        return any(file.endswith(ext) for ext in extensions)
 
     def get_format(file):
-        if any(file.endswith(ext) for ext in ['.tlt', ".xf", ".com", ".xtlt"]):
+        if any(file.endswith(ext) for ext in IMOD_ext):
             format_dict["IMOD"].append(file)
-        elif any(file.endswith(ext) for ext in ['.aln', ".txt", ".csv"]):
+        elif any(file.endswith(ext) for ext in AreTomo3_ext):
             format_dict["ARETOMO3"].append(file)
 
     if len(data.get('tomograms', [])) > 1 or len(data.get("rawtilts", [])) > 1:
@@ -89,7 +93,6 @@ def rawtilts_to_alignments(data: dict) -> None:
                             if affine_transformation_matrix:
                                 alignment["metadata"]["affine_transformation_matrix"] = affine_transformation_matrix
                     data["alignments"].append(alignment)
-
 
 def update_config(data: dict[str, Any]) -> dict[str, Any]:
     standardization_config = data["standardization_config"]
