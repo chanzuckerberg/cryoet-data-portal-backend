@@ -417,9 +417,9 @@ class AlignmentFormatEnum(str, Enum):
     """
     Used to determine what alignment alogrithm to use.
     """
-    # formats (xf, tlt, com)
+    # IMOD was used for the alignment. Supported file formats are (xf, tlt, tilt.com, news.com, xtilt)
     IMOD = "IMOD"
-    # formats (aln)
+    # ARETOMO3 was used for the alignment. Supported file formats are (aln, txt, csv)
     ARETOMO3 = "ARETOMO3"
 
 

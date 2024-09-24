@@ -375,10 +375,12 @@ enums:
     permissible_values:
       IMOD:
         text: IMOD
-        description: formats (xf, tlt, com)
+        description: IMOD was used for the alignment. Supported file formats are (xf,
+          tlt, tilt.com, news.com, xtilt)
       ARETOMO3:
         text: ARETOMO3
-        description: formats (aln)
+        description: ARETOMO3 was used for the alignment. Supported file formats are
+          (aln, txt, csv)
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.
