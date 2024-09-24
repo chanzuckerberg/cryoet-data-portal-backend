@@ -61,27 +61,22 @@ class DependencyExtension(FieldExtension):
         except AttributeError:
             request.context = {"dependency_cache": {}}
 
-        if not request.scope.get("sberrystack"):
+        async with AsyncExitStack() as async_exit_stack:
             request.scope["sberrystack"] = AsyncExitStack()
 
-        solved_result = await deputils.solve_dependencies(
-            request=request,
-            dependant=self.dependant,
-            body={},
-            dependency_overrides_provider=request.app,
-            dependency_cache=request.context["dependency_cache"],
-            async_exit_stack=request.scope["sberrystack"],
-        )
-        (
-            solved_values,
-            _,  # solver_errors. It shouldn't be possible for it to contain
-            # anything relevant to this extension.
-            _,  # background tasks
-            _,  # the subdependency returns the same response we have
-            new_cache,  # sub_dependency_cache
-        ) = solved_result
+            solved_result = await deputils.solve_dependencies(
+                request=request,
+                dependant=self.dependant,
+                body={},
+                dependency_overrides_provider=request.app,
+                dependency_cache=request.context["dependency_cache"],
+                async_exit_stack=async_exit_stack,
+                embed_body_fields=False,
+            )
+            solved_values = solved_result.values
+            new_cache = solved_result.dependency_cache
+            request.context["dependency_cache"].update(new_cache)
 
-        request.context["dependency_cache"].update(new_cache)
-        kwargs = solved_values | kwargs  # solved_values has None values that need to be overridden by kwargs
-        res = await next_(source, info, **kwargs)
+            kwargs = solved_values | kwargs  # solved_values has None values that need to be overridden by kwargs
+            res = await next_(source, info, **kwargs)
         return res

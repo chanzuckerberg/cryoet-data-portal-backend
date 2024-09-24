@@ -40,7 +40,7 @@ class SyncDB:
 
 
 def init_async_db(db_uri: str, **kwargs: dict[str, Any]) -> AsyncDB:
-    engine = create_async_engine(db_uri, pool_size=5, max_overflow=5, future=True, **kwargs)
+    engine = create_async_engine(db_uri, future=True, **kwargs)
     return AsyncDB(engine)
 
 
