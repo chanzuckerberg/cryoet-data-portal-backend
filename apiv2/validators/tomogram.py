@@ -68,7 +68,6 @@ class TomogramCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    is_canonical: Annotated[bool | None, Field()]
     s3_omezarr_dir: Annotated[
         str | None,
         StringConstraints(
@@ -134,6 +133,7 @@ class TomogramCreateInputValidator(BaseModel):
         ),
     ]
     is_standardized: Annotated[bool, Field()]
+    is_author_submitted: Annotated[bool, Field()]
     id: Annotated[int, Field()]
 
 
@@ -190,7 +190,6 @@ class TomogramUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    is_canonical: Annotated[bool | None, Field()]
     s3_omezarr_dir: Annotated[
         str | None,
         StringConstraints(
@@ -256,4 +255,5 @@ class TomogramUpdateInputValidator(BaseModel):
         ),
     ]
     is_standardized: Annotated[bool | None, Field()]
+    is_author_submitted: Annotated[bool | None, Field()]
     id: Annotated[int | None, Field()]

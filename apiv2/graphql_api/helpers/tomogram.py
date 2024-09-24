@@ -58,7 +58,6 @@ class TomogramGroupByOptions:
     tomogram_version: Optional[float] = None
     processing_software: Optional[str] = None
     reconstruction_software: Optional[str] = None
-    is_canonical: Optional[bool] = None
     s3_omezarr_dir: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
     s3_mrc_file: Optional[str] = None
@@ -74,6 +73,7 @@ class TomogramGroupByOptions:
     key_photo_thumbnail_url: Optional[str] = None
     neuroglancer_config: Optional[str] = None
     is_standardized: Optional[bool] = None
+    is_author_submitted: Optional[bool] = None
     id: Optional[int] = None
 
 

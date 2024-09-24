@@ -55,7 +55,6 @@ class TomogramFactory(CommonFactory):
     tomogram_version = fuzzy.FuzzyFloat(1, 100)
     processing_software = fuzzy.FuzzyText()
     reconstruction_software = fuzzy.FuzzyText()
-    is_canonical = factory.Faker("boolean")
     s3_omezarr_dir = fuzzy.FuzzyText()
     https_omezarr_dir = fuzzy.FuzzyText()
     s3_mrc_file = fuzzy.FuzzyText()
@@ -71,4 +70,5 @@ class TomogramFactory(CommonFactory):
     key_photo_thumbnail_url = fuzzy.FuzzyText()
     neuroglancer_config = fuzzy.FuzzyText()
     is_standardized = factory.Faker("boolean")
+    is_author_submitted = factory.Faker("boolean")
     id = fuzzy.FuzzyInteger(1, 1000)

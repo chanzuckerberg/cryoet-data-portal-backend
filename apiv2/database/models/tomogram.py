@@ -87,7 +87,6 @@ class Tomogram(Base):
     tomogram_version: Mapped[float] = mapped_column(Float, nullable=True)
     processing_software: Mapped[str] = mapped_column(String, nullable=True)
     reconstruction_software: Mapped[str] = mapped_column(String, nullable=False)
-    is_canonical: Mapped[bool] = mapped_column(Boolean, nullable=True)
     s3_omezarr_dir: Mapped[str] = mapped_column(String, nullable=True)
     https_omezarr_dir: Mapped[str] = mapped_column(String, nullable=True)
     s3_mrc_file: Mapped[str] = mapped_column(String, nullable=True)
@@ -103,4 +102,5 @@ class Tomogram(Base):
     key_photo_thumbnail_url: Mapped[str] = mapped_column(String, nullable=True)
     neuroglancer_config: Mapped[str] = mapped_column(String, nullable=True)
     is_standardized: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    is_author_submitted: Mapped[bool] = mapped_column(Boolean, nullable=False)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
