@@ -115,11 +115,6 @@ gains:
 - sources:
   - source_glob:
       list_glob: frames/{run_name}/*.dm4
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 runs:
 - sources:
   - source_glob:

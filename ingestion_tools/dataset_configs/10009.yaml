@@ -292,11 +292,6 @@ frames:
 - sources:
   - source_glob:
       list_glob: Tomo{run_name}/raw_data/raw_frames/*.mrc.bz2
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 rawtilts:
 - sources:
   - source_multi_glob:

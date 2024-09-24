@@ -145,11 +145,6 @@ frames:
 - sources:
   - source_glob:
       list_glob: frames/{run_name}_*.tif
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 runs:
 - sources:
   - source_glob:
