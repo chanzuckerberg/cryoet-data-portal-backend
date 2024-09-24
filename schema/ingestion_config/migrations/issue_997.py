@@ -149,7 +149,11 @@ def has_changes(file, config):
 
 def migrate_config(file_path):
     with open(file_path, 'r') as file:
-        config = yaml.safe_load(file)
+        try:
+            config = yaml.safe_load(file)
+        except yaml.YAMLError as e:
+            print(f"Error in {get_relative_path(file_path)}: {e}")
+            return
 
     try:
         rawtilts_to_collection_metadata(config)

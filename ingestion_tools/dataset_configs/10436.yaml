@@ -92,22 +92,8 @@ annotations:
       name: microsporidian-type exospore
     annotation_publications: 10.1101/2024.07.13.603322
     annotation_software: Dragonfly
-    authors: &id001
-    - ORCID: 0000-0002-9479-3800
-      corresponding_author_status: true
-      name: Mahrukh Usmani
-      primary_author_status: true
-    - name: Harshita Ramchandani
-    - ORCID: 0000-0002-2570-0404
-      corresponding_author_status: true
-      name: Damian C. Ekiert
-    - ORCID: 0000-0003-0624-6178
-      corresponding_author_status: true
-      name: Gira Bhabha
-    dates: &id002
-      deposition_date: '2024-07-09'
-      last_modified_date: '2024-07-24'
-      release_date: '2024-07-29'
+    authors: *id001
+    dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
     method_type: hybrid
