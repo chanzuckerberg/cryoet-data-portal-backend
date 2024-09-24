@@ -119,21 +119,21 @@ class DestinationFilteredMetadataFinder(BaseFinder):
     allow_imports: bool = False
 
     def __init__(self, filters: list[dict[str, Any]]):
-        self.filters = {f.get("key"): f.get("value") for f in filters}
+        self.filters = list(filters)
 
     @classmethod
     def _is_match(cls, metadata: dict[str, Any], key: str | list[str], expected_value: Any) -> bool:
-        key = [key]
+        key = [key] if isinstance(key, str) else key
         value = metadata
         for path_part in key:
             if isinstance(value, dict):
                 value = value.get(path_part)
             else:
-                value = {v.get(path_part) for v in value if isinstance(v, dict)}
+                value = [v.get(path_part) for v in value if isinstance(v, dict)]
             if not value:
                 break
 
-        return expected_value in value if isinstance(value, set) else value == expected_value
+        return expected_value in value if isinstance(value, list) else value == expected_value
 
     def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any], *args, **kwargs) -> dict[str, str | None]:
         cls = kwargs.get("cls")
@@ -143,7 +143,7 @@ class DestinationFilteredMetadataFinder(BaseFinder):
             local_filename = config.fs.localreadable(file_path)
             with open(local_filename, "r") as metadata_file:
                 metadata = json.load(metadata_file)
-            if all(self._is_match(metadata, key, value) for key, value in self.filters.items()):
+            if all(self._is_match(metadata, item.get("key"), item.get("value")) for item in self.filters):
                 responses[file_path] = file_path
 
         return responses
@@ -324,10 +324,10 @@ class MultiSourceFileFinder(DefaultImporterFactory):
     ):
         if not filtered_results:
             return []
-        # TODO: Handle case where metadata is the path file
-        names = ",".join([os.path.basename(path) for path in filtered_results])
         if any(path and path.endswith("metadata.json") for path in filtered_results.values()):
             name, path, filtered_results = cls.get_name_and_path(metadata, None, None, filtered_results)
+
+        names = ",".join([os.path.basename(path) for path in filtered_results])
         item = cls(
             config=config,
             metadata=metadata,
