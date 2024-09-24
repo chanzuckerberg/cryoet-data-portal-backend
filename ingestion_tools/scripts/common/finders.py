@@ -2,7 +2,7 @@ import json
 import os
 import re
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Type
 
 if TYPE_CHECKING:
     from importers.base_importer import BaseImporter
@@ -21,7 +21,7 @@ class BaseFinder(ABC):
     allow_imports: bool = True
 
     @abstractmethod
-    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any], *args, **kwargs) -> dict[str, str]:
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]) -> dict[str, str]:
         pass
 
 
@@ -31,7 +31,7 @@ class SourceMultiGlobFinder(BaseFinder):
     def __init__(self, list_globs: list[str]):
         self.list_globs = list_globs
 
-    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any], *args, **kwargs) -> dict[str, str]:
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]) -> dict[str, str]:
         responses = {}
         for list_glob in self.list_globs:
             path = os.path.join(config.deposition_root_dir, list_glob.format(**glob_vars))
@@ -61,7 +61,7 @@ class SourceGlobFinder(BaseFinder):
             name_regex = "(.*)"
         self.name_regex = re.compile(name_regex)
 
-    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any], *args, **kwargs) -> dict[str, str]:
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]) -> dict[str, str]:
         path = os.path.join(config.deposition_root_dir, self.list_glob.format(**glob_vars))
         responses = {}
         for fname in config.fs.glob(path):
@@ -90,7 +90,7 @@ class DestinationGlobFinder(BaseFinder):
             name_regex = "(.*)"
         self.name_regex = re.compile(name_regex)
 
-    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any], *args, **kwargs) -> dict[str, str]:
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]) -> dict[str, str]:
         path = os.path.join(self.list_glob.format(**glob_vars))
         responses = {}
         for fname in config.fs.glob(path):
@@ -108,7 +108,7 @@ class BaseLiteralValueFinder(BaseFinder):
     def __init__(self, value: dict[str, str | None] | list[str]):
         self.literal_value = value
 
-    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any], *args, **kwargs) -> dict[str, str | None]:
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]) -> dict[str, str | None]:
         if isinstance(self.literal_value, dict):
             return self.literal_value
         return {item: None for item in self.literal_value}
@@ -118,8 +118,9 @@ class DestinationFilteredMetadataFinder(BaseFinder):
     # Don't allow reimport the destination files that have already been imported
     allow_imports: bool = False
 
-    def __init__(self, filters: list[dict[str, Any]]):
+    def __init__(self, filters: list[dict[str, Any]], importer_cls: Type[BaseImporter]):
         self.filters = list(filters)
+        self.importer_cls = importer_cls
 
     @classmethod
     def _is_match(cls, metadata: dict[str, Any], key: str | list[str], expected_value: Any) -> bool:
@@ -135,9 +136,8 @@ class DestinationFilteredMetadataFinder(BaseFinder):
 
         return expected_value in value if isinstance(value, list) else value == expected_value
 
-    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any], *args, **kwargs) -> dict[str, str | None]:
-        cls = kwargs.get("cls")
-        output_path = os.path.join(config.output_prefix, cls.dir_path.format(**glob_vars))
+    def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]) -> dict[str, str | None]:
+        output_path = os.path.join(config.output_prefix, self.importer_cls.dir_path.format(**glob_vars))
         responses = {}
         for file_path in config.fs.glob(os.path.join(output_path, "*metadata.json")):
             local_filename = config.fs.localreadable(file_path)
@@ -153,7 +153,8 @@ class DestinationFilteredMetadataFinder(BaseFinder):
 ### Factories
 ###
 class DepositionObjectImporterFactory(ABC):
-    def __init__(self, source: dict[str, Any]):
+    def __init__(self, source: dict[str, Any], importer_cls: Type[BaseImporter]):
+        self.importer_cls = importer_cls
         self.source = source
         self._set_parent_filters(source.get("parent_filters", {}))
         self._set_exclude(source.get("exclude", []))
@@ -170,11 +171,7 @@ class DepositionObjectImporterFactory(ABC):
         self.exclude_regexes = [re.compile(regex_str) for regex_str in exclude]
 
     @abstractmethod
-    def load(
-        self,
-        config: DepositionImportConfig,
-        **expansion_data: dict[str, Any] | None,
-    ) -> BaseFinder:
+    def load(self, config: DepositionImportConfig, **expansion_data: dict[str, Any] | None) -> BaseFinder:
         pass
 
     def _should_search(self, **parent_objects: dict[str, Any] | None) -> bool:
@@ -200,7 +197,6 @@ class DepositionObjectImporterFactory(ABC):
 
     def _instantiate(
         self,
-        cls,
         config: DepositionImportConfig,
         metadata: dict[str, Any],
         name: str,
@@ -208,27 +204,27 @@ class DepositionObjectImporterFactory(ABC):
         allow_imports: bool,
         parents: dict[str, Any] | None,
     ):
-        return cls(config=config, metadata=metadata, name=name, path=path, parents=parents, allow_imports=allow_imports)
+        return self.importer_cls(
+            config=config, metadata=metadata, name=name, path=path, parents=parents, allow_imports=allow_imports,
+        )
 
     def _get_results(
         self,
-        cls,
         config: DepositionImportConfig,
         metadata: dict[str, Any],
         **parent_objects: dict[str, Any] | None,
     ) -> list[BaseImporter]:
         loader = self.load(config, **parent_objects)
         glob_vars = self._get_glob_vars(**parent_objects)
-        found = loader.find(config, glob_vars, cls=cls)
+        found = loader.find(config, glob_vars)
         filtered_results = {}
         for name, path in found.items():
             name_str = str(name)  # Wrapper to prevent float voxel spacings from erroring
             if any(exclude_regex.match(name_str) for exclude_regex in self.exclude_regexes):
-                print(f"Excluding {cls.type_key} {name}...")
+                print(f"Excluding {self.importer_cls.type_key} {name}...")
                 continue
             filtered_results[name] = path
         return self._get_instantiated_results(
-            cls,
             config,
             metadata,
             filtered_results,
@@ -238,7 +234,6 @@ class DepositionObjectImporterFactory(ABC):
 
     def _get_instantiated_results(
         self,
-        cls,
         config: DepositionImportConfig,
         metadata: dict[str, Any],
         filtered_results: dict[str, str],
@@ -247,8 +242,8 @@ class DepositionObjectImporterFactory(ABC):
     ) -> list[BaseImporter]:
         results = []
         for name, path in filtered_results.items():
-            name, path, metadata = self.handle_for_metadata_file(cls, config, name, path, metadata)
-            item = self._instantiate(cls, config, metadata, name, path, allow_imports, parents)
+            name, path, metadata = self.handle_for_metadata_file(config, name, path, metadata)
+            item = self._instantiate(config, metadata, name, path, allow_imports, parents)
             if item:
                 results.append(item)
         return results
@@ -256,19 +251,16 @@ class DepositionObjectImporterFactory(ABC):
     # This is the main entrypoint into this class that should be called by the importer
     def find(
         self,
-        cls,
         config: DepositionImportConfig,
         metadata: dict[str, Any],
         **parent_objects: dict[str, Any] | None,
     ):
         if not self._should_search(**parent_objects):
             return []
-        return self._get_results(cls, config, metadata, **parent_objects)
+        return self._get_results(config, metadata, **parent_objects)
 
-    @classmethod
     def handle_for_metadata_file(
-        cls,
-        klass,
+        self,
         config: DepositionImportConfig,
         name: str,
         path: str,
@@ -278,16 +270,12 @@ class DepositionObjectImporterFactory(ABC):
             local_filename = config.fs.localreadable(path)
             with open(local_filename, "r") as metadata_file:
                 metadata = json.load(metadata_file)
-            name, path, paths = klass.get_name_and_path(metadata, name, path, None)
+            name, path, paths = self.importer_cls.get_name_and_path(metadata, name, path, None)
         return name, path, metadata
 
 
 class DefaultImporterFactory(DepositionObjectImporterFactory):
-    def load(
-        self,
-        config: DepositionImportConfig,
-        **parent_objects: dict[str, Any] | None,
-    ) -> BaseFinder:
+    def load(self, config: DepositionImportConfig, **parent_objects: dict[str, Any] | None) -> BaseFinder:
         source = self.source
         if source.get("source_glob"):
             return SourceGlobFinder(**source["source_glob"])
@@ -298,7 +286,7 @@ class DefaultImporterFactory(DepositionObjectImporterFactory):
         if source.get("literal"):
             return BaseLiteralValueFinder(**source["literal"])
         if source.get("destination_filter"):
-            return DestinationFilteredMetadataFinder(**source["destination_filter"])
+            return DestinationFilteredMetadataFinder(**source["destination_filter"], importer_cls=self.importer_cls)
         raise Exception("Invalid source type")
 
 
@@ -315,7 +303,6 @@ class MultiSourceFileFinder(DefaultImporterFactory):
 
     def _get_instantiated_results(
         self,
-        cls,
         config: DepositionImportConfig,
         metadata: dict[str, Any],
         filtered_results: dict[str, str],
@@ -325,10 +312,10 @@ class MultiSourceFileFinder(DefaultImporterFactory):
         if not filtered_results:
             return []
         if any(path and path.endswith("metadata.json") for path in filtered_results.values()):
-            name, path, filtered_results = cls.get_name_and_path(metadata, None, None, filtered_results)
+            name, path, filtered_results = self.importer_cls.get_name_and_path(metadata, None, None, filtered_results)
 
         names = ",".join([os.path.basename(path) for path in filtered_results])
-        item = cls(
+        item = self.importer_cls(
             config=config,
             metadata=metadata,
             name=names,

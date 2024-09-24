@@ -63,7 +63,6 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
 
     def _instantiate(
         self,
-        cls,
         config: DepositionImportConfig,
         metadata: dict[str, Any],
         name: str,

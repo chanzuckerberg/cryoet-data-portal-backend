@@ -119,8 +119,8 @@ class BaseImporter:
             metadata = finder.get("metadata", {})
             sources = finder.get("sources", [])
             for source in sources:
-                source_finder_factory = cls.finder_factory(source)
-                for item in source_finder_factory.find(cls, config, metadata, **parents):
+                source_finder_factory = cls.finder_factory(source, cls)
+                for item in source_finder_factory.find(config, metadata, **parents):
                     yield item
 
     @classmethod

@@ -65,8 +65,8 @@ def test_destination_filtered_metadata_finder(
     filters: list[dict],
     expected_prefixes: list[int],
 ):
-    finder = DestinationFilteredMetadataFinder(filters)
-    actual_result = finder.find(config, {"dataset_name": dataset_id, "run_name": run_name}, cls=TiltSeriesImporter)
+    finder = DestinationFilteredMetadataFinder(filters, importer_cls=TiltSeriesImporter)
+    actual_result = finder.find(config, {"dataset_name": dataset_id, "run_name": run_name})
 
     expected = {}
     for expected_prefix in expected_prefixes:
