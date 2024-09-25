@@ -5,15 +5,8 @@ annotations:
     annotation_object:
       id: GO:0016020
       name: membrane
-    annotation_software: TARDIS
     annotation_publications: 10.1093/micmic/ozad067.485
-    method_links:
-      - link: https://github.com/SMLC-NYSBC/TARDIS
-        link_type: source_code
-        custom_name: TARDIS on GitHub
-      - link: https://smlc-nysbc.github.io/TARDIS/
-        link_type: documentation
-        custom_name: TARDIS documentation
+    annotation_software: TARDIS
     authors: &id001
     - name: Robert Kiewisz
       primary_author_status: true
@@ -25,6 +18,13 @@ annotations:
       release_date: '2024-02-20'
     ground_truth_status: false
     is_curator_recommended: false
+    method_links:
+    - custom_name: TARDIS on GitHub
+      link: https://github.com/SMLC-NYSBC/TARDIS
+      link_type: source_code
+    - custom_name: TARDIS documentation
+      link: https://smlc-nysbc.github.io/TARDIS/
+      link_type: documentation
     method_type: automated
     version: 1.0
   sources:
@@ -47,12 +47,13 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
-    dates: *id002
-    deposition_description: "Voxel-based and instance segmentations of membranes predicted using TARDIS."
-    deposition_identifier: 10301
-    deposition_title: TARDIS membrane predictions
     cross_references:
       publications: 10.1093/micmic/ozad067.485
+    dates: *id002
+    deposition_description: Voxel-based and instance segmentations of membranes predicted
+      using TARDIS.
+    deposition_identifier: 10301
+    deposition_title: TARDIS membrane predictions
     deposition_types:
     - annotation
   sources:
@@ -68,6 +69,7 @@ runs:
 standardization_config:
   deposition_id: 10301
   source_prefix: robert_kiewisz_tardis_01_2024
+version: 1.1.0
 voxel_spacings:
 - sources:
   - destination_glob:

@@ -1,10 +1,10 @@
-from __future__ import annotations
+from __future__ import annotations 
 from datetime import (
     datetime,
     date
 )
-from decimal import Decimal
-from enum import Enum
+from decimal import Decimal 
+from enum import Enum 
 import re
 import sys
 from typing import (
@@ -2149,7 +2149,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
          'domain_of': ['Annotation'],
          'exact_mappings': ['cdp-common:annotation_object_count']} })
     version: Optional[float] = Field(None, description="""Version of annotation.""", json_schema_extra = { "linkml_meta": {'alias': 'version',
-         'domain_of': ['Annotation'],
+         'domain_of': ['Annotation', 'Container'],
          'exact_mappings': ['cdp-common:annotation_version']} })
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates',
          'domain_of': ['DateStampedEntity', 'Dataset', 'Deposition', 'Annotation']} })
@@ -2420,6 +2420,7 @@ class Container(ConfiguredBaseModel):
     standardization_config: StandardizationConfig = Field(..., description="""A standardization configuration.""", json_schema_extra = { "linkml_meta": {'alias': 'standardization_config', 'domain_of': ['Container']} })
     tiltseries: Optional[List[TiltSeriesEntity]] = Field(None, description="""A tilt series entity.""", json_schema_extra = { "linkml_meta": {'alias': 'tiltseries', 'domain_of': ['Container']} })
     tomograms: Optional[List[TomogramEntity]] = Field(None, description="""A tomogram entity.""", json_schema_extra = { "linkml_meta": {'alias': 'tomograms', 'domain_of': ['Container']} })
+    version: str = Field(..., description="""The version of the ingestion config.""", json_schema_extra = { "linkml_meta": {'alias': 'version', 'domain_of': ['Annotation', 'Container']} })
     voxel_spacings: List[VoxelSpacingEntity] = Field(..., description="""A voxel spacing entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'voxel_spacings', 'domain_of': ['Container']} })
 
 
@@ -5813,3 +5814,4 @@ VoxelSpacingParentFilters.model_rebuild()
 VoxelSpacingParent.model_rebuild()
 VoxelSpacingLiteral.model_rebuild()
 TomogramHeader.model_rebuild()
+
