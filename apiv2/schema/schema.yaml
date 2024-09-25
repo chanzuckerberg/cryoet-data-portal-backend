@@ -360,9 +360,6 @@ enums:
       JEOL:
         text: JEOL
         description: JEOL Ltd.
-      SIMULATED:
-        text: SIMULATED
-        description: JEOL Ltd.
   fiducial_alignment_status_enum:
     name: fiducial_alignment_status_enum
     description: Fiducial Alignment method
@@ -538,6 +535,46 @@ classes:
         - author_primary_author_status
         ifabsent: false
         range: boolean
+  GainFile:
+    annotations:
+      plural:
+        tag: plural
+        value: GainFiles
+    description: Gain values for frames in this run
+    mixins:
+    - IDMixin
+    attributes:
+      run:
+        inverse: Run.gain_files
+        range: Run
+      s3_file_path:
+        description: Path to the file in s3
+        range: string
+        required: true
+      https_file_path:
+        description: Path to the file as an https url
+        range: string
+        required: true
+  FrameAcquisitionFile:
+    annotations:
+      plural:
+        tag: plural
+        value: FrameAcquisitionFiles
+    description: References to files containing more information about frame acquisition
+    mixins:
+    - IDMixin
+    attributes:
+      run:
+        inverse: Run.frame_acquisition_files
+        range: Run
+      s3_mdoc_path:
+        description: Path to the frame acquisition mdoc file in s3
+        range: string
+        required: true
+      https_mdoc_path:
+        description: Path to the frame acquisition mdoc file as an https url
+        range: string
+        required: true
   Alignment:
     name: Alignment
     annotations:
@@ -673,13 +710,6 @@ classes:
         unit:
           symbol: °
           descriptive_name: degrees
-      local_alignment_file:
-        name: local_alignment_file
-        description: Path to the local alignment file
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - alignment_local_alignment_file
-        range: string
       affine_transformation_matrix:
         name: affine_transformation_matrix
         description: A placeholder for the affine transformation matrix.
@@ -690,6 +720,16 @@ classes:
           - exact_cardinality: 4
           - exact_cardinality: 4
         range: string
+      s3_alignment_metadata:
+        description: S3 path to the metadata file for this alignment
+        range: string
+      https_alignment_metadata:
+        description: HTTPS url to the metadata file for this alignment
+        range: string
+      is_portal_standard:
+        description: Whether this alignment is the portal standard
+        range: boolean
+        ifabsent: false
   AnnotationAuthor:
     name: AnnotationAuthor
     annotations:
@@ -1126,8 +1166,7 @@ classes:
         exact_mappings:
         - organism_name
         range: string
-        recommended: true
-        required: false
+        required: true
       organism_taxid:
         name: organism_taxid
         description: NCBI taxonomy identifier for the organism, e.g. 9606
@@ -1469,13 +1508,6 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.frames
         range: Deposition
-      per_section_parameters:
-        name: per_section_parameters
-        description: Record how frames get mapped to TiltSeries
-        from_schema: cdp-dataset-config
-        multivalued: true
-        inverse: PerSectionParameters.frame
-        range: PerSectionParameters
       run:
         name: run
         from_schema: cdp-dataset-config
@@ -1549,69 +1581,6 @@ classes:
         - api_https_prefix
         range: string
         required: true
-  PerSectionParameters:
-    name: PerSectionParameters
-    annotations:
-      plural:
-        tag: plural
-        value: PerSectionParameters
-    description: Record how frames get mapped to TiltSeries
-    from_schema: cdp-dataset-config
-    mixins:
-    - IDMixin
-    attributes:
-      frame:
-        name: frame
-        from_schema: cdp-dataset-config
-        inverse: Frame.per_section_parameters
-        range: Frame
-        required: true
-      tiltseries:
-        name: tiltseries
-        from_schema: cdp-dataset-config
-        inverse: Tiltseries.per_section_parameters
-        range: Tiltseries
-        required: true
-      z_index:
-        name: z_index
-        description: z-index of the frame in the tiltseries
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - per_section_z_index
-        range: integer
-        required: true
-        minimum_value: 0
-      defocus:
-        name: defocus
-        description: defocus amount
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - per_section_defocus
-        range: float
-        minimum_value: 100
-        maximum_value: 100
-        unit:
-          symbol: µm
-          descriptive_name: microns
-      astigmatism:
-        name: astigmatism
-        description: Astigmatism amount for this frame
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - per_section_astigmatism
-        range: float
-      astigmatic_angle:
-        name: astigmatic_angle
-        description: Angle of ast
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - per_section_astigmatic_angle
-        range: float
-        minimum_value: -180
-        maximum_value: 180
-        unit:
-          symbol: °
-          descriptive_name: degrees
   PerSectionAlignmentParameters:
     name: PerSectionAlignmentParameters
     annotations:
@@ -1727,6 +1696,14 @@ classes:
         multivalued: true
         inverse: Frame.run
         range: Frame
+      gain_files:
+        multivalued: true
+        inverse: GainFile.run
+        range: GainFile
+      frame_acquisition_files:
+        multivalued: true
+        inverse: FrameAcquisitionFile.run
+        range: FrameAcquisitionFile
       tiltseries:
         name: tiltseries
         from_schema: cdp-dataset-config
@@ -1789,13 +1766,6 @@ classes:
         inverse: Alignment.tiltseries
         range: Alignment
         multivalued: true
-      per_section_parameters:
-        name: per_section_parameters
-        description: Record how frames get mapped to TiltSeries
-        from_schema: cdp-dataset-config
-        multivalued: true
-        inverse: PerSectionParameters.tiltseries
-        range: PerSectionParameters
       run:
         name: run
         from_schema: cdp-dataset-config
@@ -1836,20 +1806,6 @@ classes:
         exact_mappings:
         - tiltseries_https_mrc_file
         range: string
-      s3_collection_metadata:
-        name: s3_collection_metadata
-        description: S3 path to the collection metadata file for this tiltseries
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - tiltseries_s3_collection_metadata
-        range: string
-      https_collection_metadata:
-        name: https_collection_metadata
-        description: HTTPS path to the collection metadata file for this tiltseries
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - tiltseries_https_collection_metadata
-        range: string
       s3_angle_list:
         name: s3_angle_list
         description: S3 path to the angle list file for this tiltseries
@@ -1863,20 +1819,6 @@ classes:
         from_schema: cdp-dataset-config
         exact_mappings:
         - tiltseries_https_angle_list
-        range: string
-      s3_gain_file:
-        name: s3_gain_file
-        description: S3 path to the gain file for this tiltseries
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - tiltseries_s3_gain_file
-        range: string
-      https_gain_file:
-        name: https_gain_file
-        description: HTTPS path to the gain file for this tiltseries
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - tiltseries_https_gain_file
         range: string
       acceleration_voltage:
         name: acceleration_voltage
@@ -2111,13 +2053,6 @@ classes:
         - tiltseries_aligned_tiltseries_binning
         range: float
         minimum_value: 0
-      tiltseries_frames_count:
-        name: tiltseries_frames_count
-        description: Number of frames associated with this tiltseries
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - tiltseries_frames_count
-        range: integer
   TomogramAuthor:
     name: TomogramAuthor
     annotations:
@@ -2326,11 +2261,14 @@ classes:
         range: string
         required: true
         description: Name of software used for reconstruction
-      is_canonical:
-        name: is_canonical
-        description: whether this tomogram is canonical for the run
-        from_schema: cdp-dataset-config
+      is_portal_standard:
+        description: whether this tomogram adheres to portal standards
         range: boolean
+        ifabsent: false
+      is_author_submitted:
+        description: whether this tomogram was submitted by the author of the dataset it belongs to.
+        range: boolean
+        ifabsent: false
       s3_omezarr_dir:
         name: s3_omezarr_dir
         description: S3 path to this tomogram in multiscale OME-Zarr format
