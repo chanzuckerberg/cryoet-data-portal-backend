@@ -138,6 +138,7 @@ tomograms:
   - source_glob:
       list_glob: '{run_name}/3dimage_*/*'
       match_regex: .*\.(mrc|rec)$
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:
