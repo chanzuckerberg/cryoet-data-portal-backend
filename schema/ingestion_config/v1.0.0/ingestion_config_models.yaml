@@ -243,7 +243,6 @@ classes:
       - deposition
       - run
       - tomogram
-      - voxel_spacing
 
   AnnotationEntity:
     description: An annotation entity.

@@ -6,6 +6,7 @@ import shutil
 from abc import ABC, abstractmethod
 from hashlib import md5
 from io import TextIOBase
+from typing import Any
 
 import boto3
 from s3fs import S3FileSystem
@@ -20,9 +21,10 @@ class FileSystemApi(ABC):
         mode: str,
         force_overwrite: bool,
         client_kwargs: None | dict[str, str] = None,
+        **kwargs: dict[str, Any],
     ) -> "FileSystemApi":
         if mode == "s3":
-            return S3Filesystem(force_overwrite=force_overwrite, client_kwargs=client_kwargs)
+            return S3Filesystem(force_overwrite=force_overwrite, client_kwargs=client_kwargs, **kwargs)
         else:
             return LocalFilesystem(force_overwrite=force_overwrite)
 
@@ -67,9 +69,9 @@ class FileSystemApi(ABC):
 
 
 class S3Filesystem(FileSystemApi):
-    def __init__(self, force_overwrite: bool, client_kwargs: None | dict[str, str] = None):
+    def __init__(self, force_overwrite: bool, client_kwargs: None | dict[str, str] = None, **kwargs):
         self.client_kwargs = client_kwargs or {}
-        self.s3fs = S3FileSystem(anon=False, client_kwargs=client_kwargs)
+        self.s3fs = S3FileSystem(anon=False, client_kwargs=client_kwargs, **kwargs)
         self.tmpdir = "/tmp"
         self.force_overwrite = force_overwrite
 
@@ -129,7 +131,7 @@ class S3Filesystem(FileSystemApi):
     # Copy from one s3 location to another
     def copy(self, src_path: str, dest_path: str) -> None:
         # Don't re-copy it if it's already available.
-        if self.s3fs.exists(dest_path):
+        if self.exists(dest_path):
             # TODO, s3 etags aren't sufficient here, so we're cheating and using size.
             src_size = self.s3fs.size(src_path)
             dest_size = self.s3fs.size(dest_path)

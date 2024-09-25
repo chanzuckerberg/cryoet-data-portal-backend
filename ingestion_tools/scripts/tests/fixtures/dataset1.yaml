@@ -23,6 +23,45 @@ annotations:
     file_format: csv
     glob_string: particle_lists/{run_name}_fas.csv
     shape: Point
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/mdocs_modified/foo-{run_name}.mdoc
+alignments:
+- metadata:
+    affine_transformation_matrix:
+    - - 2
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 3
+      - 0
+      - 0
+    - - 0
+      - 4
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 5
+    alignment_type: LOCAL
+    format: IMOD
+    is_canonical: true
+    tilt_offset: -0.3
+    volume_offset:
+      x: -1
+      y: 2
+      z: -3
+    x_rotation_offset: -2.3
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - alignments/{run_name}.xf
+      - alignments/{run_name}.tlt
+      - alignments/{run_name}.xtilt
 dataset_keyphotos:
 - sources:
   - literal:
@@ -98,10 +137,8 @@ key_images:
 rawtilts:
 - sources:
   - source_multi_glob:
-      list_glob:
+      list_globs:
       - metadata/{run_name}.rawtlt
-      - metadata/{run_name}.xf
-      - metadata/mdocs_modified/{run_name}.mdoc
 runs:
 - sources:
   - source_glob:

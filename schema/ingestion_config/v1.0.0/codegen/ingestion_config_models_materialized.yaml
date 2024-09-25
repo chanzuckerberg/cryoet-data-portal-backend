@@ -375,10 +375,12 @@ enums:
     permissible_values:
       IMOD:
         text: IMOD
-        description: formats (xf, tlt, com)
+        description: IMOD was used for the alignment. Supported file formats are (xf,
+          tlt, tilt.com, news.com, xtilt)
       ARETOMO3:
         text: ARETOMO3
-        description: formats (aln)
+        description: ARETOMO3 was used for the alignment. Supported file formats are
+          (aln, txt, csv)
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.
@@ -652,7 +654,6 @@ slots:
     from_schema: cdp-ingestion-config
     domain_of:
     - Tomogram
-    - AlignmentParent
     - AnnotationParent
     - KeyImageParent
     - TomogramParent
@@ -1396,7 +1397,6 @@ classes:
     - deposition
     - run
     - tomogram
-    - voxel_spacing
     attributes:
       dataset:
         name: dataset
@@ -1475,22 +1475,6 @@ classes:
         domain_of:
         - AlignmentParent
         - KeyImageParent
-        range: string
-        multivalued: true
-        inlined: true
-        inlined_as_list: true
-      voxel_spacing:
-        name: voxel_spacing
-        description: Include or exclude voxel spacings for a source.
-        from_schema: cdp-ingestion-config
-        alias: voxel_spacing
-        owner: AlignmentParent
-        domain_of:
-        - Tomogram
-        - AlignmentParent
-        - AnnotationParent
-        - KeyImageParent
-        - TomogramParent
         range: string
         multivalued: true
         inlined: true
@@ -1831,7 +1815,6 @@ classes:
         owner: AnnotationParent
         domain_of:
         - Tomogram
-        - AlignmentParent
         - AnnotationParent
         - KeyImageParent
         - TomogramParent
@@ -3815,7 +3798,6 @@ classes:
         owner: KeyImageParent
         domain_of:
         - Tomogram
-        - AlignmentParent
         - AnnotationParent
         - KeyImageParent
         - TomogramParent
@@ -5015,7 +4997,6 @@ classes:
         owner: TomogramParent
         domain_of:
         - Tomogram
-        - AlignmentParent
         - AnnotationParent
         - KeyImageParent
         - TomogramParent

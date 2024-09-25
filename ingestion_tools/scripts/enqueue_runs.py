@@ -483,7 +483,7 @@ def execute_sync(ctx, input_bucket, output_bucket, new_args, entities, swipe_wdl
         for entity_id, _ in entities:
             print(f"Processing {path_prefix} {entity_id}...")
 
-            name_prefix = "dep" if path_prefix == "deposition_metadata" else "ds"
+            name_prefix = "dep" if path_prefix == "depositions_metadata" else "ds"
             execution_name = f"{int(time.time())}-sync-{name_prefix}-{entity_id}"
 
             # execution name greater than 80 chars causes boto ValidationException
@@ -586,7 +586,7 @@ def sync(
             new_args,
             deposition_entities,
             swipe_wdl_key,
-            "deposition_metadata",
+            "depositions_metadata",
         )
 
 

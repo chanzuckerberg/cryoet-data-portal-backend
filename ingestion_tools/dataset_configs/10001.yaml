@@ -15,6 +15,10 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: pyTOM + Keras
+    method_links: &annotation_method_links
+      - link: https://github.com/ZauggGroup/DeePiCt
+        link_type: source_code
+        custom_name: DeePiCt on GitHub
     authors: &id001
     - ORCID: 0000-0002-9903-3667
       name: Sara Goetz
@@ -69,6 +73,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: pyTOM + Keras
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -342,6 +347,7 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
+    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
@@ -490,6 +496,23 @@ tiltseries:
       match_regex: (.*)\.st
 tomograms:
 - metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
     authors: *id003
     ctf_corrected: false
     dates:

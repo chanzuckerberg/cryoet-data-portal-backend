@@ -80,6 +80,23 @@ standardization_config:
   source_prefix: GJensen_full
 tomograms:
 - metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
     align_software: RAPTOR
     authors: *id001
     ctf_corrected: null

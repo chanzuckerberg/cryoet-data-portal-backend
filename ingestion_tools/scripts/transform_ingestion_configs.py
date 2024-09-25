@@ -1,6 +1,7 @@
 from typing import Any
 
 import click
+import numpy as np
 import yaml
 
 
@@ -33,6 +34,65 @@ def create_deposition_metadata(deposition_id: str, config_data: dict[str, Any]) 
 
 def has_no_sources(data: list[dict[str, Any]] | dict[str, Any]) -> bool:
     return isinstance(data, dict) or not any(row.get("sources") for row in data)
+
+
+def rawtilts_to_alignments(data: dict) -> None:
+    list_globs = []
+    format_dict = {
+        "IMOD": [],
+        "ARETOMO3": [],
+    }
+
+    IMOD_ext = ['.tlt', ".xf", "tilt.com", "news.com", ".xtilt"]
+    AreTomo3_ext = ['.aln', ".txt", ".csv"]
+    extensions = IMOD_ext + AreTomo3_ext
+
+    def valid_file(file):
+        return any(file.endswith(ext) for ext in extensions)
+
+    def get_format(file):
+        if any(file.endswith(ext) for ext in IMOD_ext):
+            format_dict["IMOD"].append(file)
+        elif any(file.endswith(ext) for ext in AreTomo3_ext):
+            format_dict["ARETOMO3"].append(file)
+
+    if len(data.get('tomograms', [])) > 1 or len(data.get("rawtilts", [])) > 1:
+        raise ValueError("More than one tomogram or rawtilt")
+
+    if 'rawtilts' in data:
+        for i in data['rawtilts']:
+            if "sources" not in i:
+                continue
+            old_source = i["sources"][0]["source_multi_glob"]["list_globs"]
+            list_globs.extend(s for s in old_source if valid_file(s))
+            for source in list_globs:
+                old_source.remove(source)
+                get_format(source)
+        if list_globs:
+            if 'alignments' not in data:
+                data['alignments'] = []
+            for key, files in format_dict.items():
+                if files:
+                    # check if there is an alignment with the key in the metadata.format
+                    alignment = [a for a in data.get("alignments", []) if a["metadata"]["format"] == key]
+                    if alignment:
+                        alignment = alignment.pop()
+                        alignment["sources"][0]["source_multi_glob"]["list_globs"].extend(files)
+                    else:
+                        alignment = {
+                            "metadata": {"format": key},
+                            "sources": [{"source_multi_glob": {"list_globs": files}}]}
+                        data["alignments"].append(alignment)
+                    if 'tomograms' in data:
+                        for i in data['tomograms']:
+                            if "metadata" not in i:
+                                continue
+                            affine_transformation_matrix = i["metadata"].get("affine_transformation_matrix", None)
+                            if affine_transformation_matrix and np.allclose(affine_transformation_matrix,np.eye(4)):
+                                # skip if is an idenity matrix
+                                continue
+                            if affine_transformation_matrix:
+                                alignment["metadata"]["affine_transformation_matrix"] = affine_transformation_matrix
 
 
 def update_config(data: dict[str, Any]) -> dict[str, Any]:

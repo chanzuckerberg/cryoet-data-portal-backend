@@ -27,12 +27,16 @@ annotations:
       release_date: '2024-08-21'
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: &id003
+    - custom_name: polnet on GitHub
+      link: https://github.com/anmartinezs/polnet
+      link_type: source_code
     method_type: hybrid
     version: 1.0
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_strings: &id003
+      glob_strings: &id004
       - '{run_name}/Segmentations/ground_truth.mrc'
       is_portal_standard: false
       is_visualization_default: true
@@ -48,12 +52,13 @@ annotations:
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: *id003
     method_type: hybrid
     version: 1.0
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_strings: *id003
+      glob_strings: *id004
       is_portal_standard: false
       is_visualization_default: true
       mask_label: 2
@@ -76,12 +81,13 @@ annotations:
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: *id003
     method_type: hybrid
     version: 1.0
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_strings: *id003
+      glob_strings: *id004
       is_portal_standard: false
       is_visualization_default: true
       mask_label: 3
@@ -104,12 +110,13 @@ annotations:
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: *id003
     method_type: hybrid
     version: 1.0
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_strings: *id003
+      glob_strings: *id004
       is_portal_standard: false
       is_visualization_default: true
       mask_label: 4
@@ -132,12 +139,13 @@ annotations:
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: *id003
     method_type: hybrid
     version: 1.0
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_strings: *id003
+      glob_strings: *id004
       is_portal_standard: false
       is_visualization_default: true
       mask_label: 5
@@ -160,12 +168,13 @@ annotations:
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: *id003
     method_type: hybrid
     version: 1.0
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_strings: *id003
+      glob_strings: *id004
       is_portal_standard: false
       is_visualization_default: true
       mask_label: 6
@@ -189,12 +198,13 @@ annotations:
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: *id003
     method_type: hybrid
     version: 1.0
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_strings: *id003
+      glob_strings: *id004
       is_portal_standard: false
       is_visualization_default: true
       mask_label: 7
@@ -215,7 +225,7 @@ dataset_keyphotos:
 datasets:
 - metadata:
     authors: *id001
-    cross_references:
+    cross_references: &id005
       publications: 10.1109/TMI.2024.3398401
       related_database_entries: PDB-6MRD, PDB-1ZEF, PDB-6UPH, PDB-7TM3, PDB-7PKZ,
         PDB-6NK5
@@ -239,6 +249,7 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references: *id005
     dates: *id002
     deposition_description: This deposition includes simulated data for the evaluation
       of particle picking algorithms. The simulated data was generated using polnet
@@ -248,6 +259,7 @@ depositions:
     deposition_title: CZ Imaging Institute simulated data
     deposition_types:
     - dataset
+    - annotation
   sources:
   - literal:
       value:
@@ -295,6 +307,23 @@ tiltseries:
       list_glob: '{run_name}/TiltSeries/tilt_series.mrc'
 tomograms:
 - metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
     authors: *id001
     ctf_corrected: true
     dates: *id002
