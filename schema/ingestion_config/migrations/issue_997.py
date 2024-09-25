@@ -13,19 +13,22 @@ import yaml
 
 
 def rawtilts_to_collection_metadata(config: dict) -> None:
+    if 'rawtilts' not in config:
+        return
+
     list_globs = []
-    if 'rawtilts' in config:
-        for i in config['rawtilts']:
-            if "sources" not in i:
-                continue
-            old_source = i["sources"][0]["source_multi_glob"]["list_globs"]
-            list_globs.extend(s for s in old_source if s.endswith('.mdoc') or "{mdoc_name}" in s)
-            for source in list_globs:
-                old_source.remove(source)
-        if list_globs:
-            if 'collection_metadata' not in config:
-                config['collection_metadata'] = [{"sources": [{"source_multi_glob": {"list_globs": []}}]}]
-            config["collection_metadata"][0]["sources"][0]["source_multi_glob"]["list_globs"].extend(list_globs)
+    for i in config['rawtilts']:
+        if "sources" not in i:
+            continue
+        old_source = i["sources"][0]["source_multi_glob"]["list_globs"]
+        list_globs.extend(s for s in old_source if s.endswith('.mdoc'))
+        for source in list_globs:
+            old_source.remove(source)
+    if list_globs:
+        if 'collection_metadata' not in config:
+            config['collection_metadata'] = [{"sources": [{"source_multi_glob": {"list_globs": []}}]}]
+        config["collection_metadata"][0]["sources"][0]["source_multi_glob"]["list_globs"].extend(list_globs)
+
 
 def rawtilts_to_alignments(data: dict) -> None:
     list_globs = []
@@ -50,102 +53,121 @@ def rawtilts_to_alignments(data: dict) -> None:
     if len(data.get('tomograms', [])) > 1 or len(data.get("rawtilts", [])) > 1:
         raise ValueError("More than one tomogram or rawtilt")
 
-    if 'rawtilts' in data:
-        for i in data['rawtilts']:
-            if "sources" not in i:
+    if 'rawtilts' not in data:
+        return
+
+    for rawtilt in data['rawtilts']:
+        if "sources" not in rawtilt:
+            continue
+        old_source = rawtilt["sources"][0]["source_multi_glob"]["list_globs"]
+        list_globs.extend(s for s in old_source if valid_file(s))
+        for source in list_globs:
+            old_source.remove(source)
+            get_format(source)
+
+    if not list_globs:
+        return
+
+    if 'alignments' not in data:
+        data['alignments'] = []
+    for key, files in format_dict.items():
+        if not files:
+            continue
+        # check if there is an alignment with the key in the metadata.format
+        alignment = [a for a in data.get("alignments", []) if a["metadata"]["format"] == key]
+        if alignment:
+            alignment = alignment.pop()
+            alignment["sources"][0]["source_multi_glob"]["list_globs"].extend(files)
+        else:
+            alignment = {
+                "metadata": {"format": key},
+                "sources": [{"source_multi_glob": {"list_globs": files}}]}
+            data["alignments"].append(alignment)
+
+        if 'tomograms' not in data:
+            continue
+
+        for i in data['tomograms']:
+            if "metadata" not in i:
                 continue
-            old_source = i["sources"][0]["source_multi_glob"]["list_globs"]
-            list_globs.extend(s for s in old_source if valid_file(s))
-            for source in list_globs:
-                old_source.remove(source)
-                get_format(source)
-        if list_globs:
-            if 'alignments' not in data:
-                data['alignments'] = []
-            for key, files in format_dict.items():
-                if files:
-                    # check if there is an alignment with the key in the metadata.format
-                    alignment = [a for a in data.get("alignments", []) if a["metadata"]["format"] == key]
-                    if alignment:
-                        alignment = alignment.pop()
-                        alignment["sources"][0]["source_multi_glob"]["list_globs"].extend(files)
-                    else:
-                        alignment = {
-                            "metadata": {"format": key},
-                            "sources": [{"source_multi_glob": {"list_globs": files}}]}
-                        data["alignments"].append(alignment)
-                    if 'tomograms' in data:
-                        for i in data['tomograms']:
-                            if "metadata" not in i:
-                                continue
-                            affine_transformation_matrix = i["metadata"].get("affine_transformation_matrix", None)
-                            if affine_transformation_matrix and np.allclose(affine_transformation_matrix,np.eye(4)):
-                                # skip if is an idenity matrix
-                                continue
-                            if affine_transformation_matrix:
-                                alignment["metadata"]["affine_transformation_matrix"] = affine_transformation_matrix
+            affine_transformation_matrix = i["metadata"].get("affine_transformation_matrix", None)
+            if affine_transformation_matrix and np.allclose(affine_transformation_matrix, np.eye(4)):
+                # skip if is an idenity matrix
+                continue
+            if affine_transformation_matrix:
+                alignment["metadata"]["affine_transformation_matrix"] = affine_transformation_matrix
 
 
 def update_tomogram_metadata(config: dict) -> None:
-    if tomograms := config.get("tomograms"):
-        for tomogram in tomograms:
-            if metadata := tomogram.get("metadata"):
-                metadata["is_visualization_default"] = True
-                if not metadata.get("dates"):
-                    try:
-                        dates = config["depositions"][0]["metadata"]["dates"]
-                    except (KeyError, IndexError):
-                        dates = {
-                            "deposition_date": '1970-01-01',
-                            "last_modified_date": '1970-01-01',
-                            "release_date": '1970-01-01'}
-                    metadata["dates"] = dates
-                affine_transformation_matrix = metadata.get("affine_transformation_matrix", None)
-                if not affine_transformation_matrix:
-                    metadata["affine_transformation_matrix"] = np.eye(4, dtype=int).tolist()
+    tomograms = config.get("tomograms")
+    if not tomograms:
+        return
+
+    for tomogram in tomograms:
+        metadata = tomogram.get("metadata")
+        if not metadata:
+            continue
+        metadata["is_visualization_default"] = True
+        if not metadata.get("dates"):
+            dates = config["depositions"][0]["metadata"]["dates"]
+            metadata["dates"] = dates
+        affine_transformation_matrix = metadata.get("affine_transformation_matrix", None)
+        if not affine_transformation_matrix:
+            metadata["affine_transformation_matrix"] = np.eye(4, dtype=int).tolist()
 
 
 def update_annotation_sources(config: dict) -> None:
-    if annotations := config.get('annotations'):
-        for annotation in annotations:
-            if sources := annotation.get("sources"):
-                for source in sources:
-                    for value in source.values():
-                        value["is_portal_standard"] = False
+    annotations = config.get('annotations')
+    if not annotations:
+        return
+    for annotation in annotations:
+        sources = annotation.get("sources")
+        if not sources:
+            continue
+        for source in sources:
+            for value in source.values():
+                value["is_portal_standard"] = False
+
 
 def remove_empty_fields(config: Union[list, dict]) -> None:
     remove_key = []
     exclude_keys = ['annotations']
     if isinstance(config, list):
         for i in config:
-            if isinstance(i, (list, dict)):
-                remove_empty_fields(i)
-                if len(i) == 0:
-                    remove_key.append(i)
+            if not isinstance(i, (list, dict)):
+                continue
+            remove_empty_fields(i)
+            if len(i) == 0:
+                remove_key.append(i)
         if remove_key:
             for key in remove_key:
                 config.remove(key)
     elif isinstance(config, dict):
         for key, value in config.items():
-            if isinstance(value, (list, dict)):
-                remove_empty_fields(value)
-                if len(value) == 0:
-                    remove_key.append(key)
-        if remove_key:
-            for key in remove_key:
-                if key in exclude_keys:
-                    continue
-                config.pop(key)
+            if not isinstance(value, (list, dict)):
+                continue
+            remove_empty_fields(value)
+            if len(value) == 0:
+                remove_key.append(key)
+        if not remove_key:
+            return
+        for key in remove_key:
+            if key in exclude_keys:
+                continue
+            config.pop(key)
+
 
 def check_deposition(config: dict) -> bool:
     if "depositions" in config:
         return True
     raise ValueError("depositions is not in the config")
 
+
 def has_changes(file, config):
     with open(file, 'r') as file:
         old_config = yaml.safe_load(file)
     return json.dumps(old_config) != json.dumps(config)
+
 
 def migrate_config(file_path):
     with open(file_path, 'r') as file:
@@ -172,6 +194,7 @@ def migrate_config(file_path):
         print(f"modified: {relative_path}")
         with open(file_path, 'w') as file:
             yaml.safe_dump(config, file)
+
 
 def get_relative_path(file_path):
     return file_path[file_path.find("cryoet-data-portal-backend"):]

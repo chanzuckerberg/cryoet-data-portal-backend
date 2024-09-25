@@ -1,3 +1,7 @@
+"""
+Copnverts and ingest-config from the previous version to the latest.
+"""
+
 from typing import Any
 
 import click
