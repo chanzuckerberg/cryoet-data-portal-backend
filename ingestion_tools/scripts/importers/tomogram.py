@@ -1,15 +1,11 @@
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 from common.finders import DefaultImporterFactory
+from common.image import VolumeInfo, get_volume_info
 from common.metadata import TomoMetadata
 from common.normalize_fields import normalize_fiducial_alignment
 from importers.base_importer import VolumeImporter
 from importers.key_image import KeyImageImporter
-
-if TYPE_CHECKING:
-    from importers.run import RunImporter
-else:
-    RunImporter = "RunImporter"
 
 
 class TomogramImporter(VolumeImporter):
@@ -45,3 +41,6 @@ class TomogramImporter(VolumeImporter):
 
         metadata = TomoMetadata(self.config.fs, self.get_deposition().name, base_metadata)
         metadata.write_metadata(dest_tomo_metadata, merge_data)
+
+    def get_source_volume_info(self) -> VolumeInfo:
+        return get_volume_info(self.config.fs, self.volume_filename)

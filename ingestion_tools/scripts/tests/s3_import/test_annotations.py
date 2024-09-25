@@ -1,21 +1,33 @@
 import json
+import os
 from os.path import basename
 from typing import Any, Dict
 
 import ndjson
+import numpy as np
 import pytest
-from importers.annotation import InstanceSegmentationAnnotation, OrientedPointAnnotation, PointAnnotation
+import trimesh
+from importers.annotation import (
+    InstanceSegmentationAnnotation,
+    OrientedPointAnnotation,
+    PointAnnotation,
+    SegmentationMaskAnnotation,
+    SemanticSegmentationMaskAnnotation,
+    TriangularMeshAnnotation,
+    TriangularMeshAnnotationGroup,
+)
 from importers.dataset import DatasetImporter
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
 from importers.voxel_spacing import VoxelSpacingImporter
+from mrcfile.mrcinterpreter import MrcInterpreter
 from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
-from tests.s3_import.util import list_dir
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
+from tests.s3_import.util import list_dir
 
 default_anno_metadata = {
     "annotation_object": {
@@ -41,17 +53,42 @@ default_anno_metadata = {
 NUMERICAL_PRECISION = 1e-8
 
 
-@pytest.fixture
-def deposition_config(s3_fs: FileSystemApi, test_output_bucket: str) -> DepositionImportConfig:
+def generate_anno_config_file(tmp_path, source_prefix: str) -> str:
+    import yaml
+
     config_file = "tests/fixtures/annotations/anno_config.yaml"
+    output_file = tmp_path / "anno_config.yaml"
+    with open(config_file, "r") as fh, open(output_file, "w") as out_fh:
+        anno_config = yaml.safe_load(fh)
+        anno_config["standardization_config"]["source_prefix"] = source_prefix
+        out_fh.write(yaml.dump(anno_config))
+    return output_file
+
+
+@pytest.fixture
+def deposition_config_s3(s3_fs: FileSystemApi, test_output_bucket: str, tmp_path) -> DepositionImportConfig:
+    config_file = generate_anno_config_file(tmp_path, "input_bucket/20002")
     output_path = f"{test_output_bucket}/output"
     input_bucket = "test-public-bucket"
     return DepositionImportConfig(s3_fs, config_file, output_path, input_bucket, IMPORTERS)
 
 
 @pytest.fixture
-def tomo_importer(deposition_config: DepositionImportConfig) -> TomogramImporter:
-    deposition = DepositionImporter(config=deposition_config, metadata={}, name="20302", path="deposition1", parents={})
+def deposition_config_local(local_fs: FileSystemApi, local_test_data_dir, tmp_path) -> DepositionImportConfig:
+    config_file = generate_anno_config_file(tmp_path, "fixtures")
+    output_path = f"/{tmp_path}/output"
+    config = DepositionImportConfig(local_fs, config_file, output_path, local_test_data_dir, IMPORTERS)
+    return config
+
+
+def tomo_importer_factory(deposition_config: DepositionImportConfig) -> TomogramImporter:
+    deposition = DepositionImporter(
+        config=deposition_config,
+        metadata={},
+        name="20302",
+        path="deposition1",
+        parents={},
+    )
     dataset = DatasetImporter(
         config=deposition_config,
         metadata={},
@@ -83,20 +120,30 @@ def tomo_importer(deposition_config: DepositionImportConfig) -> TomogramImporter
     return tomo
 
 
+@pytest.fixture
+def tomo_importer_s3(deposition_config_s3: DepositionImportConfig) -> TomogramImporter:
+    return tomo_importer_factory(deposition_config_s3)
+
+
+@pytest.fixture
+def tomo_importer_local(deposition_config_local: DepositionImportConfig) -> TomogramImporter:
+    return tomo_importer_factory(deposition_config_local)
+
+
 def import_annotation_metadata(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer: TomogramImporter,
-    deposition_config: DepositionImportConfig,
+    tomo_importer_s3: TomogramImporter,
+    deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
     anno_config: Dict[str, Any],
 ) -> None:
-    deposition_config._set_object_configs("annotation", [anno_config])
+    deposition_config_s3._set_object_configs("annotation", [anno_config])
     anno = PointAnnotation(
-        config=deposition_config,
+        config=deposition_config_s3,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/annotations/points.csv",
-        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
         identifier=100,
         columns=anno_config["sources"][0]["Point"].get("columns"),
         delimiter=anno_config["sources"][0]["Point"].get("delimiter"),
@@ -135,8 +182,8 @@ def import_annotation_metadata(
 def test_import_annotation_metadata(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer: TomogramImporter,
-    deposition_config: DepositionImportConfig,
+    tomo_importer_s3: TomogramImporter,
+    deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
 ) -> None:
     anno_config = {
@@ -153,14 +200,93 @@ def test_import_annotation_metadata(
         ],
     }
 
-    import_annotation_metadata(s3_fs, test_output_bucket, tomo_importer, deposition_config, s3_client, anno_config)
+    import_annotation_metadata(
+        s3_fs,
+        test_output_bucket,
+        tomo_importer_s3,
+        deposition_config_s3,
+        s3_client,
+        anno_config,
+    )
+
+
+def test_import_annotation_metadata_with_multiple_sources(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    tomo_importer_s3: TomogramImporter,
+    deposition_config_s3: DepositionImportConfig,
+    s3_client: S3Client,
+) -> None:
+    """Make sure that we can import multiple shape types for a single annotation.
+    Specifically make sure we can support importing points files defined *AFTER*
+    non-points sources."""
+    anno_config = {
+        "metadata": default_anno_metadata,
+        "sources": [
+            {
+                "SegmentationMask": {
+                    "file_format": "mrc",
+                    "glob_string": "annotations/segmask.mrc",
+                },
+            },
+            {
+                "Point": {
+                    "file_format": "csv",
+                    "delimiter": ",",
+                    "glob_string": "annotations/points.csv",
+                    "columns": "xyz",
+                },
+            },
+        ],
+    }
+
+    deposition_config_s3._set_object_configs("annotation", [anno_config])
+    anno1 = SegmentationMaskAnnotation(
+        config=deposition_config_s3,
+        metadata=default_anno_metadata,
+        path="test-public-bucket/input_bucket/20002/annotations/segmask.mrc",
+        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
+        identifier=100,
+        file_format=anno_config["sources"][0]["SegmentationMask"].get("file_format"),
+    )
+    anno2 = PointAnnotation(
+        config=deposition_config_s3,
+        metadata=default_anno_metadata,
+        path="test-public-bucket/input_bucket/20002/annotations/points.csv",
+        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
+        identifier=100,
+        columns=anno_config["sources"][1]["Point"].get("columns"),
+        delimiter=anno_config["sources"][1]["Point"].get("delimiter"),
+        file_format=anno_config["sources"][1]["Point"].get("file_format"),
+    )
+    for anno in [anno1, anno2]:
+        anno.import_item()
+        anno.import_metadata()
+
+    # Strip the bucket name and annotation name from the annotation's output path.
+    prefix = anno1.get_output_path().rsplit("/", 1)[0].split("/", 1)[1]
+    metadata_file = anno1.get_output_path() + ".json"
+    # Make sure we have a ndjson data file and a metadata file
+    anno_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
+    assert "100-some_protein-1.0.json" in anno_files
+    assert "100-some_protein-1.0_point.ndjson" in anno_files
+
+    # Sanity check the metadata
+    with s3_fs.open(metadata_file, "r") as fh:
+        metadata = json.load(fh)
+    assert metadata["object_count"] == 3
+    fileinfo = metadata["files"]
+    assert {item["format"] for item in fileinfo} == {"zarr", "ndjson", "mrc"}
+    assert {item["shape"] for item in fileinfo} == {"Point", "SegmentationMask"}
+    print(fileinfo)
+    assert len(fileinfo) == 3  # We should have ndjson, mrc and zarr files
 
 
 def test_import_annotation_metadata_glob_strings(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer: TomogramImporter,
-    deposition_config: DepositionImportConfig,
+    tomo_importer_s3: TomogramImporter,
+    deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
 ) -> None:
     anno_config = {
@@ -177,7 +303,14 @@ def test_import_annotation_metadata_glob_strings(
         ],
     }
 
-    import_annotation_metadata(s3_fs, test_output_bucket, tomo_importer, deposition_config, s3_client, anno_config)
+    import_annotation_metadata(
+        s3_fs,
+        test_output_bucket,
+        tomo_importer_s3,
+        deposition_config_s3,
+        s3_client,
+        anno_config,
+    )
 
 
 ingest_points_test_cases = [
@@ -280,8 +413,8 @@ ingest_points_test_cases = [
 def test_ingest_point_data(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer: TomogramImporter,
-    deposition_config: DepositionImportConfig,
+    tomo_importer_s3: TomogramImporter,
+    deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
 ) -> None:
@@ -292,13 +425,13 @@ def test_ingest_point_data(
             case["source_cfg"],
         ],
     }
-    deposition_config._set_object_configs("annotation", [anno_config])
+    deposition_config_s3._set_object_configs("annotation", [anno_config])
 
     anno = PointAnnotation(
-        config=deposition_config,
+        config=deposition_config_s3,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["Point"].get("glob_string"),
-        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
         identifier=100,
         columns=anno_config["sources"][0]["Point"].get("columns"),
         delimiter=anno_config["sources"][0]["Point"].get("delimiter"),
@@ -783,8 +916,8 @@ ingest_oriented_points_test_cases = [
 def test_ingest_oriented_point_data(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer: TomogramImporter,
-    deposition_config: DepositionImportConfig,
+    tomo_importer_s3: TomogramImporter,
+    deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
 ) -> None:
@@ -795,12 +928,12 @@ def test_ingest_oriented_point_data(
             case["source_cfg"],
         ],
     }
-    deposition_config._set_object_configs("annotation", [anno_config])
+    deposition_config_s3._set_object_configs("annotation", [anno_config])
     anno = OrientedPointAnnotation(
-        config=deposition_config,
+        config=deposition_config_s3,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["OrientedPoint"].get("glob_string"),
-        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
         identifier=100,
         binning=case["source_cfg"]["OrientedPoint"].get("binning"),
         file_format=case["source_cfg"]["OrientedPoint"]["file_format"],
@@ -897,8 +1030,8 @@ ingest_instance_points_test_cases = [
 def test_ingest_instance_point_data(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer: TomogramImporter,
-    deposition_config: DepositionImportConfig,
+    tomo_importer_s3: TomogramImporter,
+    deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
 ) -> None:
@@ -909,13 +1042,13 @@ def test_ingest_instance_point_data(
             case["source_cfg"],
         ],
     }
-    deposition_config._set_object_configs("annotation", [anno_config])
+    deposition_config_s3._set_object_configs("annotation", [anno_config])
 
     anno = InstanceSegmentationAnnotation(
-        config=deposition_config,
+        config=deposition_config_s3,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["InstanceSegmentation"].get("glob_string"),
-        parents={"tomogram": tomo_importer, **tomo_importer.parents},
+        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
         identifier=100,
         binning=case["source_cfg"]["InstanceSegmentation"].get("binning"),
         file_format=anno_config["sources"][0]["InstanceSegmentation"]["file_format"],
@@ -948,3 +1081,259 @@ def test_ingest_instance_point_data(
 
         # Check id
         assert exp_point["instance_id"] == point["instance_id"], f"Incorrect id for {case['case']}"
+
+
+ingest_mask_test_cases = [
+    # Mask with 3 labels (1,2,3) and background 0
+    {
+        "case": "SemanticSegmentationMask, mask_label==1, MRC",
+        "source_cfg": {
+            "SemanticSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "mask_label": 1,
+                "glob_string": "annotations/semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]],
+                    [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]],
+                ],
+            },
+        ],
+    },
+    {
+        "case": "SemanticSegmentationMask, mask_label==2, MRC",
+        "source_cfg": {
+            "SemanticSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "mask_label": 2,
+                "glob_string": "annotations/semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[0, 0, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                ],
+            },
+        ],
+    },
+    {
+        "case": "SemanticSegmentationMask, mask_label==3, MRC",
+        "source_cfg": {
+            "SemanticSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "mask_label": 3,
+                "glob_string": "annotations/semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                ],
+            },
+        ],
+    },
+]
+
+
+@pytest.mark.parametrize("case", ingest_mask_test_cases)
+def test_ingest_segmentationmask(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    tomo_importer_s3: TomogramImporter,
+    deposition_config_s3: DepositionImportConfig,
+    s3_client: S3Client,
+    case: Dict[str, Any],
+):
+    # loop through test cases
+    anno_config = {
+        "metadata": default_anno_metadata,
+        "sources": [
+            case["source_cfg"],
+        ],
+    }
+    deposition_config_s3._set_object_configs("annotation", [anno_config])
+
+    anno = SemanticSegmentationMaskAnnotation(
+        config=deposition_config_s3,
+        metadata=default_anno_metadata,
+        path="test-public-bucket/input_bucket/20002/"
+        + case["source_cfg"]["SemanticSegmentationMask"].get("glob_string"),
+        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
+        identifier=100,
+        mask_label=case["source_cfg"]["SemanticSegmentationMask"].get("mask_label"),
+        file_format=anno_config["sources"][0]["SemanticSegmentationMask"]["file_format"],
+    )
+    anno.import_item()
+
+    # Strip the bucket name and annotation name from the annotation's output path.
+    anno_file = anno.get_output_path() + "_segmentationmask.mrc"
+
+    # Sanity check the mrc file
+    with s3_fs.open(anno_file, "rb") as fh:
+        mrc = MrcInterpreter(fh)
+        data = mrc.data
+
+    exp_data = case["out_data"][0]["volume"]
+
+    # Mask shape
+    assert data.shape == (4, 4, 4), f"Incorrect shape for {case['case']}"
+    # Mask data
+    assert np.all(data == np.array(exp_data, dtype=int)), f"Incorrect data for {case['case']}"
+
+
+@pytest.mark.parametrize(
+    "glob_string,file_format",
+    [
+        ("annotations/triangular_mesh.stl", "stl"),
+        ("annotations/triangular_mesh.glb", "glb"),
+        ("annotations/triangular_mesh.vtk", "vtk"),
+        ("annotations/triangular_mesh.obj", "obj"),
+    ],
+)
+def test_ingest_triangular_mesh(
+    glob_string,
+    file_format,
+    tomo_importer_local: TomogramImporter,
+    deposition_config_local: DepositionImportConfig,
+    local_test_data_dir: str,
+):
+    # Arrange
+    deposition_config_local._set_object_configs(
+        "annotation",
+        [
+            {
+                "metadata": default_anno_metadata,
+                "sources": [
+                    {
+                        "TriangularMesh": {
+                            "file_format": file_format,
+                            "glob_string": glob_string,
+                            "is_visualization_default": False,
+                        },
+                    },
+                ],
+            },
+        ],
+    )
+    fixtures_dir = os.path.join(local_test_data_dir, "fixtures")
+
+    # Action
+    anno = TriangularMeshAnnotation(
+        config=deposition_config_local,
+        metadata=default_anno_metadata,
+        path=os.path.join(fixtures_dir, glob_string),
+        parents={"tomogram": tomo_importer_local, **tomo_importer_local.parents},
+        file_format=file_format,
+        identifier=100,
+    )
+    anno.import_item()
+    anno.import_metadata()
+
+    # Assert
+    # verify local_metadata
+    path = "dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0_triangularmesh.glb"
+    expected_local_metadata = {
+        "object_count": 1,
+        "files": [
+            {
+                "format": "glb",
+                "path": path,
+                "shape": "TriangularMesh",
+                "is_visualization_default": False,
+            },
+        ],
+    }
+    assert anno.local_metadata == expected_local_metadata
+
+    # load the new mesh file
+    actual_mesh = trimesh.load(anno.get_output_filename(anno.get_output_path()) + ".glb", force="mesh")
+    actual_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(actual_mesh))
+    # load expected mesh
+    expected_mesh = trimesh.load(os.path.join(fixtures_dir, "annotations/triangular_mesh.glb"), force="mesh")
+    expected_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(expected_mesh))
+
+    assert actual_hash == expected_hash
+
+
+def test_ingest_triangular_mesh_hff(
+    tomo_importer_local: TomogramImporter,
+    deposition_config_local: DepositionImportConfig,
+    local_test_data_dir: str,
+):
+    # Arrange
+    glob_string = "annotations/triangular_mesh.hff"
+    file_format = "hff"
+    mesh_name = "special_name"
+    deposition_config_local._set_object_configs(
+        "annotation",
+        [
+            {
+                "metadata": default_anno_metadata,
+                "sources": [
+                    {
+                        "TriangularMeshGroup": {
+                            "file_format": file_format,
+                            "glob_string": glob_string,
+                            "is_visualization_default": False,
+                            "mesh_name": mesh_name,
+                        },
+                    },
+                ],
+            },
+        ],
+    )
+    fixtures_dir = os.path.join(local_test_data_dir, "fixtures")
+
+    # Action
+    anno = TriangularMeshAnnotationGroup(
+        config=deposition_config_local,
+        metadata=default_anno_metadata,
+        path=os.path.join(fixtures_dir, glob_string),
+        parents={"tomogram": tomo_importer_local, **tomo_importer_local.parents},
+        file_format=file_format,
+        identifier=100,
+        mesh_name=mesh_name,
+    )
+    anno.import_item()
+    anno.import_metadata()
+
+    # Assert
+    # verify local_metadata
+    path = "dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0_triangularmesh.glb"
+    expected_local_metadata = {
+        "object_count": 1,
+        "files": [
+            {
+                "format": "glb",
+                "path": path,
+                "shape": "TriangularMesh",
+                "is_visualization_default": False,
+            },
+        ],
+    }
+    assert anno.local_metadata == expected_local_metadata
+
+    # load the new mesh file
+    actual_mesh = trimesh.load(anno.get_output_filename(anno.get_output_path()) + ".glb", force="mesh")
+    actual_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(actual_mesh))
+    # load expected mesh
+    expected_mesh = trimesh.load(os.path.join(fixtures_dir, "annotations/triangular_mesh.glb"), force="mesh")
+    expected_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(expected_mesh))
+
+    assert actual_hash == expected_hash

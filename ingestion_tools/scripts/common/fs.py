@@ -6,6 +6,7 @@ import shutil
 from abc import ABC, abstractmethod
 from hashlib import md5
 from io import TextIOBase
+from typing import Any
 
 import boto3
 from s3fs import S3FileSystem
@@ -20,9 +21,10 @@ class FileSystemApi(ABC):
         mode: str,
         force_overwrite: bool,
         client_kwargs: None | dict[str, str] = None,
+        **kwargs: dict[str, Any],
     ) -> "FileSystemApi":
         if mode == "s3":
-            return S3Filesystem(force_overwrite=force_overwrite, client_kwargs=client_kwargs)
+            return S3Filesystem(force_overwrite=force_overwrite, client_kwargs=client_kwargs, **kwargs)
         else:
             return LocalFilesystem(force_overwrite=force_overwrite)
 
@@ -31,7 +33,7 @@ class FileSystemApi(ABC):
         pass
 
     @abstractmethod
-    def open(self, path: str, mode: str) -> TextIOBase:
+    def open(self, path: str, mode: str, **kwargs) -> TextIOBase:
         pass
 
     @abstractmethod
@@ -67,9 +69,9 @@ class FileSystemApi(ABC):
 
 
 class S3Filesystem(FileSystemApi):
-    def __init__(self, force_overwrite: bool, client_kwargs: None | dict[str, str] = None):
+    def __init__(self, force_overwrite: bool, client_kwargs: None | dict[str, str] = None, **kwargs):
         self.client_kwargs = client_kwargs or {}
-        self.s3fs = S3FileSystem(anon=False, client_kwargs=client_kwargs)
+        self.s3fs = S3FileSystem(anon=False, client_kwargs=client_kwargs, **kwargs)
         self.tmpdir = "/tmp"
         self.force_overwrite = force_overwrite
 
@@ -83,8 +85,8 @@ class S3Filesystem(FileSystemApi):
     def glob(self, *args: list[str]) -> list[str]:
         return self.s3fs.glob(*args)
 
-    def open(self, path: str, mode: str) -> TextIOBase:
-        return self.s3fs.open(path, mode)
+    def open(self, path: str, mode: str, **kwargs) -> TextIOBase:
+        return self.s3fs.open(path, mode, **kwargs)
 
     def localreadable(self, path: str) -> str:
         local_dest_file = os.path.join(self.tmpdir, path)
@@ -129,7 +131,7 @@ class S3Filesystem(FileSystemApi):
     # Copy from one s3 location to another
     def copy(self, src_path: str, dest_path: str) -> None:
         # Don't re-copy it if it's already available.
-        if self.s3fs.exists(dest_path):
+        if self.exists(dest_path):
             # TODO, s3 etags aren't sufficient here, so we're cheating and using size.
             src_size = self.s3fs.size(src_path)
             dest_size = self.s3fs.size(dest_path)
@@ -175,8 +177,8 @@ class LocalFilesystem(FileSystemApi):
     def glob(self, *args: list[str]) -> list[str]:
         return glob.glob(*args)
 
-    def open(self, path: str, mode: str) -> TextIOBase:
-        return open(path, mode)  # noqa
+    def open(self, path: str, mode: str, **kwargs) -> TextIOBase:
+        return open(path, mode, **kwargs)  # noqa
 
     def localreadable(self, path: str) -> str:
         return path

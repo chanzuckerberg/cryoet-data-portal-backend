@@ -1,55 +1,53 @@
 repos:
-- repo: https://github.com/psf/black-pre-commit-mirror
-  rev: 24.4.0
-  hooks:
-  - id: black
-    args:
-    - --config
-    - ingestion_tools/pyproject.toml
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.4.1
+  rev: v0.6.2
   hooks:
   - id: ruff
     # These files are codegen'd and non-compliant :'(
     exclude: |
       (?x)(
-          ^schema/v1.1.0/metadata_models.py|
-          ^schema/v1.1.0/dataset_config_models.py
+          ^apiv2/.*|
+          ^schema/.*/metadata_models.py|
+          ^schema/.*/ingestion_config_models.py
       )
     args:
     - --fix
     - --config
     - ingestion_tools/pyproject.toml
-      #- repo: https://github.com/pre-commit/mirrors-mypy
-      #  rev: "v1.4.1"
-      #  hooks:
-      #  - id: mypy
-      #    exclude: "packages/frontend"
-      #    # entry: mypy --config-file ingestion_tools/pyproject.toml
-      #    args: ["--config-file", "ingestion_tools/pyproject.toml"]
-      #    # args: [--config-file=./packages/backend/pyproject.toml]
-      #    # entry: mypy --config-file packages/backend/pyproject.toml
-      #    # entry: bash -c 'cd packages/backend && mypy --config-file pyproject.toml .'
-      #    additional_dependencies:
-      #      [
-      #        pydantic,
-      #        pydantic-settings,
-      #        click,
-      #      ]
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.6.2
+  hooks:
+  - id: ruff
+    args:
+    - --fix
+    - --config
+    - apiv2/pyproject.toml
+    files: '^apiv2/.*'
+- repo: https://github.com/mpalmer/action-validator
+  # requires installing `npm install -g @action-validator/core @action-validator/cli --save-dev`
+  rev: v0.6.0
+  hooks:
+    - id: action-validator
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.5.0
+  rev: v4.6.0
   hooks:
   - id: check-toml
   - id: check-yaml
     exclude: ingestion_tools/dataset_configs/template.yaml
   - id: check-json
+    exclude: "launch.json"
   - id: check-merge-conflict
   - id: end-of-file-fixer
+    exclude: |
+      (?x)(
+          ^.release-please-manifest.json|
+          ^release-please-config.json
+      )
   - id: trailing-whitespace
 - repo: local
   hooks:
   - id: dataset-config-validation
     name: dataset-config-validation
-    entry: bash -c "cd schema/v1.1.0/ && make validate-configs"
+    entry: bash -c "cd schema/ && make validate-configs"
     language: system
-    files: '^(ingestion_tools/dataset_configs/|schema/v1.1.0/.*\.(json|py|yaml|Makefile))'
+    files: '^(ingestion_tools/dataset_configs/|schema/.*\.(py|yaml|json|Makefile))'

@@ -6,10 +6,10 @@ from importers.deposition import DepositionImporter
 from importers.deposition_key_photo import DepositionKeyPhotoImporter
 from mypy_boto3_s3 import S3Client
 from standardize_dirs import IMPORTERS
-from tests.s3_import.util import list_dir
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
+from tests.s3_import.util import list_dir
 
 
 @pytest.fixture
@@ -50,7 +50,7 @@ def test_invalid_deposition_metadata_import(
     config = create_config("tests/fixtures/depositions/deposition2.yaml")
     deposition = list(DepositionImporter.finder(config))[0]
     deposition.import_metadata()
-    assert [] == s3_fs.glob(f"{output_path}/depositions_metadata/10302/deposition_metadata.json")
+    assert s3_fs.glob(f"{output_path}/depositions_metadata/10302/deposition_metadata.json") == []
 
 
 def test_key_photo_import_http(

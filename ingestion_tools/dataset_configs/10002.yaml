@@ -54,6 +54,10 @@ annotations:
       is_visualization_default: true
 - metadata:
     annotation_method: 2D CNN + 3D CNN hyperparameter tuning
+    method_links: &annotation_method_links
+      - link: https://github.com/ZauggGroup/DeePiCt
+        link_type: source_code
+        custom_name: DeePiCt on GitHub
     annotation_object:
       description: Actin DeePiCt training prediction
       id: GO:0005884
@@ -71,6 +75,11 @@ annotations:
       file_format: mrc
       glob_string: prediction/{run_name}_*.mrc
       is_visualization_default: false
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/{run_name}.mdoc
 dataset_keyphotos:
 - sources:
   - literal:
@@ -109,12 +118,12 @@ datasets:
     - ORCID: 0000-0001-8324-4040
       corresponding_author_status: true
       name: Judith B. Zaugg
-    cell_type:
-      id: CL:0002586
-      name: retinal pigment epithelial cell
     cell_strain:
       id: BTO:0004790
       name: hTERT-RPE1 cell
+    cell_type:
+      id: CL:0002586
+      name: retinal pigment epithelial cell
     cross_references:
       publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
       related_database_entries: EMPIAR-10989
@@ -162,7 +171,6 @@ rawtilts:
   - source_multi_glob:
       list_globs:
       - metadata/{run_name}_sq_df_sorted_fid.xf
-      - metadata/{run_name}.mdoc
 runs:
 - sources:
   - source_glob:

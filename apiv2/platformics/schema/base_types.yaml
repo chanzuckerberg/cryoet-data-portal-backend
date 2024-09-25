@@ -1,0 +1,98 @@
+id: https://github.com/chanzuckerberg/platformics
+title: Platformics Base Schema
+name: platformics_base
+default_range: string
+prefixes:
+  linkml: https://w3id.org/linkml/
+imports:
+  - linkml:types
+
+enums:
+  FileStatus:
+    permissible_values:
+      SUCCESS:
+      FAILED:
+      PENDING:
+    annotations:
+      skip_codegen: true
+  FileUploadClient:
+    permissible_values:
+      browser:
+        description: File uploaded from the user's browser
+      cli:
+        description: File uploaded from the CLI
+      s3:
+        description: File uploaded from S3
+      basespace:
+        description: File uploaded from Illumina Basespace Cloud
+    annotations:
+      skip_codegen: true
+  FileAccessProtocol:
+    permissible_values:
+      s3:
+        description: This file is accessible via the (AWS) S3 protocol
+      https:
+        description: This file is accessible via the HTTPS protocol
+    annotations:
+      skip_codegen: true
+
+classes:
+  File:
+    attributes:
+      id:
+        identifier: true
+        range: uuid
+        required: true
+        annotations:
+          indexed: true
+      # This file's ID is stored in the entity column <entity_field_name>_id
+      entity_field_name:
+        range: string
+        required: true
+      # This name of the class that this file belongs to
+      entity_class_name:
+        range: string
+        required: true
+      # Which specific instance of an entity that this file belongs to
+      entity_id:
+        range: string
+        required: true
+        annotations:
+          indexed: true
+      status:
+        range: FileStatus
+        required: true
+      protocol:
+        range: FileAccessProtocol
+        required: true
+      # Bucket name
+      namespace:
+        range: string
+        required: true
+      # Prefix (does not start with /)
+      path:
+        range: string
+        required: true
+      file_format:
+        range: string
+        required: true
+      compression_type:
+        range: string
+      size:
+        range: integer
+        minimum_value: 0
+      # Information about file upload (optional)
+      upload_client:
+        range: FileUploadClient
+      upload_error:
+        range: string
+      created_at:
+        range: date
+        required: true
+        readonly: true
+      updated_at:
+        range: date
+        readonly: true
+    annotations:
+      plural: Files
+      skip_codegen: true

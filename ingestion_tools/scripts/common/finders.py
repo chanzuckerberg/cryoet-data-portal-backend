@@ -4,9 +4,12 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
+    from importers.base_importer import BaseImporter
+
     from common.config import DepositionImportConfig
 else:
     DepositionImportConfig = "DepositionImportConfig"
+    BaseImporter = "BaseImporter"
 
 
 ###
@@ -96,7 +99,7 @@ class DestinationGlobFinder(BaseFinder):
         return responses
 
 
-class BaseLiteralValueFinder:
+class BaseLiteralValueFinder(BaseFinder):
     literal_value: list[str] | dict[str, str | None]
 
     def __init__(self, value: dict[str, str | None] | list[str]):
@@ -114,13 +117,19 @@ class BaseLiteralValueFinder:
 class DepositionObjectImporterFactory(ABC):
     def __init__(self, source: dict[str, Any]):
         self.source = source
-        parent_filters = source.get("parent_filters", {})
+        self._set_parent_filters(source.get("parent_filters", {}))
+        self._set_exclude(source.get("exclude", []))
+
+    def _set_parent_filters(self, parent_filters: dict[str, dict[str, list[str]]]):
         self.exclude_parents = {}
         self.include_parents = {}
         for parent_key, regex_list in parent_filters.get("include", {}).items():
             self.include_parents[parent_key] = [re.compile(regex_str) for regex_str in regex_list]
         for parent_key, regex_list in parent_filters.get("exclude", {}).items():
             self.exclude_parents[parent_key] = [re.compile(regex_str) for regex_str in regex_list]
+
+    def _set_exclude(self, exclude: list[str]):
+        self.exclude_regexes = [re.compile(regex_str) for regex_str in exclude]
 
     @abstractmethod
     def load(
@@ -168,13 +177,30 @@ class DepositionObjectImporterFactory(ABC):
         config: DepositionImportConfig,
         metadata: dict[str, Any],
         **parent_objects: dict[str, Any] | None,
-    ):
+    ) -> list[BaseImporter]:
         loader = self.load(config, **parent_objects)
         glob_vars = self._get_glob_vars(**parent_objects)
         found = loader.find(config, glob_vars)
-        results = []
+        filtered_results = {}
         for name, path in found.items():
-            item = self._instantiate(cls, config, metadata, name, path, parent_objects)
+            name_str = str(name)  # Wrapper to prevent float voxel spacings from erroring
+            if any(exclude_regex.match(name_str) for exclude_regex in self.exclude_regexes):
+                print(f"Excluding {cls.type_key} {name}...")
+                continue
+            filtered_results[name] = path
+        return self._get_instantiated_results(cls, config, metadata, filtered_results, parent_objects)
+
+    def _get_instantiated_results(
+        self,
+        cls,
+        config: DepositionImportConfig,
+        metadata: dict[str, Any],
+        filtered_results: dict[str, str],
+        parents: dict[str, Any] | None,
+    ) -> list[BaseImporter]:
+        results = []
+        for name, path in filtered_results.items():
+            item = self._instantiate(cls, config, metadata, name, path, parents)
             if item:
                 results.append(item)
         return results
@@ -208,3 +234,37 @@ class DefaultImporterFactory(DepositionObjectImporterFactory):
         if source.get("literal"):
             return BaseLiteralValueFinder(**source["literal"])
         raise Exception("Invalid source type")
+
+
+class MultiSourceFileFinder(DefaultImporterFactory):
+    """
+    This is a special case of the DefaultImporterFactory which has a different behaviour than other ImporterFactories.
+    It is used when we have multiple files that need to be fetched for a single entity, ie all the files retrieved in a
+    single source entry are grouped together.
+    This is used for the alignment importer, where we have multiple different files that need to be fetched for a single
+    alignment.
+    This is a bit of a hacky solution, and should be refactored to be a finder.
+    (https://github.com/chanzuckerberg/cryoet-data-portal/issues/1142)
+    """
+
+    def _get_instantiated_results(
+        self,
+        cls,
+        config: DepositionImportConfig,
+        metadata: dict[str, Any],
+        filtered_results: dict[str, str],
+        parents: dict[str, Any] | None,
+    ):
+        if not filtered_results:
+            return []
+
+        names = ",".join([os.path.basename(path) for path in filtered_results])
+        item = cls(
+            config=config,
+            metadata=metadata,
+            name=names,
+            path=None,
+            parents=parents,
+            file_paths=filtered_results,
+        )
+        return [item] if item else []

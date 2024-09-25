@@ -12,7 +12,7 @@ python = "^3.11"
 aiohttp = "^3.9.5"
 async-lru = "^2.0.4"
 click = "^8.1.7"
-linkml = "^1.8.1"
+linkml = "^1.8.2"
 numpy = "^1.26.4"
 pydantic = "^2.8.2"
 typing-extensions = "^4.12.2"
@@ -48,14 +48,6 @@ lint.ignore = [
 ]
 line-length = 120
 target-version = "py311"
-
-[tool.ruff.lint.per-file-ignores]
-"v1.1.0/metadata_models.py" = [
-    "N802", # function name should be lowercase
-    "N805", # First argument of a method should be named `self`
-    "SIM102", # Simplyfing nested loop
-]
-
 
 [tool.ruff.lint.isort]
 known-first-party =["common"]

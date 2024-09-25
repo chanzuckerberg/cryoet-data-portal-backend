@@ -91,3 +91,7 @@ class KeyImageImporter(BaseImporter):
     @staticmethod
     def get_file_name(image_type: str) -> str:
         return f"key-photo-{image_type}.png"
+
+    @classmethod
+    def get_default_config(cls) -> list[dict] | None:
+        return [{"sources": [{"literal": {"value": ["original", "snapshot", "thumbnail", "expanded"]}}]}]

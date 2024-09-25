@@ -2,7 +2,9 @@ import re
 from typing import Any, Optional
 
 import click
+from importers.alignment import AlignmentImporter
 from importers.annotation import AnnotationImporter
+from importers.collection_metadata import CollectionMetadataImporter
 from importers.dataset import DatasetImporter
 from importers.dataset_key_photo import DatasetKeyPhotoImporter
 from importers.deposition import DepositionImporter
@@ -22,7 +24,10 @@ from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
 
 IMPORTERS = [
+    AlignmentImporter,
     AnnotationImporter,
+    AnnotationVisualizationImporter,
+    CollectionMetadataImporter,
     DatasetKeyPhotoImporter,
     DatasetImporter,
     DepositionImporter,
@@ -37,7 +42,6 @@ IMPORTERS = [
     TiltSeriesImporter,
     TomogramImporter,
     VoxelSpacingImporter,
-    AnnotationVisualizationImporter,
 ]
 IMPORTER_DICT = {cls.type_key: cls for cls in IMPORTERS}
 # NOTE - ordering of keys is important here, the importer will respect it!
@@ -45,6 +49,12 @@ IMPORTER_DEP_TREE = {
     DepositionImporter: {
         DatasetImporter: {
             RunImporter: {
+                GainImporter: {},
+                FrameImporter: {},
+                CollectionMetadataImporter: {},
+                RawTiltImporter: {},
+                TiltSeriesImporter: {},
+                AlignmentImporter: {},
                 VoxelSpacingImporter: {
                     AnnotationImporter: {
                         AnnotationVisualizationImporter: {},
@@ -54,10 +64,6 @@ IMPORTER_DEP_TREE = {
                         VisualizationConfigImporter: {},
                     },
                 },
-                GainImporter: {},
-                FrameImporter: {},
-                TiltSeriesImporter: {},
-                RawTiltImporter: {},
             },
             DatasetKeyPhotoImporter: {},
         },
@@ -123,6 +129,7 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
             if import_class in to_import:
                 print(f"Importing {import_class.type_key} {item.name}")
                 item.import_item()
+
             if child_import_classes:
                 sub_parents = {import_class.type_key: item}
                 sub_parents.update(parents)

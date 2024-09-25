@@ -144,11 +144,13 @@ python3 enqueue_runs.py sync --exclude '*' --include 'Annotations/*.json' --s3-p
 
 ### Other interesting options to be aware of
 | Option | Default | Explanation                                                                                                                                                                                        |
-| --- | --- | --- |
-| --filter-datasets | null | Supply a regular expression to apply to the list of available dataset ID's, to only run import for certain datasets. This option can be specified multiple times with multiple regular expressions |
-| --include-dataset | null | Specify specific datasets to import. This option can be specified multiple times with multiple dataset id's                                                                                        |
-| --exclude-dataset | null | Supply a regular expression to exclude a list of dataset ID's the import. This option can be specified multiple times with multiple regular expressions.                                           |
-| --s3-prefix | null | Only look for datasets in a particular subdirectory (this is faster than the filter/include filters) when importing a single dataset                                                               |
+| --- |---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --filter-datasets | null    | Supply a regular expression to apply to the list of available dataset ID's, to only run import for certain datasets. This option can be specified multiple times with multiple regular expressions |
+| --include-dataset | null    | Specify specific datasets to import. This option can be specified multiple times with multiple dataset id's                                                                                        |
+| --exclude-dataset | null    | Supply a regular expression to exclude a list of dataset ID's the import. This option can be specified multiple times with multiple regular expressions.                                           |
+| --s3-prefix | null    | Only look for datasets in a particular subdirectory (this is faster than the filter/include filters) when importing a single dataset                                                               |
+| --include-deposition | null    | Look for deposition metadata  with the deposition ids passed here. This helps sync the deposition data.                                                                                            |
+| --no-sync-dataset | False   | Skip syncing datasets. This is useful when we want to only update deposition data                                                                                                                  |
 
 ## Retrieving logs from job runs
 Use the `fetch_enqueue_runs_logs.py` script to retrieve logs from the job runs. This script is used for fetching logs for the jobs run with `enqueue_runs.py` and categorizing them into success and failed directories based on the execution status. To provide the required ARNs needed for the `fetch_enqueue_runs_logs.py` script, run `enqueue_runs.py` with an output log file specified using the `--execution-machine-log` flag. See `fetch_enqueue_runs_logs.md` for more details.

@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import os.path
 import re
 import time
 from concurrent.futures import ProcessPoolExecutor, wait
@@ -16,6 +17,7 @@ from db_import import db_import_options
 from importers.dataset import DatasetImporter
 from importers.db.base_importer import DBImportConfig
 from importers.db.dataset import DatasetDBImporter
+from importers.db.deposition import DepositionDBImporter
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from standardize_dirs import IMPORTERS
@@ -218,6 +220,16 @@ def get_datasets(
             logger.info("Excluding %s...", dataset.dir_prefix)
             continue
         yield dataset_id, dataset
+
+
+def get_depositions(s3_bucket, include_depositions, anonymous: bool):
+    s3_config = Config(signature_version=UNSIGNED) if anonymous else None
+    s3_client = boto3.client("s3", config=s3_config)
+    config = DBImportConfig(s3_client, s3_bucket, "")
+    for dep in include_depositions:
+        for deposition in DepositionDBImporter.get_items(config, dep):
+            deposition_id = os.path.basename(deposition.dir_prefix.strip("/"))
+            yield deposition_id, deposition
 
 
 def to_args(**kwargs) -> list[str]:
@@ -497,6 +509,41 @@ class OrderedSyncFilters(click.Command):
         return super().parse_args(ctx, args)
 
 
+def execute_sync(ctx, input_bucket, output_bucket, new_args, entities, swipe_wdl_key, path_prefix):
+    futures = []
+    with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
+        for entity_id, _ in entities:
+            print(f"Processing {path_prefix} {entity_id}...")
+
+            name_prefix = "dep" if path_prefix == "depositions_metadata" else "ds"
+            execution_name = f"{int(time.time())}-sync-{name_prefix}-{entity_id}"
+
+            # execution name greater than 80 chars causes boto ValidationException
+            if len(execution_name) > 80:
+                execution_name = execution_name[-80:]
+            sync_path = os.path.join(path_prefix, entity_id)
+
+            wdl_args = {
+                "input_bucket": input_bucket,
+                "input_path": sync_path,
+                "output_bucket": output_bucket,
+                "output_path": sync_path,
+                "flags": " ".join(new_args),
+            }
+            futures.append(
+                workerpool.submit(
+                    partial(
+                        run_job,
+                        execution_name,
+                        wdl_args,
+                        swipe_wdl_key=swipe_wdl_key,
+                        **ctx.obj,
+                    ),
+                ),
+            )
+        wait(futures)
+
+
 @cli.command(name="sync", cls=OrderedSyncFilters)
 @click.option("--input-bucket", required=True, type=str, default="cryoet-data-portal-staging")
 @click.option("--output-bucket", required=True, type=str, default="cryoet-data-portal-public")
@@ -508,6 +555,8 @@ class OrderedSyncFilters(click.Command):
 @click.option("--filter-datasets", type=str, default=None, multiple=True)
 @click.option("--include-dataset", type=str, default=None, multiple=True)
 @click.option("--exclude-dataset", type=str, default=None, multiple=True)
+@click.option("--include-deposition", type=str, default=None, multiple=True)
+@click.option("--sync-dataset/--no-sync-dataset", default=True)
 @click.option(
     "--swipe-wdl-key",
     type=str,
@@ -527,6 +576,8 @@ def sync(
     filter_datasets: list[str],
     include_dataset: list[str],
     exclude_dataset: list[str],
+    include_deposition: list[str],
+    sync_dataset: bool,
     swipe_wdl_key: str,
     **kwargs,
 ):
@@ -549,9 +600,8 @@ def sync(
     if ctx.obj.get("execution_machine_log") is not None:
         create_execution_machine_log_file(ctx.obj.get("execution_machine_log"))
 
-    futures = []
-    with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
-        for dataset_id, _ in get_datasets(
+    if sync_dataset:
+        entities = get_datasets(
             input_bucket,
             "",
             filter_datasets,
@@ -559,34 +609,20 @@ def sync(
             exclude_dataset,
             s3_prefix,
             False,
-        ):
-            print(f"Processing dataset {dataset_id}...")
+        )
+        execute_sync(ctx, input_bucket, output_bucket, new_args, entities, swipe_wdl_key, "")
 
-            execution_name = f"{int(time.time())}-sync-{dataset_id}"
-
-            # execution name greater than 80 chars causes boto ValidationException
-            if len(execution_name) > 80:
-                execution_name = execution_name[-80:]
-
-            wdl_args = {
-                "input_bucket": input_bucket,
-                "input_path": dataset_id,
-                "output_bucket": output_bucket,
-                "output_path": dataset_id,
-                "flags": " ".join(new_args),
-            }
-            futures.append(
-                workerpool.submit(
-                    partial(
-                        run_job,
-                        execution_name,
-                        wdl_args,
-                        swipe_wdl_key=swipe_wdl_key,
-                        **ctx.obj,
-                    ),
-                ),
-            )
-        wait(futures)
+    if include_deposition:
+        deposition_entities = get_depositions(input_bucket, include_deposition, False)
+        execute_sync(
+            ctx,
+            input_bucket,
+            output_bucket,
+            new_args,
+            deposition_entities,
+            swipe_wdl_key,
+            "depositions_metadata",
+        )
 
 
 if __name__ == "__main__":
