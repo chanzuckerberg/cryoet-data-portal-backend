@@ -171,6 +171,3 @@ def upgrade(config: dict) -> dict:
     remove_empty_fields(config)
     config["version"] = "1.1.0"
     return config
-
-
-
