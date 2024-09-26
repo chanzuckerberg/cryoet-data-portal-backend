@@ -62,7 +62,7 @@ annotations:
       columns: xyz
       file_format: csv
       glob_string: particle_lists/{run_name}_fas.csv
-      is_portal_standard: false
+
       is_visualization_default: false
 - metadata:
     annotation_method: Cumulative template-matching trained 2D CNN predictions + visual
@@ -85,7 +85,7 @@ annotations:
       columns: xyz
       file_format: csv
       glob_string: particle_lists/{run_name}_cyto_ribosomes.csv
-      is_portal_standard: false
+
       is_visualization_default: true
 - metadata:
     annotation_method: manual segmentation
@@ -105,7 +105,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
-      is_portal_standard: false
+
       is_visualization_default: false
       mask_label: 1
 - metadata:
@@ -126,7 +126,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
-      is_portal_standard: false
+
       is_visualization_default: true
       mask_label: 2
 - metadata:
@@ -147,7 +147,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
-      is_portal_standard: false
+
       is_visualization_default: false
       mask_label: 3
 - metadata:
@@ -168,7 +168,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
-      is_portal_standard: false
+
       is_visualization_default: true
       mask_label: 4
 - metadata:
@@ -189,7 +189,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
-      is_portal_standard: false
+
       is_visualization_default: true
       mask_label: 5
 - metadata:
@@ -210,7 +210,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
-      is_portal_standard: false
+
       is_visualization_default: true
       mask_label: 6
 - metadata:
@@ -231,7 +231,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
-      is_portal_standard: false
+
       is_visualization_default: false
       mask_label: 7
 - metadata:
@@ -252,7 +252,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
-      is_portal_standard: false
+
       is_visualization_default: false
       mask_label: 8
 - metadata:
@@ -273,7 +273,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
-      is_portal_standard: false
+
       is_visualization_default: false
       mask_label: 9
 - metadata:
@@ -294,7 +294,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
-      is_portal_standard: false
+
       is_visualization_default: true
       mask_label: 10
 - metadata:
@@ -315,7 +315,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
-      is_portal_standard: false
+
       is_visualization_default: false
       mask_label: 11
 - metadata:
@@ -336,7 +336,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
-      is_portal_standard: false
+
       is_visualization_default: false
       mask_label: 13
 - metadata:
@@ -358,7 +358,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_membranes.mrc
-      is_portal_standard: false
+
       is_visualization_default: false
       mask_label: 1
 collection_metadata:
