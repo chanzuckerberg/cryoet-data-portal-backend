@@ -6,7 +6,7 @@ from typing import Any
 import click
 import yaml
 
-from schema_migration import migrate_v1_1_0
+import migrate_v1_1_0
 
 logger = logging.getLogger(__name__)
 

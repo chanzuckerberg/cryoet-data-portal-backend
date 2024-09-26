@@ -150,7 +150,7 @@ tomograms:
       - 1
     authors: *id001
     ctf_corrected: false
-    dates: *id002
+    dates: *id003
     fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
     offset:
