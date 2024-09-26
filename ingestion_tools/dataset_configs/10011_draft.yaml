@@ -92,11 +92,6 @@ gains:
 - sources:
   - source_glob:
       list_glob: frames/CountRef.dm4
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 rawtilts:
 - sources:
   - source_multi_glob:
@@ -176,6 +171,7 @@ tomograms:
   - source_glob:
       list_glob: tomograms/*.rec
       match_regex: .*
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

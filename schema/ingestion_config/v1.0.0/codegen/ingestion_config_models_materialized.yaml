@@ -811,6 +811,19 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+      version:
+        name: version
+        description: The version of the ingestion config.
+        from_schema: cdp-ingestion-config
+        alias: version
+        owner: Container
+        domain_of:
+        - Annotation
+        - Container
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
       voxel_spacings:
         name: voxel_spacings
         description: A voxel spacing entity.

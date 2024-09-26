@@ -34,7 +34,8 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: Manual annotations of flagellar basal body, created and pre-oriented using IMOD.
+    deposition_description: Manual annotations of flagellar basal body, created and
+      pre-oriented using IMOD.
     deposition_identifier: 10302
     deposition_title: Manual annotations of flagellar basal body
     deposition_types:
@@ -52,6 +53,7 @@ runs:
 standardization_config:
   deposition_id: 10302
   source_prefix: braxton_owens_05_2024/d3_ms_rings_common
+version: 1.1.0
 voxel_spacings:
 - sources:
   - destination_glob:

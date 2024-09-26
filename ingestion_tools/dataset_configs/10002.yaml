@@ -54,10 +54,6 @@ annotations:
       is_visualization_default: true
 - metadata:
     annotation_method: 2D CNN + 3D CNN hyperparameter tuning
-    method_links: &annotation_method_links
-      - link: https://github.com/ZauggGroup/DeePiCt
-        link_type: source_code
-        custom_name: DeePiCt on GitHub
     annotation_object:
       description: Actin DeePiCt training prediction
       id: GO:0005884
@@ -68,6 +64,10 @@ annotations:
     dates: *id002
     ground_truth_status: false
     is_curator_recommended: false
+    method_links:
+    - custom_name: DeePiCt on GitHub
+      link: https://github.com/ZauggGroup/DeePiCt
+      link_type: source_code
     method_type: automated
     version: 1.0
   sources:
@@ -161,11 +161,6 @@ gains:
 - sources:
   - source_glob:
       list_glob: CountRef_{mapped_frame_name}-range.dm4
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 rawtilts:
 - sources:
   - source_multi_glob:
@@ -246,6 +241,7 @@ tomograms:
   - source_glob:
       list_glob: tomograms/{run_name}_*.rec
       match_regex: .*
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

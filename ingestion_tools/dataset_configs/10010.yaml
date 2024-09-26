@@ -105,7 +105,7 @@ datasets:
     cell_type:
       id: CL:2000042
       name: embryonic fibroblast
-    cross_references: &dataset_cross_references
+    cross_references: &id004
       publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
       related_database_entries: EMPIAR-11370
     dataset_description: Cryo-electron tomograms of mouse embryonic fibroblasts from
@@ -126,6 +126,7 @@ datasets:
 depositions:
 - metadata:
     authors: *id003
+    cross_references: *id004
     dates: *id002
     deposition_description: This dataset contains cryo-electron tomograms of mouse
       embryonic fibroblasts from FIB-SEM lamella. The dataset was used to develop
@@ -133,7 +134,6 @@ depositions:
       ultrastructure.
     deposition_identifier: 10010
     deposition_title: Surface morphometrics of organellar membranes
-    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
     - annotation
@@ -145,11 +145,6 @@ frames:
 - sources:
   - source_glob:
       list_glob: frames/{run_name}_*.tif
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 runs:
 - sources:
   - source_glob:
@@ -222,6 +217,7 @@ tomograms:
   - source_glob:
       list_glob: Tomograms/{run_name}_*.mrc
       match_regex: .*
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:
