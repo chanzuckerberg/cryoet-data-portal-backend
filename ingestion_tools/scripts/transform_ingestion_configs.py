@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from typing import Any
 
 import click
@@ -35,8 +36,9 @@ def has_no_sources(data: list[dict[str, Any]] | dict[str, Any]) -> bool:
     return isinstance(data, dict) or not any(row.get("sources") for row in data)
 
 
-def update_config(data: dict[str, Any]) -> dict[str, Any]:
+def update_config_to_v1(data: dict[str, Any]) -> dict[str, Any]:
     standardization_config = data["standardization_config"]
+    data["version"] = "1.0.0"
     if data.get("overrides_by_run"):
         # We only have two datasets that specify overrides. It's easier to just
         # translate these manually than deal with automating it.
@@ -215,17 +217,40 @@ def update_file(filename: str) -> None:
     with open(filename, "r") as fh:
         data = yaml.safe_load(fh.read())
 
-    data = update_config(data)
+    if not data.get("version"):
+        data["version"] = "0.0.0"
+
+    # get the current version do determine where to start upgrading
+    for version, update_func in VERSION_MAP.items():
+        if convert_version(data["version"]) == version:
+            data = update_func(data)
 
     with open(filename, "w") as fh:
         fh.write(yaml.dump(data))
 
+def update_config_to_v1_1(data: dict[str, Any]) -> dict[str, Any]:
+    data["version"] = "1.1.0"
+    return data
 
-@cli.command()
+def convert_version(version: str) -> tuple[int, int, int]:
+    return tuple(map(int, version.split(".")))
+
+
+@cli.command(description="Upgrade a config file to the latest version.")
 @click.argument("conf_file", required=True, type=str, nargs=-1)
 def upgrade(conf_file: list[str]) -> None:
+    """
+
+    To add a new version upgrade function, add a new function that takes the data
+    dictionary and returns the updated data dictionary. Then add the function to
+    the VERSION_MAP dictionary with the key being the version to upgrade from.
+    """
     for filename in conf_file:
         update_file(filename)
+
+
+VERSION_MAP = OrderedDict({(0,0,0): update_config_to_v1,
+                           (1,0,0): update_config_to_v1_1})
 
 
 if __name__ == "__main__":
