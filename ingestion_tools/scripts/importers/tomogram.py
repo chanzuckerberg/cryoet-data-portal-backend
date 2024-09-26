@@ -73,6 +73,9 @@ class TomogramImporter(VolumeImporter):
             voxel_spacing=self.get_voxel_spacing().as_float(),
         )
 
+    def get_identifier(self) -> int:
+        return self.identifier
+
     def dir_path(self) -> str:
         output_dir = self.config.resolve_output_path(self.type_key, self)
         return os.path.join(output_dir, f"{self.identifier}")
@@ -80,11 +83,8 @@ class TomogramImporter(VolumeImporter):
     def get_output_path(self) -> str:
         return f"{self.dir_path()}-{self.get_run().name}"
 
-    def get_metadata_path(self) -> str:
-        return f"{self.dir_path()}-tomogram_metadata.json"
-
     def import_metadata(self) -> None:
-        dest_tomo_metadata = self.get_metadata_path()
+        dest_tomo_metadata = self.get_metadata_path().format(identifier=self.identifier)
         merge_data = self.load_extra_metadata()
         parent_args = dict(self.parents)
         parent_args["tomogram"] = self
@@ -118,6 +118,6 @@ class TomogramImporter(VolumeImporter):
     def get_neuroglancer_config_path(self) -> str:
         if self.metadata.get("is_visualization_default"):
             # TODO: Refactor this to a method in the viz_config importer with identifier in the name
-            return self.config.resolve_output_path("viz_config", self)
+            return self.config.resolve_output_path("viz_config", self).format(identifier=self.identifier)
 
         return None

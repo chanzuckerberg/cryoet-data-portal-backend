@@ -224,7 +224,7 @@ class DepositionImportConfig:
         paths = {
             "voxel_spacing": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}",
             "tomogram": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram",
-            "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos",
+            "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Images",
             "tiltseries": "{dataset_name}/{run_name}/TiltSeries",
             "gain": "{dataset_name}/{run_name}/Gains/",
             "frame": "{dataset_name}/{run_name}/Frames",
@@ -234,13 +234,13 @@ class DepositionImportConfig:
             "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
             "annotation_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
             "run_metadata": "{dataset_name}/{run_name}/run_metadata.json",
-            "tomogram_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/tomogram_metadata.json",
-            "tiltseries_metadata": "{dataset_name}/{run_name}/TiltSeries/tiltseries_metadata.json",
+            "tomogram_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/{{identifier}}-tomogram_metadata.json",
+            "tiltseries_metadata": "{dataset_name}/{run_name}/TiltSeries/{{identifier}}-tiltseries_metadata.json",
             "dataset_metadata": "{dataset_name}/dataset_metadata.json",
             "run": "{dataset_name}/{run_name}",
             "dataset": "{dataset_name}",
             "dataset_keyphoto": "{dataset_name}/Images",
-            "viz_config": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/neuroglancer_config.json",
+            "viz_config": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute/{{identifier}}-neuroglancer_config.json",
             "annotation_viz": (
                 "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute"
             ),

@@ -89,7 +89,7 @@ class KeyImageImporter(BaseImporter):
         return preview, data.shape[-1]
 
     def get_file_name(self, image_type: str) -> str:
-        tomogram_id = self.parents.get("tomogram").identifier
+        tomogram_id = self.get_tomogram().get_identifier()
         return f"{tomogram_id}-key-photo-{image_type}.png"
 
     @classmethod
