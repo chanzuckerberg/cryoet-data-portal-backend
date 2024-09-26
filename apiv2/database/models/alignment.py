@@ -45,12 +45,14 @@ class Alignment(Base):
         back_populates="alignment",
         uselist=True,
         foreign_keys="AnnotationFile.alignment_id",
+        cascade="all, delete-orphan",
     )
     per_section_alignments: Mapped[list[PerSectionAlignmentParameters]] = relationship(
         "PerSectionAlignmentParameters",
         back_populates="alignment",
         uselist=True,
         foreign_keys="PerSectionAlignmentParameters.alignment_id",
+        cascade="all, delete-orphan",
     )
     deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=True, index=True)
     deposition: Mapped["Deposition"] = relationship(
@@ -69,6 +71,7 @@ class Alignment(Base):
         back_populates="alignment",
         uselist=True,
         foreign_keys="Tomogram.alignment_id",
+        cascade="all, delete-orphan",
     )
     run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=True, index=True)
     run: Mapped["Run"] = relationship(

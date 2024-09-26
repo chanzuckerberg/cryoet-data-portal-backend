@@ -49,8 +49,9 @@ class Tomogram(Base):
         back_populates="tomogram",
         uselist=True,
         foreign_keys="TomogramAuthor.tomogram_id",
+        cascade="all, delete-orphan",
     )
-    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=True, index=True)
+    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=False, index=True)
     deposition: Mapped["Deposition"] = relationship(
         "Deposition",
         foreign_keys=deposition_id,

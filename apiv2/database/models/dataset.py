@@ -37,7 +37,7 @@ class Dataset(Base):
     __tablename__ = "dataset"
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
-    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=True, index=True)
+    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=False, index=True)
     deposition: Mapped["Deposition"] = relationship(
         "Deposition",
         foreign_keys=deposition_id,
@@ -48,18 +48,17 @@ class Dataset(Base):
         back_populates="dataset",
         uselist=True,
         foreign_keys="DatasetFunding.dataset_id",
+        cascade="all, delete-orphan",
     )
     authors: Mapped[list[DatasetAuthor]] = relationship(
         "DatasetAuthor",
         back_populates="dataset",
         uselist=True,
         foreign_keys="DatasetAuthor.dataset_id",
+        cascade="all, delete-orphan",
     )
     runs: Mapped[list[Run]] = relationship(
-        "Run",
-        back_populates="dataset",
-        uselist=True,
-        foreign_keys="Run.dataset_id",
+        "Run", back_populates="dataset", uselist=True, foreign_keys="Run.dataset_id", cascade="all, delete-orphan",
     )
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)

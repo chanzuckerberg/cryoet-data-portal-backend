@@ -11,21 +11,21 @@ import strawberry
 
 
 @strawberry.enum
-class annotation_file_source_enum(enum.Enum):
+class annotation_file_source_enum(enum.StrEnum):
     dataset_author = "dataset_author"
     community = "community"
     portal_standard = "portal_standard"
 
 
 @strawberry.enum
-class annotation_method_type_enum(enum.Enum):
+class annotation_method_type_enum(enum.StrEnum):
     manual = "manual"
     automated = "automated"
     hybrid = "hybrid"
 
 
 @strawberry.enum
-class annotation_file_shape_type_enum(enum.Enum):
+class annotation_file_shape_type_enum(enum.StrEnum):
     SegmentationMask = "SegmentationMask"
     OrientedPoint = "OrientedPoint"
     Point = "Point"
@@ -34,7 +34,7 @@ class annotation_file_shape_type_enum(enum.Enum):
 
 
 @strawberry.enum
-class annotation_method_link_type_enum(enum.Enum):
+class annotation_method_link_type_enum(enum.StrEnum):
     documentation = "documentation"
     models_weights = "models_weights"
     other = "other"
@@ -43,14 +43,14 @@ class annotation_method_link_type_enum(enum.Enum):
 
 
 @strawberry.enum
-class deposition_types_enum(enum.Enum):
+class deposition_types_enum(enum.StrEnum):
     annotation = "annotation"
     dataset = "dataset"
     tomogram = "tomogram"
 
 
 @strawberry.enum
-class sample_type_enum(enum.Enum):
+class sample_type_enum(enum.StrEnum):
     cell = "cell"
     tissue = "tissue"
     organism = "organism"
@@ -62,7 +62,7 @@ class sample_type_enum(enum.Enum):
 
 
 @strawberry.enum
-class tiltseries_camera_acquire_mode_enum(enum.Enum):
+class tiltseries_camera_acquire_mode_enum(enum.StrEnum):
     counting = "counting"
     superresolution = "superresolution"
     linear = "linear"
@@ -70,7 +70,7 @@ class tiltseries_camera_acquire_mode_enum(enum.Enum):
 
 
 @strawberry.enum
-class tiltseries_microscope_manufacturer_enum(enum.Enum):
+class tiltseries_microscope_manufacturer_enum(enum.StrEnum):
     FEI = "FEI"
     TFS = "TFS"
     JEOL = "JEOL"
@@ -78,20 +78,20 @@ class tiltseries_microscope_manufacturer_enum(enum.Enum):
 
 
 @strawberry.enum
-class fiducial_alignment_status_enum(enum.Enum):
+class fiducial_alignment_status_enum(enum.StrEnum):
     FIDUCIAL = "FIDUCIAL"
     NON_FIDUCIAL = "NON_FIDUCIAL"
 
 
 @strawberry.enum
-class tomogram_processing_enum(enum.Enum):
+class tomogram_processing_enum(enum.StrEnum):
     denoised = "denoised"
     filtered = "filtered"
     raw = "raw"
 
 
 @strawberry.enum
-class tomogram_reconstruction_method_enum(enum.Enum):
+class tomogram_reconstruction_method_enum(enum.StrEnum):
     SART = "SART"
     Fourier_Space = "Fourier_Space"
     SIRT = "SIRT"
@@ -100,6 +100,6 @@ class tomogram_reconstruction_method_enum(enum.Enum):
 
 
 @strawberry.enum
-class alignment_type_enum(enum.Enum):
+class alignment_type_enum(enum.StrEnum):
     LOCAL = "LOCAL"
     GLOBAL = "GLOBAL"
