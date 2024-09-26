@@ -90,8 +90,10 @@ def populate_deposition_authors(session: sa.orm.Session) -> DepositionAuthor:
 @write_data
 def populate_dataset(session: sa.orm.Session) -> Dataset:
     today = datetime.now().date()
+    populate_deposition(session)
     return Dataset(
         id=DATASET_ID,
+        deposition_id=DEPOSITION_ID1,
         title="foo",
         description="bar",
         deposition_date=today,
@@ -106,11 +108,13 @@ def populate_dataset(session: sa.orm.Session) -> Dataset:
 
 @write_data
 def populate_dataset_authors(session: sa.orm.Session) -> DatasetAuthor:
+    """`populate_dataset` must be called **before** calling this method!"""
     return DatasetAuthor(id=DATASET_AUTHOR_ID, dataset_id=DATASET_ID, name="Virginia Woolf", author_list_order=3)
 
 
 @write_data
 def populate_stale_dataset_authors(session: sa.orm.Session) -> DatasetAuthor:
+    """`populate_dataset` must be called **before** calling this method!"""
     return DatasetAuthor(dataset_id=DATASET_ID, name="Stale Author", author_list_order=1)
 
 
@@ -208,6 +212,7 @@ def populate_stale_tomogram_voxel_spacing(session: sa.orm.Session, run_id: int =
     session.add(stale_voxel_spacing)
     stale_tomogram = Tomogram(
         tomogram_voxel_spacing_id=stale_voxel_spacing.id,
+        deposition_id=DEPOSITION_ID1,
         name="RUN1",
         voxel_spacing=10.345,
         s3_omezarr_dir="s3://stale.zarr",
@@ -257,6 +262,7 @@ def populate_tomograms(session: sa.orm.Session) -> Tomogram:
     populate_tomogram_voxel_spacing(session)
     return Tomogram(
         id=TOMOGRAM_ID,
+        deposition_id=DEPOSITION_ID1,
         tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
         name="RUN1",
         voxel_spacing=12.3,
@@ -286,6 +292,7 @@ def populate_tomograms(session: sa.orm.Session) -> Tomogram:
 def populate_stale_tomograms(session: sa.orm.Session) -> Tomogram:
     return Tomogram(
         id=STALE_TOMOGRAM_ID,
+        deposition_id=DEPOSITION_ID1,
         tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID2,
         name="RUN1",
         voxel_spacing=12.3,
