@@ -220,7 +220,6 @@ def update_file(filename: str) -> None:
     if not data.get("version"):
         data["version"] = "0.0.0"
 
-    # get the current version do determine where to start upgrading
     for version, update_func in VERSION_MAP.items():
         if convert_version(data["version"]) == version:
             data = update_func(data)
