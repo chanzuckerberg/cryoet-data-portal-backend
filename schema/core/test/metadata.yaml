@@ -1,0 +1,13 @@
+classes:
+  Foo:
+    attributes:
+      bar:
+        any_of:
+          - exact_mappings: bar_attribute
+          - range: cdp-common:FloatFormattedString
+      ifabsent: 'float(1)'
+
+slots:
+  bar_attribute:
+    range: float
+    minimum_value: 0
