@@ -1,9 +1,11 @@
+import logging
 from collections import OrderedDict
 from typing import Any
 
 import click
 import yaml
 
+logger = logging.getLogger(__name__)
 
 @click.group()
 def cli():
@@ -213,29 +215,51 @@ def update_config_to_v1(data: dict[str, Any]) -> dict[str, Any]:
     return data
 
 
-def update_file(filename: str) -> None:
-    with open(filename, "r") as fh:
-        data = yaml.safe_load(fh.read())
+def update_config(data: dict[str, Any]) -> dict[str, Any]:
+    version_map = OrderedDict(
+        # Version_map must be updated when a new migration is needed.
+        # Order matters.
+        {
+            # current_version: (update_function, next_version)
+            "0.0.0": (update_config_to_v1, "1.0.0"),
+            "1.0.0": (update_config_to_v1_1, "1.1.0"),})
 
     if not data.get("version"):
+        logger.warning("No version found in config file. Assuming version 0.0.0.")
+        # The default version is 0.0.0
         data["version"] = "0.0.0"
+    initial_version = data["version"]
 
-    for version, update_func in VERSION_MAP.items():
-        if convert_version(data["version"]) == version:
+    for current_version, item in version_map.items():
+        update_func, result_version = item
+        if data["version"] == current_version:
             data = update_func(data)
+    logger.info(f"Updated config from {initial_version} to {result_version}")
+    return data
+
+
+def update_file(filename: str) -> None:
+    with open(filename, "r") as fh:
+        logger.debug(f"Reading {filename}")
+        data = yaml.safe_load(fh.read())
+
+    update_config(data)
 
     with open(filename, "w") as fh:
+        logger.debug(f"Writing {filename}")
         fh.write(yaml.dump(data))
+
 
 def update_config_to_v1_1(data: dict[str, Any]) -> dict[str, Any]:
     data["version"] = "1.1.0"
     return data
 
+
 def convert_version(version: str) -> tuple[int, int, int]:
     return tuple(map(int, version.split(".")))
 
 
-@cli.command(description="Upgrade a config file to the latest version.")
+@cli.command(help="Upgrade a config file to the latest version.")
 @click.argument("conf_file", required=True, type=str, nargs=-1)
 def upgrade(conf_file: list[str]) -> None:
     """
@@ -246,11 +270,3 @@ def upgrade(conf_file: list[str]) -> None:
     """
     for filename in conf_file:
         update_file(filename)
-
-
-VERSION_MAP = OrderedDict({(0,0,0): update_config_to_v1,
-                           (1,0,0): update_config_to_v1_1})
-
-
-if __name__ == "__main__":
-    cli()

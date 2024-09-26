@@ -10,7 +10,7 @@ from typing import Any, Callable, Optional, Union
 
 import click
 import yaml
-from transform_ingestion_configs import update_config
+from schema_migration.transform_ingestion_configs import update_config
 
 from common.fs import LocalFilesystem
 from common.normalize_fields import normalize_fiducial_alignment
