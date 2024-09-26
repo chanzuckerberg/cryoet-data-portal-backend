@@ -120,7 +120,7 @@ datasets:
       name: Jan Michael Schuller
     cell_strain:
       name: LKT-1
-    cross_references: &dataset_cross_references
+    cross_references: &id004
       publications: doi:10.1038/s41586-022-04971-z
       related_database_entries: EMPIAR-11058
     dataset_description: Cryo-electron tomograms of T. kivui of FIB-SEM lamella.
@@ -153,6 +153,7 @@ datasets:
 depositions:
 - metadata:
     authors: *id003
+    cross_references: *id004
     dates: *id002
     deposition_description: Cryo-electron tomograms of T. kivui FIB-SEM lamellas,
       including annotations of membrane-anchored hydrogen-dependent CO2 reductase
@@ -160,7 +161,6 @@ depositions:
     deposition_identifier: 10008
     deposition_title: Membrane-anchored Hydrogen-dependent CO2 reductase nanowires
       in T. kivui
-    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
     - annotation
@@ -172,11 +172,6 @@ frames:
 - sources:
   - source_glob:
       list_glob: tomo/raw_stacks/{mapped_ts_name}/frames/*{mapped_frame_name}_*.tif
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 runs:
 - sources:
   - source_glob:
@@ -254,6 +249,7 @@ tomograms:
   - source_glob:
       list_glob: tomo/bin4_denoised/{run_name}.rec
       match_regex: .*
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

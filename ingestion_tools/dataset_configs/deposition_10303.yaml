@@ -7,16 +7,6 @@ annotations:
       id: GO:0016020
       name: membrane
     annotation_publications: 10.1101/2024.01.05.574336
-    method_links:
-      - link: https://github.com/teamtomo/membrain-seg
-        link_type: source_code
-        custom_name: membrain-seg on GitHub
-      - link: https://pypi.org/project/membrain-seg/
-        link_type: other
-        custom_name: membrain-seg on PyPI
-      - link: https://github.com/uermel/remotebrain
-        link_type: source_code
-        custom_name: remotebrain on GitHub
     annotation_software: membrain-seg 0.0.1
     authors: &id001
     - ORCID: 0000-0003-4685-037X
@@ -33,6 +23,16 @@ annotations:
       release_date: '2024-05-20'
     ground_truth_status: false
     is_curator_recommended: false
+    method_links:
+    - custom_name: membrain-seg on GitHub
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    - custom_name: membrain-seg on PyPI
+      link: https://pypi.org/project/membrain-seg/
+      link_type: other
+    - custom_name: remotebrain on GitHub
+      link: https://github.com/uermel/remotebrain
+      link_type: source_code
     method_type: automated
     version: 1.0
   sources:
@@ -60,13 +60,13 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
+    cross_references:
+      publications: 10.1101/2024.01.05.574336
     dates: *id002
     deposition_description: Membrane segmentations predicted using membrain-seg without
       rescaling and weights MemBrain_seg_v10_alpha.ckpt
     deposition_identifier: 10303
     deposition_title: membrain-seg membrane predictions
-    cross_references:
-      publications: 10.1101/2024.01.05.574336
     deposition_types:
     - annotation
   sources:
@@ -82,6 +82,7 @@ runs:
 standardization_config:
   deposition_id: 10303
   source_prefix: membrain/outputs/
+version: 1.1.0
 voxel_spacings:
 - sources:
   - destination_glob:

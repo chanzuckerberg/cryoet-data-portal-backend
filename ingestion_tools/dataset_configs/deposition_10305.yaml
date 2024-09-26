@@ -54,6 +54,7 @@ runs:
 standardization_config:
   deposition_id: 10305
   source_prefix: braxton_owens_05_2024/d1_t4p_common
+version: 1.1.0
 voxel_spacings:
 - sources:
   - destination_glob:

@@ -8,6 +8,7 @@ alignments:
       - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.tlt
       - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.com
       - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.xtilt
+      - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.com
 annotations:
 - metadata:
     annotation_method: Manually annotate 5 slices of object of interest on 8X binned
@@ -645,6 +646,7 @@ tomograms:
   - source_glob:
       list_glob: Data_Set_3/{run_name}/tomo_rec_4bin_SART/*.mrc
       match_regex: (.*)\.mrc
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

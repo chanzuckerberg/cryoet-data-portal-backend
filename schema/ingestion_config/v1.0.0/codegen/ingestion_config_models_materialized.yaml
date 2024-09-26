@@ -644,7 +644,6 @@ slots:
     description: Include or exclude tomograms for a source.
     from_schema: cdp-ingestion-config
     domain_of:
-    - AlignmentParent
     - KeyImageParent
     range: string
     multivalued: true
@@ -849,6 +848,19 @@ classes:
         - Container
         range: TomogramEntity
         multivalued: true
+        inlined: true
+        inlined_as_list: true
+      version:
+        name: version
+        description: The version of the ingestion config.
+        from_schema: cdp-ingestion-config
+        alias: version
+        owner: Container
+        domain_of:
+        - Annotation
+        - Container
+        range: string
+        required: true
         inlined: true
         inlined_as_list: true
       voxel_spacings:
@@ -1396,7 +1408,6 @@ classes:
     - dataset
     - deposition
     - run
-    - tomogram
     attributes:
       dataset:
         name: dataset
@@ -1462,19 +1473,6 @@ classes:
         - TiltSeriesParent
         - TomogramParent
         - VoxelSpacingParent
-        range: string
-        multivalued: true
-        inlined: true
-        inlined_as_list: true
-      tomogram:
-        name: tomogram
-        description: Include or exclude tomograms for a source.
-        from_schema: cdp-ingestion-config
-        alias: tomogram
-        owner: AlignmentParent
-        domain_of:
-        - AlignmentParent
-        - KeyImageParent
         range: string
         multivalued: true
         inlined: true
@@ -3784,7 +3782,6 @@ classes:
         alias: tomogram
         owner: KeyImageParent
         domain_of:
-        - AlignmentParent
         - KeyImageParent
         range: string
         multivalued: true

@@ -310,6 +310,7 @@ tomograms:
   - source_glob:
       list_glob: tomograms_bin8/{run_name}_binalign8.rec
       match_regex: (.*)\.rec
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

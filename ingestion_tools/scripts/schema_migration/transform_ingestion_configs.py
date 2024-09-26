@@ -1,8 +1,13 @@
+import json
+import logging
+from collections import OrderedDict
 from typing import Any
 
 import click
-import numpy as np
+import migrate_v1_1_0
 import yaml
+
+logger = logging.getLogger(__name__)
 
 
 @click.group()
@@ -36,67 +41,9 @@ def has_no_sources(data: list[dict[str, Any]] | dict[str, Any]) -> bool:
     return isinstance(data, dict) or not any(row.get("sources") for row in data)
 
 
-def rawtilts_to_alignments(data: dict) -> None:
-    list_globs = []
-    format_dict = {
-        "IMOD": [],
-        "ARETOMO3": [],
-    }
-
-    IMOD_ext = ['.tlt', ".xf", "tilt.com", "news.com", ".xtilt"]
-    AreTomo3_ext = ['.aln', ".txt", ".csv"]
-    extensions = IMOD_ext + AreTomo3_ext
-
-    def valid_file(file):
-        return any(file.endswith(ext) for ext in extensions)
-
-    def get_format(file):
-        if any(file.endswith(ext) for ext in IMOD_ext):
-            format_dict["IMOD"].append(file)
-        elif any(file.endswith(ext) for ext in AreTomo3_ext):
-            format_dict["ARETOMO3"].append(file)
-
-    if len(data.get('tomograms', [])) > 1 or len(data.get("rawtilts", [])) > 1:
-        raise ValueError("More than one tomogram or rawtilt")
-
-    if 'rawtilts' in data:
-        for i in data['rawtilts']:
-            if "sources" not in i:
-                continue
-            old_source = i["sources"][0]["source_multi_glob"]["list_globs"]
-            list_globs.extend(s for s in old_source if valid_file(s))
-            for source in list_globs:
-                old_source.remove(source)
-                get_format(source)
-        if list_globs:
-            if 'alignments' not in data:
-                data['alignments'] = []
-            for key, files in format_dict.items():
-                if files:
-                    # check if there is an alignment with the key in the metadata.format
-                    alignment = [a for a in data.get("alignments", []) if a["metadata"]["format"] == key]
-                    if alignment:
-                        alignment = alignment.pop()
-                        alignment["sources"][0]["source_multi_glob"]["list_globs"].extend(files)
-                    else:
-                        alignment = {
-                            "metadata": {"format": key},
-                            "sources": [{"source_multi_glob": {"list_globs": files}}]}
-                        data["alignments"].append(alignment)
-                    if 'tomograms' in data:
-                        for i in data['tomograms']:
-                            if "metadata" not in i:
-                                continue
-                            affine_transformation_matrix = i["metadata"].get("affine_transformation_matrix", None)
-                            if affine_transformation_matrix and np.allclose(affine_transformation_matrix,np.eye(4)):
-                                # skip if is an idenity matrix
-                                continue
-                            if affine_transformation_matrix:
-                                alignment["metadata"]["affine_transformation_matrix"] = affine_transformation_matrix
-
-
-def update_config(data: dict[str, Any]) -> dict[str, Any]:
+def update_config_to_v1(data: dict[str, Any]) -> dict[str, Any]:
     standardization_config = data["standardization_config"]
+    data["version"] = "1.0.0"
     if data.get("overrides_by_run"):
         # We only have two datasets that specify overrides. It's easier to just
         # translate these manually than deal with automating it.
@@ -271,22 +218,62 @@ def update_config(data: dict[str, Any]) -> dict[str, Any]:
     return data
 
 
+def update_config(data: dict[str, Any]) -> dict[str, Any]:
+    version_map = OrderedDict(
+        # Version_map must be updated when a new migration is needed.
+        # Order matters.
+        {
+            # current_version: (update_function, next_version)
+            "0.0.0": (update_config_to_v1, "1.0.0"),
+            "1.0.0": (migrate_v1_1_0.upgrade, "1.1.0")})
+
+    if not data.get("version"):
+        logger.warning("No version found in config file. Assuming version 0.0.0.")
+        # The default version is 0.0.0
+        data["version"] = "0.0.0"
+    initial_version = data["version"]
+
+    for current_version, item in version_map.items():
+        update_func, result_version = item
+        if data["version"] == current_version:
+            data = update_func(data)
+    logger.info("Updated config from %s to %s", initial_version, result_version)
+    return data
+
+
+def has_changes(file, config):
+    with open(file, 'r') as file:
+        old_config = yaml.safe_load(file)
+    return json.dumps(old_config) != json.dumps(config)
+
+
 def update_file(filename: str) -> None:
     with open(filename, "r") as fh:
+        logger.debug("Reading %s", filename)
         data = yaml.safe_load(fh.read())
 
-    data = update_config(data)
+    update_config(data)
+
+    if not has_changes(filename, data):
+        return
 
     with open(filename, "w") as fh:
+        logger.debug("Writing %s", filename)
         fh.write(yaml.dump(data))
 
 
-@cli.command()
+def convert_version(version: str) -> tuple[int, int, int]:
+    return tuple(map(int, version.split(".")))
+
+
+@cli.command(help="Upgrade a config file to the latest version.")
 @click.argument("conf_file", required=True, type=str, nargs=-1)
 def upgrade(conf_file: list[str]) -> None:
+    """
+
+    To add a new version upgrade function, add a new function that takes the data
+    dictionary and returns the updated data dictionary. Then add the function to
+    the VERSION_MAP dictionary with the key being the version to upgrade from.
+    """
     for filename in conf_file:
         update_file(filename)
-
-
-if __name__ == "__main__":
-    cli()

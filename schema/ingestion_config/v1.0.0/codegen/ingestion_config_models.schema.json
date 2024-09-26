@@ -211,16 +211,6 @@
                         "array",
                         "null"
                     ]
-                },
-                "tomogram": {
-                    "description": "Include or exclude tomograms for a source.",
-                    "items": {
-                        "type": "string"
-                    },
-                    "type": [
-                        "array",
-                        "null"
-                    ]
                 }
             },
             "title": "AlignmentParent",
@@ -1834,6 +1824,10 @@
                         "null"
                     ]
                 },
+                "version": {
+                    "description": "The version of the ingestion config.",
+                    "type": "string"
+                },
                 "voxel_spacings": {
                     "description": "A voxel spacing entity.",
                     "items": {
@@ -1848,6 +1842,7 @@
                 "depositions",
                 "runs",
                 "standardization_config",
+                "version",
                 "voxel_spacings"
             ],
             "title": "Container",
@@ -5350,6 +5345,10 @@
                 "null"
             ]
         },
+        "version": {
+            "description": "The version of the ingestion config.",
+            "type": "string"
+        },
         "voxel_spacings": {
             "description": "A voxel spacing entity.",
             "items": {
@@ -5364,6 +5363,7 @@
         "depositions",
         "runs",
         "standardization_config",
+        "version",
         "voxel_spacings"
     ],
     "title": "cdp-ingestion-config",

@@ -35,7 +35,7 @@ datasets:
     cell_type:
       id: CL:0000010
       name: cultured cell
-    cross_references: &dataset_cross_references
+    cross_references: &id002
       publications: 10.1101/2024.06.27.600657
     dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
       contains 10 grids. This is grid 1 of 10 and contains basal membranes of HSC3
@@ -45,7 +45,7 @@ datasets:
       with 0.7 bar of paraformaldehyde prior to vitrification.
     dataset_identifier: 10426
     dataset_title: Unroofing Grid01
-    dates: &id002
+    dates: &id003
       deposition_date: '2024-07-01'
       last_modified_date: '2024-07-01'
       release_date: '2024-07-05'
@@ -71,13 +71,13 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
-    dates: *id002
+    cross_references: *id002
+    dates: *id003
     deposition_description: Cryo-electron tomography datasets used in the development
       and evaluation of the unroofing method for preparation of plasma membranes and
       associated proteins.
     deposition_identifier: 10306
     deposition_title: Unroofed eukaryotic cells.
-    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
   sources:
@@ -150,7 +150,7 @@ tomograms:
       - 1
     authors: *id001
     ctf_corrected: false
-    dates: *id002
+    dates: *id003
     fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
     offset:
@@ -166,6 +166,7 @@ tomograms:
   - source_glob:
       list_glob: tomograms_bin8/{run_name}_binalign8.rec
       match_regex: (.*)\.rec
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:
