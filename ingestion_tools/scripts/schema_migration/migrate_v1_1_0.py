@@ -1,11 +1,4 @@
-"""
-This script migrates the ingest config files to a new schema based on the changes outlines in
-https://github.com/chanzuckerberg/cryoet-data-portal/issues/997
-"""
-import glob
-import itertools
 import json
-import traceback
 from typing import Union
 
 import numpy as np
@@ -37,17 +30,17 @@ def rawtilts_to_alignments(data: dict) -> None:
         "ARETOMO3": [],
     }
 
-    IMOD_ext = ['.tlt', ".xf", "tilt.com", "news.com", ".xtilt"]
-    AreTomo3_ext = ['.aln', ".txt", ".csv"]
-    extensions = IMOD_ext + AreTomo3_ext
+    imod_ext = ['.tlt', ".xf", ".com", ".xtilt"]
+    aretomo3_ext = ['.aln', ".txt", ".csv"]
+    extensions = imod_ext + aretomo3_ext
 
     def valid_file(file):
         return any(file.endswith(ext) for ext in extensions)
 
     def get_format(file):
-        if any(file.endswith(ext) for ext in IMOD_ext):
+        if any(file.endswith(ext) for ext in imod_ext):
             format_dict["IMOD"].append(file)
-        elif any(file.endswith(ext) for ext in AreTomo3_ext):
+        elif any(file.endswith(ext) for ext in aretomo3_ext):
             format_dict["ARETOMO3"].append(file)
 
     if len(data.get('tomograms', [])) > 1 or len(data.get("rawtilts", [])) > 1:
@@ -169,47 +162,15 @@ def has_changes(file, config):
     return json.dumps(old_config) != json.dumps(config)
 
 
-def migrate_config(file_path):
-    with open(file_path, 'r') as file:
-        try:
-            config = yaml.safe_load(file)
-        except yaml.YAMLError as e:
-            print(f"Error in {get_relative_path(file_path)}: {e}")
-            return
-
-    try:
-        rawtilts_to_collection_metadata(config)
-        rawtilts_to_alignments(config)
-        update_tomogram_metadata(config)
-        check_deposition(config)
-        update_annotation_sources(config)
-        remove_empty_fields(config)
-    except Exception as e:
-        print(f"Error in {get_relative_path(file_path)}: missing {e}")
-        print(traceback.format_exc())
-        return
-
-    if has_changes(file_path, config):
-        relative_path = file_path[file_path.find("cryoet-data-portal-backend"):]
-        print(f"modified: {relative_path}")
-        with open(file_path, 'w') as file:
-            yaml.safe_dump(config, file)
+def upgrade(config: dict) -> dict:
+    rawtilts_to_collection_metadata(config)
+    rawtilts_to_alignments(config)
+    update_tomogram_metadata(config)
+    check_deposition(config)
+    update_annotation_sources(config)
+    remove_empty_fields(config)
+    config["version"] = "1.1.0"
+    return config
 
 
-def get_relative_path(file_path):
-    return file_path[file_path.find("cryoet-data-portal-backend"):]
 
-
-if __name__ == "__main__":
-    # Update all config files
-    config_files = glob.glob(
-        '/Users/trentsmith/workspace/cryoet/cryoet-data-portal-backend/ingestion_tools/dataset_configs/**/*.yaml',
-        recursive=True)
-    test_config_files = glob.glob(
-        '/Users/trentsmith/workspace/cryoet/cryoet-data-portal-backend/ingestion_tools/dataset_configs/tests/**/*.yaml',
-        recursive=True)
-    configs = itertools.chain(config_files, test_config_files)
-    for config_file in configs:
-        if "template" in config_file:
-            continue
-        migrate_config(config_file)

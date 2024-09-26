@@ -505,17 +505,10 @@ depositions:
   - literal:
       value:
       - 10307
-frames: []
-gains: []
 key_images:
 - sources:
   - source_glob:
       list_glob: .*\.jpg
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - Data_Set_4/{run_name}/tilt_series/*.txt
 runs:
 - sources:
   - source_glob:

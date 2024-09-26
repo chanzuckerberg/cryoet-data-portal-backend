@@ -187,11 +187,6 @@ gains:
 - sources:
   - source_glob:
       list_glob: CountRef_{mapped_frame_name}-range.dm4
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - metadata/{run_name}_sq_df_sorted_fid.xf
 runs:
 - sources:
   - source_glob:

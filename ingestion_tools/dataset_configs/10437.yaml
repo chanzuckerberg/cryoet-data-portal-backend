@@ -8,6 +8,7 @@ alignments:
       - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.tlt
       - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.com
       - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.xtilt
+      - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.com
 annotations:
 - metadata:
     annotation_method: Manually annotate 5 slices of object of interest on 8X binned
@@ -553,10 +554,6 @@ rawtilts:
   - source_multi_glob:
       list_globs:
       - Data_Set_3/{run_name}/tilt_series/*.mrc.rawtlt
-      - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.xf
-      - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.xtilt
-      - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.tlt
-      - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.com
 runs:
 - sources:
   - source_glob:

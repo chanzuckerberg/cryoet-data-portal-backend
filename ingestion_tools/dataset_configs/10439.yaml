@@ -264,8 +264,6 @@ depositions:
   - literal:
       value:
       - 10309
-frames: []
-gains: []
 key_images:
 - sources:
   - source_glob:

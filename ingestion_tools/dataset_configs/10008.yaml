@@ -172,12 +172,6 @@ frames:
 - sources:
   - source_glob:
       list_glob: tomo/raw_stacks/{mapped_ts_name}/frames/*{mapped_frame_name}_*.tif
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.tlt
-      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.xf
 runs:
 - sources:
   - source_glob:

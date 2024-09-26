@@ -167,12 +167,6 @@ gains:
 - sources:
   - source_glob:
       list_glob: gain/gain.mrc
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/{run_name}.mdoc-dose_filt.tlt'
-      - '{run_name}/{run_name}.mdoc-dose_filt.xf'
 runs:
 - sources:
   - source_glob:
