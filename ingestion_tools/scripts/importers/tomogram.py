@@ -7,7 +7,6 @@ from common.id_helper import IdentifierHelper
 from common.image import VolumeInfo, get_volume_info
 from common.metadata import TomoMetadata
 from common.normalize_fields import normalize_fiducial_alignment
-from importers.alignment import AlignmentImporter
 from importers.base_importer import VolumeImporter
 from importers.key_image import KeyImageImporter
 
@@ -58,7 +57,7 @@ class TomogramImporter(VolumeImporter):
         path: str,
         parents: dict[str, Any],
     ):
-        super().__init__(config, metadata, name, path, parents)
+        super().__init__(config=config, metadata=metadata, name=name, path=path, parents=parents)
         self.alignment_metadata_path = self.get_alignment_metadata_path()
         self.identifier = TomogramIdentifierHelper.get_identifier(
             config,
@@ -74,9 +73,15 @@ class TomogramImporter(VolumeImporter):
             voxel_spacing=self.get_voxel_spacing().as_float(),
         )
 
+    def dir_path(self) -> str:
+        output_dir = self.config.resolve_output_path(self.type_key, self)
+        return os.path.join(output_dir, f"{self.identifier}")
+
     def get_output_path(self) -> str:
-        output_dir = super().get_output_path()
-        return os.path.join(output_dir, f"{self.identifier}-{self.get_run().name}")
+        return f"{self.dir_path()}-{self.get_run().name}"
+
+    def get_metadata_path(self) -> str:
+        return f"{self.dir_path()}-tomogram_metadata.json"
 
     def import_metadata(self) -> None:
         dest_tomo_metadata = self.get_metadata_path()
@@ -96,11 +101,15 @@ class TomogramImporter(VolumeImporter):
         )
         merge_data["alignment_metadata_path"] = self.alignment_metadata_path
         metadata = TomoMetadata(self.config.fs, self.get_deposition().name, base_metadata)
-        # TODO: Update the metadata path to include identifier
         metadata.write_metadata(dest_tomo_metadata, merge_data)
 
     def get_source_volume_info(self) -> VolumeInfo:
         return get_volume_info(self.config.fs, self.volume_filename)
 
     def get_alignment_metadata_path(self) -> str:
-        return AlignmentImporter.finder(self.config, **self.parents).get_metadata_path()
+        from importers.alignment import AlignmentImporter
+
+        for alignment in AlignmentImporter.finder(self.config, **self.parents):
+            return alignment.get_metadata_path()
+        # TODO: This should be an error, but we need to fix the data first.
+        return None
