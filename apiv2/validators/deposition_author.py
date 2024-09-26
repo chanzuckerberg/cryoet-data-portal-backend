@@ -17,7 +17,7 @@ from typing_extensions import Annotated
 class DepositionAuthorCreateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
-    deposition_id: Annotated[uuid.UUID | None, Field()]
+    deposition_id: Annotated[uuid.UUID, Field()]
     id: Annotated[int, Field()]
     author_list_order: Annotated[int, Field()]
     orcid: Annotated[

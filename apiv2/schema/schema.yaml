@@ -1093,6 +1093,7 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.datasets
         range: Deposition
+        required: true
       funding_sources:
         name: funding_sources
         description: Information about how a dataset was funded
@@ -1331,6 +1332,7 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.authors
         range: Deposition
+        required: true
   Deposition:
     name: Deposition
     annotations:
@@ -1483,6 +1485,7 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.deposition_types
         range: Deposition
+        required: true
       type:
         name: type
         from_schema: cdp-dataset-config
@@ -2284,6 +2287,7 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.tomograms
         range: Deposition
+        required: true
       run:
         name: run
         from_schema: cdp-dataset-config
