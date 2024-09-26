@@ -222,7 +222,7 @@ def update_config(data: dict[str, Any]) -> dict[str, Any]:
         {
             # current_version: (update_function, next_version)
             "0.0.0": (update_config_to_v1, "1.0.0"),
-            "1.0.0": (update_config_to_v1_1, "1.1.0"),})
+            "1.0.0": (update_config_to_v1_1, "1.1.0")})
 
     if not data.get("version"):
         logger.warning("No version found in config file. Assuming version 0.0.0.")
@@ -234,19 +234,19 @@ def update_config(data: dict[str, Any]) -> dict[str, Any]:
         update_func, result_version = item
         if data["version"] == current_version:
             data = update_func(data)
-    logger.info(f"Updated config from {initial_version} to {result_version}")
+    logger.info("Updated config from %s to %s", initial_version, result_version)
     return data
 
 
 def update_file(filename: str) -> None:
     with open(filename, "r") as fh:
-        logger.debug(f"Reading {filename}")
+        logger.debug("Reading %s", filename)
         data = yaml.safe_load(fh.read())
 
     update_config(data)
 
     with open(filename, "w") as fh:
-        logger.debug(f"Writing {filename}")
+        logger.debug("Writing %s", filename)
         fh.write(yaml.dump(data))
 
 
