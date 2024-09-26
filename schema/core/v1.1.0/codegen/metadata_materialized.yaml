@@ -2598,20 +2598,6 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-      is_portal_standard:
-        name: is_portal_standard
-        description: Whether the tomogram is a portal standard.
-        from_schema: metadata
-        ifabsent: 'False'
-        alias: is_portal_standard
-        owner: Tomogram
-        domain_of:
-        - Tomogram
-        - AnnotationSourceFile
-        range: boolean
-        required: false
-        inlined: true
-        inlined_as_list: true
       is_visualization_default:
         name: is_visualization_default
         description: Whether the tomogram is the default for visualization.
@@ -2927,7 +2913,6 @@ classes:
         alias: is_portal_standard
         owner: AnnotationSourceFile
         domain_of:
-        - Tomogram
         - AnnotationSourceFile
         range: boolean
         required: false
@@ -3058,7 +3043,6 @@ classes:
         alias: is_portal_standard
         owner: AnnotationOrientedPointFile
         domain_of:
-        - Tomogram
         - AnnotationSourceFile
         range: boolean
         required: false
@@ -3189,7 +3173,6 @@ classes:
         alias: is_portal_standard
         owner: AnnotationInstanceSegmentationFile
         domain_of:
-        - Tomogram
         - AnnotationSourceFile
         range: boolean
         required: false
@@ -3319,7 +3302,6 @@ classes:
         alias: is_portal_standard
         owner: AnnotationPointFile
         domain_of:
-        - Tomogram
         - AnnotationSourceFile
         range: boolean
         required: false
@@ -3404,7 +3386,6 @@ classes:
         alias: is_portal_standard
         owner: AnnotationSegmentationMaskFile
         domain_of:
-        - Tomogram
         - AnnotationSourceFile
         range: boolean
         required: false
@@ -3503,7 +3484,6 @@ classes:
         alias: is_portal_standard
         owner: AnnotationSemanticSegmentationMaskFile
         domain_of:
-        - Tomogram
         - AnnotationSourceFile
         range: boolean
         required: false
@@ -3604,7 +3584,6 @@ classes:
         alias: is_portal_standard
         owner: AnnotationTriangularMeshFile
         domain_of:
-        - Tomogram
         - AnnotationSourceFile
         range: boolean
         required: false
@@ -3725,7 +3704,6 @@ classes:
         alias: is_portal_standard
         owner: AnnotationTriangularMeshGroupFile
         domain_of:
-        - Tomogram
         - AnnotationSourceFile
         range: boolean
         required: false
