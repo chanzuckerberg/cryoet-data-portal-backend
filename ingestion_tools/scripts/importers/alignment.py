@@ -7,6 +7,7 @@ from common.finders import MultiSourceFileFinder
 from common.id_helper import IdentifierHelper
 from common.metadata import AlignmentMetadata
 from importers.base_importer import BaseFileImporter
+from importers.voxel_spacing import VoxelSpacingImporter
 
 if TYPE_CHECKING:
     TomogramImporter = "TomogramImporter"
@@ -120,21 +121,25 @@ class AlignmentImporter(BaseFileImporter):
         return extra_metadata
 
     def get_tomogram_volume_dimension(self) -> dict:
-        for tomogram in TomogramImporter.finder(self.config, **self.parents):
-            return tomogram.get_source_volume_info().get_dimensions()
-
-        # If no source tomogram is found don't create a default alignment metadata file.
-        raise IOError("No source tomogram found for creating default alignment")
+        tomogram = self.get_tomogram()
+        if not tomogram:
+            # If no source tomogram is found don't create a default alignment metadata file.
+            raise IOError("No source tomogram found for creating default alignment")
+        return tomogram.get_source_volume_info().get_dimensions()
 
     def is_default_alignment(self) -> bool:
         return "default" in self.file_paths
 
     def is_valid(self) -> bool:
         volume_dim = self.metadata.get("volume_dimension", {})
-        return (
-            all(volume_dim.get(dim) for dim in "xyz")
-            or next(TomogramImporter.finder(self.config, **self.parents), None) is not None
-        )
+        return all(volume_dim.get(dim) for dim in "xyz") or self.get_tomogram() is not None
+
+    def get_tomogram(self) -> TomogramImporter | None:
+        for voxel_spacing in VoxelSpacingImporter.finder(self.config, **self.parents):
+            parents = {**self.parents, "voxel_spacing": voxel_spacing}
+            for tomogram in TomogramImporter.finder(self.config, **parents):
+                return tomogram
+        return None
 
     @classmethod
     def get_default_config(cls) -> list[dict]:
