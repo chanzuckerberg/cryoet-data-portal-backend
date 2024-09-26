@@ -28,7 +28,7 @@ httpx = "^0.24.1"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-fastapi = "^0.110.0"
+fastapi = "^0.115.0"
 # biopython 1.83 fails installation on m1 macs. The issue is fixed upstream so we're pinning to a specific commit until the next release.
 biopython = { git = "https://github.com/biopython/biopython.git", rev = "e0731edc892b653dee10b1f68acf795086e6f3f0" }
 asyncpg = "^0.28.0"
@@ -48,7 +48,7 @@ linkml = "^1.5.7"
 strcase = "^1.0.0"
 linkml-runtime = "^1.6.0"
 sqlalchemy_utils = "^0.41.1"
-strawberry-graphql = "0.237.3"
+strawberry-graphql = "0.243.0"
 typer = "^0.12.3"
 libcst = "^1.4.0"
 

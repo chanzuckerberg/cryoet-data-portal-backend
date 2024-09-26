@@ -78,7 +78,7 @@ datasets:
     - ORCID: 0000-0001-6345-1907
       corresponding_author_status: true
       name: Ellen D. Zhong
-    cross_references: &dataset_cross_references
+    cross_references: &id003
       publications: doi:10.1101/2023.08.18.553799
       related_database_entries: EMPIAR-11658
     dataset_description: Cryo-electron tomograms of S.cerevisiae of plasma FIB-SEM
@@ -105,6 +105,7 @@ datasets:
 depositions:
 - metadata:
     authors: *id002
+    cross_references: *id003
     dates: *id001
     deposition_description: Cryo-electron tomograms of S.cerevisiae of plasma FIB-SEM
       lamella, including 80S ribosome annotations generated using crYOLO. This dataset
@@ -112,7 +113,6 @@ depositions:
       conformational landscape inside cells.
     deposition_identifier: 10007
     deposition_title: Saccharomyces cerevisiae cryo-FIB lamella tomograms
-    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
     - annotation
@@ -128,11 +128,6 @@ gains:
 - sources:
   - source_glob:
       list_glob: '{run_name}/*.gain'
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 rawtilts:
 - sources:
   - source_multi_glob:
@@ -153,21 +148,21 @@ tiltseries:
 - metadata:
     acceleration_voltage: 300000
     binning_from_frames: 4
-    camera: &id003
+    camera: &id004
       manufacturer: FEI
       model: FALCON IV
     data_acquisition_software: TEM Tomography 5
     is_aligned: false
-    microscope: &id004
+    microscope: &id005
       manufacturer: FEI
       model: TITAN KRIOS
-    microscope_optical_setup: &id005
+    microscope_optical_setup: &id006
       energy_filter: Selectris X
     pixel_spacing: 1.96
     related_empiar_entry: EMPIAR-11658
     spherical_aberration_constant: 2.7
     tilt_axis: -87
-    tilt_range: &id006
+    tilt_range: &id007
       max: 60
       min: -60
     tilt_series_quality: int {ts_quality_score}
@@ -185,22 +180,22 @@ tiltseries:
         - ^ay18112021_grid2_lamella5_position16$
         - ^ay18112021_gridX_lamella1_pos5$
         - ^ay18112021_gridX_lamella8_pos6$
-    source_glob: &id007
+    source_glob: &id008
       list_glob: '{run_name}/*.st'
       name_regex: (.*)
 - metadata:
     acceleration_voltage: 300000
     binning_from_frames: 4
-    camera: *id003
+    camera: *id004
     data_acquisition_software: TEM Tomography 5
     is_aligned: false
-    microscope: *id004
-    microscope_optical_setup: *id005
+    microscope: *id005
+    microscope_optical_setup: *id006
     pixel_spacing: 3.4
     related_empiar_entry: EMPIAR-11658
     spherical_aberration_constant: 2.7
     tilt_axis: -87
-    tilt_range: *id006
+    tilt_range: *id007
     tilt_series_quality: 5
     tilt_step: 3
     tilting_scheme: Dose symmetric from lamella pre-tilt
@@ -216,7 +211,7 @@ tiltseries:
         - ^ay18112021_grid2_lamella5_position16$
         - ^ay18112021_gridX_lamella1_pos5$
         - ^ay18112021_gridX_lamella8_pos6$
-    source_glob: *id007
+    source_glob: *id008
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -254,6 +249,7 @@ tomograms:
   - source_glob:
       list_glob: bin4_cryocare/{mapped_tomo_name}.rec
       match_regex: .*
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

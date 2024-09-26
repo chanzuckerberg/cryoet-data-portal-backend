@@ -264,6 +264,8 @@ depositions:
   - literal:
       value:
       - 10309
+frames: []
+gains: []
 key_images:
 - sources:
   - source_glob:
@@ -341,6 +343,7 @@ tomograms:
   sources:
   - source_glob:
       list_glob: '{run_name}/VoxelSpacing10.000/wbp.mrc'
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

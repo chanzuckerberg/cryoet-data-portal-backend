@@ -40,7 +40,6 @@ slots:
     multivalued: true
     range: string
 
-
 classes:
   # ============================================================================
   # Configuration file class (and its subclasses)
@@ -113,6 +112,10 @@ classes:
         description: Tomograms for the dataset.
         multivalued: true
         range: TomogramEntity
+      version:
+        description: The version of the ingestion config.
+        range: string
+        required: true
       voxel_spacings:
         description: Voxel spacings for the dataset.
         multivalued: true

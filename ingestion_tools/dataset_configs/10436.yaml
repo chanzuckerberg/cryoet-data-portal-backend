@@ -303,24 +303,95 @@ dataset_keyphotos:
       value:
         snapshot: cryoetportal-rawdatasets-dev/mahrukh_usmani_06_2024/Data_Set_1/snapshot.png
         thumbnail: cryoetportal-rawdatasets-dev/mahrukh_usmani_06_2024/Data_Set_1/thumbnail.png
+datasets:
+- metadata:
+    authors: &id003
+    - ORCID: 0000-0002-9479-3800
+      corresponding_author_status: true
+      name: Mahrukh Usmani
+      primary_author_status: true
+    - ORCID: 0000-0002-6050-2219
+      corresponding_author_status: true
+      name: Nicolas Coudray
+      primary_author_status: true
+    - ORCID: 0000-0002-7388-8907
+      name: Daija Bobe
+    - ORCID: 0000-0003-0188-9799
+      name: Mykhailo Kopylov
+    - ORCID: 0000-0002-2570-0404
+      corresponding_author_status: true
+      name: Damian C. Ekiert
+    - ORCID: 0000-0003-0624-6178
+      corresponding_author_status: true
+      name: Gira Bhabha
+    cell_strain:
+      name: ATCC-50506
+    cell_type:
+      id: CL:0002369
+      name: fungal spore
+    cross_references: &id004
+      publications: 10.1101/2024.07.13.603322
+      related_database_entries: EMD-45674, EMD-45671, EMD-45672, EMD-45673
+    dataset_description: This dataset contains raw frames, tilt series, tomogram reconstructions
+      and segmentations from Encephalitozoon intestinalis microsporidian spores. Samples
+      were cryo-FIB milled.
+    dataset_identifier: 10436
+    dataset_title: Cryo-ET datasets (1 and 2) of dormant microporidian spores from
+      Encephalitozoon intestinalis
+    dates: *id002
+    funding:
+    - funding_agency_name: American Heart Association
+      grant_id: '915749'
+    - funding_agency_name: Searle Scholars Program
+      grant_id: SSP-2018-2737
+    - funding_agency_name: NIH/NIAID
+      grant_id: R01AI147131
+    - funding_agency_name: The Pew Charitable Trusts
+      grant_id: PEW-00033055
+    - funding_agency_name: NIH Common Fund Transformative High Resolution Cryo-Electron
+        Microscopy program
+      grant_id: U24 GM129539
+    - funding_agency_name: Simons Foundation
+      grant_id: SF349247
+    - funding_agency_name: NY State Assembly
+    - funding_agency_name: NIH/NIGMS
+      grant_id: 9 P41 GM103310
+    - funding_agency_name: Irma T. Hirschl Career Scientist Award
+    grid_preparation: quantifoil 2/2 200mesh, ~20nm evaporated carbon, prepared using
+      waffle method
+    organism:
+      name: Encephalitozoon intestinalis
+      taxonomy_id: 58839
+    other_setup: Cryo-FIB milling
+    sample_preparation: 'E. intestinalis spores were purified from infected vero cells,
+      then ran over a discontinuous percoll gradient to separate out mature spores.
+      For details, (see manuscript: Cryo-ET reveals the in situ architecture of the
+      polar tube invasion apparatus from microsporidian parasites)'
+    sample_type: cell
+  sources:
+  - literal:
+      value:
+      - '10436'
 depositions:
-  - metadata:
-      authors: *id001
-      dates: *id002
-      deposition_description: This deposition contains three datasets of dormant microsporidian spores from
-        Encephalitozoon intestinalis and Encephalitozoon hellem. The datasets contain raw frames, tilt series, tomogram
-        reconstructions and segmentations. Samples were prepared using the waffle-method and cryo-FIB milled. A subset
-        of runs contains manual and manually curated annotations of spore organelles.
-      deposition_identifier: 10307
-      deposition_title: In situ architecture of the polar tube invasion apparatus from microsporidian parasites
-      cross_references: *dataset_cross_references
-      deposition_types:
-        - dataset
-        - annotation
-    sources:
-      - literal:
-          value:
-            - 10307
+- metadata:
+    authors: *id003
+    cross_references: *id004
+    dates: *id002
+    deposition_description: This deposition contains three datasets of dormant microsporidian
+      spores from Encephalitozoon intestinalis and Encephalitozoon hellem. The datasets
+      contain raw frames, tilt series, tomogram reconstructions and segmentations.
+      Samples were prepared using the waffle-method and cryo-FIB milled. A subset
+      of runs contains manual and manually curated annotations of spore organelles.
+    deposition_identifier: 10307
+    deposition_title: In situ architecture of the polar tube invasion apparatus from
+      microsporidian parasites
+    deposition_types:
+    - dataset
+    - annotation
+  sources:
+  - literal:
+      value:
+      - 10307
 frames:
 - sources:
   - source_glob:
@@ -340,6 +411,11 @@ rawtilts:
   - source_multi_glob:
       list_globs:
       - Data_Set_2/{run_name}/tilt_series/*.st.rawtlt
+      - Data_Set_2/{run_name}/aligned_tilt_series/*.st.aln
+      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.xf
+      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.xtilt
+      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.tlt
+      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.com
   - source_multi_glob:
       list_globs:
       - Data_Set_1/{run_name}/tilt_series/*.mrc.tlt
@@ -458,6 +534,7 @@ tomograms:
   - source_glob:
       list_glob: Data_Set_2/{run_name}/tomo_rec_4bin_SART/*.mrc
       match_regex: (.*)\.mrc
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

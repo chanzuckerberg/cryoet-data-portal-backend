@@ -505,10 +505,17 @@ depositions:
   - literal:
       value:
       - 10307
+frames: []
+gains: []
 key_images:
 - sources:
   - source_glob:
       list_glob: .*\.jpg
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - Data_Set_4/{run_name}/tilt_series/*.txt
 runs:
 - sources:
   - source_glob:
@@ -603,6 +610,7 @@ tomograms:
     source_glob:
       list_glob: Data_Set_4/{run_name}/Segmentation_Volumes/*.mrc
       match_regex: (.*)\.mrc
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:
