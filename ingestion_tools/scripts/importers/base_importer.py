@@ -136,6 +136,7 @@ class VolumeImporter(BaseImporter):
     ):
         super().__init__(*args, **kwargs)
         self.volume_filename = path
+        self.identifier = None
 
     def get_voxel_size(self) -> float:
         return get_voxel_size(self.config.fs, self.volume_filename)
@@ -165,7 +166,8 @@ class VolumeImporter(BaseImporter):
 
     def get_output_path(self) -> str:
         output_dir = super().get_output_path()
-        return os.path.join(output_dir, self.get_run().name)
+        filename_prefix = f"{self.identifier}-" if self.identifier else ""
+        return os.path.join(output_dir, f"{filename_prefix}{self.get_run().name}")
 
     def load_extra_metadata(self) -> dict[str, Any]:
         run: RunImporter = self.get_run()

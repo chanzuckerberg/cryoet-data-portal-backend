@@ -76,15 +76,11 @@ class TomogramImporter(VolumeImporter):
     def get_identifier(self) -> int:
         return self.identifier
 
-    def dir_path(self) -> str:
-        output_dir = self.config.resolve_output_path(self.type_key, self)
-        return os.path.join(output_dir, f"{self.identifier}")
-
-    def get_output_path(self) -> str:
-        return f"{self.dir_path()}-{self.get_run().name}"
+    def get_metadata_path(self) -> str:
+        return super().get_metadata_path().format(identifier=self.identifier)
 
     def import_metadata(self) -> None:
-        dest_tomo_metadata = self.get_metadata_path().format(identifier=self.identifier)
+        dest_tomo_metadata = self.get_metadata_path()
         merge_data = self.load_extra_metadata()
         parent_args = dict(self.parents)
         parent_args["tomogram"] = self

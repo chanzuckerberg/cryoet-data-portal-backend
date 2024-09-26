@@ -1,14 +1,40 @@
-from typing import TYPE_CHECKING
+import os
+from typing import Any
 
+from common.config import DepositionImportConfig
 from common.finders import DefaultImporterFactory
+from common.id_helper import IdentifierHelper
 from common.metadata import TiltSeriesMetadata
 from importers.base_importer import VolumeImporter
 from importers.frame import FrameImporter
 
-if TYPE_CHECKING:
-    from importers.run import RunImporter
-else:
-    RunImporter = "RunImporter"
+
+class TiltSeriesIdentifierHelper(IdentifierHelper):
+    @classmethod
+    def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
+        return parents["run"].get_output_path()
+
+    @classmethod
+    def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
+        run = parents["run"]
+        tiltseries_dir_path = config.resolve_output_path("tiltseries", run)
+        return os.path.join(tiltseries_dir_path, "*tiltseries_metadata.json")
+
+    @classmethod
+    def _generate_hash_key(
+        cls,
+        container_key: str,
+        metadata: dict[str, Any],
+        parents: dict[str, Any],
+        *args,
+        **kwargs,
+    ) -> str:
+        return "-".join(
+            [
+                container_key,
+                str(metadata.get("deposition_id", int(parents["deposition"].name))),
+            ],
+        )
 
 
 class TiltSeriesImporter(VolumeImporter):
@@ -16,6 +42,20 @@ class TiltSeriesImporter(VolumeImporter):
     plural_key = "tiltseries"
     finder_factory = DefaultImporterFactory
     has_metadata = True
+
+    def __init__(
+        self,
+        config: DepositionImportConfig,
+        metadata: dict[str, Any],
+        name: str,
+        path: str,
+        parents: dict[str, Any],
+    ):
+        super().__init__(config=config, metadata=metadata, name=name, path=path, parents=parents)
+        self.identifier = TiltSeriesIdentifierHelper.get_identifier(config, self.get_base_metadata(), self.parents)
+
+    def get_metadata_path(self) -> str:
+        return super().get_metadata_path().format(identifier=self.identifier)
 
     def import_item(self) -> None:
         _ = self.scale_mrcfile(
