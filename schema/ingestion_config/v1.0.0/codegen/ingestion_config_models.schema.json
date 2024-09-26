@@ -211,16 +211,6 @@
                         "array",
                         "null"
                     ]
-                },
-                "tomogram": {
-                    "description": "Include or exclude tomograms for a source.",
-                    "items": {
-                        "type": "string"
-                    },
-                    "type": [
-                        "array",
-                        "null"
-                    ]
                 }
             },
             "title": "AlignmentParent",

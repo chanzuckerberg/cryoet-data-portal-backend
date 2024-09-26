@@ -242,7 +242,6 @@ classes:
       - dataset
       - deposition
       - run
-      - tomogram
 
   AnnotationEntity:
     description: An annotation entity.

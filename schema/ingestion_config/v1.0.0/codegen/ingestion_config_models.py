@@ -3299,7 +3299,6 @@ class AlignmentParent(ConfiguredBaseModel):
                        'TiltSeriesParent',
                        'TomogramParent',
                        'VoxelSpacingParent']} })
-    tomogram: Optional[List[str]] = Field(None, description="""Include or exclude tomograms for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'tomogram', 'domain_of': ['AlignmentParent', 'KeyImageParent']} })
 
 
 class AnnotationEntity(ConfiguredBaseModel):
@@ -5283,7 +5282,7 @@ class KeyImageParent(ConfiguredBaseModel):
                        'TiltSeriesParent',
                        'TomogramParent',
                        'VoxelSpacingParent']} })
-    tomogram: Optional[List[str]] = Field(None, description="""Include or exclude tomograms for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'tomogram', 'domain_of': ['AlignmentParent', 'KeyImageParent']} })
+    tomogram: Optional[List[str]] = Field(None, description="""Include or exclude tomograms for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'tomogram', 'domain_of': ['KeyImageParent']} })
     voxel_spacing: Optional[List[str]] = Field(None, description="""Include or exclude voxel spacings for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'voxel_spacing',
          'domain_of': ['Tomogram',
                        'AnnotationParent',
