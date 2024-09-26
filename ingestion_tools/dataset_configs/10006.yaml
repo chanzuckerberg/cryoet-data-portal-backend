@@ -159,11 +159,6 @@ gains:
 - sources:
   - source_glob:
       list_glob: gainRef/CountRef_mapped-{run_name}_acquisition-order_-0.0.dm4
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 runs:
 - sources:
   - source_glob:
