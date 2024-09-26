@@ -100,6 +100,7 @@ class TomogramImporter(VolumeImporter):
             base_metadata.get("fiducial_alignment_status"),
         )
         merge_data["alignment_metadata_path"] = self.alignment_metadata_path
+        merge_data["neuroglancer_config_path"] = self.get_neuroglancer_config_path()
         metadata = TomoMetadata(self.config.fs, self.get_deposition().name, base_metadata)
         metadata.write_metadata(dest_tomo_metadata, merge_data)
 
@@ -112,4 +113,11 @@ class TomogramImporter(VolumeImporter):
         for alignment in AlignmentImporter.finder(self.config, **self.parents):
             return alignment.get_metadata_path()
         # TODO: This should be an error, but we need to fix the data first.
+        return None
+
+    def get_neuroglancer_config_path(self) -> str:
+        if self.metadata.get("is_visualization_default"):
+            # TODO: Refactor this to a method in the viz_config importer with identifier in the name
+            return self.config.resolve_output_path("viz_config", self)
+
         return None
