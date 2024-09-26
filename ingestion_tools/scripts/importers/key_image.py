@@ -88,9 +88,9 @@ class KeyImageImporter(BaseImporter):
         preview = generate_preview(data, projection_depth=40, annotations=self.load_annotations(), cmap="tab10")
         return preview, data.shape[-1]
 
-    @staticmethod
-    def get_file_name(image_type: str) -> str:
-        return f"key-photo-{image_type}.png"
+    def get_file_name(self, image_type: str) -> str:
+        tomogram_id = self.parents.get("tomogram").identifier
+        return f"{tomogram_id}-key-photo-{image_type}.png"
 
     @classmethod
     def get_default_config(cls) -> list[dict] | None:
