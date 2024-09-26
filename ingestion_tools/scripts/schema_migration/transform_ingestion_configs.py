@@ -4,9 +4,8 @@ from collections import OrderedDict
 from typing import Any
 
 import click
-import yaml
-
 import migrate_v1_1_0
+import yaml
 
 logger = logging.getLogger(__name__)
 
