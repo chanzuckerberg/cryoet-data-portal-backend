@@ -7,13 +7,6 @@ annotations:
       name: F1-F0 complex
     annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
     annotation_software: STOPGAP
-    method_links: &method_links
-      - link: https://github.com/wan-lab-vanderbilt/STOPGAP
-        link_type: source_code
-        custom_name: STOPGAP on GitHub
-      - link: https://github.com/wan-lab-vanderbilt/TOMOMAN
-        link_type: source_code
-        custom_name: TOMOMAN on GitHub
     authors: &id001
     - corresponding_author_status: false
       name: Ron Kelley
@@ -54,6 +47,13 @@ annotations:
       release_date: '2024-04-09'
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: &id003
+    - custom_name: STOPGAP on GitHub
+      link: https://github.com/wan-lab-vanderbilt/STOPGAP
+      link_type: source_code
+    - custom_name: TOMOMAN on GitHub
+      link: https://github.com/wan-lab-vanderbilt/TOMOMAN
+      link_type: source_code
     method_type: hybrid
     version: 1.0
   sources:
@@ -72,11 +72,11 @@ annotations:
       name: F1-F0 complex
     annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
     annotation_software: STOPGAP
-    method_links: *method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: *id003
     method_type: hybrid
     version: 1.0
   sources:
@@ -95,11 +95,11 @@ annotations:
       name: cytosolic ribosome
     annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
     annotation_software: STOPGAP
-    method_links: *method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: *id003
     method_type: hybrid
     version: 1.0
   sources:
@@ -117,11 +117,11 @@ annotations:
       name: nucleosome
     annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
     annotation_software: STOPGAP
-    method_links: *method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: *id003
     method_type: hybrid
     version: 1.0
   sources:
@@ -140,11 +140,11 @@ annotations:
       name: RubisCO complex
     annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
     annotation_software: STOPGAP
-    method_links: *method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: *id003
     method_type: hybrid
     version: 1.0
   sources:
@@ -162,11 +162,11 @@ annotations:
       name: microtubule
     annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
     annotation_software: STOPGAP
-    method_links: *method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: *id003
     method_type: hybrid
     version: 1.0
   sources:
@@ -190,7 +190,7 @@ dataset_keyphotos:
         thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons//11756.gif
 datasets:
 - metadata:
-    authors: &id003
+    authors: &id004
     - corresponding_author_status: false
       name: Ron Kelley
       primary_author_status: true
@@ -242,7 +242,7 @@ datasets:
       primary_author_status: false
     cell_type:
       name: Chlamydomonas reinhardtii
-    cross_references: &dataset_cross_references
+    cross_references: &id005
       publications: 10.1093/micmic/ozad067.480
       related_database_entries: EMPIAR-11756
     dataset_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
@@ -261,7 +261,8 @@ datasets:
       - '10301'
 depositions:
 - metadata:
-    authors: *id003
+    authors: *id004
+    cross_references: *id005
     dates: *id002
     deposition_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
       lamella of Chlamydomonas reinhardtii. Contained tomograms are partially annotated,
@@ -270,7 +271,6 @@ depositions:
     deposition_identifier: 10300
     deposition_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared
       using cryo-plasmaFIB milling
-    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
     - annotation
@@ -356,7 +356,7 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id003
+    authors: *id004
     ctf_corrected: true
     fiducial_alignment_status: NON_FIDUCIAL
     offset:
@@ -372,6 +372,7 @@ tomograms:
   - source_glob:
       list_glob: cryocare_bin4_tomoname/{run_name}.mrc
       match_regex: (.*)\.mrc
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

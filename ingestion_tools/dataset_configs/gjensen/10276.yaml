@@ -145,6 +145,7 @@ tomograms:
   - source_glob:
       list_glob: '{run_name}/{mapped_tomo_name}'
       match_regex: .*\.(mrc|rec)$
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

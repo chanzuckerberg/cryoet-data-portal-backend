@@ -316,8 +316,9 @@ class Dataset(EntityInterface):
     description: str = strawberry.field(
         description="A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.",
     )
-    organism_name: str = strawberry.field(
+    organism_name: Optional[str] = strawberry.field(
         description="Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens",
+        default=None,
     )
     organism_taxid: Optional[int] = strawberry.field(
         description="NCBI taxonomy identifier for the organism, e.g. 9606", default=None,
@@ -526,8 +527,9 @@ class DatasetCreateInput:
     description: str = strawberry.field(
         description="A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.",
     )
-    organism_name: str = strawberry.field(
+    organism_name: Optional[str] = strawberry.field(
         description="Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens",
+        default=None,
     )
     organism_taxid: Optional[int] = strawberry.field(
         description="NCBI taxonomy identifier for the organism, e.g. 9606", default=None,
@@ -602,6 +604,7 @@ class DatasetUpdateInput:
     )
     organism_name: Optional[str] = strawberry.field(
         description="Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens",
+        default=None,
     )
     organism_taxid: Optional[int] = strawberry.field(
         description="NCBI taxonomy identifier for the organism, e.g. 9606", default=None,

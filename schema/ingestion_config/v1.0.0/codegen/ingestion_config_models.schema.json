@@ -1375,6 +1375,10 @@
                         "null"
                     ]
                 },
+                "version": {
+                    "description": "The version of the ingestion config.",
+                    "type": "string"
+                },
                 "voxel_spacings": {
                     "description": "A voxel spacing entity.",
                     "items": {
@@ -1389,6 +1393,7 @@
                 "depositions",
                 "runs",
                 "standardization_config",
+                "version",
                 "voxel_spacings"
             ],
             "title": "Container",
@@ -4812,6 +4817,10 @@
                 "null"
             ]
         },
+        "version": {
+            "description": "The version of the ingestion config.",
+            "type": "string"
+        },
         "voxel_spacings": {
             "description": "A voxel spacing entity.",
             "items": {
@@ -4826,6 +4835,7 @@
         "depositions",
         "runs",
         "standardization_config",
+        "version",
         "voxel_spacings"
     ],
     "title": "cdp-ingestion-config",

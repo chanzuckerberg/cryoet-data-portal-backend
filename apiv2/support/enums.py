@@ -66,6 +66,7 @@ class tiltseries_microscope_manufacturer_enum(enum.StrEnum):
     FEI = "FEI"
     TFS = "TFS"
     JEOL = "JEOL"
+    SIMULATED = "SIMULATED"
 
 
 @strawberry.enum

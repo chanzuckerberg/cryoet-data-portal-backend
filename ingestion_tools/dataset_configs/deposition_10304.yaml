@@ -2,13 +2,6 @@ annotations:
 - metadata:
     annotation_method: Tomogram Denoising + 3D-U-Net Based Membrane Segmentation +
       Manual Post-Processing
-    method_links:
-      - link: https://github.com/teamtomo/membrain-seg
-        link_type: source_code
-        custom_name: membrain-seg on GitHub
-      - link: https://pypi.org/project/membrain-seg/
-        link_type: other
-        custom_name: membrain-seg on PyPI
     annotation_object:
       id: GO:0016020
       name: membrane
@@ -32,6 +25,13 @@ annotations:
       release_date: '2024-06-03'
     ground_truth_status: false
     is_curator_recommended: false
+    method_links:
+    - custom_name: membrain-seg on GitHub
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    - custom_name: membrain-seg on PyPI
+      link: https://pypi.org/project/membrain-seg/
+      link_type: other
     method_type: hybrid
     version: 1.0
   sources:
@@ -48,12 +48,13 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
-    dates: *id002
-    deposition_description: Membrane segmentations using membrain-seg of tomograms denoised using a custom algorithm.
-    deposition_identifier: 10304
-    deposition_title: Membrane segmentations of denoised tomograms
     cross_references:
       publications: 10.1101/2024.01.05.574336
+    dates: *id002
+    deposition_description: Membrane segmentations using membrain-seg of tomograms
+      denoised using a custom algorithm.
+    deposition_identifier: 10304
+    deposition_title: Membrane segmentations of denoised tomograms
     deposition_types:
     - annotation
   sources:
@@ -69,6 +70,7 @@ runs:
 standardization_config:
   deposition_id: 10304
   source_prefix: xueying_zhan_04_2024/
+version: 1.1.0
 voxel_spacings:
 - sources:
   - destination_glob:

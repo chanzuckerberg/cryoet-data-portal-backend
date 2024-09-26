@@ -33,7 +33,7 @@ class DatasetCreateInputValidator(BaseModel):
         ),
     ]
     organism_name: Annotated[
-        str,
+        str | None,
         StringConstraints(
             strip_whitespace=True,
         ),

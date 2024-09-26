@@ -1,5 +1,11 @@
 ## S3 Data Validation Test Scripts
 
+Pytest-based data validation tests for the various data entities in the S3 buckets of the CryoET Data Portal. Fetches run folders and voxel spacing files efficiently from the S3 bucket and parametrizes tests based on the dataset and voxel spacing combinations found in the bucket. Utilizes pytest-xdist's multiprocessing features to run tests quicker. See below for more information.
+
+### Writing New Tests
+
+If new `helper_*` files are added, make sure to update the `__init__.py` file and add them to the `pytest.register_assert_rewrite` call to ensure that detailed, custom error messages are displayed when the tests fail.
+
 ### Pytest
 
 To run (from this directory):
@@ -43,7 +49,7 @@ Additional pytest helpful parameters:
     (see: https://docs.pytest.org/en/latest/example/markers.html#using-k-expr-to-select-tests-based-on-their-name)
 ```
 
-Example:
+### Examples
 
 Run all data validation for dataset 10027.
 
@@ -86,7 +92,7 @@ To run (from this directory):
 ```
 python allure_tests.py --local-dir [LOCAL_DIR] --input-bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --datasets [DATASET_ID] --multiprocessing/--no-multiprocessing --save-history/--no-save-history --extra-args [EXTRA_ARGS]
 
---local-dir: Local directory to store the results. Note that if this folder is in the data_validation folder (as is the default value), it should be added to the pytest call via `--ignore=[FOLDER_NAME]` to prevent pytest from wasting time trying to discover tests (we default ignore ./results in `pytest.ini`.) Default: `./results`
+--local-dir: Local directory to store the results. Default: `./results`
 --input-bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
 --output-bucket: The S3 bucket where the Allure report will be uploaded. Default: `cryoetportal-output-test`
 --output-dir: The remote s3 directory to store the results. Default: `data_validation`
@@ -96,7 +102,9 @@ python allure_tests.py --local-dir [LOCAL_DIR] --input-bucket [BUCKET_NAME] --ou
 --extra-args: Additional arguments to pass to pytest. See pytest arguments above.
 ```
 
-Example:
+### Note for the --local-dir option: If the specified folder is in the data_validation folder (as is the default value), it should be added to the pytest call via `--ignore=[FOLDER_NAME]` or to the `pytest.ini` file to prevent pytest from wasting time trying to discover tests (we default ignore ./results in `pytest.ini`.)
+
+### Examples
 
 Run all data validation for datasets 10027 and 10200, and save the test results to S3.
 
