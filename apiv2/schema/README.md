@@ -2,9 +2,9 @@
 erDiagram
 Tomogram {
     string name
-    float size_x
-    float size_y
-    float size_z
+    integer size_x
+    integer size_y
+    integer size_z
     float voxel_spacing
     fiducial_alignment_status_enum fiducial_alignment_status
     tomogram_reconstruction_method_enum reconstruction_method
@@ -193,6 +193,7 @@ Annotation {
     string https_metadata_path
     string annotation_publication
     string annotation_method
+    string method_links
     boolean ground_truth_status
     string object_id
     string object_name

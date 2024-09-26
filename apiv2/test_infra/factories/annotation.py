@@ -40,6 +40,7 @@ class AnnotationFactory(CommonFactory):
     https_metadata_path = fuzzy.FuzzyText()
     annotation_publication = fuzzy.FuzzyText()
     annotation_method = fuzzy.FuzzyText()
+    method_links = fuzzy.FuzzyText()
     ground_truth_status = factory.Faker("boolean")
     object_id = fuzzy.FuzzyText()
     object_name = fuzzy.FuzzyText()

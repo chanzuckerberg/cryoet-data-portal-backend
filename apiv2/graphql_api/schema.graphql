@@ -397,6 +397,11 @@ type Annotation implements EntityInterface & Node {
   annotationMethod: String!
 
   """
+  Provides links to information on the method used for generating annotation, comma separated
+  """
+  methodLinks: String
+
+  """
   Whether an annotation is considered ground truth, as determined by the annotator.
   """
   groundTruthStatus: Boolean
@@ -726,6 +731,7 @@ enum AnnotationCountColumns {
   httpsMetadataPath
   annotationPublication
   annotationMethod
+  methodLinks
   groundTruthStatus
   objectId
   objectName
@@ -763,6 +769,11 @@ input AnnotationCreateInput {
   Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)
   """
   annotationMethod: String!
+
+  """
+  Provides links to information on the method used for generating annotation, comma separated
+  """
+  methodLinks: String = null
 
   """
   Whether an annotation is considered ground truth, as determined by the annotator.
@@ -1041,6 +1052,7 @@ type AnnotationGroupByOptions {
   httpsMetadataPath: String
   annotationPublication: String
   annotationMethod: String
+  methodLinks: String
   groundTruthStatus: Boolean
   objectId: String
   objectName: String
@@ -1064,6 +1076,7 @@ type AnnotationMinMaxColumns {
   httpsMetadataPath: String
   annotationPublication: String
   annotationMethod: String
+  methodLinks: String
   objectId: String
   objectName: String
   objectDescription: String
@@ -1093,6 +1106,7 @@ input AnnotationOrderByClause {
   httpsMetadataPath: orderBy
   annotationPublication: orderBy
   annotationMethod: orderBy
+  methodLinks: orderBy
   groundTruthStatus: orderBy
   objectId: orderBy
   objectName: orderBy
@@ -1262,6 +1276,11 @@ input AnnotationUpdateInput {
   annotationMethod: String
 
   """
+  Provides links to information on the method used for generating annotation, comma separated
+  """
+  methodLinks: String = null
+
+  """
   Whether an annotation is considered ground truth, as determined by the annotator.
   """
   groundTruthStatus: Boolean = null
@@ -1335,6 +1354,7 @@ input AnnotationWhereClause {
   httpsMetadataPath: StrComparators
   annotationPublication: StrComparators
   annotationMethod: StrComparators
+  methodLinks: StrComparators
   groundTruthStatus: BoolComparators
   objectId: StrComparators
   objectName: StrComparators
@@ -4736,15 +4756,15 @@ type Tomogram implements EntityInterface & Node {
   name: String
 
   """Number of pixels in the 3D data fast axis"""
-  sizeX: Float!
+  sizeX: Int!
 
   """Number of pixels in the 3D data medium axis"""
-  sizeY: Float!
+  sizeY: Int!
 
   """
   Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
   """
-  sizeZ: Float!
+  sizeZ: Int!
 
   """Voxel spacing equal in all three axes in angstroms"""
   voxelSpacing: Float!
@@ -5118,15 +5138,15 @@ input TomogramCreateInput {
   name: String = null
 
   """Number of pixels in the 3D data fast axis"""
-  sizeX: Float!
+  sizeX: Int!
 
   """Number of pixels in the 3D data medium axis"""
-  sizeY: Float!
+  sizeY: Int!
 
   """
   Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
   """
-  sizeZ: Float!
+  sizeZ: Int!
 
   """Voxel spacing equal in all three axes in angstroms"""
   voxelSpacing: Float!
@@ -5220,9 +5240,9 @@ type TomogramGroupByOptions {
   run: RunGroupByOptions
   tomogramVoxelSpacing: TomogramVoxelSpacingGroupByOptions
   name: String
-  sizeX: Float
-  sizeY: Float
-  sizeZ: Float
+  sizeX: Int
+  sizeY: Int
+  sizeZ: Int
   voxelSpacing: Float
   fiducialAlignmentStatus: fiducial_alignment_status_enum
   reconstructionMethod: tomogram_reconstruction_method_enum
@@ -5251,9 +5271,9 @@ type TomogramGroupByOptions {
 
 type TomogramMinMaxColumns {
   name: String
-  sizeX: Float
-  sizeY: Float
-  sizeZ: Float
+  sizeX: Int
+  sizeY: Int
+  sizeZ: Int
   voxelSpacing: Float
   tomogramVersion: Float
   processingSoftware: String
@@ -5275,9 +5295,9 @@ type TomogramMinMaxColumns {
 }
 
 type TomogramNumericalColumns {
-  sizeX: Float
-  sizeY: Float
-  sizeZ: Float
+  sizeX: Int
+  sizeY: Int
+  sizeZ: Int
   voxelSpacing: Float
   tomogramVersion: Float
   offsetX: Int
@@ -5336,15 +5356,15 @@ input TomogramUpdateInput {
   name: String = null
 
   """Number of pixels in the 3D data fast axis"""
-  sizeX: Float
+  sizeX: Int
 
   """Number of pixels in the 3D data medium axis"""
-  sizeY: Float
+  sizeY: Int
 
   """
   Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
   """
-  sizeZ: Float
+  sizeZ: Int
 
   """Voxel spacing equal in all three axes in angstroms"""
   voxelSpacing: Float
@@ -5615,9 +5635,9 @@ input TomogramWhereClause {
   run: RunWhereClause
   tomogramVoxelSpacing: TomogramVoxelSpacingWhereClause
   name: StrComparators
-  sizeX: FloatComparators
-  sizeY: FloatComparators
-  sizeZ: FloatComparators
+  sizeX: IntComparators
+  sizeY: IntComparators
+  sizeZ: IntComparators
   voxelSpacing: FloatComparators
   fiducialAlignmentStatus: Fiducial_alignment_status_enumEnumComparators
   reconstructionMethod: Tomogram_reconstruction_method_enumEnumComparators
@@ -5695,6 +5715,7 @@ enum annotation_method_type_enum {
   manual
   automated
   hybrid
+  simulated
 }
 
 enum deposition_types_enum {

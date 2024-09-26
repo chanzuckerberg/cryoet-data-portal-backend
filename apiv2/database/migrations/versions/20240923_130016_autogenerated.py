@@ -22,7 +22,12 @@ def upgrade() -> None:
         "microscope_manufacturer",
         existing_type=sa.VARCHAR(length=4),
         type_=sa.Enum(
-            "FEI", "TFS", "JEOL", "SIMULATED", name="tiltseries_microscope_manufacturer_enum", native_enum=False,
+            "FEI",
+            "TFS",
+            "JEOL",
+            "SIMULATED",
+            name="tiltseries_microscope_manufacturer_enum",
+            native_enum=False,
         ),
         existing_nullable=False,
     )
@@ -35,7 +40,12 @@ def downgrade() -> None:
         "tiltseries",
         "microscope_manufacturer",
         existing_type=sa.Enum(
-            "FEI", "TFS", "JEOL", "SIMULATED", name="tiltseries_microscope_manufacturer_enum", native_enum=False,
+            "FEI",
+            "TFS",
+            "JEOL",
+            "SIMULATED",
+            name="tiltseries_microscope_manufacturer_enum",
+            native_enum=False,
         ),
         type_=sa.VARCHAR(length=4),
         existing_nullable=False,

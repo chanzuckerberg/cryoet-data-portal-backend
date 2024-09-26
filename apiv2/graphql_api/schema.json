@@ -3234,6 +3234,15 @@
             },
             {
               "defaultValue": null,
+              "name": "methodLinks",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "StrComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "groundTruthStatus",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -5278,7 +5287,7 @@
               "name": "sizeX",
               "type": {
                 "kind": "INPUT_OBJECT",
-                "name": "FloatComparators",
+                "name": "IntComparators",
                 "ofType": null
               }
             },
@@ -5287,7 +5296,7 @@
               "name": "sizeY",
               "type": {
                 "kind": "INPUT_OBJECT",
-                "name": "FloatComparators",
+                "name": "IntComparators",
                 "ofType": null
               }
             },
@@ -5296,7 +5305,7 @@
               "name": "sizeZ",
               "type": {
                 "kind": "INPUT_OBJECT",
-                "name": "FloatComparators",
+                "name": "IntComparators",
                 "ofType": null
               }
             },
@@ -6886,6 +6895,9 @@
             },
             {
               "name": "hybrid"
+            },
+            {
+              "name": "simulated"
             }
           ],
           "fields": null,
@@ -8842,6 +8854,15 @@
                   "name": "String",
                   "ofType": null
                 }
+              }
+            },
+            {
+              "args": [],
+              "name": "methodLinks",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               }
             },
             {
@@ -11243,6 +11264,15 @@
             },
             {
               "defaultValue": null,
+              "name": "methodLinks",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "groundTruthStatus",
               "type": {
                 "kind": "ENUM",
@@ -11606,6 +11636,15 @@
             },
             {
               "args": [],
+              "name": "methodLinks",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "objectId",
               "type": {
                 "kind": "SCALAR",
@@ -11779,6 +11818,15 @@
             {
               "args": [],
               "name": "annotationMethod",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "methodLinks",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -11961,6 +12009,9 @@
             },
             {
               "name": "annotationMethod"
+            },
+            {
+              "name": "methodLinks"
             },
             {
               "name": "groundTruthStatus"
@@ -18396,7 +18447,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "SCALAR",
-                  "name": "Float",
+                  "name": "Int",
                   "ofType": null
                 }
               }
@@ -18409,7 +18460,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "SCALAR",
-                  "name": "Float",
+                  "name": "Int",
                   "ofType": null
                 }
               }
@@ -18422,7 +18473,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "SCALAR",
-                  "name": "Float",
+                  "name": "Int",
                   "ofType": null
                 }
               }
@@ -19811,7 +19862,7 @@
               "name": "sizeX",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -19820,7 +19871,7 @@
               "name": "sizeY",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -19829,7 +19880,7 @@
               "name": "sizeZ",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -21097,7 +21148,7 @@
               "name": "sizeX",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -21106,7 +21157,7 @@
               "name": "sizeY",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -21115,7 +21166,7 @@
               "name": "sizeZ",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -21197,7 +21248,7 @@
               "name": "sizeX",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -21206,7 +21257,7 @@
               "name": "sizeY",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -21215,7 +21266,7 @@
               "name": "sizeZ",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -28944,6 +28995,15 @@
             },
             {
               "defaultValue": "null",
+              "name": "methodLinks",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
               "name": "groundTruthStatus",
               "type": {
                 "kind": "SCALAR",
@@ -29172,6 +29232,15 @@
             {
               "defaultValue": null,
               "name": "annotationMethod",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "methodLinks",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -32893,7 +32962,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "SCALAR",
-                  "name": "Float",
+                  "name": "Int",
                   "ofType": null
                 }
               }
@@ -32906,7 +32975,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "SCALAR",
-                  "name": "Float",
+                  "name": "Int",
                   "ofType": null
                 }
               }
@@ -32919,7 +32988,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "SCALAR",
-                  "name": "Float",
+                  "name": "Int",
                   "ofType": null
                 }
               }
@@ -33240,7 +33309,7 @@
               "name": "sizeX",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -33249,7 +33318,7 @@
               "name": "sizeY",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -33258,7 +33327,7 @@
               "name": "sizeZ",
               "type": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "Int",
                 "ofType": null
               }
             },
