@@ -879,6 +879,9 @@ classes:
         - annotation_method
         range: string
         required: true
+      method_links:
+        description: Provides links to information on the method used for generating annotation, comma separated
+        range: string
       ground_truth_status:
         name: ground_truth_status
         description: Whether an annotation is considered ground truth, as determined
