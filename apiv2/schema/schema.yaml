@@ -739,7 +739,7 @@ classes:
         description: HTTPS url to the metadata file for this alignment
         range: string
       is_portal_standard:
-        description: Whether this alignment is the portal standard
+        description: Whether this is the portal standard alignment
         range: boolean
         ifabsent: false
   AnnotationAuthor:
@@ -1697,22 +1697,14 @@ classes:
         unit:
           symbol: Å
           descriptive_name: Angstrom
-      in_plane_rotation:
-        name: in_plane_rotation
-        description: In-plane rotation of the projection in degrees
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - per_section_alignment_in_plane_rotation
+      volume_x_rotation:
+        description: X-axis rotation in degrees
         range: float
         unit:
           symbol: °
           descriptive_name: degrees
-      beam_tilt:
-        name: beam_tilt
-        description: Beam tilt during projection in degrees
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - per_section_alignment_beam_tilt
+      in_plane_rotation:
+        description: In-plane rotation of the projection in degrees
         range: float
         unit:
           symbol: °
@@ -2234,6 +2226,7 @@ classes:
     from_schema: cdp-dataset-config
     mixins:
     - IDMixin
+    - DateStampedEntityMixin
     attributes:
       alignment:
         name: alignment
@@ -2361,7 +2354,11 @@ classes:
         range: boolean
         ifabsent: false
       is_author_submitted:
-        description: whether this tomogram was submitted by the author of the dataset it belongs to.
+        description: Whether this tomogram was submitted by the author of the dataset it belongs to.
+        range: boolean
+        ifabsent: false
+      is_visualization_default:
+        description: Data curator’s subjective choice of default tomogram to display in visualization for a run
         range: boolean
         ifabsent: false
       s3_omezarr_dir:
@@ -2475,6 +2472,16 @@ classes:
         required: true
         # TODO - is this reasonable?
         ifabsent: false
+      publications:
+        description: Comma-separated list of DOIs for publications associated with the tomogram.
+        range: string
+        recommended: true
+        pattern: (^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
+      related_database_entries:
+        description: If a CryoET tomogram is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.
+        range: string
+        recommended: true
+        pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)
   DateStampedEntityMixin:
     name: DateStampedEntityMixin
     description: A set of dates at which a data item was deposited, published and
