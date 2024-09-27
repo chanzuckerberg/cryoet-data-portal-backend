@@ -44,7 +44,7 @@ annotations:
       binning: 4
       file_format: tomoman_relion_star
       glob_string: '{run_name}/metadata/particles/*.star'
-      is_portal_standard: false
+
       is_visualization_default: true
       order: xyz
 collection_metadata:

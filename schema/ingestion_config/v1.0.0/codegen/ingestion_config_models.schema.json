@@ -4603,13 +4603,6 @@
                     "description": "Whether the tomographic alignment was computed based on fiducial markers.",
                     "pattern": "(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)"
                 },
-                "is_portal_standard": {
-                    "description": "Whether the tomogram is a portal standard.",
-                    "type": [
-                        "boolean",
-                        "null"
-                    ]
-                },
                 "is_visualization_default": {
                     "description": "Whether the tomogram is the default for visualization.",
                     "type": "boolean"
