@@ -405,6 +405,58 @@ def cli(ctx):
     pass
 
 
+def get_deposition_id_mapping() -> dict[str, int]:
+    """
+    Hard coding this to prevent changes in the deposition ids due to external changes.
+    """
+    return {
+        "8": 10014,
+        "109": 10015,
+        "158": 10016,
+        "179": 10017,
+        "68": 10018,
+        "299": 10019,
+        "224": 10020,
+        "335": 10021,
+        "241": 10022,
+        "90": 10023,
+        "181": 10024,
+        "191": 10025,
+        "311": 10026,
+        "162": 10027,
+        "173": 10028,
+        "240": 10029,
+        "91": 10030,
+        "211": 10031,
+        "180": 10032,
+        "190": 10033,
+        "126": 10034,
+        "304": 10035,
+        "143": 10036,
+        "330": 10037,
+        "102": 10038,
+        "167": 10039,
+        "337": 10040,
+        "352": 10041,
+        "243": 10042,
+        "376": 10043,
+        "327": 10044,
+        "101": 10045,
+        "186": 10046,
+        "285": 10047,
+        "182": 10048,
+        "60": 10049,
+        "161": 10050,
+        "130": 10051,
+        "104": 10052,
+        "377": 10053,
+        "348": 10054,
+        "238": 10055,
+        "188": 10056,
+        "209": 10057,
+    }
+
+
 def get_deposition_map(input_dir: str) -> dict[int, int]:
     """
     Get mapping of dataset ids to deposition ids. The data for this is sourced from the portal_dataset_grouping.json
@@ -412,7 +464,8 @@ def get_deposition_map(input_dir: str) -> dict[int, int]:
     :param input_dir:
     :return: dict of dataset_id to deposition_id
     """
-    deposition_id = 10014
+    deposition_id_mapping = get_deposition_id_mapping()
+    deposition_id = max(deposition_id_mapping.values()) + 1
     data = next(
         entry["data"]
         for entry in get_json_data(input_dir, "portal_dataset_grouping.json")
@@ -420,14 +473,17 @@ def get_deposition_map(input_dir: str) -> dict[int, int]:
     )
 
     dataset_deposition_id_mapping = {}
-    deposition_id_mapping = {}
+    data.sort(key=lambda x: x["czportal_dataset_id"])
     for entry in data:
-        dataset_group = int(entry["dataset_group"])
+        dataset_group = entry["dataset_group"]
         if dataset_group not in deposition_id_mapping:
             deposition_id_mapping[dataset_group] = deposition_id
             deposition_id += 1
+            if deposition_id >= 10300:
+                raise ValueError("Exceeded the maximum valid deposition id for Jensen datasets.")
         dataset_id = int(entry["czportal_dataset_id"])
         dataset_deposition_id_mapping[dataset_id] = deposition_id_mapping[dataset_group]
+
     return dataset_deposition_id_mapping
 
 
