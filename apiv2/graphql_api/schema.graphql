@@ -1355,7 +1355,7 @@ type Dataset implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
-  depositionId: Int
+  depositionId: Int!
   fundingSources(
     where: DatasetFundingWhereClause = null
     orderBy: [DatasetFundingOrderByClause!] = []
@@ -1771,7 +1771,7 @@ enum DatasetCountColumns {
 }
 
 input DatasetCreateInput {
-  depositionId: ID = null
+  depositionId: ID!
 
   """Title of a CryoET dataset."""
   title: String!
@@ -2087,7 +2087,7 @@ input DatasetOrderByClause {
 }
 
 input DatasetUpdateInput {
-  depositionId: ID = null
+  depositionId: ID
 
   """Title of a CryoET dataset."""
   title: String
@@ -2424,7 +2424,7 @@ type DepositionAuthor implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
-  depositionId: Int
+  depositionId: Int!
 
   """The order that the author is listed as in the associated publication"""
   authorListOrder: Int!
@@ -2493,7 +2493,7 @@ enum DepositionAuthorCountColumns {
 }
 
 input DepositionAuthorCreateInput {
-  depositionId: ID = null
+  depositionId: ID!
 
   """An identifier to refer to a specific instance of this type"""
   id: Int!
@@ -2580,7 +2580,7 @@ input DepositionAuthorOrderByClause {
 }
 
 input DepositionAuthorUpdateInput {
-  depositionId: ID = null
+  depositionId: ID
 
   """An identifier to refer to a specific instance of this type"""
   id: Int
@@ -2724,7 +2724,7 @@ type DepositionType implements EntityInterface & Node {
   """An identifier to refer to a specific instance of this type"""
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
-  depositionId: Int
+  depositionId: Int!
   type: deposition_types_enum
 }
 
@@ -2759,7 +2759,7 @@ enum DepositionTypeCountColumns {
 }
 
 input DepositionTypeCreateInput {
-  depositionId: ID = null
+  depositionId: ID!
   type: deposition_types_enum = null
 
   """An identifier to refer to a specific instance of this type"""
@@ -2796,7 +2796,7 @@ input DepositionTypeOrderByClause {
 }
 
 input DepositionTypeUpdateInput {
-  depositionId: ID = null
+  depositionId: ID
   type: deposition_types_enum = null
 
   """An identifier to refer to a specific instance of this type"""
@@ -4599,7 +4599,7 @@ type Tomogram implements EntityInterface & Node {
   ): TomogramAuthorConnection!
   authorsAggregate(where: TomogramAuthorWhereClause = null): TomogramAuthorAggregate
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
-  depositionId: Int
+  depositionId: Int!
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
   runId: Int
   tomogramVoxelSpacing(where: TomogramVoxelSpacingWhereClause = null, orderBy: [TomogramVoxelSpacingOrderByClause!] = []): TomogramVoxelSpacing
@@ -4969,7 +4969,7 @@ enum TomogramCountColumns {
 input TomogramCreateInput {
   """Tiltseries Alignment"""
   alignmentId: ID = null
-  depositionId: ID = null
+  depositionId: ID!
   runId: ID = null
 
   """Voxel spacings for a run"""
@@ -5181,7 +5181,7 @@ input TomogramOrderByClause {
 input TomogramUpdateInput {
   """Tiltseries Alignment"""
   alignmentId: ID = null
-  depositionId: ID = null
+  depositionId: ID
   runId: ID = null
 
   """Voxel spacings for a run"""

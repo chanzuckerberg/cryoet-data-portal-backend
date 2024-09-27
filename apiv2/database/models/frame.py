@@ -44,6 +44,7 @@ class Frame(Base):
         back_populates="frame",
         uselist=True,
         foreign_keys="PerSectionParameters.frame_id",
+        cascade="all, delete-orphan",
     )
     run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=True, index=True)
     run: Mapped["Run"] = relationship(

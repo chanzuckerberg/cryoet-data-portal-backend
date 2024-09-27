@@ -19,7 +19,7 @@ class TomogramCreateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
     alignment_id: Annotated[uuid.UUID | None, Field()]
-    deposition_id: Annotated[uuid.UUID | None, Field()]
+    deposition_id: Annotated[uuid.UUID, Field()]
     run_id: Annotated[uuid.UUID | None, Field()]
     tomogram_voxel_spacing_id: Annotated[uuid.UUID | None, Field()]
     name: Annotated[

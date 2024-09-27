@@ -43,6 +43,7 @@ class AnnotationShape(Base):
         back_populates="annotation_shape",
         uselist=True,
         foreign_keys="AnnotationFile.annotation_shape_id",
+        cascade="all, delete-orphan",
     )
     shape_type: Mapped[annotation_file_shape_type_enum] = mapped_column(
         Enum(annotation_file_shape_type_enum, native_enum=False), nullable=True,

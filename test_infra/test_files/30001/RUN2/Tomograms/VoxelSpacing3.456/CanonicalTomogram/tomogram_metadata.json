@@ -1,6 +1,6 @@
 {
     "voxel_spacing": 3.456,
-    "reconstruction_method": "",
+    "reconstruction_method": "SART",
     "reconstruction_software": "",
     "fiducial_alignment_status": "NON_FIDUCIAL",
     "ctf_corrected": "",

@@ -2901,6 +2901,7 @@ classes:
         - Tomogram
         - AnnotationSourceFile
         range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
       is_portal_standard:
@@ -3043,6 +3044,22 @@ classes:
         alias: is_portal_standard
         owner: AnnotationOrientedPointFile
         domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
         required: false
@@ -3161,6 +3178,7 @@ classes:
         - Tomogram
         - AnnotationSourceFile
         range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
       is_portal_standard:
@@ -3290,6 +3308,7 @@ classes:
         - Tomogram
         - AnnotationSourceFile
         range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
       is_portal_standard:
@@ -3374,6 +3393,7 @@ classes:
         - Tomogram
         - AnnotationSourceFile
         range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
       is_portal_standard:
@@ -3484,6 +3504,22 @@ classes:
         alias: is_portal_standard
         owner: AnnotationSemanticSegmentationMaskFile
         domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
         required: false
@@ -3572,6 +3608,7 @@ classes:
         - Tomogram
         - AnnotationSourceFile
         range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
       is_portal_standard:
@@ -3692,6 +3729,7 @@ classes:
         - Tomogram
         - AnnotationSourceFile
         range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
       is_portal_standard:
