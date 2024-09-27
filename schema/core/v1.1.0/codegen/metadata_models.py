@@ -487,6 +487,28 @@ linkml_meta = LinkMLMeta(
 )
 
 
+class AlignmentTypeEnum(str, Enum):
+    """
+    Type of alignment
+    """
+
+    # Local alignment
+    LOCAL = "LOCAL"
+    # Global alignment
+    GLOBAL = "GLOBAL"
+
+
+class AlignmentFormatEnum(str, Enum):
+    """
+    Used to determine what alignment alogrithm to use.
+    """
+
+    # IMOD was used for the alignment. Supported file formats are (xf, tlt, tilt.com, news.com, xtilt)
+    IMOD = "IMOD"
+    # ARETOMO3 was used for the alignment. Supported file formats are (aln, txt, csv)
+    ARETOMO3 = "ARETOMO3"
+
+
 class AnnotationMethodTypeEnum(str, Enum):
     """
     Describes how the annotations were generated.
@@ -755,7 +777,10 @@ class DateStampedEntity(ConfiguredBaseModel):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {
+                "alias": "dates",
+                "domain_of": ["DateStampedEntity", "Tomogram", "Dataset", "Deposition", "Annotation"],
+            }
         },
     )
 
@@ -815,7 +840,7 @@ class CrossReferencedEntity(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "cross_references",
-                "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
+                "domain_of": ["CrossReferencedEntity", "Tomogram", "Dataset", "Deposition"],
             }
         },
     )
@@ -1245,7 +1270,10 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {
+                "alias": "dates",
+                "domain_of": ["DateStampedEntity", "Tomogram", "Dataset", "Deposition", "Annotation"],
+            }
         },
     )
     authors: List[Author] = Field(
@@ -1278,7 +1306,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
         json_schema_extra={
             "linkml_meta": {
                 "alias": "cross_references",
-                "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
+                "domain_of": ["CrossReferencedEntity", "Tomogram", "Dataset", "Deposition"],
             }
         },
     )
@@ -1428,7 +1456,10 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {
+                "alias": "dates",
+                "domain_of": ["DateStampedEntity", "Tomogram", "Dataset", "Deposition", "Annotation"],
+            }
         },
     )
     authors: List[Author] = Field(
@@ -1449,7 +1480,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "cross_references",
-                "domain_of": ["CrossReferencedEntity", "Dataset", "Deposition"],
+                "domain_of": ["CrossReferencedEntity", "Tomogram", "Dataset", "Deposition"],
             }
         },
     )
@@ -2125,7 +2156,7 @@ class TomogramSize(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "x",
-                "domain_of": ["TomogramSize", "TomogramOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2137,7 +2168,7 @@ class TomogramSize(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "y",
-                "domain_of": ["TomogramSize", "TomogramOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2149,7 +2180,7 @@ class TomogramSize(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "z",
-                "domain_of": ["TomogramSize", "TomogramOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2170,7 +2201,7 @@ class TomogramOffset(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "x",
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2182,7 +2213,7 @@ class TomogramOffset(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "y",
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2194,7 +2225,7 @@ class TomogramOffset(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "z",
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset"],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2385,7 +2416,7 @@ class Tomogram(AuthoredEntity):
                     "dimensions": [{"exact_cardinality": 4}, {"exact_cardinality": 4}],
                     "exact_number_dimensions": 2,
                 },
-                "domain_of": ["Tomogram"],
+                "domain_of": ["Tomogram", "Alignment"],
             }
         },
     )
@@ -2397,7 +2428,69 @@ class Tomogram(AuthoredEntity):
     offset: TomogramOffset = Field(
         ...,
         description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""",
-        json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram"]}},
+        json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram", "Alignment"]}},
+    )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the tomogram is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "ifabsent": "False",
+            }
+        },
+    )
+    is_visualization_default: bool = Field(
+        True,
+        description="""Whether the tomogram is the default for visualization.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_visualization_default",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "ifabsent": "True",
+            }
+        },
+    )
+    cross_references: Optional[CrossReferences] = Field(
+        None,
+        description="""A set of cross-references to other databases and publications.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "cross_references",
+                "domain_of": ["CrossReferencedEntity", "Tomogram", "Dataset", "Deposition"],
+            }
+        },
+    )
+    dates: DateStamp = Field(
+        ...,
+        description="""A set of dates at which a data item was deposited, published and last modified.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "dates",
+                "domain_of": ["DateStampedEntity", "Tomogram", "Dataset", "Deposition", "Annotation"],
+            }
+        },
     )
     authors: List[Author] = Field(
         ...,
@@ -2716,6 +2809,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "is_visualization_default",
                 "domain_of": [
+                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -2726,6 +2820,28 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
             }
         },
@@ -2846,6 +2962,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
             "linkml_meta": {
                 "alias": "is_visualization_default",
                 "domain_of": [
+                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -2856,6 +2973,28 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
             }
         },
@@ -2976,6 +3115,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
             "linkml_meta": {
                 "alias": "is_visualization_default",
                 "domain_of": [
+                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -2986,6 +3126,28 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
             }
         },
@@ -3107,6 +3269,7 @@ class AnnotationPointFile(AnnotationSourceFile):
             "linkml_meta": {
                 "alias": "is_visualization_default",
                 "domain_of": [
+                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -3117,6 +3280,28 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
             }
         },
@@ -3197,6 +3382,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
             "linkml_meta": {
                 "alias": "is_visualization_default",
                 "domain_of": [
+                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -3207,6 +3393,28 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
             }
         },
@@ -3299,6 +3507,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
             "linkml_meta": {
                 "alias": "is_visualization_default",
                 "domain_of": [
+                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -3309,6 +3518,28 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
             }
         },
@@ -3402,6 +3633,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
             "linkml_meta": {
                 "alias": "is_visualization_default",
                 "domain_of": [
+                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -3412,6 +3644,28 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
             }
         },
@@ -3526,6 +3780,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
             "linkml_meta": {
                 "alias": "is_visualization_default",
                 "domain_of": [
+                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -3536,6 +3791,28 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
             }
         },
@@ -3669,7 +3946,10 @@ class Annotation(AuthoredEntity, DateStampedEntity):
         ...,
         description="""A set of dates at which a data item was deposited, published and last modified.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dates", "domain_of": ["DateStampedEntity", "Dataset", "Deposition", "Annotation"]}
+            "linkml_meta": {
+                "alias": "dates",
+                "domain_of": ["DateStampedEntity", "Tomogram", "Dataset", "Deposition", "Annotation"],
+            }
         },
     )
     authors: List[Author] = Field(
@@ -3710,6 +3990,299 @@ class Annotation(AuthoredEntity, DateStampedEntity):
             if not pattern.match(v):
                 raise ValueError(f"Invalid method_type format: {v}")
         return v
+
+
+class AlignmentSize(ConfiguredBaseModel):
+    """
+    The size of an alignment in voxels in each dimension.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    x: Union[int, str] = Field(
+        ...,
+        description="""Number of pixels in the 3D data fast axis""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "x",
+                "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "unit": {"descriptive_name": "pixels", "symbol": "px"},
+            }
+        },
+    )
+    y: Union[int, str] = Field(
+        ...,
+        description="""Number of pixels in the 3D data medium axis""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "y",
+                "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "unit": {"descriptive_name": "pixels", "symbol": "px"},
+            }
+        },
+    )
+    z: Union[int, str] = Field(
+        ...,
+        description="""Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "z",
+                "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "unit": {"descriptive_name": "pixels", "symbol": "px"},
+            }
+        },
+    )
+
+    @field_validator("x")
+    def pattern_x(cls, v):
+        pattern = re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid x format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid x format: {v}")
+        return v
+
+    @field_validator("y")
+    def pattern_y(cls, v):
+        pattern = re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid y format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid y format: {v}")
+        return v
+
+    @field_validator("z")
+    def pattern_z(cls, v):
+        pattern = re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid z format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid z format: {v}")
+        return v
+
+
+class AlignmentOffset(ConfiguredBaseModel):
+    """
+    The offset of a alignment in voxels in each dimension relative to the canonical tomogram.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    x: Union[int, str] = Field(
+        0,
+        description="""x offset relative to the canonical tomogram in pixels""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "x",
+                "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "ifabsent": "int(0)",
+                "unit": {"descriptive_name": "pixels", "symbol": "px"},
+            }
+        },
+    )
+    y: Union[int, str] = Field(
+        0,
+        description="""y offset relative to the canonical tomogram in pixels""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "y",
+                "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "ifabsent": "int(0)",
+                "unit": {"descriptive_name": "pixels", "symbol": "px"},
+            }
+        },
+    )
+    z: Union[int, str] = Field(
+        0,
+        description="""z offset relative to the canonical tomogram in pixels""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "z",
+                "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
+                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "ifabsent": "int(0)",
+                "unit": {"descriptive_name": "pixels", "symbol": "px"},
+            }
+        },
+    )
+
+    @field_validator("x")
+    def pattern_x(cls, v):
+        pattern = re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid x format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid x format: {v}")
+        return v
+
+    @field_validator("y")
+    def pattern_y(cls, v):
+        pattern = re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid y format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid y format: {v}")
+        return v
+
+    @field_validator("z")
+    def pattern_z(cls, v):
+        pattern = re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid z format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid z format: {v}")
+        return v
+
+
+class Alignment(ConfiguredBaseModel):
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    alignment_type: Optional[AlignmentTypeEnum] = Field(
+        None,
+        description="""The type of alignment.""",
+        json_schema_extra={"linkml_meta": {"alias": "alignment_type", "domain_of": ["Alignment"]}},
+    )
+    offset: Optional[AlignmentOffset] = Field(
+        None,
+        description="""The offset of a alignment in voxels in each dimension relative to the canonical tomogram.""",
+        json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram", "Alignment"]}},
+    )
+    volume_dimesion: Optional[AlignmentSize] = Field(
+        None,
+        description="""The size of an alignment in voxels in each dimension.""",
+        json_schema_extra={"linkml_meta": {"alias": "volume_dimesion", "domain_of": ["Alignment"]}},
+    )
+    x_rotation_offset: Optional[Union[int, str]] = Field(
+        0,
+        description="""The x rotation offset relative to the tomogram.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "x_rotation_offset",
+                "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
+                "domain_of": ["Alignment"],
+                "ifabsent": "int(0)",
+            }
+        },
+    )
+    tilt_offset: Optional[float] = Field(
+        0.0,
+        description="""The tilt offset relative to the tomogram.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "tilt_offset", "domain_of": ["Alignment"], "ifabsent": "float(0.0)"}
+        },
+    )
+    affine_transformation_matrix: Optional[
+        conlist(min_length=4, max_length=4, item_type=conlist(min_length=4, max_length=4, item_type=float))
+    ] = Field(
+        None,
+        description="""The flip or rotation transformation of this author submitted tomogram is indicated here. The default value if not present, is an identity matrix.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "affine_transformation_matrix",
+                "array": {
+                    "dimensions": [{"exact_cardinality": 4}, {"exact_cardinality": 4}],
+                    "exact_number_dimensions": 2,
+                },
+                "domain_of": ["Tomogram", "Alignment"],
+            }
+        },
+    )
+    is_canonical: Optional[bool] = Field(
+        True,
+        description="""Whether the alignment is canonical.""",
+        json_schema_extra={"linkml_meta": {"alias": "is_canonical", "domain_of": ["Alignment"], "ifabsent": "True"}},
+    )
+    format: AlignmentFormatEnum = Field(
+        ...,
+        description="""The format of the alignment.""",
+        json_schema_extra={"linkml_meta": {"alias": "format", "domain_of": ["Alignment"]}},
+    )
+
+    @field_validator("alignment_type")
+    def pattern_alignment_type(cls, v):
+        pattern = re.compile(r"(^LOCAL$)|(^GLOBAL$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid alignment_type format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid alignment_type format: {v}")
+        return v
+
+    @field_validator("x_rotation_offset")
+    def pattern_x_rotation_offset(cls, v):
+        pattern = re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid x_rotation_offset format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid x_rotation_offset format: {v}")
+        return v
+
+    @field_validator("format")
+    def pattern_format(cls, v):
+        pattern = re.compile(r"(^IMOD$)|(^ARETOMO3$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid format format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid format format: {v}")
+        return v
+
+
+class Frame(ConfiguredBaseModel):
+    """
+    A frame entity.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    dose: float = Field(
+        ..., description="""The dose.""", json_schema_extra={"linkml_meta": {"alias": "dose", "domain_of": ["Frame"]}}
+    )
+    defocus: float = Field(
+        ...,
+        description="""The defocus.""",
+        json_schema_extra={"linkml_meta": {"alias": "defocus", "domain_of": ["Frame"]}},
+    )
+    astigmatism: float = Field(
+        ...,
+        description="""The astigmatism.""",
+        json_schema_extra={"linkml_meta": {"alias": "astigmatism", "domain_of": ["Frame"]}},
+    )
+    astigmatic_angle: float = Field(
+        ...,
+        description="""The astigmatic angle.""",
+        json_schema_extra={"linkml_meta": {"alias": "astigmatic_angle", "domain_of": ["Frame"]}},
+    )
 
 
 class DateStampedEntityMixin(ConfiguredBaseModel):
@@ -4201,6 +4774,10 @@ AnnotationSemanticSegmentationMaskFile.model_rebuild()
 AnnotationTriangularMeshFile.model_rebuild()
 AnnotationTriangularMeshGroupFile.model_rebuild()
 Annotation.model_rebuild()
+AlignmentSize.model_rebuild()
+AlignmentOffset.model_rebuild()
+Alignment.model_rebuild()
+Frame.model_rebuild()
 DateStampedEntityMixin.model_rebuild()
 DateStamp.model_rebuild()
 CrossReferencesMixin.model_rebuild()

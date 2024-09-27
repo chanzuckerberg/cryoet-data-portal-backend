@@ -17,19 +17,19 @@ from typing_extensions import Annotated
 class DepositionCreateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
-    deposition_title: Annotated[
+    title: Annotated[
         str,
         StringConstraints(
             strip_whitespace=True,
         ),
     ]
-    deposition_description: Annotated[
+    description: Annotated[
         str,
         StringConstraints(
             strip_whitespace=True,
         ),
     ]
-    publications: Annotated[
+    deposition_publications: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
@@ -46,25 +46,37 @@ class DepositionCreateInputValidator(BaseModel):
     deposition_date: Annotated[datetime.datetime, Field()]
     release_date: Annotated[datetime.datetime, Field()]
     last_modified_date: Annotated[datetime.datetime, Field()]
+    key_photo_url: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    key_photo_thumbnail_url: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
     id: Annotated[int, Field()]
 
 
 class DepositionUpdateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
-    deposition_title: Annotated[
+    title: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
         ),
     ]
-    deposition_description: Annotated[
+    description: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
         ),
     ]
-    publications: Annotated[
+    deposition_publications: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
@@ -81,4 +93,16 @@ class DepositionUpdateInputValidator(BaseModel):
     deposition_date: Annotated[datetime.datetime | None, Field()]
     release_date: Annotated[datetime.datetime | None, Field()]
     last_modified_date: Annotated[datetime.datetime | None, Field()]
+    key_photo_url: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    key_photo_thumbnail_url: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
     id: Annotated[int | None, Field()]

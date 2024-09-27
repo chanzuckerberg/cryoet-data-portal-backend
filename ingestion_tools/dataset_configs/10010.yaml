@@ -25,6 +25,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -44,6 +45,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 2
 - metadata:
@@ -63,6 +65,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 3
 collection_metadata:
@@ -105,7 +108,7 @@ datasets:
     cell_type:
       id: CL:2000042
       name: embryonic fibroblast
-    cross_references: &dataset_cross_references
+    cross_references: &id004
       publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
       related_database_entries: EMPIAR-11370
     dataset_description: Cryo-electron tomograms of mouse embryonic fibroblasts from
@@ -114,7 +117,6 @@ datasets:
     dataset_identifier: 10010
     dataset_title: Organellar membranes
     dates: *id002
-    funding: []
     organism:
       name: Mus musculus
       taxonomy_id: 10090
@@ -126,6 +128,7 @@ datasets:
 depositions:
 - metadata:
     authors: *id003
+    cross_references: *id004
     dates: *id002
     deposition_description: This dataset contains cryo-electron tomograms of mouse
       embryonic fibroblasts from FIB-SEM lamella. The dataset was used to develop
@@ -133,7 +136,6 @@ depositions:
       ultrastructure.
     deposition_identifier: 10010
     deposition_title: Surface morphometrics of organellar membranes
-    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
     - annotation
@@ -145,11 +147,6 @@ frames:
 - sources:
   - source_glob:
       list_glob: frames/{run_name}_*.tif
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 runs:
 - sources:
   - source_glob:
@@ -208,7 +205,9 @@ tomograms:
       - 1
     authors: *id003
     ctf_corrected: false
+    dates: *id002
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0
@@ -222,6 +221,7 @@ tomograms:
   - source_glob:
       list_glob: Tomograms/{run_name}_*.mrc
       match_regex: .*
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

@@ -1,3 +1,10 @@
+alignments:
+- metadata:
+    format: IMOD
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/{run_name}.xf
 annotations:
 - metadata:
     annotation_method: Cumulative template-matching trained 2D CNN predictions + visual
@@ -8,10 +15,6 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: pyTOM + Keras
-    method_links: &annotation_method_links
-      - link: https://github.com/ZauggGroup/DeePiCt
-        link_type: source_code
-        custom_name: DeePiCt on GitHub
     authors: &id001
     - ORCID: 0000-0002-9903-3667
       name: Sara Goetz
@@ -48,6 +51,10 @@ annotations:
       release_date: '2023-06-01'
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: &id003
+    - custom_name: DeePiCt on GitHub
+      link: https://github.com/ZauggGroup/DeePiCt
+      link_type: source_code
     method_type: hybrid
     version: 1.0
   sources:
@@ -55,6 +62,7 @@ annotations:
       columns: xyz
       file_format: csv
       glob_string: particle_lists/{run_name}_fas.csv
+      is_portal_standard: false
       is_visualization_default: false
 - metadata:
     annotation_method: Cumulative template-matching trained 2D CNN predictions + visual
@@ -65,11 +73,11 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: pyTOM + Keras
-    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: *id003
     method_type: hybrid
     version: 1.0
   sources:
@@ -77,6 +85,7 @@ annotations:
       columns: xyz
       file_format: csv
       glob_string: particle_lists/{run_name}_cyto_ribosomes.csv
+      is_portal_standard: false
       is_visualization_default: true
 - metadata:
     annotation_method: manual segmentation
@@ -96,6 +105,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
+      is_portal_standard: false
       is_visualization_default: false
       mask_label: 1
 - metadata:
@@ -116,6 +126,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 2
 - metadata:
@@ -136,6 +147,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
+      is_portal_standard: false
       is_visualization_default: false
       mask_label: 3
 - metadata:
@@ -156,6 +168,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 4
 - metadata:
@@ -176,6 +189,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 5
 - metadata:
@@ -196,6 +210,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 6
 - metadata:
@@ -216,6 +231,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
+      is_portal_standard: false
       is_visualization_default: false
       mask_label: 7
 - metadata:
@@ -236,6 +252,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
+      is_portal_standard: false
       is_visualization_default: false
       mask_label: 8
 - metadata:
@@ -256,6 +273,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
+      is_portal_standard: false
       is_visualization_default: false
       mask_label: 9
 - metadata:
@@ -276,6 +294,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 10
 - metadata:
@@ -296,6 +315,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
+      is_portal_standard: false
       is_visualization_default: false
       mask_label: 11
 - metadata:
@@ -316,6 +336,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_organelles.mrc
+      is_portal_standard: false
       is_visualization_default: false
       mask_label: 13
 - metadata:
@@ -326,17 +347,18 @@ annotations:
     annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
       EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
-    method_links: *annotation_method_links
     authors: *id001
     dates: *id002
     ground_truth_status: true
     is_curator_recommended: true
+    method_links: *id003
     method_type: hybrid
     version: 1.0
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_membranes.mrc
+      is_portal_standard: false
       is_visualization_default: false
       mask_label: 1
 collection_metadata:
@@ -352,7 +374,7 @@ dataset_keyphotos:
         thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10988.gif
 datasets:
 - metadata:
-    authors: &id003
+    authors: &id004
     - ORCID: 0000-0002-4691-9501
       name: Irene de Teresa Trueba
       primary_author_status: true
@@ -423,17 +445,11 @@ gains:
 - sources:
   - source_glob:
       list_glob: VPP/frames/CountRef_{run_name}.dm4
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
       - metadata/{run_name}.rawtlt
-      - metadata/{run_name}.xf
 runs:
 - sources:
   - source_glob:
@@ -492,9 +508,14 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id003
+    authors: *id004
     ctf_corrected: false
+    dates:
+      deposition_date: '2023-04-01'
+      last_modified_date: '2023-06-01'
+      release_date: '2023-06-01'
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0
@@ -508,6 +529,7 @@ tomograms:
   - source_glob:
       list_glob: tomograms/{run_name}.rec
       match_regex: .*\.rec
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

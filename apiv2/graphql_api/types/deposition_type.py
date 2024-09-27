@@ -128,9 +128,12 @@ class DepositionType(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
-    deposition_id: Optional[int]
-    type: Optional[deposition_types_enum] = strawberry.field(description=None, default=None)
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    deposition_id: int
+    type: Optional[deposition_types_enum] = strawberry.field(
+        description="The type of data submitted as a part of this deposition (annotation, dataset, tomogram)",
+        default=None,
+    )
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """
@@ -221,16 +224,22 @@ Mutation types
 
 @strawberry.input()
 class DepositionTypeCreateInput:
-    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    type: Optional[deposition_types_enum] = strawberry.field(description=None, default=None)
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    deposition_id: strawberry.ID = strawberry.field(description=None)
+    type: Optional[deposition_types_enum] = strawberry.field(
+        description="The type of data submitted as a part of this deposition (annotation, dataset, tomogram)",
+        default=None,
+    )
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 @strawberry.input()
 class DepositionTypeUpdateInput:
-    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    type: Optional[deposition_types_enum] = strawberry.field(description=None, default=None)
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None)
+    type: Optional[deposition_types_enum] = strawberry.field(
+        description="The type of data submitted as a part of this deposition (annotation, dataset, tomogram)",
+        default=None,
+    )
+    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """
