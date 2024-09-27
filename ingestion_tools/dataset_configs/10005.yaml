@@ -127,11 +127,6 @@ depositions:
   - literal:
       value:
       - 10005
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 runs:
 - sources:
   - source_glob:

@@ -120,11 +120,6 @@ gains:
 - sources:
   - source_glob:
       list_glob: '{run_name}/*.gain'
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 rawtilts:
 - sources:
   - source_multi_glob:

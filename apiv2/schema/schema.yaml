@@ -1090,6 +1090,7 @@ classes:
         inverse: Deposition.datasets
         range: Deposition
         description: Reference to the deposition this dataset is associated with
+        required: true
       funding_sources:
         name: funding_sources
         description: Information about how a dataset was funded
@@ -1325,6 +1326,7 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.authors
         range: Deposition
+        required: true
     slot_usage:
       name:
         description: Full name of a deposition author (e.g. Jane Doe).
@@ -1488,6 +1490,7 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.deposition_types
         range: Deposition
+        required: true
       type:
         name: type
         description: The type of data submitted as a part of this deposition (annotation, dataset, tomogram)
@@ -2292,6 +2295,7 @@ classes:
         inverse: Deposition.tomograms
         range: Deposition
         description: If the tomogram is part of a deposition, the related deposition
+        required: true
       run:
         name: run
         from_schema: cdp-dataset-config

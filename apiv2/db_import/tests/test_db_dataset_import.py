@@ -95,13 +95,13 @@ def test_import_dataset_update(
     assert len(actual.funding_sources) == 1
 
 
-# Tests addition of new authors, updating entries already existing in db, and removing stale authors
 def test_import_dataset_and_dataset_authors(
     sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[Base, dict[str, Any]], None],
     expected_authors: list[dict[str, Any]],
 ) -> None:
+    """Tests addition of new authors, updating entries already existing in db, and removing stale authors"""
     populate_dataset(sync_db_session)
     populate_dataset_authors(sync_db_session)
     populate_dataset_funding(sync_db_session)
@@ -114,13 +114,13 @@ def test_import_dataset_and_dataset_authors(
         verify_model(author, expected_authors[i])
 
 
-# Tests addition of new funding sources, and updating entries already existing in db
 def test_import_dataset_and_dataset_funding(
     sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[Base, dict[str, Any]], None],
     expected_funding_sources: list[dict[str, Any]],
 ) -> None:
+    """Tests addition of new funding sources, and updating entries already existing in db"""
     populate_dataset(sync_db_session)
     populate_dataset_authors(sync_db_session)
     populate_dataset_funding(sync_db_session)

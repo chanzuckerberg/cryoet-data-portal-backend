@@ -295,7 +295,7 @@ class Dataset(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
-    deposition_id: Optional[int]
+    deposition_id: int
     funding_sources: Sequence[Annotated["DatasetFunding", strawberry.lazy("graphql_api.types.dataset_funding")]] = (
         load_dataset_funding_rows
     )  # type:ignore
@@ -520,8 +520,8 @@ Mutation types
 
 @strawberry.input()
 class DatasetCreateInput:
-    deposition_id: Optional[strawberry.ID] = strawberry.field(
-        description="Reference to the deposition this dataset is associated with", default=None,
+    deposition_id: strawberry.ID = strawberry.field(
+        description="Reference to the deposition this dataset is associated with",
     )
     title: str = strawberry.field(description="Title of a CryoET dataset")
     description: str = strawberry.field(
@@ -596,7 +596,7 @@ class DatasetCreateInput:
 @strawberry.input()
 class DatasetUpdateInput:
     deposition_id: Optional[strawberry.ID] = strawberry.field(
-        description="Reference to the deposition this dataset is associated with", default=None,
+        description="Reference to the deposition this dataset is associated with",
     )
     title: Optional[str] = strawberry.field(description="Title of a CryoET dataset")
     description: Optional[str] = strawberry.field(

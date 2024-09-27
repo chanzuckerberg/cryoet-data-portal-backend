@@ -315,7 +315,7 @@ class Tomogram(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
-    deposition_id: Optional[int]
+    deposition_id: int
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     run_id: Optional[int]
     tomogram_voxel_spacing: Optional[
@@ -530,8 +530,8 @@ Mutation types
 @strawberry.input()
 class TomogramCreateInput:
     alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment", default=None)
-    deposition_id: Optional[strawberry.ID] = strawberry.field(
-        description="If the tomogram is part of a deposition, the related deposition", default=None,
+    deposition_id: strawberry.ID = strawberry.field(
+        description="If the tomogram is part of a deposition, the related deposition",
     )
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
@@ -603,7 +603,7 @@ class TomogramCreateInput:
 class TomogramUpdateInput:
     alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment", default=None)
     deposition_id: Optional[strawberry.ID] = strawberry.field(
-        description="If the tomogram is part of a deposition, the related deposition", default=None,
+        description="If the tomogram is part of a deposition, the related deposition",
     )
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(

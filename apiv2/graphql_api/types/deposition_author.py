@@ -144,7 +144,7 @@ class DepositionAuthor(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
-    deposition_id: Optional[int]
+    deposition_id: int
     id: int = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
     orcid: Optional[str] = strawberry.field(
@@ -274,7 +274,7 @@ Mutation types
 
 @strawberry.input()
 class DepositionAuthorCreateInput:
-    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    deposition_id: strawberry.ID = strawberry.field(description=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
     orcid: Optional[str] = strawberry.field(
@@ -302,7 +302,7 @@ class DepositionAuthorCreateInput:
 
 @strawberry.input()
 class DepositionAuthorUpdateInput:
-    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None)
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: Optional[int] = strawberry.field(
         description="The order in which the author appears in the publication",

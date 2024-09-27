@@ -9,7 +9,7 @@ from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = "20240918_121738"
-down_revision = "20240923_130016"
+down_revision = "20240926_161943"
 branch_labels = None
 depends_on = None
 
@@ -58,6 +58,7 @@ def upgrade() -> None:
         type_=sa.Integer(),
         existing_nullable=False,
     )
+    op.add_column("annotation", sa.Column("method_links", sa.String(), nullable=True))
     # ### end Alembic commands ###
 
 
@@ -105,4 +106,5 @@ def downgrade() -> None:
         type_=sa.DOUBLE_PRECISION(precision=53),
         existing_nullable=False,
     )
+    op.drop_column("annotation", "method_links")
     # ### end Alembic commands ###

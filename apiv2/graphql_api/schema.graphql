@@ -1431,7 +1431,7 @@ type Dataset implements EntityInterface & Node {
   """
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
-  depositionId: Int
+  depositionId: Int!
   fundingSources(
     where: DatasetFundingWhereClause = null
     orderBy: [DatasetFundingOrderByClause!] = []
@@ -1866,7 +1866,7 @@ enum DatasetCountColumns {
 
 input DatasetCreateInput {
   """Reference to the deposition this dataset is associated with"""
-  depositionId: ID = null
+  depositionId: ID!
 
   """Title of a CryoET dataset"""
   title: String!
@@ -2191,7 +2191,7 @@ input DatasetOrderByClause {
 
 input DatasetUpdateInput {
   """Reference to the deposition this dataset is associated with"""
-  depositionId: ID = null
+  depositionId: ID
 
   """Title of a CryoET dataset"""
   title: String
@@ -2539,7 +2539,7 @@ type DepositionAuthor implements EntityInterface & Node {
   """Numeric identifier (May change!)"""
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
-  depositionId: Int
+  depositionId: Int!
 
   """The order in which the author appears in the publication"""
   authorListOrder: Int!
@@ -2610,7 +2610,7 @@ enum DepositionAuthorCountColumns {
 }
 
 input DepositionAuthorCreateInput {
-  depositionId: ID = null
+  depositionId: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -2699,7 +2699,7 @@ input DepositionAuthorOrderByClause {
 }
 
 input DepositionAuthorUpdateInput {
-  depositionId: ID = null
+  depositionId: ID
 
   """Numeric identifier (May change!)"""
   id: Int
@@ -2855,7 +2855,7 @@ type DepositionType implements EntityInterface & Node {
   """Numeric identifier (May change!)"""
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
-  depositionId: Int
+  depositionId: Int!
 
   """
   The type of data submitted as a part of this deposition (annotation, dataset, tomogram)
@@ -2894,7 +2894,7 @@ enum DepositionTypeCountColumns {
 }
 
 input DepositionTypeCreateInput {
-  depositionId: ID = null
+  depositionId: ID!
 
   """
   The type of data submitted as a part of this deposition (annotation, dataset, tomogram)
@@ -2935,7 +2935,7 @@ input DepositionTypeOrderByClause {
 }
 
 input DepositionTypeUpdateInput {
-  depositionId: ID = null
+  depositionId: ID
 
   """
   The type of data submitted as a part of this deposition (annotation, dataset, tomogram)
@@ -4746,7 +4746,7 @@ type Tomogram implements EntityInterface & Node {
   ): TomogramAuthorConnection!
   authorsAggregate(where: TomogramAuthorWhereClause = null): TomogramAuthorAggregate
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
-  depositionId: Int
+  depositionId: Int!
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
   runId: Int
   tomogramVoxelSpacing(where: TomogramVoxelSpacingWhereClause = null, orderBy: [TomogramVoxelSpacingOrderByClause!] = []): TomogramVoxelSpacing
@@ -5128,7 +5128,7 @@ input TomogramCreateInput {
   alignmentId: ID = null
 
   """If the tomogram is part of a deposition, the related deposition"""
-  depositionId: ID = null
+  depositionId: ID!
   runId: ID = null
 
   """Voxel spacings for a run"""
@@ -5346,7 +5346,7 @@ input TomogramUpdateInput {
   alignmentId: ID = null
 
   """If the tomogram is part of a deposition, the related deposition"""
-  depositionId: ID = null
+  depositionId: ID
   runId: ID = null
 
   """Voxel spacings for a run"""
