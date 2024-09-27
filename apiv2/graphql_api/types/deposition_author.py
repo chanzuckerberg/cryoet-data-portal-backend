@@ -139,33 +139,34 @@ Define DepositionAuthor type
 """
 
 
-@strawberry.type(description="Author of a deposition")
+@strawberry.type(description="Authors for a deposition")
 class DepositionAuthor(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
-    deposition_id: Optional[int]
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
-    author_list_order: int = strawberry.field(
-        description="The order that the author is listed as in the associated publication",
+    deposition_id: int
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
+    author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
+    orcid: Optional[str] = strawberry.field(
+        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
     )
-    orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
-    name: str = strawberry.field(description="The full name of the author.")
-    email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
+    name: str = strawberry.field(description="Full name of a deposition author (e.g. Jane Doe).")
+    email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="The name of the author's affiliation.", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="The address of the author's affiliation.", default=None,
+        description="Address of the institution an author is affiliated with.", default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
-        description="A Research Organization Registry (ROR) identifier.", default=None,
+        description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
+        default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a corresponding author.", default=None,
+        description="Indicates whether an author is the corresponding author", default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a primary author.", default=None,
+        description="Indicates whether an author is the main person creating the deposition", default=None,
     )
 
 
@@ -273,55 +274,59 @@ Mutation types
 
 @strawberry.input()
 class DepositionAuthorCreateInput:
-    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
-    author_list_order: int = strawberry.field(
-        description="The order that the author is listed as in the associated publication",
+    deposition_id: strawberry.ID = strawberry.field(description=None)
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
+    author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
+    orcid: Optional[str] = strawberry.field(
+        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
     )
-    orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
-    name: str = strawberry.field(description="The full name of the author.")
-    email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
+    name: str = strawberry.field(description="Full name of a deposition author (e.g. Jane Doe).")
+    email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="The name of the author's affiliation.", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="The address of the author's affiliation.", default=None,
+        description="Address of the institution an author is affiliated with.", default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
-        description="A Research Organization Registry (ROR) identifier.", default=None,
+        description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
+        default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a corresponding author.", default=None,
+        description="Indicates whether an author is the corresponding author", default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a primary author.", default=None,
+        description="Indicates whether an author is the main person creating the deposition", default=None,
     )
 
 
 @strawberry.input()
 class DepositionAuthorUpdateInput:
-    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None)
+    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: Optional[int] = strawberry.field(
-        description="The order that the author is listed as in the associated publication",
+        description="The order in which the author appears in the publication",
     )
-    orcid: Optional[str] = strawberry.field(description="The ORCID identifier for the author.", default=None)
-    name: Optional[str] = strawberry.field(description="The full name of the author.")
-    email: Optional[str] = strawberry.field(description="The email address of the author.", default=None)
+    orcid: Optional[str] = strawberry.field(
+        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+    )
+    name: Optional[str] = strawberry.field(description="Full name of a deposition author (e.g. Jane Doe).")
+    email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="The name of the author's affiliation.", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="The address of the author's affiliation.", default=None,
+        description="Address of the institution an author is affiliated with.", default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
-        description="A Research Organization Registry (ROR) identifier.", default=None,
+        description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
+        default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a corresponding author.", default=None,
+        description="Indicates whether an author is the corresponding author", default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Whether the author is a primary author.", default=None,
+        description="Indicates whether an author is the main person creating the deposition", default=None,
     )
 
 

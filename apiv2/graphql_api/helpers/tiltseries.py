@@ -42,7 +42,7 @@ class TiltseriesGroupByOptions:
     https_angle_list: Optional[str] = None
     s3_gain_file: Optional[str] = None
     https_gain_file: Optional[str] = None
-    acceleration_voltage: Optional[float] = None
+    acceleration_voltage: Optional[int] = None
     spherical_aberration_constant: Optional[float] = None
     microscope_manufacturer: Optional[tiltseries_microscope_manufacturer_enum] = None
     microscope_model: Optional[str] = None
@@ -65,8 +65,8 @@ class TiltseriesGroupByOptions:
     tilt_series_quality: Optional[int] = None
     is_aligned: Optional[bool] = None
     pixel_spacing: Optional[float] = None
-    aligned_tiltseries_binning: Optional[float] = None
-    tiltseries_frames_count: Optional[int] = None
+    aligned_tiltseries_binning: Optional[int] = None
+    frames_count: Optional[int] = None
     id: Optional[int] = None
 
 

@@ -49,54 +49,64 @@ class Deposition(Base):
         back_populates="deposition",
         uselist=True,
         foreign_keys="DepositionAuthor.deposition_id",
+        cascade="all, delete-orphan",
     )
     alignments: Mapped[list[Alignment]] = relationship(
         "Alignment",
         back_populates="deposition",
         uselist=True,
         foreign_keys="Alignment.deposition_id",
+        cascade="all, delete-orphan",
     )
     annotations: Mapped[list[Annotation]] = relationship(
         "Annotation",
         back_populates="deposition",
         uselist=True,
         foreign_keys="Annotation.deposition_id",
+        cascade="all, delete-orphan",
     )
     datasets: Mapped[list[Dataset]] = relationship(
         "Dataset",
         back_populates="deposition",
         uselist=True,
         foreign_keys="Dataset.deposition_id",
+        cascade="all, delete-orphan",
     )
     frames: Mapped[list[Frame]] = relationship(
         "Frame",
         back_populates="deposition",
         uselist=True,
         foreign_keys="Frame.deposition_id",
+        cascade="all, delete-orphan",
     )
     tiltseries: Mapped[list[Tiltseries]] = relationship(
         "Tiltseries",
         back_populates="deposition",
         uselist=True,
         foreign_keys="Tiltseries.deposition_id",
+        cascade="all, delete-orphan",
     )
     tomograms: Mapped[list[Tomogram]] = relationship(
         "Tomogram",
         back_populates="deposition",
         uselist=True,
         foreign_keys="Tomogram.deposition_id",
+        cascade="all, delete-orphan",
     )
-    deposition_title: Mapped[str] = mapped_column(String, nullable=False)
-    deposition_description: Mapped[str] = mapped_column(String, nullable=False)
+    title: Mapped[str] = mapped_column(String, nullable=False)
+    description: Mapped[str] = mapped_column(String, nullable=False)
     deposition_types: Mapped[list[DepositionType]] = relationship(
         "DepositionType",
         back_populates="deposition",
         uselist=True,
         foreign_keys="DepositionType.deposition_id",
+        cascade="all, delete-orphan",
     )
-    publications: Mapped[str] = mapped_column(String, nullable=True)
+    deposition_publications: Mapped[str] = mapped_column(String, nullable=True)
     related_database_entries: Mapped[str] = mapped_column(String, nullable=True)
     deposition_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     release_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     last_modified_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    key_photo_url: Mapped[str] = mapped_column(String, nullable=True)
+    key_photo_thumbnail_url: Mapped[str] = mapped_column(String, nullable=True)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

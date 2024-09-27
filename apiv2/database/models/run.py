@@ -42,16 +42,10 @@ class Run(Base):
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
     alignments: Mapped[list[Alignment]] = relationship(
-        "Alignment",
-        back_populates="run",
-        uselist=True,
-        foreign_keys="Alignment.run_id",
+        "Alignment", back_populates="run", uselist=True, foreign_keys="Alignment.run_id", cascade="all, delete-orphan",
     )
     annotations: Mapped[list[Annotation]] = relationship(
-        "Annotation",
-        back_populates="run",
-        uselist=True,
-        foreign_keys="Annotation.run_id",
+        "Annotation", back_populates="run", uselist=True, foreign_keys="Annotation.run_id", cascade="all, delete-orphan",
     )
     dataset_id: Mapped[int] = mapped_column(Integer, ForeignKey("dataset.id"), nullable=False, index=True)
     dataset: Mapped["Dataset"] = relationship(
@@ -60,28 +54,20 @@ class Run(Base):
         back_populates="runs",
     )
     frames: Mapped[list[Frame]] = relationship(
-        "Frame",
-        back_populates="run",
-        uselist=True,
-        foreign_keys="Frame.run_id",
+        "Frame", back_populates="run", uselist=True, foreign_keys="Frame.run_id", cascade="all, delete-orphan",
     )
     tiltseries: Mapped[list[Tiltseries]] = relationship(
-        "Tiltseries",
-        back_populates="run",
-        uselist=True,
-        foreign_keys="Tiltseries.run_id",
+        "Tiltseries", back_populates="run", uselist=True, foreign_keys="Tiltseries.run_id", cascade="all, delete-orphan",
     )
     tomogram_voxel_spacings: Mapped[list[TomogramVoxelSpacing]] = relationship(
         "TomogramVoxelSpacing",
         back_populates="run",
         uselist=True,
         foreign_keys="TomogramVoxelSpacing.run_id",
+        cascade="all, delete-orphan",
     )
     tomograms: Mapped[list[Tomogram]] = relationship(
-        "Tomogram",
-        back_populates="run",
-        uselist=True,
-        foreign_keys="Tomogram.run_id",
+        "Tomogram", back_populates="run", uselist=True, foreign_keys="Tomogram.run_id", cascade="all, delete-orphan",
     )
     name: Mapped[str] = mapped_column(String, nullable=False)
     s3_prefix: Mapped[str] = mapped_column(String, nullable=False)

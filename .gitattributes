@@ -1,2 +1,9 @@
+apiv2/cerbos/** linguist-generated
+apiv2/database/** linguist-generated
+apiv2/graphql_api/** linguist-generated
+apiv2/support/** linguist-generated
+apiv2/test_infra/** linguist-generated
+apiv2/validators/** linguist-generated
+schema/**/*materialized*.yaml linguist-generated
 **/poetry.lock linguist-generated
 **/codegen/* linguist-generated

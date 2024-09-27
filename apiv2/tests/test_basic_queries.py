@@ -5,9 +5,9 @@ Test basic queries and mutations
 import datetime
 
 import pytest
-from conftest import GQLTestClient, SessionStorage
 
 from platformics.database.connect import SyncDB
+from platformics.test_infra.factories.base import SessionStorage
 from test_infra.factories.dataset import DatasetFactory
 
 date_now = datetime.datetime.now()
@@ -16,7 +16,7 @@ date_now = datetime.datetime.now()
 @pytest.mark.asyncio
 async def test_graphql_query(
     sync_db: SyncDB,
-    gql_client: GQLTestClient,
+    gql_client,
 ) -> None:
     """
     Test that we can only fetch datasets from the database that we have access to

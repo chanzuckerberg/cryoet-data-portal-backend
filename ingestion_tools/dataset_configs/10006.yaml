@@ -56,7 +56,7 @@ annotations:
       file_format: relion4_star
       filter_value: '{run_name}'
       glob_string: motl_star/czii-remapped-points.star
-      is_portal_standard: false
+
       is_visualization_default: true
       order: xyz
 dataset_keyphotos:

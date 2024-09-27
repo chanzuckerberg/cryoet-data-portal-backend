@@ -81,7 +81,7 @@ class TiltseriesCreateInputValidator(BaseModel):
         ),
     ]
     acceleration_voltage: Annotated[
-        float,
+        int,
         Field(
             ge=20000,
         ),
@@ -216,12 +216,12 @@ class TiltseriesCreateInputValidator(BaseModel):
         ),
     ]
     aligned_tiltseries_binning: Annotated[
-        float | None,
+        int | None,
         Field(
             ge=0,
         ),
     ]
-    tiltseries_frames_count: Annotated[int | None, Field()]
+    frames_count: Annotated[int | None, Field()]
     id: Annotated[int, Field()]
 
 
@@ -291,7 +291,7 @@ class TiltseriesUpdateInputValidator(BaseModel):
         ),
     ]
     acceleration_voltage: Annotated[
-        float | None,
+        int | None,
         Field(
             ge=20000,
         ),
@@ -426,10 +426,10 @@ class TiltseriesUpdateInputValidator(BaseModel):
         ),
     ]
     aligned_tiltseries_binning: Annotated[
-        float | None,
+        int | None,
         Field(
             ge=0,
         ),
     ]
-    tiltseries_frames_count: Annotated[int | None, Field()]
+    frames_count: Annotated[int | None, Field()]
     id: Annotated[int | None, Field()]

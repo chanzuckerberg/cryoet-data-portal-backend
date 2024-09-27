@@ -1551,17 +1551,6 @@ class Tomogram(AuthoredEntity):
          'domain_of': ['Tomogram', 'Alignment']} })
     size: Optional[TomogramSize] = Field(None, description="""The size of a tomogram in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'size', 'domain_of': ['Tomogram']} })
     offset: TomogramOffset = Field(..., description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram', 'Alignment']} })
-    is_portal_standard: Optional[bool] = Field(False, description="""Whether the tomogram is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
-                       'AnnotationOrientedPointFile',
-                       'AnnotationInstanceSegmentationFile',
-                       'AnnotationPointFile',
-                       'AnnotationSegmentationMaskFile',
-                       'AnnotationSemanticSegmentationMaskFile',
-                       'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
-         'ifabsent': 'False'} })
     is_visualization_default: bool = Field(True, description="""Whether the tomogram is the default for visualization.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
          'domain_of': ['Tomogram',
                        'AnnotationSourceFile',
@@ -1781,8 +1770,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1858,8 +1846,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1935,8 +1922,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2011,8 +1997,7 @@ class AnnotationPointFile(AnnotationSourceFile):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2073,8 +2058,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2139,8 +2123,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2206,8 +2189,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2284,8 +2266,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
