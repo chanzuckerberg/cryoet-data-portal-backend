@@ -1,3 +1,10 @@
+alignments:
+- metadata:
+    format: ARETOMO3
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - Data_Set_4/{run_name}/tilt_series/*.txt
 annotations:
 - metadata:
     annotation_method: Each organelle was segmented as a separate region of interest
@@ -33,6 +40,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Exospore.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -55,6 +63,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Endospore.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -77,6 +86,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Plasma_Membrane.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -99,6 +109,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Polaroplast.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -122,6 +133,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Vesicles_in_Polaroplast.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -144,6 +156,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Nuclear_Envelope.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -166,6 +179,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Nuclear_Fill.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -190,6 +204,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -214,6 +229,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer_multiple_coils.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -238,6 +254,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer_single_coil.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -262,6 +279,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer_Circular_Coils.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -286,6 +304,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_M-Layer_long.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -310,6 +329,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_OF-Layer.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -334,6 +354,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_IF-Layer.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -358,6 +379,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_OF-Layer_Circular_Coils.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -382,6 +404,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Polar_Tube_OF-Layer_long.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -405,6 +428,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_4/{run_name}/segmentation_masks/Vesicles.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 dataset_keyphotos:
@@ -481,17 +505,10 @@ depositions:
   - literal:
       value:
       - 10307
-frames: []
-gains: []
 key_images:
 - sources:
   - source_glob:
       list_glob: .*\.jpg
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - Data_Set_4/{run_name}/tilt_series/*.txt
 runs:
 - sources:
   - source_glob:
@@ -552,7 +569,12 @@ tomograms:
       - 1
     authors: *id003
     ctf_corrected: false
+    dates:
+      deposition_date: '2024-07-09'
+      last_modified_date: '2024-07-24'
+      release_date: '2024-07-29'
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

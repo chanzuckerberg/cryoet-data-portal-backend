@@ -1,3 +1,10 @@
+alignments:
+- metadata:
+    format: IMOD
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/{run_name}.xf
 annotations:
 - metadata:
     annotation_method: REQUIRED
@@ -97,7 +104,6 @@ rawtilts:
   - source_multi_glob:
       list_globs:
       - metadata/{run_name}.rawtlt
-      - metadata/{run_name}.xf
 runs:
 - sources:
   - source_glob:
@@ -158,6 +164,7 @@ tomograms:
       - 1
     ctf_corrected: REQUIRED
     fiducial_alignment_status: null
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

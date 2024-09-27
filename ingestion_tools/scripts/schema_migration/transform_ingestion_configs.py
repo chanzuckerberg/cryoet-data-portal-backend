@@ -1,11 +1,14 @@
+import json
 import logging
 from collections import OrderedDict
 from typing import Any
 
 import click
+import migrate_v1_1_0
 import yaml
 
 logger = logging.getLogger(__name__)
+
 
 @click.group()
 def cli():
@@ -222,7 +225,7 @@ def update_config(data: dict[str, Any]) -> dict[str, Any]:
         {
             # current_version: (update_function, next_version)
             "0.0.0": (update_config_to_v1, "1.0.0"),
-            "1.0.0": (update_config_to_v1_1, "1.1.0")})
+            "1.0.0": (migrate_v1_1_0.upgrade, "1.1.0")})
 
     if not data.get("version"):
         logger.warning("No version found in config file. Assuming version 0.0.0.")
@@ -238,6 +241,12 @@ def update_config(data: dict[str, Any]) -> dict[str, Any]:
     return data
 
 
+def has_changes(file, config):
+    with open(file, 'r') as file:
+        old_config = yaml.safe_load(file)
+    return json.dumps(old_config) != json.dumps(config)
+
+
 def update_file(filename: str) -> None:
     with open(filename, "r") as fh:
         logger.debug("Reading %s", filename)
@@ -245,14 +254,12 @@ def update_file(filename: str) -> None:
 
     update_config(data)
 
+    if not has_changes(filename, data):
+        return
+
     with open(filename, "w") as fh:
         logger.debug("Writing %s", filename)
         fh.write(yaml.dump(data))
-
-
-def update_config_to_v1_1(data: dict[str, Any]) -> dict[str, Any]:
-    data["version"] = "1.1.0"
-    return data
 
 
 def convert_version(version: str) -> tuple[int, int, int]:

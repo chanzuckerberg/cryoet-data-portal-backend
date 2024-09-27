@@ -30,6 +30,7 @@ annotations:
       delimiter: ' '
       file_format: csv
       glob_string: coorinates_dmt48/s{run_name}_dmt48_coordinates_bin2.txt
+      is_portal_standard: false
       is_visualization_default: true
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
@@ -50,6 +51,7 @@ annotations:
       delimiter: ' '
       file_format: csv
       glob_string: coordinates_dmt96/s{run_name}_dmt96_coordinates_bin2.txt
+      is_portal_standard: false
       is_visualization_default: true
 dataset_keyphotos:
 - sources:
@@ -185,7 +187,9 @@ tomograms:
       - 1
     authors: *id003
     ctf_corrected: true
+    dates: *id002
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

@@ -1,3 +1,20 @@
+alignments:
+- metadata:
+    format: IMOD
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.xf
+      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.tlt
+      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.com
+      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.xtilt
+      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.com
+- metadata:
+    format: ARETOMO3
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - Data_Set_2/{run_name}/aligned_tilt_series/*.st.aln
 annotations:
 - metadata:
     annotation_method: Each organelle was segmented as a separate region of interest
@@ -13,7 +30,14 @@ annotations:
       corresponding_author_status: true
       name: Mahrukh Usmani
       primary_author_status: true
-    - name: Harshita Ramchandani
+    - ORCID: 0000-0002-6050-2219
+      corresponding_author_status: true
+      name: Nicolas Coudray
+      primary_author_status: true
+    - ORCID: 0000-0002-7388-8907
+      name: Daija Bobe
+    - ORCID: 0000-0003-0188-9799
+      name: Mykhailo Kopylov
     - ORCID: 0000-0002-2570-0404
       corresponding_author_status: true
       name: Damian C. Ekiert
@@ -34,6 +58,7 @@ annotations:
       glob_strings:
       - Data_Set_1/{run_name}/segmentation_masks/Exospore.mrc
       - Data_Set_2/{run_name}/segmentation_masks/Exospore.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -57,6 +82,7 @@ annotations:
       glob_strings:
       - Data_Set_1/{run_name}/segmentation_masks/Endospore.mrc
       - Data_Set_2/{run_name}/segmentation_masks/Endospore.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -80,6 +106,7 @@ annotations:
       glob_strings:
       - Data_Set_1/{run_name}/segmentation_masks/Plasma_Membrane.mrc
       - Data_Set_2/{run_name}/segmentation_masks/Plasma_Membrane.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -102,6 +129,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_2/{run_name}/segmentation_masks/Polaroplast.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -124,6 +152,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_1/{run_name}/segmentation_masks/Nuclear_Envelope.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -146,6 +175,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_1/{run_name}/segmentation_masks/Nuclear_Fill.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -170,6 +200,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_1/{run_name}/segmentation_masks/Polar_Tube_M-Layer.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -194,6 +225,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_1/{run_name}/segmentation_masks/Polar_Tube_OF-Layer.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -216,6 +248,7 @@ annotations:
       file_format: mrc
       glob_strings:
       - Data_Set_1/{run_name}/segmentation_masks/Sporewall.mrc
+      is_portal_standard: false
       is_visualization_default: true
       mask_label: 1
 dataset_keyphotos:
@@ -332,11 +365,6 @@ rawtilts:
   - source_multi_glob:
       list_globs:
       - Data_Set_2/{run_name}/tilt_series/*.st.rawtlt
-      - Data_Set_2/{run_name}/aligned_tilt_series/*.st.aln
-      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.xf
-      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.xtilt
-      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.tlt
-      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.com
   - source_multi_glob:
       list_globs:
       - Data_Set_1/{run_name}/tilt_series/*.mrc.tlt
@@ -425,7 +453,9 @@ tomograms:
       corresponding_author_status: true
       name: Gira Bhabha
     ctf_corrected: false
+    dates: *id002
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

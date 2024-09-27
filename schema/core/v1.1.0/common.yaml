@@ -695,6 +695,11 @@ slots:
     range: boolean
     description: This annotation will be rendered in neuroglancer by default.
     ifabsent: false
+  annotation_source_file_is_portal_standard:
+    description: Whether the annotation source is a portal standard.
+    range: boolean
+    required: false
+    ifabsent: false
   #Annotation (Annotation): The annotation this file is a part of
 
   # ============================================================================
@@ -806,6 +811,22 @@ enums:
   # ============================================================================
   # Controlled vocabularies
   # ============================================================================
+  alignment_type_enum:
+    description: Type of alignment
+    permissible_values:
+      LOCAL:
+        description: Local alignment
+      GLOBAL:
+        description: Global alignment
+
+  alignment_format_enum:
+    description: Used to determine what alignment alogrithm to use.
+    permissible_values:
+      IMOD:
+        description: IMOD was used for the alignment. Supported file formats are (xf, tlt, tilt.com, news.com, xtilt)
+      ARETOMO3:
+        description: ARETOMO3 was used for the alignment. Supported file formats are (aln, txt, csv)
+
   annotation_method_type_enum:
     description: Describes how the annotations were generated.
     permissible_values:
