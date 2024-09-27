@@ -52,7 +52,7 @@ def stale_deposition_metadata() -> dict:
         "deposition_date": datetime.now().date(),
         "release_date": datetime.now().date(),
         "last_modified_date": datetime.now().date(),
-        "publications": "Publications",
+        "deposition_publications": "Publications",
     }
 
 

@@ -54,6 +54,7 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "tilt_step": 2,
             "tilting_scheme": "Dose symmetric from 0.0 degrees",
             "total_flux": 122,
+            "frames_count": 60,
         },
         {
             "acceleration_voltage": 10000,
@@ -81,6 +82,7 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "tilt_step": 3,
             "tilting_scheme": "min to max tilt",
             "total_flux": 12,
+            "frames_count": None,
         },
     ]
 

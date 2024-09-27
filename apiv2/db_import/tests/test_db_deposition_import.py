@@ -31,7 +31,9 @@ def expected_deposition1(http_prefix: str) -> dict[str, Any]:
         "release_date": date(2023, 6, 1),
         "last_modified_date": date(2023, 4, 2),
         "related_database_entries": None,
-        "publications": None,
+        "deposition_publications": None,
+        "key_photo_url": "https://foo.com/deposition_metadata/300/Images/snapshot.png",
+        "key_photo_thumbnail_url": "https://foo.com/deposition_metadata/300/Images/thumbnail.png",
     }
 
 
@@ -66,7 +68,7 @@ def expected_deposition2(http_prefix: str) -> dict[str, Any]:
         "release_date": date(2024, 6, 1),
         "last_modified_date": date(2023, 9, 2),
         "related_database_entries": "EMPIAR-1000, EMDB-1001",
-        "publications": "doi:10.1000/1234",
+        "deposition_publications": "doi:10.1000/1234",
     }
 
 
