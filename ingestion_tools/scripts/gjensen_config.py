@@ -652,22 +652,22 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
 
         print(f"Writing file for {dataset_id}")
         dataset_config_file_path = os.path.join(output_dir, f"{dataset_id}.yaml")
+
+        # Update the config formatting to a newer version
+        updated_dataset_config = update_config(dataset_config)
+        # Remove empty tiltseries when all tiltseries associated to the dataset have no metadata
+        if all(not ts.get("metadata") for ts in updated_dataset_config.get("tiltseries", [])):
+            updated_dataset_config.pop("tiltseries")
+        # Add filter to exclude tiltseries that have no file path specified
+        elif runs_without_tilt := [
+            f"^{run['run_name']}$" for run in val.get("runs") if not run.get("tilt_series", {}).get("tilt_series_path")
+        ]:
+            exclude_runs_parent_filter(updated_dataset_config.get("tiltseries", []), runs_without_tilt)
+        # Add filter to exclude runs for tomograms that have no tomograms specified
+        if runs_without_tomogram := [f"^{run['run_name']}$" for run in val.get("runs") if not run.get("tomograms")]:
+            exclude_runs_parent_filter(updated_dataset_config.get("voxel_spacings", []), runs_without_tomogram)
+
         with open(dataset_config_file_path, "w") as outfile:
-            # Update the config formatting to a newer version
-            updated_dataset_config = update_config(dataset_config)
-            # Remove empty tiltseries when all tiltseries associated to the dataset have no metadata
-            if all(not ts.get("metadata") for ts in updated_dataset_config.get("tiltseries", [])):
-                updated_dataset_config.pop("tiltseries")
-            # Add filter to exclude tiltseries that have no file path specified
-            elif runs_without_tilt := [
-                f"^{run['run_name']}$"
-                for run in val.get("runs")
-                if not run.get("tilt_series", {}).get("tilt_series_path")
-            ]:
-                exclude_runs_parent_filter(updated_dataset_config.get("tiltseries", []), runs_without_tilt)
-            # Add filter to exclude runs for tomograms that have no tomograms specified
-            if runs_without_tomogram := [f"^{run['run_name']}$" for run in val.get("runs") if not run.get("tomograms")]:
-                exclude_runs_parent_filter(updated_dataset_config.get("voxel_spacings", []), runs_without_tomogram)
             yaml.dump(updated_dataset_config, outfile, sort_keys=True)
 
 
