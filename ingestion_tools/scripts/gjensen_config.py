@@ -81,6 +81,14 @@ def to_dataset_config(
     authors: list[dict[str, Any]],
     cross_reference: dict[str, str] | None,
 ) -> dict[str, Any]:
+    """
+    Create dataset config from the dataset field's to the relevant config fields.
+    :param dataset_id:
+    :param data:
+    :param authors:
+    :param cross_reference:
+    :return: Metadata entity for dataset and key photos
+    """
     dataset = data.get("dataset")
 
     config = {
@@ -144,6 +152,9 @@ def to_standardization_config(
     run_frames_map_path: str,
     deposition_id: int | None,
 ) -> dict[str, Any]:
+    """
+    Creates standardization config entity.This adds all the required path globs and regexes needed for the sources.
+    """
     run_names = []
     mapped_tomo_name = {}
     run_has_multiple_tomos = False
@@ -227,7 +238,17 @@ float_fields = {
 }
 
 
-def to_template_by_run(templates, run_data_map, prefix: str, path) -> dict[str, Any]:
+def to_template_by_run(templates, run_data_map, prefix: str, path: list[str]) -> dict[str, Any]:
+    """
+    Iterates over the templates and extracting the metadata for each template. It then collects all the keys from the
+    templates and generates a template that provides values for all the runs.
+    For each key, it gets the corresponding value in the metadata. If it's a dictionary, it recursively calls itself
+    with the updated path. If it's a list, it creates a set of distinct values.
+    If there is only one distinct value, it uses that value in the template metadata.
+    If there are multiple distinct values, it creates a formatted string keyed on the prefix and field name. It creates
+    entries in run_data_map for each run and assigns the corresponding value from the metadata to that key.
+    The function returns the generated template.
+    """
     template_metadata = {}
     all_keys = set()
 
@@ -348,6 +369,15 @@ def to_config_by_run(
     mapper: Callable[[dict[str, Any]], dict[str, Any]],
     prefix: str,
 ) -> dict[str, Any]:
+    """
+     The method iterates over the runs in the dataset and gets all the distinct metadata by applying the mapper. It also
+     keeps track of the runs that have each unique metadata.
+
+     If number of distinct metadata == 0, it returns an empty dictionary.
+     If number of distinct metadata == 1, it returns the metadata.
+     If number of distinct metadata > 1, it creates a metadata with formatted string for fields that have different values,
+    and adds the relevant fields to run_data_map.
+    """
     templates = {}
     for entry in data:
         template = mapper(entry)
@@ -376,6 +406,12 @@ def cli(ctx):
 
 
 def get_deposition_map(input_dir: str) -> dict[int, int]:
+    """
+    Get mapping of dataset ids to deposition ids. The data for this is sourced from the portal_dataset_grouping.json
+    file in the input directory.
+    :param input_dir:
+    :return: dict of dataset_id to deposition_id
+    """
     deposition_id = 10014
     data = next(
         entry["data"]
@@ -392,7 +428,6 @@ def get_deposition_map(input_dir: str) -> dict[int, int]:
             deposition_id += 1
         dataset_id = int(entry["czportal_dataset_id"])
         dataset_deposition_id_mapping[dataset_id] = deposition_id_mapping[dataset_group]
-
     return dataset_deposition_id_mapping
 
 
@@ -405,6 +440,14 @@ def create_deposition_entity_map(
     cross_reference_mapping: dict[int, dict[str, str]],
     deposition_id_mapping: dict[int, int],
 ) -> dict[int, dict[str, Any]]:
+    """
+    Create deposition entity metadata for the config. The data is created from combining fields from
+    deposition_dataset.json with data from the related dataset's cross-references.
+    :param input_dir:
+    :param cross_reference_mapping:
+    :param deposition_id_mapping:
+    :return: dict of deposition_id to deposition entity meppings
+    """
     deposition_map = {}
     for entry in get_json_data(input_dir, "deposition_dataset.json"):
         deposition_ids = set()
@@ -459,6 +502,12 @@ def update_cross_reference(config) -> dict[str, str]:
 
 
 def get_cross_reference_mapping(input_dir: str) -> dict[int, dict[str, str]]:
+    """
+    Get cross-references mapping for the dataset ids. The data for this is sourced from the cross_references.json file in
+    the input directory.
+    :param input_dir:
+    :return: formatted cross-reference mapping keyed on dataset_id
+    """
     return {
         int(key): update_cross_reference(val) for key, val in get_json_data(input_dir, "cross_references.json").items()
     }
@@ -481,6 +530,14 @@ def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> No
 @click.argument("output_dir", type=str, default="../dataset_configs/gjensen")
 @click.pass_context
 def create(ctx, input_dir: str, output_dir: str) -> None:
+    """
+    Create dataset configs for Grant Jensen datasets from the data czii-data-portal-processing repository. The db data
+    is store in the path czii-data-portal-processing/src/data_portal_processing/jensendb.
+    :param ctx:
+    :param input_dir: Path to the local jensendb directory containing the input files. "
+    :param output_dir: The output directory to store the dataset configs.
+    :return:
+    """
     fs = LocalFilesystem(force_overwrite=True)
     fs.makedirs(output_dir)
     run_data_map_path = os.path.join(output_dir, "run_data_map")
@@ -540,8 +597,9 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
         print(f"Writing file for {dataset_id}")
         dataset_config_file_path = os.path.join(output_dir, f"{dataset_id}.yaml")
         with open(dataset_config_file_path, "w") as outfile:
+            # Update the config formatting to a newer version
             updated_dataset_config = update_config(dataset_config)
-            # Remove empty tiltseries when all tiltseries have no metadata
+            # Remove empty tiltseries when all tiltseries associated to the dataset have no metadata
             if all(not ts.get("metadata") for ts in updated_dataset_config.get("tiltseries", [])):
                 updated_dataset_config.pop("tiltseries")
             # Add filter to exclude tiltseries that have no file path specified
@@ -551,6 +609,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
                 if not run.get("tilt_series", {}).get("tilt_series_path")
             ]:
                 exclude_runs_parent_filter(updated_dataset_config.get("tiltseries", []), runs_without_tilt)
+            # Add filter to exclude runs for tomograms that have no tomograms specified
             if runs_without_tomogram := [f"^{run['run_name']}$" for run in val.get("runs") if not run.get("tomograms")]:
                 exclude_runs_parent_filter(updated_dataset_config.get("voxel_spacings", []), runs_without_tomogram)
             yaml.dump(updated_dataset_config, outfile, sort_keys=True)
