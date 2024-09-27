@@ -256,7 +256,7 @@ Utilities
 
 
 @strawberry.field(extensions=[DependencyExtension()])
-async def resolve_dataset_funded_by_this_source(
+async def resolve_dataset_funding(
     session: AsyncSession = Depends(get_db_session, use_cache=False),
     authz_client: AuthzClient = Depends(get_authz_client),
     principal: Principal = Depends(require_auth_principal),
@@ -321,7 +321,7 @@ def format_dataset_funding_aggregate_row(row: RowMapping) -> DatasetFundingAggre
 
 
 @strawberry.field(extensions=[DependencyExtension()])
-async def resolve_dataset_funded_by_this_source_aggregate(
+async def resolve_dataset_funding_aggregate(
     info: Info,
     session: AsyncSession = Depends(get_db_session, use_cache=False),
     authz_client: AuthzClient = Depends(get_authz_client),

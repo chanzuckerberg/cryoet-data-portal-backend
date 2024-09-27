@@ -481,7 +481,7 @@
                   }
                 }
               ],
-              "name": "datasetFundedByThisSource",
+              "name": "datasetFunding",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -1334,7 +1334,7 @@
                   }
                 }
               ],
-              "name": "datasetFundedByThisSourceAggregate",
+              "name": "datasetFundingAggregate",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,

@@ -61,8 +61,8 @@ def add(session, model, item, parents):
         }
     if model == models.Deposition:
         local_item_data = {
-            "deposition_title": remote_item["title"],
-            "deposition_description": remote_item["description"],
+            "title": remote_item["title"],
+            "description": remote_item["description"],
             "deposition_publications": remote_item["deposition_publications"],
             "related_database_entries": remote_item["related_database_entries"],
             "deposition_date": remote_item["deposition_date"],
@@ -81,6 +81,7 @@ def add(session, model, item, parents):
             "https_metadata_path": remote_item["https_metadata_path"],
             "annotation_publication": remote_item["annotation_publication"],
             "annotation_method": remote_item["annotation_method"],
+            "method_links": remote_item["method_links"],
             "ground_truth_status": remote_item["ground_truth_status"],
             "object_id": remote_item["object_id"],
             "object_name": remote_item["object_name"],
@@ -239,6 +240,7 @@ def add(session, model, item, parents):
             "is_aligned": remote_item["is_aligned"],
             "pixel_spacing": remote_item["pixel_spacing"],
             "aligned_tiltseries_binning": remote_item["aligned_tiltseries_binning"],
+            "tiltseries_frames_count": remote_item["frames_count"],
         }
     if model == models.TomogramAuthor:
         local_item_data = {

@@ -50,7 +50,7 @@ class DatasetDBImporter(BaseDBImporter):
             "organism_name": ["organism", "name"],
             "organism_taxid": ["organism", "taxonomy_id"],
             "other_setup": ["other_setup"],
-            "publications": ["cross_references", "publications"],
+            "dataset_publications": ["cross_references", "publications"],
             "related_database_entries": ["cross_references", "related_database_entries"],
             "release_date": ["dates", "release_date"],
             "sample_preparation": ["sample_preparation"],

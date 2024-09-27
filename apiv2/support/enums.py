@@ -35,6 +35,15 @@ class annotation_file_shape_type_enum(enum.StrEnum):
 
 
 @strawberry.enum
+class annotation_method_link_type_enum(enum.StrEnum):
+    documentation = "documentation"
+    models_weights = "models_weights"
+    other = "other"
+    source_code = "source_code"
+    website = "website"
+
+
+@strawberry.enum
 class deposition_types_enum(enum.StrEnum):
     annotation = "annotation"
     dataset = "dataset"

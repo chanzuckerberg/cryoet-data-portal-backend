@@ -3734,7 +3734,7 @@ type Query {
   annotationShapes(where: AnnotationShapeWhereClause = null, orderBy: [AnnotationShapeOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [AnnotationShape!]!
   annotations(where: AnnotationWhereClause = null, orderBy: [AnnotationOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [Annotation!]!
   datasetAuthors(where: DatasetAuthorWhereClause = null, orderBy: [DatasetAuthorOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [DatasetAuthor!]!
-  datasetFundedByThisSource(where: DatasetFundingWhereClause = null, orderBy: [DatasetFundingOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [DatasetFunding!]!
+  datasetFunding(where: DatasetFundingWhereClause = null, orderBy: [DatasetFundingOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [DatasetFunding!]!
   datasets(where: DatasetWhereClause = null, orderBy: [DatasetOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [Dataset!]!
   depositionAuthors(where: DepositionAuthorWhereClause = null, orderBy: [DepositionAuthorOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [DepositionAuthor!]!
   depositions(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [Deposition!]!
@@ -3753,7 +3753,7 @@ type Query {
   annotationShapesAggregate(where: AnnotationShapeWhereClause = null): AnnotationShapeAggregate!
   annotationsAggregate(where: AnnotationWhereClause = null): AnnotationAggregate!
   datasetAuthorsAggregate(where: DatasetAuthorWhereClause = null): DatasetAuthorAggregate!
-  datasetFundedByThisSourceAggregate(where: DatasetFundingWhereClause = null): DatasetFundingAggregate!
+  datasetFundingAggregate(where: DatasetFundingWhereClause = null): DatasetFundingAggregate!
   datasetsAggregate(where: DatasetWhereClause = null): DatasetAggregate!
   depositionAuthorsAggregate(where: DepositionAuthorWhereClause = null): DepositionAuthorAggregate!
   depositionsAggregate(where: DepositionWhereClause = null): DepositionAggregate!

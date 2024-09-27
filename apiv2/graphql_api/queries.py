@@ -43,8 +43,8 @@ from graphql_api.types.dataset_author import (
 from graphql_api.types.dataset_funding import (
     DatasetFunding,
     DatasetFundingAggregate,
-    resolve_dataset_funded_by_this_source,
-    resolve_dataset_funded_by_this_source_aggregate,
+    resolve_dataset_funding,
+    resolve_dataset_funding_aggregate,
 )
 from graphql_api.types.deposition import (
     Deposition,
@@ -114,7 +114,7 @@ class Query:
     annotation_shapes: Sequence[AnnotationShape] = resolve_annotation_shapes
     annotations: Sequence[Annotation] = resolve_annotations
     dataset_authors: Sequence[DatasetAuthor] = resolve_dataset_authors
-    dataset_funded_by_this_source: Sequence[DatasetFunding] = resolve_dataset_funded_by_this_source
+    dataset_funding: Sequence[DatasetFunding] = resolve_dataset_funding
     datasets: Sequence[Dataset] = resolve_datasets
     deposition_authors: Sequence[DepositionAuthor] = resolve_deposition_authors
     depositions: Sequence[Deposition] = resolve_depositions
@@ -135,7 +135,7 @@ class Query:
     annotation_shapes_aggregate: AnnotationShapeAggregate = resolve_annotation_shapes_aggregate
     annotations_aggregate: AnnotationAggregate = resolve_annotations_aggregate
     dataset_authors_aggregate: DatasetAuthorAggregate = resolve_dataset_authors_aggregate
-    dataset_funded_by_this_source_aggregate: DatasetFundingAggregate = resolve_dataset_funded_by_this_source_aggregate
+    dataset_funding_aggregate: DatasetFundingAggregate = resolve_dataset_funding_aggregate
     datasets_aggregate: DatasetAggregate = resolve_datasets_aggregate
     deposition_authors_aggregate: DepositionAuthorAggregate = resolve_deposition_authors_aggregate
     depositions_aggregate: DepositionAggregate = resolve_depositions_aggregate
