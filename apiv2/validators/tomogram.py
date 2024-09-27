@@ -29,19 +29,19 @@ class TomogramCreateInputValidator(BaseModel):
         ),
     ]
     size_x: Annotated[
-        float,
+        int,
         Field(
             ge=0,
         ),
     ]
     size_y: Annotated[
-        float,
+        int,
         Field(
             ge=0,
         ),
     ]
     size_z: Annotated[
-        float,
+        int,
         Field(
             ge=0,
         ),
@@ -151,19 +151,19 @@ class TomogramUpdateInputValidator(BaseModel):
         ),
     ]
     size_x: Annotated[
-        float | None,
+        int | None,
         Field(
             ge=0,
         ),
     ]
     size_y: Annotated[
-        float | None,
+        int | None,
         Field(
             ge=0,
         ),
     ]
     size_z: Annotated[
-        float | None,
+        int | None,
         Field(
             ge=0,
         ),

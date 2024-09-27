@@ -228,7 +228,7 @@ class TiltseriesWhereClause(TypedDict):
     https_angle_list: Optional[StrComparators] | None
     s3_gain_file: Optional[StrComparators] | None
     https_gain_file: Optional[StrComparators] | None
-    acceleration_voltage: Optional[FloatComparators] | None
+    acceleration_voltage: Optional[IntComparators] | None
     spherical_aberration_constant: Optional[FloatComparators] | None
     microscope_manufacturer: Optional[EnumComparators[tiltseries_microscope_manufacturer_enum]] | None
     microscope_model: Optional[StrComparators] | None
@@ -251,8 +251,8 @@ class TiltseriesWhereClause(TypedDict):
     tilt_series_quality: Optional[IntComparators] | None
     is_aligned: Optional[BoolComparators] | None
     pixel_spacing: Optional[FloatComparators] | None
-    aligned_tiltseries_binning: Optional[FloatComparators] | None
-    tiltseries_frames_count: Optional[IntComparators] | None
+    aligned_tiltseries_binning: Optional[IntComparators] | None
+    frames_count: Optional[IntComparators] | None
     id: Optional[IntComparators] | None
 
 
@@ -299,7 +299,7 @@ class TiltseriesOrderByClause(TypedDict):
     is_aligned: Optional[orderBy] | None
     pixel_spacing: Optional[orderBy] | None
     aligned_tiltseries_binning: Optional[orderBy] | None
-    tiltseries_frames_count: Optional[orderBy] | None
+    frames_count: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
 
@@ -358,12 +358,12 @@ class Tiltseries(EntityInterface):
     https_gain_file: Optional[str] = strawberry.field(
         description="HTTPS path to the gain file for this tiltseries", default=None,
     )
-    acceleration_voltage: float = strawberry.field(description="Electron Microscope Accelerator voltage in volts")
+    acceleration_voltage: int = strawberry.field(description="Electron Microscope Accelerator voltage in volts")
     spherical_aberration_constant: float = strawberry.field(
         description="Spherical Aberration Constant of the objective lens in millimeters",
     )
     microscope_manufacturer: tiltseries_microscope_manufacturer_enum = strawberry.field(
-        description="Name of the microscope manufacturer",
+        description="Name of the microscope manufacturer (FEI, TFS, JEOL)",
     )
     microscope_model: str = strawberry.field(description="Microscope model name")
     microscope_energy_filter: str = strawberry.field(description="Energy filter setup used")
@@ -377,7 +377,7 @@ class Tiltseries(EntityInterface):
     camera_model: str = strawberry.field(description="Camera model name")
     tilt_min: float = strawberry.field(description="Minimal tilt angle in degrees")
     tilt_max: float = strawberry.field(description="Maximal tilt angle in degrees")
-    tilt_range: float = strawberry.field(description="Total tilt range from min to max in degrees")
+    tilt_range: float = strawberry.field(description="Total tilt range in degrees")
     tilt_step: float = strawberry.field(description="Tilt step in degrees")
     tilting_scheme: str = strawberry.field(description="The order of stage tilting during acquisition of the data")
     tilt_axis: float = strawberry.field(description="Rotation angle in degrees")
@@ -395,14 +395,14 @@ class Tiltseries(EntityInterface):
         description="Author assessment of tilt series quality within the dataset (1-5, 5 is best)",
     )
     is_aligned: bool = strawberry.field(description="Whether this tilt series is aligned")
-    pixel_spacing: float = strawberry.field(description="Pixel spacing for the tilt series")
-    aligned_tiltseries_binning: Optional[float] = strawberry.field(
+    pixel_spacing: float = strawberry.field(description="Pixel spacing equal in both axes in angstroms")
+    aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
     )
-    tiltseries_frames_count: Optional[int] = strawberry.field(
+    frames_count: Optional[int] = strawberry.field(
         description="Number of frames associated with this tiltseries", default=None,
     )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """
@@ -425,7 +425,7 @@ Define columns that support numerical aggregations
 
 @strawberry.type
 class TiltseriesNumericalColumns:
-    acceleration_voltage: Optional[float] = None
+    acceleration_voltage: Optional[int] = None
     spherical_aberration_constant: Optional[float] = None
     tilt_min: Optional[float] = None
     tilt_max: Optional[float] = None
@@ -436,8 +436,8 @@ class TiltseriesNumericalColumns:
     binning_from_frames: Optional[float] = None
     tilt_series_quality: Optional[int] = None
     pixel_spacing: Optional[float] = None
-    aligned_tiltseries_binning: Optional[float] = None
-    tiltseries_frames_count: Optional[int] = None
+    aligned_tiltseries_binning: Optional[int] = None
+    frames_count: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -458,7 +458,7 @@ class TiltseriesMinMaxColumns:
     https_angle_list: Optional[str] = None
     s3_gain_file: Optional[str] = None
     https_gain_file: Optional[str] = None
-    acceleration_voltage: Optional[float] = None
+    acceleration_voltage: Optional[int] = None
     spherical_aberration_constant: Optional[float] = None
     microscope_model: Optional[str] = None
     microscope_energy_filter: Optional[str] = None
@@ -479,8 +479,8 @@ class TiltseriesMinMaxColumns:
     binning_from_frames: Optional[float] = None
     tilt_series_quality: Optional[int] = None
     pixel_spacing: Optional[float] = None
-    aligned_tiltseries_binning: Optional[float] = None
-    tiltseries_frames_count: Optional[int] = None
+    aligned_tiltseries_binning: Optional[int] = None
+    frames_count: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -529,7 +529,7 @@ class TiltseriesCountColumns(enum.Enum):
     isAligned = "is_aligned"
     pixelSpacing = "pixel_spacing"
     alignedTiltseriesBinning = "aligned_tiltseries_binning"
-    tiltseriesFramesCount = "tiltseries_frames_count"
+    framesCount = "frames_count"
     id = "id"
 
 
@@ -608,12 +608,12 @@ class TiltseriesCreateInput:
     https_gain_file: Optional[str] = strawberry.field(
         description="HTTPS path to the gain file for this tiltseries", default=None,
     )
-    acceleration_voltage: float = strawberry.field(description="Electron Microscope Accelerator voltage in volts")
+    acceleration_voltage: int = strawberry.field(description="Electron Microscope Accelerator voltage in volts")
     spherical_aberration_constant: float = strawberry.field(
         description="Spherical Aberration Constant of the objective lens in millimeters",
     )
     microscope_manufacturer: tiltseries_microscope_manufacturer_enum = strawberry.field(
-        description="Name of the microscope manufacturer",
+        description="Name of the microscope manufacturer (FEI, TFS, JEOL)",
     )
     microscope_model: str = strawberry.field(description="Microscope model name")
     microscope_energy_filter: str = strawberry.field(description="Energy filter setup used")
@@ -627,7 +627,7 @@ class TiltseriesCreateInput:
     camera_model: str = strawberry.field(description="Camera model name")
     tilt_min: float = strawberry.field(description="Minimal tilt angle in degrees")
     tilt_max: float = strawberry.field(description="Maximal tilt angle in degrees")
-    tilt_range: float = strawberry.field(description="Total tilt range from min to max in degrees")
+    tilt_range: float = strawberry.field(description="Total tilt range in degrees")
     tilt_step: float = strawberry.field(description="Tilt step in degrees")
     tilting_scheme: str = strawberry.field(description="The order of stage tilting during acquisition of the data")
     tilt_axis: float = strawberry.field(description="Rotation angle in degrees")
@@ -645,14 +645,14 @@ class TiltseriesCreateInput:
         description="Author assessment of tilt series quality within the dataset (1-5, 5 is best)",
     )
     is_aligned: bool = strawberry.field(description="Whether this tilt series is aligned")
-    pixel_spacing: float = strawberry.field(description="Pixel spacing for the tilt series")
-    aligned_tiltseries_binning: Optional[float] = strawberry.field(
+    pixel_spacing: float = strawberry.field(description="Pixel spacing equal in both axes in angstroms")
+    aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
     )
-    tiltseries_frames_count: Optional[int] = strawberry.field(
+    frames_count: Optional[int] = strawberry.field(
         description="Number of frames associated with this tiltseries", default=None,
     )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 @strawberry.input()
@@ -689,14 +689,14 @@ class TiltseriesUpdateInput:
     https_gain_file: Optional[str] = strawberry.field(
         description="HTTPS path to the gain file for this tiltseries", default=None,
     )
-    acceleration_voltage: Optional[float] = strawberry.field(
+    acceleration_voltage: Optional[int] = strawberry.field(
         description="Electron Microscope Accelerator voltage in volts",
     )
     spherical_aberration_constant: Optional[float] = strawberry.field(
         description="Spherical Aberration Constant of the objective lens in millimeters",
     )
     microscope_manufacturer: Optional[tiltseries_microscope_manufacturer_enum] = strawberry.field(
-        description="Name of the microscope manufacturer",
+        description="Name of the microscope manufacturer (FEI, TFS, JEOL)",
     )
     microscope_model: Optional[str] = strawberry.field(description="Microscope model name")
     microscope_energy_filter: Optional[str] = strawberry.field(description="Energy filter setup used")
@@ -710,7 +710,7 @@ class TiltseriesUpdateInput:
     camera_model: Optional[str] = strawberry.field(description="Camera model name")
     tilt_min: Optional[float] = strawberry.field(description="Minimal tilt angle in degrees")
     tilt_max: Optional[float] = strawberry.field(description="Maximal tilt angle in degrees")
-    tilt_range: Optional[float] = strawberry.field(description="Total tilt range from min to max in degrees")
+    tilt_range: Optional[float] = strawberry.field(description="Total tilt range in degrees")
     tilt_step: Optional[float] = strawberry.field(description="Tilt step in degrees")
     tilting_scheme: Optional[str] = strawberry.field(
         description="The order of stage tilting during acquisition of the data",
@@ -730,14 +730,14 @@ class TiltseriesUpdateInput:
         description="Author assessment of tilt series quality within the dataset (1-5, 5 is best)",
     )
     is_aligned: Optional[bool] = strawberry.field(description="Whether this tilt series is aligned")
-    pixel_spacing: Optional[float] = strawberry.field(description="Pixel spacing for the tilt series")
-    aligned_tiltseries_binning: Optional[float] = strawberry.field(
+    pixel_spacing: Optional[float] = strawberry.field(description="Pixel spacing equal in both axes in angstroms")
+    aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
     )
-    tiltseries_frames_count: Optional[int] = strawberry.field(
+    frames_count: Optional[int] = strawberry.field(
         description="Number of frames associated with this tiltseries", default=None,
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """

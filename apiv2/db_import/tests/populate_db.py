@@ -47,12 +47,12 @@ def model_to_dict(sa_object):
 def stale_deposition_metadata() -> dict:
     return {
         "id": DEPOSITION_ID1,
-        "deposition_title": "Test Deposition",
-        "deposition_description": "Test Description",
+        "title": "Test Deposition",
+        "description": "Test Description",
         "deposition_date": datetime.now().date(),
         "release_date": datetime.now().date(),
         "last_modified_date": datetime.now().date(),
-        "publications": "Publications",
+        "deposition_publications": "Publications",
     }
 
 

@@ -130,7 +130,7 @@ class DatasetCreateInputValidator(BaseModel):
     deposition_date: Annotated[datetime.datetime, Field()]
     release_date: Annotated[datetime.datetime, Field()]
     last_modified_date: Annotated[datetime.datetime, Field()]
-    publications: Annotated[
+    dataset_publications: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
@@ -273,7 +273,7 @@ class DatasetUpdateInputValidator(BaseModel):
     deposition_date: Annotated[datetime.datetime | None, Field()]
     release_date: Annotated[datetime.datetime | None, Field()]
     last_modified_date: Annotated[datetime.datetime | None, Field()]
-    publications: Annotated[
+    dataset_publications: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,

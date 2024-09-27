@@ -72,7 +72,7 @@ class Tiltseries(Base):
     https_angle_list: Mapped[str] = mapped_column(String, nullable=True)
     s3_gain_file: Mapped[str] = mapped_column(String, nullable=True)
     https_gain_file: Mapped[str] = mapped_column(String, nullable=True)
-    acceleration_voltage: Mapped[float] = mapped_column(Float, nullable=False)
+    acceleration_voltage: Mapped[int] = mapped_column(Integer, nullable=False)
     spherical_aberration_constant: Mapped[float] = mapped_column(Float, nullable=False)
     microscope_manufacturer: Mapped[tiltseries_microscope_manufacturer_enum] = mapped_column(
         Enum(tiltseries_microscope_manufacturer_enum, native_enum=False), nullable=False,
@@ -97,6 +97,6 @@ class Tiltseries(Base):
     tilt_series_quality: Mapped[int] = mapped_column(Integer, nullable=False)
     is_aligned: Mapped[bool] = mapped_column(Boolean, nullable=False)
     pixel_spacing: Mapped[float] = mapped_column(Float, nullable=False)
-    aligned_tiltseries_binning: Mapped[float] = mapped_column(Float, nullable=True)
-    tiltseries_frames_count: Mapped[int] = mapped_column(Integer, nullable=True)
+    aligned_tiltseries_binning: Mapped[int] = mapped_column(Integer, nullable=True)
+    frames_count: Mapped[int] = mapped_column(Integer, nullable=True)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

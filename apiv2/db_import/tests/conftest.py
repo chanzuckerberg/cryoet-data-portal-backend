@@ -109,7 +109,7 @@ def expected_dataset(http_prefix: str) -> dict[str, Any]:
         "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/",
         "https_prefix": f"{http_prefix}/{DATASET_ID}/",
         "related_database_entries": "TEST-1243435",
-        "publications": "test-publication-data",
+        "dataset_publications": "test-publication-data",
         "sample_preparation": "method1: value1, method2: value3",
         "grid_preparation": "method3: value8, method6: value4",
         "sample_type": "organism",

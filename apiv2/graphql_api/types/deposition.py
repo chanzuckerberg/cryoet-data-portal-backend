@@ -393,16 +393,18 @@ class DepositionWhereClause(TypedDict):
     frames: Optional[Annotated["FrameWhereClause", strawberry.lazy("graphql_api.types.frame")]] | None
     tiltseries: Optional[Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
     tomograms: Optional[Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
-    deposition_title: Optional[StrComparators] | None
-    deposition_description: Optional[StrComparators] | None
+    title: Optional[StrComparators] | None
+    description: Optional[StrComparators] | None
     deposition_types: (
         Optional[Annotated["DepositionTypeWhereClause", strawberry.lazy("graphql_api.types.deposition_type")]] | None
     )
-    publications: Optional[StrComparators] | None
+    deposition_publications: Optional[StrComparators] | None
     related_database_entries: Optional[StrComparators] | None
     deposition_date: Optional[DatetimeComparators] | None
     release_date: Optional[DatetimeComparators] | None
     last_modified_date: Optional[DatetimeComparators] | None
+    key_photo_url: Optional[StrComparators] | None
+    key_photo_thumbnail_url: Optional[StrComparators] | None
     id: Optional[IntComparators] | None
 
 
@@ -413,13 +415,15 @@ Supported ORDER BY clause attributes
 
 @strawberry.input
 class DepositionOrderByClause(TypedDict):
-    deposition_title: Optional[orderBy] | None
-    deposition_description: Optional[orderBy] | None
-    publications: Optional[orderBy] | None
+    title: Optional[orderBy] | None
+    description: Optional[orderBy] | None
+    deposition_publications: Optional[orderBy] | None
     related_database_entries: Optional[orderBy] | None
     deposition_date: Optional[orderBy] | None
     release_date: Optional[orderBy] | None
     last_modified_date: Optional[orderBy] | None
+    key_photo_url: Optional[orderBy] | None
+    key_photo_thumbnail_url: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
 
@@ -428,7 +432,7 @@ Define Deposition type
 """
 
 
-@strawberry.type(description=None)
+@strawberry.type(description="Deposition metadata")
 class Deposition(EntityInterface):
     authors: Sequence[Annotated["DepositionAuthor", strawberry.lazy("graphql_api.types.deposition_author")]] = (
         load_deposition_author_rows
@@ -470,32 +474,28 @@ class Deposition(EntityInterface):
     tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
         load_tomogram_aggregate_rows
     )  # type:ignore
-    deposition_title: str = strawberry.field(description="Title of a CryoET deposition.")
-    deposition_description: str = strawberry.field(
-        description="A short description of the deposition, similar to an abstract for a journal article or dataset.",
-    )
+    title: str = strawberry.field(description="Title for the deposition")
+    description: str = strawberry.field(description="Description for the deposition")
     deposition_types: Sequence[Annotated["DepositionType", strawberry.lazy("graphql_api.types.deposition_type")]] = (
         load_deposition_type_rows
     )  # type:ignore
     deposition_types_aggregate: Optional[
         Annotated["DepositionTypeAggregate", strawberry.lazy("graphql_api.types.deposition_type")]
     ] = load_deposition_type_aggregate_rows  # type:ignore
-    publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
+    deposition_publications: Optional[str] = strawberry.field(
+        description="The publications related to this deposition", default=None,
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database entries for the dataset.", default=None,
+        description="The related database entries to this deposition", default=None,
     )
-    deposition_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+    deposition_date: datetime.datetime = strawberry.field(description="The date the deposition was deposited")
+    release_date: datetime.datetime = strawberry.field(description="The date the deposition was released")
+    last_modified_date: datetime.datetime = strawberry.field(description="The date the deposition was last modified")
+    key_photo_url: Optional[str] = strawberry.field(description="URL for the deposition preview image.", default=None)
+    key_photo_thumbnail_url: Optional[str] = strawberry.field(
+        description="URL for the deposition thumbnail image.", default=None,
     )
-    release_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
-    )
-    last_modified_date: datetime.datetime = strawberry.field(
-        description="The date a piece of data was last modified on the cryoET data portal.",
-    )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """
@@ -528,13 +528,15 @@ Define columns that support min/max aggregations
 
 @strawberry.type
 class DepositionMinMaxColumns:
-    deposition_title: Optional[str] = None
-    deposition_description: Optional[str] = None
-    publications: Optional[str] = None
+    title: Optional[str] = None
+    description: Optional[str] = None
+    deposition_publications: Optional[str] = None
     related_database_entries: Optional[str] = None
     deposition_date: Optional[datetime.datetime] = None
     release_date: Optional[datetime.datetime] = None
     last_modified_date: Optional[datetime.datetime] = None
+    key_photo_url: Optional[str] = None
+    key_photo_thumbnail_url: Optional[str] = None
     id: Optional[int] = None
 
 
@@ -552,14 +554,16 @@ class DepositionCountColumns(enum.Enum):
     frames = "frames"
     tiltseries = "tiltseries"
     tomograms = "tomograms"
-    depositionTitle = "deposition_title"
-    depositionDescription = "deposition_description"
+    title = "title"
+    description = "description"
     depositionTypes = "deposition_types"
-    publications = "publications"
+    depositionPublications = "deposition_publications"
     relatedDatabaseEntries = "related_database_entries"
     depositionDate = "deposition_date"
     releaseDate = "release_date"
     lastModifiedDate = "last_modified_date"
+    keyPhotoUrl = "key_photo_url"
+    keyPhotoThumbnailUrl = "key_photo_thumbnail_url"
     id = "id"
 
 
@@ -606,50 +610,44 @@ Mutation types
 
 @strawberry.input()
 class DepositionCreateInput:
-    deposition_title: str = strawberry.field(description="Title of a CryoET deposition.")
-    deposition_description: str = strawberry.field(
-        description="A short description of the deposition, similar to an abstract for a journal article or dataset.",
-    )
-    publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
+    title: str = strawberry.field(description="Title for the deposition")
+    description: str = strawberry.field(description="Description for the deposition")
+    deposition_publications: Optional[str] = strawberry.field(
+        description="The publications related to this deposition", default=None,
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database entries for the dataset.", default=None,
+        description="The related database entries to this deposition", default=None,
     )
-    deposition_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+    deposition_date: datetime.datetime = strawberry.field(description="The date the deposition was deposited")
+    release_date: datetime.datetime = strawberry.field(description="The date the deposition was released")
+    last_modified_date: datetime.datetime = strawberry.field(description="The date the deposition was last modified")
+    key_photo_url: Optional[str] = strawberry.field(description="URL for the deposition preview image.", default=None)
+    key_photo_thumbnail_url: Optional[str] = strawberry.field(
+        description="URL for the deposition thumbnail image.", default=None,
     )
-    release_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
-    )
-    last_modified_date: datetime.datetime = strawberry.field(
-        description="The date a piece of data was last modified on the cryoET data portal.",
-    )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 @strawberry.input()
 class DepositionUpdateInput:
-    deposition_title: Optional[str] = strawberry.field(description="Title of a CryoET deposition.")
-    deposition_description: Optional[str] = strawberry.field(
-        description="A short description of the deposition, similar to an abstract for a journal article or dataset.",
-    )
-    publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
+    title: Optional[str] = strawberry.field(description="Title for the deposition")
+    description: Optional[str] = strawberry.field(description="Description for the deposition")
+    deposition_publications: Optional[str] = strawberry.field(
+        description="The publications related to this deposition", default=None,
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="Comma-separated list of related database entries for the dataset.", default=None,
+        description="The related database entries to this deposition", default=None,
     )
-    deposition_date: Optional[datetime.datetime] = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
-    )
-    release_date: Optional[datetime.datetime] = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
-    )
+    deposition_date: Optional[datetime.datetime] = strawberry.field(description="The date the deposition was deposited")
+    release_date: Optional[datetime.datetime] = strawberry.field(description="The date the deposition was released")
     last_modified_date: Optional[datetime.datetime] = strawberry.field(
-        description="The date a piece of data was last modified on the cryoET data portal.",
+        description="The date the deposition was last modified",
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    key_photo_url: Optional[str] = strawberry.field(description="URL for the deposition preview image.", default=None)
+    key_photo_thumbnail_url: Optional[str] = strawberry.field(
+        description="URL for the deposition thumbnail image.", default=None,
+    )
+    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """

@@ -3,7 +3,7 @@ type Alignment implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   annotationFiles(
     where: AnnotationFileWhereClause = null
@@ -63,7 +63,7 @@ type Alignment implements EntityInterface & Node {
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
   runId: Int
 
-  """Type of alignment included, i.e. is a non-rigid alignment included?"""
+  """Whether this a LOCAL or GLOBAL alignment"""
   alignmentType: alignment_type_enum
 
   """X dimension of the reconstruction volume in angstrom"""
@@ -147,7 +147,7 @@ input AlignmentCreateInput {
   tiltseriesId: ID = null
   runId: ID = null
 
-  """Type of alignment included, i.e. is a non-rigid alignment included?"""
+  """Whether this a LOCAL or GLOBAL alignment"""
   alignmentType: alignment_type_enum = null
 
   """X dimension of the reconstruction volume in angstrom"""
@@ -180,7 +180,7 @@ input AlignmentCreateInput {
   """A placeholder for the affine transformation matrix."""
   affineTransformationMatrix: String = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 }
 
@@ -260,7 +260,7 @@ input AlignmentUpdateInput {
   tiltseriesId: ID = null
   runId: ID = null
 
-  """Type of alignment included, i.e. is a non-rigid alignment included?"""
+  """Whether this a LOCAL or GLOBAL alignment"""
   alignmentType: alignment_type_enum = null
 
   """X dimension of the reconstruction volume in angstrom"""
@@ -293,7 +293,7 @@ input AlignmentUpdateInput {
   """A placeholder for the affine transformation matrix."""
   affineTransformationMatrix: String = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 }
 
@@ -334,12 +334,12 @@ input Alignment_type_enumEnumComparators {
   _is_null: Boolean
 }
 
-"""Metadata about an annotation for a run"""
+"""Metadata for an annotation"""
 type Annotation implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
   runId: Int
@@ -380,14 +380,14 @@ type Annotation implements EntityInterface & Node {
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
   depositionId: Int
 
-  """Path to the file in s3"""
+  """S3 path for the metadata json file for this annotation"""
   s3MetadataPath: String!
 
-  """Path to the file as an https url"""
+  """HTTPS path for the metadata json file for this annotation"""
   httpsMetadataPath: String!
 
   """
-  List of publication IDs (EMPIAR, EMDB, DOI) that describe this annotation method. Comma separated.
+  DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.
   """
   annotationPublication: String
 
@@ -397,11 +397,18 @@ type Annotation implements EntityInterface & Node {
   annotationMethod: String!
 
   """
+  Provides links to information on the method used for generating annotation, comma separated
+  """
+  methodLinks: String
+
+  """
   Whether an annotation is considered ground truth, as determined by the annotator.
   """
   groundTruthStatus: Boolean
 
-  """Gene Ontology Cellular Component identifier for the annotation object"""
+  """
+  Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.
+  """
   objectId: String!
 
   """
@@ -437,20 +444,22 @@ type Annotation implements EntityInterface & Node {
   annotationSoftware: String
 
   """
-  This annotation is recommended by the curator to be preferred for this object type.
+  Data curator’s subjective choice as the best annotation of the same annotation object ID
   """
   isCuratorRecommended: Boolean
 
-  """Classification of the annotation method based on supervision."""
+  """
+  The method type for generating the annotation (e.g. manual, hybrid, automated)
+  """
   methodType: annotation_method_type_enum!
 
-  """The date a data item was received by the cryoET data portal."""
+  """Date when an annotation set is initially received by the Data Portal."""
   depositionDate: DateTime!
 
-  """The date a data item was received by the cryoET data portal."""
+  """Date when annotation data is made public by the Data Portal."""
   releaseDate: DateTime!
 
-  """The date a piece of data was last modified on the cryoET data portal."""
+  """Date when an annotation was last modified in the Data Portal"""
   lastModifiedDate: DateTime!
 }
 
@@ -469,41 +478,47 @@ type AnnotationAggregateFunctions {
   count(distinct: Boolean = false, columns: AnnotationCountColumns = null): Int
 }
 
-"""Author of an annotation"""
+"""Metadata for an annotation's authors"""
 type AnnotationAuthor implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   annotation(where: AnnotationWhereClause = null, orderBy: [AnnotationOrderByClause!] = []): Annotation
   annotationId: Int
 
-  """The order that the author is listed as in the associated publication"""
+  """The order in which the author appears in the publication"""
   authorListOrder: Int!
 
-  """The ORCID identifier for the author."""
+  """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String
 
-  """The full name of the author."""
+  """Full name of an annotation author (e.g. Jane Doe)."""
   name: String!
 
-  """The email address of the author."""
+  """Email address for this author"""
   email: String
 
-  """The name of the author's affiliation."""
+  """
+  Name of the institution an annotator is affiliated with. Sometimes, one annotator may have multiple affiliations.
+  """
   affiliationName: String
 
-  """The address of the author's affiliation."""
+  """Address of the institution an annotator is affiliated with."""
   affiliationAddress: String
 
-  """A Research Organization Registry (ROR) identifier."""
+  """
+  A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).
+  """
   affiliationIdentifier: String
 
-  """Whether the author is a corresponding author."""
+  """Indicates whether an annotator is the corresponding author"""
   correspondingAuthorStatus: Boolean
 
-  """Whether the author is a primary author."""
+  """
+  Indicates whether an author is the main person executing the annotation, especially on manual annotation
+  """
   primaryAuthorStatus: Boolean
 }
 
@@ -546,37 +561,43 @@ enum AnnotationAuthorCountColumns {
 }
 
 input AnnotationAuthorCreateInput {
-  """Metadata about an annotation for a run"""
+  """Reference to the annotation this author contributed to"""
   annotationId: ID = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 
-  """The order that the author is listed as in the associated publication"""
+  """The order in which the author appears in the publication"""
   authorListOrder: Int!
 
-  """The ORCID identifier for the author."""
+  """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
 
-  """The full name of the author."""
+  """Full name of an annotation author (e.g. Jane Doe)."""
   name: String!
 
-  """The email address of the author."""
+  """Email address for this author"""
   email: String = null
 
-  """The name of the author's affiliation."""
+  """
+  Name of the institution an annotator is affiliated with. Sometimes, one annotator may have multiple affiliations.
+  """
   affiliationName: String = null
 
-  """The address of the author's affiliation."""
+  """Address of the institution an annotator is affiliated with."""
   affiliationAddress: String = null
 
-  """A Research Organization Registry (ROR) identifier."""
+  """
+  A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).
+  """
   affiliationIdentifier: String = null
 
-  """Whether the author is a corresponding author."""
+  """Indicates whether an annotator is the corresponding author"""
   correspondingAuthorStatus: Boolean = null
 
-  """Whether the author is a primary author."""
+  """
+  Indicates whether an author is the main person executing the annotation, especially on manual annotation
+  """
   primaryAuthorStatus: Boolean = null
 }
 
@@ -634,37 +655,43 @@ input AnnotationAuthorOrderByClause {
 }
 
 input AnnotationAuthorUpdateInput {
-  """Metadata about an annotation for a run"""
+  """Reference to the annotation this author contributed to"""
   annotationId: ID = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 
-  """The order that the author is listed as in the associated publication"""
+  """The order in which the author appears in the publication"""
   authorListOrder: Int
 
-  """The ORCID identifier for the author."""
+  """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
 
-  """The full name of the author."""
+  """Full name of an annotation author (e.g. Jane Doe)."""
   name: String
 
-  """The email address of the author."""
+  """Email address for this author"""
   email: String = null
 
-  """The name of the author's affiliation."""
+  """
+  Name of the institution an annotator is affiliated with. Sometimes, one annotator may have multiple affiliations.
+  """
   affiliationName: String = null
 
-  """The address of the author's affiliation."""
+  """Address of the institution an annotator is affiliated with."""
   affiliationAddress: String = null
 
-  """A Research Organization Registry (ROR) identifier."""
+  """
+  A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).
+  """
   affiliationIdentifier: String = null
 
-  """Whether the author is a corresponding author."""
+  """Indicates whether an annotator is the corresponding author"""
   correspondingAuthorStatus: Boolean = null
 
-  """Whether the author is a primary author."""
+  """
+  Indicates whether an author is the main person executing the annotation, especially on manual annotation
+  """
   primaryAuthorStatus: Boolean = null
 }
 
@@ -704,6 +731,7 @@ enum AnnotationCountColumns {
   httpsMetadataPath
   annotationPublication
   annotationMethod
+  methodLinks
   groundTruthStatus
   objectId
   objectName
@@ -726,14 +754,14 @@ input AnnotationCreateInput {
   runId: ID = null
   depositionId: ID = null
 
-  """Path to the file in s3"""
+  """S3 path for the metadata json file for this annotation"""
   s3MetadataPath: String!
 
-  """Path to the file as an https url"""
+  """HTTPS path for the metadata json file for this annotation"""
   httpsMetadataPath: String!
 
   """
-  List of publication IDs (EMPIAR, EMDB, DOI) that describe this annotation method. Comma separated.
+  DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.
   """
   annotationPublication: String = null
 
@@ -743,11 +771,18 @@ input AnnotationCreateInput {
   annotationMethod: String!
 
   """
+  Provides links to information on the method used for generating annotation, comma separated
+  """
+  methodLinks: String = null
+
+  """
   Whether an annotation is considered ground truth, as determined by the annotator.
   """
   groundTruthStatus: Boolean = null
 
-  """Gene Ontology Cellular Component identifier for the annotation object"""
+  """
+  Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.
+  """
   objectId: String!
 
   """
@@ -783,23 +818,25 @@ input AnnotationCreateInput {
   annotationSoftware: String = null
 
   """
-  This annotation is recommended by the curator to be preferred for this object type.
+  Data curator’s subjective choice as the best annotation of the same annotation object ID
   """
   isCuratorRecommended: Boolean = null
 
-  """Classification of the annotation method based on supervision."""
+  """
+  The method type for generating the annotation (e.g. manual, hybrid, automated)
+  """
   methodType: annotation_method_type_enum!
 
-  """The date a data item was received by the cryoET data portal."""
+  """Date when an annotation set is initially received by the Data Portal."""
   depositionDate: DateTime!
 
-  """The date a data item was received by the cryoET data portal."""
+  """Date when annotation data is made public by the Data Portal."""
   releaseDate: DateTime!
 
-  """The date a piece of data was last modified on the cryoET data portal."""
+  """Date when an annotation was last modified in the Data Portal"""
   lastModifiedDate: DateTime!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 }
 
@@ -812,12 +849,12 @@ type AnnotationEdge {
   node: Annotation!
 }
 
-"""Files associated with an annotation"""
+"""Metadata for files associated with an annotation"""
 type AnnotationFile implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   alignment(where: AlignmentWhereClause = null, orderBy: [AlignmentOrderByClause!] = []): Alignment
   alignmentId: Int
@@ -826,19 +863,23 @@ type AnnotationFile implements EntityInterface & Node {
   tomogramVoxelSpacing(where: TomogramVoxelSpacingWhereClause = null, orderBy: [TomogramVoxelSpacingOrderByClause!] = []): TomogramVoxelSpacing
   tomogramVoxelSpacingId: Int
 
-  """File format label"""
+  """File format for this file"""
   format: String!
 
-  """Path to the file in s3"""
+  """s3 path of the annotation file"""
   s3Path: String!
 
-  """Path to the file as an https url"""
+  """HTTPS path for this annotation file"""
   httpsPath: String!
 
-  """This annotation will be rendered in neuroglancer by default."""
+  """
+  Data curator’s subjective choice of default annotation to display in visualization for an object
+  """
   isVisualizationDefault: Boolean
 
-  """The source type for the annotation file"""
+  """
+  The source type for the annotation file (dataset_author, community, or portal_standard)
+  """
   source: annotation_file_source_enum
 }
 
@@ -885,25 +926,29 @@ input AnnotationFileCreateInput {
   """Shapes associated with an annotation"""
   annotationShapeId: ID = null
 
-  """Voxel spacings for a run"""
+  """Voxel spacing that this annotation file is associated with"""
   tomogramVoxelSpacingId: ID = null
 
-  """File format label"""
+  """File format for this file"""
   format: String!
 
-  """Path to the file in s3"""
+  """s3 path of the annotation file"""
   s3Path: String!
 
-  """Path to the file as an https url"""
+  """HTTPS path for this annotation file"""
   httpsPath: String!
 
-  """This annotation will be rendered in neuroglancer by default."""
+  """
+  Data curator’s subjective choice of default annotation to display in visualization for an object
+  """
   isVisualizationDefault: Boolean = null
 
-  """The source type for the annotation file"""
+  """
+  The source type for the annotation file (dataset_author, community, or portal_standard)
+  """
   source: annotation_file_source_enum = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 }
 
@@ -958,25 +1003,29 @@ input AnnotationFileUpdateInput {
   """Shapes associated with an annotation"""
   annotationShapeId: ID = null
 
-  """Voxel spacings for a run"""
+  """Voxel spacing that this annotation file is associated with"""
   tomogramVoxelSpacingId: ID = null
 
-  """File format label"""
+  """File format for this file"""
   format: String
 
-  """Path to the file in s3"""
+  """s3 path of the annotation file"""
   s3Path: String
 
-  """Path to the file as an https url"""
+  """HTTPS path for this annotation file"""
   httpsPath: String
 
-  """This annotation will be rendered in neuroglancer by default."""
+  """
+  Data curator’s subjective choice of default annotation to display in visualization for an object
+  """
   isVisualizationDefault: Boolean = null
 
-  """The source type for the annotation file"""
+  """
+  The source type for the annotation file (dataset_author, community, or portal_standard)
+  """
   source: annotation_file_source_enum = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 }
 
@@ -1003,6 +1052,7 @@ type AnnotationGroupByOptions {
   httpsMetadataPath: String
   annotationPublication: String
   annotationMethod: String
+  methodLinks: String
   groundTruthStatus: Boolean
   objectId: String
   objectName: String
@@ -1026,6 +1076,7 @@ type AnnotationMinMaxColumns {
   httpsMetadataPath: String
   annotationPublication: String
   annotationMethod: String
+  methodLinks: String
   objectId: String
   objectName: String
   objectDescription: String
@@ -1055,6 +1106,7 @@ input AnnotationOrderByClause {
   httpsMetadataPath: orderBy
   annotationPublication: orderBy
   annotationMethod: orderBy
+  methodLinks: orderBy
   groundTruthStatus: orderBy
   objectId: orderBy
   objectName: orderBy
@@ -1078,7 +1130,7 @@ type AnnotationShape implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   annotation(where: AnnotationWhereClause = null, orderBy: [AnnotationOrderByClause!] = []): Annotation
   annotationId: Int
@@ -1099,6 +1151,10 @@ type AnnotationShape implements EntityInterface & Node {
     last: Int = null
   ): AnnotationFileConnection!
   annotationFilesAggregate(where: AnnotationFileWhereClause = null): AnnotationFileAggregate
+
+  """
+  The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)
+  """
   shapeType: annotation_file_shape_type_enum
 }
 
@@ -1134,11 +1190,15 @@ enum AnnotationShapeCountColumns {
 }
 
 input AnnotationShapeCreateInput {
-  """Metadata about an annotation for a run"""
+  """Metadata about an shapes for an annotation"""
   annotationId: ID = null
+
+  """
+  The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)
+  """
   shapeType: annotation_file_shape_type_enum = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 }
 
@@ -1172,11 +1232,15 @@ input AnnotationShapeOrderByClause {
 }
 
 input AnnotationShapeUpdateInput {
-  """Metadata about an annotation for a run"""
+  """Metadata about an shapes for an annotation"""
   annotationId: ID = null
+
+  """
+  The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)
+  """
   shapeType: annotation_file_shape_type_enum = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 }
 
@@ -1195,14 +1259,14 @@ input AnnotationUpdateInput {
   runId: ID = null
   depositionId: ID = null
 
-  """Path to the file in s3"""
+  """S3 path for the metadata json file for this annotation"""
   s3MetadataPath: String
 
-  """Path to the file as an https url"""
+  """HTTPS path for the metadata json file for this annotation"""
   httpsMetadataPath: String
 
   """
-  List of publication IDs (EMPIAR, EMDB, DOI) that describe this annotation method. Comma separated.
+  DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.
   """
   annotationPublication: String = null
 
@@ -1212,11 +1276,18 @@ input AnnotationUpdateInput {
   annotationMethod: String
 
   """
+  Provides links to information on the method used for generating annotation, comma separated
+  """
+  methodLinks: String = null
+
+  """
   Whether an annotation is considered ground truth, as determined by the annotator.
   """
   groundTruthStatus: Boolean = null
 
-  """Gene Ontology Cellular Component identifier for the annotation object"""
+  """
+  Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.
+  """
   objectId: String
 
   """
@@ -1252,23 +1323,25 @@ input AnnotationUpdateInput {
   annotationSoftware: String = null
 
   """
-  This annotation is recommended by the curator to be preferred for this object type.
+  Data curator’s subjective choice as the best annotation of the same annotation object ID
   """
   isCuratorRecommended: Boolean = null
 
-  """Classification of the annotation method based on supervision."""
+  """
+  The method type for generating the annotation (e.g. manual, hybrid, automated)
+  """
   methodType: annotation_method_type_enum
 
-  """The date a data item was received by the cryoET data portal."""
+  """Date when an annotation set is initially received by the Data Portal."""
   depositionDate: DateTime
 
-  """The date a data item was received by the cryoET data portal."""
+  """Date when annotation data is made public by the Data Portal."""
   releaseDate: DateTime
 
-  """The date a piece of data was last modified on the cryoET data portal."""
+  """Date when an annotation was last modified in the Data Portal"""
   lastModifiedDate: DateTime
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 }
 
@@ -1281,6 +1354,7 @@ input AnnotationWhereClause {
   httpsMetadataPath: StrComparators
   annotationPublication: StrComparators
   annotationMethod: StrComparators
+  methodLinks: StrComparators
   groundTruthStatus: BoolComparators
   objectId: StrComparators
   objectName: StrComparators
@@ -1347,12 +1421,14 @@ input BoolComparators {
   _is_null: Boolean
 }
 
-"""An author of a dataset"""
+"""A collection of imaging experiments on the same organism"""
 type Dataset implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """
+  An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree
+  """
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
   depositionId: Int!
@@ -1408,7 +1484,7 @@ type Dataset implements EntityInterface & Node {
   ): RunConnection!
   runsAggregate(where: RunWhereClause = null): RunAggregate
 
-  """Title of a CryoET dataset."""
+  """Title of a CryoET dataset"""
   title: String!
 
   """
@@ -1417,7 +1493,7 @@ type Dataset implements EntityInterface & Node {
   description: String!
 
   """
-  Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens.
+  Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens
   """
   organismName: String
 
@@ -1429,11 +1505,11 @@ type Dataset implements EntityInterface & Node {
   """
   tissueName: String
 
-  """The UBERON identifier for the tissue."""
+  """UBERON identifier for the tissue"""
   tissueId: String
 
   """
-  Name of the cell type from which a biological sample used in a CryoET study is derived from.
+  Name of the cell from which a biological sample used in a CryoET study is derived from.
   """
   cellName: String
 
@@ -1443,20 +1519,22 @@ type Dataset implements EntityInterface & Node {
   """Cell line or strain for the sample."""
   cellStrainName: String
 
-  """Link to more information about the cell strain."""
+  """Link to more information about the cell strain"""
   cellStrainId: String
 
-  """Type of sample imaged in a CryoET study"""
+  """
+  Type of samples used in a CryoET study. (cell, tissue, organism, intact organelle, in-vitro mixture, in-silico synthetic data, other)
+  """
   sampleType: sample_type_enum
 
-  """Describes how the sample was prepared."""
+  """Describe how the sample was prepared."""
   samplePreparation: String
 
-  """Describes Cryo-ET grid preparation."""
+  """Describe Cryo-ET grid preparation."""
   gridPreparation: String
 
   """
-  Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication.
+  Describe other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication
   """
   otherSetup: String
 
@@ -1466,33 +1544,37 @@ type Dataset implements EntityInterface & Node {
   """URL for the thumbnail of preview image."""
   keyPhotoThumbnailUrl: String
 
-  """Name of the cellular component."""
+  """Name of the cellular component"""
   cellComponentName: String
 
-  """The GO identifier for the cellular component."""
+  """
+  If the dataset focuses on a specific part of a cell, the subset is included here
+  """
   cellComponentId: String
 
-  """The date a data item was received by the cryoET data portal."""
+  """Date when a dataset is initially received by the Data Portal."""
   depositionDate: DateTime!
 
-  """The date a data item was received by the cryoET data portal."""
+  """Date when a dataset is made available on the Data Portal."""
   releaseDate: DateTime!
 
-  """The date a piece of data was last modified on the cryoET data portal."""
+  """Date when a released dataset is last modified."""
   lastModifiedDate: DateTime!
 
   """
   Comma-separated list of DOIs for publications associated with the dataset.
   """
-  publications: String
+  datasetPublications: String
 
-  """Comma-separated list of related database entries for the dataset."""
+  """
+  If a CryoET dataset is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.
+  """
   relatedDatabaseEntries: String
 
-  """Path to a directory containing data for this entity as an S3 url"""
+  """The S3 public bucket path where this dataset is contained"""
   s3Prefix: String!
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
+  """The https directory path where this dataset is contained"""
   httpsPrefix: String!
 }
 
@@ -1516,36 +1598,40 @@ type DatasetAuthor implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   dataset(where: DatasetWhereClause = null, orderBy: [DatasetOrderByClause!] = []): Dataset
   datasetId: Int
 
-  """The order that the author is listed as in the associated publication"""
+  """The order in which the author appears in the publication"""
   authorListOrder: Int!
 
-  """The ORCID identifier for the author."""
+  """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String
 
-  """The full name of the author."""
+  """Full name of an author (e.g. Jane Doe)."""
   name: String!
 
-  """The email address of the author."""
+  """Email address for this author"""
   email: String
 
-  """The name of the author's affiliation."""
+  """Name of the institutions an author is affiliated with. Comma separated"""
   affiliationName: String
 
-  """The address of the author's affiliation."""
+  """Address of the institution an author is affiliated with."""
   affiliationAddress: String
 
-  """A Research Organization Registry (ROR) identifier."""
+  """
+  A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).
+  """
   affiliationIdentifier: String
 
-  """Whether the author is a corresponding author."""
+  """Indicates whether an author is the corresponding author"""
   correspondingAuthorStatus: Boolean
 
-  """Whether the author is a primary author."""
+  """
+  Indicates whether an author is the main person associated with the corresponding dataset
+  """
   primaryAuthorStatus: Boolean
 }
 
@@ -1588,37 +1674,41 @@ enum DatasetAuthorCountColumns {
 }
 
 input DatasetAuthorCreateInput {
-  """An author of a dataset"""
+  """Dataset authored by this person"""
   datasetId: ID = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 
-  """The order that the author is listed as in the associated publication"""
+  """The order in which the author appears in the publication"""
   authorListOrder: Int!
 
-  """The ORCID identifier for the author."""
+  """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
 
-  """The full name of the author."""
+  """Full name of an author (e.g. Jane Doe)."""
   name: String!
 
-  """The email address of the author."""
+  """Email address for this author"""
   email: String = null
 
-  """The name of the author's affiliation."""
+  """Name of the institutions an author is affiliated with. Comma separated"""
   affiliationName: String = null
 
-  """The address of the author's affiliation."""
+  """Address of the institution an author is affiliated with."""
   affiliationAddress: String = null
 
-  """A Research Organization Registry (ROR) identifier."""
+  """
+  A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).
+  """
   affiliationIdentifier: String = null
 
-  """Whether the author is a corresponding author."""
+  """Indicates whether an author is the corresponding author"""
   correspondingAuthorStatus: Boolean = null
 
-  """Whether the author is a primary author."""
+  """
+  Indicates whether an author is the main person associated with the corresponding dataset
+  """
   primaryAuthorStatus: Boolean = null
 }
 
@@ -1676,37 +1766,41 @@ input DatasetAuthorOrderByClause {
 }
 
 input DatasetAuthorUpdateInput {
-  """An author of a dataset"""
+  """Dataset authored by this person"""
   datasetId: ID = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 
-  """The order that the author is listed as in the associated publication"""
+  """The order in which the author appears in the publication"""
   authorListOrder: Int
 
-  """The ORCID identifier for the author."""
+  """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
 
-  """The full name of the author."""
+  """Full name of an author (e.g. Jane Doe)."""
   name: String
 
-  """The email address of the author."""
+  """Email address for this author"""
   email: String = null
 
-  """The name of the author's affiliation."""
+  """Name of the institutions an author is affiliated with. Comma separated"""
   affiliationName: String = null
 
-  """The address of the author's affiliation."""
+  """Address of the institution an author is affiliated with."""
   affiliationAddress: String = null
 
-  """A Research Organization Registry (ROR) identifier."""
+  """
+  A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).
+  """
   affiliationIdentifier: String = null
 
-  """Whether the author is a corresponding author."""
+  """Indicates whether an author is the corresponding author"""
   correspondingAuthorStatus: Boolean = null
 
-  """Whether the author is a primary author."""
+  """
+  Indicates whether an author is the main person associated with the corresponding dataset
+  """
   primaryAuthorStatus: Boolean = null
 }
 
@@ -1763,7 +1857,7 @@ enum DatasetCountColumns {
   depositionDate
   releaseDate
   lastModifiedDate
-  publications
+  datasetPublications
   relatedDatabaseEntries
   s3Prefix
   httpsPrefix
@@ -1771,9 +1865,10 @@ enum DatasetCountColumns {
 }
 
 input DatasetCreateInput {
+  """Reference to the deposition this dataset is associated with"""
   depositionId: ID!
 
-  """Title of a CryoET dataset."""
+  """Title of a CryoET dataset"""
   title: String!
 
   """
@@ -1782,7 +1877,7 @@ input DatasetCreateInput {
   description: String!
 
   """
-  Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens.
+  Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens
   """
   organismName: String = null
 
@@ -1794,11 +1889,11 @@ input DatasetCreateInput {
   """
   tissueName: String = null
 
-  """The UBERON identifier for the tissue."""
+  """UBERON identifier for the tissue"""
   tissueId: String = null
 
   """
-  Name of the cell type from which a biological sample used in a CryoET study is derived from.
+  Name of the cell from which a biological sample used in a CryoET study is derived from.
   """
   cellName: String = null
 
@@ -1808,20 +1903,22 @@ input DatasetCreateInput {
   """Cell line or strain for the sample."""
   cellStrainName: String = null
 
-  """Link to more information about the cell strain."""
+  """Link to more information about the cell strain"""
   cellStrainId: String = null
 
-  """Type of sample imaged in a CryoET study"""
+  """
+  Type of samples used in a CryoET study. (cell, tissue, organism, intact organelle, in-vitro mixture, in-silico synthetic data, other)
+  """
   sampleType: sample_type_enum = null
 
-  """Describes how the sample was prepared."""
+  """Describe how the sample was prepared."""
   samplePreparation: String = null
 
-  """Describes Cryo-ET grid preparation."""
+  """Describe Cryo-ET grid preparation."""
   gridPreparation: String = null
 
   """
-  Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication.
+  Describe other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication
   """
   otherSetup: String = null
 
@@ -1831,36 +1928,42 @@ input DatasetCreateInput {
   """URL for the thumbnail of preview image."""
   keyPhotoThumbnailUrl: String = null
 
-  """Name of the cellular component."""
+  """Name of the cellular component"""
   cellComponentName: String = null
 
-  """The GO identifier for the cellular component."""
+  """
+  If the dataset focuses on a specific part of a cell, the subset is included here
+  """
   cellComponentId: String = null
 
-  """The date a data item was received by the cryoET data portal."""
+  """Date when a dataset is initially received by the Data Portal."""
   depositionDate: DateTime!
 
-  """The date a data item was received by the cryoET data portal."""
+  """Date when a dataset is made available on the Data Portal."""
   releaseDate: DateTime!
 
-  """The date a piece of data was last modified on the cryoET data portal."""
+  """Date when a released dataset is last modified."""
   lastModifiedDate: DateTime!
 
   """
   Comma-separated list of DOIs for publications associated with the dataset.
   """
-  publications: String = null
+  datasetPublications: String = null
 
-  """Comma-separated list of related database entries for the dataset."""
+  """
+  If a CryoET dataset is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.
+  """
   relatedDatabaseEntries: String = null
 
-  """Path to a directory containing data for this entity as an S3 url"""
+  """The S3 public bucket path where this dataset is contained"""
   s3Prefix: String!
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
+  """The https directory path where this dataset is contained"""
   httpsPrefix: String!
 
-  """An identifier to refer to a specific instance of this type"""
+  """
+  An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree
+  """
   id: Int!
 }
 
@@ -1873,20 +1976,20 @@ type DatasetEdge {
   node: Dataset!
 }
 
-"""Information about how a dataset was funded"""
+"""Metadata for a dataset's funding sources"""
 type DatasetFunding implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   dataset(where: DatasetWhereClause = null, orderBy: [DatasetOrderByClause!] = []): Dataset
   datasetId: Int
 
-  """The name of the funding source."""
+  """Name of the funding agency."""
   fundingAgencyName: String
 
-  """Grant identifier provided by the funding agency"""
+  """Grant identifier provided by the funding agency."""
   grantId: String
 }
 
@@ -1922,16 +2025,16 @@ enum DatasetFundingCountColumns {
 }
 
 input DatasetFundingCreateInput {
-  """An author of a dataset"""
+  """The dataset this dataset funding is a part of"""
   datasetId: ID = null
 
-  """The name of the funding source."""
+  """Name of the funding agency."""
   fundingAgencyName: String = null
 
-  """Grant identifier provided by the funding agency"""
+  """Grant identifier provided by the funding agency."""
   grantId: String = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 }
 
@@ -1969,16 +2072,16 @@ input DatasetFundingOrderByClause {
 }
 
 input DatasetFundingUpdateInput {
-  """An author of a dataset"""
+  """The dataset this dataset funding is a part of"""
   datasetId: ID = null
 
-  """The name of the funding source."""
+  """Name of the funding agency."""
   fundingAgencyName: String = null
 
-  """Grant identifier provided by the funding agency"""
+  """Grant identifier provided by the funding agency."""
   grantId: String = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 }
 
@@ -2016,7 +2119,7 @@ type DatasetGroupByOptions {
   depositionDate: DateTime
   releaseDate: DateTime
   lastModifiedDate: DateTime
-  publications: String
+  datasetPublications: String
   relatedDatabaseEntries: String
   s3Prefix: String
   httpsPrefix: String
@@ -2044,7 +2147,7 @@ type DatasetMinMaxColumns {
   depositionDate: DateTime
   releaseDate: DateTime
   lastModifiedDate: DateTime
-  publications: String
+  datasetPublications: String
   relatedDatabaseEntries: String
   s3Prefix: String
   httpsPrefix: String
@@ -2079,7 +2182,7 @@ input DatasetOrderByClause {
   depositionDate: orderBy
   releaseDate: orderBy
   lastModifiedDate: orderBy
-  publications: orderBy
+  datasetPublications: orderBy
   relatedDatabaseEntries: orderBy
   s3Prefix: orderBy
   httpsPrefix: orderBy
@@ -2087,9 +2190,10 @@ input DatasetOrderByClause {
 }
 
 input DatasetUpdateInput {
+  """Reference to the deposition this dataset is associated with"""
   depositionId: ID
 
-  """Title of a CryoET dataset."""
+  """Title of a CryoET dataset"""
   title: String
 
   """
@@ -2098,7 +2202,7 @@ input DatasetUpdateInput {
   description: String
 
   """
-  Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens.
+  Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens
   """
   organismName: String = null
 
@@ -2110,11 +2214,11 @@ input DatasetUpdateInput {
   """
   tissueName: String = null
 
-  """The UBERON identifier for the tissue."""
+  """UBERON identifier for the tissue"""
   tissueId: String = null
 
   """
-  Name of the cell type from which a biological sample used in a CryoET study is derived from.
+  Name of the cell from which a biological sample used in a CryoET study is derived from.
   """
   cellName: String = null
 
@@ -2124,20 +2228,22 @@ input DatasetUpdateInput {
   """Cell line or strain for the sample."""
   cellStrainName: String = null
 
-  """Link to more information about the cell strain."""
+  """Link to more information about the cell strain"""
   cellStrainId: String = null
 
-  """Type of sample imaged in a CryoET study"""
+  """
+  Type of samples used in a CryoET study. (cell, tissue, organism, intact organelle, in-vitro mixture, in-silico synthetic data, other)
+  """
   sampleType: sample_type_enum = null
 
-  """Describes how the sample was prepared."""
+  """Describe how the sample was prepared."""
   samplePreparation: String = null
 
-  """Describes Cryo-ET grid preparation."""
+  """Describe Cryo-ET grid preparation."""
   gridPreparation: String = null
 
   """
-  Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication.
+  Describe other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication
   """
   otherSetup: String = null
 
@@ -2147,36 +2253,42 @@ input DatasetUpdateInput {
   """URL for the thumbnail of preview image."""
   keyPhotoThumbnailUrl: String = null
 
-  """Name of the cellular component."""
+  """Name of the cellular component"""
   cellComponentName: String = null
 
-  """The GO identifier for the cellular component."""
+  """
+  If the dataset focuses on a specific part of a cell, the subset is included here
+  """
   cellComponentId: String = null
 
-  """The date a data item was received by the cryoET data portal."""
+  """Date when a dataset is initially received by the Data Portal."""
   depositionDate: DateTime
 
-  """The date a data item was received by the cryoET data portal."""
+  """Date when a dataset is made available on the Data Portal."""
   releaseDate: DateTime
 
-  """The date a piece of data was last modified on the cryoET data portal."""
+  """Date when a released dataset is last modified."""
   lastModifiedDate: DateTime
 
   """
   Comma-separated list of DOIs for publications associated with the dataset.
   """
-  publications: String = null
+  datasetPublications: String = null
 
-  """Comma-separated list of related database entries for the dataset."""
+  """
+  If a CryoET dataset is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.
+  """
   relatedDatabaseEntries: String = null
 
-  """Path to a directory containing data for this entity as an S3 url"""
+  """The S3 public bucket path where this dataset is contained"""
   s3Prefix: String
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
+  """The https directory path where this dataset is contained"""
   httpsPrefix: String
 
-  """An identifier to refer to a specific instance of this type"""
+  """
+  An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree
+  """
   id: Int
 }
 
@@ -2206,7 +2318,7 @@ input DatasetWhereClause {
   depositionDate: DatetimeComparators
   releaseDate: DatetimeComparators
   lastModifiedDate: DatetimeComparators
-  publications: StrComparators
+  datasetPublications: StrComparators
   relatedDatabaseEntries: StrComparators
   s3Prefix: StrComparators
   httpsPrefix: StrComparators
@@ -2232,11 +2344,12 @@ input DatetimeComparators {
   _is_null: Boolean
 }
 
+"""Deposition metadata"""
 type Deposition implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   authors(
     where: DepositionAuthorWhereClause = null
@@ -2358,13 +2471,11 @@ type Deposition implements EntityInterface & Node {
   ): TomogramConnection!
   tomogramsAggregate(where: TomogramWhereClause = null): TomogramAggregate
 
-  """Title of a CryoET deposition."""
-  depositionTitle: String!
+  """Title for the deposition"""
+  title: String!
 
-  """
-  A short description of the deposition, similar to an abstract for a journal article or dataset.
-  """
-  depositionDescription: String!
+  """Description for the deposition"""
+  description: String!
   depositionTypes(
     where: DepositionTypeWhereClause = null
     orderBy: [DepositionTypeOrderByClause!] = []
@@ -2383,22 +2494,26 @@ type Deposition implements EntityInterface & Node {
   ): DepositionTypeConnection!
   depositionTypesAggregate(where: DepositionTypeWhereClause = null): DepositionTypeAggregate
 
-  """
-  Comma-separated list of DOIs for publications associated with the dataset.
-  """
-  publications: String
+  """The publications related to this deposition"""
+  depositionPublications: String
 
-  """Comma-separated list of related database entries for the dataset."""
+  """The related database entries to this deposition"""
   relatedDatabaseEntries: String
 
-  """The date a data item was received by the cryoET data portal."""
+  """The date the deposition was deposited"""
   depositionDate: DateTime!
 
-  """The date a data item was received by the cryoET data portal."""
+  """The date the deposition was released"""
   releaseDate: DateTime!
 
-  """The date a piece of data was last modified on the cryoET data portal."""
+  """The date the deposition was last modified"""
   lastModifiedDate: DateTime!
+
+  """URL for the deposition preview image."""
+  keyPhotoUrl: String
+
+  """URL for the deposition thumbnail image."""
+  keyPhotoThumbnailUrl: String
 }
 
 type DepositionAggregate {
@@ -2416,41 +2531,43 @@ type DepositionAggregateFunctions {
   count(distinct: Boolean = false, columns: DepositionCountColumns = null): Int
 }
 
-"""Author of a deposition"""
+"""Authors for a deposition"""
 type DepositionAuthor implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
   depositionId: Int!
 
-  """The order that the author is listed as in the associated publication"""
+  """The order in which the author appears in the publication"""
   authorListOrder: Int!
 
-  """The ORCID identifier for the author."""
+  """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String
 
-  """The full name of the author."""
+  """Full name of a deposition author (e.g. Jane Doe)."""
   name: String!
 
-  """The email address of the author."""
+  """Email address for this author"""
   email: String
 
-  """The name of the author's affiliation."""
+  """Name of the institutions an author is affiliated with. Comma separated"""
   affiliationName: String
 
-  """The address of the author's affiliation."""
+  """Address of the institution an author is affiliated with."""
   affiliationAddress: String
 
-  """A Research Organization Registry (ROR) identifier."""
+  """
+  A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).
+  """
   affiliationIdentifier: String
 
-  """Whether the author is a corresponding author."""
+  """Indicates whether an author is the corresponding author"""
   correspondingAuthorStatus: Boolean
 
-  """Whether the author is a primary author."""
+  """Indicates whether an author is the main person creating the deposition"""
   primaryAuthorStatus: Boolean
 }
 
@@ -2495,34 +2612,36 @@ enum DepositionAuthorCountColumns {
 input DepositionAuthorCreateInput {
   depositionId: ID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 
-  """The order that the author is listed as in the associated publication"""
+  """The order in which the author appears in the publication"""
   authorListOrder: Int!
 
-  """The ORCID identifier for the author."""
+  """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
 
-  """The full name of the author."""
+  """Full name of a deposition author (e.g. Jane Doe)."""
   name: String!
 
-  """The email address of the author."""
+  """Email address for this author"""
   email: String = null
 
-  """The name of the author's affiliation."""
+  """Name of the institutions an author is affiliated with. Comma separated"""
   affiliationName: String = null
 
-  """The address of the author's affiliation."""
+  """Address of the institution an author is affiliated with."""
   affiliationAddress: String = null
 
-  """A Research Organization Registry (ROR) identifier."""
+  """
+  A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).
+  """
   affiliationIdentifier: String = null
 
-  """Whether the author is a corresponding author."""
+  """Indicates whether an author is the corresponding author"""
   correspondingAuthorStatus: Boolean = null
 
-  """Whether the author is a primary author."""
+  """Indicates whether an author is the main person creating the deposition"""
   primaryAuthorStatus: Boolean = null
 }
 
@@ -2582,34 +2701,36 @@ input DepositionAuthorOrderByClause {
 input DepositionAuthorUpdateInput {
   depositionId: ID
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 
-  """The order that the author is listed as in the associated publication"""
+  """The order in which the author appears in the publication"""
   authorListOrder: Int
 
-  """The ORCID identifier for the author."""
+  """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
 
-  """The full name of the author."""
+  """Full name of a deposition author (e.g. Jane Doe)."""
   name: String
 
-  """The email address of the author."""
+  """Email address for this author"""
   email: String = null
 
-  """The name of the author's affiliation."""
+  """Name of the institutions an author is affiliated with. Comma separated"""
   affiliationName: String = null
 
-  """The address of the author's affiliation."""
+  """Address of the institution an author is affiliated with."""
   affiliationAddress: String = null
 
-  """A Research Organization Registry (ROR) identifier."""
+  """
+  A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).
+  """
   affiliationIdentifier: String = null
 
-  """Whether the author is a corresponding author."""
+  """Indicates whether an author is the corresponding author"""
   correspondingAuthorStatus: Boolean = null
 
-  """Whether the author is a primary author."""
+  """Indicates whether an author is the main person creating the deposition"""
   primaryAuthorStatus: Boolean = null
 }
 
@@ -2639,66 +2760,74 @@ enum DepositionCountColumns {
   frames
   tiltseries
   tomograms
-  depositionTitle
-  depositionDescription
+  title
+  description
   depositionTypes
-  publications
+  depositionPublications
   relatedDatabaseEntries
   depositionDate
   releaseDate
   lastModifiedDate
+  keyPhotoUrl
+  keyPhotoThumbnailUrl
   id
 }
 
 input DepositionCreateInput {
-  """Title of a CryoET deposition."""
-  depositionTitle: String!
+  """Title for the deposition"""
+  title: String!
 
-  """
-  A short description of the deposition, similar to an abstract for a journal article or dataset.
-  """
-  depositionDescription: String!
+  """Description for the deposition"""
+  description: String!
 
-  """
-  Comma-separated list of DOIs for publications associated with the dataset.
-  """
-  publications: String = null
+  """The publications related to this deposition"""
+  depositionPublications: String = null
 
-  """Comma-separated list of related database entries for the dataset."""
+  """The related database entries to this deposition"""
   relatedDatabaseEntries: String = null
 
-  """The date a data item was received by the cryoET data portal."""
+  """The date the deposition was deposited"""
   depositionDate: DateTime!
 
-  """The date a data item was received by the cryoET data portal."""
+  """The date the deposition was released"""
   releaseDate: DateTime!
 
-  """The date a piece of data was last modified on the cryoET data portal."""
+  """The date the deposition was last modified"""
   lastModifiedDate: DateTime!
 
-  """An identifier to refer to a specific instance of this type"""
+  """URL for the deposition preview image."""
+  keyPhotoUrl: String = null
+
+  """URL for the deposition thumbnail image."""
+  keyPhotoThumbnailUrl: String = null
+
+  """Numeric identifier (May change!)"""
   id: Int!
 }
 
 type DepositionGroupByOptions {
-  depositionTitle: String
-  depositionDescription: String
-  publications: String
+  title: String
+  description: String
+  depositionPublications: String
   relatedDatabaseEntries: String
   depositionDate: DateTime
   releaseDate: DateTime
   lastModifiedDate: DateTime
+  keyPhotoUrl: String
+  keyPhotoThumbnailUrl: String
   id: Int
 }
 
 type DepositionMinMaxColumns {
-  depositionTitle: String
-  depositionDescription: String
-  publications: String
+  title: String
+  description: String
+  depositionPublications: String
   relatedDatabaseEntries: String
   depositionDate: DateTime
   releaseDate: DateTime
   lastModifiedDate: DateTime
+  keyPhotoUrl: String
+  keyPhotoThumbnailUrl: String
   id: Int
 }
 
@@ -2707,13 +2836,15 @@ type DepositionNumericalColumns {
 }
 
 input DepositionOrderByClause {
-  depositionTitle: orderBy
-  depositionDescription: orderBy
-  publications: orderBy
+  title: orderBy
+  description: orderBy
+  depositionPublications: orderBy
   relatedDatabaseEntries: orderBy
   depositionDate: orderBy
   releaseDate: orderBy
   lastModifiedDate: orderBy
+  keyPhotoUrl: orderBy
+  keyPhotoThumbnailUrl: orderBy
   id: orderBy
 }
 
@@ -2721,10 +2852,14 @@ type DepositionType implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
   depositionId: Int!
+
+  """
+  The type of data submitted as a part of this deposition (annotation, dataset, tomogram)
+  """
   type: deposition_types_enum
 }
 
@@ -2760,9 +2895,13 @@ enum DepositionTypeCountColumns {
 
 input DepositionTypeCreateInput {
   depositionId: ID!
+
+  """
+  The type of data submitted as a part of this deposition (annotation, dataset, tomogram)
+  """
   type: deposition_types_enum = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 }
 
@@ -2797,9 +2936,13 @@ input DepositionTypeOrderByClause {
 
 input DepositionTypeUpdateInput {
   depositionId: ID
+
+  """
+  The type of data submitted as a part of this deposition (annotation, dataset, tomogram)
+  """
   type: deposition_types_enum = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 }
 
@@ -2814,32 +2957,34 @@ input DepositionTypeWhereClauseMutations {
 }
 
 input DepositionUpdateInput {
-  """Title of a CryoET deposition."""
-  depositionTitle: String
+  """Title for the deposition"""
+  title: String
 
-  """
-  A short description of the deposition, similar to an abstract for a journal article or dataset.
-  """
-  depositionDescription: String
+  """Description for the deposition"""
+  description: String
 
-  """
-  Comma-separated list of DOIs for publications associated with the dataset.
-  """
-  publications: String = null
+  """The publications related to this deposition"""
+  depositionPublications: String = null
 
-  """Comma-separated list of related database entries for the dataset."""
+  """The related database entries to this deposition"""
   relatedDatabaseEntries: String = null
 
-  """The date a data item was received by the cryoET data portal."""
+  """The date the deposition was deposited"""
   depositionDate: DateTime
 
-  """The date a data item was received by the cryoET data portal."""
+  """The date the deposition was released"""
   releaseDate: DateTime
 
-  """The date a piece of data was last modified on the cryoET data portal."""
+  """The date the deposition was last modified"""
   lastModifiedDate: DateTime
 
-  """An identifier to refer to a specific instance of this type"""
+  """URL for the deposition preview image."""
+  keyPhotoUrl: String = null
+
+  """URL for the deposition thumbnail image."""
+  keyPhotoThumbnailUrl: String = null
+
+  """Numeric identifier (May change!)"""
   id: Int
 }
 
@@ -2851,14 +2996,16 @@ input DepositionWhereClause {
   frames: FrameWhereClause
   tiltseries: TiltseriesWhereClause
   tomograms: TomogramWhereClause
-  depositionTitle: StrComparators
-  depositionDescription: StrComparators
+  title: StrComparators
+  description: StrComparators
   depositionTypes: DepositionTypeWhereClause
-  publications: StrComparators
+  depositionPublications: StrComparators
   relatedDatabaseEntries: StrComparators
   depositionDate: DatetimeComparators
   releaseDate: DatetimeComparators
   lastModifiedDate: DatetimeComparators
+  keyPhotoUrl: StrComparators
+  keyPhotoThumbnailUrl: StrComparators
   id: IntComparators
 }
 
@@ -2911,7 +3058,7 @@ type Frame implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
   depositionId: Int
@@ -3027,7 +3174,7 @@ input FrameCreateInput {
   """Path to a directory containing data for this entity as an HTTPS url"""
   httpsPrefix: String!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 }
 
@@ -3114,7 +3261,7 @@ input FrameUpdateInput {
   """Path to a directory containing data for this entity as an HTTPS url"""
   httpsPrefix: String
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 }
 
@@ -3245,7 +3392,7 @@ type PerSectionAlignmentParameters implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   alignment(where: AlignmentWhereClause = null, orderBy: [AlignmentOrderByClause!] = []): Alignment
   alignmentId: Int!
@@ -3326,7 +3473,7 @@ input PerSectionAlignmentParametersCreateInput {
   """Tilt angle of the projection in degrees"""
   tiltAngle: Float = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 }
 
@@ -3403,7 +3550,7 @@ input PerSectionAlignmentParametersUpdateInput {
   """Tilt angle of the projection in degrees"""
   tiltAngle: Float = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 }
 
@@ -3422,12 +3569,12 @@ input PerSectionAlignmentParametersWhereClauseMutations {
   id: IntComparators
 }
 
-"""Record how frames get mapped to TiltSeries"""
+"""Record how frames get mapped to Tiltseries"""
 type PerSectionParameters implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   frame(where: FrameWhereClause = null, orderBy: [FrameOrderByClause!] = []): Frame
   frameId: Int!
@@ -3497,7 +3644,7 @@ input PerSectionParametersCreateInput {
   """Angle of ast"""
   astigmaticAngle: Float = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 }
 
@@ -3562,7 +3709,7 @@ input PerSectionParametersUpdateInput {
   """Angle of ast"""
   astigmaticAngle: Float = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 }
 
@@ -3625,7 +3772,7 @@ type Run implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   alignments(
     where: AlignmentWhereClause = null
@@ -3732,13 +3879,13 @@ type Run implements EntityInterface & Node {
   ): TomogramConnection!
   tomogramsAggregate(where: TomogramWhereClause = null): TomogramAggregate
 
-  """Name of a run"""
+  """Short name for this experiment run"""
   name: String!
 
-  """Path to a directory containing data for this entity as an S3 url"""
+  """The S3 public bucket path where this run is contained"""
   s3Prefix: String!
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
+  """The HTTPS directory path where this run is contained url"""
   httpsPrefix: String!
 }
 
@@ -3781,19 +3928,19 @@ enum RunCountColumns {
 }
 
 input RunCreateInput {
-  """An author of a dataset"""
+  """Dataset that this run is a part of"""
   datasetId: ID!
 
-  """Name of a run"""
+  """Short name for this experiment run"""
   name: String!
 
-  """Path to a directory containing data for this entity as an S3 url"""
+  """The S3 public bucket path where this run is contained"""
   s3Prefix: String!
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
+  """The HTTPS directory path where this run is contained url"""
   httpsPrefix: String!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 }
 
@@ -3834,19 +3981,19 @@ input RunOrderByClause {
 }
 
 input RunUpdateInput {
-  """An author of a dataset"""
+  """Dataset that this run is a part of"""
   datasetId: ID
 
-  """Name of a run"""
+  """Short name for this experiment run"""
   name: String
 
-  """Path to a directory containing data for this entity as an S3 url"""
+  """The S3 public bucket path where this run is contained"""
   s3Prefix: String
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
+  """The HTTPS directory path where this run is contained url"""
   httpsPrefix: String
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 }
 
@@ -3904,7 +4051,7 @@ type Tiltseries implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   alignments(
     where: AlignmentWhereClause = null
@@ -3976,12 +4123,12 @@ type Tiltseries implements EntityInterface & Node {
   httpsGainFile: String
 
   """Electron Microscope Accelerator voltage in volts"""
-  accelerationVoltage: Float!
+  accelerationVoltage: Int!
 
   """Spherical Aberration Constant of the objective lens in millimeters"""
   sphericalAberrationConstant: Float!
 
-  """Name of the microscope manufacturer"""
+  """Name of the microscope manufacturer (FEI, TFS, JEOL)"""
   microscopeManufacturer: tiltseries_microscope_manufacturer_enum!
 
   """Microscope model name"""
@@ -4013,7 +4160,7 @@ type Tiltseries implements EntityInterface & Node {
   """Maximal tilt angle in degrees"""
   tiltMax: Float!
 
-  """Total tilt range from min to max in degrees"""
+  """Total tilt range in degrees"""
   tiltRange: Float!
 
   """Tilt step in degrees"""
@@ -4049,14 +4196,14 @@ type Tiltseries implements EntityInterface & Node {
   """Whether this tilt series is aligned"""
   isAligned: Boolean!
 
-  """Pixel spacing for the tilt series"""
+  """Pixel spacing equal in both axes in angstroms"""
   pixelSpacing: Float!
 
   """Binning factor of the aligned tilt series"""
-  alignedTiltseriesBinning: Float
+  alignedTiltseriesBinning: Int
 
   """Number of frames associated with this tiltseries"""
-  tiltseriesFramesCount: Int
+  framesCount: Int
 }
 
 type TiltseriesAggregate {
@@ -4122,7 +4269,7 @@ enum TiltseriesCountColumns {
   isAligned
   pixelSpacing
   alignedTiltseriesBinning
-  tiltseriesFramesCount
+  framesCount
   id
 }
 
@@ -4161,12 +4308,12 @@ input TiltseriesCreateInput {
   httpsGainFile: String = null
 
   """Electron Microscope Accelerator voltage in volts"""
-  accelerationVoltage: Float!
+  accelerationVoltage: Int!
 
   """Spherical Aberration Constant of the objective lens in millimeters"""
   sphericalAberrationConstant: Float!
 
-  """Name of the microscope manufacturer"""
+  """Name of the microscope manufacturer (FEI, TFS, JEOL)"""
   microscopeManufacturer: tiltseries_microscope_manufacturer_enum!
 
   """Microscope model name"""
@@ -4198,7 +4345,7 @@ input TiltseriesCreateInput {
   """Maximal tilt angle in degrees"""
   tiltMax: Float!
 
-  """Total tilt range from min to max in degrees"""
+  """Total tilt range in degrees"""
   tiltRange: Float!
 
   """Tilt step in degrees"""
@@ -4234,16 +4381,16 @@ input TiltseriesCreateInput {
   """Whether this tilt series is aligned"""
   isAligned: Boolean!
 
-  """Pixel spacing for the tilt series"""
+  """Pixel spacing equal in both axes in angstroms"""
   pixelSpacing: Float!
 
   """Binning factor of the aligned tilt series"""
-  alignedTiltseriesBinning: Float = null
+  alignedTiltseriesBinning: Int = null
 
   """Number of frames associated with this tiltseries"""
-  tiltseriesFramesCount: Int = null
+  framesCount: Int = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 }
 
@@ -4269,7 +4416,7 @@ type TiltseriesGroupByOptions {
   httpsAngleList: String
   s3GainFile: String
   httpsGainFile: String
-  accelerationVoltage: Float
+  accelerationVoltage: Int
   sphericalAberrationConstant: Float
   microscopeManufacturer: tiltseries_microscope_manufacturer_enum
   microscopeModel: String
@@ -4292,8 +4439,8 @@ type TiltseriesGroupByOptions {
   tiltSeriesQuality: Int
   isAligned: Boolean
   pixelSpacing: Float
-  alignedTiltseriesBinning: Float
-  tiltseriesFramesCount: Int
+  alignedTiltseriesBinning: Int
+  framesCount: Int
   id: Int
 }
 
@@ -4308,7 +4455,7 @@ type TiltseriesMinMaxColumns {
   httpsAngleList: String
   s3GainFile: String
   httpsGainFile: String
-  accelerationVoltage: Float
+  accelerationVoltage: Int
   sphericalAberrationConstant: Float
   microscopeModel: String
   microscopeEnergyFilter: String
@@ -4329,13 +4476,13 @@ type TiltseriesMinMaxColumns {
   binningFromFrames: Float
   tiltSeriesQuality: Int
   pixelSpacing: Float
-  alignedTiltseriesBinning: Float
-  tiltseriesFramesCount: Int
+  alignedTiltseriesBinning: Int
+  framesCount: Int
   id: Int
 }
 
 type TiltseriesNumericalColumns {
-  accelerationVoltage: Float
+  accelerationVoltage: Int
   sphericalAberrationConstant: Float
   tiltMin: Float
   tiltMax: Float
@@ -4346,8 +4493,8 @@ type TiltseriesNumericalColumns {
   binningFromFrames: Float
   tiltSeriesQuality: Int
   pixelSpacing: Float
-  alignedTiltseriesBinning: Float
-  tiltseriesFramesCount: Int
+  alignedTiltseriesBinning: Int
+  framesCount: Int
   id: Int
 }
 
@@ -4388,7 +4535,7 @@ input TiltseriesOrderByClause {
   isAligned: orderBy
   pixelSpacing: orderBy
   alignedTiltseriesBinning: orderBy
-  tiltseriesFramesCount: orderBy
+  framesCount: orderBy
   id: orderBy
 }
 
@@ -4427,12 +4574,12 @@ input TiltseriesUpdateInput {
   httpsGainFile: String = null
 
   """Electron Microscope Accelerator voltage in volts"""
-  accelerationVoltage: Float
+  accelerationVoltage: Int
 
   """Spherical Aberration Constant of the objective lens in millimeters"""
   sphericalAberrationConstant: Float
 
-  """Name of the microscope manufacturer"""
+  """Name of the microscope manufacturer (FEI, TFS, JEOL)"""
   microscopeManufacturer: tiltseries_microscope_manufacturer_enum
 
   """Microscope model name"""
@@ -4464,7 +4611,7 @@ input TiltseriesUpdateInput {
   """Maximal tilt angle in degrees"""
   tiltMax: Float
 
-  """Total tilt range from min to max in degrees"""
+  """Total tilt range in degrees"""
   tiltRange: Float
 
   """Tilt step in degrees"""
@@ -4500,16 +4647,16 @@ input TiltseriesUpdateInput {
   """Whether this tilt series is aligned"""
   isAligned: Boolean
 
-  """Pixel spacing for the tilt series"""
+  """Pixel spacing equal in both axes in angstroms"""
   pixelSpacing: Float
 
   """Binning factor of the aligned tilt series"""
-  alignedTiltseriesBinning: Float = null
+  alignedTiltseriesBinning: Int = null
 
   """Number of frames associated with this tiltseries"""
-  tiltseriesFramesCount: Int = null
+  framesCount: Int = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 }
 
@@ -4528,7 +4675,7 @@ input TiltseriesWhereClause {
   httpsAngleList: StrComparators
   s3GainFile: StrComparators
   httpsGainFile: StrComparators
-  accelerationVoltage: FloatComparators
+  accelerationVoltage: IntComparators
   sphericalAberrationConstant: FloatComparators
   microscopeManufacturer: Tiltseries_microscope_manufacturer_enumEnumComparators
   microscopeModel: StrComparators
@@ -4551,8 +4698,8 @@ input TiltseriesWhereClause {
   tiltSeriesQuality: IntComparators
   isAligned: BoolComparators
   pixelSpacing: FloatComparators
-  alignedTiltseriesBinning: FloatComparators
-  tiltseriesFramesCount: IntComparators
+  alignedTiltseriesBinning: IntComparators
+  framesCount: IntComparators
   id: IntComparators
 }
 
@@ -4577,7 +4724,7 @@ type Tomogram implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   alignment(where: AlignmentWhereClause = null, orderBy: [AlignmentOrderByClause!] = []): Alignment
   alignmentId: Int
@@ -4608,20 +4755,22 @@ type Tomogram implements EntityInterface & Node {
   """Short name for this tomogram"""
   name: String
 
-  """Tomogram voxels in the x dimension"""
-  sizeX: Float!
+  """Number of pixels in the 3D data fast axis"""
+  sizeX: Int!
 
-  """Tomogram voxels in the y dimension"""
-  sizeY: Float!
+  """Number of pixels in the 3D data medium axis"""
+  sizeY: Int!
 
-  """Tomogram voxels in the z dimension"""
-  sizeZ: Float!
+  """
+  Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
+  """
+  sizeZ: Int!
 
   """Voxel spacing equal in all three axes in angstroms"""
   voxelSpacing: Float!
 
   """
-  Whether the tomographic alignment was computed based on fiducial markers.
+  Fiducial Alignment status: True = aligned with fiducial False = aligned without fiducial
   """
   fiducialAlignmentStatus: fiducial_alignment_status_enum!
 
@@ -4640,7 +4789,9 @@ type Tomogram implements EntityInterface & Node {
   """Name of software used for reconstruction"""
   reconstructionSoftware: String!
 
-  """whether this tomogram is canonical for the run"""
+  """
+  Is this tomogram considered the canonical tomogram for the run experiment? True=Yes
+  """
   isCanonical: Boolean
 
   """S3 path to this tomogram in multiscale OME-Zarr format"""
@@ -4709,36 +4860,38 @@ type TomogramAuthor implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   tomogram(where: TomogramWhereClause = null, orderBy: [TomogramOrderByClause!] = []): Tomogram
   tomogramId: Int
 
-  """The order that the author is listed as in the associated publication"""
+  """The order in which the author appears in the publication"""
   authorListOrder: Int!
 
-  """The ORCID identifier for the author."""
+  """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String
 
-  """The full name of the author."""
+  """Full name of an author (e.g. Jane Doe)."""
   name: String!
 
-  """The email address of the author."""
+  """Email address for this author"""
   email: String
 
-  """The name of the author's affiliation."""
+  """Name of the institutions an author is affiliated with. Comma separated"""
   affiliationName: String
 
-  """The address of the author's affiliation."""
+  """Address of the institution an author is affiliated with."""
   affiliationAddress: String
 
-  """A Research Organization Registry (ROR) identifier."""
+  """
+  A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).
+  """
   affiliationIdentifier: String
 
-  """Whether the author is a corresponding author."""
+  """Indicates whether an author is the corresponding author"""
   correspondingAuthorStatus: Boolean
 
-  """Whether the author is a primary author."""
+  """Indicates whether an author is the main person creating the tomogram"""
   primaryAuthorStatus: Boolean
 }
 
@@ -4781,37 +4934,39 @@ enum TomogramAuthorCountColumns {
 }
 
 input TomogramAuthorCreateInput {
-  """Metadata describing a tomogram."""
+  """The tomogram this tomogram author is a part of"""
   tomogramId: ID = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 
-  """The order that the author is listed as in the associated publication"""
+  """The order in which the author appears in the publication"""
   authorListOrder: Int!
 
-  """The ORCID identifier for the author."""
+  """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
 
-  """The full name of the author."""
+  """Full name of an author (e.g. Jane Doe)."""
   name: String!
 
-  """The email address of the author."""
+  """Email address for this author"""
   email: String = null
 
-  """The name of the author's affiliation."""
+  """Name of the institutions an author is affiliated with. Comma separated"""
   affiliationName: String = null
 
-  """The address of the author's affiliation."""
+  """Address of the institution an author is affiliated with."""
   affiliationAddress: String = null
 
-  """A Research Organization Registry (ROR) identifier."""
+  """
+  A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).
+  """
   affiliationIdentifier: String = null
 
-  """Whether the author is a corresponding author."""
+  """Indicates whether an author is the corresponding author"""
   correspondingAuthorStatus: Boolean = null
 
-  """Whether the author is a primary author."""
+  """Indicates whether an author is the main person creating the tomogram"""
   primaryAuthorStatus: Boolean = null
 }
 
@@ -4869,37 +5024,39 @@ input TomogramAuthorOrderByClause {
 }
 
 input TomogramAuthorUpdateInput {
-  """Metadata describing a tomogram."""
+  """The tomogram this tomogram author is a part of"""
   tomogramId: ID = null
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 
-  """The order that the author is listed as in the associated publication"""
+  """The order in which the author appears in the publication"""
   authorListOrder: Int
 
-  """The ORCID identifier for the author."""
+  """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
 
-  """The full name of the author."""
+  """Full name of an author (e.g. Jane Doe)."""
   name: String
 
-  """The email address of the author."""
+  """Email address for this author"""
   email: String = null
 
-  """The name of the author's affiliation."""
+  """Name of the institutions an author is affiliated with. Comma separated"""
   affiliationName: String = null
 
-  """The address of the author's affiliation."""
+  """Address of the institution an author is affiliated with."""
   affiliationAddress: String = null
 
-  """A Research Organization Registry (ROR) identifier."""
+  """
+  A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).
+  """
   affiliationIdentifier: String = null
 
-  """Whether the author is a corresponding author."""
+  """Indicates whether an author is the corresponding author"""
   correspondingAuthorStatus: Boolean = null
 
-  """Whether the author is a primary author."""
+  """Indicates whether an author is the main person creating the tomogram"""
   primaryAuthorStatus: Boolean = null
 }
 
@@ -4969,6 +5126,8 @@ enum TomogramCountColumns {
 input TomogramCreateInput {
   """Tiltseries Alignment"""
   alignmentId: ID = null
+
+  """If the tomogram is part of a deposition, the related deposition"""
   depositionId: ID!
   runId: ID = null
 
@@ -4978,20 +5137,22 @@ input TomogramCreateInput {
   """Short name for this tomogram"""
   name: String = null
 
-  """Tomogram voxels in the x dimension"""
-  sizeX: Float!
+  """Number of pixels in the 3D data fast axis"""
+  sizeX: Int!
 
-  """Tomogram voxels in the y dimension"""
-  sizeY: Float!
+  """Number of pixels in the 3D data medium axis"""
+  sizeY: Int!
 
-  """Tomogram voxels in the z dimension"""
-  sizeZ: Float!
+  """
+  Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
+  """
+  sizeZ: Int!
 
   """Voxel spacing equal in all three axes in angstroms"""
   voxelSpacing: Float!
 
   """
-  Whether the tomographic alignment was computed based on fiducial markers.
+  Fiducial Alignment status: True = aligned with fiducial False = aligned without fiducial
   """
   fiducialAlignmentStatus: fiducial_alignment_status_enum!
 
@@ -5010,7 +5171,9 @@ input TomogramCreateInput {
   """Name of software used for reconstruction"""
   reconstructionSoftware: String!
 
-  """whether this tomogram is canonical for the run"""
+  """
+  Is this tomogram considered the canonical tomogram for the run experiment? True=Yes
+  """
   isCanonical: Boolean = null
 
   """S3 path to this tomogram in multiscale OME-Zarr format"""
@@ -5058,7 +5221,7 @@ input TomogramCreateInput {
   """Whether this tomogram was generated per the portal's standards"""
   isStandardized: Boolean!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 }
 
@@ -5077,9 +5240,9 @@ type TomogramGroupByOptions {
   run: RunGroupByOptions
   tomogramVoxelSpacing: TomogramVoxelSpacingGroupByOptions
   name: String
-  sizeX: Float
-  sizeY: Float
-  sizeZ: Float
+  sizeX: Int
+  sizeY: Int
+  sizeZ: Int
   voxelSpacing: Float
   fiducialAlignmentStatus: fiducial_alignment_status_enum
   reconstructionMethod: tomogram_reconstruction_method_enum
@@ -5108,9 +5271,9 @@ type TomogramGroupByOptions {
 
 type TomogramMinMaxColumns {
   name: String
-  sizeX: Float
-  sizeY: Float
-  sizeZ: Float
+  sizeX: Int
+  sizeY: Int
+  sizeZ: Int
   voxelSpacing: Float
   tomogramVersion: Float
   processingSoftware: String
@@ -5132,9 +5295,9 @@ type TomogramMinMaxColumns {
 }
 
 type TomogramNumericalColumns {
-  sizeX: Float
-  sizeY: Float
-  sizeZ: Float
+  sizeX: Int
+  sizeY: Int
+  sizeZ: Int
   voxelSpacing: Float
   tomogramVersion: Float
   offsetX: Int
@@ -5181,6 +5344,8 @@ input TomogramOrderByClause {
 input TomogramUpdateInput {
   """Tiltseries Alignment"""
   alignmentId: ID = null
+
+  """If the tomogram is part of a deposition, the related deposition"""
   depositionId: ID
   runId: ID = null
 
@@ -5190,20 +5355,22 @@ input TomogramUpdateInput {
   """Short name for this tomogram"""
   name: String = null
 
-  """Tomogram voxels in the x dimension"""
-  sizeX: Float
+  """Number of pixels in the 3D data fast axis"""
+  sizeX: Int
 
-  """Tomogram voxels in the y dimension"""
-  sizeY: Float
+  """Number of pixels in the 3D data medium axis"""
+  sizeY: Int
 
-  """Tomogram voxels in the z dimension"""
-  sizeZ: Float
+  """
+  Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
+  """
+  sizeZ: Int
 
   """Voxel spacing equal in all three axes in angstroms"""
   voxelSpacing: Float
 
   """
-  Whether the tomographic alignment was computed based on fiducial markers.
+  Fiducial Alignment status: True = aligned with fiducial False = aligned without fiducial
   """
   fiducialAlignmentStatus: fiducial_alignment_status_enum
 
@@ -5222,7 +5389,9 @@ input TomogramUpdateInput {
   """Name of software used for reconstruction"""
   reconstructionSoftware: String
 
-  """whether this tomogram is canonical for the run"""
+  """
+  Is this tomogram considered the canonical tomogram for the run experiment? True=Yes
+  """
   isCanonical: Boolean = null
 
   """S3 path to this tomogram in multiscale OME-Zarr format"""
@@ -5270,7 +5439,7 @@ input TomogramUpdateInput {
   """Whether this tomogram was generated per the portal's standards"""
   isStandardized: Boolean
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 }
 
@@ -5279,7 +5448,7 @@ type TomogramVoxelSpacing implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
   _id: GlobalID!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
   annotationFiles(
     where: AnnotationFileWhereClause = null
@@ -5318,13 +5487,17 @@ type TomogramVoxelSpacing implements EntityInterface & Node {
   ): TomogramConnection!
   tomogramsAggregate(where: TomogramWhereClause = null): TomogramAggregate
 
-  """Voxel spacing equal in all three axes in angstroms"""
+  """The voxel spacing for the tomograms in this set in angstroms"""
   voxelSpacing: Float!
 
-  """Path to a directory containing data for this entity as an S3 url"""
+  """
+  The S3 public bucket path where this tomogram voxel spacing is contained
+  """
   s3Prefix: String!
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
+  """
+  The HTTPS directory path where this tomogram voxel spacing is contained
+  """
   httpsPrefix: String!
 }
 
@@ -5363,18 +5536,23 @@ enum TomogramVoxelSpacingCountColumns {
 }
 
 input TomogramVoxelSpacingCreateInput {
+  """The the run this tomogram voxel spacing is a part of"""
   runId: ID = null
 
-  """Voxel spacing equal in all three axes in angstroms"""
+  """The voxel spacing for the tomograms in this set in angstroms"""
   voxelSpacing: Float!
 
-  """Path to a directory containing data for this entity as an S3 url"""
+  """
+  The S3 public bucket path where this tomogram voxel spacing is contained
+  """
   s3Prefix: String!
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
+  """
+  The HTTPS directory path where this tomogram voxel spacing is contained
+  """
   httpsPrefix: String!
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int!
 }
 
@@ -5416,18 +5594,23 @@ input TomogramVoxelSpacingOrderByClause {
 }
 
 input TomogramVoxelSpacingUpdateInput {
+  """The the run this tomogram voxel spacing is a part of"""
   runId: ID = null
 
-  """Voxel spacing equal in all three axes in angstroms"""
+  """The voxel spacing for the tomograms in this set in angstroms"""
   voxelSpacing: Float
 
-  """Path to a directory containing data for this entity as an S3 url"""
+  """
+  The S3 public bucket path where this tomogram voxel spacing is contained
+  """
   s3Prefix: String
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
+  """
+  The HTTPS directory path where this tomogram voxel spacing is contained
+  """
   httpsPrefix: String
 
-  """An identifier to refer to a specific instance of this type"""
+  """Numeric identifier (May change!)"""
   id: Int
 }
 
@@ -5452,9 +5635,9 @@ input TomogramWhereClause {
   run: RunWhereClause
   tomogramVoxelSpacing: TomogramVoxelSpacingWhereClause
   name: StrComparators
-  sizeX: FloatComparators
-  sizeY: FloatComparators
-  sizeZ: FloatComparators
+  sizeX: IntComparators
+  sizeY: IntComparators
+  sizeZ: IntComparators
   voxelSpacing: FloatComparators
   fiducialAlignmentStatus: Fiducial_alignment_status_enumEnumComparators
   reconstructionMethod: Tomogram_reconstruction_method_enumEnumComparators
@@ -5532,6 +5715,7 @@ enum annotation_method_type_enum {
   manual
   automated
   hybrid
+  simulated
 }
 
 enum deposition_types_enum {
