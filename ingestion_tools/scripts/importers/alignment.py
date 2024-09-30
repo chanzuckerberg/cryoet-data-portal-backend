@@ -57,9 +57,9 @@ class AlignmentImporter(BaseFileImporter):
     has_metadata = True
     dir_path = "{dataset_name}/{run_name}/Alignments"
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, file_paths: dict[str, str], **kwargs):
         super().__init__(*args, **kwargs)
-        self.file_paths = kwargs.get("file_paths")
+        self.file_paths = file_paths
         self.identifier = AlignmentIdentifierHelper.get_identifier(self.config, self.metadata, self.parents)
         self.converter = alignment_converter_factory(
             self.config,
